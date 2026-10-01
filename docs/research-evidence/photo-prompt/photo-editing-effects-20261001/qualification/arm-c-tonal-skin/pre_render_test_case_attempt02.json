@@ -1,0 +1,102 @@
+{
+  "contract_version": "agent-photo-editing-test-case/v1",
+  "created_before_image_call": true,
+  "created_at_utc": "2026-10-01T07:46:31.252893+00:00",
+  "request_envelope_file_sha256": "6363571a23798ee6104c62e278243f22b67b7a7596600458b7580ed00927c62c",
+  "source_authorial_core_sha256": "a7aff6a3462a015b8a5c985d13dbdc48160493ef9a67b395ea477a0e8fcbff51",
+  "source_intent_lock_sha256": "7a26d10876c1f9502c89381a46295016eb8a2787739e3e1daad485a50eb6446a",
+  "source_pack_id": "a025b7e5aa06507c",
+  "scene_ownership": "random scene/action/relationship and editing targets are agent-authored open choices",
+  "assertions": [
+    {
+      "assertion_id": "agent_test_color_splash",
+      "dimension": "color",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "axes": {
+        "effect": "selective_color",
+        "carrier": "single_red_enamel_paperweight",
+        "remaining_picture": "true_grayscale"
+      },
+      "evidence": {
+        "visible_effect": "Render the entire picture in true grayscale except the single red enamel paperweight, which retains saturated crimson."
+      },
+      "affected_dimensions": [
+        "color"
+      ]
+    },
+    {
+      "assertion_id": "agent_test_lifted_blacks",
+      "dimension": "color",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "axes": {
+        "effect": "lifted_dark_tones",
+        "shadow_floor": "soft_charcoal",
+        "retained_detail": "hair_strands_and_shelf_wood"
+      },
+      "evidence": {
+        "visible_effect": "The darkest hair and shelving tones sit at soft charcoal gray with readable strand and wood detail, while highlights roll smoothly."
+      },
+      "affected_dimensions": [
+        "color",
+        "lighting"
+      ]
+    },
+    {
+      "assertion_id": "agent_test_skin_detail",
+      "dimension": "appearance",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "axes": {
+        "effect": "local_dodge_burn_tone_evening",
+        "skin_detail": "fine_pores_and_natural_variation",
+        "view": "clearly_readable_cheeks"
+      },
+      "evidence": {
+        "visible_effect": "Local dodge-and-burn evens the larger cheek tones while fine pores and tiny natural skin variations remain clearly visible."
+      },
+      "affected_dimensions": [
+        "appearance",
+        "color"
+      ]
+    }
+  ],
+  "target_criteria": [
+    {
+      "assertion_id": "agent_test_color_splash",
+      "keyword_family": "color splash / selective color",
+      "observable_pass": "A saturated red enamel paperweight is clearly readable; every other broad scene and person region is achromatic in the same original image. Color outside the named prop, a naturally limited palette or colored scene light is a failure.",
+      "required_view": "whole frame and native prop/skin/background",
+      "partial_is_fail": true
+    },
+    {
+      "assertion_id": "agent_test_lifted_blacks",
+      "keyword_family": "lifted blacks / matte shadow floor",
+      "observable_pass": "Dark hair and major shelving/fabric surfaces show a noticeably raised charcoal tonal floor and readable texture in the same frame; they still differ from midtones. Merely bright lighting, black clipping, or flat gray flooding is a failure.",
+      "required_view": "whole frame and native dark surfaces",
+      "partial_is_fail": true
+    },
+    {
+      "assertion_id": "agent_test_skin_detail",
+      "keyword_family": "local dodge-and-burn tone evening with skin texture",
+      "observable_pass": "Native cheek/nose skin retains readable fine pores and small variations while broad local tones remain even and coherent with the window light. Smooth waxy or blurred skin, merely grain-like noise, or unassessable native detail fails. This checks visible appearance, not actual editing history.",
+      "required_view": "native face",
+      "partial_is_fail": true
+    }
+  ],
+  "pack_exposure_status": "target_family_not_exposed_in_single_pack",
+  "strict_all_of_policy": "PASS only when all three target effects, required physical gates and scoped reference appearance pass in the same original image; PARTIAL is FAIL. A blocked tool call is unscored. Prompt/runtime pass is not pixels or user acceptance.",
+  "reference_scope": "visible adult face/hair configuration only for a fictional adult woman; original preserved",
+  "user_judgment": "not_yet_received",
+  "attempt": 2,
+  "runtime_prompt_source": "composed_prompt_attempt02.json",
+  "retry_of": "a74369d920440caa",
+  "changes": "Ordinary fastened cotton work shirt, neutral engaged expression and ordinary repair-workplace atmosphere; same frozen core/pack and literal effect/contact/reference evidence."
+}

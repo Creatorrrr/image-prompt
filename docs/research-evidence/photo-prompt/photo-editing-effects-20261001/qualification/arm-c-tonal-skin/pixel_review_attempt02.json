@@ -1,0 +1,108 @@
+{
+  "contract_version": "agent-photo-editing-pixel-review/v1",
+  "pack_id": "a025b7e5aa06507c",
+  "attempt": 2,
+  "image_call_count": 2,
+  "image_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-c-tonal-skin/attempt-02-generated-original.png",
+  "image_sha256": "8e5093da220749c8f60188e0580e71c41eb09d3102ab8ec1dff78325767533e7",
+  "review_status": "completed_native",
+  "pixel_inspection_performed": true,
+  "target_effects": [
+    {
+      "assertion_id": "agent_test_color_splash",
+      "status": "fail",
+      "observed_degree": "partial",
+      "review_scale": [
+        "whole",
+        "native"
+      ],
+      "evidence": "A single red domed enamel paperweight is clear, but face, paper, shirt and background carry a residual warm sepia-like tint rather than true grayscale. Read-only RGB diagnostics outside a generous prop box show median channel spread 8/255, mean RGB 102.19/96.63/93.88 and 97.43 percent of pixels with channel spread above 3. The named prop is colored, but the otherwise-achromatic component is missing; partial is fail.",
+      "subcomponents": {
+        "named_red_prop": "pass",
+        "otherwise_achromatic_picture": "fail"
+      },
+      "prompt_evidence_preserved": true
+    },
+    {
+      "assertion_id": "agent_test_lifted_blacks",
+      "status": "fail",
+      "observed_degree": "partial",
+      "review_scale": [
+        "whole",
+        "native"
+      ],
+      "evidence": "Hair strands and shelving retain readable dark detail, but the darkest visible roots and shelf recesses still read near black. The native hair diagnostic has minimum approximate luminance 5.33 and p01 12.33/255; shelf recess minimum is 13.67. The requested soft-charcoal dark floor is insufficiently distinct even though detail retention works; partial is fail. These diagnostics support the visual reading and do not prove a tone-mapping algorithm was executed.",
+      "subcomponents": {
+        "dark_detail_retention": "pass",
+        "convincingly_lifted_charcoal_floor": "fail"
+      },
+      "prompt_evidence_preserved": true
+    },
+    {
+      "assertion_id": "agent_test_skin_detail",
+      "status": "pass",
+      "observed_degree": "readable",
+      "review_scale": [
+        "native"
+      ],
+      "evidence": "The original-scale face shows fine irregular pore/stipple relief across cheeks and around the nose, faint local natural variations and a small cheek mark. The larger cheek tones remain even and softly shaped by the same side window light, with readable skin relief rather than a uniform waxy blur. This grades the visible outcome; it cannot establish the editing operation or processing history.",
+      "subcomponents": {
+        "readable_fine_skin_texture": "pass",
+        "even_coherent_local_tone": "pass"
+      },
+      "prompt_evidence_preserved": true
+    }
+  ],
+  "physical_gates": [
+    {
+      "gate_id": "embodiment_body_ownership",
+      "status": "pass",
+      "evidence": "At whole and native scale, one continuous adult torso supports two sleeves and forearms, each ending in its own hand; the screen-left hand is actor-right and rests on the weight, and the screen-right hand is actor-left on paper. No consequential limb is orphaned or duplicated."
+    },
+    {
+      "gate_id": "embodiment_joint_chain_and_reach",
+      "status": "pass",
+      "evidence": "Each shoulder/sleeve connects through a plausible elbow/forearm to its wrist and hand. Both hands reach separate near tabletop targets without crossing into a contradictory chain; the face and neck remain continuous with the torso."
+    },
+    {
+      "gate_id": "embodiment_support_and_balance",
+      "status": "pass",
+      "evidence": "The woman leans forward with both forearms supported by the worktable. The domed weight base sits on the paper and is table-supported; the other palm contacts the paper. The crop permits ordinary lower-body support without requiring a visible seat."
+    },
+    {
+      "gate_id": "embodiment_contact_and_space",
+      "status": "pass",
+      "evidence": "Native contact inspection shows actor-right fingertips curling onto the red domed weight, whose base rests on the scenery plan. Actor-left palm and fingers rest on a distinct opposite paper edge. The near paper curl rises separately around the weighted flat area; contacts have coherent boundaries and available space."
+    },
+    {
+      "gate_id": "embodiment_visibility_and_projection",
+      "status": "pass",
+      "evidence": "The across-table three-quarter frame shows the face, connected forearms, red weight, right fingertip contact and left palm contact together. Foreground brushes occupy the edge without obscuring either critical hand/prop junction."
+    }
+  ],
+  "reference_appearance": {
+    "status": "pass",
+    "scope": "visible adult face/hair appearance guidance only, not identity or biometrics",
+    "evidence": "The short dark rounded bob, airy divided fringe, soft oval facial outline, large dark almond eyes, small nose and full lips are visibly guided by the supplied portrait within the tonal treatment. No body shape, traits or real-person identity is inferred.",
+    "source_preserved": true,
+    "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7"
+  },
+  "strict_all_of_verdict": "fail",
+  "target_effect_pass_count": 1,
+  "target_effect_count": 3,
+  "partial_is_fail": true,
+  "unscored_attempts": [
+    1
+  ],
+  "technical_binding": {
+    "composition": "pass",
+    "runtime": "pass"
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  },
+  "inspection_derivatives": "native_inspection_crops_attempt02.json",
+  "read_only_metrics": "native_pixel_readonly_metrics_attempt02.json",
+  "image_was_edited": false
+}

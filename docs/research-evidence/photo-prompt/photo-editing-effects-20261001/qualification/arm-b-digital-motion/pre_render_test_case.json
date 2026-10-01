@@ -1,0 +1,139 @@
+{
+  "contract_version": "photo-editing-qualification-case/v1",
+  "arm_id": "arm-b-digital-motion",
+  "prepared_utc": "2026-10-01T07:36:15.865636+00:00",
+  "random_seed": 6554357146893168226,
+  "request_source": "request_envelope.json",
+  "core_source": "authorial_core.json",
+  "test_origin": "agent_authorial_advisory_choices; not requester-required scene detail",
+  "selection_policy": "Use only actual newly exposed editing candidates/profiles from the single bound v6 pack. This case fixes independent observation criteria before rendering.",
+  "photo_scene": "A fictional adult woman gliding through a final slow lap of a nearly empty night roller rink, turning toward her rink-edge friend with the camera as she approaches the skate-return counter.",
+  "effects": [
+    {
+      "gate_id": "b_direct_flash",
+      "keywords": [
+        "compact-digital snapshot",
+        "direct on-camera flash"
+      ],
+      "criteria": [
+        "Hard frontal highlight transitions on the sharp woman, especially cheek or satin folds.",
+        "A short cast floor shadow associated with her skates and a dimmer ambient rink."
+      ],
+      "fail_if": [
+        "Only general brightness or smooth ambient lighting appears."
+      ],
+      "cannot_prove_from_pixels": [
+        "camera brand",
+        "capture medium",
+        "flash hardware provenance"
+      ]
+    },
+    {
+      "gate_id": "b_slow_sync_trace",
+      "keywords": [
+        "slow-sync flash",
+        "coherent shutter trace"
+      ],
+      "criteria": [
+        "One sharp principal skater remains readable.",
+        "An evident short continuous trailing exposure is attached to her moving sleeve and/or wheels toward screen left.",
+        "Fixed rails or counter edges remain stationary and readable."
+      ],
+      "fail_if": [
+        "Only soft focus or shallow depth of field occurs.",
+        "Trails have conflicting directions or look like unrelated duplicated anatomy."
+      ],
+      "cannot_prove_from_pixels": [
+        "numeric shutter speed",
+        "flash sync hardware"
+      ]
+    },
+    {
+      "gate_id": "b_digital_noise",
+      "keywords": [
+        "digital luma noise",
+        "digital chroma noise"
+      ],
+      "criteria": [
+        "Fine irregular brightness texture is visible at native resolution in dark wall and shaded jacket areas.",
+        "Tiny sparse colored speckles, including green or magenta, are visible in these shadow areas.",
+        "Noise is relatively reduced across the brightly exposed face while facial texture remains readable."
+      ],
+      "fail_if": [
+        "Only fabric weave, skin pores or large monochrome film-grain-like marks occur.",
+        "Noise is not identifiable at native resolution."
+      ],
+      "cannot_prove_from_pixels": [
+        "sensor type",
+        "ISO",
+        "capture or editing history"
+      ]
+    }
+  ],
+  "physical_gates": [
+    {
+      "gate_id": "b_body_ownership",
+      "criteria": [
+        "One adult sharp body, with connected and plausible shoulders, elbows, knees and skates; intentional exposure trail is distinguishable from extra anatomy."
+      ]
+    },
+    {
+      "gate_id": "b_support_contact",
+      "criteria": [
+        "Visible skate wheel sets meet a common floor plane, with staggered feet and softly bent knees supporting a plausible slow coast."
+      ]
+    },
+    {
+      "gate_id": "b_action_projection",
+      "criteria": [
+        "Her modest head turn, outward balance arm and glide direction are mutually plausible and both skates remain inside the frame."
+      ]
+    }
+  ],
+  "reference_gate": {
+    "gate_id": "b_face_hair_scope",
+    "criteria": [
+      "The generated fictional adult woman keeps the visible short dark bob, fine parted bangs, soft rounded facial contour, dark eyes and naturally pink lips from the supplied appearance guide."
+    ],
+    "scope": "Face/hair appearance only; no identity/biometric/personality/body-shape claim."
+  },
+  "scoring_policy": {
+    "strict_all_of": true,
+    "partial_is_fail": true,
+    "blocked_call": "unscored_attempt",
+    "visual_technical_pass": "does not establish user acceptance"
+  },
+  "selected_ids": [
+    "slot:camera_type:pe_compact_flash_noisy_finish",
+    "slot:motion:pe_flash_core_shutter_trace",
+    "integration:environment_binding",
+    "integration:event_timing"
+  ],
+  "image": null,
+  "prepared_after_pack_utc": "2026-10-01T07:40:36.929859+00:00",
+  "editing_exposure": {
+    "pack_id": "f70725085adf6010",
+    "source_pack_sha256": "ddaefec60c59014adc1296dfaf51cc1f7b30b2df0e1a0dac2ce194f287458b76",
+    "new_slot_candidate_ids": [
+      "slot:camera_type:pe_compact_flash_noisy_finish",
+      "slot:motion:pe_flash_core_shutter_trace"
+    ],
+    "new_visual_profile_ids": [],
+    "new_bundle_ids": [],
+    "profile_exposure": "absent",
+    "bundle_exposure": "absent",
+    "selection": "Two eligible new source-bound slot candidates selected; selected visual concepts explicitly empty.",
+    "focal_test_coverage": "Three independent core advisory assertions and the pre-render native-pixel case; no requester-required assertion invented from authorial testing choices."
+  },
+  "prompt_sha256": "e301531f078084ccb62087647af25e4499ad2ebee00f40bafd59ef90ba47a583",
+  "negative_sha256": "059b90307b45ebf6d504cbe76d112bed7b3ed3aab871eebd1c216c112f9a9628",
+  "word_count": 286,
+  "added_candidate_realization": "Cyan LEDs in her existing moving wheels provide a native ambient-light source for the source-bound shutter-trace candidate. The original independent trail direction, sharp endpoint and still-architecture tests remain unchanged.",
+  "required_generic_embodiment_gate_ids": [
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ]
+}

@@ -1,0 +1,397 @@
+{
+  "contract_version": "photo-editing-qualification-case/v1",
+  "arm_id": "arm-b-digital-motion",
+  "prepared_utc": "2026-10-01T07:36:15.865636+00:00",
+  "random_seed": 6554357146893168226,
+  "request_source": "request_envelope.json",
+  "core_source": "authorial_core.json",
+  "test_origin": "agent_authorial_advisory_choices; not requester-required scene detail",
+  "selection_policy": "Use only actual newly exposed editing candidates/profiles from the single bound v6 pack. This case fixes independent observation criteria before rendering.",
+  "photo_scene": "A fictional adult woman gliding through a final slow lap of a nearly empty night roller rink, turning toward her rink-edge friend with the camera as she approaches the skate-return counter.",
+  "effects": [
+    {
+      "gate_id": "b_direct_flash",
+      "keywords": [
+        "compact-digital snapshot",
+        "direct on-camera flash"
+      ],
+      "criteria": [
+        "Hard frontal highlight transitions on the sharp woman, especially cheek or satin folds.",
+        "A short cast floor shadow associated with her skates and a dimmer ambient rink."
+      ],
+      "fail_if": [
+        "Only general brightness or smooth ambient lighting appears."
+      ],
+      "cannot_prove_from_pixels": [
+        "camera brand",
+        "capture medium",
+        "flash hardware provenance"
+      ]
+    },
+    {
+      "gate_id": "b_slow_sync_trace",
+      "keywords": [
+        "slow-sync flash",
+        "coherent shutter trace"
+      ],
+      "criteria": [
+        "One sharp principal skater remains readable.",
+        "An evident short continuous trailing exposure is attached to her moving sleeve and/or wheels toward screen left.",
+        "Fixed rails or counter edges remain stationary and readable."
+      ],
+      "fail_if": [
+        "Only soft focus or shallow depth of field occurs.",
+        "Trails have conflicting directions or look like unrelated duplicated anatomy."
+      ],
+      "cannot_prove_from_pixels": [
+        "numeric shutter speed",
+        "flash sync hardware"
+      ]
+    },
+    {
+      "gate_id": "b_digital_noise",
+      "keywords": [
+        "digital luma noise",
+        "digital chroma noise"
+      ],
+      "criteria": [
+        "Fine irregular brightness texture is visible at native resolution in dark wall and shaded jacket areas.",
+        "Tiny sparse colored speckles, including green or magenta, are visible in these shadow areas.",
+        "Noise is relatively reduced across the brightly exposed face while facial texture remains readable."
+      ],
+      "fail_if": [
+        "Only fabric weave, skin pores or large monochrome film-grain-like marks occur.",
+        "Noise is not identifiable at native resolution."
+      ],
+      "cannot_prove_from_pixels": [
+        "sensor type",
+        "ISO",
+        "capture or editing history"
+      ]
+    }
+  ],
+  "physical_gates": [
+    {
+      "gate_id": "b_body_ownership",
+      "criteria": [
+        "One adult sharp body, with connected and plausible shoulders, elbows, knees and skates; intentional exposure trail is distinguishable from extra anatomy."
+      ]
+    },
+    {
+      "gate_id": "b_support_contact",
+      "criteria": [
+        "Visible skate wheel sets meet a common floor plane, with staggered feet and softly bent knees supporting a plausible slow coast."
+      ]
+    },
+    {
+      "gate_id": "b_action_projection",
+      "criteria": [
+        "Her modest head turn, outward balance arm and glide direction are mutually plausible and both skates remain inside the frame."
+      ]
+    }
+  ],
+  "reference_gate": {
+    "gate_id": "b_face_hair_scope",
+    "criteria": [
+      "The generated fictional adult woman keeps the visible short dark bob, fine parted bangs, soft rounded facial contour, dark eyes and naturally pink lips from the supplied appearance guide."
+    ],
+    "scope": "Face/hair appearance only; no identity/biometric/personality/body-shape claim."
+  },
+  "scoring_policy": {
+    "strict_all_of": true,
+    "partial_is_fail": true,
+    "blocked_call": "unscored_attempt",
+    "visual_technical_pass": "does not establish user acceptance"
+  },
+  "selected_ids": null,
+  "image": null,
+  "revision": "v2",
+  "source_independent_case_sha256": "2f91b563c6083d0c5313bb820bf6ac4f29b02740a7c5d15c2af31fa288a58bb3",
+  "prepared_v2_utc": "2026-10-01T08:33:27.740098+00:00",
+  "pack_id": "e37041f43a64aad7",
+  "pack_file_sha256": "3596d1cef4e4891ac27df72261249e7a9042aed65d564c94b3133ea4964003eb",
+  "prompt_sha256": "a93e495b5879cabc50409629b218ee193a7956c480fc88226c9089889a8434f2",
+  "negative_sha256": "059b90307b45ebf6d504cbe76d112bed7b3ed3aab871eebd1c216c112f9a9628",
+  "chosen_candidate_ids": [
+    "bundle:pe_bundle_compact_direct_flash",
+    "slot:grain_profile:pe_digital_luma_noise",
+    "slot:motion:pe_flash_core_shutter_trace",
+    "integration:environment_binding",
+    "integration:event_timing"
+  ],
+  "chosen_visual_concept_ids": [
+    "visual-concept:pe_compact_flash_noisy_finish_relation",
+    "visual-concept:pe_digital_chroma_noise_relation",
+    "visual-concept:pe_digital_luma_noise_relation"
+  ],
+  "profile_activation_source": "Explicit composer_opt_in; all gates active; no invented requester obligations",
+  "selected_profile_contracts": [
+    {
+      "effect": "promote_to_hard_visual_obligation",
+      "visual_obligations_contract_version": "photo-visual-obligations/v1",
+      "obligation": {
+        "id": "pe_compact_flash_noisy_finish_relation",
+        "category": "scoped_photographic_editing_effect",
+        "activation": {
+          "source": "composer_opt_in",
+          "scope": "request_only",
+          "source_intent_ids": []
+        },
+        "composition_instruction": "Realize this visible property on its declared owner: near subjects receive direct frontal flash Realize this visible property on its declared owner: dark image regions carry digital noise",
+        "component_semantics": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "component_1",
+            "component_2"
+          ],
+          "groups": [
+            {
+              "id": "component_1",
+              "any_terms": [
+                "near subjects receive direct frontal flash"
+              ]
+            },
+            {
+              "id": "component_2",
+              "any_terms": [
+                "dark image regions carry digital noise"
+              ]
+            }
+          ]
+        },
+        "prompt_binding": {
+          "composed_field": "visual_obligation_evidence",
+          "required_evidence_fields": [
+            "component_1_phrase",
+            "component_2_phrase"
+          ],
+          "minimum_distinct_evidence_phrases": 2,
+          "prompt_evidence_must_be_literal": true,
+          "maximum_pairwise_content_token_overlap_ratio": 0.82,
+          "forbidden_filler_phrases": [
+            "visible evidence",
+            "visual evidence",
+            "required cue",
+            "prompt phrase"
+          ]
+        },
+        "evidence_requirements": {
+          "component_1_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "near subjects receive direct frontal flash"
+            ]
+          },
+          "component_2_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "dark image regions carry digital noise"
+            ]
+          }
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "render_gates": [
+          {
+            "id": "vo_pe_compact_flash_noisy_finish_relation_1",
+            "review_scale": "both",
+            "description": "near subjects receive direct frontal flash. Inspect its declared owner in the native image; partial or substituted evidence fails."
+          },
+          {
+            "id": "vo_pe_compact_flash_noisy_finish_relation_2",
+            "review_scale": "both",
+            "description": "dark image regions carry digital noise. Inspect its declared owner in the native image; partial or substituted evidence fails."
+          }
+        ],
+        "reject_substitutes": [
+          "CCD 하나의 고정 색·필름 grain·실제 센서 사용을 보증하지 않음"
+        ]
+      }
+    },
+    {
+      "effect": "promote_to_hard_visual_obligation",
+      "visual_obligations_contract_version": "photo-visual-obligations/v1",
+      "obligation": {
+        "id": "pe_digital_chroma_noise_relation",
+        "category": "scoped_photographic_editing_effect",
+        "activation": {
+          "source": "composer_opt_in",
+          "scope": "request_only",
+          "source_intent_ids": []
+        },
+        "composition_instruction": "Realize this visible property on its declared owner: small colored speckles appear within dark image regions Realize this visible property on its declared owner: speckles remain separate from large object colors",
+        "component_semantics": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "component_1",
+            "component_2"
+          ],
+          "groups": [
+            {
+              "id": "component_1",
+              "any_terms": [
+                "small colored speckles appear within dark image regions"
+              ]
+            },
+            {
+              "id": "component_2",
+              "any_terms": [
+                "speckles remain separate from large object colors"
+              ]
+            }
+          ]
+        },
+        "prompt_binding": {
+          "composed_field": "visual_obligation_evidence",
+          "required_evidence_fields": [
+            "component_1_phrase",
+            "component_2_phrase"
+          ],
+          "minimum_distinct_evidence_phrases": 2,
+          "prompt_evidence_must_be_literal": true,
+          "maximum_pairwise_content_token_overlap_ratio": 0.82,
+          "forbidden_filler_phrases": [
+            "visible evidence",
+            "visual evidence",
+            "required cue",
+            "prompt phrase"
+          ]
+        },
+        "evidence_requirements": {
+          "component_1_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "small colored speckles appear within dark image regions"
+            ]
+          },
+          "component_2_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "speckles remain separate from large object colors"
+            ]
+          }
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "render_gates": [
+          {
+            "id": "vo_pe_digital_chroma_noise_relation_1",
+            "review_scale": "native",
+            "description": "small colored speckles appear within dark image regions. Inspect its declared owner in the native image; partial or substituted evidence fails."
+          },
+          {
+            "id": "vo_pe_digital_chroma_noise_relation_2",
+            "review_scale": "native",
+            "description": "speckles remain separate from large object colors. Inspect its declared owner in the native image; partial or substituted evidence fails."
+          }
+        ],
+        "reject_substitutes": [
+          "film grain·물체 먼지·모든 피부 평활화와 동일시하지 않음"
+        ]
+      }
+    },
+    {
+      "effect": "promote_to_hard_visual_obligation",
+      "visual_obligations_contract_version": "photo-visual-obligations/v1",
+      "obligation": {
+        "id": "pe_digital_luma_noise_relation",
+        "category": "scoped_photographic_editing_effect",
+        "activation": {
+          "source": "composer_opt_in",
+          "scope": "request_only",
+          "source_intent_ids": []
+        },
+        "composition_instruction": "Realize this visible property on its declared owner: dark image regions contain irregular brightness speckle Realize this visible property on its declared owner: speckle remains an image-plane artifact",
+        "component_semantics": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "component_1",
+            "component_2"
+          ],
+          "groups": [
+            {
+              "id": "component_1",
+              "any_terms": [
+                "dark image regions contain irregular brightness speckle"
+              ]
+            },
+            {
+              "id": "component_2",
+              "any_terms": [
+                "speckle remains an image-plane artifact"
+              ]
+            }
+          ]
+        },
+        "prompt_binding": {
+          "composed_field": "visual_obligation_evidence",
+          "required_evidence_fields": [
+            "component_1_phrase",
+            "component_2_phrase"
+          ],
+          "minimum_distinct_evidence_phrases": 2,
+          "prompt_evidence_must_be_literal": true,
+          "maximum_pairwise_content_token_overlap_ratio": 0.82,
+          "forbidden_filler_phrases": [
+            "visible evidence",
+            "visual evidence",
+            "required cue",
+            "prompt phrase"
+          ]
+        },
+        "evidence_requirements": {
+          "component_1_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "dark image regions contain irregular brightness speckle"
+            ]
+          },
+          "component_2_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "speckle remains an image-plane artifact"
+            ]
+          }
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "render_gates": [
+          {
+            "id": "vo_pe_digital_luma_noise_relation_1",
+            "review_scale": "native",
+            "description": "dark image regions contain irregular brightness speckle. Inspect its declared owner in the native image; partial or substituted evidence fails."
+          },
+          {
+            "id": "vo_pe_digital_luma_noise_relation_2",
+            "review_scale": "native",
+            "description": "speckle remains an image-plane artifact. Inspect its declared owner in the native image; partial or substituted evidence fails."
+          }
+        ],
+        "reject_substitutes": [
+          "film grain·물체 먼지·모든 피부 평활화와 동일시하지 않음"
+        ]
+      }
+    }
+  ],
+  "generic_embodiment_required_checks": [
+    "body_ownership",
+    "joint_chain_and_reach",
+    "support_and_balance",
+    "contact_and_space",
+    "visibility_and_projection"
+  ],
+  "binary_rule": "PARTIAL is FAIL. Original three effects and all selected profile/physical/reference criteria must pass. User acceptance remains pending.",
+  "effective_visual_contract_sha256": "c4a6785811531febc522dbdea125795c3607bc392ac40b22f9c1d4a41c7b8d61"
+}

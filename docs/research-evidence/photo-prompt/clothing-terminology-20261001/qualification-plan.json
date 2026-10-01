@@ -1,0 +1,1220 @@
+{
+  "schema_version": "clothing-qualification-plan/research-v1",
+  "state": "planned_not_executed",
+  "case_count": 61,
+  "blueprint_count": 15,
+  "pixel_arm_count": 12,
+  "caveats": [
+    "These are requirements/specification cases, not observed pass/fail results.",
+    "Exact request examples are schema/routing probes. Holdout paraphrases should be written independently of source candidate wording before implementation.",
+    "Existing baseline failures must be measured before integration; this plan does not assume the broad suite currently passes.",
+    "A revised discovery surface needs a new hash and fresh relevant evidence; old pixels do not qualify new data."
+  ],
+  "metrics": {
+    "term_fixture_reach": "intended sense resolved with owner and variant",
+    "false_hard_activation": "zero on declared negative cases",
+    "locked_dimension_drift": "zero",
+    "candidate_exposure": "record actual ID and absence explicitly",
+    "adoption": "record actual selected ID and composed relation; not required in every optional request",
+    "pixel_success": "all required gates per arm, no averaging of failed arms"
+  },
+  "cases": [
+    {
+      "id": "Q001",
+      "kind": "explicit_relation_en",
+      "request": "a Henley button placket ends partway down the shirt front",
+      "blueprint_id": "BP01",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_henley_placket_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_henley_placket_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q002",
+      "kind": "explicit_relation_ko",
+      "request": "몸판 중간에서 끝나는 헨리 버튼 플래킷",
+      "blueprint_id": "BP01",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_henley_placket_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_henley_placket_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q003",
+      "kind": "negated_relation_en",
+      "request": "Do not add this feature: a Henley button placket ends partway down the shirt front. Use a plain alternative.",
+      "blueprint_id": "BP01",
+      "expected": {
+        "forbidden_required_profile_ids": [
+          "clothing_henley_placket_selected"
+        ],
+        "optional_retrieval_cannot_override_negation": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q004",
+      "kind": "explicit_relation_en",
+      "request": "a sweetheart bodice edge has two rounded lobes and a center dip",
+      "blueprint_id": "BP02",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_sweetheart_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_sweetheart_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q005",
+      "kind": "explicit_relation_ko",
+      "request": "두 곡선과 중앙 골이 보이는 스위트하트 넥라인",
+      "blueprint_id": "BP02",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_sweetheart_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_sweetheart_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q006",
+      "kind": "negated_relation_en",
+      "request": "Do not add this feature: a sweetheart bodice edge has two rounded lobes and a center dip. Use a plain alternative.",
+      "blueprint_id": "BP02",
+      "expected": {
+        "forbidden_required_profile_ids": [
+          "clothing_sweetheart_selected"
+        ],
+        "optional_retrieval_cannot_override_negation": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q007",
+      "kind": "explicit_relation_en",
+      "request": "raglan seams join the neckline to the underarm on the shirt",
+      "blueprint_id": "BP03",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_raglan_setin_drop_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_raglan_setin_drop_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q008",
+      "kind": "explicit_relation_ko",
+      "request": "목부터 겨드랑이로 이어진 래글런 봉제선",
+      "blueprint_id": "BP03",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_raglan_setin_drop_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_raglan_setin_drop_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q009",
+      "kind": "negated_relation_en",
+      "request": "Do not add this feature: raglan seams join the neckline to the underarm on the shirt. Use a plain alternative.",
+      "blueprint_id": "BP03",
+      "expected": {
+        "forbidden_required_profile_ids": [
+          "clothing_raglan_setin_drop_selected"
+        ],
+        "optional_retrieval_cannot_override_negation": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q010",
+      "kind": "explicit_relation_en",
+      "request": "a gigot sleeve has upper-arm fullness and a narrow forearm and wrist",
+      "blueprint_id": "BP04",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_puff_gigot_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_puff_gigot_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q011",
+      "kind": "explicit_relation_ko",
+      "request": "상부는 풍성하고 손목으로 좁아지는 기고 소매",
+      "blueprint_id": "BP04",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_puff_gigot_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_puff_gigot_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q012",
+      "kind": "negated_relation_en",
+      "request": "Do not add this feature: a gigot sleeve has upper-arm fullness and a narrow forearm and wrist. Use a plain alternative.",
+      "blueprint_id": "BP04",
+      "expected": {
+        "forbidden_required_profile_ids": [
+          "clothing_puff_gigot_selected"
+        ],
+        "optional_retrieval_cannot_override_negation": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q013",
+      "kind": "explicit_relation_en",
+      "request": "curved princess seams connect the front and side-front bodice panels",
+      "blueprint_id": "BP05",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_princess_dart_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_princess_dart_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q014",
+      "kind": "explicit_relation_ko",
+      "request": "몸판 패널을 연결하는 프린세스 곡선 봉제",
+      "blueprint_id": "BP05",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_princess_dart_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_princess_dart_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q015",
+      "kind": "negated_relation_en",
+      "request": "Do not add this feature: curved princess seams connect the front and side-front bodice panels. Use a plain alternative.",
+      "blueprint_id": "BP05",
+      "expected": {
+        "forbidden_required_profile_ids": [
+          "clothing_princess_dart_selected"
+        ],
+        "optional_retrieval_cannot_override_negation": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q016",
+      "kind": "explicit_relation_en",
+      "request": "a single fabric welt frames the pocket slit on the jacket",
+      "blueprint_id": "BP06",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_pocket_patch_welt_seam_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_pocket_patch_welt_seam_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q017",
+      "kind": "explicit_relation_ko",
+      "request": "절개 입구를 감싸는 단일 웰트",
+      "blueprint_id": "BP06",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_pocket_patch_welt_seam_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_pocket_patch_welt_seam_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q018",
+      "kind": "negated_relation_en",
+      "request": "Do not add this feature: a single fabric welt frames the pocket slit on the jacket. Use a plain alternative.",
+      "blueprint_id": "BP06",
+      "expected": {
+        "forbidden_required_profile_ids": [
+          "clothing_pocket_patch_welt_seam_selected"
+        ],
+        "optional_retrieval_cannot_override_negation": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q019",
+      "kind": "explicit_relation_en",
+      "request": "rounded piping projects between two joined garment panels",
+      "blueprint_id": "BP07",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_piping_binding_welt_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_piping_binding_welt_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q020",
+      "kind": "explicit_relation_ko",
+      "request": "몸판 사이에 삽입된 돌출 파이핑",
+      "blueprint_id": "BP07",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_piping_binding_welt_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_piping_binding_welt_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q021",
+      "kind": "negated_relation_en",
+      "request": "Do not add this feature: rounded piping projects between two joined garment panels. Use a plain alternative.",
+      "blueprint_id": "BP07",
+      "expected": {
+        "forbidden_required_profile_ids": [
+          "clothing_piping_binding_welt_selected"
+        ],
+        "optional_retrieval_cannot_override_negation": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q022",
+      "kind": "explicit_relation_en",
+      "request": "vertical boning channels run along the structured garment bodice",
+      "blueprint_id": "BP08",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_bra_wire_boning_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_bra_wire_boning_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q023",
+      "kind": "explicit_relation_ko",
+      "request": "옷 몸판의 세로 보닝 채널",
+      "blueprint_id": "BP08",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_bra_wire_boning_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_bra_wire_boning_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q024",
+      "kind": "negated_relation_en",
+      "request": "Do not add this feature: vertical boning channels run along the structured garment bodice. Use a plain alternative.",
+      "blueprint_id": "BP08",
+      "expected": {
+        "forbidden_required_profile_ids": [
+          "clothing_bra_wire_boning_selected"
+        ],
+        "optional_retrieval_cannot_override_negation": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q025",
+      "kind": "explicit_relation_en",
+      "request": "opposing herringbone weave diagonals meet with a visible offset",
+      "blueprint_id": "BP09",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_twill_herringbone_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_twill_herringbone_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q026",
+      "kind": "explicit_relation_ko",
+      "request": "방향이 반전되며 어긋나는 헤링본 조직",
+      "blueprint_id": "BP09",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_twill_herringbone_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_twill_herringbone_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q027",
+      "kind": "negated_relation_en",
+      "request": "Do not add this feature: opposing herringbone weave diagonals meet with a visible offset. Use a plain alternative.",
+      "blueprint_id": "BP09",
+      "expected": {
+        "forbidden_required_profile_ids": [
+          "clothing_twill_herringbone_selected"
+        ],
+        "optional_retrieval_cannot_override_negation": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q028",
+      "kind": "explicit_relation_en",
+      "request": "a necklace chain passes through the bail attached to a pendant",
+      "blueprint_id": "BP10",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_bail_connector_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_bail_connector_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q029",
+      "kind": "explicit_relation_ko",
+      "request": "체인이 통과하는 펜던트 연결 고리",
+      "blueprint_id": "BP10",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_bail_connector_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_bail_connector_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q030",
+      "kind": "negated_relation_en",
+      "request": "Do not add this feature: a necklace chain passes through the bail attached to a pendant. Use a plain alternative.",
+      "blueprint_id": "BP10",
+      "expected": {
+        "forbidden_required_profile_ids": [
+          "clothing_bail_connector_selected"
+        ],
+        "optional_retrieval_cannot_override_negation": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q031",
+      "kind": "explicit_relation_en",
+      "request": "Derby eyelet facings are stitched on top of the shoe vamp",
+      "blueprint_id": "BP11",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_oxford_derby_brogue_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_oxford_derby_brogue_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q032",
+      "kind": "explicit_relation_ko",
+      "request": "뱀프 위에 연결된 더비 아이렛 페이싱",
+      "blueprint_id": "BP11",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_oxford_derby_brogue_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_oxford_derby_brogue_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q033",
+      "kind": "negated_relation_en",
+      "request": "Do not add this feature: Derby eyelet facings are stitched on top of the shoe vamp. Use a plain alternative.",
+      "blueprint_id": "BP11",
+      "expected": {
+        "forbidden_required_profile_ids": [
+          "clothing_oxford_derby_brogue_selected"
+        ],
+        "optional_retrieval_cannot_override_negation": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q034",
+      "kind": "explicit_relation_en",
+      "request": "a separate dongjeong strip follows the edge of the jeogori collar",
+      "blueprint_id": "BP12",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_jeogori_parts_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_jeogori_parts_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q035",
+      "kind": "explicit_relation_ko",
+      "request": "저고리 깃에 얹힌 별도의 동정",
+      "blueprint_id": "BP12",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_jeogori_parts_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_jeogori_parts_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q036",
+      "kind": "negated_relation_en",
+      "request": "Do not add this feature: a separate dongjeong strip follows the edge of the jeogori collar. Use a plain alternative.",
+      "blueprint_id": "BP12",
+      "expected": {
+        "forbidden_required_profile_ids": [
+          "clothing_jeogori_parts_selected"
+        ],
+        "optional_retrieval_cannot_override_negation": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q037",
+      "kind": "explicit_relation_en",
+      "request": "a norigae hangs from the goreum with a cord knot ornament and tassel",
+      "blueprint_id": "BP13",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_norigae_attachment_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_norigae_attachment_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q038",
+      "kind": "explicit_relation_ko",
+      "request": "고름에 매달린 노리개의 연결",
+      "blueprint_id": "BP13",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_norigae_attachment_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_norigae_attachment_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q039",
+      "kind": "negated_relation_en",
+      "request": "Do not add this feature: a norigae hangs from the goreum with a cord knot ornament and tassel. Use a plain alternative.",
+      "blueprint_id": "BP13",
+      "expected": {
+        "forbidden_required_profile_ids": [
+          "clothing_norigae_attachment_selected"
+        ],
+        "optional_retrieval_cannot_override_negation": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q040",
+      "kind": "explicit_relation_en",
+      "request": "a kimono wraps wearer-left over wearer-right and is secured by an obi",
+      "blueprint_id": "BP14",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_kimono_wrap_obi_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_kimono_wrap_obi_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q041",
+      "kind": "explicit_relation_ko",
+      "request": "오비로 고정한 착용자 왼쪽 겹침 기모노",
+      "blueprint_id": "BP14",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_kimono_wrap_obi_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_kimono_wrap_obi_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q042",
+      "kind": "negated_relation_en",
+      "request": "Do not add this feature: a kimono wraps wearer-left over wearer-right and is secured by an obi. Use a plain alternative.",
+      "blueprint_id": "BP14",
+      "expected": {
+        "forbidden_required_profile_ids": [
+          "clothing_kimono_wrap_obi_selected"
+        ],
+        "optional_retrieval_cannot_override_negation": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q043",
+      "kind": "explicit_relation_en",
+      "request": "only the shirt center-front hem is tucked beneath the trouser waistband",
+      "blueprint_id": "BP15",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_tuck_relation_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_tuck_relation_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q044",
+      "kind": "explicit_relation_ko",
+      "request": "가운데 앞자락만 넣어 입은 셔츠",
+      "blueprint_id": "BP15",
+      "expected": {
+        "required_profile_ids": [
+          "clothing_tuck_relation_selected"
+        ],
+        "exposed_candidate_ids": [
+          "clt_tuck_relation_selected"
+        ],
+        "no_extra_owner": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q045",
+      "kind": "negated_relation_en",
+      "request": "Do not add this feature: only the shirt center-front hem is tucked beneath the trouser waistband. Use a plain alternative.",
+      "blueprint_id": "BP15",
+      "expected": {
+        "forbidden_required_profile_ids": [
+          "clothing_tuck_relation_selected"
+        ],
+        "optional_retrieval_cannot_override_negation": true
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q046",
+      "kind": "polysemy_gore",
+      "request": "A horror film still with gore, with no specified clothing panels.",
+      "expected": {
+        "forbidden_assumption": "clothing_gore_godet_bridge",
+        "rule": "Do not treat horror gore as a skirt panel or bra bridge."
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q047",
+      "kind": "polysemy_bail_veil",
+      "request": "머리에 쓰는 긴 베일을 드리운 사람.",
+      "expected": {
+        "forbidden_assumption": "clothing_bail_connector_selected",
+        "rule": "Do not require pendant connector hardware from the Korean veil label."
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q048",
+      "kind": "polysemy_oxford_fabric",
+      "request": "옥스퍼드 조직의 셔츠 원단 매크로.",
+      "expected": {
+        "forbidden_assumption": "clothing_oxford_derby_brogue_selected",
+        "rule": "Do not require Oxford or Derby footwear from fabric terminology."
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q049",
+      "kind": "polysemy_kimono_sleeve",
+      "request": "기모노 슬리브의 단색 블라우스.",
+      "expected": {
+        "forbidden_assumption": "clothing_kimono_wrap_obi_selected",
+        "rule": "Do not add a kimono garment or obi from the sleeve cut."
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q050",
+      "kind": "polysemy_jersey_fabric",
+      "request": "번호와 로고 없는 저지 니트 원단.",
+      "expected": {
+        "forbidden_assumption": "sports_uniform",
+        "rule": "Do not introduce a sports team or jersey number from a fabric term."
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q051",
+      "kind": "polysemy_cuff",
+      "request": "열린 형태의 금속 커프 팔찌.",
+      "expected": {
+        "forbidden_assumption": "shirt_cuff",
+        "rule": "Do not introduce a shirt sleeve cuff from a bracelet."
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q052",
+      "kind": "polysemy_stole",
+      "request": "어깨에 두른 폭넓은 패션 스톨.",
+      "expected": {
+        "forbidden_assumption": "liturgical_stole",
+        "rule": "Do not infer a religious vestment or wearer role."
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q053",
+      "kind": "material_satin",
+      "request": "폴리에스터 새틴의 광택 면을 보여줘.",
+      "expected": {
+        "forbidden_assumption": "silk_fiber",
+        "rule": "Preserve polyester metadata; satin appearance cannot establish silk."
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q054",
+      "kind": "broad_style",
+      "request": "편안한 캐주얼 옷차림.",
+      "expected": {
+        "forbidden_assumption": "all_clothing_blueprints",
+        "rule": "Do not make optional named structures hard requirements from this broad request."
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q055",
+      "kind": "optional_only",
+      "request": "Use a simple blouse; a retrieved optional pack happens to contain a sweetheart variant.",
+      "expected": {
+        "forbidden_assumption": "clothing_sweetheart_selected",
+        "rule": "Retrieval or selection alone cannot create requester evidence."
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q056",
+      "kind": "hidden_interfacing",
+      "request": "심지가 들어간 재킷을 정면에서 닫힌 채 촬영.",
+      "expected": {
+        "forbidden_assumption": "pixel_proof_interfacing",
+        "rule": "Preserve the specified hidden metadata; do not claim visible proof of internal construction."
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q057",
+      "kind": "no_people",
+      "request": "인물 없이 테이블 위에 놓인 펜던트와 체인 제품 사진.",
+      "expected": {
+        "forbidden_assumption": "human_wearer",
+        "rule": "Permit object-only relations where appropriate and do not add a wearer."
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q058",
+      "kind": "body_lock",
+      "request": "현재 체형을 유지하고 잘 맞는 테이퍼드 바지를 입힌다.",
+      "expected": {
+        "forbidden_assumption": "body_geometry_change",
+        "rule": "Change garment cut only; preserve locked body shape."
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q059",
+      "kind": "tuck_direction_lock",
+      "request": "셔츠의 착용자 오른쪽 앞자락만 넣고 왼쪽은 밖으로 둔다.",
+      "expected": {
+        "forbidden_assumption": "clothing_tuck_relation_selected",
+        "rule": "Do not substitute center-front tuck blueprint for the explicitly different right-only variant."
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q060",
+      "kind": "camera_lock",
+      "request": "목걸이 뒤 클라스프가 가려진 구도를 유지해줘.",
+      "expected": {
+        "forbidden_assumption": "forced_macro_view",
+        "rule": "Do not override locked composition to force a research test view."
+      },
+      "state": "planned_not_executed"
+    },
+    {
+      "id": "Q061",
+      "kind": "regional_variant",
+      "request": "케바야의 지역 변형을 아직 정하지 않은 패션 연구.",
+      "expected": {
+        "forbidden_assumption": "universal_three_brooches",
+        "rule": "Do not harden a Straits three-kerosang example into a universal kebaya definition."
+      },
+      "state": "planned_not_executed"
+    }
+  ],
+  "pixel_arms": [
+    {
+      "id": "PX01",
+      "blueprint_id": "BP02",
+      "request_seed": "두 곡선과 중앙 골이 보이는 스위트하트 넥라인",
+      "frozen_request_and_authorial_core": "author independently and freeze before opening candidate data in the generation turn",
+      "gates": [
+        {
+          "id": "vo_clt_sweetheart_paired_lobes",
+          "description": "Inspect the declared relation at native resolution: the bodice upper edge forms two rounded arcs. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        },
+        {
+          "id": "vo_clt_sweetheart_center_dip",
+          "description": "Inspect the declared relation at native resolution: the two curved arcs meet at a visible central dip. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        }
+      ],
+      "prerequisite": "definition and variant closed; source hash fixed; observed routing and pack exposure/adoption",
+      "first_generation_calls": 1,
+      "retries_for_primary_comparison": 0,
+      "source_image_pixels": "not_reviewed_in_this_research",
+      "metrics": {
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "prompt_contract": "not_tested",
+        "pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      },
+      "source_and_prompt_bytes_must_be_saved": true,
+      "required_connections_must_be_visible_in_test_setup": true
+    },
+    {
+      "id": "PX02",
+      "blueprint_id": "BP04",
+      "request_seed": "상부는 풍성하고 손목으로 좁아지는 기고 소매",
+      "frozen_request_and_authorial_core": "author independently and freeze before opening candidate data in the generation turn",
+      "gates": [
+        {
+          "id": "vo_clt_puff_gigot_upper_volume",
+          "description": "Inspect the declared relation at native resolution: the sleeve has clear fabric fullness around the shoulder and upper arm. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        },
+        {
+          "id": "vo_clt_puff_gigot_lower_taper",
+          "description": "Inspect the declared relation at native resolution: the same sleeve narrows around the forearm and wrist. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        }
+      ],
+      "prerequisite": "definition and variant closed; source hash fixed; observed routing and pack exposure/adoption",
+      "first_generation_calls": 1,
+      "retries_for_primary_comparison": 0,
+      "source_image_pixels": "not_reviewed_in_this_research",
+      "metrics": {
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "prompt_contract": "not_tested",
+        "pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      },
+      "source_and_prompt_bytes_must_be_saved": true,
+      "required_connections_must_be_visible_in_test_setup": true
+    },
+    {
+      "id": "PX03",
+      "blueprint_id": "BP05",
+      "request_seed": "몸판 패널을 연결하는 프린세스 곡선 봉제",
+      "frozen_request_and_authorial_core": "author independently and freeze before opening candidate data in the generation turn",
+      "gates": [
+        {
+          "id": "vo_clt_princess_dart_panel_connection",
+          "description": "Inspect the declared relation at native resolution: a continuous curved seam joins two distinct bodice fabric panels. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        }
+      ],
+      "prerequisite": "definition and variant closed; source hash fixed; observed routing and pack exposure/adoption",
+      "first_generation_calls": 1,
+      "retries_for_primary_comparison": 0,
+      "source_image_pixels": "not_reviewed_in_this_research",
+      "metrics": {
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "prompt_contract": "not_tested",
+        "pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      },
+      "source_and_prompt_bytes_must_be_saved": true,
+      "required_connections_must_be_visible_in_test_setup": true
+    },
+    {
+      "id": "PX04",
+      "blueprint_id": "BP06",
+      "request_seed": "절개 입구를 감싸는 단일 웰트",
+      "frozen_request_and_authorial_core": "author independently and freeze before opening candidate data in the generation turn",
+      "gates": [
+        {
+          "id": "vo_clt_pocket_patch_welt_seam_welt_mouth",
+          "description": "Inspect the declared relation at native resolution: a narrow fabric welt lies along the boundary of a visible slit opening. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        }
+      ],
+      "prerequisite": "definition and variant closed; source hash fixed; observed routing and pack exposure/adoption",
+      "first_generation_calls": 1,
+      "retries_for_primary_comparison": 0,
+      "source_image_pixels": "not_reviewed_in_this_research",
+      "metrics": {
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "prompt_contract": "not_tested",
+        "pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      },
+      "source_and_prompt_bytes_must_be_saved": true,
+      "required_connections_must_be_visible_in_test_setup": true
+    },
+    {
+      "id": "PX05",
+      "blueprint_id": "BP07",
+      "request_seed": "몸판 사이에 삽입된 돌출 파이핑",
+      "frozen_request_and_authorial_core": "author independently and freeze before opening candidate data in the generation turn",
+      "gates": [
+        {
+          "id": "vo_clt_piping_binding_welt_piping_seam",
+          "description": "Inspect the declared relation at native resolution: a narrow rounded piping ridge projects from the joining seam between two panels. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        }
+      ],
+      "prerequisite": "definition and variant closed; source hash fixed; observed routing and pack exposure/adoption",
+      "first_generation_calls": 1,
+      "retries_for_primary_comparison": 0,
+      "source_image_pixels": "not_reviewed_in_this_research",
+      "metrics": {
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "prompt_contract": "not_tested",
+        "pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      },
+      "source_and_prompt_bytes_must_be_saved": true,
+      "required_connections_must_be_visible_in_test_setup": true
+    },
+    {
+      "id": "PX06",
+      "blueprint_id": "BP08",
+      "request_seed": "옷 몸판의 세로 보닝 채널",
+      "frozen_request_and_authorial_core": "author independently and freeze before opening candidate data in the generation turn",
+      "gates": [
+        {
+          "id": "vo_clt_bra_wire_boning_channel_owner",
+          "description": "Inspect the declared relation at native resolution: separate narrow vertical channels are visible in the garment bodice. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        }
+      ],
+      "prerequisite": "definition and variant closed; source hash fixed; observed routing and pack exposure/adoption",
+      "first_generation_calls": 1,
+      "retries_for_primary_comparison": 0,
+      "source_image_pixels": "not_reviewed_in_this_research",
+      "metrics": {
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "prompt_contract": "not_tested",
+        "pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      },
+      "source_and_prompt_bytes_must_be_saved": true,
+      "required_connections_must_be_visible_in_test_setup": true
+    },
+    {
+      "id": "PX07",
+      "blueprint_id": "BP09",
+      "request_seed": "방향이 반전되며 어긋나는 헤링본 조직",
+      "frozen_request_and_authorial_core": "author independently and freeze before opening candidate data in the generation turn",
+      "gates": [
+        {
+          "id": "vo_clt_twill_herringbone_diagonal_reversal",
+          "description": "Inspect the declared relation at native resolution: opposing diagonal yarn ridges reverse direction in neighboring bands. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        },
+        {
+          "id": "vo_clt_twill_herringbone_offset_join",
+          "description": "Inspect the declared relation at native resolution: the direction change contains a visible offset rather than a continuous chevron apex. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        }
+      ],
+      "prerequisite": "definition and variant closed; source hash fixed; observed routing and pack exposure/adoption",
+      "first_generation_calls": 1,
+      "retries_for_primary_comparison": 0,
+      "source_image_pixels": "not_reviewed_in_this_research",
+      "metrics": {
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "prompt_contract": "not_tested",
+        "pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      },
+      "source_and_prompt_bytes_must_be_saved": true,
+      "required_connections_must_be_visible_in_test_setup": true
+    },
+    {
+      "id": "PX08",
+      "blueprint_id": "BP10",
+      "request_seed": "체인이 통과하는 펜던트 연결 고리",
+      "frozen_request_and_authorial_core": "author independently and freeze before opening candidate data in the generation turn",
+      "gates": [
+        {
+          "id": "vo_clt_bail_connector_bail_pendant",
+          "description": "Inspect the declared relation at native resolution: a small bail is visibly attached at the top of the pendant. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        },
+        {
+          "id": "vo_clt_bail_connector_chain_loop",
+          "description": "Inspect the declared relation at native resolution: the necklace chain visibly passes through the bail opening. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        }
+      ],
+      "prerequisite": "definition and variant closed; source hash fixed; observed routing and pack exposure/adoption",
+      "first_generation_calls": 1,
+      "retries_for_primary_comparison": 0,
+      "source_image_pixels": "not_reviewed_in_this_research",
+      "metrics": {
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "prompt_contract": "not_tested",
+        "pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      },
+      "source_and_prompt_bytes_must_be_saved": true,
+      "required_connections_must_be_visible_in_test_setup": true
+    },
+    {
+      "id": "PX09",
+      "blueprint_id": "BP11",
+      "request_seed": "뱀프 위에 연결된 더비 아이렛 페이싱",
+      "frozen_request_and_authorial_core": "author independently and freeze before opening candidate data in the generation turn",
+      "gates": [
+        {
+          "id": "vo_clt_oxford_derby_brogue_facings_owner",
+          "description": "Inspect the declared relation at native resolution: the eyelet-bearing facings are visibly joined on top of the vamp. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        }
+      ],
+      "prerequisite": "definition and variant closed; source hash fixed; observed routing and pack exposure/adoption",
+      "first_generation_calls": 1,
+      "retries_for_primary_comparison": 0,
+      "source_image_pixels": "not_reviewed_in_this_research",
+      "metrics": {
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "prompt_contract": "not_tested",
+        "pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      },
+      "source_and_prompt_bytes_must_be_saved": true,
+      "required_connections_must_be_visible_in_test_setup": true
+    },
+    {
+      "id": "PX10",
+      "blueprint_id": "BP12",
+      "request_seed": "저고리 깃에 얹힌 별도의 동정",
+      "frozen_request_and_authorial_core": "author independently and freeze before opening candidate data in the generation turn",
+      "gates": [
+        {
+          "id": "vo_clt_jeogori_parts_dongjeong_collar",
+          "description": "Inspect the declared relation at native resolution: a distinct narrow strip follows and is attached to the jeogori collar edge. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        }
+      ],
+      "prerequisite": "definition and variant closed; source hash fixed; observed routing and pack exposure/adoption",
+      "first_generation_calls": 1,
+      "retries_for_primary_comparison": 0,
+      "source_image_pixels": "not_reviewed_in_this_research",
+      "metrics": {
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "prompt_contract": "not_tested",
+        "pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      },
+      "source_and_prompt_bytes_must_be_saved": true,
+      "required_connections_must_be_visible_in_test_setup": true
+    },
+    {
+      "id": "PX11",
+      "blueprint_id": "BP13",
+      "request_seed": "고름에 매달린 노리개의 연결",
+      "frozen_request_and_authorial_core": "author independently and freeze before opening candidate data in the generation turn",
+      "gates": [
+        {
+          "id": "vo_clt_norigae_attachment_upper_attachment",
+          "description": "Inspect the declared relation at native resolution: the norigae upper connector is visibly attached to the goreum. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        },
+        {
+          "id": "vo_clt_norigae_attachment_hanging_order",
+          "description": "Inspect the declared relation at native resolution: the cord continues through the selected knot and ornament to the hanging tassel. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        }
+      ],
+      "prerequisite": "definition and variant closed; source hash fixed; observed routing and pack exposure/adoption",
+      "first_generation_calls": 1,
+      "retries_for_primary_comparison": 0,
+      "source_image_pixels": "not_reviewed_in_this_research",
+      "metrics": {
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "prompt_contract": "not_tested",
+        "pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      },
+      "source_and_prompt_bytes_must_be_saved": true,
+      "required_connections_must_be_visible_in_test_setup": true
+    },
+    {
+      "id": "PX12",
+      "blueprint_id": "BP14",
+      "request_seed": "오비로 고정한 착용자 왼쪽 겹침 기모노",
+      "frozen_request_and_authorial_core": "author independently and freeze before opening candidate data in the generation turn",
+      "gates": [
+        {
+          "id": "vo_clt_kimono_wrap_obi_wrap_direction",
+          "description": "Inspect the declared relation at native resolution: the wearer-left front panel lies over the wearer-right front panel. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        },
+        {
+          "id": "vo_clt_kimono_wrap_obi_obi_waist",
+          "description": "Inspect the declared relation at native resolution: a separate obi sash encircles and visually secures the kimono at the waist. A nearby substitute, printed imitation or occluded connection does not satisfy this gate.",
+          "review_scale": "native",
+          "partial_is_fail": true
+        }
+      ],
+      "prerequisite": "definition and variant closed; source hash fixed; observed routing and pack exposure/adoption",
+      "first_generation_calls": 1,
+      "retries_for_primary_comparison": 0,
+      "source_image_pixels": "not_reviewed_in_this_research",
+      "metrics": {
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "prompt_contract": "not_tested",
+        "pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      },
+      "source_and_prompt_bytes_must_be_saved": true,
+      "required_connections_must_be_visible_in_test_setup": true
+    }
+  ]
+}

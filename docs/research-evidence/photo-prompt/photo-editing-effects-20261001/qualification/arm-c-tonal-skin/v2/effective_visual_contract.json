@@ -1,0 +1,267 @@
+{
+  "enabled": true,
+  "contract_version": "photo-visual-obligations/v1",
+  "scope": "request_only",
+  "strict_gate_set": true,
+  "obligations": [
+    {
+      "id": "pe_red_object_splash_relation",
+      "category": "scoped_photographic_editing_effect",
+      "activation": {
+        "source": "composer_opt_in",
+        "scope": "request_only",
+        "source_intent_ids": []
+      },
+      "composition_instruction": "Realize this visible property on its declared owner: one declared red object retains its red color Realize this visible property on its declared owner: the rest of the picture is achromatic",
+      "component_semantics": {
+        "minimum_component_groups": 2,
+        "required_group_ids": [
+          "component_1",
+          "component_2"
+        ],
+        "groups": [
+          {
+            "id": "component_1",
+            "any_terms": [
+              "one declared red object retains its red color"
+            ]
+          },
+          {
+            "id": "component_2",
+            "any_terms": [
+              "the rest of the picture is achromatic"
+            ]
+          }
+        ]
+      },
+      "prompt_binding": {
+        "composed_field": "visual_obligation_evidence",
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase"
+        ],
+        "minimum_distinct_evidence_phrases": 2,
+        "prompt_evidence_must_be_literal": true,
+        "maximum_pairwise_content_token_overlap_ratio": 0.82,
+        "forbidden_filler_phrases": [
+          "visible evidence",
+          "visual evidence",
+          "required cue",
+          "prompt phrase"
+        ]
+      },
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "one declared red object retains its red color"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "the rest of the picture is achromatic"
+          ]
+        }
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "render_gates": [
+        {
+          "id": "vo_pe_red_object_splash_relation_1",
+          "review_scale": "both",
+          "description": "one declared red object retains its red color. Inspect its declared owner in the native image; partial or substituted evidence fails."
+        },
+        {
+          "id": "vo_pe_red_object_splash_relation_2",
+          "review_scale": "both",
+          "description": "the rest of the picture is achromatic. Inspect its declared owner in the native image; partial or substituted evidence fails."
+        }
+      ],
+      "reject_substitutes": [
+        "Selective Color CMYK 조절과 구분; 흑백의 임의 소품 추가는 오답"
+      ]
+    },
+    {
+      "id": "pe_lifted_black_floor_relation",
+      "category": "scoped_photographic_editing_effect",
+      "activation": {
+        "source": "composer_opt_in",
+        "scope": "request_only",
+        "source_intent_ids": []
+      },
+      "composition_instruction": "Realize this visible property on its declared owner: dark image tones are lifted to visible gray Realize this visible property on its declared owner: dark subject information remains readable",
+      "component_semantics": {
+        "minimum_component_groups": 2,
+        "required_group_ids": [
+          "component_1",
+          "component_2"
+        ],
+        "groups": [
+          {
+            "id": "component_1",
+            "any_terms": [
+              "dark image tones are lifted to visible gray"
+            ]
+          },
+          {
+            "id": "component_2",
+            "any_terms": [
+              "dark subject information remains readable"
+            ]
+          }
+        ]
+      },
+      "prompt_binding": {
+        "composed_field": "visual_obligation_evidence",
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase"
+        ],
+        "minimum_distinct_evidence_phrases": 2,
+        "prompt_evidence_must_be_literal": true,
+        "maximum_pairwise_content_token_overlap_ratio": 0.82,
+        "forbidden_filler_phrases": [
+          "visible evidence",
+          "visual evidence",
+          "required cue",
+          "prompt phrase"
+        ]
+      },
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "dark image tones are lifted to visible gray"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "dark subject information remains readable"
+          ]
+        }
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "render_gates": [
+        {
+          "id": "vo_pe_lifted_black_floor_relation_1",
+          "review_scale": "both",
+          "description": "dark image tones are lifted to visible gray. Inspect its declared owner in the native image; partial or substituted evidence fails."
+        },
+        {
+          "id": "vo_pe_lifted_black_floor_relation_2",
+          "review_scale": "both",
+          "description": "dark subject information remains readable. Inspect its declared owner in the native image; partial or substituted evidence fails."
+        }
+      ],
+      "reject_substitutes": [
+        "국부 광막·단순 전체 노출 증가·장면의 검은 재질과 구분"
+      ]
+    },
+    {
+      "id": "pe_texture_preserving_tone_evening_relation",
+      "category": "scoped_photographic_editing_effect",
+      "activation": {
+        "source": "composer_opt_in",
+        "scope": "request_only",
+        "source_intent_ids": []
+      },
+      "composition_instruction": "Realize this visible property on its declared owner: skin color transitions remain locally even Realize this visible property on its declared owner: fine skin texture remains visible without facial-geometry alteration",
+      "component_semantics": {
+        "minimum_component_groups": 2,
+        "required_group_ids": [
+          "component_1",
+          "component_2"
+        ],
+        "groups": [
+          {
+            "id": "component_1",
+            "any_terms": [
+              "skin color transitions remain locally even"
+            ]
+          },
+          {
+            "id": "component_2",
+            "any_terms": [
+              "fine skin texture remains visible without facial-geometry alteration"
+            ]
+          }
+        ]
+      },
+      "prompt_binding": {
+        "composed_field": "visual_obligation_evidence",
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase"
+        ],
+        "minimum_distinct_evidence_phrases": 2,
+        "prompt_evidence_must_be_literal": true,
+        "maximum_pairwise_content_token_overlap_ratio": 0.82,
+        "forbidden_filler_phrases": [
+          "visible evidence",
+          "visual evidence",
+          "required cue",
+          "prompt phrase"
+        ]
+      },
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "skin color transitions remain locally even"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "fine skin texture remains visible without facial-geometry alteration"
+          ]
+        }
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "render_gates": [
+        {
+          "id": "vo_pe_texture_preserving_tone_evening_relation_1",
+          "review_scale": "native",
+          "description": "skin color transitions remain locally even. Inspect its declared owner in the native image; partial or substituted evidence fails."
+        },
+        {
+          "id": "vo_pe_texture_preserving_tone_evening_relation_2",
+          "review_scale": "native",
+          "description": "fine skin texture remains visible without facial-geometry alteration. Inspect its declared owner in the native image; partial or substituted evidence fails."
+        }
+      ],
+      "reject_substitutes": [
+        "피부색 교체·얼굴 형상 변경·균일 플라스틱 피부·화장품 도포로 대체하지 않음"
+      ]
+    }
+  ],
+  "required_hard_gates": [
+    "vo_pe_red_object_splash_relation_1",
+    "vo_pe_red_object_splash_relation_2",
+    "vo_pe_lifted_black_floor_relation_1",
+    "vo_pe_lifted_black_floor_relation_2",
+    "vo_pe_texture_preserving_tone_evening_relation_1",
+    "vo_pe_texture_preserving_tone_evening_relation_2"
+  ],
+  "selected_visual_concept_ids": [
+    "visual-concept:pe_red_object_splash_relation",
+    "visual-concept:pe_lifted_black_floor_relation",
+    "visual-concept:pe_texture_preserving_tone_evening_relation"
+  ]
+}

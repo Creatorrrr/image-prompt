@@ -1,0 +1,1094 @@
+{
+  "schema_version": "photo-prompt-research-extension/v1",
+  "auto_optional_policy": "authored_filters_only",
+  "slots": {
+    "grain_profile": [
+      {
+        "id": "edit_research_fine_midtonal_grain",
+        "ko": "중간톤의 미세한 필름형 입자",
+        "en": "fine film-like image-plane grain in midtones",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "fine film-like image-plane grain in midtones"
+        ],
+        "concept_units": [
+          "fine film-like image-plane grain",
+          "midtone detail remains readable"
+        ],
+        "affected_dimensions": [
+          "style"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_coarse_film_grain",
+        "ko": "거친 필름형 영상 입자",
+        "en": "coarse film-like image-plane grain",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "coarse film-like image-plane grain"
+        ],
+        "concept_units": [
+          "coarse film-like image-plane grain",
+          "grain does not become object damage"
+        ],
+        "affected_dimensions": [
+          "style"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_digital_luma_noise",
+        "ko": "영상 밝기 성분의 디지털 노이즈",
+        "en": "digital luminance noise on the image plane",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "digital luminance noise on the image plane"
+        ],
+        "concept_units": [
+          "brightness-only digital image-plane speckle",
+          "scene material remains distinct"
+        ],
+        "affected_dimensions": [
+          "style"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_digital_chroma_noise",
+        "ko": "영상 색 성분의 디지털 노이즈",
+        "en": "digital chroma noise on the image plane",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "digital chroma noise on the image plane"
+        ],
+        "concept_units": [
+          "colored digital image-plane speckle",
+          "speckle does not recolor the subject"
+        ],
+        "affected_dimensions": [
+          "style",
+          "color"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          },
+          {
+            "dimension": "color",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      }
+    ],
+    "quality": [
+      {
+        "id": "edit_research_jpeg_edge_blocks",
+        "ko": "고대비 경계의 JPEG형 블록 흔적",
+        "en": "JPEG-like block artifacts near high-contrast image edges",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "JPEG-like block artifacts near high-contrast image edges"
+        ],
+        "concept_units": [
+          "block-pattern image artifacts near contrast edges",
+          "blocks do not become scene objects"
+        ],
+        "affected_dimensions": [
+          "style"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_highlight_local_bloom",
+        "ko": "밝은 부분 주위의 국부 블룸",
+        "en": "localized luminous bloom around bright image regions",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "localized luminous bloom around bright image regions"
+        ],
+        "concept_units": [
+          "localized bloom around bright image regions",
+          "non-highlight subject detail remains readable"
+        ],
+        "affected_dimensions": [
+          "style"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_neutral_optical_diffusion",
+        "ko": "색중립적 광학 확산형 하이라이트 번짐",
+        "en": "neutral-colored optical-diffusion-like highlight spread",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "neutral-colored optical-diffusion-like highlight spread"
+        ],
+        "concept_units": [
+          "neutral-colored optical-diffusion-like highlight spread",
+          "recognizable subject details through the softening"
+        ],
+        "affected_dimensions": [
+          "style"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_veiling_contrast_loss",
+        "ko": "광원 쪽 베일형 대비 감소",
+        "en": "veiling-flare-like contrast reduction on the light-facing image region",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "veiling-flare-like contrast reduction on the light-facing image region"
+        ],
+        "concept_units": [
+          "light-facing image region loses contrast under a luminous veil",
+          "no discrete geometric ghost is required"
+        ],
+        "affected_dimensions": [
+          "style"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_discrete_flare_ghosts",
+        "ko": "광원과 정렬된 분리된 플레어 고스트",
+        "en": "discrete flare-ghost shapes aligned with a bright light source",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "discrete flare-ghost shapes aligned with a bright light source"
+        ],
+        "concept_units": [
+          "discrete flare-ghost shapes aligned with a bright source",
+          "the ghosts are optical image marks, not scene objects"
+        ],
+        "affected_dimensions": [
+          "style"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_sharpening_edge_halo",
+        "ko": "선명화 경계의 밝고 어두운 링",
+        "en": "sharpening-like bright and dark edge halos",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "sharpening-like bright and dark edge halos"
+        ],
+        "concept_units": [
+          "paired bright and dark halos along sharpened image edges",
+          "halos do not imply emitted light"
+        ],
+        "affected_dimensions": [
+          "style"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_readable_microdetail",
+        "ko": "과한 테두리 없이 읽히는 미세 세부",
+        "en": "readable fine image detail without exaggerated edge halos",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "readable fine image detail without exaggerated edge halos"
+        ],
+        "concept_units": [
+          "readable fine image detail",
+          "no exaggerated edge halos"
+        ],
+        "affected_dimensions": [
+          "style"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      }
+    ],
+    "film_emulation": [
+      {
+        "id": "edit_research_red_edge_halation",
+        "ko": "필름형 하이라이트 경계의 적주황 번짐",
+        "en": "film-like red-orange halo confined to bright contrast edges",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "film-like red-orange halo confined to bright contrast edges"
+        ],
+        "concept_units": [
+          "red-orange film-like halo at bright contrast edges",
+          "unrelated dark edges remain unaffected"
+        ],
+        "affected_dimensions": [
+          "style",
+          "color"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          },
+          {
+            "dimension": "color",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_light_leak_patch",
+        "ko": "장면 광원과 분리된 필름형 빛샘 패치",
+        "en": "film-like light-leak patch independent of a scene-light halo",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "film-like light-leak patch independent of a scene-light halo"
+        ],
+        "concept_units": [
+          "film-like irregular light-leak patch",
+          "patch does not need a scene-light origin"
+        ],
+        "affected_dimensions": [
+          "style",
+          "color"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          },
+          {
+            "dimension": "color",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      }
+    ],
+    "color_grading": [
+      {
+        "id": "edit_research_lifted_black_floor",
+        "ko": "열린 암부와 올라간 검정 바닥",
+        "en": "lifted black floor with readable dark image tones",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "lifted black floor with readable dark image tones"
+        ],
+        "concept_units": [
+          "lifted black floor across dark image tones",
+          "dark subject information remains readable"
+        ],
+        "affected_dimensions": [
+          "color",
+          "style"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "color",
+            "target": "*",
+            "property": "*"
+          },
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_gentle_highlight_rolloff",
+        "ko": "밝은 계조의 완만한 전이",
+        "en": "gentle highlight roll-off through a gradual bright tonal transition",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "gentle highlight roll-off through a gradual bright tonal transition"
+        ],
+        "concept_units": [
+          "gradual bright tonal transition into highlights",
+          "visible highlight shape without a spatial glow requirement"
+        ],
+        "affected_dimensions": [
+          "color",
+          "style"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "color",
+            "target": "*",
+            "property": "*"
+          },
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_muted_chroma",
+        "ko": "형태·명암을 유지한 절제된 색",
+        "en": "restrained image chroma with readable tonal structure",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "restrained image chroma with readable tonal structure"
+        ],
+        "concept_units": [
+          "restrained image chroma",
+          "readable tonal structure"
+        ],
+        "affected_dimensions": [
+          "color"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "color",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_warm_highlight_cool_shadow",
+        "ko": "따뜻한 하이라이트와 차가운 그림자의 분리",
+        "en": "warm highlight tint and cool shadow tint in separate tonal regions",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "warm highlight tint and cool shadow tint in separate tonal regions"
+        ],
+        "concept_units": [
+          "warm tint in bright tonal regions",
+          "cool tint in shadow tonal regions"
+        ],
+        "affected_dimensions": [
+          "color"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "color",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_bright_open_tones",
+        "ko": "밝고 열린 계조와 남은 하이라이트 형태",
+        "en": "bright open image tones with readable highlight shape",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "bright open image tones with readable highlight shape"
+        ],
+        "concept_units": [
+          "bright open image tones",
+          "readable highlight shape"
+        ],
+        "affected_dimensions": [
+          "color",
+          "style"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "color",
+            "target": "*",
+            "property": "*"
+          },
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      }
+    ],
+    "color": [
+      {
+        "id": "edit_research_cobalt_cream_tonal_duotone",
+        "ko": "계조에 대응한 코발트·크림 두 색 룩",
+        "en": "cobalt-to-cream two-color tonal mapping",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "cobalt-to-cream two-color tonal mapping"
+        ],
+        "concept_units": [
+          "dark image tones mapped to cobalt",
+          "bright image tones mapped to cream"
+        ],
+        "affected_dimensions": [
+          "color",
+          "style"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "color",
+            "target": "*",
+            "property": "*"
+          },
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_selected_red_color_splash",
+        "ko": "지정한 붉은 물체만 색을 유지",
+        "en": "selected red object remains colored in an otherwise achromatic image",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "selected red object remains colored in an otherwise achromatic image"
+        ],
+        "concept_units": [
+          "selected red object remains colored",
+          "the rest of the image is achromatic"
+        ],
+        "affected_dimensions": [
+          "color"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "color",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      }
+    ],
+    "skin_finish": [
+      {
+        "id": "edit_research_texture_preserving_tone_evening",
+        "ko": "피부 미세결을 유지한 국부 톤 정리",
+        "en": "local skin-tone evening with readable fine skin texture",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "local skin-tone evening with readable fine skin texture"
+        ],
+        "concept_units": [
+          "local skin-tone evening",
+          "readable fine skin texture without facial-geometry alteration"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      }
+    ],
+    "focus": [
+      {
+        "id": "edit_research_extended_near_far_focus",
+        "ko": "가까운 부분과 먼 부분에 걸친 선명도",
+        "en": "extended near-to-far readable focus across the subject",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "extended near-to-far readable focus across the subject"
+        ],
+        "concept_units": [
+          "near and far subject regions both remain in readable focus",
+          "subject geometry remains continuous across focus transitions"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "camera",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_narrow_focus_transition",
+        "ko": "선명한 대상과 점진적으로 흐려지는 깊이",
+        "en": "selected subject in sharp focus with gradual depth-dependent defocus",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "selected subject in sharp focus with gradual depth-dependent defocus"
+        ],
+        "concept_units": [
+          "selected subject in sharp focus",
+          "gradual depth-dependent defocus away from the focus plane"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "camera",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      }
+    ],
+    "motion": [
+      {
+        "id": "edit_research_tracked_subject_background_trace",
+        "ko": "추적된 대상은 읽히고 배경은 방향성 흔적",
+        "en": "tracked moving subject remains readable against directional background streaks",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "tracked moving subject remains readable against directional background streaks"
+        ],
+        "concept_units": [
+          "tracked moving subject remains readable",
+          "background streaks follow the tracking direction"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "camera",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      {
+        "id": "edit_research_flash_core_shutter_trace",
+        "ko": "플래시로 읽히는 대상과 긴 셔터의 주변 흔적",
+        "en": "readable flash-lit subject core with ambient slow-shutter traces",
+        "weight": 1.0,
+        "tags": [
+          "editing_effect",
+          "image_finish"
+        ],
+        "keywords": [
+          "readable flash-lit subject core with ambient slow-shutter traces"
+        ],
+        "concept_units": [
+          "readable flash-lit subject core",
+          "ambient slow-shutter traces remain visible"
+        ],
+        "affected_dimensions": [
+          "camera",
+          "lighting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "camera",
+            "target": "*",
+            "property": "*"
+          },
+          {
+            "dimension": "lighting",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      }
+    ]
+  },
+  "visual_semantics": [
+    {
+      "id": "edit_research_bundle_bright_local_bloom",
+      "primary_visual_proposition": "bright local bloom",
+      "candidate_only": true,
+      "candidate_ids": [
+        "edit_research_bright_open_tones",
+        "edit_research_gentle_highlight_rolloff",
+        "edit_research_highlight_local_bloom"
+      ],
+      "candidate_slots": {
+        "edit_research_bright_open_tones": "color_grading",
+        "edit_research_gentle_highlight_rolloff": "color_grading",
+        "edit_research_highlight_local_bloom": "quality"
+      },
+      "component_groups": [
+        {
+          "id": "edit_research_bright_open_tones_1",
+          "visible_evidence": [
+            "bright open image tones"
+          ]
+        },
+        {
+          "id": "edit_research_bright_open_tones_2",
+          "visible_evidence": [
+            "readable highlight shape"
+          ]
+        },
+        {
+          "id": "edit_research_gentle_highlight_rolloff_1",
+          "visible_evidence": [
+            "gradual bright tonal transition into highlights"
+          ]
+        },
+        {
+          "id": "edit_research_gentle_highlight_rolloff_2",
+          "visible_evidence": [
+            "visible highlight shape without a spatial glow requirement"
+          ]
+        },
+        {
+          "id": "edit_research_highlight_local_bloom_1",
+          "visible_evidence": [
+            "localized bloom around bright image regions"
+          ]
+        },
+        {
+          "id": "edit_research_highlight_local_bloom_2",
+          "visible_evidence": [
+            "non-highlight subject detail remains readable"
+          ]
+        }
+      ],
+      "hard_profile_ids": [
+        "highlight_rolloff_tone_response"
+      ],
+      "confusion_boundaries": [
+        "Highlight spread remains local while subject information and bright tonal transitions remain readable."
+      ],
+      "source_keywords": [
+        "bright local bloom"
+      ],
+      "relations": []
+    },
+    {
+      "id": "edit_research_bundle_film_edge_and_grain",
+      "primary_visual_proposition": "film edge and grain",
+      "candidate_only": true,
+      "candidate_ids": [
+        "edit_research_red_edge_halation",
+        "edit_research_fine_midtonal_grain",
+        "edit_research_gentle_highlight_rolloff"
+      ],
+      "candidate_slots": {
+        "edit_research_red_edge_halation": "film_emulation",
+        "edit_research_fine_midtonal_grain": "grain_profile",
+        "edit_research_gentle_highlight_rolloff": "color_grading"
+      },
+      "component_groups": [
+        {
+          "id": "edit_research_red_edge_halation_1",
+          "visible_evidence": [
+            "red-orange film-like halo at bright contrast edges"
+          ]
+        },
+        {
+          "id": "edit_research_red_edge_halation_2",
+          "visible_evidence": [
+            "unrelated dark edges remain unaffected"
+          ]
+        },
+        {
+          "id": "edit_research_fine_midtonal_grain_1",
+          "visible_evidence": [
+            "fine film-like image-plane grain"
+          ]
+        },
+        {
+          "id": "edit_research_fine_midtonal_grain_2",
+          "visible_evidence": [
+            "midtone detail remains readable"
+          ]
+        },
+        {
+          "id": "edit_research_gentle_highlight_rolloff_1",
+          "visible_evidence": [
+            "gradual bright tonal transition into highlights"
+          ]
+        },
+        {
+          "id": "edit_research_gentle_highlight_rolloff_2",
+          "visible_evidence": [
+            "visible highlight shape without a spatial glow requirement"
+          ]
+        }
+      ],
+      "hard_profile_ids": [
+        "film_halation_highlight_edge_relation"
+      ],
+      "confusion_boundaries": [
+        "Film-like colored edge halo and image-plane grain have different spatial owners."
+      ],
+      "source_keywords": [
+        "film edge and grain"
+      ],
+      "relations": []
+    },
+    {
+      "id": "edit_research_bundle_neutral_diffusion_detail",
+      "primary_visual_proposition": "neutral diffusion detail",
+      "candidate_only": true,
+      "candidate_ids": [
+        "edit_research_neutral_optical_diffusion",
+        "edit_research_readable_microdetail"
+      ],
+      "candidate_slots": {
+        "edit_research_neutral_optical_diffusion": "quality",
+        "edit_research_readable_microdetail": "quality"
+      },
+      "component_groups": [
+        {
+          "id": "edit_research_neutral_optical_diffusion_1",
+          "visible_evidence": [
+            "neutral-colored optical-diffusion-like highlight spread"
+          ]
+        },
+        {
+          "id": "edit_research_neutral_optical_diffusion_2",
+          "visible_evidence": [
+            "recognizable subject details through the softening"
+          ]
+        },
+        {
+          "id": "edit_research_readable_microdetail_1",
+          "visible_evidence": [
+            "readable fine image detail"
+          ]
+        },
+        {
+          "id": "edit_research_readable_microdetail_2",
+          "visible_evidence": [
+            "no exaggerated edge halos"
+          ]
+        }
+      ],
+      "hard_profile_ids": [
+        "diffusion_filter_highlight_halation"
+      ],
+      "confusion_boundaries": [
+        "Optical-diffusion-like spread coexists with readable subject detail; it need not be a red film halo."
+      ],
+      "source_keywords": [
+        "neutral diffusion detail"
+      ],
+      "relations": []
+    },
+    {
+      "id": "edit_research_bundle_digital_flash_trace",
+      "primary_visual_proposition": "digital flash trace",
+      "candidate_only": true,
+      "candidate_ids": [
+        "edit_research_digital_luma_noise",
+        "edit_research_flash_core_shutter_trace",
+        "edit_research_jpeg_edge_blocks"
+      ],
+      "candidate_slots": {
+        "edit_research_digital_luma_noise": "grain_profile",
+        "edit_research_flash_core_shutter_trace": "motion",
+        "edit_research_jpeg_edge_blocks": "quality"
+      },
+      "component_groups": [
+        {
+          "id": "edit_research_digital_luma_noise_1",
+          "visible_evidence": [
+            "brightness-only digital image-plane speckle"
+          ]
+        },
+        {
+          "id": "edit_research_digital_luma_noise_2",
+          "visible_evidence": [
+            "scene material remains distinct"
+          ]
+        },
+        {
+          "id": "edit_research_flash_core_shutter_trace_1",
+          "visible_evidence": [
+            "readable flash-lit subject core"
+          ]
+        },
+        {
+          "id": "edit_research_flash_core_shutter_trace_2",
+          "visible_evidence": [
+            "ambient slow-shutter traces remain visible"
+          ]
+        },
+        {
+          "id": "edit_research_jpeg_edge_blocks_1",
+          "visible_evidence": [
+            "block-pattern image artifacts near contrast edges"
+          ]
+        },
+        {
+          "id": "edit_research_jpeg_edge_blocks_2",
+          "visible_evidence": [
+            "blocks do not become scene objects"
+          ]
+        }
+      ],
+      "hard_profile_ids": [],
+      "confusion_boundaries": [
+        "Digital image-plane noise, flash-lit readability and ambient traces remain distinct; this does not identify a sensor type."
+      ],
+      "source_keywords": [
+        "digital flash trace"
+      ],
+      "relations": []
+    },
+    {
+      "id": "edit_research_bundle_muted_lifted_black_finish",
+      "primary_visual_proposition": "muted lifted black finish",
+      "candidate_only": true,
+      "candidate_ids": [
+        "edit_research_muted_chroma",
+        "edit_research_lifted_black_floor",
+        "edit_research_fine_midtonal_grain"
+      ],
+      "candidate_slots": {
+        "edit_research_muted_chroma": "color_grading",
+        "edit_research_lifted_black_floor": "color_grading",
+        "edit_research_fine_midtonal_grain": "grain_profile"
+      },
+      "component_groups": [
+        {
+          "id": "edit_research_muted_chroma_1",
+          "visible_evidence": [
+            "restrained image chroma"
+          ]
+        },
+        {
+          "id": "edit_research_muted_chroma_2",
+          "visible_evidence": [
+            "readable tonal structure"
+          ]
+        },
+        {
+          "id": "edit_research_lifted_black_floor_1",
+          "visible_evidence": [
+            "lifted black floor across dark image tones"
+          ]
+        },
+        {
+          "id": "edit_research_lifted_black_floor_2",
+          "visible_evidence": [
+            "dark subject information remains readable"
+          ]
+        },
+        {
+          "id": "edit_research_fine_midtonal_grain_1",
+          "visible_evidence": [
+            "fine film-like image-plane grain"
+          ]
+        },
+        {
+          "id": "edit_research_fine_midtonal_grain_2",
+          "visible_evidence": [
+            "midtone detail remains readable"
+          ]
+        }
+      ],
+      "hard_profile_ids": [],
+      "confusion_boundaries": [
+        "Restrained color, lifted dark tones and grain form an optional look without forcing all nostalgic images into this recipe."
+      ],
+      "source_keywords": [
+        "muted lifted black finish"
+      ],
+      "relations": []
+    },
+    {
+      "id": "edit_research_bundle_tonal_duotone_detail",
+      "primary_visual_proposition": "tonal duotone detail",
+      "candidate_only": true,
+      "candidate_ids": [
+        "edit_research_cobalt_cream_tonal_duotone",
+        "edit_research_readable_microdetail"
+      ],
+      "candidate_slots": {
+        "edit_research_cobalt_cream_tonal_duotone": "color",
+        "edit_research_readable_microdetail": "quality"
+      },
+      "component_groups": [
+        {
+          "id": "edit_research_cobalt_cream_tonal_duotone_1",
+          "visible_evidence": [
+            "dark image tones mapped to cobalt"
+          ]
+        },
+        {
+          "id": "edit_research_cobalt_cream_tonal_duotone_2",
+          "visible_evidence": [
+            "bright image tones mapped to cream"
+          ]
+        },
+        {
+          "id": "edit_research_readable_microdetail_1",
+          "visible_evidence": [
+            "readable fine image detail"
+          ]
+        },
+        {
+          "id": "edit_research_readable_microdetail_2",
+          "visible_evidence": [
+            "no exaggerated edge halos"
+          ]
+        }
+      ],
+      "hard_profile_ids": [
+        "cr_duotone",
+        "cr_gradient_mapping"
+      ],
+      "confusion_boundaries": [
+        "Two colors map to tonal image regions while subject details remain readable; two differently colored scene objects are insufficient."
+      ],
+      "source_keywords": [
+        "tonal duotone detail"
+      ],
+      "relations": []
+    }
+  ]
+}

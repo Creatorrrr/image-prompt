@@ -1,0 +1,236 @@
+{
+  "contract_version": "photo-editing-arm-a-v2-pre-render-tests/v1",
+  "pack_id": "e55857b2035930d7",
+  "frozen_core_unchanged": true,
+  "advisory_assertions": [
+    {
+      "assertion_id": "film_grain_test",
+      "dimension": "style",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "axes": {
+        "texture_family": "film_grain",
+        "texture_scale": "fine_irregular",
+        "target_region": [
+          "flat_blue_shadows",
+          "cream_wall_midtones"
+        ]
+      },
+      "evidence": {
+        "grain_phrase": "Fine irregular film grain is plainly visible in the flat blue doorway shadows and cream wall midtones"
+      },
+      "affected_dimensions": [
+        "style"
+      ]
+    },
+    {
+      "assertion_id": "edge_halation_test",
+      "dimension": "style",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "axes": {
+        "optical_effect": "edge_halation",
+        "color_behavior": "red_orange",
+        "scope": "bright_task_bulb_boundary_against_dark_beam"
+      },
+      "evidence": {
+        "halation_phrase": "A narrow red-orange edge halo follows the brightest task-bulb outline against the dark roof beam"
+      },
+      "affected_dimensions": [
+        "style",
+        "color"
+      ]
+    },
+    {
+      "assertion_id": "highlight_rolloff_test",
+      "dimension": "lighting",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "axes": {
+        "tonal_response": "soft_highlight_rolloff",
+        "target_material": [
+          "skin",
+          "glaze",
+          "paper"
+        ],
+        "texture_behavior": "preserved_through_bright_transition"
+      },
+      "evidence": {
+        "rolloff_phrase": "Highlights on her cheek, the cup glaze and crumpled paper roll gently into pale tones, retaining smooth gradients and material texture"
+      },
+      "affected_dimensions": [
+        "lighting",
+        "style"
+      ]
+    }
+  ],
+  "selected_bundle_id": "bundle:pe_bundle_film_edge_grain_rolloff",
+  "selected_bundle_six_components": [
+    {
+      "id": "component_1",
+      "concept_units": [
+        "red-orange halo hugs bright-dark image boundaries"
+      ],
+      "minimum_realizations": 1,
+      "literal_evidence": "A narrow red-orange edge halo follows the brightest task-bulb outline against the dark roof beam"
+    },
+    {
+      "id": "component_2",
+      "concept_units": [
+        "unrelated dark edges remain free of the colored halo"
+      ],
+      "minimum_realizations": 1,
+      "literal_evidence": "Door-jamb and radio edges retain their neutral dark contours"
+    },
+    {
+      "id": "component_3",
+      "concept_units": [
+        "fine irregular image-plane grain is visible in midtones"
+      ],
+      "minimum_realizations": 1,
+      "literal_evidence": "Here, fine irregular image-plane grain is visible in midtones as densely resolved tiny brightness flecks"
+    },
+    {
+      "id": "component_4",
+      "concept_units": [
+        "subject material details remain distinct from the grain"
+      ],
+      "minimum_realizations": 1,
+      "literal_evidence": "Subject material details remain distinct from the grain: hair strands, cotton fibers and the cup seam stay legible"
+    },
+    {
+      "id": "component_5",
+      "concept_units": [
+        "bright image tones approach white gradually"
+      ],
+      "minimum_realizations": 1,
+      "literal_evidence": "Highlights on her cheek, the cup glaze and crumpled paper roll gently into pale tones, retaining smooth gradients and material texture"
+    },
+    {
+      "id": "component_6",
+      "concept_units": [
+        "highlight form remains readable without requiring a spatial halo"
+      ],
+      "minimum_realizations": 1,
+      "literal_evidence": "Smooth bright gradation follows each material's form inside crisp surface boundaries"
+    }
+  ],
+  "selected_member_relations": {
+    "slot:film_emulation:pe_red_edge_halation": {
+      "effect_owner": "A narrow red-orange edge halo follows the brightest task-bulb outline against the dark roof beam"
+    },
+    "slot:grain_profile:pe_fine_midtonal_grain": {
+      "effect_owner": "Here, fine irregular image-plane grain is visible in midtones as densely resolved tiny brightness flecks"
+    },
+    "slot:color_grading:pe_gentle_rolloff": {
+      "effect_owner": "Highlights on her cheek, the cup glaze and crumpled paper roll gently into pale tones, retaining smooth gradients and material texture"
+    }
+  },
+  "selected_optional_visual_concept_id": "visual-concept:pe_fine_midtonal_grain_relation",
+  "promoted_profile": {
+    "id": "pe_fine_midtonal_grain_relation",
+    "category": "scoped_photographic_editing_effect",
+    "activation": {
+      "source": "composer_opt_in",
+      "scope": "request_only",
+      "source_intent_ids": []
+    },
+    "composition_instruction": "Realize this visible property on its declared owner: fine irregular image-plane grain is visible in midtones Realize this visible property on its declared owner: subject material details remain distinct from the grain",
+    "component_semantics": {
+      "minimum_component_groups": 2,
+      "required_group_ids": [
+        "component_1",
+        "component_2"
+      ],
+      "groups": [
+        {
+          "id": "component_1",
+          "any_terms": [
+            "fine irregular image-plane grain is visible in midtones"
+          ]
+        },
+        {
+          "id": "component_2",
+          "any_terms": [
+            "subject material details remain distinct from the grain"
+          ]
+        }
+      ]
+    },
+    "prompt_binding": {
+      "composed_field": "visual_obligation_evidence",
+      "required_evidence_fields": [
+        "component_1_phrase",
+        "component_2_phrase"
+      ],
+      "minimum_distinct_evidence_phrases": 2,
+      "prompt_evidence_must_be_literal": true,
+      "maximum_pairwise_content_token_overlap_ratio": 0.82,
+      "forbidden_filler_phrases": [
+        "visible evidence",
+        "visual evidence",
+        "required cue",
+        "prompt phrase"
+      ]
+    },
+    "evidence_requirements": {
+      "component_1_phrase": {
+        "min_content_words": 3,
+        "must_mention_any": [
+          "fine irregular image-plane grain is visible in midtones"
+        ]
+      },
+      "component_2_phrase": {
+        "min_content_words": 3,
+        "must_mention_any": [
+          "subject material details remain distinct from the grain"
+        ]
+      }
+    },
+    "runtime_expression": {
+      "default_mode": "definition_with_optional_label",
+      "prompt_label_terms": [],
+      "forbidden_prompt_terms": [],
+      "runtime_forbidden_labels": []
+    },
+    "render_gates": [
+      {
+        "id": "vo_pe_fine_midtonal_grain_relation_1",
+        "review_scale": "native",
+        "description": "fine irregular image-plane grain is visible in midtones. Inspect its declared owner in the native image; partial or substituted evidence fails."
+      },
+      {
+        "id": "vo_pe_fine_midtonal_grain_relation_2",
+        "review_scale": "native",
+        "description": "subject material details remain distinct from the grain. Inspect its declared owner in the native image; partial or substituted evidence fails."
+      }
+    ],
+    "reject_substitutes": [
+      "고정 흰 점·모공·모래·디지털 chroma noise로 치환하지 않음"
+    ]
+  },
+  "test_regions": {
+    "grain": [
+      "smooth shaded blue jamb",
+      "plain dry cream-painted wall"
+    ],
+    "halation": [
+      "entire exposed bulb contour against nearly black beam",
+      "unrelated neutral radio/jamb edges"
+    ],
+    "rolloff": [
+      "cheek",
+      "cup glaze",
+      "crumpled wrapping paper"
+    ]
+  },
+  "partial_is_fail": true,
+  "strict_rule": "All six bundle components, both selected fine-grain profile gates, the original three advisory effect tests, and all physical/reference checks must pass in this one saved native image. Grain cannot be rain/material marks; red edge cannot be a metal-shade rim.",
+  "user_acceptance": "pending"
+}

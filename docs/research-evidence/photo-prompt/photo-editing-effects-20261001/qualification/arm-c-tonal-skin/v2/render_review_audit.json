@@ -1,0 +1,50 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "b8ac119256abc2dd",
+  "contract_version": "photo-visual-obligations/v1",
+  "qualification_status": "failed_technical_hard_gates",
+  "technical_qualified": false,
+  "representative_eligible": false,
+  "required_hard_gate_count": 11,
+  "required_hard_gates": [
+    "vo_pe_red_object_splash_relation_1",
+    "vo_pe_red_object_splash_relation_2",
+    "vo_pe_lifted_black_floor_relation_1",
+    "vo_pe_lifted_black_floor_relation_2",
+    "vo_pe_texture_preserving_tone_evening_relation_1",
+    "vo_pe_texture_preserving_tone_evening_relation_2",
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ],
+  "source_character_response_contract_sha256": null,
+  "effective_visual_contract_sha256": "371aaea627e9282c50f89fd188b26a1c590b80fe6869e38722b29bdc178fb7cd",
+  "selected_visual_concept_ids": [
+    "visual-concept:pe_red_object_splash_relation",
+    "visual-concept:pe_lifted_black_floor_relation",
+    "visual-concept:pe_texture_preserving_tone_evening_relation"
+  ],
+  "failed_hard_gates": [
+    {
+      "gate": "vo_pe_red_object_splash_relation_2",
+      "status": "fail",
+      "evidence": "PARTIAL maps to FAIL: the environment and person are desaturated but broadly warm/sepia rather than achromatic. Native cheeks, paper, shirt and wood retain a systematic red-over-blue tint. Outside the generous prop mask, median RGB channel spread is 7/255, mean RGB 110.27/106.14/103.55, and 88.36% of pixels exceed spread 3. The true-grayscale remainder does not coexist with the red carrier."
+    },
+    {
+      "gate": "vo_pe_lifted_black_floor_relation_1",
+      "status": "fail",
+      "evidence": "PARTIAL maps to FAIL: larger dark surfaces are gray and some shadow separation improves, but the deepest root troughs still read near black rather than a consistently visible soft-charcoal floor; dark shelf recesses also sink well below the main charcoal level. The native root crop has p01 luminance 21.82 and p05 28.07, with 13.39% below 35, and the shelf crop p01 24.07. These diagnostics corroborate the visible compressed lower endpoint; the authorial approximate 45/255 guide is not treated as a requester lock or independent numeric gate."
+    }
+  ],
+  "schema_failures": [],
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "No requesting-user acceptance or comparison judgment has been received."
+  },
+  "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+}

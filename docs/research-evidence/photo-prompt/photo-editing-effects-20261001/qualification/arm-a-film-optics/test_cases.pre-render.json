@@ -1,0 +1,70 @@
+{
+  "contract_version": "arm-a-pre-render-test-ledger/v1",
+  "authority": "agent-authored advisory testing, not requester-prescribed effects",
+  "freeze_phase": "prepack",
+  "seed": 3964569183912157136,
+  "concept": "Rainy blue-hour harbor repair booth: a reference-guided fictional adult woman unwraps a mended glazed cup for its waiting owner.",
+  "baseline_prompt_sha256": "8914fc79e06aec5e56192d28cbe6f24a05b830d99be3e529e89e7840b0239bef",
+  "strict_rule": "PASS only when all three effects and reference-scope/physical gates pass in native pixels; PARTIAL is FAIL; blocked image generation is unscored.",
+  "tests": [
+    {
+      "id": "film_grain_test",
+      "keywords": [
+        "fine film grain"
+      ],
+      "expected": "Fine irregular luminance texture visible across flat blue doorway shadows and cream wall midtones, distinct from scene material and compression blocks.",
+      "positive_regions": [
+        "blue doorway shadows",
+        "cream wall midtones"
+      ],
+      "confusions": [
+        "digital speckle",
+        "JPEG blocks",
+        "wall surface texture"
+      ],
+      "partial_rule": "Only material texture or no inspectable grain means FAIL."
+    },
+    {
+      "id": "edge_halation_test",
+      "keywords": [
+        "edge halation"
+      ],
+      "expected": "Narrow red-orange halo localized along the bright task-bulb boundary against dark beam; nearby midtone edges stay comparatively crisp.",
+      "positive_regions": [
+        "task-bulb edge",
+        "dark roof beam around bulb"
+      ],
+      "confusions": [
+        "large global haze",
+        "unfocused bokeh alone",
+        "warm object pigment"
+      ],
+      "partial_rule": "General warm light without a localized edge halo means FAIL."
+    },
+    {
+      "id": "highlight_rolloff_test",
+      "keywords": [
+        "soft highlight roll-off"
+      ],
+      "expected": "Skin, glaze and wrapping retain smooth tonal transition and texture toward bright pale regions.",
+      "positive_regions": [
+        "cheek highlight",
+        "cup glaze",
+        "paper highlight"
+      ],
+      "confusions": [
+        "clipped flat white patch",
+        "beauty skin smoothing",
+        "globally low exposure"
+      ],
+      "partial_rule": "If only one material preserves a transition while others visibly clip, PARTIAL therefore FAIL."
+    }
+  ],
+  "physical_gates": [
+    "Cup base contacts supporting right palm",
+    "Left fingertips touch loose wrapping",
+    "Both hand/forearm owners readable",
+    "Torso support and reach plausible"
+  ],
+  "reference_gate": "Visible dark bob and wispy fringe, broad face/eye/lip appearance guidance remains reasonably represented for fictional adult; no identity equivalence is scored."
+}

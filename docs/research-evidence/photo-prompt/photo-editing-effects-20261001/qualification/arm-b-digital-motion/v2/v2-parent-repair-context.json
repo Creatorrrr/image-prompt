@@ -1,0 +1,145 @@
+{
+  "contract_version": "photo-editing-retest-whitelist/v1",
+  "parent_revision": "v1",
+  "child_revision": "v2",
+  "source_core_file_sha256": "5ab98bf7feb4f651121ed76a1aeb473044183d86a3ef82bb435d072834d1dfc9",
+  "source_normalized_core_sha256": "e9e467f64fdfec75dd76dbbdda68d354590de8dcbb6cd6c05d8a424b20fd3a10",
+  "source_intent_lock_sha256": "254aaa065c032f996efe2644504b71ca03e91bfe9dfcb76386a3c0a1abcbe308",
+  "same_frozen_core": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-b-digital-motion/authorial_core.json",
+  "same_creative_controls": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-b-digital-motion/creative_controls.json",
+  "same_request_envelope": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-b-digital-motion/request_envelope.json",
+  "baseline_prompt_en": "A photographic scene of a fictional adult woman in a candid moment at an almost empty night roller rink beside the skate-return counter. Her face and hair are guided by the attached portrait: a short dark bob with fine parted bangs, a softly rounded facial contour, dark eyes and naturally pink lips. She glides left to right through her last slow lap, turning her head toward her rink-edge friend who is taking this photograph. A small, unguarded smile and the loose swing of her open slate satin blouson make the farewell feel close and spontaneous; an ivory fitted knit tank and dark tapered trousers belong naturally to the evening. Both quad-skate wheel sets meet the smooth floor, feet slightly staggered beneath softly bent knees, with her left arm held loosely outward for balance. The return counter and stacked rental skates mark where her glide is carrying her. Photograph her full body from nearby at chest height, with her face large enough to read and both skates inside the frame. The main impression is a compact-digital direct-flash snapshot: hard frontal flash makes a crisp bright edge on her cheek and jacket folds, with a short dark floor shadow behind her skates and a dimmer rink. Slow-sync flash freezes one sharp body while a faint continuous exposure trail follows her moving sleeve and wheels toward screen left; fixed rails and counter edges stay still. Fine digital luma noise and scattered tiny green-magenta chroma speckles are visibly strongest across the dark wall and shaded jacket folds, fading into the bright face. Keep skin texture, satin reflections and floor contact readable.",
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "A photographic scene"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a fictional adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "in a candid moment"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Her face and hair are guided by the attached portrait"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere",
+      "format"
+    ]
+  },
+  "agent_authored_advisory_test_assertions": [
+    {
+      "assertion_id": "authorial_direct_flash",
+      "dimension": "lighting",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "affected_dimensions": [
+        "lighting"
+      ],
+      "axes": {
+        "treatment": "hard frontal direct flash",
+        "observable_consequence": [
+          "bright cheek and satin edge",
+          "short floor shadow",
+          "dimmer background"
+        ]
+      },
+      "evidence": {
+        "flash_phrase": "hard frontal flash makes a crisp bright edge on her cheek and jacket folds",
+        "shadow_phrase": "a short dark floor shadow behind her skates and a dimmer rink"
+      }
+    },
+    {
+      "assertion_id": "authorial_slow_sync_trace",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "affected_dimensions": [
+        "camera",
+        "timing"
+      ],
+      "axes": {
+        "treatment": "slow-sync flash movement trace",
+        "direction": "screen left behind the rightward moving subject",
+        "carrier": [
+          "moving sleeve",
+          "skate wheels"
+        ],
+        "static_support": "fixed rails and counter edges"
+      },
+      "evidence": {
+        "sharp_subject_phrase": "Slow-sync flash freezes one sharp body",
+        "trace_phrase": "a faint continuous exposure trail follows her moving sleeve and wheels toward screen left",
+        "static_phrase": "fixed rails and counter edges stay still"
+      }
+    },
+    {
+      "assertion_id": "authorial_digital_noise",
+      "dimension": "style",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "affected_dimensions": [
+        "style"
+      ],
+      "axes": {
+        "treatment": "digital luma and chroma noise",
+        "luma": "fine uneven brightness texture",
+        "chroma": "tiny green-magenta speckles",
+        "distribution": "stronger in dark wall and shaded jacket folds than bright face"
+      },
+      "evidence": {
+        "noise_phrase": "Fine digital luma noise and scattered tiny green-magenta chroma speckles",
+        "distribution_phrase": "visibly strongest across the dark wall and shaded jacket folds, fading into the bright face"
+      }
+    }
+  ],
+  "own_reported_defects": [
+    "Direct flash and shutter-time sleeve/wheel traces passed.",
+    "Dark-wall noise was visible but shaded jacket folds lacked the same image-plane luma/chroma speckle."
+  ],
+  "effective_selected_v1_opt_in_profiles": [],
+  "authorial_repair_boundary": "Refine only open properties to realize the same observations. All test effects remain agent-authored advisory assertions; retain the requesting user anchors and reference-use scope. Never invent requesting-user definitions."
+}

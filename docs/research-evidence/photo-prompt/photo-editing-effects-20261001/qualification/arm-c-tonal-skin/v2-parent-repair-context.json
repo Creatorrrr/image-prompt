@@ -1,0 +1,143 @@
+{
+  "contract_version": "photo-editing-retest-whitelist/v1",
+  "parent_revision": "v1",
+  "child_revision": "v2",
+  "source_core_file_sha256": "411436e1cf894d91af673f4c235a24e9e8cced4b3d8efbe40f6e7a53ef30687d",
+  "source_normalized_core_sha256": "a7aff6a3462a015b8a5c985d13dbdc48160493ef9a67b395ea477a0e8fcbff51",
+  "source_intent_lock_sha256": "7a26d10876c1f9502c89381a46295016eb8a2787739e3e1daad485a50eb6446a",
+  "same_frozen_core": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-c-tonal-skin/authorial_core.json",
+  "same_creative_controls": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-c-tonal-skin/creative_controls.json",
+  "same_request_envelope": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-c-tonal-skin/request_envelope.json",
+  "baseline_prompt_en": "A complex photographic scene holds one coherent moment with a fictional adult woman in a theater prop repair room just after the final curtain. The supplied image guides her visible face and hair appearance: a short dark bob, airy divided bangs, soft oval face, large dark almond eyes, small nose and full lips. Across a scarred worktable, she briefly looks up toward the photographer with an unforced, slightly parted-lip expression while finishing a small repair. Her dark satin blouse has an open neckline and sleeves pushed back from the wrists. Both forearms rest lightly on the tabletop; her right fingertips rest on a domed red enamel paperweight seated fully on the curling corner of a hand-painted scenery plan, while her left palm spreads its opposite edge flat. A previously rolled portion still arcs upward behind the flattened corner. Curtain folds and rolled scenery lean against the distant wall, placing this private working pause after a public performance. A chest-height three-quarter view from the opposite side shows her face, both connected arms, the paper and weight together; her face and working hands lead the frame. Render the entire picture in true grayscale except the single red enamel paperweight, which retains saturated crimson. The darkest hair and shelving tones sit at soft charcoal gray with readable strand and wood detail, while highlights roll smoothly. Local dodge-and-burn evens the larger cheek tones while fine pores and tiny natural skin variations remain clearly visible. Broad side window light shapes her face and the table; the background recedes gently while her eyes, cheeks and fingertips remain crisp.",
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "A complex photographic scene"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a fictional adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "one coherent moment"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "The supplied image guides her visible face and hair appearance"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "identity",
+      "count",
+      "age",
+      "role",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "agent_authored_advisory_test_assertions": [
+    {
+      "assertion_id": "agent_test_color_splash",
+      "dimension": "color",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "affected_dimensions": [
+        "color"
+      ],
+      "axes": {
+        "effect": "selective_color",
+        "carrier": "single_red_enamel_paperweight",
+        "remaining_picture": "true_grayscale"
+      },
+      "evidence": {
+        "visible_effect": "Render the entire picture in true grayscale except the single red enamel paperweight, which retains saturated crimson."
+      }
+    },
+    {
+      "assertion_id": "agent_test_lifted_blacks",
+      "dimension": "color",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "affected_dimensions": [
+        "color",
+        "lighting"
+      ],
+      "axes": {
+        "effect": "lifted_dark_tones",
+        "shadow_floor": "soft_charcoal",
+        "retained_detail": "hair_strands_and_shelf_wood"
+      },
+      "evidence": {
+        "visible_effect": "The darkest hair and shelving tones sit at soft charcoal gray with readable strand and wood detail, while highlights roll smoothly."
+      }
+    },
+    {
+      "assertion_id": "agent_test_skin_detail",
+      "dimension": "appearance",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "affected_dimensions": [
+        "appearance",
+        "color"
+      ],
+      "axes": {
+        "effect": "local_dodge_burn_tone_evening",
+        "skin_detail": "fine_pores_and_natural_variation",
+        "view": "clearly_readable_cheeks"
+      },
+      "evidence": {
+        "visible_effect": "Local dodge-and-burn evens the larger cheek tones while fine pores and tiny natural skin variations remain clearly visible."
+      }
+    }
+  ],
+  "own_reported_defects": [
+    "Color splash retained unwanted warm tint beyond the red object.",
+    "Dark hair and shelf recesses stayed near black instead of a visibly lifted charcoal floor.",
+    "Skin detail/tone appearance passed.",
+    "Use the ordinary fastened cotton work shirt and neutral engaged expression from the safer second attempt."
+  ],
+  "effective_selected_v1_opt_in_profiles": [],
+  "authorial_repair_boundary": "Refine only open properties to realize the same observations. All test effects remain agent-authored advisory assertions; retain the requesting user anchors and reference-use scope. Never invent requesting-user definitions."
+}

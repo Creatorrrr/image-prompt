@@ -1,0 +1,200 @@
+{
+  "contract_version": "photo-editing-arm-a-v2-native-review/v1",
+  "pack_id": "e55857b2035930d7",
+  "reviewer": "independent_arm_a_native_pixel_review",
+  "reviewed_at": "2026-10-01T08:36:38.503259+00:00",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-a-film-optics/v2/image.native.png",
+  "result_sha256": "e5501d610039eaa3589d5ac7f1e74ea7475b75ec196b610da22dabb6656bf882",
+  "native_size": [
+    1237,
+    1272
+  ],
+  "pre_render_tests": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-a-film-optics/v2/test_cases.pre-render.json",
+  "partial_is_fail": true,
+  "original_effects": [
+    {
+      "id": "film_grain_test",
+      "status": "fail",
+      "evidence": "At native pixels the cream wall carries plaster mottling, seams and drawn marks, while the blue jamb carries irregular bright paint chips. Tiny image-plane brightness grain independently visible across these midtone planes is not established; rain remains external. Material marks cannot satisfy film grain.",
+      "review_scale": "native"
+    },
+    {
+      "id": "edge_halation_test",
+      "status": "fail",
+      "evidence": "A warm orange rim/glow follows portions of the exposed glass bulb rather than a metal shade, but nearly all of the luminous outline projects over the cream wall. The dark roof beam lies above the socket, not behind the bright bulb contour. The frozen bulb-against-dark-beam relation is only partially realized.",
+      "review_scale": "native"
+    },
+    {
+      "id": "highlight_rolloff_test",
+      "status": "pass",
+      "evidence": "The cheek changes smoothly from warm pale highlights to pink/beige skin while its form remains legible; cup-glaze highlights retain stipple and its vertical repaired seam; crumpled paper transitions from tan creases to pale warm facets without broad clipped white plates. All three declared materials show visible gradual bright transitions.",
+      "review_scale": "native"
+    }
+  ],
+  "selected_bundle_id": "bundle:pe_bundle_film_edge_grain_rolloff",
+  "selected_bundle_components": [
+    {
+      "id": "component_1",
+      "concept_units": [
+        "red-orange halo hugs bright-dark image boundaries"
+      ],
+      "minimum_realizations": 1,
+      "literal_evidence": "A narrow red-orange edge halo follows the brightest task-bulb outline against the dark roof beam",
+      "status": "fail",
+      "evidence": "A warm orange rim/glow follows portions of the exposed glass bulb rather than a metal shade, but nearly all of the luminous outline projects over the cream wall. The dark roof beam lies above the socket, not behind the bright bulb contour. The frozen bulb-against-dark-beam relation is only partially realized.",
+      "review_scale": "native",
+      "partial_is_fail": true
+    },
+    {
+      "id": "component_2",
+      "concept_units": [
+        "unrelated dark edges remain free of the colored halo"
+      ],
+      "minimum_realizations": 1,
+      "literal_evidence": "Door-jamb and radio edges retain their neutral dark contours",
+      "status": "pass",
+      "evidence": "The blue jamb contours and dark radio case/perforation edges do not carry a red-orange band. Orange diffusion is localized near the task bulb, not replicated over unrelated dark edges.",
+      "review_scale": "native",
+      "partial_is_fail": true
+    },
+    {
+      "id": "component_3",
+      "concept_units": [
+        "fine irregular image-plane grain is visible in midtones"
+      ],
+      "minimum_realizations": 1,
+      "literal_evidence": "Here, fine irregular image-plane grain is visible in midtones as densely resolved tiny brightness flecks",
+      "status": "fail",
+      "evidence": "At native pixels the cream wall carries plaster mottling, seams and drawn marks, while the blue jamb carries irregular bright paint chips. Tiny image-plane brightness grain independently visible across these midtone planes is not established; rain remains external. Material marks cannot satisfy film grain.",
+      "review_scale": "native",
+      "partial_is_fail": true
+    },
+    {
+      "id": "component_4",
+      "concept_units": [
+        "subject material details remain distinct from the grain"
+      ],
+      "minimum_realizations": 1,
+      "literal_evidence": "Subject material details remain distinct from the grain: hair strands, cotton fibers and the cup seam stay legible",
+      "status": "fail",
+      "evidence": "Hair strands, shirt folds and the repaired cup seam are legible, but the visible specks and mottle track painted/plaster/cotton surfaces. A distinct image-plane grain layer from which these material details remain separate is not established. The preserved-detail subcue is partial evidence only.",
+      "review_scale": "native",
+      "partial_is_fail": true
+    },
+    {
+      "id": "component_5",
+      "concept_units": [
+        "bright image tones approach white gradually"
+      ],
+      "minimum_realizations": 1,
+      "literal_evidence": "Highlights on her cheek, the cup glaze and crumpled paper roll gently into pale tones, retaining smooth gradients and material texture",
+      "status": "pass",
+      "evidence": "The cheek changes smoothly from warm pale highlights to pink/beige skin while its form remains legible; cup-glaze highlights retain stipple and its vertical repaired seam; crumpled paper transitions from tan creases to pale warm facets without broad clipped white plates. All three declared materials show visible gradual bright transitions.",
+      "review_scale": "native",
+      "partial_is_fail": true
+    },
+    {
+      "id": "component_6",
+      "concept_units": [
+        "highlight form remains readable without requiring a spatial halo"
+      ],
+      "minimum_realizations": 1,
+      "literal_evidence": "Smooth bright gradation follows each material's form inside crisp surface boundaries",
+      "status": "pass",
+      "evidence": "Cheek contours, the cup lip and repaired seam, and paper fold edges remain readable inside their own crisp boundaries. Their bright tone gradients follow surface form and do not require a colored spatial halo around those materials.",
+      "review_scale": "native",
+      "partial_is_fail": true
+    }
+  ],
+  "selected_member_relation_reviews": {
+    "slot:film_emulation:pe_red_edge_halation": {
+      "relation_id": "effect_owner",
+      "status": "fail",
+      "evidence": "A warm orange rim/glow follows portions of the exposed glass bulb rather than a metal shade, but nearly all of the luminous outline projects over the cream wall. The dark roof beam lies above the socket, not behind the bright bulb contour. The frozen bulb-against-dark-beam relation is only partially realized.",
+      "literal_prompt_evidence": "A narrow red-orange edge halo follows the brightest task-bulb outline against the dark roof beam"
+    },
+    "slot:grain_profile:pe_fine_midtonal_grain": {
+      "relation_id": "effect_owner",
+      "status": "fail",
+      "evidence": "At native pixels the cream wall carries plaster mottling, seams and drawn marks, while the blue jamb carries irregular bright paint chips. Tiny image-plane brightness grain independently visible across these midtone planes is not established; rain remains external. Material marks cannot satisfy film grain.",
+      "literal_prompt_evidence": "Here, fine irregular image-plane grain is visible in midtones as densely resolved tiny brightness flecks"
+    },
+    "slot:color_grading:pe_gentle_rolloff": {
+      "relation_id": "effect_owner",
+      "status": "pass",
+      "evidence": "The cheek changes smoothly from warm pale highlights to pink/beige skin while its form remains legible; cup-glaze highlights retain stipple and its vertical repaired seam; crumpled paper transitions from tan creases to pale warm facets without broad clipped white plates. All three declared materials show visible gradual bright transitions.",
+      "literal_prompt_evidence": "Highlights on her cheek, the cup glaze and crumpled paper roll gently into pale tones, retaining smooth gradients and material texture"
+    }
+  },
+  "selected_optional_profile_gates": {
+    "vo_pe_fine_midtonal_grain_relation_1": {
+      "status": "fail",
+      "evidence": "At native pixels the cream wall carries plaster mottling, seams and drawn marks, while the blue jamb carries irregular bright paint chips. Tiny image-plane brightness grain independently visible across these midtone planes is not established; rain remains external. Material marks cannot satisfy film grain.",
+      "review_scale": "native",
+      "partial_is_fail": true
+    },
+    "vo_pe_fine_midtonal_grain_relation_2": {
+      "status": "fail",
+      "evidence": "Hair strands, shirt folds and the repaired cup seam are legible, but the visible specks and mottle track painted/plaster/cotton surfaces. A distinct image-plane grain layer from which these material details remain separate is not established. The preserved-detail subcue is partial evidence only.",
+      "review_scale": "native",
+      "partial_is_fail": true
+    }
+  },
+  "physical_checks": {
+    "embodiment_body_ownership": {
+      "status": "pass",
+      "evidence": "The woman has one visible right supporting forearm/palm at the cup base and one left forearm/hand peeling paper; the foreground customer hand is separately attached to the customer at the bench.",
+      "review_scale": "native"
+    },
+    "embodiment_joint_chain_and_reach": {
+      "status": "pass",
+      "evidence": "Her right forearm connects through the rolled sleeve and bent elbow to the supporting palm; her left forearm reaches the pinching hand at the paper edge without an impossible crossing or disconnected joint.",
+      "review_scale": "native"
+    },
+    "embodiment_support_and_balance": {
+      "status": "pass",
+      "evidence": "Her visible torso stands behind the waist-high bench with the cup held close to the trunk over her upturned palm. Lower legs are outside the frame; no unsupported floating body or load is shown.",
+      "review_scale": "native"
+    },
+    "embodiment_contact_and_space": {
+      "status": "pass",
+      "evidence": "The pale cup base touches the upturned right palm and curved fingers; left fingertips pinch the brown paper beside the cup. Cup, paper and hands occupy compatible space and the customer hand rests on the workbench.",
+      "review_scale": "native"
+    },
+    "embodiment_visibility_and_projection": {
+      "status": "pass",
+      "evidence": "Face, both hands, enough of each forearm, upright cup, repaired seam and peeling-paper contact are visible without the important interaction being hidden by the bench or customer.",
+      "review_scale": "native"
+    }
+  },
+  "reference_scope": {
+    "status": "pass",
+    "scope": "visible_face_and_hair_guidance_for_fictional_adult",
+    "evidence": "The generated fictional adult has the reference-guided short dark bob with wispy bangs, brown eyes, rounded cheek appearance and soft lip shape. These are visible appearance cues only; no identity, biometric, body, ethnicity, personality or other trait conclusion is made.",
+    "original_source_preserved": true
+  },
+  "authorial_scene_observation": {
+    "mended_cup_and_paper_action": "pass",
+    "waiting_owner_context": "pass",
+    "evidence": "The cup seam is visible, right palm supports the cup, left fingertips lift the wrapping, and a customer profile plus bench-resting hand completes the exchange context. One customer hand is shown clearly; the second requested authorial staging hand is not visible. This is recorded as authorial drift, not silently promoted into a requester obligation."
+  },
+  "strict_all_of_outcome": "fail",
+  "original_effect_pass_count": 1,
+  "original_effect_total": 3,
+  "bundle_component_pass_count": 3,
+  "bundle_component_total": 6,
+  "selected_optional_profile_pass_count": 0,
+  "selected_optional_profile_total": 2,
+  "physical_pass_count": 5,
+  "physical_total": 5,
+  "reference_scope_pass": true,
+  "generation_status": "success",
+  "native_technical_qualification": "failed_active_visual_hard_gates",
+  "user_acceptance": "pending",
+  "parent_independent_review": {
+    "stage": "post_generation_only; not an authoring or prompt input",
+    "source": "root independent original pixel review",
+    "observations": "Cup support, paper, repair seam, body/bench relationship and bright material gradation were clear. Most luminous bulb outline is against cream wall; paint chips and surface mottle cannot substitute for image-plane grain.",
+    "agreement": "This separate review concurs with the independently observed failed grain owner distinction and incomplete bulb-dark-beam relation. It does not supply user acceptance."
+  }
+}

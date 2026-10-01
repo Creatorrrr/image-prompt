@@ -1,0 +1,1800 @@
+{
+  "schema_version": "clothing-profile-candidate-blueprints/research-v1",
+  "runtime_integrated": false,
+  "limits": [
+    "These proposals demonstrate component-level authoring using current contract fields. Full registry/loader validation, source-definition closure, candidate applicability, calibrated weight and request-context routing remain required.",
+    "This wrapper is a maintenance artifact and cannot be loaded as a runtime extension.",
+    "Broad family terms are not inserted as hard-trigger aliases in these blueprints."
+  ],
+  "blueprints": [
+    {
+      "id": "BP01",
+      "research_slug": "henley_placket",
+      "status": "research_blueprint_not_integrated",
+      "slot_proposal": "garment_detail",
+      "owner_entities": [
+        "shirt neckline",
+        "shirt front"
+      ],
+      "source_feature_check_required_before_promotion": true,
+      "candidate_draft": {
+        "id": "clt_henley_placket_selected",
+        "ko": "몸판 중간에서 끝나는 헨리 버튼 플래킷",
+        "en": "a Henley button placket ends partway down the shirt front",
+        "weight": 0.35,
+        "aliases": [
+          "몸판 중간에서 끝나는 헨리 버튼 플래킷"
+        ],
+        "keywords": [
+          "몸판 중간에서 끝나는 헨리 버튼 플래킷",
+          "a Henley button placket ends partway down the shirt front"
+        ],
+        "concept_units": [
+          "the short button placket begins at the neckline and stops within the front bodice"
+        ],
+        "relations": [
+          {
+            "id": "henley_placket_partway_down",
+            "type": "ends_within",
+            "subject": "Henley placket",
+            "object": "shirt front"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      },
+      "profile_draft": {
+        "id": "clothing_henley_placket_selected",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "exact_terms": [
+            "a Henley button placket ends partway down the shirt front",
+            "몸판 중간에서 끝나는 헨리 버튼 플래킷"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "requested_relation",
+                "any_terms": [
+                  "a Henley button placket ends partway down the shirt front",
+                  "몸판 중간에서 끝나는 헨리 버튼 플래킷"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "a Henley button placket ends partway down the shirt front",
+          "paraphrase_examples": [],
+          "contrast_examples": [
+            "긴 전면 버튼 여밈이나 칼라를 자동 추가하지 않는다."
+          ],
+          "claim_limits": [
+            "One selected visible variant; not a universal family definition.",
+            "Hidden material, function and wearer identity are not inferred."
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "partway_down",
+              "match_terms": [
+                "a Henley button placket ends partway down the shirt front",
+                "몸판 중간에서 끝나는 헨리 버튼 플래킷"
+              ],
+              "evidence_field": "partway_down_phrase",
+              "evidence_terms": [
+                "the short button placket begins at the neckline and stops within the front bodice"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: the short button placket begins at the neckline and stops within the front bodice",
+              "render_gate": {
+                "id": "vo_clt_henley_placket_partway_down",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: the short button placket begins at the neckline and stops within the front bodice. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            }
+          ]
+        }
+      },
+      "weight_note": "0.35 is a provisional review value, not a tuned selection weight.",
+      "qualification": {
+        "schema_subset": "passed_authored_components_hard_activation_candidate_relations_only",
+        "routing": "not_tested",
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "native_pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      }
+    },
+    {
+      "id": "BP02",
+      "research_slug": "sweetheart",
+      "status": "research_blueprint_not_integrated",
+      "slot_proposal": "garment_detail",
+      "owner_entities": [
+        "bodice upper edge"
+      ],
+      "source_feature_check_required_before_promotion": true,
+      "candidate_draft": {
+        "id": "clt_sweetheart_selected",
+        "ko": "두 곡선과 중앙 골이 보이는 스위트하트 넥라인",
+        "en": "a sweetheart bodice edge has two rounded lobes and a center dip",
+        "weight": 0.35,
+        "aliases": [
+          "두 곡선과 중앙 골이 보이는 스위트하트 넥라인"
+        ],
+        "keywords": [
+          "두 곡선과 중앙 골이 보이는 스위트하트 넥라인",
+          "a sweetheart bodice edge has two rounded lobes and a center dip"
+        ],
+        "concept_units": [
+          "the bodice upper edge forms two rounded arcs",
+          "the two curved arcs meet at a visible central dip"
+        ],
+        "relations": [
+          {
+            "id": "sweetheart_paired_lobes",
+            "type": "has_geometry",
+            "subject": "bodice neckline",
+            "object": "two rounded lobes"
+          },
+          {
+            "id": "sweetheart_center_dip",
+            "type": "has_geometry",
+            "subject": "bodice neckline",
+            "object": "a central dip"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      },
+      "profile_draft": {
+        "id": "clothing_sweetheart_selected",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "exact_terms": [
+            "a sweetheart bodice edge has two rounded lobes and a center dip",
+            "두 곡선과 중앙 골이 보이는 스위트하트 넥라인"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "requested_relation",
+                "any_terms": [
+                  "a sweetheart bodice edge has two rounded lobes and a center dip",
+                  "두 곡선과 중앙 골이 보이는 스위트하트 넥라인"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "a sweetheart bodice edge has two rounded lobes and a center dip",
+          "paraphrase_examples": [],
+          "contrast_examples": [
+            "하트 프린트 또는 깊은 V만으로 대체하지 않는다."
+          ],
+          "claim_limits": [
+            "One selected visible variant; not a universal family definition.",
+            "Hidden material, function and wearer identity are not inferred."
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "paired_lobes",
+              "match_terms": [
+                "a sweetheart bodice edge has two rounded lobes and a center dip",
+                "두 곡선과 중앙 골이 보이는 스위트하트 넥라인"
+              ],
+              "evidence_field": "paired_lobes_phrase",
+              "evidence_terms": [
+                "the bodice upper edge forms two rounded arcs"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: the bodice upper edge forms two rounded arcs",
+              "render_gate": {
+                "id": "vo_clt_sweetheart_paired_lobes",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: the bodice upper edge forms two rounded arcs. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            },
+            {
+              "id": "center_dip",
+              "match_terms": [
+                "a sweetheart bodice edge has two rounded lobes and a center dip",
+                "두 곡선과 중앙 골이 보이는 스위트하트 넥라인"
+              ],
+              "evidence_field": "center_dip_phrase",
+              "evidence_terms": [
+                "the two curved arcs meet at a visible central dip"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: the two curved arcs meet at a visible central dip",
+              "render_gate": {
+                "id": "vo_clt_sweetheart_center_dip",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: the two curved arcs meet at a visible central dip. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            }
+          ]
+        }
+      },
+      "weight_note": "0.35 is a provisional review value, not a tuned selection weight.",
+      "qualification": {
+        "schema_subset": "passed_authored_components_hard_activation_candidate_relations_only",
+        "routing": "not_tested",
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "native_pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      }
+    },
+    {
+      "id": "BP03",
+      "research_slug": "raglan_setin_drop",
+      "status": "research_blueprint_not_integrated",
+      "slot_proposal": "garment_detail",
+      "owner_entities": [
+        "shirt sleeve",
+        "shirt bodice"
+      ],
+      "source_feature_check_required_before_promotion": true,
+      "candidate_draft": {
+        "id": "clt_raglan_setin_drop_selected",
+        "ko": "목부터 겨드랑이로 이어진 래글런 봉제선",
+        "en": "raglan seams join the neckline to the underarm on the shirt",
+        "weight": 0.35,
+        "aliases": [
+          "목부터 겨드랑이로 이어진 래글런 봉제선"
+        ],
+        "keywords": [
+          "목부터 겨드랑이로 이어진 래글런 봉제선",
+          "raglan seams join the neckline to the underarm on the shirt"
+        ],
+        "concept_units": [
+          "a diagonal sleeve seam visibly continues from neckline to underarm"
+        ],
+        "relations": [
+          {
+            "id": "raglan_setin_drop_neck_underarm",
+            "type": "connects",
+            "subject": "raglan seam",
+            "object": "neckline and underarm"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      },
+      "profile_draft": {
+        "id": "clothing_raglan_setin_drop_selected",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "exact_terms": [
+            "raglan seams join the neckline to the underarm on the shirt",
+            "목부터 겨드랑이로 이어진 래글런 봉제선"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "requested_relation",
+                "any_terms": [
+                  "raglan seams join the neckline to the underarm on the shirt",
+                  "목부터 겨드랑이로 이어진 래글런 봉제선"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "raglan seams join the neckline to the underarm on the shirt",
+          "paraphrase_examples": [],
+          "contrast_examples": [
+            "소매 배색·넓은 어깨·드롭숄더로 대체하지 않는다."
+          ],
+          "claim_limits": [
+            "One selected visible variant; not a universal family definition.",
+            "Hidden material, function and wearer identity are not inferred."
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "neck_underarm",
+              "match_terms": [
+                "raglan seams join the neckline to the underarm on the shirt",
+                "목부터 겨드랑이로 이어진 래글런 봉제선"
+              ],
+              "evidence_field": "neck_underarm_phrase",
+              "evidence_terms": [
+                "a diagonal sleeve seam visibly continues from neckline to underarm"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: a diagonal sleeve seam visibly continues from neckline to underarm",
+              "render_gate": {
+                "id": "vo_clt_raglan_setin_drop_neck_underarm",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: a diagonal sleeve seam visibly continues from neckline to underarm. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            }
+          ]
+        }
+      },
+      "weight_note": "0.35 is a provisional review value, not a tuned selection weight.",
+      "qualification": {
+        "schema_subset": "passed_authored_components_hard_activation_candidate_relations_only",
+        "routing": "not_tested",
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "native_pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      }
+    },
+    {
+      "id": "BP04",
+      "research_slug": "puff_gigot",
+      "status": "research_blueprint_not_integrated",
+      "slot_proposal": "garment_detail",
+      "owner_entities": [
+        "garment sleeve"
+      ],
+      "source_feature_check_required_before_promotion": true,
+      "candidate_draft": {
+        "id": "clt_puff_gigot_selected",
+        "ko": "상부는 풍성하고 손목으로 좁아지는 기고 소매",
+        "en": "a gigot sleeve has upper-arm fullness and a narrow forearm and wrist",
+        "weight": 0.35,
+        "aliases": [
+          "상부는 풍성하고 손목으로 좁아지는 기고 소매"
+        ],
+        "keywords": [
+          "상부는 풍성하고 손목으로 좁아지는 기고 소매",
+          "a gigot sleeve has upper-arm fullness and a narrow forearm and wrist"
+        ],
+        "concept_units": [
+          "the sleeve has clear fabric fullness around the shoulder and upper arm",
+          "the same sleeve narrows around the forearm and wrist"
+        ],
+        "relations": [
+          {
+            "id": "puff_gigot_upper_volume",
+            "type": "has_geometry",
+            "subject": "sleeve",
+            "object": "full upper-arm region"
+          },
+          {
+            "id": "puff_gigot_lower_taper",
+            "type": "narrows_toward",
+            "subject": "sleeve",
+            "object": "forearm and wrist"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      },
+      "profile_draft": {
+        "id": "clothing_puff_gigot_selected",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "exact_terms": [
+            "a gigot sleeve has upper-arm fullness and a narrow forearm and wrist",
+            "상부는 풍성하고 손목으로 좁아지는 기고 소매"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "requested_relation",
+                "any_terms": [
+                  "a gigot sleeve has upper-arm fullness and a narrow forearm and wrist",
+                  "상부는 풍성하고 손목으로 좁아지는 기고 소매"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "a gigot sleeve has upper-arm fullness and a narrow forearm and wrist",
+          "paraphrase_examples": [],
+          "contrast_examples": [
+            "짧은 퍼프 소매나 손목까지 풍성한 비숍 소매로 대체하지 않는다."
+          ],
+          "claim_limits": [
+            "One selected visible variant; not a universal family definition.",
+            "Hidden material, function and wearer identity are not inferred."
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "upper_volume",
+              "match_terms": [
+                "a gigot sleeve has upper-arm fullness and a narrow forearm and wrist",
+                "상부는 풍성하고 손목으로 좁아지는 기고 소매"
+              ],
+              "evidence_field": "upper_volume_phrase",
+              "evidence_terms": [
+                "the sleeve has clear fabric fullness around the shoulder and upper arm"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: the sleeve has clear fabric fullness around the shoulder and upper arm",
+              "render_gate": {
+                "id": "vo_clt_puff_gigot_upper_volume",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: the sleeve has clear fabric fullness around the shoulder and upper arm. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            },
+            {
+              "id": "lower_taper",
+              "match_terms": [
+                "a gigot sleeve has upper-arm fullness and a narrow forearm and wrist",
+                "상부는 풍성하고 손목으로 좁아지는 기고 소매"
+              ],
+              "evidence_field": "lower_taper_phrase",
+              "evidence_terms": [
+                "the same sleeve narrows around the forearm and wrist"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: the same sleeve narrows around the forearm and wrist",
+              "render_gate": {
+                "id": "vo_clt_puff_gigot_lower_taper",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: the same sleeve narrows around the forearm and wrist. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            }
+          ]
+        }
+      },
+      "weight_note": "0.35 is a provisional review value, not a tuned selection weight.",
+      "qualification": {
+        "schema_subset": "passed_authored_components_hard_activation_candidate_relations_only",
+        "routing": "not_tested",
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "native_pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      }
+    },
+    {
+      "id": "BP05",
+      "research_slug": "princess_dart",
+      "status": "research_blueprint_not_integrated",
+      "slot_proposal": "garment_detail",
+      "owner_entities": [
+        "front bodice",
+        "side-front bodice"
+      ],
+      "source_feature_check_required_before_promotion": true,
+      "candidate_draft": {
+        "id": "clt_princess_dart_selected",
+        "ko": "몸판 패널을 연결하는 프린세스 곡선 봉제",
+        "en": "curved princess seams connect the front and side-front bodice panels",
+        "weight": 0.35,
+        "aliases": [
+          "몸판 패널을 연결하는 프린세스 곡선 봉제"
+        ],
+        "keywords": [
+          "몸판 패널을 연결하는 프린세스 곡선 봉제",
+          "curved princess seams connect the front and side-front bodice panels"
+        ],
+        "concept_units": [
+          "a continuous curved seam joins two distinct bodice fabric panels"
+        ],
+        "relations": [
+          {
+            "id": "princess_dart_panel_connection",
+            "type": "connected_to",
+            "subject": "princess seam",
+            "object": "front and side-front panels"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      },
+      "profile_draft": {
+        "id": "clothing_princess_dart_selected",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "exact_terms": [
+            "curved princess seams connect the front and side-front bodice panels",
+            "몸판 패널을 연결하는 프린세스 곡선 봉제"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "requested_relation",
+                "any_terms": [
+                  "curved princess seams connect the front and side-front bodice panels",
+                  "몸판 패널을 연결하는 프린세스 곡선 봉제"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "curved princess seams connect the front and side-front bodice panels",
+          "paraphrase_examples": [],
+          "contrast_examples": [
+            "인쇄 곡선이나 점으로 끝나는 단독 다트는 연결 봉제의 대체가 아니다."
+          ],
+          "claim_limits": [
+            "One selected visible variant; not a universal family definition.",
+            "Hidden material, function and wearer identity are not inferred."
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "panel_connection",
+              "match_terms": [
+                "curved princess seams connect the front and side-front bodice panels",
+                "몸판 패널을 연결하는 프린세스 곡선 봉제"
+              ],
+              "evidence_field": "panel_connection_phrase",
+              "evidence_terms": [
+                "a continuous curved seam joins two distinct bodice fabric panels"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: a continuous curved seam joins two distinct bodice fabric panels",
+              "render_gate": {
+                "id": "vo_clt_princess_dart_panel_connection",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: a continuous curved seam joins two distinct bodice fabric panels. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            }
+          ]
+        }
+      },
+      "weight_note": "0.35 is a provisional review value, not a tuned selection weight.",
+      "qualification": {
+        "schema_subset": "passed_authored_components_hard_activation_candidate_relations_only",
+        "routing": "not_tested",
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "native_pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      }
+    },
+    {
+      "id": "BP06",
+      "research_slug": "pocket_patch_welt_seam",
+      "status": "research_blueprint_not_integrated",
+      "slot_proposal": "garment_detail",
+      "owner_entities": [
+        "jacket outer panel",
+        "pocket mouth"
+      ],
+      "source_feature_check_required_before_promotion": true,
+      "candidate_draft": {
+        "id": "clt_pocket_patch_welt_seam_selected",
+        "ko": "절개 입구를 감싸는 단일 웰트",
+        "en": "a single fabric welt frames the pocket slit on the jacket",
+        "weight": 0.35,
+        "aliases": [
+          "절개 입구를 감싸는 단일 웰트"
+        ],
+        "keywords": [
+          "절개 입구를 감싸는 단일 웰트",
+          "a single fabric welt frames the pocket slit on the jacket"
+        ],
+        "concept_units": [
+          "a narrow fabric welt lies along the boundary of a visible slit opening"
+        ],
+        "relations": [
+          {
+            "id": "pocket_patch_welt_seam_welt_mouth",
+            "type": "frames",
+            "subject": "fabric welt",
+            "object": "pocket opening"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      },
+      "profile_draft": {
+        "id": "clothing_pocket_patch_welt_seam_selected",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "exact_terms": [
+            "a single fabric welt frames the pocket slit on the jacket",
+            "절개 입구를 감싸는 단일 웰트"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "requested_relation",
+                "any_terms": [
+                  "a single fabric welt frames the pocket slit on the jacket",
+                  "절개 입구를 감싸는 단일 웰트"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "a single fabric welt frames the pocket slit on the jacket",
+          "paraphrase_examples": [],
+          "contrast_examples": [
+            "겉면만 시험한다. 포켓백과 실제 수납 기능의 증거는 포함하지 않는다."
+          ],
+          "claim_limits": [
+            "One selected visible variant; not a universal family definition.",
+            "Hidden material, function and wearer identity are not inferred."
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "welt_mouth",
+              "match_terms": [
+                "a single fabric welt frames the pocket slit on the jacket",
+                "절개 입구를 감싸는 단일 웰트"
+              ],
+              "evidence_field": "welt_mouth_phrase",
+              "evidence_terms": [
+                "a narrow fabric welt lies along the boundary of a visible slit opening"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: a narrow fabric welt lies along the boundary of a visible slit opening",
+              "render_gate": {
+                "id": "vo_clt_pocket_patch_welt_seam_welt_mouth",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: a narrow fabric welt lies along the boundary of a visible slit opening. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            }
+          ]
+        }
+      },
+      "weight_note": "0.35 is a provisional review value, not a tuned selection weight.",
+      "qualification": {
+        "schema_subset": "passed_authored_components_hard_activation_candidate_relations_only",
+        "routing": "not_tested",
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "native_pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      }
+    },
+    {
+      "id": "BP07",
+      "research_slug": "piping_binding_welt",
+      "status": "research_blueprint_not_integrated",
+      "slot_proposal": "garment_detail",
+      "owner_entities": [
+        "panel seam"
+      ],
+      "source_feature_check_required_before_promotion": true,
+      "candidate_draft": {
+        "id": "clt_piping_binding_welt_selected",
+        "ko": "몸판 사이에 삽입된 돌출 파이핑",
+        "en": "rounded piping projects between two joined garment panels",
+        "weight": 0.35,
+        "aliases": [
+          "몸판 사이에 삽입된 돌출 파이핑"
+        ],
+        "keywords": [
+          "몸판 사이에 삽입된 돌출 파이핑",
+          "rounded piping projects between two joined garment panels"
+        ],
+        "concept_units": [
+          "a narrow rounded piping ridge projects from the joining seam between two panels"
+        ],
+        "relations": [
+          {
+            "id": "piping_binding_welt_piping_seam",
+            "type": "inserted_between",
+            "subject": "piping cord",
+            "object": "garment panels"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      },
+      "profile_draft": {
+        "id": "clothing_piping_binding_welt_selected",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "exact_terms": [
+            "rounded piping projects between two joined garment panels",
+            "몸판 사이에 삽입된 돌출 파이핑"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "requested_relation",
+                "any_terms": [
+                  "rounded piping projects between two joined garment panels",
+                  "몸판 사이에 삽입된 돌출 파이핑"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "rounded piping projects between two joined garment panels",
+          "paraphrase_examples": [],
+          "contrast_examples": [
+            "가장자리를 감싼 납작한 바인딩이나 프린트 선과 구분한다."
+          ],
+          "claim_limits": [
+            "One selected visible variant; not a universal family definition.",
+            "Hidden material, function and wearer identity are not inferred."
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "piping_seam",
+              "match_terms": [
+                "rounded piping projects between two joined garment panels",
+                "몸판 사이에 삽입된 돌출 파이핑"
+              ],
+              "evidence_field": "piping_seam_phrase",
+              "evidence_terms": [
+                "a narrow rounded piping ridge projects from the joining seam between two panels"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: a narrow rounded piping ridge projects from the joining seam between two panels",
+              "render_gate": {
+                "id": "vo_clt_piping_binding_welt_piping_seam",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: a narrow rounded piping ridge projects from the joining seam between two panels. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            }
+          ]
+        }
+      },
+      "weight_note": "0.35 is a provisional review value, not a tuned selection weight.",
+      "qualification": {
+        "schema_subset": "passed_authored_components_hard_activation_candidate_relations_only",
+        "routing": "not_tested",
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "native_pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      }
+    },
+    {
+      "id": "BP08",
+      "research_slug": "bra_wire_boning",
+      "status": "research_blueprint_not_integrated",
+      "slot_proposal": "garment_detail",
+      "owner_entities": [
+        "structured garment bodice"
+      ],
+      "source_feature_check_required_before_promotion": true,
+      "candidate_draft": {
+        "id": "clt_bra_wire_boning_selected",
+        "ko": "옷 몸판의 세로 보닝 채널",
+        "en": "vertical boning channels run along the structured garment bodice",
+        "weight": 0.35,
+        "aliases": [
+          "옷 몸판의 세로 보닝 채널"
+        ],
+        "keywords": [
+          "옷 몸판의 세로 보닝 채널",
+          "vertical boning channels run along the structured garment bodice"
+        ],
+        "concept_units": [
+          "separate narrow vertical channels are visible in the garment bodice"
+        ],
+        "relations": [
+          {
+            "id": "bra_wire_boning_channel_owner",
+            "type": "located_on",
+            "subject": "boning channels",
+            "object": "garment bodice"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      },
+      "profile_draft": {
+        "id": "clothing_bra_wire_boning_selected",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "exact_terms": [
+            "vertical boning channels run along the structured garment bodice",
+            "옷 몸판의 세로 보닝 채널"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "requested_relation",
+                "any_terms": [
+                  "vertical boning channels run along the structured garment bodice",
+                  "옷 몸판의 세로 보닝 채널"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "vertical boning channels run along the structured garment bodice",
+          "paraphrase_examples": [],
+          "contrast_examples": [
+            "실제 내부 금속·압박·신체 형상은 판정 대상이 아니다."
+          ],
+          "claim_limits": [
+            "One selected visible variant; not a universal family definition.",
+            "Hidden material, function and wearer identity are not inferred."
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "channel_owner",
+              "match_terms": [
+                "vertical boning channels run along the structured garment bodice",
+                "옷 몸판의 세로 보닝 채널"
+              ],
+              "evidence_field": "channel_owner_phrase",
+              "evidence_terms": [
+                "separate narrow vertical channels are visible in the garment bodice"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: separate narrow vertical channels are visible in the garment bodice",
+              "render_gate": {
+                "id": "vo_clt_bra_wire_boning_channel_owner",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: separate narrow vertical channels are visible in the garment bodice. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            }
+          ]
+        }
+      },
+      "weight_note": "0.35 is a provisional review value, not a tuned selection weight.",
+      "qualification": {
+        "schema_subset": "passed_authored_components_hard_activation_candidate_relations_only",
+        "routing": "not_tested",
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "native_pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      }
+    },
+    {
+      "id": "BP09",
+      "research_slug": "twill_herringbone",
+      "status": "research_blueprint_not_integrated",
+      "slot_proposal": "surface_material",
+      "owner_entities": [
+        "fabric woven face"
+      ],
+      "source_feature_check_required_before_promotion": true,
+      "candidate_draft": {
+        "id": "clt_twill_herringbone_selected",
+        "ko": "방향이 반전되며 어긋나는 헤링본 조직",
+        "en": "opposing herringbone weave diagonals meet with a visible offset",
+        "weight": 0.35,
+        "aliases": [
+          "방향이 반전되며 어긋나는 헤링본 조직"
+        ],
+        "keywords": [
+          "방향이 반전되며 어긋나는 헤링본 조직",
+          "opposing herringbone weave diagonals meet with a visible offset"
+        ],
+        "concept_units": [
+          "opposing diagonal yarn ridges reverse direction in neighboring bands",
+          "the direction change contains a visible offset rather than a continuous chevron apex"
+        ],
+        "relations": [
+          {
+            "id": "twill_herringbone_diagonal_reversal",
+            "type": "reverse_direction",
+            "subject": "woven diagonal bands",
+            "object": "adjacent woven bands"
+          },
+          {
+            "id": "twill_herringbone_offset_join",
+            "type": "meet_with",
+            "subject": "diagonal bands",
+            "object": "an offset"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      },
+      "profile_draft": {
+        "id": "clothing_twill_herringbone_selected",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "exact_terms": [
+            "opposing herringbone weave diagonals meet with a visible offset",
+            "방향이 반전되며 어긋나는 헤링본 조직"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "requested_relation",
+                "any_terms": [
+                  "opposing herringbone weave diagonals meet with a visible offset",
+                  "방향이 반전되며 어긋나는 헤링본 조직"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "opposing herringbone weave diagonals meet with a visible offset",
+          "paraphrase_examples": [],
+          "contrast_examples": [
+            "매크로 조직을 시험한다. 헤링본 모양 프린트와 동일시하지 않는다."
+          ],
+          "claim_limits": [
+            "One selected visible variant; not a universal family definition.",
+            "Hidden material, function and wearer identity are not inferred."
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "diagonal_reversal",
+              "match_terms": [
+                "opposing herringbone weave diagonals meet with a visible offset",
+                "방향이 반전되며 어긋나는 헤링본 조직"
+              ],
+              "evidence_field": "diagonal_reversal_phrase",
+              "evidence_terms": [
+                "opposing diagonal yarn ridges reverse direction in neighboring bands"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: opposing diagonal yarn ridges reverse direction in neighboring bands",
+              "render_gate": {
+                "id": "vo_clt_twill_herringbone_diagonal_reversal",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: opposing diagonal yarn ridges reverse direction in neighboring bands. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            },
+            {
+              "id": "offset_join",
+              "match_terms": [
+                "opposing herringbone weave diagonals meet with a visible offset",
+                "방향이 반전되며 어긋나는 헤링본 조직"
+              ],
+              "evidence_field": "offset_join_phrase",
+              "evidence_terms": [
+                "the direction change contains a visible offset rather than a continuous chevron apex"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: the direction change contains a visible offset rather than a continuous chevron apex",
+              "render_gate": {
+                "id": "vo_clt_twill_herringbone_offset_join",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: the direction change contains a visible offset rather than a continuous chevron apex. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            }
+          ]
+        }
+      },
+      "weight_note": "0.35 is a provisional review value, not a tuned selection weight.",
+      "qualification": {
+        "schema_subset": "passed_authored_components_hard_activation_candidate_relations_only",
+        "routing": "not_tested",
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "native_pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      }
+    },
+    {
+      "id": "BP10",
+      "research_slug": "bail_connector",
+      "status": "research_blueprint_not_integrated",
+      "slot_proposal": "wearable_accessory",
+      "owner_entities": [
+        "pendant",
+        "necklace chain"
+      ],
+      "source_feature_check_required_before_promotion": true,
+      "candidate_draft": {
+        "id": "clt_bail_connector_selected",
+        "ko": "체인이 통과하는 펜던트 연결 고리",
+        "en": "a necklace chain passes through the bail attached to a pendant",
+        "weight": 0.35,
+        "aliases": [
+          "체인이 통과하는 펜던트 연결 고리"
+        ],
+        "keywords": [
+          "체인이 통과하는 펜던트 연결 고리",
+          "a necklace chain passes through the bail attached to a pendant"
+        ],
+        "concept_units": [
+          "a small bail is visibly attached at the top of the pendant",
+          "the necklace chain visibly passes through the bail opening"
+        ],
+        "relations": [
+          {
+            "id": "bail_connector_bail_pendant",
+            "type": "connected_to",
+            "subject": "bail",
+            "object": "pendant top"
+          },
+          {
+            "id": "bail_connector_chain_loop",
+            "type": "passes_through",
+            "subject": "necklace chain",
+            "object": "bail opening"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      },
+      "profile_draft": {
+        "id": "clothing_bail_connector_selected",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "exact_terms": [
+            "a necklace chain passes through the bail attached to a pendant",
+            "체인이 통과하는 펜던트 연결 고리"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "requested_relation",
+                "any_terms": [
+                  "a necklace chain passes through the bail attached to a pendant",
+                  "체인이 통과하는 펜던트 연결 고리"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "a necklace chain passes through the bail attached to a pendant",
+          "paraphrase_examples": [],
+          "contrast_examples": [
+            "머리 베일·목걸이 clasp·떠 있는 장식 고리로 대체하지 않는다."
+          ],
+          "claim_limits": [
+            "One selected visible variant; not a universal family definition.",
+            "Hidden material, function and wearer identity are not inferred."
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "bail_pendant",
+              "match_terms": [
+                "a necklace chain passes through the bail attached to a pendant",
+                "체인이 통과하는 펜던트 연결 고리"
+              ],
+              "evidence_field": "bail_pendant_phrase",
+              "evidence_terms": [
+                "a small bail is visibly attached at the top of the pendant"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: a small bail is visibly attached at the top of the pendant",
+              "render_gate": {
+                "id": "vo_clt_bail_connector_bail_pendant",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: a small bail is visibly attached at the top of the pendant. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            },
+            {
+              "id": "chain_loop",
+              "match_terms": [
+                "a necklace chain passes through the bail attached to a pendant",
+                "체인이 통과하는 펜던트 연결 고리"
+              ],
+              "evidence_field": "chain_loop_phrase",
+              "evidence_terms": [
+                "the necklace chain visibly passes through the bail opening"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: the necklace chain visibly passes through the bail opening",
+              "render_gate": {
+                "id": "vo_clt_bail_connector_chain_loop",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: the necklace chain visibly passes through the bail opening. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            }
+          ]
+        }
+      },
+      "weight_note": "0.35 is a provisional review value, not a tuned selection weight.",
+      "qualification": {
+        "schema_subset": "passed_authored_components_hard_activation_candidate_relations_only",
+        "routing": "not_tested",
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "native_pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      }
+    },
+    {
+      "id": "BP11",
+      "research_slug": "oxford_derby_brogue",
+      "status": "research_blueprint_not_integrated",
+      "slot_proposal": "footwear",
+      "owner_entities": [
+        "shoe vamp",
+        "eyelet facings"
+      ],
+      "source_feature_check_required_before_promotion": true,
+      "candidate_draft": {
+        "id": "clt_oxford_derby_brogue_selected",
+        "ko": "뱀프 위에 연결된 더비 아이렛 페이싱",
+        "en": "Derby eyelet facings are stitched on top of the shoe vamp",
+        "weight": 0.35,
+        "aliases": [
+          "뱀프 위에 연결된 더비 아이렛 페이싱"
+        ],
+        "keywords": [
+          "뱀프 위에 연결된 더비 아이렛 페이싱",
+          "Derby eyelet facings are stitched on top of the shoe vamp"
+        ],
+        "concept_units": [
+          "the eyelet-bearing facings are visibly joined on top of the vamp"
+        ],
+        "relations": [
+          {
+            "id": "oxford_derby_brogue_facings_owner",
+            "type": "stitched_over",
+            "subject": "eyelet facings",
+            "object": "shoe vamp"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      },
+      "profile_draft": {
+        "id": "clothing_oxford_derby_brogue_selected",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "exact_terms": [
+            "Derby eyelet facings are stitched on top of the shoe vamp",
+            "뱀프 위에 연결된 더비 아이렛 페이싱"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "requested_relation",
+                "any_terms": [
+                  "Derby eyelet facings are stitched on top of the shoe vamp",
+                  "뱀프 위에 연결된 더비 아이렛 페이싱"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "Derby eyelet facings are stitched on top of the shoe vamp",
+          "paraphrase_examples": [],
+          "contrast_examples": [
+            "브로그 천공·갈색·포멀한 분위기만으로 레이싱 구조를 대신하지 않는다."
+          ],
+          "claim_limits": [
+            "One selected visible variant; not a universal family definition.",
+            "Hidden material, function and wearer identity are not inferred."
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "facings_owner",
+              "match_terms": [
+                "Derby eyelet facings are stitched on top of the shoe vamp",
+                "뱀프 위에 연결된 더비 아이렛 페이싱"
+              ],
+              "evidence_field": "facings_owner_phrase",
+              "evidence_terms": [
+                "the eyelet-bearing facings are visibly joined on top of the vamp"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: the eyelet-bearing facings are visibly joined on top of the vamp",
+              "render_gate": {
+                "id": "vo_clt_oxford_derby_brogue_facings_owner",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: the eyelet-bearing facings are visibly joined on top of the vamp. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            }
+          ]
+        }
+      },
+      "weight_note": "0.35 is a provisional review value, not a tuned selection weight.",
+      "qualification": {
+        "schema_subset": "passed_authored_components_hard_activation_candidate_relations_only",
+        "routing": "not_tested",
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "native_pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      }
+    },
+    {
+      "id": "BP12",
+      "research_slug": "jeogori_parts",
+      "status": "research_blueprint_not_integrated",
+      "slot_proposal": "garment_detail",
+      "owner_entities": [
+        "jeogori collar"
+      ],
+      "source_feature_check_required_before_promotion": true,
+      "candidate_draft": {
+        "id": "clt_jeogori_parts_selected",
+        "ko": "저고리 깃에 얹힌 별도의 동정",
+        "en": "a separate dongjeong strip follows the edge of the jeogori collar",
+        "weight": 0.35,
+        "aliases": [
+          "저고리 깃에 얹힌 별도의 동정"
+        ],
+        "keywords": [
+          "저고리 깃에 얹힌 별도의 동정",
+          "a separate dongjeong strip follows the edge of the jeogori collar"
+        ],
+        "concept_units": [
+          "a distinct narrow strip follows and is attached to the jeogori collar edge"
+        ],
+        "relations": [
+          {
+            "id": "jeogori_parts_dongjeong_collar",
+            "type": "attached_to",
+            "subject": "dongjeong strip",
+            "object": "jeogori collar edge"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      },
+      "profile_draft": {
+        "id": "clothing_jeogori_parts_selected",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "exact_terms": [
+            "a separate dongjeong strip follows the edge of the jeogori collar",
+            "저고리 깃에 얹힌 별도의 동정"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "requested_relation",
+                "any_terms": [
+                  "a separate dongjeong strip follows the edge of the jeogori collar",
+                  "저고리 깃에 얹힌 별도의 동정"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "a separate dongjeong strip follows the edge of the jeogori collar",
+          "paraphrase_examples": [],
+          "contrast_examples": [
+            "동정의 색·저고리 길이·착용자 특성은 추가 필수 조건이 아니다."
+          ],
+          "claim_limits": [
+            "One selected visible variant; not a universal family definition.",
+            "Hidden material, function and wearer identity are not inferred."
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "dongjeong_collar",
+              "match_terms": [
+                "a separate dongjeong strip follows the edge of the jeogori collar",
+                "저고리 깃에 얹힌 별도의 동정"
+              ],
+              "evidence_field": "dongjeong_collar_phrase",
+              "evidence_terms": [
+                "a distinct narrow strip follows and is attached to the jeogori collar edge"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: a distinct narrow strip follows and is attached to the jeogori collar edge",
+              "render_gate": {
+                "id": "vo_clt_jeogori_parts_dongjeong_collar",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: a distinct narrow strip follows and is attached to the jeogori collar edge. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            }
+          ]
+        }
+      },
+      "weight_note": "0.35 is a provisional review value, not a tuned selection weight.",
+      "qualification": {
+        "schema_subset": "passed_authored_components_hard_activation_candidate_relations_only",
+        "routing": "not_tested",
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "native_pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      }
+    },
+    {
+      "id": "BP13",
+      "research_slug": "norigae_attachment",
+      "status": "research_blueprint_not_integrated",
+      "slot_proposal": "wearable_accessory",
+      "owner_entities": [
+        "jeogori goreum",
+        "norigae"
+      ],
+      "source_feature_check_required_before_promotion": true,
+      "candidate_draft": {
+        "id": "clt_norigae_attachment_selected",
+        "ko": "고름에 매달린 노리개의 연결",
+        "en": "a norigae hangs from the goreum with a cord knot ornament and tassel",
+        "weight": 0.35,
+        "aliases": [
+          "고름에 매달린 노리개의 연결"
+        ],
+        "keywords": [
+          "고름에 매달린 노리개의 연결",
+          "a norigae hangs from the goreum with a cord knot ornament and tassel"
+        ],
+        "concept_units": [
+          "the norigae upper connector is visibly attached to the goreum",
+          "the cord continues through the selected knot and ornament to the hanging tassel"
+        ],
+        "relations": [
+          {
+            "id": "norigae_attachment_upper_attachment",
+            "type": "connected_to",
+            "subject": "norigae upper loop",
+            "object": "jeogori goreum"
+          },
+          {
+            "id": "norigae_attachment_hanging_order",
+            "type": "suspends",
+            "subject": "norigae cord",
+            "object": "knot ornament and lower tassel"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      },
+      "profile_draft": {
+        "id": "clothing_norigae_attachment_selected",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "exact_terms": [
+            "a norigae hangs from the goreum with a cord knot ornament and tassel",
+            "고름에 매달린 노리개의 연결"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "requested_relation",
+                "any_terms": [
+                  "a norigae hangs from the goreum with a cord knot ornament and tassel",
+                  "고름에 매달린 노리개의 연결"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "a norigae hangs from the goreum with a cord knot ornament and tassel",
+          "paraphrase_examples": [],
+          "contrast_examples": [
+            "목에 단 펜던트로 옮기지 않는다. 치마허리 부착 변형은 별도 작성한다."
+          ],
+          "claim_limits": [
+            "One selected visible variant; not a universal family definition.",
+            "Hidden material, function and wearer identity are not inferred."
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "upper_attachment",
+              "match_terms": [
+                "a norigae hangs from the goreum with a cord knot ornament and tassel",
+                "고름에 매달린 노리개의 연결"
+              ],
+              "evidence_field": "upper_attachment_phrase",
+              "evidence_terms": [
+                "the norigae upper connector is visibly attached to the goreum"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: the norigae upper connector is visibly attached to the goreum",
+              "render_gate": {
+                "id": "vo_clt_norigae_attachment_upper_attachment",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: the norigae upper connector is visibly attached to the goreum. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            },
+            {
+              "id": "hanging_order",
+              "match_terms": [
+                "a norigae hangs from the goreum with a cord knot ornament and tassel",
+                "고름에 매달린 노리개의 연결"
+              ],
+              "evidence_field": "hanging_order_phrase",
+              "evidence_terms": [
+                "the cord continues through the selected knot and ornament to the hanging tassel"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: the cord continues through the selected knot and ornament to the hanging tassel",
+              "render_gate": {
+                "id": "vo_clt_norigae_attachment_hanging_order",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: the cord continues through the selected knot and ornament to the hanging tassel. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            }
+          ]
+        }
+      },
+      "weight_note": "0.35 is a provisional review value, not a tuned selection weight.",
+      "qualification": {
+        "schema_subset": "passed_authored_components_hard_activation_candidate_relations_only",
+        "routing": "not_tested",
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "native_pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      }
+    },
+    {
+      "id": "BP14",
+      "research_slug": "kimono_wrap_obi",
+      "status": "research_blueprint_not_integrated",
+      "slot_proposal": "costume_style",
+      "owner_entities": [
+        "kimono front panels",
+        "obi"
+      ],
+      "source_feature_check_required_before_promotion": true,
+      "candidate_draft": {
+        "id": "clt_kimono_wrap_obi_selected",
+        "ko": "오비로 고정한 착용자 왼쪽 겹침 기모노",
+        "en": "a kimono wraps wearer-left over wearer-right and is secured by an obi",
+        "weight": 0.35,
+        "aliases": [
+          "오비로 고정한 착용자 왼쪽 겹침 기모노"
+        ],
+        "keywords": [
+          "오비로 고정한 착용자 왼쪽 겹침 기모노",
+          "a kimono wraps wearer-left over wearer-right and is secured by an obi"
+        ],
+        "concept_units": [
+          "the wearer-left front panel lies over the wearer-right front panel",
+          "a separate obi sash encircles and visually secures the kimono at the waist"
+        ],
+        "relations": [
+          {
+            "id": "kimono_wrap_obi_wrap_direction",
+            "type": "overlaps",
+            "subject": "wearer-left kimono panel",
+            "object": "wearer-right kimono panel"
+          },
+          {
+            "id": "kimono_wrap_obi_obi_waist",
+            "type": "encircles",
+            "subject": "obi sash",
+            "object": "kimono waist"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      },
+      "profile_draft": {
+        "id": "clothing_kimono_wrap_obi_selected",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "exact_terms": [
+            "a kimono wraps wearer-left over wearer-right and is secured by an obi",
+            "오비로 고정한 착용자 왼쪽 겹침 기모노"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "requested_relation",
+                "any_terms": [
+                  "a kimono wraps wearer-left over wearer-right and is secured by an obi",
+                  "오비로 고정한 착용자 왼쪽 겹침 기모노"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "a kimono wraps wearer-left over wearer-right and is secured by an obi",
+          "paraphrase_examples": [],
+          "contrast_examples": [
+            "기모노 슬리브 요청은 이 품목 프로필을 활성화하지 않는다. 화면 좌우·거울을 별도 기록한다."
+          ],
+          "claim_limits": [
+            "One selected visible variant; not a universal family definition.",
+            "Hidden material, function and wearer identity are not inferred."
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "wrap_direction",
+              "match_terms": [
+                "a kimono wraps wearer-left over wearer-right and is secured by an obi",
+                "오비로 고정한 착용자 왼쪽 겹침 기모노"
+              ],
+              "evidence_field": "wrap_direction_phrase",
+              "evidence_terms": [
+                "the wearer-left front panel lies over the wearer-right front panel"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: the wearer-left front panel lies over the wearer-right front panel",
+              "render_gate": {
+                "id": "vo_clt_kimono_wrap_obi_wrap_direction",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: the wearer-left front panel lies over the wearer-right front panel. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            },
+            {
+              "id": "obi_waist",
+              "match_terms": [
+                "a kimono wraps wearer-left over wearer-right and is secured by an obi",
+                "오비로 고정한 착용자 왼쪽 겹침 기모노"
+              ],
+              "evidence_field": "obi_waist_phrase",
+              "evidence_terms": [
+                "a separate obi sash encircles and visually secures the kimono at the waist"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: a separate obi sash encircles and visually secures the kimono at the waist",
+              "render_gate": {
+                "id": "vo_clt_kimono_wrap_obi_obi_waist",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: a separate obi sash encircles and visually secures the kimono at the waist. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            }
+          ]
+        }
+      },
+      "weight_note": "0.35 is a provisional review value, not a tuned selection weight.",
+      "qualification": {
+        "schema_subset": "passed_authored_components_hard_activation_candidate_relations_only",
+        "routing": "not_tested",
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "native_pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      }
+    },
+    {
+      "id": "BP15",
+      "research_slug": "tuck_relation",
+      "status": "research_blueprint_not_integrated",
+      "slot_proposal": "garment_detail",
+      "owner_entities": [
+        "shirt center-front hem",
+        "trouser waistband"
+      ],
+      "source_feature_check_required_before_promotion": true,
+      "candidate_draft": {
+        "id": "clt_tuck_relation_selected",
+        "ko": "가운데 앞자락만 넣어 입은 셔츠",
+        "en": "only the shirt center-front hem is tucked beneath the trouser waistband",
+        "weight": 0.35,
+        "aliases": [
+          "가운데 앞자락만 넣어 입은 셔츠"
+        ],
+        "keywords": [
+          "가운데 앞자락만 넣어 입은 셔츠",
+          "only the shirt center-front hem is tucked beneath the trouser waistband"
+        ],
+        "concept_units": [
+          "only the shirt center-front hem passes beneath the waistband",
+          "the shirt side hems remain visibly hanging outside the waistband"
+        ],
+        "relations": [
+          {
+            "id": "tuck_relation_tucked_center",
+            "type": "tucked_beneath",
+            "subject": "shirt center-front hem",
+            "object": "trouser waistband"
+          },
+          {
+            "id": "tuck_relation_outside_sides",
+            "type": "remain_outside",
+            "subject": "shirt side hems",
+            "object": "trouser waistband"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      },
+      "profile_draft": {
+        "id": "clothing_tuck_relation_selected",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "exact_terms": [
+            "only the shirt center-front hem is tucked beneath the trouser waistband",
+            "가운데 앞자락만 넣어 입은 셔츠"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "requested_relation",
+                "any_terms": [
+                  "only the shirt center-front hem is tucked beneath the trouser waistband",
+                  "가운데 앞자락만 넣어 입은 셔츠"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "only the shirt center-front hem is tucked beneath the trouser waistband",
+          "paraphrase_examples": [],
+          "contrast_examples": [
+            "요청에서 좌우 한쪽을 지정한 경우 그 관계에 맞는 별도 변형을 사용한다."
+          ],
+          "claim_limits": [
+            "One selected visible variant; not a universal family definition.",
+            "Hidden material, function and wearer identity are not inferred."
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "tucked_center",
+              "match_terms": [
+                "only the shirt center-front hem is tucked beneath the trouser waistband",
+                "가운데 앞자락만 넣어 입은 셔츠"
+              ],
+              "evidence_field": "tucked_center_phrase",
+              "evidence_terms": [
+                "only the shirt center-front hem passes beneath the waistband"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: only the shirt center-front hem passes beneath the waistband",
+              "render_gate": {
+                "id": "vo_clt_tuck_relation_tucked_center",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: only the shirt center-front hem passes beneath the waistband. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            },
+            {
+              "id": "outside_sides",
+              "match_terms": [
+                "only the shirt center-front hem is tucked beneath the trouser waistband",
+                "가운데 앞자락만 넣어 입은 셔츠"
+              ],
+              "evidence_field": "outside_sides_phrase",
+              "evidence_terms": [
+                "the shirt side hems remain visibly hanging outside the waistband"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this requested visible owner relation: the shirt side hems remain visibly hanging outside the waistband",
+              "render_gate": {
+                "id": "vo_clt_tuck_relation_outside_sides",
+                "review_scale": "native",
+                "description": "Inspect the declared relation at native resolution: the shirt side hems remain visibly hanging outside the waistband. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+              }
+            }
+          ]
+        }
+      },
+      "weight_note": "0.35 is a provisional review value, not a tuned selection weight.",
+      "qualification": {
+        "schema_subset": "passed_authored_components_hard_activation_candidate_relations_only",
+        "routing": "not_tested",
+        "exposure": "not_tested",
+        "adoption": "not_tested",
+        "native_pixels": "not_tested",
+        "user_acceptance": "not_tested"
+      }
+    }
+  ]
+}

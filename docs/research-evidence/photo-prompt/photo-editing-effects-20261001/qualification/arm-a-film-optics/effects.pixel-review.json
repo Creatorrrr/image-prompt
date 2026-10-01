@@ -1,0 +1,65 @@
+{
+  "contract_version": "arm-a-effect-native-review/v1",
+  "pack_id": "c21c65b2ada390d2",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-a-film-optics/image.native.png",
+  "result_sha256": "b3b08c7329f30158578965757f696981d513b55342ff0a525ba05eedbfbf0fbe",
+  "reviewer": "independent agent arm-a-film-optics",
+  "review_scale": "native",
+  "prompt_sha256": "8914fc79e06aec5e56192d28cbe6f24a05b830d99be3e529e89e7840b0239bef",
+  "request_sha256": "4e68ecbe87c19987be80de87e848e243d14d5c82cf95de6b77f6ce2d70a1b706",
+  "test_authority": "Agent advisory assertions frozen prepack; no requester-prescribed editing-effect assertions and no selected effect visual profiles.",
+  "tests": [
+    {
+      "assertion_id": "film_grain_test",
+      "status": "fail",
+      "observed_degree": "partial",
+      "evidence": "The uniform blue backdrop has faint fine texture but conspicuous longer rain streaks. The cream region is an aged illustrated chart with its own surface marks. Distinct irregular film-like grain is not plainly and independently readable across both planned low-detail regions.",
+      "checked_crop_paths": [
+        "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-a-film-optics/blue-midtones-native.png",
+        "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-a-film-optics/lamp-native.png"
+      ],
+      "confusion_resolution": "Rain streaks and old paper material texture were not counted as film grain.",
+      "strict_reason": "Ambiguous partial realization is FAIL."
+    },
+    {
+      "assertion_id": "edge_halation_test",
+      "status": "fail",
+      "observed_degree": "partial",
+      "evidence": "A narrow orange-red rim is visible along the metal lamp shade, but the white-yellow bulb sits against a light chart/wall. The specified red-orange halo around its brightest outline against a dark roof beam is not assessably realized; a warm lit metal edge alone is insufficient.",
+      "checked_crop_paths": [
+        "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-a-film-optics/lamp-native.png"
+      ],
+      "confusion_resolution": "Warm metallic rim/reflection was not promoted to complete source-bound bulb halation.",
+      "strict_reason": "Some related edge coloration with missing owner/background relation is PARTIAL and FAIL."
+    },
+    {
+      "assertion_id": "highlight_rolloff_test",
+      "status": "pass",
+      "observed_degree": "complete",
+      "evidence": "Cheek and nose highlights transition through warm pale skin tones while facial texture remains. The cup glaze preserves tonal bands and its mended seam through bright reflections. Wrapping highlights keep brown creases and smooth pale-gold transitions. These three tested materials retain gradation.",
+      "checked_crop_paths": [
+        "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-a-film-optics/face-highlight-native.png",
+        "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-a-film-optics/cup-hands-native.png",
+        "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-a-film-optics/paper-highlight-native.png"
+      ],
+      "confusion_resolution": "The bright bulb clipping is separate from the three declared cheek/glaze/paper regions.",
+      "strict_reason": "All three declared material targets pass in this same native image."
+    }
+  ],
+  "reference_scope_result": {
+    "status": "pass",
+    "evidence": "The fictional adult portrait follows the visible dark bob/wispy fringe and broad facial appearance, with moderate scene/expression variation; no body traits or identity are taken from the reference."
+  },
+  "physical_result": {
+    "status": "pass",
+    "evidence": "All five derived embodiment gates are supported by native contact and limb evidence; see render_review.json."
+  },
+  "scene_relation_result": {
+    "status": "pass",
+    "evidence": "The mended seam on the upright cup, loose paper, cup owner at the bench and rainy harbor context are simultaneous and legible."
+  },
+  "strict_effect_all_of": false,
+  "strict_effect_outcome": "FAIL: 1/3 effect tests pass; 2 PARTIAL -> FAIL.",
+  "pack_exposure_outcome": "FAIL: relevant new grain/halation/roll-off candidates and profiles were absent from the sole pack.",
+  "user_acceptance": "pending"
+}

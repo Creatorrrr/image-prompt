@@ -1,0 +1,97 @@
+{
+  "enabled": true,
+  "contract_version": "photo-visual-obligations/v1",
+  "scope": "request_only",
+  "strict_gate_set": true,
+  "obligations": [
+    {
+      "id": "pe_fine_midtonal_grain_relation",
+      "category": "scoped_photographic_editing_effect",
+      "activation": {
+        "source": "composer_opt_in",
+        "scope": "request_only",
+        "source_intent_ids": []
+      },
+      "composition_instruction": "Realize this visible property on its declared owner: fine irregular image-plane grain is visible in midtones Realize this visible property on its declared owner: subject material details remain distinct from the grain",
+      "component_semantics": {
+        "minimum_component_groups": 2,
+        "required_group_ids": [
+          "component_1",
+          "component_2"
+        ],
+        "groups": [
+          {
+            "id": "component_1",
+            "any_terms": [
+              "fine irregular image-plane grain is visible in midtones"
+            ]
+          },
+          {
+            "id": "component_2",
+            "any_terms": [
+              "subject material details remain distinct from the grain"
+            ]
+          }
+        ]
+      },
+      "prompt_binding": {
+        "composed_field": "visual_obligation_evidence",
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase"
+        ],
+        "minimum_distinct_evidence_phrases": 2,
+        "prompt_evidence_must_be_literal": true,
+        "maximum_pairwise_content_token_overlap_ratio": 0.82,
+        "forbidden_filler_phrases": [
+          "visible evidence",
+          "visual evidence",
+          "required cue",
+          "prompt phrase"
+        ]
+      },
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "fine irregular image-plane grain is visible in midtones"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "subject material details remain distinct from the grain"
+          ]
+        }
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "render_gates": [
+        {
+          "id": "vo_pe_fine_midtonal_grain_relation_1",
+          "review_scale": "native",
+          "description": "fine irregular image-plane grain is visible in midtones. Inspect its declared owner in the native image; partial or substituted evidence fails."
+        },
+        {
+          "id": "vo_pe_fine_midtonal_grain_relation_2",
+          "review_scale": "native",
+          "description": "subject material details remain distinct from the grain. Inspect its declared owner in the native image; partial or substituted evidence fails."
+        }
+      ],
+      "reject_substitutes": [
+        "고정 흰 점·모공·모래·디지털 chroma noise로 치환하지 않음"
+      ]
+    }
+  ],
+  "required_hard_gates": [
+    "vo_pe_fine_midtonal_grain_relation_1",
+    "vo_pe_fine_midtonal_grain_relation_2"
+  ],
+  "selected_visual_concept_ids": [
+    "visual-concept:pe_fine_midtonal_grain_relation"
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "2f5bae135f6b29520d2e6d99eba9c9e0faa2360e132275996c16772a9c9811f1",
+  "interpreted_intent": "The requester delegates distinct random complex photographic concepts and reference-guided image tests. Agent A independently chooses the quiet reveal of a mended cup in a harbor repair booth: WHO is a fictional adult woman attending to a waiting owner; WHERE is a rainy pier repair booth; HOW is a threshold environmental portrait at conversational distance; WHY NOW is wrapping just peeled away to expose the seam. The setting, wardrobe, specific hand staging and film finish are authorial choices, not requester definitions. Fine grain, warm edge halation and soft highlight roll-off are advisory film/optical test targets. The viewer first reads her presence and the supported cup, then the quiet owner relation and harbor depth. Sensual 1 supports her subtle presence through warm cheek light, open collar and faint half-smile; fetish 0, surreal 0, creativity 1 and the resolved sensual-led emphasis remain as frozen.",
+  "subject": "A fictional adult woman guided by visible face/hair in the supplied portrait; an adult cup owner is secondary authorial staging.",
+  "setting": "A roofed harbor repair booth with a workbench and open pier-facing doorway at rainy blue hour.",
+  "event": "The woman reveals a repaired glazed cup while peeling away wrapping paper for its waiting owner.",
+  "visual_priorities": [
+    "Her face and the mended cup carry the first reading.",
+    "The right palm bears the cup while the left hand reveals its seam.",
+    "The waiting owner and open doorway establish the reveal as a shared moment.",
+    "Fine grain, localized warm edge halation and smooth highlight roll-off support a tactile blue-hour photograph."
+  ],
+  "baseline_prompt_en": "An environmental portrait captures a layered photographic moment inside a roofed harbor repair booth at rainy blue hour. A fictional adult woman reveals an object to its waiting owner. Use the attached portrait as guidance for her visible face and hair: a dark chin-length bob with wispy fringe, rounded cheeks, brown eyes and softly shaped lips. She stands beside a waist-high wooden workbench, wearing a cream cotton shirt with an open collar and rolled sleeves, and dark work trousers. Her right palm supports the underside of an upright pale glazed cup, with fingers curved around its base; her bent right elbow holds it just above the bench. Her left fingertips peel loose brown wrapping paper away from the cup, exposing a thin mended seam. She turns a faint half-smile toward an adult customer in profile at the open doorway, whose hands rest on the far end of the workbench. A small radio and neatly coiled wire sit on the back shelf; wet pier boards and moored boats recede through the doorway. The intimate gesture carries the picture. Frame her from mid-thigh upward at chest height in a three-quarter view, including her face, both forearms, the cup and the customer's profile. A warm task bulb above the bench lights her cheek and the cup against cool blue harbor light. Fine irregular film grain is plainly visible in the flat blue doorway shadows and cream wall midtones. A narrow red-orange edge halo follows the brightest task-bulb outline against the dark roof beam. Highlights on her cheek, the cup glaze and crumpled paper roll gently into pale tones, retaining smooth gradients and material texture. Face and revealed seam lead the eye, then the owner's listening posture and rainy harbor depth.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "The request delegates choosing a random complex concept suitable for actual image tests. This authorial arm constructs a layered photographic moment and a visible event. Specific scene geometry and test effects remain agent-owned choices.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the attached portrait as observable face and hair guidance for a fictional adult woman. The image does not establish identity, biography, bodily properties, temperament or desired self-presentation.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "a layered photographic moment"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "A fictional adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "reveals an object to its waiting owner"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the attached portrait as guidance for her visible face and hair"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "count",
+      "role",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "film_grain_test",
+      "dimension": "style",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "affected_dimensions": [
+        "style"
+      ],
+      "axes": {
+        "texture_family": "film_grain",
+        "texture_scale": "fine_irregular",
+        "target_region": [
+          "flat_blue_shadows",
+          "cream_wall_midtones"
+        ]
+      },
+      "evidence": {
+        "grain_phrase": "Fine irregular film grain is plainly visible in the flat blue doorway shadows and cream wall midtones"
+      }
+    },
+    {
+      "assertion_id": "edge_halation_test",
+      "dimension": "style",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "affected_dimensions": [
+        "style",
+        "color"
+      ],
+      "axes": {
+        "optical_effect": "edge_halation",
+        "color_behavior": "red_orange",
+        "scope": "bright_task_bulb_boundary_against_dark_beam"
+      },
+      "evidence": {
+        "halation_phrase": "A narrow red-orange edge halo follows the brightest task-bulb outline against the dark roof beam"
+      }
+    },
+    {
+      "assertion_id": "highlight_rolloff_test",
+      "dimension": "lighting",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "affected_dimensions": [
+        "lighting",
+        "style"
+      ],
+      "axes": {
+        "tonal_response": "soft_highlight_rolloff",
+        "target_material": [
+          "skin",
+          "glaze",
+          "paper"
+        ],
+        "texture_behavior": "preserved_through_bright_transition"
+      },
+      "evidence": {
+        "rolloff_phrase": "Highlights on her cheek, the cup glaze and crumpled paper roll gently into pale tones, retaining smooth gradients and material texture"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "editorial",
+    "family": "tactile blue-hour environmental portrait",
+    "evidence": [
+      "warm task bulb against cool harbor light",
+      "film grain and localized red-orange edge halation"
+    ]
+  },
+  "variation_key": "arm-a-film-optics-3964569183912157136"
+}

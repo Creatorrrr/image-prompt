@@ -1,0 +1,656 @@
+{
+  "schema_version": "photo-editing-research-validation-plan/v1",
+  "status": "prospective_not_acceptance_evidence",
+  "created_date": "2026-10-01",
+  "cases": [
+    {
+      "id": "V01",
+      "layer": "sense",
+      "request_examples": [
+        "필름 할레이션으로 밝은 경계만 적주황 번짐 / film-like red-orange edge halation"
+      ],
+      "expected_invariant": "Unqualified optical diffusion must not be forced into red film halo; edge-local color and owner remain explicit.",
+      "proposal_group_ids": [
+        "edit_29"
+      ],
+      "forbidden_substitute": "red global grade or chromatic aberration",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V02",
+      "layer": "sense",
+      "request_examples": [
+        "디퓨전 필터 하이라이트 번짐 / optical diffusion practical-light halation"
+      ],
+      "expected_invariant": "Optical context stays distinct from film-emulsion context; not every diffusion filter produces identical halo.",
+      "proposal_group_ids": [
+        "edit_35"
+      ],
+      "forbidden_substitute": "mandatory red-orange ring",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V03",
+      "layer": "sense",
+      "request_examples": [
+        "하이라이트 블룸 / localized bloom around bright regions"
+      ],
+      "expected_invariant": "Spatial highlight spread is evaluated separately from tone-response roll-off.",
+      "proposal_group_ids": [
+        "edit_28"
+      ],
+      "forbidden_substitute": "global Gaussian blur",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V04",
+      "layer": "sense",
+      "request_examples": [
+        "밝은 계조를 부드럽게 이행 / gradual highlight shoulder response"
+      ],
+      "expected_invariant": "Tonal transition remains identifiable without requiring spatial glow.",
+      "proposal_group_ids": [
+        "edit_15"
+      ],
+      "forbidden_substitute": "bloom as the sole evidence",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V05",
+      "layer": "sense",
+      "request_examples": [
+        "soft light를 비춘 인물 / Soft Light blend layer"
+      ],
+      "expected_invariant": "Illumination shadow relation and layer-blending operator get different senses.",
+      "proposal_group_ids": [
+        "edit_24"
+      ],
+      "forbidden_substitute": "casefolded single canonical alias",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V06",
+      "layer": "sense",
+      "request_examples": [
+        "high-key with readable highlights / 과노출로 하이라이트를 날린 사진"
+      ],
+      "expected_invariant": "Brightness design and lost highlight information remain distinct.",
+      "proposal_group_ids": [
+        "edit_13"
+      ],
+      "forbidden_substitute": "clipping as high-key proof",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V07",
+      "layer": "sense",
+      "request_examples": [
+        "low-key selective illumination / 전체를 어둡게 만든 보정"
+      ],
+      "expected_invariant": "Selective light hierarchy cannot be substituted by global underexposure.",
+      "proposal_group_ids": [
+        "edit_13"
+      ],
+      "forbidden_substitute": "black wardrobe or vignette alone",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V08",
+      "layer": "sense",
+      "request_examples": [
+        "Color splash: 빨간 우산만 색 유지 / Selective Color CMYK adjustment"
+      ],
+      "expected_invariant": "Selected-object achromatic context differs from color-family CMYK contribution adjustment.",
+      "proposal_group_ids": [
+        "edit_23"
+      ],
+      "forbidden_substitute": "a shared selective-color alias",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V09",
+      "layer": "sense",
+      "request_examples": [
+        "cobalt-to-cream gradient map / 파란 배경과 크림색 옷"
+      ],
+      "expected_invariant": "Tonal image mapping differs from two scene-object colors.",
+      "proposal_group_ids": [
+        "edit_22"
+      ],
+      "forbidden_substitute": "two-object palette as duotone evidence",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V10",
+      "layer": "sense",
+      "request_examples": [
+        "미세 필름 입자 / 밝기 노이즈 / 색 노이즈"
+      ],
+      "expected_invariant": "Film-like grain, luminance noise and chroma noise retain distinct owners and patterns.",
+      "proposal_group_ids": [
+        "edit_55"
+      ],
+      "forbidden_substitute": "noise=grain=surface roughness",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V11",
+      "layer": "sense",
+      "request_examples": [
+        "panning a cyclist / intentional camera movement across the scene"
+      ],
+      "expected_invariant": "Tracked subject/background relation differs from scene-wide camera-motion expression.",
+      "proposal_group_ids": [
+        "edit_42"
+      ],
+      "forbidden_substitute": "uncontrolled blur as panning proof",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V12",
+      "layer": "sense",
+      "request_examples": [
+        "slow-sync flash / rear-curtain sync / shutter drag"
+      ],
+      "expected_invariant": "Ambient exposure duration and flash firing time are independent axes.",
+      "proposal_group_ids": [
+        "edit_44"
+      ],
+      "forbidden_substitute": "rear-curtain activation from shutter drag alone",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V13",
+      "layer": "sense",
+      "request_examples": [
+        "shallow depth focus / global Gaussian Blur"
+      ],
+      "expected_invariant": "Depth-dependent focus transition differs from image-wide low-frequency softening.",
+      "proposal_group_ids": [
+        "edit_36"
+      ],
+      "forbidden_substitute": "skin smoothing as shallow depth evidence",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V14",
+      "layer": "sense",
+      "request_examples": [
+        "focus-stacked macro / single-capture deep focus"
+      ],
+      "expected_invariant": "Visible near/far focus can be described; actual multi-image execution needs workflow evidence.",
+      "proposal_group_ids": [
+        "edit_70"
+      ],
+      "forbidden_substitute": "generated result proving stacking history",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V15",
+      "layer": "scope",
+      "request_examples": [
+        "필름형 그레인, 옷 표면과 피부의 원래 질감 유지"
+      ],
+      "expected_invariant": "Image-plane grain stays in rendering scope and does not dirty clothing or skin.",
+      "proposal_group_ids": [
+        "edit_55"
+      ],
+      "forbidden_substitute": "material damage from grain",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V16",
+      "layer": "scope",
+      "request_examples": [
+        "피부 톤 정리, 얼굴 비율과 미세결 유지"
+      ],
+      "expected_invariant": "Local finish respects appearance/body geometry and reference scope.",
+      "proposal_group_ids": [
+        "edit_62"
+      ],
+      "forbidden_substitute": "face reshaping or pore erasure",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V17",
+      "layer": "scope",
+      "request_examples": [
+        "빨간 드레스 색은 고정, 배경만 cool grading"
+      ],
+      "expected_invariant": "Global color transforms cannot bypass a garment-color property lock.",
+      "proposal_group_ids": [
+        "edit_19"
+      ],
+      "forbidden_substitute": "declaring style-only to change wardrobe color",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V18",
+      "layer": "scope",
+      "request_examples": [
+        "전체 style 잠금 + optional film grain"
+      ],
+      "expected_invariant": "Optional affected dimensions must remain open; explicit required intent is represented in core separately.",
+      "proposal_group_ids": [
+        "edit_55"
+      ],
+      "forbidden_substitute": "automatic grain adoption across locked style",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V19",
+      "layer": "scope",
+      "request_examples": [
+        "카페 벽의 cyanotype 인쇄물을 찍은 사진"
+      ],
+      "expected_invariant": "Depicted print scope differs from whole-frame cyanotype rendering.",
+      "proposal_group_ids": [
+        "edit_78"
+      ],
+      "forbidden_substitute": "turning the whole photograph blue",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V20",
+      "layer": "scope",
+      "request_examples": [
+        "whole-frame watercolor / 사진 속 수채화 카드"
+      ],
+      "expected_invariant": "Image medium and depicted artifact medium remain separate.",
+      "proposal_group_ids": [
+        "edit_76"
+      ],
+      "forbidden_substitute": "unrequested full illustration conversion",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V21",
+      "layer": "scope",
+      "request_examples": [
+        "비인물 풍경의 CCD-inspired finish"
+      ],
+      "expected_invariant": "Generic device-era look must not inherit adult-character activation.",
+      "proposal_group_ids": [
+        "edit_47"
+      ],
+      "forbidden_substitute": "forcing an adult model into a landscape",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V22",
+      "layer": "scope",
+      "request_examples": [
+        "film-scan look, 테두리·종이 물체 없이"
+      ],
+      "expected_invariant": "Scan-inspired rendering does not require photographed paper borders.",
+      "proposal_group_ids": [
+        "edit_45"
+      ],
+      "forbidden_substitute": "physical print profile without requester scope",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V23",
+      "layer": "negation",
+      "request_examples": [
+        "halation 없이 neutral finish / no halation, no bloom"
+      ],
+      "expected_invariant": "Negated or excluded effects are not adopted or activated from lexical mentions.",
+      "proposal_group_ids": [
+        "edit_29"
+      ],
+      "forbidden_substitute": "positive activation from negated keyword",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V24",
+      "layer": "composition",
+      "request_examples": [
+        "highlight-rolloff tone response WITH localized bloom"
+      ],
+      "expected_invariant": "Both tonal transition and spatial bloom persist under independent request evidence.",
+      "proposal_group_ids": [
+        "edit_15"
+      ],
+      "forbidden_substitute": "whole-context bloom veto dropping roll-off",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V25",
+      "layer": "composition",
+      "request_examples": [
+        "optical diffusion WITH film-like red-orange edge halation"
+      ],
+      "expected_invariant": "Both scoped effects can be independently required; a coexistence request is not a substitute.",
+      "proposal_group_ids": [
+        "edit_29"
+      ],
+      "forbidden_substitute": "film-halo lexical veto dropping diffusion",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V26",
+      "layer": "composition",
+      "request_examples": [
+        "tracked panning WITH rear-curtain flash motion trace"
+      ],
+      "expected_invariant": "Tracking direction, readable subject and flash/ambient timing duties coexist.",
+      "proposal_group_ids": [
+        "edit_42"
+      ],
+      "forbidden_substitute": "automatic mutual exclusion",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V27",
+      "layer": "composition",
+      "request_examples": [
+        "grain WITH texture-preserving retouch"
+      ],
+      "expected_invariant": "Image-plane texture and subject skin texture retain separate owners.",
+      "proposal_group_ids": [
+        "edit_62"
+      ],
+      "forbidden_substitute": "grain masking erased skin details",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V28",
+      "layer": "contract",
+      "request_examples": [
+        "bundle component 한 성분의 literal evidence 삭제"
+      ],
+      "expected_invariant": "Every required component ID must link to literal final-prompt evidence.",
+      "proposal_group_ids": [
+        "edit_28"
+      ],
+      "forbidden_substitute": "one component satisfying multiple simultaneous duties",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V29",
+      "layer": "contract",
+      "request_examples": [
+        "compact view 후 full details 의무/출처 hash 대조"
+      ],
+      "expected_invariant": "Projection preserves mandatory component/relation duties and source hashes.",
+      "proposal_group_ids": [
+        "edit_29"
+      ],
+      "forbidden_substitute": "dropping a qualifier or using stale source contracts",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V30",
+      "layer": "contract",
+      "request_examples": [
+        "관련 profile을 가진 bundle 발견·선택"
+      ],
+      "expected_invariant": "Discovery or optional selection never manufactures independent hard-profile activation.",
+      "proposal_group_ids": [
+        "edit_22"
+      ],
+      "forbidden_substitute": "associated_profile_ids promoted to hard",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V31",
+      "layer": "contract",
+      "request_examples": [
+        "필수 bloom 요청인데 해당 optional 후보가 검색되지 않음"
+      ],
+      "expected_invariant": "The explicit request effect remains in frozen-core semantics regardless of retrieval coverage.",
+      "proposal_group_ids": [
+        "edit_28"
+      ],
+      "forbidden_substitute": "missing required effect because no candidate was returned",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V32",
+      "layer": "metadata",
+      "request_examples": [
+        "LUT로 색·대비 변환만 요청"
+      ],
+      "expected_invariant": "Spatial grain/halation/bloom/vignette require separately requested effect operators or components.",
+      "proposal_group_ids": [
+        "edit_87"
+      ],
+      "forbidden_substitute": "LUT automatically adding spatial artifacts",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V33",
+      "layer": "metadata",
+      "request_examples": [
+        "16-bit, ICC profile, soft proofing"
+      ],
+      "expected_invariant": "File/display metadata stays outside automatic aesthetic candidates and needs format/environment evidence.",
+      "proposal_group_ids": [
+        "edit_88"
+      ],
+      "forbidden_substitute": "16-bit aesthetic inferred from smooth pixels",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V34",
+      "layer": "metadata",
+      "request_examples": [
+        "HDR output / HDR merge / HDR-like local contrast"
+      ],
+      "expected_invariant": "Output capability, source merging and a visual look are three different contracts.",
+      "proposal_group_ids": [
+        "edit_69"
+      ],
+      "forbidden_substitute": "bright SDR image proving HDR file",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V35",
+      "layer": "metadata",
+      "request_examples": [
+        "non-destructive editing, smart object, batch action"
+      ],
+      "expected_invariant": "Workflow metadata does not imply a unique image look; actual execution is checked through tool/file evidence.",
+      "proposal_group_ids": [
+        "edit_86"
+      ],
+      "forbidden_substitute": "automatic skin or film preset adoption",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V36",
+      "layer": "workflow",
+      "request_examples": [
+        "국부 healing, dodge/burn, 배경 replacement"
+      ],
+      "expected_invariant": "Input, target/mask, expected result and preserved regions are required for edit verification.",
+      "proposal_group_ids": [
+        "edit_59"
+      ],
+      "forbidden_substitute": "single generated image proving an edit occurred",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V37",
+      "layer": "workflow",
+      "request_examples": [
+        "복원·컬러화·super resolution으로 원래 색을 되찾기"
+      ],
+      "expected_invariant": "Plausible inferred color/detail must be distinguished from verified historical truth.",
+      "proposal_group_ids": [
+        "edit_81"
+      ],
+      "forbidden_substitute": "claiming authentic recovered historical colors",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V38",
+      "layer": "workflow",
+      "request_examples": [
+        "마스크 밖은 보존한 inpainting / 화면 밖 outpainting"
+      ],
+      "expected_invariant": "Original/mask/inside/outside scopes and comparison evidence are separate.",
+      "proposal_group_ids": [
+        "edit_83"
+      ],
+      "forbidden_substitute": "unbounded edit or resize treated as expansion proof",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "conditional_or_nonpixel_evidence"
+    },
+    {
+      "id": "V39",
+      "layer": "scope",
+      "request_examples": [
+        "사진 속 금속 daguerreotype plate / whole-frame daguerreotype-like look"
+      ],
+      "expected_invariant": "Material provenance and process-inspired look remain distinct.",
+      "proposal_group_ids": [
+        "edit_79"
+      ],
+      "forbidden_substitute": "actual historic-process claim on a generated image",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V40",
+      "layer": "sense",
+      "request_examples": [
+        "photogram object traces / luminogram light patterns"
+      ],
+      "expected_invariant": "Cameraless object/contact and light relationships are not assigned arbitrary lens settings.",
+      "proposal_group_ids": [
+        "edit_80"
+      ],
+      "forbidden_substitute": "camera capture recipe as mandatory evidence",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V41",
+      "layer": "sense",
+      "request_examples": [
+        "Clarity / Texture / Structure / Dehaze / Sharpening"
+      ],
+      "expected_invariant": "Product controls and visible results remain distinct; no shared numerical recipe.",
+      "proposal_group_ids": [
+        "edit_52"
+      ],
+      "forbidden_substitute": "a universal detail slider",
+      "status": "planned_not_executed",
+      "implementation_stage": "D",
+      "native_pixel_verification": "required_after_implementation"
+    },
+    {
+      "id": "V42",
+      "layer": "evidence_gap",
+      "request_examples": [
+        "JPEG blocks / gradient banding / moiré / instant-disposable/CCD look"
+      ],
+      "expected_invariant": "Dedicated primary pattern/device evidence and contrast cases must precede new hard-profile promotion.",
+      "proposal_group_ids": [
+        "edit_58"
+      ],
+      "forbidden_substitute": "family-level sources presented as per-pattern qualification",
+      "status": "planned_not_executed",
+      "implementation_stage": "G",
+      "native_pixel_verification": "required_after_implementation"
+    }
+  ],
+  "planned_pixel_policy": {
+    "partial_is_fail": true,
+    "blocked_attempts_are_unscored": true,
+    "technical_vs_user_judgment": "separate",
+    "artifact_requirements": [
+      "request/core/pack/selection/prompt/negative bytes and hashes",
+      "raw native image paths",
+      "attempt status and interventions",
+      "per-gate evidence",
+      "output file/display evidence when applicable"
+    ],
+    "initial_proposal": {
+      "confusion_pairs": 8,
+      "conditions_per_pair": 2,
+      "independent_renders_per_condition": 3,
+      "total_images": 48,
+      "execution": "not_authorized_by_this_research_only_request; run after a follow-up image-validation request"
+    }
+  }
+}

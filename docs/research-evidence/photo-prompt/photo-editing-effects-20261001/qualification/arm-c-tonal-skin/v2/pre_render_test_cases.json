@@ -1,0 +1,182 @@
+{
+  "contract_version": "photo-qualification-pre-render/v1",
+  "created_at": "2026-10-01T08:33:09.738525+00:00",
+  "arm_id": "arm-c-tonal-skin",
+  "revision": "v2",
+  "random_seed_hex": "8f0040ca75299371254dbda8c32957fd",
+  "same_frozen_core": true,
+  "same_frozen_controls": true,
+  "same_frozen_request_envelope": true,
+  "source_dict_sha256": "70379562ac6e618750d724a51659049174aec2e4cb95f3226e3bf6a1036f4ed4",
+  "source_registry_sha256": "103e10149bcda2a0ba846b215c309d07ed3f0102d49d5b0a25741f5483e6d45c",
+  "pack_id": "b8ac119256abc2dd",
+  "source_pack_sha256": "1f7451bea06fe97ade0754bcdeff0e9d8c05a4f50feb26090efd18a620c331a6",
+  "effective_visual_contract_sha256": "371aaea627e9282c50f89fd188b26a1c590b80fe6869e38722b29bdc178fb7cd",
+  "prompt_sha256": "fb024c220c4317e6fbb374d2e58693ae3ec16e9a462a6d281a4d6f7459b6538f",
+  "negative_sha256": "615114182e676fd44c4588905b386ed36f0540242f6a8af15d889d6ba601e26c",
+  "runtime_prompt_sha256": "11a80c351bcbc2807068858e596c36290c6b49bb9ed8f2f31d84d9bf81b5b123",
+  "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+  "target_authority": "agent-authored advisory test goals; explicit composer profile opt-in adds hard visual gates without changing requester locks",
+  "test_cases": [
+    {
+      "profile_id": "pe_red_object_splash_relation",
+      "selected_visual_concept_id": "visual-concept:pe_red_object_splash_relation",
+      "component_semantics": {
+        "minimum_component_groups": 2,
+        "required_group_ids": [
+          "component_1",
+          "component_2"
+        ],
+        "groups": [
+          {
+            "id": "component_1",
+            "any_terms": [
+              "one declared red object retains its red color"
+            ]
+          },
+          {
+            "id": "component_2",
+            "any_terms": [
+              "the rest of the picture is achromatic"
+            ]
+          }
+        ]
+      },
+      "render_gates": [
+        {
+          "id": "vo_pe_red_object_splash_relation_1",
+          "review_scale": "both",
+          "description": "one declared red object retains its red color. Inspect its declared owner in the native image; partial or substituted evidence fails."
+        },
+        {
+          "id": "vo_pe_red_object_splash_relation_2",
+          "review_scale": "both",
+          "description": "the rest of the picture is achromatic. Inspect its declared owner in the native image; partial or substituted evidence fails."
+        }
+      ],
+      "literal_component_evidence": {
+        "component_1_phrase": "One declared red object retains its red color: the saturated crimson enamel paperweight beneath her fingertips.",
+        "component_2_phrase": "The rest of the picture is achromatic, including skin, lips, eyes, hair, shirt, paper, curtains and wood, all equal-channel neutral grayscale."
+      },
+      "reject_substitutes": [
+        "Selective Color CMYK 조절과 구분; 흑백의 임의 소품 추가는 오답"
+      ],
+      "same_image_required": true
+    },
+    {
+      "profile_id": "pe_lifted_black_floor_relation",
+      "selected_visual_concept_id": "visual-concept:pe_lifted_black_floor_relation",
+      "component_semantics": {
+        "minimum_component_groups": 2,
+        "required_group_ids": [
+          "component_1",
+          "component_2"
+        ],
+        "groups": [
+          {
+            "id": "component_1",
+            "any_terms": [
+              "dark image tones are lifted to visible gray"
+            ]
+          },
+          {
+            "id": "component_2",
+            "any_terms": [
+              "dark subject information remains readable"
+            ]
+          }
+        ]
+      },
+      "render_gates": [
+        {
+          "id": "vo_pe_lifted_black_floor_relation_1",
+          "review_scale": "both",
+          "description": "dark image tones are lifted to visible gray. Inspect its declared owner in the native image; partial or substituted evidence fails."
+        },
+        {
+          "id": "vo_pe_lifted_black_floor_relation_2",
+          "review_scale": "both",
+          "description": "dark subject information remains readable. Inspect its declared owner in the native image; partial or substituted evidence fails."
+        }
+      ],
+      "literal_component_evidence": {
+        "component_1_phrase": "Dark image tones are lifted to visible gray, including the darkest hair roots and shelf recesses sitting distinctly at soft charcoal, approximately 45/255 at the darkest tonal endpoint.",
+        "component_2_phrase": "Dark subject information remains readable as separate strands and shelf grain against that elevated tonal floor."
+      },
+      "reject_substitutes": [
+        "국부 광막·단순 전체 노출 증가·장면의 검은 재질과 구분"
+      ],
+      "same_image_required": true
+    },
+    {
+      "profile_id": "pe_texture_preserving_tone_evening_relation",
+      "selected_visual_concept_id": "visual-concept:pe_texture_preserving_tone_evening_relation",
+      "component_semantics": {
+        "minimum_component_groups": 2,
+        "required_group_ids": [
+          "component_1",
+          "component_2"
+        ],
+        "groups": [
+          {
+            "id": "component_1",
+            "any_terms": [
+              "skin color transitions remain locally even"
+            ]
+          },
+          {
+            "id": "component_2",
+            "any_terms": [
+              "fine skin texture remains visible without facial-geometry alteration"
+            ]
+          }
+        ]
+      },
+      "render_gates": [
+        {
+          "id": "vo_pe_texture_preserving_tone_evening_relation_1",
+          "review_scale": "native",
+          "description": "skin color transitions remain locally even. Inspect its declared owner in the native image; partial or substituted evidence fails."
+        },
+        {
+          "id": "vo_pe_texture_preserving_tone_evening_relation_2",
+          "review_scale": "native",
+          "description": "fine skin texture remains visible without facial-geometry alteration. Inspect its declared owner in the native image; partial or substituted evidence fails."
+        }
+      ],
+      "literal_component_evidence": {
+        "component_1_phrase": "Skin color transitions remain locally even through restrained local dodge-and-burn across her cheeks.",
+        "component_2_phrase": "Fine skin texture remains visible without facial-geometry alteration: fine pores and tiny natural variations stay crisp."
+      },
+      "reject_substitutes": [
+        "피부색 교체·얼굴 형상 변경·균일 플라스틱 피부·화장품 도포로 대체하지 않음"
+      ],
+      "same_image_required": true
+    }
+  ],
+  "required_selected_profile_gates": [
+    "vo_pe_red_object_splash_relation_1",
+    "vo_pe_red_object_splash_relation_2",
+    "vo_pe_lifted_black_floor_relation_1",
+    "vo_pe_lifted_black_floor_relation_2",
+    "vo_pe_texture_preserving_tone_evening_relation_1",
+    "vo_pe_texture_preserving_tone_evening_relation_2"
+  ],
+  "required_physical_gates": [
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ],
+  "required_reference_review": "visible face/hair guidance only",
+  "strict_all_of": true,
+  "partial_is_fail": true,
+  "blocked_calls": "unscored",
+  "user_acceptance": "pending",
+  "diagnostic_rules": {
+    "color_splash": "Native visual review must show the existing crimson paperweight as sole colored region and every remaining region achromatic. Read-only RGB spread outside a generous prop mask can corroborate visual tint; tolerance diagnostics do not waive the contract.",
+    "lifted_blacks": "Inspect deepest roots and shelf recesses at native scale for clearly visible neutral-charcoal floor and preserved strand/wood distinctions. The authorial approximately 45/255 cue is a rendering guide, not a new requester lock or substitute for visible gray.",
+    "skin_detail": "Inspect cheeks at native scale for locally smooth tonal transitions plus independent fine pores/natural variations; preserved face/hair configuration and no artificial facial-geometry alteration are separate checks."
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "contract_version": "photo-authorial-editing-pixel-review/v1",
+  "pack_id": "f70725085adf6010",
+  "reviewer": "independent_arm_b_agent_native_pixel_review",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-b-digital-motion/generated_original.png",
+  "result_sha256": "bc2170c5cbdb72c8e6f8bd7b289d52cd634e27d70d756e59ae7bc11e56e6a083",
+  "pre_render_case_sha256": "e5b7979ef3d9eb5255019ae0bd98d47aa213229070f641e1083265518f9b58c0",
+  "frozen_advisory_assertion_ids": [
+    "authorial_direct_flash",
+    "authorial_slow_sync_trace",
+    "authorial_digital_noise"
+  ],
+  "test_authority": "authorial_advisory_qualification_not_requester_required_visual_obligation",
+  "review_scales": [
+    "native_1237x1272",
+    "whole_frame"
+  ],
+  "effects": [
+    {
+      "gate_id": "b_direct_flash",
+      "status": "pass",
+      "realization": "complete",
+      "evidence": "At native scale the face and slate satin jacket have bright frontal exposure with crisp shoulder-fold highlights and a darker chin boundary. Small dark skate shadows extend across the parquet toward screen right behind the wheel contacts, while the rink wall remains much dimmer. The visible rendering supports a direct-flash look without proving actual flash hardware.",
+      "observations": {
+        "frontal_flash_subject": "pass",
+        "cast_floor_shadow_and_dimmer_rink": "pass"
+      },
+      "regions": [
+        {
+          "x": 500,
+          "y": 35,
+          "width": 340,
+          "height": 570,
+          "scale": "native",
+          "source_size": [
+            1237,
+            1272
+          ]
+        },
+        {
+          "x": 375,
+          "y": 850,
+          "width": 610,
+          "height": 400,
+          "scale": "native",
+          "source_size": [
+            1237,
+            1272
+          ]
+        }
+      ]
+    },
+    {
+      "gate_id": "b_slow_sync_trace",
+      "status": "pass",
+      "realization": "complete",
+      "evidence": "One sharp skater and readable face coexist with short cyan streaks terminating at the lit wheels of both skates; the streaks extend toward screen left behind the sharp wheels. The balancing left sleeve carries a faint leftward temporal blur while the counter and horizontal rails remain stationary. The trails belong to the same moving skates and sleeve rather than a second actor.",
+      "observations": {
+        "sharp_principal_skater": "pass",
+        "leftward_same_owner_trace": "pass",
+        "stationary_architecture": "pass"
+      },
+      "regions": [
+        {
+          "x": 200,
+          "y": 310,
+          "width": 460,
+          "height": 275,
+          "scale": "native",
+          "source_size": [
+            1237,
+            1272
+          ]
+        },
+        {
+          "x": 275,
+          "y": 875,
+          "width": 600,
+          "height": 360,
+          "scale": "native",
+          "source_size": [
+            1237,
+            1272
+          ]
+        },
+        {
+          "x": 2,
+          "y": 230,
+          "width": 430,
+          "height": 145,
+          "scale": "native",
+          "source_size": [
+            1237,
+            1272
+          ]
+        }
+      ]
+    },
+    {
+      "gate_id": "b_digital_noise",
+      "status": "fail",
+      "realization": "partial",
+      "evidence": "Tiny green, magenta and cyan speckles are readily visible across the dim blue wall and the bright face is comparatively clean. The shaded satin jacket remains mostly smooth at native scale: its visible changes are primarily broad specular folds and material shading, with no comparably clear fine luma/chroma noise. The frozen compound criterion requires identifiable brightness texture and colored speckles in both wall and shaded jacket regions, so this is PARTIAL and counts as FAIL.",
+      "observations": {
+        "dark_wall_chroma_speckles": "pass",
+        "shadow_local_fine_luma_texture": "fail",
+        "shaded_jacket_luma_chroma_distribution": "fail",
+        "cleaner_bright_face": "pass"
+      },
+      "regions": [
+        {
+          "x": 810,
+          "y": 400,
+          "width": 390,
+          "height": 325,
+          "scale": "native",
+          "source_size": [
+            1237,
+            1272
+          ]
+        },
+        {
+          "x": 430,
+          "y": 280,
+          "width": 320,
+          "height": 275,
+          "scale": "native",
+          "source_size": [
+            1237,
+            1272
+          ]
+        }
+      ],
+      "cannot_promote_partial": true
+    }
+  ],
+  "reference_gate": {
+    "gate_id": "b_face_hair_scope",
+    "status": "pass",
+    "scope": "Visible face/hair appearance guidance only",
+    "evidence": "Compared with the inspected original portrait, the generated fictional woman retains a short dark bob, fine forehead-parted bangs, a softly rounded facial contour, dark eyes and naturally pink lips. The expression and camera distance change naturally with the scene; the bob has slightly looser ends. This is appearance-guidance fidelity, not identity authentication.",
+    "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+    "regions": [
+      {
+        "x": 580,
+        "y": 25,
+        "width": 235,
+        "height": 270,
+        "scale": "native",
+        "source_size": [
+          1237,
+          1272
+        ]
+      }
+    ]
+  },
+  "physical_gate_status": "all_five_pass",
+  "strict_all_of": {
+    "effect_gate_count": 3,
+    "passed_effect_gate_count": 2,
+    "failed_effect_gate_ids": [
+      "b_digital_noise"
+    ],
+    "all_effects_status": "fail",
+    "all_effects_plus_physical_and_reference_status": "fail",
+    "partial_is_fail": true
+  },
+  "pixel_boundary": "Image-grounded agent review. File/audit success does not prove pixels; visible digital effects do not prove camera sensor type, ISO, shutter speed, editing history or identity.",
+  "user_judgment_source": "not_yet_received",
+  "whole_image_review": {
+    "label_free_initial_impression": "A bright, close, polished skater looks warmly toward the photographer beside a dim rental-skate counter; cyan wheel tracks and heavy colored wall speckles make the movement and stylized digital finish immediately readable.",
+    "strengths": [
+      "The skater connects to the nearby camera through a small returning smile.",
+      "Skates and support are visible, with directional wheel light traces at the same locations as the sharp endpoints.",
+      "The rental counter and stacked boots locate the end-of-evening setting."
+    ],
+    "weaknesses": [
+      "Noise distribution is heavily concentrated on walls and resembles a conspicuous colored-speckle overlay; shaded satin remains smoother than intended.",
+      "Face and shirt are polished, reducing the rough spontaneous compact-digital impression."
+    ],
+    "control_calibration": "The portrayal supports ordinary warmth and presence at the frozen subtle sensual setting; this is a qualitative reading, not a measured intensity or user preference."
+  },
+  "inspection_artifacts": {
+    "full_original": "generated_original.png",
+    "jacket_native_crop": "native-review-jacket.png",
+    "wall_native_crop": "native-review-shadow-valid.png",
+    "skate_native_crop": "native-review-skate-contact.png",
+    "extraction_policy": "Cropping only for native pixel inspection; original generated output is unchanged. The earlier native-review-shadow.png crop contains a padded right edge and was not used as qualifying evidence."
+  }
+}

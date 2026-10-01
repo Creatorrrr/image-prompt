@@ -1,0 +1,173 @@
+{
+  "schema_version": "photo-keyword-target-ledger/v1",
+  "revision": "v2",
+  "pre_render": false,
+  "targets": [
+    {
+      "assertion_id": "agent_test_color_splash",
+      "dimension": "color",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "affected_dimensions": [
+        "color"
+      ],
+      "axes": {
+        "effect": "selective_color",
+        "carrier": "single_red_enamel_paperweight",
+        "remaining_picture": "true_grayscale"
+      },
+      "evidence": {
+        "visible_effect": "Render the entire picture in true grayscale except the single red enamel paperweight, which retains saturated crimson."
+      }
+    },
+    {
+      "assertion_id": "agent_test_lifted_blacks",
+      "dimension": "color",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "affected_dimensions": [
+        "color",
+        "lighting"
+      ],
+      "axes": {
+        "effect": "lifted_dark_tones",
+        "shadow_floor": "soft_charcoal",
+        "retained_detail": "hair_strands_and_shelf_wood"
+      },
+      "evidence": {
+        "visible_effect": "The darkest hair and shelving tones sit at soft charcoal gray with readable strand and wood detail, while highlights roll smoothly."
+      }
+    },
+    {
+      "assertion_id": "agent_test_skin_detail",
+      "dimension": "appearance",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "visual_1"
+      ],
+      "affected_dimensions": [
+        "appearance",
+        "color"
+      ],
+      "axes": {
+        "effect": "local_dodge_burn_tone_evening",
+        "skin_detail": "fine_pores_and_natural_variation",
+        "view": "clearly_readable_cheeks"
+      },
+      "evidence": {
+        "visible_effect": "Local dodge-and-burn evens the larger cheek tones while fine pores and tiny natural skin variations remain clearly visible."
+      }
+    }
+  ],
+  "target_source": "unchanged original frozen core advisory assertions",
+  "required_requester_assertions_added": false,
+  "selected_candidate_ids": [
+    "slot:color_grading:pe_red_object_splash",
+    "slot:color_grading:pe_lifted_black_floor",
+    "slot:skin_finish:pe_texture_preserving_tone_evening"
+  ],
+  "selected_visual_concept_ids": [
+    "visual-concept:pe_red_object_splash_relation",
+    "visual-concept:pe_lifted_black_floor_relation",
+    "visual-concept:pe_texture_preserving_tone_evening_relation"
+  ],
+  "selected_candidate_interpretations": [
+    {
+      "candidate_id": "slot:color_grading:pe_red_object_splash",
+      "artistic_interpretation": "Keep the physical repair consequence legible through the sole crimson carrier against a neutral scene.",
+      "transformation": "Bind the declared red object to the existing enamel paperweight under her fingertips and extend achromatic rendering across every other region.",
+      "prompt_evidence": "One declared red object retains its red color: the saturated crimson enamel paperweight beneath her fingertips. The rest of the picture is achromatic, including skin, lips, eyes, hair, shirt, paper, curtains and wood, all equal-channel neutral grayscale.",
+      "relation_evidence": {
+        "effect_owner": "One declared red object retains its red color: the saturated crimson enamel paperweight beneath her fingertips. The rest of the picture is achromatic, including skin, lips, eyes, hair, shirt, paper, curtains and wood, all equal-channel neutral grayscale."
+      }
+    },
+    {
+      "candidate_id": "slot:color_grading:pe_lifted_black_floor",
+      "artistic_interpretation": "Place every deepest hair root and shelving recess on a visible charcoal floor while retaining dark material information.",
+      "transformation": "Lift the global lower tonal endpoint across the existing roots and shelf recesses rather than substituting colored lighting or local haze.",
+      "prompt_evidence": "Dark image tones are lifted to visible gray, including the darkest hair roots and shelf recesses sitting distinctly at soft charcoal, approximately 45/255 at the darkest tonal endpoint. Dark subject information remains readable as separate strands and shelf grain against that elevated tonal floor.",
+      "relation_evidence": {
+        "effect_owner": "Dark image tones are lifted to visible gray, including the darkest hair roots and shelf recesses sitting distinctly at soft charcoal, approximately 45/255 at the darkest tonal endpoint. Dark subject information remains readable as separate strands and shelf grain against that elevated tonal floor."
+      }
+    },
+    {
+      "candidate_id": "slot:skin_finish:pe_texture_preserving_tone_evening",
+      "artistic_interpretation": "Balance broad cheek tones locally while keeping tactile fine skin texture on the same reference-guided fictional face.",
+      "transformation": "Use restrained local dodge-and-burn on the cheeks with crisp pores and small natural variations; retain the given visible facial configuration.",
+      "prompt_evidence": "Skin color transitions remain locally even through restrained local dodge-and-burn across her cheeks. Fine skin texture remains visible without facial-geometry alteration: fine pores and tiny natural variations stay crisp.",
+      "relation_evidence": {
+        "effect_owner": "Skin color transitions remain locally even through restrained local dodge-and-burn across her cheeks. Fine skin texture remains visible without facial-geometry alteration: fine pores and tiny natural variations stay crisp."
+      }
+    }
+  ],
+  "selected_profile_components": {
+    "pe_red_object_splash_relation": {
+      "component_1_phrase": "One declared red object retains its red color: the saturated crimson enamel paperweight beneath her fingertips.",
+      "component_2_phrase": "The rest of the picture is achromatic, including skin, lips, eyes, hair, shirt, paper, curtains and wood, all equal-channel neutral grayscale."
+    },
+    "pe_lifted_black_floor_relation": {
+      "component_1_phrase": "Dark image tones are lifted to visible gray, including the darkest hair roots and shelf recesses sitting distinctly at soft charcoal, approximately 45/255 at the darkest tonal endpoint.",
+      "component_2_phrase": "Dark subject information remains readable as separate strands and shelf grain against that elevated tonal floor."
+    },
+    "pe_texture_preserving_tone_evening_relation": {
+      "component_1_phrase": "Skin color transitions remain locally even through restrained local dodge-and-burn across her cheeks.",
+      "component_2_phrase": "Fine skin texture remains visible without facial-geometry alteration: fine pores and tiny natural variations stay crisp."
+    }
+  },
+  "selected_effective_contract_sha256": "371aaea627e9282c50f89fd188b26a1c590b80fe6869e38722b29bdc178fb7cd",
+  "pre_render_gate_checklist_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-c-tonal-skin/v2/pre_render_test_cases.json",
+  "test_grading": "all targets, all opted-in gates, physical gates and scoped reference guidance in this single saved image; partial_is_fail",
+  "pre_render_ledger_unchanged": true,
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-c-tonal-skin/v2/generated-original.png",
+  "result_sha256": "5b94e4215dfc4c31dbe0d270ef86d612a50b32ddee51b7920c7e4b3365756624",
+  "effect_results": [
+    {
+      "assertion_id": "agent_test_color_splash",
+      "authority": "original core advisory; chosen profile independently promotes explicit all-of gates",
+      "profile_id": "pe_red_object_splash_relation",
+      "status": "fail",
+      "required_gates": [
+        "vo_pe_red_object_splash_relation_1",
+        "vo_pe_red_object_splash_relation_2"
+      ],
+      "pixel_evidence": [
+        "At overall and native contact scale, the existing domed enamel paperweight beneath the right fingertips carries distinctly red paint; its circular base sits on the scenery paper. This is the declared colored carrier.",
+        "PARTIAL maps to FAIL: the environment and person are desaturated but broadly warm/sepia rather than achromatic. Native cheeks, paper, shirt and wood retain a systematic red-over-blue tint. Outside the generous prop mask, median RGB channel spread is 7/255, mean RGB 110.27/106.14/103.55, and 88.36% of pixels exceed spread 3. The true-grayscale remainder does not coexist with the red carrier."
+      ]
+    },
+    {
+      "assertion_id": "agent_test_lifted_blacks",
+      "authority": "original core advisory; chosen profile independently promotes explicit all-of gates",
+      "profile_id": "pe_lifted_black_floor_relation",
+      "status": "fail",
+      "required_gates": [
+        "vo_pe_lifted_black_floor_relation_1",
+        "vo_pe_lifted_black_floor_relation_2"
+      ],
+      "pixel_evidence": [
+        "PARTIAL maps to FAIL: larger dark surfaces are gray and some shadow separation improves, but the deepest root troughs still read near black rather than a consistently visible soft-charcoal floor; dark shelf recesses also sink well below the main charcoal level. The native root crop has p01 luminance 21.82 and p05 28.07, with 13.39% below 35, and the shelf crop p01 24.07. These diagnostics corroborate the visible compressed lower endpoint; the authorial approximate 45/255 guide is not treated as a requester lock or independent numeric gate.",
+        "Native hair-root inspection resolves separate dark strands and lighter strand boundaries around the part; shelving remains distinguishable from objects and shelf edges. Dark subject information is retained even though the globally lifted endpoint is incomplete."
+      ]
+    },
+    {
+      "assertion_id": "agent_test_skin_detail",
+      "authority": "original core advisory; chosen profile independently promotes explicit all-of gates",
+      "profile_id": "pe_texture_preserving_tone_evening_relation",
+      "status": "pass",
+      "required_gates": [
+        "vo_pe_texture_preserving_tone_evening_relation_1",
+        "vo_pe_texture_preserving_tone_evening_relation_2"
+      ],
+      "pixel_evidence": [
+        "At native cheek scale, the broad transitions from nose highlight through both cheek planes remain continuous and locally even. Small tonal variation persists rather than blotchy or posterized patches; this supports the requested visible result, not proof of a specific editing operation.",
+        "Native face and cheek crops retain fine pores and tiny irregular skin variations, distinct from the coarse textile and hair detail. Comparing the original reference with the generated face shows the guided bob, divided bangs, soft oval face, dark almond eyes, small nose and full lips without an obvious introduced facial-geometry distortion. This is a visible-appearance comparison and makes no identity or biometric claim."
+      ]
+    }
+  ],
+  "all_of_verdict": "FAIL",
+  "review_audit_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photo-editing-effects-20261001/qualification/arm-c-tonal-skin/v2/render_review_audit.json"
+}

@@ -1,0 +1,327 @@
+{
+  "contract_version": "photo-composed-prompt/v1",
+  "composer": "agent",
+  "pack_id": "e37041f43a64aad7",
+  "prompt_en": "A photographic scene of a fictional adult woman in a candid moment at an almost empty night roller rink beside the skate-return counter. Her face and hair are guided by the attached portrait: a short dark bob with fine parted bangs, a softly rounded facial contour, dark eyes and naturally pink lips. She glides left to right through her last slow lap, turning her head toward her rink-edge friend who is taking this photograph. A small, unguarded smile and the loose swing of her open slate satin blouson make the farewell feel close and spontaneous; an ivory fitted knit tank and dark tapered trousers belong naturally to the evening. Both quad-skate wheel sets meet the smooth floor, feet slightly staggered beneath softly bent knees, with her left arm held loosely outward for balance. The return counter and stacked rental skates mark where her glide is carrying her. Photograph her full body from nearby at chest height, with her face large enough to read and both skates inside the frame. The main impression is a compact-digital snapshot. Here near subjects receive direct frontal flash: her cheek and satin folds have crisp bright edges, with a short sharp floor shadow behind her skates and a dimmer rink. Slow-sync flash freezes one sharp body while a faint continuous exposure trail follows her moving sleeve and wheels toward screen left. Small cyan LEDs in the skate wheels leave short horizontal light streaks toward screen left behind the flash-frozen wheels; fixed rails and counter edges stay still. Dark image regions carry digital noise across the wall and shadowed sleeves and chest folds of her slate jacket. Dark image regions contain irregular brightness speckle, fine random light/dark pixels visibly scattered over those jacket gradients. Small colored speckles appear within dark image regions, including tiny green and magenta flecks in the same shaded jacket folds; speckles remain separate from large object colors. The speckle remains an image-plane artifact overlaying satin, rather than a woven pattern. Keep jacket shadows open enough to read this noisy texture. Noise fades into the bright face; skin texture, satin reflections and floor contact remain readable.",
+  "negative_en": "3D render look, broken facial features, fake-looking background, body distortion, illustration look, over-processed retouching, unrealistic hands, plastic-looking skin, cartoon style",
+  "chosen_candidate_ids": [
+    "bundle:pe_bundle_compact_direct_flash",
+    "slot:grain_profile:pe_digital_luma_noise",
+    "slot:motion:pe_flash_core_shutter_trace",
+    "integration:environment_binding",
+    "integration:event_timing"
+  ],
+  "chosen_visual_concept_ids": [
+    "visual-concept:pe_compact_flash_noisy_finish_relation",
+    "visual-concept:pe_digital_chroma_noise_relation",
+    "visual-concept:pe_digital_luma_noise_relation"
+  ],
+  "candidate_interpretations": [
+    {
+      "candidate_id": "bundle:pe_bundle_compact_direct_flash",
+      "artistic_interpretation": "The farewell glance belongs to a nearby flash portrait with a dim rink and a shared digital shadow texture.",
+      "transformation": "Translate all four bundle components to the woman and rink wall, with sparse green and magenta pixels crossing her slate satin shadows.",
+      "prompt_evidence": "her cheek and satin folds have crisp bright edges, with a short sharp floor shadow behind her skates and a dimmer rink",
+      "component_evidence": {
+        "component_1": "near subjects receive direct frontal flash: her cheek and satin folds have crisp bright edges",
+        "component_2": "Dark image regions carry digital noise across the wall and shadowed sleeves and chest folds of her slate jacket",
+        "component_3": "Small colored speckles appear within dark image regions, including tiny green and magenta flecks in the same shaded jacket folds",
+        "component_4": "speckles remain separate from large object colors"
+      },
+      "relation_evidence": {}
+    },
+    {
+      "candidate_id": "slot:grain_profile:pe_digital_luma_noise",
+      "artistic_interpretation": "The digital shadow field must visibly cross satin gradients rather than remain confined to a noisy wall.",
+      "transformation": "Specify random pixel brightness fluctuations on jacket shadows, alongside an image-plane ownership phrase that excludes a woven material reading.",
+      "prompt_evidence": "fine random light/dark pixels visibly scattered over those jacket gradients",
+      "relation_evidence": {
+        "effect_owner": "The speckle remains an image-plane artifact overlaying satin, rather than a woven pattern"
+      }
+    },
+    {
+      "candidate_id": "slot:motion:pe_flash_core_shutter_trace",
+      "artistic_interpretation": "A single flash-frozen skater remains distinct from earlier moving sleeve and wheel exposure.",
+      "transformation": "Retain the passed cyan wheel light streaks trailing toward screen left behind the sharp skate endpoints and stationary rink architecture.",
+      "prompt_evidence": "Small cyan LEDs in the skate wheels leave short horizontal light streaks toward screen left behind the flash-frozen wheels",
+      "relation_evidence": {
+        "effect_owner": "Small cyan LEDs in the skate wheels leave short horizontal light streaks toward screen left behind the flash-frozen wheels; fixed rails and counter edges stay still"
+      }
+    },
+    {
+      "candidate_id": "integration:environment_binding",
+      "artistic_interpretation": "The bright nearby subject shares the floor with her short cast shadow and a dimmer rink.",
+      "transformation": "Bind the frontal flash to the satin highlights and a specific shadow behind the grounded skates.",
+      "prompt_evidence": "a short sharp floor shadow behind her skates and a dimmer rink"
+    },
+    {
+      "candidate_id": "integration:event_timing",
+      "artistic_interpretation": "This glance happens during the final lap and carries the farewell through her ongoing glide.",
+      "transformation": "Keep the authored return counter, slow forward momentum and spontaneous smile as the visible event phase.",
+      "prompt_evidence": "She glides left to right through her last slow lap, turning her head toward her rink-edge friend who is taking this photograph"
+    }
+  ],
+  "coverage_assertions": {
+    "A photographic scene": [
+      "A photographic scene"
+    ],
+    "in a candid moment": [
+      "in a candid moment"
+    ],
+    "a fictional adult woman": [
+      "a fictional adult woman"
+    ],
+    "Her face and hair are guided by the attached portrait": [
+      "Her face and hair are guided by the attached portrait"
+    ]
+  },
+  "authorial_core_binding": {
+    "source_authorial_core_sha256": "e9e467f64fdfec75dd76dbbdda68d354590de8dcbb6cd6c05d8a424b20fd3a10",
+    "source_intent_lock_sha256": "254aaa065c032f996efe2644504b71ca03e91bfe9dfcb76386a3c0a1abcbe308",
+    "source_authorship_policy_sha256": "fa7aa84463254645e55f50123d88f58a940d795a819a33ec4722491318b64d18",
+    "preserved_anchor_ids": [
+      "core_concept",
+      "core_subject",
+      "core_event",
+      "reference_scope"
+    ],
+    "preserved_evidence": [],
+    "authorial_decisions": [
+      {
+        "dimension": "style",
+        "decision": "Expose fine luma and green/magenta chroma texture over both wall and shaded satin folds, with a quieter flash-bright face.",
+        "rationale": "The original advisory digital-noise test failed where jacket shadows stayed smooth; this intensifies visibility within its original style scope.",
+        "prompt_evidence": "Dark image regions contain irregular brightness speckle, fine random light/dark pixels visibly scattered over those jacket gradients"
+      },
+      {
+        "dimension": "lighting",
+        "decision": "Keep jacket shadows open while retaining hard frontal flash and a dimmer rink.",
+        "rationale": "Readable shadow gradients expose image-plane noise without replacing satin reflections or floor shadows.",
+        "prompt_evidence": "Keep jacket shadows open enough to read this noisy texture"
+      },
+      {
+        "dimension": "camera",
+        "decision": "Preserve cyan wheel light streaks behind the flash-frozen endpoints and stable counter and rails.",
+        "rationale": "This open-dimensional realization passed the original shutter-trace criteria and covers moving ambient light units.",
+        "prompt_evidence": "Small cyan LEDs in the skate wheels leave short horizontal light streaks toward screen left behind the flash-frozen wheels"
+      }
+    ]
+  },
+  "semantic_clarification_decisions": [
+    {
+      "clarification_id": "clarification:authorial-core:interpreted-intent",
+      "decision": "applied",
+      "rationale": "Retain original requester-owned anchors and the explicitly selected authorial editing definition.",
+      "prompt_evidence": "A photographic scene of a fictional adult woman in a candid moment"
+    },
+    {
+      "clarification_id": "clarification:visual-profile:deliberate_underarm_salience",
+      "decision": "rejected",
+      "rationale": "This optional alternate visual proposition adds unrelated action, emphasis or genre to the frozen roller-rink test; keep the existing direction."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:embodied_corruption_transition",
+      "decision": "rejected",
+      "rationale": "This optional alternate visual proposition adds unrelated action, emphasis or genre to the frozen roller-rink test; keep the existing direction."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:hands_free_supported_drink_load",
+      "decision": "rejected",
+      "rationale": "This optional alternate visual proposition adds unrelated action, emphasis or genre to the frozen roller-rink test; keep the existing direction."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:kuudere_composed_warmth_relation",
+      "decision": "rejected",
+      "rationale": "This optional alternate visual proposition adds unrelated action, emphasis or genre to the frozen roller-rink test; keep the existing direction."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:medium_native_glitch",
+      "decision": "rejected",
+      "rationale": "This optional alternate visual proposition adds unrelated action, emphasis or genre to the frozen roller-rink test; keep the existing direction."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pc_pc23_owner_relation",
+      "decision": "rejected",
+      "rationale": "This optional alternate visual proposition adds unrelated action, emphasis or genre to the frozen roller-rink test; keep the existing direction."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pe_compact_flash_noisy_finish_relation",
+      "decision": "applied",
+      "rationale": "Retain original requester-owned anchors and the explicitly selected authorial editing definition.",
+      "prompt_evidence": "near subjects receive direct frontal flash: her cheek and satin folds have crisp bright edges"
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pe_digital_chroma_noise_relation",
+      "decision": "applied",
+      "rationale": "Retain original requester-owned anchors and the explicitly selected authorial editing definition.",
+      "prompt_evidence": "Small colored speckles appear within dark image regions, including tiny green and magenta flecks in the same shaded jacket folds"
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pe_digital_luma_noise_relation",
+      "decision": "applied",
+      "rationale": "Retain original requester-owned anchors and the explicitly selected authorial editing definition.",
+      "prompt_evidence": "Dark image regions contain irregular brightness speckle, fine random light/dark pixels visibly scattered over those jacket gradients"
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pfe_back_face",
+      "decision": "rejected",
+      "rationale": "This optional alternate visual proposition adds unrelated action, emphasis or genre to the frozen roller-rink test; keep the existing direction."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:uncanny_coherence_mismatch",
+      "decision": "rejected",
+      "rationale": "This optional alternate visual proposition adds unrelated action, emphasis or genre to the frozen roller-rink test; keep the existing direction."
+    }
+  ],
+  "creative_augmentation_brief": {
+    "decisions": [
+      {
+        "candidate_id": "slot:composition:third_grid_off_center_subject",
+        "decision": "rejected",
+        "rationale": "Keep the same whole-body skate-contact, readable reference-guided face and restrained farewell direction; this candidate adds no necessary improvement for the original three-effect retest."
+      },
+      {
+        "candidate_id": "slot:subject_framing:upper_body_framing",
+        "decision": "rejected",
+        "rationale": "Keep the same whole-body skate-contact, readable reference-guided face and restrained farewell direction; this candidate adds no necessary improvement for the original three-effect retest."
+      },
+      {
+        "candidate_id": "slot:platform_framing:reels_ui_safe_negative_space",
+        "decision": "rejected",
+        "rationale": "Keep the same whole-body skate-contact, readable reference-guided face and restrained farewell direction; this candidate adds no necessary improvement for the original three-effect retest."
+      },
+      {
+        "candidate_id": "slot:shot_scale:extreme_wide_environment_scale",
+        "decision": "rejected",
+        "rationale": "Keep the same whole-body skate-contact, readable reference-guided face and restrained farewell direction; this candidate adds no necessary improvement for the original three-effect retest."
+      },
+      {
+        "candidate_id": "preset:social_vertical_pose_hook",
+        "decision": "rejected",
+        "rationale": "Keep the same whole-body skate-contact, readable reference-guided face and restrained farewell direction; this candidate adds no necessary improvement for the original three-effect retest."
+      }
+    ]
+  },
+  "adult_appeal_brief": {
+    "adult_subject_phrase": "a fictional adult woman",
+    "agency_phrase": "She glides left to right through her last slow lap",
+    "axes": {
+      "sensual": {
+        "intensity": 1,
+        "realization": "baseline",
+        "affected_dimensions": [],
+        "artistic_interpretation": "Her unguarded returning smile, open satin drape and nearby companion viewpoint express ordinary attraction as a subtle supporting quality within this moving farewell.",
+        "prompt_evidence": "A small, unguarded smile and the loose swing of her open slate satin blouson make the farewell feel close and spontaneous"
+      },
+      "fetish": {
+        "intensity": 0,
+        "realization": "baseline",
+        "affected_dimensions": [],
+        "artistic_interpretation": "The configured zero axis adds no focused erotic treatment. Ordinary grounded quad-skate contact and movement remain part of the pre-authored photographic scene.",
+        "prompt_evidence": "Both quad-skate wheel sets meet the smooth floor"
+      }
+    },
+    "blend": {
+      "emphasis": "sensual_led"
+    },
+    "contextual_review": [
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:gaze_engagement:same_adult_target_coordinated_gaze",
+        "reading": "relevant",
+        "reason": "The existing returned glance supports attention to her friend, but turning the entire body toward the camera weakens the ongoing rightward glide; retain baseline expression.",
+        "proposed_application": "Retain the modest head turn, smile and forward skating stance without adopting a new axis candidate.",
+        "requirement_evidence": []
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:garment_detail:pfe_cleavage_candidate",
+        "reading": "irrelevant",
+        "reason": "A central chest contour does not help the returning glance, flash/noise or wheel-trace test; subtle attraction is already carried by smile and satin swing.",
+        "proposed_application": "Not adopted.",
+        "requirement_evidence": []
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:wardrobe_style:ctx_c096",
+        "reading": "potential",
+        "reason": "A fitted T-shirt and jeans could carry ordinary warmth at sensual one, but replacing satin removes the common flash-and-shadow testing surface.",
+        "proposed_application": "A future open wardrobe alternative could replace trousers and top with jeans and a fitted T-shirt while retaining a satin outer layer; this retest keeps the original wardrobe.",
+        "requirement_evidence": []
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:mood:vulnerable_glamour",
+        "reading": "potential",
+        "reason": "A quieter caught expression could support a close farewell at the same intensity, but the unguarded smile already serves the friend relationship.",
+        "proposed_application": "A future expression-only refinement could soften the smile; retain the easy smile here.",
+        "requirement_evidence": []
+      }
+    ],
+    "contextual_comparison": "At the same sensual one/fetish zero strengths, coordinated gaze supports the head turn but full body rotation weakens the glide; T-shirt and jeans remove the reflective common test surface; vulnerable glamour shifts an easy farewell into a more directed register; chest-contour emphasis distracts from glance and motion. The original unguarded smile, satin swing and chest-height view remain coherent."
+  },
+  "embodiment_review": {
+    "source_contract_sha256": "4b1274500b847108c4255f2bd947c36a5fa9428a7755f3af915ef8e89b2c96ee",
+    "review": {
+      "contract_version": "photo-embodiment-review/v1",
+      "provenance": "agent_postcomposition",
+      "prompt_sha256": "a93e495b5879cabc50409629b218ee193a7956c480fc88226c9089889a8434f2",
+      "scope": "body_action",
+      "summary": "Re-reviewed the entire final full-body prompt. The same plausible adult human quad-skate glide is preserved. Added cyan LED points are mounted in moving skate wheels and trail toward screen left; they require no new body action, support or second subject. The torso remains above staggered grounded skates during a moderate head turn toward the photographer.",
+      "checks": {
+        "body_ownership": {
+          "status": "supported",
+          "reason": "The woman owns one pair of skates and one left balancing arm. Sleeve and wheel traces are temporal exposure artifacts associated with her sharp body. The wheel LEDs belong to her own skates; light traces denote their previous positions.",
+          "prompt_evidence": [
+            "Both quad-skate wheel sets meet the smooth floor",
+            "her left arm held loosely outward for balance"
+          ]
+        },
+        "joint_chain_and_reach": {
+          "status": "supported",
+          "reason": "Bent knees above slightly staggered feet support a slow glide. A head turn toward the rink edge can occur while her pelvis and skates continue along the glide.",
+          "prompt_evidence": [
+            "feet slightly staggered beneath softly bent knees",
+            "turning her head toward her rink-edge friend"
+          ]
+        },
+        "support_and_balance": {
+          "status": "supported",
+          "reason": "Both wheel sets are supported by the same smooth rink floor. Staggered feet and a loose extended arm make a stable coasting stance; no hand carries a load.",
+          "prompt_evidence": [
+            "Both quad-skate wheel sets meet the smooth floor",
+            "her left arm held loosely outward for balance"
+          ]
+        },
+        "contact_and_space": {
+          "status": "supported",
+          "reason": "The empty lane affords space for a slow rightward glide. The return counter is a background destination, not a support surface intersecting her body.",
+          "prompt_evidence": [
+            "She glides left to right through her last slow lap",
+            "The return counter and stacked rental skates mark where her glide is carrying her"
+          ]
+        },
+        "visibility_and_projection": {
+          "status": "supported",
+          "reason": "A nearby full-body chest-height view must retain both skate contacts and show the face after a modest turn. The intentional motion trail lies behind the sharp body toward screen left.",
+          "prompt_evidence": [
+            "Photograph her full body from nearby at chest height",
+            "both skates inside the frame",
+            "a faint continuous exposure trail follows her moving sleeve and wheels toward screen left",
+            "Small cyan LEDs in the skate wheels leave short horizontal light streaks toward screen left behind the flash-frozen wheels"
+          ]
+        }
+      }
+    }
+  },
+  "visual_obligation_evidence": {
+    "pe_compact_flash_noisy_finish_relation": {
+      "component_1_phrase": "near subjects receive direct frontal flash: her cheek and satin folds have crisp bright edges",
+      "component_2_phrase": "Dark image regions carry digital noise across the wall and shadowed sleeves and chest folds of her slate jacket"
+    },
+    "pe_digital_chroma_noise_relation": {
+      "component_1_phrase": "Small colored speckles appear within dark image regions, including tiny green and magenta flecks in the same shaded jacket folds",
+      "component_2_phrase": "speckles remain separate from large object colors"
+    },
+    "pe_digital_luma_noise_relation": {
+      "component_1_phrase": "Dark image regions contain irregular brightness speckle, fine random light/dark pixels visibly scattered over those jacket gradients",
+      "component_2_phrase": "The speckle remains an image-plane artifact overlaying satin, rather than a woven pattern"
+    }
+  }
+}
