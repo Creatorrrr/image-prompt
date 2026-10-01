@@ -66,6 +66,47 @@ class PhotoComposerViewTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             view.build_view(pack)
 
+    def test_review_sources_preserve_exact_request_and_lock_ownership(self):
+        pack = fixture()
+        pack["authorial_core"].update({
+            "source_request": "창문 빛만, 사람 없이.  Keep the ceramic bowl white.",
+            "user_exclusions": ["사람 없이"],
+            "user_definitions": [{"source_text": "창문 빛만", "meaning": "window light only"}],
+            "intent_lock": {
+                "locked_dimensions": ["subject", "event", "concept"],
+                "open_dimensions": ["lighting", "appearance"],
+                "semantic_anchors": [{"dimension": "appearance", "target": "main_subject",
+                                      "property": "surface.color", "source_text": "Keep the ceramic bowl white.",
+                                      "prompt_evidence": "the white ceramic bowl"}],
+            },
+        })
+        pack["pack_id"] = view.digest(dict(pack, pack_id=None))[:16]
+        overview = view.build_view(pack)
+        self.assertEqual(overview["requirements"]["authorial_core"], pack["authorial_core"])
+        self.assertEqual(overview["source_pack_sha256"], view.digest(pack))
+        view.verify_view(pack, overview)
+
+    def test_full_bundle_detail_cannot_drop_actor_or_relation_for_partial_use(self):
+        pack = fixture()
+        bundle = {
+            "id": "bundle:reflected-interaction", "concept_units": ["two adults reflected together"],
+            "components": [{"id": "first_actor"}, {"id": "second_actor"}],
+            "relations": [{"id": "shared_reflection", "subject": "first_actor",
+                           "object": "second_actor", "relation_type": "reflected_together"}],
+            "context_prerequisites": {"people": "required"},
+            "adoption": "atomic",
+        }
+        pack["candidate_bundles"] = {"candidates": [bundle]}
+        pack["pack_id"] = view.digest(dict(pack, pack_id=None))[:16]
+        detail = view.build_view(pack, [bundle["id"]])
+        self.assertEqual(detail["candidates"][0]["candidate"], bundle)
+        for field in ("components", "relations", "context_prerequisites", "adoption"):
+            modified = copy.deepcopy(detail)
+            del modified["candidates"][0]["candidate"][field]
+            with self.assertRaises(ValueError):
+                view.verify_view(pack, modified)
+        self.assertEqual(pack["candidate_bundles"]["candidates"][0], bundle)
+
     def test_unknown_candidate_and_legacy_pack_are_rejected(self):
         with self.assertRaises(ValueError):
             view.build_view(fixture(), ["absent"])

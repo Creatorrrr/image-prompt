@@ -4153,13 +4153,14 @@ def candidate_pack_summarize_slot_candidate(
 def candidate_pack_rows_with_selected(rows: Sequence[JsonDict], selected_id: str, limit: int) -> List[JsonDict]:
     selected_id = str(selected_id or "")
     normalized = [dict(row) for row in rows if isinstance(row, dict) and row.get("id")]
-    if selected_id and selected_id not in {str(row.get("id")) for row in normalized}:
-        selected_row = {"id": selected_id, "weight": 0.0, "selected_fallback": True}
-        if len(normalized) >= limit:
-            normalized = normalized[: max(0, limit - 1)] + [selected_row]
-        else:
-            normalized.append(selected_row)
-    return normalized[:limit]
+    limited = normalized[:max(0, limit)]
+    if limit > 0 and selected_id and selected_id not in {str(row.get("id")) for row in limited}:
+        # Preserve membership, not first-place preference. The selected row may
+        # exist below the cutoff; keep its eligibility/provenance in that case.
+        selected_row = next((row for row in normalized if str(row.get("id")) == selected_id),
+                            {"id": selected_id, "weight": 0.0, "selected_fallback": True})
+        limited = limited[:max(0, limit - 1)] + [selected_row]
+    return limited
 
 
 def candidate_pack_build_presets(
@@ -4258,6 +4259,79 @@ def candidate_pack_age_only_subject_match(entry: Entry, slot: str, core: JsonDic
     })
 
 
+def candidate_pack_direct_subject_categories(subject: str) -> list[str]:
+    """Recognize a narrow English direct human noun phrase, not a depicted person.
+
+    The existing category policy omits woman/man. Do not match an embedded
+    mention (statue/photo of a person), a compound object head (woman statue),
+    or a nonhuman adult. Unknown syntax remains unclassified.
+    """
+    match = re.match(r'^\s*(?:(?:a|an|the)\s+)?adult\s+(?:woman|man|women|men)\b(.*)$', subject, re.I)
+    if not match:
+        return []
+    suffix = match.group(1).strip()
+    if suffix and suffix != '.' and not re.match(r'^(?:in|with|who|whose|wearing)\b', suffix, re.I):
+        return []
+    # An image/container is not the main physical human. Restrict this check
+    # to the immediate "in a ... image" complement; a person carrying a photo
+    # or standing in a room with pictures is still a person.
+    representation = r'(?:photo(?:graph)?|picture|painting|poster|portrait|drawing|print|sculpture|statue)'
+    if re.match(r'^in\s+(?:(?:a|an|the)\s+)?(?:(?!(?:with|of|beside|containing|near|behind)\b)[a-z-]+\s+){0,3}' + representation + r'\b', suffix, re.I):
+        return []
+    if re.match(r'^in\s+(?:bronze|marble|stone|clay|wax)\s*(?:$|[,.])', suffix, re.I):
+        return []
+    return ['human']
+
+
+def candidate_pack_normalized_slot_contract(data: JsonDict, core: Optional[JsonDict], generation_contract: Optional[JsonDict]) -> JsonDict:
+    contract = generation_contract if isinstance(generation_contract, dict) else {}
+    if not core:
+        return contract
+    # Normalize applicability from the same frozen subject evidence used by
+    # intent routing, before any slot/entry guards. Never infer identity from
+    # the sampler's selected portrait or from a candidate's own tags.
+    frozen_constraints = resolve_request_intent_constraints(data, None, {}, authorial_core=core)
+    subject_categories = set(normalize_list(frozen_constraints.get("subject_categories")))
+    subject_categories.update(normalize_list((contract.get("intent_constraints") or {}).get("subject_categories")))
+    if not subject_categories:
+        subject_categories.update(candidate_pack_direct_subject_categories(str(core.get("subject") or "")))
+    no_people = bool(contract.get("no_people") or (contract.get("intent_constraints") or {}).get("no_people") or frozen_constraints.get("no_people"))
+    if no_people:
+        subject_categories.discard("human")
+    if contract:
+        contract = {**contract, "intent_constraints": {
+            **(contract.get("intent_constraints") or {}),
+            "subject_categories": sorted(subject_categories), "no_people": no_people,
+        }}
+        if len(subject_categories) == 1:
+            contract["subject_category"] = next(iter(subject_categories))
+        elif no_people and contract.get("subject_category") == "human":
+            contract["subject_category"] = "generic"
+    return contract
+
+
+def candidate_pack_entry_prior_blocked(
+    entry: Entry, slot: str, data: JsonDict, prior_contract: JsonDict,
+    prior_subject_tokens: Set[str], age_only_subject: bool,
+) -> bool:
+    """Identify options newly unlocked by frozen-subject normalization."""
+    if not prior_contract:
+        return False
+    reason = entry_block_reason(entry, slot, prior_contract)
+    prior_categories = set(normalize_list(
+        (prior_contract.get("intent_constraints") or {}).get("subject_categories")
+    ))
+    allowed_subjects = set(normalize_list(entry.get("for_any")))
+    return bool(
+        slot_block_reason(data, slot, prior_contract)
+        or (reason and not (age_only_subject and reason == "adult_not_allowed"))
+        or (slot == "subject" and prior_categories
+            and subject_category({"subject": entry}, data) not in prior_categories)
+        or (set(normalize_list(entry.get("exclude_for_any"))) & prior_subject_tokens)
+        or (allowed_subjects and not (allowed_subjects & prior_subject_tokens))
+    )
+
+
 def candidate_pack_rank_slot_rows(
     data: JsonDict,
     slot: str,
@@ -4269,6 +4343,8 @@ def candidate_pack_rank_slot_rows(
     global_query: str,
     generation_contract: Optional[JsonDict] = None,
     preset: Optional[JsonDict] = None,
+    *,
+    prior_contract: Optional[JsonDict] = None,
 ) -> tuple[List[JsonDict], Optional[JsonDict]]:
     """Fuse core-grounded hits after reapplying hard guards to new options."""
 
@@ -4280,12 +4356,19 @@ def candidate_pack_rank_slot_rows(
         return original, None
     base_rows = list(original)
     original_count = len(original)
+    prior_expansion_count = 0
+    normalization_only_ids: List[str] = []
     entries_by_id = {
         str(entry.get("id") or ""): entry
         for entry in data.get("slots", {}).get(slot, []) or []
         if isinstance(entry, dict) and str(entry.get("id") or "")
     }
-    contract = generation_contract if isinstance(generation_contract, dict) else {}
+    # Pack construction normalizes once; direct callers receive the same repair.
+    if prior_contract is None:
+        prior_contract = generation_contract if isinstance(generation_contract, dict) else {}
+        contract = candidate_pack_normalized_slot_contract(data, core, generation_contract)
+    else:
+        contract = generation_contract if isinstance(generation_contract, dict) else {}
     soft_policy = contract.get("soft_anchor_policy") or {}
     pool_trace = contract.get("candidate_pool_trace") or {}
     pool_record = pool_trace.get(slot) if isinstance(pool_trace, dict) else {}
@@ -4298,6 +4381,15 @@ def candidate_pack_rank_slot_rows(
         and not soft_anchor_atomic_pool_for_slot(soft_policy, slot)
         and not slot_block_reason(data, slot, contract)
     )
+    prior_subject_tokens = candidate_pack_relevance_tokens(str(core.get("subject") or "")) | set(
+        normalize_list((prior_contract.get("intent_constraints") or {}).get("subject_categories"))
+    )
+    picked_for_guards = {
+        other_slot: entry for other_slot, choice in choices.items()
+        if other_slot != slot and isinstance(choice, dict)
+        for entry in [candidate_pack_slot_entry_by_id(data, other_slot, str(choice.get("id") or ""))]
+        if entry is not None
+    }
     if can_expand:
         existing_ids = {str(row["id"]) for row in original}
         core_tokens = candidate_pack_relevance_tokens(global_query)
@@ -4348,6 +4440,13 @@ def candidate_pack_rank_slot_rows(
                 allow_adult_item=age_only_subject,
             ):
                 continue
+            # Preserve the previous eligible pool, but category normalization
+            # must not newly unlock a context-bound motif without its guards.
+            newly_eligible = candidate_pack_entry_prior_blocked(
+                entry, slot, data, prior_contract, prior_subject_tokens, age_only_subject,
+            )
+            if newly_eligible and not compatible_with_slot_context(slot, entry, picked_for_guards, data):
+                continue
             if set(normalize_list(entry.get("for_any"))) and not (
                 set(normalize_list(entry.get("for_any"))) & subject_tokens
             ):
@@ -4381,6 +4480,10 @@ def candidate_pack_rank_slot_rows(
                 "applicability_source": "slot_focus_hard_guarded_pool",
             })
             existing_ids.add(entry_id)
+            if newly_eligible:
+                normalization_only_ids.append(entry_id)
+            else:
+                prior_expansion_count += 1
     by_id = {str(row["id"]): row for row in original}
     doc_to_id = {f"slot:{slot}:{entry_id}": entry_id for entry_id in by_id}
     search_limit = min(len(doc_to_id), max(12, candidate_pack_slot_limit(slot) * 6))
@@ -4403,21 +4506,11 @@ def candidate_pack_rank_slot_rows(
     global_lane = [str(row["document_id"]) for row in global_hits]
     focus_lane = [str(row["document_id"]) for row in focus_hits]
     fused = reciprocal_rank_fusion(
-        ([global_lane, focus_lane] if len(original) > original_count
+        ([global_lane, focus_lane] if prior_expansion_count > 0
          else [original_lane, global_lane, focus_lane]),
         k=30,
     )
-    picked_others = {
-        other_slot: entry
-        for other_slot, choice in choices.items()
-        if other_slot != slot and isinstance(choice, dict)
-        for entry in [
-            candidate_pack_slot_entry_by_id(
-                data, other_slot, str(choice.get("id") or "")
-            )
-        ]
-        if entry is not None
-    }
+    picked_others = picked_for_guards
     context_tokens = picked_core_context_tokens(picked_others)
 
     def context_fit(entry_id: str) -> bool:
@@ -4454,7 +4547,7 @@ def candidate_pack_rank_slot_rows(
     ordered_ids: List[str] = []
     if selected_id in by_id:
         ordered_ids.append(selected_id)
-    if len(original) > original_count:
+    if prior_expansion_count > 0:
         # A broad catalog search should expose candidates supported by both
         # the focal and whole-scene query, without padding from arbitrary
         # sampler or source ordering. One focal fallback is allowed when the
@@ -4480,7 +4573,8 @@ def candidate_pack_rank_slot_rows(
                 break
         ordered_ids.extend(doc_to_id[str(row["document_id"])] for row in ranked_docs)
         ordered_ids.extend(str(row["id"]) for row in original)
-    deduped_ids = list(dict.fromkeys(ordered_ids))
+    deduped_ids = [entry_id for entry_id in dict.fromkeys(ordered_ids)
+                   if entry_id not in normalization_only_ids or f"slot:{slot}:{entry_id}" in focus_lane]
     metadata: JsonDict = {
         "contract_version": "photo-slot-query-fusion/v1",
         "method": "eligible_pool_global_and_slot_bm25f_with_scene_rerank",
@@ -4506,6 +4600,7 @@ def candidate_pack_build_slots(
     slots: JsonDict = {}
     choices = result.get("choices") if isinstance(result.get("choices"), dict) else {}
     contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
+    normalized_contract = candidate_pack_normalized_slot_contract(data, authorial_core, contract)
     pool_trace = contract.get("candidate_pool_trace") if isinstance(contract.get("candidate_pool_trace"), dict) else {}
     soft_policy = contract.get("soft_anchor_policy") if isinstance(contract.get("soft_anchor_policy"), dict) else {}
     semantic_index = data.get(SEMANTIC_INDEX_DATA_KEY)
@@ -4587,7 +4682,7 @@ def candidate_pack_build_slots(
         source_rows, slot_retrieval = candidate_pack_rank_slot_rows(
             data, slot, source_rows, selected_id, choices,
             authorial_core, bm25f_payload, global_query,
-            contract, preset,
+            normalized_contract, preset, prior_contract=contract,
         )
         rows = candidate_pack_rows_with_selected(source_rows, selected_id, min(limit, available))
         if not rows:
@@ -4706,7 +4801,7 @@ def candidate_pack_build_slots(
         rows, slot_retrieval = candidate_pack_rank_slot_rows(
             data, str(slot), rows, raw_id, choices,
             authorial_core, bm25f_payload, global_query,
-            contract, preset,
+            normalized_contract, preset, prior_contract=contract,
         )
         ranked_count = len(rows)
         rows = candidate_pack_rows_with_selected(rows, raw_id, min(limit, remaining))
@@ -6294,7 +6389,7 @@ def candidate_pack_contextual_adult_appeal(
         "subject_category": snapshot["context"]["subject_category"],
         "preset_domains": [],
         "adult_allowed": contract["eligibility"]["status"] == "eligible",
-        "intent_constraints": authorial_core_generation_constraints(core),
+        "intent_constraints": authorial_core_generation_constraints(core, creative_control_snapshot=snapshot),
     }
     exclusions = [
         candidate_pack_relevance_tokens(value) for value in core.get("user_exclusions") or []
@@ -9312,12 +9407,15 @@ def compile_render_repair_contract(core: Any) -> Optional[JsonDict]:
     return contract
 
 
-def authorial_core_generation_constraints(core: JsonDict) -> JsonDict:
+def authorial_core_generation_constraints(
+    core: JsonDict, *, creative_control_snapshot: Optional[JsonDict] = None,
+) -> JsonDict:
     """Translate only explicit structural exclusions into existing guards.
 
-    Exclusions never become positive retrieval text.  Reusing the established
-    no-people parser keeps this adapter generic and avoids introducing a new
-    adult/safety classifier.
+    Exclusions never become positive retrieval text. A supplied pre-core
+    snapshot must bind the same request/core and may only strengthen this
+    existing guard through its explicit no_people context. Neither nonhuman
+    category inference nor candidate metadata supplies that boolean.
     """
 
     exclusions = [
@@ -9336,10 +9434,28 @@ def authorial_core_generation_constraints(core: JsonDict) -> JsonDict:
             f"{exclusion}なし",
         )
     )
+    exclusion_no_people = no_people
+    bound_no_people = False
+    if creative_control_snapshot is not None:
+        if core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
+            raise ValueError("bound creative context requires a v3 authorial core")
+        # Context is an explicit requester interpretation frozen before local
+        # retrieval, not a candidate-derived or inferred subject preference.
+        creative_controls.validate(creative_control_snapshot, core.get("source_request"))
+        if core.get("creative_controls_sha256") != creative_control_snapshot["canonical_sha256"]:
+            raise ValueError("authorial core does not bind the supplied pre-core creative controls")
+        bound_no_people = (creative_control_snapshot.get("context") or {}).get("no_people") is True
+    no_people = exclusion_no_people or bound_no_people
     dimension_scope = authorial_core_intent_dimension_scope(core)
     return {
         "no_people": no_people,
-        "source": "explicit_authorial_core_user_exclusions",
+        "source": ("explicit_request_exclusions_and_bound_creative_context" if bound_no_people
+                   else "explicit_authorial_core_user_exclusions"),
+        **({"no_people_sources": [
+                *(["user_exclusions"] if exclusion_no_people else []),
+                "bound_creative_controls.context.no_people",
+            ], "creative_controls_sha256": creative_control_snapshot["canonical_sha256"]}
+           if bound_no_people else {}),
         "excluded_term_count": len(exclusions),
         **(
             {
@@ -14636,7 +14752,7 @@ def candidate_pack_candidate_bundles(data: JsonDict, pack: JsonDict) -> JsonDict
     constraints = {
         "subject_category": "generic", "preset_domains": [],
         "adult_allowed": candidate_pack_visual_obligation_adult_context([{"text": query}], None),
-        "intent_constraints": authorial_core_generation_constraints(core),
+        "intent_constraints": authorial_core_generation_constraints(core, creative_control_snapshot=pack.get("creative_controls")),
     }
     admissions: JsonDict = {}
     for bundle in data.get("candidate_bundles") or []:
@@ -24046,8 +24162,12 @@ def generate_once(
         raise ValueError("--intent cannot be used with --selection-mode rule")
     retrieval_text: Optional[str] = None
     retrieval_provenance: Optional[JsonDict] = None
+    frozen_generation_constraints = None
     if isinstance(authorial_core, dict):
         retrieval_text, retrieval_provenance = authorial_core_retrieval_text(authorial_core, intent)
+        frozen_generation_constraints = authorial_core_generation_constraints(
+            authorial_core, creative_control_snapshot=creative_control_snapshot,
+        )
     try:
         semantic_context = make_semantic_context(
             data,
@@ -24087,6 +24207,28 @@ def generate_once(
             )
         else:
             raise
+    if semantic_context is not None and (frozen_generation_constraints or {}).get("no_people"):
+        # Explicit frozen no-people meaning must reach preset selection too,
+        # not only the later slot guards. Never let a false context weaken it.
+        # Keep the existing user/default routing boundary. Re-resolving the
+        # entire core here would activate unrelated domains/scoped routes for
+        # a default intent and could empty the guarded preset pool.
+        constraints = copy.deepcopy(semantic_context.get("intent_constraints") or {})
+        constraints["no_people"] = True
+        if "subject_categories" in constraints:
+            constraints["subject_categories"] = [category for category in constraints["subject_categories"]
+                                                  if category != "human"]
+        human_entry_ids = {str(row.get("value") or "") for row in constraints.get("matched") or []
+                           if row.get("axis") == "subject_entry" and row.get("category") == "human"}
+        if "subject_entry_ids" in constraints:
+            constraints["subject_entry_ids"] = [entry_id for entry_id in constraints["subject_entry_ids"]
+                                                if entry_id not in human_entry_ids]
+        if "matched" in constraints:
+            constraints["matched"] = [row for row in constraints["matched"] if not (
+                (row.get("axis") == "subject_category" and row.get("value") == "human")
+                or (row.get("axis") == "subject_entry" and row.get("category") == "human")
+            )]
+        semantic_context["intent_constraints"] = constraints
     routed_preset_id = preset_id
     preset = choose_preset(
         data, rng, routed_preset_id, semantic_context, soft_anchor_spec=soft_anchor_spec
@@ -24113,9 +24255,7 @@ def generate_once(
     )
     if isinstance(authorial_core, dict):
         generation_contract["_authorial_core"] = authorial_core
-        generation_contract["authorial_core_constraints"] = authorial_core_generation_constraints(
-            authorial_core
-        )
+        generation_contract["authorial_core_constraints"] = frozen_generation_constraints
         generation_contract["intent_constraints"] = resolve_request_intent_constraints(
             data,
             semantic_context if intent_source == "user" else None,
