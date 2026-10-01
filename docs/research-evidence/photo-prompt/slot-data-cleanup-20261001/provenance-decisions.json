@@ -1,0 +1,182 @@
+{
+  "method": {
+    "mode": "read-only audit; no repository data edited",
+    "merge_loader": "prompt_generator.load_json(photo_prompt_tags.json)",
+    "selection": "Explicit 85-row bounded inventory: stage 2 = 30 (10 per slot), stage 3 = 30 (15 per slot), stage 4 = 25 (all 13 merged lens artifacts, 7 image texture entries, 5 film emulation entries)",
+    "counts_by_stage": {
+      "2": 30,
+      "3": 30,
+      "4": 25
+    },
+    "reviewed_surfaces": [
+      "all full merged-entry fields",
+      "all raw owner-entry fields",
+      "labels",
+      "aliases",
+      "keywords",
+      "embedding_text",
+      "applicability",
+      "facets",
+      "contextual_usage and existing-slot context extension provenance",
+      "related unchanged visual obligation contracts",
+      "targeted git introduction history"
+    ],
+    "out_of_scope": [
+      "schema changes",
+      "retrieval code changes",
+      "runtime flags",
+      "automatic slot migration",
+      "changing candidate identity based only on ID or slot name"
+    ],
+    "important_limit": "No claim of measured ranking or visual-quality improvement; recommendations require normal data/index/test workflow before runtime use."
+  },
+  "intentional_specificity_no_change": [
+    {
+      "slot": "gaze_target",
+      "id": "gaze_to_distant_horizon",
+      "decision": "keep",
+      "reason": "Preserve royal exile/future-rule specificity. It was present at introduction in a princess expansion, and tags/keywords independently establish royal ownership. A generic-looking ID is not authority to erase it.",
+      "introduction_commit": "2816b21e56789f337ef2fb212d6f866f7ec29b3e",
+      "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json"
+    },
+    {
+      "slot": "garment_detail",
+      "id": "landscape_embroidery_hem",
+      "decision": "keep",
+      "reason": "Preserve blue-gray hanbok, silver-white thread and mountain/stream/pine/waterfall/wave details. Introduced together with modern_hanbok_valley_fullbody preset and core garment anchor.",
+      "introduction_commit": "5439b99",
+      "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json"
+    },
+    {
+      "slot": "surface_material",
+      "id": "worn_alloy_surface",
+      "decision": "keep",
+      "reason": "Preserve robot casing, scratches/dents/serial marks and machine-use specificity. Introduced with robot presets and retains explicit robot proof/degree facets; object applicability permits depicting the machine as an object.",
+      "introduction_commit": "156dd35",
+      "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json"
+    },
+    {
+      "slot": "surface_material",
+      "id": "brushed_aluminum_panel_surface",
+      "decision": "keep",
+      "reason": "Preserve robot-casing ownership because robot_proof_family independently confirms it; no evidence that the general label is intended to erase that scope.",
+      "introduction_commit": null,
+      "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json"
+    },
+    {
+      "slot": "surface_material",
+      "id": "carbon_fiber_weave_surface",
+      "decision": "keep",
+      "reason": "Preserve robotic limbs, drones and mecha shells; robot_proof_family independently supports domain ownership.",
+      "introduction_commit": null,
+      "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json"
+    },
+    {
+      "slot": "surface_material",
+      "id": "rusted_steel_panel_surface",
+      "decision": "keep",
+      "reason": "Preserve robot age/exposure/abandonment because robot_condition=decommissioned_abandoned and wear_decay prove authored specificity.",
+      "introduction_commit": null,
+      "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json"
+    },
+    {
+      "slot": "lens_artifact",
+      "id": "rain_streaks_on_glass",
+      "decision": "keep",
+      "reason": "Preserve glass-or-lens ownership: ko, en and embedding all explicitly permit both. Do not reinterpret slot name as lens-only.",
+      "introduction_commit": "bd3e896",
+      "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json"
+    },
+    {
+      "slot": "texture",
+      "id": "halation",
+      "decision": "keep",
+      "reason": "Preserve combined film halation plus soft light bloom: both labels explicitly declare that combination. It is a distinct authored candidate from the narrower lighting-cluster halation entry.",
+      "introduction_commit": "3e6d800",
+      "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json"
+    },
+    {
+      "slot": "lens_artifact",
+      "id": "rb_optional_lens_falloff_candidate",
+      "decision": "keep",
+      "reason": "Preserve mild falloff and no solid border/local illumination replacement; these are directly visible extent/ownership conditions rather than unrelated substitutes.",
+      "introduction_commit": null,
+      "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_realistic_background_extension.json"
+    },
+    {
+      "slot": "lens_artifact",
+      "id": "rb_optional_chromatic_fringe_candidate",
+      "decision": "keep",
+      "reason": "Preserve selected-peripheral-edge extent and separation from scene illumination; this describes the actual ownership of the optical effect.",
+      "introduction_commit": null,
+      "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_realistic_background_extension.json"
+    },
+    {
+      "slot": "gaze_engagement",
+      "id": "eyes_closed_serene",
+      "decision": "keep",
+      "reason": "Preserve no direct eye contact: this is a geometric consequence of the closed-eye concept, not unrelated counterexample contamination.",
+      "introduction_commit": null,
+      "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json"
+    }
+  ],
+  "known_history": {
+    "gaze_target.gaze_to_distant_horizon": {
+      "commit": "2816b21e56789f337ef2fb212d6f866f7ec29b3e",
+      "subject": "Expand princess prompt facets and anchors",
+      "observed": "Same royal/princess tags and exile/future-rule embedding at introduction"
+    },
+    "garment_detail.landscape_embroidery_hem": {
+      "commit": "5439b99",
+      "subject": "Harden photo prompt artifact handling",
+      "observed": "Same full blue-gray hanbok embroidery embedding, plus modern_hanbok_valley_fullbody preset filters and core anchor"
+    },
+    "surface_material.worn_alloy_surface": {
+      "commit": "156dd35",
+      "subject": "Expand robot prompt presets and tags",
+      "observed": "Introduced inside robot-specific preset expansion"
+    },
+    "lens_artifact.rain_streaks_on_glass": {
+      "commit": "bd3e896",
+      "subject": "Expand natural portrait prompt coverage"
+    },
+    "film_emulation.lit_filmic_grain_rolloff_halation": {
+      "commit": "215be788525890eecc38114838b457cec584f5bf",
+      "subject": "Update image prompt generation workflow",
+      "observed": "Lighting extension cluster explicitly stores confusion_boundaries separately"
+    },
+    "expression.candid_laugh": {
+      "commit": "27fed81",
+      "subject": "Add semantic photo prompt selection"
+    },
+    "expression.eyes_closed_serene": {
+      "commit": "27fed81",
+      "subject": "Add semantic photo prompt selection"
+    },
+    "surface_material.white_marble_surface": {
+      "commit": "27fed81",
+      "subject": "Add semantic photo prompt selection"
+    },
+    "gaze_engagement.same_adult_target_coordinated_gaze": {
+      "commit": "81eabea",
+      "subject": "Refine image prompt implementation"
+    },
+    "surface_material.athletic_mesh_open_structure": {
+      "commit": "61e7bf4",
+      "subject": "Update image prompt workflow"
+    }
+  },
+  "summary": {
+    "inventoried_entries": 85,
+    "recommended_entries": 28,
+    "recommended_fields": 33,
+    "recommendations_by_stage": {
+      "2": 6,
+      "3": 17,
+      "4": 5
+    },
+    "unchanged_entries": 57,
+    "unmodified_render_contracts": true,
+    "repository_edits_performed": false
+  }
+}
