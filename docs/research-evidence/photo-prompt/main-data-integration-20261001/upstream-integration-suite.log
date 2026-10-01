@@ -1,0 +1,20 @@
+................E..................................................
+======================================================================
+ERROR: test_maintenance_prose_is_external_and_hash_bound (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_maintenance_prose_is_external_and_hash_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/tests/test_photo_candidate_semantics.py", line 119, in test_maintenance_prose_is_external_and_hash_bound
+    record = json.loads((ROOT / "docs/research-evidence/photo-prompt/extension-maintenance" / (reference["record_id"] + ".json")).read_text())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/ce8f20680f5a/image-prompt/docs/research-evidence/photo-prompt/extension-maintenance/photo_prompt_tactile_reality_extension_20260930.json'
+
+----------------------------------------------------------------------
+Ran 67 tests in 858.660s
+
+FAILED (errors=1)
