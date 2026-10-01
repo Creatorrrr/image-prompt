@@ -29,14 +29,6 @@ _JAPANESE_OR_HAN_RE = re.compile(
     r"^[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff]+$"
 )
 
-# Query-only damping deliberately covers just articles and copulas. Negation,
-# state, possession, spatial relations, and logical alternatives remain intact:
-# e.g. not/no, on/off, with/without, from/under, has, and/or. This is not a
-# tokenizer stop list and never changes the indexed documents or their recipe.
-_ENGLISH_QUERY_FUNCTION_WORDS = frozenset({
-    "a", "an", "the", "is", "are", "was", "were", "be", "been", "being",
-})
-
 # Longest-first removal keeps a full eojeol and emits a conservative stem.
 # It handles common particles and request-form endings without treating an
 # arbitrary substring inside another Korean noun as an independent term.
@@ -319,29 +311,7 @@ def _query_term_weights(
     *,
     policy: Mapping[str, Any],
     lexicon: Sequence[str],
-    query_term_cap: Optional[float] = None,
-    function_word_weight: float = 1.0,
 ) -> Counter[str]:
-    """Weight query terms without mutating the indexed text or stored policy.
-
-    The optional cap applies to each token's summed, field-weighted query
-    contribution across all fields and values. Function-word damping happens
-    after that cap, so repetition cannot restore a damped word's full weight.
-    Defaults retain the original unbounded query weighting exactly.
-    """
-
-    if query_term_cap is not None:
-        if isinstance(query_term_cap, bool):
-            raise ValueError("query_term_cap must be finite and greater than zero")
-        query_term_cap = float(query_term_cap)
-        if not math.isfinite(query_term_cap) or query_term_cap <= 0:
-            raise ValueError("query_term_cap must be finite and greater than zero")
-    if isinstance(function_word_weight, bool):
-        raise ValueError("function_word_weight must be finite and between zero and one")
-    function_word_weight = float(function_word_weight)
-    if not math.isfinite(function_word_weight) or not 0 <= function_word_weight <= 1:
-        raise ValueError("function_word_weight must be finite and between zero and one")
-
     weights: Counter[str] = Counter()
     configured = policy.get("query_fields")
     query_weights = configured if isinstance(configured, Mapping) else {}
@@ -352,17 +322,6 @@ def _query_term_weights(
         for value in _as_values(raw_value):
             for token in tokenize_bm25f_text(value, lexicon=lexicon):
                 weights[token] += field_weight
-    if query_term_cap is not None or function_word_weight != 1.0:
-        for token in list(weights):
-            weight = weights[token]
-            if query_term_cap is not None:
-                weight = min(weight, query_term_cap)
-            if token in _ENGLISH_QUERY_FUNCTION_WORDS:
-                weight *= function_word_weight
-            if weight > 0:
-                weights[token] = weight
-            else:
-                del weights[token]
     return weights
 
 
@@ -373,15 +332,8 @@ def rank_bm25f(
     limit: Optional[int] = None,
     allowed_ids: Optional[Iterable[str]] = None,
     blocked_ids: Iterable[str] = (),
-    query_term_cap: Optional[float] = None,
-    function_word_weight: float = 1.0,
 ) -> list[dict[str, Any]]:
-    """Return private BM25F ranks with deterministic document-ID tie breaks.
-
-    Optional query-only controls cap repeated, field-weighted token evidence
-    and damp a narrow English article/copula list. Neither changes the index;
-    omitting both preserves the original ranking and score behavior.
-    """
+    """Return private BM25F ranks with deterministic document-ID tie breaks."""
 
     if payload.get("recipe_version") != BM25F_INDEX_RECIPE_VERSION:
         raise ValueError("unsupported BM25F index recipe_version")
@@ -394,8 +346,6 @@ def rank_bm25f(
         query_fields,
         policy=policy,
         lexicon=lexicon,
-        query_term_cap=query_term_cap,
-        function_word_weight=function_word_weight,
     )
     if not query_terms:
         return []
