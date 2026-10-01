@@ -1,0 +1,13 @@
+# Preserve the existing non-sacred-record contrast
+
+Baseline: remote-verified5d5fe18c3960210b5c8adce7da0af7a71743ef17. Freeze10 rows: one clear source-unit proposal, seven deliberately retained punk keyword/bundle rows and two unchanged capture-context controls. Three unresolved long narrative cores are excluded. A length threshold by itself does not justify a correction.
+
+The target's existing25-word English sentence and matching Korean label distinguish fictional non-sacred numbering/maps/handoff packets/material traces from living rites/divine names/sacred objects as the means of showing jurisdiction and record reliability. With no authored units or keywords, semantic_source is empty. Actual production pack/detail preflight shows only unordered terms, including sacred vocabulary without the intact contrast. Adding concept_units containing that same English sentence verbatim restores the complete original meaning in the actual final semantic overlay. Labels,aliases,embedding text,tags,facets,weights and guards remain untouched; no cap/parser/schema/runtime change is proposed. This is controlled serialization evidence, not natural retrieval or adoption proof.
+
+Original research records explicitly separate fictional record evidence from living practice and preserve cultural/provenance boundaries. Do not make sacred content or vocabulary globally forbidden: an independent museum display can coexist, while records remain the selected evidence mechanism. No practice instructions, authenticity or faith inference is introduced.
+
+Six exact independently authored probes cover the positive record process, different actual-rite practice and coexistence in English/Korean. Two authored ordinary capture controls give eight diagnostics total. All are inspectable, not blind. Measure both retrieval methods against the frozen baseline and preserve every result; investigate harms and weigh the concrete restored public meaning independently. Restore rather than tune after freeze if acceptance is unsupported.
+
+One document text changes. Nominal nine uncached inputs (one document,eight queries), maximum10 attempts and $0.016384 conservative additional upper over tracked$1.1517952 within$10. Reuse compatible exact caches, record all attempted calls and disable automatic retries. No new image generation or rendered-quality claim.
+
+Verify actual public pack and detail, nine exact keeps/all other raw fields, source/index/cache/bundle integrity, relevant source/contract/retrieval tests and independent review. Commit,pull main preserving both intents,revalidate unchanged or merged source/index,normalpush and verify remote/checks. CJK source has no maintenance_ref; do not invent a new one.
