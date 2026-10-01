@@ -408,9 +408,7 @@ When `render_repair` exists, add `render_repair_evidence` with its exact `source
 
 ### One bounded semantic self-review
 
-Before final binding and audit, compare the actual complete `prompt_en` with the raw active request, requester-owned locks and exclusions, baseline, active controls, and every adopted candidate's required meaning. Inspect implications and combinations as well as literal phrases: keeping a lock phrase does not excuse contradicting it elsewhere. Repair only a concrete, evidenced mismatch introduced by composition, using the smallest change within open scope; preserve compatible creativity and do not rewrite merely for a reviewer's stylistic preference. If no such mismatch is found, retain the draft unchanged. For comparison or debugging, preserve the first draft and the reviewed version with the source constraint, conflicting phrase, and repair reason in separate run artifacts, not new composed fields.
-
-Do one review-and-repair pass, then refresh affected evidence/review hashes and run the existing audits. An unresolved required contradiction blocks that version and uses the existing rebuild/clarification path; it does not justify an endless self-review loop. Uncertainty about an optional addition warrants withholding that addition or retaining the grounded baseline, not declaring it universally banned or automatically safe. This agent review is fallible, not a semantic guarantee or pixel check. Normal composition adds no external model/API dependency. The experimental natural-language constraint gate remains explicitly opt-in (`--semantic-constraint-policy structured-v1`); its default is `off`.
+Compare the complete final prompt with the active requester meaning, locks, exclusions and adopted candidate contracts once. Repair only a concrete, evidenced contradiction within open scope; otherwise retain the draft. Refresh any affected bindings and run the existing audits; an unresolved required contradiction uses the existing rebuild/clarification path, not repeated review loops or a claim of semantic certainty.
 
 ## Phase 4 — Audit Before Image Generation
 

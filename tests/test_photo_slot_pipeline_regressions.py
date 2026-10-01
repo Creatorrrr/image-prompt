@@ -1,8 +1,9 @@
-"""Real sampler-to-public-pack contracts for the two retrieval policies.
+"""Real sampler-to-public-pack contracts for stable slot retrieval.
 
-These are lexical and explicit static-vector integration regressions, not
-retrieval-quality or rendered-image evaluations. No expected candidate IDs select the fixtures or influence
-queries. Embedding entry points are blocked so these tests cannot incur API cost.
+These lexical and explicit static-vector integration regressions check candidate
+contracts, not retrieval quality or rendered images. Expected candidate IDs do
+not select fixtures or influence queries. Embedding entry points are blocked so
+these tests cannot incur API cost.
 """
 from __future__ import annotations
 
@@ -90,7 +91,6 @@ class PhotoSlotPipelineRegressionTests(unittest.TestCase):
         for name in ('embed_texts_with_gemini', 'embed_single_semantic_text', 'cached_gemini_client'):
             cls.guards.enter_context(patch.object(g, name, side_effect=AssertionError('network/model calls forbidden in lexical pipeline tests')))
         cls.data = v6.PhotoAuthorialCoreV6Tests().runtime_data()
-        cls.data.pop(g.SLOT_QUERY_VECTORS_DATA_KEY, None)
         cls.data.pop(g.VISUAL_PROFILE_QUERY_VECTORS_DATA_KEY, None)
         cls.results = {}
         cls.cores = {}
@@ -126,18 +126,16 @@ class PhotoSlotPipelineRegressionTests(unittest.TestCase):
             result['provenance']['embodiment_preflight'] = photo_embodiment.build_policy(core, fixtures.review(core['baseline_prompt_en']))
             cls.cores[name] = core
             cls.results[name] = result
-            for policy in ('stable', 'evidence-union'):
-                cls.packs[name, policy] = cls.build_observed(result, policy)
+            cls.packs[name] = cls.build_observed(result)
 
     @classmethod
-    def build_observed(cls, result, policy, data_override=None):
+    def build_observed(cls, result, data_override=None):
         observed = {}
         original = g.candidate_pack_project
         def observe(pack, *args, **kwargs):
             observed['private'] = copy.deepcopy(pack)
             return original(pack, *args, **kwargs)
         data = dict(cls.data if data_override is None else data_override)
-        data[g.SLOT_RETRIEVAL_POLICY_DATA_KEY] = policy
         with patch.object(g, 'candidate_pack_project', side_effect=observe):
             observed['public'] = g.build_candidate_pack(copy.deepcopy(result), data, 'v6')
         return observed
@@ -161,8 +159,8 @@ class PhotoSlotPipelineRegressionTests(unittest.TestCase):
                         self.assertIn(row['candidate_id'], all_ids)
 
     def test_requester_locks_remain_immutable_and_public_rank_fields_are_private(self):
-        for (case, policy), observed in self.packs.items():
-            with self.subTest(case=case, policy=policy):
+        for case, observed in self.packs.items():
+            with self.subTest(case=case):
                 pack = observed['public']
                 core = self.cores[case]
                 self.assertEqual(pack['authorial_core']['canonical_sha256'], core['canonical_sha256'])
@@ -177,46 +175,40 @@ class PhotoSlotPipelineRegressionTests(unittest.TestCase):
                         self.assertFalse({'selected_by_sampler', 'probability', 'weight', 'score', 'scores', '_v6_semantic_source'} & set(candidate))
 
     def test_audit_noise_does_not_enter_retrieval_or_public_candidate_membership(self):
-        for policy in ('stable', 'evidence-union'):
-            with self.subTest(policy=policy):
-                result = copy.deepcopy(self.results['reader'])
-                noise = 'AUDIT_ONLY_DO_NOT_USE ultraviolet neon dancing warrior extreme fisheye aerial camera'
-                result['semantic_trace']['private_audit_only'] = {'text': noise}
-                result['provenance']['private_audit_only'] = {'text': noise}
-                changed = self.build_observed(result, policy)
-                self.assertEqual(_slot_ids(changed['public']), _slot_ids(self.packs['reader', policy]['public']))
-                self.assertNotIn(noise, str(changed['public']))
+        result = copy.deepcopy(self.results['reader'])
+        noise = 'AUDIT_ONLY_DO_NOT_USE ultraviolet neon dancing warrior extreme fisheye aerial camera'
+        result['semantic_trace']['private_audit_only'] = {'text': noise}
+        result['provenance']['private_audit_only'] = {'text': noise}
+        changed = self.build_observed(result)
+        self.assertEqual(_slot_ids(changed['public']), _slot_ids(self.packs['reader']['public']))
+        self.assertNotIn(noise, str(changed['public']))
 
     def test_no_people_object_request_does_not_gain_human_pose_candidates(self):
-        for policy in ('stable', 'evidence-union'):
-            with self.subTest(policy=policy):
-                observed = self.packs['objects', policy]
-                contract = self.results['objects']['semantic_trace']['generation_contract']
-                normalized = g.candidate_pack_normalized_slot_contract(self.data, self.cores['objects'], contract)
-                self.assertTrue(normalized['intent_constraints']['no_people'])
-                self.assertFalse(g.intent_explicitly_excludes_people(self.cores['objects']['source_request']),
-                                 'fixture must test bound context rather than recognized request wording')
-                bound = contract['authorial_core_constraints']
-                self.assertTrue(bound['no_people'])
-                self.assertIn('bound_creative_controls.context.no_people', bound['no_people_sources'])
-                self.assertEqual(bound['creative_controls_sha256'], self.cores['objects']['creative_controls_sha256'])
-                for candidate in observed['private']['slots'].get('body_pose', {}).get('candidates', []):
-                    entry = g.candidate_pack_slot_entry_by_id(self.data, 'body_pose', candidate['entry_id'])
-                    self.assertNotIn('human', g.entry_kinds(entry) | g.entry_tags(entry))
+        observed = self.packs['objects']
+        contract = self.results['objects']['semantic_trace']['generation_contract']
+        normalized = g.candidate_pack_normalized_slot_contract(self.data, self.cores['objects'], contract)
+        self.assertTrue(normalized['intent_constraints']['no_people'])
+        self.assertFalse(g.intent_explicitly_excludes_people(self.cores['objects']['source_request']),
+                         'fixture must test bound context rather than recognized request wording')
+        bound = contract['authorial_core_constraints']
+        self.assertTrue(bound['no_people'])
+        self.assertIn('bound_creative_controls.context.no_people', bound['no_people_sources'])
+        self.assertEqual(bound['creative_controls_sha256'], self.cores['objects']['creative_controls_sha256'])
+        for candidate in observed['private']['slots'].get('body_pose', {}).get('candidates', []):
+            entry = g.candidate_pack_slot_entry_by_id(self.data, 'body_pose', candidate['entry_id'])
+            self.assertNotIn('human', g.entry_kinds(entry) | g.entry_tags(entry))
 
     def test_public_shuffle_is_seed_deterministic_and_membership_preserving(self):
-        for policy in ('stable', 'evidence-union'):
-            with self.subTest(policy=policy):
-                private = self.packs['reader', policy]['private']
-                original = self.packs['reader', policy]['public']
-                repeated = g.candidate_pack_project(copy.deepcopy(private), 'v6')
-                self.assertEqual(_slot_ids(repeated), _slot_ids(original))
-                alternate = copy.deepcopy(private)
-                alternate['provenance']['seed'] += 1
-                shuffled = g.candidate_pack_project(alternate, 'v6')
-                old_ids, new_ids = _slot_ids(original), _slot_ids(shuffled)
-                self.assertEqual({k: set(v) for k, v in old_ids.items()}, {k: set(v) for k, v in new_ids.items()})
-                self.assertTrue(any(old_ids[s] != new_ids[s] for s in old_ids if len(old_ids[s]) > 1))
+        private = self.packs['reader']['private']
+        original = self.packs['reader']['public']
+        repeated = g.candidate_pack_project(copy.deepcopy(private), 'v6')
+        self.assertEqual(_slot_ids(repeated), _slot_ids(original))
+        alternate = copy.deepcopy(private)
+        alternate['provenance']['seed'] += 1
+        shuffled = g.candidate_pack_project(alternate, 'v6')
+        old_ids, new_ids = _slot_ids(original), _slot_ids(shuffled)
+        self.assertEqual({k: set(v) for k, v in old_ids.items()}, {k: set(v) for k, v in new_ids.items()})
+        self.assertTrue(any(old_ids[s] != new_ids[s] for s in old_ids if len(old_ids[s]) > 1))
 
 
     def test_score_mode_has_real_scene_and_exploration_references(self):
@@ -228,35 +220,32 @@ class PhotoSlotPipelineRegressionTests(unittest.TestCase):
         query = g.authorial_core_retrieval_text(core)[0]
         self.assertEqual(fixture['observed_queries'].count(query), 1,
                          'the exact core query must reach the static provider once; recipe axes may add local calls')
-        self.assertEqual(data[g.SLOT_QUERY_VECTORS_DATA_KEY][g.candidate_pack_slot_vector_key(data[g.SEMANTIC_INDEX_DATA_KEY], query)], [1.0, 0.0])
-        for policy in ('stable', 'evidence-union'):
-            with self.subTest(policy=policy):
-                observed = self.build_observed(result, policy, data)
-                private = observed['private']
-                scene_rows = [r for r in _dicts(private.get('scene_contract', {})) if r.get('selected_entry_id')]
-                self.assertTrue(scene_rows, 'real configured atomic scene must produce selected scene references')
-                exploration = private.get('creative_exploration')
-                self.assertIsNotNone(exploration, 'positive creativity must reach exploration generation')
-                self.assertTrue(exploration['enabled'])
-                contrasts = exploration['contrast_candidates']
-                self.assertTrue(contrasts, 'at least one real sampler alternative must exercise replacement references')
-                all_ids = {c['id'] for p in private['slots'].values() for c in p['candidates']}
-                score_slots = {r['slot'] for r in score_rows}
-                self.assertTrue(score_slots & set(private['slots']))
-                for slot, payload in private['slots'].items():
-                    if payload.get('selected'):
-                        self.assertIn(payload['selected'], {c['id'] for c in payload['candidates']}, slot)
-                for row in scene_rows:
-                    self.assertIn(row['selected_entry_id'], row['candidate_entry_ids'])
-                    self.assertIn(row['selected_entry_id'], row['allowed_entry_ids'])
-                for row in contrasts:
-                    self.assertIn(row['replaces_candidate_id'], all_ids)
-                    self.assertIn(row['candidate_id'], all_ids)
-                noisy = copy.deepcopy(result)
-                noisy['semantic_trace']['private_audit_only'] = 'AUDIT_ONLY extreme fisheye ultraviolet dancing'
-                repeated = self.build_observed(noisy, policy, data)
-                self.assertEqual(_slot_ids(observed['public']), _slot_ids(repeated['public']))
-                self.assertEqual(observed['public']['authorial_core']['canonical_sha256'], core['canonical_sha256'])
+        observed = self.build_observed(result, data)
+        private = observed['private']
+        scene_rows = [r for r in _dicts(private.get('scene_contract', {})) if r.get('selected_entry_id')]
+        self.assertTrue(scene_rows, 'real configured atomic scene must produce selected scene references')
+        exploration = private.get('creative_exploration')
+        self.assertIsNotNone(exploration, 'positive creativity must reach exploration generation')
+        self.assertTrue(exploration['enabled'])
+        contrasts = exploration['contrast_candidates']
+        self.assertTrue(contrasts, 'at least one real sampler alternative must exercise replacement references')
+        all_ids = {c['id'] for p in private['slots'].values() for c in p['candidates']}
+        score_slots = {r['slot'] for r in score_rows}
+        self.assertTrue(score_slots & set(private['slots']))
+        for slot, payload in private['slots'].items():
+            if payload.get('selected'):
+                self.assertIn(payload['selected'], {c['id'] for c in payload['candidates']}, slot)
+        for row in scene_rows:
+            self.assertIn(row['selected_entry_id'], row['candidate_entry_ids'])
+            self.assertIn(row['selected_entry_id'], row['allowed_entry_ids'])
+        for row in contrasts:
+            self.assertIn(row['replaces_candidate_id'], all_ids)
+            self.assertIn(row['candidate_id'], all_ids)
+        noisy = copy.deepcopy(result)
+        noisy['semantic_trace']['private_audit_only'] = 'AUDIT_ONLY extreme fisheye ultraviolet dancing'
+        repeated = self.build_observed(noisy, data)
+        self.assertEqual(_slot_ids(observed['public']), _slot_ids(repeated['public']))
+        self.assertEqual(observed['public']['authorial_core']['canonical_sha256'], core['canonical_sha256'])
 
 
 
@@ -300,7 +289,6 @@ class DefaultIntentBoundContextTests(unittest.TestCase):
         for name in ('embed_texts_with_gemini', 'embed_single_semantic_text', 'cached_gemini_client'):
             cls.guards.enter_context(patch.object(g, name, side_effect=AssertionError('network/model calls forbidden in static-vector test')))
         cls.data = v6.PhotoAuthorialCoreV6Tests().runtime_data()
-        cls.data.pop(g.SLOT_QUERY_VECTORS_DATA_KEY, None)
         cls.data.pop(g.VISUAL_PROFILE_QUERY_VECTORS_DATA_KEY, None)
 
     def test_default_intent_bound_no_people_preserves_domain_routing_and_guarded_pool(self):
