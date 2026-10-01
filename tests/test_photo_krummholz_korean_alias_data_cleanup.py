@@ -2,6 +2,7 @@
 from pathlib import Path
 import copy
 import hashlib
+import gzip
 import importlib.util
 import json
 import unittest
@@ -9,6 +10,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'skills/photo-prompt-image-generator/assets'
 E = ROOT / 'docs/research-evidence/photo-prompt/krummholz-korean-alias-data-cleanup-20261001'
+NEXT = ROOT / 'docs/research-evidence/photo-prompt/protostar-korean-alias-data-cleanup-20261001'
 
 
 def load_module(name, path):
@@ -30,6 +32,7 @@ class KrummholzKoreanAliasDataCleanupTests(unittest.TestCase):
         cls.states = common.states_from_freeze(cls.frozen)
         cls.target = next(row for row in cls.frozen['inventory'] if row['decision'] == 'fix')
         cls.current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
+        cls.accepted_snapshot = json.loads(gzip.decompress((NEXT / 'baseline-merged-data.json.gz').read_bytes()))
         cls.runtime = v6_fixtures.PhotoAuthorialCoreV6Tests().runtime_data()
         cls.runtime.pop(common.g.SEMANTIC_INDEX_DATA_KEY, None)
         cls.fixture = json.loads((E / 'scout/synthetic-rule-contract-result.json').read_text())
@@ -67,8 +70,8 @@ class KrummholzKoreanAliasDataCleanupTests(unittest.TestCase):
         self.assertEqual(current, expected)
         self.assertEqual(current['maintenance_ref'], before['maintenance_ref'])
 
-    def test_complete_merged_state_and_ten_keeps_are_exact(self):
-        self.assertEqual(self.current, self.states['proposal'])
+    def test_historical_merged_state_and_current_ten_keeps_are_exact(self):
+        self.assertEqual(self.accepted_snapshot, self.states['proposal'])
         self.assertEqual(self.current['candidate_bundles'], self.states['baseline']['candidate_bundles'])
         for item in self.frozen['inventory']:
             row = next(r for r in self.current['slots'][item['slot']] if r['id'] == item['id'])
@@ -152,7 +155,7 @@ class KrummholzKoreanAliasDataCleanupTests(unittest.TestCase):
         decision = json.loads(raw)
         self.assertEqual(decision['accepted_ids'], [self.target['id']])
         self.assertEqual(decision['accepted_fields'], ['aliases'])
-        self.assertEqual(decision['accepted_dictionary_hash'], common.g.dictionary_hash(self.current))
+        self.assertEqual(decision['accepted_dictionary_hash'], common.g.dictionary_hash(self.accepted_snapshot))
         gain = decision['measured_benefit']['bare_korean_name_lexical']['primary_target']
         self.assertIsNone(gain['baseline']['rank'])
         self.assertEqual(gain['proposal']['rank'], 1)
