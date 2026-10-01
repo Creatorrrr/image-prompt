@@ -47,6 +47,16 @@ The composed object binds its source, decisions and typed evidence:
 - If `render_repair` exists, `render_repair_evidence` contains exactly its canonical hash plus an evidence map keyed by every lineage repair ID. The interaction and recognition phrases byte-equal the frozen pre-retrieval core, occur literally in `prompt_en`, and are already owned by one required action assertion. The contract is object-agnostic: it preserves actor, object class, interaction state, and required or transitional contact while permitting only declared local repair axes. `relation_origin: parent_preserved` protects an unchanged parent relation; `requester_corrected` freezes an explicit requester correction after the new core is built. Removal, relocation, concealment, or transfer never counts as fidelity repair.
 - If `character_response` exists, its specialized composed binding remains authoritative for the one required causal response assertion. The audit also compares its assertion ID, source spans, axes, and frozen evidence directly with the core, so removing or mutating the compiled contract cannot bypass the typed meaning.
 
+## Model-guided candidate review
+
+Read the bound requester spans, definitions/exclusions, locks, baseline, controls and full candidate detail together before adoption. A slot name, rank or eligibility flag is not semantic compatibility. Use these reasoning outcomes with existing fields, not new schema values:
+
+- **Adopt the complete meaning:** use existing selection/interpretation fields and satisfy all concept, relation, component, conditional and opt-in evidence. New prose is allowed; check joint effects with other selections.
+- **Use independently justified generic attributes:** decline the contractual candidate and record a material refinement in `authorial_decisions` within open scope. Do not retain its distinctive compound meaning, omit its prerequisites, or relabel it as authorial to evade its contract.
+- **Decline:** leave the optional candidate unselected, using an existing rejected decision where required. No replacement or extra detail is owed; retaining the baseline is valid.
+
+For example, a daylight-only scene may use an independently justified gentle transition from its existing window light without adopting a softbox candidate or adding that apparatus. Required meanings remain binding; uncertain optional additions can be withheld without inventing new exclusions or claiming that mechanical audit guarantees semantic or image quality.
+
 ### Authorial binding shape
 
 The example below retains a complete baseline without additional refinements under the v2 policy. Add a decision only for a material final refinement.
