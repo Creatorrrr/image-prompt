@@ -228,7 +228,12 @@ class PhotoLightingVisualSemanticsTests(unittest.TestCase):
                         candidate["requires_any_tags"],
                         [cluster["id"]],
                     )
-                self.assertGreaterEqual(len(candidate["embedding_text"].split()), 12)
+                if candidate_id == "lit_filmic_grain_rolloff_halation":
+                    # Counterexamples formerly padded this complete positive caption.
+                    for concept in ("filmic grain", "gentle rolloff", "localized halation"):
+                        self.assertIn(concept, candidate["embedding_text"])
+                else:
+                    self.assertGreaterEqual(len(candidate["embedding_text"].split()), 12)
 
     def test_generated_visual_index_contains_every_lighting_profile(self) -> None:
         self.assertLessEqual(
