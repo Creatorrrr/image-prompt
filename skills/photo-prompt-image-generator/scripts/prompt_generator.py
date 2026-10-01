@@ -2599,23 +2599,32 @@ def visual_profile_bm25f_documents(registry: JsonDict) -> Dict[str, JsonDict]:
     }
 
 
-def visual_profile_bm25f_lexicon(registry: JsonDict) -> List[str]:
+def _bm25f_lexicon_from_documents(
+    documents: Mapping[str, JsonDict],
+    fields: Sequence[str] = ("aliases",),
+) -> List[str]:
     return sorted(
         {
             clean_spaces(str(value))
-            for fields in visual_profile_bm25f_documents(registry).values()
-            for value in fields.get("aliases") or []
+            for document in documents.values()
+            for field in fields
+            for value in document.get(field) or []
             if clean_spaces(str(value))
         },
         key=lambda value: (-len(value), value.casefold()),
     )
 
 
+def visual_profile_bm25f_lexicon(registry: JsonDict) -> List[str]:
+    return _bm25f_lexicon_from_documents(visual_profile_bm25f_documents(registry))
+
+
 def build_visual_profile_bm25f_payload(registry: JsonDict) -> JsonDict:
+    documents = visual_profile_bm25f_documents(registry)
     payload = build_bm25f_index(
-        visual_profile_bm25f_documents(registry),
+        documents,
         policy=VISUAL_PROFILE_BM25F_POLICY,
-        lexicon=visual_profile_bm25f_lexicon(registry),
+        lexicon=_bm25f_lexicon_from_documents(documents),
     )
     payload["policy_version"] = VISUAL_PROFILE_BM25F_POLICY_VERSION
     payload["policy_sha256"] = canonical_json_sha256(VISUAL_PROFILE_BM25F_POLICY)
@@ -2717,15 +2726,16 @@ def validate_visual_profile_index_metadata(
     ):
         raise ValueError("visual profile index BM25F policy hash is stale")
     bm25f_material = {
-        key: copy.deepcopy(value)
+        key: value
         for key, value in bm25f_payload.items()
         if key not in {"policy_version", "policy_sha256"}
     }
+    documents = visual_profile_bm25f_documents(registry)
     validate_bm25f_index(
         bm25f_material,
-        visual_profile_bm25f_documents(registry),
+        documents,
         policy=VISUAL_PROFILE_BM25F_POLICY,
-        lexicon=visual_profile_bm25f_lexicon(registry),
+        lexicon=_bm25f_lexicon_from_documents(documents),
     )
     expected_entries = {
         str(profile.get("id") or ""): visual_profile_semantic_text(profile)
@@ -15351,38 +15361,40 @@ def semantic_bm25f_documents(data: JsonDict) -> Dict[str, JsonDict]:
 
 
 def semantic_bm25f_lexicon(data: JsonDict) -> List[str]:
-    documents = semantic_bm25f_documents(data)
-    return sorted(
-        {
-            clean_spaces(str(value))
-            for fields in documents.values()
-            for field in ("aliases", "labels", "paraphrases")
-            for value in fields.get(field) or []
-            if clean_spaces(str(value))
-        },
-        key=lambda value: (-len(value), value.casefold()),
+    return _bm25f_lexicon_from_documents(
+        semantic_bm25f_documents(data), ("aliases", "labels", "paraphrases")
     )
 
 
 def build_semantic_bm25f_payload(data: JsonDict) -> JsonDict:
+    documents = semantic_bm25f_documents(data)
     payload = build_bm25f_index(
-        semantic_bm25f_documents(data),
+        documents,
         policy=SEMANTIC_BM25F_POLICY,
-        lexicon=semantic_bm25f_lexicon(data),
+        lexicon=_bm25f_lexicon_from_documents(
+            documents, ("aliases", "labels", "paraphrases")
+        ),
     )
     payload["policy_version"] = SEMANTIC_BM25F_POLICY_VERSION
     payload["policy_sha256"] = canonical_json_sha256(SEMANTIC_BM25F_POLICY)
     return payload
 
 
-def semantic_bm25f_payload_from_index(index: JsonDict) -> JsonDict:
+def semantic_bm25f_payload_from_index(
+    index: JsonDict, *, copy_values: bool = True
+) -> JsonDict:
+    """Project BM25F fields; allow read-only validation to avoid corpus copies."""
     metadata = (
-        copy.deepcopy(index.get("bm25f"))
+        (copy.deepcopy(index["bm25f"]) if copy_values else dict(index["bm25f"]))
         if isinstance(index.get("bm25f"), dict)
         else {}
     )
     metadata["documents"] = {
-        str(key): copy.deepcopy(entry.get("bm25f_document") or {})
+        str(key): (
+            copy.deepcopy(entry.get("bm25f_document") or {})
+            if copy_values
+            else entry.get("bm25f_document") or {}
+        )
         for key, entry in (index.get("entries") or {}).items()
         if isinstance(entry, dict)
     }
@@ -15765,7 +15777,7 @@ def validate_semantic_index_metadata(
                 "build_semantic_index.py."
             )
         return
-    bm25f_payload = semantic_bm25f_payload_from_index(payload)
+    bm25f_payload = semantic_bm25f_payload_from_index(payload, copy_values=False)
     if bm25f_payload.get("policy_version") != SEMANTIC_BM25F_POLICY_VERSION:
         raise ValueError("Semantic index BM25F policy_version is stale")
     if bm25f_payload.get("policy_sha256") != canonical_json_sha256(
@@ -15773,15 +15785,18 @@ def validate_semantic_index_metadata(
     ):
         raise ValueError("Semantic index BM25F policy hash is stale")
     bm25f_material = {
-        key: copy.deepcopy(value)
+        key: value
         for key, value in bm25f_payload.items()
         if key not in {"policy_version", "policy_sha256"}
     }
+    documents = semantic_bm25f_documents(data)
     validate_bm25f_index(
         bm25f_material,
-        semantic_bm25f_documents(data),
+        documents,
         policy=SEMANTIC_BM25F_POLICY,
-        lexicon=semantic_bm25f_lexicon(data),
+        lexicon=_bm25f_lexicon_from_documents(
+            documents, ("aliases", "labels", "paraphrases")
+        ),
     )
 
 
