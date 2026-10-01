@@ -12,6 +12,8 @@ import json
 import re
 from typing import Any
 
+from photo_contracts import property_effects_allowed
+
 SURFACE_VERSION = "photo-candidate-semantic-surface/v1"
 BUNDLE_VERSION = "photo-candidate-bundles/v1"
 COMPILED_BUNDLE_FIELDS = (
@@ -119,7 +121,8 @@ def validate_semantic_policy(policy: dict[str, Any], allowed_dimensions: set[str
     if not policy:
         return  # Older dictionaries remain readable without opting into v1.
     if (not isinstance(policy, dict)
-            or set(policy) != {"contract_version", "unknown_scope", "slot_dimensions", "required_extensions", "joint_adoption"}
+            or not {"contract_version", "unknown_scope", "slot_dimensions", "required_extensions", "joint_adoption"} <= set(policy)
+            or set(policy) - {"contract_version", "unknown_scope", "slot_dimensions", "required_extensions", "joint_adoption", "core_assertion_discovery"}
             or policy.get("contract_version") != "photo-candidate-semantic-policy/v1"
             or policy.get("unknown_scope") != "not_eligible_for_bundle_adoption"
             or not isinstance(policy.get("slot_dimensions"), dict)):
@@ -137,6 +140,16 @@ def validate_semantic_policy(policy: dict[str, Any], allowed_dimensions: set[str
             or joint.get("context_policy") != "self_contained_bundle_guards_only"
             or any(type(joint.get(key)) is not int or joint[key] < 1 for key in ("maximum_bundles", "maximum_members_per_bundle", "minimum_shared_content_words"))):
         raise ValueError("joint candidate adoption needs bounded positive integer limits and its declared context policy")
+    discovery = policy.get("core_assertion_discovery")
+    if discovery is not None and (
+        not isinstance(discovery, dict)
+        or set(discovery) != {"maximum_candidates", "maximum_per_assertion", "minimum_shared_content_words"}
+        or any(type(discovery.get(key)) is not int or discovery[key] < 1 for key in discovery)
+        or discovery["maximum_candidates"] > 24
+        or discovery["maximum_per_assertion"] > 4
+        or discovery["minimum_shared_content_words"] < 3
+    ):
+        raise ValueError("core assertion discovery requires bounded limits and at least three shared content words")
 
 
 def validate_relations(relations: Any, label: str) -> None:
@@ -156,12 +169,29 @@ def validate_candidate_entries(data: dict[str, Any], allowed_dimensions: set[str
     for slot, entries in (data.get("slots") or {}).items():
         by_id = {entry["id"]: entry for entry in entries}
         for entry in entries:
+            if "core_assertion_discovery" in entry and type(entry["core_assertion_discovery"]) is not bool:
+                raise ValueError(f"{slot}.{entry['id']} discovery opt-in must be boolean")
+            if entry.get("core_assertion_discovery") and (
+                not strings(entry.get("affected_dimensions"))
+                or not entry.get("affected_properties")
+                or not strings(entry.get("concept_units"))
+            ):
+                raise ValueError(f"{slot}.{entry['id']} discovery needs authored units and explicit property scope")
             if "concept_units" in entry and not strings(entry["concept_units"]):
                 raise ValueError(f"{slot}.{entry['id']} concept_units must be non-empty")
             if "relations" in entry:
                 validate_relations(entry["relations"], f"{slot}.{entry['id']}")
             if "affected_dimensions" in entry and not set(strings(entry["affected_dimensions"])).issubset(allowed_dimensions):
                 raise ValueError(f"{slot}.{entry['id']} has unknown affected dimensions")
+            if "affected_properties" in entry:
+                effects = entry["affected_properties"]
+                dimensions = strings(entry.get("affected_dimensions")) or slot_dimensions(slot, data.get("candidate_semantic_policy"))
+                if (not isinstance(effects, list)
+                        or any(not isinstance(row, dict) or set(row) != {"dimension", "target", "property"}
+                               or any(not isinstance(value, str) or not value.strip() for value in row.values())
+                               or row["dimension"] not in dimensions for row in effects)
+                        or len({(row["dimension"], row["target"], row["property"]) for row in effects}) != len(effects)):
+                    raise ValueError(f"{slot}.{entry['id']} has malformed affected properties")
             seen = {entry["id"]}
             target = entry.get("canonical_concept_id")
             while target:
@@ -201,6 +231,8 @@ def semantic_source(entry: dict[str, Any], slot: str = "", policy: dict[str, Any
     }
     if entry.get("canonical_concept_id"):
         result["canonical_concept_id"] = str(entry["canonical_concept_id"])
+    if "affected_properties" in entry:
+        result["affected_properties"] = copy.deepcopy(entry["affected_properties"])
     return result
 
 
@@ -292,6 +324,11 @@ def public_bundles(data: dict[str, Any], pack: dict[str, Any], joint_admissions:
         dimensions = {dimension for member in bundle["member_candidates"]
                       for dimension in member.get("affected_dimensions") or []}
         joint_admission = (joint_admissions or {}).get(bundle["id"])
+        lock = (pack.get("authorial_core") or {}).get("intent_lock") or {}
+        if any(not property_effects_allowed(lock, member.get("affected_dimensions") or [],
+                                           member.get("affected_properties", []))
+               for member in bundle["member_candidates"]):
+            continue
         if not joint_admission and (not member_ids.issubset(visible)
                 or any(not member.get("affected_dimensions") for member in bundle["member_candidates"])
                 or not dimensions.issubset(open_dimensions)

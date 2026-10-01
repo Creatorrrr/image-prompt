@@ -172,6 +172,7 @@ VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
     "photo_prompt_visual_obligations_y2k.json",
     "photo_prompt_visual_obligations_portrait_composition.json",
     "photo_prompt_visual_obligations_portrait_fashion_exposure.json",
+    "photo_prompt_visual_obligations_editing_effects.json",
 )
 VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
     "photo-visual-obligation-registry-extension/v1"
@@ -219,6 +220,7 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_portrait_fashion_exposure_extension.json",
     "photo_prompt_sensual_fetish_fashion_extension.json",
     "photo_prompt_contextual_appeal_extension.json",
+    "photo_prompt_editing_effects_extension.json",
 )
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v2"
@@ -2514,6 +2516,13 @@ def load_visual_obligation_registry(path: str | Path) -> JsonDict:
             existing_ids.add(profile_id)
         payload["relation_contract_version"] = VISUAL_RELATION_CONTRACT_VERSION
     payload["profiles"] = [compile_visual_profile(profile) for profile in profiles]
+    for profile in payload["profiles"]:
+        candidate = profile.get("concept_candidate") or {}
+        if "core_assertion_discovery" in candidate:
+            photo_candidate_semantics.validate_candidate_entries({"slots": {"profile": [{
+                **candidate, "id": profile["id"],
+                "concept_units": (profile.get("semantics") or {}).get("visual_components") or [],
+            }]}}, AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS)
     return payload
 
 
@@ -4837,6 +4846,146 @@ def candidate_pack_build_slots(
         }
         total += len(candidates)
     return slots
+
+
+def candidate_pack_assertion_discovery(
+    data: JsonDict, core: JsonDict, documents: JsonDict, bm25f: JsonDict,
+) -> List[str]:
+    """Find source-opted-in options per frozen assertion, never hard duties.
+
+    Sampler scheduling and whole-scene similarity must not hide an explicitly
+    authored observation. All additions still require open dimensions and
+    source-declared property compatibility. No keyword or concept IDs route
+    this lane, and exclusions are checked before lexical ranking.
+    """
+    policy = (data.get("candidate_semantic_policy") or {}).get("core_assertion_discovery") or {}
+    if not policy or not bm25f:
+        return []
+    lock = core.get("intent_lock") or {}
+    open_dimensions = set(lock.get("open_dimensions") or [])
+    assertions = [a for a in core.get("semantic_assertions") or [] if isinstance(a, dict)]
+
+    def assertion_text(assertion: JsonDict) -> str:
+        def values(node: Any) -> List[str]:
+            if isinstance(node, dict):
+                return [text for value in node.values() for text in values(value)]
+            if isinstance(node, list):
+                return [text for value in node for text in values(value)]
+            return [str(node).replace("_", " ")] if isinstance(node, str) else []
+        return clean_spaces(" ".join(values(assertion.get("evidence")) + values(assertion.get("axes"))))
+
+    minimum = policy["minimum_shared_content_words"]
+    excluded = [str(text) for text in core.get("user_exclusions") or []]
+    excluded.extend(assertion_text(a) for a in assertions if a.get("polarity") == "excluded")
+    allowed: JsonDict = {}
+    for document_id, source in documents.items():
+        dimensions = normalize_list(source.get("affected_dimensions"))
+        if (source.get("core_assertion_discovery") is not True
+                or not dimensions or not set(dimensions) <= open_dimensions
+                or not property_effects_allowed(lock, dimensions, source.get("affected_properties"))):
+            continue
+        blob = candidate_pack_entry_blob(source, extra=[
+            *normalize_list(source.get("concept_units")), *normalize_list(source.get("concept_terms")),
+            *normalize_list(source.get("paraphrases")),
+        ])
+        tokens = candidate_pack_relevance_tokens(blob)
+        if any(intent_alias_matches(blob, text) or len(tokens & candidate_pack_relevance_tokens(text)) >= minimum
+               for text in excluded if clean_spaces(text)):
+            continue
+        allowed[document_id] = tokens
+    found: List[str] = []
+    for assertion in assertions:
+        if assertion.get("polarity") not in {"advisory", "required"}:
+            continue
+        query = assertion_text(assertion)
+        tokens = candidate_pack_relevance_tokens(query)
+        eligible = {key for key, source_tokens in allowed.items() if len(tokens & source_tokens) >= minimum}
+        for hit in rank_bm25f(bm25f, {"assertion_evidence": query}, allowed_ids=eligible,
+                              limit=policy["maximum_per_assertion"]):
+            document_id = str(hit.get("document_id") or "")
+            if document_id and document_id not in found:
+                found.append(document_id)
+        if len(found) >= policy["maximum_candidates"]:
+            break
+    return found[:policy["maximum_candidates"]]
+
+
+def candidate_pack_add_assertion_candidates(
+    data: JsonDict, core: JsonDict, trace: JsonDict, result: JsonDict,
+    slots: JsonDict, candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]],
+) -> None:
+    index = data.get(SEMANTIC_INDEX_DATA_KEY) or {}
+    bm25f = semantic_bm25f_payload_from_index(index) if index.get("bm25f") else {}
+    contract = candidate_pack_normalized_slot_contract(data, core, trace.get("generation_contract") or {})
+    soft_policy = contract.get("soft_anchor_policy") or {}
+    preset = candidate_pack_preset_by_id(data, str(result.get("preset_id") or "")) or {}
+    picked = {slot: entry for slot, choice in (result.get("choices") or {}).items()
+              if isinstance(choice, dict)
+              for entry in [candidate_pack_slot_entry_by_id(data, slot, str(choice.get("id") or ""))]
+              if entry is not None}
+    core_tokens = candidate_pack_relevance_tokens(authorial_core_retrieval_text(core)[0])
+    subject_tokens = candidate_pack_relevance_tokens(str(core.get("subject") or ""))
+    documents: JsonDict = {}
+    sources: JsonDict = {}
+    for slot, entries in data.get("slots", {}).items():
+        pool = (contract.get("candidate_pool_trace") or {}).get(slot) or {}
+        if (slot_block_reason(data, slot, contract) or pool.get("forced")
+                or soft_anchor_critical_slot(soft_policy, slot)
+                or soft_anchor_atomic_pool_for_slot(soft_policy, slot)):
+            continue
+        for entry in entries:
+            if (entry.get("core_assertion_discovery") is not True
+                    or not entry_matches_preset_domain_scope(entry, preset, data)
+                    or entry_block_reason(entry, slot, contract)
+                    or not compatible_with_semantic_hard_guards(entry, preset, {}, slot)
+                    or not compatible_with_slot_context(slot, entry, {s: e for s, e in picked.items() if s != slot}, data)
+                    or (set(normalize_list(entry.get("for_any"))) and not set(normalize_list(entry.get("for_any"))) & subject_tokens)
+                    or set(normalize_list(entry.get("exclude_for_any"))) & subject_tokens
+                    or (values_as_set(entry, "requires_any_tags", "requires_any") and not values_as_set(entry, "requires_any_tags", "requires_any") & core_tokens)
+                    or not values_as_set(entry, "requires_all_tags", "requires_all").issubset(core_tokens)
+                    or values_as_set(entry, "exclude_any_tags", "exclude_any") & core_tokens):
+                continue
+            key = candidate_pack_candidate_id("slot", entry["id"], slot)
+            documents[key] = entry
+            sources[key] = (slot, entry)
+    additions = candidate_pack_assertion_discovery(data, core, documents, bm25f)
+    focused_ids = set(additions)
+    for candidate_id in additions:
+        slot, entry = sources[candidate_id]
+        payload = slots.setdefault(slot, {"slot": slot, "role": "support", "selected": None,
+                                         "candidates": [], "candidate_count": 0,
+                                         "candidate_limit": candidate_pack_slot_limit(slot)})
+        candidates = payload["candidates"]
+        if any(c["id"] == candidate_id for c in candidates):
+            continue
+        # Retain sampler selections and bound the final pack. Displace only
+        # optional whole-scene alternatives, never another focused option.
+        removable = [c for c in reversed(candidates) if not c.get("selected_by_sampler")
+                     and c["id"] not in focused_ids
+                     and (c.get("applicability") or {}).get("source") != "frozen_assertion_discovery"]
+        if len(candidates) >= candidate_pack_slot_limit(slot):
+            if not removable:
+                continue
+            removed = removable[0]
+            candidates.remove(removed)
+            candidate_entries.pop(removed["id"], None)
+        if sum(len(p["candidates"]) for p in slots.values()) >= CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT:
+            removable_pairs = [(p, c) for p in reversed(list(slots.values())) for c in reversed(p["candidates"])
+                               if not c.get("selected_by_sampler")
+                               and c["id"] not in focused_ids
+                               and (c.get("applicability") or {}).get("source") != "frozen_assertion_discovery"]
+            if not removable_pairs:
+                continue
+            other, removed = removable_pairs[0]
+            other["candidates"].remove(removed)
+            candidate_entries.pop(removed["id"], None)
+        candidate, source = candidate_pack_summarize_slot_candidate(data, slot, {
+            "id": entry["id"], "weight": item_base_weight(entry),
+            "applicability_status": "eligible", "applicability_source": "frozen_assertion_discovery",
+        }, 0.0, "")
+        candidates.append(candidate)
+        candidate_entries[candidate_id] = ("slot", slot, source)
+        payload["candidate_count"] = max(payload["candidate_count"], len(candidates))
 
 
 def candidate_pack_conflicts(
@@ -11266,7 +11415,7 @@ def candidate_pack_resolve_visual_profiles(
         else {}
     )
     query_vector = query_vectors.get(prompt_id)
-    return resolve_visual_profile_hits(
+    resolution = resolve_visual_profile_hits(
         registry,
         source_rows,
         visual_profile_index=visual_profile_index,
@@ -11287,6 +11436,30 @@ def candidate_pack_resolve_visual_profiles(
             moe_response,
         ),
     )
+    existing_ids = {hit["profile_id"] for hit in resolution.get("hits") or []}
+    context_text = authorial_core_retrieval_text(core)[0] if core else ""
+    adult_context = candidate_pack_visual_obligation_adult_context(source_rows, moe_response)
+    documents: JsonDict = {}
+    for profile in registry.get("profiles") or []:
+        candidate = profile.get("concept_candidate") or {}
+        if (candidate.get("core_assertion_discovery") is not True
+                or profile["id"] in existing_ids
+                or ((profile.get("activation") or {}).get("requires_adult_character") and not adult_context)
+                or not visual_profile_context_applicability(
+                    profile, context_text, has_authorial_core_context=bool(core),
+                    require_positive_context_terms=False,
+                )[0]):
+            continue
+        documents[profile["id"]] = {**candidate, "en": (profile.get("semantics") or {}).get("definition") or ""}
+    for profile_id in candidate_pack_assertion_discovery(
+        data, core, documents, visual_profile_index.get("bm25f") or {},
+    ):
+        resolution.setdefault("hits", []).append({
+            "profile_id": profile_id, "match_basis": "bm25f_frozen_assertion",
+            "applicability_status": "eligible", "hard_eligible": False,
+            "optional_eligible": True, "source_intent_ids": [],
+        })
+    return resolution
 
 
 def candidate_pack_visual_profile_obligation(
@@ -11628,6 +11801,14 @@ def candidate_pack_visual_concept_candidates(
         ]
         if not concept_terms:
             continue
+        core = (result.get("provenance") or {}).get("authorial_core") or {}
+        scope = {key: copy.deepcopy(concept_candidate[key]) for key in ("affected_dimensions", "affected_properties")
+                 if key in concept_candidate}
+        if scope and (
+            not set(scope.get("affected_dimensions") or []) <= set((core.get("intent_lock") or {}).get("open_dimensions") or [])
+            or not property_effects_allowed(core.get("intent_lock") or {}, scope.get("affected_dimensions") or [], scope.get("affected_properties"))
+        ):
+            continue
         obligation = candidate_pack_visual_profile_obligation(
             profile,
             registry,
@@ -11646,6 +11827,7 @@ def candidate_pack_visual_concept_candidates(
                 "id": f"visual-concept:{profile_id}",
                 "content_form": "unordered_inspiration_terms",
                 "concept_terms": concept_terms,
+                **scope,
                 "applicability": {
                     "status": "eligible",
                     "source": (
@@ -14773,6 +14955,10 @@ def candidate_pack_candidate_bundles(data: JsonDict, pack: JsonDict) -> JsonDict
                 or any(not member.get("affected_dimensions") for member in members)
                 or not dimensions.issubset(opened)):
             continue
+        if any(not property_effects_allowed(core.get("intent_lock") or {},
+                                           member.get("affected_dimensions") or [],
+                                           member.get("affected_properties", [])) for member in members):
+            continue
         units = [unit for member in members for unit in member.get("concept_units") or []]
         tokens = candidate_pack_relevance_tokens(" ".join(units))
         if (len(tokens & query_tokens) < policy["minimum_shared_content_words"]
@@ -14893,6 +15079,7 @@ def build_candidate_pack(
     slots = candidate_pack_build_slots(
         data, trace, result, candidate_entries, authorial_core=authorial_core
     )
+    candidate_pack_add_assertion_candidates(data, authorial_core, trace, result, slots, candidate_entries)
     candidate_pack_ensure_species_policy_candidates(
         data,
         slots,
@@ -15171,6 +15358,15 @@ def build_candidate_pack(
                 candidate["_v6_semantic_source"] = photo_candidate_semantics.semantic_source(
                     entry, slot, data.get("candidate_semantic_policy")
                 )
+                source = candidate["_v6_semantic_source"]
+                if "affected_properties" in source and not property_effects_allowed(
+                    authorial_core.get("intent_lock") or {}, source.get("affected_dimensions") or [],
+                    source["affected_properties"]
+                ):
+                    candidate["applicability"] = {
+                        "status": "ineligible", "source": "authored_property_scope",
+                        "reason": "effect overlaps a protected requester property",
+                    }
     pack["candidate_bundles"] = candidate_pack_candidate_bundles(data, pack)
     candidate_pack_recompute_id(pack)
     return candidate_pack_project(pack, candidate_pack_version)

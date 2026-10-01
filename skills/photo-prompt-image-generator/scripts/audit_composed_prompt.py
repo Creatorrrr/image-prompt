@@ -3121,6 +3121,7 @@ def audit_candidate_semantic_contracts(
         return failures
     # Load from this auditor's skill snapshot, never a path asserted by a pack.
     # Recompute admission instead of trusting its published hash or booleans.
+    source_data = {}
     try:
         assets = Path(__file__).resolve().parents[1] / "assets"
         source_data = candidate_semantics_generator.load_json(assets / "photo_prompt_tags.json")
@@ -3277,6 +3278,20 @@ def audit_candidate_semantic_contracts(
             )
         if candidate_id not in chosen:
             continue
+        if candidate_id.startswith("slot:") and source_data:
+            source_entry = candidate_semantics_generator.candidate_pack_slot_entry_by_id(
+                source_data, str(candidate.get("slot") or ""), str(candidate.get("entry_id") or "")
+            )
+            if source_entry and "affected_properties" in source_entry:
+                trusted = photo_candidate_semantics.semantic_source(
+                    source_entry, str(candidate.get("slot") or ""), source_data.get("candidate_semantic_policy")
+                )
+                if (candidate.get("affected_properties") != trusted["affected_properties"]
+                        or candidate.get("affected_dimensions") != trusted["affected_dimensions"]
+                        or not property_effects_allowed(
+                            (pack.get("authorial_core") or {}).get("intent_lock") or {},
+                            trusted["affected_dimensions"], trusted["affected_properties"])):
+                    fail(candidate_id, "selected property effects must match the source and preserve requester property locks")
         interpretation = by_id.get(candidate_id, {})
         for field, expected_ids in (
             (

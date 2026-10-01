@@ -357,8 +357,14 @@
       "photo_prompt_portrait_fashion_exposure_extension.json",
       "photo_prompt_sensual_fetish_fashion_extension.json",
       "photo_prompt_contextual_appeal_extension.json",
-      "photo_prompt_costume_cosplay_extension.json"
+      "photo_prompt_costume_cosplay_extension.json",
+      "photo_prompt_editing_effects_extension.json"
     ],
+    "core_assertion_discovery": {
+      "maximum_candidates": 15,
+      "maximum_per_assertion": 3,
+      "minimum_shared_content_words": 3
+    },
     "joint_adoption": {
       "maximum_bundles": 8,
       "maximum_members_per_bundle": 8,
@@ -170703,6 +170709,16 @@
         "weight": 1.4,
         "tags": [
           "film"
+        ],
+        "affected_dimensions": [
+          "style"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "image_plane",
+            "property": "rendering.grain"
+          }
         ]
       },
       {
@@ -170831,6 +170847,22 @@
         "tags": [
           "film",
           "cinematic"
+        ],
+        "affected_dimensions": [
+          "style",
+          "color"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "image_plane",
+            "property": "rendering.halo"
+          },
+          {
+            "dimension": "color",
+            "target": "*",
+            "property": "*"
+          }
         ]
       },
       {
@@ -170937,6 +170969,22 @@
           "archive",
           "retro",
           "digicam"
+        ],
+        "affected_dimensions": [
+          "style",
+          "color"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "image_plane",
+            "property": "rendering.noise"
+          },
+          {
+            "dimension": "color",
+            "target": "*",
+            "property": "*"
+          }
         ]
       },
       {
@@ -190591,7 +190639,17 @@
           "noise",
           "lowlight"
         ],
-        "embedding_text": "ISO 3200 high-sensitivity noise grain"
+        "embedding_text": "ISO 3200 high-sensitivity noise grain",
+        "affected_dimensions": [
+          "style"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "style",
+            "target": "image_plane",
+            "property": "rendering.noise"
+          }
+        ]
       },
       {
         "id": "ccd_chroma_noise",
