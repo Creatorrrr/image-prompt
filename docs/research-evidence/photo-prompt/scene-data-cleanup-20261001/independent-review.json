@@ -1,0 +1,48 @@
+{
+  "status": "accepted; final combined 102-test gate also passed",
+  "independent_checks": [
+    "Exactly 14 changed rows within 32 frozen candidates",
+    "Exactly 14 semantic inputs changed",
+    "All 9012 slot IDs and all non-slot top-level fields preserved",
+    "Prior 23 edited rows preserved",
+    "Original bytes outside the 14 row objects preserved",
+    "Frozen 42 query texts and their hash preserved",
+    "25 scene and BM25F tests passed",
+    "Current branch improve/next-slot-data-20261001 at base769f005",
+    "Untouched visual profile index Git blob verified",
+    "Recomputed all 42 ranks, target scores and top5 results for baseline, stage1, stage2 and final: zero mismatches",
+    "Each API attempt matches cached text hash, model, finite 768-dimensional vector; all changed vectors equal the final index"
+  ],
+  "findings_resolved": [
+    {
+      "row": "time_of_day:time_blue_hour",
+      "issue": "Ordinary spaced blue hour query lost all lexical matches after fragment aliases were removed",
+      "resolution": "Add complete unhyphenated blue hour after sunset alias; restore rank1; no query substitution or hard filter",
+      "evidence": "review-diagnostic-lexical.json"
+    },
+    {
+      "row": "crowd_density:empty_deserted_space",
+      "issue": "Korean phrase should explicitly retain empty surroundings",
+      "resolution": "주변 공간이 텅 비어 군중이 보이지 않는 배열로"
+    }
+  ],
+  "qualifications": [
+    "Tags are not semantic/BM25F search text; retained tags preserve routing but do not preserve context-only keyword discovery",
+    "Positive checks are candidate-derived, not an independent holdout",
+    "Ten probes include valid scene alternatives and must not be reported as ten hard negatives",
+    "No image generation, pixel review, or rendered-quality improvement claim"
+  ],
+  "index_checks": {
+    "entries": 9754,
+    "unchanged_text_vector_pairs": 9740,
+    "changed_text_vector_pairs": 14,
+    "changed_vectors_for_unchanged_text": 0,
+    "api_unique_completed_attempts": 56,
+    "documents": 14,
+    "queries": 42,
+    "dense_positive_before_top1": 32,
+    "dense_positive_after_top1": 32,
+    "dense_probe_rank_lower": 7,
+    "dense_probe_rank_same": 3
+  }
+}

@@ -1,0 +1,44 @@
+.........................................................................FFF...........E
+======================================================================
+ERROR: test_series_trend_and_source_provenance_remain_maintenance_only (tests.test_photo_portrait_composition_semantics.PortraitCompositionTests.test_series_trend_and_source_provenance_remain_maintenance_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ce8f20680f5a/baseline-round2/tests/test_photo_portrait_composition_semantics.py", line 127, in test_series_trend_and_source_provenance_remain_maintenance_only
+    record = json.loads((ROOT / 'docs/research-evidence/photo-prompt/extension-maintenance' / (ref['record_id'] + '.json')).read_text())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/ce8f20680f5a/baseline-round2/docs/research-evidence/photo-prompt/extension-maintenance/portrait-composition-cleanup-20261001-stage1.json'
+
+======================================================================
+FAIL: test_three_arm_cases_are_frozen_profile_distinct_and_reference_bound (tests.test_photo_lighting_visual_semantics.PhotoLightingVisualSemanticsTests.test_three_arm_cases_are_frozen_profile_distinct_and_reference_bound) (arm_id='arm-a')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ce8f20680f5a/baseline-round2/tests/test_photo_lighting_visual_semantics.py", line 324, in test_three_arm_cases_are_frozen_profile_distinct_and_reference_bound
+    self.assertTrue(artifact.is_file())
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_three_arm_cases_are_frozen_profile_distinct_and_reference_bound (tests.test_photo_lighting_visual_semantics.PhotoLightingVisualSemanticsTests.test_three_arm_cases_are_frozen_profile_distinct_and_reference_bound) (arm_id='arm-b')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ce8f20680f5a/baseline-round2/tests/test_photo_lighting_visual_semantics.py", line 324, in test_three_arm_cases_are_frozen_profile_distinct_and_reference_bound
+    self.assertTrue(artifact.is_file())
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_three_arm_cases_are_frozen_profile_distinct_and_reference_bound (tests.test_photo_lighting_visual_semantics.PhotoLightingVisualSemanticsTests.test_three_arm_cases_are_frozen_profile_distinct_and_reference_bound) (arm_id='arm-c')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ce8f20680f5a/baseline-round2/tests/test_photo_lighting_visual_semantics.py", line 324, in test_three_arm_cases_are_frozen_profile_distinct_and_reference_bound
+    self.assertTrue(artifact.is_file())
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 86 tests in 218.042s
+
+FAILED (failures=3, errors=1)

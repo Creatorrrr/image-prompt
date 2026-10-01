@@ -1,0 +1,88 @@
+...........................EE..E..........EE...............E.......E..
+======================================================================
+ERROR: test_explicit_bound_no_people_context_reaches_existing_guard_without_text_guessing (tests.test_photo_slot_rank_regressions.SlotRankRegressionTests.test_explicit_bound_no_people_context_reaches_existing_guard_without_text_guessing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/tests/test_photo_slot_rank_regressions.py", line 200, in test_explicit_bound_no_people_context_reaches_existing_guard_without_text_guessing
+    core, controls = self.bound_context_core(True)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/tests/test_photo_slot_rank_regressions.py", line 185, in bound_context_core
+    from tests import photo_prompt_fixtures as inputs
+ImportError: cannot import name 'photo_prompt_fixtures' from 'tests' (/workspace/scratch/ce8f20680f5a/image-prompt/tests/__init__.py)
+
+======================================================================
+ERROR: test_false_context_cannot_override_exclusion_or_infer_no_people_from_category (tests.test_photo_slot_rank_regressions.SlotRankRegressionTests.test_false_context_cannot_override_exclusion_or_infer_no_people_from_category)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/tests/test_photo_slot_rank_regressions.py", line 212, in test_false_context_cannot_override_exclusion_or_infer_no_people_from_category
+    core, controls = self.bound_context_core(False)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/tests/test_photo_slot_rank_regressions.py", line 185, in bound_context_core
+    from tests import photo_prompt_fixtures as inputs
+ImportError: cannot import name 'photo_prompt_fixtures' from 'tests' (/workspace/scratch/ce8f20680f5a/image-prompt/tests/__init__.py)
+
+======================================================================
+ERROR: test_no_people_bridge_changes_only_people_fields_without_mutating_source (tests.test_photo_slot_rank_regressions.SlotRankRegressionTests.test_no_people_bridge_changes_only_people_fields_without_mutating_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/tests/test_photo_slot_rank_regressions.py", line 233, in test_no_people_bridge_changes_only_people_fields_without_mutating_source
+    core, controls = self.bound_context_core(True)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/tests/test_photo_slot_rank_regressions.py", line 185, in bound_context_core
+    from tests import photo_prompt_fixtures as inputs
+ImportError: cannot import name 'photo_prompt_fixtures' from 'tests' (/workspace/scratch/ce8f20680f5a/image-prompt/tests/__init__.py)
+
+======================================================================
+ERROR: test_stale_or_mutated_context_cannot_enter_no_people_guard (tests.test_photo_slot_rank_regressions.SlotRankRegressionTests.test_stale_or_mutated_context_cannot_enter_no_people_guard)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/tests/test_photo_slot_rank_regressions.py", line 218, in test_stale_or_mutated_context_cannot_enter_no_people_guard
+    core, controls = self.bound_context_core(True)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/tests/test_photo_slot_rank_regressions.py", line 185, in bound_context_core
+    from tests import photo_prompt_fixtures as inputs
+ImportError: cannot import name 'photo_prompt_fixtures' from 'tests' (/workspace/scratch/ce8f20680f5a/image-prompt/tests/__init__.py)
+
+======================================================================
+ERROR: test_photo_slot_pipeline_regressions (unittest.loader._FailedTest.test_photo_slot_pipeline_regressions)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_photo_slot_pipeline_regressions
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/tests/test_photo_slot_pipeline_regressions.py", line 16, in <module>
+    from tests import photo_prompt_fixtures as fixtures
+ImportError: cannot import name 'photo_prompt_fixtures' from 'tests' (/workspace/scratch/ce8f20680f5a/image-prompt/tests/__init__.py)
+
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_lighting_visual_semantics.PhotoLightingVisualSemanticsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/tests/test_photo_lighting_visual_semantics.py", line 83, in setUpClass
+    cls.generated_index = prompt_generator.load_visual_profile_index(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 2777, in load_visual_profile_index
+    raise FileNotFoundError(f"visual profile index not found: {index_path}")
+FileNotFoundError: visual profile index not found: /workspace/scratch/ce8f20680f5a/image-prompt/skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json
+
+======================================================================
+ERROR: test_real_generated_indexes_cover_current_source (tests.test_photo_portrait_composition_semantics.PortraitCompositionTests.test_real_generated_indexes_cover_current_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/tests/test_photo_portrait_composition_semantics.py", line 148, in test_real_generated_indexes_cover_current_source
+    visual = json.loads((SKILL / 'assets/photo_prompt_visual_profile_index.json').read_text())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/ce8f20680f5a/image-prompt/skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json'
+
+----------------------------------------------------------------------
+Ran 69 tests in 17.308s
+
+FAILED (errors=7)
