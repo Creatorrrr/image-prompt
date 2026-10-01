@@ -1,0 +1,615 @@
+{
+  "source_test": "tests.test_photo_concept_candidate_expansion.PhotoConceptCandidateExpansionTests.test_semantic_index_ranks_new_keyword_families_near_the_top",
+  "baseline_commit": "b2bdb46d5fde01713f2b41d5b482c0f938be2790",
+  "cases": [
+    {
+      "query": "마녀 빗자루 달빛 주문 수행",
+      "required_top_k": 4,
+      "expected_ids": [
+        "slot:action:broom_flight_across_moon",
+        "slot:prop:working_broom_prop",
+        "slot:subject:witch_practitioner_role_model"
+      ],
+      "baseline": {
+        "top12": [
+          {
+            "document_id": "slot:prop:working_broom_prop",
+            "score": 84.677561956529,
+            "matched_terms": [
+              "마녀",
+              "빗자루"
+            ]
+          },
+          {
+            "document_id": "slot:subject:witch_practitioner_role_model",
+            "score": 70.296486458496,
+            "matched_terms": [
+              "마녀",
+              "수행"
+            ]
+          },
+          {
+            "document_id": "slot:action:broom_flight_across_moon",
+            "score": 45.739492482617,
+            "matched_terms": [
+              "빗자루"
+            ]
+          },
+          {
+            "document_id": "slot:costume_style:witch_robe_wide_hat",
+            "score": 40.054232800161,
+            "matched_terms": [
+              "마녀"
+            ]
+          },
+          {
+            "document_id": "slot:lighting:moonlit_tiled_roof_edge_light",
+            "score": 38.076412643288,
+            "matched_terms": [
+              "달빛"
+            ]
+          },
+          {
+            "document_id": "slot:light_type:moonlight",
+            "score": 35.537949816409,
+            "matched_terms": [
+              "달빛"
+            ]
+          },
+          {
+            "document_id": "preset:witch_apothecary_room_portrait",
+            "score": 35.374821662526,
+            "matched_terms": [
+              "마녀"
+            ]
+          },
+          {
+            "document_id": "slot:location:witch_apothecary_room",
+            "score": 35.374821662526,
+            "matched_terms": [
+              "마녀"
+            ]
+          },
+          {
+            "document_id": "slot:prop:wide_brim_witch_hat_prop",
+            "score": 35.374821662526,
+            "matched_terms": [
+              "마녀"
+            ]
+          },
+          {
+            "document_id": "slot:lighting:moonlight",
+            "score": 35.295258743846,
+            "matched_terms": [
+              "달빛"
+            ]
+          },
+          {
+            "document_id": "slot:wearable_accessory:ccx_cc11_01",
+            "score": 35.13108619684,
+            "matched_terms": [
+              "마녀"
+            ]
+          },
+          {
+            "document_id": "slot:wearable_accessory:ccx_cc11_02",
+            "score": 34.809597394746,
+            "matched_terms": [
+              "마녀"
+            ]
+          }
+        ],
+        "missing_required_top_k": []
+      },
+      "accepted": {
+        "top12": [
+          {
+            "document_id": "slot:prop:working_broom_prop",
+            "score": 84.677578912597,
+            "matched_terms": [
+              "마녀",
+              "빗자루"
+            ]
+          },
+          {
+            "document_id": "slot:subject:witch_practitioner_role_model",
+            "score": 70.296511707743,
+            "matched_terms": [
+              "마녀",
+              "수행"
+            ]
+          },
+          {
+            "document_id": "slot:action:broom_flight_across_moon",
+            "score": 45.739501350557,
+            "matched_terms": [
+              "빗자루"
+            ]
+          },
+          {
+            "document_id": "slot:costume_style:witch_robe_wide_hat",
+            "score": 40.054237422621,
+            "matched_terms": [
+              "마녀"
+            ]
+          },
+          {
+            "document_id": "slot:lighting:moonlit_tiled_roof_edge_light",
+            "score": 38.076420922917,
+            "matched_terms": [
+              "달빛"
+            ]
+          },
+          {
+            "document_id": "slot:light_type:moonlight",
+            "score": 35.537955929876,
+            "matched_terms": [
+              "달빛"
+            ]
+          },
+          {
+            "document_id": "preset:witch_apothecary_room_portrait",
+            "score": 35.374832096747,
+            "matched_terms": [
+              "마녀"
+            ]
+          },
+          {
+            "document_id": "slot:location:witch_apothecary_room",
+            "score": 35.374832096747,
+            "matched_terms": [
+              "마녀"
+            ]
+          },
+          {
+            "document_id": "slot:prop:wide_brim_witch_hat_prop",
+            "score": 35.374832096747,
+            "matched_terms": [
+              "마녀"
+            ]
+          },
+          {
+            "document_id": "slot:lighting:moonlight",
+            "score": 35.295266281663,
+            "matched_terms": [
+              "달빛"
+            ]
+          },
+          {
+            "document_id": "slot:wearable_accessory:ccx_cc11_01",
+            "score": 35.13108619684,
+            "matched_terms": [
+              "마녀"
+            ]
+          },
+          {
+            "document_id": "slot:wearable_accessory:ccx_cc11_02",
+            "score": 34.809597394746,
+            "matched_terms": [
+              "마녀"
+            ]
+          }
+        ],
+        "missing_required_top_k": []
+      },
+      "same_top12_id_order": true
+    },
+    {
+      "query": "트레저헌터 단서 지도 발견 직전",
+      "required_top_k": 4,
+      "expected_ids": [
+        "slot:action:triangulating_ruin_clues",
+        "slot:narrative_phase:search_before_discovery",
+        "slot:prop:annotated_treasure_map_prop",
+        "slot:subject:treasure_hunter_role_model"
+      ],
+      "baseline": {
+        "top12": [
+          {
+            "document_id": "slot:narrative_phase:search_before_discovery",
+            "score": 94.073095795269,
+            "matched_terms": [
+              "단서",
+              "발견",
+              "직전"
+            ]
+          },
+          {
+            "document_id": "slot:subject:treasure_hunter_role_model",
+            "score": 74.00809977189,
+            "matched_terms": [
+              "단서",
+              "트레저헌터"
+            ]
+          },
+          {
+            "document_id": "slot:prop:annotated_treasure_map_prop",
+            "score": 57.0140583868,
+            "matched_terms": [
+              "단서",
+              "지도"
+            ]
+          },
+          {
+            "document_id": "slot:action:triangulating_ruin_clues",
+            "score": 51.699855787462,
+            "matched_terms": [
+              "단서",
+              "지도"
+            ]
+          },
+          {
+            "document_id": "slot:aftermath_trace:documented_find_marker_trace",
+            "score": 39.589133581525,
+            "matched_terms": [
+              "발견"
+            ]
+          },
+          {
+            "document_id": "slot:action:revealing_sealed_cache_edge",
+            "score": 35.58281176596,
+            "matched_terms": [
+              "발견"
+            ]
+          },
+          {
+            "document_id": "slot:narrative_phase:partial_reveal_moment",
+            "score": 35.58281176596,
+            "matched_terms": [
+              "발견"
+            ]
+          },
+          {
+            "document_id": "slot:narrative_phase:post_discovery_verification",
+            "score": 35.58281176596,
+            "matched_terms": [
+              "발견"
+            ]
+          },
+          {
+            "document_id": "slot:action:logging_geocache_find",
+            "score": 35.295980018641,
+            "matched_terms": [
+              "발견"
+            ]
+          },
+          {
+            "document_id": "slot:location:cliff_overlook_after_discovery",
+            "score": 35.295980018641,
+            "matched_terms": [
+              "발견"
+            ]
+          },
+          {
+            "document_id": "slot:action:ed_bus_stop_ready_candidate",
+            "score": 33.7913401374,
+            "matched_terms": [
+              "직전"
+            ]
+          },
+          {
+            "document_id": "slot:relational_action:pr_observed_action_trace_candidate",
+            "score": 32.720363563452,
+            "matched_terms": [
+              "직전"
+            ]
+          }
+        ],
+        "missing_required_top_k": []
+      },
+      "accepted": {
+        "top12": [
+          {
+            "document_id": "slot:narrative_phase:search_before_discovery",
+            "score": 94.073117942355,
+            "matched_terms": [
+              "단서",
+              "발견",
+              "직전"
+            ]
+          },
+          {
+            "document_id": "slot:subject:treasure_hunter_role_model",
+            "score": 74.008128273364,
+            "matched_terms": [
+              "단서",
+              "트레저헌터"
+            ]
+          },
+          {
+            "document_id": "slot:prop:annotated_treasure_map_prop",
+            "score": 57.014064368267,
+            "matched_terms": [
+              "단서",
+              "지도"
+            ]
+          },
+          {
+            "document_id": "slot:action:triangulating_ruin_clues",
+            "score": 51.699875821524,
+            "matched_terms": [
+              "단서",
+              "지도"
+            ]
+          },
+          {
+            "document_id": "slot:aftermath_trace:documented_find_marker_trace",
+            "score": 39.58914164932,
+            "matched_terms": [
+              "발견"
+            ]
+          },
+          {
+            "document_id": "slot:action:revealing_sealed_cache_edge",
+            "score": 35.58281176596,
+            "matched_terms": [
+              "발견"
+            ]
+          },
+          {
+            "document_id": "slot:narrative_phase:partial_reveal_moment",
+            "score": 35.58281176596,
+            "matched_terms": [
+              "발견"
+            ]
+          },
+          {
+            "document_id": "slot:narrative_phase:post_discovery_verification",
+            "score": 35.58281176596,
+            "matched_terms": [
+              "발견"
+            ]
+          },
+          {
+            "document_id": "slot:action:logging_geocache_find",
+            "score": 35.295980018641,
+            "matched_terms": [
+              "발견"
+            ]
+          },
+          {
+            "document_id": "slot:location:cliff_overlook_after_discovery",
+            "score": 35.295980018641,
+            "matched_terms": [
+              "발견"
+            ]
+          },
+          {
+            "document_id": "slot:action:ed_bus_stop_ready_candidate",
+            "score": 33.791342091286,
+            "matched_terms": [
+              "직전"
+            ]
+          },
+          {
+            "document_id": "slot:relational_action:pr_observed_action_trace_candidate",
+            "score": 32.720367820579,
+            "matched_terms": [
+              "직전"
+            ]
+          }
+        ],
+        "missing_required_top_k": []
+      },
+      "same_top12_id_order": true
+    },
+    {
+      "query": "도내 1등 초절정 미소녀 지역 평판 여러 사람 시선",
+      "required_top_k": 6,
+      "expected_ids": [
+        "slot:capture_context:local_press_recognition_capture",
+        "slot:narrative_phase:self_aware_superlative_entrance",
+        "slot:situation_context:local_reputation_beauty_context",
+        "slot:situation_context:playful_hyperbole_public_entrance",
+        "slot:social_cue:multi_observer_recognition_cue"
+      ],
+      "baseline": {
+        "top12": [
+          {
+            "document_id": "slot:situation_context:playful_hyperbole_public_entrance",
+            "score": 104.800318533121,
+            "matched_terms": [
+              "지역",
+              "초절정",
+              "평판"
+            ]
+          },
+          {
+            "document_id": "slot:situation_context:local_reputation_beauty_context",
+            "score": 96.02026714592,
+            "matched_terms": [
+              "사람",
+              "지역",
+              "평판"
+            ]
+          },
+          {
+            "document_id": "slot:narrative_phase:self_aware_superlative_entrance",
+            "score": 80.366938608462,
+            "matched_terms": [
+              "초절정",
+              "평판"
+            ]
+          },
+          {
+            "document_id": "slot:occasion_context:dungeon_synth_world_chronicle_occasion",
+            "score": 55.228723798117,
+            "matched_terms": [
+              "여러",
+              "지역"
+            ]
+          },
+          {
+            "document_id": "slot:capture_context:local_press_recognition_capture",
+            "score": 53.831306335526,
+            "matched_terms": [
+              "여러",
+              "지역"
+            ]
+          },
+          {
+            "document_id": "slot:body_orientation:pc_pc06_component_1",
+            "score": 52.60250577708,
+            "matched_terms": [
+              "1",
+              "시선"
+            ]
+          },
+          {
+            "document_id": "slot:social_cue:multi_observer_recognition_cue",
+            "score": 51.980344905436,
+            "matched_terms": [
+              "사람",
+              "여러"
+            ]
+          },
+          {
+            "document_id": "slot:expression:ctx_c120",
+            "score": 45.664680500873,
+            "matched_terms": [
+              "사람",
+              "시선"
+            ]
+          },
+          {
+            "document_id": "slot:gaze_target:joint_gaze_to_shared_target",
+            "score": 43.054772319241,
+            "matched_terms": [
+              "사람",
+              "시선"
+            ]
+          },
+          {
+            "document_id": "slot:action:jianghu_inn_identity_standoff",
+            "score": 42.104049780217,
+            "matched_terms": [
+              "시선",
+              "여러"
+            ]
+          },
+          {
+            "document_id": "slot:garment_detail:sff_pro_e12",
+            "score": 39.504372033528,
+            "matched_terms": [
+              "등"
+            ]
+          },
+          {
+            "document_id": "slot:garment_detail:sff_extra_xa043",
+            "score": 39.483761885989,
+            "matched_terms": [
+              "등"
+            ]
+          }
+        ],
+        "missing_required_top_k": [
+          "slot:social_cue:multi_observer_recognition_cue"
+        ]
+      },
+      "accepted": {
+        "top12": [
+          {
+            "document_id": "slot:situation_context:playful_hyperbole_public_entrance",
+            "score": 104.800351287454,
+            "matched_terms": [
+              "지역",
+              "초절정",
+              "평판"
+            ]
+          },
+          {
+            "document_id": "slot:situation_context:local_reputation_beauty_context",
+            "score": 96.02029895193,
+            "matched_terms": [
+              "사람",
+              "지역",
+              "평판"
+            ]
+          },
+          {
+            "document_id": "slot:narrative_phase:self_aware_superlative_entrance",
+            "score": 80.366946400937,
+            "matched_terms": [
+              "초절정",
+              "평판"
+            ]
+          },
+          {
+            "document_id": "slot:occasion_context:dungeon_synth_world_chronicle_occasion",
+            "score": 55.228744467321,
+            "matched_terms": [
+              "여러",
+              "지역"
+            ]
+          },
+          {
+            "document_id": "slot:capture_context:local_press_recognition_capture",
+            "score": 53.831333188415,
+            "matched_terms": [
+              "여러",
+              "지역"
+            ]
+          },
+          {
+            "document_id": "slot:body_orientation:pc_pc06_component_1",
+            "score": 52.602526010227,
+            "matched_terms": [
+              "1",
+              "시선"
+            ]
+          },
+          {
+            "document_id": "slot:social_cue:multi_observer_recognition_cue",
+            "score": 51.98035019573,
+            "matched_terms": [
+              "사람",
+              "여러"
+            ]
+          },
+          {
+            "document_id": "slot:expression:ctx_c120",
+            "score": 45.6647169887,
+            "matched_terms": [
+              "사람",
+              "시선"
+            ]
+          },
+          {
+            "document_id": "slot:gaze_target:joint_gaze_to_shared_target",
+            "score": 43.054807134108,
+            "matched_terms": [
+              "사람",
+              "시선"
+            ]
+          },
+          {
+            "document_id": "slot:action:jianghu_inn_identity_standoff",
+            "score": 42.104091994453,
+            "matched_terms": [
+              "시선",
+              "여러"
+            ]
+          },
+          {
+            "document_id": "slot:garment_detail:sff_pro_e12",
+            "score": 39.504373981918,
+            "matched_terms": [
+              "등"
+            ]
+          },
+          {
+            "document_id": "slot:garment_detail:sff_extra_xa043",
+            "score": 39.483763767049,
+            "matched_terms": [
+              "등"
+            ]
+          }
+        ],
+        "missing_required_top_k": [
+          "slot:social_cue:multi_observer_recognition_cue"
+        ]
+      },
+      "same_top12_id_order": true
+    }
+  ]
+}

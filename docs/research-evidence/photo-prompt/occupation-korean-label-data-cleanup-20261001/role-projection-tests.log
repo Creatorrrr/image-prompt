@@ -1,0 +1,25 @@
+test_aliases_are_narrow_and_adjacent_concepts_remain_distinct (tests.test_photo_concept_candidate_expansion.PhotoConceptCandidateExpansionTests.test_aliases_are_narrow_and_adjacent_concepts_remain_distinct) ... ok
+test_local_reputation_mixin_never_owns_appearance_or_body_slots (tests.test_photo_concept_candidate_expansion.PhotoConceptCandidateExpansionTests.test_local_reputation_mixin_never_owns_appearance_or_body_slots) ... ok
+test_new_candidate_ids_exist_in_the_expected_slots (tests.test_photo_concept_candidate_expansion.PhotoConceptCandidateExpansionTests.test_new_candidate_ids_exist_in_the_expected_slots) ... ok
+test_research_rows_are_approved_and_reference_real_candidates (tests.test_photo_concept_candidate_expansion.PhotoConceptCandidateExpansionTests.test_research_rows_are_approved_and_reference_real_candidates) ... ok
+test_resolution_preserves_roles_and_emits_coherent_anchor_clusters (tests.test_photo_concept_candidate_expansion.PhotoConceptCandidateExpansionTests.test_resolution_preserves_roles_and_emits_coherent_anchor_clusters) ... ok
+test_role_recipes_keep_identity_core_disjoint_from_rotating_scenes (tests.test_photo_concept_candidate_expansion.PhotoConceptCandidateExpansionTests.test_role_recipes_keep_identity_core_disjoint_from_rotating_scenes) ... ok
+test_sampler_candidates_cover_each_concept_and_surface_new_semantics (tests.test_photo_concept_candidate_expansion.PhotoConceptCandidateExpansionTests.test_sampler_candidates_cover_each_concept_and_surface_new_semantics) ... ok
+test_semantic_index_ranks_new_keyword_families_near_the_top (tests.test_photo_concept_candidate_expansion.PhotoConceptCandidateExpansionTests.test_semantic_index_ranks_new_keyword_families_near_the_top) ...
+  test_semantic_index_ranks_new_keyword_families_near_the_top (tests.test_photo_concept_candidate_expansion.PhotoConceptCandidateExpansionTests.test_semantic_index_ranks_new_keyword_families_near_the_top) (query='도내 1등 초절정 미소녀 지역 평판 여러 사람 시선') ... FAIL
+test_candidate_ids_and_presets_form_closed_slot_references (tests.test_photo_role_garment_candidate_expansion.PhotoRoleGarmentCandidateExpansionTests.test_candidate_ids_and_presets_form_closed_slot_references) ... ok
+test_recipes_route_roles_mixins_and_requester_glossary (tests.test_photo_role_garment_candidate_expansion.PhotoRoleGarmentCandidateExpansionTests.test_recipes_route_roles_mixins_and_requester_glossary) ... ok
+test_research_rows_cover_sources_candidates_contracts_and_limitations (tests.test_photo_role_garment_candidate_expansion.PhotoRoleGarmentCandidateExpansionTests.test_research_rows_cover_sources_candidates_contracts_and_limitations) ... ok
+
+======================================================================
+FAIL: test_semantic_index_ranks_new_keyword_families_near_the_top (tests.test_photo_concept_candidate_expansion.PhotoConceptCandidateExpansionTests.test_semantic_index_ranks_new_keyword_families_near_the_top) (query='도내 1등 초절정 미소녀 지역 평판 여러 사람 시선')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/tests/test_photo_concept_candidate_expansion.py", line 415, in test_semantic_index_ranks_new_keyword_families_near_the_top
+    self.assertLessEqual(expected_ids, top_ids)
+AssertionError: {'slot:narrative_phase:self_aware_superlative_entrance', 'slot:social_cue:multi_observer_recognition_cue', 'slot:situation_context:local_reputation_beauty_context', 'slot:situation_context:playful_hyperbole_public_entrance', 'slot:capture_context:local_press_recognition_capture'} not less than or equal to {'slot:occasion_context:dungeon_synth_world_chronicle_occasion', 'slot:body_orientation:pc_pc06_component_1', 'slot:situation_context:local_reputation_beauty_context', 'slot:narrative_phase:self_aware_superlative_entrance', 'slot:situation_context:playful_hyperbole_public_entrance', 'slot:capture_context:local_press_recognition_capture'}
+
+----------------------------------------------------------------------
+Ran 11 tests in 52.601s
+
+FAILED (failures=1)

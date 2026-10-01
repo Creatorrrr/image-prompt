@@ -1,0 +1,15 @@
+# Korean labels for five occupational subjects
+
+Baseline: remote-verified `b2bdb46d5fde01713f2b41d5b482c0f938be2790`. The five-row scope covers welder, mechanic, harbor fisherman, rice-paddy farmer and blacksmith. Their `ko` fields contain full English clauses, including articles, rather than Korean labels or intentionally retained brand names.
+
+Change only `ko`. Preserve all English wording, role specialization, protective gear, grease-marked hands, harbor+dawn, rice-paddy wet-soil work, forge role, weights, tags and human applicability. Do not add demographic attributes, era, specific unmentioned tools/actions, sparks, a helmet, catches or a rice-planting action. The creation commit is not established and no automatic-generation provenance is claimed. Current source, matching trade context and the localization contract support the language-field repair.
+
+The independent pre-freeze review refined dawn to `동틀 무렵`, made the mechanic's Korean query person-headed, and removed incidental differences between paired English/Korean probes. Twenty authored queries, ten positives and ten near-misses, were then frozen. Every role has English and Korean positive/near-miss counterparts. No positive copies the entire proposed Korean label, but these are still author-derived diagnostics rather than a blind bilingual benchmark.
+
+Localization and public-pack wording are distinct: `localize` and the intermediate candidate summary produce the Korean label; current V6 consumes `label_en` and `label_ko` into unordered `concept_terms` and removes those fields. The frozen plan's shorthand “public label_ko projection” refers to that path, not a claim that V6 exposes a persistent label_ko field. Offline projection checks must verify that all existing English terms survive and the new Korean terms fit within the existing20-term cap. No projection code or policy changes are proposed.
+
+Nominal paid scope is five changed documents and20 queries,25 inputs, with a28-attempt cap ($0.0458752 conservative upper). Previous tracked upper is $1.0502144, within the existing $10 project authorization. Reuse compatible exact-text vectors, do not automatically retry, and preserve/count unsuccessful attempts if any.
+
+Acceptance requires faithful Korean meaning, exact preservation of all non-ko fields, validated bilingual projections, matching source/index/cache, independent read-only review, and paired query diagnostics. Inspect English/Korean ranking tradeoffs and actual top-k effects together. Require concrete label/coverage benefit rather than accepting avoidable regressions by disclosure alone. Retain original trial results and restore an unhelpful proposal to its exact baseline if needed. Do not tune frozen queries, change weights or add hard filters.
+
+Run related tests, commit, pull fresh main while preserving both intents, recheck, then normal push and verify the exact remote SHA/checks. Reproduction is against this cycle's publication snapshot, not arbitrary later main. No rendered-image quality or automatic final-prompt-adoption claim is made.
