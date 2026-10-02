@@ -21913,7 +21913,7 @@
         "concept_terms": [
           "critically sharp very-near anchor",
           "simultaneously sharp distant anchor",
-          "softer intervening depth band",
+          "softer intervening depth band or restrained optical transition",
           "continuous light and perspective across both zones",
           "two-zone split-field signature"
         ]
@@ -21989,11 +21989,11 @@
               "a softer middle-depth band separates the sharp anchors"
             ],
             "min_content_words": 6,
-            "instruction": "An intervening middle-depth band remains visibly softer than both anchors.",
+            "instruction": "An intervening middle-depth band or restrained optical transition remains visibly softer than both anchors.",
             "render_gate": {
               "id": "vo_capture_diopter_soft_middle_band",
               "review_scale": "both",
-              "description": "An intervening middle-depth band remains visibly softer than both anchors."
+              "description": "An intervening middle-depth band or restrained optical transition remains visibly softer than both anchors."
             }
           },
           {
@@ -22018,15 +22018,9 @@
           },
           {
             "id": "diopter_not_stack_or_split_screen",
-            "match_terms": [
-              "two separated sharp zones with a softer intervening band",
-              "분리된 두 선명 구역 사이에 더 부드러운 깊이 띠가 남음"
-            ],
+            "match_terms": ["two separated sharp zones with a softer intervening band or restrained optical transition", "분리된 두 선명 구역 사이에 더 부드러운 깊이 띠나 절제된 광학 전환이 남음", "two separated sharp zones with a softer intervening band", "분리된 두 선명 구역 사이에 더 부드러운 깊이 띠가 남음"],
             "evidence_field": "diopter_boundary_phrase",
-            "evidence_terms": [
-              "only two separated focus zones are emphasized rather than uniform deep focus a focus stack collage or split screen",
-              "two separated sharp zones with a softer intervening band"
-            ],
+            "evidence_terms": ["only two separated focus zones are emphasized rather than uniform deep focus a focus stack collage or split screen", "two separated sharp zones with a softer intervening band or restrained optical transition", "two separated sharp zones with a softer intervening band"],
             "min_content_words": 6,
             "instruction": "Uniform deep focus, focus stacking, collage, and split screen do not substitute.",
             "render_gate": {
@@ -22269,40 +22263,40 @@
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "Sequential sensor readout records different rows at different instants, so fast lateral motion or rapid camera movement produces a coherent direction-dependent shear: straight structures lean or bend consistently, moving forms skew across their height, and some local detail can remain crisp. A Dutch angle, wide-angle convergence, global warp, or ordinary motion blur cannot substitute.",
-        "paraphrase_examples": ["vertical posts lean consistently while a fast moving vehicle shears across its height yet retains crisp local texture", "빠른 측면 움직임에서 수직 구조와 이동 물체가 같은 판독 방향으로 기울고 전단됨", "row-timed distortion changes geometry without simply smearing every edge"],
+        "definition": "Temporally staggered sensor-row exposures record different image positions at different instants, so fast lateral subject motion or rapid camera movement produces coherent readout-axis shear according to each form's motion relative to the camera. Moving image forms lean or shear while stationary forms relative to a fixed camera retain stable geometry, and some local detail can remain crisp. A Dutch angle, wide-angle convergence, arbitrary warp, or ordinary motion blur cannot substitute.",
+        "paraphrase_examples": ["a fast lateral vehicle shears across its height against upright stationary posts when the camera is fixed; staggered row exposure progressively displaces only the vehicle image while painted lettering stays crisp, distinguishing motion-owned shear from tilted framing, perspective convergence, lens warp and uniform blur", "고정된 카메라 앞에서 빠르게 옆으로 이동하는 차량만 시차를 둔 센서 행 노출에 따라 높이 방향으로 점진적으로 전단되고 정지한 기둥은 곧게 유지되며, 차량의 글자는 국소적으로 선명하여 기울어진 구도나 원근 수렴, 렌즈 왜곡 또는 균일한 번짐과 구별됨", "a rapid camera sweep shears stationary scene structures while crisp local detail separates row-timed geometry from ordinary blur"],
         "component_semantics": {
           "minimum_component_groups": 5,
           "required_group_ids": ["rolling_row_time_shear", "rolling_structure_lean", "rolling_moving_form_skew", "rolling_crisp_local_detail", "rolling_not_angle_or_blur"],
           "groups": [
             {"id":"rolling_row_time_shear","any_terms":["geometric displacement changes progressively across the sensor readout direction","기하학적 변위가 센서 판독 방향을 따라 점진적으로 변함"]},
-            {"id":"rolling_structure_lean","any_terms":["normally vertical repeated structures lean or bend consistently in one direction","일반적으로 수직인 반복 구조가 한 방향으로 일관되게 기울거나 휨"]},
-            {"id":"rolling_moving_form_skew","any_terms":["the fast-moving subject shears across its height or width instead of remaining rigid","빠르게 움직이는 피사체가 강체로 유지되지 않고 높이나 너비를 가로질러 전단됨"]},
+            {"id":"rolling_structure_lean","any_terms":["scene geometry remains stable or shears consistently according to each form's motion relative to the camera", "장면의 기하 형태가 각 형태의 카메라에 대한 상대 움직임에 따라 안정적으로 유지되거나 일관되게 전단됨", "normally vertical repeated structures lean or bend consistently in one direction", "일반적으로 수직인 반복 구조가 한 방향으로 일관되게 기울거나 휨"]},
+            {"id":"rolling_moving_form_skew","any_terms":["a recognizable form displaced by subject motion or camera movement shears progressively across the sensor readout axis", "피사체 움직임이나 카메라 이동으로 영상 위치가 바뀌는 형태가 센서 판독 축을 가로질러 전단됨", "the fast-moving subject shears across its height or width instead of remaining rigid", "빠르게 움직이는 피사체가 강체로 유지되지 않고 높이나 너비를 가로질러 전단됨"]},
             {"id":"rolling_crisp_local_detail","any_terms":["some local edges remain crisp enough to distinguish skew from ordinary motion blur","일부 국소 경계가 일반 움직임 블러와 스큐를 구분할 만큼 선명하게 남음"]},
             {"id":"rolling_not_angle_or_blur","any_terms":["the shared readout-direction deformation cannot be explained by a tilted camera wide-angle convergence lens warp or uniform smear","공유된 판독 방향 변형은 기울어진 카메라 광각 수렴 렌즈 왜곡 또는 균일 번짐으로 설명되지 않음"]}
           ]
         },
-        "contrast_examples": ["a Dutch-angle frame", "wide-angle converging buildings", "barrel distortion", "uniform motion blur", "one bent object in an otherwise stable frame"]
+        "contrast_examples": ["a Dutch-angle frame", "wide-angle converging buildings", "barrel distortion", "uniform motion blur", "an arbitrarily bent object with no coherent motion-related shear"]
       },
-      "concept_candidate": {"concept_terms":["progressive readout-direction displacement", "consistent lean in vertical structures", "moving-form shear across height", "crisp local edges inside skew", "sensor-readout distortion not camera angle"]},
+      "concept_candidate": {"concept_terms":["progressive readout-direction displacement", "scene geometry consistent with each form's motion relative to the camera", "subject-motion or camera-motion shear across the readout axis", "crisp local edges inside skew", "sensor-readout distortion not camera angle"]},
       "runtime_expression": {"default_mode":"definition_with_optional_label","prompt_label_terms":["rolling-shutter readout skew"],"forbidden_prompt_terms":[],"runtime_forbidden_labels":[]},
-      "composition_instruction": "Use fast lateral motion or a rapid sweep against repeated vertical structures. Make displacement change progressively along one sensor-readout direction, shear the moving form across its height or width, and preserve some crisp local edges so the result reads as rolling-shutter geometry rather than a tilted frame or generic blur.",
+      "composition_instruction": "Use fast lateral subject motion or a rapid camera sweep. Make geometric displacement vary progressively along one sensor-readout axis according to each form's relative image motion. Keep any stationary background structures stable with a fixed camera; a camera sweep can shear stationary scene structures without an independently moving subject. Preserve some crisp local edges so the result reads as row-timed geometry rather than a tilted frame or generic blur.",
       "required_evidence_fields": ["rolling_readout_phrase", "rolling_structure_phrase", "rolling_subject_phrase", "rolling_crisp_detail_phrase", "rolling_boundary_phrase"],
       "evidence_requirements": {
         "rolling_readout_phrase":{"min_content_words":9,"must_mention_any":["geometric displacement changes progressively across the sensor readout direction"]},
-        "rolling_structure_phrase":{"min_content_words":10,"must_mention_any":["normally vertical repeated structures lean or bend consistently in one direction"]},
-        "rolling_subject_phrase":{"min_content_words":12,"must_mention_any":["the fast-moving subject shears across its height or width instead of remaining rigid"]},
+        "rolling_structure_phrase":{"min_content_words":10,"must_mention_any":["scene geometry remains stable or shears consistently according to each form's motion relative to the camera", "normally vertical repeated structures lean or bend consistently in one direction"]},
+        "rolling_subject_phrase":{"min_content_words":12,"must_mention_any":["a recognizable form displaced by subject motion or camera movement shears progressively across the sensor readout axis", "the fast-moving subject shears across its height or width instead of remaining rigid"]},
         "rolling_crisp_detail_phrase":{"min_content_words":12,"must_mention_any":["some local edges remain crisp enough to distinguish skew from ordinary motion blur"]},
         "rolling_boundary_phrase":{"min_content_words":17,"must_mention_any":["the shared readout-direction deformation cannot be explained by a tilted camera wide-angle convergence lens warp or uniform smear"]}
       },
       "render_gates": [
         {"id":"vo_capture_rolling_progressive_readout_shear","review_scale":"both","description":"Geometric displacement changes progressively along one readout direction."},
-        {"id":"vo_capture_rolling_consistent_vertical_lean","review_scale":"thumbnail","description":"Repeated normally vertical structures lean or bend consistently."},
-        {"id":"vo_capture_rolling_subject_cross_axis_skew","review_scale":"both","description":"The fast-moving form visibly shears across its height or width."},
+        {"id":"vo_capture_rolling_consistent_vertical_lean","review_scale":"thumbnail","description":"Visible scene geometry is consistent with each form's motion relative to the camera. Stationary background structures, when present with a fixed camera, remain stable; a separate background structure is not required."},
+        {"id":"vo_capture_rolling_subject_cross_axis_skew","review_scale":"both","description":"A form displaced in the image by subject motion or camera movement visibly shears across the sensor readout axis."},
         {"id":"vo_capture_rolling_crisp_local_edges","review_scale":"native","description":"Some local edges remain crisp inside the skewed geometry."},
         {"id":"vo_capture_rolling_not_dutch_wide_or_blur","review_scale":"native","description":"Dutch angle, wide-angle convergence, lens warp, and uniform blur do not substitute."}
       ],
-      "reject_substitutes": ["dutch_camera_angle", "wide_angle_convergence", "barrel_or_pincushion_distortion", "uniform_motion_blur", "single_bent_object"]
+      "reject_substitutes": ["dutch_camera_angle", "wide_angle_convergence", "barrel_or_pincushion_distortion", "uniform_motion_blur", "arbitrary_bending_without_motion_related_shear"]
     },
     {
       "id": "rembrandt_face_light_pattern",
