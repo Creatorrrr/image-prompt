@@ -4,6 +4,7 @@ import copy
 import importlib.util
 import json
 import unittest
+from unittest.mock import patch
 from tests import photo_prompt_fixtures as fixtures
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -76,12 +77,19 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
         self.assertEqual(live['runtime_keys'], ['schema_version', 'slots'])
 
     def test_complete_merged_state_and_twenty_one_keeps_remain_exact(self):
-        self.assertEqual(self.current['slots'], self.states['proposal']['slots'])
-        self.assertEqual(fixtures.bundle_meanings(self.current['candidate_bundles']),
-                         fixtures.bundle_meanings(self.states['baseline']['candidate_bundles']))
+        # Compare the historical authored source before the later equivalent
+        # pose-context overlay. Its exact original meanings stay protected.
+        filenames = tuple(name for name in common.g.RESEARCH_EXTENSION_FILENAMES
+                          if name != 'photo_prompt_pose_vocabulary_extension.json')
+        with patch.object(common.g, 'RESEARCH_EXTENSION_FILENAMES', filenames):
+            historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
+        self.assertEqual(historical_current['slots'], self.states['proposal']['slots'])
+        historical_bundles = self.states['baseline']['candidate_bundles']
+        self.assertEqual(fixtures.bundle_meanings(self.current['candidate_bundles'], within=historical_bundles),
+                         fixtures.bundle_meanings(historical_bundles))
         differences = []
         for slot, rows in self.states['baseline']['slots'].items():
-            for before, after in zip(rows, self.current['slots'][slot]):
+            for before, after in zip(rows, historical_current['slots'][slot]):
                 if before != after:
                     differences.append((slot, before['id']))
         self.assertEqual(differences, [('action','waiting_in_between_use_space')])

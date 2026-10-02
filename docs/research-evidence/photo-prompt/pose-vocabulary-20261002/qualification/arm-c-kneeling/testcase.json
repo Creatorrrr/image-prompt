@@ -1,0 +1,97 @@
+{
+  "contract_version": "independent-native-pixel-case/v1",
+  "provenance": "agent_visual_choice",
+  "arm": "C",
+  "seed": 2157385214743513717,
+  "pre_candidate_data_access": false,
+  "reference_scope": "Visible face/hair appearance only; no identity, biometric, actual-age, body or personality inference.",
+  "reference_path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+  "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+  "concept": "Adult portrait subject pauses after resetting an upright tidal-crossing demonstration in a small coastal railway signal museum before opening. Bronze sleeveless satin blouse, slate trousers, brass tide gauge and rolled coastal chart behind; low side-window light and silver floor reflections; frontal low-eye-height full-body view.",
+  "targets": [
+    {
+      "keyword": "half-kneeling",
+      "independent_definition": "One knee contacts the ground while the opposite foot is planted with its knee raised; hips remain lifted rather than sitting on heels.",
+      "all_of": [
+        "Exactly one knee clearly meets the floor or pad",
+        "Opposite sole is clearly planted forward and that knee is raised",
+        "Pelvis is raised above the rear heel and torso is supported upright"
+      ],
+      "near_misses": [
+        "two-knee kneeling",
+        "seiza sitting on heels",
+        "low squat with both feet on floor",
+        "lunge with rear knee hovering"
+      ],
+      "required_regions": [
+        "both knees",
+        "forward foot sole/floor interface",
+        "pelvis/rear-heel relationship"
+      ],
+      "partial_is_fail": true
+    },
+    {
+      "keyword": "OK sign",
+      "owner": "actor right hand; expected screen left",
+      "independent_definition": "Thumb tip and index tip touch in a closed loop while the other three fingers extend.",
+      "all_of": [
+        "Right thumb tip and index tip visibly contact",
+        "Their connected curve encloses a clear hole",
+        "Middle, ring and little fingers separately extend from that same hand"
+      ],
+      "near_misses": [
+        "C-shaped unclosed pinch",
+        "thumbs-up",
+        "pointing",
+        "finger heart",
+        "all five fingers open"
+      ],
+      "required_regions": [
+        "right wrist/arm chain",
+        "right thumb-index contact",
+        "right three remaining fingers"
+      ],
+      "partial_is_fail": true
+    },
+    {
+      "keyword": "V sign",
+      "owner": "actor left hand; expected screen right",
+      "independent_definition": "Index and middle fingers extend and separate into a V; ring and little fingers fold into palm under thumb.",
+      "all_of": [
+        "Left index and middle fingers are visibly extended",
+        "The two extended fingers separate into a V",
+        "Ring and little fingers fold while the thumb crosses them on the same hand"
+      ],
+      "near_misses": [
+        "two parallel joined fingers",
+        "three extended fingers",
+        "open palm",
+        "pointing",
+        "finger heart"
+      ],
+      "required_regions": [
+        "left wrist/arm chain",
+        "left index/middle separation",
+        "left folded ring/little and thumb"
+      ],
+      "partial_is_fail": true
+    }
+  ],
+  "scene_all_of": [
+    "clearly adult newly staged subject with face/hair appearance guidance",
+    "coastal railway signal museum and upright repaired demonstration board",
+    "bronze sleeveless satin blouse and slate trousers",
+    "brass tide gauge and rolled coastal chart on rear low workbench",
+    "low side-window light and silver polished-floor reflections",
+    "frontal low-eye-height tight full-body frame",
+    "all three target keywords fully observed"
+  ],
+  "embodiment_gates": [
+    "body_ownership",
+    "joint_chain_and_reach",
+    "support_and_balance",
+    "contact_and_space",
+    "visibility_and_projection"
+  ],
+  "grading": "Every target component must be observed and satisfied for PASS. Any observed mismatch is FAIL; occluded/cropped/too-small required region is UNOBSERVABLE and excluded from success. Metadata or audits do not establish pixel success. Actual forces, identity, biometric similarity and user acceptance are outside the claim."
+}

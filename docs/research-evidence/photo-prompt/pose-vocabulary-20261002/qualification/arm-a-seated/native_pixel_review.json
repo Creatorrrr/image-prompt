@@ -1,0 +1,235 @@
+{
+  "schema": "photo-native-qualification-review/v1",
+  "arm": "a-seated",
+  "reviewed_utc": "2026-10-02T09:03:38.586641+00:00",
+  "reviewer": "independent agent A",
+  "image": {
+    "original_path": "/Users/chasoik/.codex/generated_images/01a0fba6-334f-77c0-9e34-c130549f7505/exec-e541bbb8-cafa-4077-af0b-7ffbff542a28.png",
+    "preserved_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/pose-vocabulary-20261002/qualification/arm-a-seated/native_image.png",
+    "sha256": "ce4cbbeac3c4bc64d6c35f4c45c68e1f3512f815bf0103f76fd3d3b3835d8e6c",
+    "dimensions": [
+      1237,
+      1272
+    ]
+  },
+  "viewing": {
+    "original_png_viewed_with_view_image": true,
+    "full_frame_source_scale": "Full native 1237x1272 PNG was inspected through view_image high; supplemental crops use native pixels with no resize. The optional original-detail display yielded an unusably tiny fragment, so that display was not used to infer hidden detail.",
+    "supplemental_crop_manifest": "native_diagnostic_crop_manifest.json"
+  },
+  "candidate_exposure": {
+    "schema": "pose-candidate-exposure/v1",
+    "pack_id": "3205b9ef3ab797b5",
+    "exact_pack_count": 1,
+    "baseline_unchanged": true,
+    "agent_owned_targets": [
+      {
+        "keyword": "cross-legged seated",
+        "slot_id": "slot:body_pose:pv_cross_shins_seated_surface",
+        "slot_exposed": true,
+        "bundle_id": "bundle:pv_bundle_cross_shins_seated_surface",
+        "bundle_exposed": true,
+        "adopted_id": "bundle:pv_bundle_cross_shins_seated_surface",
+        "associated_profile_id": "pv_profile_cross_shins_seated_surface",
+        "profile_opt_in_exposed": false,
+        "profile_adopted": false
+      },
+      {
+        "keyword": "one-hand palm brace",
+        "slot_exposed": false,
+        "profile_id": null,
+        "profile_opt_in_exposed": false,
+        "profile_adopted": false,
+        "realization": "frozen_baseline",
+        "source_entry_id": "pv_seated_palm_brace",
+        "exposed_slot_id": null
+      }
+    ],
+    "chosen_visual_concept_ids": [],
+    "notes": [
+      "Associated profile metadata in a bundle is advisory and does not expose or activate an opt-in obligation.",
+      "No pack regeneration, forced insertion, or core rewrite occurred.",
+      "Source components refine only the independent pose realization; original testcase criteria remain unchanged."
+    ],
+    "focal_meaning_coverage": "The requester names no specific pose keyword or perceptual effect. Minimal user anchors remain literal, while these two agent-owned test targets use the frozen independent all-of criteria. The exposed complete folded-leg bundle is bound with all four component phrases; unavailable opt-in profiles are not invented."
+  },
+  "keyword_reviews": [
+    {
+      "keyword": "cross-legged seated / 양반다리 앉기",
+      "status": "UNOBSERVABLE",
+      "all_of_pass": false,
+      "source_criterion_file": "testcase.json",
+      "components": [
+        {
+          "criterion": "pelvis rests on the horizontal platform",
+          "status": "PASS",
+          "evidence": "The trousered pelvis is seated over the timber tabletop; its level top continues beneath both hips."
+        },
+        {
+          "criterion": "both knees bend and fall outward",
+          "status": "PASS",
+          "evidence": "The two clothed knees spread to image left and right, each bent back toward a bare lower leg."
+        },
+        {
+          "criterion": "lower legs cross in front of the pelvis on the platform",
+          "status": "PASS",
+          "evidence": "The two bare shin segments overlap across the tabletop in front of the pelvis, with the nearer shin continuing to the large foreground foot at image left."
+        },
+        {
+          "criterion": "each foot lies beneath or close to the opposite lower leg/thigh region, with both ankles/feet legible",
+          "status": "UNOBSERVABLE",
+          "evidence": "The rear shin disappears behind the nearer trouser cuff and crossed leg. Only the rear toes and outer foot end emerge at lower image right; its ankle and full shin-to-foot junction are concealed. The image cannot establish the required rear foot ownership and placement at native scale."
+        }
+      ],
+      "confusion_check": "This is visibly folded cross-legged seating rather than hanging crossed ankles, straight-leg sitting, kneeling, or standing. That broad read does not supply the concealed rear-ankle component.",
+      "native_regions_xywh": [
+        [
+          300,
+          820,
+          920,
+          370
+        ]
+      ],
+      "partial_is_fail": true
+    },
+    {
+      "keyword": "one-hand palm brace / 한 손바닥 짚고 지지",
+      "status": "FAIL",
+      "all_of_pass": false,
+      "source_criterion_file": "testcase.json",
+      "components": [
+        {
+          "criterion": "left hand belongs to visible connected left shoulder-arm-wrist chain and acts as brace",
+          "status": "FAIL",
+          "evidence": "The supporting hand at image left connects toward the woman's anatomical right shoulder/arm. Her anatomical left arm is at image right and its hand rests on the chart. The actor-relative side frozen in the case is reversed."
+        },
+        {
+          "criterion": "open left palm contacts the platform beside and slightly behind the left hip",
+          "status": "FAIL",
+          "evidence": "A right-hand brace occupies the timber surface at image left. The requested left palm instead rests on the chart at image right; the selected left-palm platform relation is absent. The actual supporting right palm heel is partly obscured by the foreground knee."
+        },
+        {
+          "criterion": "fingers visibly fan along the platform surface rather than grasping an object",
+          "status": "PASS",
+          "evidence": "On the actually supporting right hand, the source-scale crop shows an open hand with thumb and four extended finger ends arranged over the wood, with no held object. This is generic finger configuration evidence only and does not repair the left/right mismatch."
+        },
+        {
+          "criterion": "slight torso lean has plausible elbow-wrist path and hips remain supported",
+          "status": "UNOBSERVABLE",
+          "evidence": "The seated hips and gentle lean toward the actual right brace form a plausible gross configuration. The knee hides the final forearm-to-wrist and palm-heel boundary, preventing full inspection of the frozen connected brace mechanism."
+        }
+      ],
+      "confusion_check": "The actual right hand reads as an open hand on wood rather than a fist, thigh rest or chart grip. A generic one-hand brace is partially present, while the frozen left-sided realization fails and its critical wrist/heel is partly hidden.",
+      "native_regions_xywh": [
+        [
+          140,
+          740,
+          360,
+          300
+        ]
+      ],
+      "partial_is_fail": true
+    }
+  ],
+  "physical_gates": [
+    {
+      "gate": "body_ownership",
+      "status": "FAIL",
+      "evidence": "The intended actor is one woman with two plausible arms and two legs. However the frozen assignment of left hand as brace and right hand as chart hand is reversed: supporting hand image left is actor right, chart hand image right is actor left. This is an assignment failure, not a diagnosed extra or detached limb."
+    },
+    {
+      "gate": "joint_chain_and_reach",
+      "status": "UNOBSERVABLE",
+      "evidence": "Gross shoulder-to-elbow paths and outward bent knees are plausible. The brace forearm/wrist runs behind the near knee and the rear ankle runs behind the opposite cuff, so the complete two critical chains cannot be assessed from the native pixels."
+    },
+    {
+      "gate": "support_and_balance",
+      "status": "PASS",
+      "evidence": "The wide level timber surface visibly supports the seated hips and folded legs. The slight tilt toward the actual right bracing hand stays over that base and reads as a stable seated configuration. This PASS concerns visible support consistency; it does not correct the sidedness failure or estimate real force."
+    },
+    {
+      "gate": "contact_and_space",
+      "status": "FAIL",
+      "evidence": "The actual right open hand appears to contact the exposed wood with coherent finger boundaries and available space. The intended left palm-to-platform contact is absent because the left hand is on the coastal chart. The actual right palm heel is partially behind the knee, so full heel contact remains unobservable rather than proven floating."
+    },
+    {
+      "gate": "visibility_and_projection",
+      "status": "FAIL",
+      "evidence": "The frame includes the head, both feet and supporting hand, but the rear ankle-to-foot junction and the supporting wrist/palm heel are hidden behind crossed legs. The camera exposes the opposite brace side. Required regions being in-frame does not make the frozen left brace and both ankle junctions assessable."
+    }
+  ],
+  "frozen_scene_components": [
+    {
+      "component": "clearly adult new-scene subject",
+      "status": "PASS",
+      "evidence": "A single fictional adult woman is depicted in an adult workroom portrayal. This is a judgment of the generated depiction and supplies no claim about the reference person's real age."
+    },
+    {
+      "component": "sage linen shirt and charcoal wool trousers",
+      "status": "PASS",
+      "evidence": "A muted sage-gray open-collar shirt with visible woven linen-like texture and pushed sleeves is paired with dark charcoal textured cropped trousers. Material appearance is observed, not chemically verified."
+    },
+    {
+      "component": "tidal observatory map room",
+      "status": "PASS",
+      "evidence": "Sea and wintry coastal cliffs are visible through the window; a large coastal wall map, map drawers, charts and navigational work objects make the selected map-room setting readable."
+    },
+    {
+      "component": "broad low timber platform",
+      "status": "UNOBSERVABLE",
+      "evidence": "A broad horizontal timber work surface visibly carries the seated pose. The floor and full legs/base of that surface are cropped, so its required low height cannot be established."
+    },
+    {
+      "component": "folded coastal chart and plain graphite pencil",
+      "status": "PASS",
+      "evidence": "A folded coastal chart lies across the lap beneath the free hand; a plain dark graphite pencil lies separately on the wood near lower image left. The free hand is on the opposite actor side from the frozen detailed realization."
+    },
+    {
+      "component": "low winter sunlight and cooler skylight appearance",
+      "status": "PASS",
+      "evidence": "A snowy bright coast and warm raking window-side highlights accompany cooler shadow-side fill. This matches the selected visible light impression without claiming the actual physical light-source setup."
+    },
+    {
+      "component": "full seated front-left framing",
+      "status": "FAIL",
+      "evidence": "The seated frame includes face, feet and tabletop, but the camera reveals an actor-right brace instead of the planned actor-left near hand; the critical rear ankle and brace wrist remain occluded."
+    }
+  ],
+  "reference_appearance_review": {
+    "scope": "visible face and hair appearance only",
+    "status": "OBSERVED",
+    "observations": [
+      "The source and render both show a short dark bob near jaw level with wispy center-parted fringe.",
+      "Brown eyes, soft facial contours and pink lips remain visible in the generated face.",
+      "The render adapts appearance to the coastal daylight and full seated composition."
+    ],
+    "limits": [
+      "No real-identity assertion",
+      "No biometric similarity score",
+      "No reference age inference",
+      "No body-shape or personality transfer",
+      "No requesting-user acceptance"
+    ]
+  },
+  "scene_all_of": {
+    "status": "FAIL",
+    "pass": false,
+    "partial_is_fail": true,
+    "reasons": [
+      "cross-legged rear-ankle relation UNOBSERVABLE",
+      "left-brace handedness FAIL",
+      "critical wrist/heel occluded",
+      "low support-surface height UNOBSERVABLE",
+      "front-left visibility realization FAIL"
+    ],
+    "no_cross_attempt_aggregation": true
+  },
+  "claim_boundaries": [
+    "Actual tool return and saved file are successful generation evidence; pixel qualification is separate.",
+    "Prompt/runtime audits do not prove pixels.",
+    "Visible support is not force measurement.",
+    "No real identity, biometric similarity or user acceptance is asserted."
+  ],
+  "actual_native_image_call_count": 1,
+  "additional_generation": false
+}

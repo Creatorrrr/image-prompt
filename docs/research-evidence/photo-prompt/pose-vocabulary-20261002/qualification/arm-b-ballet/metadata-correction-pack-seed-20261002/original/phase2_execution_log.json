@@ -1,0 +1,61 @@
+{
+  "schema_version": "phase2-execution-log/v1",
+  "completed_utc": "2026-10-02T09:04:03.778507+00:00",
+  "phase2_authorization": "Coordinator sent Phase 2 start after current data/index verification.",
+  "single_candidate_pack_generation_count": 1,
+  "native_imagegen_invocation_count": 1,
+  "native_generation_outcome": "successfully returned and saved",
+  "cli_fallback_invocations": 0,
+  "additional_renders": 0,
+  "other_arm_inputs_used": false,
+  "shared_source_edits": false,
+  "exact_generation_args_file": "native_tool_args.json",
+  "exact_runtime_prompt_file": "runtime_prompt.txt",
+  "positive_prompt_file": "prompt_en.txt",
+  "negative_prompt_file": "negative_en.txt",
+  "source_hash_checks": [
+    "pre_retrieval_source_check.json",
+    "pre_imagegen_source_check.json"
+  ],
+  "phase1_final_unchanged": {
+    "request_envelope.json": true,
+    "creative_context.json": true,
+    "creative_controls.json": true,
+    "random_concept.json": true,
+    "test_case.json": true,
+    "authorial_core.json": true,
+    "baseline_prompt.txt": true,
+    "embodiment_review.json": true,
+    "precore_feature_selection.json": true,
+    "visual_feature_catalog.snapshot.json": true
+  },
+  "pack_id": "53f7462a9cfec002",
+  "composed_audit_status": "pass",
+  "composed_warning_count": 4,
+  "runtime_audit_status": "pass",
+  "review_audit": {
+    "exit_code": 1,
+    "schema_failures": [],
+    "failed_hard_gates": [],
+    "technical_qualified": true,
+    "qualification_status": "visual_technical_qualified_user_judgment_pending",
+    "reason_exit_nonzero": "Requesting-user judgment remains pending; representative_eligible false."
+  },
+  "independent_keyword_counts": {
+    "keyword_PASS": 1,
+    "keyword_FAIL": 2,
+    "keyword_UNOBSERVABLE": 0,
+    "embodiment_PASS": 5,
+    "embodiment_FAIL": 0,
+    "embodiment_UNOBSERVABLE": 0
+  },
+  "scene_all_of_status": "FAIL",
+  "non_generation_preparation_errors": [
+    {
+      "step": "copy preparation and PNG dimensions",
+      "error": "System python lacks PIL; first preparation command failed before copying and dependent view path did not yet exist.",
+      "resolution": "Used the standard-library PNG IHDR reader, copied exact native file, verified source/destination hash and viewed saved original.",
+      "additional_image_calls": 0
+    }
+  ]
+}

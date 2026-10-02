@@ -1,0 +1,49 @@
+{
+  "contract_version": "photo-embodiment-review/v1",
+  "provenance": "agent_prepack",
+  "prompt_sha256": "f13ecc964a7b751d32fe08bf221a66ab244161c830fd1c5231fe2595afbcb90c",
+  "scope": "body_action",
+  "summary": "General human body model; a single dancer uses two flat feet, a shallow bilateral outward knee bend, and empty rounded overhead arms on a dry floor. Plausibility reasoning precedes retrieval; native pixels will require a separate review.",
+  "checks": {
+    "body_ownership": {
+      "status": "supported",
+      "reason": "Two grounded feet, two bent knees and two raised arms are assigned to the same adult dancer. Hands are empty so the notebook and case cannot compete for limb ownership.",
+      "prompt_evidence": [
+        "The subject is a visibly adult woman",
+        "Her two empty hands belong to those raised arms"
+      ]
+    },
+    "joint_chain_and_reach": {
+      "status": "supported",
+      "reason": "The hip turnout, shallow hip/knee bend and matching toe directions are mutually compatible. Overhead arms use relaxed shoulder elevation and softly flexed elbows; hands stop short rather than collide.",
+      "prompt_evidence": [
+        "both knees bend outward over the matching toes",
+        "both elbows remain softly bent, her fingertips stop apart with a small air gap"
+      ]
+    },
+    "support_and_balance": {
+      "status": "supported",
+      "reason": "Both soles and heels form the broad base; the pelvis remains between the two supports and the torso stays upright. It is a held shallow plie, without simultaneous pointe or lifted-foot roles.",
+      "prompt_evidence": [
+        "both entire soles and heels flat on the dry wooden rehearsal platform",
+        "her pelvis lowers between her feet, and her torso stays upright"
+      ]
+    },
+    "contact_and_space": {
+      "status": "supported",
+      "reason": "The full soles contact the dry platform. The fingertip gap stays open. The stool and props are well behind the stance so floor and arm sweep remain clear.",
+      "prompt_evidence": [
+        "her fingertips stop apart with a small air gap",
+        "A low stool stands well behind the dance space"
+      ]
+    },
+    "visibility_and_projection": {
+      "status": "supported",
+      "reason": "Short skirt exposes the knees; soft slippers reveal heel and forefoot outlines. Slight frontal offset retains both feet and knees; full-length portrait contains the entire arm oval and floor contacts.",
+      "prompt_evidence": [
+        "leaving both knees clearly visible",
+        "a vertical full-length frame that includes the entire overhead arm oval, both knees, both feet and the floor contacts"
+      ]
+    }
+  }
+}

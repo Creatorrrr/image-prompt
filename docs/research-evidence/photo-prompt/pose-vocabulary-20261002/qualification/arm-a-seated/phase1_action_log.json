@@ -1,0 +1,32 @@
+{
+  "phase": "phase1",
+  "candidate_access": false,
+  "allowed_project_inputs": [
+    "skills/photo-prompt-image-generator/SKILL.md",
+    "skills/photo-prompt-image-generator/precore/creative_controls.json",
+    "skills/photo-prompt-image-generator/precore/creative_controls.py",
+    "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json"
+  ],
+  "external_skill": "/Users/chasoik/.codex/skills/.system/imagegen/SKILL.md",
+  "request_input": "request_envelope.json",
+  "reference_inspection": "tools.view_image on supplied reference JPEG",
+  "actions": [
+    "read both SKILL.md files completely in bounded chunks",
+    "verify request envelope and reference JPEG SHA256",
+    "inspect reference pixels with view_image",
+    "draw and record secrets.randbits(63) seed, use Python random.Random for compatible scene choices",
+    "write creative_context.json with no overrides",
+    "resolve creative controls via exact precore resolver using recorded seed",
+    "read authoring_brief and shared principle",
+    "freeze independent target meanings, confusion cases, regions, success criteria in testcase.json before catalog",
+    "read current exact neutral catalog",
+    "author and freeze canonically spaced baseline, v3 core, 5-check embodiment review, 9-category selection",
+    "save exact catalog snapshot",
+    "run validate_precore_feature_selection after freeze and before candidate access"
+  ],
+  "precore_selection_result": {
+    "valid": true,
+    "warnings": []
+  },
+  "native_generation_calls": 0
+}

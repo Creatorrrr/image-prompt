@@ -1,0 +1,3626 @@
+{
+  "schema_version": "pose-visual-profile-research-proposal/v1",
+  "not_runtime_drop_in": true,
+  "profiles": [
+    {
+      "id": "contrapposto_weight_shift",
+      "candidate_id": "pv_contrapposto",
+      "operation": "review_existing_profile_do_not_duplicate",
+      "qualification": "reuse_existing_profile",
+      "source_ids": [
+        "S01",
+        "S37"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Contrapposto",
+          "콘트라포스토",
+          "콘트라포스토의 하중과 대항 기울기"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "one support leg and one relaxed free leg are distinguishable; pelvic and shoulder lines counterbalance rather than tilting together; the full support-to-torso arrangement is visible",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "contrapposto_weight_shift_component_1",
+          "required_field": "component_1",
+          "rule": "one support leg and one relaxed free leg are distinguishable",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "contrapposto_weight_shift_component_2",
+          "required_field": "component_2",
+          "rule": "pelvic and shoulder lines counterbalance rather than tilting together",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "contrapposto_weight_shift_component_3",
+          "required_field": "component_3",
+          "rule": "the full support-to-torso arrangement is visible",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "generic S silhouette",
+        "waist bend alone",
+        "both legs equally loaded"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "figura_serpentinata_spiral_pose",
+      "candidate_id": "pv_serpentinata",
+      "operation": "review_existing_profile_do_not_duplicate",
+      "qualification": "reuse_existing_profile",
+      "source_ids": [
+        "S02"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Figura serpentinata",
+          "피구라 세르펜티나타",
+          "하체와 상체의 나선 대항 회전"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "lower body and thorax turn in opposing directions around the central axis; head or arm continuation reinforces the spiral; depth cues distinguish axial turning from a flat lateral bend",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "figura_serpentinata_spiral_pose_component_1",
+          "required_field": "component_1",
+          "rule": "lower body and thorax turn in opposing directions around the central axis",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "figura_serpentinata_spiral_pose_component_2",
+          "required_field": "component_2",
+          "rule": "head or arm continuation reinforces the spiral",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "figura_serpentinata_spiral_pose_component_3",
+          "required_field": "component_3",
+          "rule": "depth cues distinguish axial turning from a flat lateral bend",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "flat S curve",
+        "head turn alone",
+        "ordinary three-quarter stance"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "tribhanga_three_bend_pose",
+      "candidate_id": "pv_tribhanga",
+      "operation": "review_existing_profile_do_not_duplicate",
+      "qualification": "reuse_existing_profile",
+      "source_ids": [
+        "S03"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Tribhanga",
+          "트리방가",
+          "세 굴곡의 교대 리듬"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "head inclines in one direction; middle body bend counters that direction; lower-body return establishes a third bend; all three regions can be compared together",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "tribhanga_three_bend_pose_component_1",
+          "required_field": "component_1",
+          "rule": "head inclines in one direction",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "tribhanga_three_bend_pose_component_2",
+          "required_field": "component_2",
+          "rule": "middle body bend counters that direction",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "tribhanga_three_bend_pose_component_3",
+          "required_field": "component_3",
+          "rule": "lower-body return establishes a third bend",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "tribhanga_three_bend_pose_component_4",
+          "required_field": "component_4",
+          "rule": "all three regions can be compared together",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "single hip pop",
+        "one C bend",
+        "contrapposto without three bends"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_figure_four",
+      "candidate_id": "pv_figure_four",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S05"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Figure-four sitting",
+          "4자 다리",
+          "발목을 반대 허벅지에 둔 4자 앉기"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "one ankle rests on the opposite thigh near its knee; the lifted knee opens laterally; pelvis and the other leg retain seated support",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_figure_four_component_1",
+          "required_field": "component_1",
+          "rule": "one ankle rests on the opposite thigh near its knee",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_figure_four_component_2",
+          "required_field": "component_2",
+          "rule": "the lifted knee opens laterally",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_figure_four_component_3",
+          "required_field": "component_3",
+          "rule": "pelvis and the other leg retain seated support",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "knee-over-knee",
+        "crossed ankles",
+        "lotus both feet on thighs"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_knee_over_knee",
+      "candidate_id": "pv_knee_over_knee",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S05"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Knee-over-knee",
+          "Crossed knees",
+          "무릎 위 다리 꼬기",
+          "앉아서 무릎 위 교차"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "one thigh crosses over the other at knee level; pelvis remains seated; the lower legs continue from the correct knee owners",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_knee_over_knee_component_1",
+          "required_field": "component_1",
+          "rule": "one thigh crosses over the other at knee level",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_knee_over_knee_component_2",
+          "required_field": "component_2",
+          "rule": "pelvis remains seated",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_knee_over_knee_component_3",
+          "required_field": "component_3",
+          "rule": "the lower legs continue from the correct knee owners",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "ankle crossing",
+        "figure-four ankle on thigh"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_ankle_cross_seated",
+      "candidate_id": "pv_ankle_cross_seated",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S05"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Ankle-cross seated pose",
+          "발목만 교차",
+          "앉아서 발목만 교차"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "pelvis is visibly seated; ankles cross below otherwise uncrossed thighs; each shin continues to its own foot",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_ankle_cross_seated_component_1",
+          "required_field": "component_1",
+          "rule": "pelvis is visibly seated",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_ankle_cross_seated_component_2",
+          "required_field": "component_2",
+          "rule": "ankles cross below otherwise uncrossed thighs",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_ankle_cross_seated_component_3",
+          "required_field": "component_3",
+          "rule": "each shin continues to its own foot",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "knee-over-knee",
+        "standing ankle crossing"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_reverse_chair",
+      "candidate_id": "pv_reverse_chair",
+      "operation": "propose_new_profile",
+      "qualification": "project_operational_definition",
+      "source_ids": [
+        "S05"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Reverse-chair pose",
+          "의자 거꾸로 앉기",
+          "등받이를 향한 거꾸로 앉기"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "the torso faces the chair backrest; pelvis contacts the seat; leg placement is stated independently of the reversed direction",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_reverse_chair_component_1",
+          "required_field": "component_1",
+          "rule": "the torso faces the chair backrest",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_reverse_chair_component_2",
+          "required_field": "component_2",
+          "rule": "pelvis contacts the seat",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_reverse_chair_component_3",
+          "required_field": "component_3",
+          "rule": "leg placement is stated independently of the reversed direction",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "front-facing regular chair pose",
+        "automatic wide straddle"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_chair_straddle",
+      "candidate_id": "pv_chair_straddle",
+      "operation": "propose_new_profile",
+      "qualification": "project_operational_definition",
+      "source_ids": [
+        "S05",
+        "S06"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Chair straddle",
+          "Chair-straddle pose",
+          "의자 스트래들",
+          "좌면 양쪽에 다리를 둔 스트래들"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "pelvis contacts the chair seat; one leg lies on each side of the seat or backrest structure; both sides and support geometry are visible; chair-facing direction is a separately chosen property",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_chair_straddle_component_1",
+          "required_field": "component_1",
+          "rule": "pelvis contacts the chair seat",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_chair_straddle_component_2",
+          "required_field": "component_2",
+          "rule": "one leg lies on each side of the seat or backrest structure",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_chair_straddle_component_3",
+          "required_field": "component_3",
+          "rule": "both sides and support geometry are visible",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_chair_straddle_component_4",
+          "required_field": "component_4",
+          "rule": "chair-facing direction is a separately chosen property",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "reverse sitting with both legs on one side",
+        "wide knees without a chair"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_tall_kneel",
+      "candidate_id": "pv_tall_kneel",
+      "operation": "propose_new_profile",
+      "qualification": "project_operational_definition",
+      "source_ids": [
+        "S04",
+        "S05"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Tall kneeling",
+          "Upright kneeling",
+          "높은 무릎 꿇기",
+          "골반을 뒤꿈치에서 띄운 높은 무릎 꿇기"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "both knees contact the support surface; pelvis rises clearly above the heels; thighs continue upward toward the torso",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_tall_kneel_component_1",
+          "required_field": "component_1",
+          "rule": "both knees contact the support surface",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_tall_kneel_component_2",
+          "required_field": "component_2",
+          "rule": "pelvis rises clearly above the heels",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_tall_kneel_component_3",
+          "required_field": "component_3",
+          "rule": "thighs continue upward toward the torso",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "heel-sitting",
+        "deep squat on feet"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_heel_sit",
+      "candidate_id": "pv_heel_sit",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S05",
+        "S12"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Heel-sitting",
+          "Seated kneeling",
+          "Heel-seated kneel",
+          "Bambi pose",
+          "밤비 포즈",
+          "뒤꿈치 쪽에 골반을 낮춘 무릎 앉기"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [
+        {
+          "terms": [
+            "Bambi pose"
+          ],
+          "rule": "Require low pelvis-to-heels and thighs above shins in the documented variant; no implied wardrobe or sexual-tone change."
+        }
+      ],
+      "runtime_expression_proposed": "knees and shins rest on the support surface; pelvis lowers toward the heels with thighs above the shins; feet and lower-body arrangement distinguish it from tall kneeling",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_heel_sit_component_1",
+          "required_field": "component_1",
+          "rule": "knees and shins rest on the support surface",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_heel_sit_component_2",
+          "required_field": "component_2",
+          "rule": "pelvis lowers toward the heels with thighs above the shins",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_heel_sit_component_3",
+          "required_field": "component_3",
+          "rule": "feet and lower-body arrangement distinguish it from tall kneeling",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "tall kneeling",
+        "W-sitting",
+        "generic crouch"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_half_kneel",
+      "candidate_id": "pv_half_kneel",
+      "operation": "propose_new_profile",
+      "qualification": "project_operational_definition",
+      "source_ids": [
+        "S04"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Half-kneeling",
+          "One-knee pose",
+          "한쪽 무릎 꿇기",
+          "한 무릎과 반대 발의 지지"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "one knee contacts the floor; the other foot is planted forward; the grounded knee and planted foot belong to different legs",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_half_kneel_component_1",
+          "required_field": "component_1",
+          "rule": "one knee contacts the floor",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_half_kneel_component_2",
+          "required_field": "component_2",
+          "rule": "the other foot is planted forward",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_half_kneel_component_3",
+          "required_field": "component_3",
+          "rule": "the grounded knee and planted foot belong to different legs",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "both knees down",
+        "lunge with rear knee airborne"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_squat_grounded",
+      "candidate_id": "pv_squat_grounded",
+      "operation": "propose_new_profile",
+      "qualification": "project_operational_definition",
+      "source_ids": [
+        "S04"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Squat",
+          "Deep squat",
+          "쪼그려 앉기",
+          "양발로 지지하는 낮은 스쿼트"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "pelvis lowers through hip and knee flexion; both feet supply the ground base; knee or pelvis-floor contact is absent unless a variant explicitly requests it",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_squat_grounded_component_1",
+          "required_field": "component_1",
+          "rule": "pelvis lowers through hip and knee flexion",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_squat_grounded_component_2",
+          "required_field": "component_2",
+          "rule": "both feet supply the ground base",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_squat_grounded_component_3",
+          "required_field": "component_3",
+          "rule": "knee or pelvis-floor contact is absent unless a variant explicitly requests it",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "heel-sitting",
+        "hands-and-knees support"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_toe_squat",
+      "candidate_id": "pv_toe_squat",
+      "operation": "propose_new_profile",
+      "qualification": "project_operational_definition",
+      "source_ids": [
+        "S04"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Toe squat",
+          "Heels-raised squat",
+          "발끝으로 쪼그리기",
+          "뒤꿈치를 든 쪼그리기"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "hips and knees remain deeply flexed; forefeet contact the floor; heels have visible clearance from the floor",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_toe_squat_component_1",
+          "required_field": "component_1",
+          "rule": "hips and knees remain deeply flexed",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_toe_squat_component_2",
+          "required_field": "component_2",
+          "rule": "forefeet contact the floor",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_toe_squat_component_3",
+          "required_field": "component_3",
+          "rule": "heels have visible clearance from the floor",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "flat-foot squat",
+        "tall kneel"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_quadruped",
+      "candidate_id": "pv_quadruped",
+      "operation": "propose_new_profile",
+      "qualification": "project_operational_definition",
+      "source_ids": [
+        "S04",
+        "S29"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Quadruped",
+          "All-fours pose",
+          "네 점 지지",
+          "양손과 양무릎의 네 점 지지"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "two hands and two knees contact the support surface; limbs connect to one identifiable actor; torso spans the four-point base; head and pelvic height remain independent variant controls",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_quadruped_component_1",
+          "required_field": "component_1",
+          "rule": "two hands and two knees contact the support surface",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_quadruped_component_2",
+          "required_field": "component_2",
+          "rule": "limbs connect to one identifiable actor",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_quadruped_component_3",
+          "required_field": "component_3",
+          "rule": "torso spans the four-point base",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_quadruped_component_4",
+          "required_field": "component_4",
+          "rule": "head and pelvic height remain independent variant controls",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "plank with knees airborne",
+        "prone lying",
+        "cat/cow curvature assumed"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_supine",
+      "candidate_id": "pv_supine",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S06",
+        "S29"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Supine",
+          "Lying on the back",
+          "바로 눕기",
+          "등을 지지면에 둔 바로 눕기"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "back of torso rests on the support surface; anterior torso generally faces away from that surface; limbs connect to the reclining actor",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_supine_component_1",
+          "required_field": "component_1",
+          "rule": "back of torso rests on the support surface",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_supine_component_2",
+          "required_field": "component_2",
+          "rule": "anterior torso generally faces away from that surface",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_supine_component_3",
+          "required_field": "component_3",
+          "rule": "limbs connect to the reclining actor",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "prone",
+        "side-lying",
+        "back view of a standing actor"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_prone",
+      "candidate_id": "pv_prone",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S06",
+        "S29"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Prone",
+          "Lying on the stomach",
+          "엎드리기",
+          "몸 앞면을 지지면에 둔 엎드리기"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "anterior torso rests toward the support surface; back faces away from that surface; head turn does not change prone classification",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_prone_component_1",
+          "required_field": "component_1",
+          "rule": "anterior torso rests toward the support surface",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_prone_component_2",
+          "required_field": "component_2",
+          "rule": "back faces away from that surface",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_prone_component_3",
+          "required_field": "component_3",
+          "rule": "head turn does not change prone classification",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "supine",
+        "quadruped with torso suspended"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_side_lying",
+      "candidate_id": "pv_side_lying",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S06",
+        "S29"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Side-lying",
+          "Lateral pose",
+          "Side-reclining pose",
+          "옆으로 눕기",
+          "몸 옆면으로 지지하는 눕기"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "lateral torso or hip contacts the support surface; shoulders and hips read as side-oriented; arm-propping is declared separately",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_side_lying_component_1",
+          "required_field": "component_1",
+          "rule": "lateral torso or hip contacts the support surface",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_side_lying_component_2",
+          "required_field": "component_2",
+          "rule": "shoulders and hips read as side-oriented",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_side_lying_component_3",
+          "required_field": "component_3",
+          "rule": "arm-propping is declared separately",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "prone",
+        "supine",
+        "seated side turn"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_chin_support",
+      "candidate_id": "pv_chin_support",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S05",
+        "S07"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Chin on hand",
+          "Chin rest",
+          "Prone chin-rest pose",
+          "턱 괴기",
+          "턱을 받치는 손과 팔의 지지"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "chin rests on a stated palm or knuckle area; elbow or forearm has a visible receiving support when loaded; hand-arm-head continuity is readable",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_chin_support_component_1",
+          "required_field": "component_1",
+          "rule": "chin rests on a stated palm or knuckle area",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_chin_support_component_2",
+          "required_field": "component_2",
+          "rule": "elbow or forearm has a visible receiving support when loaded",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_chin_support_component_3",
+          "required_field": "component_3",
+          "rule": "hand-arm-head continuity is readable",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "fingertip near cheek",
+        "floating elbow supporting full head"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_fingertip_touch",
+      "candidate_id": "pv_fingertip_touch",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S07"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Fingertip touch",
+          "손끝 접촉",
+          "손끝만 닿는 접촉"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "specified fingertip reaches a visible target; a distinct contact point is readable; contact does not automatically carry body weight",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_fingertip_touch_component_1",
+          "required_field": "component_1",
+          "rule": "specified fingertip reaches a visible target",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_fingertip_touch_component_2",
+          "required_field": "component_2",
+          "rule": "a distinct contact point is readable",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_fingertip_touch_component_3",
+          "required_field": "component_3",
+          "rule": "contact does not automatically carry body weight",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "palm support",
+        "fingertip hovering",
+        "missing target"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_pointed_foot",
+      "candidate_id": "pv_pointed_foot",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S04",
+        "S23"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Pointed foot",
+          "Pointed toes",
+          "발끝 뻗기",
+          "발목 족저굴곡으로 길게 뻗은 발"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "ankle extends into a plantarflexed line; toes and foot continue from the lower leg; ground contact or lifted-foot role is declared separately",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_pointed_foot_component_1",
+          "required_field": "component_1",
+          "rule": "ankle extends into a plantarflexed line",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_pointed_foot_component_2",
+          "required_field": "component_2",
+          "rule": "toes and foot continue from the lower leg",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_pointed_foot_component_3",
+          "required_field": "component_3",
+          "rule": "ground contact or lifted-foot role is declared separately",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "heel lift alone",
+        "toe curl alone",
+        "en pointe assumed"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_heel_lift",
+      "candidate_id": "pv_heel_lift",
+      "operation": "propose_new_profile",
+      "qualification": "variant_definition_required",
+      "source_ids": [
+        "S04",
+        "S13"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Heel lift",
+          "Tiptoe stance",
+          "Barbie feet",
+          "바비 피트",
+          "앞발을 지지하고 뒤꿈치를 들기"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [
+        {
+          "terms": [
+            "Barbie feet"
+          ],
+          "rule": "Bare foot, forefoot support and raised heel are required in the documented variant; a shoe-only heel lift is insufficient. If clothing/footwear is locked, report conflict instead of changing appearance."
+        }
+      ],
+      "runtime_expression_proposed": "forefoot retains visible ground contact; heel clears the ground; barefoot status is an additional requirement only for the selected Barbie-feet variant",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_heel_lift_component_1",
+          "required_field": "component_1",
+          "rule": "forefoot retains visible ground contact",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_heel_lift_component_2",
+          "required_field": "component_2",
+          "rule": "heel clears the ground",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_heel_lift_component_3",
+          "required_field": "component_3",
+          "rule": "barefoot status is an additional requirement only for the selected Barbie-feet variant",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "wearing high heels without lifted bare heel",
+        "ballet pointe",
+        "floating entire foot"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_v_sign",
+      "candidate_id": "pv_v_sign",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S11"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "V sign",
+          "Peace sign",
+          "브이",
+          "검지·중지의 V 모양"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "index and middle fingers extend and separate; ring and little fingers fold; thumb remains attached and distinguishable; palm orientation is independently selected",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_v_sign_component_1",
+          "required_field": "component_1",
+          "rule": "index and middle fingers extend and separate",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_v_sign_component_2",
+          "required_field": "component_2",
+          "rule": "ring and little fingers fold",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_v_sign_component_3",
+          "required_field": "component_3",
+          "rule": "thumb remains attached and distinguishable",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_v_sign_component_4",
+          "required_field": "component_4",
+          "rule": "palm orientation is independently selected",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "three extended fingers",
+        "finger gun",
+        "V-neck garment"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_double_v",
+      "candidate_id": "pv_double_v",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S11"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Double peace sign",
+          "더블 브이",
+          "두 손의 각각 독립된 V"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "each hand has index-middle V geometry; both wrists connect to separate actor arms; each hand's palm direction is explicitly selected",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_double_v_component_1",
+          "required_field": "component_1",
+          "rule": "each hand has index-middle V geometry",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_double_v_component_2",
+          "required_field": "component_2",
+          "rule": "both wrists connect to separate actor arms",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_double_v_component_3",
+          "required_field": "component_3",
+          "rule": "each hand's palm direction is explicitly selected",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "one V duplicated by reflection",
+        "four merged fingers"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_finger_heart",
+      "candidate_id": "pv_finger_heart",
+      "operation": "propose_new_profile",
+      "qualification": "reference_calibration_required",
+      "source_ids": [
+        "S07"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Finger heart",
+          "손가락 하트",
+          "엄지·검지의 작은 손가락 하트"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "one hand's thumb and index overlap or meet in the selected small-heart convention; other fingers fold independently; finger ownership and small shape remain readable",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_finger_heart_component_1",
+          "required_field": "component_1",
+          "rule": "one hand's thumb and index overlap or meet in the selected small-heart convention",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_finger_heart_component_2",
+          "required_field": "component_2",
+          "rule": "other fingers fold independently",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_finger_heart_component_3",
+          "required_field": "component_3",
+          "rule": "finger ownership and small shape remain readable",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "two-handed large heart",
+        "thumbs-up",
+        "V sign"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_two_hand_heart",
+      "candidate_id": "pv_two_hand_heart",
+      "operation": "propose_new_profile",
+      "qualification": "reference_calibration_required",
+      "source_ids": [
+        "S07"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Hand heart",
+          "손 하트",
+          "두 손으로 만든 큰 하트 윤곽"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "two hands create opposite halves of a heart outline; selected thumb and finger contacts close the shape; both wrists continue to separate arms",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_two_hand_heart_component_1",
+          "required_field": "component_1",
+          "rule": "two hands create opposite halves of a heart outline",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_two_hand_heart_component_2",
+          "required_field": "component_2",
+          "rule": "selected thumb and finger contacts close the shape",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_two_hand_heart_component_3",
+          "required_field": "component_3",
+          "rule": "both wrists continue to separate arms",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "finger heart",
+        "circle formed by thumbs and indices"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_gyaru_v",
+      "candidate_id": "pv_gyaru_v",
+      "operation": "propose_new_profile",
+      "qualification": "reference_calibration_required",
+      "source_ids": [
+        "S11"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Gyaru peace",
+          "갸루 피스",
+          "카메라 쪽으로 뻗은 손바닥 위 V"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "index and middle form a V; hand extends toward camera in the documented variant; palm-up or outward visible orientation matches the chosen reference; foreshortening does not hide digit structure",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_gyaru_v_component_1",
+          "required_field": "component_1",
+          "rule": "index and middle form a V",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_gyaru_v_component_2",
+          "required_field": "component_2",
+          "rule": "hand extends toward camera in the documented variant",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_gyaru_v_component_3",
+          "required_field": "component_3",
+          "rule": "palm-up or outward visible orientation matches the chosen reference",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_gyaru_v_component_4",
+          "required_field": "component_4",
+          "rule": "foreshortening does not hide digit structure",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "ordinary upright V",
+        "generational identity inferred"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_squinch",
+      "candidate_id": "pv_squinch",
+      "operation": "propose_new_profile",
+      "qualification": "reference_calibration_required",
+      "source_ids": [
+        "S09"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Squinch",
+          "스퀸치",
+          "아래 눈꺼풀 중심의 눈 틈 축소"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "lower-lid region rises in the selected convention; eyes remain visibly open; upper-lid closing is limited relative to an ordinary squint; mouth expression is independent",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_squinch_component_1",
+          "required_field": "component_1",
+          "rule": "lower-lid region rises in the selected convention",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_squinch_component_2",
+          "required_field": "component_2",
+          "rule": "eyes remain visibly open",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_squinch_component_3",
+          "required_field": "component_3",
+          "rule": "upper-lid closing is limited relative to an ordinary squint",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_squinch_component_4",
+          "required_field": "component_4",
+          "rule": "mouth expression is independent",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "eyes closed",
+        "full squint",
+        "any small eye shape"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_handholding_pair",
+      "candidate_id": "pv_handholding_pair",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S19"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Handholding",
+          "손잡기",
+          "두 인물 손의 맞잡기"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "actor_1 hand contacts actor_2 hand; both wrists and forearms retain owner continuity; the chosen grip or interlace is visible",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_handholding_pair_component_1",
+          "required_field": "component_1",
+          "rule": "actor_1 hand contacts actor_2 hand",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_handholding_pair_component_2",
+          "required_field": "component_2",
+          "rule": "both wrists and forearms retain owner continuity",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_handholding_pair_component_3",
+          "required_field": "component_3",
+          "rule": "the chosen grip or interlace is visible",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "self-interlaced hands",
+        "hands nearly touching"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_head_shoulder_pair",
+      "candidate_id": "pv_head_shoulder_pair",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S19"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Head on shoulder",
+          "머리 기대기",
+          "상대 어깨에 머리 기대기"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "actor_1 head contacts actor_2 shoulder; head still joins actor_1 neck; shoulder belongs to actor_2 and supplies the specified resting support",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_head_shoulder_pair_component_1",
+          "required_field": "component_1",
+          "rule": "actor_1 head contacts actor_2 shoulder",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_head_shoulder_pair_component_2",
+          "required_field": "component_2",
+          "rule": "head still joins actor_1 neck",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_head_shoulder_pair_component_3",
+          "required_field": "component_3",
+          "rule": "shoulder belongs to actor_2 and supplies the specified resting support",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "self shoulder contact",
+        "head floating near partner"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_cradle_carry",
+      "candidate_id": "pv_cradle_carry",
+      "operation": "propose_new_profile",
+      "qualification": "reference_calibration_required",
+      "source_ids": [
+        "S19"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Cradle carry",
+          "Bridal carry",
+          "가로 안기",
+          "두 팔로 가로 받친 상대"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "actor_2 body spans horizontally across actor_1 front; actor_1 arms support actor_2 upper back and knees or selected targets; actor_1 feet and torso retain coherent support; actor_2 limbs remain owned separately",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_cradle_carry_component_1",
+          "required_field": "component_1",
+          "rule": "actor_2 body spans horizontally across actor_1 front",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_cradle_carry_component_2",
+          "required_field": "component_2",
+          "rule": "actor_1 arms support actor_2 upper back and knees or selected targets",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_cradle_carry_component_3",
+          "required_field": "component_3",
+          "rule": "actor_1 feet and torso retain coherent support",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_cradle_carry_component_4",
+          "required_field": "component_4",
+          "rule": "actor_2 limbs remain owned separately",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "piggyback",
+        "unsupported horizontal torso",
+        "fused arm ownership"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_thinker",
+      "candidate_id": "pv_thinker",
+      "operation": "propose_new_profile",
+      "qualification": "reference_calibration_required",
+      "source_ids": [
+        "S20"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Thinker pose",
+          "생각하는 사람형",
+          "로드앵 생각하는 사람의 교차 지지"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "seated torso bends and twists forward; right elbow contacts left knee in the selected Rodin-object variant; right hand supports the chin; pelvis and legs retain coherent seat support",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_thinker_component_1",
+          "required_field": "component_1",
+          "rule": "seated torso bends and twists forward",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_thinker_component_2",
+          "required_field": "component_2",
+          "rule": "right elbow contacts left knee in the selected Rodin-object variant",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_thinker_component_3",
+          "required_field": "component_3",
+          "rule": "right hand supports the chin",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_thinker_component_4",
+          "required_field": "component_4",
+          "rule": "pelvis and legs retain coherent seat support",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "any chin-rest",
+        "right elbow on right knee",
+        "left hand substituted without variant declaration"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_abhaya",
+      "candidate_id": "pv_abhaya",
+      "operation": "propose_new_profile",
+      "qualification": "reference_calibration_required",
+      "source_ids": [
+        "S03"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Abhaya mudra",
+          "시무외인",
+          "시무외인의 바깥쪽 손바닥"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "one selected hand rises near shoulder or chest height; palm faces outward toward the viewer in the selected iconographic form; fingers extend with the declared arrangement; wrist remains connected to the actor",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_abhaya_component_1",
+          "required_field": "component_1",
+          "rule": "one selected hand rises near shoulder or chest height",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_abhaya_component_2",
+          "required_field": "component_2",
+          "rule": "palm faces outward toward the viewer in the selected iconographic form",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_abhaya_component_3",
+          "required_field": "component_3",
+          "rule": "fingers extend with the declared arrangement",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_abhaya_component_4",
+          "required_field": "component_4",
+          "rule": "wrist remains connected to the actor",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "ordinary waving motion",
+        "prayer palms",
+        "religious identity inferred"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_arabesque",
+      "candidate_id": "pv_arabesque",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S23",
+        "S39"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Arabesque",
+          "아라베스크",
+          "뒤쪽 곧은 자유 다리의 아라베스크"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "one leg provides standing support; the other leg extends straight behind the torso; working knee is extended rather than attitude-bent; arms and working-leg height follow the declared variant",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_arabesque_component_1",
+          "required_field": "component_1",
+          "rule": "one leg provides standing support",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_arabesque_component_2",
+          "required_field": "component_2",
+          "rule": "the other leg extends straight behind the torso",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_arabesque_component_3",
+          "required_field": "component_3",
+          "rule": "working knee is extended rather than attitude-bent",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_arabesque_component_4",
+          "required_field": "component_4",
+          "rule": "arms and working-leg height follow the declared variant",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "attitude bent rear knee",
+        "ornamental arabesque pattern",
+        "ordinary kickback"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_attitude",
+      "candidate_id": "pv_attitude",
+      "operation": "propose_new_profile",
+      "qualification": "variant_definition_required",
+      "source_ids": [
+        "S23",
+        "S39"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Attitude",
+          "아티튀드",
+          "굴곡 자유 다리의 아티튀드"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "one leg supplies support; the lifted working leg has a visibly bent knee; working-leg direction and turnout follow a declared dance variant",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_attitude_component_1",
+          "required_field": "component_1",
+          "rule": "one leg supplies support",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_attitude_component_2",
+          "required_field": "component_2",
+          "rule": "the lifted working leg has a visibly bent knee",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_attitude_component_3",
+          "required_field": "component_3",
+          "rule": "working-leg direction and turnout follow a declared dance variant",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "arabesque straight rear leg",
+        "attitude as personality",
+        "any casual bent knee"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_retire",
+      "candidate_id": "pv_retire",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S25"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Retiré",
+          "Retire",
+          "르티레",
+          "지지 다리 무릎 부근에 자유 발을 둔 르티레"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "one leg supports the body; other knee folds and opens in the selected variant; working foot rests near the support-leg knee; support foot contact is explicitly visible",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_retire_component_1",
+          "required_field": "component_1",
+          "rule": "one leg supports the body",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_retire_component_2",
+          "required_field": "component_2",
+          "rule": "other knee folds and opens in the selected variant",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_retire_component_3",
+          "required_field": "component_3",
+          "rule": "working foot rests near the support-leg knee",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_retire_component_4",
+          "required_field": "component_4",
+          "rule": "support foot contact is explicitly visible",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "generic one-knee-up",
+        "passé whole movement claimed from a still"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_tendu",
+      "candidate_id": "pv_tendu",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S41"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Tendu",
+          "탕뒤",
+          "바닥에 닿아 뻗은 탕뒤 자유 발"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "support leg stays planted; working leg extends in the stated direction; working toes retain a light floor contact while foot lengthens",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_tendu_component_1",
+          "required_field": "component_1",
+          "rule": "support leg stays planted",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_tendu_component_2",
+          "required_field": "component_2",
+          "rule": "working leg extends in the stated direction",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_tendu_component_3",
+          "required_field": "component_3",
+          "rule": "working toes retain a light floor contact while foot lengthens",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "lifted dégagé",
+        "barely visible foot",
+        "generic toe curl"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_croise",
+      "candidate_id": "pv_croise",
+      "operation": "propose_new_profile",
+      "qualification": "reference_calibration_required",
+      "source_ids": [
+        "S23",
+        "S26"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Croisé",
+          "Croise",
+          "크루아제",
+          "관찰자에게 교차해 보이는 크루아제"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "body adopts the declared diagonal dance orientation; leg relation appears crossed from the stated audience or camera; working-leg position is explicitly selected",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_croise_component_1",
+          "required_field": "component_1",
+          "rule": "body adopts the declared diagonal dance orientation",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_croise_component_2",
+          "required_field": "component_2",
+          "rule": "leg relation appears crossed from the stated audience or camera",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_croise_component_3",
+          "required_field": "component_3",
+          "rule": "working-leg position is explicitly selected",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "crossed ankles without audience relation",
+        "effacé open relation"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_efface",
+      "candidate_id": "pv_efface",
+      "operation": "propose_new_profile",
+      "qualification": "reference_calibration_required",
+      "source_ids": [
+        "S26"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Effacé",
+          "Efface",
+          "에파세",
+          "관찰자에게 열린 다리 관계의 에파세"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "body adopts the declared diagonal dance orientation; leg relation appears uncrossed/open from the stated audience; working-leg position is explicitly selected",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_efface_component_1",
+          "required_field": "component_1",
+          "rule": "body adopts the declared diagonal dance orientation",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_efface_component_2",
+          "required_field": "component_2",
+          "rule": "leg relation appears uncrossed/open from the stated audience",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_efface_component_3",
+          "required_field": "component_3",
+          "rule": "working-leg position is explicitly selected",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "croisé crossed relation",
+        "any three-quarter body view"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_demi_pointe",
+      "candidate_id": "pv_demi_pointe",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S25",
+        "S40"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Demi-pointe",
+          "드미 포앵트",
+          "앞발 볼을 지지하는 드미 포앵트"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "heels rise visibly; metatarsal/forefoot area remains the floor support; toes and ankles continue coherently from the lower legs",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_demi_pointe_component_1",
+          "required_field": "component_1",
+          "rule": "heels rise visibly",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_demi_pointe_component_2",
+          "required_field": "component_2",
+          "rule": "metatarsal/forefoot area remains the floor support",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_demi_pointe_component_3",
+          "required_field": "component_3",
+          "rule": "toes and ankles continue coherently from the lower legs",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "full pointe toe-box support",
+        "entire foot floating"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_en_pointe",
+      "candidate_id": "pv_en_pointe",
+      "operation": "propose_new_profile",
+      "qualification": "reference_calibration_required",
+      "source_ids": [
+        "S23",
+        "S25"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "En pointe",
+          "앙 포앵트",
+          "포앵트 슈즈 끝 지지의 앙 포앵트"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "selected foot is supported through the pointe-shoe toe-box tip; foot and ankle form the requested extended line; toe-box-floor contact remains readable",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_en_pointe_component_1",
+          "required_field": "component_1",
+          "rule": "selected foot is supported through the pointe-shoe toe-box tip",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_en_pointe_component_2",
+          "required_field": "component_2",
+          "rule": "foot and ankle form the requested extended line",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_en_pointe_component_3",
+          "required_field": "component_3",
+          "rule": "toe-box-floor contact remains readable",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "demi-pointe forefoot support",
+        "barefoot tiptoe",
+        "shoe alone with heel grounded"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_grand_jete",
+      "candidate_id": "pv_grand_jete",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S23"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Grand jeté",
+          "Grand jete",
+          "그랑 주테",
+          "공중에서 앞뒤 다리를 펼친 그랑 주테"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "both feet clear the ground in the selected leap phase; legs extend in opposing front-back directions; pelvis and torso remain connected between the legs; one-foot takeoff and landing belong to sequence metadata",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_grand_jete_component_1",
+          "required_field": "component_1",
+          "rule": "both feet clear the ground in the selected leap phase",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_grand_jete_component_2",
+          "required_field": "component_2",
+          "rule": "legs extend in opposing front-back directions",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_grand_jete_component_3",
+          "required_field": "component_3",
+          "rule": "pelvis and torso remain connected between the legs",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_grand_jete_component_4",
+          "required_field": "component_4",
+          "rule": "one-foot takeoff and landing belong to sequence metadata",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "grounded front split",
+        "ordinary tucked jump",
+        "side split"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_warrior_i",
+      "candidate_id": "pv_warrior_i",
+      "operation": "propose_new_profile",
+      "qualification": "variant_definition_required",
+      "source_ids": [
+        "S29"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Warrior I",
+          "Virabhadrasana I",
+          "전사 1",
+          "전사 1의 앞뒤 다리와 위쪽 팔"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "front knee flexes over the front foot; rear leg extends with declared heel support; torso faces generally toward the front leg; arms rise in the chosen variant",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_warrior_i_component_1",
+          "required_field": "component_1",
+          "rule": "front knee flexes over the front foot",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_warrior_i_component_2",
+          "required_field": "component_2",
+          "rule": "rear leg extends with declared heel support",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_warrior_i_component_3",
+          "required_field": "component_3",
+          "rule": "torso faces generally toward the front leg",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_warrior_i_component_4",
+          "required_field": "component_4",
+          "rule": "arms rise in the chosen variant",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "Warrior II side-facing torso",
+        "Warrior III airborne rear leg"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_warrior_ii",
+      "candidate_id": "pv_warrior_ii",
+      "operation": "propose_new_profile",
+      "qualification": "individual_source_check_required",
+      "source_ids": [
+        "S29"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Warrior II",
+          "Virabhadrasana II",
+          "전사 2",
+          "전사 2의 측면 몸통과 수평 팔"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "front knee bends while rear leg stays extended; torso opens laterally relative to front leg; arms extend in opposite lateral directions; feet ground both ends of the stance",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_warrior_ii_component_1",
+          "required_field": "component_1",
+          "rule": "front knee bends while rear leg stays extended",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_warrior_ii_component_2",
+          "required_field": "component_2",
+          "rule": "torso opens laterally relative to front leg",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_warrior_ii_component_3",
+          "required_field": "component_3",
+          "rule": "arms extend in opposite lateral directions",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_warrior_ii_component_4",
+          "required_field": "component_4",
+          "rule": "feet ground both ends of the stance",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "Warrior I upward arms",
+        "straight-legged triangle"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_warrior_iii",
+      "candidate_id": "pv_warrior_iii",
+      "operation": "propose_new_profile",
+      "qualification": "individual_source_check_required",
+      "source_ids": [
+        "S29"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Warrior III",
+          "Virabhadrasana III",
+          "전사 3",
+          "전사 3의 한 발과 수평 몸통·자유 다리"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "one foot supplies standing support; torso inclines toward a near-horizontal selected line; rear working leg extends behind along that line; arms follow the selected variant",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_warrior_iii_component_1",
+          "required_field": "component_1",
+          "rule": "one foot supplies standing support",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_warrior_iii_component_2",
+          "required_field": "component_2",
+          "rule": "torso inclines toward a near-horizontal selected line",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_warrior_iii_component_3",
+          "required_field": "component_3",
+          "rule": "rear working leg extends behind along that line",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_warrior_iii_component_4",
+          "required_field": "component_4",
+          "rule": "arms follow the selected variant",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "Warrior I both feet grounded",
+        "dancer bent leg with hand grip"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_trikonasana",
+      "candidate_id": "pv_trikonasana",
+      "operation": "propose_new_profile",
+      "qualification": "individual_source_check_required",
+      "source_ids": [
+        "S29",
+        "S31"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Trikonasana",
+          "Triangle pose",
+          "삼각 자세",
+          "트리코나사나의 편 다리와 옆 몸통선"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "both legs remain extended in the selected stance; torso inclines laterally toward one leg; lower hand contacts a declared leg/floor/block target; upper arm direction is explicitly selected",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_trikonasana_component_1",
+          "required_field": "component_1",
+          "rule": "both legs remain extended in the selected stance",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_trikonasana_component_2",
+          "required_field": "component_2",
+          "rule": "torso inclines laterally toward one leg",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_trikonasana_component_3",
+          "required_field": "component_3",
+          "rule": "lower hand contacts a declared leg/floor/block target",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_trikonasana_component_4",
+          "required_field": "component_4",
+          "rule": "upper arm direction is explicitly selected",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "side angle bent front knee",
+        "generic side bend"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_parsvakonasana",
+      "candidate_id": "pv_parsvakonasana",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S31"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Utthita Parsvakonasana",
+          "Extended side angle",
+          "측각 자세",
+          "파르스바코나사나의 굽힌 앞 무릎과 사선 팔"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "front knee bends while rear leg remains extended; side torso connects rear heel toward the raised arm in the selected diagonal; lower hand or forearm contacts the declared support; feet retain their ground base",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_parsvakonasana_component_1",
+          "required_field": "component_1",
+          "rule": "front knee bends while rear leg remains extended",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_parsvakonasana_component_2",
+          "required_field": "component_2",
+          "rule": "side torso connects rear heel toward the raised arm in the selected diagonal",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_parsvakonasana_component_3",
+          "required_field": "component_3",
+          "rule": "lower hand or forearm contacts the declared support",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_parsvakonasana_component_4",
+          "required_field": "component_4",
+          "rule": "feet retain their ground base",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "straight-legged triangle",
+        "upper arm vertical when an overhead diagonal is required"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_kakasana",
+      "candidate_id": "pv_kakasana",
+      "operation": "propose_new_profile",
+      "qualification": "definition_ready",
+      "source_ids": [
+        "S28"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Kakasana",
+          "Crow pose",
+          "크로우",
+          "굴곡 팔의 카카사나 크로우"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [],
+      "runtime_expression_proposed": "palms provide the principal floor support; elbows remain visibly bent in this convention; knees contact declared upper-arm regions; both feet clear the ground",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_kakasana_component_1",
+          "required_field": "component_1",
+          "rule": "palms provide the principal floor support",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_kakasana_component_2",
+          "required_field": "component_2",
+          "rule": "elbows remain visibly bent in this convention",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_kakasana_component_3",
+          "required_field": "component_3",
+          "rule": "knees contact declared upper-arm regions",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_kakasana_component_4",
+          "required_field": "component_4",
+          "rule": "both feet clear the ground",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "Bakasana straighter arms",
+        "quadruped knees on floor"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_bakasana",
+      "candidate_id": "pv_bakasana",
+      "operation": "propose_new_profile",
+      "qualification": "variant_definition_required",
+      "source_ids": [
+        "S28"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Bakasana",
+          "Crane pose",
+          "크레인",
+          "더 편 팔의 바카사나 크레인"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [
+        {
+          "terms": [
+            "Bakasana",
+            "Crane pose"
+          ],
+          "rule": "Use the selected straighter-arm teaching convention; other schools' Crow/Crane naming must not be overwritten."
+        }
+      ],
+      "runtime_expression_proposed": "palms provide principal floor support; elbows are straighter than the selected Crow contrast; knees contact declared higher arm regions; feet clear the ground; school naming convention is recorded",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4",
+        "component_5"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_bakasana_component_1",
+          "required_field": "component_1",
+          "rule": "palms provide principal floor support",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_bakasana_component_2",
+          "required_field": "component_2",
+          "rule": "elbows are straighter than the selected Crow contrast",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_bakasana_component_3",
+          "required_field": "component_3",
+          "rule": "knees contact declared higher arm regions",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_bakasana_component_4",
+          "required_field": "component_4",
+          "rule": "feet clear the ground",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_bakasana_component_5",
+          "required_field": "component_5",
+          "rule": "school naming convention is recorded",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "Crow bent-arm form treated as universal synonym",
+        "floating palms"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_self_cover_hands",
+      "candidate_id": "pv_self_cover_hands",
+      "operation": "propose_new_profile",
+      "qualification": "project_operational_definition",
+      "source_ids": [
+        "S21",
+        "S06"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "Hand bra",
+          "Self-covering pose",
+          "셀프 커버링",
+          "손바닥으로 지정된 부위 가리기"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [
+        {
+          "terms": [
+            "Hand bra"
+          ],
+          "rule": "Bind covering target to explicitly requested chest/body-or-garment region; palms must actually occlude it. Do not infer or introduce nudity."
+        },
+        {
+          "terms": [
+            "Self-covering pose"
+          ],
+          "rule": "Broad covering can use hands, forearms or fabric; a hand-only form is an optional variant until object and target are specified."
+        }
+      ],
+      "runtime_expression_proposed": "hands belong to the same declared actor; selected palms occlude the explicitly named body or garment region; finger-arm continuity is visible; coverage and clothing state remain separately requested",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_self_cover_hands_component_1",
+          "required_field": "component_1",
+          "rule": "hands belong to the same declared actor",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_self_cover_hands_component_2",
+          "required_field": "component_2",
+          "rule": "selected palms occlude the explicitly named body or garment region",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_self_cover_hands_component_3",
+          "required_field": "component_3",
+          "rule": "finger-arm continuity is visible",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_self_cover_hands_component_4",
+          "required_field": "component_4",
+          "rule": "coverage and clothing state remain separately requested",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "automatic Venus pudica",
+        "hands nearby without occlusion",
+        "nudity added"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_m_leg_variant",
+      "candidate_id": "pv_m_leg_variant",
+      "operation": "propose_new_profile",
+      "qualification": "nickname_variant_pending",
+      "source_ids": [
+        "S33"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "M字開脚",
+          "M-shaped leg pose",
+          "M자 개각",
+          "좌면·무릎·발 위치를 지정한 M형 다리 배치"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [
+        {
+          "terms": [
+            "M字開脚",
+            "M-shaped leg pose"
+          ],
+          "rule": "Do not activate exact geometry until seat, knees, feet, support and viewer projection are reference-defined."
+        }
+      ],
+      "runtime_expression_proposed": "pelvis has a declared seat or floor support; both knees flex and separate in the chosen reference variant; foot positions and contact roles are explicitly specified; projected M relation is verified from the chosen view",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_m_leg_variant_component_1",
+          "required_field": "component_1",
+          "rule": "pelvis has a declared seat or floor support",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_m_leg_variant_component_2",
+          "required_field": "component_2",
+          "rule": "both knees flex and separate in the chosen reference variant",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_m_leg_variant_component_3",
+          "required_field": "component_3",
+          "rule": "foot positions and contact roles are explicitly specified",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_m_leg_variant_component_4",
+          "required_field": "component_4",
+          "rule": "projected M relation is verified from the chosen view",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "any wide stance",
+        "side split",
+        "letter shape inferred from hidden feet"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    },
+    {
+      "id": "pv_profile_quadruped_arch_variant",
+      "candidate_id": "pv_quadruped_arch_variant",
+      "operation": "propose_new_profile",
+      "qualification": "nickname_variant_pending",
+      "source_ids": [
+        "S34"
+      ],
+      "activation": {
+        "request_only": true,
+        "exact_contextual_terms_proposed": [
+          "女豹のポーズ",
+          "여표 포즈",
+          "네 점 지지에 곡선·시선을 지정한 여표 변형"
+        ],
+        "negation_blocks": true,
+        "user_definition_precedes": true,
+        "semantic_similarity_optional_only": true,
+        "requires_resolved_variant": true,
+        "pack_selection_alone_never_activates": true
+      },
+      "conditional_alias_constraints": [
+        {
+          "terms": [
+            "女豹のポーズ"
+          ],
+          "rule": "Caption usage is lexical evidence only; choose a directly inspected support/curve/head variant before exact promotion."
+        }
+      ],
+      "runtime_expression_proposed": "hands and knees retain declared ground contacts; pelvis and thorax curvature match a chosen reference variant; head and gaze direction are separately specified; camera projection preserves those regions",
+      "required_evidence_fields": [
+        "component_1",
+        "component_2",
+        "component_3",
+        "component_4"
+      ],
+      "render_gates_proposed": [
+        {
+          "id": "pv_profile_quadruped_arch_variant_component_1",
+          "required_field": "component_1",
+          "rule": "hands and knees retain declared ground contacts",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_quadruped_arch_variant_component_2",
+          "required_field": "component_2",
+          "rule": "pelvis and thorax curvature match a chosen reference variant",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_quadruped_arch_variant_component_3",
+          "required_field": "component_3",
+          "rule": "head and gaze direction are separately specified",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        },
+        {
+          "id": "pv_profile_quadruped_arch_variant_component_4",
+          "required_field": "component_4",
+          "rule": "camera projection preserves those regions",
+          "review_resolution": "native_pixels",
+          "hidden_or_occluded": "UNOBSERVABLE",
+          "partial": "FAIL",
+          "basis": "proposed_project_gate_not_source_standard"
+        }
+      ],
+      "gate_aggregation": "all_required_PASS_and_observable; partial_is_fail; UNOBSERVABLE_is_not_success",
+      "reject_substitutes": [
+        "any quadruped automatically called this nickname",
+        "cat yoga form synonym"
+      ],
+      "locked_crop_conflict": "declare_unverifiable_or_request_explicit_reframing_choice_before_future_render"
+    }
+  ]
+}

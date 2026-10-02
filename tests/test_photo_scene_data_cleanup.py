@@ -4,6 +4,7 @@ import hashlib
 import json
 import sys
 import unittest
+from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'skills/photo-prompt-image-generator/scripts'))
@@ -114,10 +115,21 @@ class ScenePreservationTests(DataCase):
     def test_prior_twenty_three_edited_rows_are_byte_semantically_preserved(self):
         evidence=json.loads((EVIDENCE/'baseline-preservation.json').read_text())
         self.assertEqual(len(evidence['prior_23_rows']),23)
+        # The pose extension adds equivalent context to reviewed existing rows.
+        # Keep the historical source hash and separately protect its live meaning.
+        filenames=tuple(name for name in generator.RESEARCH_EXTENSION_FILENAMES
+                        if name != 'photo_prompt_pose_vocabulary_extension.json')
+        with patch.object(generator,'RESEARCH_EXTENSION_FILENAMES',filenames):
+            source=generator.load_json(ROOT/'skills/photo-prompt-image-generator/assets/photo_prompt_tags.json')
         for record in evidence['prior_23_rows']:
-            row=self.row(record['slot'],record['id'])
+            row=next(item for item in source['slots'][record['slot']] if item['id']==record['id'])
             actual=hashlib.sha256(json.dumps(row,sort_keys=True,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
             self.assertEqual(actual,record['sha256'],record['id'])
+            current=self.row(record['slot'],record['id'])
+            additive_fields={'paraphrases','contextual_usage'}
+            self.assertEqual({k:v for k,v in current.items() if k not in additive_fields},
+                             {k:v for k,v in row.items() if k not in additive_fields},record['id'])
+            self.assertTrue(set(row.get('paraphrases',[])) <= set(current.get('paraphrases',[])))
     def test_frozen_inventory_and_queries_remain_bound(self):
         source=(EVIDENCE/'frozen-inventory-queries.json').read_bytes()
         self.assertEqual(hashlib.sha256(source).hexdigest(),(EVIDENCE/'frozen-sha256.txt').read_text().split()[0])
