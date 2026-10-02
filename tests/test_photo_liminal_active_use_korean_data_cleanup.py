@@ -77,12 +77,74 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
         self.assertEqual(live['runtime_keys'], ['schema_version', 'slots'])
 
     def test_complete_merged_state_and_twenty_one_keeps_remain_exact(self):
-        # Compare the historical authored source before the later equivalent
-        # pose-context overlay. Its exact original meanings stay protected.
+        # Compare the historical authored source before later pose/body overlays.
+        # Body integration adds structured semantics to these 13 base entries;
+        # every pre-existing field must still equal the frozen historical row.
+        # Neither the historical expected values nor the lexical holdouts change.
         filenames = tuple(name for name in common.g.RESEARCH_EXTENSION_FILENAMES
-                          if name != 'photo_prompt_pose_vocabulary_extension.json')
+                          if name not in {'photo_prompt_pose_vocabulary_extension.json',
+                                          'photo_prompt_body_morphology_extension.json'})
         with patch.object(common.g, 'RESEARCH_EXTENSION_FILENAMES', filenames):
             historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
+        body_enriched_ids = {
+            'philtral_columns_cupid_bow', 'clavicle_supraclavicular_hollow',
+            'decolletage_neckline_exposure_boundary', 'trochanteric_depression_hip_dip',
+            'posterior_psis_dimples_pair', 'infragluteal_crease_boundary',
+            'calf_to_ankle_taper', 'bust_to_ribcage_projection_relation',
+            'slender_linear_build', 'soft_full_figure_volume',
+            'curvilinear_figure_relation', 'toned_muscular_definition',
+            'willowy_long_limb_proportion',
+        }
+        added_fields = {'paraphrases', 'concept_units', 'relations',
+                        'affected_dimensions', 'affected_properties', 'core_assertion_discovery'}
+        seen = set()
+        for slot, rows in historical_current['slots'].items():
+            expected = {row['id']: row for row in self.states['proposal']['slots'][slot]}
+            for row in rows:
+                if row['id'] not in body_enriched_ids:
+                    continue
+                original = expected[row['id']]
+                self.assertTrue(added_fields.isdisjoint(original))
+                self.assertEqual(set(row) - set(original), added_fields)
+                self.assertEqual({key: row[key] for key in original}, original)
+                for field in added_fields:
+                    self.assertTrue(row[field])
+                for field in added_fields:
+                    row.pop(field)
+                seen.add(row['id'])
+        self.assertEqual(seen, body_enriched_ids)
+        # Later instrument corrections change only these six label/text fields.
+        # Check their complete authored values, then project the historical rows
+        # for the original whole-dictionary and twenty-one-keep assertions below.
+        instrument_revisions = {
+            ('action', 'trumpet_lip_valve_action'): {
+                'ko': '컵 마우스피스에 입술을 대고 왼손으로 트럼펫을 지지하며 오른손 손가락으로 밸브를 조작하는',
+                'en': 'playing a trumpet at the cup mouthpiece with left-hand support and right-hand valve fingering',
+                'embedding_text': "the player's lips meet a trumpet cup mouthpiece while the left hand supports the folded brass tubing and the right-hand fingers rest on or press a note-appropriate combination of the three aligned piston valves",
+            },
+            ('body_pose', 'wind_embouchure_two_hand_key_pose'): {
+                'ko': '관악기 마우스피스에 입술을 대고 각 손을 악기에 맞는 연주·지지 위치에 둔 자세',
+                'en': 'a wind-instrument embouchure pose with each hand in its instrument-specific playing or support role',
+                'embedding_text': "the adult player maintains plausible neck and shoulder support while the lips meet the correct mouthpiece and each hand takes the instrument's appropriate playing or support role",
+            },
+        }
+        seen_revisions = set()
+        for slot, rows in historical_current['slots'].items():
+            expected = {row['id']: row for row in self.states['proposal']['slots'][slot]}
+            for row in rows:
+                key = (slot, row['id'])
+                if key not in instrument_revisions:
+                    continue
+                original = expected[row['id']]
+                revisions = instrument_revisions[key]
+                self.assertEqual(set(row), set(original))
+                self.assertEqual({field: row[field] for field in revisions}, revisions)
+                self.assertEqual({field: value for field, value in row.items() if field not in revisions},
+                                 {field: value for field, value in original.items() if field not in revisions})
+                for field in revisions:
+                    row[field] = original[field]
+                seen_revisions.add(key)
+        self.assertEqual(seen_revisions, set(instrument_revisions))
         self.assertEqual(historical_current['slots'], self.states['proposal']['slots'])
         historical_bundles = self.states['baseline']['candidate_bundles']
         self.assertEqual(fixtures.bundle_meanings(self.current['candidate_bundles'], within=historical_bundles),

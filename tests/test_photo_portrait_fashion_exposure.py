@@ -171,7 +171,20 @@ class PortraitFashionExposureTests(unittest.TestCase):
         current_authored = {p["id"]: p for p in json.loads((SKILL / "assets/photo_prompt_visual_obligations_portrait_fashion_exposure.json").read_text())["profiles"]}
         self.assertEqual(len(initial_profiles), 14)
         for p in initial_profiles:
-            self.assertEqual(p, current_authored[p["id"]])
+            comparable = copy.deepcopy(current_authored[p["id"]])
+            # These three reviewed profiles now have append-only contextual
+            # examples and scope notes. All initial values and every other
+            # field, including activation, components and gates, stay frozen.
+            if p["id"] in {"pfe_cowl", "pfe_one_shoulder", "pfe_ruching"}:
+                for field in ("paraphrase_examples", "contrast_examples", "claim_limits"):
+                    original = p["semantics"].get(field, [])
+                    current = comparable["semantics"].get(field, [])
+                    self.assertEqual(current[:len(original)], original)
+                    if field in p["semantics"]:
+                        comparable["semantics"][field] = original
+                    else:
+                        comparable["semantics"].pop(field, None)
+            self.assertEqual(p, comparable)
         initial = json.loads((EVIDENCE / "revisions/initial/photo_prompt_portrait_fashion_exposure_extension.json").read_text())
         for slot, rows in initial["slots"].items():
             actual = {r["id"]: r for r in self.ext["slots"][slot]}
