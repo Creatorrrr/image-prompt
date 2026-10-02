@@ -1,0 +1,97 @@
+...............................F.....................F
+======================================================================
+FAIL: test_live_corpus_and_indexes_have_no_retired_document_kinds (tests.test_photo_core_retrieval.PhotoCoreRetrievalTests.test_live_corpus_and_indexes_have_no_retired_document_kinds)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_core_retrieval.py", line 87, in test_live_corpus_and_indexes_have_no_retired_document_kinds
+    self.assertEqual(set(index["entries"]), expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the second set but not the first:
+'slot:silhouette_proportion:bm_abdominal_v_boundary'
+'slot:silhouette_proportion:bm_torso_limb_ratio'
+'slot:skin_finish:bm_vascular_surface'
+'slot:skin_finish:bm_body_hair_fiber'
+'slot:body_evidence_region:bm_scrotal_testis_boundary'
+'slot:silhouette_proportion:bm_breast_spacing'
+'slot:silhouette_proportion:bm_breast_vertical_position'
+'slot:garment_detail:bm_fabric_body_outline'
+'slot:face_shape_relation:bm_facial_asymmetry'
+'slot:garment_detail:bm_compression_contour'
+'slot:silhouette_proportion:bm_thigh_volume'
+'slot:silhouette_proportion:bm_ribcage_depth'
+'slot:face_shape_relation:bm_eyelid_fold'
+'slot:skin_finish:bm_body_hair_distribution'
+'slot:garment_detail:bm_garment_central_crease'
+'slot:anatomical_connection:bm_prosthetic_connection'
+'slot:skin_finish:bm_skin_tone_appearance'
+'slot:silhouette_proportion:bm_stocky_build'
+'slot:silhouette_proportion:bm_gluteal_fullness'
+'slot:garment_detail:bm_under_gluteal_boundary'
+'slot:silhouette_proportion:bm_scapular_relief'
+'slot:face_shape_relation:bm_nose_projection'
+'slot:face_shape_relation:bm_ear_attachment'
+'slot:silhouette_proportion:bm_shoulder_width'
+'slot:body_evidence_region:bm_thigh_gap'
+'slot:body_marking:bm_scar_surface'
+'slot:body_evidence_region:bm_nail_shape'
+'slot:body_evidence_region:bm_vulvar_topology'
+'slot:silhouette_proportion:bm_finger_proportion'
+'slot:silhouette_proportion:bm_limb_alignment'
+'slot:body_marking:bm_skin_pigment_pattern'
+'slot:silhouette_proportion:bm_foot_arch_instep'
+'slot:silhouette_proportion:bm_breast_fullness'
+'slot:garment_detail:bm_sheer_layering'
+'slot:skin_finish:bm_skin_fold_wrinkle'
+'slot:garment_detail:bm_garment_bulge'
+'slot:face_shape_relation:bm_eye_spacing'
+'slot:silhouette_proportion:bm_abdominal_projection'
+'slot:face_shape_relation:bm_lip_volume'
+'slot:silhouette_proportion:bm_wiry_definition'
+'slot:silhouette_proportion:bm_waist_level'
+'slot:silhouette_proportion:bm_abdominal_segmentation'
+'slot:body_pose:bm_mobility_contact'
+'slot:skin_finish:bm_hair_grooming_state'
+'slot:silhouette_proportion:bm_head_body_ratio'
+'slot:silhouette_proportion:bm_compact_frame'
+'slot:body_evidence_region:bm_perineal_location'
+'slot:silhouette_proportion:bm_gluteal_projection'
+'slot:silhouette_proportion:bm_breast_root_height'
+'slot:body_evidence_region:bm_penile_topology'
+'slot:anatomical_connection:bm_limb_difference'
+'slot:skin_finish:bm_seated_skin_folds'
+'slot:silhouette_proportion:bm_muscle_striation'
+'slot:silhouette_proportion:bm_ribcage_width'
+'slot:face_shape_relation:bm_eye_aperture'
+'slot:silhouette_proportion:bm_waist_width_depth'
+'slot:silhouette_proportion:bm_breast_asymmetry'
+'slot:silhouette_proportion:bm_nipple_projection'
+'slot:silhouette_proportion:bm_shoulder_slope'
+'slot:silhouette_proportion:bm_knuckle_relief'
+'slot:skin_finish:bm_cellulite_relief'
+'slot:silhouette_proportion:bm_breast_root_width'
+'slot:skin_finish:bm_skin_relief_texture'
+'slot:silhouette_proportion:bm_neck_proportion'
+'slot:body_marking:bm_areolar_surface'
+'slot:body_pose:bm_pose_surface_change'
+'slot:silhouette_proportion:bm_navel_shape'
+'slot:silhouette_proportion:bm_stature_scale'
+'slot:silhouette_proportion:bm_muscle_volume'
+'slot:silhouette_proportion:bm_bust_prominence'
+'slot:silhouette_proportion:bm_back_width_depth'
+'slot:silhouette_proportion:bm_gluteal_cleft'
+'slot:silhouette_proportion:bm_hip_width'
+
+======================================================================
+FAIL: test_wrapper_emits_bound_policy_without_retrieving_review_prose (tests.test_photo_embodiment.EmbodimentPipelineTests.test_wrapper_emits_bound_policy_without_retrieving_review_prose)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_embodiment.py", line 279, in test_wrapper_emits_bound_policy_without_retrieving_review_prose
+    self.assertEqual(completed.returncode, 0, completed.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Error: Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py.
+
+
+----------------------------------------------------------------------
+Ran 54 tests in 296.385s
+
+FAILED (failures=2)

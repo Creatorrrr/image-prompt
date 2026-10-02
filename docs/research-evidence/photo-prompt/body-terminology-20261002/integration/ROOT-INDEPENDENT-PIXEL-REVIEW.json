@@ -1,0 +1,125 @@
+{
+  "schema_version": "root-independent-native-pixel-review/v1",
+  "reviewer": "root",
+  "method": "Direct visual inspection of saved native originals; A full image, B full image and three native crops, C full image and native hand/waist crops. No resampling or enhancement.",
+  "cases": [
+    {
+      "case": "A",
+      "image_path": "/Users/chasoik/Projects/image-prompt/runs/body-morphology-integration-20261002/case-a/generated_image.png",
+      "image_sha256": "bbaea7176dac9d9fe283ec20060e5ea13e29e25a611a2f5858b5ceb791f211bd",
+      "conditions": [
+        {
+          "keyword": "long_leg_proportion",
+          "observed_status": "PASS",
+          "evidence": "Whole figure shows long thigh and lower-leg lengths relative to the compact visible torso; no precise anthropometric claim.",
+          "strict_status": "pass"
+        },
+        {
+          "keyword": "shoulder_width",
+          "observed_status": "PARTIAL",
+          "evidence": "Both shoulders are visible, but forward protraction and garment straps limit a confident bilateral span comparison.",
+          "strict_status": "fail"
+        },
+        {
+          "keyword": "gentle_shoulder_slope",
+          "observed_status": "PASS",
+          "evidence": "Visible neck-to-shoulder lines slope gently on both sides.",
+          "strict_status": "pass"
+        },
+        {
+          "keyword": "moderate_muscle_volume_and_definition",
+          "observed_status": "PARTIAL",
+          "evidence": "Moderate upper/lower limb volume is visible; distinct muscular planes in both regions are missing.",
+          "strict_status": "fail"
+        }
+      ],
+      "pass_count": 2,
+      "condition_count": 4,
+      "whole_case": "FAIL",
+      "ledger_rows": 1,
+      "ledger_sha256": "5b1ba3a24b64eeec9d21cc343956081ec5081b8f244e222bee1ba01427d275ad",
+      "manifest_sha256": "14595de849ab1e6c11e0dfd2069e04b7949fcc07e325de729f0fd939b68da9f3"
+    },
+    {
+      "case": "B",
+      "image_path": "/Users/chasoik/Projects/image-prompt/runs/body-morphology-integration-20261002/case-b/generated_image.png",
+      "image_sha256": "af8b75a7dd7e31222dbe15ea6a62735f308cb4932a9aba3e94f1ad3ba021be2c",
+      "conditions": [
+        {
+          "keyword": "goosebump_like_skin_relief",
+          "observed_status": "PASS",
+          "evidence": "Native upper-arm crop shows repeated small localized follicular elevations; this is an appearance assessment, not a clinical diagnosis.",
+          "strict_status": "pass"
+        },
+        {
+          "keyword": "vellus_hair",
+          "observed_status": "PARTIAL",
+          "evidence": "Pale upper-arm individual strands and attachment do not resolve sufficiently at native size.",
+          "strict_status": "fail"
+        },
+        {
+          "keyword": "dark_forearm_hair",
+          "observed_status": "PASS",
+          "evidence": "Native forearm crop resolves many individual darker, longer strands attached along the skin surface.",
+          "strict_status": "pass"
+        },
+        {
+          "keyword": "dorsal_hand_vessel_visibility",
+          "observed_status": "PASS",
+          "evidence": "Native dorsal-hand crop resolves continuous blue-gray mildly branching courses beneath intact skin.",
+          "strict_status": "pass"
+        }
+      ],
+      "pass_count": 3,
+      "condition_count": 4,
+      "whole_case": "FAIL",
+      "ledger_rows": 1,
+      "ledger_sha256": "f32b5c0141d2e0aff1f276d2f739b2690d2f35c9f7b779446a378a0f86a9a444",
+      "manifest_sha256": "61efc2c33ab9821136d20320f1f07496ea00ab36cd3e8f9e038d4086964e76ae"
+    },
+    {
+      "case": "C",
+      "image_path": "/Users/chasoik/Projects/image-prompt/runs/body-morphology-integration-20261002/case-c/generated-image.png",
+      "image_sha256": "abecf9763705bdefcd7839accf96ad593a152d2f0921f7ce64ac279f4d2686ab",
+      "conditions": [
+        {
+          "keyword": "long_finger_short_palm_ratio",
+          "observed_status": "UNASSESSABLE",
+          "evidence": "Curl and foreshortening conceal full finger segments; projected lengths cannot prove the requested ratio.",
+          "strict_status": "fail"
+        },
+        {
+          "keyword": "prominent_knuckle_relief",
+          "observed_status": "PARTIAL",
+          "evidence": "Joint folds exist but the requested prominent bony relief is weak.",
+          "strict_status": "fail"
+        },
+        {
+          "keyword": "localized_waistband_impression",
+          "observed_status": "PARTIAL",
+          "evidence": "A crease near the elastic waistband is visible; paired localized compression ridge and groove are not unambiguous.",
+          "strict_status": "fail"
+        },
+        {
+          "keyword": "two_actor_left_side_bending_folds",
+          "observed_status": "FAIL",
+          "evidence": "Broad creases cross the exposed midriff; the exact two localized actor-left folds and specified side-bending direction are absent. Upturned palm is on actor right rather than authored left.",
+          "strict_status": "fail"
+        }
+      ],
+      "pass_count": 0,
+      "condition_count": 4,
+      "whole_case": "FAIL",
+      "ledger_rows": 1,
+      "ledger_sha256": "67a6a07b157aab700b997dbdeb8ec926d7655502917620c047525a671af0777e",
+      "manifest_sha256": "b79e90f569e078eb4c533e17cdeb63850dd128eff7d70851db8747dca5c6cc06"
+    }
+  ],
+  "pass_count": 5,
+  "condition_count": 12,
+  "overall": "FAIL",
+  "rule": "PARTIAL, UNASSESSABLE and FAIL all fail the complete case.",
+  "reference_role": "Visible face and hair guidance only; no identity inference or body inference.",
+  "user_acceptance": "not_yet_received",
+  "boundary": "Root observable labels may differ from an agent FAIL label; complete-case qualification agrees. Strict pack/embodiment gates remain each agent audit, not this supplementary record."
+}

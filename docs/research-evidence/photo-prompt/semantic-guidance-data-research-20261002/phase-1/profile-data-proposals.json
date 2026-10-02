@@ -1,0 +1,814 @@
+{
+  "schema_version": 1,
+  "baseline_head": "0ed2267b91e73f4b4d1493d095287e7795ebf805",
+  "status": "NOT_APPLIED",
+  "apply_script_included": false,
+  "policy": "Review artifacts for existing data fields, not runtime schema or skill logic changes. An appendix may preserve additional source/variant metadata outside the runtime registry.",
+  "proposals": [
+    {
+      "profile_id": "aircraft_pilot_operation",
+      "card_id": "pilot-aircraft",
+      "source_ids": [
+        "mw-pilot",
+        "faa-flight-controls"
+      ],
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "baseline_compiled_profile_sha256": "89db2c062120112851fcb78dbe944267e954052c1fab26576b80d79380fa63c8",
+      "status": "unapplied_append_only_review_proposal",
+      "operations": [
+        {
+          "operation": "append_unique",
+          "path": "semantics.paraphrase_examples",
+          "values": [
+            "성인이 항공기 조종석에서 체크리스트를 짚으며 계기와 창밖 상태를 확인한다. 두 상태는 요청한 비행 단계와 맞는다.",
+            "An adult at the aircraft controls follows a checklist and checks the instruments against the outside view, with both agreeing with the requested flight phase.",
+            "성인 조종자가 항공기의 조종사 좌석에 앉아 있다. 손가락은 조종석 체크리스트의 한 항목을 따라가거나 주 조종 장치에 닿는다. 보이는 계기와 창밖 기준물은 사용자가 지정한 운항 단계와 서로 모순되지 않는다. 좌석, 손, 계기, 창밖이 한 장면 안에서 읽힌다.",
+            "An adult occupies the aircraft's control station. A finger follows a cockpit checklist item or a hand contacts a primary control. The visible instruments and outside anchors consistently depict the operation phase named in the request. The station, hand, instruments and outside view remain legible in one scene."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.contrast_examples",
+          "values": [
+            "새 드라마의 pilot episode 촬영 현장을 보여줘.",
+            "Show the set where a new television pilot episode is being filmed.",
+            "가스 기기의 작은 pilot light를 접사로 찍어줘.",
+            "Make a close-up of a gas appliance's small pilot light.",
+            "공항 카페에서 쉬는 파일럿의 인물 사진을 만들어줘.",
+            "Create a portrait of a pilot resting in an airport cafe."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.claim_limits",
+          "values": [
+            "운항 장면의 가시 조건과 일반적인 직업 정의를 구별한다.",
+            "항공기 종류별 장치·계기 내용은 별도 전문 자료가 필요하다. 이 데이터는 운항 절차 안내가 아니다."
+          ]
+        }
+      ],
+      "unchanged_contracts": [
+        "semantics.definition",
+        "activation",
+        "runtime_expression",
+        "authored_components",
+        "required_evidence_fields",
+        "evidence_requirements",
+        "render_gates",
+        "composition_instruction"
+      ],
+      "boundary": "Paraphrase additions alone do not update literal evidence requirements, hard activation, frozen core choices or output wording. No change has been applied."
+    },
+    {
+      "profile_id": "one_piece_dress_construction",
+      "card_id": "dress-one-unit",
+      "source_ids": [
+        "collins-one-piece"
+      ],
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "baseline_compiled_profile_sha256": "b4a0c366a2089818e57739f28b263dfdd8a6741826db750ca7acefc428f01e58",
+      "status": "unapplied_append_only_review_proposal",
+      "operations": [
+        {
+          "operation": "append_unique",
+          "path": "semantics.paraphrase_examples",
+          "values": [
+            "상체 부분과 치마 부분이 하나의 옷으로 이어지며, 목둘레부터 밑단까지 연속된 윤곽 안에 봉제선과 여밈이 보인다.",
+            "The bodice and skirt form one garment, with seams and a closure inside a continuous outline from neckline to hem.",
+            "목둘레에서 상체를 지나 치마 밑단까지 한 벌로 이어진 의복을 보여준다. 허리 절개선이나 여러 패널이 있어도 위와 아래는 서로 분리된 옷이 아니다. 봉제선, 겹치는 여밈, 천의 낙하가 같은 드레스의 구조로 읽히며 하부에는 별도의 바지 다리가 없다.",
+            "Show one garment continuing from neckline through bodice to skirt hem. A waist seam or multiple panels may be present while upper and lower parts remain one dress. Seams, overlapping closure and fabric drape read as its construction, and the lower section does not divide into trouser legs."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.contrast_examples",
+          "values": [
+            "one-piece swimsuit의 앞뒤 상품 사진을 만들어줘.",
+            "Create front and back product views of a one-piece swimsuit.",
+            "원피스처럼 색이 맞는 블라우스와 스커트 두 벌을 찍어줘.",
+            "Photograph a matching blouse and skirt that remain two separate garments.",
+            "ONE PIECE라는 작품의 책 표지를 자료로 찾아줘.",
+            "Find reference information for a book cover from the work titled ONE PIECE."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.claim_limits",
+          "values": [
+            "한 벌이라는 말은 한 장의 천이나 무봉제라는 뜻이 아니다.",
+            "한국어 단어 범위는 현재 프로젝트의 드레스 문맥으로 한정하였다. 국립국어원 개별 항목의 직접 확인은 완료하지 못했다."
+          ]
+        }
+      ],
+      "unchanged_contracts": [
+        "semantics.definition",
+        "activation",
+        "runtime_expression",
+        "authored_components",
+        "required_evidence_fields",
+        "evidence_requirements",
+        "render_gates",
+        "composition_instruction"
+      ],
+      "boundary": "Paraphrase additions alone do not update literal evidence requirements, hard activation, frozen core choices or output wording. No change has been applied."
+    },
+    {
+      "profile_id": "embodied_corruption_transition",
+      "card_id": "character-transition",
+      "source_ids": [
+        "mw-corruption",
+        "kadokawa-yami"
+      ],
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "baseline_compiled_profile_sha256": "f761e9fcbde1eaf4a3955abf408107a90f255c44920c6bb99997b1ed1f1d3a65",
+      "status": "unapplied_append_only_review_proposal",
+      "operations": [
+        {
+          "operation": "append_unique",
+          "path": "semantics.paraphrase_examples",
+          "values": [
+            "성인 창작 인물의 몸 표면에서 짙어진 영역과 이전 모습 사이의 변화 경계가 아직 남아 있고, 옛 복장이나 상징도 함께 읽힌다.",
+            "An adult fictional character retains an unfinished boundary between darkened and former body-surface regions while the earlier costume or emblem remains readable.",
+            "한 성인 창작 인물의 같은 몸에서 이전 상태와 짙게 변한 영역이 나란히 보인다. 변화의 가장자리는 팔이나 몸 표면에서 멈춰 있어 완료되지 않은 전환으로 읽힌다. 옛 복장 또는 상징이 남아 이전 상태를 식별할 수 있고, 변한 영역과 그대로인 영역의 경계가 이어진다.",
+            "The same adult fictional character shows both an earlier state and a darkened body-surface region. The advancing edge stops visibly on an arm or body surface, making the transition unfinished. An earlier costume or emblem remains identifiable, alongside the continuing boundary between changed and unchanged regions."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.contrast_examples",
+          "values": [
+            "손상된 파일의 corruption 오류 메시지 화면을 보여줘.",
+            "Show a file-corruption error message on a screen.",
+            "정부 corruption을 주제로 한 비폭력 풍자 일러스트를 원해.",
+            "I want a nonviolent editorial illustration about government corruption.",
+            "이제 어두운 조직에 가담한 인물이 검은 새 옷을 입은 모습을 보여줘. 몸의 변화는 없어.",
+            "Show a character who has joined a darker faction wearing a new black outfit, with no body transformation."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.claim_limits",
+          "values": [
+            "타락·흑화·corruption·闇堕ち를 모든 문맥에서 완전 동의어로 묶지 않는다.",
+            "검은 옷이나 어두운 색조만으로 인물 전환의 경계를 대신하지 않는다."
+          ]
+        }
+      ],
+      "unchanged_contracts": [
+        "semantics.definition",
+        "activation",
+        "runtime_expression",
+        "authored_components",
+        "required_evidence_fields",
+        "evidence_requirements",
+        "render_gates",
+        "composition_instruction"
+      ],
+      "boundary": "Paraphrase additions alone do not update literal evidence requirements, hard activation, frozen core choices or output wording. No change has been applied."
+    },
+    {
+      "profile_id": "kuudere_composed_warmth_relation",
+      "card_id": "reserved-help",
+      "source_ids": [
+        "flight-kuudere",
+        "togashi-kuudere"
+      ],
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "baseline_compiled_profile_sha256": "5f3cf14e99762ec878818ce2a2ddb957a04ba5aad4b1767318862a226cbf8d4c",
+      "status": "unapplied_append_only_review_proposal",
+      "operations": [
+        {
+          "operation": "append_unique",
+          "path": "semantics.paraphrase_examples",
+          "values": [
+            "차분하고 표정 변화가 적은 성인 인물이 특정 성인 동료에게 필요한 도구를 조용히 건넨다. 그 동료가 작업을 재개할 때 인물의 입매만 조금 풀린다.",
+            "A composed adult with little facial movement quietly hands a needed tool to one specific adult companion. The companion resumes the task as only the helper's mouth corners soften slightly.",
+            "두 성인 중 한 인물은 안정된 자세와 거의 변하지 않는 표정을 유지한다. 그 인물이 한 명의 신뢰하는 동료에게 필요한 도구를 먼저 건네고, 같은 동료가 그 도구로 작업을 다시 시작한다. 도움을 준 인물은 차분한 기준선을 유지한 채 입가나 눈가 한 곳만 작게 부드러워진다. 도움의 대상과 결과가 같은 동료에게 이어진다.",
+            "Of two adults, one maintains a stable posture and a low-expression face. That character quietly supplies a needed tool to one trusted companion, who uses it to resume the task. The helper remains composed while one small area around the mouth or eyes softens. The target and visible consequence of the help belong to that same companion."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.contrast_examples",
+          "values": [
+            "표정 없는 성인 인물을 혼자 정면으로 찍어줘.",
+            "Photograph an expressionless adult alone, facing the camera.",
+            "모든 고객에게 똑같이 도구를 건네는 차분한 직원의 모습을 보여줘.",
+            "Show a composed employee handing tools to every customer in exactly the same manner.",
+            "상대에게 큰 소리로 거절하다가 얼굴 전체가 밝아져 크게 웃는 성인 캐릭터를 보여줘.",
+            "Show an adult character who loudly rejects another person and then changes into a broad full-face smile."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.claim_limits",
+          "values": [
+            "실용적 도움을 모든 원어 용례의 필수 조건으로 일반화하지 않는다.",
+            "도움을 준 사람, 도움을 받은 사람, 작은 변화와 결과를 구별한다. 실존 인물의 감정·성격·동의는 외관만으로 확정하지 않는다."
+          ]
+        }
+      ],
+      "unchanged_contracts": [
+        "semantics.definition",
+        "activation",
+        "runtime_expression",
+        "authored_components",
+        "required_evidence_fields",
+        "evidence_requirements",
+        "render_gates",
+        "composition_instruction"
+      ],
+      "boundary": "Paraphrase additions alone do not update literal evidence requirements, hard activation, frozen core choices or output wording. No change has been applied."
+    },
+    {
+      "profile_id": "pfe_cowl",
+      "card_id": "cowl-draped-opening",
+      "source_ids": [
+        "mw-cowl",
+        "met-cowl"
+      ],
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_portrait_fashion_exposure.json",
+      "baseline_compiled_profile_sha256": "d9a9417a12e5e611c47caa47f9fa2777ebe2fbb66bd9dd74355f73706b704bc9",
+      "status": "unapplied_append_only_review_proposal",
+      "operations": [
+        {
+          "operation": "append_unique",
+          "path": "semantics.paraphrase_examples",
+          "values": [
+            "같은 옷의 목둘레 부착점 사이에서 천이 느슨하게 처진다. 접힌 가장자리는 그 목둘레에 이어지고, 겹친 주름 아래에 그림자가 남는다.",
+            "Fabric hangs loosely between attachment points of the same garment opening. Its folded edge continues into that neckline, with overlap shadows under the hanging folds.",
+            "상의의 목둘레 가장자리를 따라가면 양쪽 부착점 사이의 여분 천이 아래로 처지는 모습을 볼 수 있다. 곡선으로 접힌 가장자리는 별도 장신구가 아니라 같은 옷의 연속된 천이다. 겹의 깊이와 주름 아래 그림자가 천의 표면과 아래층을 구별한다. 대칭 여부와 처짐의 깊이는 요청에서 정한다.",
+            "Following the top's neckline reveals surplus fabric hanging between its attachment points. The curved folded edge belongs to the same continuous garment, rather than an independent accessory. Fold depth and shadows distinguish fabric from the underlying layer. Symmetry and drape depth follow the request."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.contrast_examples",
+          "values": [
+            "평평한 목둘레 위에 독립된 스카프를 둘러줘.",
+            "Place an independent scarf over a flat neckline.",
+            "수도사의 cowl hood를 자료로 설명해줘.",
+            "Explain a monk's cowl hood as a reference concept.",
+            "목 위로 올라오는 두꺼운 니트 카울 칼라를 보여줘.",
+            "Show a thick knitted cowl collar rising around the neck."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.claim_limits",
+          "values": [
+            "스카프 같은 형태와 실제 별도 스카프를 단어만으로 구별하지 않는다.",
+            "접힌 외관만으로 바이어스 재단이나 내부 봉제 방식을 확정하지 않는다."
+          ]
+        }
+      ],
+      "unchanged_contracts": [
+        "semantics.definition",
+        "activation",
+        "runtime_expression",
+        "authored_components",
+        "required_evidence_fields",
+        "evidence_requirements",
+        "render_gates",
+        "composition_instruction"
+      ],
+      "boundary": "Paraphrase additions alone do not update literal evidence requirements, hard activation, frozen core choices or output wording. No change has been applied."
+    },
+    {
+      "profile_id": "clothing_ct037_v1",
+      "card_id": "cowl-draped-opening",
+      "source_ids": [
+        "mw-cowl",
+        "met-cowl"
+      ],
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_clothing_structure.json",
+      "baseline_compiled_profile_sha256": "1195ae56730c0b56cbbe4ab24775c35760a16b6abef4d02a11f26614a8618b2a",
+      "status": "unapplied_append_only_review_proposal",
+      "operations": [
+        {
+          "operation": "append_unique",
+          "path": "semantics.paraphrase_examples",
+          "values": [
+            "같은 옷의 목둘레 부착점 사이에서 천이 느슨하게 처진다. 접힌 가장자리는 그 목둘레에 이어지고, 겹친 주름 아래에 그림자가 남는다.",
+            "Fabric hangs loosely between attachment points of the same garment opening. Its folded edge continues into that neckline, with overlap shadows under the hanging folds.",
+            "상의의 목둘레 가장자리를 따라가면 양쪽 부착점 사이의 여분 천이 아래로 처지는 모습을 볼 수 있다. 곡선으로 접힌 가장자리는 별도 장신구가 아니라 같은 옷의 연속된 천이다. 겹의 깊이와 주름 아래 그림자가 천의 표면과 아래층을 구별한다. 대칭 여부와 처짐의 깊이는 요청에서 정한다.",
+            "Following the top's neckline reveals surplus fabric hanging between its attachment points. The curved folded edge belongs to the same continuous garment, rather than an independent accessory. Fold depth and shadows distinguish fabric from the underlying layer. Symmetry and drape depth follow the request."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.contrast_examples",
+          "values": [
+            "평평한 목둘레 위에 독립된 스카프를 둘러줘.",
+            "Place an independent scarf over a flat neckline.",
+            "수도사의 cowl hood를 자료로 설명해줘.",
+            "Explain a monk's cowl hood as a reference concept.",
+            "목 위로 올라오는 두꺼운 니트 카울 칼라를 보여줘.",
+            "Show a thick knitted cowl collar rising around the neck."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.claim_limits",
+          "values": [
+            "스카프 같은 형태와 실제 별도 스카프를 단어만으로 구별하지 않는다.",
+            "접힌 외관만으로 바이어스 재단이나 내부 봉제 방식을 확정하지 않는다."
+          ]
+        }
+      ],
+      "unchanged_contracts": [
+        "semantics.definition",
+        "activation",
+        "runtime_expression",
+        "authored_components",
+        "required_evidence_fields",
+        "evidence_requirements",
+        "render_gates",
+        "composition_instruction"
+      ],
+      "boundary": "Paraphrase additions alone do not update literal evidence requirements, hard activation, frozen core choices or output wording. No change has been applied."
+    },
+    {
+      "profile_id": "pfe_one_shoulder",
+      "card_id": "single-shoulder-support",
+      "source_ids": [
+        "met-wrap"
+      ],
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_portrait_fashion_exposure.json",
+      "baseline_compiled_profile_sha256": "9761297adda9a164489f51d29f07cb4e0c1b544fc1707c196496d216ae7048dd",
+      "status": "unapplied_append_only_review_proposal",
+      "operations": [
+        {
+          "operation": "append_unique",
+          "path": "semantics.paraphrase_examples",
+          "values": [
+            "같은 상의는 한쪽 어깨 위에서 지지되고 반대 어깨는 목둘레 경계 밖에 있다. 비스듬한 가장자리가 그 지지점으로 연속해서 이어진다.",
+            "The same top is supported over one shoulder while the opposite shoulder lies outside its neckline. A diagonal edge continues into that support.",
+            "성인 상의의 지지 경로는 한쪽 어깨 위를 지나 같은 몸판으로 이어진다. 반대 어깨는 그 비대칭 목둘레 바깥에 남는다. 목둘레의 비스듬한 천 가장자리와 어깨의 연결이 함께 읽힌다. 어깨 위의 지지 천이 갈라지더라도 모든 지지 조각은 같은 한쪽 어깨와 몸판에 이어진다.",
+            "The adult top's support passes over one shoulder and continues into the same bodice. The opposite shoulder remains outside its asymmetrical opening. The diagonal fabric edge and shoulder connection are readable together. If the support divides into narrow pieces, they all continue over that same shoulder into the same bodice."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.contrast_examples",
+          "values": [
+            "양쪽 어깨 아래로 목둘레가 내려오는 상의를 보여줘.",
+            "Show a top whose neckline sits below both shoulders.",
+            "한쪽 끈은 머리카락에 가려진 두 끈 상의를 원해.",
+            "I want a two-strap top with one strap hidden by hair.",
+            "대칭 상의 위로 머리만 한쪽에 늘어뜨려 비대칭으로 보여줘.",
+            "Make a symmetric top look asymmetrical by draping hair to one side."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.claim_limits",
+          "values": [
+            "한쪽 어깨 구조는 성별·체형·매력의 주장과 별개다.",
+            "가려진 지지점을 실제로 확인했다고 기록하지 않는다. 역사적 용례의 소재·문양을 일반 요구로 옮기지 않는다."
+          ]
+        }
+      ],
+      "unchanged_contracts": [
+        "semantics.definition",
+        "activation",
+        "runtime_expression",
+        "authored_components",
+        "required_evidence_fields",
+        "evidence_requirements",
+        "render_gates",
+        "composition_instruction"
+      ],
+      "boundary": "Paraphrase additions alone do not update literal evidence requirements, hard activation, frozen core choices or output wording. No change has been applied."
+    },
+    {
+      "profile_id": "pfe_ruching",
+      "card_id": "local-gathered-folds",
+      "source_ids": [
+        "mw-ruche",
+        "seamwork-gathering",
+        "seamwork-shirring"
+      ],
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_portrait_fashion_exposure.json",
+      "baseline_compiled_profile_sha256": "1fce625c2d26309e2be4dd7dc695db1e3d9bf1c34f9fb10d6de438f1836a4728",
+      "status": "unapplied_append_only_review_proposal",
+      "operations": [
+        {
+          "operation": "append_unique",
+          "path": "semantics.paraphrase_examples",
+          "values": [
+            "같은 옷 패널의 지정 봉제선으로 작은 천 주름들이 반복해 모인다. 모인 부분과 주변의 비교적 평평한 천이 끊기지 않고 이어진다.",
+            "Small repeated folds in the same garment panel converge at the requested seam. The gathered area continues into the surrounding, flatter fabric.",
+            "요청한 패널 위치의 고정선으로 여분 천이 모여 작은 주름을 반복해서 만든다. 주름들은 그 선이나 부착점을 향하고, 주위의 덜 모인 천까지 같은 패널로 연속된다. 반복되는 작은 주름 마루와 골의 그림자가 모임의 위치와 방향을 읽을 수 있게 한다.",
+            "Surplus fabric forms repeated small folds toward a fixed line at the requested panel position. The folds converge on that seam or attachment and continue into less-gathered fabric in the same panel. Small repeating fold ridges and valley shadows make the location and direction of gathering readable."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.contrast_examples",
+          "values": [
+            "고정점 없이 드레스 전체가 불규칙하게 구겨진 모습을 보여줘.",
+            "Show irregular wrinkles across a whole dress with no gathering attachment.",
+            "국소 모임 없이 일정한 폭의 접힌 플리츠가 늘어서는 치마를 보여줘.",
+            "Show a skirt with evenly spaced folded pleats and no localized gathering.",
+            "요청한 옆선 대신 독립된 장식 주름 띠를 목둘레에 달아줘.",
+            "Add a separate ruched trim around the neckline instead of gathering the requested side seam."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.claim_limits",
+          "values": [
+            "루싱·셔링·스모킹을 모든 문맥에서 완전 동의어로 묶지 않는다.",
+            "탄성·신축 성능은 보이는 주름만으로 확정할 수 없다."
+          ]
+        }
+      ],
+      "unchanged_contracts": [
+        "semantics.definition",
+        "activation",
+        "runtime_expression",
+        "authored_components",
+        "required_evidence_fields",
+        "evidence_requirements",
+        "render_gates",
+        "composition_instruction"
+      ],
+      "boundary": "Paraphrase additions alone do not update literal evidence requirements, hard activation, frozen core choices or output wording. No change has been applied."
+    },
+    {
+      "profile_id": "sheer_garment_optical_layering",
+      "card_id": "textile-transmission",
+      "source_ids": [
+        "mw-sheer",
+        "cotton-mesh"
+      ],
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "baseline_compiled_profile_sha256": "134c7e7788f3f878a3360aebc931a20883b64a05bb28418d54e84047b28e1ad9",
+      "status": "unapplied_append_only_review_proposal",
+      "operations": [
+        {
+          "operation": "append_unique",
+          "path": "semantics.paraphrase_examples",
+          "values": [
+            "바깥 천의 직조·봉제선·가장자리가 보이면서 빛과 불투명한 안감의 색이 일부 통과한다. 겹친 주름에서는 그 투과가 줄어든다.",
+            "The outer fabric's weave, seam and edge remain visible while some light and color from an opaque lining pass through; overlapping folds transmit less.",
+            "불투명한 안감 위에 얇은 직물 층이 놓인다. 바깥 층의 실 조직과 봉제선, 끝단, 주름이 읽히며 안감의 색은 일부만 통과한다. 겹쳐 두꺼워진 주름은 주변의 단일 층보다 덜 비친다. 겉감 가장자리는 안감보다 앞에 있고 빛이 얇은 층을 통과하는 방향도 읽힌다.",
+            "A thin textile layer sits above an opaque lining. Its yarn structure, seams, edge and folds remain legible while the lining's color partly transmits. Overlapping folds transmit less than the single layer beside them. The outer fabric edge lies in front of the lining, and the direction of light through the thin layer remains readable."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.contrast_examples",
+          "values": [
+            "직물 대신 투명한 유리판을 앞에 놓아줘.",
+            "Place a transparent glass pane in front instead of a textile.",
+            "불투명 천에 망사 격자만 인쇄하고 빛은 통과하지 않게 해줘.",
+            "Print a mesh grid on opaque cloth without any transmitted light.",
+            "sheer cliff의 가파른 수직 지형을 보여줘.",
+            "Show the vertical terrain of a sheer cliff."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.claim_limits",
+          "values": [
+            "시어의 광학 성질과 메시의 실제 구멍은 동의어가 아니다.",
+            "아래층의 소유자가 달라지면 같은 표현의 등가 치환이 아니다. 불투명 안감 예시는 별도 선택 변형이다.",
+            "투과 정도·섬유 성분·제작법은 실제 재료·조명 자료가 있어야 확정할 수 있다."
+          ]
+        }
+      ],
+      "unchanged_contracts": [
+        "semantics.definition",
+        "activation",
+        "runtime_expression",
+        "authored_components",
+        "required_evidence_fields",
+        "evidence_requirements",
+        "render_gates",
+        "composition_instruction"
+      ],
+      "boundary": "Paraphrase additions alone do not update literal evidence requirements, hard activation, frozen core choices or output wording. No change has been applied."
+    },
+    {
+      "profile_id": "clothing_ct090_v2",
+      "card_id": "fine-open-cells",
+      "source_ids": [
+        "cotton-mesh"
+      ],
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_textile_surface.json",
+      "baseline_compiled_profile_sha256": "80e606f95f2d75725442b9b0c23f00ad90f5c1fcf77218af2d2ee9f38d853aa9",
+      "status": "unapplied_append_only_review_proposal",
+      "operations": [
+        {
+          "operation": "append_unique",
+          "path": "semantics.paraphrase_examples",
+          "values": [
+            "미세한 실들이 일정한 간격의 작은 열린 셀을 이루고, 그 실제 틈을 통해 뒤의 층이 보인다. 실과 빈 틈을 각각 구별할 수 있다.",
+            "Fine yarns form small real open cells at even intervals, revealing the layer behind through the gaps. Yarns and empty spaces remain distinguishable.",
+            "가느다란 실 조직이 작은 열린 셀을 일정하게 반복해 둘러싼다. 그 실제 틈을 통해 아래에 놓인 불투명한 천이 보인다. 셀을 둘러싼 실의 윤곽과 교차, 그 사이의 빈 공간, 전체 천 가장자리가 각각 구별된다. 작은 열린 셀의 반복은 주름 주변에서도 같은 겉감에 이어진다.",
+            "A fine yarn network encloses small real open cells at even intervals, revealing opaque cloth beneath through the gaps. Yarn boundaries and intersections, empty spaces between them, and the overall fabric edge remain separately legible. The repeated small openings continue in the same outer fabric around its folds."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.contrast_examples",
+          "values": [
+            "실제 구멍 없이 불투명 천에 작은 격자를 인쇄해줘.",
+            "Print a small grid on opaque cloth without real openings.",
+            "연결된 금속 고리로 된 링 메시를 보여줘.",
+            "Show a mesh made of linked metal rings.",
+            "촘촘한 셀 대신 옷에 큰 원형 절개 구멍 세 개를 만들어줘.",
+            "Give the garment three large circular cutouts instead of fine cells."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.claim_limits",
+          "values": [
+            "일정한 셀은 현재 선택 변형의 조건이다. 모든 메시는 동일하게 규칙적이지 않다.",
+            "CottonWorks의 일반 메시 정의는 이 셀을 튤로 확정하거나 섬유 성분을 입증하지 않는다."
+          ]
+        }
+      ],
+      "unchanged_contracts": [
+        "semantics.definition",
+        "activation",
+        "runtime_expression",
+        "authored_components",
+        "required_evidence_fields",
+        "evidence_requirements",
+        "render_gates",
+        "composition_instruction"
+      ],
+      "boundary": "Paraphrase additions alone do not update literal evidence requirements, hard activation, frozen core choices or output wording. No change has been applied."
+    },
+    {
+      "profile_id": "clothing_ct023_v2",
+      "card_id": "paired-front-fastening",
+      "source_ids": [
+        "va-corset"
+      ],
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_clothing_structure.json",
+      "baseline_compiled_profile_sha256": "86b38c997b8652798c342075ba56cb5de699b8e0a928949f4e8194635f0ca64b",
+      "status": "unapplied_append_only_review_proposal",
+      "operations": [
+        {
+          "operation": "append_unique",
+          "path": "semantics.paraphrase_examples",
+          "values": [
+            "구조적인 의복의 좌우 앞판이 중심에서 만나고, 양쪽 가장자리의 작은 금속 고리와 돌기가 쌍으로 맞물려 앞면을 닫는다.",
+            "The two front panels of a structured garment meet at the center, where small paired metal loops and studs interlock along the edges to close it.",
+            "같은 구조적인 의복의 앞면 좌우 가장자리에 연속된 잠금 부품이 놓인다. 한쪽의 작은 고리 또는 훅과 다른 쪽의 대응하는 돌기가 쌍을 이루어 맞물리고, 그 연결이 두 앞판을 닫는다. 각 부품은 대응하는 앞 가장자리에 붙어 있고 금속과 천 사이의 연결이 읽힌다.",
+            "A sequence of fasteners lies along the two front edges of the same structured garment. Small loops or hooks on one side interlock with corresponding studs on the other, joining and closing the two front panels. Each component is attached to its corresponding front edge, with the metal-to-fabric connection readable."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.contrast_examples",
+          "values": [
+            "여밈 없이 잘록한 실루엣의 상의만 보여줘.",
+            "Show a fitted narrow-waist top without a visible closure.",
+            "코르셋의 뒤 끈만 보이고 앞면은 가려지게 해줘.",
+            "Show only a corset's rear lacing with the front hidden.",
+            "한 장의 단단한 버스크를 내부에 넣고 앞면은 평평하게 닫아줘.",
+            "Use a single solid busk inside the garment with a plain closed front."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.claim_limits",
+          "values": [
+            "버스크라는 단어만으로 분할 앞면 잠금을 확정하지 않는다.",
+            "코르셋 전체·잘록한 허리·내부 지지 성능을 이 앞면 여밈과 동일시하지 않는다."
+          ]
+        }
+      ],
+      "unchanged_contracts": [
+        "semantics.definition",
+        "activation",
+        "runtime_expression",
+        "authored_components",
+        "required_evidence_fields",
+        "evidence_requirements",
+        "render_gates",
+        "composition_instruction"
+      ],
+      "boundary": "Paraphrase additions alone do not update literal evidence requirements, hard activation, frozen core choices or output wording. No change has been applied."
+    },
+    {
+      "profile_id": "split_diopter_dual_focus_planes",
+      "card_id": "separated-focus-zones",
+      "source_ids": [
+        "schneider-split"
+      ],
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "baseline_compiled_profile_sha256": "738b3e0932e4e713f008ebaf7eff368690cdd1426f7f0fb80090fe6bf13034fd",
+      "status": "unapplied_append_only_review_proposal",
+      "operations": [
+        {
+          "operation": "append_unique",
+          "path": "semantics.paraphrase_examples",
+          "values": [
+            "가까운 물체와 분명히 먼 물체가 동시에 선명하고, 사이 깊이의 좁은 영역은 더 부드럽다. 빛·원근·가림은 두 구역을 가로질러 연속된다.",
+            "A near object and a clearly distant object are sharp simultaneously, with a softer intervening depth region and continuous light, perspective and occlusion across both zones.",
+            "전경 가까이에 놓인 물체의 세부와 멀리 있는 대상의 세부가 한 화면에서 동시에 또렷하다. 두 거리 사이의 중간 깊이 또는 절제된 광학 전환은 상대적으로 흐려 보인다. 두 선명 영역의 조명 방향, 원근선, 가림 순서는 서로 이어지며 하나의 공간을 이룬다.",
+            "Fine detail on a close foreground object and a clearly distant subject stays sharp in the same frame. The intervening depth or restrained optical transition appears softer. Lighting direction, perspective lines and occlusion order continue across both sharp zones as one coherent space."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.contrast_examples",
+          "values": [
+            "가까운 곳부터 먼 곳까지 모든 깊이가 똑같이 선명하게 해줘.",
+            "Make every depth from foreground to background equally sharp.",
+            "좌우 두 사진을 분할 화면으로 붙여줘.",
+            "Join two photographs as a left-right split screen.",
+            "가까운 성인만 선명하게 하고 먼 배경은 전부 흐리게 해줘.",
+            "Keep only the close adult sharp and blur the whole distant background."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.claim_limits",
+          "values": [
+            "부드러운 사이 영역은 현재 프로필의 선택 조건이지 모든 반쪽 보조 렌즈 사용의 필수 외관이 아니다.",
+            "렌즈·단일 촬영·합성 여부는 최종 픽셀만으로 확정하지 않는다."
+          ]
+        }
+      ],
+      "unchanged_contracts": [
+        "semantics.definition",
+        "activation",
+        "runtime_expression",
+        "authored_components",
+        "required_evidence_fields",
+        "evidence_requirements",
+        "render_gates",
+        "composition_instruction"
+      ],
+      "boundary": "Paraphrase additions alone do not update literal evidence requirements, hard activation, frozen core choices or output wording. No change has been applied."
+    },
+    {
+      "profile_id": "film_halation_highlight_edge_relation",
+      "card_id": "warm-highlight-halo",
+      "source_ids": [
+        "kodak-halation"
+      ],
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "baseline_compiled_profile_sha256": "910d88d68149146cf2172f009a2d0c9a1455bb1ef2cde7a6605df7db1afb0de9",
+      "status": "unapplied_append_only_review_proposal",
+      "operations": [
+        {
+          "operation": "append_unique",
+          "path": "semantics.paraphrase_examples",
+          "values": [
+            "아주 밝은 가장자리 바로 밖에 얇고 따뜻한 번짐이 국소적으로 줄어든다. 밝은 코어와 주변 세부는 읽히며 전역 안개나 유령 광점과 구별된다.",
+            "A thin warm halo falls off locally just outside very bright edges. Highlight cores and nearby detail remain readable, distinct from global haze, ghost orbs or paired colored fringes.",
+            "아주 밝은 창이나 반사광의 경계 바로 바깥에 얇은 따뜻한 색 테두리가 나타난다. 번짐의 폭과 강도는 가까운 영역에서 줄어들고 화면 전체로 퍼지지 않는다. 밝은 대상 자체의 모양과 근처의 어둡거나 중간 밝기 세부는 유지된다. 렌즈 유령 광점, 넓은 안개, 서로 반대색의 이중 가장자리와 구별되는 하나의 국소 번짐으로 읽힌다.",
+            "A thin warm-colored rim appears immediately outside a very bright window or reflection boundary. Its width and strength decrease nearby instead of spreading across the frame. The bright object's core shape and neighboring midtone or dark detail remain readable. The halo stays distinct from ghost orbs, broad veiling haze and opposed colored edge pairs."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.contrast_examples",
+          "values": [
+            "전체 사진을 붉게 색 보정해줘.",
+            "Apply a red color grade to the entire photograph.",
+            "모든 영역에 똑같은 뿌연 glow를 덮어줘.",
+            "Cover every region with the same hazy glow.",
+            "고대비 가장자리 양쪽에 반대색 색수차를 만들어줘.",
+            "Create opposed colored aberration fringes on both sides of high-contrast edges."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.claim_limits",
+          "values": [
+            "따뜻함과 붉은 편향은 이 프로젝트의 선택 조건이다. 모든 필름 할레이션의 보편적 색을 입증한 것이 아니다.",
+            "이 외관은 실제 필름 사용이나 필름 제품 종류를 확정하지 않는다."
+          ]
+        }
+      ],
+      "unchanged_contracts": [
+        "semantics.definition",
+        "activation",
+        "runtime_expression",
+        "authored_components",
+        "required_evidence_fields",
+        "evidence_requirements",
+        "render_gates",
+        "composition_instruction"
+      ],
+      "boundary": "Paraphrase additions alone do not update literal evidence requirements, hard activation, frozen core choices or output wording. No change has been applied."
+    },
+    {
+      "profile_id": "broad_face_light_orientation_relation",
+      "card_id": "broad-cheek-lit",
+      "source_ids": [
+        "profoto-face-light",
+        "nikon-broad"
+      ],
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "baseline_compiled_profile_sha256": "828e7c163880e5f1599bd64465a611413301ef76bc68014ea14411abe8504982",
+      "status": "unapplied_append_only_review_proposal",
+      "operations": [
+        {
+          "operation": "append_unique",
+          "path": "semantics.paraphrase_examples",
+          "values": [
+            "고개를 돌려 카메라에 넓게 보이는 뺨이 주광을 받고 좁게 보이는 반대 뺨에는 그림자가 남는다. 코·눈·턱의 방향이 읽힌다.",
+            "On a turned face, the cheek showing more area to the camera receives the main light while the narrower opposite cheek stays in shadow; nose, eye and jaw direction remain readable.",
+            "얼굴을 돌려 한쪽 뺨은 카메라에 넓게, 반대쪽은 좁게 보이게 한다. 주된 빛은 넓게 보이는 가까운 뺨을 비추고 좁은 먼 뺨에는 모델링된 그림자가 남는다. 코의 방향과 눈·턱 윤곽은 읽을 수 있다. 화면의 좌우가 바뀌어도 넓게 보이는 면이 밝다는 관계는 유지한다.",
+            "Turn the face so one cheek occupies more camera-visible area and the opposite cheek less. The dominant light illuminates the broad near cheek, leaving modeled shadow on the narrow far cheek. Nose direction, eyes and jaw remain legible. Mirroring the frame preserves which camera-visible plane is lit."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.contrast_examples",
+          "values": [
+            "얼굴을 돌리고 좁게 보이는 먼 뺨을 밝게, 넓은 가까운 뺨을 어둡게 해줘.",
+            "Turn the face and light the narrow far cheek, leaving the broad near cheek in shadow.",
+            "얼굴 방향은 정하지 않고 왼쪽 조명이라고만 써줘.",
+            "Specify only light from the left, without defining the head turn.",
+            "정면 얼굴의 양쪽을 동일하게 밝게 해줘.",
+            "Light both sides of a front-facing face equally."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.claim_limits",
+          "values": [
+            "브로드는 얼굴 폭·미적 평가·성격의 주장이 아니라 카메라에 보이는 면과 빛의 관계다.",
+            "고정된 화면 왼쪽·오른쪽만으로 라벨을 결정하지 않는다."
+          ]
+        }
+      ],
+      "unchanged_contracts": [
+        "semantics.definition",
+        "activation",
+        "runtime_expression",
+        "authored_components",
+        "required_evidence_fields",
+        "evidence_requirements",
+        "render_gates",
+        "composition_instruction"
+      ],
+      "boundary": "Paraphrase additions alone do not update literal evidence requirements, hard activation, frozen core choices or output wording. No change has been applied."
+    },
+    {
+      "profile_id": "short_face_light_orientation_relation",
+      "card_id": "short-cheek-lit",
+      "source_ids": [
+        "profoto-face-light"
+      ],
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "baseline_compiled_profile_sha256": "f3089d6a987ac6a8bfde3ce3310aebf73479ed149a6b3f6025acffb6a922b8ef",
+      "status": "unapplied_append_only_review_proposal",
+      "operations": [
+        {
+          "operation": "append_unique",
+          "path": "semantics.paraphrase_examples",
+          "values": [
+            "고개를 돌려 카메라에 좁게 보이는 먼 뺨이 주광을 받고 넓게 보이는 가까운 뺨에는 그림자가 남는다. 그림자 속 눈·코·얼굴 윤곽도 읽힌다.",
+            "On a turned face, the narrow far cheek receives the main light and the broad near cheek stays in shadow, with eyes, nose and contour still readable.",
+            "머리 회전으로 먼 뺨의 카메라 가시 면적은 작고 가까운 뺨의 면적은 크게 만든다. 주광은 좁게 보이는 먼 뺨에 닿으며 넓게 보이는 가까운 뺨은 형태가 읽히는 그림자에 둔다. 눈의 위치, 코의 방향과 얼굴 윤곽은 사라지지 않는다. 좌우를 뒤집어도 좁은 면이 밝고 넓은 면이 그림자인 관계를 유지한다.",
+            "The head turn makes the far cheek occupy less camera-visible area than the near cheek. Place the dominant light on that narrow far plane, leaving modeled shadow on the broad near plane. Eye position, nose direction and face contour remain legible. Mirroring preserves the narrow-lit and broad-shadow relation."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.contrast_examples",
+          "values": [
+            "돌아간 얼굴의 넓게 보이는 가까운 뺨을 밝게 비춰줘.",
+            "Illuminate the broad near cheek of the turned face.",
+            "얼굴 면은 전부 어둡게 하고 뒤에서 윤곽선만 밝혀줘.",
+            "Leave the facial planes dark and light only the outline from behind.",
+            "넓은 가까운 뺨을 완전히 검게 지워 눈과 얼굴 방향도 안 보이게 해줘.",
+            "Make the broad near cheek solid black so the eyes and face direction disappear."
+          ]
+        },
+        {
+          "operation": "append_unique",
+          "path": "semantics.claim_limits",
+          "values": [
+            "쇼트는 얼굴이 짧다는 뜻이나 체형 보정 효과의 입증이 아니다.",
+            "그림자의 밝기와 주광 방향을 구별한다. 검은 면만으로 쇼트 관계를 대신하지 않는다."
+          ]
+        }
+      ],
+      "unchanged_contracts": [
+        "semantics.definition",
+        "activation",
+        "runtime_expression",
+        "authored_components",
+        "required_evidence_fields",
+        "evidence_requirements",
+        "render_gates",
+        "composition_instruction"
+      ],
+      "boundary": "Paraphrase additions alone do not update literal evidence requirements, hard activation, frozen core choices or output wording. No change has been applied."
+    }
+  ]
+}

@@ -1,0 +1,1369 @@
+{
+  "schema_version": "neutral-expression-candidate-drafts/v1",
+  "status": "research_only_not_runtime_schema",
+  "candidates": [
+    {
+      "id": "NC01",
+      "proposal_action": "reuse_or_refine",
+      "slot": "silhouette_proportion",
+      "units": [
+        "U03",
+        "U10"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "명시된 성인 인물의 몸통 기준에 비한 가슴 돌출 깊이;전체 크기와 부착 폭은 그대로 유지",
+      "prerequisites": "동일 부위의 돌출 축이 core에 명시;형태를 확인할 수 있는 시점",
+      "affected_dimensions": [
+        "body_geometry"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "body_geometry",
+          "property": "breast_projection",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "몸통 바탕과 전방 경계가 함께 읽힘",
+      "contrast": "작은 가슴=얕은 돌출;큰 가슴=좁은 부착 폭",
+      "readiness": "existing_owner_clause_review",
+      "current_slot_dimensions": [
+        "body_geometry"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [
+        "S38",
+        "S54",
+        "S56"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC02",
+      "proposal_action": "reuse_or_refine",
+      "slot": "anatomical_connection",
+      "units": [
+        "U09"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "명시된 가슴이 몸통으로 이어지는 좌우 바탕 폭;돌출·크기를 변경하지 않음",
+      "prerequisites": "부위 소유자와 부착 폭 요청이 core에 명시",
+      "affected_dimensions": [
+        "body_geometry"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "body_geometry",
+          "property": "breast_root_width",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "같은 부위와 몸통 연결의 연속 경계",
+      "contrast": "옷의 볼륨;컵 크기;돌출 깊이",
+      "readiness": "existing_owner_clause_review",
+      "current_slot_dimensions": [
+        "body_geometry"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [
+        "S56"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC03",
+      "proposal_action": "reuse_or_refine",
+      "slot": "silhouette_proportion",
+      "units": [
+        "U06"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "명시된 둔부의 몸통에 대한 후방 돌출;골반의 좌우 폭·허벅지 크기와 별도",
+      "prerequisites": "부위와 돌출 요청;측면 또는 사선 가시성",
+      "affected_dimensions": [
+        "body_geometry"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "body_geometry",
+          "property": "gluteal_projection",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "후방 경계와 몸통 기준을 같은 인물에서 확인",
+      "contrast": "큰 골반 폭;큰 허벅지;미적 평가만",
+      "readiness": "existing_owner_clause_review",
+      "current_slot_dimensions": [
+        "body_geometry"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [
+        "S39",
+        "S52"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC04",
+      "proposal_action": "reuse_or_refine",
+      "slot": "face_shape_relation",
+      "units": [
+        "U15"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "명시된 입술의 상대적 두께와 돌출;현재 입 내밂·벌림과 분리",
+      "prerequisites": "성인 얼굴 소유자;입술 볼륨 축 명시",
+      "affected_dimensions": [
+        "body_geometry"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "body_geometry",
+          "property": "lip_volume",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "위·아래 입술 경계와 볼륨 유지",
+      "contrast": "불쾌함;동작;광택;시술 원인",
+      "readiness": "existing_owner_clause_review",
+      "current_slot_dimensions": [
+        "body_geometry"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [
+        "S49"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC05",
+      "proposal_action": "deduplicate_then_propose",
+      "slot": "expression",
+      "units": [
+        "U16"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "현재 입술을 조금 앞으로 내민 모양;입술의 원래 볼륨과 감정은 변경하지 않음",
+      "prerequisites": "현재 입 모양이 core에 명시;얼굴 소유자 고정",
+      "affected_dimensions": [
+        "expression"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "expression",
+          "property": "current_lip_protrusion_gesture",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "현재 동작과 원래 두께를 분리해 검토",
+      "contrast": "두꺼운 입술;욕망;불쾌감 확정",
+      "readiness": "expression_scope_review",
+      "current_slot_dimensions": [
+        "expression"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [
+        "S30",
+        "S49"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC06",
+      "proposal_action": "reuse_or_refine",
+      "slot": "face_shape_relation",
+      "units": [
+        "U17"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "명시된 눈 개구의 상대적 폭·높이;눈동자 방향이나 인격을 추가하지 않음",
+      "prerequisites": "눈 구조의 형태 요청;얼굴 소유자 고정",
+      "affected_dimensions": [
+        "body_geometry"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "body_geometry",
+          "property": "eye_aperture_shape",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "눈꺼풀의 실제 개구 경계",
+      "contrast": "순진함;나이;반쯤 감은 표정과 혼합",
+      "readiness": "existing_owner_clause_review",
+      "current_slot_dimensions": [
+        "body_geometry"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [
+        "S30",
+        "S50"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC07",
+      "proposal_action": "reuse",
+      "slot": "gaze_engagement",
+      "units": [
+        "U18"
+      ],
+      "existing_candidate_ids": [
+        "pv_side_eye"
+      ],
+      "definition": "머리 방향에 비해 옆으로 이동한 눈동자;시선의 감정·동기를 붙이지 않음",
+      "prerequisites": "이미 정해진 인물;옆 시선 요청",
+      "affected_dimensions": [
+        "expression"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "expression",
+          "property": "eye_direction",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "눈동자와 얼굴 회전의 상대 방향",
+      "contrast": "leer 평가;몰래 봄;성적 의도",
+      "readiness": "existing_candidate_narrow_use",
+      "current_slot_dimensions": [
+        "expression"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [
+        "S19",
+        "S20",
+        "S30",
+        "S74"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC08",
+      "proposal_action": "reuse",
+      "slot": "expression",
+      "units": [
+        "U18"
+      ],
+      "existing_candidate_ids": [
+        "pv_half_lidded"
+      ],
+      "definition": "현재 위 눈꺼풀이 개구를 부분적으로 덮는 상태",
+      "prerequisites": "현재 눈꺼풀 상태 요청;눈 형태 변경 금지",
+      "affected_dimensions": [
+        "expression"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "expression",
+          "property": "eyelid_opening_state",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "눈꺼풀 상태를 실제 경계로 확인",
+      "contrast": "졸림;욕망;bedroom eyes 전체 의미",
+      "readiness": "existing_candidate_narrow_use",
+      "current_slot_dimensions": [
+        "expression"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [
+        "S19",
+        "S20",
+        "S30",
+        "S74"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC09",
+      "proposal_action": "reuse_or_refine",
+      "slot": "gaze_engagement",
+      "units": [
+        "U19"
+      ],
+      "existing_candidate_ids": [
+        "same_adult_target_coordinated_gaze"
+      ],
+      "definition": "core에 이미 지정된 동일 성인 대상을 향하는 눈·머리 방향",
+      "prerequisites": "보는 주체와 대상 및 관계가 core에서 먼저 정의;관계 추가 금지",
+      "affected_dimensions": [
+        "expression"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "expression",
+          "property": "eye_direction",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "expression",
+          "property": "head_eye_alignment",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "다른 인물 또는 물체로 타깃을 바꾸지 않음",
+      "contrast": "지속;관심 동기;대상 후보가 스스로 전제 생성",
+      "readiness": "existing_candidate_target_binding_review",
+      "current_slot_dimensions": [
+        "expression"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [
+        "S19",
+        "S20",
+        "S30"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC10",
+      "proposal_action": "reuse_full_contract",
+      "slot": "relational_action",
+      "units": [
+        "U20"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "core가 지정한 상대에게 하는 구체적인 초대 동작과 그 대상에 묶인 결과",
+      "prerequisites": "명시된 초대·성인 주체·대상·행동·결과;전체 프로필 충족",
+      "affected_dimensions": [
+        "action",
+        "pose",
+        "relationship"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "action",
+          "property": "invitation_action",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "pose",
+          "property": "body_orientation",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "relationship",
+          "property": "target_relation",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "주체·대상·동작·결과 전체 연결",
+      "contrast": "노출·미소·몸매만으로 초대",
+      "readiness": "hold_cross_dimension_slot_policy",
+      "current_slot_dimensions": [
+        "action"
+      ],
+      "dimensions_not_owned_by_current_slot": [
+        "pose",
+        "relationship"
+      ],
+      "source_ids": [
+        "S30"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC11",
+      "proposal_action": "reuse_full_contract",
+      "slot": "relational_action",
+      "units": [
+        "U21"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "core가 지정한 상대에게 물건을 제안하고 물리는 사건의 현재 순간",
+      "prerequisites": "사건·주체·대상·물건·시점이 core에 명시",
+      "affected_dimensions": [
+        "action",
+        "pose",
+        "relationship"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "action",
+          "property": "offering_withdrawal_action",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "pose",
+          "property": "hand_pose",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "relationship",
+          "property": "target_relation",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "같은 물건·같은 상대·현재 시점 유지",
+      "contrast": "혼자 짓는 미소;동일 의미의 임의 동작",
+      "readiness": "hold_cross_dimension_slot_policy",
+      "current_slot_dimensions": [
+        "action"
+      ],
+      "dimensions_not_owned_by_current_slot": [
+        "pose",
+        "relationship"
+      ],
+      "source_ids": [
+        "S30"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC12",
+      "proposal_action": "reuse",
+      "slot": "gaze_engagement",
+      "units": [
+        "U22"
+      ],
+      "existing_candidate_ids": [
+        "pv_gaze_direct"
+      ],
+      "definition": "현재 카메라 방향을 향한 눈동자;게시 목적·카메라 인지의 진실은 추가하지 않음",
+      "prerequisites": "카메라 방향의 시선이 core에 명시",
+      "affected_dimensions": [
+        "expression"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "expression",
+          "property": "eye_direction",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "눈동자와 촬영 방향의 연결",
+      "contrast": "thirst trap;관심 욕구;밤·노출 고정",
+      "readiness": "existing_candidate_narrow_use",
+      "current_slot_dimensions": [
+        "expression"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [
+        "S21"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC13",
+      "proposal_action": "deduplicate_then_propose",
+      "slot": "wearable_accessory",
+      "units": [
+        "U24"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "목 둘레에 부착된 명시된 장식의 재질과 연속 잠금 구조",
+      "prerequisites": "해당 장식·착용자·재질이 core에 명시;관계 역할 없음",
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "property": "neckwear_material",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "appearance",
+          "property": "neckwear_attachment",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "목 장식·잠금·부착의 물체 동일성",
+      "contrast": "셔츠 칼라;소유;dom/sub;합의",
+      "readiness": "accessory_structure_deduplication_pending",
+      "current_slot_dimensions": [
+        "appearance"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC14",
+      "proposal_action": "deduplicate_then_propose",
+      "slot": "wearable_accessory",
+      "units": [
+        "U25"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "명시된 커프·끈·고정점이 같은 착용자 부위에 연결되어 요청한 움직임 제한을 이룸",
+      "prerequisites": "착용자·부위·고정점·제한 동작이 core에 명시",
+      "affected_dimensions": [
+        "appearance",
+        "pose",
+        "action"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "property": "restraint_material",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "appearance",
+          "property": "restraint_attachment",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "pose",
+          "property": "limb_position",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "action",
+          "property": "movement_constraint",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "단순 장식과 실제 연결·제한을 분리",
+      "contrast": "교차선만;역할·동의 추론",
+      "readiness": "hold_cross_dimension_slot_policy",
+      "current_slot_dimensions": [
+        "appearance"
+      ],
+      "dimensions_not_owned_by_current_slot": [
+        "action",
+        "pose"
+      ],
+      "source_ids": [
+        "S27"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC15",
+      "proposal_action": "reuse_or_refine",
+      "slot": "garment_detail",
+      "units": [
+        "U26"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "명시된 의복 표면의 재료에 묶인 광택과 가장자리 구조",
+      "prerequisites": "재료·의복·착용자 명시;노출·체형 변경 금지",
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "property": "garment_material",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "appearance",
+          "property": "material_specularity",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "광택이 실제 의복 표면에 일관되게 연결",
+      "contrast": "광택=항상 라텍스;취향·성격",
+      "readiness": "material_candidate_deduplication_pending",
+      "current_slot_dimensions": [
+        "appearance"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [
+        "S66",
+        "S67"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC16",
+      "proposal_action": "reuse_full_contract",
+      "slot": "garment_detail",
+      "units": [
+        "U28"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "연속된 얇은 직물 층의 직조·솔기·접힘과 부분 광학적 겹침",
+      "prerequisites": "그 의복과 투과 요청;전체 직물 계약 충족",
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "property": "garment_optical_transmission",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "appearance",
+          "property": "garment_layer_continuity",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "직물 존재와 투과를 동시에 확인",
+      "contrast": "사라진 옷;피부만;광택만",
+      "readiness": "existing_owner_clause_review",
+      "current_slot_dimensions": [
+        "appearance"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC17",
+      "proposal_action": "reuse_or_refine",
+      "slot": "garment_detail",
+      "units": [
+        "U27"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "명시된 불투명 직물이 해당 착용자의 이미 정해진 윤곽에 접촉하여 드러내는 외곽",
+      "prerequisites": "불투명 의복·접촉 윤곽 요청;body_geometry 잠금 보존",
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "property": "fabric_contact_outline",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "appearance",
+          "property": "garment_opacity",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "직물 존재·불투명성·동일 윤곽 접촉",
+      "contrast": "투명;노출;가려진 해부 구조 발명",
+      "readiness": "existing_owner_clause_review",
+      "current_slot_dimensions": [
+        "appearance"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC18",
+      "proposal_action": "deduplicate_then_propose",
+      "slot": "garment_detail",
+      "units": [
+        "U29"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "명시된 의복 가장자리 안에서 보이는 양측 가슴 사이 중앙의 오목한 경계",
+      "prerequisites": "중앙 경계와 의복 요청;해당 영역을 볼 수 있는 기존 프레이밍",
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "property": "garment_opening_boundary",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "appearance",
+          "property": "central_region_visibility",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "낮은 목선과 실제 중앙 관계를 구별",
+      "contrast": "쇄골 노출만;큰 가슴 필수;새 카메라 크롭",
+      "readiness": "central_relation_owner_deduplication_pending",
+      "current_slot_dimensions": [
+        "appearance"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [
+        "S55"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC19",
+      "proposal_action": "reuse_full_contract",
+      "slot": "garment_detail",
+      "units": [
+        "U30"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "같은 불투명 몸판 옆 가장자리와 팔구멍에 접한 제한된 바깥 가슴 윤곽",
+      "prerequisites": "요청의 해당 옆 노출;동일 상의 구조;프레이밍이 이미 허용",
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "property": "lateral_garment_boundary",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "appearance",
+          "property": "lateral_region_visibility",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "중심 몸판·옆 가장자리·바깥 윤곽 전체 유지",
+      "contrast": "팔·등;중앙 노출;옷 제거",
+      "readiness": "existing_owner_clause_review_alias_pending",
+      "current_slot_dimensions": [
+        "appearance"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [
+        "S75"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC20",
+      "proposal_action": "reuse_full_contract",
+      "slot": "garment_detail",
+      "units": [
+        "U31"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "같은 불투명 상의 아래 단 밑으로 보이는 제한된 아래 가슴 윤곽",
+      "prerequisites": "요청의 해당 아래 노출;동일 상의 구조;프레이밍이 이미 허용",
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "property": "lower_garment_hem",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "appearance",
+          "property": "lower_region_visibility",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "중심 몸판·아래 단·아래 윤곽 전체 유지",
+      "contrast": "복부;그림자;옷 제거",
+      "readiness": "existing_owner_clause_review_alias_pending",
+      "current_slot_dimensions": [
+        "appearance"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [
+        "S76"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC21",
+      "proposal_action": "reuse_or_refine",
+      "slot": "skin_condition",
+      "units": [
+        "U33"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "명시된 피부 영역의 국소 오목한 요철",
+      "prerequisites": "피부 소유자와 표면 요청;색·건강·체중 변경 금지",
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "property": "local_skin_dimpling",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "광학 단서가 실제 피부 표면에 연결",
+      "contrast": "일반 점무늬;큰 구멍;질환·체중 추론",
+      "readiness": "existing_owner_clause_review",
+      "current_slot_dimensions": [
+        "appearance"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [
+        "S60"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC22",
+      "proposal_action": "reuse_or_refine",
+      "slot": "skin_condition",
+      "units": [
+        "U34"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "명시된 피부 영역에 이어지는 선형 띠의 색·낮은 높이 차이",
+      "prerequisites": "피부 소유자·영역·선형 띠 요청;이력 없음",
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "property": "linear_skin_bands",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "선형 구조와 주변 표면 차이",
+      "contrast": "일반 그림자;임신·성장 원인",
+      "readiness": "existing_owner_clause_review",
+      "current_slot_dimensions": [
+        "appearance"
+      ],
+      "dimensions_not_owned_by_current_slot": [],
+      "source_ids": [
+        "S59"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC23",
+      "proposal_action": "reuse_or_refine",
+      "slot": "body_pose",
+      "units": [
+        "U36"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "core에 명시된 접촉·자세에 따른 현재 표면의 눌림과 퍼짐",
+      "prerequisites": "접촉 주체·부위·자세·변형이 core에 명시;복원 시간은 별도",
+      "affected_dimensions": [
+        "pose",
+        "body_geometry",
+        "appearance"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "pose",
+          "property": "contact_pose",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "body_geometry",
+          "property": "current_surface_deformation",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "appearance",
+          "property": "compression_relief",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "요청된 접촉과 국소 변화가 연결",
+      "contrast": "복원성;느린 진동;단순 둥근 윤곽",
+      "readiness": "hold_cross_dimension_slot_policy",
+      "current_slot_dimensions": [
+        "pose"
+      ],
+      "dimensions_not_owned_by_current_slot": [
+        "appearance",
+        "body_geometry"
+      ],
+      "source_ids": [
+        "S57",
+        "S58",
+        "S77",
+        "S78",
+        "S79"
+      ],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    },
+    {
+      "id": "NC24",
+      "proposal_action": "reuse_or_refine",
+      "slot": "relational_action",
+      "units": [
+        "U44"
+      ],
+      "existing_candidate_ids": [],
+      "definition": "core에 지정된 사건 후 같은 상대에게 물·담요를 건네는 현재 행동",
+      "prerequisites": "선행 사건·시점·주체·대상·돌봄 행동이 core에 명시",
+      "affected_dimensions": [
+        "action",
+        "pose",
+        "relationship"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "action",
+          "property": "care_handoff_action",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "pose",
+          "property": "hand_pose",
+          "target": "$core.bound_owner_id"
+        },
+        {
+          "dimension": "relationship",
+          "property": "recipient_relation",
+          "target": "$core.bound_owner_id"
+        }
+      ],
+      "evidence_gate": "선행 사건의 근거와 현재 전달 연결을 분리 검토",
+      "contrast": "물·담요만으로 aftercare;합의 추론",
+      "readiness": "hold_cross_dimension_slot_policy",
+      "current_slot_dimensions": [
+        "action"
+      ],
+      "dimensions_not_owned_by_current_slot": [
+        "pose",
+        "relationship"
+      ],
+      "source_ids": [],
+      "binding_status": "unbound_placeholder_not_eligible",
+      "required_core_bindings": [
+        "owner_id",
+        "requested_property_scope",
+        "relevant_objects_and_targets",
+        "already_allowed_visibility"
+      ],
+      "property_names_status": "research_proposed_names_must_map_to_runtime_property_inventory",
+      "positive_index_fields_proposed": [
+        "definition"
+      ],
+      "excluded_positive_index_fields": [
+        "contrast",
+        "evidence_gate",
+        "source_ids",
+        "readiness",
+        "category_ids"
+      ],
+      "runtime_export_allowed": false,
+      "test_status": "proposed_not_pack_or_pixel_tested"
+    }
+  ]
+}

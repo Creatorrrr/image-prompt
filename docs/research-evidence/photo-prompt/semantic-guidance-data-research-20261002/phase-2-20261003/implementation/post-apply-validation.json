@@ -1,0 +1,105 @@
+{
+  "checked_at": "2026-10-02T17:08:48.033405+00:00",
+  "status": "PASS",
+  "changed_authored_files": 5,
+  "changed_profile_records": 15,
+  "profile_field_operations": 88,
+  "changed_graph_records": 1,
+  "graph_field_operations": 4,
+  "unrelated_protected_files_preserved": 669,
+  "original_shard_files_preserved": 112,
+  "frozen_holdout_files_preserved": 11,
+  "required_evidence_fields_preserved": 60,
+  "render_gate_ids_and_scales_preserved": 60,
+  "runtime_modes_preserved": true,
+  "exact_and_hard_activation_preserved": true,
+  "visual_index": {
+    "profiles": 1496,
+    "exact_terms": 3624,
+    "changed_entries": [
+      "aircraft_pilot_operation",
+      "broad_face_light_orientation_relation",
+      "clothing_ct023_v2",
+      "clothing_ct037_v1",
+      "clothing_ct090_v2",
+      "embodied_corruption_transition",
+      "film_halation_highlight_edge_relation",
+      "kuudere_composed_warmth_relation",
+      "one_piece_dress_construction",
+      "pfe_cowl",
+      "pfe_one_shoulder",
+      "pfe_ruching",
+      "sheer_garment_optical_layering",
+      "short_face_light_orientation_relation",
+      "split_diopter_dual_focus_planes"
+    ],
+    "reused_entries_unchanged": 1481,
+    "registry_sha256": "95204cd9f89fece88bc689837272c3fe8c7cf26b8255dec24e7069537d26adea"
+  },
+  "semantic_index": {
+    "entries": 9700,
+    "changed_entries": [
+      "character_response_concept:kuudere"
+    ],
+    "reused_entries_unchanged": 9699,
+    "dictionary_hash": "d8e967ea33f5619a3954f103c726774a7643ba156d82e15ea6a5d94ee0ee13c8",
+    "shards": 16
+  },
+  "embedding_provider": "gemini",
+  "embedding_model": "gemini-embedding-2",
+  "embedding_dimensions": 768,
+  "unique_changed_embedding_items": 16,
+  "successful_embedding_items": 17,
+  "llm_evaluation_calls": 0,
+  "image_generation_calls": 0,
+  "skill_logic_files_changed_by_this_task": 0,
+  "new_regression_test_files": 1,
+  "adjusted_existing_test_files": 1,
+  "graph_regression_repair_applied": true,
+  "unverified": [
+    "independent language/semantic evaluation",
+    "model retrieval precision and recall",
+    "model moderation outcomes",
+    "generated image structure preservation",
+    "user acceptance"
+  ],
+  "tests": {
+    "baseline": {
+      "status": "PASS",
+      "passed_primary_tests": 86,
+      "passed_subtests": 804,
+      "duration_seconds": 378.16,
+      "failed_cases": [],
+      "junit_sha256": "85651d29b5f9d3d2bb1b5e9c1af0780df7debf69b0846305fc40b529af9a3e2b",
+      "log_sha256": "24323827cffb5bb8cf6577536374d5e33a9287002bfbd14f35f5935e461684a6"
+    },
+    "initial_post_apply": {
+      "status": "FAIL",
+      "passed_primary_tests": 99,
+      "passed_subtests": 924,
+      "duration_seconds": 411.73,
+      "failed_cases": [
+        {
+          "classname": "tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests",
+          "name": "test_added_projection_preserves_initial_profiles_candidates_and_source_links"
+        },
+        {
+          "classname": "tests.test_photo_character_response_concepts.PhotoCharacterResponseConceptTests",
+          "name": "test_multilingual_fixture_uses_contrastive_bm25f"
+        }
+      ],
+      "junit_sha256": "cf1b1edb913f169646f24ae9d0e3f92d8f23559d4272c2362766bfeded4a9f58",
+      "log_sha256": "a25ed572055e8f28be0a7e47342a23c87442f476c55156a9761a7ac50500e958"
+    },
+    "final_post_repair": {
+      "status": "PASS",
+      "passed_primary_tests": 100,
+      "passed_subtests": 928,
+      "duration_seconds": 374.88,
+      "failed_cases": [],
+      "junit_sha256": "9b3679a02599f9383dd63b7d4fbafe4ab016b5227351ae0616fe219c4455630d",
+      "log_sha256": "2e4786c250f82218ab1e2200685c9d7c373d5301cfb6564d100300ffe16a9138"
+    }
+  },
+  "dictionary_validation": "PASS"
+}
