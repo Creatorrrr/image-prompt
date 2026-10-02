@@ -21,3 +21,11 @@ The independently authored baseline now owns the photographic scene. Candidate d
 - Modified Python source parsed successfully; `git diff --check` passed.
 
 No rendered-image quality claim is made by this source-maintenance task.
+
+## Integration with the upstream liminal-use correction
+
+The upstream Korean action correction now distinguishes absent expected activity from evidence of prior use. Its accepted wording, all other slot fields, and immutable research evidence are preserved alongside the removal of runtime presets and retired routing metadata. The imaginal extension has a new maintenance record for the combined source schema; neither prior maintenance record was rewritten.
+
+The merged semantic index reuses all 9,468 verified upstream vectors and makes no new API calls. All authored slot arrays in 42 live source assets match the upstream slot arrays exactly. The merged corpus still contains 112 slots and 9,432 entries, with no preset documents. Historical tests now validate their frozen evidence and current scoped meanings without executing retired generator interfaces.
+
+Integration validation passed 67 focused tests covering both changed data tests, imaginal semantics, core retrieval, index integrity, loading, slot query fusion, public boundaries, and the sibling illustration boundary. Dictionary metadata validation and a regenerated public CLI smoke run also passed; that run preserved the original frozen core and final prompt, with the same three advisory coverage warnings and no failures.
