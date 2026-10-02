@@ -645,21 +645,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
 
         data = self.runtime_data()
         normalized = self.normalize(core())
-        result = current_fixtures.generate_once(
-            data,
-            random.Random(1416),
-            "character_attribute_composition_scene",
-            ["en"],
-            True,
-            12,
-            True,
-            selection_mode="rule",
-            include_trace=True,
-            concept_locks=[REQUEST],
-            seed=1416,
-            creativity=0,
-            authorial_core=normalized,
-        )
+        result = current_fixtures.candidate_source(data, normalized, seed=1416, overrides={'creativity': 0})
         pack = prompt_generator.build_candidate_pack(result, data, "v6")
         self.assertEqual(
             pack["authorial_composition"]["prompt_budget"],
@@ -868,21 +854,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
         self.assertEqual(identity_suppressed, [])
 
         data = self.runtime_data()
-        result = current_fixtures.generate_once(
-            data,
-            random.Random(1415),
-            "character_attribute_composition_scene",
-            ["en"],
-            True,
-            12,
-            True,
-            selection_mode="rule",
-            include_trace=True,
-            concept_locks=[REQUEST],
-            seed=1415,
-            creativity=0,
-            authorial_core=normalized,
-        )
+        result = current_fixtures.candidate_source(data, normalized, seed=1415, overrides={'creativity': 0})
         pack = prompt_generator.build_candidate_pack(result, data, "v6")
         guard = pack["negative_intent_guard"]
         self.assertEqual(
@@ -1057,21 +1029,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             yandere_core(),
             request_envelope=normalized_envelope,
         )
-        result = current_fixtures.generate_once(
-            data,
-            random.Random(1415),
-            "character_attribute_composition_scene",
-            ["en"],
-            True,
-            12,
-            True,
-            selection_mode="rule",
-            include_trace=True,
-            concept_locks=[YANDERE_REQUEST],
-            seed=1415,
-            creativity=0,
-            authorial_core=normalized_core,
-        )
+        result = current_fixtures.candidate_source(data, normalized_core, seed=1415, overrides={'creativity': 0})
         pack = prompt_generator.build_candidate_pack(result, data, "v6")
         self.assertEqual(pack["contract_version"], "photo-candidate-pack/v6")
         self.assertEqual(
@@ -1117,21 +1075,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             reality_error_core(),
             request_envelope=normalized_envelope,
         )
-        result = current_fixtures.generate_once(
-            data,
-            random.Random(1421),
-            "character_attribute_composition_scene",
-            ["en"],
-            True,
-            12,
-            True,
-            selection_mode="rule",
-            include_trace=True,
-            concept_locks=[REALITY_ERROR_REQUEST],
-            seed=1421,
-            creativity=0,
-            authorial_core=normalized_core,
-        )
+        result = current_fixtures.candidate_source(data, normalized_core, seed=1421, overrides={'creativity': 0})
         pack = prompt_generator.build_candidate_pack(result, data, "v6")
         self.assertEqual(pack["contract_version"], "photo-candidate-pack/v6")
         self.assertEqual(
@@ -1265,21 +1209,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             data[prompt_generator.VISUAL_OBLIGATIONS_DATA_KEY],
             data[prompt_generator.VISUAL_PROFILE_INDEX_DATA_KEY],
         )
-        result = current_fixtures.generate_once(
-            data,
-            random.Random(1417),
-            "character_attribute_composition_scene",
-            ["en"],
-            True,
-            12,
-            True,
-            selection_mode="rule",
-            include_trace=True,
-            concept_locks=[retry_request],
-            seed=1417,
-            creativity=0,
-            authorial_core=normalized_core,
-        )
+        result = current_fixtures.candidate_source(data, normalized_core, seed=1417, overrides={'creativity': 0})
         result.setdefault("provenance", {})["visual_intent"] = visual_intent
         pack = prompt_generator.build_candidate_pack(result, data, "v6")
         self.assertEqual(
@@ -1379,7 +1309,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             side_effect=AssertionError("legacy raw router must not run"),
         ):
             resolved = prompt_generator.resolve_request_intent_constraints(
-                {"presets": [], "slots": {}},
+                { "slots": {}},
                 {"intent": "외모에 어울리는 성인 인물 사진"},
                 {},
                 authorial_core=typed_core,
@@ -1400,21 +1330,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             "resolve_moe_response_intent", create=True,
             side_effect=AssertionError("legacy raw router must not run"),
         ):
-            result = current_fixtures.generate_once(
-                data,
-                random.Random(42),
-                "character_attribute_composition_scene",
-                ["en"],
-                True,
-                12,
-                True,
-                selection_mode="rule",
-                include_trace=True,
-                concept_locks=[normalized_envelope["request_text"]],
-                seed=42,
-                creativity=0,
-                authorial_core=normalized_core,
-            )
+            result = current_fixtures.candidate_source(data, normalized_core, seed=42, overrides={'creativity': 0})
             pack = prompt_generator.build_candidate_pack(result, data, "v6")
         self.assertEqual(pack["contract_version"], "photo-candidate-pack/v6")
         self.assertIn("character_response", pack)

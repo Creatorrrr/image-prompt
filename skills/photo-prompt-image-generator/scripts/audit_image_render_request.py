@@ -62,6 +62,9 @@ def audit_image_render_request(
     request_path: Path | None = None,
 ) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
+    expected_retrieval_sha = (pack.get("core_retrieval") or {}).get("canonical_sha256")
+    if not expected_retrieval_sha or request.get("core_retrieval_sha256") != expected_retrieval_sha:
+        failures.append({"check": "core_retrieval_sha256", "reason": "runtime request must bind the exact core retrieval contract"})
     failures.extend(photo_embodiment.audit_runtime(pack, composed, request))
 
     if request.get("schema_version") != SCHEMA_VERSION:

@@ -1,6 +1,6 @@
 ---
 name: prompt-trend-scout
-description: Periodically and read-only collect AI-image and image-prompt examples shared on SNS or local inboxes through official APIs, allowed feeds, or user-provided files; sanitize signatures, handles, watermarks, and promotional boilerplate; abstract examples into visual grammar, tag, recipe, and drift-gate candidates; and emit a human-review reflection report for photo-prompt-image-generator without applying changes. Use when the user or an automation asks to scout prompt trends, crawl/collect SNS prompt examples, or prepare a reflection plan. Never like, reply, repost, follow, bookmark, DM, publish, or auto-mutate photo-prompt-image-generator.
+description: Periodically and read-only collect AI-image and image-prompt examples shared on SNS or local inboxes through official APIs, allowed feeds, or user-provided files; sanitize signatures, handles, watermarks, and promotional boilerplate; abstract examples into visual grammar, tag, candidate bundle, and drift-gate candidates; and emit a human-review reflection report for photo-prompt-image-generator without applying changes. Use when the user or an automation asks to scout prompt trends, crawl/collect SNS prompt examples, or prepare a reflection plan. Never like, reply, repost, follow, bookmark, DM, publish, or auto-mutate photo-prompt-image-generator.
 ---
 
 # Prompt Trend Scout
@@ -17,7 +17,7 @@ Use this skill to run a read-only trend scout that turns outside prompt examples
 - Keep raw source text and media only under this skill's gitignored `data/` cache.
 - Strip author signatures, handles, watermarks, tool signatures, credit boilerplate, and promotional calls to action before analysis.
 - Treat "do not repost", "do not steal", watermark, or credit-required signals as `no_raw_reuse` and `no_republish`; still allow private abstraction into visual grammar.
-- Emit reports and candidates only as abstract visual grammar, tag candidates, recipe candidates, drift gates, and review notes.
+- Emit reports and candidates only as abstract visual grammar, tag candidates, candidate bundle ideas, drift gates, and review notes.
 - Never write to `skills/photo-prompt-image-generator/assets/*` during the automated scout. Use `apply_reflection.py` only after explicit user approval.
 
 ## Default Workflow
@@ -33,7 +33,7 @@ The pipeline is:
 1. `collect_sources.py`: fetch enabled read-only sources from `assets/source_registry.json`.
 2. `sanitize_examples.py`: remove signatures/promos and attach reuse flags.
 3. `analyze_corpus.py`: convert sanitized examples into abstract candidates.
-4. `diff_against_photo_prompt.py`: compare candidates against `photo_prompt_tags.json` and `concept_recipes.json` in read-only mode.
+4. `diff_against_photo_prompt.py`: compare candidates against `photo_prompt_tags.json` in read-only mode.
 5. `build_reflection_report.py`: write `data/reports/<report_id>.md` and `.json`.
 6. `validate_harvest_schema.py`: validate every emitted record and leakage gate.
 

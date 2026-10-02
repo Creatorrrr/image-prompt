@@ -14,6 +14,7 @@ from tests import test_photo_initial_creative_controls as initial_fixtures
 import audit_composed_prompt as auditor
 import photo_creative_controls as controls
 import prompt_generator as generator
+import generate_photo_prompt
 
 
 class ControlSpanOwnershipTests(unittest.TestCase):
@@ -58,10 +59,7 @@ class ControlSpanOwnershipTests(unittest.TestCase):
         raw, envelope, snapshot = self.inputs()
         core = self.normalize(raw, envelope, snapshot)
         data = initial_fixtures.InitialDirectionIntegrationTests.data
-        result = current_fixtures.generate_once(data, random.Random(9), None, ["en"], True, 12, True,
-            selection_mode="rule", include_trace=True, seed=9,
-            concept_locks=generator.request_envelope_active_texts(envelope),
-            authorial_core=core, creative_control_snapshot=snapshot)
+        result = current_fixtures.candidate_source(data, core, seed=9, controls=snapshot)
         pack = generator.build_candidate_pack(result, data, "v6")
         self.assertFalse({"sensual", "fetish", "3"} & {
             row["text"] for row in pack["mandatory_intents"]
@@ -194,7 +192,7 @@ class ControlSpanOwnershipTests(unittest.TestCase):
                 controls.resolve("a portrait", overrides={old: 3})
         for old in ("--sensual-editorial-intensity", "--fetish-fashion-intensity"):
             with contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
-                generator.main([old, "3"])
+                generate_photo_prompt.main([old, "3"])
         inactive = controls.resolve("no people", overrides={"sensual": 3, "fetish": 3}, context={"no_people": True}, seed=1)
         self.assertIn("sensual: 0", controls.authoring_brief(inactive))
 

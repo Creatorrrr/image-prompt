@@ -16,7 +16,6 @@ from typing import Any
 
 VERSION = "photo-composer-view/v2"
 OPTIONAL_PATHS = (
-    ("presets",),
     ("photographic_integration", "category_candidates"),
     ("visual_proposition", "core_candidates"),
     ("visual_proposition", "tension_candidates"),

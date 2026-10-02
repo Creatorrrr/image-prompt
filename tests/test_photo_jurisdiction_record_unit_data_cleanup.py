@@ -5,7 +5,8 @@ ROOT=Path(__file__).resolve().parents[1]
 ASSETS=ROOT/'skills/photo-prompt-image-generator/assets'
 EVIDENCE=ROOT/'docs/research-evidence/photo-prompt/jurisdiction-record-unit-data-cleanup-20261001'
 PUBLIC=ROOT/'docs/research-evidence/photo-prompt/published-data-v6-surface-audit-20261001'
-spec=importlib.util.spec_from_file_location('record_unit_surface',PUBLIC/'replay_public_surfaces.py');surface=importlib.util.module_from_spec(spec);spec.loader.exec_module(surface)
+from tests import photo_prompt_fixtures as fixtures
+import prompt_generator as generator
 import photo_candidate_semantics as semantics
 
 
@@ -13,7 +14,7 @@ class JurisdictionRecordUnitDataCleanupTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.frozen=json.loads((EVIDENCE/'frozen-inventory-queries.json').read_text())
-        cls.data=surface.runtime_data()
+        cls.data=generator.load_json(ASSETS/"photo_prompt_tags.json")
         cls.rows={(s,r['id']):r for s,rows in cls.data['slots'].items()for r in rows}
         cls.target=next(r for r in cls.frozen['inventory']if r['decision']=='fix')
         cls.contract=json.loads((PUBLIC/'generated-contract-result.json').read_text())
@@ -54,10 +55,10 @@ class JurisdictionRecordUnitDataCleanupTests(unittest.TestCase):
         self.assertIn('non-sacred numbering, maps, handoff envelopes, and material traces rather than living rites, divine names, or sacred objects',row['concept_units'][0])
         self.assertEqual(semantics.semantic_source(row,'capture_context',self.data['candidate_semantic_policy'])['concept_units'],row['concept_units'])
 
-    def test_actual_production_pack_and_detail_restore_the_full_contrast(self):
+    def test_current_public_projection_and_detail_restore_the_full_contrast(self):
         slot=self.target['slot'];eid=self.target['id']
-        old=surface.build_state(self.data,self.target['before'],slot,eid,self.contract)
-        new=surface.build_state(self.data,self.rows[slot,eid],slot,eid,self.contract)
+        old=dict(zip(('candidate','detail'),fixtures.project_slot_candidate(self.data,slot,self.target['before'])))
+        new=dict(zip(('candidate','detail'),fixtures.project_slot_candidate(self.data,slot,self.rows[slot,eid])))
         self.assertIsNotNone(old['candidate']);self.assertIsNotNone(new['candidate'])
         self.assertNotIn('concept_units',old['candidate'])
         self.assertNotIn('semantic_surface_version',old['candidate'])

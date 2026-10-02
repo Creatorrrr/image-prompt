@@ -47,90 +47,47 @@ class PhotoSlotQueryFusionTests(unittest.TestCase):
             ("", []),
         )
 
-    def test_without_guard_context_lookup_stays_in_supplied_pool(self):
-        core = self.core()
-        entries = [
-            {"id": "generic", "en": "generic witch action"},
-            {"id": "moon", "en": "moonlit flight"},
-            {"id": "broom", "en": "broom travel"},
-            {"id": "cloud", "en": "cloud transit"},
-            {"id": "counterfire", "en": "luminous return shot toward a fighter"},
-            {"id": "uneligible", "en": "luminous return shot toward a fighter"},
-        ]
-        documents = {
-            f"slot:action:{entry['id']}": {
-                "aliases": [entry["en"]],
-                "definition": [entry["en"]],
-            }
-            for entry in entries
-        }
-        index = bm25f_retrieval.build_bm25f_index(
-            documents,
-            policy={
-                "fields": {
-                    "aliases": {"weight": 4.0, "b": 0.2},
-                    "definition": {"weight": 2.0, "b": 0.7},
-                },
-                "query_fields": {},
-            },
-        )
-        rows = [{"id": entry["id"], "weight": 1.0} for entry in entries[:-1]]
-        global_query, _ = prompt_generator.authorial_core_retrieval_text(core)
-        ranked, metadata = prompt_generator.candidate_pack_rank_slot_rows(
-            {"slots": {"action": entries}},
-            "action",
-            rows,
-            "generic",
-            {"action": {"id": "generic"}},
-            core,
-            index,
-            global_query,
-        )
-        self.assertEqual([row["id"] for row in ranked[:2]], ["generic", "counterfire"])
-        self.assertNotIn("uneligible", [row["id"] for row in ranked])
-        self.assertEqual(metadata["source_authorial_core_sha256"], core["canonical_sha256"])
-        self.assertEqual(metadata["slot_query_source_fields"], ["event"])
-        self.assertTrue(metadata["advisory_only"])
 
-    def test_guarded_expansion_recovers_focused_action_without_user_exclusion(self):
+
+    def test_guarded_action_lookup_recovers_focus_without_inherited_choices(self):
+        data = {"candidate_semantic_policy": {"slot_dimensions": {"action": ["action"]}},
+                "slots": {"action": [
+                    {"id": "generic", "en": "ordinary standing action"},
+                    {"id": "counterfire", "en": "firing a luminous return shot toward a chasing fighter"},
+                    {"id": "excluded", "en": "red scarf return shot toward a fighter"},
+                    {"id": "blocked", "en": "firing a luminous return shot toward a chasing fighter", "requires_all": ["missing_context"]},
+                ]}}
         core = self.core()
-        entries = [
-            {"id": "generic", "en": "ordinary standing action", "weight": 1.0},
-            {"id": "counterfire", "en": "firing a luminous return shot toward a chasing fighter", "weight": 1.0},
-            {"id": "excluded", "en": "red scarf return shot toward a fighter", "weight": 1.0},
-        ]
-        documents = {
-            f"slot:action:{entry['id']}": {
-                "aliases": [entry["en"]],
-                "definition": [entry["en"]],
-            }
-            for entry in entries
-        }
-        index = bm25f_retrieval.build_bm25f_index(
-            documents,
-            policy={"fields": {"aliases": {"weight": 4.0, "b": 0.2}}},
-        )
-        global_query, _ = prompt_generator.authorial_core_retrieval_text(core)
-        contract = {
-            "adult_allowed": True,
-            "subject_category": "human",
-            "intent_constraints": {"subject_categories": ["human"]},
-            "soft_anchor_policy": {},
-        }
-        ranked, metadata = prompt_generator.candidate_pack_rank_slot_rows(
-            {"slots": {"action": entries}},
-            "action",
-            [{"id": "generic", "weight": 1.0}],
-            "generic",
-            {"action": {"id": "generic"}},
-            core,
-            index,
-            global_query,
-            contract,
-            {"id": "generic"},
-        )
-        self.assertEqual([row["id"] for row in ranked], ["generic", "counterfire"])
-        self.assertEqual(metadata["hard_guarded_expansion_count"], 1)
+        core["source_request"] = "A human witch fires a return shot."
+        controls = prompt_generator.creative_controls.resolve(core["source_request"],
+            context={"subject_category": "human"}, overrides={"sensual": 0, "fetish": 0}, seed=1)
+        core["creative_controls_sha256"] = controls["canonical_sha256"]
+        slots, binding, _ = prompt_generator.retrieve_core_slots(data, core, controls)
+        ids = {row["id"] for row in slots["action"]["candidates"]}
+        self.assertIn("slot:action:counterfire", ids)
+        self.assertNotIn("slot:action:excluded", ids)
+        self.assertNotIn("slot:action:blocked", ids)
+        self.assertEqual(binding["active_slots"]["action"]["source_fields"], ["event"])
+        self.assertEqual(binding["candidate_adoption"], "optional")
+
+    def test_subject_lookup_keeps_typed_human_and_adult_style_guards(self):
+        data = {"candidate_semantic_policy": {"slot_dimensions": {"subject": ["subject"]}},
+                "slots": {"subject": [
+                    {"id": "generic", "en": "a human witness", "tags": ["human"]},
+                    {"id": "witch", "en": "an adult human witch with feline ears", "tags": ["human", "witch", "adult", "role"]},
+                    {"id": "cat", "en": "a stray cat", "tags": ["animal"]},
+                    {"id": "adult_styling", "en": "an adult human witch in suggestive styling", "tags": ["human", "witch", "adult", "suggestive"]},
+                ]}}
+        core = self.core()
+        core["source_request"] = "An adult human cat-eared witch."
+        controls = prompt_generator.creative_controls.resolve(core["source_request"],
+            context={"subject_category": "human"}, overrides={"sensual": 0, "fetish": 0}, seed=1)
+        core["creative_controls_sha256"] = controls["canonical_sha256"]
+        slots, _, _ = prompt_generator.retrieve_core_slots(data, core, controls)
+        ids = {row["id"] for row in slots["subject"]["candidates"]}
+        self.assertIn("slot:subject:witch", ids)
+        self.assertNotIn("slot:subject:cat", ids)
+        self.assertNotIn("slot:subject:adult_styling", ids)
 
     def test_cat_eared_human_core_does_not_route_to_animal_subject(self):
         data = {
@@ -187,51 +144,7 @@ class PhotoSlotQueryFusionTests(unittest.TestCase):
         )
         self.assertEqual(adjacent_constraints["subject_categories"], ["animal"])
 
-    def test_subject_expansion_keeps_typed_human_category(self):
-        core = self.core()
-        entries = [
-            {"id": "generic", "en": "a human witness", "tags": ["human"]},
-            {"id": "witch", "en": "an adult human witch with feline ears", "tags": ["human", "witch", "adult", "role"]},
-            {"id": "cat", "en": "a stray cat", "tags": ["animal"]},
-            {"id": "adult_styling", "en": "an adult human witch in suggestive styling", "tags": ["human", "witch", "adult", "suggestive"]},
-        ]
-        index = bm25f_retrieval.build_bm25f_index(
-            {
-                f"slot:subject:{entry['id']}": {"aliases": [entry["en"]]}
-                for entry in entries
-            },
-            policy={"fields": {"aliases": {"weight": 4.0, "b": 0.2}}},
-        )
-        global_query, _ = prompt_generator.authorial_core_retrieval_text(core)
-        ranked, metadata = prompt_generator.candidate_pack_rank_slot_rows(
-            {"slots": {"subject": entries}},
-            "subject",
-            [{"id": "generic", "weight": 1.0}],
-            "generic",
-            {"subject": {"id": "generic"}},
-            core,
-            index,
-            global_query,
-            {
-                "adult_allowed": False,
-                "subject_category": "human",
-                "intent_constraints": {"subject_categories": ["human"]},
-                "soft_anchor_policy": {},
-            },
-            {"id": "generic"},
-        )
-        self.assertIn("witch", [row["id"] for row in ranked])
-        self.assertNotIn("cat", [row["id"] for row in ranked])
-        self.assertNotIn("adult_styling", [row["id"] for row in ranked])
-        self.assertEqual(metadata["hard_guarded_expansion_count"], 1)
 
-    def test_missing_index_preserves_existing_order(self):
-        rows = [{"id": "first"}, {"id": "second"}]
-        ranked, metadata = prompt_generator.candidate_pack_rank_slot_rows(
-            {}, "action", rows, "first", {}, self.core(), None, "scene"
-        )
-        self.assertEqual(ranked, rows)
-        self.assertIsNone(metadata)
 
 
 if __name__ == "__main__":

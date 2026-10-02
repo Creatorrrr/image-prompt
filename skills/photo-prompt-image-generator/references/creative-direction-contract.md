@@ -1,6 +1,6 @@
 # Creative Direction Contract
 
-Use this contract only when the candidate pack contains `creative_direction.enabled: true`. It is an agent composition procedure, not a topic taxonomy, preset family, score claiming historical novelty, or permission to weaken the scene, safety, character, candidate-provenance, or negative-prompt contracts.
+Use this contract only when the candidate pack contains `creative_direction.enabled: true`. It is an agent composition procedure, not a topic taxonomy, score claiming historical novelty, or permission to weaken the scene, safety, character, candidate-provenance, or negative-prompt contracts.
 
 Every creative-direction pack also contains `viewer_experience`. Read `viewer-experience-contract.md` and make the selected concept's aboutness, reveal path, and authorial grammar serve one declared viewer need. The creative brief answers what changes and how it is discovered; the viewer block answers why the discovery should matter.
 

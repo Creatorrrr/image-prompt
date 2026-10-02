@@ -248,7 +248,7 @@ class EmbodimentPipelineTests(unittest.TestCase):
 
     def test_runtime_auditor_checks_full_reviewed_input(self):
         pack, composed = self.bound_pair()
-        request = {"schema_version": "photo-image-render-request/v2", "pack_id": pack["pack_id"],
+        request = {"core_retrieval_sha256": pack["core_retrieval"]["canonical_sha256"], "schema_version": "photo-image-render-request/v2", "pack_id": pack["pack_id"],
                    "source_intent_lock_sha256": pack["authorial_core"]["intent_lock"]["canonical_sha256"],
                    "source_embodiment_preflight_sha256": pack["embodiment_preflight"]["canonical_sha256"],
                    "runtime_prompt_en": composed["prompt_en"] + "\n\nAvoid: " + composed["negative_en"], "runtime_negative_en": composed["negative_en"],
@@ -275,14 +275,7 @@ class EmbodimentPipelineTests(unittest.TestCase):
                 # extension handling, even if it happens to match its basename.
                 paths[name] = Path(tmp) / ("photo_prompt_tags.json" if name == "review" else name + ".json")
                 paths[name].write_text(json.dumps(value, ensure_ascii=False))
-            completed = subprocess.run([
-                sys.executable, str(SCRIPTS / "generate_photo_prompt.py"),
-                "--selection-mode", "rule", "--seed", "9501", "--creativity", "0",
-                "--emit-candidate-pack", "--candidate-pack-version", "v6",
-                "--authorial-core-json", str(paths["core"]),
-                "--request-envelope-json", str(paths["envelope"]),
-                "--embodiment-review-json", str(paths["review"]), "--creative-controls-json", str(paths["controls"]), "--n", "1",
-            ], cwd=ROOT, capture_output=True, text=True, timeout=180)
+            completed = subprocess.run([sys.executable, str(SCRIPTS / 'generate_photo_prompt.py'), '--seed', '9501', '--authorial-core-json', str(paths['core']), '--request-envelope-json', str(paths['envelope']), '--embodiment-review-json', str(paths['review']), '--creative-controls-json', str(paths['controls'])], cwd=ROOT, capture_output=True, text=True, timeout=180)
         self.assertEqual(completed.returncode, 0, completed.stderr)
         pack = json.loads(completed.stdout)[0]
         self.assertEqual(embodiment.policy_from_pack(pack)["baseline_review"], r)

@@ -6266,13 +6266,12 @@ def _canonical_photo_pack_id(pack: Mapping[str, Any]) -> str:
 
 
 def _public_photo_candidate_count(pack: Mapping[str, Any]) -> int:
-    presets = pack.get("presets")
     slots = pack.get("slots")
     _require(
-        isinstance(presets, list) and isinstance(slots, dict),
+        isinstance(slots, dict),
         "photo baseline pack shape mismatch",
     )
-    return len(presets) + sum(
+    return sum(
         len(slot["candidates"])
         for slot in slots.values()
         if isinstance(slot, dict) and isinstance(slot.get("candidates"), list)
@@ -6285,7 +6284,8 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
     historical_path = asset_dir / "photo_regression_baseline_v1.json"
     prior_path = asset_dir / "photo_regression_baseline_v2.json"
     intermediate_path = asset_dir / "photo_regression_baseline_v3.json"
-    baseline_path = asset_dir / "photo_regression_baseline_v4.json"
+    bound_path = asset_dir / "photo_regression_baseline_v4.json"
+    baseline_path = asset_dir / "photo_regression_baseline_v5.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
     photo_boundary = universal_baseline.get("photo_boundary")
     _require(
@@ -6326,15 +6326,22 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
         },
         "intermediate photo baseline lineage mismatch",
     )
+    bound = _load_json(bound_path)
+    _require(
+        bound.get("schema") == "photo_regression_baseline/v4"
+        and bound.get("historical_baseline") == {
+            "path": intermediate_path.name, "schema": "photo_regression_baseline/v3",
+            "sha256": _sha256(intermediate_path),
+        },
+        "bound photo history lineage mismatch",
+    )
     baseline = _load_json(baseline_path)
     _require(
-        baseline.get("schema") == "photo_regression_baseline/v4"
+        baseline.get("schema") == "photo_regression_baseline/v5"
         and baseline.get("status") == "current"
-        and baseline.get("historical_baseline")
-        == {
-            "path": intermediate_path.name,
-            "schema": "photo_regression_baseline/v3",
-            "sha256": _sha256(intermediate_path),
+        and baseline.get("historical_baseline") == {
+            "path": bound_path.name, "schema": "photo_regression_baseline/v4",
+            "sha256": _sha256(bound_path),
         },
         "current photo baseline lineage mismatch",
     )
@@ -6345,9 +6352,11 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
     )
     _require(command.count("--output-file") == 1, "photo baseline output flag mismatch")
     _require(
-        command.count("--candidate-pack-version") == 1
-        and command[command.index("--candidate-pack-version") + 1] == "v6",
-        "photo baseline candidate-pack version must be explicitly pinned to v6",
+        all(command.count(flag) == 1 for flag in (
+            "--request-envelope-json", "--authorial-core-json",
+            "--creative-controls-json", "--embodiment-review-json",
+        )),
+        "photo baseline must supply all current authored inputs",
     )
     output_index = command.index("--output-file") + 1
     repo_root = Path(__file__).resolve().parents[3]

@@ -40,12 +40,12 @@ def fixture():
         entry("seam", "A flowing dress seam follows posture and material drape", "wardrobe.construction.seam"),
         entry("cuff", "A deliberate glove cuff gesture presents the fastening in adult fashion", "accessories.gloves"),
         entry("whole", "A red leather corset dress leads sensual fashion", "wardrobe"),
-    ]}, "presets": [], "candidate_semantic_policy": {"slot_dimensions": {"garment_detail": ["appearance"]}},
+    ]},  "candidate_semantic_policy": {"slot_dimensions": {"garment_detail": ["appearance"]}},
         generator.QUALITY_LAYERS_DATA_KEY: {"adult_appeal": {
             "contextual_retrieval": {"contract_version": contextual.VERSION},
             # These old admission gates must not affect the bound v6 path.
             "entry_min_intensity": {"seam": 3, "cuff": 3},
-            "inventory_preset_id": "missing", "axes": {},
+            "axes": {},
         }}}
     result = {"provenance": {"prompt_id": "test", "creative_controls": snapshot,
                               "adult_appeal": {"axes": {axis: {"intensity": 1} for axis in contextual.AXES}}}}

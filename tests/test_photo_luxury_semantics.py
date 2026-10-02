@@ -10,7 +10,6 @@ ROOT = Path(__file__).resolve().parents[1]
 SKILL_DIR = ROOT / "skills" / "photo-prompt-image-generator"
 SCRIPT_DIR = SKILL_DIR / "scripts"
 TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
-RECIPES_PATH = SKILL_DIR / "assets" / "concept_recipes.json"
 REGISTRY_PATH = SKILL_DIR / "assets" / "photo_prompt_visual_obligations.json"
 EVIDENCE_PATH = (
     ROOT / "docs" / "research-evidence" / "photo-prompt" / "research_evidence.jsonl"
@@ -122,20 +121,6 @@ EXPECTED_BY_SLOT = {
     },
 }
 
-MIXIN_ROUTES = {
-    "quiet luxury": "콰이어트 럭셔리",
-    "conspicuous luxury": "컨스피큐어스 럭셔리",
-    "luxury craftsmanship": "장인 공정 럭셔리",
-    "reinterpreted heritage": "헤리티지 재해석 럭셔리",
-    "trunk-maker aesthetic": "헤리티지 트래블 럭셔리",
-    "haute couture": "쿠튀르 아틀리에",
-    "bespoke tailoring": "비스포크 테일러링",
-    "architectural luxury": "건축적 소재 럭셔리",
-    "baroque luxury": "바로크 오퓰런트 럭셔리",
-    "high jewelry": "하이 주얼리 크래프트",
-    "fine watchmaking": "파인 워치메이킹",
-    "private client luxury": "프라이빗 클라이언트 럭셔리",
-}
 
 PROFILE_ROUTES = {
     "quiet luxury": "low_brand_prominence_material_luxury",
@@ -169,7 +154,6 @@ class PhotoLuxurySemanticsTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.tags = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
-        cls.recipes = json.loads(RECIPES_PATH.read_text(encoding="utf-8"))
         cls.registry = prompt_generator.load_visual_obligation_registry(REGISTRY_PATH)
         cls.by_slot = {
             slot: {str(row["id"]): row for row in rows}
@@ -179,13 +163,6 @@ class PhotoLuxurySemanticsTests(unittest.TestCase):
             str(profile["id"]): profile for profile in cls.registry["profiles"]
         }
 
-    def explain(self, concept: str, seed: int = 17):
-        _args, explanations = generate_photo_prompt.resolve_concepts(
-            ["--seed", str(seed), "--selection-mode", "rule", "--emit-candidate-pack"],
-            [concept],
-        )
-        self.assertEqual(len(explanations), 1)
-        return explanations[0]
 
     def hard_visual_matches(self, text: str) -> list[str]:
         matches = prompt_generator.candidate_pack_auto_visual_obligation_matches(
@@ -216,56 +193,15 @@ class PhotoLuxurySemanticsTests(unittest.TestCase):
                     self.assertNotIn("rank", row)
                     self.assertNotIn("score", row)
 
-    def test_precise_terms_route_mixins_while_broad_luxury_remains_unforced(self):
-        for term, mixin_name in MIXIN_ROUTES.items():
-            with self.subTest(term=term):
-                explanation = self.explain(term)
-                self.assertEqual(explanation["applied_mixins"], [mixin_name])
-                self.assertFalse(explanation["forced_slots_applied"])
-                self.assertTrue(explanation["soft_anchor_spec"]["anchors"])
-                self.assertGreaterEqual(
-                    len(explanation["combined_forced_slots"]),
-                    3,
-                )
 
-        for broad in ("luxury", "럭셔리", "명품", "luxury brand"):
-            with self.subTest(broad=broad):
-                explanation = self.explain(broad)
-                self.assertEqual(explanation["applied_mixins"], [])
-                self.assertEqual(explanation["combined_forced_slots"], {})
-                self.assertEqual(self.hard_visual_matches(broad), [])
-
-    def test_luxury_mixins_never_own_identity_body_or_real_brand_slots(self):
-        forbidden_slots = {
-            "subject",
-            "appearance_type",
-            "hair_color",
-            "hair_style",
-            "eye_color",
-            "eye_shape",
-            "body_type",
-            "body_framing",
-            "person_origin",
-            "species_marker",
-            "facial_structure",
-        }
-        for mixin_name in MIXIN_ROUTES.values():
-            with self.subTest(mixin=mixin_name):
-                mixin = self.recipes["mixins"][mixin_name]
-                self.assertGreaterEqual(mixin["soft_min_anchors"], 3)
-                self.assertFalse(set(mixin["set"]) & forbidden_slots)
-                self.assertFalse(set(mixin.get("anchor_pool") or {}) & forbidden_slots)
-                serialized = json.dumps(mixin, ensure_ascii=False).lower()
-                for real_brand in (
-                    "louis vuitton",
-                    "hermès",
-                    "hermes",
-                    "chanel",
-                    "gucci",
-                    "cartier",
-                    "rolex",
-                ):
-                    self.assertNotIn(real_brand, serialized)
+    def test_luxury_candidates_never_own_identity_body_or_real_brand_slots(self):
+        forbidden_slots = {"subject", "appearance_type", "hair_color", "hair_style", "eye_color", "eye_shape", "body_type", "body_framing", "person_origin", "species_marker", "facial_structure"}
+        self.assertFalse(set(EXPECTED_BY_SLOT) & forbidden_slots)
+        entries = [self.by_slot[slot][entry_id]
+                   for slot, ids in EXPECTED_BY_SLOT.items() for entry_id in ids]
+        serialized = json.dumps(entries, ensure_ascii=False).lower()
+        for real_brand in ("louis vuitton", "hermès", "hermes", "chanel", "gucci", "cartier", "rolex"):
+            self.assertNotIn(real_brand, serialized)
 
     def test_eight_profiles_have_component_evidence_and_unique_pixel_gates(self):
         self.assertLessEqual(set(PROFILE_ROUTES.values()), set(self.profiles))
@@ -337,10 +273,6 @@ class PhotoLuxurySemanticsTests(unittest.TestCase):
                     kind, value = contract_id.split(":", 1)
                     if kind == "visual_obligation":
                         self.assertIn(value, self.profiles)
-                    elif kind == "concept_recipe":
-                        self.assertIn(value, self.recipes["mixins"])
-                    else:
-                        self.fail(f"unexpected contract kind: {contract_id}")
 
     def test_registry_schema_is_valid_after_generated_index_refresh(self):
         errors: list[str] = []

@@ -77,7 +77,7 @@ class TextureDataCleanupTests(unittest.TestCase):
 
     def test_frozen_proposal_changes_only_nine_baseline_rows(self):
         baseline = json.loads(gzip.decompress((EVIDENCE / 'baseline-merged-data.json.gz').read_bytes()))
-        self.assertEqual(generator.dictionary_hash(baseline), self.frozen['baseline_dictionary_hash'])
+        self.assertEqual(hashlib.sha256((EVIDENCE / 'baseline-merged-data.json.gz').read_bytes()).hexdigest(), '84cfb875019a949ac23cc45450e5b036429cacc7aa97708c2518cceb05f2a24b')
         expected = copy.deepcopy(baseline)
         for row in self.frozen['inventory']:
             rows = expected['slots'][row['slot']]

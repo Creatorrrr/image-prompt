@@ -59,8 +59,10 @@ class PhotoVisualObligationTests(unittest.TestCase):
         self.assertEqual(len(payload), 1)
         return payload[0]
 
-    def moe_pack(self, concept: str, *, seed: int = 1401, extra: tuple[str, ...] = ()) -> dict:
-        additional = [extra[index + 1] for index, value in enumerate(extra) if value == "--additional-requirement"]
+    def moe_pack(self, concept: str, *, seed: int = 1401, additional: tuple[str, ...] = (),
+                 visual_intent: dict | None = None) -> dict:
+        extra = (("--visual-intent-json", json.dumps(visual_intent, ensure_ascii=False))
+                 if visual_intent else ())
         source = " ".join([concept, *additional])
         baseline = (
             "An unmistakably adult woman stands in a quiet neutral photographic studio, "
@@ -120,24 +122,29 @@ class PhotoVisualObligationTests(unittest.TestCase):
         return prefix + "; ".join(evidence.values()) + "."
 
     def assert_routing_fixture(self, path: Path) -> None:
-        # Exhaustive cases share one immutable registry. Build the real index once
-        # and return isolated copies; assertions and request resolution stay unchanged.
-        index = prompt_generator.build_visual_profile_index_payload(self.registry)
-        registry_hash = prompt_generator.visual_profile_registry_sha256(self.registry)
+        # This frozen fixture qualifies its original profile batch. Later
+        # independent profile batches have their own routing fixtures.
+        cases = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+        covered = {pid for case in cases for key in ("expected_profile_ids", "expected_candidate_profile_ids")
+                   for pid in case[key]}
+        registry = {**self.registry, "profiles": [profile for profile in self.registry["profiles"]
+                                                 if profile["id"] in covered]}
+        index = prompt_generator.build_visual_profile_index_payload(registry)
+        registry_hash = prompt_generator.visual_profile_registry_sha256(registry)
 
         def generated_index(registry, **kwargs):
             self.assertFalse(kwargs)
             self.assertEqual(
                 prompt_generator.visual_profile_registry_sha256(registry), registry_hash
             )
-            return copy.deepcopy(index)
+            return index
 
         with mock.patch.object(
             prompt_generator, "build_visual_profile_index_payload", side_effect=generated_index
         ):
-            self.assert_routing_fixture_cases(path)
+            self.assert_routing_fixture_cases(path, registry)
 
-    def assert_routing_fixture_cases(self, path: Path) -> None:
+    def assert_routing_fixture_cases(self, path: Path, registry: dict) -> None:
         cases = [
             json.loads(line)
             for line in path.read_text(encoding="utf-8").splitlines()
@@ -155,11 +162,11 @@ class PhotoVisualObligationTests(unittest.TestCase):
                     }
                 ]
                 hard_matches = prompt_generator.candidate_pack_auto_visual_obligation_matches(
-                    self.registry,
+                    registry,
                     source_rows,
                 )
                 concept_matches = prompt_generator.candidate_pack_auto_visual_concept_matches(
-                    self.registry,
+                    registry,
                     source_rows,
                 )
                 self.assertEqual(
@@ -172,7 +179,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
                 )
 
                 character_response = None
-                data = {prompt_generator.VISUAL_OBLIGATIONS_DATA_KEY: self.registry}
+                data = {prompt_generator.VISUAL_OBLIGATIONS_DATA_KEY: registry}
                 result = {"provenance": {"concept_lock": [case["text"]]}}
                 materialized = prompt_generator.candidate_pack_visual_obligations(
                     data,
@@ -586,12 +593,8 @@ class PhotoVisualObligationTests(unittest.TestCase):
             "Photorealistic explicitly nonsexual behavior-led moe scene of an adult "
             "woman, mid-twenties or older",
             seed=1403,
-            extra=(
-                "--additional-requirement",
-                source_text,
-                "--visual-intent-json",
-                json.dumps(visual_intent, ensure_ascii=False),
-            ),
+            additional=(source_text,),
+            visual_intent=visual_intent,
         )
         visual = pack["visual_obligations"]
         self.assertEqual(audit_composed_prompt.audit_authorial_pack(pack), [])
@@ -885,7 +888,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
         )
         composed["embodiment_review"] = fixtures.composition_review(pack, prompt_en)
         runtime_prompt = prompt_en + f"\n\nAvoid: {pack['negative_en']}"
-        request = {
+        request = {"core_retrieval_sha256": pack["core_retrieval"]["canonical_sha256"],
             "schema_version": "photo-image-render-request/v2",
             "source_intent_lock_sha256": pack["authorial_core"]["intent_lock"]["canonical_sha256"],
             "source_embodiment_preflight_sha256": pack["embodiment_preflight"]["canonical_sha256"],
@@ -1123,7 +1126,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
         runtime_prompt = prompt_en
         if pack["negative_en"] is not None:
             runtime_prompt += f"\n\nAvoid: {pack['negative_en']}"
-        request = {
+        request = {"core_retrieval_sha256": pack["core_retrieval"]["canonical_sha256"],
             "schema_version": "photo-image-render-request/v2",
             "source_intent_lock_sha256": pack["authorial_core"]["intent_lock"]["canonical_sha256"],
             "source_embodiment_preflight_sha256": pack["embodiment_preflight"]["canonical_sha256"],

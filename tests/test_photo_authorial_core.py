@@ -114,15 +114,9 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
         self.assertTrue(pack["coverage"]["intent_constraints"]["no_people"])
         self.assertFalse(pack.get("adult_appeal", {}).get("enabled"))
 
-        missing = self.run_wrapper_raw(
-            "--selection-mode",
-            "rule",
-            "--emit-candidate-pack",
-            "--candidate-pack-version",
-            "v6",
-        )
+        missing = self.run_wrapper_raw()
         self.assertNotEqual(missing.returncode, 0)
-        self.assertIn("requires --authorial-core-json", missing.stderr)
+        self.assertIn("--authorial-core-json", missing.stderr)
 
         mismatched = copy.deepcopy(raw_core)
         mismatched["source_request"] = "a request that was never supplied"
@@ -136,21 +130,7 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
             core_path.write_text(json.dumps(mismatched))
             controls_path.write_text(json.dumps(pack["creative_controls"]))
             review_path.write_text(json.dumps(fixtures.review(raw_core["baseline_prompt_en"])))
-            mismatch_run = self.run_wrapper_raw(
-                "--selection-mode",
-                "rule",
-                "--emit-candidate-pack",
-                "--candidate-pack-version",
-                "v6",
-                "--request-envelope-json",
-                str(envelope_path),
-                "--authorial-core-json",
-                str(core_path),
-                "--creative-controls-json",
-                str(controls_path),
-                "--embodiment-review-json",
-                str(review_path),
-            )
+            mismatch_run = self.run_wrapper_raw('--request-envelope-json', str(envelope_path), '--authorial-core-json', str(core_path), '--creative-controls-json', str(controls_path), '--embodiment-review-json', str(review_path))
         self.assertNotEqual(mismatch_run.returncode, 0)
         self.assertIn("creative-control snapshot is stale", mismatch_run.stderr)
         with self.assertRaisesRegex(
@@ -158,15 +138,7 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
         ):
             prompt_generator.normalize_authorial_core(mismatched, request_envelope=envelope)
 
-        legacy = self.run_wrapper_raw(
-            "--selection-mode",
-            "rule",
-            "--seed",
-            "91",
-            "--emit-candidate-pack",
-            "--concept-lock",
-            source,
-        )
+        legacy = self.run_wrapper_raw('--seed', '91', '--concept-lock', source)
         self.assertNotEqual(legacy.returncode, 0)
         self.assertIn("authorial-core", legacy.stderr)
 
@@ -252,17 +224,9 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
         forged_binding["core_id"] = forged_binding["canonical_sha256"][:16]
         self.assertFalse(audit_composed_prompt.authorial_core_intent_contract_valid(forged_binding))
 
-        missing_envelope = self.run_wrapper_raw(
-            "--selection-mode",
-            "rule",
-            "--emit-candidate-pack",
-            "--candidate-pack-version",
-            "v6",
-            "--authorial-core-json",
-            json.dumps(raw_core, ensure_ascii=False),
-        )
+        missing_envelope = self.run_wrapper_raw('--authorial-core-json', json.dumps(raw_core, ensure_ascii=False))
         self.assertNotEqual(missing_envelope.returncode, 0)
-        self.assertIn("requires --request-envelope-json", missing_envelope.stderr)
+        self.assertIn("--request-envelope-json", missing_envelope.stderr)
 
         unanchored = copy.deepcopy(raw_core)
         unanchored["intent_lock"]["semantic_anchors"] = [
@@ -307,133 +271,32 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
                 request_envelope=envelope,
             )
 
-    def test_authorial_core_text_is_the_actual_semantic_query_and_changes_selection(self):
-        data = {
-            "version": "test",
-            "presets": [
-                {
-                    "id": "test_preset",
-                    "en": "test preset",
-                    "required_slots": ["location"],
-                    "filters": {"location": {"ids": ["red_studio", "misty_forest"]}},
-                }
-            ],
-            "slots": {
-                "location": [
-                    {"id": "red_studio", "en": "a red geometric studio", "weight": 1},
-                    {"id": "misty_forest", "en": "a misty cedar forest", "weight": 1},
-                ]
-            },
-        }
-        index = {
-            "provider": "gemini",
-            "dictionary_hash": prompt_generator.dictionary_hash(data),
-            "semantic_text_recipe": prompt_generator.SEMANTIC_TEXT_RECIPE_VERSION,
-            "embedding_model": "gemini-embedding-2",
-            "embedding_dimensions": 2,
-            "entries": {
-                "preset:test_preset": {"vector": [1.0, 0.0]},
-                "slot:location:red_studio": {"vector": [1.0, 0.0]},
-                "slot:location:misty_forest": {"vector": [0.0, 1.0]},
-            },
-        }
-        red_source = "A red geometric studio product photograph without a misty forest"
-        red_core = prompt_generator.normalize_authorial_core(
-            self.core(
-                red_source,
-                interpreted_intent="A precise red geometric studio study with ordered planes and hard edges",
-                setting="a red geometric studio interior",
-                baseline_prompt_en=(
-                    "A blue porcelain teacup stands inside a red geometric studio where ordered "
-                    "planes, hard edges, restrained reflections, exact shadows, quiet spacing, and "
-                    "tactile glaze form a precise product photograph."
-                ),
-                exclusions=("misty forest",),
-            ),
-            request_envelope=prompt_generator.normalize_request_envelope(self.envelope(red_source)),
-        )
-        forest_source = "A misty cedar forest product photograph without a red studio"
-        forest_core = prompt_generator.normalize_authorial_core(
-            self.core(
-                forest_source,
-                interpreted_intent="A quiet misty cedar forest study with layered trunks and diffuse air",
-                setting="a misty cedar forest clearing",
-                baseline_prompt_en=(
-                    "A blue porcelain teacup rests within a misty cedar forest where layered trunks, "
-                    "diffuse air, damp bark, quiet depth, restrained reflections, and tactile glaze "
-                    "form an atmospheric product photograph."
-                ),
-                exclusions=("red studio",),
-            ),
-            request_envelope=prompt_generator.normalize_request_envelope(
-                self.envelope(forest_source)
-            ),
-        )
-        red_query, red_provenance = prompt_generator.authorial_core_retrieval_text(red_core)
-        forest_query, forest_provenance = prompt_generator.authorial_core_retrieval_text(
-            forest_core
-        )
-        observed_queries: list[str] = []
-
-        def fake_embed(text: str, **_: object) -> list[float]:
-            observed_queries.append(text)
-            return [0.0, 1.0] if "misty cedar forest" in text.lower() else [1.0, 0.0]
-
-        with mock.patch.object(
-            prompt_generator,
-            "embed_single_semantic_text",
-            side_effect=fake_embed,
+    def test_authorial_core_text_is_the_actual_retrieval_query_and_changes_candidates(self):
+        data = {"candidate_semantic_policy": {"slot_dimensions": {"location": ["setting"]}}, "slots": {"location": [
+            {"id": "red_studio", "en": "a red geometric studio"},
+            {"id": "misty_forest", "en": "a misty cedar forest"},
+        ]}}
+        results = []
+        for setting, excluded, expected in (
+            ("a red geometric studio", "misty cedar forest", "red_studio"),
+            ("a misty cedar forest", "red geometric studio", "misty_forest"),
         ):
-            red_context = prompt_generator.make_semantic_context(
-                data,
-                red_core["source_request"],
-                "semantic",
-                "medium",
-                filter_strictness="soft",
-                semantic_weight=1.0,
-                semantic_profile="balanced",
-                semantic_index=index,
-                semantic_dimensions=2,
-                gemini_api_key="test-key",
-                semantic_axis_mode="off",
-                retrieval_text=red_query,
-                retrieval_provenance=red_provenance,
-                authorial_core_mode=True,
-            )
-            forest_context = prompt_generator.make_semantic_context(
-                data,
-                forest_core["source_request"],
-                "semantic",
-                "medium",
-                filter_strictness="soft",
-                semantic_weight=1.0,
-                semantic_profile="balanced",
-                semantic_index=index,
-                semantic_dimensions=2,
-                gemini_api_key="test-key",
-                semantic_axis_mode="off",
-                retrieval_text=forest_query,
-                retrieval_provenance=forest_provenance,
-                authorial_core_mode=True,
-            )
-
-        self.assertIn(red_query, observed_queries)
-        self.assertIn(forest_query, observed_queries)
-        self.assertNotIn("misty forest", red_query.lower())
-        self.assertNotIn("red studio", forest_query.lower())
-        red_selected = prompt_generator.choose_slot(
-            "location", data, data["presets"][0], random.Random(8), {}, semantic_context=red_context
-        )
-        forest_selected = prompt_generator.choose_slot(
-            "location",
-            data,
-            data["presets"][0],
-            random.Random(8),
-            {},
-            semantic_context=forest_context,
-        )
-        self.assertEqual(red_selected["id"], "red_studio")
-        self.assertEqual(forest_selected["id"], "misty_forest")
+            source = f"A blue porcelain teacup in {setting} without {excluded}"
+            controls = prompt_generator.creative_controls.resolve(
+                source, context={"subject_category": "nonhuman"}, seed=8)
+            raw = self.core(source, setting=setting, exclusions=(excluded,),
+                baseline_prompt_en=f"A blue porcelain teacup rests in {setting}. Its tactile glaze, restrained reflections, quiet spacing, exact shadows, controlled highlights, and coherent near-to-far depth form a carefully observed product photograph with a clear focal hierarchy.")
+            raw["creative_controls_sha256"] = controls["canonical_sha256"]
+            core = prompt_generator.normalize_authorial_core(raw,
+                request_envelope=prompt_generator.normalize_request_envelope(self.envelope(source)))
+            query, _ = prompt_generator.authorial_core_retrieval_text(core)
+            self.assertNotIn(excluded, query.casefold())
+            slots, binding, _ = prompt_generator.retrieve_core_slots(data, core, controls)
+            self.assertEqual([row["id"] for row in slots["location"]["candidates"]],
+                             [f"slot:location:{expected}"])
+            self.assertEqual(binding["whole_scene_query_sha256"], hashlib.sha256(query.encode()).hexdigest())
+            results.append(binding)
+        self.assertNotEqual(results[0]["whole_scene_query_sha256"], results[1]["whole_scene_query_sha256"])
 
     def test_clarification_is_stable_while_creativity_widens_seeded_augmentation(self):
         source = "Photorealistic blue porcelain teacup still life in a quiet rainlit kitchen"
@@ -817,6 +680,7 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
             for row in pack["creative_augmentation"]["candidates"]
         ]
         composed = {
+            "core_retrieval_sha256": pack["core_retrieval"]["canonical_sha256"],
             "pack_id": pack["pack_id"],
             "prompt_en": prompt,
             "negative_en": pack["negative_en"],
@@ -858,7 +722,7 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
         audit = audit_composed_prompt.audit_composed_prompt(pack, composed)
         self.assertEqual(audit["status"], "pass", audit["failures"])
 
-        render_request = {
+        render_request = {"core_retrieval_sha256": pack["core_retrieval"]["canonical_sha256"],
             "schema_version": "photo-image-render-request/v2",
             "source_embodiment_preflight_sha256": pack["embodiment_preflight"]["canonical_sha256"],
             "pack_id": pack["pack_id"],

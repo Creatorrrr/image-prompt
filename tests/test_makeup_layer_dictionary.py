@@ -8,7 +8,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SKILL_DIR = ROOT / "skills" / "photo-prompt-image-generator"
 TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
-WRAPPER_PATH = SKILL_DIR / "scripts" / "inspect_photo_sample.py"
 
 NEW_LAYER_SLOTS = {
     "brow_style",
@@ -22,32 +21,6 @@ NEW_LAYER_SLOTS = {
     "lash_style",
     "makeup_decoration",
     "makeup_wear_state",
-}
-FORCED_LAYER_IDS = {
-    "brow_style": "soft_brushed_up_brow",
-    "cheek_makeup": "across_nose_sunburn_blush",
-    "complexion_coverage": "sheer_translucent_complexion_coverage",
-    "eyeshadow_style": "cut_crease_lid_separation",
-    "face_sculpting": "balanced_contour_highlight_dimension",
-    "lash_style": "clean_separated_defined_lashes",
-    "lip_color_placement": "center_saturated_gradient_lip",
-    "lip_finish": "soft_blur_matte_lip_finish",
-    "eye_makeup_line": "graphic_floating_eyeliner",
-    "makeup_decoration": "micro_crystal_face_gem_constellation",
-    "makeup_wear_state": "fresh_precise_makeup_application",
-}
-EXPECTED_RENDER_TERMS = {
-    "brow_style": "soft brushed-up natural brows",
-    "cheek_makeup": "warm sunburn-style blush distributed continuously across high cheeks and the nose bridge",
-    "complexion_coverage": "sheer translucent complexion coverage preserving pores and natural color variation",
-    "eyeshadow_style": "cut-crease eyeshadow with a clean boundary separating the mobile lid from deeper color above the crease",
-    "face_sculpting": "balanced cosmetic contour and highlight placed on opposing facial planes",
-    "lash_style": "clean separated lashes with individually readable strands",
-    "lip_color_placement": "lip color most saturated at the inner center and fading softly toward the vermilion edge",
-    "lip_finish": "soft-blur matte lip surface with restrained specular reflection",
-    "eye_makeup_line": "graphic floating eyeliner with clean negative space",
-    "makeup_decoration": "small crystal face gems arranged as a deliberate localized constellation",
-    "makeup_wear_state": "fresh precise makeup application with intact edges and even local distribution",
 }
 
 
@@ -64,7 +37,6 @@ class MakeupLayerDictionaryTests(unittest.TestCase):
             with self.subTest(slot=slot):
                 entries = self.tags["slots"][slot]
                 self.assertGreaterEqual(len(entries), 5)
-                self.assertIn(slot, self.tags["slot_pick_order"])
                 self.assertEqual(
                     self.tags["slot_applicability"]["slots"][slot]["subject_categories"],
                     ["human"],
@@ -121,75 +93,9 @@ class MakeupLayerDictionaryTests(unittest.TestCase):
                 rendered = entry["en"].lower()
                 self.assertFalse(any(term in rendered for term in forbidden))
 
-    def test_inclusive_makeup_family_routes_layered_slots_and_preset(self):
-        family = self.tags["semantic_policy"]["families"]["inclusive_makeup_beauty"]
 
-        self.assertIn("gender_neutral_makeup_editorial_closeup", family["preset_policy"]["allow_ids"])
-        self.assertTrue(NEW_LAYER_SLOTS.issubset(set(family["routed_slots"])))
-        self.assertTrue(NEW_LAYER_SLOTS.issubset(set(family["steering_slots"])))
-        self.assertIn("inclusive_makeup_beauty", self.tags["semantic_policy"]["steering_priority"])
-        self.assertIn("inclusive_makeup_beauty", self.tags["coherence_rules"]["family_strength"])
 
-    def test_makeup_family_slot_signals_reference_known_slot_entries(self):
-        slots = self.tags["slots"]
-        family = self.tags["semantic_policy"]["families"]["inclusive_makeup_beauty"]
 
-        for slot, signal_groups in family["slot_signals"].items():
-            slot_ids = {entry["id"] for entry in slots[slot]}
-            for group_name in ("core", "support"):
-                for entry_id in signal_groups.get(group_name, []):
-                    with self.subTest(slot=slot, group=group_name, entry_id=entry_id):
-                        self.assertIn(entry_id, slot_ids)
-
-    def test_makeup_layer_preset_uses_new_layer_slots(self):
-        preset = next(
-            entry
-            for entry in self.tags["presets"]
-            if entry["id"] == "gender_neutral_makeup_editorial_closeup"
-        )
-
-        optional_slots = {entry["slot"] for entry in preset["optional_slots"]}
-        self.assertIn("subject", optional_slots)
-        self.assertTrue(NEW_LAYER_SLOTS.issubset(optional_slots))
-        self.assertNotIn("adult_woman_lifestyle_subject", preset["filters"]["subject"]["ids"])
-        for slot in NEW_LAYER_SLOTS:
-            with self.subTest(slot=slot):
-                self.assertGreaterEqual(len(preset["filters"][slot]["ids"]), 5)
-
-    def test_forced_makeup_layers_render_exactly_once_in_every_detail_level(self):
-        for detail_level in ("standard", "detailed", "compact"):
-            argv = [
-                sys.executable,
-                str(WRAPPER_PATH),
-                "--preset",
-                "gender_neutral_makeup_editorial_closeup",
-                "--selection-mode",
-                "rule",
-                "--seed",
-                "42",
-                "--lang",
-                "en",
-                "--detail-level",
-                detail_level,
-                "--json-output",
-            ]
-            for slot, entry_id in FORCED_LAYER_IDS.items():
-                argv.extend(["--set", f"{slot}={entry_id}"])
-
-            completed = subprocess.run(
-                argv,
-                cwd=ROOT,
-                check=True,
-                capture_output=True,
-                text=True,
-            )
-            result = json.loads(completed.stdout)[0]
-            prompt = result["prompt_en"].lower()
-
-            self.assertEqual(result["quality"]["verdict"], "pass")
-            for slot, phrase in EXPECTED_RENDER_TERMS.items():
-                with self.subTest(detail_level=detail_level, slot=slot):
-                    self.assertEqual(prompt.count(phrase.lower()), 1)
 
 
 if __name__ == "__main__":

@@ -11,7 +11,6 @@ SKILL_DIR = ROOT / "skills" / "photo-prompt-image-generator"
 SCRIPT_DIR = SKILL_DIR / "scripts"
 REGISTRY_PATH = SKILL_DIR / "assets" / "photo_prompt_visual_obligations.json"
 TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
-RECIPES_PATH = SKILL_DIR / "assets" / "concept_recipes.json"
 EVIDENCE_PATH = (
     ROOT / "docs" / "research-evidence" / "photo-prompt" / "research_evidence.jsonl"
 )
@@ -36,7 +35,6 @@ class PhotoDeathAfterlifeSemanticsTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.registry = prompt_generator.load_visual_obligation_registry(REGISTRY_PATH)
         cls.tags = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
-        cls.recipes = json.loads(RECIPES_PATH.read_text(encoding="utf-8"))
         cls.profiles = {row["id"]: row for row in cls.registry["profiles"]}
         cls.candidates = {
             slot: {row["id"]: row for row in rows}
@@ -185,28 +183,6 @@ class PhotoDeathAfterlifeSemanticsTests(unittest.TestCase):
             with self.subTest(slot=slot):
                 self.assertTrue(expected_ids <= set(self.candidates[slot]))
 
-    def test_recipe_defaults_preserve_semantic_boundaries(self):
-        aliases = self.recipes["aliases"]
-        mixins = self.recipes["mixins"]
-        self.assertEqual(aliases["저승사자"], "한국 저승사자")
-        self.assertEqual(aliases["necromancer"], "네크로맨서")
-        self.assertEqual(aliases["human ghost"], "유령")
-        self.assertEqual(aliases["human corpse"], "시신")
-        self.assertNotIn("사체", aliases)
-        self.assertNotIn("death", aliases)
-        self.assertNotIn("죽음", aliases)
-        self.assertEqual(
-            mixins["원귀"]["set"]["subject"],
-            "korean_wongwi_unresolved_return",
-        )
-        self.assertEqual(
-            mixins["사신"]["set"]["action"],
-            "turning_final_hourglass_mortality_action",
-        )
-        self.assertEqual(
-            mixins["한국 저승사자"]["set"]["action"],
-            "guiding_deceased_across_threshold",
-        )
 
     def test_research_evidence_is_approved_and_candidate_bound(self):
         rows = [

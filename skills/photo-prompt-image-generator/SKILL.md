@@ -28,7 +28,7 @@ During that pre-core phase, do not open, search, quote, or infer from:
 
 - any candidate pack or earlier generated pack;
 - any file under this skill's `assets/`, `references/`, or `scripts/` directories;
-- visual-obligation profiles, registries, aliases, tags, presets, recipes, semantic indexes, or quality layers;
+- visual-obligation profiles, registries, aliases, slot candidates, semantic indexes, or quality layers;
 - tests, fixtures, evaluation cases, snapshots, rendered attempts, or maintenance evidence;
 - private routing, another experiment arm, or a previous prompt produced from project-local knowledge.
 
@@ -69,7 +69,7 @@ Use active `sensual`, `fetish`, their emphasis, and `creativity` to shape the wh
 
 Use the saved `creativity` level and resolved `adult_appeal_emphasis` from the first authorial decision. Creativity's default is 1; level 3 activates the existing high-creativity composition workflow after the core is frozen. The emphasis resolution records which active axis leads, or that no emphasis is active. These choices remain agent-owned and do not create requester locks.
 
-Consider reference-use scope, intended viewer experience and use, and any active surreal/trend treatment at this same stage. Use the saved `surreal` meaning and selected level from the first authorial decision. This one integer replaces the former mode, probability and intensity settings; it has no probabilistic activation. The sampler's candidate breadth is not a perceptual measurement or a required detail count. Optional review toggles do not switch off artistic judgment or explicit request meaning. Keep staging register (such as candid or directed) and scene information density in the existing intent explanation when useful, without adding new required sliders. Prompt length, retrieval weights, candidate budgets and surface `artistic_final_touch` remain later/internal concerns.
+Consider reference-use scope, intended viewer experience and use, and any active surreal/trend treatment at this same stage. Use the saved `surreal` meaning and selected level from the first authorial decision. This one integer replaces the former mode, probability and intensity settings; it has no probabilistic activation. The retrieved candidate breadth is not a perceptual measurement or a required detail count. Optional review toggles do not switch off artistic judgment or explicit request meaning. Keep staging register (such as candid or directed) and scene information density in the existing intent explanation when useful, without adding new required sliders. Prompt length, retrieval weights, candidate budgets and surface `artistic_final_touch` remain later/internal concerns.
 
 Settings and agent staging are separate from requester text: do not insert their prose into `source_request`, user definitions, exclusions or requester-owned anchors. Use the baseline and `interpreted_intent` to realize them coherently. No new decision-count or styling checklist is required.
 
@@ -320,7 +320,7 @@ cp skills/photo-prompt-image-generator/precore/visual_feature_catalog.json visua
 
 If validation fails, correct the record or rebuild the affected pre-core artifacts before opening candidate data. An `agent_visual_choice` phrase included intact in a mandatory anchor, definition, or required assertion is an ownership conflict: narrow the mandatory evidence or correct its provenance from the actual request, rather than relabeling the choice to pass. Inspect `warnings` even when the command succeeds: revise repeated reasons or evidence, and review any delivery-and-technique majority against the request before proceeding. The group-majority warning is a review cue, not an automatic rejection of a justified composition choice. Any baseline change also invalidates the embodiment-review hash, core, derived intent-lock binding, and selection hash. The validator checks the supplied catalog against the current permitted file in live runs; use `--historical-catalog` only to verify an archived record against its saved snapshot after the run. It confirms structure and literal binding; it cannot prove that selection preceded drafting or that the resulting image is good.
 
-Pass the envelope with `--request-envelope-json`, the core with `--authorial-core-json`, and explicitly request candidate-pack v6. The generator canonicalizes both, rejects unsupported or ungrounded fields, and binds their hashes and active spans to retrieval, the public pack, composition, and runtime.
+Pass the envelope with `--request-envelope-json`, the core with `--authorial-core-json`, to the generator; it always returns candidate-pack v6. The generator canonicalizes both, rejects unsupported or ungrounded fields, and binds their hashes and active spans to retrieval, the public pack, composition, and runtime.
 
 ## Phase 2 — Retrieve After the Core Is Frozen
 
@@ -334,17 +334,18 @@ Generate exactly one pack:
   --authorial-core-json authorial_core.json \
   --creative-controls-json creative_controls.json \
   --embodiment-review-json embodiment_review.json \
-  --candidate-pack-version v6 \
-  --emit-candidate-pack --n 1
+  --output-file candidate_pack.json
 ```
 
-The generator derives retrieval from the active requester spans and frozen core, removes true requester exclusions, and retains runtime-forbidden labels for meaning retrieval. `--concept-lock` is normally omitted; if supplied, every value must byte-equal the active spans in order. The pack must not define the baseline after the fact.
+The generator derives retrieval from the active requester spans and frozen core, removes true requester exclusions, and retains runtime-forbidden labels for meaning retrieval. The pack must not define the baseline after the fact.
 
 The generator takes initial artistic controls from the supplied snapshot. Conflicting later CLI controls are rejected; update the pre-core inputs and rebuild instead of silently changing the creative direction after freezing. Every generated pack requires this binding.
 
-Bound v6 runs retrieve adult-axis possibilities from the compatible corpus, using separate baseline-coherence and request-led alternatives queries. Preset membership, axis tags and garment intensity thresholds do not gate this path. The returned mode states whether keyword or hybrid search actually ran; a hit proposes material for contextual interpretation, never proves an aesthetic category. Internal search lanes still produce one external pack.
+Bound v6 runs retrieve adult-axis possibilities from the compatible corpus, using separate baseline-coherence and request-led alternatives queries. Eligibility follows the frozen scope and context. The returned mode states whether keyword or hybrid search actually ran; a hit proposes material for contextual interpretation, never proves an aesthetic category. Internal search lanes still produce one external pack.
 
-For v6 slot candidates, the generator keeps the frozen whole-scene query and prepares a separate core-derived focus query only for each active slot with relevant frozen fields. It searches the sampler's eligible pool and may recover additional candidates from the same slot corpus after reapplying request, domain, facet, and exclusion guards. It fuses whole-scene and focused hits into a bounded shortlist, keeping the sampler result available and favoring candidates supported by both queries. This produces one pack, not one pack per slot. A slot hit is optional even when it matches strongly; the composer must keep the subject–action–target and other directed relations intact when choosing across slots. Slots without a grounded focus or a lexical hit retain their existing shortlist. The single visual-profile resolver and its exact-versus-approximate authority rules are unchanged.
+Basic-prompt authoring does not receive a slot list or candidate data. The frozen core determines which slot queries are grounded. After freeze, each such slot searches its eligible authored corpus with the whole-scene query and a core-derived focus query, then fuses supported hits into one bounded pack. Explicit frozen observations also receive focused lexical discovery from source-declared, property-compatible candidates and take priority within the shared candidate cap. This priority changes exposure only; it never creates an adoption duty. Eligibility uses requester exclusions, subject/domain constraints, facets and primary-context guards from the frozen core. An ungrounded slot or a slot without a lexical hit is omitted; there is no automatic detail-slot quota or required adoption. All optional candidates may be rejected, leaving the independently written baseline intact.
+
+The pack records `photo-core-retrieval/v1` in `core_retrieval`, binding the frozen core, slot corpus, ownership and applicability hashes, whole-scene query and active-slot focus hashes. Copy its exact `canonical_sha256` into `core_retrieval_sha256` in both the composed prompt and runtime request. Audits recompute the inventory from the source corpus; an added, omitted or substituted candidate fails.
 
 Candidate-pack v6 separates three jobs:
 
@@ -367,7 +368,7 @@ The view binds the unchanged source pack and presents requirements plus a candid
 
 For an exact, non-substitutable requester definition or a preserved parent hard obligation, read `references/retrieval-contract.md` and construct `photo-visual-intent/v1` only after the core is frozen. Its evidence must already belong to the requester definition or one exact frozen core field. Exact resolution may bind a hard profile; approximate retrieval remains optional. Do not construct visual intent merely because a candidate offers an attractive interpretation.
 
-Before rendering, an explicitly focal perceptual meaning needs a required typed assertion or an active hard visual obligation. A broad label, optional candidate, or embedding hit does not provide coverage. If coverage is missing, rebuild from the clear requester meaning; ask only if that meaning is still ambiguous. Record focal coverage separately from prompt, runtime, and pixel status.
+Before rendering, when the requester explicitly makes a perceptual effect focal, cover that meaning with a required typed assertion or an active hard visual obligation. A broad label, an embedding hit, or an optional candidate is not coverage. If the focal meaning is still uncovered, rebuild from the clear requester meaning; ask only if that meaning is still ambiguous. Record this focal-coverage check separately from prompt, runtime, and pixel status.
 
 ## Phase 3 — Clarify and Refine the Authored Photograph
 
@@ -441,7 +442,7 @@ All references below are post-core only. Load only what the frozen request and r
 - High-creativity proposals and authorial selection: `references/creative-direction-contract.md`
 - Viewer response or commercial communication outcomes: `references/viewer-experience-contract.md`
 - Natural-language character-response, identity, and pixel-review contracts: `references/moe-response-contract.md`
-- Intent, concept, preset, and slot routing behavior: `references/concept-routing.md`
+- Intent, concept, and slot retrieval behavior: `references/concept-routing.md`
 - Image generation, saving, retries, and ledger records: `references/image-runtime.md`
 - Body-action review binding and conditional pixel gates: `references/embodiment-preflight.md`
 - Dictionary/profile edits, validation, semantic index, and evaluation: `references/maintenance.md`
@@ -452,8 +453,7 @@ Do not load every reference for a normal prompt request. Maintenance fixtures an
 
 - The supported workflow is V6, request envelope V1, core V3, intent lock V2, creative controls V4 and embodiment preflight V1.
 - Removed pack/core versions and missing current policy markers fail validation. Historical artifacts remain evidence and can be inspected with their historical implementation.
-- `--explain-scene-routing` is private diagnostic output and must never be used as a composition pack.
-- Public packs withhold scores, probabilities, private preset IDs, sampler answer keys, reusable render-blueprint prose, and expanded argv.
+- Public packs withhold scores, probabilities, private ranking evidence and expanded argv.
 
 ## Validation for Skill Maintenance
 

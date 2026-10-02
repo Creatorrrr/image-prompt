@@ -72,7 +72,7 @@ class OccupationKoreanLabelDataCleanupTests(unittest.TestCase):
 
     def test_intermediate_projection_adds_korean_terms_without_losing_baseline_terms(self):
         for row in self.frozen['inventory']:
-            current, source = generator.candidate_pack_summarize_slot_candidate(self.data, 'subject', {'id': row['id']}, 0.0, '')
+            current, source = generator.candidate_pack_summarize_slot_candidate(self.data, 'subject', {'id': row['id']})
             expected = row['proposed_after'] if row['id'] in self.acceptance['accepted_ids'] else row['before']
             self.assertEqual(current['label_ko'], expected['ko'])
             before = copy.deepcopy(current)

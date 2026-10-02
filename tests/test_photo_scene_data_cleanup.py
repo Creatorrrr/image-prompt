@@ -46,10 +46,6 @@ class SceneLocationCleanupTests(DataCase):
         self.assertEqual(e['phrase_ko'],'불꽃이 튀는 용접 작업장 피트에서')
         self.assertEqual(e['en'],'a welding workshop pit with sparks')
         self.assertNotIn('for_any',e)
-        for name,tags in [('용접 로봇',['robot']),('용접사',['human']),('금속 구조물',['object'])]:
-            subject={'id':'fixture_subject','ko':name,'en':'a subject','tags':tags}
-            fields=generator.build_fields({'subject':subject,'location':e},'ko',self.data)
-            self.assertIn('불꽃이 튀는 용접 작업장 피트에서',str(fields))
 
 class ScenePropCleanupTests(DataCase):
     def test_coffee_gesture_is_preserved_in_both_languages(self):
@@ -107,10 +103,6 @@ class SceneContextCleanupTests(DataCase):
         self.assertEqual(e['ko'],'군중 없이 텅 빈 주변 공간')
         self.assertEqual(e['phrase_ko'],'주변 공간이 텅 비어 군중이 보이지 않는 배열로')
         self.assertNotIn('for_any',e)
-        for name,tags in [('사람',['human']),('개',['animal']),('조형물',['object'])]:
-            subject={'id':'fixture_subject','ko':name,'en':'a subject','tags':tags}
-            fields=generator.build_fields({'subject':subject,'crowd_density':e},'ko',self.data)
-            self.assertEqual(fields['scene_context_sentence'],'장면 맥락은 주변 공간이 텅 비어 군중이 보이지 않는 배열로.')
     def test_depth_and_occlusion_relations_remain(self):
         e=self.row('composition','three_plane_depth_chain')
         self.assertIn('one continuous space',e['embedding_text'])

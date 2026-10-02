@@ -22,17 +22,14 @@ COMPILED_BUNDLE_FIELDS = (
 )
 MAINTENANCE_VERSION = "photo-extension-maintenance-ref/v1"
 RUNTIME_EXTENSION_KEYS = frozenset({
-    "schema_version", "auto_optional_policy", "facet_vocab", "preset_families",
-    "preset_filter_defaults", "preset_render_contract_defaults", "presets",
-    "existing_preset_metadata_overrides", "existing_preset_render_contract_extensions",
-    "existing_preset_filter_extensions", "existing_preset_filter_overrides",
+    "schema_version", "facet_vocab",
     "slots", "coherence_rules", "character_mechanism_graph", "slot_applicability",
     "visual_semantics", "maintenance_ref", "existing_slot_context_extensions",
 })
 BUNDLE_SOURCE_KEYS = frozenset({
     "id", "primary_visual_proposition", "hard_profile_id", "hard_profile_ids",
     "component_groups", "candidate_ids", "confusion_boundaries", "source_keywords",
-    "activation_mode", "establishment", "runtime_preset_id", "terms", "relations", "candidate_only", "candidate_slots",
+    "activation_mode", "establishment",  "terms", "relations", "candidate_only", "candidate_slots",
 })
 
 

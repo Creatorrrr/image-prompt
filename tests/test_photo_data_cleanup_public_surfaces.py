@@ -1,4 +1,4 @@
-"""Final production pack surfaces, distinct from the intermediate term helper."""
+"""Current public semantics and detail retain previously reviewed source meanings."""
 from pathlib import Path
 import importlib.util
 import json
@@ -6,24 +6,22 @@ import unittest
 
 ROOT=Path(__file__).resolve().parents[1]
 EVIDENCE=ROOT/'docs/research-evidence/photo-prompt/published-data-v6-surface-audit-20261001'
-spec=importlib.util.spec_from_file_location('data_surface_replay',EVIDENCE/'replay_public_surfaces.py')
-replay=importlib.util.module_from_spec(spec)
-spec.loader.exec_module(replay)
+from tests import photo_prompt_fixtures as fixtures
+import prompt_generator as generator
 
 
 class DataCleanupPublicSurfaceTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.data=replay.runtime_data()
+        cls.data=generator.load_json(ROOT/"skills/photo-prompt-image-generator/assets/photo_prompt_tags.json")
         cls.contract=json.loads((EVIDENCE/'generated-contract-result.json').read_text())
         cls.audit=json.loads((EVIDENCE/'projection-audit.json').read_text())
 
     def candidate(self,slot,eid,control=None):
         entry=next(r for r in self.data['slots'][slot]if r['id']==eid)
-        result=replay.build_state(self.data,entry,slot,eid,self.contract,control)
-        self.assertIsNotNone(result['candidate'])
-        self.assertIsNotNone(result['detail'])
-        return result['candidate']
+        candidate, detail = fixtures.project_slot_candidate(self.data,slot,entry)
+        self.assertEqual(detail['candidates'][0]['candidate'],candidate)
+        return candidate
 
     def test_audit_covers_fifty_eight_published_rows_and_not_the_deferred_trial(self):
         self.assertEqual(len(self.audit['rows']),58)

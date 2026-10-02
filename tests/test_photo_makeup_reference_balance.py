@@ -30,7 +30,6 @@ SOURCE_IMAGE = Path(
     "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg"
 )
 PROFILE_ID = "restrained_polished_natural_makeup_balance"
-PRESET_ID = "restrained_polished_natural_makeup_closeup"
 
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
@@ -47,7 +46,6 @@ class PhotoMakeupReferenceBalanceTests(unittest.TestCase):
         cls.profile = next(
             row for row in cls.registry["profiles"] if row["id"] == PROFILE_ID
         )
-        cls.preset = next(row for row in cls.tags["presets"] if row["id"] == PRESET_ID)
 
     def hard_matches(self, text: str) -> set[str]:
         rows = [
@@ -110,7 +108,7 @@ class PhotoMakeupReferenceBalanceTests(unittest.TestCase):
             set(self.profile["activation"]["exact_terms"]),
         )
 
-    def test_candidate_preset_routes_existing_independent_makeup_axes(self) -> None:
+    def test_independent_makeup_axes_retain_reference_candidates(self) -> None:
         expected_filters = {
             "complexion_coverage": {
                 "sheer_translucent_complexion_coverage",
@@ -127,17 +125,8 @@ class PhotoMakeupReferenceBalanceTests(unittest.TestCase):
         }
         for slot, expected in expected_filters.items():
             with self.subTest(slot=slot):
-                self.assertEqual(set(self.preset["filters"][slot]["ids"]), expected)
                 known = {row["id"] for row in self.tags["slots"][slot]}
                 self.assertTrue(expected <= known)
-        family = self.tags["semantic_policy"]["families"]["inclusive_makeup_beauty"]
-        self.assertIn(PRESET_ID, family["preset_policy"]["allow_ids"])
-        self.assertIn(
-            PRESET_ID,
-            self.tags["coherence_rules"]["family_strength"][
-                "inclusive_makeup_beauty"
-            ]["strong"],
-        )
 
     def test_source_observation_is_hash_bound_and_identity_independent(self) -> None:
         observation = json.loads(
@@ -187,7 +176,7 @@ class PhotoMakeupReferenceBalanceTests(unittest.TestCase):
 
     def test_semantics_do_not_encode_demographic_or_value_inference(self) -> None:
         payload = json.dumps(
-            {"profile": self.profile, "preset": self.preset},
+            {"profile": self.profile},
             ensure_ascii=False,
         ).casefold()
         for forbidden in (

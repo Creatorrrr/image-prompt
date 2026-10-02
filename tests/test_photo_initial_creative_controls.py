@@ -17,6 +17,7 @@ from tests import test_photo_adult_appeal_scope as scope_fixtures
 from tests import photo_prompt_fixtures as fixtures
 from tests import test_photo_authorship_policy as composition_fixtures
 import prompt_generator as generator
+import generate_photo_prompt
 import audit_composed_prompt as auditor
 import photo_creative_controls as controls
 from photo_contracts import property_effects_allowed
@@ -147,11 +148,6 @@ class CreativeControlResolverTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "stale, malformed"):
             controls.validate(snapshot, "An adult woman beside a window.")
 
-    def test_cli_rejects_fractional_creativity_before_loading_candidates(self):
-        for value in ("0.5", "1.0", "-1", "4"):
-            with self.subTest(value=value), contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit) as exc:
-                generator.main(["--creativity", value])
-            self.assertEqual(exc.exception.code, 2)
 
     def test_resolver_cli_saves_the_same_complete_brief_it_returns(self):
         request = "A glass house above a lake. surreal=2"
@@ -180,16 +176,12 @@ class CreativeControlResolverTests(unittest.TestCase):
             self.assertEqual(snapshot["adult_appeal"]["sensual"]["requested_intensity"], 1)
             self.assertEqual(snapshot["adult_appeal"]["sensual"]["effective_intensity"], 0)
 
-    def test_cli_rejects_post_core_control_change_before_loading_candidates(self):
-        request = "An adult woman beside a window."
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            (root / "controls.json").write_text(json.dumps(self.snapshot()))
-            (root / "request.json").write_text(json.dumps({"request_text": request}))
-            for flag, value in (("--sensual-intensity", "3"), ("--surreal", "3"),
-                                ("--creativity", "3"), ("--adult-appeal-emphasis", "sensual_led")):
-                with self.subTest(flag=flag), self.assertRaisesRegex(ValueError, "conflicts with the frozen"):
-                    generator.main(["--emit-candidate-pack", "--candidate-pack-version", "v6", "--request-envelope-json", str(root / "request.json"), "--creative-controls-json", str(root / "controls.json"), flag, value])
+    def test_cli_rejects_post_core_control_flags_before_loading_candidates(self):
+        for flag, value in (("--sensual-intensity", "3"), ("--surreal", "3"),
+                            ("--creativity", "3"), ("--adult-appeal-emphasis", "sensual_led")):
+            with self.subTest(flag=flag), patch.object(generator, "load_runtime_data", side_effect=AssertionError("must not read candidates")), contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit) as exc:
+                generate_photo_prompt.main([flag, value])
+            self.assertEqual(exc.exception.code, 2)
 
 
 class InitialDirectionIntegrationTests(unittest.TestCase):
@@ -213,9 +205,7 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
         cls.snapshot = controls.resolve(source, context={"subject_category": "human"}, overrides={"sensual": 2, "fetish": 1}, seed=73)
         cls.raw["creative_controls_sha256"] = cls.snapshot["canonical_sha256"]
         cls.core = generator.normalize_authorial_core(cls.raw, request_envelope=cls.envelope)
-        cls.result = current_fixtures.generate_once(cls.data, random.Random(73), None, ["en"], True, 12, True,
-            selection_mode="rule", include_trace=True, concept_locks=[source], seed=73,
-            authorial_core=cls.core, creative_control_snapshot=cls.snapshot)
+        cls.result = current_fixtures.candidate_source(cls.data, cls.core, seed=73, controls=cls.snapshot)
         cls.pack = generator.build_candidate_pack(cls.result, cls.data, "v6")
 
     def composed(self):
@@ -241,7 +231,7 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
         self.assertEqual(self.pack["provenance"]["creativity"], 1)
         self.assertEqual(self.pack["provenance"]["candidate_pool_creativity"], 3)
 
-    def test_surreal_level_and_saved_brief_survive_sampler_and_public_pack(self):
+    def test_surreal_level_and_saved_brief_survive_retrieval_and_public_pack(self):
         for level in range(4):
             with self.subTest(level=level):
                 raw = copy.deepcopy(self.raw)
@@ -250,13 +240,8 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
                 raw["creative_controls_sha256"] = snapshot["canonical_sha256"]
                 core = generator.normalize_authorial_core(raw, request_envelope=self.envelope,
                                                           creative_control_snapshot=snapshot)
-                with patch.object(generator, "apply_surreal_layer", wraps=generator.apply_surreal_layer) as apply:
-                    result = current_fixtures.generate_once(self.data, random.Random(73), None, ["en"], True, 12, True,
-                        selection_mode="rule", include_trace=True, seed=73,
-                        authorial_core=core, creative_control_snapshot=snapshot)
-                self.assertEqual(apply.call_count, int(level > 0))
-                if level:
-                    self.assertEqual(apply.call_args.args[5], level)
+                result = current_fixtures.candidate_source(self.data, core, seed=73, controls=snapshot)
+                self.assertEqual(result["prompt_en"], raw["baseline_prompt_en"])
                 pack = generator.build_candidate_pack(result, self.data, "v6")
                 self.assertEqual(pack["creative_controls"], snapshot)
                 self.assertEqual(pack["provenance"]["creative_control_runtime"]["surreal"], level)
@@ -275,9 +260,7 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
                 raw["creative_controls_sha256"] = snapshot["canonical_sha256"]
                 core = generator.normalize_authorial_core(raw, request_envelope=self.envelope,
                                                           creative_control_snapshot=snapshot)
-                result = current_fixtures.generate_once(self.data, random.Random(73), None, ["en"], True, 12, True,
-                    selection_mode="rule", include_trace=True, seed=73,
-                    authorial_core=core, creative_control_snapshot=snapshot)
+                result = current_fixtures.candidate_source(self.data, core, seed=73, controls=snapshot)
                 pack = generator.build_candidate_pack(result, self.data, "v6")
                 self.assertEqual(pack["creative_controls"], snapshot)
                 self.assertEqual(pack["provenance"]["creative_control_runtime"], controls.runtime_values(snapshot))

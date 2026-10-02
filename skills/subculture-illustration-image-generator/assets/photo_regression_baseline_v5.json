@@ -1,0 +1,41 @@
+{
+  "schema": "photo_regression_baseline/v5",
+  "created_at": "2026-10-02",
+  "status": "current",
+  "historical_baseline": {
+    "path": "photo_regression_baseline_v4.json",
+    "schema": "photo_regression_baseline/v4",
+    "sha256": "0cea827c27183e08db36a29ecd443f7264d183953e9be24281199ea47fa7f127"
+  },
+  "change_scope": "current_frozen_core_optional_slot_boundary",
+  "command": [
+    ".venv/bin/python",
+    "skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py",
+    "--seed",
+    "910000",
+    "--authorial-core-json",
+    "tests/fixtures/photo_prompt/current_boundary/core.json",
+    "--request-envelope-json",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json",
+    "--creative-controls-json",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json",
+    "--embodiment-review-json",
+    "tests/fixtures/photo_prompt/current_boundary/review.json",
+    "--output-file",
+    "/tmp/subculture-illustration-photo-baseline-v5.json"
+  ],
+  "sha256": "5c8d81b16c64d8f066dd692472627812113b718ecfac243e2dd2f3e5bbcd5865",
+  "pack_id": "82eb2a467727e4d5",
+  "contract_version": "photo-candidate-pack/v6",
+  "public_candidate_count": 64,
+  "private_fields_absent": [
+    "argv",
+    "sample_prompt_id",
+    "concept_gate_results",
+    "concept_scene_variants",
+    "character_response",
+    "adult_appeal"
+  ],
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "purpose": "Verify current bound V6 output after corpus and CLI cleanup; V1-V4 retain immutable historical observations."
+}

@@ -10,7 +10,6 @@ ROOT = Path(__file__).resolve().parents[1]
 SKILL_DIR = ROOT / "skills" / "photo-prompt-image-generator"
 SCRIPT_DIR = SKILL_DIR / "scripts"
 TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
-RECIPES_PATH = SKILL_DIR / "assets" / "concept_recipes.json"
 REGISTRY_PATH = SKILL_DIR / "assets" / "photo_prompt_visual_obligations.json"
 EVIDENCE_PATH = (
     ROOT
@@ -123,7 +122,6 @@ class PhotoFantasyVisualSemanticsTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.tags = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
-        cls.recipes = json.loads(RECIPES_PATH.read_text(encoding="utf-8"))
         cls.registry = prompt_generator.load_visual_obligation_registry(REGISTRY_PATH)
         cls.by_slot = {
             slot: {str(row["id"]): row for row in rows}
@@ -253,33 +251,7 @@ class PhotoFantasyVisualSemanticsTests(unittest.TestCase):
                     self.assertNotIn("rank", row)
                     self.assertNotIn("score", row)
 
-    def test_summoner_and_alchemist_roles_have_identity_and_four_scenes(self):
-        expected = {
-            "소환사": "summoner_practitioner_role_model",
-            "연금술사": "alchemist_practitioner_role_model",
-        }
-        for role_name, subject_id in expected.items():
-            with self.subTest(role_name=role_name):
-                role = self.recipes["roles"][role_name]
-                self.assertEqual(role["identity_core"], {"subject": subject_id})
-                self.assertEqual(len(role["scene_variants"]), 4)
-                self.assertEqual(
-                    len({scene["id"] for scene in role["scene_variants"]}), 4
-                )
-                for scene in role["scene_variants"]:
-                    for slot, candidate_id in scene["set"].items():
-                        self.assertIn(candidate_id, self.by_slot[slot])
-                self.assertGreaterEqual(len(role["additional"]), 3)
-                self.assertGreaterEqual(len(role["review_gates"]), 2)
 
-    def test_role_aliases_are_narrow_and_do_not_claim_adjacent_classes(self):
-        aliases = self.recipes["aliases"]
-        self.assertEqual(aliases["summoner"], "소환사")
-        self.assertEqual(aliases["alchemist"], "연금술사")
-        for forbidden in ("conjurer", "stage magician", "wizard", "sorcerer"):
-            self.assertNotEqual(aliases.get(forbidden), "소환사")
-        for forbidden in ("chemist", "apothecary", "herbalist", "witch"):
-            self.assertNotEqual(aliases.get(forbidden), "연금술사")
 
     def test_research_evidence_is_approved_bound_and_limited(self):
         rows = {

@@ -466,11 +466,6 @@ def text_contains_term(text: str, term: str) -> bool:
     return term_lower in lowered
 
 
-def english_prompt_word_count(text: str) -> int:
-    """Count image-prompt words consistently across the contract and audit."""
-    return len(re.findall(r"[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*", str(text or "")))
-
-
 def expected_authorial_prompt_budget_contract() -> dict[str, Any]:
     return {
         "contract_version": AUTHORIAL_PROMPT_BUDGET_CONTRACT_VERSION,
@@ -682,18 +677,6 @@ def normalize_chosen_candidate_ids(raw: Any) -> set[str]:
     return chosen
 
 
-def chosen_slot_entry_ids(chosen: set[str]) -> dict[str, set[str]]:
-    slots: dict[str, set[str]] = {}
-    for candidate_id in chosen:
-        parts = candidate_id.split(":", 2)
-        if len(parts) != 3 or parts[0] != "slot":
-            continue
-        _scope, slot, entry_id = parts
-        if slot and entry_id:
-            slots.setdefault(slot, set()).add(entry_id)
-    return slots
-
-
 def composed_search_text(composed: dict[str, Any]) -> str:
     return str(composed.get("prompt_en") or "")
 
@@ -715,19 +698,8 @@ def assertion_values(raw: Any) -> list[str]:
     return []
 
 
-def candidate_id_matches_term(candidate_id: str, term: str) -> bool:
-    term = str(term or "").strip().lower()
-    if not term:
-        return False
-    return term in str(candidate_id or "").lower()
-
-
-def chosen_matches_terms(chosen: set[str], terms: Sequence[str]) -> bool:
-    return any(candidate_id_matches_term(candidate_id, term) for candidate_id in chosen for term in terms)
-
-
 def candidate_ids_from_pack(pack: dict[str, Any]) -> set[str]:
-    ids = {str(candidate.get("id")) for candidate in pack.get("presets", []) if isinstance(candidate, dict)}
+    ids: set[str] = set()
     slots = pack.get("slots") or {}
     if isinstance(slots, dict):
         slot_values = slots.values()
@@ -790,9 +762,6 @@ def creative_augmentation_candidates_from_pack(
 
 def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any]]:
     candidates: dict[str, dict[str, Any]] = {}
-    for candidate in pack.get("presets") or []:
-        if isinstance(candidate, dict) and candidate.get("id"):
-            candidates[str(candidate["id"])] = candidate
     slots = pack.get("slots") or {}
     slot_values = slots.values() if isinstance(slots, dict) else slots
     for slot_payload in slot_values:
@@ -890,23 +859,6 @@ def audit_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
         }
         & set(provenance)
     )
-    preset_reference = (
-        pack.get("preset_reference") if isinstance(pack.get("preset_reference"), dict) else {}
-    )
-    motif_budget = pack.get("motif_budget") if isinstance(pack.get("motif_budget"), dict) else {}
-    if (
-        private_provenance_keys
-        or "preset_id" in preset_reference
-        or len(pack.get("presets") or []) == 1
-        or ("selected_motifs" in motif_budget)
-    ):
-        failures.append(
-            {
-                "check": "authorial_private_routing",
-                "reason": "current pack exposes a private sampled route, singleton preset, or sampled motif answer",
-                "provenance_keys": private_provenance_keys,
-            }
-        )
     quality_profile = (
         pack.get("quality_profile") if isinstance(pack.get("quality_profile"), dict) else {}
     )
@@ -1170,35 +1122,6 @@ def assertion_terms_for_intent(intent: dict[str, Any], composed: dict[str, Any])
     if isinstance(assertions, dict):
         terms.extend(assertion_values(assertions.get(text)))
     return list(dict.fromkeys(term for term in terms if str(term).strip()))
-
-
-def terms_for_identity_axis(axis: dict[str, Any]) -> list[str]:
-    terms = [str(axis.get("id") or "")]
-    for term in axis.get("terms") or []:
-        if isinstance(term, str):
-            terms.append(term)
-    description = str(axis.get("description") or "").strip()
-    if description:
-        terms.append(description)
-    return [term for term in dict.fromkeys(terms) if term.strip()]
-
-
-def open_slot_terms(open_slot: dict[str, Any]) -> list[str]:
-    terms: list[str] = []
-    for key in ("masked_entry_id", "candidate_id"):
-        value = str(open_slot.get(key) or "").strip()
-        if value:
-            terms.append(value)
-    for term in open_slot.get("terms") or []:
-        if isinstance(term, str) and term.strip():
-            terms.append(term)
-    return list(dict.fromkeys(terms))
-
-
-def motif_taxonomy_terms(pack: dict[str, Any], motif: str) -> list[str]:
-    budget = pack.get("motif_budget") if isinstance(pack.get("motif_budget"), dict) else {}
-    taxonomy = budget.get("motif_taxonomy") if isinstance(budget.get("motif_taxonomy"), dict) else {}
-    return [str(term) for term in taxonomy.get(motif, []) if str(term).strip()]
 
 
 def photographic_integration_category_terms(integration: dict[str, Any], category: str) -> list[str]:
@@ -2712,379 +2635,23 @@ def audit_creative_direction(
     return failures
 
 
-def audit_authorial_scene(
-    pack: dict[str, Any],
-    composed: dict[str, Any],
-    prompt_en: str,
-) -> list[dict[str, Any]]:
-    scene_contract = pack.get("scene_contract") if isinstance(pack.get("scene_contract"), dict) else {}
-    groups = [
-        group
-        for group in scene_contract.get("groups") or []
-        if isinstance(group, dict)
-        and str(group.get("strategy") or "") == "authorial_scene"
-        and str(group.get("source") or "") == "selected_render_blueprint_abstraction"
-    ]
-    if not groups:
-        return []
-
-    authored = composed.get("authored_scene")
-    if not isinstance(authored, dict):
-        return [
-            {
-                "check": "authorial_scene",
-                "reason": "current abstract scene contract requires an authored_scene object",
-            }
-        ]
-
+def audit_core_retrieval(pack: dict[str, Any], source_data: dict[str, Any]) -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
-    if not str(authored.get("governing_premise") or "").strip() or not str(
-        authored.get("artistic_rationale") or ""
-    ).strip():
-        failures.append(
-            {
-                "check": "authorial_scene_judgment",
-                "reason": "authored_scene requires a governing_premise and artistic_rationale",
-            }
-        )
-
-    atoms = authored.get("atoms") if isinstance(authored.get("atoms"), dict) else {}
-    required_slots = list(
-        dict.fromkeys(
-            str(slot)
-            for group in groups
-            for slot in group.get("required_authored_slots") or []
-            if str(slot)
-        )
-    )
-    evidence_phrases: list[str] = []
-    for slot in required_slots:
-        phrase = str(atoms.get(slot) or "").strip()
-        if not phrase:
-            failures.append(
-                {
-                    "check": "authorial_scene_atoms",
-                    "reason": "authored scene is missing a required newly written atom",
-                    "slot": slot,
-                }
-            )
-            continue
-        evidence_phrases.append(phrase)
-        if not text_contains_term(prompt_en, phrase):
-            failures.append(
-                {
-                    "check": "authorial_scene_binding",
-                    "reason": "authored scene atom is not literal in prompt_en",
-                    "slot": slot,
-                    "prompt_evidence": phrase,
-                }
-            )
-        if len(authorial_evidence_tokens(phrase)) < 3:
-            failures.append(
-                {
-                    "check": "authorial_scene_atoms",
-                    "reason": "authored scene atom is too fragmentary to establish an original relation",
-                    "slot": slot,
-                }
-            )
-    if len({phrase.lower() for phrase in evidence_phrases}) != len(evidence_phrases):
-        failures.append(
-            {
-                "check": "authorial_scene_atoms",
-                "reason": "subject, action, location, and prop must be distinct authored decisions",
-            }
-        )
-    coverage = pack.get("coverage") if isinstance(pack.get("coverage"), dict) else {}
-    intent_constraints = (
-        coverage.get("intent_constraints")
-        if isinstance(coverage.get("intent_constraints"), dict)
-        else {}
-    )
-    subject_atom = str(atoms.get("subject") or "")
-    if intent_constraints.get("no_people") and re.search(
-        r"\b(?:adult|boy|girl|human|man|men|person|people|woman|women)\b",
-        subject_atom,
-        flags=re.IGNORECASE,
-    ):
-        failures.append(
-            {
-                "check": "negative_presence_constraint",
-                "reason": "no-people authored scene contains an explicit human subject term",
-            }
-        )
-
-    choices = [row for row in authored.get("interpretive_choices") or [] if isinstance(row, dict)]
-    minimum_choices = max(
-        [
-            int((group.get("composition_policy") or {}).get("minimum_interpretive_choices", 2) or 2)
-            for group in groups
-        ]
-        or [2]
-    )
-    allowed_dimensions = {
-        str(item)
-        for group in groups
-        for item in (group.get("composition_policy") or {}).get("interpretive_dimensions") or []
-        if str(item)
-    }
-    choice_dimensions = [str(row.get("dimension") or "") for row in choices]
-    invalid_choices = [
-        row
-        for row in choices
-        if not str(row.get("dimension") or "").strip()
-        or not str(row.get("decision") or "").strip()
-        or not str(row.get("reason") or "").strip()
-        or (allowed_dimensions and str(row.get("dimension") or "") not in allowed_dimensions)
-    ]
-    if (
-        len(choices) < minimum_choices
-        or len(set(choice_dimensions)) < minimum_choices
-        or invalid_choices
-    ):
-        failures.append(
-            {
-                "check": "authorial_scene_judgment",
-                "reason": (
-                    "authored_scene requires distinct valid interpretive choices with a decision "
-                    "and artistic reason"
-                ),
-                "minimum": minimum_choices,
-                "actual_dimensions": choice_dimensions,
-            }
-        )
-    return failures
-
-
-def audit_authorial_open_slots(
-    pack: dict[str, Any],
-    composed: dict[str, Any],
-    prompt_en: str,
-) -> list[dict[str, Any]]:
-    contracts = [
-        row
-        for row in pack.get("authorial_open_slots") or []
-        if isinstance(row, dict) and str(row.get("slot") or "")
-    ]
-    if not contracts:
-        return []
-    authored_slots = composed.get("authored_slots")
-    if not isinstance(authored_slots, dict):
-        return [
-            {
-                "check": "authorial_open_slots",
-                "reason": "current authorial openings require an authored_slots object",
-                "slots": [str(row.get("slot")) for row in contracts],
-            }
-        ]
-
-    failures: list[dict[str, Any]] = []
-    for contract in contracts:
-        slot = str(contract.get("slot") or "")
-        decision = authored_slots.get(slot)
-        if not isinstance(decision, dict):
-            failures.append(
-                {
-                    "check": "authorial_open_slots",
-                    "reason": "missing authored decision for an open singleton scene slot",
-                    "slot": slot,
-                }
-            )
-            continue
-        evidence = str(decision.get("prompt_evidence") or "").strip()
-        rationale = str(decision.get("artistic_rationale") or "").strip()
-        if (
-            not evidence
-            or not rationale
-            or not text_contains_term(prompt_en, evidence)
-            or len(authorial_evidence_tokens(evidence)) < 3
-        ):
-            failures.append(
-                {
-                    "check": "authorial_open_slots",
-                    "reason": (
-                        "each open slot needs a newly authored literal prompt phrase and artistic rationale"
-                    ),
-                    "slot": slot,
-                    "prompt_evidence": evidence or None,
-                }
-            )
-        constraints = contract.get("constraints") if isinstance(contract.get("constraints"), dict) else {}
-        scene_family = str(constraints.get("scene_family") or "")
-        acknowledgments = {
-            str(item)
-            for item in decision.get("constraint_acknowledgments") or []
-            if str(item).strip()
-        }
-        if scene_family and scene_family not in acknowledgments:
-            failures.append(
-                {
-                    "check": "authorial_open_slot_constraints",
-                    "reason": "authored location must acknowledge its required role-scene family",
-                    "slot": slot,
-                    "required": scene_family,
-                }
-            )
-        forbidden_hits = [
-            str(term)
-            for term in constraints.get("forbidden_concepts") or []
-            if text_contains_term(evidence, str(term).replace("_", " "))
-        ]
-        if forbidden_hits:
-            failures.append(
-                {
-                    "check": "authorial_open_slot_constraints",
-                    "reason": "authored slot uses a forbidden role-scene concept",
-                    "slot": slot,
-                    "concepts": forbidden_hits,
-                }
-            )
-        if constraints.get("no_people") and re.search(
-            r"\b(?:adult|boy|girl|human|man|men|person|people|woman|women)\b",
-            evidence,
-            flags=re.IGNORECASE,
-        ):
-            failures.append(
-                {
-                    "check": "negative_presence_constraint",
-                    "reason": "no-people authorial subject contains an explicit human term",
-                    "slot": slot,
-                }
-            )
-    unexpected = sorted(set(authored_slots) - {str(row.get("slot")) for row in contracts})
-    if unexpected:
-        failures.append(
-            {
-                "check": "authorial_open_slots",
-                "reason": "authored_slots contains a slot that was not opened by the pack",
-                "slots": unexpected,
-            }
-        )
-    return failures
-
-
-def audit_japanese_subculture_photo(
-    pack: dict[str, Any],
-    prompt_en: str,
-) -> list[dict[str, Any]]:
-    contract = (
-        pack.get("japanese_subculture_photo")
-        if isinstance(pack.get("japanese_subculture_photo"), dict)
-        else None
-    )
-    if not isinstance(contract, dict) or contract.get("requested") is not True:
-        return []
-    failures: list[dict[str, Any]] = []
-    if (
-        contract.get("contract_version") != "japanese-subculture-photo/v1"
-        or not str(contract.get("style_family_id") or "")
-        or not str(contract.get("style_family_label") or "")
-    ):
-        failures.append(
-            {
-                "check": "japanese_subculture_style_contract",
-                "reason": "typed Japanese-subculture photo contract is incomplete",
-            }
-        )
-    cues = [
-        cue
-        for cue in contract.get("visible_cues") or []
-        if isinstance(cue, dict)
-        and str(cue.get("cue_id") or "")
-        and str(cue.get("prompt_phrase") or "")
-    ]
+    def fail(reason: str) -> None:
+        failures.append({"check": "core_retrieval_contract", "reason": reason})
     try:
-        minimum = max(2, int(contract.get("minimum_visible_cues") or 2))
-    except (TypeError, ValueError):
-        minimum = 2
-        failures.append(
-            {
-                "check": "japanese_subculture_style_contract",
-                "reason": "minimum_visible_cues must be an integer",
-            }
-        )
-    if len(cues) < minimum:
-        failures.append(
-            {
-                "check": "japanese_subculture_style_contract",
-                "reason": "style contract exposes fewer than two concrete visible cues",
-                "visible_cue_count": len(cues),
-            }
-        )
-    literal_cues = [
-        str(cue["prompt_phrase"])
-        for cue in cues
-        if text_contains_term(prompt_en, str(cue["prompt_phrase"]))
-    ]
-    if len(literal_cues) < minimum:
-        failures.append(
-            {
-                "check": "japanese_subculture_style_evidence",
-                "reason": "style label is not backed by enough literal visible cues",
-                "minimum": minimum,
-                "literal_cue_count": len(literal_cues),
-                "accepted_cues": [str(cue["prompt_phrase"]) for cue in cues],
-            }
-        )
-
-    identity_policy = (
-        contract.get("identity_policy")
-        if isinstance(contract.get("identity_policy"), dict)
-        else {}
-    )
-    if identity_policy.get("infer_ethnicity_or_nationality") is not False:
-        failures.append(
-            {
-                "check": "japanese_subculture_style_contract",
-                "reason": "style contract must forbid ethnicity or nationality inference",
-            }
-        )
-    inference_patterns = (
-        r"\bjapanese\s+(?:woman|man|person|girl|boy|ethnicity|nationality|facial\s+features?)\b",
-        r"\b(?:ethnically|racially)\s+japanese\b",
-        r"일본인\s*(?:여성|남성|인물|얼굴|외모|혈통)",
-        r"日本人(?:の)?(?:女性|男性|人物|顔|容姿|血統)",
-    )
-    if any(re.search(pattern, prompt_en, flags=re.IGNORECASE) for pattern in inference_patterns):
-        failures.append(
-            {
-                "check": "japanese_subculture_ethnicity_inference",
-                "reason": "subculture style was converted into an unrequested ethnicity or nationality claim",
-            }
-        )
-
-    guard = (
-        contract.get("candidate_guard")
-        if isinstance(contract.get("candidate_guard"), dict)
-        else {}
-    )
-    blocked = {
-        str(item)
-        for item in guard.get("blocked_unrequested_entry_ids") or []
-        if str(item)
-    }
-    preserved = {
-        str(item)
-        for item in guard.get("explicitly_preserved_entry_ids") or []
-        if str(item)
-    }
-    leaked: list[dict[str, str]] = []
-    for slot, payload in (pack.get("slots") or {}).items():
-        if not isinstance(payload, dict):
-            continue
-        for candidate in payload.get("candidates") or []:
-            if not isinstance(candidate, dict):
-                continue
-            entry_id = str(candidate.get("entry_id") or "")
-            if entry_id in blocked and entry_id not in preserved:
-                leaked.append({"slot": str(slot), "entry_id": entry_id})
-    if leaked:
-        failures.append(
-            {
-                "check": "japanese_subculture_candidate_relevance",
-                "reason": "unrequested strong-theme candidates remain exposed",
-                "candidates": leaked,
-            }
-        )
+        slots, expected, _ = candidate_semantics_generator.retrieve_core_slots(
+            source_data, pack["authorial_core"], pack["creative_controls"])
+        if pack.get("core_retrieval") != expected:
+            fail("retrieval binding differs from the source corpus and frozen core")
+        actual = pack.get("slots") or {}
+        if set(actual) != set(slots) or any(
+            {row["id"] for row in actual[slot].get("candidates") or []}
+            != {row["id"] for row in payload["candidates"]}
+            for slot, payload in slots.items() if slot in actual):
+            fail("ordinary candidates differ from the complete guarded core retrieval")
+    except (KeyError, TypeError, ValueError) as exc:
+        fail(f"core retrieval source recomputation failed: {exc}")
     return failures
 
 
@@ -5923,6 +5490,18 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
             }
         )
     failures.extend(audit_authorial_pack(pack))
+    try:
+        assets = Path(__file__).resolve().parents[1] / "assets"
+        source_data = candidate_semantics_generator.load_json(assets / "photo_prompt_tags.json")
+        source_data[candidate_semantics_generator.QUALITY_LAYERS_DATA_KEY] = (
+            candidate_semantics_generator.load_quality_layers(assets / "photo_prompt_quality_layers.json")
+        )
+        failures.extend(audit_core_retrieval(pack, source_data))
+    except (OSError, KeyError, TypeError, ValueError) as exc:
+        failures.append({"check": "core_retrieval_contract", "reason": f"source recomputation failed: {exc}"})
+    expected_retrieval_sha = (pack.get("core_retrieval") or {}).get("canonical_sha256")
+    if not expected_retrieval_sha or composed.get("core_retrieval_sha256") != expected_retrieval_sha:
+        failures.append({"check": "core_retrieval_binding", "reason": "composed prompt must bind the exact core retrieval contract"})
 
     required_fields = ("pack_id", "prompt_en", "negative_en", "chosen_candidate_ids", "composer")
     missing_fields = [field for field in required_fields if field not in composed]
@@ -5968,83 +5547,6 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     safety = pack.get("safety") if isinstance(pack.get("safety"), dict) else {}
     if safety.get("status") != "pass" or safety.get("requires_user_approval") is True:
         failures.append({"check": "safety", "reason": "candidate pack safety contract is not pass", "safety": safety})
-    failed_gates = [
-        gate
-        for gate in pack.get("concept_gates") or []
-        if isinstance(gate, dict) and gate.get("status") not in {"pass", "manual"}
-    ]
-    if failed_gates:
-        failures.append({"check": "concept_gates", "reason": "candidate pack contains a failed concept gate", "gates": failed_gates})
-    manual_gates = [
-        gate
-        for gate in pack.get("concept_gates") or []
-        if isinstance(gate, dict) and gate.get("status") == "manual"
-    ]
-    if manual_gates:
-        manual_evidence = composed.get("manual_gate_evidence")
-        if not isinstance(manual_evidence, dict):
-            failures.append(
-                {
-                    "check": "concept_gates",
-                    "reason": "manual concept gates require prompt-bound evidence before pixel review",
-                    "gate_ids": [str(gate.get("id") or "") for gate in manual_gates],
-                }
-            )
-        else:
-            for gate in manual_gates:
-                gate_id = str(gate.get("id") or "")
-                evidence = manual_evidence.get(gate_id)
-                if not isinstance(evidence, dict):
-                    failures.append(
-                        {
-                            "check": "concept_gates",
-                            "reason": "manual concept gate is missing an evidence object",
-                            "gate_id": gate_id,
-                        }
-                    )
-                    continue
-                evidence_phrases = nonempty_string_list(evidence.get("evidence_phrases"))
-                minimum = 2 if gate_id in {"contradiction_in_frame", "costume_swap_test"} else 1
-                if len(evidence_phrases) < minimum:
-                    failures.append(
-                        {
-                            "check": "concept_gates",
-                            "reason": "manual concept gate has insufficient prompt evidence",
-                            "gate_id": gate_id,
-                            "minimum_phrases": minimum,
-                        }
-                    )
-                    continue
-                missing_phrases = [
-                    phrase for phrase in evidence_phrases if not text_contains_term(prompt_en, phrase)
-                ]
-                if missing_phrases:
-                    failures.append(
-                        {
-                            "check": "concept_gates",
-                            "reason": "manual concept-gate evidence is not literal in prompt_en",
-                            "gate_id": gate_id,
-                            "phrases": missing_phrases,
-                        }
-                    )
-                    continue
-                if str(evidence.get("review_stage") or "") != "pixel_review_required":
-                    failures.append(
-                        {
-                            "check": "concept_gates",
-                            "reason": "manual gate evidence must remain pending for pixel review",
-                            "gate_id": gate_id,
-                        }
-                    )
-                    continue
-                warnings.append(
-                    {
-                        "check": "manual_concept_gate",
-                        "reason": "prompt evidence is bound; native-pixel confirmation is still required",
-                        "gate_id": gate_id,
-                    }
-                )
-
     mandatory_texts = {
         str(intent.get("text") or "")
         for intent in pack.get("mandatory_intents") or []
@@ -6152,9 +5654,6 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
             candidate_objects,
         )
     )
-    failures.extend(audit_authorial_scene(pack, composed, prompt_en))
-    failures.extend(audit_authorial_open_slots(pack, composed, prompt_en))
-    failures.extend(audit_japanese_subculture_photo(pack, prompt_en))
 
     coverage = pack.get("coverage") if isinstance(pack.get("coverage"), dict) else {}
     intent_constraints = coverage.get("intent_constraints") if isinstance(coverage.get("intent_constraints"), dict) else {}
@@ -6213,315 +5712,6 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
                     "candidates": violations,
                 }
             )
-
-    concept_axes = pack.get("concept_axes") if isinstance(pack.get("concept_axes"), dict) else {}
-    for axis in concept_axes.get("required") or []:
-        if not isinstance(axis, dict):
-            continue
-        terms = terms_for_identity_axis(axis)
-        if terms and not any(text_contains_term(search_text, term) or chosen_matches_terms(chosen, [term]) for term in terms):
-            failures.append(
-                {
-                    "check": "identity_axis",
-                    "reason": "required identity axis not represented",
-                    "axis": axis.get("id"),
-                    "accepted_terms": terms,
-                }
-            )
-
-    masked_echo_count = 0
-    for open_slot in pack.get("open_slots") or []:
-        if not isinstance(open_slot, dict):
-            continue
-        terms = open_slot_terms(open_slot)
-        open_slot_name = str(open_slot.get("slot") or "")
-        chosen_hit = bool(open_slot_name) and any(
-            candidate_id.startswith(f"slot:{open_slot_name}:") for candidate_id in chosen
-        )
-        text_hits = [term for term in terms if text_contains_term(search_text, term)]
-        if chosen_hit or text_hits:
-            masked_echo_count += 1
-            failures.append(
-                {
-                    "check": "masked_bucket_echo",
-                    "reason": "masked/open preset section was copied back into the composed prompt",
-                    "slot": open_slot.get("slot"),
-                    "bucket": open_slot.get("bucket"),
-                    "text_hits": text_hits[:8],
-                    "chosen_hit": chosen_hit,
-                }
-            )
-
-    motif_budget = pack.get("motif_budget") if isinstance(pack.get("motif_budget"), dict) else {}
-    for motif in motif_budget.get("discouraged_now") or []:
-        motif_id = str(motif or "")
-        terms = motif_taxonomy_terms(pack, motif_id)
-        if not terms:
-            terms = [motif_id]
-        text_hits = [term for term in terms if text_contains_term(search_text, term)]
-        chosen_hit = chosen_matches_terms(chosen, terms)
-        if text_hits or chosen_hit:
-            failures.append(
-                {
-                    "check": "motif_quota",
-                    "reason": "discouraged motif selected despite quota pressure",
-                    "motif": motif_id,
-                    "text_hits": text_hits[:8],
-                    "chosen_hit": chosen_hit,
-                }
-            )
-
-    taxonomy = motif_budget.get("motif_taxonomy") if isinstance(motif_budget.get("motif_taxonomy"), dict) else {}
-    quota_motifs = set((motif_budget.get("quotas") or {}).keys()) if isinstance(motif_budget.get("quotas"), dict) else set()
-    hit_motifs: set[str] = set()
-    for motif, terms_raw in taxonomy.items():
-        terms = [str(term) for term in terms_raw or [] if str(term).strip()]
-        if terms and (chosen_matches_terms(chosen, terms) or any(text_contains_term(search_text, term) for term in terms)):
-            hit_motifs.add(str(motif))
-    if quota_motifs and hit_motifs and hit_motifs <= quota_motifs:
-        warnings.append(
-            {
-                "check": "cliche_only_concept_coverage",
-                "reason": "concept coverage relies only on capped/cliche motif groups",
-                "motifs": sorted(hit_motifs),
-            }
-        )
-
-    echo_risk = pack.get("template_echo_risk") if isinstance(pack.get("template_echo_risk"), dict) else {}
-    if pack.get("open_slots"):
-        try:
-            max_allowed = float(echo_risk.get("max_allowed_score", 0.2))
-        except (TypeError, ValueError):
-            max_allowed = 0.2
-        masked_total = max(1, len([slot for slot in pack.get("open_slots") or [] if isinstance(slot, dict)]))
-        score = masked_echo_count / masked_total
-        if score > max_allowed:
-            failures.append(
-                {
-                    "check": "template_echo_risk",
-                    "reason": "excessive overlap with masked source preset/bundle",
-                    "score": round(score, 4),
-                    "max_allowed_score": max_allowed,
-                    "masked_echo_count": masked_echo_count,
-                    "masked_slot_count": masked_total,
-                }
-            )
-
-    chosen_slots = chosen_slot_entry_ids(chosen)
-    scene_contract = pack.get("scene_contract") if isinstance(pack.get("scene_contract"), dict) else {}
-    evidence_budget = pack.get("evidence_budget") if isinstance(pack.get("evidence_budget"), dict) else {}
-    if evidence_budget.get("enabled"):
-        clue_slots = {str(item) for item in evidence_budget.get("world_clue_slots") or [] if str(item)}
-        render_contract = pack.get("render_contract") if isinstance(pack.get("render_contract"), dict) else {}
-        selected_scene = render_contract.get("selected_scene") if isinstance(render_contract.get("selected_scene"), dict) else {}
-        authored_scene = composed.get("authored_scene") if isinstance(composed.get("authored_scene"), dict) else {}
-        authored_atoms = authored_scene.get("atoms") if isinstance(authored_scene.get("atoms"), dict) else {}
-        authored_slots = composed.get("authored_slots") if isinstance(composed.get("authored_slots"), dict) else {}
-        chosen_clue_slots = sorted(
-            slot
-            for slot in clue_slots
-            if chosen_slots.get(slot)
-            or bool(str(authored_atoms.get(slot) or "").strip())
-            or isinstance(authored_slots.get(slot), dict)
-        )
-        try:
-            minimum_chosen = int(evidence_budget.get("minimum_chosen", 0))
-            maximum_chosen = int(evidence_budget.get("maximum_chosen", len(clue_slots)))
-        except (TypeError, ValueError):
-            minimum_chosen, maximum_chosen = 0, len(clue_slots)
-        if len(chosen_clue_slots) < minimum_chosen or len(chosen_clue_slots) > maximum_chosen:
-            failures.append(
-                {
-                    "check": "evidence_budget",
-                    "reason": "chosen world-clue slots fall outside the sparse evidence budget",
-                    "chosen_slots": chosen_clue_slots,
-                    "minimum_chosen": minimum_chosen,
-                    "maximum_chosen": maximum_chosen,
-                }
-            )
-    render_contract = pack.get("render_contract") if isinstance(pack.get("render_contract"), dict) else {}
-    selected_scene = render_contract.get("selected_scene") if isinstance(render_contract.get("selected_scene"), dict) else {}
-    visual_provenance = [
-        str(item)
-        for item in selected_scene.get("diegetic_visual_provenance") or []
-        if str(item).strip()
-    ]
-    if render_contract.get("enabled") and len(set(visual_provenance)) > 1:
-        failures.append(
-            {
-                "check": "diegetic_visual_provenance",
-                "reason": "selected atomic scene carries multiple visual provenance values",
-                "values": sorted(set(visual_provenance)),
-            }
-        )
-    character_grammar = (
-        pack.get("character_grammar")
-        if isinstance(pack.get("character_grammar"), dict)
-        else {}
-    )
-    if character_grammar.get("enabled"):
-        runtime_nodes = [
-            item
-            for item in character_grammar.get("runtime_nodes") or []
-            if isinstance(item, dict)
-        ]
-        max_support_cues = int(character_grammar.get("max_support_cues", 2) or 2)
-        primary_nodes = [item for item in runtime_nodes if item.get("role") == "primary"]
-        support_nodes = [item for item in runtime_nodes if item.get("role") == "support"]
-        runtime_ids = {str(item.get("id") or "") for item in runtime_nodes}
-        primary_runtime_id = (
-            str(primary_nodes[0].get("id") or "")
-            if len(primary_nodes) == 1
-            else ""
-        )
-        if (
-            character_grammar.get("valid") is not True
-            or len(primary_nodes) != 1
-            or not primary_runtime_id
-            or len(support_nodes) > max_support_cues
-            or len(runtime_nodes) != len(runtime_ids)
-        ):
-            failures.append(
-                {
-                    "check": "character_grammar_contract",
-                    "reason": "character runtime bundle violates the one-primary sparse support contract",
-                    "primary_runtime_id": primary_runtime_id,
-                    "runtime_ids": sorted(runtime_ids),
-                    "support_count": len(support_nodes),
-                    "max_support_cues": max_support_cues,
-                }
-            )
-        if len(runtime_nodes) > 1 and character_grammar.get("compatible_bundle") is not True:
-            failures.append(
-                {
-                    "check": "character_grammar_contract",
-                    "reason": "multi-node character runtime bundle is not declared compatible",
-                }
-            )
-        scene_evidence = {
-            str(item)
-            for item in selected_scene.get("visual_evidence_types") or []
-            if str(item)
-        }
-        grammar_evidence = {
-            str(item)
-            for item in character_grammar.get("visual_evidence_types") or []
-            if str(item)
-        }
-        required_evidence = {
-            str(item)
-            for item in character_grammar.get("required_visual_evidence_types") or []
-            if str(item)
-        }
-        if (
-            not scene_evidence
-            or scene_evidence != grammar_evidence
-            or not required_evidence.issubset(scene_evidence)
-        ):
-            failures.append(
-                {
-                    "check": "character_grammar_contract",
-                    "reason": "selected scene and character grammar visual evidence types are missing or inconsistent",
-                    "scene_evidence": sorted(scene_evidence),
-                    "grammar_evidence": sorted(grammar_evidence),
-                    "required_evidence": sorted(required_evidence),
-                }
-            )
-        constraints = (
-            character_grammar.get("composition_constraints")
-            if isinstance(character_grammar.get("composition_constraints"), dict)
-            else {}
-        )
-        if (
-            constraints.get("explicit_adult_original_subject") != "required"
-            or constraints.get("observable_evidence") != "required"
-            or constraints.get("appearance_inference_from_route") != "forbidden"
-            or constraints.get("protected_identity_replication") != "forbidden"
-        ):
-            failures.append(
-                {
-                    "check": "character_grammar_contract",
-                    "reason": "character route is missing generic composition constraints",
-                }
-            )
-    role_scene_policy = pack.get("role_scene_policy") if isinstance(pack.get("role_scene_policy"), dict) else {}
-    if role_scene_policy.get("enabled"):
-        if role_scene_policy.get("selection_mode") == "agent_authored_location":
-            authored_slots = composed.get("authored_slots") if isinstance(composed.get("authored_slots"), dict) else {}
-            authored_location = authored_slots.get("location")
-            if not isinstance(authored_location, dict):
-                failures.append(
-                    {
-                        "check": "role_scene_policy",
-                        "reason": "agent-authored role scene requires an authored location decision",
-                        "scene_family": role_scene_policy.get("scene_family"),
-                    }
-                )
-        else:
-            selected_locations = chosen_slots.get("location", set())
-            allowed_locations = {str(item) for item in role_scene_policy.get("allowed_locations") or []}
-            forbidden_locations = {str(item) for item in role_scene_policy.get("forbidden_locations") or []}
-            forbidden_locations.update(str(item) for item in role_scene_policy.get("discouraged_generic_locations") or [])
-            forbidden_selected = sorted(selected_locations & forbidden_locations)
-            if forbidden_selected:
-                failures.append(
-                    {
-                        "check": "role_scene_policy",
-                        "reason": "role-incompatible location selected",
-                        "location_ids": forbidden_selected,
-                        "scene_family": role_scene_policy.get("scene_family"),
-                    }
-                )
-            outside_allowed = sorted(selected_locations - allowed_locations) if allowed_locations else []
-            if outside_allowed and role_scene_policy.get("enforce"):
-                failures.append(
-                    {
-                        "check": "role_scene_policy",
-                        "reason": "selected location is outside role scene pool",
-                        "location_ids": outside_allowed,
-                        "allowed_locations": sorted(allowed_locations),
-                        "scene_family": role_scene_policy.get("scene_family"),
-                    }
-                )
-            if allowed_locations and not selected_locations and role_scene_policy.get("enforce"):
-                failures.append(
-                    {
-                        "check": "role_scene_policy",
-                        "reason": "no location candidate id supplied for enforced role-scene audit",
-                        "scene_family": role_scene_policy.get("scene_family"),
-                    }
-                )
-
-    species_policy = pack.get("species_family") if isinstance(pack.get("species_family"), dict) else {}
-    if species_policy.get("enabled") and not species_policy.get("hybrid_allowed"):
-        allowed = species_policy.get("allowed") if isinstance(species_policy.get("allowed"), dict) else {}
-        for slot, allowed_ids_raw in allowed.items():
-            selected_ids = chosen_slots.get(str(slot), set())
-            allowed_ids = {str(item) for item in allowed_ids_raw or []}
-            if allowed_ids and not selected_ids:
-                failures.append(
-                    {
-                        "check": "species_family",
-                        "reason": "required species-family slot candidate id is missing",
-                        "slot": str(slot),
-                        "allowed_ids": sorted(allowed_ids),
-                        "family": species_policy.get("family"),
-                        "variant_id": species_policy.get("variant_id"),
-                    }
-                )
-            mismatched = sorted(selected_ids - allowed_ids)
-            if mismatched:
-                failures.append(
-                    {
-                        "check": "species_family",
-                        "reason": "selected species-family detail is outside the locked family",
-                        "slot": str(slot),
-                        "ids": mismatched,
-                        "allowed_ids": sorted(allowed_ids),
-                        "family": species_policy.get("family"),
-                        "variant_id": species_policy.get("variant_id"),
-                    }
-                )
 
     for conflict in pack.get("conflicts") or []:
         if not isinstance(conflict, dict) or str(conflict.get("severity") or "hard") != "hard":
@@ -6605,6 +5795,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     else:
         print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 0 if result["status"] == "pass" else 1
+
+
+def english_prompt_word_count(text: str) -> int:
+    """Count image-prompt words consistently across the contract and audit."""
+    return len(re.findall(r"[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*", str(text or "")))
 
 
 if __name__ == "__main__":

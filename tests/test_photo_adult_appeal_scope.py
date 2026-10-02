@@ -44,14 +44,7 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         raw["semantic_assertions"] = []
         envelope = generator.normalize_request_envelope(fixtures.envelope(source))
         cls.core = generator.normalize_authorial_core(raw, request_envelope=envelope)
-        cls.result = current_fixtures.generate_once(
-            cls.data, random.Random(77), None, ["en"], True, 12, True,
-            selection_mode="rule", include_trace=True, concept_locks=[source],
-            seed=77, creativity=0, authorial_core=cls.core, fixture_context={"subject_category": "human"},
-            sensual_intensity=2,
-            fetish_intensity=1,
-            adult_appeal_activation_source="skill_default",
-        )
+        cls.result = current_fixtures.candidate_source(cls.data, cls.core, seed=77, context={'subject_category': 'human'}, overrides={'sensual': 2, 'fetish': 1, 'creativity': 0})
         cls.pack = generator.build_candidate_pack(cls.result, cls.data, "v6")
 
     def adult(self, *, locked=None, result=None):
@@ -149,12 +142,7 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         # Changing frozen controls requires a fresh core binding, even when
         # the requested axes are disabled. A stale snapshot is tested separately.
         core = copy.deepcopy(self.core)
-        result = current_fixtures.generate_once(
-            self.data, random.Random(77), None, ["en"], True, 12, True,
-            selection_mode="rule", include_trace=True, seed=77, creativity=0,
-            authorial_core=core, fixture_context={"subject_category": "human"},
-            sensual_intensity=0, fetish_intensity=0,
-        )
+        result = current_fixtures.candidate_source(self.data, core, seed=77, context={'subject_category': 'human'}, overrides={'sensual': 0, 'fetish': 0, 'creativity': 0})
         adult = generator.candidate_pack_contextual_adult_appeal(
             self.data, result, {}, authorial_core=core,
         )
@@ -209,7 +197,7 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
     def test_exact_runtime_accepts_the_scoped_composition(self):
         composed = self.composed()
         report = auditor.audit_composed_prompt(self.pack, composed)
-        request = {
+        request = {"core_retrieval_sha256": self.pack["core_retrieval"]["canonical_sha256"],
             "schema_version": runtime_auditor.SCHEMA_VERSION,
             "pack_id": self.pack["pack_id"],
             "source_intent_lock_sha256": self.pack["authorial_core"]["intent_lock"]["canonical_sha256"],

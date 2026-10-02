@@ -25,7 +25,8 @@ class PhotoEditingEffectsSemanticsTests(unittest.TestCase):
         cls.extension = json.loads((ASSETS / "photo_prompt_editing_effects_extension.json").read_text())
         cls.profiles = {p["id"]: p for p in cls.registry["profiles"]}
         cls.bundle = next(b for b in cls.data["candidate_bundles"] if b["id"] == "pe_bundle_muted_grain_finish")
-        cls.semantic_index = generator.load_semantic_index(ASSETS / "photo_prompt_semantic_index.json", cls.data)
+        cls.semantic_index = generator.load_semantic_index_payload(ASSETS / "photo_prompt_semantic_index.json")
+        generator.validate_semantic_index_metadata(cls.semantic_index, cls.data)
         cls.data[generator.SEMANTIC_INDEX_DATA_KEY] = cls.semantic_index
         cls.bm25 = generator.semantic_bm25f_payload_from_index(cls.semantic_index)
         cls.visual_index = generator.load_visual_profile_index(ASSETS / "photo_prompt_visual_profile_index.json", cls.registry)
@@ -48,12 +49,11 @@ class PhotoEditingEffectsSemanticsTests(unittest.TestCase):
         slots = {}
         for m in bundle["member_candidates"]:
             e = self.entry(m["slot"], m["entry_id"])
-            c, _ = generator.candidate_pack_summarize_slot_candidate(self.data, m["slot"],
-                       {"id": m["entry_id"], "applicability_status": "eligible"}, 0.5, m["entry_id"])
+            c, _ = generator.candidate_pack_summarize_slot_candidate(self.data, m['slot'], {'id': m['entry_id'], 'applicability_status': 'eligible'})
             c["_v6_semantic_source"] = semantics.semantic_source(e, m["slot"], self.data["candidate_semantic_policy"])
             slots.setdefault(m["slot"], {"slot": m["slot"], "candidates": []})["candidates"].append(c)
         pack = {"contract_version": "photo-candidate-pack/v6", "authorial_core": core, "slots": slots,
-                "presets": [], "provenance": {"seed": 311}}
+                 "provenance": {"seed": 311}}
         pack["candidate_bundles"] = generator.candidate_pack_candidate_bundles(self.data, pack)
         return pack
 
@@ -174,7 +174,7 @@ class PhotoEditingEffectsSemanticsTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "malformed affected properties"):
                 semantics.validate_candidate_entries({"slots": {"grain_profile": [e]}}, generator.AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS)
 
-    def test_frozen_three_arm_effects_surface_in_unscheduled_slots_within_pack_budget(self):
+    def test_frozen_three_arm_effects_remain_retrievable_after_core_freeze(self):
         cases = {
             "arm-a-film-optics": {"slot:grain_profile:pe_fine_midtonal_grain", "slot:film_emulation:pe_red_edge_halation", "slot:color_grading:pe_gentle_rolloff"},
             "arm-b-digital-motion": {"slot:camera_type:pe_compact_flash_noisy_finish", "slot:grain_profile:pe_digital_luma_noise", "slot:grain_profile:pe_digital_chroma_noise", "slot:motion:pe_flash_core_shutter_trace"},
@@ -182,25 +182,19 @@ class PhotoEditingEffectsSemanticsTests(unittest.TestCase):
         }
         for arm, expected in cases.items():
             with self.subTest(arm=arm):
-                payload = json.loads((RESEARCH / "qualification" / arm / "candidate_pack.json").read_text())
-                pack = payload[0] if isinstance(payload, list) else payload
-                slots = copy.deepcopy(pack["slots"])
-                # Public v6 omits sampler preference. Exercise the private
-                # preservation seam explicitly without inventing user locks.
-                for slot_payload in slots.values():
-                    if slot_payload["candidates"]:
-                        slot_payload["candidates"][0]["selected_by_sampler"] = True
-                before_selected = {c["id"] for p in slots.values() for c in p["candidates"] if c.get("selected_by_sampler")}
-                core = pack["authorial_core"]
-                entries = {}
-                result = {"preset_id": pack["presets"][0]["preset_id"], "choices": {}}
-                trace = {"generation_contract": {"subject_category": "human", "intent_constraints": {"subject_categories": ["human"]}}}
-                generator.candidate_pack_add_assertion_candidates(self.data, core, trace, result, slots, entries)
-                after = {c["id"] for p in slots.values() for c in p["candidates"]}
-                self.assertTrue(expected <= after, expected - after)
-                self.assertTrue(before_selected <= after)
+                root = RESEARCH / "qualification" / arm
+                raw = json.loads((root / "authorial_core.json").read_text())
+                old = json.loads((root / "candidate_pack.json").read_text())
+                old = old[0] if isinstance(old, list) else old
+                controls = old["creative_controls"]
+                core = old["authorial_core"]
+                slots, binding, _ = generator.retrieve_core_slots(self.data, core, controls)
+                candidates = {c["id"] for p in slots.values() for c in p["candidates"]}
+                self.assertTrue(expected <= candidates, expected - candidates)
                 self.assertLessEqual(sum(len(p["candidates"]) for p in slots.values()), generator.CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT)
-                self.assertEqual(core, pack["authorial_core"])
+                self.assertEqual(binding["source_authorial_core_sha256"], core["canonical_sha256"])
+                self.assertEqual(core, old["authorial_core"])
+                self.assertEqual(core["baseline_prompt_en"], raw["baseline_prompt_en"])
 
     def test_advisory_discovery_adds_no_requester_duty_and_obeys_closed_and_partial_locks(self):
         core = json.loads((RESEARCH / "qualification/arm-c-tonal-skin/authorial_core.json").read_text())
@@ -236,18 +230,17 @@ class PhotoEditingEffectsSemanticsTests(unittest.TestCase):
                 self.assertTrue(expected <= {h["profile_id"] for h in focused})
                 self.assertTrue(all(h["optional_eligible"] and not h["hard_eligible"] and not h["source_intent_ids"] for h in focused))
 
-    def test_discovery_cannot_bypass_sampler_context_and_forced_pool_guards(self):
-        core = json.loads((RESEARCH / "qualification/arm-a-film-optics/authorial_core.json").read_text())
-        slots, entries = {}, {}
-        trace = {"generation_contract": {"candidate_pool_trace": {"grain_profile": {"forced": True}}}}
-        generator.candidate_pack_add_assertion_candidates(self.data, core, trace, {"choices": {}}, slots, entries)
-        self.assertNotIn("grain_profile", slots)
+    def test_retrieval_cannot_bypass_declared_context_guards(self):
+        old = json.loads((RESEARCH / "qualification/arm-a-film-optics/candidate_pack.json").read_text())
+        old = old[0] if isinstance(old, list) else old
+        core, controls = old["authorial_core"], old["creative_controls"]
+        slots, _, _ = generator.retrieve_core_slots(self.data, core, controls)
+        self.assertIn("slot:grain_profile:pe_fine_midtonal_grain", {c["id"] for p in slots.values() for c in p["candidates"]})
         blocked = copy.deepcopy(self.data)
         grain = generator.candidate_pack_slot_entry_by_id(blocked, "grain_profile", "pe_fine_midtonal_grain")
         grain["requires_all"] = ["undeclared_context_for_test"]
-        slots, entries = {}, {}
-        generator.candidate_pack_add_assertion_candidates(blocked, core, {}, {"choices": {}}, slots, entries)
-        self.assertNotIn("slot:grain_profile:pe_fine_midtonal_grain", entries)
+        slots, _, _ = generator.retrieve_core_slots(blocked, core, controls)
+        self.assertNotIn("slot:grain_profile:pe_fine_midtonal_grain", {c["id"] for p in slots.values() for c in p["candidates"]})
 
     def test_discovery_configuration_rejects_unbounded_or_unscoped_source_opt_in(self):
         for key, value in (("maximum_candidates", 10000), ("maximum_per_assertion", 5), ("minimum_shared_content_words", 1)):
