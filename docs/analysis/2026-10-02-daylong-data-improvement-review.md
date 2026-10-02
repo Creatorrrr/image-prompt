@@ -1,6 +1,6 @@
 # 24-hour DATA improvement review
 
-Measurement checkpoint: 2026-10-02 10:45 UTC. The authorized work window ends at 2026-10-02 11:46:56 UTC (20:46:56 Korea time). C20 and C21 are independently deferred. The final 44-row source-only audits are complete; final integration checks continue through the cutoff.
+Measurement checkpoint: 2026-10-02 11:08 UTC. The authorized work window ends at 2026-10-02 11:46:56 UTC (20:46:56 Korea time). C20 and C21 are independently deferred. The final 44-row source-only audits are complete; final integration checks continue through the cutoff.
 
 ## Published results
 
@@ -25,7 +25,7 @@ Fourteen new DATA cycles have published 49 accepted row changes. The initial 16-
 
 Initial delivery: [dedb6a8](https://github.com/Creatorrrr/image-prompt/commit/dedb6a817742aba25114fa274e19a9deb2990ea2). Historical final-surface audit and corrected claims: [5d5fe18](https://github.com/Creatorrrr/image-prompt/commit/5d5fe18c3960210b5c8adce7da0af7a71743ef17).
 
-## Integration and validation
+## a207 integration and validation
 
 The current upstream architecture removed presets and their retired interfaces while retaining slot arrays from 42 source assets: 112 slots and 9,432 entries with identical row values and order. The new semantic index contains 9,468 documents. The dictionary hash is 23fd879001f019f0b5dd1ce2461e097014a4f530fe8d400e3c97f689fd011a46. All accepted DATA source rows survive the integration.
 
@@ -48,6 +48,14 @@ Current ordinary candidate retrieval uses frozen-core slot-only BM25F, eligibili
 A 24-row instrument audit, disjoint from the recorded prior review inventories, produced 21 justified keeps and three deferrals. The shared wind pose assigns key or valve operation to both hands, while the authored trumpet action/profile assigns the left hand to support and the right hand to valve operation, consistent with [Yamaha’s guide](https://www.yamaha.com/en/musical_instrument_guide/trumpet/play/). This source-owner conflict remains unedited pending current-consumer qualification. Two shared material rows have ambiguous component lists and are not established defects. No retrieval, adoption or image benefit was measured by that source audit.
 
 A further 20-row celestial/process audit retained all 20 rows without a qualified source repair. The rows were disjoint from recorded explicit review inventories. One broad historical evidence-link association remains an unvalidated documentation-scope ambiguity, not a physical contradiction. Historical comparisons are limited to the available shallow checkout; the audit did not measure current candidate exposure or image output.
+
+## Late upstream integration
+
+A fresh pull after the report commit merged [upstream 0ed2267](https://github.com/Creatorrrr/image-prompt/commit/0ed2267b91e73f4b4d1493d095287e7795ebf805) cleanly as dce53c5e6406674afc1cdfa8619c20f2e5242526. The merged tree outside this report and its evidence is identical to upstream. All 9,432 prior raw source rows and their order are preserved. Upstream separately adds 158 pose candidates plus overlays and registers the new source/profile extensions. Those upstream changes are not counted as this loop’s accepted DATA changes.
+
+The latest loaded corpus has 9,590 entries in 112 slots and 9,626 semantic-index documents, bound to dictionary 22cf3c8d2340795fe701410e91a1a5c810b7ed46094d900d279d4cde068a89d9. **81 focused post-pull tests passed** in 119.760 seconds, covering pose vocabulary, core retrieval, semantic index/loading, affected DATA regressions and the sibling skill boundary. This overlaps the earlier suite; the counts are not summed. [Preservation evidence](../research-evidence/photo-prompt/daylong-current-core-review-20261002/post-pull-0ed2267-preservation.json) and the [post-pull test log](../research-evidence/photo-prompt/daylong-current-core-review-20261002/post-pull-0ed2267-tests.log) retain the exact state.
+
+The 32 C20/C21 comparisons remain measurements of a207 and its 9,432-entry corpus. They were not rerun on the expanded corpus and do not establish its current rankings. Both DATA proposals remain unpublished; any future attempt must qualify against the then-current source and consumer. The original evidence archive is unchanged.
 
 ## Spend and limits
 
