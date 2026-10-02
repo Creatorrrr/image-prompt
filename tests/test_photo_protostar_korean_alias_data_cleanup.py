@@ -2,6 +2,7 @@
 from pathlib import Path
 import copy
 import hashlib
+import gzip
 import importlib.util
 import json
 import sys
@@ -11,6 +12,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'skills/photo-prompt-image-generator/assets'
 E = ROOT / 'docs/research-evidence/photo-prompt/protostar-korean-alias-data-cleanup-20261001'
+NEXT = ROOT / 'docs/research-evidence/photo-prompt/shelf-return-korean-state-data-cleanup-20261001'
 
 
 def load_module(name, path):
@@ -32,6 +34,7 @@ class ProtostarKoreanAliasDataCleanupTests(unittest.TestCase):
         cls.states = common.states_from_freeze(cls.frozen)
         cls.target = next(row for row in cls.frozen['inventory'] if row['decision'] == 'fix')
         cls.current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
+        cls.accepted_snapshot = json.loads(gzip.decompress((NEXT / 'baseline-merged-data.json.gz').read_bytes()))
 
     def test_frozen_inventory_probes_and_bounded_cost(self):
         self.assertEqual(hashlib.sha256((E / 'frozen-inventory-queries.json').read_bytes()).hexdigest(),
@@ -62,8 +65,8 @@ class ProtostarKoreanAliasDataCleanupTests(unittest.TestCase):
         self.assertEqual(json.loads((ROOT / self.frozen['source_file']).read_text()), expected)
         self.assertEqual(expected['maintenance_ref'], before['maintenance_ref'])
 
-    def test_complete_current_merged_state_and_nineteen_keeps_are_exact(self):
-        self.assertEqual(self.current, self.states['proposal'])
+    def test_historical_merged_state_and_current_nineteen_keeps_are_exact(self):
+        self.assertEqual(self.accepted_snapshot, self.states['proposal'])
         self.assertEqual(self.current['candidate_bundles'], self.states['baseline']['candidate_bundles'])
         for item in self.frozen['inventory']:
             current = next(r for r in self.current['slots'][item['slot']] if r['id'] == item['id'])
@@ -81,7 +84,7 @@ class ProtostarKoreanAliasDataCleanupTests(unittest.TestCase):
         self.assertEqual(after['en'], 'an embedded protostellar system with dust disk and bipolar outflow')
         self.assertEqual(after['kind'], ['environment'])
 
-    def test_actual_v6_full_pack_detail_and_overview_preserve_genuine_subject_context(self):
+    def test_historical_v6_full_pack_detail_and_overview_preserve_genuine_subject_context(self):
         report = public_gate.check()
         for key in ['candidate_equal', 'full_pack_equal', 'detail_equal', 'overview_equal',
                     'genuine_subject_compatibility_without_force',
@@ -107,12 +110,12 @@ class ProtostarKoreanAliasDataCleanupTests(unittest.TestCase):
         subjects = {'slot:subject:' + row['id'] for row in self.current['slots']['subject']}
         self.assertTrue(all(q['target'] in subjects for q in queries))
 
-    def test_all_other_merged_rows_and_previously_accepted_natural_rows_are_exact(self):
+    def test_historical_other_merged_rows_and_current_natural_rows_are_exact(self):
         for slot, rows in self.states['baseline']['slots'].items():
             for row in rows:
                 if slot == 'subject' and row['id'] == self.target['id']:
                     continue
-                self.assertEqual(next(r for r in self.current['slots'][slot] if r['id'] == row['id']), row)
+                self.assertEqual(next(r for r in self.accepted_snapshot['slots'][slot] if r['id'] == row['id']), row)
         krummholz = next(r for r in self.current['slots']['surface_material'] if r['id'] == 'treeline_wind_pruned_krummholz_surface')
         self.assertIn('왜성변형수 바람형 패치', krummholz['aliases'])
         reef = next(r for r in self.current['slots']['action'] if r['id'] == 'reef_flat_crest_forereef_wave_gradient')
@@ -126,7 +129,7 @@ class ProtostarKoreanAliasDataCleanupTests(unittest.TestCase):
         decision = json.loads(raw)
         self.assertEqual(decision['accepted_ids'], [self.target['id']])
         self.assertEqual(decision['accepted_fields'], ['aliases'])
-        self.assertEqual(decision['accepted_dictionary_hash'], common.g.dictionary_hash(self.current))
+        self.assertEqual(decision['accepted_dictionary_hash'], common.g.dictionary_hash(self.accepted_snapshot))
         gain = decision['measured_benefit']['bare_korean_name_lexical']
         self.assertTrue(gain['no_hits']['baseline'])
         self.assertFalse(gain['no_hits']['proposal'])
