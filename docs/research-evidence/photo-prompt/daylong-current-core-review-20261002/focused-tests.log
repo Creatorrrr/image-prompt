@@ -1,0 +1,61 @@
+.......................................................EEE
+======================================================================
+ERROR: test_frozen_photo_baseline_is_historical_and_not_a_current_adapter (tests.test_subculture_illustration_photo_boundary.SubcultureIllustrationPhotoBoundaryTests.test_frozen_photo_baseline_is_historical_and_not_a_current_adapter)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/tests/test_subculture_illustration_photo_boundary.py", line 29, in setUp
+    self.baseline = json.loads(BASELINE_PATH.read_text(encoding="utf-8"))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/ce8f20680f5a/image-prompt/skills/subculture-illustration-image-generator/assets/photo_regression_baseline_v4.json'
+
+======================================================================
+ERROR: test_illustration_introduction_did_not_modify_photo_runtime (tests.test_subculture_illustration_photo_boundary.SubcultureIllustrationPhotoBoundaryTests.test_illustration_introduction_did_not_modify_photo_runtime)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/tests/test_subculture_illustration_photo_boundary.py", line 29, in setUp
+    self.baseline = json.loads(BASELINE_PATH.read_text(encoding="utf-8"))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/ce8f20680f5a/image-prompt/skills/subculture-illustration-image-generator/assets/photo_regression_baseline_v4.json'
+
+======================================================================
+ERROR: test_illustration_modules_do_not_import_photo_runtime (tests.test_subculture_illustration_photo_boundary.SubcultureIllustrationPhotoBoundaryTests.test_illustration_modules_do_not_import_photo_runtime)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/tests/test_subculture_illustration_photo_boundary.py", line 29, in setUp
+    self.baseline = json.loads(BASELINE_PATH.read_text(encoding="utf-8"))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/ce8f20680f5a/image-prompt/skills/subculture-illustration-image-generator/assets/photo_regression_baseline_v4.json'
+
+----------------------------------------------------------------------
+Ran 58 tests in 19.278s
+
+FAILED (errors=3)
+{
+  "provider": "gemini",
+  "semantic_text_recipe": "semantic-text-v5",
+  "bm25f_policy_version": "photo-semantic-bm25f-policy/v3",
+  "embedding_model": "gemini-embedding-2",
+  "embedding_dimensions": 768,
+  "entries": 9468,
+  "storage_format": "sharded-json-v1",
+  "shard_count": 16,
+  "output": "/workspace/scratch/ce8f20680f5a/image-prompt/skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json"
+}
