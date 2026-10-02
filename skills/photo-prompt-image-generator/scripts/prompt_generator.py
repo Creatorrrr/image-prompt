@@ -135,6 +135,7 @@ VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
     "photo_prompt_visual_obligations_accessory_structure.json",
     "photo_prompt_visual_obligations_traditional_clothing_detail.json",
     "photo_prompt_visual_obligations_pose_vocabulary.json",
+    "photo_prompt_visual_obligations_body_morphology.json",
 )
 VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
     "photo-visual-obligation-registry-extension/v1"
@@ -184,6 +185,7 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_contextual_appeal_extension.json",
     "photo_prompt_editing_effects_extension.json",
     "photo_prompt_pose_vocabulary_extension.json",
+    "photo_prompt_body_morphology_extension.json",
 )
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v2"
@@ -2257,6 +2259,7 @@ def candidate_pack_direct_subject_categories(subject: str) -> list[str]:
 
 def candidate_pack_assertion_discovery(
     data: JsonDict, core: JsonDict, documents: JsonDict, bm25f: JsonDict,
+    *, include_visual_priorities: bool = False,
 ) -> List[str]:
     """Find source-opted-in options per frozen assertion, never hard duties.
 
@@ -2301,10 +2304,14 @@ def candidate_pack_assertion_discovery(
             continue
         allowed[document_id] = tokens
     found: List[str] = []
-    for assertion in assertions:
-        if assertion.get("polarity") not in {"advisory", "required"}:
-            continue
-        query = assertion_text(assertion)
+    queries = [assertion_text(a) for a in assertions
+               if a.get("polarity") in {"advisory", "required"}]
+    if include_visual_priorities:
+        # These are already-authored observations, not requester assertions.
+        # Keep them advisory and subject to the same opt-in/effect/lock guards.
+        queries.extend(str(value) for value in core.get("visual_priorities") or []
+                       if isinstance(value, str) and value.strip())
+    for query in queries:
         tokens = candidate_pack_relevance_tokens(query)
         eligible = {key for key, source_tokens in allowed.items() if len(tokens & source_tokens) >= minimum}
         for hit in rank_bm25f(bm25f, {"assertion_evidence": query}, allowed_ids=eligible,
@@ -11360,7 +11367,9 @@ def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, d
     discovery = candidate_pack_assertion_discovery(data, core, {
         f"slot:{slot}:{entry_id}": entry
         for slot, entries in eligible.items() for entry_id, entry in entries.items()
-    }, bm25f)
+    }, bm25f, include_visual_priorities=True)
+    observation_fields = [field for field in ("semantic_assertions", "visual_priorities")
+                          if core.get(field)]
     discovery_slots = list(dict.fromkeys(document_id.split(":", 2)[1] for document_id in discovery))
     discovery_order = {slot: i for i, slot in enumerate(discovery_slots)}
     slots, active = {}, {}
@@ -11401,7 +11410,7 @@ def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, d
             candidates.append(candidate)
         if not candidates:
             continue
-        active[slot] = {"source_fields": fields + (["semantic_assertions"] if observed else []),
+        active[slot] = {"source_fields": list(dict.fromkeys(fields + (observation_fields if observed else []))),
                         "focus_query_sha256": hashlib.sha256(query.encode()).hexdigest()}
         slots[slot] = {"slot": slot, "role": "core" if slot in CANDIDATE_PACK_CORE_SLOTS else "support",
                        "selected": None, "candidates": candidates, "candidate_count": len(entries),
@@ -11414,7 +11423,7 @@ def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, d
         "slot_ownership_sha256": canonical_json_sha256(data.get("candidate_semantic_policy") or {}),
         "slot_applicability_sha256": canonical_json_sha256(slot_applicability_from_source(data)["slots"]),
         "whole_scene_query_sha256": hashlib.sha256(global_query.encode()).hexdigest(),
-        "active_slots": active, "retrieval": "same_slot_core_focus_and_frozen_assertion_bm25f_rrf",
+        "active_slots": active, "retrieval": "same_slot_core_focus_and_frozen_observation_bm25f_rrf",
         "candidate_adoption": "optional",
     }
     binding["canonical_sha256"] = canonical_json_sha256(binding)
