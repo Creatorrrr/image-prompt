@@ -22042,46 +22042,177 @@
       "id": "panning_subject_tracking_motion_relation",
       "category": "capture_motion_panning_subject_tracking",
       "activation": {
-        "exact_terms": ["panning subject-tracking motion relation", "tracked-subject panning blur photograph", "패닝 피사체 추적 모션 관계", "피사체 추적 패닝 블러 사진"],
-        "exclude_if_any_terms": ["camera shake", "zoom blur", "radial blur", "rear-curtain flash only"],
+        "exact_terms": [
+          "panning subject-tracking motion relation",
+          "tracked-subject panning blur photograph",
+          "패닝 피사체 추적 모션 관계",
+          "피사체 추적 패닝 블러 사진"
+        ],
+        "exclude_if_any_terms": [
+          "camera shake",
+          "zoom blur",
+          "radial blur",
+          "rear-curtain flash only"
+        ],
         "requires_adult_character": false,
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "The camera tracks a laterally moving subject during a slow exposure so the subject's identity-bearing core remains comparatively sharp, the environment streaks directionally, secondary moving parts retain plausible relative blur, and every streak agrees with the travel vector. Uniform shake, radial zoom blur, or a frozen subject pasted over a blurred background cannot substitute.",
-        "paraphrase_examples": ["a moving cyclist stays readable while the street becomes horizontal streaks and the wheels retain rotational blur", "달리는 성인 피사체 핵심은 읽히고 배경은 이동 방향과 평행하게 흐르는 추적 패닝", "directional environment smear and comparatively sharp tracked features share one coherent motion vector"],
+        "definition": "The camera tracks a moving subject during a slow exposure so the subject's identity-bearing core remains comparatively sharp, the environment streaks directionally, secondary moving parts retain plausible relative blur, and every streak agrees with the travel vector. Uniform shake, radial zoom blur, or a frozen subject pasted over a blurred background cannot substitute.",
+        "paraphrase_examples": [
+          "a moving cyclist stays readable while the street becomes horizontal streaks and the wheels retain rotational blur",
+          "달리는 성인 피사체 핵심은 읽히고 배경은 이동 방향과 평행하게 흐르는 추적 패닝",
+          "directional environment smear and comparatively sharp tracked features share one coherent motion vector"
+        ],
         "component_semantics": {
           "minimum_component_groups": 5,
-          "required_group_ids": ["pan_tracked_core", "pan_directional_background", "pan_secondary_motion", "pan_vector_consistency", "pan_not_global_shake"],
+          "required_group_ids": [
+            "pan_tracked_core",
+            "pan_directional_background",
+            "pan_secondary_motion",
+            "pan_vector_consistency",
+            "pan_not_global_shake"
+          ],
           "groups": [
-            {"id":"pan_tracked_core","any_terms":["the moving subject's identity-bearing core remains comparatively sharp and readable","움직이는 피사체의 정체성 핵심 부분이 상대적으로 선명하고 읽히게 유지됨"]},
-            {"id":"pan_directional_background","any_terms":["environmental detail stretches into predominantly parallel directional streaks","환경 디테일이 주로 서로 평행한 방향성 스트리크로 늘어남"]},
-            {"id":"pan_secondary_motion","any_terms":["secondary moving parts retain plausible local motion or rotational blur","보조 움직임 부위가 그럴듯한 국소 움직임 또는 회전 블러를 유지함"]},
-            {"id":"pan_vector_consistency","any_terms":["background streaks subject travel and local motion cues agree on one lateral movement vector","배경 스트리크 피사체 이동과 국소 움직임 단서가 하나의 측면 이동 벡터에 일치함"]},
-            {"id":"pan_not_global_shake","any_terms":["the comparatively sharp moving subject and directional environment streaks belong to one continuously tracked exposure with coherent relative motion","상대적인 피사체 선명도가 전역 카메라 흔들림 방사형 줌 또는 합성 블러가 아닌 능동 추적을 증명함"]}
+            {
+              "id": "pan_tracked_core",
+              "any_terms": [
+                "the moving subject's identity-bearing core remains comparatively sharp and readable",
+                "움직이는 피사체의 정체성 핵심 부분이 상대적으로 선명하고 읽히게 유지됨"
+              ]
+            },
+            {
+              "id": "pan_directional_background",
+              "any_terms": [
+                "environmental detail stretches into predominantly parallel directional streaks",
+                "환경 디테일이 주로 서로 평행한 방향성 스트리크로 늘어남"
+              ]
+            },
+            {
+              "id": "pan_secondary_motion",
+              "any_terms": [
+                "secondary moving parts retain plausible local motion or rotational blur",
+                "보조 움직임 부위가 그럴듯한 국소 움직임 또는 회전 블러를 유지함"
+              ]
+            },
+            {
+              "id": "pan_vector_consistency",
+              "any_terms": [
+                "background streaks subject travel and local motion cues remain coherent with the tracked movement direction throughout the exposure",
+                "배경 스트리크 피사체 이동과 국소 움직임 단서가 노출 동안 추적하는 이동 방향과 일관된 관계를 유지함",
+                "background streaks subject travel and local motion cues agree on one lateral movement vector",
+                "배경 스트리크 피사체 이동과 국소 움직임 단서가 하나의 측면 이동 벡터에 일치함"
+              ]
+            },
+            {
+              "id": "pan_not_global_shake",
+              "any_terms": [
+                "the comparatively sharp moving subject and directional environment streaks belong to one continuously tracked exposure with coherent relative motion",
+                "상대적인 피사체 선명도가 전역 카메라 흔들림 방사형 줌 또는 합성 블러가 아닌 능동 추적을 증명함"
+              ]
+            }
           ]
         },
-        "contrast_examples": ["everything blurred equally by camera shake", "radial zoom blur", "a tack-sharp frozen subject over a synthetic blurred backdrop", "motion blur perpendicular to travel", "a still pose with speed lines"]
+        "contrast_examples": [
+          "everything blurred equally by camera shake",
+          "radial zoom blur",
+          "a tack-sharp frozen subject over a synthetic blurred backdrop",
+          "motion blur perpendicular to travel",
+          "a still pose with speed lines"
+        ]
       },
-      "concept_candidate": {"concept_terms":["comparatively sharp tracked subject core", "parallel directional environment streaks", "plausible secondary-part motion blur", "single lateral travel vector", "tracking rather than global shake"]},
-      "runtime_expression": {"default_mode":"definition_with_optional_label","prompt_label_terms":["tracked-subject panning photograph"],"forbidden_prompt_terms":[],"runtime_forbidden_labels":[]},
-      "composition_instruction": "Track one clearly moving subject laterally during a slow exposure. Keep the face or other identity-bearing core comparatively sharp, stretch environmental texture into parallel streaks, retain plausible local blur in moving extremities or wheels, and align every motion cue with one travel vector.",
-      "required_evidence_fields": ["pan_tracked_core_phrase", "pan_background_streak_phrase", "pan_secondary_motion_phrase", "pan_vector_phrase", "pan_boundary_phrase"],
+      "concept_candidate": {
+        "concept_terms": [
+          "comparatively sharp tracked subject core",
+          "parallel directional environment streaks",
+          "plausible secondary-part motion blur",
+          "single coherent travel direction",
+          "tracking rather than global shake"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "tracked-subject panning photograph"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Track one clearly moving subject along its direction of travel during a slow exposure. Keep the face or other identity-bearing core comparatively sharp, stretch environmental texture into parallel streaks, retain plausible local blur in moving extremities or wheels, and align every motion cue with one travel vector.",
+      "required_evidence_fields": [
+        "pan_tracked_core_phrase",
+        "pan_background_streak_phrase",
+        "pan_secondary_motion_phrase",
+        "pan_vector_phrase",
+        "pan_boundary_phrase"
+      ],
       "evidence_requirements": {
-        "pan_tracked_core_phrase":{"min_content_words":10,"must_mention_any":["the moving subject's identity-bearing core remains comparatively sharp and readable"]},
-        "pan_background_streak_phrase":{"min_content_words":8,"must_mention_any":["environmental detail stretches into predominantly parallel directional streaks"]},
-        "pan_secondary_motion_phrase":{"min_content_words":9,"must_mention_any":["secondary moving parts retain plausible local motion or rotational blur"]},
-        "pan_vector_phrase":{"min_content_words":13,"must_mention_any":["background streaks subject travel and local motion cues agree on one lateral movement vector"]},
-        "pan_boundary_phrase":{"min_content_words":14,"must_mention_any":["the comparatively sharp moving subject and directional environment streaks belong to one continuously tracked exposure with coherent relative motion"]}
+        "pan_tracked_core_phrase": {
+          "min_content_words": 10,
+          "must_mention_any": [
+            "the moving subject's identity-bearing core remains comparatively sharp and readable"
+          ]
+        },
+        "pan_background_streak_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "environmental detail stretches into predominantly parallel directional streaks"
+          ]
+        },
+        "pan_secondary_motion_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": [
+            "secondary moving parts retain plausible local motion or rotational blur"
+          ]
+        },
+        "pan_vector_phrase": {
+          "min_content_words": 13,
+          "must_mention_any": [
+            "background streaks subject travel and local motion cues remain coherent with the tracked movement direction throughout the exposure",
+            "background streaks subject travel and local motion cues agree on one lateral movement vector"
+          ]
+        },
+        "pan_boundary_phrase": {
+          "min_content_words": 14,
+          "must_mention_any": [
+            "the comparatively sharp moving subject and directional environment streaks belong to one continuously tracked exposure with coherent relative motion"
+          ]
+        }
       },
       "render_gates": [
-        {"id":"vo_capture_pan_tracked_core_readable","review_scale":"thumbnail","description":"The moving subject's identity-bearing core remains comparatively sharp and readable."},
-        {"id":"vo_capture_pan_parallel_background_streaks","review_scale":"both","description":"Environmental detail forms predominantly parallel streaks along the travel direction."},
-        {"id":"vo_capture_pan_secondary_motion_plausible","review_scale":"both","description":"Extremities, fabric, or wheels retain plausible local or rotational motion blur."},
-        {"id":"vo_capture_pan_single_motion_vector","review_scale":"native","description":"Subject travel, background streaks, and local motion agree on one vector."},
-        {"id":"vo_capture_pan_not_shake_zoom_or_speed_lines","review_scale":"native","description":"Uniform shake, radial zoom, pasted blur, and decorative speed lines do not substitute."}
+        {
+          "id": "vo_capture_pan_tracked_core_readable",
+          "review_scale": "thumbnail",
+          "description": "The moving subject's identity-bearing core remains comparatively sharp and readable."
+        },
+        {
+          "id": "vo_capture_pan_parallel_background_streaks",
+          "review_scale": "both",
+          "description": "Environmental detail forms predominantly parallel streaks along the travel direction."
+        },
+        {
+          "id": "vo_capture_pan_secondary_motion_plausible",
+          "review_scale": "both",
+          "description": "Extremities, fabric, or wheels retain plausible local or rotational motion blur."
+        },
+        {
+          "id": "vo_capture_pan_single_motion_vector",
+          "review_scale": "native",
+          "description": "Subject travel, background streaks, and local motion agree on one vector."
+        },
+        {
+          "id": "vo_capture_pan_not_shake_zoom_or_speed_lines",
+          "review_scale": "native",
+          "description": "Uniform shake, radial zoom, pasted blur, and decorative speed lines do not substitute."
+        }
       ],
-      "reject_substitutes": ["uniform_camera_shake", "radial_zoom_blur", "frozen_subject_on_synthetic_blur", "motion_vector_mismatch", "decorative_speed_lines"]
+      "reject_substitutes": [
+        "uniform_camera_shake",
+        "radial_zoom_blur",
+        "frozen_subject_on_synthetic_blur",
+        "motion_vector_mismatch",
+        "decorative_speed_lines"
+      ]
     },
     {
       "id": "rear_curtain_flash_motion_trace",
