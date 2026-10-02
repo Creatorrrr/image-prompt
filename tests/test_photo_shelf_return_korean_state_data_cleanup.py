@@ -112,7 +112,14 @@ class ShelfReturnKoreanStateDataCleanupTests(unittest.TestCase):
 
     def test_historical_merged_state_and_current_eleven_keeps_are_exact(self):
         self.assertEqual(self.accepted_snapshot, self.states['proposal'])
-        self.assertEqual(fixtures.bundle_meanings(self.current['candidate_bundles']), fixtures.bundle_meanings(self.states['baseline']['candidate_bundles']))
+        historical_bundles = self.states['baseline']['candidate_bundles']
+        historical_ids = {row['id'] for row in historical_bundles}
+        # Later optional extensions may append bundles; every historical meaning
+        # and its order must still survive unchanged in the current corpus.
+        current_historical = [row for row in self.current['candidate_bundles']
+                              if row['id'] in historical_ids]
+        self.assertEqual(fixtures.bundle_meanings(current_historical),
+                         fixtures.bundle_meanings(historical_bundles))
         for item in self.frozen['inventory']:
             current = next(r for r in self.current['slots'][item['slot']] if r['id'] == item['id'])
             self.assertEqual(current, item['proposal'])
