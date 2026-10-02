@@ -178,72 +178,33 @@ def review(prompt: str, provenance: str = "agent_prepack") -> dict:
     }
 
 
-def generate_once(*args, **kwargs):
-    """Prepare complete current inputs before invoking the real sampler."""
+def candidate_source(data: dict, frozen: dict, *, seed: int = 7, controls: dict | None = None,
+                     overrides: dict | None = None, context: dict | None = None,
+                     visual_intent: dict | None = None) -> dict:
+    """Supply complete current inputs for tests of downstream contracts."""
     import copy
-
-    creative_controls = prompt_generator.creative_controls
-    import photo_embodiment
-
-    fixture_context = kwargs.pop("fixture_context", {})
-    frozen = kwargs.get("authorial_core")
-    if isinstance(frozen, dict):
-        snapshot = kwargs.get("creative_control_snapshot")
-        if snapshot is None:
-            overrides = {
-                "sensual": kwargs.get("sensual_intensity", 0),
-                "fetish": kwargs.get("fetish_intensity", 0),
-                "creativity": (
-                    kwargs.get("creativity") if kwargs.get("creativity") is not None else 1
-                ),
-                "surreal": kwargs.get("surreal", 0),
-            }
-            if kwargs.get("adult_appeal_emphasis"):
-                overrides["adult_appeal_emphasis"] = kwargs["adult_appeal_emphasis"]
-            snapshot = creative_controls.resolve(
-                frozen["source_request"], overrides=overrides, context=fixture_context, seed=7
-            )
-            binding = frozen["request_binding"]
-            request = prompt_generator.normalize_request_envelope(
-                {
-                    "contract_version": "photo-request-envelope/v1",
-                    "provenance": "requesting_user",
-                    "request_id": binding["request_id"],
-                    "request_text": frozen["source_request"],
-                    "request_sha256": binding["request_sha256"],
-                    "active_spans": binding["active_spans"],
-                }
-            )
-            raw = copy.deepcopy(frozen)
-            for key in ("canonical_sha256", "core_id", "request_binding"):
-                raw.pop(key, None)
-            raw["intent_lock"] = {
-                key: value
-                for key, value in raw["intent_lock"].items()
-                if key
-                in {
-                    "contract_version",
-                    "priority",
-                    "semantic_anchors",
-                    "locked_dimensions",
-                    "open_dimensions",
-                }
-            }
-            if isinstance(raw.get("request_lineage"), dict):
-                raw["request_lineage"].pop("canonical_sha256", None)
-            raw["creative_controls_sha256"] = snapshot["canonical_sha256"]
-            bound = prompt_generator.normalize_authorial_core(
-                raw, request_envelope=request, creative_control_snapshot=snapshot
-            )
-            frozen.clear()
-            frozen.update(bound)
-            kwargs["creative_control_snapshot"] = snapshot
-        result = prompt_generator.generate_once(*args, **kwargs)
-        result["provenance"]["embodiment_preflight"] = photo_embodiment.build_policy(
-            frozen, review(frozen["baseline_prompt_en"])
-        )
-        return result
-    return prompt_generator.generate_once(*args, **kwargs)
+    snapshot = controls
+    if snapshot is None:
+        values = {"sensual": 0, "fetish": 0, "creativity": 1, "surreal": 0, **(overrides or {})}
+        snapshot = prompt_generator.creative_controls.resolve(
+            frozen["source_request"], overrides=values, context=context or {}, seed=7)
+        binding = frozen["request_binding"]
+        request = prompt_generator.normalize_request_envelope({
+            "contract_version": "photo-request-envelope/v1", "provenance": "requesting_user",
+            "request_id": binding["request_id"], "request_text": frozen["source_request"],
+            "request_sha256": binding["request_sha256"], "active_spans": binding["active_spans"],
+        })
+        raw = copy.deepcopy(frozen)
+        for key in ("canonical_sha256", "core_id", "request_binding"):
+            raw.pop(key, None)
+        raw["intent_lock"] = {key: value for key,value in raw["intent_lock"].items()
+                              if key in {"contract_version","priority","semantic_anchors","locked_dimensions","open_dimensions"}}
+        if isinstance(raw.get("request_lineage"),dict):raw["request_lineage"].pop("canonical_sha256",None)
+        raw["creative_controls_sha256"] = snapshot["canonical_sha256"]
+        bound = prompt_generator.normalize_authorial_core(raw,request_envelope=request,creative_control_snapshot=snapshot)
+        frozen.clear();frozen.update(bound)
+    return prompt_generator.prepare_candidate_source(data,frozen,snapshot,
+        review(frozen["baseline_prompt_en"]),seed=seed,visual_intent=visual_intent)
 
 
 def composition_review(pack: dict, prompt: str) -> dict:
@@ -290,11 +251,8 @@ def run_current(
             [
                 sys.executable,
                 str(SCRIPT_DIR / "generate_photo_prompt.py"),
-                "--selection-mode",
-                "rule",
                 "--seed",
                 str(seed),
-                "--emit-candidate-pack",
                 "--authorial-core-json",
                 paths["core"],
                 "--request-envelope-json",
@@ -312,3 +270,63 @@ def run_current(
         if result.returncode:
             raise AssertionError(result.stderr)
         return json.loads(result.stdout)[0]
+
+
+def historical_freeze(evidence: Path) -> dict:
+    """Validate archived evidence bytes without executing its retired runtime."""
+    import json
+    raw = (evidence / "frozen-inventory-queries.json").read_bytes()
+    expected = (evidence / "frozen-sha256.txt").read_text().split()[0]
+    assert hashlib.sha256(raw).hexdigest() == expected, "historical freeze changed"
+    frozen = json.loads(raw)
+    for name, digest in frozen["artifact_sha256"].items():
+        original = evidence / name
+        preserved = evidence / "preparation-revisions/pre-maintenance-binding" / name
+        candidates = [original, preserved]
+        assert any(p.is_file() and hashlib.sha256(p.read_bytes()).hexdigest() == digest
+                   for p in candidates), "historical artifact changed: " + name
+    return frozen
+
+
+def historical_states(evidence: Path, frozen: dict) -> dict:
+    """Read the frozen source delta; source hashes belong to that prior run."""
+    import copy
+    import gzip
+    import json
+    baseline = json.loads(gzip.decompress((evidence / "baseline-merged-data.json.gz").read_bytes()))
+    states = {label: copy.deepcopy(baseline) for label in frozen["state_dictionary_hashes"]}
+    for item in frozen["inventory"]:
+        for label, data in states.items():
+            rows = data["slots"][item["slot"]]
+            position = next(i for i, row in enumerate(rows) if row["id"] == item["id"])
+            assert rows[position] == item["before"]
+            rows[position] = copy.deepcopy(item["before"] if label == "baseline"
+                                          else item.get(label, item.get("proposal", item["before"])))
+    return states
+
+
+def bundle_meanings(bundles: list) -> list:
+    """Compare authored bundle meaning independently of its derived source hash."""
+    return [{key: value for key, value in row.items() if key != "source_sha256"}
+            for row in bundles]
+
+
+def project_slot_candidate(data: dict, slot: str, entry: dict) -> tuple[dict, dict]:
+    """Exercise current public projection and lossless detail, without retrieval."""
+    import copy
+    import compose_pack_view as views
+    import photo_candidate_semantics as semantics
+    variant = dict(data, slots=dict(data["slots"]))
+    variant["slots"][slot] = [entry if row["id"] == entry["id"] else row
+                              for row in data["slots"][slot]]
+    candidate, _ = prompt_generator.candidate_pack_summarize_slot_candidate(
+        variant, slot, {"id": entry["id"], "applicability_status": "eligible"})
+    projected = {"contract_version": "photo-candidate-pack/v6",
+                 "slots": {slot: {"slot": slot, "candidates": [candidate]}}}
+    prompt_generator.candidate_pack_project_candidate_surfaces(projected)
+    semantics.apply_public_semantics(projected, {
+        candidate["id"]: semantics.semantic_source(entry, slot, data["candidate_semantic_policy"])})
+    prompt_generator.candidate_pack_recompute_id(projected)
+    detail = views.build_view(projected, [candidate["id"]])
+    views.verify_view(projected, detail)
+    return candidate, detail

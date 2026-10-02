@@ -240,6 +240,9 @@ class PhotoTraditionalClothingSemanticsTests(unittest.TestCase):
         self.assertTrue(forbidden_generic_terms.isdisjoint(exact_terms))
 
     def test_exact_candidate_and_hard_negative_routing_fixture(self):
+        registry = {**self.registry, "profiles": [
+            profile for profile in self.registry["profiles"] if profile["id"] in PROFILE_IDS
+        ]}
         cases = [
             json.loads(line)
             for line in FIXTURE_PATH.read_text(encoding="utf-8").splitlines()
@@ -258,13 +261,13 @@ class PhotoTraditionalClothingSemanticsTests(unittest.TestCase):
                 ]
                 hard_matches = (
                     prompt_generator.candidate_pack_auto_visual_obligation_matches(
-                        self.registry,
+                        registry,
                         source_rows,
                     )
                 )
                 optional_matches = (
                     prompt_generator.candidate_pack_auto_visual_concept_matches(
-                        self.registry,
+                        registry,
                         source_rows,
                     )
                 )

@@ -114,7 +114,7 @@ class RealisticBackgroundTests(unittest.TestCase):
   self.assertIn('clean interior',clean)
   self.assertNotIn('lobby',clean)
   material=next(e for e in self.ext['slots']['texture'] if e['id']=='rb_material_response_contrast_candidate')
-  self.assertIsNone(pg.slot_block_reason(self.data,'texture',{'subject_category':'human','preset_domains':[]}))
+  self.assertIsNone(pg.slot_block_reason(self.data,'texture',{'subject_category':'human','domains':[]}))
   self.assertEqual(material['affected_dimensions'],['material'])
  def test_visual_component_schema_accepts_positive_units_and_rejects_malformed_data(self):
   for value in [[], 'glass', ['glass', 'GLASS'], [3], [' ']]:

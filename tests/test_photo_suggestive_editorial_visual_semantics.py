@@ -76,12 +76,6 @@ EXPECTED_CANDIDATES = {
     },
 }
 
-EXPECTED_PRESETS = {
-    "adult_controlled_reveal_window_editorial",
-    "strategic_coverage_figure_study_editorial",
-    "underwear_outerwear_layered_editorial",
-    "soft_window_private_room_editorial",
-}
 
 EXPECTED_ARM_PROFILES = {
     "arm-01-window-reveal": {
@@ -119,7 +113,6 @@ class PhotoSuggestiveEditorialVisualSemanticsTests(unittest.TestCase):
             slot: {row["id"]: row for row in rows}
             for slot, rows in cls.tags["slots"].items()
         }
-        cls.presets = {row["id"]: row for row in cls.tags["presets"]}
 
     @staticmethod
     def source_rows(text: str) -> list[dict[str, object]]:
@@ -278,54 +271,10 @@ class PhotoSuggestiveEditorialVisualSemanticsTests(unittest.TestCase):
             with self.subTest(text=text):
                 self.assertTrue(self.hard_matches(text).isdisjoint(new_ids))
 
-    def test_candidate_atoms_and_presets_are_reachable(self) -> None:
+    def test_candidate_atoms_are_reachable(self) -> None:
         for slot, expected_ids in EXPECTED_CANDIDATES.items():
             with self.subTest(slot=slot):
                 self.assertLessEqual(expected_ids, set(self.candidates[slot]))
-        self.assertLessEqual(EXPECTED_PRESETS, set(self.presets))
-        all_expected = set().union(*EXPECTED_CANDIDATES.values())
-        referenced: set[str] = set()
-        for preset_id in EXPECTED_PRESETS:
-            preset = self.presets[preset_id]
-            self.assertTrue(preset["required_slots"])
-            for rule in preset["filters"].values():
-                referenced.update(rule.get("ids", []))
-        intentionally_unbound_after_regression = {
-            "camera_acknowledged_observer_frame",
-            "forearm_coverage_contour_continuity",
-        }
-        self.assertLessEqual(
-            all_expected - intentionally_unbound_after_regression,
-            referenced,
-        )
-        self.assertTrue(intentionally_unbound_after_regression.isdisjoint(referenced))
-
-    def test_presets_remove_uncoupled_or_redundant_choices(self) -> None:
-        reveal_filters = self.presets[
-            "adult_controlled_reveal_window_editorial"
-        ]["filters"]
-        self.assertEqual(
-            reveal_filters["action"]["ids"],
-            ["jacket_lapel_settle_action"],
-        )
-        self.assertNotIn(
-            "sheet_drape_stable_coverage_detail",
-            reveal_filters["garment_detail"]["ids"],
-        )
-        coverage_filters = self.presets[
-            "strategic_coverage_figure_study_editorial"
-        ]["filters"]
-        self.assertEqual(
-            coverage_filters["garment_detail"]["ids"],
-            ["sheet_drape_stable_coverage_detail"],
-        )
-        self.assertEqual(
-            coverage_filters["composition"]["ids"],
-            [
-                "sheet_drape_stable_coverage_path",
-                "environmental_three_quarter_face_body_context",
-            ],
-        )
 
     def test_skill_fail_closes_uncovered_focal_meaning(self) -> None:
         skill_text = (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8")
@@ -351,10 +300,10 @@ class PhotoSuggestiveEditorialVisualSemanticsTests(unittest.TestCase):
             f"slot:{slot}:{candidate_id}"
             for slot, candidate_ids in EXPECTED_CANDIDATES.items()
             for candidate_id in candidate_ids
-        } | {f"preset:{preset_id}" for preset_id in EXPECTED_PRESETS}
+        }
         self.assertLessEqual(expected_document_ids, set(semantic_index["entries"]))
 
-    def test_research_evidence_is_approved_and_candidate_bound(self) -> None:
+    def test_historical_evidence_is_approved_and_remaining_candidates_are_bound(self) -> None:
         rows = [
             json.loads(line)
             for line in EVIDENCE_PATH.read_text(encoding="utf-8").splitlines()
@@ -370,12 +319,16 @@ class PhotoSuggestiveEditorialVisualSemanticsTests(unittest.TestCase):
             candidate_id
             for candidates in self.candidates.values()
             for candidate_id in candidates
-        } | set(self.presets)
+        }
+        # This immutable 20260902 record also cited one removed preset.
+        retired_ids = {"mirror_selfie_phone_flash"}
+        self.assertTrue(retired_ids.isdisjoint(known_ids))
+        self.assertLessEqual(retired_ids, {cid for row in evidence_rows for cid in row["candidate_ids"]})
         for row in evidence_rows:
             with self.subTest(evidence_id=row["id"]):
                 self.assertEqual(row["status"], "approved")
                 self.assertTrue(row["source_url"].startswith("https://"))
-                self.assertLessEqual(set(row["candidate_ids"]), known_ids)
+                self.assertLessEqual(set(row["candidate_ids"]) - retired_ids, known_ids)
                 self.assertTrue(row["research_limitations"])
                 self.assertTrue(row["reuse_note"])
 

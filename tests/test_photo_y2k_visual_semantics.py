@@ -76,7 +76,7 @@ class PhotoY2KVisualSemanticsTests(unittest.TestCase):
                 self.assertNotIn(rejected, self.hard_matches(text))
 
     def test_garment_materials_do_not_weaken_nonhuman_material_slot(self):
-        contract = {"subject_category": "human", "preset_domains": ["fashion"], "adult_allowed": True}
+        contract = {"subject_category": "human", "domains": ["fashion"], "adult_allowed": True}
         self.assertEqual(generator.slot_block_reason(self.data, "surface_material", contract), "subject_category_not_allowed")
         self.assertIsNone(generator.slot_block_reason(self.data, "garment_detail", contract))
         for candidate_id in ("y2kr_velour_garment", "y2kr_metallic_garment", "y2kr_pvc_garment"):

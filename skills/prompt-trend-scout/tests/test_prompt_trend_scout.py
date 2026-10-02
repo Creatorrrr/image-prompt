@@ -13,7 +13,6 @@ ROOT = Path(__file__).resolve().parents[3]
 SKILL_DIR = ROOT / "skills" / "prompt-trend-scout"
 SCRIPTS_DIR = SKILL_DIR / "scripts"
 TARGET_TAGS = ROOT / "skills" / "photo-prompt-image-generator" / "assets" / "photo_prompt_tags.json"
-TARGET_RECIPES = ROOT / "skills" / "photo-prompt-image-generator" / "assets" / "concept_recipes.json"
 
 sys.path.insert(0, str(SCRIPTS_DIR))
 sys.path.insert(0, str(SKILL_DIR))
@@ -180,7 +179,7 @@ def test_diff_against_photo_prompt_marks_existing_and_new(tmp_path):
 def test_run_scout_report_and_no_auto_mutation(tmp_path):
     make_inbox(tmp_path)
     registry = make_registry(tmp_path)
-    before = {TARGET_TAGS: sha(TARGET_TAGS), TARGET_RECIPES: sha(TARGET_RECIPES)}
+    before = {TARGET_TAGS: sha(TARGET_TAGS)}
     cmd = [
         sys.executable,
         str(SCRIPTS_DIR / "run_scout.py"),
@@ -192,7 +191,7 @@ def test_run_scout_report_and_no_auto_mutation(tmp_path):
         "10",
     ]
     completed = subprocess.run(cmd, cwd=ROOT, check=True, text=True, capture_output=True)
-    after = {TARGET_TAGS: sha(TARGET_TAGS), TARGET_RECIPES: sha(TARGET_RECIPES)}
+    after = {TARGET_TAGS: sha(TARGET_TAGS)}
     assert before == after
     report_line = [line for line in completed.stdout.splitlines() if line.startswith("Report markdown: ")][0]
     report_path = Path(report_line.split(": ", 1)[1])

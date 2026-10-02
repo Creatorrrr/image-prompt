@@ -32,12 +32,11 @@ class PhotoCandidateSemanticsTests(unittest.TestCase):
         slots = {}
         for member in self.bundle["member_candidates"]:
             entry = generator.candidate_pack_slot_entry_by_id(self.data, member["slot"], member["entry_id"])
-            candidate, _ = generator.candidate_pack_summarize_slot_candidate(
-                self.data, member["slot"], {"id": member["entry_id"], "applicability_status": "eligible"}, 0.5, member["entry_id"])
+            candidate, _ = generator.candidate_pack_summarize_slot_candidate(self.data, member['slot'], {'id': member['entry_id'], 'applicability_status': 'eligible'})
             candidate["_v6_semantic_source"] = semantics.semantic_source(entry, member["slot"], self.data["candidate_semantic_policy"])
             slots.setdefault(member["slot"], {"slot": member["slot"], "candidates": []})["candidates"].append(candidate)
         pack = {"contract_version": "photo-candidate-pack/v6", "authorial_core": core,
-                "slots": slots, "presets": [], "provenance": {"seed": 17}}
+                "slots": slots,  "provenance": {"seed": 17}}
         pack["candidate_bundles"] = semantics.public_bundles(self.data, pack)
         return pack
 
@@ -192,9 +191,7 @@ class PhotoCandidateSemanticsTests(unittest.TestCase):
                     "active_spans": [{"span_id": "topic", "start": 0, "end": len(request), "text": request}]}
         core = generator.normalize_authorial_core(raw, request_envelope=generator.normalize_request_envelope(envelope))
         data = v6.PhotoAuthorialCoreV6Tests().runtime_data()
-        result = current_fixtures.generate_once(data, random.Random(919), None, ["en"], True, 12, True,
-                                         selection_mode="rule", include_trace=True, concept_locks=[request],
-                                         seed=919, creativity=0, authorial_core=core)
+        result = current_fixtures.candidate_source(data, core, seed=919, overrides={'creativity': 0})
         pack = generator.build_candidate_pack(result, data, "v6")
         bundles = pack["candidate_bundles"]["candidates"]
         self.assertTrue(bundles, "the normal generator must expose a usable bundle, not only compile a dead catalog")

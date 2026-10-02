@@ -44,12 +44,13 @@ class PhotoCurrentBoundaryTests(unittest.TestCase):
             with self.subTest(flag=flag), contextlib.redirect_stderr(
                 io.StringIO()
             ), self.assertRaises(SystemExit) as exc:
-                generator.main([flag, "{}"])
+                generate_photo_prompt.main([flag, "{}"])
             self.assertEqual(exc.exception.code, 2)
 
     def test_normal_generation_requires_complete_current_inputs(self):
-        with self.assertRaisesRegex(ValueError, "authorial-core"):
-            generator.main(["--emit-candidate-pack", "--selection-mode", "rule"])
+        with contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit) as exc:
+            generate_photo_prompt.main([])
+        self.assertEqual(exc.exception.code, 2)
         with self.assertRaisesRegex(ValueError, "core"):
             generator.build_candidate_pack({}, {})
 
@@ -88,15 +89,12 @@ class PhotoCurrentBoundaryTests(unittest.TestCase):
             build_semantic_index.write_sharded_payload(path, raw, shard_count=2)
             self.assertEqual(generator.load_semantic_index_payload(path)["entries"], raw["entries"])
 
-    def test_missing_sampler_pool_is_not_rebuilt_from_preset_filters(self):
-        data = {"slots": {"prop": [{"id": "cup", "en": "cup"}]}, "presets": []}
-        result = {"choices": {"prop": {"id": "cup"}}}
-        with self.assertRaisesRegex(ValueError, "recorded eligible pool"):
-            generator.candidate_pack_build_slots(data, {}, result, {})
+    def test_sampler_api_is_removed(self):
+        for name in ("generate_once", "choose_slot", "choose_preset", "candidate_pack_build_slots"):
+            self.assertFalse(hasattr(generator, name), name)
 
     def test_legacy_concept_mode_has_no_adapter(self):
-        with self.assertRaisesRegex(ValueError, "only supports soft"):
-            generate_photo_prompt.resolve_concepts([], ["portrait"], "legacy")
+        self.assertFalse(hasattr(generate_photo_prompt, "resolve_concepts"))
 
 
 if __name__ == "__main__":

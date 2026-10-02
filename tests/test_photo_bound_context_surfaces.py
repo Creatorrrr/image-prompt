@@ -117,7 +117,7 @@ class BoundContextSurfaceTests(unittest.TestCase):
              "tags": [], "affected_dimensions": ["lighting"], "weight": 1},
         ]
         return {
-            "slots": {"lighting": rows}, "presets": [],
+            "slots": {"lighting": rows},
             "candidate_semantic_policy": copy.deepcopy(self.data["candidate_semantic_policy"]),
             generator.QUALITY_LAYERS_DATA_KEY: copy.deepcopy(self.data[generator.QUALITY_LAYERS_DATA_KEY]),
         }
@@ -136,7 +136,7 @@ class BoundContextSurfaceTests(unittest.TestCase):
                     core, creative_control_snapshot=snapshot
                 )
                 self.assertEqual(constraints["no_people"], no_people)
-                contract = {"subject_category": "generic", "preset_domains": [],
+                contract = {"subject_category": "generic", "domains": [],
                             "adult_allowed": False, "intent_constraints": constraints}
                 self.assertEqual(generator.entry_block_reason(entry, "space_condition", contract),
                                  "explicit_no_people" if no_people else None)

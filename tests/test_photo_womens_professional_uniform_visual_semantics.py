@@ -10,7 +10,6 @@ ROOT = Path(__file__).resolve().parents[1]
 SKILL_DIR = ROOT / "skills" / "photo-prompt-image-generator"
 SCRIPT_DIR = SKILL_DIR / "scripts"
 TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
-RECIPES_PATH = SKILL_DIR / "assets" / "concept_recipes.json"
 REGISTRY_PATH = SKILL_DIR / "assets" / "photo_prompt_visual_obligations.json"
 EVIDENCE_PATH = (
     ROOT
@@ -106,70 +105,7 @@ EXPECTED_BY_SLOT = {
     },
 }
 
-EXPECTED_PRESETS = {
-    "clinical_nursing_duty_documentary",
-    "police_public_safety_duty_documentary",
-    "firefighter_protective_readiness_documentary",
-    "emergency_medical_transport_documentary",
-    "maritime_rescue_coast_guard_documentary",
-    "rail_driver_operation_documentary",
-    "rail_platform_dispatch_documentary",
-    "private_security_access_control_documentary",
-    "professional_kitchen_workflow_documentary",
-    "postal_route_delivery_documentary",
-    "hotel_front_desk_service_documentary",
-}
 
-ROLE_EXPECTATIONS = {
-    "간호사": (
-        "clinical_nursing_duty_documentary",
-        "nurse_patient_identifier_vitals_handover",
-    ),
-    "경찰": (
-        "police_public_safety_duty_documentary",
-        "police_perimeter_radio_flow_control",
-    ),
-    "소방관": (
-        "firefighter_protective_readiness_documentary",
-        "firefighter_scba_pressure_equipment_check",
-    ),
-    "응급구조사": (
-        "emergency_medical_transport_documentary",
-        "emt_assess_secure_transport_patient",
-    ),
-    "보안요원": (
-        "private_security_access_control_documentary",
-        "security_verify_credential_control_gate",
-    ),
-    "요리사": (
-        "professional_kitchen_workflow_documentary",
-        "chef_temperature_ticket_hygiene_check",
-    ),
-    "호텔리어": (
-        "hotel_front_desk_service_documentary",
-        "hotel_register_guest_issue_keycard",
-    ),
-    "우체부": (
-        "postal_route_delivery_documentary",
-        "postal_scan_sort_deliver_route_item",
-    ),
-    "기차 차장": (
-        "rail_platform_dispatch_documentary",
-        "rail_dispatch_doors_clear_ready_signal",
-    ),
-    "역무원": (
-        "rail_platform_dispatch_documentary",
-        "rail_dispatch_doors_clear_ready_signal",
-    ),
-    "해양경찰": (
-        "maritime_rescue_coast_guard_documentary",
-        "coast_guard_rescue_line_recovery",
-    ),
-    "철도 기관사": (
-        "rail_driver_operation_documentary",
-        "train_driver_control_signal_crosscheck",
-    ),
-}
 
 EVIDENCE_IDS = {
     "womens_uniform_nhs_clinical_workwear",
@@ -190,7 +126,6 @@ class WomensProfessionalUniformVisualSemanticsTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.tags = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
-        cls.recipes = json.loads(RECIPES_PATH.read_text(encoding="utf-8"))
         cls.registry = prompt_generator.load_visual_obligation_registry(REGISTRY_PATH)
         cls.profiles = {
             str(profile["id"]): profile for profile in cls.registry["profiles"]
@@ -203,7 +138,6 @@ class WomensProfessionalUniformVisualSemanticsTests(unittest.TestCase):
             slot: {str(row["id"]): row for row in rows}
             for slot, rows in cls.tags["slots"].items()
         }
-        cls.presets = {str(row["id"]): row for row in cls.tags["presets"]}
 
     def hard_visual_matches(self, text: str) -> set[str]:
         return set(
@@ -221,16 +155,6 @@ class WomensProfessionalUniformVisualSemanticsTests(unittest.TestCase):
             )
         )
 
-    @staticmethod
-    def normalized_set(role: dict) -> dict[str, str]:
-        raw = role.get("set", {})
-        if isinstance(raw, dict):
-            return {str(key): str(value) for key, value in raw.items()}
-        result: dict[str, str] = {}
-        for entry in raw:
-            slot, candidate_id = str(entry).split("=", 1)
-            result[slot] = candidate_id
-        return result
 
     def test_eight_hard_profiles_have_component_contracts_and_five_pixel_gates(self):
         self.assertLessEqual(PROFILE_IDS, set(self.profiles))
@@ -308,29 +232,7 @@ class WomensProfessionalUniformVisualSemanticsTests(unittest.TestCase):
                     self.assertTrue(row.get("embedding_text"))
                     self.assertNotIn("rank", row)
                     self.assertNotIn("score", row)
-        self.assertLessEqual(EXPECTED_PRESETS, set(self.presets))
 
-    def test_role_recipes_use_procedural_presets_and_actions(self):
-        for role_name, (preset_id, action_id) in ROLE_EXPECTATIONS.items():
-            with self.subTest(role_name=role_name):
-                role = self.recipes["roles"][role_name]
-                selected = self.normalized_set(role)
-                self.assertEqual(role["preset"], preset_id)
-                self.assertEqual(selected["action"], action_id)
-                self.assertIn(selected["action"], self.by_slot["action"])
-                self.assertIn(selected["location"], self.by_slot["location"])
-                self.assertIn(selected["prop"], self.by_slot["prop"])
-
-        hotel = self.normalized_set(self.recipes["roles"]["호텔리어"])
-        self.assertNotIn("costume_style", hotel)
-        hotel_preset = self.presets["hotel_front_desk_service_documentary"]
-        self.assertNotIn("costume_style", hotel_preset["required_slots"])
-        self.assertTrue(
-            any(
-                row.get("slot") == "costume_style"
-                for row in hotel_preset["optional_slots"]
-            )
-        )
 
     def test_research_rows_are_approved_source_bound_and_candidate_complete(self):
         rows = {
@@ -357,9 +259,6 @@ class WomensProfessionalUniformVisualSemanticsTests(unittest.TestCase):
                     contract_type, contract_name = contract_id.split(":", 1)
                     if contract_type == "visual_obligation":
                         self.assertIn(contract_name, PROFILE_IDS)
-                    else:
-                        self.assertEqual(contract_type, "preset")
-                        self.assertIn(contract_name, EXPECTED_PRESETS)
 
     def test_registry_schema_accepts_professional_uniform_profiles(self):
         errors: list[str] = []

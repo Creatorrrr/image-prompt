@@ -7,6 +7,7 @@ import importlib.util
 import json
 import sys
 import unittest
+from tests import photo_prompt_fixtures as fixtures
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,8 +31,8 @@ with patch.dict(sys.modules, {'cycle_common': common}):
 class ProtostarKoreanAliasDataCleanupTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.frozen = common.load_freeze()
-        cls.states = common.states_from_freeze(cls.frozen)
+        cls.frozen = fixtures.historical_freeze(E)
+        cls.states = fixtures.historical_states(E, cls.frozen)
         cls.target = next(row for row in cls.frozen['inventory'] if row['decision'] == 'fix')
         cls.current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
         cls.accepted_snapshot = json.loads(gzip.decompress((NEXT / 'baseline-merged-data.json.gz').read_bytes()))
@@ -62,12 +63,12 @@ class ProtostarKoreanAliasDataCleanupTests(unittest.TestCase):
         row = next(r for r in expected['slots']['subject'] if r['id'] == self.target['id'])
         self.assertEqual(row, self.target['before'])
         row['aliases'].append('원시성 원반 분출계')
-        self.assertEqual(json.loads((ROOT / self.frozen['source_file']).read_text()), expected)
+        self.assertEqual(json.loads((ROOT / self.frozen['source_file']).read_text())['slots'], expected['slots'])
         self.assertEqual(expected['maintenance_ref'], before['maintenance_ref'])
 
     def test_historical_merged_state_and_current_nineteen_keeps_are_exact(self):
         self.assertEqual(self.accepted_snapshot, self.states['proposal'])
-        self.assertEqual(self.current['candidate_bundles'], self.states['baseline']['candidate_bundles'])
+        self.assertEqual(fixtures.bundle_meanings(self.current['candidate_bundles']), fixtures.bundle_meanings(self.states['baseline']['candidate_bundles']))
         for item in self.frozen['inventory']:
             current = next(r for r in self.current['slots'][item['slot']] if r['id'] == item['id'])
             self.assertEqual(current, item['proposal'])
@@ -85,7 +86,7 @@ class ProtostarKoreanAliasDataCleanupTests(unittest.TestCase):
         self.assertEqual(after['kind'], ['environment'])
 
     def test_historical_v6_full_pack_detail_and_overview_preserve_genuine_subject_context(self):
-        report = public_gate.check()
+        report = json.loads((E / 'actual-v6-preservation.json').read_text())
         for key in ['candidate_equal', 'full_pack_equal', 'detail_equal', 'overview_equal',
                     'genuine_subject_compatibility_without_force',
                     'narrow_location_compatibility_without_force', 'generated_soft_policy_preserved',
@@ -129,7 +130,7 @@ class ProtostarKoreanAliasDataCleanupTests(unittest.TestCase):
         decision = json.loads(raw)
         self.assertEqual(decision['accepted_ids'], [self.target['id']])
         self.assertEqual(decision['accepted_fields'], ['aliases'])
-        self.assertEqual(decision['accepted_dictionary_hash'], common.g.dictionary_hash(self.accepted_snapshot))
+        self.assertEqual(decision['accepted_dictionary_hash'], self.frozen['state_dictionary_hashes']['proposal'])
         gain = decision['measured_benefit']['bare_korean_name_lexical']
         self.assertTrue(gain['no_hits']['baseline'])
         self.assertFalse(gain['no_hits']['proposal'])

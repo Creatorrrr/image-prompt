@@ -13,7 +13,6 @@ TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
 EXTENSION_PATH = (
     SKILL_DIR / "assets" / "photo_prompt_natural_environment_extension.json"
 )
-RECIPES_PATH = SKILL_DIR / "assets" / "concept_recipes.json"
 REGISTRY_PATH = SKILL_DIR / "assets" / "photo_prompt_visual_obligations.json"
 EVIDENCE_PATH = (
     ROOT / "docs" / "research-evidence" / "photo-prompt" / "research_evidence.jsonl"
@@ -37,20 +36,6 @@ EXPECTED_SLOT_COUNTS = {
     "weather": 4,
 }
 
-MIXIN_ROUTES = {
-    "old-growth forest structure": "노령림 구조",
-    "wetland hydrology mosaic": "습지 수문 모자이크",
-    "riparian floodplain gradient": "하천변 범람원 구배",
-    "intertidal vertical zonation": "조간대 수직 대상",
-    "karst surface subsurface drainage": "카르스트 배수 지형",
-    "active glacier flow landform": "활동 빙하 지형",
-    "aeolian dune wind structure": "풍성사구 과정",
-    "volcanic hydrothermal field process": "화산 열수지대",
-    "cumulonimbus convective storm structure": "적란운 구조",
-    "alpine treeline ecotone gradient": "고산 수목한계 전이지대",
-    "mangrove intertidal root sediment system": "맹그로브 조석 뿌리 체계",
-    "coral reef cross-shore zonation": "산호초 횡단 대상",
-}
 
 PROFILE_ROUTES = {
     "old-growth forest structure": (
@@ -101,7 +86,6 @@ class PhotoNaturalEnvironmentSemanticsTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.extension = json.loads(EXTENSION_PATH.read_text(encoding="utf-8"))
         cls.tags = prompt_generator.load_json(TAGS_PATH)
-        cls.recipes = json.loads(RECIPES_PATH.read_text(encoding="utf-8"))
         cls.registry = prompt_generator.load_visual_obligation_registry(REGISTRY_PATH)
         cls.by_slot = {
             slot: {str(row["id"]): row for row in rows}
@@ -112,19 +96,6 @@ class PhotoNaturalEnvironmentSemanticsTests(unittest.TestCase):
             for profile in cls.registry["profiles"]
         }
 
-    def explain(self, concept: str, seed: int = 17):
-        _args, explanations = generate_photo_prompt.resolve_concepts(
-            [
-                "--seed",
-                str(seed),
-                "--selection-mode",
-                "rule",
-                "--emit-candidate-pack",
-            ],
-            [concept],
-        )
-        self.assertEqual(len(explanations), 1)
-        return explanations[0]
 
     def hard_visual_matches(self, text: str) -> set[str]:
         rows = [
@@ -175,32 +146,9 @@ class PhotoNaturalEnvironmentSemanticsTests(unittest.TestCase):
         self.assertEqual(len(extension_ids), 75)
         self.assertEqual(len(extension_ids), len(set(extension_ids)))
 
-    def test_every_extension_candidate_is_owned_by_one_research_mixin(self):
-        extension_ids = {
-            str(row["id"])
-            for rows in self.extension["slots"].values()
-            for row in rows
-        }
-        routed_ids = {
-            str(candidate_id)
-            for mixin_name in MIXIN_ROUTES.values()
-            for candidate_id in self.recipes["mixins"][mixin_name]["set"].values()
-            if str(candidate_id) in extension_ids
-        }
-        self.assertEqual(routed_ids, extension_ids)
 
-    def test_precise_terms_route_one_mixin_with_environment_slots(self):
-        for term, mixin_name in MIXIN_ROUTES.items():
-            with self.subTest(term=term):
-                explanation = self.explain(term)
-                self.assertEqual(explanation["applied_mixins"], [mixin_name])
-                self.assertGreaterEqual(
-                    len(explanation["combined_forced_slots"]),
-                    6,
-                )
 
     def test_broad_nature_terms_do_not_activate_new_routes(self):
-        new_mixins = set(MIXIN_ROUTES.values())
         hard_profiles = set(PROFILE_ROUTES.values())
         for broad in (
             "forest",
@@ -221,39 +169,13 @@ class PhotoNaturalEnvironmentSemanticsTests(unittest.TestCase):
             "자연환경",
         ):
             with self.subTest(term=broad):
-                explanation = self.explain(broad)
-                self.assertTrue(
-                    set(explanation["applied_mixins"]).isdisjoint(new_mixins)
-                )
                 self.assertTrue(
                     self.hard_visual_matches(broad).isdisjoint(hard_profiles)
                 )
 
-    def test_environment_mixins_do_not_own_human_body_or_identity_slots(self):
-        forbidden_slots = {
-            "appearance_type",
-            "hair_color",
-            "hair_style",
-            "eye_color",
-            "eye_shape",
-            "body_type",
-            "body_framing",
-            "person_origin",
-            "species_marker",
-            "facial_structure",
-            "garment_detail",
-            "wardrobe_style",
-        }
-        for mixin_name in MIXIN_ROUTES.values():
-            with self.subTest(mixin=mixin_name):
-                mixin = self.recipes["mixins"][mixin_name]
-                self.assertGreaterEqual(mixin["soft_min_anchors"], 4)
-                self.assertTrue(set(mixin["set"]).isdisjoint(forbidden_slots))
-                self.assertTrue(
-                    set(mixin.get("anchor_pool") or {}).isdisjoint(
-                        forbidden_slots
-                    )
-                )
+    def test_environment_candidates_do_not_own_human_body_or_identity_slots(self):
+        forbidden_slots = {"appearance_type", "hair_color", "hair_style", "eye_color", "eye_shape", "body_type", "body_framing", "person_origin", "species_marker", "facial_structure", "garment_detail", "wardrobe_style"}
+        self.assertTrue(set(self.extension["slots"]).isdisjoint(forbidden_slots))
 
     def test_eight_hard_profiles_are_complete_fail_closed_contracts(self):
         self.assertLessEqual(set(PROFILE_ROUTES.values()), set(self.profiles))
@@ -308,15 +230,9 @@ class PhotoNaturalEnvironmentSemanticsTests(unittest.TestCase):
                     self.hard_visual_matches(negative).isdisjoint(hard_profiles)
                 )
 
-    def test_candidate_only_grammars_route_without_hard_pixel_contracts(self):
-        for term, mixin_name in CANDIDATE_ONLY_TERMS.items():
+    def test_candidate_only_terms_do_not_force_hard_pixel_contracts(self):
+        for term in CANDIDATE_ONLY_TERMS:
             with self.subTest(term=term):
-                explanation = self.explain(term)
-                self.assertEqual(explanation["applied_mixins"], [mixin_name])
-                self.assertGreaterEqual(
-                    len(explanation["combined_forced_slots"]),
-                    6,
-                )
                 self.assertEqual(self.hard_visual_matches(term), set())
 
     def test_research_evidence_is_approved_and_bound_to_current_data(self):
@@ -348,10 +264,6 @@ class PhotoNaturalEnvironmentSemanticsTests(unittest.TestCase):
                     kind, value = contract_id.split(":", 1)
                     if kind == "visual_obligation":
                         self.assertIn(value, self.profiles)
-                    elif kind == "mixin":
-                        self.assertIn(value, self.recipes["mixins"])
-                    else:
-                        self.fail(f"unexpected contract kind: {contract_id}")
 
     def test_registry_schema_is_valid_before_derived_index_check(self):
         errors: list[str] = []

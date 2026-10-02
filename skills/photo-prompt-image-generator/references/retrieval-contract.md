@@ -6,8 +6,7 @@ requester definitions/anchors and the frozen control meanings without copying
 agent-selected wardrobe. BM25F and available embeddings rank the compatible
 corpus, with soft fusion across whole directions, construction/material and
 portrayal/scene relations. Those are expression scopes, not aesthetic membership
-classes. No preset list, axis tag or item-specific intensity threshold admits a
-candidate. Scope/property locks and requester exclusions still apply.
+classes. Scope and context determine candidate eligibility. Scope/property locks and requester exclusions still apply.
 
 Up to two short requester-owned event/relationship/action/situation anchors add
 relation-focused queries; absent anchors produce no extra queries. Configuration
@@ -26,19 +25,17 @@ Post-core only. Load this reference for retrieval diagnostics or maintenance; or
 
 ## Frozen query and index ownership
 
-The retrieval query combines the exact active requester spans, with true requester exclusions redacted, plus interpreted intent, subject, setting, event, visual priorities, baseline prompt, requester definitions, interpretation resolutions, and optional style evidence. Runtime-forbidden labels remain meaning-retrieval input. Research URLs are provenance only. `--concept-lock` is normally derived; every supplied value must byte-equal the active spans in order.
+The retrieval query combines the exact active requester spans, with true requester exclusions redacted, plus interpreted intent, subject, setting, event, visual priorities, baseline prompt, requester definitions, interpretation resolutions, and optional style evidence. Runtime-forbidden labels remain meaning-retrieval input. Research URLs are provenance only.
 
 V6 projects those frozen fields into a versioned BM25F query. Tokenization is NFKC/casefolded and boundary-aware: conservative Korean suffix stripping may recognize an inflected whole term, while an unrelated word containing the same characters cannot activate it.
 
 ## Slot-focused candidate lookup
 
-The v6 candidate-pack slot shortlist now uses a whole-scene BM25F lane and one slot-focused BM25F lane for each active slot whose frozen core has a relevant subject, setting, event, affect, light, or style field. The focused text is constructed solely from the frozen core and uses the same requester-exclusion redaction as the whole-scene query. It starts with the sampler's eligible pool and may retrieve from the wider same-slot corpus after reapplying request, domain, facet, and exclusion guards. Forced and atomic anchor pools stay closed. This is an advisory candidate search, not a new meaning decision. There is no focused lookup for an inactive slot, a slot without a grounded focus, or a slot with no lexical hit.
+The slot inventory is determined after core freeze. Only a slot with authored ownership dimensions and grounded frozen fields gets a focus query. Search the eligible same-slot corpus with a whole-scene BM25F lane and the focused lane. Reapply subject, domain, facet, primary-context and requester-exclusion guards against the frozen core; another optional candidate cannot establish a prerequisite.
 
-The existing sampler order, whole-scene hits, and focused hits are fused within the same candidate budget. Wider-pool candidates are exposed when both query lanes support them, with one focused fallback if there is no intersection; the sampler-selected candidate stays available. Other sampler choices are soft context because the composer may replace multiple coupled slots together. The composer selects jointly across action, pose, prop, subject, setting, and visual style, preserving the frozen relations and all hard gates. A focused match remains advisory and may be rejected. The public slot metadata carries source-core and query hashes plus source field names, but no matched terms or private scores. This path does not run the visual-profile resolver per slot.
+Fuse the two query lanes with reciprocal-rank fusion, preferring their intersection and allowing one focused fallback. Expose at most four candidates for each core slot, two for each support slot, and 64 ordinary slot candidates overall. Process core slots before support slots within this shared cap. These are inventory limits, never an active-slot quota or adoption count. Omit a slot without grounded focus or lexical hits. There is no sampled default, fixed scene template, or forced slot selection.
 
-Frozen-subject categories are normalized once before slot lookup; a narrow English direct-human fallback does not treat depicted people or human-shaped objects as human subjects. Newly eligible candidates still satisfy their declared primary-context guards against the sampler's other choices; the composer must review prerequisites again when jointly replacing choices. Normalization-only additions must be focused hits without switching the existing narrow-pool ranking branch, and they follow the same intersection/fallback rule as other wider-pool rows when that branch is active. The sampler-selected candidate retains its real eligibility when reserved within the cutoff. A hash-validated explicit `context.no_people` can strengthen slot, bundle, adult-inventory and existing semantic-preset guards; it does not weaken exclusions or alter unrelated domain routing, and rule-mode preset selection remains unchanged.
-
-Evidence-union, partial regex semantic filtering and lane reservation were removed after negative evaluations. Their code is preserved at [the original experimental commit](https://github.com/Creatorrrr/image-prompt/commit/e8d738c37ef8b06235d049a7f2d59051373e9ce8) and in the pre-simplification bundle; they are not runtime options.
+`core_retrieval` binds the core, corpus, ownership, applicability and query hashes. The composed and runtime records must copy `core_retrieval_sha256`. The composition auditor recomputes the full eligible inventory and rejects missing or substituted candidates. Selecting across slots remains a joint authorial decision that preserves the frozen actor, action, target and other directed relations. Rejecting every optional candidate is valid.
 
 For v6 typed request routing, subject category and exact subject-entry routes read the frozen subject field. An animal-ear modifier in that field is not treated as a standalone animal subject. Authored human role aliases such as witch can supply the human category when the field does not literally say human; a nearby person in the event cannot reclassify an animal subject.
 For subject candidates only, an explicit adult human in the frozen core may expose a human role tagged `adult` when that tag describes age alone. Adult-content and suggestive tags retain their existing guards.

@@ -219,11 +219,13 @@ def pack_and_composed(core: dict) -> tuple[dict, dict]:
     assert contract is not None
     pack = {
         "pack_id": "b" * 16,
+        "core_retrieval": {"canonical_sha256": "c" * 64},
         "authorial_core": core,
         "render_repair": contract,
         "negative_en": None,
     }
     composed = {
+        "core_retrieval_sha256": pack["core_retrieval"]["canonical_sha256"],
         "pack_id": pack["pack_id"],
         "prompt_en": core["baseline_prompt_en"],
         "negative_en": None,
@@ -400,7 +402,7 @@ class PhotoRenderRepairTests(unittest.TestCase):
         core = normalized_core()
         pack, composed = pack_and_composed(core)
         contract_sha = pack["render_repair"]["canonical_sha256"]
-        request = {
+        request = {"core_retrieval_sha256": pack["core_retrieval"]["canonical_sha256"],
             "schema_version": "photo-image-render-request/v2",
             "pack_id": pack["pack_id"],
             "source_intent_lock_sha256": core["intent_lock"]["canonical_sha256"],
@@ -598,21 +600,7 @@ class PhotoRenderRepairTests(unittest.TestCase):
                 assets / "photo_prompt_semantic_index.json"
             )
         )
-        result = current_fixtures.generate_once(
-            data,
-            random.Random(1919),
-            "character_attribute_composition_scene",
-            ["en"],
-            True,
-            12,
-            True,
-            selection_mode="rule",
-            include_trace=True,
-            concept_locks=[REQUEST],
-            seed=1919,
-            creativity=0,
-            authorial_core=core,
-        )
+        result = current_fixtures.candidate_source(data, core, seed=1919, overrides={'creativity': 0})
         pack = prompt_generator.build_candidate_pack(result, data, "v6")
         self.assertEqual(pack["contract_version"], "photo-candidate-pack/v6")
         self.assertEqual(

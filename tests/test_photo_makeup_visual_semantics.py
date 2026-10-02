@@ -251,8 +251,6 @@ class PhotoMakeupVisualSemanticsTests(unittest.TestCase):
         for slot, expected_ids in MODULAR_SLOT_IDS.items():
             with self.subTest(slot=slot):
                 self.assertEqual(set(self.candidates[slot]), expected_ids)
-                self.assertIn(slot, self.tags["slot_pick_order"])
-                self.assertIn(slot, self.tags["slot_priorities"])
                 self.assertEqual(
                     self.tags["slot_applicability"]["slots"][slot]["subject_categories"],
                     ["human"],

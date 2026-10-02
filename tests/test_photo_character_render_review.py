@@ -25,12 +25,7 @@ class PhotoCharacterRenderReviewTests(unittest.TestCase):
         fixture = fixtures.PhotoAuthorialCoreV6Tests()
         core = fixture.normalize(fixtures.core())
         data = fixture.runtime_data()
-        result = current_fixtures.generate_once(
-            data, random.Random(9501), None, ["en"], True, 12, True,
-            selection_mode="rule", include_trace=True,
-            concept_locks=[fixtures.REQUEST], seed=9501, creativity=0,
-            authorial_core=core,
-        )
+        result = current_fixtures.candidate_source(data, core, seed=9501, overrides={'creativity': 0})
         cls.pack = generator.build_candidate_pack(result, data, "v6")
         cls.composed = authorship_fixtures.PhotoAuthorshipPolicyTests.composed(cls.pack)
         contract = cls.pack["character_response"]

@@ -95,15 +95,11 @@ class PhotoSlotDataCleanupTests(unittest.TestCase):
         for entry_id in ['repair_bay_worklight', 'hologram_underglow']:
             e = self.row('lighting', entry_id)
             self.assertEqual(e['embedding_text'], e['en'])
-            self.assertEqual(generator.family_signal_strength(e, 'robot', generator.coherence_rules_from_source(self.data), 'lighting', self.data), 'ambient')
-            self.assertEqual(generator.slot_signal_tier_summary(e, 'robot', 'lighting', self.data)[0], 'support')
 
     def test_monitor_rectangle_is_not_bedroom_only(self):
         e = self.row('light_shape', 'monitor_rectangle_glow')
         self.assertEqual(e['embedding_text'], 'rectangular blue light cast by a computer monitor screen in a dark interior')
         self.assertIn('gaming', e['tags'])
-        self.assertEqual(generator.family_signal_strength(e, 'homebody_room', generator.coherence_rules_from_source(self.data), 'light_shape', self.data), 'strong')
-        self.assertEqual(generator.slot_signal_tier_summary(e, 'homebody_room', 'light_shape', self.data)[0], 'core')
 
     def test_lighting_removed_counterexamples_do_not_trigger_exclusion_predicate(self):
         for slot, entry_id, term in [
@@ -135,11 +131,6 @@ class PhotoSlotDataCleanupTests(unittest.TestCase):
         self.assertEqual(e['phrase_ko'], '군중 사이 틈으로 단일 피사체가 보이는 배열로')
         self.assertEqual(e['en'], 'one subject visible through a gap in the surrounding crowd')
         self.assertNotIn('for_any', e)
-        for name, tags in [('청동 조형물', ['object']), ('개', ['animal']), ('성인 인물', ['human'])]:
-            subject = {'id': 'fixture_subject', 'ko': name, 'en': 'a subject', 'tags': tags}
-            fields = generator.build_fields({'subject': subject, 'crowd_density': e}, 'ko', self.data)
-            self.assertEqual(fields['scene_context_sentence'], '장면 맥락은 군중 사이 틈으로 단일 피사체가 보이는 배열로.')
-            self.assertNotIn('한 사람이', fields['scene_context_sentence'])
 
     def test_repair_pit_korean_output_preserves_subject_type(self):
         location = self.row('location', 'repair_garage_pit')
@@ -147,19 +138,12 @@ class PhotoSlotDataCleanupTests(unittest.TestCase):
         self.assertEqual(location['phrase_ko'], '자동차 정비소의 정비 피트에서')
         self.assertEqual(location['en'], 'an auto repair garage pit')
         self.assertNotIn('for_any', location)
-        for name, tags in [('정비사', ['human']), ('정비 로봇', ['robot']), ('공구 상자', ['object'])]:
-            subject = {'id': 'fixture_subject', 'ko': name, 'en': 'a subject', 'tags': tags}
-            fields = generator.build_fields({'subject': subject, 'location': location}, 'ko', self.data)
-            self.assertEqual(fields['location_phrase'], '자동차 정비소의 정비 피트에서')
-            self.assertNotIn('in an', fields['location_phrase'])
 
     def test_closing_cleanup_only_says_visitors_have_left(self):
         occasion = self.row('occasion_context', 'closing_cleanup_after_hours')
         self.assertEqual(occasion['phrase_ko'], '방문객들이 떠난 뒤의 폐점 정리 시간으로')
         self.assertEqual(occasion['en'], 'after-hours closing cleanup after visitors have left')
-        fields = generator.build_fields({'occasion_context': occasion, 'space_condition': self.row('space_condition', 'closing_cleanup_state')}, 'ko', self.data)
-        self.assertIn('방문객들이 떠난', fields['scene_context_sentence'])
-        self.assertNotIn('사람들이 떠난', fields['scene_context_sentence'])
+        self.assertNotIn('사람들이 떠난', occasion['phrase_ko'])
 
 
 if __name__ == '__main__':

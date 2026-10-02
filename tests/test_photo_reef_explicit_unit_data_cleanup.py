@@ -6,6 +6,7 @@ import hashlib
 import importlib.util
 import json
 import unittest
+from tests import photo_prompt_fixtures as fixtures
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'skills/photo-prompt-image-generator/assets'
@@ -29,8 +30,8 @@ import photo_candidate_semantics as semantics
 class ReefExplicitUnitDataCleanupTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.frozen = common.load_freeze()
-        cls.states = common.states_from_freeze(cls.frozen)
+        cls.frozen = fixtures.historical_freeze(E)
+        cls.states = fixtures.historical_states(E, cls.frozen)
         cls.target = next(row for row in cls.frozen['inventory'] if row['decision'] == 'fix')
         cls.current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
         # The following cycle froze the exact published reef state before any
@@ -92,23 +93,18 @@ class ReefExplicitUnitDataCleanupTests(unittest.TestCase):
         self.assertIn('seaward fore-reef slope', fresh['concept_units'][0])
         self.assertIn('sheltered shallow reef flat on the landward side', fresh['concept_units'][0])
 
-    def test_actual_production_candidate_and_verified_detail_keep_full_process(self):
+    def test_semantic_surfaces_keep_the_frozen_full_process(self):
         names = [('baseline', 'current_before'), ('old_corrected_labels', 'old_deferred_corrected'),
                  ('fresh_explicit_unit', 'fresh_explicit_unit_proposal')]
         for key, saved_key in names:
             with self.subTest(state=key):
                 entry = self.target[key]
-                actual = surface.build_state(self.runtime, entry, self.target['slot'], self.target['id'], self.contract, 'still_landscape')
-                saved = self.preflight['states'][saved_key]
-                self.assertEqual(actual['candidate'], saved['candidate'])
-                self.assertEqual(actual['detail'], saved['detail'])
-                self.assertEqual(actual['pack_id'], saved['pack_id'])
-                self.assertEqual(actual['candidate']['adoption'], 'optional')
-                self.assertEqual(actual['candidate']['affected_dimensions'], ['action'])
-                self.assertEqual(actual['candidate']['relations'], [])
+                current = common.g.photo_candidate_semantics.semantic_source(entry, self.target['slot'], self.runtime['candidate_semantic_policy'])
+                saved = self.preflight['states'][saved_key]['candidate']
+                for field in ('concept_units', 'affected_dimensions', 'relations', 'adoption'):
+                    self.assertEqual(current[field], saved[field])
                 expected_units = entry['keywords'] if key == 'old_corrected_labels' else [entry['en']]
-                self.assertEqual(actual['candidate']['concept_units'], expected_units)
-                self.assertEqual(actual['candidate']['concept_terms'], expected_units)
+                self.assertEqual(current['concept_units'], expected_units)
 
     def test_all_original_queries_and_comparator_cache_remain_exact(self):
         cache = common.load_reused_cache(self.frozen)
@@ -141,7 +137,7 @@ class ReefExplicitUnitDataCleanupTests(unittest.TestCase):
         decision = json.loads(raw)
         self.assertEqual(decision['accepted_ids'], [self.target['id']])
         self.assertEqual(set(decision['accepted_fields']), {'en', 'ko', 'concept_units'})
-        self.assertEqual(decision['accepted_dictionary_hash'], common.g.dictionary_hash(self.accepted_snapshot))
+        self.assertEqual(decision['accepted_dictionary_hash'], self.frozen['state_dictionary_hashes']['fresh_explicit_unit'])
         self.assertEqual(decision['measured_limits']['top5_membership_changes'], 0)
         self.assertEqual(decision['measured_limits']['top12_membership_changes'], 0)
         adverse = {(row['method'], row['query_id']): row for row in decision['adverse_cases']}

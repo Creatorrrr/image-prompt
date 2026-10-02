@@ -50,21 +50,7 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
     def pack(self, opened: tuple[str, ...]) -> dict:
         if opened not in self.packs:
             core = self.normalize(self.raw_core(opened))
-            result = current_fixtures.generate_once(
-                self.data,
-                random.Random(9100),
-                None,
-                ["en"],
-                True,
-                12,
-                True,
-                selection_mode="rule",
-                include_trace=True,
-                concept_locks=[REQUEST],
-                seed=9100,
-                creativity=0,
-                authorial_core=core,
-            )
+            result = current_fixtures.candidate_source(self.data, core, seed=9100, overrides={'creativity': 0})
             self.packs[opened] = generator.build_candidate_pack(result, self.data, "v6")
         return copy.deepcopy(self.packs[opened])
 
@@ -81,6 +67,7 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
             for dimension in lock["open_dimensions"][:2]
         ] if legacy else []
         return {
+            "core_retrieval_sha256": pack["core_retrieval"]["canonical_sha256"],
             "pack_id": pack["pack_id"],
             "prompt_en": core["baseline_prompt_en"],
             "negative_en": pack["negative_en"],

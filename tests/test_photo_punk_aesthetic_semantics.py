@@ -38,8 +38,7 @@ class PunkAestheticSemanticsTests(unittest.TestCase):
         cls.contracts = {
             item["id"]: item for item in cls.extension["visual_semantics"]
         }
-        cls.presets = {item["id"]: item for item in cls.data["presets"]}
-        cls.catalog = set(cls.presets)
+        cls.catalog = set()
         for entries in cls.data["slots"].values():
             cls.catalog.update(item["id"] for item in entries)
 
@@ -89,76 +88,17 @@ class PunkAestheticSemanticsTests(unittest.TestCase):
                 self.assertEqual(contract["activation_mode"], "exact_only")
         self.assertEqual(counts, EXPECTED_STATUS_COUNTS)
 
-    def test_every_contract_resolves_to_runnable_candidates(self):
-        extension_preset_ids = {item["id"] for item in self.extension["presets"]}
-        self.assertEqual(len(extension_preset_ids), 19)
+    def test_every_contract_resolves_to_live_slot_candidates(self):
         for contract in self.contracts.values():
-            preset_id = contract["runtime_preset_id"]
-            self.assertIn(preset_id, self.presets, contract["id"])
-            self.assertTrue(set(contract["candidate_ids"]) <= self.catalog, contract["id"])
-            if contract["id"] == "solarpunk":
-                self.assertEqual(preset_id, "civic_solarpunk_institutional_world")
-                self.assertNotIn(preset_id, extension_preset_ids)
-                continue
-            self.assertIn(preset_id, extension_preset_ids)
-            preset = self.presets[preset_id]
-            self.assertEqual(preset["filters"]["world"]["ids"], [contract["candidate_ids"][0]])
-            self.assertEqual(preset["filters"]["prop"]["ids"], contract["candidate_ids"][1:])
-            self.assertIn("worldbuilding_system", preset["tags"])
-            self.assertIn(f"punk_{contract['id']}", preset["tags"])
+            with self.subTest(contract=contract["id"]):
+                self.assertTrue(set(contract["candidate_ids"]) <= self.catalog)
+                world = self.data["slots"]["narrative_core" if contract["id"] == "solarpunk" else "world"]
+                props = self.data["slots"]["prop"]
+                self.assertIn(contract["candidate_ids"][0], {row["id"] for row in world})
+                self.assertLessEqual(set(contract["candidate_ids"][1:]), {row["id"] for row in props})
 
-    def test_exact_english_and_korean_terms_route_to_one_contract(self):
-        for contract in self.contracts.values():
-            for language in ("en", "ko"):
-                for term in contract["terms"][language]:
-                    routed = prompt_generator.resolve_request_intent_constraints(
-                        self.data, {"intent": term}, {}
-                    )
-                    self.assertIn("worldbuilding_system", routed["domains"], term)
-                    self.assertEqual(
-                        routed["scoped_routes"],
-                        [contract["runtime_preset_id"]],
-                        term,
-                    )
 
-    def test_visual_neighbors_do_not_trigger_punk_routes(self):
-        confounders = (
-            "adult cybergoth club fashion under ultraviolet light",
-            "a DIY punk band repairing an amplifier in a basement venue",
-            "modern green architecture with solar panels and plant walls",
-            "a Victorian costume portrait decorated with loose brass gears",
-            "a generic neon rainy future city with holographic advertisements",
-            "an ocean research diver beside an ordinary pressure housing",
-            "a desert settlement with a shaded bus stop and water tank",
-        )
-        punk_presets = {item["runtime_preset_id"] for item in self.contracts.values()}
-        for intent in confounders:
-            routed = prompt_generator.resolve_request_intent_constraints(
-                self.data, {"intent": intent}, {}
-            )
-            self.assertFalse(punk_presets & set(routed["scoped_routes"]), intent)
 
-    def test_rule_generation_keeps_world_mechanism_and_carrier_together(self):
-        for offset, concept_id in enumerate(
-            ("cyberpunk", "decopunk", "lunarpunk", "crystalpunk"), start=31
-        ):
-            contract = self.contracts[concept_id]
-            result = current_fixtures.generate_once(
-                self.data,
-                random.Random(offset),
-                contract["runtime_preset_id"],
-                ["en"],
-                False,
-                0,
-                True,
-                selection_mode="rule",
-                seed=offset,
-            )
-            choices = result["choices"]
-            self.assertEqual(choices["world"]["id"], contract["candidate_ids"][0])
-            self.assertIn(choices["prop"]["id"], contract["candidate_ids"][1:])
-            self.assertIn(choices["world"]["en"], result["prompt_en"])
-            self.assertIn(choices["prop"]["en"], result["prompt_en"])
 
     def test_candidates_are_original_and_do_not_encode_fixed_identity(self):
         extension_text = json.dumps(self.extension, ensure_ascii=False).lower()

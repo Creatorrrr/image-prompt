@@ -4,7 +4,7 @@ Use this rubric when reviewing generated candidates.
 
 ## Recommendation Values
 
-- `adopt`: Repeated across multiple sanitized examples, low source risk, not already covered, and maps cleanly to a photo-prompt slot, facet, recipe, or coherence rule.
+- `adopt`: Repeated across multiple sanitized examples, low source risk, not already covered, and maps cleanly to a photo-prompt slot, facet, candidate bundle, or coherence rule.
 - `trial`: Promising but based on a small sample, partially overlapping with existing tags, or useful only for a narrow concept family.
 - `reject`: Too generic, already covered, too close to source wording, not photographic, or not actionable for `photo-prompt-image-generator`.
 - `needs_human`: Any IP, brand, real-person, minor-coding, explicit sexual, graphic violence, medical-risk, legal, or source-policy ambiguity.
@@ -20,7 +20,7 @@ Use this rubric when reviewing generated candidates.
 ## Mapping Priorities
 
 1. Existing `photo_prompt_tags.json` slot ids and `facet_vocab`.
-2. Existing `concept_recipes.json` roles and mixins.
+2. Existing optional candidate bundles and visual-profile meanings.
 3. New tag or facet candidate only when existing coverage is weak.
 4. Drift gate or coherence rule when the issue is selection quality rather than a missing tag.
 

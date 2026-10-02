@@ -273,9 +273,6 @@ class PhotoFaceShapeSemanticsTests(unittest.TestCase):
         for slot, expected_ids in EXPECTED_CANDIDATES.items():
             with self.subTest(slot=slot):
                 self.assertTrue(expected_ids <= set(self.candidates[slot]))
-        self.assertIn("face_shape_relation", self.tags["slot_pick_order"])
-        self.assertIn("face_shape_relation", self.tags["slot_priorities"])
-        self.assertNotIn("face_shape_relation", json.dumps(self.tags["presets"]))
 
     def test_research_evidence_is_approved_and_candidate_bound(self) -> None:
         rows = [

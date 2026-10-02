@@ -10,7 +10,6 @@ from common import TARGET_SKILL_DIR, default_data_dir, load_json, read_records, 
 
 def existing_index() -> dict[str, Any]:
     tags = load_json(TARGET_SKILL_DIR / "assets" / "photo_prompt_tags.json")
-    recipes = load_json(TARGET_SKILL_DIR / "assets" / "concept_recipes.json")
     slot_ids: dict[str, set[str]] = {}
     slot_text: dict[str, set[str]] = {}
     for slot, values in tags.get("slots", {}).items():
@@ -28,8 +27,7 @@ def existing_index() -> dict[str, Any]:
         for facet, values in tags.get("facet_vocab", {}).items()
         if isinstance(values, list)
     }
-    recipe_names = set(recipes.get("roles", {})) | set(recipes.get("mixins", {})) | set(recipes.get("aliases", {}))
-    return {"slot_ids": slot_ids, "slot_text": slot_text, "facet_values": facet_values, "recipe_names": recipe_names}
+    return {"slot_ids": slot_ids, "slot_text": slot_text, "facet_values": facet_values}
 
 
 def diff_candidates(input_path: str, *, output: str | None = None, data_dir: str | None = None) -> dict[str, Any]:
@@ -63,11 +61,6 @@ def diff_candidates(input_path: str, *, output: str | None = None, data_dir: str
             elif facet and facet not in index["facet_values"]:
                 novelty = "conflict"
                 overlaps.append(f"unknown_facet:{facet}")
-        elif candidate["kind"] == "recipe":
-            name = proposed.get("id", "")
-            if name in index["recipe_names"]:
-                novelty = "reinforce"
-                overlaps.append(f"recipe:{name}")
         candidate["novelty"] = novelty
         candidate["overlap_with_existing"] = overlaps
         if novelty == "conflict" and candidate.get("recommendation") == "adopt":
