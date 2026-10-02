@@ -68,7 +68,9 @@ class ProtostarKoreanAliasDataCleanupTests(unittest.TestCase):
 
     def test_historical_merged_state_and_current_nineteen_keeps_are_exact(self):
         self.assertEqual(self.accepted_snapshot, self.states['proposal'])
-        self.assertEqual(fixtures.bundle_meanings(self.current['candidate_bundles']), fixtures.bundle_meanings(self.states['baseline']['candidate_bundles']))
+        historical = self.states['baseline']['candidate_bundles']
+        self.assertEqual(fixtures.bundle_meanings(self.current['candidate_bundles'], within=historical),
+                         fixtures.bundle_meanings(historical))
         for item in self.frozen['inventory']:
             current = next(r for r in self.current['slots'][item['slot']] if r['id'] == item['id'])
             self.assertEqual(current, item['proposal'])

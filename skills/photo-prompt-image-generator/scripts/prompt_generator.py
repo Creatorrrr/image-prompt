@@ -134,6 +134,7 @@ VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
     "photo_prompt_visual_obligations_textile_surface.json",
     "photo_prompt_visual_obligations_accessory_structure.json",
     "photo_prompt_visual_obligations_traditional_clothing_detail.json",
+    "photo_prompt_visual_obligations_pose_vocabulary.json",
 )
 VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
     "photo-visual-obligation-registry-extension/v1"
@@ -182,6 +183,7 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_sensual_fetish_fashion_extension.json",
     "photo_prompt_contextual_appeal_extension.json",
     "photo_prompt_editing_effects_extension.json",
+    "photo_prompt_pose_vocabulary_extension.json",
 )
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v2"

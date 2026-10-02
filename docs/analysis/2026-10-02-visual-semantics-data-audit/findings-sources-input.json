@@ -1,0 +1,383 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "inventory",
+      "title": "현재 규모와 구조적 일관성은 어떠한가?",
+      "queries": [
+        {
+          "id": "inventory-query",
+          "source": {
+            "label": "로컬 시각 의미 데이터 전수 분석",
+            "files": [
+              {
+                "label": "source-manifest.json"
+              },
+              {
+                "label": "metrics.json"
+              },
+              {
+                "label": "profile-inventory.csv"
+              },
+              {
+                "label": "analyze.py"
+              }
+            ],
+            "metricDefinitions": [
+              {
+                "label": "프로필",
+                "definition": "현재 운영 로더로 컴파일한 레코드 하나"
+              },
+              {
+                "label": "인덱스 검증",
+                "definition": "기존 validate_visual_profile_index_metadata를 실행한 결과"
+              }
+            ],
+            "filters": [
+              "photo-prompt-image-generator 현재 로더가 읽는 레지스트리 23개",
+              "2026-10-02 소스 스냅샷; commit 0e5cc0d1"
+            ],
+            "caveats": [
+              "등록·컴파일·인덱스의 일관성을 확인한 결과이며 이미지 품질을 인증하지 않는다."
+            ]
+          },
+          "reportingPeriod": "2026-10-02 소스 스냅샷; commit 0e5cc0d1",
+          "capturedAt": "2026-10-02T11:11:37.198491+09:00",
+          "columns": [
+            "metric",
+            "count"
+          ],
+          "rows": [
+            {
+              "metric": "운영 레지스트리 파일",
+              "count": 23
+            },
+            {
+              "metric": "프로필",
+              "count": 1385
+            },
+            {
+              "metric": "exact 검색 행",
+              "count": 3305
+            },
+            {
+              "metric": "구성 요소 그룹",
+              "count": 3289
+            },
+            {
+              "metric": "프로필 ID 중복",
+              "count": 0
+            },
+            {
+              "metric": "exact 검색어 충돌 그룹",
+              "count": 0
+            }
+          ],
+          "methods": [
+            {
+              "language": "python",
+              "code": "source_counts = []\nfor entry in manifest[\"files\"]:\n    path = ROOT / entry[\"path\"]\n    if path.name.startswith(\"photo_prompt_visual_obligations\") and path.suffix == \".json\":\n        source_counts.append((path.name, len(json.loads(path.read_text())[\"profiles\"])))\nprofiles = sum(count for _, count in source_counts)\ngroups = sum(int(row[\"component_groups\"]) for row in inventory)\nassert len(source_counts) == metrics[\"totals\"][\"files\"]\nassert profiles == len(inventory) == metrics[\"totals\"][\"compiled_profiles\"]\nassert groups == metrics[\"totals\"][\"component_groups\"]\nprint(json.dumps({\"registry_files\": len(source_counts), \"profiles\": profiles,\n                  \"component_groups\": groups}, ensure_ascii=False))\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "self-context",
+      "title": "제외 조건과 자체 구성 요소가 충돌하는가?",
+      "queries": [
+        {
+          "id": "self-context-query",
+          "source": {
+            "label": "로컬 시각 의미 데이터 전수 분석",
+            "files": [
+              {
+                "label": "source-component-context-conflicts.json"
+              },
+              {
+                "label": "prompt_generator.py"
+              },
+              {
+                "label": "analyze.py"
+              }
+            ],
+            "metricDefinitions": [
+              {
+                "label": "자기 문맥 충돌",
+                "definition": "그룹 any_terms의 첫 표현을 이어 현재 context applicability에 넣었을 때 request_exclusion인 프로필"
+              }
+            ],
+            "filters": [
+              "photo-prompt-image-generator 현재 로더가 읽는 레지스트리 23개",
+              "2026-10-02 소스 스냅샷; commit 0e5cc0d1"
+            ],
+            "caveats": [
+              "소스 파생 진단이며 정상 공개 core나 독립 요청 평가가 아니다.",
+              "21건을 모든 실사용 요청의 실패로 일반화할 수 없다."
+            ]
+          },
+          "reportingPeriod": "2026-10-02 소스 스냅샷; commit 0e5cc0d1",
+          "capturedAt": "2026-10-02T11:11:37.198491+09:00",
+          "columns": [
+            "profile_id",
+            "reason"
+          ],
+          "rows": [
+            {
+              "profile_id": "wide_angle_near_field_perspective",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "panning_subject_tracking_motion_relation",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "rear_curtain_flash_motion_trace",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "negative_fill_shadow_deepening_relation",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "diffusion_filter_highlight_halation",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "mixed_illuminant_white_balance_relation",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "highlight_rolloff_tone_response",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "loop_face_light_pattern",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "split_face_light_pattern",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "low_key_selective_illumination",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "third_grid_focal_anchor_relation",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "asymmetric_counterbalance_relation",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "subject_field_negative_space_relation",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "pattern_break_focal_exception",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "mirror_selfie_reflection_device_topology",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "overhead_social_snapshot_relation",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "intentional_face_occluded_mood_portrait",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "under_eye_high_cheek_blush_distribution",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "cheekbone_temple_blush_drape",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "photobooth_four_cut_sequence",
+              "reason": "request_exclusion"
+            },
+            {
+              "profile_id": "material_replacement_deferral_repair_cycle",
+              "reason": "request_exclusion"
+            }
+          ],
+          "methods": [
+            {
+              "language": "python",
+              "code": "sys.path.insert(0, str(ROOT / \"skills/photo-prompt-image-generator/scripts\"))\nimport prompt_generator as pg\nregistry = pg.load_visual_obligation_registry(ROOT / \"skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json\")\nconflict_rows = []\nfor profile in registry[\"profiles\"]:\n    context = \"; \".join(group[\"any_terms\"][0] for group in profile[\"semantics\"][\"component_semantics\"][\"groups\"])\n    eligible, reason = pg.visual_profile_context_applicability(\n        profile, context, has_authorial_core_context=True, require_positive_context_terms=False)\n    if not eligible and reason == \"request_exclusion\":\n        conflict_rows.append({\"profile_id\": profile[\"id\"], \"reason\": reason})\nrecorded = json.loads((OUT / \"source-component-context-conflicts.json\").read_text())\nassert {row[\"profile_id\"] for row in conflict_rows} == {row[\"profile_id\"] for row in recorded}\nprint(\"Self-context request exclusions:\", len(conflict_rows), \"/\", len(registry[\"profiles\"]))\nprint(json.dumps(conflict_rows, ensure_ascii=False, indent=2))\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "korean-access",
+      "title": "한국어 구성 요소 표현을 어디부터 보강할 것인가?",
+      "queries": [
+        {
+          "id": "korean-access-query",
+          "source": {
+            "label": "로컬 시각 의미 데이터 전수 분석",
+            "files": [
+              {
+                "label": "profile-inventory.csv"
+              },
+              {
+                "label": "metrics.json"
+              },
+              {
+                "label": "analyze.py"
+              }
+            ],
+            "metricDefinitions": [
+              {
+                "label": "한국어 존재",
+                "definition": "가-힣 범위의 한글 문자 존재; 표현의 정확도는 별도 검토"
+              },
+              {
+                "label": "guarded",
+                "definition": "semantic_discovery_requires_component_evidence=true인 프로필"
+              }
+            ],
+            "filters": [
+              "photo-prompt-image-generator 현재 로더가 읽는 레지스트리 23개",
+              "2026-10-02 소스 스냅샷; commit 0e5cc0d1"
+            ],
+            "caveats": [
+              "한글 표현 부재가 질의 이해 실패를 뜻하지 않는다; 실제 baseline 경로와 함께 검증해야 한다."
+            ]
+          },
+          "reportingPeriod": "2026-10-02 소스 스냅샷; commit 0e5cc0d1",
+          "capturedAt": "2026-10-02T11:11:37.198491+09:00",
+          "columns": [
+            "metric",
+            "count",
+            "denominator",
+            "share_pct"
+          ],
+          "rows": [
+            {
+              "metric": "한국어 exact/alias 존재",
+              "count": 850,
+              "denominator": 1385,
+              "share_pct": 61.4
+            },
+            {
+              "metric": "한국어 positive 검색 텍스트 존재",
+              "count": 1319,
+              "denominator": 1385,
+              "share_pct": 95.2
+            },
+            {
+              "metric": "모든 구성 요소 그룹에 한국어 대안 존재",
+              "count": 620,
+              "denominator": 1385,
+              "share_pct": 44.8
+            },
+            {
+              "metric": "guarded 중 한국어 구성 요소 대안 전무",
+              "count": 272,
+              "denominator": 833,
+              "share_pct": 32.7
+            }
+          ],
+          "methods": [
+            {
+              "language": "python",
+              "code": "flags = metrics[\"profile_flags\"]\nguard = metrics[\"discovery_guard_details\"]\nlanguage_rows = [\n    {\"metric\": \"한국어 exact/alias 존재\", \"count\": flags[\"exact_has_korean\"], \"denominator\": profiles},\n    {\"metric\": \"한국어 positive 검색 텍스트 존재\", \"count\": flags[\"semantic_text_has_korean\"], \"denominator\": profiles},\n    {\"metric\": \"모든 구성 요소 그룹에 한국어 대안 존재\", \"count\": flags[\"all_component_groups_have_korean\"], \"denominator\": profiles},\n    {\"metric\": \"guarded 중 한국어 구성 요소 대안 전무\", \"count\": guard[\"guarded_with_no_korean_component_terms\"], \"denominator\": guard[\"guarded_profiles\"]},\n]\nfor row in language_rows:\n    row[\"share_pct\"] = round(row[\"count\"] / row[\"denominator\"] * 100, 1)\nprint(json.dumps(language_rows, ensure_ascii=False, indent=2))\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "contrast-pairs",
+      "title": "가장 유사한 여섯 쌍을 합쳐도 되는가?",
+      "queries": [
+        {
+          "id": "contrast-pairs-query",
+          "source": {
+            "label": "로컬 시각 의미 데이터 전수 분석",
+            "files": [
+              {
+                "label": "near-duplicate-vector-pairs.json"
+              },
+              {
+                "label": "metrics.json"
+              },
+              {
+                "label": "photo_prompt_visual_profile_index.json"
+              }
+            ],
+            "metricDefinitions": [
+              {
+                "label": "cosine",
+                "definition": "기존 768차원 문서 벡터를 L2 정규화해 계산한 서로 다른 프로필 쌍의 내적"
+              }
+            ],
+            "filters": [
+              "photo-prompt-image-generator 현재 로더가 읽는 레지스트리 23개",
+              "2026-10-02 소스 스냅샷; commit 0e5cc0d1"
+            ],
+            "caveats": [
+              "정의를 검토한 여섯 쌍은 역할·주체·방향이 반대인 의미다.",
+              "질의 임베딩이나 실제 오검색률을 측정하지 않았다; 유사도는 중복 판정이 아니다."
+            ]
+          },
+          "reportingPeriod": "2026-10-02 소스 스냅샷; commit 0e5cc0d1",
+          "capturedAt": "2026-10-02T11:11:37.198491+09:00",
+          "columns": [
+            "left",
+            "right",
+            "cosine"
+          ],
+          "rows": [
+            {
+              "left": "cr_warm_highlights",
+              "right": "cr_cool_highlights",
+              "cosine": 0.98793618
+            },
+            {
+              "left": "top_hourglass_silhouette_relation",
+              "right": "bottom_hourglass_silhouette_relation",
+              "cosine": 0.97532009
+            },
+            {
+              "left": "cr_warm_foreground",
+              "right": "cr_cool_foreground",
+              "cosine": 0.97493519
+            },
+            {
+              "left": "broad_face_light_orientation_relation",
+              "right": "short_face_light_orientation_relation",
+              "cosine": 0.97054666
+            },
+            {
+              "left": "cr_colored_key",
+              "right": "cr_colored_fill",
+              "cosine": 0.96647834
+            },
+            {
+              "left": "cr_complex_subject",
+              "right": "cr_complex_background",
+              "cosine": 0.9639931
+            }
+          ],
+          "methods": [
+            {
+              "language": "python",
+              "code": "pairs = json.loads((OUT / \"near-duplicate-vector-pairs.json\").read_text())\ncontrast_pairs = [{\"left\": row[\"left\"], \"right\": row[\"right\"], \"cosine\": row[\"cosine\"]}\n                  for row in pairs if row[\"cosine\"] >= 0.95]\nassert len(contrast_pairs) == metrics[\"vector_checks\"][\"pair_counts_by_threshold\"][\"0.95\"] == 6\nprint(json.dumps(contrast_pairs, ensure_ascii=False, indent=2))\n"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

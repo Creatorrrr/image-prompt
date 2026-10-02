@@ -1,0 +1,188 @@
+{
+  "schema_version": "pose-coordinator-qualification/v1",
+  "source_manifest_sha256": "c4727e17671270b54c2766b3b62295086c58b1162796e2d678b8fb061e1eadff",
+  "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+  "three_independent_agents": true,
+  "candidate_access_after_case_core_freeze": true,
+  "packs": 3,
+  "native_image_calls": 3,
+  "returned_originals": 3,
+  "blocked_calls": 0,
+  "additional_renders": 0,
+  "cli_fallbacks": 0,
+  "preparation_failures_before_image_invocation": 1,
+  "pixel_policy": {
+    "partial_is_fail": true,
+    "unobservable_excludes_success": true,
+    "user_acceptance": "pending"
+  },
+  "counts": {
+    "reflected_target_pixels": {
+      "PASS": 3,
+      "FAIL": 3,
+      "UNOBSERVABLE": 1,
+      "total": 7
+    },
+    "general_knowledge_control_OK": {
+      "PASS": 1,
+      "total": 1
+    },
+    "all_target_pixels": {
+      "PASS": 4,
+      "FAIL": 3,
+      "UNOBSERVABLE": 1,
+      "total": 8
+    },
+    "reflected_targets_exposed_and_adopted": {
+      "count": 4,
+      "total": 7
+    },
+    "new_opt_in_profiles_directly_exposed": 0,
+    "new_opt_in_profiles_adopted": 0,
+    "physical_gates_author_reviews": {
+      "PASS": 11,
+      "FAIL": 3,
+      "UNOBSERVABLE": 1,
+      "total": 15
+    },
+    "scene_all_of": {
+      "PASS": 0,
+      "FAIL": 2,
+      "UNOBSERVABLE": 1,
+      "total": 3
+    }
+  },
+  "arms": [
+    {
+      "arm": "A",
+      "seed": 1502416880209716418,
+      "pack_seed": 2012744107882077902,
+      "pack_id": "3205b9ef3ab797b5",
+      "adopted_target": "bundle:pv_bundle_cross_shins_seated_surface",
+      "keywords": [
+        {
+          "keyword": "cross-legged seated",
+          "source_id": "pv_cross_shins_seated_surface",
+          "exposed": true,
+          "adopted": true,
+          "pixel_status": "UNOBSERVABLE"
+        },
+        {
+          "keyword": "left seated palm brace",
+          "source_id": "pv_seated_palm_brace",
+          "exposed": false,
+          "adopted": false,
+          "pixel_status": "FAIL"
+        }
+      ],
+      "scene_status": "FAIL",
+      "image_file": "arm-a-seated/native_image.png",
+      "image_sha256": "ce4cbbeac3c4bc64d6c35f4c45c68e1f3512f815bf0103f76fd3d3b3835d8e6c",
+      "reason": "Left/right support roles reverse and the rear ankle ownership junction is hidden.",
+      "author_review": "arm-a-seated/native_pixel_review.json",
+      "parent_review": "parent-review-a.json"
+    },
+    {
+      "arm": "B",
+      "seed": 608642126586136787,
+      "pack_seed": 1312320717690390855,
+      "pack_id": "53f7462a9cfec002",
+      "adopted_targets": [
+        "pv_ballet_second_flat",
+        "pv_ballet_demi_plie_flat"
+      ],
+      "keywords": [
+        {
+          "keyword": "modest-width ballet second position",
+          "source_id": "pv_ballet_second_flat",
+          "exposed": true,
+          "adopted": true,
+          "pixel_status": "FAIL"
+        },
+        {
+          "keyword": "shallow demi-plie",
+          "source_id": "pv_ballet_demi_plie_flat",
+          "exposed": true,
+          "adopted": true,
+          "pixel_status": "FAIL"
+        },
+        {
+          "keyword": "fifth-position arms overhead",
+          "source_id": "pv_ballet_fifth_arms_overhead",
+          "exposed": false,
+          "adopted": false,
+          "pixel_status": "PASS"
+        }
+      ],
+      "scene_status": "FAIL",
+      "image_file": "arm-b-ballet/native_result.png",
+      "image_sha256": "196f5beb543c1ff39ddf1cc3dd0717f062e1b31dcbae6805f3564c9849faf3d8",
+      "reason": "Foot spacing exceeds the frozen modest variant, knee bend is deep, and a generic closed case cannot establish violin class.",
+      "generic_candidate_scope": "The broader flat-second candidate does show its four lateral/outward/grounded/uncrossed components. That source-scope match does not override the stricter independently frozen spacing criterion.",
+      "author_review": "arm-b-ballet/independent_pixel_review.json",
+      "parent_review": "parent-review-b.json"
+    },
+    {
+      "arm": "C",
+      "seed": 2157385214743513717,
+      "pack_seed": 8145926231557907273,
+      "pack_id": "db8281fdbe9c4b9a",
+      "adopted_target": "bundle:pv_bundle_half_kneel",
+      "keywords": [
+        {
+          "keyword": "half-kneeling",
+          "source_id": "pv_half_kneel",
+          "exposed": true,
+          "adopted": true,
+          "pixel_status": "PASS"
+        },
+        {
+          "keyword": "left V sign",
+          "source_id": "pv_v_sign",
+          "exposed": false,
+          "adopted": false,
+          "pixel_status": "PASS"
+        },
+        {
+          "keyword": "right OK sign",
+          "source_id": null,
+          "general_knowledge_control": true,
+          "exposed_new_data": false,
+          "adopted_new_data": false,
+          "pixel_status": "PASS"
+        }
+      ],
+      "scene_status": "UNOBSERVABLE",
+      "image_file": "arm-c-kneeling/native_attempt_1.png",
+      "image_sha256": "daca4c8597f08207f50699a23d44ec0b35f5dff659ea1e02a3e2a891f1ca5e53",
+      "reason": "Pose and both hand gestures pass; the intended restored demonstration-board consequence is not separately identifiable.",
+      "author_review": "arm-c-kneeling/pixel_test_review.json",
+      "parent_review": "parent-review-c.json"
+    }
+  ],
+  "reviewer_differences": [
+    {
+      "arm": "A",
+      "difference": "Parent initially inferred the far foot connection; its initial file is retained. Re-reading the frozen observability rule changes that component to UNOBSERVABLE. Generic actual-palm contact in the parent review is also distinct from the author's owner-bound left-palm contact gate. Final all-of uses the owner-bound author rule."
+    },
+    {
+      "arm": "C",
+      "difference": "Parent recognized an upright bolted signal apparatus and marked the generic scene PASS. The author could not separately identify the frozen restored demonstration-board consequence. Both records remain, and final scene qualification conservatively excludes success."
+    }
+  ],
+  "claims": {
+    "before_after_causal_improvement_proven": false,
+    "all_158_candidates_pixel_qualified": false,
+    "all_34_profiles_pixel_qualified": false,
+    "independent_population_holdout": false,
+    "actual_force_measured": false,
+    "identity_or_biometric_match_claimed": false
+  },
+  "metadata_repairs": [
+    "A initial concept-seed ledger field corrected to the actual pack seed with the old record retained.",
+    "B null ledger seed corrected to the actual pack seed with the old record retained. These pack seeds are not native imagegen options."
+  ],
+  "artifact_integrity": "artifact-verification.json",
+  "implementation_verification": "../implementation/final-verification.json",
+  "follow_up_plan": "follow-up-plan.md"
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "3205b9ef3ab797b5",
+  "contract_version": "photo-embodiment-preflight/v1",
+  "reviewer": "independent agent A, source PNG and native diagnostic crops",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/pose-vocabulary-20261002/qualification/arm-a-seated/native_image.png",
+  "result_sha256": "ce4cbbeac3c4bc64d6c35f4c45c68e1f3512f815bf0103f76fd3d3b3835d8e6c",
+  "source_embodiment_preflight_sha256": "cbf29f45b210e4f8b17dd033996359033f7cec7174b8a7aa093a526acd219805",
+  "hard_gates": {
+    "embodiment_body_ownership": {
+      "status": "fail",
+      "evidence": "FAIL: The intended actor is one woman with two plausible arms and two legs. However the frozen assignment of left hand as brace and right hand as chart hand is reversed: supporting hand image left is actor right, chart hand image right is actor left. This is an assignment failure, not a diagnosed extra or detached limb.",
+      "observed_state": "FAIL"
+    },
+    "embodiment_joint_chain_and_reach": {
+      "status": "fail",
+      "evidence": "UNOBSERVABLE: Gross shoulder-to-elbow paths and outward bent knees are plausible. The brace forearm/wrist runs behind the near knee and the rear ankle runs behind the opposite cuff, so the complete two critical chains cannot be assessed from the native pixels.",
+      "observed_state": "UNOBSERVABLE"
+    },
+    "embodiment_support_and_balance": {
+      "status": "pass",
+      "evidence": "PASS: The wide level timber surface visibly supports the seated hips and folded legs. The slight tilt toward the actual right bracing hand stays over that base and reads as a stable seated configuration. This PASS concerns visible support consistency; it does not correct the sidedness failure or estimate real force.",
+      "observed_state": "PASS"
+    },
+    "embodiment_contact_and_space": {
+      "status": "fail",
+      "evidence": "FAIL: The actual right open hand appears to contact the exposed wood with coherent finger boundaries and available space. The intended left palm-to-platform contact is absent because the left hand is on the coastal chart. The actual right palm heel is partially behind the knee, so full heel contact remains unobservable rather than proven floating.",
+      "observed_state": "FAIL"
+    },
+    "embodiment_visibility_and_projection": {
+      "status": "fail",
+      "evidence": "FAIL: The frame includes the head, both feet and supporting hand, but the rear ankle-to-foot junction and the supporting wrist/palm heel are hidden behind crossed legs. The camera exposes the opposite brace side. Required regions being in-frame does not make the frozen left brace and both ankle junctions assessable.",
+      "observed_state": "FAIL"
+    }
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "No requesting-user judgment has been received; this arm performs technical photo/pose qualification only."
+  },
+  "supplemental_observations_file": "native_pixel_review.json",
+  "artistic_observations_file": "artistic_supplement.json",
+  "render_repair_audit": "not_applicable: this initial run has no render_repair contract"
+}

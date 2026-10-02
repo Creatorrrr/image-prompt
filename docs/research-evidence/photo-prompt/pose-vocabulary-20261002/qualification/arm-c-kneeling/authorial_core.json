@@ -1,0 +1,113 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "85821a420925c5d00d8662cd3441629db60c817da5dac15ca391d537f95e767b",
+  "interpreted_intent": "The requester asks independent agents to create complex random concepts to test new visual vocabulary in generated images using the attached portrait. Agent-owned direction: a quietly playful victory pause after setting upright a tidal crossing demonstration in a coastal railway museum, with a confident adult presence and small supporting sensual appeal at effective sensual=1, fetish=0, surreal=0, creativity=1. A purely candid repair document was compared with this brief posed pause; the pause makes two distinct gestures legible while keeping a credible moment and the repair context subordinate. WHO is a newly staged adult portrait subject, WHERE is the museum before opening, HOW is a near frontal encounter with the camera, WHY NOW is the visible upright bracket after repair. All posture, gesture, wardrobe, props, light and detailed setting choices remain agent-owned open dimensions.",
+  "subject": "An unmistakably adult woman with visible face and hair appearance guidance from the attached portrait, independently staged for this test.",
+  "setting": "A small coastal railway signal museum before opening, beside an upright tide-crossing demonstration board and a low workbench.",
+  "event": "A portrait subject pauses after the demonstration board has been set upright, half-kneeling with separate OK and V hand gestures.",
+  "visual_priorities": [
+    "The upright adult subject gives the lens a small relieved smile in a brief posed pause.",
+    "The floor-contact geometry distinguishes half-kneeling from two-knee kneeling or a squat.",
+    "Each shoulder-adjacent hand displays one complete and different finger pattern.",
+    "The repaired bracket, tide gauge and rolled chart relate the subject to a coastal railway exhibit.",
+    "Warm bronze satin and low window light quietly support the subject presence over cool floor reflections."
+  ],
+  "baseline_prompt_en": "A complex photographic test scene centers on a portrait subject who pauses for a staged photograph. She is an unmistakably adult woman in a small coastal railway signal museum before opening, beside a demonstration board whose bolted support bracket now stands upright. The attached image supplies appearance guidance. Her short dark bob, wispy bangs, softly rounded oval face, brown eyes and softly full lips follow the visible face-and-hair reference. She meets the lens with a small relieved smile, wearing a bronze sleeveless satin blouse and slate tailored trousers; gentle side light gives her relaxed presence a subtle intimate appeal. She holds a half-kneeling pose: her right knee rests on a cork pad on the floor, her right shin extends backward, and her left foot is planted flat forward with the left knee raised. Her pelvis stays lifted above the rear heel and her torso is upright over the knee-and-foot base. Both elbows are comfortably bent and each hand is raised beside its own shoulder, separated from her face. Her right hand makes an OK sign: thumb tip touches index-finger tip in a closed round loop facing the lens, while the middle, ring and little fingers extend separately. Her left hand makes a V sign: index and middle fingers extend upward and separate into a V, while the ring and little fingers fold into the palm beneath the thumb. A brass tide gauge and a rolled coastal chart sit on a low workbench behind her, explaining this railway's tidal crossing display. Low side-window light lays silver reflections across the polished floor. A straight frontal camera at her low eye height gives a tight environmental full-body portrait, including both hands, the grounded knee and the planted foot, with clear finger silhouettes and quiet museum depth.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complex random vocabulary-test concept",
+      "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여",
+      "basis": "request_context",
+      "resolution": "Create an independently chosen coherent photographic scene that visibly stages test vocabulary; detailed staging is agent-owned.",
+      "sources": []
+    },
+    {
+      "term": "attached image use",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the attached portrait for visible appearance guidance in a new scene; this does not establish identity, biometrics, body geometry, biography, personality or actual age.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "concept",
+        "prompt_evidence": "A complex photographic test scene"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "subject",
+        "prompt_evidence": "a portrait subject"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "event",
+        "prompt_evidence": "pauses for a staged photograph"
+      },
+      {
+        "anchor_id": "reference_guidance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "target": "main_subject",
+        "property": "appearance.guidance",
+        "prompt_evidence": "The attached image supplies appearance guidance"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "identity",
+      "count",
+      "age",
+      "role",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "reference_use",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "portrait photography",
+    "family": "quiet museum environmental portrait",
+    "evidence": [
+      "bronze satin in low side-window light",
+      "silver reflections across the polished floor"
+    ]
+  },
+  "variation_key": "arm-c-kneeling-seed-2157385214743513717"
+}

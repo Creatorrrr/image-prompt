@@ -305,8 +305,15 @@ def historical_states(evidence: Path, frozen: dict) -> dict:
     return states
 
 
-def bundle_meanings(bundles: list) -> list:
-    """Compare authored bundle meaning independently of its derived source hash."""
+def bundle_meanings(bundles: list, *, within: list | None = None) -> list:
+    """Compare authored meanings, optionally projecting a historical ID inventory.
+
+    Projection keeps order and missing entries remain visible in the comparison;
+    later optional bundles do not rewrite a frozen historical inventory.
+    """
+    if within is not None:
+        historical_ids = {row['id'] for row in within}
+        bundles = [row for row in bundles if row['id'] in historical_ids]
     return [{key: value for key, value in row.items() if key != "source_sha256"}
             for row in bundles]
 

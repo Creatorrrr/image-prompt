@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "current-semantic-data",
+      "title": "현재 데이터의 문맥·라벨 표현 설정",
+      "queries": [
+        {
+          "id": "profile-counts",
+          "source": {
+            "label": "시각 의미 레지스트리",
+            "files": [
+              {
+                "label": "PROFILE-AUDIT.json"
+              },
+              {
+                "label": "data-research-checks.ipynb"
+              },
+              {
+                "label": "photo_prompt_visual_obligations.json"
+              },
+              {
+                "label": "photo_prompt_visual_obligations_portrait_fashion_exposure.json"
+              }
+            ],
+            "metricDefinitions": [
+              {
+                "label": "프로필",
+                "definition": "프로필은 현재 로더가 읽은 시각 의미 개념 한 건이다."
+              },
+              {
+                "label": "문맥 조건",
+                "definition": "문맥 조건 수는 context_disambiguation이 비어 있지 않은 프로필을 센다."
+              },
+              {
+                "label": "라벨 제한",
+                "definition": "라벨 제한 수는 runtime_forbidden_labels가 비어 있지 않은 프로필을 센다."
+              }
+            ],
+            "filters": [
+              "현재 로더가 읽은 레지스트리와 확장 파일"
+            ],
+            "caveats": [
+              "라벨 제한 설정은 모델의 실제 검열 또는 생성 실패를 측정한 값이 아니다.",
+              "문맥 조건은 선택적 필드이며 빈 값만으로 데이터 결함을 판정하지 않았다.",
+              "portrait-fashion 28개는 라벨 선택 가능 방식이며 라벨 관련 세 배열이 모두 비어 있다."
+            ]
+          },
+          "capturedAt": "2026-10-02T12:09:36.716780+09:00",
+          "columns": [
+            {
+              "field": "measure",
+              "label": "항목"
+            },
+            {
+              "field": "count",
+              "label": "프로필 수"
+            }
+          ],
+          "rows": [
+            {
+              "measure": "전체 프로필",
+              "count": 1385
+            },
+            {
+              "measure": "명시적 문맥 조건",
+              "count": 54
+            },
+            {
+              "measure": "런타임 라벨 제한 설정",
+              "count": 41
+            },
+            {
+              "measure": "portrait-fashion 확장",
+              "count": 28
+            }
+          ],
+          "methods": [
+            {
+              "language": "python",
+              "code": "from pathlib import Path\nfrom collections import Counter\nfrom datetime import datetime, timezone, timedelta\nimport hashlib, json, sys\nroot = Path.cwd()\nskill = root / \"skills/photo-prompt-image-generator\"\nsys.path.insert(0, str(skill / \"scripts\"))\nimport prompt_generator as pg\nprofiles = pg.load_visual_obligation_registry(skill / \"assets/photo_prompt_visual_obligations.json\")[\"profiles\"]\nby_id = {p[\"id\"]: p for p in profiles}\ncounts = {\n    \"profiles\": len(profiles),\n    \"unique_profile_ids\": len(by_id),\n    \"runtime_expression_default_modes\": dict(Counter(p[\"runtime_expression\"].get(\"default_mode\") for p in profiles)),\n    \"profiles_with_context_disambiguation\": sum(bool(p[\"activation\"].get(\"context_disambiguation\")) for p in profiles),\n    \"profiles_with_runtime_forbidden_labels\": sum(bool(p[\"runtime_expression\"].get(\"runtime_forbidden_labels\")) for p in profiles),\n}\nrestricted = [p for p in profiles if p[\"runtime_expression\"].get(\"runtime_forbidden_labels\")]\ncounts[\"restricted_profiles_by_category\"] = dict(Counter(p[\"category\"] for p in restricted))\ncounts[\"restricted_profiles_by_default_mode\"] = dict(Counter(p[\"runtime_expression\"].get(\"default_mode\") for p in restricted))\npfe_raw = json.loads((skill / \"assets/photo_prompt_visual_obligations_portrait_fashion_exposure.json\").read_text())\npfe_ids = {p[\"id\"] for p in pfe_raw[\"profiles\"]}\npfe = [p for p in profiles if p[\"id\"] in pfe_ids]\ncounts[\"portrait_fashion_extension\"] = {\n    \"profiles\": len(pfe),\n    \"default_modes\": dict(Counter(p[\"runtime_expression\"].get(\"default_mode\") for p in pfe)),\n    \"nonempty_runtime_forbidden_labels\": sum(bool(p[\"runtime_expression\"].get(\"runtime_forbidden_labels\")) for p in pfe),\n    \"nonempty_forbidden_prompt_terms\": sum(bool(p[\"runtime_expression\"].get(\"forbidden_prompt_terms\")) for p in pfe),\n    \"nonempty_prompt_label_terms\": sum(bool(p[\"runtime_expression\"].get(\"prompt_label_terms\")) for p in pfe),\n}\nprint(json.dumps(counts, ensure_ascii=False, indent=2))"
+            }
+          ],
+          "preview": {
+            "kind": "aggregate",
+            "note": "현재 프로필의 작성 설정을 집계한 결과이며 의미·검색·이미지 품질 측정은 아니다."
+          },
+          "sourceRoles": [
+            {
+              "kind": "file",
+              "label": "PROFILE-AUDIT.json",
+              "role": "현재 집계와 선택한 기존 프로필의 내용"
+            },
+            {
+              "kind": "file",
+              "label": "data-research-checks.ipynb",
+              "role": "실제로 실행한 집계 코드와 출력"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "research-priorities",
+      "title": "문맥별 의미와 형상 보존을 위한 추가 조사",
+      "queries": [
+        {
+          "id": "contextual-concepts",
+          "source": {
+            "label": "Getty 어휘 작성 지침",
+            "links": [
+              {
+                "label": "Scope note",
+                "href": "https://www.getty.edu/publications/vocabularies-editorial-guidelines/aat-guidelines/3_editorial_rules/3.4/"
+              },
+              {
+                "label": "Multilingual equivalency",
+                "href": "https://www.getty.edu/publications/vocabularies-editorial-guidelines/aat-guidelines/4_appendices/4.4/"
+              }
+            ],
+            "caveats": [
+              "조사 항목과 개념별 작업량은 이 프로젝트에 맞춘 제안이며 출처의 의무 요건이 아니다."
+            ]
+          },
+          "summary": "하나의 문맥에서 쓰이는 개념의 범위, 같은 철자의 다른 뜻, 번역의 개념 등가성을 구별한다."
+        },
+        {
+          "id": "observable-construction",
+          "source": {
+            "label": "구조와 제작 원리의 1차 자료",
+            "links": [
+              {
+                "label": "CottonWorks mesh",
+                "href": "https://cottonworks.com/encyclopedia-item/mesh/"
+              },
+              {
+                "label": "V&A Vionnet",
+                "href": "https://www.vam.ac.uk/articles/madeleine-vionnet-an-introduction"
+              },
+              {
+                "label": "V&A corsets",
+                "href": "https://www.vam.ac.uk/articles/corsets-crinolines-and-bustles-fashionable-victorian-underwear"
+              },
+              {
+                "label": "Schneider split diopter",
+                "href": "https://schneiderkreuznach.com/application/files/5717/0142/0920/Fact_Sheet_Diopter_Split_GEN2_Schneider-Kreuznach.pdf"
+              },
+              {
+                "label": "Kodak film guide",
+                "href": "https://www.kodak.com/content/products-brochures/Film/kodak-essential-reference-guide-for-filmmakers.pdf"
+              }
+            ],
+            "caveats": [
+              "직물·광학의 제작 원리는 사진에서 보이는 형상과 구별해야 한다.",
+              "이번 조사에서는 참고 이미지의 시각 주석이나 이미지 생성을 실행하지 않았다."
+            ]
+          },
+          "summary": "직물의 열린 조직, 재단 방향, 의복의 지지 구조, 초점 면과 국소 번짐을 자료로 구별할 수 있다."
+        },
+        {
+          "id": "relation-cases",
+          "source": {
+            "label": "텍스트와 이미지의 관계 평가 연구",
+            "links": [
+              {
+                "label": "GenEval",
+                "href": "https://arxiv.org/abs/2310.11513"
+              },
+              {
+                "label": "T2I-CompBench++",
+                "href": "https://arxiv.org/abs/2307.06350"
+              }
+            ],
+            "caveats": [
+              "평가 차원은 반례 자료의 설계에 참고했으며 해당 벤치마크를 실행하거나 스킬 평가기로 도입하지 않았다."
+            ]
+          },
+          "summary": "속성의 귀속과 물체 관계를 나눠 자료의 최소 차이와 반례를 설계할 수 있다."
+        }
+      ]
+    },
+    {
+      "id": "neutral-description-limits",
+      "title": "중립 표현과 생성 결과는 별도로 확인",
+      "queries": [
+        {
+          "id": "input-output-screening",
+          "source": {
+            "label": "OpenAI Images 2.0 system card",
+            "links": [
+              {
+                "label": "시스템 카드",
+                "href": "https://deploymentsafety.openai.com/chatgpt-images-2-0/chatgpt-images-2-0.pdf"
+              }
+            ],
+            "caveats": [
+              "이 시스템 카드로 특정 과거 요청의 차단 원인이나 원인 단어를 확정할 수 없다."
+            ]
+          },
+          "summary": "텍스트·입력 이미지·생성 출력에 안전성 검사가 적용될 수 있으므로 중립적인 어휘만으로 생성 통과를 보장할 수 없다."
+        }
+      ]
+    }
+  ]
+}

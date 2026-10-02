@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "id": "visual-semantics-distribution",
+  "queryId": "source-distribution",
+  "title": "계열별 구성 비중",
+  "chart": {
+    "type": "horizontalBar",
+    "x": "family",
+    "y": "share",
+    "series": "basis",
+    "xLabel": "전체 대비 비중 (%)",
+    "yLabel": "파일 계열",
+    "showXAxisLabel": true,
+    "showYAxisLabel": true
+  },
+  "rows": [
+    {
+      "family": "기본",
+      "basis": "프로필 비중",
+      "count": 333,
+      "denominator": 1385,
+      "share": 24.04
+    },
+    {
+      "family": "기본",
+      "basis": "구성 요소 비중",
+      "count": 1539,
+      "denominator": 3289,
+      "share": 46.79
+    },
+    {
+      "family": "Y2K",
+      "basis": "프로필 비중",
+      "count": 306,
+      "denominator": 1385,
+      "share": 22.09
+    },
+    {
+      "family": "Y2K",
+      "basis": "구성 요소 비중",
+      "count": 313,
+      "denominator": 3289,
+      "share": 9.52
+    },
+    {
+      "family": "의복",
+      "basis": "프로필 비중",
+      "count": 157,
+      "denominator": 1385,
+      "share": 11.34
+    },
+    {
+      "family": "의복",
+      "basis": "구성 요소 비중",
+      "count": 160,
+      "denominator": 3289,
+      "share": 4.86
+    },
+    {
+      "family": "코스튬",
+      "basis": "프로필 비중",
+      "count": 87,
+      "denominator": 1385,
+      "share": 6.28
+    },
+    {
+      "family": "코스튬",
+      "basis": "구성 요소 비중",
+      "count": 87,
+      "denominator": 3289,
+      "share": 2.65
+    },
+    {
+      "family": "장신구",
+      "basis": "프로필 비중",
+      "count": 68,
+      "denominator": 1385,
+      "share": 4.91
+    },
+    {
+      "family": "장신구",
+      "basis": "구성 요소 비중",
+      "count": 69,
+      "denominator": 3289,
+      "share": 2.1
+    },
+    {
+      "family": "수영복",
+      "basis": "프로필 비중",
+      "count": 65,
+      "denominator": 1385,
+      "share": 4.69
+    },
+    {
+      "family": "수영복",
+      "basis": "구성 요소 비중",
+      "count": 130,
+      "denominator": 3289,
+      "share": 3.95
+    },
+    {
+      "family": "기타",
+      "basis": "프로필 비중",
+      "count": 369,
+      "denominator": 1385,
+      "share": 26.64
+    },
+    {
+      "family": "기타",
+      "basis": "구성 요소 비중",
+      "count": 991,
+      "denominator": 3289,
+      "share": 30.13
+    }
+  ],
+  "source": {
+    "label": "로컬 시각 의미 데이터 전수 분석",
+    "files": [
+      {
+        "label": "source-distribution.csv"
+      },
+      {
+        "label": "metrics.json"
+      },
+      {
+        "label": "profile-inventory.csv"
+      }
+    ],
+    "metricDefinitions": [
+      {
+        "label": "프로필 비중",
+        "definition": "한 계열의 프로필 개수 / 전체 1,385개 × 100"
+      },
+      {
+        "label": "구성 요소 비중",
+        "definition": "한 계열의 구성 요소 그룹 수 / 전체 3,289개 × 100"
+      }
+    ],
+    "filters": [
+      "photo-prompt-image-generator 현재 로더가 읽는 레지스트리 23개",
+      "2026-10-02 소스 스냅샷; commit 0e5cc0d1"
+    ],
+    "caveats": [
+      "구성 요소와 프로필의 의미 크기는 동일하지 않다; 두 비중은 서로 다른 분모를 사용한다.",
+      "프로필 개수 상위 6개 파일과 나머지 17개 파일을 묶었다.",
+      "사용 빈도·개념 범위·이미지 성공률을 측정한 비중이 아니다."
+    ]
+  },
+  "theme": "codex-classic"
+}

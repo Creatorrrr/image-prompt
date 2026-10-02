@@ -1,0 +1,469 @@
+{
+  "schema_version": "pose-research-resolved-variants/v1",
+  "basis": "Support-surface and body-part variants of researched primitives, independently specified; no scene, wardrobe or reference-face data is copied from test arms.",
+  "candidates": [
+    {
+      "id": "pv_cross_shins_seated_surface",
+      "families": [
+        "F04"
+      ],
+      "target_slot": "body_pose",
+      "status": "research_proposal",
+      "ko": "좌면 위에서 정강이를 교차한 앉기",
+      "en": "the pelvis rests on a horizontal sitting surface; both knees flex outward with the shins crossing in front of the pelvis; each foot continues from its own shin beside the opposite lower leg; the sitting surface supports the folded lower legs",
+      "aliases": [
+        "cross-legged seated on a sitting surface",
+        "crossed-shins seated pose"
+      ],
+      "embedding_text_proposed": "바닥에서 정강이를 교차한 앉기; Cross-legged sitting; 양반다리; 바닥에서 정강이를 교차한 앉기; pelvis contacts the floor; both legs fold with shins crossing in front; feet do not need to rest on opposite thighs",
+      "concept_units": [
+        "the pelvis rests on a horizontal sitting surface",
+        "both knees flex outward with the shins crossing in front of the pelvis",
+        "each foot continues from its own shin beside the opposite lower leg",
+        "the sitting surface supports the folded lower legs"
+      ],
+      "typed_assertions": [],
+      "required_entity_bindings": {
+        "owner": "actor_1",
+        "laterality": "actor_left_right_when_material",
+        "target": "explicit_body_landmark_prop_partner_or_support_surface",
+        "mirror_rule": "reflection_does_not_create_a_new_actor"
+      },
+      "contact_and_support_policy": {
+        "roles": [
+          "no_contact",
+          "near",
+          "touch",
+          "grip",
+          "apparent_support",
+          "occlusion"
+        ],
+        "selected_role": "derive_from_declared_components_not_from_broad_label",
+        "force_measurement": "not_inferable_from_single_photo"
+      },
+      "affected_dimensions": [
+        "pose"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "pose",
+          "target": "actor_1.body",
+          "property": "body_support_and_configuration"
+        }
+      ],
+      "locked_by_default": [
+        "identity",
+        "appearance",
+        "setting",
+        "lighting",
+        "camera",
+        "framing",
+        "sexual_tone"
+      ],
+      "scope_note": "Property names/targets are research design. Adapt to current property contract and actual core owners before promotion; broad action/pose changes are not automatically authorized.",
+      "confusion_boundaries": [
+        "full lotus",
+        "W-sitting"
+      ],
+      "source_ids": [
+        "S05",
+        "S37"
+      ],
+      "qualification": "project_operational_definition",
+      "existing_reuse_or_extension_target": null,
+      "observability": {
+        "required_regions": [
+          "the pelvis rests on a horizontal sitting surface",
+          "both knees flex outward with the shins crossing in front of the pelvis",
+          "each foot continues from its own shin beside the opposite lower leg",
+          "the sitting surface supports the folded lower legs"
+        ],
+        "hidden_region": "UNOBSERVABLE_not_assumed_pass",
+        "framing_conflict": "report_conflict_do_not_expand_locked_crop",
+        "thumbnail": "check_global_arrangement_if_visible",
+        "native_pixels": "check_all_contact_digit_joint_owner_details"
+      },
+      "temporal_semantics": "single_arrangement",
+      "activation": {
+        "aliases_are_retrieval_leads_not_global_synonyms": true,
+        "optional_only_until_promoted": true,
+        "pack_exposure_does_not_activate_profile": true,
+        "exact_label_requires_context_variant_negation_and_property_scope_checks": true,
+        "broad_similarity_cannot_set_hard_requirement": true
+      },
+      "conditional_alias_constraints": [],
+      "refinement_of_research_id": "pv_cross_leg_floor"
+    },
+    {
+      "id": "pv_seated_palm_brace",
+      "families": [
+        "F04"
+      ],
+      "target_slot": "contact_point",
+      "status": "research_proposal",
+      "ko": "좌면을 짚는 한 손바닥의 지지",
+      "en": "one declared palm contacts the sitting surface beside or behind the pelvis; that hand connects through its wrist and elbow to the same shoulder; the arm and sitting surface form a visible bracing arrangement; the seated pelvis and folded or planted legs maintain the remaining support base",
+      "aliases": [
+        "seated single-palm brace",
+        "one-hand palm brace on sitting surface"
+      ],
+      "embedding_text_proposed": "뒤쪽 손바닥의 바닥 지지; Supported floor sitting; 손 짚고 뒤로 기대기; 뒤쪽 손바닥의 바닥 지지; seated pelvis stays on the floor; hands contact the floor behind or beside the torso; wrist-arm direction supports the selected lean",
+      "concept_units": [
+        "one declared palm contacts the sitting surface beside or behind the pelvis",
+        "that hand connects through its wrist and elbow to the same shoulder",
+        "the arm and sitting surface form a visible bracing arrangement",
+        "the seated pelvis and folded or planted legs maintain the remaining support base"
+      ],
+      "typed_assertions": [],
+      "required_entity_bindings": {
+        "owner": "actor_1",
+        "laterality": "actor_left_right_when_material",
+        "target": "explicit_body_landmark_prop_partner_or_support_surface",
+        "mirror_rule": "reflection_does_not_create_a_new_actor"
+      },
+      "contact_and_support_policy": {
+        "roles": [
+          "no_contact",
+          "near",
+          "touch",
+          "grip",
+          "apparent_support",
+          "occlusion"
+        ],
+        "selected_role": "derive_from_declared_components_not_from_broad_label",
+        "force_measurement": "not_inferable_from_single_photo"
+      },
+      "affected_dimensions": [
+        "relationship"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "relationship",
+          "target": "actor_1.body",
+          "property": "contact_geometry"
+        }
+      ],
+      "locked_by_default": [
+        "identity",
+        "appearance",
+        "setting",
+        "lighting",
+        "camera",
+        "framing",
+        "sexual_tone"
+      ],
+      "scope_note": "Property names/targets are research design. Adapt to current property contract and actual core owners before promotion; broad action/pose changes are not automatically authorized.",
+      "confusion_boundaries": [
+        "hovering palms",
+        "hands merely near the floor"
+      ],
+      "source_ids": [
+        "S05",
+        "S37"
+      ],
+      "qualification": "project_operational_definition",
+      "existing_reuse_or_extension_target": null,
+      "observability": {
+        "required_regions": [
+          "one declared palm contacts the sitting surface beside or behind the pelvis",
+          "that hand connects through its wrist and elbow to the same shoulder",
+          "the arm and sitting surface form a visible bracing arrangement",
+          "the seated pelvis and folded or planted legs maintain the remaining support base"
+        ],
+        "hidden_region": "UNOBSERVABLE_not_assumed_pass",
+        "framing_conflict": "report_conflict_do_not_expand_locked_crop",
+        "thumbnail": "check_global_arrangement_if_visible",
+        "native_pixels": "check_all_contact_digit_joint_owner_details"
+      },
+      "temporal_semantics": "single_arrangement",
+      "activation": {
+        "aliases_are_retrieval_leads_not_global_synonyms": true,
+        "optional_only_until_promoted": true,
+        "pack_exposure_does_not_activate_profile": true,
+        "exact_label_requires_context_variant_negation_and_property_scope_checks": true,
+        "broad_similarity_cannot_set_hard_requirement": true
+      },
+      "conditional_alias_constraints": [],
+      "refinement_of_research_id": "pv_floor_hand_support"
+    },
+    {
+      "id": "pv_ballet_second_flat",
+      "families": [
+        "F02",
+        "F09"
+      ],
+      "target_slot": "body_pose",
+      "status": "research_proposal",
+      "ko": "양발 접지를 유지하는 발레 2번 위치",
+      "en": "both feet are separated laterally on the same support plane; both legs turn outward with toes and knees facing compatible outward directions; both heels and forefeet contact the floor in this flat-foot variant; each foot retains its own distinct uncrossed ground contact",
+      "aliases": [
+        "ballet second position flat-foot variant",
+        "flat-foot ballet second position"
+      ],
+      "embedding_text_proposed": "양발의 넓은 지지 폭; Wide stance; Feet apart; 넓게 서기; 양발의 넓은 지지 폭; two grounded feet are separated laterally; the lateral base is wider than a feet-together stance; knee and toe orientation are independent",
+      "concept_units": [
+        "both feet are separated laterally on the same support plane",
+        "both legs turn outward with toes and knees facing compatible outward directions",
+        "both heels and forefeet contact the floor in this flat-foot variant",
+        "each foot retains its own distinct uncrossed ground contact"
+      ],
+      "typed_assertions": [],
+      "required_entity_bindings": {
+        "owner": "actor_1",
+        "laterality": "actor_left_right_when_material",
+        "target": "explicit_body_landmark_prop_partner_or_support_surface",
+        "mirror_rule": "reflection_does_not_create_a_new_actor"
+      },
+      "contact_and_support_policy": {
+        "roles": [
+          "no_contact",
+          "near",
+          "touch",
+          "grip",
+          "apparent_support",
+          "occlusion"
+        ],
+        "selected_role": "derive_from_declared_components_not_from_broad_label",
+        "force_measurement": "not_inferable_from_single_photo"
+      },
+      "affected_dimensions": [
+        "pose"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "pose",
+          "target": "actor_1.body",
+          "property": "body_support_and_configuration"
+        }
+      ],
+      "locked_by_default": [
+        "identity",
+        "appearance",
+        "setting",
+        "lighting",
+        "camera",
+        "framing",
+        "sexual_tone"
+      ],
+      "scope_note": "Property names/targets are research design. Adapt to current property contract and actual core owners before promotion; broad action/pose changes are not automatically authorized.",
+      "confusion_boundaries": [
+        "forward-back stagger alone",
+        "all-fours"
+      ],
+      "source_ids": [
+        "I01"
+      ],
+      "qualification": "project_operational_definition",
+      "existing_reuse_or_extension_target": null,
+      "observability": {
+        "required_regions": [
+          "both feet are separated laterally on the same support plane",
+          "both legs turn outward with toes and knees facing compatible outward directions",
+          "both heels and forefeet contact the floor in this flat-foot variant",
+          "each foot retains its own distinct uncrossed ground contact"
+        ],
+        "hidden_region": "UNOBSERVABLE_not_assumed_pass",
+        "framing_conflict": "report_conflict_do_not_expand_locked_crop",
+        "thumbnail": "check_global_arrangement_if_visible",
+        "native_pixels": "check_all_contact_digit_joint_owner_details"
+      },
+      "temporal_semantics": "single_arrangement",
+      "activation": {
+        "aliases_are_retrieval_leads_not_global_synonyms": true,
+        "optional_only_until_promoted": true,
+        "pack_exposure_does_not_activate_profile": true,
+        "exact_label_requires_context_variant_negation_and_property_scope_checks": true,
+        "broad_similarity_cannot_set_hard_requirement": true
+      },
+      "conditional_alias_constraints": [],
+      "refinement_of_research_id": "pv_wide_stance"
+    },
+    {
+      "id": "pv_ballet_demi_plie_flat",
+      "families": [
+        "F19"
+      ],
+      "target_slot": "body_pose",
+      "status": "research_proposal",
+      "ko": "뒤꿈치 접지를 유지하는 얕은 드미 플리에",
+      "en": "both knees show a shallow bend over a turned-out standing base; each knee follows the outward direction of its corresponding toes; both heels remain on the floor; the pelvis stays between the two supporting legs",
+      "aliases": [
+        "shallow demi-plié grounded-heel variant",
+        "shallow demi-plie grounded-heel variant",
+        "flat-foot demi-plié"
+      ],
+      "embedding_text_proposed": "선택한 발 위치에서 무릎을 굽힌 플리에; Plié; Plie; 플리에; 선택한 발 위치에서 무릎을 굽힌 플리에; both knees flex in the selected ballet foot position; feet retain the declared floor contacts; demi or grand depth is explicitly selected; heels are evaluated according to that variant",
+      "concept_units": [
+        "both knees show a shallow bend over a turned-out standing base",
+        "each knee follows the outward direction of its corresponding toes",
+        "both heels remain on the floor",
+        "the pelvis stays between the two supporting legs"
+      ],
+      "typed_assertions": [],
+      "required_entity_bindings": {
+        "owner": "actor_1",
+        "laterality": "actor_left_right_when_material",
+        "target": "explicit_body_landmark_prop_partner_or_support_surface",
+        "mirror_rule": "reflection_does_not_create_a_new_actor"
+      },
+      "contact_and_support_policy": {
+        "roles": [
+          "no_contact",
+          "near",
+          "touch",
+          "grip",
+          "apparent_support",
+          "occlusion"
+        ],
+        "selected_role": "derive_from_declared_components_not_from_broad_label",
+        "force_measurement": "not_inferable_from_single_photo"
+      },
+      "affected_dimensions": [
+        "pose"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "pose",
+          "target": "actor_1.body",
+          "property": "body_support_and_configuration"
+        }
+      ],
+      "locked_by_default": [
+        "identity",
+        "appearance",
+        "setting",
+        "lighting",
+        "camera",
+        "framing",
+        "sexual_tone"
+      ],
+      "scope_note": "Property names/targets are research design. Adapt to current property contract and actual core owners before promotion; broad action/pose changes are not automatically authorized.",
+      "confusion_boundaries": [
+        "generic squat treated as full ballet definition",
+        "all grand forms forced to heels down"
+      ],
+      "source_ids": [
+        "I01",
+        "S24"
+      ],
+      "qualification": "project_operational_definition",
+      "existing_reuse_or_extension_target": null,
+      "observability": {
+        "required_regions": [
+          "both knees show a shallow bend over a turned-out standing base",
+          "each knee follows the outward direction of its corresponding toes",
+          "both heels remain on the floor",
+          "the pelvis stays between the two supporting legs"
+        ],
+        "hidden_region": "UNOBSERVABLE_not_assumed_pass",
+        "framing_conflict": "report_conflict_do_not_expand_locked_crop",
+        "thumbnail": "check_global_arrangement_if_visible",
+        "native_pixels": "check_all_contact_digit_joint_owner_details"
+      },
+      "temporal_semantics": "single_arrangement",
+      "activation": {
+        "aliases_are_retrieval_leads_not_global_synonyms": true,
+        "optional_only_until_promoted": true,
+        "pack_exposure_does_not_activate_profile": true,
+        "exact_label_requires_context_variant_negation_and_property_scope_checks": true,
+        "broad_similarity_cannot_set_hard_requirement": true
+      },
+      "conditional_alias_constraints": [],
+      "refinement_of_research_id": "pv_plie"
+    },
+    {
+      "id": "pv_ballet_fifth_arms_overhead",
+      "families": [
+        "F19"
+      ],
+      "target_slot": "hand_pose",
+      "status": "research_proposal",
+      "ko": "머리 위 타원을 이루는 발레 양팔 위치",
+      "en": "both arms form a rounded oval above the head; both elbows retain a soft curve rather than a rigid straight line; the fingertips approach across a visible gap without joining; the shoulders rest at the base of the neck while both connected arms rise overhead",
+      "aliases": [
+        "rounded fifth-position arms overhead",
+        "rounded fifth position arms overhead",
+        "overhead rounded ballet arms"
+      ],
+      "embedding_text_proposed": "선택한 발레 팔 위치의 포르 드 브라; Port de bras; 포르 드 브라; 선택한 발레 팔 위치의 포르 드 브라; a named arm-position variant is declared; both shoulder-elbow-wrist chains follow that variant; static arm form is distinguished from arm movement sequence",
+      "concept_units": [
+        "both arms form a rounded oval above the head",
+        "both elbows retain a soft curve rather than a rigid straight line",
+        "the fingertips approach across a visible gap without joining",
+        "the shoulders rest at the base of the neck while both connected arms rise overhead"
+      ],
+      "typed_assertions": [],
+      "required_entity_bindings": {
+        "owner": "actor_1",
+        "laterality": "actor_left_right_when_material",
+        "target": "explicit_body_landmark_prop_partner_or_support_surface",
+        "mirror_rule": "reflection_does_not_create_a_new_actor"
+      },
+      "contact_and_support_policy": {
+        "roles": [
+          "no_contact",
+          "near",
+          "touch",
+          "grip",
+          "apparent_support",
+          "occlusion"
+        ],
+        "selected_role": "derive_from_declared_components_not_from_broad_label",
+        "force_measurement": "not_inferable_from_single_photo"
+      },
+      "affected_dimensions": [
+        "pose"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "pose",
+          "target": "actor_1.body",
+          "property": "hand_digit_configuration"
+        }
+      ],
+      "locked_by_default": [
+        "identity",
+        "appearance",
+        "setting",
+        "lighting",
+        "camera",
+        "framing",
+        "sexual_tone"
+      ],
+      "scope_note": "Property names/targets are research design. Adapt to current property contract and actual core owners before promotion; broad action/pose changes are not automatically authorized.",
+      "confusion_boundaries": [
+        "generic arms overhead",
+        "whole port-de-bras sequence inferred"
+      ],
+      "source_ids": [
+        "I01",
+        "I02",
+        "S24"
+      ],
+      "qualification": "project_operational_definition",
+      "existing_reuse_or_extension_target": null,
+      "observability": {
+        "required_regions": [
+          "both arms form a rounded oval above the head",
+          "both elbows retain a soft curve rather than a rigid straight line",
+          "the fingertips approach across a visible gap without joining",
+          "the shoulders rest at the base of the neck while both connected arms rise overhead"
+        ],
+        "hidden_region": "UNOBSERVABLE_not_assumed_pass",
+        "framing_conflict": "report_conflict_do_not_expand_locked_crop",
+        "thumbnail": "check_global_arrangement_if_visible",
+        "native_pixels": "check_all_contact_digit_joint_owner_details"
+      },
+      "temporal_semantics": "single_arrangement",
+      "activation": {
+        "aliases_are_retrieval_leads_not_global_synonyms": true,
+        "optional_only_until_promoted": true,
+        "pack_exposure_does_not_activate_profile": true,
+        "exact_label_requires_context_variant_negation_and_property_scope_checks": true,
+        "broad_similarity_cannot_set_hard_requirement": true
+      },
+      "conditional_alias_constraints": [],
+      "refinement_of_research_id": "pv_port_de_bras"
+    }
+  ]
+}
