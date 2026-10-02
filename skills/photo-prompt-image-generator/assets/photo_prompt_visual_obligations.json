@@ -23248,7 +23248,7 @@
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "A rapier morphology with a long slender straight double-edged blade tapering to an acute point, an elaborate swept or cup guard that encloses the hand, a one-hand grip, and a pommel on one continuous hilt-to-blade axis. Blade proportion and protective guard topology distinguish it from a broad two-hand greatsword, a short smallsword silhouette, or a plain cruciform medieval sword.",
+        "definition": "A rapier morphology with a long slender straight double-edged blade tapering to an acute point, an elaborate swept or cup guard around the grip, a one-hand grip, and a pommel on one continuous hilt-to-blade axis. Blade proportion and protective guard topology distinguish it from a broad two-hand greatsword, a short smallsword silhouette, or a plain cruciform medieval sword.",
         "paraphrase_examples": [
           "손을 감싸는 복잡한 가드와 가느다란 직선 양날 검신이 뾰족한 끝으로 이어지는 레이피어",
           "a slender thrusting sword whose ornate swept guard, one-hand grip, pommel, and acute point share one readable profile"
@@ -23281,7 +23281,9 @@
               "id": "elaborate_hand_guard",
               "any_terms": [
                 "a swept or cup guard visibly encloses and protects the gripping hand",
-                "스웹트 또는 컵 가드가 손을 감싸 보호하는 구조"
+                "스웹트 또는 컵 가드가 손을 감싸 보호하는 구조",
+                "a swept or cup guard forms an elaborate protective enclosure around the grip",
+                "스웹트 또는 컵 가드가 그립 둘레에 정교한 보호 구조를 형성"
               ]
             },
             {
@@ -23320,12 +23322,12 @@
       "runtime_expression": {
         "default_mode": "label_plus_definition",
         "prompt_label_terms": [
-          "rapier with an elaborate hand-enclosing guard"
+          "rapier with an elaborate swept or cup guard"
         ],
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Use an unobstructed side or three-quarter profile that keeps the elaborate guard, gripping hand, one-hand grip, pommel, complete slender blade, and acute point on one continuous readable axis.",
+      "composition_instruction": "Use an unobstructed side or three-quarter profile that keeps the elaborate guard, grip, pommel, complete slender blade, and acute point on one continuous readable axis. Preserve the requested object placement and whether any person is present.",
       "required_evidence_fields": [
         "blade_profile_phrase",
         "acute_point_phrase",
@@ -23349,6 +23351,7 @@
         "guard_phrase": {
           "min_content_words": 11,
           "must_mention_any": [
+            "a swept or cup guard forms an elaborate protective enclosure around the grip",
             "a swept or cup guard visibly encloses and protects the gripping hand"
           ]
         },
@@ -23379,7 +23382,7 @@
         {
           "id": "vo_weapon_rapier_elaborate_guard",
           "review_scale": "both",
-          "description": "A swept or cup guard visibly encloses the gripping hand rather than becoming a plain crossguard."
+          "description": "A swept or cup guard forms an elaborate protective structure around the grip rather than becoming a plain crossguard; no hand is required."
         },
         {
           "id": "vo_weapon_rapier_hilt_axis",
@@ -23586,10 +23589,11 @@
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "A compound bow morphology built around a rigid central riser, split or compact limbs, cams or pulleys at both limb tips, and visibly separate bowstring and cable paths. The complete vertical bow remains independent of a stock, preventing a recurve or longbow without cams and preventing a crossbow substitution.",
+        "definition": "A compound bow morphology built around a rigid central riser, split or compact limbs, cams or pulleys at both limb tips, and visibly separate bowstring and cable paths. The complete bow remains independent of a stock, preventing a recurve or longbow without cams and preventing a crossbow substitution.",
         "paraphrase_examples": [
           "중앙 라이저·분할 림·양끝 캠·서로 분리된 보우스트링과 케이블 경로가 보이는 컴파운드 보우",
-          "a vertical modern bow whose paired cams and distinct cable paths remain visible from limb tip to limb tip"
+          "a vertical modern bow whose paired cams and distinct cable paths remain visible from limb tip to limb tip",
+          "a modern bow whose paired cams and distinct cable paths remain visible from limb tip to limb tip"
         ],
         "component_semantics": {
           "minimum_component_groups": 5,
@@ -23663,7 +23667,7 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Keep the entire vertical bow inside frame, with both limb-tip cams, split limbs, central riser and grip, bowstring, and separate cable routes unobstructed by hands, hair, costume, or background clutter.",
+      "composition_instruction": "Keep the entire bow inside frame in the requested orientation, with both limb-tip cams, split limbs, central riser and grip, bowstring, and separate cable routes unobstructed. Preserve the requested object placement and whether any person is present.",
       "required_evidence_fields": [
         "riser_phrase",
         "split_limb_phrase",
@@ -23707,7 +23711,7 @@
         {
           "id": "vo_weapon_compound_bow_full_riser_limbs",
           "review_scale": "thumbnail",
-          "description": "The complete vertical riser and upper and lower limb system fit inside the frame."
+          "description": "The complete riser and both limb systems fit inside the frame in the requested orientation."
         },
         {
           "id": "vo_weapon_compound_bow_two_cams",
@@ -23722,7 +23726,7 @@
         {
           "id": "vo_weapon_compound_bow_grip_relation",
           "review_scale": "native",
-          "description": "The hand meets the central riser grip without hiding either cam or inventing extra strings."
+          "description": "The grip remains a coherent part of the central riser without hiding either cam or inventing extra strings; no hand is required."
         },
         {
           "id": "vo_weapon_compound_bow_not_simple_or_crossbow",
