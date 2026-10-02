@@ -2,6 +2,7 @@
 from pathlib import Path
 import copy
 import hashlib
+import gzip
 import importlib.util
 import json
 import sys
@@ -11,6 +12,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'skills/photo-prompt-image-generator/assets'
 E = ROOT / 'docs/research-evidence/photo-prompt/shelf-return-korean-state-data-cleanup-20261001'
+NEXT = ROOT / 'docs/research-evidence/photo-prompt/liminal-active-use-korean-data-cleanup-20261002'
 
 
 def load_module(name, path):
@@ -32,6 +34,7 @@ class ShelfReturnKoreanStateDataCleanupTests(unittest.TestCase):
         cls.states = common.states_from_freeze(cls.frozen)
         cls.target = next(row for row in cls.frozen['inventory'] if row['decision'] == 'fix')
         cls.current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
+        cls.accepted_snapshot = json.loads(gzip.decompress((NEXT / 'baseline-merged-data.json.gz').read_bytes()))
 
     def test_frozen_inventory_probes_and_bounded_cost(self):
         self.assertEqual(hashlib.sha256((E / 'frozen-inventory-queries.json').read_bytes()).hexdigest(),
@@ -83,7 +86,7 @@ class ShelfReturnKoreanStateDataCleanupTests(unittest.TestCase):
         decision = json.loads((E / 'acceptance-decisions.json').read_text())
         self.assertEqual(decision['accepted_ids'], [self.target['id']])
         self.assertEqual(decision['accepted_fields'], ['ko'])
-        self.assertEqual(decision['accepted_dictionary_hash'], common.g.dictionary_hash(self.current))
+        self.assertEqual(decision['accepted_dictionary_hash'], common.g.dictionary_hash(self.accepted_snapshot))
         for name, digest in decision['artifact_sha256'].items():
             self.assertEqual(common.sha((E / name).read_bytes()), digest)
         report = json.loads((E / 'korean-catalog-consumer.json').read_text())
@@ -107,8 +110,8 @@ class ShelfReturnKoreanStateDataCleanupTests(unittest.TestCase):
         self.assertEqual(decision['cost']['attempts'], 13)
         self.assertEqual(decision['cost']['retries'], 0)
 
-    def test_complete_current_merged_state_and_eleven_keeps_are_exact(self):
-        self.assertEqual(self.current, self.states['proposal'])
+    def test_historical_merged_state_and_current_eleven_keeps_are_exact(self):
+        self.assertEqual(self.accepted_snapshot, self.states['proposal'])
         self.assertEqual(self.current['candidate_bundles'], self.states['baseline']['candidate_bundles'])
         for item in self.frozen['inventory']:
             current = next(r for r in self.current['slots'][item['slot']] if r['id'] == item['id'])
@@ -129,7 +132,7 @@ class ShelfReturnKoreanStateDataCleanupTests(unittest.TestCase):
         self.assertEqual(after['requires_primary_any_tags'], ['food_access_budget_choice_event'])
         self.assertEqual(after['affected_dimensions'], ['timing'])
 
-    def test_actual_v6_full_pack_detail_and_overview_preserve_genuine_adult_context(self):
+    def test_historical_v6_full_pack_detail_and_overview_preserve_genuine_adult_context(self):
         report = public_gate.check()
         for key in ['candidate_equal', 'full_pack_equal', 'detail_equal', 'overview_equal',
                     'genuine_human_adult_subject_compatibility_without_force',

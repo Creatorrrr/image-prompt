@@ -1,0 +1,54 @@
+"""Controlled production consumers; no repository writes or network/retrieval."""
+import copy,contextlib,hashlib,io,json,random,socket,sys,tempfile,urllib.request
+from pathlib import Path
+from unittest.mock import patch
+sys.dont_write_bytecode=True
+R=Path('/workspace/scratch/ce8f20680f5a/image-prompt');O=R.parent/'daylong-progress/boundary-transition-source-scout';A=R/'skills/photo-prompt-image-generator/assets';S=A.parent/'scripts';sys.path[:0]=[str(R),str(S)]
+import prompt_generator as g
+import photo_candidate_semantics as semantics
+import compose_pack_view as views
+from tests import photo_prompt_fixtures as fixtures
+sha=lambda b:hashlib.sha256(b).hexdigest();save=lambda n,v:(O/n).write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n')
+f=json.loads((O/'frozen-proposal-and-unmeasured-probes.json').read_text());freeze_sha=sha((O/'frozen-proposal-and-unmeasured-probes.json').read_bytes());assert freeze_sha==(O/'frozen-proposal-sha256.txt').read_text().strip();ID='waiting_in_between_use_space';SLOT='action';CID='slot:action:'+ID
+assert sha((O/'maintenance-binding-plan.json').read_bytes())==f['maintenance_binding_plan_sha256']
+assert all(sha((R/p).read_bytes())==h for p,h in f['repository_snapshot'].items())
+base=g.load_json(A/'photo_prompt_tags.json');assert next(r for r in base['slots'][SLOT] if r['id']==ID)==f['before'];prop=copy.deepcopy(base);prop['slots'][SLOT]=[copy.deepcopy(f['proposal']) if r['id']==ID else r for r in prop['slots'][SLOT]];rawstates={'baseline':base,'proposal':prop}
+blocked=AssertionError('Network/API forbidden in zero-cost consumer gate')
+with patch.object(g,'embed_texts_with_gemini',side_effect=blocked),patch.object(urllib.request,'urlopen',side_effect=blocked),patch.object(urllib.request.OpenerDirector,'open',side_effect=blocked),patch.object(socket,'create_connection',side_effect=blocked):
+ def catalog(path):
+  stream=io.StringIO()
+  with contextlib.redirect_stdout(stream):
+   code=g.main(['--tags',str(path),'--quality-layers',str(A/'photo_prompt_quality_layers.json'),'--visual-obligation-registry',str(A/'photo_prompt_visual_obligations.json'),'--visual-profile-index',str(A/'photo_prompt_visual_profile_index.json'),'--lang','ko','--list-tags',SLOT])
+  assert code==0
+  return stream.getvalue()
+ cats={}
+ with tempfile.TemporaryDirectory(dir=O) as temp:
+  for name,data in rawstates.items():
+   p=Path(temp)/(name+'-merged.json');p.write_text(json.dumps(data,ensure_ascii=False));assert g.load_json(p)==data;cats[name]=catalog(p)
+ assert catalog(A/'photo_prompt_tags.json')==cats['baseline']
+ lines={n:s.splitlines() for n,s in cats.items()};assert len(lines['baseline'])==len(lines['proposal'])==len(base['slots'][SLOT]);changed=[{'before':b,'proposal':a} for b,a in zip(lines['baseline'],lines['proposal']) if b!=a];assert changed==[{'before':f"{ID}: {f['before']['ko']} / {f['before']['en']}",'proposal':f"{ID}: {f['proposal']['ko']} / {f['proposal']['en']}"}]
+ for n,t in cats.items():(O/('catalog-'+n+'.txt')).write_text(t)
+ save('korean-catalog-consumer.json',{'status':'pass','consumer':'Production prompt_generator.main --list-tags action -> list_tags -> localize(ko/en)','source_rows':len(lines['baseline']),'changed_display_rows':changed,'all_other_lines_exact':True,'live_repository_equals_baseline':True,'loader_or_formatter_mocked':False,'inputs':'Complete merged before/proposal states serialized to temporary --tags paths','api_calls':0,'retrieval_executions':0,'limits':'Real Korean catalog display correction only; no generated Korean prompt, retrieval, adoption or image claim.'})
+ print('CATALOG_PASS',len(lines['baseline']),changed,flush=True)
+ data=copy.deepcopy(base);data[g.QUALITY_LAYERS_DATA_KEY]=g.load_quality_layers(A/'photo_prompt_quality_layers.json');reg=g.load_visual_obligation_registry(A/'photo_prompt_visual_obligations.json');data[g.VISUAL_OBLIGATIONS_DATA_KEY]=reg;data[g.VISUAL_PROFILE_INDEX_DATA_KEY]=g.load_visual_profile_index(A/'photo_prompt_visual_profile_index.json',reg)
+ subject=next(r for r in data['slots']['subject'] if r['id']=='elderly_commuter');location=next(r for r in data['slots']['location'] if r['id']=='between_use_transit_interior');picked={'subject':subject,'location':location};assert subject['kind']==['human'];assert g.compatible_with_picked([f['before']],picked,forced=False,slot=SLOT,source=data)==[f['before']];assert g.compatible_with_picked([f['proposal']],picked,forced=False,slot=SLOT,source=data)==[f['proposal']]
+ request='A lone elderly commuter waits in a clean maintained liminal transit interior between expected uses, with working route lights and traces of recently paused operation.'
+ baseline='A lone elderly commuter waits within a clean maintained station passage between expected uses. Working route lights, orderly benches and signs imply passage onward, while the expected passenger flow and destination activity are absent. A small wet footprint remains near the threshold, preserving a trace of recently paused operation. Repeating ceiling bays lead toward an unresolved arrival point. The photograph keeps one person, the route and its ordinary material details together under practical lighting.'
+ raw=fixtures.core(request,interpreted_intent='One living elderly commuter waits in a maintained between-use transit interior while expected active use is absent and recent operational traces remain',subject='one elderly commuter',setting='a clean maintained liminal transit interior',event='one elderly commuter waits between expected uses',visual_priorities=('one lone waiting commuter','maintained route cues','recent temporal residue','unresolved destination'),baseline_prompt_en=baseline,locked_dimensions=('concept','subject','event'))
+ core=g.normalize_authorial_core(raw,request_envelope=g.normalize_request_envelope(fixtures.envelope(request)))
+ result=fixtures.generate_once(data,random.Random(17),None,['en'],True,12,True,selection_mode='rule',include_trace=True,concept_locks=[request],seed=17,creativity=0,authorial_core=core,fixture_context={'subject_category':'human'})
+ save('generated-contract.json',result)
+ surfaces={}
+ for name,row in [('baseline',f['before']),('proposal',f['proposal'])]:
+  d=copy.deepcopy(data);d['slots'][SLOT]=[copy.deepcopy(row) if r['id']==ID else r for r in d['slots'][SLOT]];semantics.validate_candidate_entries(d,g.AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS)
+  fixture=copy.deepcopy(result);fixture['choices']={'subject':copy.deepcopy(subject),'location':copy.deepcopy(location),SLOT:{'id':ID}};fixture['preset_id']=None;trace=fixture['semantic_trace'];trace['preset_scores']=[];trace['slot_scores']=[{'slot':SLOT,'selected':ID,'candidate_count':1,'top':[{'id':ID,'weight':row['weight'],'score':1.,'applicability_status':'eligible','applicability_source':'controlled_source_compatible_fixture'}]}];contract=trace['generation_contract'];contract['candidate_pool_trace']={SLOT:{'eligible_ids':[ID],'weights':{ID:row['weight']},'forced':False}}
+  assert g.compatible_with_picked([row],picked,forced=False,slot=SLOT,source=d)==[row]
+  pack=g.build_candidate_pack(fixture,d,'v6');candidate=next((x for x in pack.get('slots',{}).get(SLOT,{}).get('candidates',[]) if x['id']==CID),None)
+  overview=views.build_view(pack);views.verify_view(pack,overview);detail=views.build_view(pack,[CID]) if candidate else None
+  if detail:views.verify_view(pack,detail)
+  assert pack['authorial_core']==result['provenance']['authorial_core'];assert pack['negative_intent_guard']==result['negative_intent_guard'];assert contract['soft_anchor_policy']==result['semantic_trace']['generation_contract']['soft_anchor_policy'];assert fixture['provenance']==result['provenance']
+  surfaces[name]={'full_pack':pack,'candidate':candidate,'overview':overview,'detail':detail,'detail_verified':bool(detail)};save(name+'-actual-v6.json',surfaces[name]);print('V6',name,'candidate_exposed',bool(candidate),'pack',pack.get('pack_id'),flush=True)
+ assert surfaces['baseline']['candidate'] and surfaces['proposal']['candidate'];assert surfaces['baseline']==surfaces['proposal']
+ checks={'full_pack_equal':True,'candidate_equal':True,'overview_equal':True,'detail_equal':True,'both_candidates_exposed':True,'human_subject_genuine':True,'source_location_supplies_existing_required_context_tags':True,'compatibility_without_force_and_without_action_self_support':True,'source_ko_only_change':True,'generated_soft_policy_unchanged':True,'negative_guard_unchanged':True,'frozen_core_unchanged':True,'fixture_provenance_unchanged':True,'no_retrieval_or_paid_calls':True,'frozen_proposal_unchanged':sha((O/'frozen-proposal-and-unmeasured-probes.json').read_bytes())==freeze_sha,'source_runtime_index_registry_bytes_unchanged':all(sha((R/p).read_bytes())==h for p,h in f['repository_snapshot'].items())};assert all(checks.values())
+ save('actual-v6-preservation.json',{'status':'pass','scope':'Controlled genuine-source-context production V6 preservation. Not natural candidate exposure/adoption, final composed prose, retrieval or image improvement.','checks':checks,'freeze_sha256':freeze_sha,'pack_id':surfaces['baseline']['full_pack']['pack_id'],'fixture':{'source_request':request,'real_user_request':False,'subject_row':subject,'location_row':location,'fixed_core':result['provenance']['authorial_core'],'exposure_override_fields':['choices','preset_id','semantic_trace.slot_scores','semantic_trace.preset_scores','semantic_trace.generation_contract.candidate_pool_trace'],'action_not_used_to_prove_its_own_compatibility':True},'api_calls':0,'retrieval_executions':0,'production_rule_fixture_generations':1,'repository_writes':0})
+ print('FULL_V6_PRESERVATION_PASS',surfaces['baseline']['full_pack']['pack_id'],flush=True)
