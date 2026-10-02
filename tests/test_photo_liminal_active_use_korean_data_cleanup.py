@@ -77,12 +77,42 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
         self.assertEqual(live['runtime_keys'], ['schema_version', 'slots'])
 
     def test_complete_merged_state_and_twenty_one_keeps_remain_exact(self):
-        # Compare the historical authored source before the later equivalent
-        # pose-context overlay. Its exact original meanings stay protected.
+        # Compare the historical authored source before later pose/body overlays.
+        # Body integration adds structured semantics to these 13 base entries;
+        # every pre-existing field must still equal the frozen historical row.
+        # Neither the historical expected values nor the lexical holdouts change.
         filenames = tuple(name for name in common.g.RESEARCH_EXTENSION_FILENAMES
-                          if name != 'photo_prompt_pose_vocabulary_extension.json')
+                          if name not in {'photo_prompt_pose_vocabulary_extension.json',
+                                          'photo_prompt_body_morphology_extension.json'})
         with patch.object(common.g, 'RESEARCH_EXTENSION_FILENAMES', filenames):
             historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
+        body_enriched_ids = {
+            'philtral_columns_cupid_bow', 'clavicle_supraclavicular_hollow',
+            'decolletage_neckline_exposure_boundary', 'trochanteric_depression_hip_dip',
+            'posterior_psis_dimples_pair', 'infragluteal_crease_boundary',
+            'calf_to_ankle_taper', 'bust_to_ribcage_projection_relation',
+            'slender_linear_build', 'soft_full_figure_volume',
+            'curvilinear_figure_relation', 'toned_muscular_definition',
+            'willowy_long_limb_proportion',
+        }
+        added_fields = {'paraphrases', 'concept_units', 'relations',
+                        'affected_dimensions', 'affected_properties', 'core_assertion_discovery'}
+        seen = set()
+        for slot, rows in historical_current['slots'].items():
+            expected = {row['id']: row for row in self.states['proposal']['slots'][slot]}
+            for row in rows:
+                if row['id'] not in body_enriched_ids:
+                    continue
+                original = expected[row['id']]
+                self.assertTrue(added_fields.isdisjoint(original))
+                self.assertEqual(set(row) - set(original), added_fields)
+                self.assertEqual({key: row[key] for key in original}, original)
+                for field in added_fields:
+                    self.assertTrue(row[field])
+                for field in added_fields:
+                    row.pop(field)
+                seen.add(row['id'])
+        self.assertEqual(seen, body_enriched_ids)
         self.assertEqual(historical_current['slots'], self.states['proposal']['slots'])
         historical_bundles = self.states['baseline']['candidate_bundles']
         self.assertEqual(fixtures.bundle_meanings(self.current['candidate_bundles'], within=historical_bundles),

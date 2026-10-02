@@ -1,0 +1,124 @@
+................ [ 16%]
+........... [ 27%]
+...................F.................. [ 65%]
+................................... [100%]
+=================================== FAILURES ===================================
+_ PortraitFashionExposureTests.test_added_projection_preserves_initial_profiles_candidates_and_source_links _
+
+self = <tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests testMethod=test_added_projection_preserves_initial_profiles_candidates_and_source_links>
+
+    def test_added_projection_preserves_initial_profiles_candidates_and_source_links(self):
+        initial_profiles = json.loads((EVIDENCE / "revisions/initial/photo_prompt_visual_obligations_portrait_fashion_exposure.json").read_text())["profiles"]
+        # Compare authored bytes with authored bytes; the runtime loader adds
+        # compiled component and claim-policy fields to profile dictionaries.
+        current_authored = {p["id"]: p for p in json.loads((SKILL / "assets/photo_prompt_visual_obligations_portrait_fashion_exposure.json").read_text())["profiles"]}
+        self.assertEqual(len(initial_profiles), 14)
+        for p in initial_profiles:
+>           self.assertEqual(p, current_authored[p["id"]])
+E           AssertionError: {'id'[744 chars]line'], 'contrast_examples': ['an independent [3192 chars]}}]}} != {'id'[744 chars]line', '같은 옷의 목둘레 부착점 사이에서 천이 느슨하게 처진다. 접힌 가장자[4314 chars]}}]}}
+E           Diff is 17801 characters long. Set self.maxDiff to None to see it.
+
+tests/test_photo_portrait_fashion_exposure.py:174: AssertionError
+_ PhotoCharacterResponseConceptTests.test_multilingual_fixture_uses_contrastive_bm25f (case='pure_hostility') _
+
+self = <tests.test_photo_character_response_concepts.PhotoCharacterResponseConceptTests testMethod=test_multilingual_fixture_uses_contrastive_bm25f>
+
+    def test_multilingual_fixture_uses_contrastive_bm25f(self):
+        for raw_line in FIXTURE_PATH.read_text(encoding="utf-8").splitlines():
+            case = json.loads(raw_line)
+            with self.subTest(case=case["id"]):
+                rows = prompt_generator.rank_character_response_concept_candidates(
+                    self.data,
+                    self.bm25f,
+                    {"active_request": case["text"]},
+                    limit=3,
+                )
+                actual = (
+                    str(rows[0]["document_id"]).split(":", 1)[1]
+                    if rows
+                    else None
+                )
+>               self.assertEqual(actual, case["expected_profile_id"])
+E               AssertionError: 'kuudere' != None
+
+tests/test_photo_character_response_concepts.py:79: AssertionError
+_ PhotoCharacterResponseConceptTests.test_multilingual_fixture_uses_contrastive_bm25f (case='yandere_negative_generic_jealousy') _
+
+self = <tests.test_photo_character_response_concepts.PhotoCharacterResponseConceptTests testMethod=test_multilingual_fixture_uses_contrastive_bm25f>
+
+    def test_multilingual_fixture_uses_contrastive_bm25f(self):
+        for raw_line in FIXTURE_PATH.read_text(encoding="utf-8").splitlines():
+            case = json.loads(raw_line)
+            with self.subTest(case=case["id"]):
+                rows = prompt_generator.rank_character_response_concept_candidates(
+                    self.data,
+                    self.bm25f,
+                    {"active_request": case["text"]},
+                    limit=3,
+                )
+                actual = (
+                    str(rows[0]["document_id"]).split(":", 1)[1]
+                    if rows
+                    else None
+                )
+>               self.assertEqual(actual, case["expected_profile_id"])
+E               AssertionError: 'kuudere' != None
+
+tests/test_photo_character_response_concepts.py:79: AssertionError
+_ PhotoCharacterResponseConceptTests.test_multilingual_fixture_uses_contrastive_bm25f (case='kuudere_ko_paraphrase') _
+
+self = <tests.test_photo_character_response_concepts.PhotoCharacterResponseConceptTests testMethod=test_multilingual_fixture_uses_contrastive_bm25f>
+
+    def test_multilingual_fixture_uses_contrastive_bm25f(self):
+        for raw_line in FIXTURE_PATH.read_text(encoding="utf-8").splitlines():
+            case = json.loads(raw_line)
+            with self.subTest(case=case["id"]):
+                rows = prompt_generator.rank_character_response_concept_candidates(
+                    self.data,
+                    self.bm25f,
+                    {"active_request": case["text"]},
+                    limit=3,
+                )
+                actual = (
+                    str(rows[0]["document_id"]).split(":", 1)[1]
+                    if rows
+                    else None
+                )
+>               self.assertEqual(actual, case["expected_profile_id"])
+E               AssertionError: 'tsundere' != 'kuudere'
+E               - tsundere
+E               + kuudere
+
+tests/test_photo_character_response_concepts.py:79: AssertionError
+_ PhotoCharacterResponseConceptTests.test_multilingual_fixture_uses_contrastive_bm25f (case='kuudere_en_paraphrase') _
+
+self = <tests.test_photo_character_response_concepts.PhotoCharacterResponseConceptTests testMethod=test_multilingual_fixture_uses_contrastive_bm25f>
+
+    def test_multilingual_fixture_uses_contrastive_bm25f(self):
+        for raw_line in FIXTURE_PATH.read_text(encoding="utf-8").splitlines():
+            case = json.loads(raw_line)
+            with self.subTest(case=case["id"]):
+                rows = prompt_generator.rank_character_response_concept_candidates(
+                    self.data,
+                    self.bm25f,
+                    {"active_request": case["text"]},
+                    limit=3,
+                )
+                actual = (
+                    str(rows[0]["document_id"]).split(":", 1)[1]
+                    if rows
+                    else None
+                )
+>               self.assertEqual(actual, case["expected_profile_id"])
+E               AssertionError: 'tsundere' != 'kuudere'
+E               - tsundere
+E               + kuudere
+
+tests/test_photo_character_response_concepts.py:79: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_photo_portrait_fashion_exposure.py::PortraitFashionExposureTests::test_added_projection_preserves_initial_profiles_candidates_and_source_links
+SUBFAILED(case='pure_hostility') tests/test_photo_character_response_concepts.py::PhotoCharacterResponseConceptTests::test_multilingual_fixture_uses_contrastive_bm25f
+SUBFAILED(case='yandere_negative_generic_jealousy') tests/test_photo_character_response_concepts.py::PhotoCharacterResponseConceptTests::test_multilingual_fixture_uses_contrastive_bm25f
+SUBFAILED(case='kuudere_ko_paraphrase') tests/test_photo_character_response_concepts.py::PhotoCharacterResponseConceptTests::test_multilingual_fixture_uses_contrastive_bm25f
+SUBFAILED(case='kuudere_en_paraphrase') tests/test_photo_character_response_concepts.py::PhotoCharacterResponseConceptTests::test_multilingual_fixture_uses_contrastive_bm25f
+5 failed, 99 passed, 924 subtests passed in 411.73s (0:06:51)

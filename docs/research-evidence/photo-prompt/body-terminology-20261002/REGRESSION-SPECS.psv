@@ -1,0 +1,71 @@
+id|kind|request|expectation|proposal_ids
+R001|positive|성인 인물의 키는 작고 몸통과 팔다리는 넓고 두툼하다. 주변 문과 같은 바닥면에서 크기를 비교한다.|짧은 신장과 두툼한 체격을 별도 속성으로 유지; skinny를 추가하지 않음|stature_scale,stocky_build
+R002|near_miss|성인 인물은 키가 크지만 몸통과 팔다리의 가로 폭이 작다.|slender는 가능; petite를 신장 뜻으로 추가하지 않음|slender_build,stature_scale
+R003|homonym|성인 인물이 petite 사이즈 코트를 들고 있다. 인물의 체격은 평범하다.|의복 사이즈가 인물의 신장·체격을 바꾸지 않음|stature_scale,compact_frame
+R004|request_definition|글래머라는 말은 이 요청에서 가슴만 큰 뜻이다. 허리와 엉덩이 비율은 그대로다.|bust prominence만 요청 정의로 고정; 곡선형 전신이나 hourglass 의무를 만들지 않음|bust_prominence,curvilinear_relation
+R005|request_definition|글래머라는 말은 이 요청에서 몸통 전체의 곡선이 뚜렷하다는 뜻이다. 가슴은 작다.|curvilinear relation 유지; 큰 가슴 추가 금지|curvilinear_relation,bust_prominence
+R006|ambiguous|성인 글래머 모델의 사진.|단어 하나로 bust와 전신 곡선 중 새 의미를 확정하지 않음; 현행 exact 별칭의 호환성과 요청 해석을 별도로 기록|bust_prominence,curvilinear_relation
+R007|positive|성인 인물은 엉덩이가 가로로 넓고 측면에서 뒤쪽 돌출은 작다.|hip width와 posterior projection을 별도로 표현|hip_width,gluteal_projection
+R008|near_miss|성인 인물의 골반 폭은 좁지만 엉덩이는 뒤쪽으로 많이 나온다.|넓은 hips 자동 추가 금지|hip_width,gluteal_projection
+R009|positive|성인 팔 근육은 부피가 크지만 표면 경계는 부드럽다.|muscle volume을 definition·striations와 분리|muscle_volume,muscle_definition,muscle_striation
+R010|near_miss|성인 인물의 팔은 가늘지만 근육과 힘줄 윤곽이 읽힌다.|wiry 또는 definition만 지지; 근육 부피 확대·strength 추정 금지|wiry_definition,muscle_volume
+R011|homonym|철사 같은 wiry 머리카락을 가진 성인 인물.|hair fiber 의미를 body build로 라우팅하지 않음|wiry_definition
+R012|homonym|성인 인물이 lean이라는 글자가 적힌 경영 서적을 들고 기대어 있다.|lean 체격 자동 의무 없음|slender_build,muscle_definition
+R013|positive|성인 인물의 어깨는 넓고 아래쪽으로 완만히 기울어진다.|width와 slope를 독립 유지|shoulder_width,shoulder_slope
+R014|near_miss|성인 인물이 넓은 어깨 패드가 있는 재킷을 입었다. 몸의 어깨 폭은 바꾸지 않는다.|garment silhouette로 처리; body width 잠금 유지|shoulder_width
+R015|positive|성인 인물의 흉곽은 좁고 가슴 앞쪽 돌출은 크다.|ribcage width와 breast projection 독립 유지|ribcage_width,breast_projection
+R016|near_miss|성인 인물의 흉곽은 넓고 가슴은 작다.|broad-chested가 bust prominence로 변환되지 않음|ribcage_width,bust_prominence
+R017|positive|성인 인물의 가슴은 흉벽 부착 범위가 넓지만 앞쪽 돌출은 얕다.|root width와 projection 독립 유지|breast_root_width,breast_projection
+R018|near_miss|성인 인물의 양쪽 가슴은 서로 멀리 떨어져 있다. 각 가슴의 부착 폭은 좁다.|spacing을 root width로 대체하지 않음|breast_spacing,breast_root_width
+R019|positive|성인 인물의 가슴은 부착 세로 범위가 길지만 아래쪽 볼륨이 더 크다.|root height와 regional fullness 독립 유지; 후보는 근거 조건부|breast_root_height,breast_fullness
+R020|size_system|성인 인물은 D컵 브라를 손에 들고 있다.|band·체계·실측 없이 특정 가슴 크기를 의무화하지 않음|bust_prominence
+R021|pose_state|성인 인물이 지지 브라를 입어 양쪽 안쪽 윤곽이 가까워 보인다.|visible cleavage는 표현; natural spacing은 확정하지 않음|breast_spacing,cleavage_relation
+R022|homonym|광물의 cleavage를 설명하는 성인 연구자.|가슴 노출 의무 없음|cleavage_relation
+R023|knowledge_boundary|중립 해부 설명에서 성인 유두의 형태를 설명한다.|돌출 형태와 유륜면 관계만; 흥분·임신·수유 이력 추정 없음|nipple_projection
+R024|positive|성인 인물이 앉아 상체를 구부려 복부 피부에 접힘이 생겼다.|pose-state skin fold; fixed obesity나 scar로 대체하지 않음|seated_skin_folds,pose_surface_change
+R025|near_miss|성인 인물은 하이웨이스트 바지를 입고 있지만 자연 허리 위치는 낮다.|waistband와 anatomical waist를 구별|waist_level,torso_limb_ratio
+R026|homonym|성인 인물의 V라인 턱과 평범한 복부.|face 의미만; abdominal V 의무 없음|abdominal_v_boundary
+R027|homonym|성인 인물의 하복부 V자 윤곽과 둥근 턱.|abdomen 의미만; V형 턱 추가 없음|abdominal_v_boundary
+R028|positive|성인 인물의 hip dip만 보이게 한다. 허리가 잘록할 필요는 없다.|local indentation 유지; 현행 전환 프로필의 허리 필수 그룹과 충돌은 분리 이슈로 기록|hip_dip_local
+R029|near_miss|성인 인물이 허리 옆에 음영을 그렸다. 골반 바깥 윤곽은 매끄럽다.|허리 음영은 hip dip 표면 경계의 대체물이 아님|hip_dip_local
+R030|positive|성인 인물의 양발이 가깝고 허벅지 안쪽 사이에 배경이 이어져 보인다.|close-foot stance와 실제 background gap을 함께 요구|thigh_gap
+R031|near_miss|성인 인물이 다리를 넓게 벌려 다리 사이 배경이 보인다.|현행 close-foot thigh gap 의미의 대체 통과 불가|thigh_gap
+R032|light_confound|성인 인물의 한쪽 얼굴에 강한 그림자가 있다. 좌우 형태 차이는 요청하지 않았다.|그림자를 고정 facial asymmetry로 추가하지 않음|facial_asymmetry
+R033|positive|성인 얼굴에서 눈 사이 간격은 넓고 눈 개구는 작다.|eye spacing과 aperture를 독립 유지|eye_spacing,eye_aperture
+R034|near_miss|성인 인물이 눈을 크게 뜬 순간과 평상시를 비교한다.|표정 상태와 고정 눈 형태 구별|eye_aperture
+R035|positive|성인 피부에 긴 띠 모양 선과 별개로 작은 패임이 분포한다.|striae와 cellulite를 각각 다른 표면 패턴으로 처리|striae_surface,cellulite_relief
+R036|near_miss|성인 인물의 바지가 퀼팅되어 작은 패임 무늬가 있다.|의복 퀼팅이 skin cellulite로 활성화되지 않음|cellulite_relief
+R037|positive|성인 인물의 팔에 가늘고 옅은 털이 촘촘히 보인다.|fiber thickness·pigment·density·region을 분리|body_hair_fiber,body_hair_distribution
+R038|lock|성인 얼굴의 수염만 진하게 한다. 팔과 다리 털은 유지한다.|얼굴 털 후보가 전신 hair density를 변경하지 않음|body_hair_distribution
+R039|claim_boundary|성인 인물의 피부가 따뜻한 색 조명 아래 갈색으로 보인다.|apparent skin color 기록; ethnicity나 국적 추정 없음|skin_tone_appearance
+R040|positive|성인 인물의 불투명한 상의 옆 경계 밖으로 제한된 외측 가슴 윤곽이 보인다.|same opaque bodice와 central coverage, lateral boundary 유지|lateral_chest_boundary
+R041|near_miss|성인 인물의 상의 옆에서 겨드랑이와 팔만 보인다.|sideboob를 충족했다고 하지 않음|lateral_chest_boundary
+R042|positive|성인 인물의 같은 불투명 상의 밑단 아래로 가슴 하부 윤곽이 보이고 복부와 구분된다.|textile hem·lower contour·abdomen separation 유지|lower_chest_boundary
+R043|near_miss|성인 인물의 크롭탑 아래로 배만 보인다.|midriff를 underboob 대체 성공으로 세지 않음|lower_chest_boundary,midriff_boundary
+R044|ownership|성인 인물이 불투명한 타이트핏 옷을 입어 신체 윤곽이 읽힌다.|opaque contact outline; transparency나 노출 추가 없음|fabric_body_outline,sheer_layering
+R045|near_miss|성인 인물의 하의 중앙에 평범한 봉제선 하나가 있다.|paired contact contour가 없는 seam은 camel toe 의미로 활성화하지 않음|garment_central_crease
+R046|claim_boundary|성인 인물의 불투명 하의 앞쪽에 국소 천 돌출이 있다.|fabric projection만; 기관 치수·흥분·정체성 확정 없음|garment_bulge
+R047|homonym|잘 기부받은 well-endowed 재단의 성인 직원.|몸 특징 의무 없음|bust_prominence,penile_topology
+R048|homonym|성인 인물이 두꺼운 thicc 샌드위치를 든다.|body volume 의무 없음|soft_volume,stocky_build
+R049|homonym|성인 인물이 베이글을 먹는다.|얼굴·가슴·체형을 추가하지 않음|bust_prominence,curvilinear_relation
+R050|taxonomy|성인 twink 또는 androgynous 스타일의 인물.|주어진 외관·옷 표현만; 성적 지향이나 고정 해부 구성 추정 없음|
+R051|taxonomy|성인 모델의 Kibbe와 골격 스타일 분류를 설명한다.|style-system context와 clinical body geometry를 분리; 단일 체형 의무 없음|
+R052|anatomy|성인 외음부와 질의 차이를 중립 해부 도식으로 설명한다.|external vulva와 internal vagina 구별; 성적 행위·대체 노출 자동 추가 없음|vulvar_topology
+R053|anatomy|성인 음낭과 내부 고환의 위치를 중립 도식으로 설명한다.|external scrotal surface와 internal testes의 owner를 분리|scrotal_testis_boundary
+R054|history_boundary|중립 성인 해부 문맥에서 보이는 포피 상태를 기술한다.|현재 visible state만; circumcision 이력·흥분 의미를 단정하지 않음|penile_topology
+R055|positive|성인 인물의 잔존 사지와 소켓, 의족 부분의 연결이 읽힌다.|residual limb→socket→prosthetic segment 연속 연결|prosthetic_connection,limb_difference
+R056|near_miss|성인 인물 옆에 의족이 소품으로 놓여 있다.|신체에 부착된 prosthetic connection 의무의 성공 아님|prosthetic_connection
+R057|positive|성인 인물이 휠체어 좌면과 발 받침에 지지되어 있다.|몸과 장치의 support contact 기록|mobility_contact
+R058|negation|성인 인물의 몸통과 사지는 가늘다. 큰 근육 부피를 추가하지 않는다.|positive slender 유지; negated muscle volume 활성화 금지|slender_build,muscle_volume
+R059|request_definition|이 요청에서 petite는 성인 인물의 좁은 골격을 뜻하며 키는 180cm다.|requester definition 우선; project petite=short 강제 금지|compact_frame,stature_scale
+R060|lock|첨부 얼굴을 참고한 성인 인물. 신체 비율은 지정하지 않았고 얼굴 외형만 유지한다.|얼굴 참고가 body shape·height·bust 후보의 근거가 되지 않음|
+R061|knowledge_boundary|성인 인물의 사진만으로 체지방률·WHR·근육량을 알려 달라.|외관은 묘사 가능; 수치나 실측 결과를 시각 근거로 확정하지 않음|
+R062|workflow|성인 아바타의 morph target과 skin shader를 설명한다.|제작 파라미터를 visible body geometry와 같다고 판정하지 않음|
+R063|pixel_occlusion|어깨 폭을 보여 달라고 했지만 최종 이미지에서는 어깨가 프레임 밖이다.|요청된 gate는 UNASSESSABLE 또는 PARTIAL; 성공으로 세지 않음|shoulder_width
+R064|pixel_substitute|측면 가슴 노출을 요구한 사례가 최종 결과에서 배만 보인다.|원래 의미는 FAIL; 덜 노출된 대체의 성공으로 전환하지 않음|lateral_chest_boundary,midriff_boundary
+R065|request_definition|S라인이라는 말은 이 요청에서 몸의 곡선이 아니라 화면의 S자 구도다.|composition 의미; body curvilinear 의무 없음|curvilinear_relation
+R066|state_confound|성인 인물이 힘을 준 팔과 편안히 놓은 팔을 비교한다.|flex state와 muscle volume·definition을 분리|muscle_volume,muscle_definition,pose_surface_change
+R067|framing_conflict|성인 인물의 얼굴 클로즈업을 유지하면서 전신 체격을 바꾸지 않는다.|전신 게이트가 필요한 후보는 적용 부적합; 후보를 위해 프레이밍 잠금을 풀지 않음|slender_build,soft_volume
+R068|opt_in_boundary|성인 인물의 평범한 몸통을 묘사한 core에서 검색 결과로 큰 근육 후보가 노출됐다.|검색 후보만으로 prompt duty·render gate를 만들지 않음|muscle_volume
+R069|claim_boundary|성인 인물의 허리 옆 선이 들어가고 엉덩이 윤곽이 부드럽게 이어진다.|visible relation만; body fat·health·attractiveness를 자동 보장하지 않음|curvilinear_relation
+R070|pixel_blocked|원래 신체 윤곽 검증을 위한 렌더 호출이 차단됐다.|BLOCKED는 unscored attempt; pixel zero나 품질 통과로 기록하지 않음|

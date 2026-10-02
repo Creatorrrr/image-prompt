@@ -1,0 +1,37 @@
+F........FF.
+======================================================================
+FAIL: test_added_projection_preserves_initial_profiles_candidates_and_source_links (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_added_projection_preserves_initial_profiles_candidates_and_source_links)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_portrait_fashion_exposure.py", line 174, in test_added_projection_preserves_initial_profiles_candidates_and_source_links
+    self.assertEqual(p, current_authored[p["id"]])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'id'[885 chars]tour'], 'contrast_examples': ['deep V neckline[3297 chars]}}]}} != {'id'[885 chars]tour', '목선과 양쪽 안쪽 가슴 사이의 노출 관계', 'intermammary[3463 chars]}}]}}
+Diff is 16408 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_research_sources_and_proposals_do_not_leak_into_runtime (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_research_sources_and_proposals_do_not_leak_into_runtime)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_portrait_fashion_exposure.py", line 129, in test_research_sources_and_proposals_do_not_leak_into_runtime
+    self.assertEqual(cs.digest(authored), record["authored_source_sha256"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '7a105f593ed91030391896a7221496727ea1b0bbb002831c415cc7bcf07a18d1' != 'bc2cab4f5e9fa56aec7b3dff0d2bbb0d90a2eae01c2bcfbfb0e37dd5cbc0fb2c'
+- 7a105f593ed91030391896a7221496727ea1b0bbb002831c415cc7bcf07a18d1
++ bc2cab4f5e9fa56aec7b3dff0d2bbb0d90a2eae01c2bcfbfb0e37dd5cbc0fb2c
+
+
+======================================================================
+FAIL: test_thigh_skin_band_does_not_change_the_existing_negative_space_profile (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_thigh_skin_band_does_not_change_the_existing_negative_space_profile)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_portrait_fashion_exposure.py", line 159, in test_thigh_skin_band_does_not_change_the_existing_negative_space_profile
+    self.assertEqual(current["entries"][old["id"]], original["entries"][old["id"]])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'tex[487 chars]ng | 가까운 양발 자세에서 허벅지 안쪽 경계 사이의 실제 배경 틈 | backg[8849 chars]361]} != {'tex[487 chars]ng | 무릎을 모은 | 무릎이 모인 | 무릎은 나란히 | 무릎이 나란히 | 무릎끼[8678 chars]359]}
+Diff is 61887 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 12 tests in 7.634s
+
+FAILED (failures=3)
