@@ -1,0 +1,94 @@
+[
+  {
+    "case": "side-overlap",
+    "cli_command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "REPOSITORY_ROOT/skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py",
+      "--pack",
+      "EVIDENCE_ROOT/garment-closure-alternative-audit/public-cli/after/side-overlap-pack.json",
+      "--composed",
+      "EVIDENCE_ROOT/wrap-skirt-side-review/after-evidence/side-overlap-complete-composed.json"
+    ],
+    "cli_exit": 0,
+    "status": "pass",
+    "failures": [],
+    "warnings": [
+      {
+        "check": "uncovered_intent",
+        "intent": "One clearly adult person",
+        "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+      },
+      {
+        "check": "uncovered_intent",
+        "intent": "One clearly adult person stands steadily in a daylight garment studio with both feet planted beneath the body.",
+        "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+      },
+      {
+        "check": "uncovered_intent",
+        "intent": "One panel crosses diagonally over the other across the skirt side, with a separately traceable under-panel continuing beneath its edge.",
+        "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+      }
+    ],
+    "before_visual_failures": [
+      {
+        "check": "visual_obligation_semantic_evidence",
+        "reason": "visual evidence phrase lacks a profile-declared component anchor",
+        "profile_id": "wrap_skirt_overlap_closure",
+        "field": "diagonal_overlap_phrase",
+        "accepted_anchors": [
+          "one panel crosses diagonally over the other across the skirt front"
+        ]
+      }
+    ],
+    "after_visual_failures": [],
+    "baseline_preserved": true,
+    "evidence_content_words": {
+      "shared_waist_phrase": 14,
+      "two_panel_edges_phrase": 15,
+      "diagonal_overlap_phrase": 18,
+      "functional_fastening_phrase": 17,
+      "underpanel_confound_phrase": 23
+    }
+  },
+  {
+    "case": "front-overlap-control",
+    "cli_command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "REPOSITORY_ROOT/skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py",
+      "--pack",
+      "EVIDENCE_ROOT/garment-closure-alternative-audit/public-cli/after/front-overlap-control-pack.json",
+      "--composed",
+      "EVIDENCE_ROOT/wrap-skirt-side-review/after-evidence/front-overlap-control-complete-composed.json"
+    ],
+    "cli_exit": 0,
+    "status": "pass",
+    "failures": [],
+    "warnings": [
+      {
+        "check": "uncovered_intent",
+        "intent": "One clearly adult person",
+        "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+      },
+      {
+        "check": "uncovered_intent",
+        "intent": "One clearly adult person stands steadily in a daylight garment studio with both feet planted beneath the body.",
+        "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+      },
+      {
+        "check": "uncovered_intent",
+        "intent": "One panel crosses diagonally over the other across the skirt front, with a separately traceable under-panel continuing beneath its edge.",
+        "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+      }
+    ],
+    "before_visual_failures": [],
+    "after_visual_failures": [],
+    "baseline_preserved": true,
+    "evidence_content_words": {
+      "shared_waist_phrase": 14,
+      "two_panel_edges_phrase": 15,
+      "diagonal_overlap_phrase": 18,
+      "functional_fastening_phrase": 17,
+      "underpanel_confound_phrase": 23
+    }
+  }
+]
