@@ -1,0 +1,2067 @@
+{
+  "scope": "Exactly priority 3 selected 12 rows; related subject/composition/profile rows used only as context, not added review membership.",
+  "source_sha256": "7638dd9e03a4beebc6e8768d2b558a9d2b8ea009cdbef30f8820f460c89672ba",
+  "reviewed_rows": [
+    {
+      "candidate_id": "slot:action:pov_food_item_return_action",
+      "source_pointer": "/slots/action/0",
+      "source_row_sha256": "d3ff950eb1adff401f6aef34ea943200013183e951063aeeac79fa69025846ea",
+      "decision": "keep",
+      "reason": "The same item travels basket to original display before the reduced payment completes; Korean, English and explicit concept unit agree.",
+      "current": {
+        "id": "pov_food_item_return_action",
+        "ko": "필수 식품 하나를 장바구니에서 꺼내 원래 진열 지점으로 되돌린 뒤 남은 묶음만 결제하기",
+        "en": "removing one staple from the basket, returning it to its source display and completing payment for the reduced set",
+        "weight": 0.88,
+        "tags": [
+          "poverty_access_visual_semantics",
+          "food_access_budget_choice_event",
+          "action"
+        ],
+        "requires_primary_any_tags": [
+          "food_access_budget_choice_event"
+        ],
+        "aliases": [
+          "returning one staple under a finite budget"
+        ],
+        "keywords": [
+          "item removal",
+          "reduced purchase",
+          "source return"
+        ],
+        "embedding_text": "one basic food item follows a visible basket-to-source return path before the remaining essential set is paid",
+        "concept_units": [
+          "removing one staple from the basket, returning it to its source display and completing payment for the reduced set"
+        ],
+        "affected_dimensions": [
+          "action"
+        ]
+      },
+      "original_proposal_pointer": {
+        "path": "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/candidate-data-proposal.json",
+        "json_pointer": "/proposed_candidates/1",
+        "source_ids": [
+          "S04",
+          "S07"
+        ]
+      },
+      "original_proposal": {
+        "id": "pov_food_item_return_action",
+        "slot": "action",
+        "ko": "필수 식품 하나를 장바구니에서 꺼내 원래 진열 지점으로 되돌린 뒤 남은 묶음만 결제하기",
+        "en": "removing one staple from the basket, returning it to its source display and completing payment for the reduced set",
+        "aliases": [
+          "returning one staple under a finite budget"
+        ],
+        "keywords": [
+          "item removal",
+          "source return",
+          "reduced purchase"
+        ],
+        "embedding_text": "one basic food item follows a visible basket-to-source return path before the remaining essential set is paid",
+        "for_any": [
+          "food_access_budget_choice_event"
+        ],
+        "tier": "optional",
+        "source_ids": [
+          "S04",
+          "S07"
+        ]
+      },
+      "source_bindings": [
+        {
+          "line": 4,
+          "record": {
+            "evidence_id": "E04",
+            "source_id": "S04",
+            "title": "Applying the Food Insecurity Experience Scale",
+            "publisher": "FAO",
+            "date": null,
+            "url": "https://www.fao.org/measuring-hunger/access-to-food/applying-the-fies/",
+            "abstracted_dimensions": [
+              "worry_about_food",
+              "dietary_diversity_reduction",
+              "meal_skipping",
+              "portion_reduction",
+              "food_exhaustion",
+              "hunger_without_eating"
+            ],
+            "candidate_ids": [
+              "pov_food_item_return_action",
+              "pov_remaining_supply_division_action",
+              "pov_depleted_container_after_portion_trace"
+            ],
+            "affected_contract_ids": [
+              "food_access_budget_choice_event",
+              "household_food_depletion_portioning_event"
+            ],
+            "research_limitations": [
+              "FIES is an experience survey with a reference period rather than an image classifier",
+              "an empty bowl or small portion alone does not establish food insecurity"
+            ],
+            "reuse_note": "Translate only component-rich access and portioning events; retain duration and severity labels as advisory."
+          }
+        },
+        {
+          "line": 7,
+          "record": {
+            "evidence_id": "E07",
+            "source_id": "S07",
+            "title": "Persons at risk of poverty or social exclusion (sdg_01_10)",
+            "publisher": "Eurostat",
+            "date": null,
+            "url": "https://ec.europa.eu/eurostat/cache/metadata/en/sdg_01_10_esmsip2.htm",
+            "abstracted_dimensions": [
+              "arrears",
+              "thermal_comfort",
+              "meal_affordability",
+              "clothing_replacement",
+              "furniture_replacement",
+              "internet_access",
+              "social_participation"
+            ],
+            "candidate_ids": [
+              "pov_paid_one_deferred_one_trace",
+              "pov_inactive_service_used_zone_trace",
+              "pov_visible_mend_return_to_use_trace",
+              "pov_unentered_activity_continuing_trace"
+            ],
+            "affected_contract_ids": [
+              "basic_needs_budget_tradeoff_deferral",
+              "household_energy_affordability_coping_relation",
+              "material_replacement_deferral_repair_cycle",
+              "relative_participation_affordability_barrier",
+              "digital_connectivity_affordability_workaround_event"
+            ],
+            "research_limitations": [
+              "survey items encode enforced inability and household context",
+              "a worn item cold color grade or missed outing alone is not deprivation evidence"
+            ],
+            "reuse_note": "Use as a dimension map and for exact relation contrasts, not as a bag of aesthetic poverty tokens."
+          }
+        }
+      ],
+      "current_semantic_projection": {
+        "concept_units": [
+          "removing one staple from the basket, returning it to its source display and completing payment for the reduced set"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "action"
+        ],
+        "adoption": "optional"
+      },
+      "compiled_bundle_member": {
+        "id": "slot:action:pov_food_item_return_action",
+        "slot": "action",
+        "entry_id": "pov_food_item_return_action",
+        "concept_units": [
+          "removing one staple from the basket, returning it to its source display and completing payment for the reduced set"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "action"
+        ],
+        "adoption": "optional"
+      },
+      "family": "food_access_budget_choice_event",
+      "bundle_source_sha256": "b993f3de9d3ca523beee6cf3dbb057f25152b152caca301bd8770df3f5fe9003",
+      "source_owned_profile_components": [
+        "several basic staple-food items remain grouped as one intended essential purchase",
+        "one visibly finite payment resource is physically compared with the essential set without depending on readable prices",
+        "the same unmistakably adult shopper visibly returns or removes one staple item from the intended set",
+        "the remaining smaller set visibly reaches a completed paid purchase state",
+        "the returned item's source and the reduced paid set remain spatially connected to the same shopper"
+      ],
+      "field_checks": {
+        "original_labels_and_positive_embedding_equal": true,
+        "keyword_set_equal": true,
+        "complete_en_unit_preserved": true,
+        "no_authored_relation_endpoints_to_reverse": true,
+        "family_binding_and_source_digest_valid": true
+      }
+    },
+    {
+      "candidate_id": "slot:prop:pov_finite_payment_basic_basket_prop",
+      "source_pointer": "/slots/prop/0",
+      "source_row_sha256": "c476204eb863486160ace07478ae9efd3aca7ec64fb340e3547d78b1d8eaeb75",
+      "decision": "keep",
+      "reason": "One finite payment medium and grouped basic foods remain explicit. The prop is one optional atom, not the whole event.",
+      "current": {
+        "id": "pov_finite_payment_basic_basket_prop",
+        "ko": "여러 기본 식품과 수량이 한정된 무상표 지불 수단을 함께 보여 주는 장바구니",
+        "en": "a basket of several basic foods beside a visibly count-limited unbranded payment medium",
+        "weight": 0.88,
+        "tags": [
+          "poverty_access_visual_semantics",
+          "food_access_budget_choice_event",
+          "prop"
+        ],
+        "requires_primary_any_tags": [
+          "food_access_budget_choice_event"
+        ],
+        "aliases": [
+          "finite payment and staple basket"
+        ],
+        "keywords": [
+          "basket",
+          "finite resource",
+          "staples"
+        ],
+        "embedding_text": "several necessary food items compete for one visibly finite payment resource without readable personal financial data",
+        "concept_units": [
+          "a basket of several basic foods beside a visibly count-limited unbranded payment medium"
+        ],
+        "affected_dimensions": [
+          "concept"
+        ]
+      },
+      "original_proposal_pointer": {
+        "path": "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/candidate-data-proposal.json",
+        "json_pointer": "/proposed_candidates/3",
+        "source_ids": [
+          "S04",
+          "S07"
+        ]
+      },
+      "original_proposal": {
+        "id": "pov_finite_payment_basic_basket_prop",
+        "slot": "prop",
+        "ko": "여러 기본 식품과 수량이 한정된 무상표 지불 수단을 함께 보여 주는 장바구니",
+        "en": "a basket of several basic foods beside a visibly count-limited unbranded payment medium",
+        "aliases": [
+          "finite payment and staple basket"
+        ],
+        "keywords": [
+          "staples",
+          "finite resource",
+          "basket"
+        ],
+        "embedding_text": "several necessary food items compete for one visibly finite payment resource without readable personal financial data",
+        "for_any": [
+          "food_access_budget_choice_event"
+        ],
+        "tier": "optional",
+        "source_ids": [
+          "S04",
+          "S07"
+        ]
+      },
+      "source_bindings": [
+        {
+          "line": 4,
+          "record": {
+            "evidence_id": "E04",
+            "source_id": "S04",
+            "title": "Applying the Food Insecurity Experience Scale",
+            "publisher": "FAO",
+            "date": null,
+            "url": "https://www.fao.org/measuring-hunger/access-to-food/applying-the-fies/",
+            "abstracted_dimensions": [
+              "worry_about_food",
+              "dietary_diversity_reduction",
+              "meal_skipping",
+              "portion_reduction",
+              "food_exhaustion",
+              "hunger_without_eating"
+            ],
+            "candidate_ids": [
+              "pov_food_item_return_action",
+              "pov_remaining_supply_division_action",
+              "pov_depleted_container_after_portion_trace"
+            ],
+            "affected_contract_ids": [
+              "food_access_budget_choice_event",
+              "household_food_depletion_portioning_event"
+            ],
+            "research_limitations": [
+              "FIES is an experience survey with a reference period rather than an image classifier",
+              "an empty bowl or small portion alone does not establish food insecurity"
+            ],
+            "reuse_note": "Translate only component-rich access and portioning events; retain duration and severity labels as advisory."
+          }
+        },
+        {
+          "line": 7,
+          "record": {
+            "evidence_id": "E07",
+            "source_id": "S07",
+            "title": "Persons at risk of poverty or social exclusion (sdg_01_10)",
+            "publisher": "Eurostat",
+            "date": null,
+            "url": "https://ec.europa.eu/eurostat/cache/metadata/en/sdg_01_10_esmsip2.htm",
+            "abstracted_dimensions": [
+              "arrears",
+              "thermal_comfort",
+              "meal_affordability",
+              "clothing_replacement",
+              "furniture_replacement",
+              "internet_access",
+              "social_participation"
+            ],
+            "candidate_ids": [
+              "pov_paid_one_deferred_one_trace",
+              "pov_inactive_service_used_zone_trace",
+              "pov_visible_mend_return_to_use_trace",
+              "pov_unentered_activity_continuing_trace"
+            ],
+            "affected_contract_ids": [
+              "basic_needs_budget_tradeoff_deferral",
+              "household_energy_affordability_coping_relation",
+              "material_replacement_deferral_repair_cycle",
+              "relative_participation_affordability_barrier",
+              "digital_connectivity_affordability_workaround_event"
+            ],
+            "research_limitations": [
+              "survey items encode enforced inability and household context",
+              "a worn item cold color grade or missed outing alone is not deprivation evidence"
+            ],
+            "reuse_note": "Use as a dimension map and for exact relation contrasts, not as a bag of aesthetic poverty tokens."
+          }
+        }
+      ],
+      "current_semantic_projection": {
+        "concept_units": [
+          "a basket of several basic foods beside a visibly count-limited unbranded payment medium"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "concept"
+        ],
+        "adoption": "optional"
+      },
+      "compiled_bundle_member": {
+        "id": "slot:prop:pov_finite_payment_basic_basket_prop",
+        "slot": "prop",
+        "entry_id": "pov_finite_payment_basic_basket_prop",
+        "concept_units": [
+          "a basket of several basic foods beside a visibly count-limited unbranded payment medium"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "concept"
+        ],
+        "adoption": "optional"
+      },
+      "family": "food_access_budget_choice_event",
+      "bundle_source_sha256": "b993f3de9d3ca523beee6cf3dbb057f25152b152caca301bd8770df3f5fe9003",
+      "source_owned_profile_components": [
+        "several basic staple-food items remain grouped as one intended essential purchase",
+        "one visibly finite payment resource is physically compared with the essential set without depending on readable prices",
+        "the same unmistakably adult shopper visibly returns or removes one staple item from the intended set",
+        "the remaining smaller set visibly reaches a completed paid purchase state",
+        "the returned item's source and the reduced paid set remain spatially connected to the same shopper"
+      ],
+      "field_checks": {
+        "original_labels_and_positive_embedding_equal": true,
+        "keyword_set_equal": true,
+        "complete_en_unit_preserved": true,
+        "no_authored_relation_endpoints_to_reverse": true,
+        "family_binding_and_source_digest_valid": true
+      }
+    },
+    {
+      "candidate_id": "slot:aftermath_trace:pov_reduced_purchase_set_trace",
+      "source_pointer": "/slots/aftermath_trace/0",
+      "source_row_sha256": "971fcd50aa7d8ebd230b658801876b5789e0ce51ed49a8f8e3b3b2cfde998919",
+      "decision": "propose_ko_owner_state_correction",
+      "reason": "Propose Korean-only owner-state correction; English, explicit unit, reduced paid set and all metadata remain unchanged.",
+      "current": {
+        "id": "pov_reduced_purchase_set_trace",
+        "ko": "되돌린 한 품목의 진열 공백과 결제된 더 작은 필수 식품 묶음이 함께 남는 결과",
+        "en": "the returned item's restored shelf position and the smaller completed essential purchase remain visible together",
+        "weight": 0.88,
+        "tags": [
+          "poverty_access_visual_semantics",
+          "food_access_budget_choice_event",
+          "aftermath_trace"
+        ],
+        "requires_primary_any_tags": [
+          "food_access_budget_choice_event"
+        ],
+        "aliases": [
+          "completed reduced grocery result"
+        ],
+        "keywords": [
+          "completed payment",
+          "returned item",
+          "smaller set"
+        ],
+        "embedding_text": "a completed but reduced food purchase is distinguishable from indecision or ordinary comparison",
+        "concept_units": [
+          "the returned item's restored shelf position and the smaller completed essential purchase remain visible together"
+        ],
+        "affected_dimensions": [
+          "timing"
+        ]
+      },
+      "original_proposal_pointer": {
+        "path": "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/candidate-data-proposal.json",
+        "json_pointer": "/proposed_candidates/5",
+        "source_ids": [
+          "S04",
+          "S07"
+        ]
+      },
+      "original_proposal": {
+        "id": "pov_reduced_purchase_set_trace",
+        "slot": "aftermath_trace",
+        "ko": "되돌린 한 품목의 진열 공백과 결제된 더 작은 필수 식품 묶음이 함께 남는 결과",
+        "en": "the returned item's restored shelf position and the smaller completed essential purchase remain visible together",
+        "aliases": [
+          "completed reduced grocery result"
+        ],
+        "keywords": [
+          "returned item",
+          "smaller set",
+          "completed payment"
+        ],
+        "embedding_text": "a completed but reduced food purchase is distinguishable from indecision or ordinary comparison",
+        "for_any": [
+          "food_access_budget_choice_event"
+        ],
+        "tier": "optional",
+        "source_ids": [
+          "S04",
+          "S07"
+        ]
+      },
+      "source_bindings": [
+        {
+          "line": 4,
+          "record": {
+            "evidence_id": "E04",
+            "source_id": "S04",
+            "title": "Applying the Food Insecurity Experience Scale",
+            "publisher": "FAO",
+            "date": null,
+            "url": "https://www.fao.org/measuring-hunger/access-to-food/applying-the-fies/",
+            "abstracted_dimensions": [
+              "worry_about_food",
+              "dietary_diversity_reduction",
+              "meal_skipping",
+              "portion_reduction",
+              "food_exhaustion",
+              "hunger_without_eating"
+            ],
+            "candidate_ids": [
+              "pov_food_item_return_action",
+              "pov_remaining_supply_division_action",
+              "pov_depleted_container_after_portion_trace"
+            ],
+            "affected_contract_ids": [
+              "food_access_budget_choice_event",
+              "household_food_depletion_portioning_event"
+            ],
+            "research_limitations": [
+              "FIES is an experience survey with a reference period rather than an image classifier",
+              "an empty bowl or small portion alone does not establish food insecurity"
+            ],
+            "reuse_note": "Translate only component-rich access and portioning events; retain duration and severity labels as advisory."
+          }
+        },
+        {
+          "line": 7,
+          "record": {
+            "evidence_id": "E07",
+            "source_id": "S07",
+            "title": "Persons at risk of poverty or social exclusion (sdg_01_10)",
+            "publisher": "Eurostat",
+            "date": null,
+            "url": "https://ec.europa.eu/eurostat/cache/metadata/en/sdg_01_10_esmsip2.htm",
+            "abstracted_dimensions": [
+              "arrears",
+              "thermal_comfort",
+              "meal_affordability",
+              "clothing_replacement",
+              "furniture_replacement",
+              "internet_access",
+              "social_participation"
+            ],
+            "candidate_ids": [
+              "pov_paid_one_deferred_one_trace",
+              "pov_inactive_service_used_zone_trace",
+              "pov_visible_mend_return_to_use_trace",
+              "pov_unentered_activity_continuing_trace"
+            ],
+            "affected_contract_ids": [
+              "basic_needs_budget_tradeoff_deferral",
+              "household_energy_affordability_coping_relation",
+              "material_replacement_deferral_repair_cycle",
+              "relative_participation_affordability_barrier",
+              "digital_connectivity_affordability_workaround_event"
+            ],
+            "research_limitations": [
+              "survey items encode enforced inability and household context",
+              "a worn item cold color grade or missed outing alone is not deprivation evidence"
+            ],
+            "reuse_note": "Use as a dimension map and for exact relation contrasts, not as a bag of aesthetic poverty tokens."
+          }
+        }
+      ],
+      "current_semantic_projection": {
+        "concept_units": [
+          "the returned item's restored shelf position and the smaller completed essential purchase remain visible together"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "timing"
+        ],
+        "adoption": "optional"
+      },
+      "compiled_bundle_member": {
+        "id": "slot:aftermath_trace:pov_reduced_purchase_set_trace",
+        "slot": "aftermath_trace",
+        "entry_id": "pov_reduced_purchase_set_trace",
+        "concept_units": [
+          "the returned item's restored shelf position and the smaller completed essential purchase remain visible together"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "timing"
+        ],
+        "adoption": "optional"
+      },
+      "family": "food_access_budget_choice_event",
+      "bundle_source_sha256": "b993f3de9d3ca523beee6cf3dbb057f25152b152caca301bd8770df3f5fe9003",
+      "source_owned_profile_components": [
+        "several basic staple-food items remain grouped as one intended essential purchase",
+        "one visibly finite payment resource is physically compared with the essential set without depending on readable prices",
+        "the same unmistakably adult shopper visibly returns or removes one staple item from the intended set",
+        "the remaining smaller set visibly reaches a completed paid purchase state",
+        "the returned item's source and the reduced paid set remain spatially connected to the same shopper"
+      ],
+      "field_checks": {
+        "original_labels_and_positive_embedding_equal": true,
+        "keyword_set_equal": true,
+        "complete_en_unit_preserved": true,
+        "no_authored_relation_endpoints_to_reverse": true,
+        "family_binding_and_source_digest_valid": true
+      }
+    },
+    {
+      "candidate_id": "slot:action:pov_remaining_supply_division_action",
+      "source_pointer": "/slots/action/1",
+      "source_row_sha256": "62db5c705be9b5f027798de73b6eb2835fc092428d0698b2b38a207637a3252d",
+      "decision": "keep",
+      "reason": "Active measuring/transfer remains distinct from finished portions and traces back to the near-empty source.",
+      "current": {
+        "id": "pov_remaining_supply_division_action",
+        "ko": "거의 빈 식량 용기의 남은 양을 계량해 여러 용기나 끼니 몫으로 실제 옮기기",
+        "en": "measuring and transferring the remaining contents of a nearly empty food container into several meal portions",
+        "weight": 0.88,
+        "tags": [
+          "poverty_access_visual_semantics",
+          "household_food_depletion_portioning_event",
+          "action"
+        ],
+        "requires_primary_any_tags": [
+          "household_food_depletion_portioning_event"
+        ],
+        "aliases": [
+          "portioning a nearly depleted staple"
+        ],
+        "keywords": [
+          "measure",
+          "portions",
+          "remaining food",
+          "transfer"
+        ],
+        "embedding_text": "the transfer action visibly links one near-empty staple source to every destination portion",
+        "concept_units": [
+          "measuring and transferring the remaining contents of a nearly empty food container into several meal portions"
+        ],
+        "affected_dimensions": [
+          "action"
+        ]
+      },
+      "original_proposal_pointer": {
+        "path": "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/candidate-data-proposal.json",
+        "json_pointer": "/proposed_candidates/7",
+        "source_ids": [
+          "S04"
+        ]
+      },
+      "original_proposal": {
+        "id": "pov_remaining_supply_division_action",
+        "slot": "action",
+        "ko": "거의 빈 식량 용기의 남은 양을 계량해 여러 용기나 끼니 몫으로 실제 옮기기",
+        "en": "measuring and transferring the remaining contents of a nearly empty food container into several meal portions",
+        "aliases": [
+          "portioning a nearly depleted staple"
+        ],
+        "keywords": [
+          "measure",
+          "transfer",
+          "remaining food",
+          "portions"
+        ],
+        "embedding_text": "the transfer action visibly links one near-empty staple source to every destination portion",
+        "for_any": [
+          "household_food_depletion_portioning_event"
+        ],
+        "tier": "optional",
+        "source_ids": [
+          "S04"
+        ]
+      },
+      "source_bindings": [
+        {
+          "line": 4,
+          "record": {
+            "evidence_id": "E04",
+            "source_id": "S04",
+            "title": "Applying the Food Insecurity Experience Scale",
+            "publisher": "FAO",
+            "date": null,
+            "url": "https://www.fao.org/measuring-hunger/access-to-food/applying-the-fies/",
+            "abstracted_dimensions": [
+              "worry_about_food",
+              "dietary_diversity_reduction",
+              "meal_skipping",
+              "portion_reduction",
+              "food_exhaustion",
+              "hunger_without_eating"
+            ],
+            "candidate_ids": [
+              "pov_food_item_return_action",
+              "pov_remaining_supply_division_action",
+              "pov_depleted_container_after_portion_trace"
+            ],
+            "affected_contract_ids": [
+              "food_access_budget_choice_event",
+              "household_food_depletion_portioning_event"
+            ],
+            "research_limitations": [
+              "FIES is an experience survey with a reference period rather than an image classifier",
+              "an empty bowl or small portion alone does not establish food insecurity"
+            ],
+            "reuse_note": "Translate only component-rich access and portioning events; retain duration and severity labels as advisory."
+          }
+        }
+      ],
+      "current_semantic_projection": {
+        "concept_units": [
+          "measuring and transferring the remaining contents of a nearly empty food container into several meal portions"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "action"
+        ],
+        "adoption": "optional"
+      },
+      "compiled_bundle_member": {
+        "id": "slot:action:pov_remaining_supply_division_action",
+        "slot": "action",
+        "entry_id": "pov_remaining_supply_division_action",
+        "concept_units": [
+          "measuring and transferring the remaining contents of a nearly empty food container into several meal portions"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "action"
+        ],
+        "adoption": "optional"
+      },
+      "family": "household_food_depletion_portioning_event",
+      "bundle_source_sha256": "10d1eaa7e160dfed270b9825f326a25db002b0e4f201e9532edc02f9bc7464f5",
+      "source_owned_profile_components": [
+        "one household food container is visibly near depletion before allocation",
+        "the same group of unmistakably adult household members actively divides contents from that one source",
+        "several clearly bounded portions are visible as the result of the division",
+        "every divided portion remains physically traceable to the single depleted source container",
+        "the source container is visibly empty or nearly empty after the portions are allocated"
+      ],
+      "field_checks": {
+        "original_labels_and_positive_embedding_equal": true,
+        "keyword_set_equal": true,
+        "complete_en_unit_preserved": true,
+        "no_authored_relation_endpoints_to_reverse": true,
+        "family_binding_and_source_digest_valid": true
+      }
+    },
+    {
+      "candidate_id": "slot:prop:pov_single_source_staple_container_prop",
+      "source_pointer": "/slots/prop/1",
+      "source_row_sha256": "15d5b818370574936795355bac865c9499f911a989f002d24a3a8b80deb61e01",
+      "decision": "keep",
+      "reason": "One depleted original source and multiple distinct destinations remain explicit; binding is to the matching portioning family.",
+      "current": {
+        "id": "pov_single_source_staple_container_prop",
+        "ko": "바닥이 드러난 무상표 주식 용기와 서로 구분되는 여러 분배 용기",
+        "en": "an unbranded staple container with its bottom exposed beside several clearly separate destination containers",
+        "weight": 0.88,
+        "tags": [
+          "poverty_access_visual_semantics",
+          "household_food_depletion_portioning_event",
+          "prop"
+        ],
+        "requires_primary_any_tags": [
+          "household_food_depletion_portioning_event"
+        ],
+        "aliases": [
+          "near-empty staple source and portions"
+        ],
+        "keywords": [
+          "depleted source",
+          "destination portions",
+          "unbranded"
+        ],
+        "embedding_text": "one identifiable source has too little remaining content and every portion is physically traceable back to it",
+        "concept_units": [
+          "an unbranded staple container with its bottom exposed beside several clearly separate destination containers"
+        ],
+        "affected_dimensions": [
+          "concept"
+        ]
+      },
+      "original_proposal_pointer": {
+        "path": "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/candidate-data-proposal.json",
+        "json_pointer": "/proposed_candidates/9",
+        "source_ids": [
+          "S04"
+        ]
+      },
+      "original_proposal": {
+        "id": "pov_single_source_staple_container_prop",
+        "slot": "prop",
+        "ko": "바닥이 드러난 무상표 주식 용기와 서로 구분되는 여러 분배 용기",
+        "en": "an unbranded staple container with its bottom exposed beside several clearly separate destination containers",
+        "aliases": [
+          "near-empty staple source and portions"
+        ],
+        "keywords": [
+          "depleted source",
+          "destination portions",
+          "unbranded"
+        ],
+        "embedding_text": "one identifiable source has too little remaining content and every portion is physically traceable back to it",
+        "for_any": [
+          "household_food_depletion_portioning_event"
+        ],
+        "tier": "optional",
+        "source_ids": [
+          "S04"
+        ]
+      },
+      "source_bindings": [
+        {
+          "line": 4,
+          "record": {
+            "evidence_id": "E04",
+            "source_id": "S04",
+            "title": "Applying the Food Insecurity Experience Scale",
+            "publisher": "FAO",
+            "date": null,
+            "url": "https://www.fao.org/measuring-hunger/access-to-food/applying-the-fies/",
+            "abstracted_dimensions": [
+              "worry_about_food",
+              "dietary_diversity_reduction",
+              "meal_skipping",
+              "portion_reduction",
+              "food_exhaustion",
+              "hunger_without_eating"
+            ],
+            "candidate_ids": [
+              "pov_food_item_return_action",
+              "pov_remaining_supply_division_action",
+              "pov_depleted_container_after_portion_trace"
+            ],
+            "affected_contract_ids": [
+              "food_access_budget_choice_event",
+              "household_food_depletion_portioning_event"
+            ],
+            "research_limitations": [
+              "FIES is an experience survey with a reference period rather than an image classifier",
+              "an empty bowl or small portion alone does not establish food insecurity"
+            ],
+            "reuse_note": "Translate only component-rich access and portioning events; retain duration and severity labels as advisory."
+          }
+        }
+      ],
+      "current_semantic_projection": {
+        "concept_units": [
+          "an unbranded staple container with its bottom exposed beside several clearly separate destination containers"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "concept"
+        ],
+        "adoption": "optional"
+      },
+      "compiled_bundle_member": {
+        "id": "slot:prop:pov_single_source_staple_container_prop",
+        "slot": "prop",
+        "entry_id": "pov_single_source_staple_container_prop",
+        "concept_units": [
+          "an unbranded staple container with its bottom exposed beside several clearly separate destination containers"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "concept"
+        ],
+        "adoption": "optional"
+      },
+      "family": "household_food_depletion_portioning_event",
+      "bundle_source_sha256": "10d1eaa7e160dfed270b9825f326a25db002b0e4f201e9532edc02f9bc7464f5",
+      "source_owned_profile_components": [
+        "one household food container is visibly near depletion before allocation",
+        "the same group of unmistakably adult household members actively divides contents from that one source",
+        "several clearly bounded portions are visible as the result of the division",
+        "every divided portion remains physically traceable to the single depleted source container",
+        "the source container is visibly empty or nearly empty after the portions are allocated"
+      ],
+      "field_checks": {
+        "original_labels_and_positive_embedding_equal": true,
+        "keyword_set_equal": true,
+        "complete_en_unit_preserved": true,
+        "no_authored_relation_endpoints_to_reverse": true,
+        "family_binding_and_source_digest_valid": true
+      }
+    },
+    {
+      "candidate_id": "slot:aftermath_trace:pov_depleted_container_after_portion_trace",
+      "source_pointer": "/slots/aftermath_trace/1",
+      "source_row_sha256": "9b9b0eededc1f392c4c63f74e0f34c9eea326485a5e999310c4d37ba0568c459",
+      "decision": "keep",
+      "reason": "After allocation, the same original source is empty or nearly depleted; no amount or diagnosis is invented.",
+      "current": {
+        "id": "pov_depleted_container_after_portion_trace",
+        "ko": "여러 몫이 마련된 뒤 원래 식량 용기에 거의 아무것도 남지 않은 분배 결과",
+        "en": "after several portions are set aside, the original food container remains visibly empty or nearly depleted",
+        "weight": 0.88,
+        "tags": [
+          "poverty_access_visual_semantics",
+          "household_food_depletion_portioning_event",
+          "aftermath_trace"
+        ],
+        "requires_primary_any_tags": [
+          "household_food_depletion_portioning_event"
+        ],
+        "aliases": [
+          "post-allocation depleted source"
+        ],
+        "keywords": [
+          "after portioning",
+          "bounded shares",
+          "empty source"
+        ],
+        "embedding_text": "the source after allocation records the constrained total without using hunger expressions or body cues",
+        "concept_units": [
+          "after several portions are set aside, the original food container remains visibly empty or nearly depleted"
+        ],
+        "affected_dimensions": [
+          "timing"
+        ]
+      },
+      "original_proposal_pointer": {
+        "path": "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/candidate-data-proposal.json",
+        "json_pointer": "/proposed_candidates/11",
+        "source_ids": [
+          "S04",
+          "S16"
+        ]
+      },
+      "original_proposal": {
+        "id": "pov_depleted_container_after_portion_trace",
+        "slot": "aftermath_trace",
+        "ko": "여러 몫이 마련된 뒤 원래 식량 용기에 거의 아무것도 남지 않은 분배 결과",
+        "en": "after several portions are set aside, the original food container remains visibly empty or nearly depleted",
+        "aliases": [
+          "post-allocation depleted source"
+        ],
+        "keywords": [
+          "after portioning",
+          "empty source",
+          "bounded shares"
+        ],
+        "embedding_text": "the source after allocation records the constrained total without using hunger expressions or body cues",
+        "for_any": [
+          "household_food_depletion_portioning_event"
+        ],
+        "tier": "optional",
+        "source_ids": [
+          "S04",
+          "S16"
+        ]
+      },
+      "source_bindings": [
+        {
+          "line": 4,
+          "record": {
+            "evidence_id": "E04",
+            "source_id": "S04",
+            "title": "Applying the Food Insecurity Experience Scale",
+            "publisher": "FAO",
+            "date": null,
+            "url": "https://www.fao.org/measuring-hunger/access-to-food/applying-the-fies/",
+            "abstracted_dimensions": [
+              "worry_about_food",
+              "dietary_diversity_reduction",
+              "meal_skipping",
+              "portion_reduction",
+              "food_exhaustion",
+              "hunger_without_eating"
+            ],
+            "candidate_ids": [
+              "pov_food_item_return_action",
+              "pov_remaining_supply_division_action",
+              "pov_depleted_container_after_portion_trace"
+            ],
+            "affected_contract_ids": [
+              "food_access_budget_choice_event",
+              "household_food_depletion_portioning_event"
+            ],
+            "research_limitations": [
+              "FIES is an experience survey with a reference period rather than an image classifier",
+              "an empty bowl or small portion alone does not establish food insecurity"
+            ],
+            "reuse_note": "Translate only component-rich access and portioning events; retain duration and severity labels as advisory."
+          }
+        },
+        {
+          "line": 16,
+          "record": {
+            "evidence_id": "E16",
+            "source_id": "S16",
+            "title": "Illustrative Guide to the Dóchas Code of Conduct on Images and Messages",
+            "publisher": "Dóchas",
+            "date": null,
+            "url": "https://dochas.ie/wp-content/uploads/2026/02/Illustrative_Guide_to_the_Dochas_Code_of_Conduct_on_Images_and_Messages.pdf",
+            "abstracted_dimensions": [
+              "dignity",
+              "agency",
+              "context",
+              "structural_causes",
+              "community_strength",
+              "symbolic_alternatives"
+            ],
+            "candidate_ids": [
+              "pov_budget_item_return_composition",
+              "pov_service_source_coping_composition",
+              "pov_paid_work_cost_gap_composition",
+              "pov_inside_outside_same_activity_composition"
+            ],
+            "affected_contract_ids": [
+              "food_access_budget_choice_event",
+              "household_energy_affordability_coping_relation",
+              "working_income_essential_cost_gap_relation",
+              "relative_participation_affordability_barrier"
+            ],
+            "research_limitations": [
+              "ethical guidance does not guarantee generated-image fidelity or consent",
+              "symbolic imagery can still become reductive without contextual gates"
+            ],
+            "reuse_note": "Apply as a cross-profile composition guard: same eye level, visible agency, traceable systems, no victimizing crop or spectacle."
+          }
+        }
+      ],
+      "current_semantic_projection": {
+        "concept_units": [
+          "after several portions are set aside, the original food container remains visibly empty or nearly depleted"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "timing"
+        ],
+        "adoption": "optional"
+      },
+      "compiled_bundle_member": {
+        "id": "slot:aftermath_trace:pov_depleted_container_after_portion_trace",
+        "slot": "aftermath_trace",
+        "entry_id": "pov_depleted_container_after_portion_trace",
+        "concept_units": [
+          "after several portions are set aside, the original food container remains visibly empty or nearly depleted"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "timing"
+        ],
+        "adoption": "optional"
+      },
+      "family": "household_food_depletion_portioning_event",
+      "bundle_source_sha256": "10d1eaa7e160dfed270b9825f326a25db002b0e4f201e9532edc02f9bc7464f5",
+      "source_owned_profile_components": [
+        "one household food container is visibly near depletion before allocation",
+        "the same group of unmistakably adult household members actively divides contents from that one source",
+        "several clearly bounded portions are visible as the result of the division",
+        "every divided portion remains physically traceable to the single depleted source container",
+        "the source container is visibly empty or nearly empty after the portions are allocated"
+      ],
+      "field_checks": {
+        "original_labels_and_positive_embedding_equal": true,
+        "keyword_set_equal": true,
+        "complete_en_unit_preserved": true,
+        "no_authored_relation_endpoints_to_reverse": true,
+        "family_binding_and_source_digest_valid": true
+      }
+    },
+    {
+      "candidate_id": "slot:action:pov_choose_one_defer_one_action",
+      "source_pointer": "/slots/action/2",
+      "source_row_sha256": "cd361e79189221974ab50496cce931dee420aa22488a5984b86c95cc73123e76",
+      "decision": "keep",
+      "reason": "One need is paid/provisioned and the competing need deferred; the positive embedding explicitly keeps one finite resource and the same adult.",
+      "current": {
+        "id": "pov_choose_one_defer_one_action",
+        "ko": "한 필수 필요에 지불·공급을 완료하고 다른 필수 필요의 물품이나 서비스를 다시 미룸 상태로 두기",
+        "en": "completing payment or provision for one basic need while visibly returning the other basic need to a deferred state",
+        "weight": 0.88,
+        "tags": [
+          "poverty_access_visual_semantics",
+          "basic_needs_budget_tradeoff_deferral",
+          "action"
+        ],
+        "requires_primary_any_tags": [
+          "basic_needs_budget_tradeoff_deferral"
+        ],
+        "aliases": [
+          "meet one need defer another"
+        ],
+        "keywords": [
+          "allocation",
+          "one deferred",
+          "one met"
+        ],
+        "embedding_text": "one finite resource moves to one essential need and the same adult leaves the competing need unresolved",
+        "concept_units": [
+          "completing payment or provision for one basic need while visibly returning the other basic need to a deferred state"
+        ],
+        "affected_dimensions": [
+          "action"
+        ]
+      },
+      "original_proposal_pointer": {
+        "path": "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/candidate-data-proposal.json",
+        "json_pointer": "/proposed_candidates/13",
+        "source_ids": [
+          "S01",
+          "S07"
+        ]
+      },
+      "original_proposal": {
+        "id": "pov_choose_one_defer_one_action",
+        "slot": "action",
+        "ko": "한 필수 필요에 지불·공급을 완료하고 다른 필수 필요의 물품이나 서비스를 다시 미룸 상태로 두기",
+        "en": "completing payment or provision for one basic need while visibly returning the other basic need to a deferred state",
+        "aliases": [
+          "meet one need defer another"
+        ],
+        "keywords": [
+          "allocation",
+          "one met",
+          "one deferred"
+        ],
+        "embedding_text": "one finite resource moves to one essential need and the same adult leaves the competing need unresolved",
+        "for_any": [
+          "basic_needs_budget_tradeoff_deferral"
+        ],
+        "tier": "optional",
+        "source_ids": [
+          "S01",
+          "S07"
+        ]
+      },
+      "source_bindings": [
+        {
+          "line": 1,
+          "record": {
+            "evidence_id": "E01",
+            "source_id": "S01",
+            "title": "CESCR statement on poverty and the International Covenant on Economic, Social and Cultural Rights",
+            "publisher": "OHCHR / Committee on Economic, Social and Cultural Rights",
+            "date": "2001",
+            "url": "https://docstore.ohchr.org/SelfServices/FilesHandler.ashx?enc=2H6doNlv%2FGZH6sbI%2FuOPmUKCWSAIK7WcG6zIYSUAA%2BCs18dBw4td%2FMYxllFpqI%2F%2Bf4ew4ABya%2F7q0HHXmFPU0w%3D%3D",
+            "abstracted_dimensions": [
+              "resources",
+              "capabilities",
+              "choices",
+              "security",
+              "power",
+              "sustained_deprivation"
+            ],
+            "candidate_ids": [
+              "pov_choose_one_defer_one_action",
+              "pov_choice_consequence_split_composition"
+            ],
+            "affected_contract_ids": [
+              "basic_needs_budget_tradeoff_deferral",
+              "relative_participation_affordability_barrier"
+            ],
+            "research_limitations": [
+              "rights-based multidimensional definition is not a single-frame diagnostic",
+              "duration and power relations require context beyond appearance"
+            ],
+            "reuse_note": "Use as a decomposition and claim-limit source; never as a visual prototype or a basis for inferring poverty from a person."
+          }
+        },
+        {
+          "line": 7,
+          "record": {
+            "evidence_id": "E07",
+            "source_id": "S07",
+            "title": "Persons at risk of poverty or social exclusion (sdg_01_10)",
+            "publisher": "Eurostat",
+            "date": null,
+            "url": "https://ec.europa.eu/eurostat/cache/metadata/en/sdg_01_10_esmsip2.htm",
+            "abstracted_dimensions": [
+              "arrears",
+              "thermal_comfort",
+              "meal_affordability",
+              "clothing_replacement",
+              "furniture_replacement",
+              "internet_access",
+              "social_participation"
+            ],
+            "candidate_ids": [
+              "pov_paid_one_deferred_one_trace",
+              "pov_inactive_service_used_zone_trace",
+              "pov_visible_mend_return_to_use_trace",
+              "pov_unentered_activity_continuing_trace"
+            ],
+            "affected_contract_ids": [
+              "basic_needs_budget_tradeoff_deferral",
+              "household_energy_affordability_coping_relation",
+              "material_replacement_deferral_repair_cycle",
+              "relative_participation_affordability_barrier",
+              "digital_connectivity_affordability_workaround_event"
+            ],
+            "research_limitations": [
+              "survey items encode enforced inability and household context",
+              "a worn item cold color grade or missed outing alone is not deprivation evidence"
+            ],
+            "reuse_note": "Use as a dimension map and for exact relation contrasts, not as a bag of aesthetic poverty tokens."
+          }
+        }
+      ],
+      "current_semantic_projection": {
+        "concept_units": [
+          "completing payment or provision for one basic need while visibly returning the other basic need to a deferred state"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "action"
+        ],
+        "adoption": "optional"
+      },
+      "compiled_bundle_member": {
+        "id": "slot:action:pov_choose_one_defer_one_action",
+        "slot": "action",
+        "entry_id": "pov_choose_one_defer_one_action",
+        "concept_units": [
+          "completing payment or provision for one basic need while visibly returning the other basic need to a deferred state"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "action"
+        ],
+        "adoption": "optional"
+      },
+      "family": "basic_needs_budget_tradeoff_deferral",
+      "bundle_source_sha256": "85e7a785639a872d6992a49f0cbe07028645f4dad83c955caa87fda0f484217b",
+      "source_owned_profile_components": [
+        "two distinct basic household needs remain visible as separate concrete anchors",
+        "one visibly finite household resource is shared between those two needs without depending on readable numbers",
+        "the same unmistakably adult person physically allocates that finite resource toward one need",
+        "the selected basic need shows an already completed met or paid state",
+        "the other basic need remains visibly deferred with an immediate material consequence"
+      ],
+      "field_checks": {
+        "original_labels_and_positive_embedding_equal": true,
+        "keyword_set_equal": true,
+        "complete_en_unit_preserved": true,
+        "no_authored_relation_endpoints_to_reverse": true,
+        "family_binding_and_source_digest_valid": true
+      }
+    },
+    {
+      "candidate_id": "slot:prop:pov_two_essential_need_anchors_prop",
+      "source_pointer": "/slots/prop/2",
+      "source_row_sha256": "df5d2266d3204494a0f76c8e6587d08cb5fd135fab104ab2149664a6be0b80fc",
+      "decision": "keep",
+      "reason": "Two separate basic-need anchors share one limited payment resource; optional heating, housing and transport variants remain optional.",
+      "current": {
+        "id": "pov_two_essential_need_anchors_prop",
+        "ko": "무상표 식품 묶음과 난방·주거·교통 같은 두 번째 필수 서비스 단서, 하나의 제한된 지불 자원",
+        "en": "an unbranded food bundle, a second essential-service anchor such as heating housing or transport, and one limited payment resource",
+        "weight": 0.88,
+        "tags": [
+          "poverty_access_visual_semantics",
+          "basic_needs_budget_tradeoff_deferral",
+          "prop"
+        ],
+        "requires_primary_any_tags": [
+          "basic_needs_budget_tradeoff_deferral"
+        ],
+        "aliases": [
+          "two basic needs one resource"
+        ],
+        "keywords": [
+          "essential service",
+          "finite payment",
+          "food"
+        ],
+        "embedding_text": "two basic needs visibly compete for one shared household resource without legible personal bills",
+        "concept_units": [
+          "an unbranded food bundle, a second essential-service anchor such as heating housing or transport, and one limited payment resource"
+        ],
+        "affected_dimensions": [
+          "concept"
+        ]
+      },
+      "original_proposal_pointer": {
+        "path": "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/candidate-data-proposal.json",
+        "json_pointer": "/proposed_candidates/15",
+        "source_ids": [
+          "S01",
+          "S07",
+          "S09"
+        ]
+      },
+      "original_proposal": {
+        "id": "pov_two_essential_need_anchors_prop",
+        "slot": "prop",
+        "ko": "무상표 식품 묶음과 난방·주거·교통 같은 두 번째 필수 서비스 단서, 하나의 제한된 지불 자원",
+        "en": "an unbranded food bundle, a second essential-service anchor such as heating housing or transport, and one limited payment resource",
+        "aliases": [
+          "two basic needs one resource"
+        ],
+        "keywords": [
+          "food",
+          "essential service",
+          "finite payment"
+        ],
+        "embedding_text": "two basic needs visibly compete for one shared household resource without legible personal bills",
+        "for_any": [
+          "basic_needs_budget_tradeoff_deferral"
+        ],
+        "tier": "optional",
+        "source_ids": [
+          "S01",
+          "S07",
+          "S09"
+        ]
+      },
+      "source_bindings": [
+        {
+          "line": 1,
+          "record": {
+            "evidence_id": "E01",
+            "source_id": "S01",
+            "title": "CESCR statement on poverty and the International Covenant on Economic, Social and Cultural Rights",
+            "publisher": "OHCHR / Committee on Economic, Social and Cultural Rights",
+            "date": "2001",
+            "url": "https://docstore.ohchr.org/SelfServices/FilesHandler.ashx?enc=2H6doNlv%2FGZH6sbI%2FuOPmUKCWSAIK7WcG6zIYSUAA%2BCs18dBw4td%2FMYxllFpqI%2F%2Bf4ew4ABya%2F7q0HHXmFPU0w%3D%3D",
+            "abstracted_dimensions": [
+              "resources",
+              "capabilities",
+              "choices",
+              "security",
+              "power",
+              "sustained_deprivation"
+            ],
+            "candidate_ids": [
+              "pov_choose_one_defer_one_action",
+              "pov_choice_consequence_split_composition"
+            ],
+            "affected_contract_ids": [
+              "basic_needs_budget_tradeoff_deferral",
+              "relative_participation_affordability_barrier"
+            ],
+            "research_limitations": [
+              "rights-based multidimensional definition is not a single-frame diagnostic",
+              "duration and power relations require context beyond appearance"
+            ],
+            "reuse_note": "Use as a decomposition and claim-limit source; never as a visual prototype or a basis for inferring poverty from a person."
+          }
+        },
+        {
+          "line": 7,
+          "record": {
+            "evidence_id": "E07",
+            "source_id": "S07",
+            "title": "Persons at risk of poverty or social exclusion (sdg_01_10)",
+            "publisher": "Eurostat",
+            "date": null,
+            "url": "https://ec.europa.eu/eurostat/cache/metadata/en/sdg_01_10_esmsip2.htm",
+            "abstracted_dimensions": [
+              "arrears",
+              "thermal_comfort",
+              "meal_affordability",
+              "clothing_replacement",
+              "furniture_replacement",
+              "internet_access",
+              "social_participation"
+            ],
+            "candidate_ids": [
+              "pov_paid_one_deferred_one_trace",
+              "pov_inactive_service_used_zone_trace",
+              "pov_visible_mend_return_to_use_trace",
+              "pov_unentered_activity_continuing_trace"
+            ],
+            "affected_contract_ids": [
+              "basic_needs_budget_tradeoff_deferral",
+              "household_energy_affordability_coping_relation",
+              "material_replacement_deferral_repair_cycle",
+              "relative_participation_affordability_barrier",
+              "digital_connectivity_affordability_workaround_event"
+            ],
+            "research_limitations": [
+              "survey items encode enforced inability and household context",
+              "a worn item cold color grade or missed outing alone is not deprivation evidence"
+            ],
+            "reuse_note": "Use as a dimension map and for exact relation contrasts, not as a bag of aesthetic poverty tokens."
+          }
+        },
+        {
+          "line": 9,
+          "record": {
+            "evidence_id": "E09",
+            "source_id": "S09",
+            "title": "The Right to Adequate Housing, Fact Sheet No. 21/Rev.1",
+            "publisher": "OHCHR / UN-Habitat",
+            "date": null,
+            "url": "https://www.ohchr.org/Documents/Publications/FS21_rev_1_Housing_en.pdf",
+            "abstracted_dimensions": [
+              "security_of_tenure",
+              "services",
+              "affordability",
+              "habitability",
+              "accessibility",
+              "location",
+              "cultural_adequacy"
+            ],
+            "candidate_ids": [
+              "pov_occupied_defect_path_dwelling_location",
+              "pov_leak_damp_draft_mitigation_prop",
+              "pov_temporary_mitigation_occupancy_trace"
+            ],
+            "affected_contract_ids": [
+              "occupied_housing_habitability_mitigation_relation"
+            ],
+            "research_limitations": [
+              "adequacy combines legal social and physical dimensions",
+              "one crack mold patch or small room does not establish inadequate housing"
+            ],
+            "reuse_note": "Use only the observable habitability path for a hard contract; keep tenure affordability and accessibility as contextual claims."
+          }
+        }
+      ],
+      "current_semantic_projection": {
+        "concept_units": [
+          "an unbranded food bundle, a second essential-service anchor such as heating housing or transport, and one limited payment resource"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "concept"
+        ],
+        "adoption": "optional"
+      },
+      "compiled_bundle_member": {
+        "id": "slot:prop:pov_two_essential_need_anchors_prop",
+        "slot": "prop",
+        "entry_id": "pov_two_essential_need_anchors_prop",
+        "concept_units": [
+          "an unbranded food bundle, a second essential-service anchor such as heating housing or transport, and one limited payment resource"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "concept"
+        ],
+        "adoption": "optional"
+      },
+      "family": "basic_needs_budget_tradeoff_deferral",
+      "bundle_source_sha256": "85e7a785639a872d6992a49f0cbe07028645f4dad83c955caa87fda0f484217b",
+      "source_owned_profile_components": [
+        "two distinct basic household needs remain visible as separate concrete anchors",
+        "one visibly finite household resource is shared between those two needs without depending on readable numbers",
+        "the same unmistakably adult person physically allocates that finite resource toward one need",
+        "the selected basic need shows an already completed met or paid state",
+        "the other basic need remains visibly deferred with an immediate material consequence"
+      ],
+      "field_checks": {
+        "original_labels_and_positive_embedding_equal": true,
+        "keyword_set_equal": true,
+        "complete_en_unit_preserved": true,
+        "no_authored_relation_endpoints_to_reverse": true,
+        "family_binding_and_source_digest_valid": true
+      }
+    },
+    {
+      "candidate_id": "slot:aftermath_trace:pov_paid_one_deferred_one_trace",
+      "source_pointer": "/slots/aftermath_trace/2",
+      "source_row_sha256": "8b892e8bbb3eb6746366fde6b32f891bdedfbc270cda13ea0b0dc15883acbee3",
+      "decision": "keep",
+      "reason": "The met/prepared side and inactive/sealed/deferred side remain jointly visible; authored Korean material examples are retained rather than normalized.",
+      "current": {
+        "id": "pov_paid_one_deferred_one_trace",
+        "ko": "한 필수 항목은 공급 준비가 끝났지만 다른 항목은 봉인되거나 꺼진 상태로 남는 즉시 결과",
+        "en": "one essential need is visibly provisioned while the competing item or service remains set aside inactive or unresolved",
+        "weight": 0.88,
+        "tags": [
+          "poverty_access_visual_semantics",
+          "basic_needs_budget_tradeoff_deferral",
+          "aftermath_trace"
+        ],
+        "requires_primary_any_tags": [
+          "basic_needs_budget_tradeoff_deferral"
+        ],
+        "aliases": [
+          "one provisioned one unresolved"
+        ],
+        "keywords": [
+          "deferred result",
+          "paid result",
+          "same decision"
+        ],
+        "embedding_text": "the post-decision state preserves both sides of the basic-needs constraint without requiring readable labels",
+        "concept_units": [
+          "one essential need is visibly provisioned while the competing item or service remains set aside inactive or unresolved"
+        ],
+        "affected_dimensions": [
+          "timing"
+        ]
+      },
+      "original_proposal_pointer": {
+        "path": "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/candidate-data-proposal.json",
+        "json_pointer": "/proposed_candidates/17",
+        "source_ids": [
+          "S01",
+          "S07"
+        ]
+      },
+      "original_proposal": {
+        "id": "pov_paid_one_deferred_one_trace",
+        "slot": "aftermath_trace",
+        "ko": "한 필수 항목은 공급 준비가 끝났지만 다른 항목은 봉인되거나 꺼진 상태로 남는 즉시 결과",
+        "en": "one essential need is visibly provisioned while the competing item or service remains set aside inactive or unresolved",
+        "aliases": [
+          "one provisioned one unresolved"
+        ],
+        "keywords": [
+          "paid result",
+          "deferred result",
+          "same decision"
+        ],
+        "embedding_text": "the post-decision state preserves both sides of the basic-needs constraint without requiring readable labels",
+        "for_any": [
+          "basic_needs_budget_tradeoff_deferral"
+        ],
+        "tier": "optional",
+        "source_ids": [
+          "S01",
+          "S07"
+        ]
+      },
+      "source_bindings": [
+        {
+          "line": 1,
+          "record": {
+            "evidence_id": "E01",
+            "source_id": "S01",
+            "title": "CESCR statement on poverty and the International Covenant on Economic, Social and Cultural Rights",
+            "publisher": "OHCHR / Committee on Economic, Social and Cultural Rights",
+            "date": "2001",
+            "url": "https://docstore.ohchr.org/SelfServices/FilesHandler.ashx?enc=2H6doNlv%2FGZH6sbI%2FuOPmUKCWSAIK7WcG6zIYSUAA%2BCs18dBw4td%2FMYxllFpqI%2F%2Bf4ew4ABya%2F7q0HHXmFPU0w%3D%3D",
+            "abstracted_dimensions": [
+              "resources",
+              "capabilities",
+              "choices",
+              "security",
+              "power",
+              "sustained_deprivation"
+            ],
+            "candidate_ids": [
+              "pov_choose_one_defer_one_action",
+              "pov_choice_consequence_split_composition"
+            ],
+            "affected_contract_ids": [
+              "basic_needs_budget_tradeoff_deferral",
+              "relative_participation_affordability_barrier"
+            ],
+            "research_limitations": [
+              "rights-based multidimensional definition is not a single-frame diagnostic",
+              "duration and power relations require context beyond appearance"
+            ],
+            "reuse_note": "Use as a decomposition and claim-limit source; never as a visual prototype or a basis for inferring poverty from a person."
+          }
+        },
+        {
+          "line": 7,
+          "record": {
+            "evidence_id": "E07",
+            "source_id": "S07",
+            "title": "Persons at risk of poverty or social exclusion (sdg_01_10)",
+            "publisher": "Eurostat",
+            "date": null,
+            "url": "https://ec.europa.eu/eurostat/cache/metadata/en/sdg_01_10_esmsip2.htm",
+            "abstracted_dimensions": [
+              "arrears",
+              "thermal_comfort",
+              "meal_affordability",
+              "clothing_replacement",
+              "furniture_replacement",
+              "internet_access",
+              "social_participation"
+            ],
+            "candidate_ids": [
+              "pov_paid_one_deferred_one_trace",
+              "pov_inactive_service_used_zone_trace",
+              "pov_visible_mend_return_to_use_trace",
+              "pov_unentered_activity_continuing_trace"
+            ],
+            "affected_contract_ids": [
+              "basic_needs_budget_tradeoff_deferral",
+              "household_energy_affordability_coping_relation",
+              "material_replacement_deferral_repair_cycle",
+              "relative_participation_affordability_barrier",
+              "digital_connectivity_affordability_workaround_event"
+            ],
+            "research_limitations": [
+              "survey items encode enforced inability and household context",
+              "a worn item cold color grade or missed outing alone is not deprivation evidence"
+            ],
+            "reuse_note": "Use as a dimension map and for exact relation contrasts, not as a bag of aesthetic poverty tokens."
+          }
+        }
+      ],
+      "current_semantic_projection": {
+        "concept_units": [
+          "one essential need is visibly provisioned while the competing item or service remains set aside inactive or unresolved"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "timing"
+        ],
+        "adoption": "optional"
+      },
+      "compiled_bundle_member": {
+        "id": "slot:aftermath_trace:pov_paid_one_deferred_one_trace",
+        "slot": "aftermath_trace",
+        "entry_id": "pov_paid_one_deferred_one_trace",
+        "concept_units": [
+          "one essential need is visibly provisioned while the competing item or service remains set aside inactive or unresolved"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "timing"
+        ],
+        "adoption": "optional"
+      },
+      "family": "basic_needs_budget_tradeoff_deferral",
+      "bundle_source_sha256": "85e7a785639a872d6992a49f0cbe07028645f4dad83c955caa87fda0f484217b",
+      "source_owned_profile_components": [
+        "two distinct basic household needs remain visible as separate concrete anchors",
+        "one visibly finite household resource is shared between those two needs without depending on readable numbers",
+        "the same unmistakably adult person physically allocates that finite resource toward one need",
+        "the selected basic need shows an already completed met or paid state",
+        "the other basic need remains visibly deferred with an immediate material consequence"
+      ],
+      "field_checks": {
+        "original_labels_and_positive_embedding_equal": true,
+        "keyword_set_equal": true,
+        "complete_en_unit_preserved": true,
+        "no_authored_relation_endpoints_to_reverse": true,
+        "family_binding_and_source_digest_valid": true
+      }
+    },
+    {
+      "candidate_id": "slot:action:pov_shift_end_budget_reconcile_action",
+      "source_pointer": "/slots/action/5",
+      "source_row_sha256": "3b2a5f69261d34af031cc50e80f865612cac2bcb44ab0fdd951199825af9a5ca",
+      "decision": "keep",
+      "reason": "Completed paid work precedes same-actor allocation. Shortfall context remains in Korean, keywords, positive embedding, matched result and family, so remainder wording alone is not a defect.",
+      "current": {
+        "id": "pov_shift_end_budget_reconcile_action",
+        "ko": "교대·납품·작업 완료 뒤 받은 보상을 여러 필수 생활 항목에 배정하고 남는 부족을 다시 조정하기",
+        "en": "after a visible shift delivery or task completion, allocating the compensation across several essential household needs and reconciling the remainder",
+        "weight": 0.88,
+        "tags": [
+          "poverty_access_visual_semantics",
+          "working_income_essential_cost_gap_relation",
+          "action"
+        ],
+        "requires_primary_any_tags": [
+          "working_income_essential_cost_gap_relation"
+        ],
+        "aliases": [
+          "paid-work completion to household reconciliation"
+        ],
+        "keywords": [
+          "allocation",
+          "compensation",
+          "shortfall",
+          "work completion"
+        ],
+        "embedding_text": "work output precedes a same-actor essential-cost allocation whose unresolved remainder is visible",
+        "concept_units": [
+          "after a visible shift delivery or task completion, allocating the compensation across several essential household needs and reconciling the remainder"
+        ],
+        "affected_dimensions": [
+          "action"
+        ]
+      },
+      "original_proposal_pointer": {
+        "path": "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/candidate-data-proposal.json",
+        "json_pointer": "/proposed_candidates/31",
+        "source_ids": [
+          "S10"
+        ]
+      },
+      "original_proposal": {
+        "id": "pov_shift_end_budget_reconcile_action",
+        "slot": "action",
+        "ko": "교대·납품·작업 완료 뒤 받은 보상을 여러 필수 생활 항목에 배정하고 남는 부족을 다시 조정하기",
+        "en": "after a visible shift delivery or task completion, allocating the compensation across several essential household needs and reconciling the remainder",
+        "aliases": [
+          "paid-work completion to household reconciliation"
+        ],
+        "keywords": [
+          "work completion",
+          "compensation",
+          "allocation",
+          "shortfall"
+        ],
+        "embedding_text": "work output precedes a same-actor essential-cost allocation whose unresolved remainder is visible",
+        "for_any": [
+          "working_income_essential_cost_gap_relation"
+        ],
+        "tier": "optional",
+        "source_ids": [
+          "S10"
+        ]
+      },
+      "source_bindings": [
+        {
+          "line": 10,
+          "record": {
+            "evidence_id": "E10",
+            "source_id": "S10",
+            "title": "Working poverty rate",
+            "publisher": "ILOSTAT",
+            "date": null,
+            "url": "https://ilostat.ilo.org/data/snapshots/working-poverty-rate/",
+            "abstracted_dimensions": [
+              "employment",
+              "household_poverty",
+              "earned_income",
+              "essential_cost_gap"
+            ],
+            "candidate_ids": [
+              "pov_shift_end_budget_reconcile_action",
+              "pov_work_output_pay_essentials_prop",
+              "pov_paid_work_cost_gap_composition"
+            ],
+            "affected_contract_ids": [
+              "working_income_essential_cost_gap_relation"
+            ],
+            "research_limitations": [
+              "working poverty is a household income classification not a visual occupation type",
+              "night work uniforms fatigue and rough hands are non-diagnostic"
+            ],
+            "reuse_note": "Activate only when the request explicitly supplies paid work and an essential-cost shortfall; never infer it from occupation or appearance."
+          }
+        }
+      ],
+      "current_semantic_projection": {
+        "concept_units": [
+          "after a visible shift delivery or task completion, allocating the compensation across several essential household needs and reconciling the remainder"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "action"
+        ],
+        "adoption": "optional"
+      },
+      "compiled_bundle_member": {
+        "id": "slot:action:pov_shift_end_budget_reconcile_action",
+        "slot": "action",
+        "entry_id": "pov_shift_end_budget_reconcile_action",
+        "concept_units": [
+          "after a visible shift delivery or task completion, allocating the compensation across several essential household needs and reconciling the remainder"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "action"
+        ],
+        "adoption": "optional"
+      },
+      "family": "working_income_essential_cost_gap_relation",
+      "bundle_source_sha256": "39e393c4013e7e94fde72889e2daa94653d225e523dcdd4f954f2567e20de8cd",
+      "source_owned_profile_components": [
+        "a completed paid shift or finished work output remains visibly associated with the same adult",
+        "the compensation resource is visibly received and handled by that same unmistakably adult worker",
+        "multiple concrete essential household cost anchors remain visible without relying on readable bill text",
+        "the adult visibly allocates or reconciles the compensation resource against those essential costs",
+        "after allocation one essential need remains visibly unmet while the available compensation is exhausted"
+      ],
+      "field_checks": {
+        "original_labels_and_positive_embedding_equal": true,
+        "keyword_set_equal": true,
+        "complete_en_unit_preserved": true,
+        "no_authored_relation_endpoints_to_reverse": true,
+        "family_binding_and_source_digest_valid": true
+      }
+    },
+    {
+      "candidate_id": "slot:prop:pov_work_output_pay_essentials_prop",
+      "source_pointer": "/slots/prop/5",
+      "source_row_sha256": "504302ffe2a3208c94c956dfee88680b6513433f411d6ad959939f6c7136950f",
+      "decision": "keep",
+      "reason": "Work output, nonidentifying compensation and several basic costs remain connected; the positive embedding preserves resource insufficiency.",
+      "current": {
+        "id": "pov_work_output_pay_essentials_prop",
+        "ko": "무상표 작업 완료물·비식별 보상 수단·식품이나 교통 같은 여러 기본비용 단서",
+        "en": "an unbranded completed-work item, a non-identifying compensation medium and several essential-cost anchors such as food or transport",
+        "weight": 0.88,
+        "tags": [
+          "poverty_access_visual_semantics",
+          "working_income_essential_cost_gap_relation",
+          "prop"
+        ],
+        "requires_primary_any_tags": [
+          "working_income_essential_cost_gap_relation"
+        ],
+        "aliases": [
+          "work pay and essential-cost evidence set"
+        ],
+        "keywords": [
+          "compensation",
+          "completed work",
+          "essentials"
+        ],
+        "embedding_text": "non-readable material evidence connects work compensation with costs that exceed the available resource",
+        "concept_units": [
+          "an unbranded completed-work item, a non-identifying compensation medium and several essential-cost anchors such as food or transport"
+        ],
+        "affected_dimensions": [
+          "concept"
+        ]
+      },
+      "original_proposal_pointer": {
+        "path": "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/candidate-data-proposal.json",
+        "json_pointer": "/proposed_candidates/33",
+        "source_ids": [
+          "S07",
+          "S10"
+        ]
+      },
+      "original_proposal": {
+        "id": "pov_work_output_pay_essentials_prop",
+        "slot": "prop",
+        "ko": "무상표 작업 완료물·비식별 보상 수단·식품이나 교통 같은 여러 기본비용 단서",
+        "en": "an unbranded completed-work item, a non-identifying compensation medium and several essential-cost anchors such as food or transport",
+        "aliases": [
+          "work pay and essential-cost evidence set"
+        ],
+        "keywords": [
+          "completed work",
+          "compensation",
+          "essentials"
+        ],
+        "embedding_text": "non-readable material evidence connects work compensation with costs that exceed the available resource",
+        "for_any": [
+          "working_income_essential_cost_gap_relation"
+        ],
+        "tier": "optional",
+        "source_ids": [
+          "S07",
+          "S10"
+        ]
+      },
+      "source_bindings": [
+        {
+          "line": 7,
+          "record": {
+            "evidence_id": "E07",
+            "source_id": "S07",
+            "title": "Persons at risk of poverty or social exclusion (sdg_01_10)",
+            "publisher": "Eurostat",
+            "date": null,
+            "url": "https://ec.europa.eu/eurostat/cache/metadata/en/sdg_01_10_esmsip2.htm",
+            "abstracted_dimensions": [
+              "arrears",
+              "thermal_comfort",
+              "meal_affordability",
+              "clothing_replacement",
+              "furniture_replacement",
+              "internet_access",
+              "social_participation"
+            ],
+            "candidate_ids": [
+              "pov_paid_one_deferred_one_trace",
+              "pov_inactive_service_used_zone_trace",
+              "pov_visible_mend_return_to_use_trace",
+              "pov_unentered_activity_continuing_trace"
+            ],
+            "affected_contract_ids": [
+              "basic_needs_budget_tradeoff_deferral",
+              "household_energy_affordability_coping_relation",
+              "material_replacement_deferral_repair_cycle",
+              "relative_participation_affordability_barrier",
+              "digital_connectivity_affordability_workaround_event"
+            ],
+            "research_limitations": [
+              "survey items encode enforced inability and household context",
+              "a worn item cold color grade or missed outing alone is not deprivation evidence"
+            ],
+            "reuse_note": "Use as a dimension map and for exact relation contrasts, not as a bag of aesthetic poverty tokens."
+          }
+        },
+        {
+          "line": 10,
+          "record": {
+            "evidence_id": "E10",
+            "source_id": "S10",
+            "title": "Working poverty rate",
+            "publisher": "ILOSTAT",
+            "date": null,
+            "url": "https://ilostat.ilo.org/data/snapshots/working-poverty-rate/",
+            "abstracted_dimensions": [
+              "employment",
+              "household_poverty",
+              "earned_income",
+              "essential_cost_gap"
+            ],
+            "candidate_ids": [
+              "pov_shift_end_budget_reconcile_action",
+              "pov_work_output_pay_essentials_prop",
+              "pov_paid_work_cost_gap_composition"
+            ],
+            "affected_contract_ids": [
+              "working_income_essential_cost_gap_relation"
+            ],
+            "research_limitations": [
+              "working poverty is a household income classification not a visual occupation type",
+              "night work uniforms fatigue and rough hands are non-diagnostic"
+            ],
+            "reuse_note": "Activate only when the request explicitly supplies paid work and an essential-cost shortfall; never infer it from occupation or appearance."
+          }
+        }
+      ],
+      "current_semantic_projection": {
+        "concept_units": [
+          "an unbranded completed-work item, a non-identifying compensation medium and several essential-cost anchors such as food or transport"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "concept"
+        ],
+        "adoption": "optional"
+      },
+      "compiled_bundle_member": {
+        "id": "slot:prop:pov_work_output_pay_essentials_prop",
+        "slot": "prop",
+        "entry_id": "pov_work_output_pay_essentials_prop",
+        "concept_units": [
+          "an unbranded completed-work item, a non-identifying compensation medium and several essential-cost anchors such as food or transport"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "concept"
+        ],
+        "adoption": "optional"
+      },
+      "family": "working_income_essential_cost_gap_relation",
+      "bundle_source_sha256": "39e393c4013e7e94fde72889e2daa94653d225e523dcdd4f954f2567e20de8cd",
+      "source_owned_profile_components": [
+        "a completed paid shift or finished work output remains visibly associated with the same adult",
+        "the compensation resource is visibly received and handled by that same unmistakably adult worker",
+        "multiple concrete essential household cost anchors remain visible without relying on readable bill text",
+        "the adult visibly allocates or reconciles the compensation resource against those essential costs",
+        "after allocation one essential need remains visibly unmet while the available compensation is exhausted"
+      ],
+      "field_checks": {
+        "original_labels_and_positive_embedding_equal": true,
+        "keyword_set_equal": true,
+        "complete_en_unit_preserved": true,
+        "no_authored_relation_endpoints_to_reverse": true,
+        "family_binding_and_source_digest_valid": true
+      }
+    },
+    {
+      "candidate_id": "slot:aftermath_trace:pov_remaining_essential_shortfall_trace",
+      "source_pointer": "/slots/aftermath_trace/5",
+      "source_row_sha256": "ff106d2078b19aca67e3bd85cff6280186cac3348aba4daed5fc69615658ec35",
+      "decision": "keep",
+      "reason": "The post-allocation unmet/deferred need survives in both labels and explicit unit; this is a local visible remainder rather than inferred household statistics.",
+      "current": {
+        "id": "pov_remaining_essential_shortfall_trace",
+        "ko": "보상이 여러 필수 항목에 배정된 뒤 한 필요가 공급되지 않거나 다시 미뤄진 채 남는 결과",
+        "en": "after compensation is allocated across essential items, one necessary provision remains visibly unmet or deferred",
+        "weight": 0.88,
+        "tags": [
+          "poverty_access_visual_semantics",
+          "working_income_essential_cost_gap_relation",
+          "aftermath_trace"
+        ],
+        "requires_primary_any_tags": [
+          "working_income_essential_cost_gap_relation"
+        ],
+        "aliases": [
+          "post-allocation essential shortfall"
+        ],
+        "keywords": [
+          "allocated pay",
+          "deferred result",
+          "unmet essential"
+        ],
+        "embedding_text": "the final shortfall remains material and local without claiming a household income statistic from appearance",
+        "concept_units": [
+          "after compensation is allocated across essential items, one necessary provision remains visibly unmet or deferred"
+        ],
+        "affected_dimensions": [
+          "timing"
+        ]
+      },
+      "original_proposal_pointer": {
+        "path": "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/candidate-data-proposal.json",
+        "json_pointer": "/proposed_candidates/35",
+        "source_ids": [
+          "S07",
+          "S10"
+        ]
+      },
+      "original_proposal": {
+        "id": "pov_remaining_essential_shortfall_trace",
+        "slot": "aftermath_trace",
+        "ko": "보상이 여러 필수 항목에 배정된 뒤 한 필요가 공급되지 않거나 다시 미뤄진 채 남는 결과",
+        "en": "after compensation is allocated across essential items, one necessary provision remains visibly unmet or deferred",
+        "aliases": [
+          "post-allocation essential shortfall"
+        ],
+        "keywords": [
+          "allocated pay",
+          "unmet essential",
+          "deferred result"
+        ],
+        "embedding_text": "the final shortfall remains material and local without claiming a household income statistic from appearance",
+        "for_any": [
+          "working_income_essential_cost_gap_relation"
+        ],
+        "tier": "optional",
+        "source_ids": [
+          "S07",
+          "S10"
+        ]
+      },
+      "source_bindings": [
+        {
+          "line": 7,
+          "record": {
+            "evidence_id": "E07",
+            "source_id": "S07",
+            "title": "Persons at risk of poverty or social exclusion (sdg_01_10)",
+            "publisher": "Eurostat",
+            "date": null,
+            "url": "https://ec.europa.eu/eurostat/cache/metadata/en/sdg_01_10_esmsip2.htm",
+            "abstracted_dimensions": [
+              "arrears",
+              "thermal_comfort",
+              "meal_affordability",
+              "clothing_replacement",
+              "furniture_replacement",
+              "internet_access",
+              "social_participation"
+            ],
+            "candidate_ids": [
+              "pov_paid_one_deferred_one_trace",
+              "pov_inactive_service_used_zone_trace",
+              "pov_visible_mend_return_to_use_trace",
+              "pov_unentered_activity_continuing_trace"
+            ],
+            "affected_contract_ids": [
+              "basic_needs_budget_tradeoff_deferral",
+              "household_energy_affordability_coping_relation",
+              "material_replacement_deferral_repair_cycle",
+              "relative_participation_affordability_barrier",
+              "digital_connectivity_affordability_workaround_event"
+            ],
+            "research_limitations": [
+              "survey items encode enforced inability and household context",
+              "a worn item cold color grade or missed outing alone is not deprivation evidence"
+            ],
+            "reuse_note": "Use as a dimension map and for exact relation contrasts, not as a bag of aesthetic poverty tokens."
+          }
+        },
+        {
+          "line": 10,
+          "record": {
+            "evidence_id": "E10",
+            "source_id": "S10",
+            "title": "Working poverty rate",
+            "publisher": "ILOSTAT",
+            "date": null,
+            "url": "https://ilostat.ilo.org/data/snapshots/working-poverty-rate/",
+            "abstracted_dimensions": [
+              "employment",
+              "household_poverty",
+              "earned_income",
+              "essential_cost_gap"
+            ],
+            "candidate_ids": [
+              "pov_shift_end_budget_reconcile_action",
+              "pov_work_output_pay_essentials_prop",
+              "pov_paid_work_cost_gap_composition"
+            ],
+            "affected_contract_ids": [
+              "working_income_essential_cost_gap_relation"
+            ],
+            "research_limitations": [
+              "working poverty is a household income classification not a visual occupation type",
+              "night work uniforms fatigue and rough hands are non-diagnostic"
+            ],
+            "reuse_note": "Activate only when the request explicitly supplies paid work and an essential-cost shortfall; never infer it from occupation or appearance."
+          }
+        }
+      ],
+      "current_semantic_projection": {
+        "concept_units": [
+          "after compensation is allocated across essential items, one necessary provision remains visibly unmet or deferred"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "timing"
+        ],
+        "adoption": "optional"
+      },
+      "compiled_bundle_member": {
+        "id": "slot:aftermath_trace:pov_remaining_essential_shortfall_trace",
+        "slot": "aftermath_trace",
+        "entry_id": "pov_remaining_essential_shortfall_trace",
+        "concept_units": [
+          "after compensation is allocated across essential items, one necessary provision remains visibly unmet or deferred"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "timing"
+        ],
+        "adoption": "optional"
+      },
+      "family": "working_income_essential_cost_gap_relation",
+      "bundle_source_sha256": "39e393c4013e7e94fde72889e2daa94653d225e523dcdd4f954f2567e20de8cd",
+      "source_owned_profile_components": [
+        "a completed paid shift or finished work output remains visibly associated with the same adult",
+        "the compensation resource is visibly received and handled by that same unmistakably adult worker",
+        "multiple concrete essential household cost anchors remain visible without relying on readable bill text",
+        "the adult visibly allocates or reconciles the compensation resource against those essential costs",
+        "after allocation one essential need remains visibly unmet while the available compensation is exhausted"
+      ],
+      "field_checks": {
+        "original_labels_and_positive_embedding_equal": true,
+        "keyword_set_equal": true,
+        "complete_en_unit_preserved": true,
+        "no_authored_relation_endpoints_to_reverse": true,
+        "family_binding_and_source_digest_valid": true
+      }
+    }
+  ],
+  "maintenance_ref": {
+    "contract_version": "photo-extension-maintenance-ref/v1",
+    "record_id": "photo_prompt_poverty_extension",
+    "sha256": "8b36c8c69f0af56835c194d69f696f673fd86a89d16f57d56ba496312a239d15"
+  },
+  "maintenance_record_digest": "8b36c8c69f0af56835c194d69f696f673fd86a89d16f57d56ba496312a239d15",
+  "maintenance_reference_digest_valid": true,
+  "source_binding_limit": "Official sources support abstract dimensions and representation limits. The authored proposal supplies the specific staged physical events; ledger candidate lists are illustrative and not an exhaustive reverse index."
+}

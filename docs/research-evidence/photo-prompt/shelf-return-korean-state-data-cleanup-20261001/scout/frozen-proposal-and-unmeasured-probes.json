@@ -1,0 +1,175 @@
+{
+  "head": "e793d350eed966745dcb5c5d35ebbfd924cb6bff",
+  "status": "source-only one-field proposal; probes frozen before V6 surface check and never queried",
+  "candidate_id": "slot:aftermath_trace:pov_reduced_purchase_set_trace",
+  "source": "skills/photo-prompt-image-generator/assets/photo_prompt_poverty_extension.json",
+  "source_pointer": "/slots/aftermath_trace/0",
+  "before": {
+    "id": "pov_reduced_purchase_set_trace",
+    "ko": "되돌린 한 품목의 진열 공백과 결제된 더 작은 필수 식품 묶음이 함께 남는 결과",
+    "en": "the returned item's restored shelf position and the smaller completed essential purchase remain visible together",
+    "weight": 0.88,
+    "tags": [
+      "poverty_access_visual_semantics",
+      "food_access_budget_choice_event",
+      "aftermath_trace"
+    ],
+    "requires_primary_any_tags": [
+      "food_access_budget_choice_event"
+    ],
+    "aliases": [
+      "completed reduced grocery result"
+    ],
+    "keywords": [
+      "completed payment",
+      "returned item",
+      "smaller set"
+    ],
+    "embedding_text": "a completed but reduced food purchase is distinguishable from indecision or ordinary comparison",
+    "concept_units": [
+      "the returned item's restored shelf position and the smaller completed essential purchase remain visible together"
+    ],
+    "affected_dimensions": [
+      "timing"
+    ]
+  },
+  "proposed": {
+    "id": "pov_reduced_purchase_set_trace",
+    "ko": "되돌린 한 품목이 놓인 원래 진열 위치와 결제된 더 작은 필수 식품 묶음이 함께 남는 결과",
+    "en": "the returned item's restored shelf position and the smaller completed essential purchase remain visible together",
+    "weight": 0.88,
+    "tags": [
+      "poverty_access_visual_semantics",
+      "food_access_budget_choice_event",
+      "aftermath_trace"
+    ],
+    "requires_primary_any_tags": [
+      "food_access_budget_choice_event"
+    ],
+    "aliases": [
+      "completed reduced grocery result"
+    ],
+    "keywords": [
+      "completed payment",
+      "returned item",
+      "smaller set"
+    ],
+    "embedding_text": "a completed but reduced food purchase is distinguishable from indecision or ordinary comparison",
+    "concept_units": [
+      "the returned item's restored shelf position and the smaller completed essential purchase remain visible together"
+    ],
+    "affected_dimensions": [
+      "timing"
+    ]
+  },
+  "before_row_sha256": "971fcd50aa7d8ebd230b658801876b5789e0ce51ed49a8f8e3b3b2cfde998919",
+  "proposed_row_sha256": "670de7218b23b55f1ecbbe3b054ba5cb3efb3dcf0a86c18ba472b4ad3e8f2a56",
+  "change_fields": [
+    "ko"
+  ],
+  "rationale": "The old Korean names a gap belonging to the returned item (되돌린 한 품목의 진열 공백); both the existing English unit and matched action specify returning that item to its source display. Replace only that owner-state phrase with the original display position occupied by the returned item. Do not require the whole shelf to be stocked.",
+  "source_grounding": [
+    {
+      "path": "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/candidate-data-proposal.json",
+      "pointer": "/proposed_candidates/5",
+      "note": "Authored bilingual inconsistency already exists here; this is not a new upstream mutation."
+    },
+    {
+      "path": "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/candidate-data-proposal.json",
+      "pointer": "/proposed_candidates/1",
+      "note": "Matched action returns the same item to its original display before completing the reduced purchase."
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_poverty_extension.json",
+      "pointer": "/slots/composition/0",
+      "note": "Source shelf, returning hand, finite payment and reduced paid set form one chain."
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_poverty.json",
+      "pointer": "/profiles/0",
+      "note": "Same adult, source-to-result continuity and completed reduced purchase are the existing contract."
+    }
+  ],
+  "probes": [
+    {
+      "id": "positive_en",
+      "kind": "positive",
+      "language": "en",
+      "query": "At checkout, a shopper can afford only part of the groceries. The unaffordable staple is back in its original display spot, and the purchased remainder is bagged beside that shopper.",
+      "expected": "Returned item occupies its source position; the same adult and smaller completed purchase stay linked.",
+      "query_sha256": "4cfc7acfec5a4611e83276a00563f98710d251be9878d1c27da6785bc566c029"
+    },
+    {
+      "id": "positive_ko",
+      "kind": "positive",
+      "language": "ko",
+      "query": "계산대에서 식비가 모자란 성인이 식품 하나를 원래 있던 자리에 놓았다. 그 사람 옆 봉투에는 값을 치른 나머지 식품만 담겨 있다.",
+      "expected": "Returned item occupies its source position; the same adult and smaller completed purchase stay linked.",
+      "query_sha256": "3ab15e89a7edb65e61a2ba05f9c9c4f7afeaf74de78b628fe96b1776a81df215"
+    },
+    {
+      "id": "coexistence_en",
+      "kind": "coexistence",
+      "language": "en",
+      "query": "A shopper has put one staple back and paid for fewer essentials. A different sold-out product leaves a separate bare patch on the display; the returned staple itself remains visible in its own spot.",
+      "expected": "Allow unrelated shelf vacancy without moving the returned item out of its restored source position.",
+      "query_sha256": "409d4fda2e253764ad43cdf89df4c53d9441d261700f29480585c67cdc2d5fef"
+    },
+    {
+      "id": "coexistence_ko",
+      "kind": "coexistence",
+      "language": "ko",
+      "query": "성인이 식품 한 개를 제자리에 돌려놓고 더 적은 필수품만 계산했다. 옆의 다른 품절 상품 자리는 비어 있어도 돌려놓은 식품은 자기 진열 자리에 그대로 보인다.",
+      "expected": "Allow unrelated shelf vacancy without moving the returned item out of its restored source position.",
+      "query_sha256": "68804c0d34d52891ca1d99dcd7b17c602ac8f95678a695339d6ec918b544288b"
+    },
+    {
+      "id": "near_miss_removal_en",
+      "kind": "near_miss",
+      "language": "en",
+      "query": "A customer takes a package off the shelf, leaving its spot empty, and keeps it in the basket while continuing to browse. No purchase is finished.",
+      "expected": "Do not equate a vacated source position and unfinished shopping with the returned-item completed-reduced-purchase result.",
+      "query_sha256": "2d6477339445fc9d2f9090b009c19ab1bfeee084f968770fe0aed6e6bc2ec1cc"
+    },
+    {
+      "id": "near_miss_removal_ko",
+      "kind": "near_miss",
+      "language": "ko",
+      "query": "손님이 진열대에서 꺼낸 상품을 장바구니에 그대로 둔 채 더 둘러본다. 상품 자리는 비어 있고 계산은 아직 하지 않았다.",
+      "expected": "Do not equate a vacated source position and unfinished shopping with the returned-item completed-reduced-purchase result.",
+      "query_sha256": "6a368d928cc42a378d782deb9e42b3975cdab8e0b81509a3001a1490cfb2ea0b"
+    },
+    {
+      "id": "near_miss_restock_en",
+      "kind": "near_miss",
+      "language": "en",
+      "query": "A shop employee fills a vacant display spot from a delivery carton while a customer elsewhere pays for a full basket.",
+      "expected": "Do not merge different actors and resources into the same-shopper budget-constrained return result.",
+      "query_sha256": "a7c93b59510f44491d4e873b4b75827d04e243f033b2fb0a491572806e671a2c"
+    },
+    {
+      "id": "near_miss_restock_ko",
+      "kind": "near_miss",
+      "language": "ko",
+      "query": "매장 직원이 입고 상자에서 상품을 꺼내 빈 진열 칸을 채운다. 다른 쪽 손님은 가득 찬 장바구니 전부를 계산한다.",
+      "expected": "Do not merge different actors and resources into the same-shopper budget-constrained return result.",
+      "query_sha256": "983fe6d7b885b9174b01b205afd7a57f43ffe28dd2dcc7949ea95d876e8947e1"
+    }
+  ],
+  "probe_measurement_status": "unmeasured",
+  "api_calls": 0,
+  "source_snapshot": {
+    "skills/photo-prompt-image-generator/assets/photo_prompt_poverty_extension.json": "7638dd9e03a4beebc6e8768d2b558a9d2b8ea009cdbef30f8820f460c89672ba",
+    "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/candidate-data-proposal.json": "e969adbcec683d4984912842eed79547c46f7bde59aa446eb10bd9b41a33ed18",
+    "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/evidence.jsonl": "aa860fce50ecded31fb5106cfc133114b2d837ac087f2a4b3c1f57ba2f8da8ca",
+    "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/report-source.md": "b530432886c52f8d53061fca941f88b31c74c40aa2fba69a52780258fef6e603",
+    "docs/research-evidence/photo-prompt/extension-maintenance/photo_prompt_poverty_extension.json": "2d018628d7ca4421d8c3e8c86c19c857c91dbccedfb5b81133c6b4a48a2879a0",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_poverty.json": "76a1c18fa165ef14daa0052f1eae248e5435927b697c2f84e40b12dcc1a66bd9",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json": "ab0125e9ce88d1cea7f4da19cca310a156bbc73699ae466f125da7565587608d",
+    "skills/photo-prompt-image-generator/scripts/prompt_generator.py": "aee165de87105335edd7ad55907ad2004cb6aff4da0dd788fbe05117b984900b",
+    "skills/photo-prompt-image-generator/scripts/photo_candidate_semantics.py": "5ea7dca0ba23c20afa59dfb1268f15f4560831fb86ecc415149bb4b0991d0175",
+    "skills/photo-prompt-image-generator/scripts/compose_pack_view.py": "a8374754e781e8f44219bc20207e0c3e47e2a24cff65870aeca69ce59f4627bc",
+    "tests/photo_prompt_fixtures.py": "8a041e8d0eec8c29e88f1bfa0dcf69e2d8b64ff40c57db845ca40f1689a91b86",
+    "tests/test_photo_authorial_core_v6.py": "f7a640d91655a85c7310ae048470b6efdfbc940f40a545128e83a75868495635"
+  }
+}

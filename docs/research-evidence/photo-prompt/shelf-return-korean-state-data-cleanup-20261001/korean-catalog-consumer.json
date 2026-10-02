@@ -1,0 +1,29 @@
+{
+  "status": "pass",
+  "consumer": "Production prompt_generator.main --list-tags aftermath_trace -> list_tags -> localize(ko/en)",
+  "baseline_input": "Exact complete frozen baseline serialized to a temporary --tags file; real CLI loader and output path, no loader/formatter mocking",
+  "proposal_input": "Exact complete frozen proposal serialized to a temporary --tags file; independently equal to the actual live repository CLI output",
+  "source_rows": 53,
+  "changed_display_rows": [
+    {
+      "baseline": "pov_reduced_purchase_set_trace: 되돌린 한 품목의 진열 공백과 결제된 더 작은 필수 식품 묶음이 함께 남는 결과 / the returned item's restored shelf position and the smaller completed essential purchase remain visible together",
+      "proposal": "pov_reduced_purchase_set_trace: 되돌린 한 품목이 놓인 원래 진열 위치와 결제된 더 작은 필수 식품 묶음이 함께 남는 결과 / the returned item's restored shelf position and the smaller completed essential purchase remain visible together"
+    }
+  ],
+  "all_other_catalog_lines_exact": true,
+  "current_live_cli_equals_proposal": true,
+  "source_and_runtime_written": false,
+  "api_calls": 0,
+  "network_calls": 0,
+  "prompt_generator_sha256": "aee165de87105335edd7ad55907ad2004cb6aff4da0dd788fbe05117b984900b",
+  "catalog_sha256": {
+    "baseline": "5f23326a2766f2fe51c49e851a0c9e36108a708d945c0efe9d11b1cb7dd72f1d",
+    "proposal": "fb0439db467bf48e7b465c2dc06511fd1f5ff33dcaf18807b30d1099fa6464e3"
+  },
+  "limits": [
+    "This is a real Korean source/catalog display correction, not Korean generated-prompt improvement.",
+    "The current prompt section/template path does not include aftermath_trace; build_fields alone is not evidence of final prompt usage.",
+    "Selected-choice JSON serializes localized labels when an entry is selected; natural selection or adoption is not established here.",
+    "Final English V6 surfaces are independently identical; that unchanged output is not an offset for retrieval harm."
+  ]
+}

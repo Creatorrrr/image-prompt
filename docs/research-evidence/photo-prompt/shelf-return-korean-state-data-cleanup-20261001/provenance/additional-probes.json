@@ -1,0 +1,40 @@
+{
+  "status": "frozen_before_measurement",
+  "queries": [
+    {
+      "id": "reviewer_wrong_source_en",
+      "kind": "near_miss_paid_completion_wrong_source_position",
+      "language": "en",
+      "query": "A shopper finishes paying for fewer essentials, but the omitted package remains beside the till and its original shelf position is empty.",
+      "authorship": "independent_source_reviewer_before_measurement",
+      "expected": "A completed smaller purchase alone does not establish that the omitted item has returned to its source position. This is a legitimate different scene, not an exclusion rule."
+    },
+    {
+      "id": "reviewer_wrong_source_ko",
+      "kind": "near_miss_paid_completion_wrong_source_position",
+      "language": "ko",
+      "query": "구매자는 더 적은 필수 식품만 계산했지만 빼놓은 품목은 계산대 옆에 있고 원래 진열 자리는 비어 있다.",
+      "authorship": "independent_source_reviewer_before_measurement",
+      "expected": "A completed smaller purchase alone does not establish that the omitted item has returned to its source position. This is a legitimate different scene, not an exclusion rule."
+    },
+    {
+      "id": "control_cooled_drink_en",
+      "kind": "unrelated_existing_aftermath_trace_control",
+      "language": "en",
+      "query": "An untouched drink has cooled on the table, with a thin film across its surface.",
+      "authorship": "preparation_worker_before_measurement",
+      "target": "slot:aftermath_trace:cooling_untouched_drink",
+      "expected": "Preserve the existing cooled untouched drink aftermath trace, unrelated to shopping or a shelf."
+    },
+    {
+      "id": "control_waiting_luggage_ko",
+      "kind": "unrelated_existing_aftermath_trace_control",
+      "language": "ko",
+      "query": "기다리는 사람의 발 바로 옆 바닥에 여행 가방이 놓여 있어 출발 준비가 된 상태가 보인다.",
+      "authorship": "preparation_worker_before_measurement",
+      "target": "slot:aftermath_trace:ep_luggage_beside_waiting_position",
+      "expected": "Preserve the existing luggage beside a waiting position aftermath trace, unrelated to a grocery return."
+    }
+  ],
+  "cache_selection": "No existing aftermath_trace-targeted frozen query was found among prior cycle inventories. New same-slot controls were authored rather than using mismatched-slot cached text. Neither rankings nor scores were consulted."
+}
