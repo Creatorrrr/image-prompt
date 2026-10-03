@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "frozen_before_runtime_patch": true,
+  "purpose": "New scenes and owner-negative controls, without candidate IDs or aliases from the diagnostic twelve scenes. Text and contract evaluation only.",
+  "category_cases": [
+    {"id": "object_lantern", "subject": "a dented copper lantern", "category": "object", "surface_allowed": true},
+    {"id": "object_fish_pendant", "subject": "a silver fish pendant", "category": "object", "surface_allowed": true},
+    {"id": "food_fig", "subject": "one split ripe fig", "category": "food", "surface_allowed": true},
+    {"id": "plant_fern", "subject": "a curled fern frond", "category": "plant", "surface_allowed": true},
+    {"id": "environment_bank", "subject": "an eroded river bank", "category": "environment", "surface_allowed": true},
+    {"id": "sign_plate", "subject": "a weathered station nameplate", "category": "sign", "surface_allowed": true},
+    {"id": "animal_beetle", "subject": "a green beetle shell", "category": "animal", "surface_allowed": false},
+    {"id": "human_wrist", "subject": "an adult human wrist", "category": "human", "surface_allowed": false},
+    {"id": "unknown_shape", "subject": "an unidentified reflective shape", "category": "unknown", "surface_allowed": false}
+  ],
+  "owner_cases": [
+    {"id": "rear_lantern", "slot": "light_direction", "dimension": "lighting", "target": "lantern", "property": "illumination.direction", "evidence": "light arriving from behind the lantern", "irrelevant": "the camera faces the lantern from its left"},
+    {"id": "left_lantern", "slot": "light_direction", "dimension": "lighting", "target": "lantern", "property": "illumination.direction", "evidence": "a light source on the camera left illuminates the lantern", "irrelevant": "the lantern handle points toward its own right"},
+    {"id": "upward_weather_vane", "slot": "camera_direction", "dimension": "camera", "target": "camera", "property": "viewpoint.direction", "evidence": "the camera looks upward from below the weather vane", "irrelevant": "a bird crosses above a bright background window"},
+    {"id": "downward_weather_vane", "slot": "camera_direction", "dimension": "camera", "target": "camera", "property": "viewpoint.direction", "evidence": "the camera looks downward from above the weather vane", "irrelevant": "the light source sits below the roof"},
+    {"id": "background_light", "slot": "light_direction", "dimension": "camera", "target": "camera", "property": "viewpoint.direction", "evidence": "the camera faces a bright sign behind the building", "irrelevant": "a glowing sign lights only the distant background"}
+  ]
+}
