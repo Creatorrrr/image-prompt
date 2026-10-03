@@ -195,7 +195,10 @@ class PhotoCandidateSemanticsTests(unittest.TestCase):
         pack = generator.build_candidate_pack(result, data, "v6")
         bundles = pack["candidate_bundles"]["candidates"]
         self.assertTrue(bundles, "the normal generator must expose a usable bundle, not only compile a dead catalog")
-        bundle = bundles[0]
+        bundles_by_id = {item["id"]: item for item in bundles}
+        self.assertIn("bundle:clean_beauty_clamshell", bundles_by_id)
+        # Candidate order does not express preference; audit the requested bundle by identity.
+        bundle = bundles_by_id["bundle:clean_beauty_clamshell"]
         detail = views.build_view(pack, [bundle["id"]])
         views.verify_view(pack, detail)
         self.assertFalse(self.check(pack))
@@ -219,7 +222,7 @@ class PhotoCandidateSemanticsTests(unittest.TestCase):
         prompt = raw["baseline_prompt_en"] + " " + " ".join(phrases)
         self.assertFalse(auditor.audit_candidate_interpretations(pack, composed, prompt, {bundle["id"]}, auditor.candidate_objects_from_pack(pack)))
         forged = copy.deepcopy(pack)
-        altered = forged["candidate_bundles"]["candidates"][0]
+        altered = next(item for item in forged["candidate_bundles"]["candidates"] if item["id"] == bundle["id"])
         altered["components"][0]["concept_units"] = ["a front ring light instead of an upper key"]
         altered["source_contract_sha256"] = semantics.digest(semantics.bundle_source_material(altered))
         generator.candidate_pack_recompute_id(forged)
