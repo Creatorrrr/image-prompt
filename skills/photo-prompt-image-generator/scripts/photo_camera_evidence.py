@@ -42,17 +42,20 @@ def legacy_camera_clauses(core: dict, axis: str) -> list[str]:
     if re.search(r"\bcameras\b|\b(?:another|second|third|first|other|both|two|three|secondary|backup)\s+(?:\w+\s+){0,2}camera\b", text, re.I):
         return []
     sentences = re.split(r"[.!?;]+\s*", text)
-    if any(re.search(r"\bcamera\b", sentence, re.I)
-           and re.search(r"\b(?:background|depicted|painted|displayed)\b|\b(?:toy|miniature|antique)\s+camera\b|\bon\s+display\b", sentence, re.I)
-           for sentence in sentences):
+    background_camera = (r"\b(?:background|depicted|painted|displayed)\s+(?:[\w-]+\s+){0,5}camera\b"
+                         r"|\bcamera\b[^,;.!?]{0,60}\bbackground\b"
+                         r"|\b(?:toy|miniature|antique)\s+camera\b"
+                         r"|\bcamera\b[^,;.!?]{0,40}\bon\s+display\b")
+    if any(re.search(background_camera, sentence, re.I) for sentence in sentences):
         return []
     queries = []
     direction = r"(?:upwards?|downwards?|up|down|horizontally|vertically|forward|backward|ahead|left|right|towards?|from|above|below)\b"
-    for sentence in sentences:
-        if re.search(r"\b(?:not|never|without|instead)\b|\b\w+n['’]t\b|\brather\s+than\b", sentence, re.I):
-            continue
+    positive_parts = [part for sentence in sentences
+                      if not re.search(r"\b(?:not|never|without|instead)\b|\b\w+n['’]t\b|\brather\s+than\b", sentence, re.I)
+                      for part in sentence.split(",")]
+    for part in positive_parts:
         # Stop before another scene actor, a relative clause or a consequence.
-        clause = re.split(r",|\b(?:while|whereas|because|making|which|whose|that|with)\b|\band\s+(?=the|a\b|an\b|its\b|they\b|it\s+(?:is|looks|faces|points)\b)", sentence, flags=re.I)[0].strip()
+        clause = re.split(r"\b(?:while|whereas|because|making|which|whose|that|with)\b|\band\s+(?=the|a\b|an\b|its\b|they\b|it\s+(?:is|looks|faces|points)\b)", part, flags=re.I)[0].strip()
         head = re.fullmatch(
             r"(?:(?P<command>Position|Place|Put|Set|Keep|Mount|Hold|Tilt|Aim|Point|Turn)\s+(?:(?:the|our)\s+)?(?:shooting\s+)?camera\b|(?:The|Our)\s+(?:shooting\s+)?camera\b)\s*(?P<body>.+)",
             clause, re.I)
@@ -63,6 +66,7 @@ def legacy_camera_clauses(core: dict, axis: str) -> list[str]:
             supported = (
                 command in {"tilt", "aim", "point", "turn"} and re.match(direction, body, re.I)
                 or re.match(r"(?:looks?|faces?|points?|aims?|tilts?|turns?|views?)\s+(?:straight\s+)?" + direction, body, re.I)
+                or re.match(r"(?:(?:is|was|remains)\s+)?(?:tilted|aimed|pointed|angled|turned|oriented)\s+(?:straight\s+)?" + direction, body, re.I)
                 or re.search(r"\band\s+(?:tilt|aim|point|turn)\s+(?:it|the\s+camera)\s+(?:straight\s+)?" + direction, body, re.I)
             )
         else:
