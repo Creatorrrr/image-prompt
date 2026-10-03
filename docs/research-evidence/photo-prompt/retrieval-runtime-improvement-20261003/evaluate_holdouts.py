@@ -19,6 +19,10 @@ def main():
     sys.path.insert(0, str(args.test_repo))
     sys.path.insert(0, str(args.runtime_repo / "skills/photo-prompt-image-generator/scripts"))
     import prompt_generator as pg
+    # Pin the companion auditors before the shared fixture inserts its own
+    # script directory; a replay must not mix before/after contract modules.
+    import audit_composed_prompt
+    import audit_image_render_request
     file = args.test_repo / "tests/test_photo_retrieval_runtime_improvement.py"
     spec = importlib.util.spec_from_file_location("frozen_retrieval_controls", file)
     controls = importlib.util.module_from_spec(spec)
