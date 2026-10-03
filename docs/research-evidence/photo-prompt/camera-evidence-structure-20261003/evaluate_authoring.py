@@ -21,6 +21,8 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     for arg in ('runtime-repo', 'data-repo', 'inputs', 'output'):
         p.add_argument('--' + arg, type=Path, required=True)
+    p.add_argument('--request-axis-review', type=Path,
+                   help='Separate semantic review of source requests; never infer required axes from author declarations.')
     args = p.parse_args(); args.output.mkdir(parents=True, exist_ok=True)
     scripts = args.runtime_repo / 'skills/photo-prompt-image-generator/scripts'
     sys.path.insert(0, str(scripts))
@@ -32,6 +34,10 @@ def main():
               'runtime_sources': {x.name: sha(x) for x in scripts.glob('*.py')}, 'provider_calls': 0,
               'pixel_quality_evaluated': False, 'complete_author_inputs': True,
               'new_author_cli_mode_supported': new_mode, 'rows': []}
+    axis_review = json.loads(args.request_axis_review.read_text()) if args.request_axis_review else None
+    if axis_review:
+        report['request_axis_review'] = axis_review
+        report['request_axis_review_sha256'] = sha(args.request_axis_review)
     cache = []
     real_loader = pg.load_runtime_data
     def load_data(*unused, **kwargs):
@@ -47,6 +53,10 @@ def main():
         argv = [arg for key in keys for arg in ('--' + key + '-json', str(folder / (key + '.json')))]
         outfile = args.output / (folder.name + '.pack.json')
         if new_mode: argv += ['--new-author-camera-evidence']
+        if axis_review:
+            row['request_axis_requirements'] = axis_review['cases'][folder.name]
+            for axis, state in row['request_axis_requirements'].items():
+                if state == 'requested': argv += ['--require-camera-evidence', axis]
         argv += ['--seed', '829', '--output-file', str(outfile)]
         try:
             env = pg.normalize_request_envelope(json.loads(original['request-envelope.json']))
