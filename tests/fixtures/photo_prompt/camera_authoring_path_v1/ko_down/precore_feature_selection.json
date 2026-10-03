@@ -1,0 +1,67 @@
+{
+  "contract_version": "photo-precore-feature-selection/v1",
+  "request_id": "ko_down",
+  "active_span_ids": [
+    "topic"
+  ],
+  "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+  "catalog_schema_version": "photo-precore-feature-catalog/v1",
+  "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+  "request_sha256": "670c6dee91766c65bd37b9897b74d4269dfe95a08b65e01244a22a99d388b7f5",
+  "baseline_prompt_sha256": "f0df0ebb85307b615e995eacbf5b082f88d6fa447622e8c2a25d6fe16e1a0509",
+  "selected": [
+    {
+      "category_id": "feature.subject",
+      "basis": "explicit_request",
+      "source_span_ids": [
+        "topic"
+      ],
+      "source_text": "접힌 지도",
+      "derivation": null,
+      "reason": "The requested map is the primary object.",
+      "baseline_evidence": "folded map"
+    },
+    {
+      "category_id": "feature.props",
+      "basis": "explicit_request",
+      "source_span_ids": [
+        "topic"
+      ],
+      "source_text": "나무 쟁반",
+      "derivation": null,
+      "reason": "The second requested object remains visible.",
+      "baseline_evidence": "wooden tray"
+    },
+    {
+      "category_id": "feature.camera_height",
+      "basis": "explicit_request",
+      "source_span_ids": [
+        "topic"
+      ],
+      "source_text": "쟁반 위에 놓고",
+      "derivation": null,
+      "reason": "Camera height is independently prescribed.",
+      "baseline_evidence": "above the wooden tray"
+    },
+    {
+      "category_id": "feature.camera_angle",
+      "basis": "explicit_request",
+      "source_span_ids": [
+        "topic"
+      ],
+      "source_text": "아래쪽 지도를 내려다보게",
+      "derivation": null,
+      "reason": "The camera direction is separately prescribed.",
+      "baseline_evidence": "looks downward toward the map"
+    },
+    {
+      "category_id": "feature.texture",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "Different material surfaces make the arrangement legible.",
+      "baseline_evidence": "paper folds and the tray grain"
+    }
+  ]
+}

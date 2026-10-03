@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 import prompt_generator as generator
-from photo_camera_evidence import CAMERA_AXES, require_camera_evidence
+from photo_camera_evidence import CAMERA_AXES, require_camera_evidence, camera_authoring_declaration
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -19,6 +19,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--visual-intent-json")
     parser.add_argument("--require-camera-evidence", action="append", choices=CAMERA_AXES, default=[],
                         help="New authoring: verify each requester-owned camera axis has explicit frozen evidence.")
+    parser.add_argument("--new-author-camera-evidence", action="store_true",
+                        help="Require the independently authored owner and separate direction/height declaration.")
     parser.add_argument("--seed", type=int)
     parser.add_argument("--output-file")
     args = parser.parse_args(argv)
@@ -27,6 +29,7 @@ def main(argv: list[str] | None = None) -> int:
     core = generator.load_authorial_core_arg(args.authorial_core_json, request_envelope=envelope,
                                             creative_control_snapshot=controls)
     require_camera_evidence(core, args.require_camera_evidence)
+    camera_authoring_declaration(core, required=args.new_author_camera_evidence)
     embodiment = json.loads(Path(args.embodiment_review_json).read_text(encoding="utf-8"))
     # No candidate data is loaded until all authored inputs are validated.
     generator.photo_embodiment.build_policy(core, embodiment)
