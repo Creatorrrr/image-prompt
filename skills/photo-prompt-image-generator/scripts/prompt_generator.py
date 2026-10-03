@@ -138,6 +138,7 @@ VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
     "photo_prompt_visual_obligations_body_morphology.json",
     "photo_prompt_visual_obligations_acting_expression.json",
     "photo_prompt_visual_obligations_neutral_expression.json",
+    "photo_prompt_visual_obligations_religion_iconography.json",
 )
 VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
     "photo-visual-obligation-registry-extension/v1"
@@ -190,6 +191,7 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_body_morphology_extension.json",
     "photo_prompt_acting_expression_extension.json",
     "photo_prompt_neutral_expression_extension.json",
+    "photo_prompt_religion_iconography_extension.json",
 )
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v2"

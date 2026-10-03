@@ -77,7 +77,7 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
         self.assertEqual(live['runtime_keys'], ['schema_version', 'slots'])
 
     def test_complete_merged_state_and_twenty_one_keeps_remain_exact(self):
-        # Compare the historical source before later pose/body/acting overlays.
+        # Compare the historical source before later pose/body/acting/iconography overlays.
         # Body integration adds structured semantics to these 13 base entries;
         # every pre-existing field must still equal the frozen historical row.
         # Neither the historical expected values nor the lexical holdouts change.
@@ -85,7 +85,8 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
                           if name not in {'photo_prompt_pose_vocabulary_extension.json',
                                           'photo_prompt_body_morphology_extension.json',
                                           'photo_prompt_acting_expression_extension.json',
-                                          'photo_prompt_neutral_expression_extension.json'})
+                                          'photo_prompt_neutral_expression_extension.json',
+                                          'photo_prompt_religion_iconography_extension.json'})
         with patch.object(common.g, 'RESEARCH_EXTENSION_FILENAMES', filenames):
             historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
         body_enriched_ids = {
@@ -157,8 +158,21 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
                 if before != after:
                     differences.append((slot, before['id']))
         self.assertEqual(differences, [('action','waiting_in_between_use_space')])
+        # The iconography overlay adds only full, equivalent paraphrases to
+        # declared existing rows. Protect the exact addition and project those
+        # later fields before comparing this frozen twenty-one-keep inventory.
+        iconography = json.loads((ASSETS / 'photo_prompt_religion_iconography_extension.json').read_text())
+        iconographic_contexts = iconography['existing_slot_context_extensions']
         for item in self.frozen['inventory']:
-            after = next(x for x in self.current['slots'][item['slot']] if x['id'] == item['id'])
+            after = copy.deepcopy(next(x for x in self.current['slots'][item['slot']] if x['id'] == item['id']))
+            update = iconographic_contexts.get(item['slot'], {}).get(item['id'])
+            if update:
+                self.assertEqual(set(after.get('paraphrases', [])),
+                                 set(item['proposal'].get('paraphrases', [])) | set(update['paraphrases']))
+                if 'paraphrases' in item['proposal']:
+                    after['paraphrases'] = item['proposal']['paraphrases']
+                else:
+                    after.pop('paraphrases')
             self.assertEqual(after, item['proposal'])
             if item['decision'] == 'keep':
                 self.assertEqual(after, item['before'])
