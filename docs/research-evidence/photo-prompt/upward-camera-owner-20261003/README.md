@@ -128,5 +128,41 @@ toward the locomotive`를 camera query로 전달한다. 후보 ID는
 카메라 속성 anchor가 빠진 원본 006은 같은 flag에서 DATA 로드 전에 exit 1로
 거절됐다. Legacy 원본의 flag 없는 재현은 그대로 가능하다.
 
-별도 작성자의 최종 blind V2는 아직 전달되지 않았다. 첫 독립 V1 결과를 최종
-blind 성능으로 바꾸어 보고하지 않는다. V2 수신 전 runtime은 동결했다.
+## 최종 독립 blind V2 — 미해결 재현율을 그대로 보존
+
+별도 작성자는 repository, 구현, 이전 holdout에 노출되지 않았다. EN/KO 요청
+각 7건과 각각 59–66단어 영어 baseline을 수신 전에 runtime
+`6665684fd5c3a73591b4c5b4508c4cc5f5d3da1f`로 동결했다. 평가 후 runtime을
+조정하지 않았다. 요청·영어 기본문·기대 owner 및 방향/높이 predicate span은
+전달된 그대로 보존했고 SHA-256은
+`8ad46e1ac0448dddc3503299b4b5b24e786a04902c41143f455d9c960a5a9a07`이다.
+
+| V2 측정 | 수정 전 | 동결 수정 후 |
+| --- | ---: | ---: |
+| 양성 소유 절 추출 | 0/6 | 0/6 |
+| 음성 literal projection abstention | 8/8 | 8/8 |
+| production caller 코어 수락 | 13/14 | 13/14 |
+| 새로운 소유 절 전달 | 0 | 0 |
+| camera 질의·후보 노출 변화 | — | 0건 |
+
+`taking this photograph`, `making the image`, `used to take the picture` 등의
+camera 수식과 lens로 이어지는 간접 소유 절은 현재 제한 문법에서 추출하지
+못한다. KO_LOW의 국소 upward 부정도 현재 전체 문장 부정 guard에서는 positive
+수평 방향과 함께 abstain한다. 따라서 일반화된 capture-camera 재현율 개선은
+입증되지 않았다. V2 기대값을 구현에 맞춰 바꾸거나 새 사례로 문법을 튜닝하지 않았다.
+
+KO_TWO는 `No single capture direction can be selected from this scene`가 기존
+blanket-negative 코어 계약에 걸려 양쪽 모두 거절됐다. 문장을 다시 써 통과시키지
+않았고 해당 사례의 retrieved IDs는 null이다. Raw extractor abstention 8/8을
+production 코어 수락 14/14로 표현하지 않는다. 나머지 13개의 synthetic caller
+질의와 반환 camera IDs는 전후 같으며, 기존 generic projection은 잘못된 방향의
+optional 후보도 노출한다. 추출 abstention은 slot 노출 없음이나 적합한 의미
+채택을 뜻하지 않는다. 모든 양성의 camera 부분 잠금을 counterfactual로 선언하면
+방향 행은 0/49 compatible이며 이 guards도 완화하지 않았다.
+
+[변경 전](independent-v2-before.json), [동결 변경 후](independent-v2-after.json),
+[분리 집계](independent-v2-summary.json)에 코어 오류와 모든 기대 span을 기록했다.
+독립 V2가 제공한 것은 영어 prose와 span이지 완전한 frozen scene core가 아니다.
+주체 label, candidate-free anchor/wire scaffold는 executor가 caller 검사용으로
+만들었으며 독립 작성자의 핵심 장면 해석으로 주장하지 않는다. 첫 독립 V1의
+최초 0/6과 seen 후 개발 결과 1/6은 그대로이며 V2와 구분한다.
