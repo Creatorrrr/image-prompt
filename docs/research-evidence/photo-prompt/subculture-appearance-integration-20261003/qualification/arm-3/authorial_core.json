@@ -1,0 +1,120 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 시각 의미 데이터의 대체 표현을 추가/보강하는 작업을 중심으로 진행하고 후보 데이터에도 잘 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "56a04d8214b4a3c6cdf8902baeb6022865ba22219e2c845f49fa3ca276985625",
+  "interpreted_intent": "The requester delegates different randomized complex concepts for testing integrated appearance terms and asks for reference-guided photographic generation. This arm independently chooses a heated mountain observatory at moonlit early evening, an adult subject attending to the recorder, a copper/charcoal palette, and four hair/material/handwear test realizations. These scene choices and term interpretations are agent-owned; the requester did not define or name these test terms in the envelope. The intended viewing experience is close, tactile concentration with subtle human appeal, while the distant snow horizon gives the equipment work a larger setting. The reference guides only observable facial form, never identity, actual age, personality, body geometry or biography.",
+  "subject": "A fictional adult woman, approximately 28, whose visible facial form is guided by the supplied portrait; hairstyle and wardrobe are authored for this scene.",
+  "setting": "A heated high-altitude telescope observatory, moonlit early evening, with a service doorway opening onto snowy ridges.",
+  "event": "Watching a fresh ink trace on an analog chart recorder after a tracking adjustment, with one fingertip beside the paper and the other hand resting on a rail.",
+  "visual_priorities": [
+    "The readable eye, nose and lips retain reference-guided visible form while a connected fringe fully conceals the other eye.",
+    "One independent curved crown strand is silhouetted against a clear light patch.",
+    "Copper forearm guards cross the wrists and cover the hand backs while the fingers remain distinctly exposed.",
+    "Open diamond mesh shows repeated actual apertures and visible skin between individual fabric strands.",
+    "Warm instrument-bay light separates the tactile portrait and chart recorder from the cold snowy horizon."
+  ],
+  "baseline_prompt_en": "A complex fashion photograph shows a fictional adult woman, approximately 28, in a heated high-altitude observatory at moonlit early evening. Her visible facial appearance follows the attached portrait: a small oval contour with a tapered lower jaw, a dark clearly shaped uncovered eye, a straight delicate nose with a rounded tip, and softly full rose-pink lips. Her hair is a charcoal-black bob with a dense diagonal fringe descending continuously from the scalp across her left eye to the cheek; the left eye is fully concealed while her right eye remains readable. One short, separate curved tuft springs upward from the crown against a clear pale background. She wears a charcoal structured jumpsuit with open black diamond-mesh upper sleeves: individual intersecting strands surround repeated hollow openings, and actual skin is visible through those openings. Copper forearm gauntlets cross both wrists and extend over the backs of her hands to the knuckle roots, with her fingers individually exposed. She is watching a fresh ink trace on the chart recorder beside the telescope mount. Her right elbow bends loosely, and her right index fingertip rests beside the new ink trace. Her left hand lies palm down on the waist-high rail, showing the copper guard across the back of the hand. Her torso stays upright with a relaxed, balanced stance. Behind her, the telescope barrel recedes diagonally into the open dome; a service doorway reveals blue snow ridges beneath a small early-evening moon. Fine meltwater drops shine on a rubber floor mat at the doorway. A warm task lamp gives the visible eye, lips, mesh openings and copper edges tactile clarity against the cool mountain light. A vertical mid-thigh environmental portrait at a natural eye-level viewpoint includes clear space above the raised crown strand and both complete hands, with the instrument, subject and distant ridges legible as separate depth layers. Natural skin texture and precise fabric edges hold the photograph's quiet presence.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여",
+      "basis": "request_context",
+      "resolution": "An independently randomized, visually coherent scene chosen by the agent to test appearance features. This is delegated creative scope rather than a requester definition of the selected stage, garments, hairstyle or material geometry.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용",
+      "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Use the supplied portrait as a guide to visible facial appearance for a fictional adult in a newly authored photographic scene, then generate and review actual pixels. Facial appearance establishes no identity, age, personality, body shape or acceptance.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "A complex fashion photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록",
+        "dimension": "subject",
+        "prompt_evidence": "a fictional adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "event",
+        "prompt_evidence": "watching a fresh ink trace on the chart recorder"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "visible facial appearance follows the attached portrait"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "global_2"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a fictional adult woman"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "fashion photography",
+    "family": "tactile environmental editorial portrait",
+    "evidence": [
+      "warm task-lamp modelling of face and copper",
+      "cool snowy horizon behind a coherent instrument bay"
+    ]
+  },
+  "variation_key": "arm-3-seed-1430897504"
+}

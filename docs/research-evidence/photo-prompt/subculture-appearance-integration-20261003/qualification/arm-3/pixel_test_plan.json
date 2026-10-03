@@ -1,0 +1,88 @@
+{
+  "contract_version": "independent-pixel-test-plan/v1",
+  "frozen_before_candidate_access": true,
+  "baseline_prompt_sha256": "a553699b7c2de845020452771a1c17132fbbd7e17f828ea6348c7a54570fbff9",
+  "policy": "partial_is_fail",
+  "statuses": [
+    "PASS",
+    "FAIL",
+    "UNOBSERVABLE"
+  ],
+  "required_test_feature_gates": [
+    "fringe_one_eye",
+    "separate_crown_tuft",
+    "gauntlet_hand_back",
+    "open_mesh_apertures"
+  ],
+  "all_of_gates": [
+    "fringe_one_eye",
+    "separate_crown_tuft",
+    "gauntlet_hand_back",
+    "open_mesh_apertures",
+    "mountain_observatory_scene",
+    "recorder_moment",
+    "visible_reference_face",
+    "photographic_medium"
+  ],
+  "aggregate_rule": "Every selected appearance feature and scene/reference/medium gate must be PASS for this arm to qualify. Any FAIL or UNOBSERVABLE makes the arm unqualified; do not drop failed agent-selected details after rendering.",
+  "gates": [
+    {
+      "gate_id": "fringe_one_eye",
+      "feature_ownership": "agent_owned_test_choice",
+      "PASS": "A visibly connected opaque fringe covers one entire eye; the other eye is separately visible. The concealment is made by hair, not shadow, eyewear or an unrelated object.",
+      "FAIL": "Both eyes remain visible, both eyes are covered, or the apparent eye cover has another cause.",
+      "UNOBSERVABLE": "The scale, crop, view or blur does not allow hair continuity and eye concealment to be inspected."
+    },
+    {
+      "gate_id": "separate_crown_tuft",
+      "feature_ownership": "agent_owned_test_choice",
+      "PASS": "At least one short curved hair tuft rises distinctly above the crown with a readable separation from the main hair mass.",
+      "FAIL": "The crown is smooth, only a diagonal fringe is present, or an indistinct general windblown edge substitutes for a separate tuft.",
+      "UNOBSERVABLE": "The crown is cropped, too small, merged with background or blurred."
+    },
+    {
+      "gate_id": "gauntlet_hand_back",
+      "feature_ownership": "agent_owned_test_choice",
+      "PASS": "A discrete guard visibly continues from the forearm across the wrist onto the dorsal hand to near the knuckle roots, with separate exposed fingers.",
+      "FAIL": "The guard ends at the wrist, only a glove or sleeve cuff appears, or the hand-back continuation is missing.",
+      "UNOBSERVABLE": "Hands are cropped, concealed, blurred or the hand-back orientation cannot be inspected."
+    },
+    {
+      "gate_id": "open_mesh_apertures",
+      "feature_ownership": "agent_owned_test_choice",
+      "PASS": "Multiple individually bounded actual open apertures occur between intersecting textile strands, with skin visible through the empty spaces.",
+      "FAIL": "A printed grid, solid fabric, smoothly translucent sheet or unresolved net-like texture replaces open apertures.",
+      "UNOBSERVABLE": "Sleeves are too small, hidden, blurred or underexposed to distinguish holes from printed marks."
+    },
+    {
+      "gate_id": "mountain_observatory_scene",
+      "feature_ownership": "agent_owned_stage",
+      "PASS": "A telescope or unmistakable observatory instrument enclosure and snowy mountain view belong to a spatially coherent facility scene.",
+      "FAIL": "Only a generic mountain portrait or generic room appears, or the equipment and outside view are spatially incompatible.",
+      "UNOBSERVABLE": "Essential facility/background components cannot be inspected."
+    },
+    {
+      "gate_id": "recorder_moment",
+      "feature_ownership": "agent_owned_event",
+      "PASS": "The subject visibly attends toward a recorder/paper trace with a coherent nearby finger or hand placement.",
+      "FAIL": "No readable recorder/trace relationship exists, or ownership/contact is anatomically inconsistent.",
+      "UNOBSERVABLE": "The recorder, gaze or hand contact cannot be inspected."
+    },
+    {
+      "gate_id": "visible_reference_face",
+      "feature_ownership": "request_reference_scope",
+      "PASS": "The visible eye, nose, lips and lower face contour retain recognizable corresponding exterior form from the reference at useful scale. The covered eye remains intentionally unassessed.",
+      "FAIL": "Visible corresponding face components are materially transformed into a different contour or generic stylized form.",
+      "UNOBSERVABLE": "Visible corresponding facial parts lack enough scale/clarity for a fair comparison."
+    },
+    {
+      "gate_id": "photographic_medium",
+      "feature_ownership": "request_derived",
+      "PASS": "The saved image reads as a photograph with coherent material, light and skin behavior.",
+      "FAIL": "It primarily reads as drawing, anime, painting or stylized CGI.",
+      "UNOBSERVABLE": "No inspectable saved image exists."
+    }
+  ],
+  "control_calibration": "Describe actual image impression before consulting intended control labels; perceived expression and technical binding are separate.",
+  "user_acceptance": "Not assessed by this technical test."
+}

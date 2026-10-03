@@ -6289,8 +6289,11 @@ def validate_photo_regression_baseline(
     bound_path = asset_dir / "photo_regression_baseline_v4.json"
     previous_path = asset_dir / "photo_regression_baseline_v5.json"
     if baseline_version is None:
-        baseline_version = 8 if (asset_dir / "photo_regression_baseline_v8.json").exists() else 7
-    _require(baseline_version in {6, 7, 8}, "unsupported photo baseline version")
+        baseline_version = next(
+            version for version in (9, 8, 7)
+            if (asset_dir / f"photo_regression_baseline_v{version}.json").exists()
+        )
+    _require(baseline_version in {6, 7, 8, 9}, "unsupported photo baseline version")
     lineage_version = min(baseline_version, 7)
     baseline_path = asset_dir / f"photo_regression_baseline_v{lineage_version}.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
@@ -6398,11 +6401,11 @@ def validate_photo_regression_baseline(
         )),
         "photo retrieval successor changed the preserved public boundary",
     )
-    if baseline_version == 8:
-        successor_path = asset_dir / "photo_regression_baseline_v8.json"
+    for successor_version in range(8, baseline_version + 1):
+        successor_path = asset_dir / f"photo_regression_baseline_v{successor_version}.json"
         successor = _load_json(successor_path)
         _require(
-            successor.get("schema") == "photo_regression_baseline/v8"
+            successor.get("schema") == f"photo_regression_baseline/v{successor_version}"
             and successor.get("status") == "current"
             and successor.get("historical_baseline") == {
                 "path": baseline_path.name, "schema": baseline["schema"],

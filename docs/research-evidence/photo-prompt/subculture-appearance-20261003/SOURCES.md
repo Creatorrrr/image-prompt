@@ -1,0 +1,62 @@
+# 출처와 확인 범위
+
+2026-10-03 조회. 검색 요약·본문 읽기·픽셀 관찰·접근 제한을 구분했습니다. 아래 사실 범위를 넘어선 구성요소/소유자/속성 설계는 연구자의 제안입니다.
+
+- **S00** [서브컬처 외형 용어 조사 원 대화](chatgpt-conversation://6ac0831d-0450-83ee-a900-01dbfc850d62) — `bounded_connector_and_full_browser_DOM`. 37 사례와 171 용어의 조사 범위 및 이름 없는 묘사. 제한: 독립 검증된 사실로 간주하지 않음.
+- **S01** [重音テト・重音テッド 소개](https://kasaneteto.jp/about/) — `text_read`. 공동 창작 출발과 파생 소개에서 포니드릴이라는 용어. 제한: 의상 버전과 파생별 차이를 보존.
+- **S02** [重音テト Synthesizer V 삼면도](https://kasaneteto.jp/assets/download/illust-logo/teto_sv_3views.jpg) — `pixels_observed_browser`. 좌우 나선 머리의 흰 리본과 의상 선무늬·분리 상하의. 제한: 한 버전의 디자인이며 트윈 드릴 일반 필수색이 아님.
+- **S03** [Piapro 공식 캐릭터 소개](https://piapro.net/intl/en_character.html) — `text_read`. 초기 의상 링크와 소프트웨어·캐릭터별 기본 소개. 제한: 다른 버전 및 캐릭터 나이를 재사용 레시피로 상속하지 않음.
+- **S04** [Piapro Miku 초기 공식 의상](https://piapro.net/intl/images/official_cos_miku.jpg) — `pixels_observed_browser`. 높은 좌우 묶음·분리 소매·옷 가장자리 배색·소매 그래픽. 제한: 표시창 같은 장식은 실제 작동 장치의 증거가 아님.
+- **S05** [ZOR Universe](https://zoruniverse.info/) — `access_limited_JS`. 커뮤니티 종족 규칙을 확인할 원 출처의 위치. 제한: 얇은 JS 페이지 응답으로 Protogen 규칙을 충분히 확인하지 못함.
+- **S06** [Megami Device ASRA NINJA](https://www.megamidevice.com/megami/asra_ninja/) — `text_read`. 장착 가능한 닌자 무장과 팔·다리 장비 및 소품 구성. 제한: 신체 기관·인공 신체·부유 장비로 자동 변환하지 않음.
+- **S07** [Busou Shinki type Angel Arnval](https://www.megamidevice.com/megami/busou-shinki-type-angel-arnval/) — `text_read`. 천사형 모델의 무장 구성과 모델 체계. 제한: 키트 관절을 현실 인체의 실제 기능으로 추론하지 않음.
+- **S08** [오리지널 3D 모델 桔梗](https://booth.pm/ja/items/3681787) — `text_read`. 제작자 판매 페이지와 정확한 모델 식별. 제한: 모델 외형 픽셀 및 모든 업데이트 버전은 미검토.
+- **S09** [GGST A.B.A](https://www.guiltygear.com/ggst/en/character/aba/) — `text_read`. 캐릭터 버전과 열쇠형 동반 무기 사례 출처. 제한: 무기 형상 세부는 원 대화에서 추출한 검증 대기 묘사.
+- **S10** [GGST Baiken](https://www.guiltygear.com/ggst/en/character/bkn/) — `text_read`. 캐릭터 버전과 비대칭 외형 사례 출처. 제한: 팔 소실·상흔을 연결 없는 임의 장식으로 일반화하지 않음.
+- **S11** [GGST Testament](https://www.guiltygear.com/ggst/en/character/tst/) — `text_read`. 캐릭터 버전과 복식 사례 출처. 제한: 외형으로 성별 정체성을 판정하지 않음.
+- **S12** [Metamorphose Pannier 제품 분류](https://metamorphose.gr.jp/product_category/10) — `text_read`. 현대 패션용 패니에·속치마라는 브랜드 제품 분류. 제한: 역사적 옆 확장 후프 구조와 동의어로 처리하지 않음.
+- **S13** [Metamorphose Florence 시리즈](https://metamorphose.gr.jp/ja/metamornews/144381) — `search_excerpt`. 시리즈별 프릴·치마·케이프·소매 조합. 제한: 브랜드 한 시리즈가 전체 하위 스타일의 필수 부품은 아님.
+- **S14** [V&A corsets crinolines bustles](https://www.vam.ac.uk/articles/corsets-crinolines-and-bustles-fashionable-victorian-underwear) — `text_read`. 코르셋·크리놀린·버슬이 만드는 서로 다른 구조와 부피. 제한: 역사적 범주를 현대 코스튬 속치마 전체에 강제하지 않음.
+- **S15** [AATP two-tier petticoat](https://store.babyssb.co.jp/en/products/p21sk502) — `search_excerpt`. 현대 제품의 층진 속치마 사례. 제한: 제품 하나의 형태를 모든 Lolita 복식에 강제하지 않음.
+- **S16** [BODYLINE Lolita petticoat guide](https://bodylinetokyo.co.jp/en-int/blogs/news/lolita-petticoat-guide) — `text_read`. 선택한 치마 실루엣을 받치는 속치마 형태와 부피. 제한: 브랜드 실용 지침이며 서브스타일의 완전한 정의는 아님.
+- **S17** [Cleveland Clinic heterochromia](https://my.clevelandclinic.org/health/symptoms/25112-heterochromia) — `search_excerpt`. 좌우 전체·부분·중심 이색 홍채의 서로 다른 색 배치. 제한: 그림에서 질환·원인·렌즈 착용 여부를 진단하지 않음.
+- **S18** [Cleveland Clinic eyes anatomy](https://my.clevelandclinic.org/health/body/21823-eyes) — `search_excerpt`. 홍채·동공·공막을 다른 영역으로 구분. 제한: 의학적 판단이 아닌 눈 도안의 영역 구분에 한정.
+- **S19** [Clip Studio chibi drawing guide](https://www.clipstudio.net/how-to-draw/archives/155423) — `search_excerpt`. 큰 머리와 축약 신체 비례의 작화 관습. 제한: 치비 비례를 실제 나이와 동일시하지 않음.
+- **S20** [Clip Studio community chibi tutorial](https://tips.clip-studio.com/en-us/articles/10576) — `search_excerpt`. 아호게 등을 작화 요소로 사용하는 사례. 제한: 커뮤니티 제작자 설명이며 사전·표준 정의가 아님.
+- **S21** [L'Oreal blunt haircuts](https://www.lorealparisusa.com/beauty-magazine/hair-style/hairstyle-trends/blunt-haircuts) — `search_excerpt`. 블런트 커트의 선명한 끝 경계라는 실용 구분. 제한: 모든 보브가 블런트 보브라는 뜻은 아님.
+- **S22** [Super Sonico profile](https://supersonico.jp/profile/) — `text_read`. 마스코트의 기본 소개와 외형 사례 출처. 제한: 복식 다양성과 성인 사례를 분리하고 신체 원인 추론 제외.
+- **S23** [Dejiko 소개](https://www.broccoli.co.jp/dejiko/what.php) — `text_read`. 마스코트 사례와 귀 달린 모자 조합 출처. 제한: 모자의 귀를 생물학적 귀로 읽지 않음.
+- **S24** [Zunko official](https://zunko.jp/) — `text_read`. 지역 캐릭터 프로젝트와 배포 자료 출처. 제한: 머리 돌출부를 동물 귀로 임의 해석하지 않음.
+- **S25** [Megami Device Ibarahime custom gallery](https://www.megamidevice.com/custom/7943/) — `text_read`. 팬 커스텀 사례가 공식 갤러리에 실린 것. 제한: 기본 제품의 정식 외형 또는 새 공식 캐릭터라는 뜻 아님.
+- **S26** [Frame Arms Girl title index](https://www.kotobukiya.co.jp/en/title/framearmsgirl/) — `text_read_index_only`. 시리즈와 제조사 자료 접근점. 제한: Baselard＋외골격의 정확한 제품·버전은 추가 확인 필요.
+- **S27** [Gawr Gura talent page](https://hololive.hololivepro.com/en/talents/gawr-gura/) — `text_read`. 공식 기본 비주얼의 접근점과 버전 확인 출처. 제한: 후드 톱니·입의 치아·뒤 꼬리 픽셀은 본 연구에서 미검토.
+- **S28** [Ninomae Ina'nis talent page](https://hololive.hololivepro.com/en/talents/ninomae-inanis/) — `text_read`. 공식 비주얼의 촉수·고리·책 사례 접근점. 제한: 책과 고리를 신체 기관으로 상속하지 않음.
+- **S29** [Hylics creator store](https://mason-lindroth.itch.io/hylics) — `text_read`. 제작자의 점토 조형 게임 소개와 버전 출처. 제한: 스타일과 신체 초승달 형상을 다른 축으로 처리.
+- **S30** [Helltaker creator store](https://store.steampowered.com/app/1289310/Helltaker/) — `text_read`. 제작자의 정장 차림 악마라는 핵심 콘셉트. 제한: 모든 악마 디자인이 흰 머리·빨간 눈·정장이라는 뜻 아님.
+- **S31** [Hollow Knight official](https://www.hollowknight.com/) — `text_read`. 게임 및 기사 외형 사례 출처. 제한: 픽셀 기반 머리/몸 비율 측정은 미실시.
+- **S32** [Joel G creator page](https://joelg.newgrounds.com/) — `text_read_index_only`. ENA 제작자 원 출처 위치. 제한: 초기 노랑·파랑 디자인과 다른 버전을 구분할 직접 자료 필요.
+- **S33** [GGST Nagoriyuki](https://www.guiltygear.com/ggst/en/character/nag/) — `text_read`. 해당 버전의 캐릭터·무기 사례 출처. 제한: 근육 크기와 갑주 실루엣은 별도 관찰 필요.
+- **S34** [League of Legends Kindred](https://www.leagueoflegends.com/en-us/champions/kindred/) — `text_read`. 양과 늑대라는 두 존재의 관계. 제한: 한 몸에 두 종을 합친 생물로 바꾸지 않음.
+- **S35** [PlatinumGames NieR Automata](https://www.platinumgames.com/works/nier-automata) — `text_read`. 원작 버전의 작품·디자인 접근점. 제한: 눈 가림의 재질·연결·복식 픽셀은 추가 확인 필요.
+- **S36** [PlatinumGames Bayonetta](https://www.platinumgames.com/works/bayonetta) — `text_read`. 첫 작품의 버전 출처. 제한: 후속 작품 머리·의상과 혼합하지 않음.
+- **S37** [Met Museum left gauntlet](https://www.metmuseum.org/art/collection/search/23276) — `search_excerpt`. 손을 덮는 갑주 가운틀릿의 물체 기록. 제한: 손가락 판 또는 벙어리장갑 구조 중 하나를 보편 필수로 강제하지 않음.
+- **S38** [Met Arms and Armor notable acquisitions](https://resources.metmuseum.org/resources/metpublications/pdf/Arms_and_Armor_Notable_Acquisitions_1991_2002.pdf) — `search_excerpt_not_full_PDF`. 어깨 방어판·가운틀릿의 역사적 장비 분류. 제한: 전체 PDF 도판을 직접 검토한 것으로 간주하지 않음.
+- **S39** [Japanese with Anime tareme](https://www.japanesewithanime.com/2020/01/tareme.html) — `text_read`. 팬 용어 설명과 사전 원 출처를 찾는 경로. 제한: 강한 정의는 별도로 확인한 사전 S54·S55에 근거.
+- **S40** [Wiktionary ahoge](https://en.wiktionary.org/wiki/ahoge) — `text_read`. 아호게의 로마자 용례. 제한: 규범 표준 또는 전체 팬덤 합의로 간주하지 않음.
+- **S41** [Japanese Wikipedia 乳袋](https://ja.wikipedia.org/wiki/%E4%B9%B3%E8%A2%8B) — `text_read`. 실제 옷 종류보다 작화 표현이라는 용례. 제한: 렌더링 가능성·물리적 직물 거동은 별도 검증 대상.
+- **S42** [Met Museum A Ruff](https://www.metmuseum.org/art/collection/search/361281) — `search_excerpt`. 주름 잡힌 목 장식 물체 기록. 제한: 이 기록의 도판 픽셀은 검토하지 않음.
+- **S43** [Hair.com hime-cut practitioner guide](https://www.hair.com/hime-cut.html) — `search_excerpt`. 긴 뒤 머리와 짧은 얼굴 옆 패널의 길이 단계. 제한: 뱅·머리색·직모를 필수로 강제하지 않고 역사 주장 제외.
+- **S44** [Radical Rubber latex sheet manufacturer](https://radicalrubber.co.uk/) — `text_read`. 라텍스 시트 재료 출처와 마감·색의 다양성 접근점. 제한: 사진 광택만으로 고분자 성분을 식별할 수 없음.
+- **S45** [DOLK ball-jointed doll introduction](https://dolk.jp/en/portal/generic/new) — `text_read`. 공·소켓 관절 인형이라는 제작 구조 설명. 제한: SD 약어의 모든 용법 또는 캐릭터 나이를 정의하지 않음.
+- **S46** [Collins digitigrade](https://www.collinsdictionary.com/us/dictionary/english/digitigrade) — `text_read`. 발가락으로 지지하는 보행·서기라는 어휘 정의. 제한: 무릎과 발목 위치의 각 디자인은 추가 구조 관찰로 검증.
+- **S47** [Volks MDD Reimu licensed outfit](https://dollfie.volks.co.jp/dd/special/touhou-project/product/mdd_reimu.html) — `text_read`. 별도 부착 소매·속치마 등 제품 구성과 추가 프릴. 제한: 라이선스 인형 변형이지 역사적 무녀복 전체의 정의 아님.
+- **S48** [Volks MDD Marisa licensed outfit](https://dollfie.volks.co.jp/dd/special/touhou-project/product/mdd_marisa.html) — `text_read`. 모자·블라우스·베스트·치마·앞치마·속치마의 별개 부품. 제한: 제품 변형의 부품을 모든 마녀복에 강제하지 않음.
+- **S49** [SIGNALIS creator store](https://store.steampowered.com/app/1262350/SIGNALIS/) — `text_read`. 게임 및 인공 존재 사례 출처. 제한: 생물·기계 연결 세부 도판은 픽셀 검증 대기.
+- **S50** [Team17 Blasphemous](https://www.team17.com/games/blasphemous) — `text_read`. 작품과 참회자 갑주 사례 접근점. 제한: 공포 모티프에서 임의 원인·종교 정체성 추가 제외.
+- **S51** [Black Rock Shooter Dawn Fall](https://www.blackrockshooter-dawnfall.com/) — `text_read_version_mismatch`. Dawn Fall 버전 자료 접근점. 제한: 원 대화가 말한 초기 BRS 디자인의 직접 증거로 쓰지 않음.
+- **S52** [小学館 八重歯 사전 원문](https://kotobank.jp/word/%E5%85%AB%E9%87%8D%E6%AD%AF-143407) — `text_read`. 정상 치열 밖으로 겹쳐 난 치아라는 정의. 제한: 단순히 뾰족하고 긴 치아와 동의어가 아님.
+- **S53** [Kurashiki Eye Center sanpaku](https://www.fkmc.or.jp/data/2683/eyecenter_yomoyamadtl/) — `text_read`. 공막이 세 방향에서 보이는 상태와 네 방향 노출의 구분. 제한: 성격·운명·공격성·의학적 원인 판단으로 확대하지 않음.
+- **S54** [小学館 垂れ目 사전 원문](https://kotobank.jp/word/%E5%9E%82%E3%82%8C%E7%9B%AE-563456) — `text_read`. 눈꼬리가 내려간 눈이라는 정의. 제한: 눈꺼풀 개방량·슬픔·친절함과 동일시하지 않음.
+- **S55** [小学館 吊り目 사전 원문](https://kotobank.jp/word/%E5%90%8A%E3%82%8A%E7%9B%AE-572877) — `text_read`. 눈꼬리가 올라간 눈이라는 정의. 제한: 눈썹 각도·성격과 동일시하지 않음.
+- **S56** [Volks Super Dollfie](https://dollfie.volks.co.jp/sd/) — `text_read`. Super Dollfie 제품군이 SD로 축약된다는 공식 명칭. 제한: super-deformed 작화 약어 및 모든 구체관절 인형과 분리.
+- **S57** [GGST Faust](https://www.guiltygear.com/ggst/en/character/fau/) — `text_read`. 봉투 머리 덮개·수술칼 사례의 버전 출처. 제한: 물리 기능·의학적 역할은 외형으로 추론하지 않음.

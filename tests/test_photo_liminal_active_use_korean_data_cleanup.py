@@ -87,7 +87,8 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
                                           'photo_prompt_acting_expression_extension.json',
                                           'photo_prompt_neutral_expression_extension.json',
                                           'photo_prompt_religion_iconography_extension.json',
-                                          'photo_prompt_slang_visual_extension.json'})
+                                          'photo_prompt_slang_visual_extension.json',
+                                          'photo_prompt_subculture_appearance_extension.json'})
         with patch.object(common.g, 'RESEARCH_EXTENSION_FILENAMES', filenames):
             historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
         body_enriched_ids = {

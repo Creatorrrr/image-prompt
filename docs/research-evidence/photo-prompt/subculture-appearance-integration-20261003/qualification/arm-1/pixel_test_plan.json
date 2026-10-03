@@ -1,0 +1,111 @@
+{
+  "contract_version": "agent-owned-pixel-test-plan/v1",
+  "provenance": "agent_prepack",
+  "random_seed": 1844968826299970451,
+  "baseline_prompt_sha256": "47228524d0062df42276382d7271c6805d74cac61f1988571059fbdf50b62a2c",
+  "policy": {
+    "partial_is_fail": true,
+    "unobservable_is_pass": false,
+    "allowed_statuses": [
+      "PASS",
+      "FAIL",
+      "UNOBSERVABLE"
+    ],
+    "all_of": [
+      "twin_drill_structure",
+      "separate_ribbon_wrap",
+      "detached_sleeves",
+      "contrasting_piping"
+    ],
+    "requester_acceptance": "not measured"
+  },
+  "gates": [
+    {
+      "gate_id": "twin_drill_structure",
+      "origin": "agent_owned_test_scope",
+      "meaning": "Two distinct side-rooted hair bundles form continuous tapered corkscrew helixes, each with multiple visually open turns.",
+      "pass_requires": [
+        "two separate roots or continuous connection to the two sides of the head",
+        "both bundles show at least two readable successive helical turns",
+        "the helix shape narrows towards the tips and reads as hair"
+      ],
+      "confusions": [
+        "wavy loose hair",
+        "one ringlet only",
+        "pigtails with curved ends",
+        "braids"
+      ]
+    },
+    {
+      "gate_id": "separate_ribbon_wrap",
+      "origin": "agent_owned_test_scope",
+      "meaning": "A distinct silver ribbon strip winds around the exterior of each black spiral bundle on successive turns.",
+      "pass_requires": [
+        "separate ribbon material or edges distinguish it from black hair",
+        "at least two successive wrapping crossings on each bundle",
+        "ribbon follows the same hair bundle and is not merely a root bow"
+      ],
+      "confusions": [
+        "silver hair streak",
+        "a bow only at the root",
+        "ribbon hanging parallel beside the hair",
+        "garment straps behind hair"
+      ]
+    },
+    {
+      "gate_id": "detached_sleeves",
+      "origin": "agent_owned_test_scope",
+      "meaning": "Sleeves are separate arm pieces with visible upper-arm skin gaps between them and the bodice.",
+      "pass_requires": [
+        "both arm sleeves are readable as arm-worn clothing",
+        "both upper-arm gaps show uninterrupted skin separating sleeve tops from the bodice",
+        "sleeve volume continues towards each wrist"
+      ],
+      "confusions": [
+        "cold-shoulder cutout with remaining fabric bridge",
+        "ordinary off-shoulder connected sleeve",
+        "gloves alone",
+        "hair or prop obscuring the join"
+      ]
+    },
+    {
+      "gate_id": "contrasting_piping",
+      "origin": "agent_owned_test_scope",
+      "meaning": "Thin raised coral cord-like lines follow dark navy garment seam or edge paths.",
+      "pass_requires": [
+        "at least two continuous narrow coral edge or seam paths are visible",
+        "navy base cloth remains dominant beside the lines",
+        "line looks like an attached seam or edge trim rather than broad panel or free decorative motif"
+      ],
+      "confusions": [
+        "broad contrasting fabric panels",
+        "embroidered symbols",
+        "printed disconnected stripes",
+        "whole garment recoloring"
+      ]
+    }
+  ],
+  "context_gates": [
+    {
+      "gate_id": "underwater_venue",
+      "pass_requires": [
+        "dry stage contains the performer",
+        "glass boundary separates room from visible exterior water and marine cues"
+      ]
+    },
+    {
+      "gate_id": "score_contact",
+      "pass_requires": [
+        "right fingertips connect plausibly to right arm",
+        "finger contact on open page is observable at the reachable stand"
+      ]
+    },
+    {
+      "gate_id": "photographic_materiality",
+      "pass_requires": [
+        "skin, cloth, hair and glass show coherent photographic lighting and material behavior"
+      ]
+    }
+  ],
+  "reference_observation": "Compare visible eye, nose, mouth and face-contour guidance descriptively; do not evaluate real identity, biometrics, actual age or body shape."
+}

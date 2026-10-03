@@ -1,0 +1,420 @@
+{
+  "semantic_clarification_contract": {
+    "composed_field": "semantic_clarification_decisions",
+    "every_candidate_requires_a_typed_decision": true,
+    "required_candidates_cannot_be_rejected": true,
+    "governing_meaning_change_requires_new_core": true,
+    "applied_evidence_must_be_literal": true,
+    "forbidden_runtime_labels_must_remain_absent": true
+  },
+  "creative_augmentation": {
+    "enabled": true,
+    "contract_version": "photo-creative-augmentation/v1",
+    "source_authorial_core_sha256": "dd53e8807065da6e3831b24371fb3927087fce583fcbad26532dbfdedb8251c8",
+    "requested_creativity": 1,
+    "distance_policy": {
+      "bands": [
+        "near",
+        "adjacent",
+        "lateral"
+      ],
+      "allowed_bands": [
+        "near"
+      ],
+      "selection": "seeded_weighted_sampling_without_replacement",
+      "same_hard_eligible_pool_across_creativity": true,
+      "hard_guards_relaxed_by_creativity": false,
+      "relevance_basis": "authorial_core_query_with_semantic_score_when_available"
+    },
+    "hard_eligible_pool_sha256": "00afedb404c06e9b1d66e91345b4585451485ecb304304c4e374390ef73bf0d6",
+    "hard_eligible_candidate_count": 74,
+    "guard_invariant_sha256": "c1428ce38ae76e753d32bcb54167dc4476be5239de217ca1c0da472649c3cc15",
+    "user_exclusion_filter": {
+      "applied": false,
+      "excluded_candidate_count": 0,
+      "exclusions_used_as_positive_query": false
+    },
+    "candidate_order": "seed_shuffled_non_preferential",
+    "candidates": {
+      "deferred_candidate_ids": [
+        "augmentation:adult_appeal:sensual:wardrobe_style:one_piece_wrap_dress",
+        "augmentation:adult_appeal:sensual:action:mep_in_between_candidate",
+        "slot:subject_framing:pfe_back_face_candidate",
+        "augmentation:adult_appeal:sensual:composition:pfe_face_garment_candidate",
+        "slot:composition:pfe_low_angle_outer_silhouette_candidate"
+      ],
+      "read_details_before_selection": true
+    },
+    "selection_contract": {
+      "composed_field": "creative_augmentation_brief",
+      "all_sampled_candidates_require_a_decision": true,
+      "decision_states": [
+        "transformed",
+        "rejected"
+      ],
+      "agent_may_reject_all": true,
+      "maximum_transformed": 3,
+      "candidate_copying_forbidden": true,
+      "new_literal_prompt_evidence_required": true,
+      "transformed_affected_dimensions_required": true,
+      "transformed_dimensions_must_be_open": true,
+      "adult_appeal_scope_exception": "photo-adult-appeal-dimension-scope/v4"
+    }
+  },
+  "assertion_obligations": {
+    "contract_version": "photo-semantic-assertion-obligations/v1",
+    "enabled": true,
+    "source": "authorial_core_semantic_assertions",
+    "source_authorial_core_sha256": "dd53e8807065da6e3831b24371fb3927087fce583fcbad26532dbfdedb8251c8",
+    "source_intent_lock_sha256": "28971b530725cb12876b42bf9d045c3bdbfabfafde6a894c8dd802d4b43de8e8",
+    "composed_field": "semantic_assertion_evidence",
+    "obligations": [
+      {
+        "assertion_id": "primary_human",
+        "dimension": "subject",
+        "affected_dimensions": [
+          "subject"
+        ],
+        "source_span_ids": [
+          "global_2"
+        ],
+        "semantic_axes": {
+          "subject_category": "human"
+        },
+        "frozen_evidence": {
+          "subject_phrase": "A fictional adult woman"
+        },
+        "prompt_binding": {
+          "required_evidence_fields": [
+            "subject_phrase"
+          ],
+          "all_required_phrases_must_be_literal_in_final_prompt": true,
+          "evidence_must_remain_byte_identical": true,
+          "new_hard_evidence_from_retrieval_forbidden": true
+        }
+      }
+    ],
+    "canonical_sha256": "1cde6e42452cf4d7c068d3adc9cedebecf9d69d421d8303483acc6f3123e478b"
+  },
+  "authorial_composition": {
+    "enabled": true,
+    "contract_version": "photo-authorial-composition/v1",
+    "candidate_content_form": "unordered_inspiration_terms",
+    "candidate_order": "seed_shuffled_non_preferential",
+    "variation_lens": "gesture_and_interruption",
+    "policy": {
+      "agent_is_final_author": true,
+      "select_reinterpret_or_reject_by_artistic_judgment": true,
+      "candidate_sentence_copying_forbidden": true,
+      "technical_or_identity_terms_may_be_used_selectively": true,
+      "candidate_pack_must_not_supply_final_prompt_prose": true,
+      "all_advisory_candidates_may_be_rejected": true,
+      "hard_identity_and_safety_constraints_remain_required": true,
+      "chosen_candidate_interpretations_required": true
+    },
+    "candidate_interpretation_contract": {
+      "composed_field": "candidate_interpretations",
+      "required_for_every_non_augmentation_chosen_candidate": true,
+      "required_fields": [
+        "candidate_id",
+        "artistic_interpretation",
+        "transformation",
+        "prompt_evidence"
+      ],
+      "prompt_evidence_must_be_literal_and_newly_authored": true,
+      "minimum_prompt_evidence_content_words": 4,
+      "minimum_new_content_words_beyond_source_terms": 2,
+      "source_term_only_evidence_forbidden": true,
+      "augmentation_candidates_use_augmentation_brief": true
+    },
+    "prepack_authorial_core_bound": true,
+    "governing_core_sha256": "dd53e8807065da6e3831b24371fb3927087fce583fcbad26532dbfdedb8251c8",
+    "baseline_prompt_precedes_candidate_pack": true,
+    "prompt_budget": {
+      "contract_version": "photo-authorial-prompt-budget/v2",
+      "language": "en",
+      "minimum_words": 48,
+      "recommended_maximum_words": 360,
+      "absolute_maximum_words": 640,
+      "required_evidence_headroom_words": 160,
+      "counting_rule": "ascii_words_with_internal_hyphens_or_apostrophes",
+      "policy": {
+        "recommended_maximum_is_warning": true,
+        "absolute_bounds_are_blocking": true,
+        "required_evidence_expands_advisory_ceiling": true,
+        "requester_meaning_outranks_concision": true
+      }
+    },
+    "core_binding_contract": {
+      "composed_field": "authorial_core_binding",
+      "minimum_preserved_evidence_phrases": 0,
+      "minimum_authorial_decisions": 0,
+      "evidence_must_be_literal_in_baseline_and_final_prompt": true,
+      "source_intent_lock_sha256_required": true,
+      "all_semantic_anchor_ids_required": true,
+      "authorial_decisions_limited_to_open_dimensions": true,
+      "contract_version": "photo-authorial-core-binding/v3",
+      "source_authorship_policy_sha256": "3b2793f9370bc47224a751d8ffc273e76a98da3e4fd276c0cdb59035630014a0"
+    },
+    "authorship_policy": {
+      "contract_version": "photo-authorial-authorship-policy/v2",
+      "source_authorial_core_sha256": "dd53e8807065da6e3831b24371fb3927087fce583fcbad26532dbfdedb8251c8",
+      "source_intent_lock_sha256": "28971b530725cb12876b42bf9d045c3bdbfabfafde6a894c8dd802d4b43de8e8",
+      "allowed_dimensions": [
+        "count",
+        "age",
+        "role",
+        "appearance",
+        "pose",
+        "body_geometry",
+        "expression",
+        "action",
+        "setting",
+        "relationship",
+        "sexual_tone",
+        "style",
+        "viewer_outcome",
+        "text",
+        "format",
+        "framing",
+        "composition",
+        "lighting",
+        "camera",
+        "color",
+        "material",
+        "timing",
+        "atmosphere"
+      ],
+      "minimum_authorial_decisions": 0,
+      "minimum_preserved_evidence_phrases": 0,
+      "dimension_policy": "distinct_open_dimensions_only",
+      "insufficient_freedom_policy": "do_not_invent_open_dimensions",
+      "canonical_sha256": "3b2793f9370bc47224a751d8ffc273e76a98da3e4fd276c0cdb59035630014a0"
+    }
+  },
+  "intent_preservation": {
+    "contract_version": "photo-intent-preservation/v1",
+    "source_authorial_core_sha256": "dd53e8807065da6e3831b24371fb3927087fce583fcbad26532dbfdedb8251c8",
+    "source_intent_lock_sha256": "28971b530725cb12876b42bf9d045c3bdbfabfafde6a894c8dd802d4b43de8e8",
+    "priority_order": [
+      "requesting_user_definition",
+      "requesting_user_semantic_anchor",
+      "requesting_user_modifier_or_exclusion",
+      "agent_prepack_interpretation",
+      "creative_augmentation"
+    ],
+    "required_anchor_ids": [
+      "core_concept",
+      "core_subject",
+      "core_event",
+      "core_reference"
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "count",
+      "age",
+      "role",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ],
+    "material_change_action": "stop_and_rebuild_core_after_requester_input",
+    "creative_change_boundary": "open_dimensions_only_and_subordinate"
+  },
+  "adult_requirements": {
+    "explicit_adult_original_subject": true,
+    "adult_subject_phrase_required": true,
+    "agency_phrase_required": true,
+    "intensity_is_ordinal_not_exposure_or_detail_count": true,
+    "baseline_expression_may_be_retained": true,
+    "shared_styling_between_axes_allowed": true,
+    "appearance_or_popularity_inference_forbidden": true,
+    "affected_dimensions_per_active_axis": true,
+    "authorial_axis_interpretation_per_active_axis": true,
+    "candidate_adoption_per_active_axis": "optional"
+  },
+  "adult_blend": {
+    "emphasis": "sensual_led",
+    "simultaneous_activation_allowed": true,
+    "requested_emphasis": "sensual_led"
+  },
+  "adult_axes": {
+    "sensual": {
+      "intensity": 1,
+      "active": true,
+      "carrier_ids": [
+        "action",
+        "body_pose",
+        "composition",
+        "costume_style",
+        "expression",
+        "face_shape_relation",
+        "garment_detail",
+        "wardrobe_style"
+      ],
+      "requested_intensity": 1,
+      "intensity_meaning": "This expression is a subtle supporting quality.",
+      "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+      "configured_intensity": 1,
+      "configuration_source": "saved_setting"
+    },
+    "fetish": {
+      "intensity": 0,
+      "active": false,
+      "carrier_ids": [],
+      "requested_intensity": 0,
+      "intensity_meaning": "No added fetish treatment; preserve explicitly requested content.",
+      "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+      "configured_intensity": 0,
+      "configuration_source": "saved_setting"
+    }
+  },
+  "adult_scope": {
+    "contract_version": "photo-adult-appeal-dimension-scope/v4",
+    "policy": "preserve_locked_dimensions",
+    "source_intent_lock_sha256": "28971b530725cb12876b42bf9d045c3bdbfabfafde6a894c8dd802d4b43de8e8",
+    "locked_dimensions": [
+      "concept",
+      "event",
+      "reference_use",
+      "subject"
+    ],
+    "axis_allowed_dimensions": {
+      "sensual": [
+        "action",
+        "appearance",
+        "atmosphere",
+        "body_geometry",
+        "camera",
+        "color",
+        "composition",
+        "expression",
+        "framing",
+        "lighting",
+        "material",
+        "pose",
+        "relationship",
+        "role",
+        "setting",
+        "sexual_tone",
+        "style",
+        "timing"
+      ],
+      "fetish": [
+        "action",
+        "appearance",
+        "atmosphere",
+        "body_geometry",
+        "camera",
+        "color",
+        "composition",
+        "expression",
+        "framing",
+        "lighting",
+        "material",
+        "pose",
+        "relationship",
+        "role",
+        "setting",
+        "sexual_tone",
+        "style",
+        "timing"
+      ]
+    },
+    "protected_properties": []
+  },
+  "embodiment": {
+    "contract_version": "photo-embodiment-preflight/v1",
+    "source_authorial_core_sha256": "dd53e8807065da6e3831b24371fb3927087fce583fcbad26532dbfdedb8251c8",
+    "source_intent_lock_sha256": "28971b530725cb12876b42bf9d045c3bdbfabfafde6a894c8dd802d4b43de8e8",
+    "baseline_review": {
+      "contract_version": "photo-embodiment-review/v1",
+      "provenance": "agent_prepack",
+      "prompt_sha256": "4792de6b825f06e3165f6193a80361c08cbd596aafcb874bc50456c3eb619e2e",
+      "scope": "body_action",
+      "summary": "One fictional adult stands on a level aisle and lowers a small, two-hand-supported pot beside her left thigh toward a low trolley shelf. Hair, a headband, and distinct skirt layers remain connected to their ordinary carriers. The object is kept below and to the side of the front lacing.",
+      "checks": {
+        "body_ownership": {
+          "status": "supported",
+          "reason": "Both acting hands belong to the single subject; the left palm bears the saucer and the right fingers steady its pot. The headband sits on her crown and the petticoat is under her dress.",
+          "prompt_evidence": [
+            "Her left palm supports the pot's saucer while her right fingers steady the terracotta side",
+            "A slim black headband arcs across her crown",
+            "a separate gathered ivory petticoat"
+          ]
+        },
+        "joint_chain_and_reach": {
+          "status": "supported",
+          "reason": "A small pot beside the thigh and a low trolley shelf permit relaxed shoulder reach and bent elbows. The hands can meet opposite support surfaces without crossing the upper bodice.",
+          "prompt_evidence": [
+            "the pot stays beside her left thigh",
+            "just above the trolley's low shelf"
+          ]
+        },
+        "support_and_balance": {
+          "status": "supported",
+          "reason": "Both feet carry her weight on a level aisle. A comfortably upright torso and modest pot close to the thigh keep the load within ordinary standing balance.",
+          "prompt_evidence": [
+            "Her feet rest on the level aisle",
+            "her torso stays comfortably upright"
+          ]
+        },
+        "contact_and_space": {
+          "status": "supported",
+          "reason": "The palm has a stable saucer underside target, while the other hand grips the pot side. The low trolley shelf is immediately below the object but has not yet received its weight. The front closure is left readable.",
+          "prompt_evidence": [
+            "Her left palm supports the pot's saucer",
+            "her right fingers steady the terracotta side",
+            "leaving the bodice front readable"
+          ]
+        },
+        "visibility_and_projection": {
+          "status": "supported",
+          "reason": "The head-to-toe eye-level view can show the support surface, both hands and the below-waist plant without hiding the front eyelets. Jaw-length cheek sections and the longer rear hair need distinct silhouette edges; the ruffled underlayer is visible below the outer hem.",
+          "prompt_evidence": [
+            "An eye-level, head-to-toe vertical composition",
+            "the petticoat's layered ruffled hem visibly extends below the satin hem"
+          ]
+        }
+      }
+    },
+    "required_checks": [
+      "body_ownership",
+      "joint_chain_and_reach",
+      "support_and_balance",
+      "contact_and_space",
+      "visibility_and_projection"
+    ],
+    "boundary": "Agent review with literal actuation and exact text binding; not a kinematic proof or pixel judgment.",
+    "canonical_sha256": "8a2405f31d690fb706e04d26a287a980cb46bcf2071cb20daeb2b442fa123d9e"
+  },
+  "safety": {
+    "mode": "automatic",
+    "evaluation_requested": false,
+    "status": "pass",
+    "requires_user_approval": false,
+    "items": []
+  }
+}

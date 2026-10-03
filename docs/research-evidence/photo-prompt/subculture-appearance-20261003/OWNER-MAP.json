@@ -1,0 +1,758 @@
+{
+  "schema_version": "research-owner-map/v1",
+  "reference": "verified Git baseline, not latest working tree",
+  "mappings": [
+    {
+      "term_or_split_ids": [
+        "H03"
+      ],
+      "existing_profile_ids": [
+        "hime_cut_structural"
+      ],
+      "existing_candidate_keys": [
+        "hair_style.hime_cut"
+      ],
+      "profile_property_scope": {
+        "hime_cut_structural": []
+      },
+      "candidate_property_scope": {
+        "hair_style.hime_cut": []
+      },
+      "reuse_boundary": "같은 긴 뒤 머리·좌우 짧은 패널·단차 관계. 앞머리/직모를 새 필수조건으로 추가하지 않음.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "H04"
+      ],
+      "existing_profile_ids": [
+        "bilateral_twin_tail_gather"
+      ],
+      "existing_candidate_keys": [
+        "hair_style.bilateral_twin_tail_gather"
+      ],
+      "profile_property_scope": {
+        "bilateral_twin_tail_gather": []
+      },
+      "candidate_property_scope": {
+        "hair_style.bilateral_twin_tail_gather": []
+      },
+      "reuse_boundary": "기존 양쪽 묶음의 관계를 재사용. long_black_twin_tails는 색·리본까지 포함해 범용 후보와 비동일.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "B02"
+      ],
+      "existing_profile_ids": [
+        "bm_stature_scale",
+        "bm_long_limb_build"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "bm_stature_scale": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.person.stature_scale"
+          }
+        ],
+        "bm_long_limb_build": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.limbs.segment_length_relation"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "키의 비교척도와 사지 길이 비율을 별개 owner property로 재사용. 하나의 장신 라벨로 합치지 않음.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "B03",
+        "B04"
+      ],
+      "existing_profile_ids": [
+        "bm_torso_limb_ratio"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "bm_torso_limb_ratio": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.body.torso_limb_length_relation"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "몸통/다리 실제 기준점을 보존. 높은 허리선·긴 옷을 해부학적 길이로 처리하지 않음.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "B05"
+      ],
+      "existing_profile_ids": [
+        "bm_stocky_build"
+      ],
+      "existing_candidate_keys": [
+        "silhouette_proportion.bm_stocky_build"
+      ],
+      "profile_property_scope": {
+        "bm_stocky_build": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.body.width_length_relation"
+          }
+        ]
+      },
+      "candidate_property_scope": {
+        "silhouette_proportion.bm_stocky_build": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.body.width_length_relation"
+          }
+        ]
+      },
+      "reuse_boundary": "기존 두께/구간 길이 비율. 짧은 키·근육 크기 추가 금지.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "B06"
+      ],
+      "existing_profile_ids": [
+        "bm_shoulder_width",
+        "bm_hip_width"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "bm_shoulder_width": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.shoulders.transverse_width"
+          }
+        ],
+        "bm_hip_width": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.hips.transverse_width"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "어깨와 골반 두 축을 조합. 어깨 갑주 너비를 실제 몸 너비로 흡수 금지.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "B07"
+      ],
+      "existing_profile_ids": [
+        "bm_muscle_volume"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "bm_muscle_volume": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.muscles.regional_volume"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "부위별 근육 체적을 재사용. 근육 선명도·혈관을 동시에 추가하지 않음.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "B08"
+      ],
+      "existing_profile_ids": [
+        "bm_wiry_definition",
+        "bm_muscle_volume"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "bm_wiry_definition": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.body.narrow_defined_build"
+          }
+        ],
+        "bm_muscle_volume": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.muscles.regional_volume"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "선명도와 체적을 별개 관계로 검토. 스포츠 역할/의상으로 신체 확정 금지.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "B09"
+      ],
+      "existing_profile_ids": [
+        "bm_waist_width_depth",
+        "bm_shoulder_width",
+        "bm_hip_width"
+      ],
+      "existing_candidate_keys": [
+        "silhouette_proportion.natural_hourglass_relation"
+      ],
+      "profile_property_scope": {
+        "bm_waist_width_depth": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.waist.transverse_width_depth"
+          }
+        ],
+        "bm_shoulder_width": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.shoulders.transverse_width"
+          }
+        ],
+        "bm_hip_width": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.hips.transverse_width"
+          }
+        ]
+      },
+      "candidate_property_scope": {
+        "silhouette_proportion.natural_hourglass_relation": []
+      },
+      "reuse_boundary": "몸의 세 실제 폭 비교. 장비·코르셋으로 만든 외곽 실루엣과 구분.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "B10"
+      ],
+      "existing_profile_ids": [
+        "bm_hip_width",
+        "bm_thigh_volume"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "bm_hip_width": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.hips.transverse_width"
+          }
+        ],
+        "bm_thigh_volume": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.thighs.transverse_volume"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "하체 너비/체적 관계를 부위별 사용. 전체 몸 체적 자동 증가 금지.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "B11"
+      ],
+      "existing_profile_ids": [
+        "bm_breast_projection",
+        "bm_abdominal_projection",
+        "bm_hip_width",
+        "bm_thigh_volume"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "bm_breast_projection": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.breast.anterior_projection"
+          }
+        ],
+        "bm_abdominal_projection": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.abdomen.regional_projection"
+          }
+        ],
+        "bm_hip_width": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.hips.transverse_width"
+          }
+        ],
+        "bm_thigh_volume": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.thighs.transverse_volume"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "사용자가 명시한 부위만 선택. full-figured를 하나의 고정 몸으로 만들지 않음.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "B13"
+      ],
+      "existing_profile_ids": [
+        "bm_finger_proportion",
+        "bm_foot_arch_instep"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "bm_finger_proportion": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.hand.finger_palm_length_relation"
+          }
+        ],
+        "bm_foot_arch_instep": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.foot.arch_instep_relation"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "기존 손가락/발 관찰 축의 비교점부터 확인. 손가락 내부 비율 및 발등/아치 프로필은 손·발 전체의 거대한 크기와 비동일.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "B14"
+      ],
+      "existing_profile_ids": [
+        "bm_head_body_ratio"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "bm_head_body_ratio": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.body.head_body_length_relation"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "실제 몸 비율 참조는 가능하지만 치비의 style 효과는 별도 검토. 범용 비율 프로필에 나이/매체 추가 금지.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "F16",
+        "F17",
+        "F19"
+      ],
+      "existing_profile_ids": [
+        "bm_skin_pigment_pattern"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "bm_skin_pigment_pattern": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "body.skin_region.pigment_distribution"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "국소 색소 무늬와 장식·보석을 구분. 얼굴별 세부 위치를 새 관계로 검토.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "F20"
+      ],
+      "existing_profile_ids": [
+        "bm_scar_surface"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "bm_scar_surface": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "body.skin_region.scar_like_relief"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "상흔 표면 관계 재사용. 흉터 경로/눈 가림/눈 부재는 별개.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "N01",
+        "N02",
+        "N05"
+      ],
+      "existing_profile_ids": [
+        "bm_ear_attachment"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "bm_ear_attachment": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.ear.lobe_attachment_relation"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "기존 귀 부착 관찰축 참고. 동물 귀·추가 귀·종 변경 의미는 단순 동의어 확장 불가.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "N23",
+        "X11"
+      ],
+      "existing_profile_ids": [
+        "bm_prosthetic_connection"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "bm_prosthetic_connection": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.prosthesis_limb_relation.socket_segment_attachment"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "잔존 사지 끝·소켓·의지 구간이 명시된 경우만 재사용. 모든 사이보그를 의지로 축소하지 않음.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "G01"
+      ],
+      "existing_profile_ids": [
+        "costume_ccx_cc08_02"
+      ],
+      "existing_candidate_keys": [
+        "garment_detail.ccx_cc08_02"
+      ],
+      "profile_property_scope": {
+        "costume_ccx_cc08_02": []
+      },
+      "candidate_property_scope": {
+        "garment_detail.ccx_cc08_02": []
+      },
+      "reuse_boundary": "분리 커프스와 몸판의 빈 간격 관계가 같은 경우. 초기 미쿠 소매 전체 형상과는 세부 차이 검토.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "G08"
+      ],
+      "existing_profile_ids": [
+        "hw_polonaise_three_lifts"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "hw_polonaise_three_lifts": []
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "기존 치마 들어올림/속층 owner의 인접 반례. 패니에의 부피 지지와 비동일하므로 이 ID로 통합 금지.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "G23"
+      ],
+      "existing_profile_ids": [
+        "sheer_garment_optical_layering"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "sheer_garment_optical_layering": []
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "연속 직물의 투과·하부층·불투명 부분 경계의 실제 의무 검토. 망사 셀 구조와 비동일.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "G24"
+      ],
+      "existing_profile_ids": [
+        "pfe_mesh_skin"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "pfe_mesh_skin": []
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "기존 복부 망사 관찰을 참고하되 위치/프레임 의무를 임의 확대하지 않음.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "A01",
+        "A02"
+      ],
+      "existing_profile_ids": [
+        "bm_breast_projection",
+        "bm_breast_fullness"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "bm_breast_projection": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.breast.anterior_projection"
+          }
+        ],
+        "bm_breast_fullness": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.breast.regional_fullness_distribution"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "돌출과 지역별 체적을 독립축으로 재사용. 소형/평평형을 한 값으로 합치지 않음.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "A04"
+      ],
+      "existing_profile_ids": [
+        "bm_thigh_volume"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "bm_thigh_volume": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body.thighs.transverse_volume"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "실제 허벅지 횡단 체적과 무릎 연결 관계 재사용. 넓은 옷으로 대체 불가.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "A06"
+      ],
+      "existing_profile_ids": [
+        "clothing_ct023_v1"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "clothing_ct023_v1": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.details.corset_bustier"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "세로 보닝 통로 있는 구조 상의는 부분 대응. 모든 뷔스티에가 보닝을 갖는다고 강제 금지.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "A08"
+      ],
+      "existing_profile_ids": [
+        "clothing_ct037_v2"
+      ],
+      "existing_candidate_keys": [
+        "garment_detail.clt_ct037_v2"
+      ],
+      "profile_property_scope": {
+        "clothing_ct037_v2": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.neckline"
+          }
+        ]
+      },
+      "candidate_property_scope": {
+        "garment_detail.clt_ct037_v2": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.neckline"
+          }
+        ]
+      },
+      "reuse_boundary": "목선 아래의 작은 키홀과 위 천 연결부. 허리 cutout인 pfe_cutout와 위치가 다름.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "A09"
+      ],
+      "existing_profile_ids": [
+        "pfe_lower_chest"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "pfe_lower_chest": []
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "하부 가슴과 상의 아래 가장자리 관계. 몸 체적 변경을 포함하지 않음.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "A10"
+      ],
+      "existing_profile_ids": [
+        "pfe_lateral_chest"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "pfe_lateral_chest": []
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "측면 가슴과 암홀/가장자리 관계. 중앙 네크라인·몸 체적과 분리.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "A11"
+      ],
+      "existing_profile_ids": [
+        "pfe_back_face"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "pfe_back_face": []
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "열린 등과 옷 가장자리의 일부 관계 재사용. 돌아본 얼굴/프레임을 모든 backless 요청에 강제하지 않음.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "A13",
+        "A14"
+      ],
+      "existing_profile_ids": [
+        "clothing_ct019_v1"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "clothing_ct019_v1": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.details.one_piece_leg_branch"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "몸판-다리 연속 구조는 참고. 일반 점프수트가 모두 밀착 캣슈트인 것은 아님.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "A17"
+      ],
+      "existing_profile_ids": [
+        "pfe_garter_path",
+        "clothing_ct025_v1"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "pfe_garter_path": [],
+        "clothing_ct025_v1": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.details.garter_suspender"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "허리 지지부-끈-스타킹 윗단 연결을 재사용. 독립 허벅지 가터밴드와 구분.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "A19"
+      ],
+      "existing_profile_ids": [
+        "pfe_thigh_skin_band"
+      ],
+      "existing_candidate_keys": [
+        "garment_detail.pfe_thigh_skin_band_candidate"
+      ],
+      "profile_property_scope": {
+        "pfe_thigh_skin_band": []
+      },
+      "candidate_property_scope": {
+        "garment_detail.pfe_thigh_skin_band_candidate": []
+      },
+      "reuse_boundary": "짧은 밑단-긴 양말 윗단 사이의 노출띠. 허벅지 사이의 배경 틈과 다른 경계.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    },
+    {
+      "term_or_split_ids": [
+        "P09"
+      ],
+      "existing_profile_ids": [
+        "costume_ccx_cc15_02",
+        "clothing_ct101_v2"
+      ],
+      "existing_candidate_keys": [],
+      "profile_property_scope": {
+        "costume_ccx_cc15_02": [],
+        "clothing_ct101_v2": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.accessories.cap_panels_visor"
+          }
+        ]
+      },
+      "candidate_property_scope": {},
+      "reuse_boundary": "헬멧 안 바이저/햇빛 가리개의 기존 owner 비교. 표시 얼굴 자체와 비동일하므로 자동 alias 추가 금지.",
+      "status": "BASELINE_ID_VERIFIED_MEANING_REVIEW_REQUIRED"
+    }
+  ]
+}

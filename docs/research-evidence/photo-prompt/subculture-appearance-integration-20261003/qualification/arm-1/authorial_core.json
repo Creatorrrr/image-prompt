@@ -1,0 +1,129 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 시각 의미 데이터의 대체 표현을 추가/보강하는 작업을 중심으로 진행하고 후보 데이터에도 잘 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "99c09d3572a1ab228e1f794c35c4fed238961e8b7140af403fd076e57ad6542e",
+  "interpreted_intent": "The requester authorizes different random complex concepts and use of the supplied image. I independently choose a fictional adult singer pausing on a preparatory breath in a dry underwater recital room. Warm stage light and the open-neckline stage costume support a subtle attractive presence at the saved sensual level; fetish and surreal remain zero. The face uses observable proportions from the portrait only. The submerged venue, twin corkscrew ponytails, separately winding silver ribbons, detached sleeves and coral piping are agent-owned staging and test choices, not user definitions. The score contact and standing pose make the pre-performance moment legible while the paired hair and garment boundaries remain the focal detail.",
+  "subject": "A fictional adult performer, using the supplied portrait only for observable facial appearance.",
+  "setting": "A dry glass-enclosed recital hall beneath blue seawater, with fish, kelp and brass resonator rings.",
+  "event": "The performer prepares to sing on an intake of breath while steadying an open score page.",
+  "visual_priorities": [
+    "A quiet pre-performance breath and a face whose visible proportions are guided by the supplied portrait.",
+    "Two separately rooted, tapering corkscrew hair spirals, each visibly wrapped by a separate silver ribbon.",
+    "Detached navy sleeves separated from the bodice by bare upper-arm gaps, and narrow coral piping on garment edges and seams.",
+    "The dry stage and curved glass boundary place the singer below seawater containing fish and kelp."
+  ],
+  "baseline_prompt_en": "A complex performance photograph of a fictional adult performer in a dry, glass-enclosed recital hall below the sea. She prepares to sing, lips parted on a quiet intake of breath, with one hand steadying an open score before its first note. Use the supplied portrait as a visible facial-appearance reference: large brown eyes, fine gently curved eyebrows, a small rounded nose, softly curved lips and a rounded jawline. Her presentation conveys a warm, composed presence; the face retains subtle skin texture. Two thick black corkscrew ponytails are rooted separately at the two sides of her head and fall beside her shoulders as tapered helixes with several open turns. A separate narrow silver satin ribbon winds around the outside of each black hair spiral on successive turns; little tied ribbon ends remain visible at the top. She wears a dark navy fitted stage dress with a knee-length flared skirt. Its detached navy sleeves begin below the upper arms and flare to the wrists, with an exposed band of skin separating each sleeve from the bodice. Thin raised coral piping traces the neckline, bodice panel seams and sleeve cuffs, visibly contrasting with the navy cloth. Her right forearm extends towards a waist-high music stand on her right; right fingertips rest on the lower edge of the score page. Her left arm hangs a little clear of her torso. Both feet in low ankle boots rest on the timber stage, set apart for a balanced upright stance. Curved window mullions enclose blue seawater, drifting kelp and a school of small fish outside. Concentric brass resonator rings hang behind the stage. An audience-level vertical full-length view shows the front of the bodice and both sleeve gaps, with room around both hair coils. Warm stage light gives the face a quiet glow against late-afternoon blue water, while broken water-light patterns touch the floor. Natural perspective and tangible satin, hair and glass textures hold the image as a believable directed editorial photograph.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여",
+      "basis": "request_context",
+      "resolution": "Permission to select distinct randomized complex visual scenes. The specific undersea recital concept and its hair and costume are independently chosen agent details, not requester-defined meanings.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용",
+      "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Use the supplied image as reference when writing and generating the new photograph. The visible face proportions guide a fictional adult subject; identity, real age, body shape and personality are not inferred.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "concept",
+        "prompt_evidence": "A complex performance photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성",
+        "dimension": "subject",
+        "prompt_evidence": "a fictional adult performer"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "event",
+        "prompt_evidence": "She prepares to sing"
+      },
+      {
+        "anchor_id": "core_reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the supplied portrait as a visible facial-appearance reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "identity",
+      "count",
+      "age",
+      "role",
+      "species",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_human_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "global_2"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a fictional adult performer"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photographic",
+    "family": "directed environmental performance editorial",
+    "evidence": [
+      "subtle skin texture",
+      "tangible satin, hair and glass textures"
+    ]
+  },
+  "variation_key": "arm-1-seed-1844968826299970451"
+}

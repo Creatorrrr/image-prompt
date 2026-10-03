@@ -1,0 +1,161 @@
+{
+  "contract_version": "agent-independent-pixel-review/v1",
+  "reviewer": "arm-2-independent-agent",
+  "pack_id": "776044c6c2229207",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/subculture-appearance-integration-20261003/qualification/arm-2/generated_image.attempt-1.png",
+  "result_sha256": "a5c9dc228c695df40cc1875eb599e7a6677a82e6ffa4ae4fb1201bae74e0bd8f",
+  "native_dimensions": [
+    1024,
+    1536
+  ],
+  "review_method": "The saved native PNG was opened with view_image(detail=original) and inspected as one image. No other arm output was used.",
+  "criteria_source": "pixel_test_criteria.json frozen before candidate/profile access",
+  "baseline_prompt_sha256": "4792de6b825f06e3165f6193a80361c08cbd596aafcb874bc50456c3eb619e2e",
+  "partial_is_fail": true,
+  "unobservable_is_pass": false,
+  "cases": [
+    {
+      "id": "hime_cut",
+      "term": "히메컷",
+      "status": "FAIL",
+      "native_region": [
+        320,
+        55,
+        610,
+        470
+      ],
+      "criteria": [
+        {
+          "criterion": "both short cheek/jaw sections have abrupt blunt lower edges",
+          "status": "FAIL",
+          "evidence": "The hair beside both cheeks continues as tapered strands to the collarbone and upper chest; neither side ends as a blunt jaw-length block."
+        },
+        {
+          "criterion": "a separate rear layer visibly continues below the shoulders",
+          "status": "PASS",
+          "evidence": "Long dark hair continues behind the shoulders and toward the upper back."
+        },
+        {
+          "criterion": "the front fringe has a straight eyebrow-level edge",
+          "status": "FAIL",
+          "evidence": "The forehead fringe is wispy, parted and arched, with individual strands rather than a straight even edge."
+        }
+      ],
+      "all_of_pass": false,
+      "summary": "A long layered hairstyle is rendered. The defining short blunt cheek sections are absent, so the long rear layer alone cannot pass the hime structure."
+    },
+    {
+      "id": "cat_ear_headband",
+      "term": "고양이 귀 머리띠",
+      "status": "PASS",
+      "native_region": [
+        320,
+        10,
+        555,
+        145
+      ],
+      "criteria": [
+        {
+          "criterion": "a headband follows the crown as a separate accessory",
+          "status": "PASS",
+          "evidence": "A black curved band is visible across the crown above the parted hair."
+        },
+        {
+          "criterion": "two triangular felt ear forms are visible above the crown",
+          "status": "PASS",
+          "evidence": "Two separate fuzzy black triangular pieces rise above the head, one at each side of the band."
+        },
+        {
+          "criterion": "the triangles are coherently mounted on the headband",
+          "status": "PASS",
+          "evidence": "Both triangular bases meet the curved black band at the crown."
+        }
+      ],
+      "all_of_pass": true,
+      "summary": "The accessory reads as a physical two-ear headband, with the carrier and its ear attachments visible."
+    },
+    {
+      "id": "petticoat",
+      "term": "페티코트",
+      "status": "PASS",
+      "native_region": [
+        399,
+        816,
+        943,
+        1057
+      ],
+      "criteria": [
+        {
+          "criterion": "outer satin skirt and ivory underlayer have separate readable boundaries",
+          "status": "PASS",
+          "evidence": "The dark garnet satin hem overlaps a recessed cream tiered fabric layer with its own separate lower contour."
+        },
+        {
+          "criterion": "ivory gathered or ruffled fabric visibly extends below the outer hem",
+          "status": "PASS",
+          "evidence": "Several ivory gathered ruffle tiers extend substantially below the satin hem across the lower skirt."
+        },
+        {
+          "criterion": "the underskirt contributes a rounded flared skirt volume",
+          "status": "PASS",
+          "evidence": "The satin skirt forms a broad rounded bell contour above the gathered underlayer rather than falling as a flat tube."
+        }
+      ],
+      "all_of_pass": true,
+      "summary": "A visibly distinct fuller ivory underskirt supports the outer garnet skirt. This is the one adopted integrated candidate, slot:garment_detail:sca_g08."
+    },
+    {
+      "id": "lace_up_fastener",
+      "term": "레이스업 여밈",
+      "status": "PASS",
+      "native_region": [
+        467,
+        463,
+        603,
+        657
+      ],
+      "criteria": [
+        {
+          "criterion": "two opposed vertical eyelet rows frame the bodice opening",
+          "status": "PASS",
+          "evidence": "Metal rings form two opposing vertical rows at the center-front bodice opening."
+        },
+        {
+          "criterion": "one cord makes multiple visible X crossings between those rows",
+          "status": "PASS",
+          "evidence": "Black cord repeats a sequence of clear X crossings from the upper edge down toward the waist."
+        },
+        {
+          "criterion": "cord is visibly connected to the eyelets and closes the opening",
+          "status": "PASS",
+          "evidence": "The black cord segments meet the metal eyelet holes at both opposing garment edges."
+        },
+        {
+          "criterion": "the small tied cord bow is readable",
+          "status": "PASS",
+          "evidence": "A tied black knot with loop and hanging ends is visible below the final crossings at the waist."
+        }
+      ],
+      "all_of_pass": true,
+      "summary": "The front closure has real paired metal eyelets and connected repeated crossed cord rather than an isolated graphic pattern."
+    }
+  ],
+  "passed_case_count": 3,
+  "case_count": 4,
+  "all_of_pass": false,
+  "overall_status": "FAIL",
+  "failure_ids": [
+    "hime_cut"
+  ],
+  "candidate_exposure_count": 1,
+  "target_count": 4,
+  "candidate_exposure_fraction": "1/4",
+  "data_specific_adopted_keyword_count": 1,
+  "data_specific_adopted_keyword_pass_count": 1,
+  "data_specific_boundary": "Only the petticoat candidate was retrieved and adopted. The other states are independently authored baseline tests, so their pixel results do not establish owner-profile application.",
+  "tool": "image_gen.imagegen",
+  "image_call_count": 1,
+  "first_attempt_preserved": true,
+  "retry_performed": false,
+  "user_acceptance": "not_yet_received"
+}
