@@ -30,6 +30,8 @@ def main():
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     sys.path.insert(0, str(args.repo))
+    for name in ("OPENAI_API_KEY", "GEMINI_API_KEY", "GOOGLE_API_KEY", "ANTHROPIC_API_KEY"):
+        os.environ.pop(name, None)
     if args.module:
         executed = []
         runtime_sources = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
