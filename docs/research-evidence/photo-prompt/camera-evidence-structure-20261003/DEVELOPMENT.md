@@ -33,3 +33,13 @@ local negative tails only for an explicit angle/tilt denial with non-conflicting
 positive direction; arbitrary negation and unclear attachment still abstain. It
 will miss unbounded photographer-led clauses, cross-sentence pronouns and other
 unsupported structures. No dependency/model, DATA or vectors were changed.
+
+A pre-holdout review found generic assertion discovery flattened the new protocol
+axes into observational query terms. A camera axis review with empty evidence
+could opt in a source-declared camera-axis candidate on those metadata words alone.
+The baseline minimal reproduction returns that candidate; the new regression must
+return none. Marked declarations now contribute only literal evidence to discovery;
+all unmarked assertions retain their existing axes behavior. This correction
+supersedes the first source freeze 3a0064b5 before any fresh holdout was received.
+The first full regression and comparisons remain preserved as that source stage;
+final-source verification is repeated rather than claiming unchanged source hashes.

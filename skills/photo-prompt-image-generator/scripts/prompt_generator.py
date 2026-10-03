@@ -2294,7 +2294,11 @@ def candidate_pack_assertion_discovery(
             if isinstance(node, list):
                 return [text for value in node for text in values(value)]
             return [str(node).replace("_", " ")] if isinstance(node, str) else []
-        return clean_spaces(" ".join(values(assertion.get("evidence")) + values(assertion.get("axes"))))
+        axes = assertion.get("axes") or {}
+        # Camera review states are protocol metadata, not observations. Only
+        # the author's literal owner/axis evidence can opt in a discovery.
+        axis_values = [] if "camera_axis_review" in axes else values(axes)
+        return clean_spaces(" ".join(values(assertion.get("evidence")) + axis_values))
 
     minimum = policy["minimum_shared_content_words"]
     excluded = [str(text) for text in core.get("user_exclusions") or []]
