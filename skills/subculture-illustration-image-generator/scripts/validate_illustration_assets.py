@@ -6279,16 +6279,24 @@ def _public_photo_candidate_count(pack: Mapping[str, Any]) -> int:
 
 
 def _validate_metadata_only_photo_successor(
-    asset_dir: Path, repo_root: Path, baseline: dict[str, Any], pack: dict[str, Any]
+    asset_dir: Path, repo_root: Path, baseline: dict[str, Any], pack: dict[str, Any], *, version: int = 10
 ) -> None:
-    """V10 preserves the complete V9 pack except four metadata bindings."""
+    """Explicitly registered metadata successors preserve their predecessor pack."""
     transition = baseline.get("metadata_only_transition") or {}
-    evidence_path = repo_root / "docs/research-evidence/photo-prompt/camera-evidence-structure-20261003/independent-v9-boundary-verification.json"
+    registrations = {
+        10: ("independent-v9-boundary-verification.json", "nape_data_commit",
+             "pre_nape_runtime_and_data_commit", "pre_nape_data_commit", "pre_nape_pack_sha256"),
+        11: ("pr-review-followup/V11-four-leaf-proof.json", "current_data_commit",
+             "previous_data_commit", "previous_data_commit", "previous_pack_sha256"),
+    }
+    _require(version in registrations, "unregistered photo metadata successor")
+    proof_path, current_commit_key, previous_commit_key, previous_transition_key, previous_pack_key = registrations[version]
+    evidence_path = repo_root / "docs/research-evidence/photo-prompt/camera-evidence-structure-20261003" / proof_path
     _require(transition.get("evidence_sha256") == _sha256(evidence_path),
              "photo metadata successor comparison provenance drift")
     evidence = _load_json(evidence_path)
-    _require(transition.get("data_commit") == evidence.get("nape_data_commit")
-             and transition.get("pre_nape_data_commit") == evidence.get("pre_nape_runtime_and_data_commit"),
+    _require(transition.get("data_commit") == evidence.get(current_commit_key)
+             and transition.get(previous_transition_key) == evidence.get(previous_commit_key),
              "photo metadata successor DATA provenance drift")
     # The already frozen generation command supplies the sibling location.
     # Hash source bytes only; do not import its runtime or load its DATA.
@@ -6301,10 +6309,10 @@ def _validate_metadata_only_photo_successor(
     _require(isinstance(sources, dict) and set(sources) == source_paths
              and all(sources[path] == _sha256(repo_root / path) for path in source_paths),
              "photo metadata successor DATA source bytes drift")
-    previous = _load_json(asset_dir / "photo_regression_baseline_v9.json")
-    previous_pack_path = asset_dir / "photo_regression_baseline_v9_pack.json"
+    previous = _load_json(asset_dir / f"photo_regression_baseline_v{version - 1}.json")
+    previous_pack_path = asset_dir / f"photo_regression_baseline_v{version - 1}_pack.json"
     _require(_sha256(previous_pack_path) == previous.get("sha256")
-             == evidence.get("pre_nape_pack_sha256")
+             == evidence.get(previous_pack_key)
              and baseline.get("sha256") == evidence.get("current_pack_sha256"),
              "photo metadata successor historical pack binding drift")
     old_payload = _load_json(previous_pack_path)
@@ -6337,10 +6345,10 @@ def validate_photo_regression_baseline(
     previous_path = asset_dir / "photo_regression_baseline_v5.json"
     if baseline_version is None:
         baseline_version = next(
-            version for version in (10, 9, 8, 7)
+            version for version in (11, 10, 9, 8, 7)
             if (asset_dir / f"photo_regression_baseline_v{version}.json").exists()
         )
-    _require(baseline_version in {6, 7, 8, 9, 10}, "unsupported photo baseline version")
+    _require(baseline_version in {6, 7, 8, 9, 10, 11}, "unsupported photo baseline version")
     lineage_version = min(baseline_version, 7)
     baseline_path = asset_dir / f"photo_regression_baseline_v{lineage_version}.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
@@ -6575,8 +6583,8 @@ def validate_photo_regression_baseline(
         pack.get("negative_en") == baseline.get("negative_en"),
         "photo baseline negative prompt drift",
     )
-    if baseline_version == 10:
-        _validate_metadata_only_photo_successor(asset_dir, repo_root, baseline, pack)
+    if baseline_version in {10, 11}:
+        _validate_metadata_only_photo_successor(asset_dir, repo_root, baseline, pack, version=baseline_version)
     return {
         "status": "pass",
         "schema": baseline["schema"],

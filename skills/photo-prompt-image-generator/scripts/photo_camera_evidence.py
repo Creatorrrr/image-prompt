@@ -120,34 +120,7 @@ def legacy_camera_clauses(core: dict, axis: str) -> list[str]:
                     for part in re.split(r",|\b(?:and|but|while|whereas)\b", sentence, flags=re.I)]
     if any(re.search(background_camera, part, re.I) for part in camera_parts):
         return []
-    queries = []
-    direction = r"(?:upwards?|downwards?|up|down|horizontally|vertically|forward|backward|ahead|left|right|towards?|from|above|below)\b"
-    positive_parts = [part for sentence in sentences
-                      if not re.search(r"\b(?:not|never|without|instead)\b|\b\w+n['’]t\b|\brather\s+than\b", sentence, re.I)
-                      for part in sentence.split(",")]
-    for part in positive_parts:
-        # Stop before another scene actor, a relative clause or a consequence.
-        # Keep a coordination only when its literal object is this camera.
-        clause = re.split(r"\b(?:while|whereas|because|making|which|whose|that|with|but)\b|\band\b(?!\s+(?:tilt|aim|point|turn)\s+(?:it|the\s+camera)\b)", part, maxsplit=1, flags=re.I)[0].strip()
-        head = re.fullmatch(
-            r"(?:(?P<command>Position|Place|Put|Set|Keep|Mount|Hold|Tilt|Aim|Point|Turn)\s+(?:(?:the|our)\s+)?(?:shooting\s+)?camera\b|(?:The|Our)\s+(?:shooting\s+)?camera\b)\s*(?P<body>.+)",
-            clause, re.I)
-        if not head:
-            continue
-        body, command = head["body"], (head["command"] or "").lower()
-        if axis == "direction":
-            supported = (
-                command in {"tilt", "aim", "point", "turn"} and re.match(direction, body, re.I)
-                or re.match(r"(?:looks?|faces?|points?|aims?|tilts?|turns?|views?)\s+(?:straight\s+)?" + direction, body, re.I)
-                or re.match(r"(?:(?:is|was|remains)\s+)?(?:tilted|aimed|pointed|angled|turned|oriented)\s+(?:straight\s+)?" + direction, body, re.I)
-                or re.search(r"\band\s+(?:tilt|aim|point|turn)\s+(?:it|the\s+camera)\s+(?:straight\s+)?" + direction, body, re.I)
-            )
-        else:
-            spatial = r"(?:above|below|under|low|high|lower|higher)\b|(?:at|near)\s+(?:[\w-]+\s+){0,3}(?:height|level)\b"
-            supported = (
-                command in {"position", "place", "put", "set", "keep", "mount", "hold"} and re.match(spatial, body, re.I)
-                or not command and re.match(r"(?:(?:is|sits|stands|remains|stays|rests)\s+(?:(?:positioned|placed|mounted|held|located)\s+)?)?" + spatial, body, re.I)
-            )
-        if supported and clause not in queries:
-            queries.append(clause)
-    return queries or bounded_camera_clauses(text, axis)
+    # Decide over complete owner predicates before extracting any literal span.
+    # The bounded parser retains coordinated directions and local polarity; a
+    # prefix-only fast path could silently discard their contradictory tails.
+    return bounded_camera_clauses(text, axis)
