@@ -110,6 +110,72 @@ class CameraAuthoringStructureTests(unittest.TestCase):
                     cli.main(args + ['--new-author-camera-evidence'])
                 load.assert_not_called()
 
+    def test_closed_camera_zero_open_and_disjoint_scope_remain_unchanged(self):
+        for dimensions in ([], ['lighting']):
+            inputs = read_inputs('en_open')
+            raw = inputs['authorial-core']
+            raw['intent_lock']['open_dimensions'] = dimensions
+            raw['semantic_assertions'] = []
+            expected = normalize(inputs)
+            with self.subTest(open_dimensions=dimensions), tempfile.TemporaryDirectory() as folder:
+                args = []
+                for key, payload in inputs.items():
+                    path = Path(folder) / (key + '.json'); path.write_text(json.dumps(payload))
+                    args += ['--' + key + '-json', str(path)]
+                with mock.patch.object(pg, 'load_runtime_data', return_value={
+                        pg.VISUAL_OBLIGATIONS_DATA_KEY: {}, pg.VISUAL_PROFILE_INDEX_DATA_KEY: {}}), \
+                     mock.patch.object(pg, 'generate_candidate_pack', return_value={}) as generate:
+                    cli.main(args + ['--new-author-camera-evidence', '--output-file', str(Path(folder) / 'pack.json')])
+                self.assertEqual(generate.call_args.args[1], expected)
+                self.assertEqual(raw['intent_lock']['open_dimensions'], dimensions)
+                self.assertEqual(raw['semantic_assertions'], [])
+
+    def test_whole_camera_lock_with_no_open_dimensions_keeps_required_evidence(self):
+        inputs = read_inputs('ko_down')
+        raw = inputs['authorial-core']
+        lock = raw['intent_lock']
+        lock['open_dimensions'] = []
+        lock['locked_dimensions'].append('camera')
+        for anchor in lock['semantic_anchors']:
+            if anchor['dimension'] == 'camera':
+                anchor.pop('target'); anchor.pop('property')
+        raw['semantic_assertions'][0]['polarity'] = 'required'
+        expected = normalize(inputs)
+        with tempfile.TemporaryDirectory() as folder:
+            args = []
+            for key, payload in inputs.items():
+                path = Path(folder) / (key + '.json'); path.write_text(json.dumps(payload))
+                args += ['--' + key + '-json', str(path)]
+            with mock.patch.object(pg, 'load_runtime_data', return_value={
+                    pg.VISUAL_OBLIGATIONS_DATA_KEY: {}, pg.VISUAL_PROFILE_INDEX_DATA_KEY: {}}), \
+                 mock.patch.object(pg, 'generate_candidate_pack', return_value={}) as generate:
+                cli.main(args + ['--new-author-camera-evidence', '--require-camera-evidence', 'direction',
+                                 '--require-camera-evidence', 'height', '--output-file', str(Path(folder) / 'pack.json')])
+            self.assertEqual(generate.call_args.args[1], expected)
+            raw['semantic_assertions'] = []
+            (Path(folder) / 'authorial-core.json').write_text(json.dumps(raw))
+            with mock.patch.object(pg, 'load_runtime_data') as load:
+                with self.assertRaisesRegex(ValueError, 'separate direction/height declaration'):
+                    cli.main(args + ['--new-author-camera-evidence'])
+                load.assert_not_called()
+
+    def test_closed_scope_does_not_bypass_requested_axis_or_invalid_review_checks(self):
+        for control in ('requested_axis', 'invented_advisory', 'ambiguous_core'):
+            inputs = read_inputs('en_open')
+            raw = inputs['authorial-core']
+            raw['intent_lock']['open_dimensions'] = []
+            if control != 'invented_advisory': raw['semantic_assertions'] = []
+            if control == 'ambiguous_core': raw['unresolved_ambiguities'] = ['Which camera takes the photograph?']
+            with self.subTest(control=control), tempfile.TemporaryDirectory() as folder:
+                args = []
+                for key, payload in inputs.items():
+                    path = Path(folder) / (key + '.json'); path.write_text(json.dumps(payload))
+                    args += ['--' + key + '-json', str(path)]
+                if control == 'requested_axis': args += ['--require-camera-evidence', 'direction']
+                with mock.patch.object(pg, 'load_runtime_data') as load:
+                    with self.assertRaises(ValueError): cli.main(args + ['--new-author-camera-evidence'])
+                    load.assert_not_called()
+
     def test_redaction_does_not_resurrect_a_partial_owned_axis_query(self):
         core = normalize(read_inputs()); core['user_exclusions'] = ['upward']
         data = {'candidate_semantic_policy': {'slot_dimensions': {'camera_direction': ['camera']}}}
@@ -210,6 +276,29 @@ class BoundedCameraStructureTests(unittest.TestCase):
 
 
 class PublicCameraAuthoringPathTests(unittest.TestCase):
+    def test_zero_open_public_production_pack_is_identical_with_new_mode(self):
+        inputs = read_inputs('en_open')
+        inputs['authorial-core']['intent_lock']['open_dimensions'] = []
+        inputs['authorial-core']['semantic_assertions'] = []
+        data = pg.load_runtime_data()
+        self.assertIn(pg.QUALITY_LAYERS_DATA_KEY, data)
+        with tempfile.TemporaryDirectory() as folder:
+            args = []
+            for key, payload in inputs.items():
+                path = Path(folder) / (key + '.json'); path.write_text(json.dumps(payload))
+                args += ['--' + key + '-json', str(path)]
+            snapshots = {p.name: p.read_bytes() for p in Path(folder).glob('*.json')}
+            outputs = []
+            for mode in ([], ['--new-author-camera-evidence']):
+                output = Path(folder) / ('pack-' + str(len(outputs)) + '.json')
+                with mock.patch.object(pg, 'load_runtime_data', return_value=data), \
+                     mock.patch.object(pg, 'cached_gemini_client', side_effect=AssertionError('offline scope control')), \
+                     mock.patch.object(pg, 'embed_texts_with_gemini', side_effect=AssertionError('offline scope control')):
+                    cli.main(args + mode + ['--seed', '829', '--output-file', str(output)])
+                outputs.append(output.read_bytes())
+            self.assertEqual(outputs[0], outputs[1])
+            for name, payload in snapshots.items(): self.assertEqual((Path(folder) / name).read_bytes(), payload)
+
     def test_full_frozen_author_inputs_run_public_cli_with_production_quality_layers(self):
         data = pg.load_runtime_data()
         self.assertIn(pg.QUALITY_LAYERS_DATA_KEY, data)
