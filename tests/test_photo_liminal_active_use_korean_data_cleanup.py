@@ -84,7 +84,8 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
         filenames = tuple(name for name in common.g.RESEARCH_EXTENSION_FILENAMES
                           if name not in {'photo_prompt_pose_vocabulary_extension.json',
                                           'photo_prompt_body_morphology_extension.json',
-                                          'photo_prompt_acting_expression_extension.json'})
+                                          'photo_prompt_acting_expression_extension.json',
+                                          'photo_prompt_neutral_expression_extension.json'})
         with patch.object(common.g, 'RESEARCH_EXTENSION_FILENAMES', filenames):
             historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
         body_enriched_ids = {
