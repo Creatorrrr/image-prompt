@@ -137,5 +137,90 @@ class PhotoRetrievalPropertyEligibilityTests(unittest.TestCase):
         self.assertTrue(any("property effects" in f["reason"] for f in failures), failures)
 
 
+class PhotoRetrievalSubjectHandoffTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.data = pg.load_runtime_data()
+        cls.cases = json.loads(HOLDOUT.read_text())["category_cases"]
+
+    def inputs(self, case, *, typed=True):
+        subject = case["subject"]
+        request = f"Photograph {subject} beside a window with a clear surface."
+        baseline = (f"A natural photograph shows {subject} beside a window. The subject rests in a quiet arrangement, "
+            "with its visible surface clearly described by gentle reflections. Soft light separates the near edge from "
+            "the dark surroundings. A restrained background and a steady camera position keep the subject's shape "
+            "readable across the whole frame.")
+        raw = fixtures.core(request, subject=subject, baseline_prompt_en=baseline,
+            interpreted_intent="A clear study of the primary subject and its visible surface",
+            setting="a quiet window side arrangement", event="the primary subject rests beside a window",
+            visual_priorities=("visible surface reflections", "readable subject shape"))
+        if typed:
+            raw["semantic_assertions"] = [{"assertion_id": "primary_subject", "dimension": "subject",
+                "polarity": "required", "source_span_ids": ["scope_1"], "affected_dimensions": ["subject"],
+                "axes": {"subject_category": case["category"]}, "evidence": {"subject_phrase": subject}}]
+        context = "human" if case["category"] == "human" else "unspecified" if case["category"] == "unknown" else "nonhuman"
+        controls = pg.creative_controls.resolve(request, context={"subject_category": context},
+            overrides={"sensual": 0, "fetish": 0}, seed=31)
+        raw["creative_controls_sha256"] = controls["canonical_sha256"]
+        return raw, controls
+
+    def normalized(self, raw, controls):
+        return pg.normalize_authorial_core(raw,
+            request_envelope=pg.normalize_request_envelope(fixtures.envelope(raw["source_request"])),
+            creative_control_snapshot=controls)
+
+    def test_typed_categories_preserve_the_surface_slot_boundary_before_ranking(self):
+        for case in self.cases:
+            with self.subTest(case=case["id"]):
+                raw, controls = self.inputs(case)
+                core = self.normalized(raw, controls)
+                contract, picked = pg.frozen_core_context(self.data, core, controls)
+                self.assertEqual(contract["subject_category"],
+                                 "generic" if case["category"] == "unknown" else case["category"])
+                count = sum(pg.core_slot_entry_eligible(self.data, core, contract, picked, "surface_material", e)
+                            for e in self.data["slots"]["surface_material"])
+                self.assertEqual(count > 0, case["surface_allowed"])
+                self.assertEqual(core["source_request"], raw["source_request"])
+                self.assertEqual(core["baseline_prompt_en"], raw["baseline_prompt_en"])
+                self.assertTrue(auditor.authorial_core_v3_semantic_contract_valid(core, creative_control_snapshot=controls))
+
+    def test_coarse_nonhuman_context_does_not_establish_object(self):
+        raw, controls = self.inputs(self.cases[0], typed=False)
+        core = self.normalized(raw, controls)
+        contract, _ = pg.frozen_core_context(self.data, core, controls)
+        self.assertEqual(contract["subject_category"], "generic")
+        self.assertEqual(pg.slot_block_reason(self.data, "surface_material", contract), "subject_category_not_allowed")
+
+    def test_invalid_or_conflicting_types_fail_normalization_and_independent_audit(self):
+        for value in ("nonhuman", "generic", ["object", "animal"]):
+            raw, controls = self.inputs(self.cases[0])
+            raw["semantic_assertions"][0]["axes"]["subject_category"] = value
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, "subject_category"):
+                self.normalized(raw, controls)
+        raw, controls = self.inputs(self.cases[0])
+        other = copy.deepcopy(raw["semantic_assertions"][0])
+        other["assertion_id"] = "contradictory_type"
+        other["axes"]["subject_category"] = "animal"
+        raw["semantic_assertions"].append(other)
+        with self.assertRaisesRegex(ValueError, "disagree"):
+            self.normalized(raw, controls)
+        core = self.normalized(*self.inputs(self.cases[0]))
+        core["semantic_assertions"][0]["axes"]["subject_category"] = "nonhuman"
+        self.assertFalse(auditor.authorial_core_v3_semantic_contract_valid(core, creative_control_snapshot=controls))
+
+    def test_type_cannot_override_human_or_no_people_context(self):
+        raw, _ = self.inputs(self.cases[0])
+        controls = pg.creative_controls.resolve(raw["source_request"], context={"subject_category": "human"}, seed=31)
+        raw["creative_controls_sha256"] = controls["canonical_sha256"]
+        with self.assertRaisesRegex(ValueError, "conflicts"):
+            self.normalized(raw, controls)
+        raw, _ = self.inputs(self.cases[-2])
+        controls = pg.creative_controls.resolve(raw["source_request"],
+            context={"subject_category": "nonhuman", "no_people": True}, seed=31)
+        raw["creative_controls_sha256"] = controls["canonical_sha256"]
+        with self.assertRaisesRegex(ValueError, "conflicts"):
+            self.normalized(raw, controls)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -61,6 +61,7 @@ try:
         INTENT_LOCK_CONTRACT_VERSION,
         INTENT_LOCK_PROPERTY_CONTRACT_VERSION,
         intent_property_locks,
+        authored_subject_category,
         property_effects_allowed,
         INTENT_LOCK_DIMENSIONS,
         INTENT_PRESERVATION_CONTRACT_VERSION,
@@ -4966,6 +4967,8 @@ def normalize_authorial_core(
         intent_lock=normalized["intent_lock"],
         baseline_prompt_en=normalized["baseline_prompt_en"],
     )
+    authored_subject_category(normalized["semantic_assertions"],
+        (creative_control_snapshot or {}).get("context"))
     normalized["request_lineage"] = normalize_request_lineage(
         payload.get("request_lineage"),
         current_request_id=str(normalized.get("request_binding", {}).get("request_id") or ""),
@@ -11275,13 +11278,19 @@ def core_slot_focus_text(data: dict, core: dict, slot: str) -> tuple[str, list[s
 
 def frozen_core_context(data: dict, core: dict, controls: dict) -> tuple[dict, dict]:
     constraints = resolve_request_intent_constraints(data, None, {}, authorial_core=core)
-    categories = set(constraints.get("subject_categories") or [])
-    categories.update(candidate_pack_direct_subject_categories(core["subject"]))
-    if controls["context"]["subject_category"] == "human":
-        categories.add("human")
+    typed_category = authored_subject_category(core.get("semantic_assertions") or [], controls["context"])
+    if typed_category is not None:
+        categories = {typed_category} if typed_category != "unknown" else set()
+    else:
+        categories = set(constraints.get("subject_categories") or [])
+        categories.update(candidate_pack_direct_subject_categories(core["subject"]))
+        if controls["context"]["subject_category"] == "human":
+            categories.add("human")
     explicit = authorial_core_generation_constraints(core, creative_control_snapshot=controls)
     constraints["no_people"] = bool(constraints.get("no_people") or explicit["no_people"])
     if constraints["no_people"]:
+        if typed_category == "human":
+            raise ValueError("typed human subject conflicts with the requester no-people constraint")
         categories.discard("human")
     constraints["subject_categories"] = sorted(categories)
     domains = sorted(constraints.get("domains") or [])

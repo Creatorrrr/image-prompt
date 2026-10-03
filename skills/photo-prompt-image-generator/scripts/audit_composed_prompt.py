@@ -47,6 +47,7 @@ try:
         INTENT_LOCK_CONTRACT_VERSION,
         INTENT_LOCK_PROPERTY_CONTRACT_VERSION,
         intent_property_locks,
+        authored_subject_category,
         property_effects_allowed,
         INTENT_LOCK_DIMENSIONS,
         INTENT_PRESERVATION_CONTRACT_VERSION,
@@ -3303,6 +3304,7 @@ def authorial_core_v3_semantic_contract_valid(core: dict[str, Any], *, creative_
     if not isinstance(assertions, list) or len(assertions) > 16:
         return False
     try:
+        authored_subject_category(assertions, (creative_control_snapshot or {}).get("context"))
         visual_spans = authorial_core_visual_spans(core, creative_control_snapshot)
     except (ValueError, TypeError, KeyError, AttributeError):
         return False
