@@ -6278,6 +6278,50 @@ def _public_photo_candidate_count(pack: Mapping[str, Any]) -> int:
     )
 
 
+def _validate_metadata_only_photo_successor(
+    asset_dir: Path, repo_root: Path, baseline: dict[str, Any], pack: dict[str, Any]
+) -> None:
+    """V10 preserves the complete V9 pack except four metadata bindings."""
+    transition = baseline.get("metadata_only_transition") or {}
+    evidence_path = repo_root / "docs/research-evidence/photo-prompt/camera-evidence-structure-20261003/independent-v9-boundary-verification.json"
+    _require(transition.get("evidence_sha256") == _sha256(evidence_path),
+             "photo metadata successor comparison provenance drift")
+    evidence = _load_json(evidence_path)
+    _require(transition.get("data_commit") == evidence.get("nape_data_commit")
+             and transition.get("pre_nape_data_commit") == evidence.get("pre_nape_runtime_and_data_commit"),
+             "photo metadata successor DATA provenance drift")
+    source_paths = {"skills/photo-prompt-image-generator/assets/" + name for name in (
+        "photo_prompt_tags.json", "photo_prompt_quality_layers.json",
+        "photo_prompt_semantic_index.json", "photo_prompt_visual_profile_index.json",
+    )}
+    sources = transition.get("source_files")
+    _require(isinstance(sources, dict) and set(sources) == source_paths
+             and all(sources[path] == _sha256(repo_root / path) for path in source_paths),
+             "photo metadata successor DATA source bytes drift")
+    previous = _load_json(asset_dir / "photo_regression_baseline_v9.json")
+    previous_pack_path = asset_dir / "photo_regression_baseline_v9_pack.json"
+    _require(_sha256(previous_pack_path) == previous.get("sha256")
+             == evidence.get("pre_nape_pack_sha256")
+             and baseline.get("sha256") == evidence.get("current_pack_sha256"),
+             "photo metadata successor historical pack binding drift")
+    old_payload = _load_json(previous_pack_path)
+    _require(isinstance(old_payload, list) and len(old_payload) == 1
+             and isinstance(old_payload[0], dict), "photo metadata predecessor pack shape drift")
+    old, current = copy.deepcopy(old_payload[0]), copy.deepcopy(pack)
+    paths = (("provenance", "tags_hash"), ("core_retrieval", "slot_corpus_sha256"),
+             ("core_retrieval", "canonical_sha256"), ("pack_id",))
+    for path in paths:
+        left, right = old, current
+        for key in path[:-1]:
+            left, right = left.get(key, {}), right.get(key, {})
+        key = path[-1]
+        _require(key in left and key in right and left[key] != right[key],
+                 "photo metadata successor must change exactly four binding fields")
+        del left[key], right[key]
+    _require(old == current,
+             "photo metadata successor changed candidates/order or scene/core/composition/negative/privacy semantics")
+
+
 def validate_photo_regression_baseline(
     asset_dir: Path, *, baseline_version: int | None = None
 ) -> dict[str, Any]:
@@ -6290,10 +6334,10 @@ def validate_photo_regression_baseline(
     previous_path = asset_dir / "photo_regression_baseline_v5.json"
     if baseline_version is None:
         baseline_version = next(
-            version for version in (9, 8, 7)
+            version for version in (10, 9, 8, 7)
             if (asset_dir / f"photo_regression_baseline_v{version}.json").exists()
         )
-    _require(baseline_version in {6, 7, 8, 9}, "unsupported photo baseline version")
+    _require(baseline_version in {6, 7, 8, 9, 10}, "unsupported photo baseline version")
     lineage_version = min(baseline_version, 7)
     baseline_path = asset_dir / f"photo_regression_baseline_v{lineage_version}.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
@@ -6528,6 +6572,8 @@ def validate_photo_regression_baseline(
         pack.get("negative_en") == baseline.get("negative_en"),
         "photo baseline negative prompt drift",
     )
+    if baseline_version == 10:
+        _validate_metadata_only_photo_successor(asset_dir, repo_root, baseline, pack)
     return {
         "status": "pass",
         "schema": baseline["schema"],

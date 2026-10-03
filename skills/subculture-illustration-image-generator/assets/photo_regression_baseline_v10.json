@@ -1,0 +1,64 @@
+{
+  "schema": "photo_regression_baseline/v10",
+  "created_at": "2026-10-03",
+  "status": "current",
+  "historical_baseline": {
+    "path": "photo_regression_baseline_v9.json",
+    "schema": "photo_regression_baseline/v9",
+    "sha256": "d75adc6a34f1395e7ebde27ddd81a2abf1cf1b9afb433e9c569a118a4533f5de"
+  },
+  "change_scope": "reviewed_nape_effect_metadata_hash_bindings_only",
+  "command": [
+    ".venv/bin/python",
+    "skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py",
+    "--seed",
+    "910000",
+    "--authorial-core-json",
+    "tests/fixtures/photo_prompt/current_boundary/core.json",
+    "--request-envelope-json",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json",
+    "--creative-controls-json",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json",
+    "--embodiment-review-json",
+    "tests/fixtures/photo_prompt/current_boundary/review.json",
+    "--output-file",
+    "/tmp/subculture-illustration-photo-baseline-v10.json"
+  ],
+  "sha256": "6b1e97923886f2fddee94fcfafbda799b903bb109e20eba3d17dc3ac3a96c319",
+  "pack_id": "5e136f4f8f1db0ad",
+  "contract_version": "photo-candidate-pack/v6",
+  "public_candidate_count": 64,
+  "private_fields_absent": [
+    "argv",
+    "sample_prompt_id",
+    "concept_gate_results",
+    "concept_scene_variants",
+    "character_response",
+    "adult_appeal"
+  ],
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "purpose": "Immutable successor for reviewed nape effect metadata only. Preserve V1–V9 bytes, frozen inputs, all 64 complete candidates and public order, scene/core/composition/negative/privacy semantics. No camera recall or rendered-quality claim.",
+  "preserved_contract_sha256": "4dd926370d017e22d41e0a1c05f49d9b00ec42b37c050eaa246a8fd2697c9c19",
+  "frozen_inputs": {
+    "tests/fixtures/photo_prompt/current_boundary/core.json": "7be72244a8aa95c92a0bfc041f16bf544d376a9664366ad92c92cc728ebf6316",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json": "170ca49644a3ae0703d5d98875007bbaa74a0794202089ded9f617d532443524",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json": "0958274c1f1d5ec8b2faef5f3f7409d15f0256505411613cc33ad05f3a124896",
+    "tests/fixtures/photo_prompt/current_boundary/review.json": "0039a9afdb6b7fa6d3989dc0187297eba8e3de436c012ce13d20f570bb55f7fd"
+  },
+  "parallel_local_baseline": {
+    "path": "photo_regression_baseline_v6_religion_iconography.json",
+    "schema": "photo_regression_baseline/v6",
+    "sha256": "691aca1ba73acb0e6324596ab10d5c96356f9bdfc981f9dfd46618b4d0eb40ca"
+  },
+  "metadata_only_transition": {
+    "data_commit": "7e769e3e4a0da7068723830bb0c5c5c2dfd784c8",
+    "pre_nape_data_commit": "8a0fb5b8dd30d70bc9dbae7f63fbce38daa3bbfc",
+    "evidence_sha256": "e33f840476ea7fc4e04c12b104619303697a26aa1610e8f2929f379ebb359db3",
+    "source_files": {
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json": "ccdd4eb2245f3f5b4f6aaae5f3e27a3e452cac9f0386b67f4c00b791d9c1e7e6",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json": "8c348126f41f71e6a284b755a329d82781c25493d6a3a862fb7e618bd678d23c",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json": "3d9a097fe3ca336a4122363769efd1ff783b2f52b9dcaf05100266c7de2a4913",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json": "56f60ee568570211e3f7b7762a0a191b0f01bd7182ab1a5e055d5062059bced6"
+    }
+  }
+}
