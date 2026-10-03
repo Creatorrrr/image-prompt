@@ -6290,7 +6290,10 @@ def _validate_metadata_only_photo_successor(
     _require(transition.get("data_commit") == evidence.get("nape_data_commit")
              and transition.get("pre_nape_data_commit") == evidence.get("pre_nape_runtime_and_data_commit"),
              "photo metadata successor DATA provenance drift")
-    source_paths = {"skills/photo-prompt-image-generator/assets/" + name for name in (
+    # The already frozen generation command supplies the sibling location.
+    # Hash source bytes only; do not import its runtime or load its DATA.
+    source_assets = Path(baseline["command"][1]).parent.parent / "assets"
+    source_paths = {str(source_assets / name) for name in (
         "photo_prompt_tags.json", "photo_prompt_quality_layers.json",
         "photo_prompt_semantic_index.json", "photo_prompt_visual_profile_index.json",
     )}
