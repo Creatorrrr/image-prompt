@@ -92,10 +92,16 @@ both setup failure and the actual confirmed baseline failure logs are retained.
 
 A clean full discovery on restored frozen runtime plus main 7e769e3e is running
 1386 tests across 159 modules, including the upstream DATA tests. Updated-DATA
-frozen 24-scene before/after comparisons are also running. Previously completed
-24-scene comparison on identical earlier DATA had all 24 output pack bytes equal,
-including both original and 22-property-corrected arms. Final latest-DATA results
-and actual independent authored inputs remain pending. Main publication requires
-completion and parent window coordination; draft PR 5 remains open.
+frozen 24-scene before/after comparison completed: all 24 output pack bytes and
+scene diagnostics are identical, including both original and 22-property-corrected
+arms. The identical full production DATA fingerprint is
+`b65a9d67ea2ded1c408de120974131ae01d37996aa39e0d773748e0294c56af7`;
+maximum candidates stays 64. Per-pack before/after hashes are in
+`latest-data-frozen24-summary.json`. Budget-bound historical traces concern six
+cases, not all twelve; the upward-view focal-intersection trace is not diagnosed
+as budget exhaustion. Previously completed comparison on identical earlier DATA
+also had all 24 pack bytes equal. Complete latest-DATA full-suite results and actual
+independent authored inputs remain pending. Main publication requires completion
+and parent window coordination; draft PR 5 remains open.
 
 No text or contract measurement establishes rendering quality improvement.
