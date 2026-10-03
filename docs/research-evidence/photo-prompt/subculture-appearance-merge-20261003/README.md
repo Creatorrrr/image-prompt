@@ -11,3 +11,5 @@
 커밋 범위는 이번 시각 의미·후보 반영, 연결된 연구와 세 독립 원본 이미지 시험, 회귀 이력, 현재 인덱스가 참조하는 16개 shard와 이 검증 기록이다. 별도 종교 연구의 임시 replay와 현재 인덱스가 사용하지 않는 이전 shard 세대는 포함하지 않는다. 원본 연구·이미지 시험의 실패와 미확인 사용자 수락도 그대로 보존한다.
 
 [반영과 이미지 시험 상세](../subculture-appearance-integration-20261003/README.md), [완전한 테스트 집계](../subculture-appearance-integration-20261003/TEST-RESULTS.json), [보존 검사 스크립트](verify_upstream_preservation.py)를 연결했다.
+
+커밋 직후 두 번째 pull에서 원격 마감 커밋 `37bc654e6116131cd3fb7030a41ae203082480e1`의 문서·archive 6개가 추가되어 자동 머지됐다. 로컬 반영 커밋 `34f1efff3d8e1159ff1ce02881ddea732ce1f015`와 원격 마감 커밋을 두 부모로 보존한다. 양쪽 변경 파일은 각 부모 바이트와 동일하며, runtime source와 83개 asset은 전체 1,362개 테스트 당시 해시와 계속 일치한다. [최종 양쪽 부모 보존 검사](MERGE-PARENT-PRESERVATION.json)를 기록했다.
