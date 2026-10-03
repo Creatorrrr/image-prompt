@@ -1,0 +1,27 @@
+{
+  "schema_version": "arm-preparation-events/v1",
+  "actual_native_tool_calls": 2,
+  "non_generation_events": [
+    {
+      "event": "precore validator --output option unsupported",
+      "resolution": "Removed unsupported option and captured stdout to arm file; valid=true with no warnings."
+    },
+    {
+      "event": "composed auditor --output option unsupported",
+      "resolution": "Removed unsupported option and captured stdout to arm file."
+    },
+    {
+      "event": "initial composed coverage_assertions keys were raw active spans",
+      "resolution": "Corrected to exact mandatory-intent keys without changing envelope, core, baseline or prompt bytes; final audit PASS. Initial failure audit retained."
+    },
+    {
+      "event": "system python PIL import unavailable during dimension query",
+      "resolution": "Used PNG header directly to verify native width/height; no library install or image modification."
+    },
+    {
+      "event": "repeated view_image display showed corner despite original payload",
+      "resolution": "Verified high/original data URL equality and exact equality to the native tool-return PNG payload, already viewed whole. No file reconstruction."
+    }
+  ],
+  "native_errors": 0
+}

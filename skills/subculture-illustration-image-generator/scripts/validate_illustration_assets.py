@@ -6285,7 +6285,8 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
     prior_path = asset_dir / "photo_regression_baseline_v2.json"
     intermediate_path = asset_dir / "photo_regression_baseline_v3.json"
     bound_path = asset_dir / "photo_regression_baseline_v4.json"
-    baseline_path = asset_dir / "photo_regression_baseline_v5.json"
+    prior_current_path = asset_dir / "photo_regression_baseline_v5.json"
+    baseline_path = asset_dir / "photo_regression_baseline_v6.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
     photo_boundary = universal_baseline.get("photo_boundary")
     _require(
@@ -6335,13 +6336,23 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
         },
         "bound photo history lineage mismatch",
     )
-    baseline = _load_json(baseline_path)
+    prior_current = _load_json(prior_current_path)
     _require(
-        baseline.get("schema") == "photo_regression_baseline/v5"
-        and baseline.get("status") == "current"
-        and baseline.get("historical_baseline") == {
+        prior_current.get("schema") == "photo_regression_baseline/v5"
+        and prior_current.get("status") == "current"
+        and prior_current.get("historical_baseline") == {
             "path": bound_path.name, "schema": "photo_regression_baseline/v4",
             "sha256": _sha256(bound_path),
+        },
+        "prior current photo baseline lineage mismatch",
+    )
+    baseline = _load_json(baseline_path)
+    _require(
+        baseline.get("schema") == "photo_regression_baseline/v6"
+        and baseline.get("status") == "current"
+        and baseline.get("historical_baseline") == {
+            "path": prior_current_path.name, "schema": "photo_regression_baseline/v5",
+            "sha256": _sha256(prior_current_path),
         },
         "current photo baseline lineage mismatch",
     )

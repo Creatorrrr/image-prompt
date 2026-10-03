@@ -1,0 +1,4220 @@
+{
+  "schema_version": "religion-myth-semantic-unit-seeds/v1",
+  "status": "RESEARCH_ONLY_NOT_RUNTIME",
+  "units": [
+    {
+      "unit_id": "attribute_owner",
+      "title": "지물의 소유자와 역할",
+      "reference_rows": [
+        1
+      ],
+      "source_ids": [
+        "attribute"
+      ],
+      "variant_scope": "이름 자체가 아닌 인물–지물 결합",
+      "observable_components": [
+        "식별 지물의 형태",
+        "그 지물을 가진 인물",
+        "손·몸·받침과 지물의 위치 연결"
+      ],
+      "relations": [
+        {
+          "subject": "represented_actor",
+          "type": "holds_or_associated_with",
+          "object": "attribute"
+        }
+      ],
+      "confusion_boundaries": [
+        "배경 장식에 지물이 있다고 주인공의 정체가 바뀌지 않는다",
+        "사람의 실제 신앙은 지물에서 추정할 수 없다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The specified actor and diagnostic attribute are visible together with their ownership readable.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "head_halo",
+      "title": "머리 중심 두광",
+      "reference_rows": [
+        2
+      ],
+      "source_ids": [
+        "buddha_halo"
+      ],
+      "variant_scope": "투르판 5–6세기 불상 표본의 두광",
+      "observable_components": [
+        "광휘 중심이 머리 뒤에 놓임",
+        "머리 윤곽과 두광의 범위 구별",
+        "전신 광휘와 별도 경계"
+      ],
+      "relations": [
+        {
+          "subject": "head_halo",
+          "type": "centered_behind",
+          "object": "represented_actor.head"
+        }
+      ],
+      "confusion_boundaries": [
+        "전신 만돌라와 동의어가 아니다",
+        "노출 과다·렌즈 플레어로 대체하지 않는다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "A discrete halo is centered behind the represented head, distinct from any full-body aureole.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "body_mandorla",
+      "title": "전신 만돌라",
+      "reference_rows": [
+        3
+      ],
+      "source_ids": [
+        "mandorla"
+      ],
+      "variant_scope": "1480–1500년경 해당 이탈리아 성모자상의 아몬드형",
+      "observable_components": [
+        "아몬드형 광휘의 위·아래 끝",
+        "광휘 안에 놓인 전신",
+        "머리 두광과 공간 범위 차이"
+      ],
+      "relations": [
+        {
+          "subject": "body_aureole",
+          "type": "encloses",
+          "object": "represented_actor.full_body"
+        }
+      ],
+      "confusion_boundaries": [
+        "다른 지역 불교 광배까지 아몬드형으로 강제하지 않는다",
+        "머리 원반만으로 전신 광휘가 충족되지 않는다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The full figure is enclosed in the selected almond-shaped mandorla, with both ends visible.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "arm_reliquary",
+      "title": "팔 모양 성유물함",
+      "reference_rows": [
+        5,
+        6
+      ],
+      "source_ids": [
+        "reliquary"
+      ],
+      "variant_scope": "남네덜란드 1230년경 팔형 용기",
+      "observable_components": [
+        "금속 팔·손 형태의 외함",
+        "내용물을 보이는 두 창",
+        "용기와 내포된 유물의 경계"
+      ],
+      "relations": [
+        {
+          "subject": "reliquary_shell",
+          "type": "contains",
+          "object": "relic"
+        },
+        {
+          "subject": "inspection_windows",
+          "type": "reveal",
+          "object": "container_interior"
+        }
+      ],
+      "confusion_boundaries": [
+        "잘린 살아 있는 팔과 혼동하지 않는다",
+        "창 없는 외함에서 유골 존재를 픽셀로 판정하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "An arm-shaped metal reliquary shows its viewing windows and container structure.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "apotropaic_role",
+      "title": "벽사 기능과 공포 외형의 분리",
+      "reference_rows": [
+        7
+      ],
+      "source_ids": [
+        "pazuzu"
+      ],
+      "variant_scope": "파주주의 보호 기능 설명",
+      "observable_components": [
+        "요청에서 지정한 수호 형상",
+        "그 형상과 보호 대상의 위치를 따로 기록"
+      ],
+      "relations": [
+        {
+          "subject": "guardian_image",
+          "type": "protective_context_for",
+          "object": "protected_target"
+        }
+      ],
+      "confusion_boundaries": [
+        "괴물 외형이 악역 역할을 자동 지정하지 않는다",
+        "보호 효능 자체는 정지 이미지에서 입증할 수 없다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Retain the requested protective role without assigning moral alignment from a frightening appearance.",
+      "phase": "B",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "buddhapada",
+      "title": "불족적의 기호형",
+      "reference_rows": [
+        10
+      ],
+      "source_ids": [
+        "early_buddhist"
+      ],
+      "variant_scope": "초기 인도 불교 조각의 발자국형",
+      "observable_components": [
+        "발바닥·발가락을 읽을 수 있는 발자국 윤곽",
+        "선택 표본의 길상 기호",
+        "표현 면과 참배 맥락"
+      ],
+      "relations": [
+        {
+          "subject": "footprint_motif",
+          "type": "marks_presence_of",
+          "object": "represented_buddha"
+        }
+      ],
+      "confusion_boundaries": [
+        "평범한 발자국만으로 불족적을 확정하지 않는다",
+        "현대 작가의 개인적 문자 배열을 고대 표준으로 만들지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The selected Buddhapada motif retains a legible foot outline and its documented auspicious signs.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "empty_throne",
+      "title": "빈 보좌–보리수 표상",
+      "reference_rows": [
+        11,
+        12
+      ],
+      "source_ids": [
+        "early_buddhist"
+      ],
+      "variant_scope": "초기 조각의 각성 장소 기호",
+      "observable_components": [
+        "사람이 앉지 않은 보좌",
+        "보좌 위나 뒤의 수목",
+        "참배 인물과 빈 자리의 분리"
+      ],
+      "relations": [
+        {
+          "subject": "bodhi_tree",
+          "type": "above_or_behind",
+          "object": "empty_throne"
+        },
+        {
+          "subject": "worshippers",
+          "type": "face",
+          "object": "empty_throne"
+        }
+      ],
+      "confusion_boundaries": [
+        "빈 자리를 새 불상으로 채우지 않는다",
+        "모든 빈 의자가 불교 기호는 아니다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The throne remains unoccupied beneath its tree while worshippers face the vacant seat.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "stupa_path",
+      "title": "탑과 회랑",
+      "reference_rows": [
+        16
+      ],
+      "source_ids": [
+        "buddhism"
+      ],
+      "variant_scope": "초기 인도 스투파 설명에 한정",
+      "observable_components": [
+        "중심 봉안 기념 구조",
+        "둘러싼 난간",
+        "중심 구조 바깥의 순회 경로"
+      ],
+      "relations": [
+        {
+          "subject": "circumambulatory_path",
+          "type": "encircles",
+          "object": "stupa"
+        },
+        {
+          "subject": "railing",
+          "type": "bounds",
+          "object": "circumambulatory_path"
+        }
+      ],
+      "confusion_boundaries": [
+        "모든 탑을 반구형이나 같은 층수로 만들지 않는다",
+        "서양 묘비·일반 원형 건물로 대체하지 않는다"
+      ],
+      "slot_hint": "location",
+      "description_en": "A path bounded by railing encircles the selected stupa form.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "earth_touch",
+      "title": "항마성도의 지면 접촉 수인",
+      "reference_rows": [
+        13,
+        25
+      ],
+      "source_ids": [
+        "earth_touch"
+      ],
+      "variant_scope": "캄보디아 1923년 명문 불상",
+      "observable_components": [
+        "좌상",
+        "자기 오른손이 아래 지면을 향함",
+        "손과 좌대·지면의 위치 연결"
+      ],
+      "relations": [
+        {
+          "subject": "buddha.proper_right_hand",
+          "type": "extends_toward",
+          "object": "earth"
+        }
+      ],
+      "confusion_boundaries": [
+        "화면 오른쪽과 인물 오른쪽을 혼동하지 않는다",
+        "수인 하나에서 마라 군대 전체를 자동 추가하지 않는다"
+      ],
+      "slot_hint": "action",
+      "description_en": "The seated figure extends its proper right hand down toward the earth in the selected earth-witness gesture.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "avalokiteshvara_variants",
+      "title": "관음의 지역별 표상 보류",
+      "reference_rows": [
+        17
+      ],
+      "source_ids": [
+        "rubin_glossary"
+      ],
+      "variant_scope": "인도·티베트와 동아시아 표상 차이",
+      "observable_components": [
+        "요청에 명시된 지역·시대형을 우선 선택",
+        "선택형에서의 지물·관·팔 수만 따로 조사"
+      ],
+      "relations": [
+        {
+          "subject": "variant_record",
+          "type": "scopes",
+          "object": "represented_bodhisattva"
+        }
+      ],
+      "confusion_boundaries": [
+        "관음이라는 이름만으로 여성·흰 옷·천수형 중 하나를 고정하지 않는다",
+        "실제 참조 인물의 성별·신앙을 추론하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Select an explicitly requested regional Avalokiteshvara variant before assigning its attributes.",
+      "phase": "B",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "five_buddha_families",
+      "title": "오불의 방위·색·지물 배치",
+      "reference_rows": [
+        22,
+        24
+      ],
+      "source_ids": [
+        "rubin_glossary"
+      ],
+      "variant_scope": "자료에 명시된 Yoga Tantra 오불 체계",
+      "observable_components": [
+        "중앙 비로자나 백색·륜",
+        "동방 아촉 청색·금강저, 서방 아미타 적색·연꽃",
+        "남방 보생 황색·보주, 북방 불공성취 녹색·교차 금강저"
+      ],
+      "relations": [
+        {
+          "subject": "mandala_record",
+          "type": "assigns_direction_color_attribute_to",
+          "object": "five_family_actors"
+        }
+      ],
+      "confusion_boundaries": [
+        "나침반 방위와 그림의 위아래를 동일시하지 않는다",
+        "다른 만다라·종파의 배치를 이 레시피로 덮지 않는다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The selected five-family diagram keeps each named Buddha linked to its specified direction, color and attribute.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "vajra_bell_pair",
+      "title": "금강저–금강령 짝",
+      "reference_rows": [
+        28
+      ],
+      "source_ids": [
+        "vajra_bell"
+      ],
+      "variant_scope": "티베트 18세기 금강령 표본과 설명",
+      "observable_components": [
+        "종 몸통과 손잡이를 가진 금강령",
+        "끝이 갈라지는 짧은 금강저",
+        "서로 다른 도구의 동시 식별"
+      ],
+      "relations": [
+        {
+          "subject": "vajra",
+          "type": "paired_with",
+          "object": "bell"
+        }
+      ],
+      "confusion_boundaries": [
+        "둘을 하나의 무기로 합치지 않는다",
+        "우·좌 손 배치는 선택 도상의 근거 없이 보편 규칙으로 정하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "A distinct vajra scepter and bell are shown as a pair with both silhouettes readable.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "five_prong_bell",
+      "title": "오고령의 다섯 갈래 구조",
+      "reference_rows": [
+        28
+      ],
+      "source_ids": [
+        "five_prong"
+      ],
+      "variant_scope": "일본 e-Museum 해당 금속품",
+      "observable_components": [
+        "중앙의 팔각형 금강 끝",
+        "안으로 굽는 주변 네 갈래",
+        "아래쪽 종 몸통"
+      ],
+      "relations": [
+        {
+          "subject": "bell_handle",
+          "type": "terminates_in",
+          "object": "central_prong_and_four_side_prongs"
+        }
+      ],
+      "confusion_boundaries": [
+        "끝 다섯 개와 손잡이 다섯 개를 혼동하지 않는다",
+        "다른 일고·삼고·구고형에 오고 수를 강제하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The selected bell handle has one central prong and four inward-curving surrounding prongs.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "kartika_shape",
+      "title": "카트리카의 곡도 구조",
+      "reference_rows": [
+        37
+      ],
+      "source_ids": [
+        "ritual_guide"
+      ],
+      "variant_scope": "밀교 도상 안내의 곡도",
+      "observable_components": [
+        "넓은 곡선 칼날",
+        "칼날 위 손잡이",
+        "지물을 잡는 손과 칼의 연결"
+      ],
+      "relations": [
+        {
+          "subject": "deity.hand",
+          "type": "grips",
+          "object": "curved_knife.handle"
+        }
+      ],
+      "confusion_boundaries": [
+        "시바 삼지창·주방 칼·서양 낫으로 대체하지 않는다",
+        "칼이 있다는 이유로 새 공격 사건을 만들지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "A broad curved ritual blade remains distinct from its raised grip and the holder's hand.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "kapala_shape",
+      "title": "카팔라의 잔 구조",
+      "reference_rows": [
+        36
+      ],
+      "source_ids": [
+        "ritual_guide"
+      ],
+      "variant_scope": "해골잔이라는 도구 범주; 재료 인증은 별도",
+      "observable_components": [
+        "그릇처럼 열린 상부",
+        "두개골형 곡면",
+        "선택 도상에서의 받침·내용물"
+      ],
+      "relations": [
+        {
+          "subject": "holder.hand",
+          "type": "supports",
+          "object": "skull_cup"
+        }
+      ],
+      "confusion_boundaries": [
+        "두개골 전체·해골 가면과 같은 물체가 아니다",
+        "내용물의 종류나 실제 인간 유래는 외형으로 인증하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The kapala is rendered as an open skull-shaped cup rather than a complete skull or mask.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "khatvanga_owner",
+      "title": "캇방가의 팔꿈치–어깨 지지",
+      "reference_rows": [
+        38
+      ],
+      "source_ids": [
+        "vajravarahi"
+      ],
+      "variant_scope": "HAR 94 붉은 바즈라바라히 중심상",
+      "observable_components": [
+        "긴 지팡이",
+        "자기 왼쪽 팔꿈치 굽힘에 지팡이가 걸림",
+        "지팡이가 왼쪽 어깨 방향으로 이어짐"
+      ],
+      "relations": [
+        {
+          "subject": "vajravarahi.left_elbow",
+          "type": "supports",
+          "object": "khatvanga"
+        },
+        {
+          "subject": "khatvanga",
+          "type": "leans_against",
+          "object": "vajravarahi.left_shoulder"
+        }
+      ],
+      "confusion_boundaries": [
+        "손에 든 칼·잔과 지팡이의 소유자가 뒤섞이지 않는다",
+        "모든 캇방가의 장식 머리 수를 이 표본으로 고정하지 않는다"
+      ],
+      "slot_hint": "action",
+      "description_en": "The staff rests in the figure's proper left elbow bend and leans against the same-side shoulder.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "vajravarahi_red",
+      "title": "붉은 바즈라바라히",
+      "reference_rows": [
+        32,
+        33
+      ],
+      "source_ids": [
+        "vajravarahi"
+      ],
+      "variant_scope": "HAR 94 중심상 변형",
+      "observable_components": [
+        "한 인간 얼굴과 별도 멧돼지 머리 표지",
+        "오른손의 곡도와 왼손 가슴 높이 해골잔",
+        "붉은 몸과 춤 자세"
+      ],
+      "relations": [
+        {
+          "subject": "deity.right_hand",
+          "type": "holds",
+          "object": "curved_knife"
+        },
+        {
+          "subject": "deity.left_hand",
+          "type": "holds_at_heart",
+          "object": "skull_cup"
+        },
+        {
+          "subject": "boar_head",
+          "type": "attached_to",
+          "object": "deity.head"
+        }
+      ],
+      "confusion_boundaries": [
+        "멧돼지 머리 없는 바즈라요기니와 구별한다",
+        "히indu 바라히의 전신 멧돼지 얼굴로 교체하지 않는다"
+      ],
+      "slot_hint": "anatomical_connection",
+      "description_en": "A distinct boar-head marker attaches to the selected red Vajravarahi figure; knife and cup retain their owners.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "chakra_blue12",
+      "title": "차크라삼바라 청색 열두 팔형",
+      "reference_rows": [
+        29,
+        30,
+        265
+      ],
+      "source_ids": [
+        "chakra12"
+      ],
+      "variant_scope": "카트만두 1575–1600년 작품",
+      "observable_components": [
+        "청색 주 신격의 열두 팔",
+        "주 팔이 붉은 배우자를 감싸고 금강저·령을 가짐",
+        "청색 바이라바·적색 칼라라트리 위의 발"
+      ],
+      "relations": [
+        {
+          "subject": "main_deity.principal_arms",
+          "type": "embrace",
+          "object": "consort"
+        },
+        {
+          "subject": "main_deity.feet",
+          "type": "trample",
+          "object": "two_named_subordinates"
+        }
+      ],
+      "confusion_boundaries": [
+        "백색 두 팔 좌상과 하나의 조합으로 합치지 않는다",
+        "팔 수만 맞고 배우자와 지물 소유자가 틀리면 실패"
+      ],
+      "slot_hint": "anatomical_connection",
+      "description_en": "The selected twelve-armed blue form keeps its principal embrace and the specified subordinate figures distinct.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "chakra_white2",
+      "title": "차크라삼바라 백색 두 팔 좌상",
+      "reference_rows": [
+        29,
+        30,
+        265
+      ],
+      "source_ids": [
+        "chakra2"
+      ],
+      "variant_scope": "HAR 432의 중앙 장수 성취형",
+      "observable_components": [
+        "백색 한 얼굴 두 손",
+        "가슴에서 교차한 금강저·령",
+        "붉은 배우자가 무릎에 앉아 다리로 감쌈"
+      ],
+      "relations": [
+        {
+          "subject": "main_deity.hands",
+          "type": "cross_at",
+          "object": "main_deity.heart"
+        },
+        {
+          "subject": "consort.legs",
+          "type": "embrace",
+          "object": "main_deity"
+        },
+        {
+          "subject": "consort",
+          "type": "seated_in",
+          "object": "main_deity.lap"
+        }
+      ],
+      "confusion_boundaries": [
+        "청색 열두 팔형의 팔·입상·발밑 인물을 섞지 않는다",
+        "주변 보살의 손 수를 중심상에 옮기지 않는다"
+      ],
+      "slot_hint": "relational_action",
+      "description_en": "The selected white two-handed seated form embraces its red consort with crossed implements at the heart.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "hevajra_eight16",
+      "title": "헤바즈라 여덟 얼굴·열여섯 손형",
+      "reference_rows": [
+        31
+      ],
+      "source_ids": [
+        "hevajra"
+      ],
+      "variant_scope": "HAR 90531",
+      "observable_components": [
+        "총 여덟 얼굴",
+        "열여섯 손이 각각 해골잔을 가짐",
+        "밝은 청색 나이라트미야와 중심 팔 결합"
+      ],
+      "relations": [
+        {
+          "subject": "each_hevajra_hand",
+          "type": "holds",
+          "object": "its_own_skull_cup"
+        },
+        {
+          "subject": "central_arms",
+          "type": "embrace",
+          "object": "nairatmya"
+        }
+      ],
+      "confusion_boundaries": [
+        "차크라삼바라 12팔과 대체하지 않는다",
+        "잔 속 모든 내용을 하나로 통일하지 않는다"
+      ],
+      "slot_hint": "anatomical_connection",
+      "description_en": "The selected Hevajra form preserves eight faces, sixteen hands and one cup per hand with its distinct consort.",
+      "phase": "C",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "wrathful_protector",
+      "title": "분노존 외형과 보호 역할",
+      "reference_rows": [
+        34
+      ],
+      "source_ids": [
+        "yamantaka"
+      ],
+      "variant_scope": "티베트 야만타카 해당 작품의 해석",
+      "observable_components": [
+        "요청에서 지정한 야만타카 형상",
+        "분노 표정·지물의 소유자를 선택형 안에서 확인"
+      ],
+      "relations": [
+        {
+          "subject": "wrathful_form",
+          "type": "represents",
+          "object": "specified_protector_role"
+        }
+      ],
+      "confusion_boundaries": [
+        "야만타카 이름만으로 모든 얼굴·팔 수를 확정하지 않는다",
+        "불꽃·송곳니를 악역이나 공격 의사로 자동 번역하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Preserve the named protector role while researching the requested Yamantaka form separately.",
+      "phase": "B",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "vajrakila_dagger",
+      "title": "바즈라킬라와 삼면 칼날형",
+      "reference_rows": [
+        35
+      ],
+      "source_ids": [
+        "vajrakila"
+      ],
+      "variant_scope": "기관 용어 설명에 있는 하반신 킬라형 변형",
+      "observable_components": [
+        "선택형의 상부 분노존",
+        "아래쪽으로 길어지는 칼날 몸",
+        "서로 만나는 세 면의 날"
+      ],
+      "relations": [
+        {
+          "subject": "selected_deity.lower_body",
+          "type": "takes_form_of",
+          "object": "three_sided_kila"
+        }
+      ],
+      "confusion_boundaries": [
+        "일반 휴대 푸르바와 신격 전신형은 별도",
+        "모든 바즈라킬라를 이 칼날 몸으로 고정하지 않는다"
+      ],
+      "slot_hint": "anatomical_connection",
+      "description_en": "In the explicitly selected kila-bodied variant, the lower form terminates in a three-sided dagger.",
+      "phase": "C",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "mandala_architecture",
+      "title": "네 문 궁전형 만다라",
+      "reference_rows": [
+        23
+      ],
+      "source_ids": [
+        "chakra_mandala"
+      ],
+      "variant_scope": "네팔 1100년경 해당 차크라삼바라 만다라",
+      "observable_components": [
+        "사각 궁전의 네 출입구",
+        "중앙 도상과 연꽃 구역",
+        "외곽 금강·불꽃 고리"
+      ],
+      "relations": [
+        {
+          "subject": "four_gate_palace",
+          "type": "contains",
+          "object": "central_deity_region"
+        },
+        {
+          "subject": "outer_rings",
+          "type": "encircle",
+          "object": "palace"
+        }
+      ],
+      "confusion_boundaries": [
+        "어떤 원형 장식도 만다라로 확정하지 않는다",
+        "모든 만다라에 이 팔 시체림 배열을 추가하지 않는다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The selected mandala retains its four-gated square palace, central region and separate enclosing rings.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "mandala_foundation",
+      "title": "교차 삼각형 기초와 육각별 경계",
+      "reference_rows": [
+        23,
+        89
+      ],
+      "source_ids": [
+        "vajravarahi"
+      ],
+      "variant_scope": "HAR 94 만다라 중앙 기초",
+      "observable_components": [
+        "선택 만다라의 두 교차 삼각형",
+        "중앙 신격과 기초의 위치"
+      ],
+      "relations": [
+        {
+          "subject": "crossed_triangle_foundation",
+          "type": "underlies",
+          "object": "mandala_central_region"
+        }
+      ],
+      "confusion_boundaries": [
+        "육각형 실루엣이 같아도 마겐 다비드 별칭으로 병합하지 않는다",
+        "평면 픽셀에서 숨은 입체 구조를 검증했다고 하지 않는다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The crossed-triangle foundation remains within its named mandala context rather than becoming a generic Star of David.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION",
+      "non_pixel_claims": [
+        "설명상 두 사면체의 투영 맥락"
+      ]
+    },
+    {
+      "unit_id": "cham_mask_performer",
+      "title": "참의 가면과 착용자",
+      "reference_rows": [
+        40
+      ],
+      "source_ids": [
+        "cham"
+      ],
+      "variant_scope": "구루 도르제 드롤로 의례 춤용 가면 자료",
+      "observable_components": [
+        "별도 가면의 얼굴 형상",
+        "가면 아래 착용자의 몸과 의복",
+        "공연 맥락의 착용 관계"
+      ],
+      "relations": [
+        {
+          "subject": "performer.head",
+          "type": "wears",
+          "object": "ritual_mask"
+        }
+      ],
+      "confusion_boundaries": [
+        "가면의 신격과 실제 착용자를 같은 정체로 추론하지 않는다",
+        "기괴한 가면을 일반 축제 소품으로만 축소하지 않는다"
+      ],
+      "slot_hint": "costume_style",
+      "description_en": "A performer wears the specified ritual dance mask, preserving the distinction between mask form and wearer.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "nataraja_chola",
+      "title": "촐라 나타라자의 손·발 지물",
+      "reference_rows": [
+        42,
+        43,
+        285
+      ],
+      "source_ids": [
+        "nataraja"
+      ],
+      "variant_scope": "타밀나두 11세기 해당 청동",
+      "observable_components": [
+        "위 오른손 북·위 왼손 불",
+        "아래 오른손 시무외인·앞 왼손이 든 왼발을 가리킴",
+        "오른발이 아파스마라를 밟고 둘레에 불꽃 고리"
+      ],
+      "relations": [
+        {
+          "subject": "shiva.upper_right_hand",
+          "type": "holds",
+          "object": "drum"
+        },
+        {
+          "subject": "shiva.upper_left_hand",
+          "type": "holds",
+          "object": "fire"
+        },
+        {
+          "subject": "shiva.right_foot",
+          "type": "tramples",
+          "object": "apasmara"
+        },
+        {
+          "subject": "shiva.front_left_hand",
+          "type": "points_to",
+          "object": "shiva.raised_left_foot"
+        }
+      ],
+      "confusion_boundaries": [
+        "화면 좌우를 인물 좌우로 오인하지 않는다",
+        "수호 제압을 성인 간 임의 폭행 사건으로 바꾸지 않는다"
+      ],
+      "slot_hint": "action",
+      "description_en": "The specified Nataraja preserves actor-relative drum, flame, pointing hand and trampling foot relations.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "ardhana_cambodia",
+      "title": "한 몸의 아르다나리슈바라",
+      "reference_rows": [
+        44,
+        266
+      ],
+      "source_ids": [
+        "ardhana"
+      ],
+      "variant_scope": "캄보디아 7–8세기 반환 작품 기록",
+      "observable_components": [
+        "공유된 하나의 몸",
+        "한쪽 파르바티 머리·긴 치마",
+        "다른 쪽 시바 수염·제삼안"
+      ],
+      "relations": [
+        {
+          "subject": "one_body",
+          "type": "integrates",
+          "object": "shiva_side_and_parvati_side"
+        }
+      ],
+      "confusion_boundaries": [
+        "두 인물의 포옹·두 머리 레비스와 다른 연결 구조",
+        "이 도상에서 실제 인물의 성별·신체·정체를 추론하지 않는다"
+      ],
+      "slot_hint": "anatomical_connection",
+      "description_en": "One continuous figure carries the documented Shiva and Parvati side markers without becoming two embracing bodies.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "durga_eight",
+      "title": "두르가 여덟 팔 제압형",
+      "reference_rows": [
+        49,
+        285
+      ],
+      "source_ids": [
+        "durga8"
+      ],
+      "variant_scope": "참바 추정 12세기 제단형",
+      "observable_components": [
+        "여덟 팔과 각각의 무기",
+        "발로 눌린 물소",
+        "삼지창 접촉과 나타나는 인간형 마히샤"
+      ],
+      "relations": [
+        {
+          "subject": "durga.foot",
+          "type": "crushes",
+          "object": "buffalo"
+        },
+        {
+          "subject": "durga.trident",
+          "type": "impales",
+          "object": "mahisha"
+        },
+        {
+          "subject": "human_demon",
+          "type": "emerges_from",
+          "object": "buffalo_form"
+        }
+      ],
+      "confusion_boundaries": [
+        "네 팔 승리상에 여덟 팔을 추가하지 않는다",
+        "물소·사자·인간형을 하나의 몸으로 무작위 합성하지 않는다"
+      ],
+      "slot_hint": "action",
+      "description_en": "The selected eight-armed Durga subdues the buffalo with foot and trident while the demon's emerging human form remains separate.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "durga_four",
+      "title": "두르가 네 팔 승리상",
+      "reference_rows": [
+        49
+      ],
+      "source_ids": [
+        "durga4"
+      ],
+      "variant_scope": "캄보디아 900년대 청동 표본",
+      "observable_components": [
+        "네 팔",
+        "륜·소라·곤봉·흙덩이 지물",
+        "발 아래 잘린 물소 머리"
+      ],
+      "relations": [
+        {
+          "subject": "durga.four_hands",
+          "type": "hold",
+          "object": "four_documented_attributes"
+        },
+        {
+          "subject": "buffalo_head",
+          "type": "below",
+          "object": "durga.feet"
+        }
+      ],
+      "confusion_boundaries": [
+        "이 작품에 삼지창을 꽂는 전투 중 장면을 강제하지 않는다",
+        "두르가를 항상 8·10팔로 고정하지 않는다"
+      ],
+      "slot_hint": "anatomical_connection",
+      "description_en": "The selected four-armed victorious Durga retains its four documented attributes and buffalo head below.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "chinnamasta_streams",
+      "title": "친나마스타의 자기 참수·세 혈류",
+      "reference_rows": [
+        54,
+        275,
+        281
+      ],
+      "source_ids": [
+        "chinnamasta"
+      ],
+      "variant_scope": "박물관이 설명한 해당 인쇄 도상의 서사",
+      "observable_components": [
+        "분리된 자기 머리를 든 신격",
+        "목에서 나오는 세 갈래 혈류",
+        "자기 머리와 두 동반자에게 각각 이어지는 흐름"
+      ],
+      "relations": [
+        {
+          "subject": "neck_stream_1",
+          "type": "reaches",
+          "object": "self_held_head"
+        },
+        {
+          "subject": "neck_stream_2",
+          "type": "reaches",
+          "object": "companion_a"
+        },
+        {
+          "subject": "neck_stream_3",
+          "type": "reaches",
+          "object": "companion_b"
+        }
+      ],
+      "confusion_boundaries": [
+        "다른 사람이 참수하는 장면과 다르다",
+        "두 팔·네 팔 등 변형의 수는 별도 근거로 선택한다"
+      ],
+      "slot_hint": "action",
+      "description_en": "The selected self-decapitation motif keeps three distinct streams directed to the held head and two companions.",
+      "phase": "C",
+      "evidence_level": "SEARCH_EXCERPT_BODY_REACCESS_BLOCKED"
+    },
+    {
+      "unit_id": "mithuna_couple",
+      "title": "길상 연인상 미투나",
+      "reference_rows": [
+        58,
+        263
+      ],
+      "source_ids": [
+        "mithuna"
+      ],
+      "variant_scope": "오디샤 13세기 사원 파사드 부조",
+      "observable_components": [
+        "장신구를 한 두 인물",
+        "서로 얽힌 팔·몸과 시선",
+        "사원 장식이라는 부조 형식"
+      ],
+      "relations": [
+        {
+          "subject": "actor_a",
+          "type": "embraces",
+          "object": "actor_b"
+        },
+        {
+          "subject": "actor_a.gaze",
+          "type": "directed_to",
+          "object": "actor_b"
+        }
+      ],
+      "confusion_boundaries": [
+        "미투나라는 말만으로 성교 행위를 추가하지 않는다",
+        "실제 참조 인물 간 관계·동의를 판정하지 않는다"
+      ],
+      "slot_hint": "relational_action",
+      "description_en": "The selected temple couple embraces and exchanges a gaze while retaining its relief format.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "maithuna_boundary",
+      "title": "미투나·마이투나·얍윰의 의미 경계",
+      "reference_rows": [
+        264,
+        265
+      ],
+      "source_ids": [
+        "mithuna",
+        "chinnamasta"
+      ],
+      "variant_scope": "범주 구분을 위한 연구 메모; 독립 완성 도상 아님",
+      "observable_components": [
+        "연인상·성적 결합·신격 결합을 서로 다른 사건 축으로 기록",
+        "상징 해석과 실제 보이는 접촉을 분리"
+      ],
+      "relations": [
+        {
+          "subject": "request_event",
+          "type": "selects",
+          "object": "one_defined_union_category"
+        }
+      ],
+      "confusion_boundaries": [
+        "연애·성교·밀교 합일이 같은 activation alias 집합으로 섞이지 않는다",
+        "금욕적 나체가 결합 행위로 자동 승격되지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Keep loving-couple, sexual-union and tantric deity-union interpretations distinct unless the request explicitly combines them.",
+      "phase": "C",
+      "evidence_level": "ANALYTIC_BOUNDARY_NOT_OBJECT_TEMPLATE"
+    },
+    {
+      "unit_id": "sri_yantra_graph",
+      "title": "슈리 얀트라의 위상 구조",
+      "reference_rows": [
+        59
+      ],
+      "source_ids": [
+        "sri_yantra"
+      ],
+      "variant_scope": "CE1998/7/6 교차 아홉 삼각형형; 완전한 그래프 검증 필요",
+      "observable_components": [
+        "서로 교차하는 아홉 삼각형",
+        "중심과 교차점을 가진 연결 그래프",
+        "선택 표본의 바깥 경계"
+      ],
+      "relations": [
+        {
+          "subject": "triangle_graph",
+          "type": "organized_around",
+          "object": "central_region"
+        }
+      ],
+      "confusion_boundaries": [
+        "무작위 삼각형 무늬·육각별로 대체하지 않는다",
+        "이 자료만으로 모든 내부 소삼각형 수·정확한 정점을 검증했다고 하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The selected Shri yantra uses a curated nine-triangle intersection graph with a clearly defined center.",
+      "phase": "C",
+      "evidence_level": "SEARCH_EXCERPT_GRAPH_REQUIRES_REVIEW"
+    },
+    {
+      "unit_id": "generic_yantra",
+      "title": "연꽃형 얀트라와 슈리 얀트라 구별",
+      "reference_rows": [
+        59
+      ],
+      "source_ids": [
+        "generic_yantra"
+      ],
+      "variant_scope": "북인도 18세기 연꽃형 금속판",
+      "observable_components": [
+        "꽃잎 형태 외곽",
+        "꽃잎의 문자",
+        "중앙 두 원과 삼각형"
+      ],
+      "relations": [
+        {
+          "subject": "central_triangle",
+          "type": "inside",
+          "object": "two_circles"
+        },
+        {
+          "subject": "inscriptions",
+          "type": "on",
+          "object": "lotus_petals"
+        }
+      ],
+      "confusion_boundaries": [
+        "모든 얀트라가 아홉 삼각형은 아니다",
+        "태국 천 얀트라·밀교 기초와 같은 도상으로 합치지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The documented lotus-shaped metal yantra keeps petal inscriptions and a central triangle within two circles.",
+      "phase": "C",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "jina_kayotsarga",
+      "title": "디감바라 카요트사르가",
+      "reference_rows": [
+        60,
+        61,
+        62,
+        271
+      ],
+      "source_ids": [
+        "jina"
+      ],
+      "variant_scope": "카르나타카 12세기 티르탕카라",
+      "observable_components": [
+        "장신구 없는 직립형",
+        "팔이 몸 곁에 내려온 정적인 자세",
+        "선택 실물의 머리 형상"
+      ],
+      "relations": [
+        {
+          "subject": "jina.arms",
+          "type": "hang_beside",
+          "object": "jina.torso"
+        }
+      ],
+      "confusion_boundaries": [
+        "나체가 성적 행위·현대 누드 장르를 자동 뜻하지 않는다",
+        "해당 작품의 곱슬머리 예외를 불상과의 동일 정체 근거로 삼지 않는다"
+      ],
+      "slot_hint": "body_orientation",
+      "description_en": "The standing renunciant figure retains its unadorned, still kayotsarga posture.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "dastar_scope",
+      "title": "다스타르의 착용 외형과 정체 경계",
+      "reference_rows": [
+        63
+      ],
+      "source_ids": [
+        "sikh_identity"
+      ],
+      "variant_scope": "시크 공동체의 터번 설명",
+      "observable_components": [
+        "요청된 감기 방식과 천의 겹",
+        "머리를 감싼 착용 관계"
+      ],
+      "relations": [
+        {
+          "subject": "wearer.head",
+          "type": "wrapped_by",
+          "object": "specified_turban"
+        }
+      ],
+      "confusion_boundaries": [
+        "터번만으로 실제 사람의 민족·신앙·직업을 단정하지 않는다",
+        "모든 시크의 터번 색·형상을 하나로 고정하지 않는다"
+      ],
+      "slot_hint": "wearable_accessory",
+      "description_en": "The specified turban wraps the head with readable fabric layers without assigning the wearer's real-world faith.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "five_ks_visible",
+      "title": "다섯 K의 가시성과 불가시성",
+      "reference_rows": [
+        64
+      ],
+      "source_ids": [
+        "sikh_identity"
+      ],
+      "variant_scope": "각 요청된 다섯 K 항목의 가시성; 전 항목을 완성했다고 주장하는 프로필 아님",
+      "observable_components": [
+        "보이는 카라의 금속 고리",
+        "선택 의복에서 보이는 캉가·키르판"
+      ],
+      "relations": [
+        {
+          "subject": "kara",
+          "type": "encircles",
+          "object": "wearer.wrist"
+        },
+        {
+          "subject": "visible_kirpan",
+          "type": "carried_by",
+          "object": "wearer"
+        }
+      ],
+      "confusion_boundaries": [
+        "모든 다섯 K가 한 사진에서 보여야 한다고 옷 안을 추정하지 않는다",
+        "키르판의 착용이 공격 사건을 자동 만들지 않는다"
+      ],
+      "slot_hint": "wearable_accessory",
+      "description_en": "Visible Sikh articles retain their documented wearing relations; concealed articles remain unobservable.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION",
+      "non_pixel_claims": [
+        "감춰진 머리·속의복은 관찰 불가로 기록"
+      ]
+    },
+    {
+      "unit_id": "icon_media",
+      "title": "이콘의 매체와 예배 맥락",
+      "reference_rows": [
+        4
+      ],
+      "source_ids": [
+        "icons"
+      ],
+      "variant_scope": "비잔틴 이콘의 매체 다양성",
+      "observable_components": [
+        "선택된 평면·모자이크·금속 피복 형식",
+        "도상과 물질적 지지체의 구별"
+      ],
+      "relations": [
+        {
+          "subject": "icon_image",
+          "type": "rendered_on",
+          "object": "selected_support"
+        }
+      ],
+      "confusion_boundaries": [
+        "이콘을 컴퓨터 UI 아이콘 별칭과 섞지 않는다",
+        "예배 기능·기적적 제작을 외형에서 입증하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Distinguish the sacred image's selected material support from its devotional interpretation.",
+      "phase": "A",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "hodegetria_pointing",
+      "title": "호데게트리아의 가리키기",
+      "reference_rows": [
+        67
+      ],
+      "source_ids": [
+        "icons"
+      ],
+      "variant_scope": "자료에서 설명한 성모자의 좌우 관계",
+      "observable_components": [
+        "성모 왼팔에 놓인 아기",
+        "성모 오른손이 아기를 가리킴",
+        "두 인물과 손 접촉의 소유자"
+      ],
+      "relations": [
+        {
+          "subject": "mary.left_arm",
+          "type": "supports",
+          "object": "child"
+        },
+        {
+          "subject": "mary.right_hand",
+          "type": "points_to",
+          "object": "child"
+        }
+      ],
+      "confusion_boundaries": [
+        "성모자라는 말만으로 이 좌우 배치를 모든 작품에 강제하지 않는다",
+        "엘레우사의 얼굴 접촉을 필수로 섞지 않는다"
+      ],
+      "slot_hint": "relational_action",
+      "description_en": "In the selected Hodegetria form, the Virgin supports the child on her left arm and points toward him with her right hand.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "eleousa_contact",
+      "title": "엘레우사의 얼굴 친밀 접촉",
+      "reference_rows": [
+        68
+      ],
+      "source_ids": [
+        "virgin_hybrid"
+      ],
+      "variant_scope": "기관이 대조한 엘레우사형; 개별 원본 선정 후 보강",
+      "observable_components": [
+        "아기 얼굴이 성모 목·뺨 방향으로 올라감",
+        "얼굴 간 가까운 접촉",
+        "성모가 아기 몸을 지지함"
+      ],
+      "relations": [
+        {
+          "subject": "child.face",
+          "type": "nestles_against",
+          "object": "mary.cheek_or_neck"
+        }
+      ],
+      "confusion_boundaries": [
+        "호데게트리아 변형에서 얼굴이 떨어져 있으면 접촉 PASS로 추정하지 않는다",
+        "실제 모자 관계나 감정을 인증하는 기준으로 쓰지 않는다"
+      ],
+      "slot_hint": "relational_action",
+      "description_en": "In an explicitly selected Eleousa form, the child's upturned face nestles against the Virgin's cheek or neck.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "virgin_hybrid_variant",
+      "title": "호데게트리아 혼합 변형",
+      "reference_rows": [
+        67,
+        68
+      ],
+      "source_ids": [
+        "virgin_hybrid"
+      ],
+      "variant_scope": "13세기 비잔틴·십자군 해당 작품",
+      "observable_components": [
+        "성모의 아기 가리키기",
+        "위로 향한 아기 얼굴",
+        "성모 목에 완전히 붙지 않은 아기 위치"
+      ],
+      "relations": [
+        {
+          "subject": "mary.hand",
+          "type": "points_to",
+          "object": "child"
+        },
+        {
+          "subject": "child.face",
+          "type": "turned_up_toward",
+          "object": "mary"
+        },
+        {
+          "subject": "child.face",
+          "type": "separated_from",
+          "object": "mary.neck"
+        }
+      ],
+      "confusion_boundaries": [
+        "호데게트리아와 엘레우사 단어가 함께 있음을 곧 모순으로 판정하지 않는다",
+        "자료가 구별한 거리 차이를 지워서 표준형으로 돌리지 않는다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The documented hybrid retains pointing, an upturned child face and visible separation from the Virgin's neck.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "mandylion_face_cloth",
+      "title": "만딜리온의 얼굴–천",
+      "reference_rows": [
+        69
+      ],
+      "source_ids": [
+        "icons"
+      ],
+      "variant_scope": "자료에 설명된 만딜리온 전승",
+      "observable_components": [
+        "흰 천의 경계",
+        "천 위 그리스도 얼굴",
+        "독립된 얼굴상과 지지 천의 관계"
+      ],
+      "relations": [
+        {
+          "subject": "christ_face_image",
+          "type": "on",
+          "object": "white_cloth"
+        }
+      ],
+      "confusion_boundaries": [
+        "케라미온의 타일과 천을 같은 재료로 처리하지 않는다",
+        "실제 제작 방식이 기적임을 이미지로 입증하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The Mandylion image presents the face on a bounded white cloth rather than on a ceramic tile.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "acheiropoieta_status",
+      "title": "아케이로포이에타의 비시각적 제작 전승",
+      "reference_rows": [
+        70
+      ],
+      "source_ids": [
+        "icons"
+      ],
+      "variant_scope": "기적적 제작이라는 해석 범주",
+      "observable_components": [
+        "선택된 물질과 얼굴상은 별도 관찰",
+        "제작 전승은 출처·맥락 필드에만 기록"
+      ],
+      "relations": [
+        {
+          "subject": "tradition_record",
+          "type": "attributes_origin_to",
+          "object": "icon_image"
+        }
+      ],
+      "confusion_boundaries": [
+        "특정 외형·필터가 기적적 제작의 증거가 되지 않는다",
+        "모든 만딜리온 복제물이 원본 유물과 같은 정체는 아니다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Record the miraculous-origin tradition as context rather than a visible material property.",
+      "phase": "A",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "anastasis_harrowing",
+      "title": "아나스타시스의 끌어올림 관계",
+      "reference_rows": [
+        71
+      ],
+      "source_ids": [
+        "byzantine_scenes"
+      ],
+      "variant_scope": "비잔틴 구원 도상의 서사; 세부 실물 재검토 필요",
+      "observable_components": [
+        "그리스도가 아래 인물을 끌어올리는 접촉",
+        "아담·하와의 구별된 위치",
+        "하부 지하세계의 문·공간"
+      ],
+      "relations": [
+        {
+          "subject": "christ",
+          "type": "raises",
+          "object": "adam"
+        },
+        {
+          "subject": "christ",
+          "type": "raises_or_addresses",
+          "object": "eve"
+        },
+        {
+          "subject": "broken_gates",
+          "type": "below",
+          "object": "christ"
+        }
+      ],
+      "confusion_boundaries": [
+        "지하세계 진입·피에타·개별 무덤 부활을 하나의 사건으로 합치지 않는다",
+        "그림별 손목 소유자·문 수는 원본으로 확정한다"
+      ],
+      "slot_hint": "relational_action",
+      "description_en": "The selected Anastasis preserves the raising contact with the named figures and the lower-world setting.",
+      "phase": "B",
+      "evidence_level": "SEARCH_EXCERPT_DETAILS_PENDING"
+    },
+    {
+      "unit_id": "dormition_soul",
+      "title": "성모 안식의 몸과 영혼 표상",
+      "reference_rows": [
+        72
+      ],
+      "source_ids": [
+        "byzantine_scenes"
+      ],
+      "variant_scope": "비잔틴 성모 안식 도상; 세부 표본 재검토 필요",
+      "observable_components": [
+        "누워 있는 성모의 몸",
+        "뒤쪽 그리스도",
+        "그리스도가 든 작은 영혼 표상"
+      ],
+      "relations": [
+        {
+          "subject": "mary.body",
+          "type": "lies_on",
+          "object": "bed"
+        },
+        {
+          "subject": "christ.hands",
+          "type": "hold",
+          "object": "small_soul_representation"
+        }
+      ],
+      "confusion_boundaries": [
+        "작은 표상을 새 현실 아기로 자동 해석하지 않는다",
+        "피에타의 성모–성인 아들 지지 관계와 소유자가 뒤바뀌지 않는다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The selected Dormition keeps the recumbent body and the separately held soul representation distinct.",
+      "phase": "B",
+      "evidence_level": "SEARCH_EXCERPT_DETAILS_PENDING"
+    },
+    {
+      "unit_id": "pieta_support",
+      "title": "피에타의 성인 몸 지지",
+      "reference_rows": [
+        74
+      ],
+      "source_ids": [
+        "pieta"
+      ],
+      "variant_scope": "보헤미아 1400년경 베스페르빌트",
+      "observable_components": [
+        "성모의 옷 입은 몸",
+        "성인 그리스도의 힘없는 몸",
+        "무릎·팔의 지지와 손목 잡기"
+      ],
+      "relations": [
+        {
+          "subject": "mary.lap",
+          "type": "supports",
+          "object": "christ.body"
+        },
+        {
+          "subject": "mary.hand",
+          "type": "grasps",
+          "object": "christ.wrist"
+        }
+      ],
+      "confusion_boundaries": [
+        "성모자상의 아기나 연인 포옹으로 축소하지 않는다",
+        "경전의 직접 장면인지 여부는 도상 외형과 별도"
+      ],
+      "slot_hint": "relational_action",
+      "description_en": "The Virgin's lap and hand visibly support the deceased adult Christ and his wrist.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "lucy_plate_eyes",
+      "title": "루치아의 접시 위 눈",
+      "reference_rows": [
+        77,
+        277
+      ],
+      "source_ids": [
+        "lucy"
+      ],
+      "variant_scope": "크리벨리 NG788.12",
+      "observable_components": [
+        "한 손의 둥근 목제 접시",
+        "접시 위 별도 두 눈",
+        "다른 손의 순교 종려"
+      ],
+      "relations": [
+        {
+          "subject": "lucy.hand_a",
+          "type": "holds",
+          "object": "wooden_plate"
+        },
+        {
+          "subject": "two_eye_attributes",
+          "type": "rest_on",
+          "object": "plate"
+        },
+        {
+          "subject": "lucy.hand_b",
+          "type": "holds",
+          "object": "martyr_palm"
+        }
+      ],
+      "confusion_boundaries": [
+        "순교 표지를 얼굴의 빈 안와로 자동 확대하지 않는다",
+        "안구처럼 보이는 배경 구슬은 접시 위 지물을 충족하지 않는다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The plate, paired eye attributes and martyr's palm remain visibly owned by the specified figure.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "bartholomew_knife",
+      "title": "바르톨로메오의 칼 지물",
+      "reference_rows": [
+        79,
+        276
+      ],
+      "source_ids": [
+        "bartholomew"
+      ],
+      "variant_scope": "성인 식별 지물과 순교 전승의 분리",
+      "observable_components": [
+        "성인과 칼의 위치 연결",
+        "별도 요청 없을 때 온전한 인물 외형"
+      ],
+      "relations": [
+        {
+          "subject": "saint.hand",
+          "type": "holds",
+          "object": "knife_attribute"
+        }
+      ],
+      "confusion_boundaries": [
+        "칼 지물 요청을 박피 실행이나 피부 훼손으로 자동 확대하지 않는다",
+        "해골잔·곡도 지물과 이름만으로 동일시하지 않는다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The knife remains an identifying attribute of the saint without introducing an unrequested flaying event.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "agatha_attribution",
+      "title": "성 아가타 지물과 초상 정체",
+      "reference_rows": [
+        80,
+        277
+      ],
+      "source_ids": [
+        "agatha"
+      ],
+      "variant_scope": "박물관 제목상 성 아가타의 지물을 가진 여인",
+      "observable_components": [
+        "초상 인물",
+        "소유한 순교 표지",
+        "얼굴·몸과 별도 지물의 구별"
+      ],
+      "relations": [
+        {
+          "subject": "portrait_sitter",
+          "type": "carries",
+          "object": "saint_attributes"
+        }
+      ],
+      "confusion_boundaries": [
+        "성인 지물을 지닌 초상 인물이 곧 그 성인이라는 자동 추론을 막는다",
+        "지물의 정확한 신체 부분 외형은 본문·원본 확인까지 보류"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Preserve the distinction between the portrayed woman and the saintly attributes she carries.",
+      "phase": "B",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "peter_keys",
+      "title": "베드로의 열쇠 소유자",
+      "reference_rows": [
+        81,
+        1
+      ],
+      "source_ids": [
+        "peter"
+      ],
+      "variant_scope": "로렌초 코스타 해당 작품",
+      "observable_components": [
+        "인물 손에 모인 열쇠 지물",
+        "열쇠와 손의 접촉",
+        "다른 손의 제스처"
+      ],
+      "relations": [
+        {
+          "subject": "peter.hand",
+          "type": "holds",
+          "object": "keys"
+        }
+      ],
+      "confusion_boundaries": [
+        "열쇠가 배경 문에 있다고 같은 식별 관계가 성립하지 않는다",
+        "열쇠 수·색·역십자가는 선택 원본 없이 강제하지 않는다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The specified saint visibly owns the keys, with the hand-to-key relation readable.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "hanukkiah_holders",
+      "title": "하누키아의 여덟 심지와 샤마시",
+      "reference_rows": [
+        84
+      ],
+      "source_ids": [
+        "hanukkiah"
+      ],
+      "variant_scope": "볼페르트 1935–48년 은제 표본",
+      "observable_components": [
+        "반원 배열의 여덟 심지 받침",
+        "따로 놓인 작은 샤마시 주전자",
+        "각 점등 자리가 서로 구별됨"
+      ],
+      "relations": [
+        {
+          "subject": "eight_wick_holders",
+          "type": "arranged_in",
+          "object": "semicircle"
+        },
+        {
+          "subject": "shamash_jug",
+          "type": "distinct_from",
+          "object": "eight_holders"
+        }
+      ],
+      "confusion_boundaries": [
+        "아홉 점등 자리를 아홉 가지로 일률 변환하지 않는다",
+        "일곱 가지 메노라·이미 켜진 불 수와 구조 수를 구별한다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The selected Hanukkah lamp has eight separate wick holders and a distinct small shamash jug.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "tefillin_pair",
+      "title": "테필린 두 상자와 착용부",
+      "reference_rows": [
+        87
+      ],
+      "source_ids": [
+        "tefillin"
+      ],
+      "variant_scope": "Chabad 설명의 머리·위팔 세트",
+      "observable_components": [
+        "검은 가죽 머리 상자",
+        "위팔의 별도 상자",
+        "상자를 몸에 잇는 끈"
+      ],
+      "relations": [
+        {
+          "subject": "head_box",
+          "type": "strapped_to",
+          "object": "wearer.head"
+        },
+        {
+          "subject": "arm_box",
+          "type": "strapped_to",
+          "object": "wearer.upper_arm"
+        }
+      ],
+      "confusion_boundaries": [
+        "이마와 손목에 같은 장신구를 복사하지 않는다",
+        "닫힌 상자 안의 두루마리·칸 수를 보였다고 판정하지 않는다"
+      ],
+      "slot_hint": "wearable_accessory",
+      "description_en": "Two distinct black tefillin boxes retain their head and upper-arm wearing relations.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "tallit_corner_fringe",
+      "title": "탈리트 모서리 치치트",
+      "reference_rows": [
+        86
+      ],
+      "source_ids": [
+        "tallit"
+      ],
+      "variant_scope": "해당 공동체의 의례 물건 설명",
+      "observable_components": [
+        "선택된 숄 모서리",
+        "모서리에 달린 술",
+        "의복 본체와 별도 술의 연결"
+      ],
+      "relations": [
+        {
+          "subject": "tzitzit",
+          "type": "attached_to",
+          "object": "tallit.corners"
+        }
+      ],
+      "confusion_boundaries": [
+        "줄무늬만으로 탈리트를 판정하지 않는다",
+        "화면 밖 모서리의 술을 보인 것으로 추정하지 않는다"
+      ],
+      "slot_hint": "garment_detail",
+      "description_en": "Tzitzit attach to the visible corners of the selected tallit rather than appearing as general border fringe.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "sefirot_diagram",
+      "title": "세피로트 도식의 연결과 문자",
+      "reference_rows": [
+        91,
+        92
+      ],
+      "source_ids": [
+        "sefirot"
+      ],
+      "variant_scope": "국립도서관 일라노트 자료의 원고별 도식",
+      "observable_components": [
+        "선택 원고의 노드 배열",
+        "노드 사이 연결",
+        "노드 명칭과 본문의 문자 영역"
+      ],
+      "relations": [
+        {
+          "subject": "named_nodes",
+          "type": "connected_by",
+          "object": "documented_edges"
+        }
+      ],
+      "confusion_boundaries": [
+        "모든 카발라 도식을 현대 오컬트의 같은 10구 도형으로 고정하지 않는다",
+        "문자 정확성 없이 점·원 개수만으로 PASS하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "Use a selected manuscript-specific sefirotic node-and-edge diagram with its documented labels.",
+      "phase": "C",
+      "evidence_level": "DIAGRAM_REQUIRES_CURATED_TRANSCRIPTION"
+    },
+    {
+      "unit_id": "mihrab_minbar",
+      "title": "미흐라브와 민바르의 공간 역할",
+      "reference_rows": [
+        95,
+        96
+      ],
+      "source_ids": [
+        "islam_glossary"
+      ],
+      "variant_scope": "기관 용어집의 전형적 모스크 관계",
+      "observable_components": [
+        "벽의 기도 방향 니치",
+        "니치 옆 계단형 설교단",
+        "니치·계단의 서로 다른 기능적 구조"
+      ],
+      "relations": [
+        {
+          "subject": "mihrab",
+          "type": "in",
+          "object": "qibla_wall"
+        },
+        {
+          "subject": "minbar",
+          "type": "beside",
+          "object": "mihrab"
+        }
+      ],
+      "confusion_boundaries": [
+        "미흐라브는 제단·설교단과 같은 물체가 아니다",
+        "민바르가 보통 오른쪽이라는 설명을 모든 실물에 강제하지 않는다"
+      ],
+      "slot_hint": "location",
+      "description_en": "The prayer-direction niche and adjacent stepped pulpit remain separate architectural elements.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "muqarnas_cells",
+      "title": "무카르나스의 입체 셀",
+      "reference_rows": [
+        98
+      ],
+      "source_ids": [
+        "islam_glossary"
+      ],
+      "variant_scope": "종유석·벌집형 건축 요소 정의",
+      "observable_components": [
+        "반복되는 입체 셀",
+        "층별 돌출과 후퇴",
+        "아치·천장 등 실제 배치면"
+      ],
+      "relations": [
+        {
+          "subject": "three_dimensional_cells",
+          "type": "step_across",
+          "object": "architectural_surface"
+        }
+      ],
+      "confusion_boundaries": [
+        "평면 기하 문양·샹들리에·금속 그릴로 대체하지 않는다",
+        "이 구조만으로 건물의 종교 정체를 인증하지 않는다"
+      ],
+      "slot_hint": "location",
+      "description_en": "Stepped three-dimensional cells form the selected muqarnas surface rather than a flat geometric pattern.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "kaba_focus",
+      "title": "카바의 건물과 주변 예배 공간",
+      "reference_rows": [
+        94
+      ],
+      "source_ids": [
+        "islam_glossary"
+      ],
+      "variant_scope": "기관 정의의 메카 카바",
+      "observable_components": [
+        "입방형 중심 건물",
+        "주변의 별도 예배 공간",
+        "건물과 주변 인물·경로의 구별"
+      ],
+      "relations": [
+        {
+          "subject": "prayer_space",
+          "type": "surrounds",
+          "object": "kaba_structure"
+        }
+      ],
+      "confusion_boundaries": [
+        "검은 입방체라는 형상만으로 실제 장소를 확정하지 않는다",
+        "현재 건물 장식·행사·군중 규모는 이 정의에서 추정하지 않는다"
+      ],
+      "slot_hint": "location",
+      "description_en": "The selected representation keeps the cubical Kaaba structure distinct from its surrounding prayer space.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "islam_figural_context",
+      "title": "이슬람 미술의 형상 사용 맥락",
+      "reference_rows": [
+        99,
+        100,
+        105
+      ],
+      "source_ids": [
+        "islam_figures"
+      ],
+      "variant_scope": "종교 공간·세속 물건·회화의 구분",
+      "observable_components": [
+        "선택 작품의 매체·용도",
+        "사람·동물·문자 영역의 구별"
+      ],
+      "relations": [
+        {
+          "subject": "source_record",
+          "type": "scopes",
+          "object": "depiction_context"
+        }
+      ],
+      "confusion_boundaries": [
+        "이슬람이라는 범주에서 모든 인물·동물 표현을 지우지 않는다",
+        "세속 회화 표본을 모든 모스크에 그대로 적용하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Scope figural imagery by the selected object's period, medium and setting.",
+      "phase": "B",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "sema_motion_evidence",
+      "title": "세마 의례와 정지 장면 한계",
+      "reference_rows": [
+        102
+      ],
+      "source_ids": [
+        "sema"
+      ],
+      "variant_scope": "UNESCO 메블레비 의례 설명",
+      "observable_components": [
+        "선택된 의례복과 참가자 배열",
+        "회전을 암시하는 몸·옷 자세",
+        "의례 맥락과 공연·인물 외형의 구별"
+      ],
+      "relations": [
+        {
+          "subject": "performer.body",
+          "type": "poses_within",
+          "object": "specified_ceremony_context"
+        }
+      ],
+      "confusion_boundaries": [
+        "정지 이미지 한 장에서 실제 회전 방향·연속 동작을 확인했다고 하지 않는다",
+        "비슷한 긴 치마를 입었다고 세마나 신앙을 확정하지 않는다"
+      ],
+      "slot_hint": "action",
+      "description_en": "Depict the selected Sema posture and garment state while treating continuous rotation as unverified.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "buraq_golconda",
+      "title": "골콘다 합성체 부라크",
+      "reference_rows": [
+        103
+      ],
+      "source_ids": [
+        "buraq"
+      ],
+      "variant_scope": "1660–80년 해당 회화의 무탑승자형",
+      "observable_components": [
+        "여성 얼굴 표상",
+        "작은 동물·물고기·새로 이루어진 몸",
+        "탑승자가 없는 표본의 구성"
+      ],
+      "relations": [
+        {
+          "subject": "small_animal_forms",
+          "type": "compose",
+          "object": "buraq.body"
+        },
+        {
+          "subject": "human_face",
+          "type": "belongs_to",
+          "object": "buraq.head"
+        }
+      ],
+      "confusion_boundaries": [
+        "일반 날개 달린 말과 동일하지 않다",
+        "요청 없이 탑승자를 추가하거나 모든 부라크를 무탑승자로 고정하지 않는다"
+      ],
+      "slot_hint": "anatomical_connection",
+      "description_en": "The selected Golconda Buraq preserves its human face and body composed of small animal forms.",
+      "phase": "C",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "daoist_robe_sky",
+      "title": "도교 의례복의 천상 자수",
+      "reference_rows": [
+        115
+      ],
+      "source_ids": [
+        "dao_robe"
+      ],
+      "variant_scope": "청대 18세기 말 해당 의례복의 뒷면",
+      "observable_components": [
+        "탑이 든 큰 원형 구역",
+        "위쪽 해·금까마귀와 달·옥토끼 구역",
+        "옷 전면의 흰 학 자수"
+      ],
+      "relations": [
+        {
+          "subject": "sun_crow_and_moon_rabbit",
+          "type": "above",
+          "object": "pagoda_roundel"
+        },
+        {
+          "subject": "crane_motifs",
+          "type": "embroidered_on",
+          "object": "robe"
+        }
+      ],
+      "confusion_boundaries": [
+        "화면 좌우 표기와 입은 사람의 좌우를 재검토한다",
+        "모든 도교 복식에 이 구성을 복사하지 않는다"
+      ],
+      "slot_hint": "garment_detail",
+      "description_en": "The selected robe retains its pagoda roundel and separately placed sun-crow and moon-rabbit motifs.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "daoist_robe_xuanwu",
+      "title": "도교 의례복의 현무 연결",
+      "reference_rows": [
+        112,
+        115
+      ],
+      "source_ids": [
+        "dao_robe"
+      ],
+      "variant_scope": "같은 청대 옷의 하단 동물 자수",
+      "observable_components": [
+        "거북 형상",
+        "거북을 감은 별도 뱀",
+        "자수라는 물질적 표현"
+      ],
+      "relations": [
+        {
+          "subject": "snake_motif",
+          "type": "entwines",
+          "object": "tortoise_motif"
+        }
+      ],
+      "confusion_boundaries": [
+        "자수 표지를 인물의 생물학적 몸으로 흡수하지 않는다",
+        "진무 신격 전체와 현무 동물 모티프를 같은 인물로 병합하지 않는다"
+      ],
+      "slot_hint": "garment_detail",
+      "description_en": "A snake entwines the tortoise within the robe's embroidered motif rather than altering the wearer's body.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "daoist_system_scope",
+      "title": "도교의 분파·신격 체계",
+      "reference_rows": [
+        107,
+        108,
+        109,
+        110,
+        111,
+        116,
+        117
+      ],
+      "source_ids": [
+        "dao_context"
+      ],
+      "variant_scope": "범주 수준의 맥락; 개별 지물은 별도 조사",
+      "observable_components": [
+        "선택 분파·시대·물건 기록",
+        "관료형 신격·불사 선경을 다른 장면 유형으로 구분"
+      ],
+      "relations": [
+        {
+          "subject": "tradition_variant",
+          "type": "scopes",
+          "object": "named_iconography"
+        }
+      ],
+      "confusion_boundaries": [
+        "팔선이라는 이름에서 특정 장면·8인 배치를 자동 고정하지 않는다",
+        "노자·여동빈 지물을 일반 동아시아 의상 소품과 병합하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Select the named Daoist tradition and figure before assigning object-level attributes.",
+      "phase": "B",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "musindo_genre",
+      "title": "무신도의 신격·장르 구분",
+      "reference_rows": [
+        118,
+        119,
+        120,
+        121,
+        122,
+        124,
+        125
+      ],
+      "source_ids": [
+        "musindo"
+      ],
+      "variant_scope": "무신도 범주 설명; 개별 신당 기록 필요",
+      "observable_components": [
+        "그려진 신격과 그림 지지체",
+        "신당의 봉안 위치는 개별 사례",
+        "방울·부채 등 집행자의 물건은 별도 소유자"
+      ],
+      "relations": [
+        {
+          "subject": "deity_portrait",
+          "type": "depicts",
+          "object": "named_deity"
+        },
+        {
+          "subject": "ritual_tools",
+          "type": "owned_by",
+          "object": "specified_practitioner"
+        }
+      ],
+      "confusion_boundaries": [
+        "무신도·무당 초상·굿 장면을 같은 그림으로 취급하지 않는다",
+        "불교·도교 도상을 모두 임의 혼합 가능한 소품으로 만들지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Separate the deity portrait, its shrine setting and the practitioner's owned ritual tools.",
+      "phase": "B",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "sanshin_old_tiger",
+      "title": "노인·호랑이형 산신도",
+      "reference_rows": [
+        123
+      ],
+      "source_ids": [
+        "sanshin"
+      ],
+      "variant_scope": "백과사전의 대체적 일반형에 한정",
+      "observable_components": [
+        "백발·긴 수염의 산신",
+        "산·골짜기 배경",
+        "산신이 기대 앉은 별도 호랑이"
+      ],
+      "relations": [
+        {
+          "subject": "sanshin.body",
+          "type": "leans_against",
+          "object": "tiger"
+        },
+        {
+          "subject": "mountain_landscape",
+          "type": "behind",
+          "object": "sanshin_and_tiger"
+        }
+      ],
+      "confusion_boundaries": [
+        "일반형이 모든 산신도의 정의는 아니다",
+        "호랑이 자체가 인물 몸의 일부가 되지 않는다"
+      ],
+      "slot_hint": "relational_action",
+      "description_en": "In the explicitly selected old-man variant, Sanshin leans beside or against a distinct tiger in a mountain setting.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "sanshin_variant_guard",
+      "title": "여성·무호랑이 산신도 허용",
+      "reference_rows": [
+        123
+      ],
+      "source_ids": [
+        "sanshin"
+      ],
+      "variant_scope": "자료가 열거한 소수 변형",
+      "observable_components": [
+        "선택된 여성·제왕·승려 등 변형 기록",
+        "호랑이 동반 여부를 독립 필드로 둠"
+      ],
+      "relations": [
+        {
+          "subject": "variant_record",
+          "type": "determines",
+          "object": "figure_type_and_companions"
+        }
+      ],
+      "confusion_boundaries": [
+        "산신 검색 hit가 여성형을 백발 남성으로 바꾸지 않는다",
+        "호랑이 없는 명시 요청에 호랑이를 필수 지물로 추가하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Preserve an explicitly requested female or tigerless Sanshin variant.",
+      "phase": "B",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "jangseung_face_post",
+      "title": "장승의 얼굴 기둥",
+      "reference_rows": [
+        126
+      ],
+      "source_ids": [
+        "jangseung"
+      ],
+      "variant_scope": "마을 경계의 목·석 장승",
+      "observable_components": [
+        "기둥형 몸과 새겨진 얼굴",
+        "목재·석재 중 선택 재료",
+        "선택 사례에서의 명문"
+      ],
+      "relations": [
+        {
+          "subject": "face_carving",
+          "type": "integrated_in",
+          "object": "guardian_post"
+        }
+      ],
+      "confusion_boundaries": [
+        "새가 장대 끝에 앉는 솟대와 구별한다",
+        "무서운 얼굴이 악귀 역할이나 실제 효능을 입증하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "A carved face belongs to the selected wooden or stone guardian post, distinct from a bird-topped pole.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "sotdae_three_birds",
+      "title": "세 새형 솟대",
+      "reference_rows": [
+        127
+      ],
+      "source_ids": [
+        "sotdae"
+      ],
+      "variant_scope": "자료에 명시된 세 갈래·세 새 변형",
+      "observable_components": [
+        "긴 장대",
+        "끝의 세 갈래 가지",
+        "각 가지 위 새 조각"
+      ],
+      "relations": [
+        {
+          "subject": "three_bird_carvings",
+          "type": "perch_on",
+          "object": "three_branch_pole_top"
+        }
+      ],
+      "confusion_boundaries": [
+        "솟대 일반형의 새 수를 항상 셋으로 강제하지 않는다",
+        "장승의 얼굴·몸과 새 장대를 합치지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The selected three-bird sotdae places one bird carving on each of the pole's three top branches.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "bari_narrative",
+      "title": "바리공주의 약수 획득 서사",
+      "reference_rows": [
+        129
+      ],
+      "source_ids": [
+        "bari"
+      ],
+      "variant_scope": "무가의 서사 단락; 고정 초상 외형 없음",
+      "observable_components": [
+        "요청된 약수 획득 사건",
+        "인물·물·용기의 소유자",
+        "현실·저승 공간은 선택 각색에 맞춰 분리"
+      ],
+      "relations": [
+        {
+          "subject": "bari",
+          "type": "obtains",
+          "object": "life_restoring_water"
+        }
+      ],
+      "confusion_boundaries": [
+        "이 이야기를 관음이나 페르세포네의 도상 외형으로 자동 대체하지 않는다",
+        "서사 자료만으로 단일 관복·머리모양을 인증하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Keep the requested water-retrieval event without inventing a universal Bari costume.",
+      "phase": "B",
+      "evidence_level": "NARRATIVE_SOURCE_NOT_FIXED_ICONOGRAPHY"
+    },
+    {
+      "unit_id": "torii_boundary",
+      "title": "도리이의 경계 구조",
+      "reference_rows": [
+        131
+      ],
+      "source_ids": [
+        "shinto_shrine"
+      ],
+      "variant_scope": "국학원 신사 개념 설명; 세부 형태 별도 선택",
+      "observable_components": [
+        "두 기둥과 가로 부재의 문형",
+        "문을 기준으로 구별되는 앞·뒤 공간"
+      ],
+      "relations": [
+        {
+          "subject": "gateway",
+          "type": "marks_boundary_of",
+          "object": "selected_shrine_space"
+        }
+      ],
+      "confusion_boundaries": [
+        "모든 도리이를 붉은 목재 명신형으로 고정하지 않는다",
+        "일반 아치나 탑을 도리이로 대체하지 않는다"
+      ],
+      "slot_hint": "location",
+      "description_en": "The selected torii form marks a readable boundary through its posts and crossmembers.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "shintai_not_statue",
+      "title": "신체의 물건·봉안 맥락",
+      "reference_rows": [
+        132,
+        133
+      ],
+      "source_ids": [
+        "shinto_shrine"
+      ],
+      "variant_scope": "신체 개념; 거울·검·곡옥의 선택형은 추가 실물 필요",
+      "observable_components": [
+        "요청된 물건 또는 자연물",
+        "봉안·가림 상태",
+        "대상과 용기의 구별"
+      ],
+      "relations": [
+        {
+          "subject": "selected_shintai",
+          "type": "enshrined_in",
+          "object": "specified_shrine_context"
+        }
+      ],
+      "confusion_boundaries": [
+        "신체를 인간형 신상과 같은 필수 외형으로 고정하지 않는다",
+        "닫힌 봉안물을 보였다고 내부 형태를 추정하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Preserve the explicitly requested shintai object and its visibility without requiring a human-shaped statue.",
+      "phase": "B",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "uzume_narrative",
+      "title": "우즈메 춤과 동굴 은둔의 서사",
+      "reference_rows": [
+        134,
+        135
+      ],
+      "source_ids": [
+        "uzume"
+      ],
+      "variant_scope": "고사기·일본서기 설명의 분리",
+      "observable_components": [
+        "동굴 안·밖의 관계",
+        "춤추는 우즈메와 다른 관람 신격의 구별",
+        "요청된 옷·노출 상태만 표시"
+      ],
+      "relations": [
+        {
+          "subject": "uzume",
+          "type": "performs_outside",
+          "object": "amaterasu_cave"
+        }
+      ],
+      "confusion_boundaries": [
+        "문헌의 노출을 모든 현대 재현의 동일 의상·행동으로 강제하지 않는다",
+        "춤의 결과·감정·효능은 픽셀로 인증하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Keep Uzume outside the cave in the requested narrative version without inventing a universal costume.",
+      "phase": "C",
+      "evidence_level": "NARRATIVE_SOURCE_NOT_FIXED_ICONOGRAPHY"
+    },
+    {
+      "unit_id": "tsukumogami_object_body",
+      "title": "쓰쿠모가미의 도구 몸",
+      "reference_rows": [
+        139,
+        143
+      ],
+      "source_ids": [
+        "tsukumogami"
+      ],
+      "variant_scope": "그림 두루마리 연구에서 식별되는 도구형",
+      "observable_components": [
+        "원래 생활 도구의 실루엣",
+        "그 도구에 붙은 얼굴·팔다리",
+        "도구 몸과 추가 생명 표지의 연결"
+      ],
+      "relations": [
+        {
+          "subject": "animated_face_and_limbs",
+          "type": "attach_to",
+          "object": "recognizable_utensil_body"
+        }
+      ],
+      "confusion_boundaries": [
+        "일반 사람 요괴·오니·로봇과 동일하지 않다",
+        "백 년의 실제 사용 이력은 외형으로 입증하지 않는다"
+      ],
+      "slot_hint": "anatomical_connection",
+      "description_en": "The animated form retains a recognizable utensil body with attached face or limbs.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "hyakki_scroll",
+      "title": "백귀야행의 두루마리 행렬",
+      "reference_rows": [
+        144
+      ],
+      "source_ids": [
+        "tsukumogami",
+        "tsukumogami_archive"
+      ],
+      "variant_scope": "선정한 두루마리의 행렬 구성",
+      "observable_components": [
+        "여러 개별 요괴·도구형 인물",
+        "가로로 이어지는 행렬",
+        "그림 지지체와 장면의 구별"
+      ],
+      "relations": [
+        {
+          "subject": "distinct_figures",
+          "type": "form",
+          "object": "horizontal_procession"
+        }
+      ],
+      "confusion_boundaries": [
+        "백귀를 숫자 100마리 강제 생성으로 해석하지 않는다",
+        "박물관 두루마리 촬영과 실물 판타지 장면을 합치지 않는다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "Distinct animated figures form the selected horizontal scroll procession without requiring exactly one hundred subjects.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "heart_ani_roles",
+      "title": "아니 파피루스의 계량 역할",
+      "reference_rows": [
+        145,
+        147,
+        152,
+        153,
+        282
+      ],
+      "source_ids": [
+        "heart_ani"
+      ],
+      "variant_scope": "BM EA10470-3",
+      "observable_components": [
+        "명시된 심판 대상인 죽은 인물",
+        "양팔 저울의 심장과 마아트 깃털",
+        "아누비스의 저울 조정",
+        "토트의 기록 행위",
+        "암미트 대기 또는 오시리스 결과 수령"
+      ],
+      "relations": [
+        {
+          "subject": "anubis",
+          "type": "steadies",
+          "object": "scale"
+        },
+        {
+          "subject": "heart",
+          "type": "weighed_against",
+          "object": "maat_feather"
+        },
+        {
+          "subject": "thoth",
+          "type": "records",
+          "object": "weighing"
+        },
+        {
+          "subject": "deceased",
+          "type": "faces",
+          "object": "judgment_scale"
+        },
+        {
+          "subject": "ammit_or_osiris",
+          "type": "establishes",
+          "object": "judgment_consequence"
+        }
+      ],
+      "confusion_boundaries": [
+        "아누비스·토트·암미트의 역할을 뒤바꾸지 않는다",
+        "기존 egyptian_heart_weighing_judgment 의미 소유자를 재사용한다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The selected judgment scene keeps heart, feather, scale operator and recorder in their documented roles.",
+      "phase": "A",
+      "evidence_level": "SEARCH_EXCERPT_BODY_REACCESS_BLOCKED"
+    },
+    {
+      "unit_id": "heart_maat_figure",
+      "title": "깃털 대신 마아트 소형상 계량형",
+      "reference_rows": [
+        152,
+        282
+      ],
+      "source_ids": [
+        "heart_greenfield"
+      ],
+      "variant_scope": "BM EA10554-80 그린필드 파피루스",
+      "observable_components": [
+        "한 저울 접시의 심장",
+        "다른 접시의 앉은 마아트 형상",
+        "마아트 머리의 깃털 표지"
+      ],
+      "relations": [
+        {
+          "subject": "heart",
+          "type": "weighed_against",
+          "object": "small_maat_figure"
+        },
+        {
+          "subject": "feather",
+          "type": "on",
+          "object": "maat_figure.head"
+        }
+      ],
+      "confusion_boundaries": [
+        "모든 심장 계량 장면의 반대편을 단독 깃털로 고정하지 않는다",
+        "소형상을 새 동반 인물로 복제하지 않는다",
+        "현재 기존 profile의 heart_feather_balance를 그대로 만족하지 않는다. 의미를 몰래 넓히지 말고 별도 변형 profile 초안이 필요하다."
+      ],
+      "slot_hint": "composition",
+      "description_en": "The selected Greenfield variant weighs the heart against a small seated Maat figure with feather headdress.",
+      "phase": "B",
+      "evidence_level": "SEARCH_EXCERPT_BODY_REACCESS_BLOCKED"
+    },
+    {
+      "unit_id": "wedjat_form",
+      "title": "우자트의 눈 형태",
+      "reference_rows": [
+        149
+      ],
+      "source_ids": [
+        "amulets"
+      ],
+      "variant_scope": "선택 이집트 눈 부적; 좌우 변형 별도",
+      "observable_components": [
+        "눈썹·눈·아래 표지로 구성된 윤곽",
+        "부적의 외곽",
+        "현실 얼굴과 독립된 물건"
+      ],
+      "relations": [
+        {
+          "subject": "eye_motif",
+          "type": "incised_or_formed_on",
+          "object": "amulet"
+        }
+      ],
+      "confusion_boundaries": [
+        "실제 손상된 안구·루치아의 접시 눈과 같은 물체가 아니다",
+        "좌·우 눈이나 모든 내부 선은 선정 표본으로 확정한다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The selected Wedjat amulet keeps its documented eye outline and lower markings as a separate object.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "scarab_heart_scope",
+      "title": "스카라브와 심장 스카라브의 범주",
+      "reference_rows": [
+        150,
+        151
+      ],
+      "source_ids": [
+        "amulets"
+      ],
+      "variant_scope": "풍뎅이 부적의 형상과 특정 장례 기능",
+      "observable_components": [
+        "풍뎅이 등껍질 윤곽",
+        "물건의 밑면·명문은 보일 때만 기록"
+      ],
+      "relations": [
+        {
+          "subject": "inscription_if_visible",
+          "type": "on",
+          "object": "scarab.underside"
+        }
+      ],
+      "confusion_boundaries": [
+        "풍뎅이 모양만으로 심장용 주문·장례 기능을 인증하지 않는다",
+        "모든 스카라브를 파란 파이앙스로 고정하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The selected scarab keeps beetle form and only the inscription surfaces that are actually visible.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION",
+      "non_pixel_claims": [
+        "몸 위 배치 여부는 요청·실물 근거에 따름"
+      ]
+    },
+    {
+      "unit_id": "faience_visible_finish",
+      "title": "이집트 파이앙스의 표면과 재료 경계",
+      "reference_rows": [
+        157
+      ],
+      "source_ids": [
+        "amulets"
+      ],
+      "variant_scope": "소장품 재료 설명과 표면 관찰의 분리",
+      "observable_components": [
+        "선택한 유약 광택",
+        "선택 표본의 색·마모"
+      ],
+      "relations": [
+        {
+          "subject": "documented_material",
+          "type": "described_in",
+          "object": "object_record"
+        }
+      ],
+      "confusion_boundaries": [
+        "청록색이라 해서 파이앙스라고 픽셀로 인증하지 않는다",
+        "일반 점토 도기·금속·유리와 재료명을 자동 병합하지 않는다"
+      ],
+      "slot_hint": "surface_material",
+      "description_en": "Render the documented glazed finish while treating material identification as collection evidence.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION",
+      "non_pixel_claims": [
+        "재료명은 소장 기록에서 인용"
+      ]
+    },
+    {
+      "unit_id": "book_dead_corpus",
+      "title": "사자의 서의 주문 집합",
+      "reference_rows": [
+        155
+      ],
+      "source_ids": [
+        "book_dead"
+      ],
+      "variant_scope": "장례 주문·도상 자료의 범주",
+      "observable_components": [
+        "선택 파피루스의 문장과 도상 구역",
+        "각 주문·삽화 단위",
+        "전체 두루마리와 일부 장면의 구별"
+      ],
+      "relations": [
+        {
+          "subject": "selected_vignette",
+          "type": "part_of",
+          "object": "specific_funeral_manuscript"
+        }
+      ],
+      "confusion_boundaries": [
+        "하나의 고정 책·한 가지 심판 장면으로 모든 사자의 서를 대체하지 않는다",
+        "문자 전사를 확인하지 않고 의미를 인증하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Scope a Book of the Dead vignette to its specific manuscript and section.",
+      "phase": "B",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "meso_horn_crown",
+      "title": "메소포타미아 뿔 관",
+      "reference_rows": [
+        158
+      ],
+      "source_ids": [
+        "meso_deities"
+      ],
+      "variant_scope": "신성 표지 범주; 시대별 관형은 별도",
+      "observable_components": [
+        "머리에 놓인 관",
+        "겹치는 뿔 쌍",
+        "관과 머리 자체의 구별"
+      ],
+      "relations": [
+        {
+          "subject": "horn_pairs",
+          "type": "belong_to",
+          "object": "crown"
+        },
+        {
+          "subject": "crown",
+          "type": "worn_on",
+          "object": "represented_head"
+        }
+      ],
+      "confusion_boundaries": [
+        "신의 관 장식을 생물학적 뿔로 흡수하지 않는다",
+        "뿔 수·신격 정체를 일반형 하나로 고정하지 않는다"
+      ],
+      "slot_hint": "wearable_accessory",
+      "description_en": "Horn pairs belong to the selected divine headdress rather than emerging as the wearer's anatomy.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "ishtar_emblem",
+      "title": "이슈타르의 지물 조합",
+      "reference_rows": [
+        160
+      ],
+      "source_ids": [
+        "meso_deities"
+      ],
+      "variant_scope": "출처가 연결하는 별·로제트·사자 범주",
+      "observable_components": [
+        "선택한 별 또는 로제트",
+        "인물·사자와의 소유·동반 위치",
+        "표지의 배치면"
+      ],
+      "relations": [
+        {
+          "subject": "star_or_rosette",
+          "type": "associated_with",
+          "object": "named_ishtar_form"
+        }
+      ],
+      "confusion_boundaries": [
+        "별 모양 하나에서 모든 신격 정체를 확정하지 않는다",
+        "북유럽·도교·유대교 별 도식과 같은 activation으로 섞지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Use the selected Ishtar attribute set within its documented object context.",
+      "phase": "B",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "sin_crescent",
+      "title": "신·난나의 초승달 표지",
+      "reference_rows": [
+        161
+      ],
+      "source_ids": [
+        "meso_deities"
+      ],
+      "variant_scope": "달 표지와 신격 연결 설명",
+      "observable_components": [
+        "명확한 초승달 윤곽",
+        "지정한 신격·표석과의 위치 연결"
+      ],
+      "relations": [
+        {
+          "subject": "crescent",
+          "type": "associated_with",
+          "object": "named_sin_representation"
+        }
+      ],
+      "confusion_boundaries": [
+        "하늘의 실제 달·칼날·다른 전통의 초승달이 같은 신격을 자동 활성화하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The specified crescent emblem stays associated with its named Sin representation.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "marduk_nabu_emblems",
+      "title": "마르두크 삽–나부 쐐기 구별",
+      "reference_rows": [
+        162,
+        163
+      ],
+      "source_ids": [
+        "meso_deities"
+      ],
+      "variant_scope": "서로 다른 신격 표지",
+      "observable_components": [
+        "삽 모양 표지",
+        "별도의 쐐기 표지",
+        "각 표지와 해당 신격의 연결"
+      ],
+      "relations": [
+        {
+          "subject": "spade_emblem",
+          "type": "associated_with",
+          "object": "marduk"
+        },
+        {
+          "subject": "wedge_emblem",
+          "type": "associated_with",
+          "object": "nabu"
+        }
+      ],
+      "confusion_boundaries": [
+        "두 기호를 같은 무기·깃대로 합치지 않는다",
+        "평범한 삽·필기 도구가 이름 없이 신격 장면을 생성하지 않는다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The spade and wedge emblems retain their distinct Marduk and Nabu associations.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "enki_fish_streams",
+      "title": "에아·엔키의 물과 물고기",
+      "reference_rows": [
+        164
+      ],
+      "source_ids": [
+        "enki"
+      ],
+      "variant_scope": "ORACC가 설명한 물 표지",
+      "observable_components": [
+        "인물에서 이어지는 물줄기",
+        "물줄기 안의 물고기",
+        "선택 관·좌상 표지"
+      ],
+      "relations": [
+        {
+          "subject": "fish",
+          "type": "within",
+          "object": "flowing_streams"
+        },
+        {
+          "subject": "streams",
+          "type": "associated_with",
+          "object": "ea_enki"
+        }
+      ],
+      "confusion_boundaries": [
+        "일반 바다·분수·포세이돈의 삼지창으로 대체하지 않는다",
+        "압주라는 개념만으로 같은 인물 외형을 강제하지 않는다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "Fish remain within the depicted streams associated with the specified Ea-Enki figure.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "pazuzu_lamashtu_role",
+      "title": "파주주·라마슈투 역할 경계",
+      "reference_rows": [
+        165,
+        166
+      ],
+      "source_ids": [
+        "pazuzu"
+      ],
+      "variant_scope": "루브르가 설명한 보호 관계",
+      "observable_components": [
+        "선택한 파주주 실물 표상",
+        "별도 기록된 라마슈투와 보호 대상"
+      ],
+      "relations": [
+        {
+          "subject": "pazuzu",
+          "type": "protective_opposition_to",
+          "object": "lamashtu"
+        }
+      ],
+      "confusion_boundaries": [
+        "악마 명칭·혼합 몸이 보호 역할을 지우지 않는다",
+        "라마슈투 지물을 파주주 몸에 혼합하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Retain Pazuzu's documented protective opposition without merging it with Lamashtu.",
+      "phase": "B",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "fire_altar_identity",
+      "title": "불의 제단 외형과 종교 정체 한계",
+      "reference_rows": [
+        169
+      ],
+      "source_ids": [
+        "fire_altar"
+      ],
+      "variant_scope": "Iranica의 역사·식별 한계",
+      "observable_components": [
+        "그릇·받침 또는 제단의 형상",
+        "불이 담긴 위치",
+        "시대·소장 출처는 별도 기록"
+      ],
+      "relations": [
+        {
+          "subject": "flame_if_requested",
+          "type": "contained_by",
+          "object": "fire_holder"
+        }
+      ],
+      "confusion_boundaries": [
+        "불을 올린 용기만으로 조로아스터교 제의라고 확정하지 않는다",
+        "향로·난로·노천 불과 의미를 일괄 병합하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Separate the fire-holder's visible construction from its historically established ritual identification.",
+      "phase": "B",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "chinvat_narrative",
+      "title": "친바트 다리의 심판 장소",
+      "reference_rows": [
+        171,
+        282
+      ],
+      "source_ids": [
+        "chinvat"
+      ],
+      "variant_scope": "분다히슌 등 문헌의 지리·사후 서사",
+      "observable_components": [
+        "다리와 양쪽 공간의 연결",
+        "선택 각색의 사후 인물",
+        "문헌 근거와 상상된 건축 외형의 분리"
+      ],
+      "relations": [
+        {
+          "subject": "bridge",
+          "type": "connects",
+          "object": "two_afterlife_regions"
+        }
+      ],
+      "confusion_boundaries": [
+        "북유럽 비프로스트의 무지개·발할라 요소를 자동 추가하지 않는다",
+        "문헌만으로 단일 길이·재료·수호자 수를 인증하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Keep the Chinvat judgment crossing distinct from other mythic bridges and mark imagined geometry as interpretation.",
+      "phase": "B",
+      "evidence_level": "NARRATIVE_SOURCE_NOT_FIXED_ICONOGRAPHY"
+    },
+    {
+      "unit_id": "siren_human_bird",
+      "title": "고대 사이렌의 인간–새 연결",
+      "reference_rows": [
+        185
+      ],
+      "source_ids": [
+        "siren"
+      ],
+      "variant_scope": "남이탈리아·시칠리아 테라코타 도상",
+      "observable_components": [
+        "인간 머리 또는 상체",
+        "새의 몸·날개·발",
+        "인간부와 조류부 연결"
+      ],
+      "relations": [
+        {
+          "subject": "human_head_or_torso",
+          "type": "joins",
+          "object": "avian_body"
+        }
+      ],
+      "confusion_boundaries": [
+        "현대 인어의 물고기 꼬리와 고대 사이렌을 동일시하지 않는다",
+        "여성 사자 몸 스핑크스와 몸 소유를 섞지 않는다"
+      ],
+      "slot_hint": "anatomical_connection",
+      "description_en": "The selected ancient siren connects a human upper form to an avian body.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "sphinx_greek",
+      "title": "그리스 스핑크스의 사자 몸",
+      "reference_rows": [
+        186
+      ],
+      "source_ids": [
+        "sphinx"
+      ],
+      "variant_scope": "기원전 6세기 말–5세기 초 청동",
+      "observable_components": [
+        "여성 머리 표상",
+        "사자 몸",
+        "날개가 몸에 연결됨"
+      ],
+      "relations": [
+        {
+          "subject": "human_head",
+          "type": "joins",
+          "object": "lion_body"
+        },
+        {
+          "subject": "wings",
+          "type": "attach_to",
+          "object": "lion_body"
+        }
+      ],
+      "confusion_boundaries": [
+        "이집트 스핑크스에 그리스 여성 얼굴·날개를 강제하지 않는다",
+        "사이렌의 새 몸·그리핀의 독수리 머리와 구별한다"
+      ],
+      "slot_hint": "anatomical_connection",
+      "description_en": "The selected Greek sphinx combines a female human head, lion body and attached wings.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "griffin_eagle_lion",
+      "title": "그리핀의 독수리–사자 연결",
+      "reference_rows": [
+        187
+      ],
+      "source_ids": [
+        "griffin"
+      ],
+      "variant_scope": "남이탈리아 9–10세기 기독교 부조 표본",
+      "observable_components": [
+        "독수리 머리와 부리",
+        "독수리 날개",
+        "사자 몸·뒷다리"
+      ],
+      "relations": [
+        {
+          "subject": "eagle_head_and_wings",
+          "type": "join",
+          "object": "lion_body"
+        }
+      ],
+      "confusion_boundaries": [
+        "인간 얼굴 스핑크스·날개 달린 말과 구별한다",
+        "동물 혼합 형상이 하나의 종교 정체를 보편적으로 뜻하지 않는다"
+      ],
+      "slot_hint": "anatomical_connection",
+      "description_en": "The selected griffin links eagle head and wings to the lion body without a human face.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "odin_attributes",
+      "title": "오딘의 한 눈·두 까마귀",
+      "reference_rows": [
+        200
+      ],
+      "source_ids": [
+        "odin"
+      ],
+      "variant_scope": "스웨덴 역사박물관의 인물 설명",
+      "observable_components": [
+        "선택 표상에서 한 눈 상태",
+        "서로 구별되는 두 까마귀",
+        "까마귀와 오딘의 동반 관계"
+      ],
+      "relations": [
+        {
+          "subject": "two_ravens",
+          "type": "accompany",
+          "object": "odin"
+        }
+      ],
+      "confusion_boundaries": [
+        "외눈 인물·검은 새만으로 오딘을 확정하지 않는다",
+        "한 눈을 가린 구도에서 잃은 눈의 신체 상태를 추정하지 않는다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The specified Odin representation shows two distinct accompanying ravens while its chosen eye state is readable.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "sleipnir_eight_legs",
+      "title": "슬레이프니르 여덟 다리",
+      "reference_rows": [
+        211
+      ],
+      "source_ids": [
+        "odin",
+        "sleipnir_stone"
+      ],
+      "variant_scope": "여덟 다리 말 표상; 그림돌 해석은 맥락",
+      "observable_components": [
+        "같은 말 몸에 연결된 여덟 다리",
+        "각 다리의 관절·발굽",
+        "겹친 두 말과 구별되는 하나의 몸"
+      ],
+      "relations": [
+        {
+          "subject": "eight_distinct_legs",
+          "type": "attach_to",
+          "object": "one_horse_body"
+        }
+      ],
+      "confusion_boundaries": [
+        "숨은 다리를 추정해서 여덟 개 PASS로 세지 않는다",
+        "장례 운반자 해석을 모든 여덟 다리 도상의 사실로 고정하지 않는다"
+      ],
+      "slot_hint": "anatomical_connection",
+      "description_en": "Eight separately traceable legs belong to one horse body rather than two overlapping horses.",
+      "phase": "C",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "babayaga_hut",
+      "title": "바바 야가의 닭발 오두막",
+      "reference_rows": [
+        214
+      ],
+      "source_ids": [
+        "babayaga"
+      ],
+      "variant_scope": "박물관이 소개한 현대 동화 삽화 전승",
+      "observable_components": [
+        "집 모양 오두막",
+        "닭 다리형 받침",
+        "집과 다리의 연결"
+      ],
+      "relations": [
+        {
+          "subject": "chicken_legs",
+          "type": "support",
+          "object": "hut"
+        }
+      ],
+      "confusion_boundaries": [
+        "닭이 집 앞에 서 있는 것과 구별한다",
+        "이 현대 삽화의 문·울타리를 모든 역사 판본에 고정하지 않는다"
+      ],
+      "slot_hint": "location",
+      "description_en": "The hut is supported by attached chicken-like legs rather than ordinary posts.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "babayaga_mortar",
+      "title": "바바 야가의 절구 이동형",
+      "reference_rows": [
+        214
+      ],
+      "source_ids": [
+        "babayaga"
+      ],
+      "variant_scope": "같은 동화 전승의 절구·공이",
+      "observable_components": [
+        "절구 형태 이동 용기",
+        "그 안의 바바 야가",
+        "별도 공이"
+      ],
+      "relations": [
+        {
+          "subject": "babayaga",
+          "type": "rides_in",
+          "object": "mortar"
+        },
+        {
+          "subject": "pestle",
+          "type": "associated_with",
+          "object": "rider"
+        }
+      ],
+      "confusion_boundaries": [
+        "빗자루만 탄 일반 마녀로 대체하지 않는다",
+        "모든 판본에서 공이·빗자루의 정확한 손 배치를 추정하지 않는다"
+      ],
+      "slot_hint": "action",
+      "description_en": "The specified figure rides within a mortar-shaped vessel with a separate pestle.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "sheela_interpretation",
+      "title": "실라 나 긱의 형태와 기능 보류",
+      "reference_rows": [
+        220,
+        269
+      ],
+      "source_ids": [
+        "sheela"
+      ],
+      "variant_scope": "보일 수도원 사례; 기능 해석은 복수",
+      "observable_components": [
+        "건축물의 조각형 인물",
+        "선택 원본의 다리·손 배치",
+        "원본에 있는 신체 노출 표지"
+      ],
+      "relations": [
+        {
+          "subject": "carved_figure",
+          "type": "installed_on",
+          "object": "architectural_surface"
+        }
+      ],
+      "confusion_boundaries": [
+        "노출 외형을 곧 풍요·음란·경고 중 하나로 확정하지 않는다",
+        "벨라우 딜루카이와 공통 기능의 동의어로 병합하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "Retain the documented carved pose while keeping competing functional interpretations in provenance.",
+      "phase": "C",
+      "evidence_level": "FUNCTION_DISPUTED_REFERENCE_IMAGE_REVIEW_REQUIRED"
+    },
+    {
+      "unit_id": "selkie_skin_change",
+      "title": "셀키의 가죽 변신",
+      "reference_rows": [
+        216
+      ],
+      "source_ids": [
+        "selkie"
+      ],
+      "variant_scope": "스코틀랜드 전승을 해석한 현대 미술 맥락",
+      "observable_components": [
+        "인간형 또는 물개형의 선택 단계",
+        "벗겨진 물개 가죽",
+        "가죽과 인물의 소유 관계"
+      ],
+      "relations": [
+        {
+          "subject": "seal_skin",
+          "type": "separate_from",
+          "object": "human_form"
+        }
+      ],
+      "confusion_boundaries": [
+        "물고기 꼬리 인어와 같은 몸으로 만들지 않는다",
+        "한 컷에서 변신 전·중·후를 모두 성립했다고 주장하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Specify one selkie transformation stage and keep the shed seal skin distinct from the human form.",
+      "phase": "B",
+      "evidence_level": "NARRATIVE_AND_ARTIST_INTERPRETATION"
+    },
+    {
+      "unit_id": "nkisi_container_scope",
+      "title": "은키시의 물건과 권능 맥락",
+      "reference_rows": [
+        221
+      ],
+      "source_ids": [
+        "nkisi"
+      ],
+      "variant_scope": "콩고 19–20세기 물건의 추가물",
+      "observable_components": [
+        "선택한 목조 형상",
+        "그 형상에 부착된 천·종·비즈 등",
+        "내용물과 외함의 구별"
+      ],
+      "relations": [
+        {
+          "subject": "attachments",
+          "type": "added_to",
+          "object": "nkisi_object"
+        }
+      ],
+      "confusion_boundaries": [
+        "모든 은키시에 못을 필수로 추가하지 않는다",
+        "감춰진 약재·권능의 존재를 표면 픽셀로 인증하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The selected nkisi preserves its documented attachments without requiring nails in every form.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "mangaaka_nkondi",
+      "title": "망가카 은콘디의 자세·금속",
+      "reference_rows": [
+        222
+      ],
+      "source_ids": [
+        "nkondi"
+      ],
+      "variant_scope": "콩고·앙골라 해안 19세기 말 작품",
+      "observable_components": [
+        "앞으로 기울며 손을 허리에 둔 형상",
+        "상체에 박힌 금속",
+        "복부 저장부 흔적과 mpu 머리 장식"
+      ],
+      "relations": [
+        {
+          "subject": "figure.hands",
+          "type": "rest_on",
+          "object": "figure.hips"
+        },
+        {
+          "subject": "metal_elements",
+          "type": "embedded_in",
+          "object": "figure.torso"
+        },
+        {
+          "subject": "recess",
+          "type": "in",
+          "object": "figure.abdomen"
+        }
+      ],
+      "confusion_boundaries": [
+        "일반 저주 인형·실제 사람의 신체 피해로 대체하지 않는다",
+        "모든 금속을 동일 못·새 상처로 통일하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The Mangaaka figure retains hands-on-hips posture, embedded metal and the separate abdominal recess.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "mami_wata_snake",
+      "title": "마미 와타의 뱀 표본",
+      "reference_rows": [
+        226
+      ],
+      "source_ids": [
+        "mami"
+      ],
+      "variant_scope": "아낭·이비비오 해당 조각; 다른 지역형과 분리",
+      "observable_components": [
+        "여성형 인물 표상",
+        "인물이 들거나 걸친 뱀",
+        "몸의 하단 형상은 해당 원본으로 확정"
+      ],
+      "relations": [
+        {
+          "subject": "snake",
+          "type": "held_or_draped_by",
+          "object": "mami_wata_figure"
+        }
+      ],
+      "confusion_boundaries": [
+        "물의 신격이라는 말만으로 물고기 꼬리를 추가하지 않는다",
+        "지역·작가·시대가 다른 도상을 하나의 표준형으로 고정하지 않는다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The selected Mami Wata form keeps the snake-to-figure ownership relation without assuming a mermaid tail.",
+      "phase": "B",
+      "evidence_level": "SEARCH_EXCERPT_BODY_REACCESS_BLOCKED"
+    },
+    {
+      "unit_id": "egungun_partial_garment",
+      "title": "에궁군 속의복 표본의 한계",
+      "reference_rows": [
+        225
+      ],
+      "source_ids": [
+        "egungun"
+      ],
+      "variant_scope": "Met 소장 속의복 한 점",
+      "observable_components": [
+        "한 벌 속의복의 직물",
+        "그 의복의 경계",
+        "완전한 가면·겉복·공연은 별도 자료"
+      ],
+      "relations": [
+        {
+          "subject": "undergarment",
+          "type": "component_of",
+          "object": "possible_masquerade_ensemble"
+        }
+      ],
+      "confusion_boundaries": [
+        "속의복 하나를 완전한 에궁군 의례복으로 인증하지 않는다",
+        "직물만으로 착용자의 실제 정체·조상을 판정하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Treat the documented undergarment as one component, pending a source for the complete ensemble.",
+      "phase": "B",
+      "evidence_level": "PARTIAL_OBJECT_CANNOT_ESTABLISH_WHOLE"
+    },
+    {
+      "unit_id": "drapo_material",
+      "title": "드라포의 봉헌 깃발",
+      "reference_rows": [
+        228
+      ],
+      "source_ids": [
+        "drapo"
+      ],
+      "variant_scope": "포울러 전시의 20세기 아이티 제의 깃발",
+      "observable_components": [
+        "직물 바탕",
+        "스팽글·비즈·아플리케 장식",
+        "선택한 루아의 중심 도상과 테두리"
+      ],
+      "relations": [
+        {
+          "subject": "beads_and_sequins",
+          "type": "decorate",
+          "object": "textile_flag"
+        },
+        {
+          "subject": "dedication_record",
+          "type": "names",
+          "object": "specific_lwa"
+        }
+      ],
+      "confusion_boundaries": [
+        "바닥 베베와 깃발을 같은 재료·동의어로 처리하지 않는다",
+        "한 깃발의 루아 표지를 다른 신격으로 자동 옮기지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "A textile drapo shows its stitched beads or sequins and the selected dedicated image.",
+      "phase": "A",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "gede_distinct_name",
+      "title": "파파 게데 깃발의 명칭 보존",
+      "reference_rows": [
+        233
+      ],
+      "source_ids": [
+        "gede_flag"
+      ],
+      "variant_scope": "파파 게데 헌정 깃발에 대한 별도 비교 자료",
+      "observable_components": [
+        "그 깃발의 헌정 이름",
+        "선정된 도상·문자",
+        "깃발의 제작자·시대 기록"
+      ],
+      "relations": [
+        {
+          "subject": "dedication",
+          "type": "names",
+          "object": "papa_gede"
+        }
+      ],
+      "confusion_boundaries": [
+        "게데 계열을 바롱 사메디 하나로 무조건 병합하지 않는다",
+        "이 자료는 바롱 사메디 고정 도상의 직접 증거가 아니다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Preserve the Papa Gede dedication as distinct comparison context for the requested Baron Samedi research.",
+      "phase": "B",
+      "evidence_level": "COMPARISON_SOURCE_NOT_REQUESTED_FIGURE_EVIDENCE"
+    },
+    {
+      "unit_id": "poto_relation",
+      "title": "포토 미탕의 공간 관계",
+      "reference_rows": [
+        230
+      ],
+      "source_ids": [
+        "poto"
+      ],
+      "variant_scope": "포울러 공개 연구의 제의 중심 기둥 맥락",
+      "observable_components": [
+        "선택 기록의 중심 기둥",
+        "기둥 주위의 집행 공간",
+        "기둥·제단·깃발을 별도 물건으로 기록"
+      ],
+      "relations": [
+        {
+          "subject": "ceremonial_space",
+          "type": "organized_around",
+          "object": "central_post"
+        }
+      ],
+      "confusion_boundaries": [
+        "중심 기둥이 있는 모든 방을 같은 제의 공간으로 판정하지 않는다",
+        "공개 시각자료를 실제 제의 절차 지시로 바꾸지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Keep the documented central-post spatial relation separate from the altar and flag objects.",
+      "phase": "B",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "coatlicue_sculpture",
+      "title": "코아틀리쿠에 뱀·목걸이 조합",
+      "reference_rows": [
+        235,
+        238
+      ],
+      "source_ids": [
+        "coatlicue"
+      ],
+      "variant_scope": "INAH가 설명한 멕시카 조각",
+      "observable_components": [
+        "뱀으로 구성된 치마",
+        "손·심장·중앙 두개골의 목걸이",
+        "쌍두 뱀 허리 장식"
+      ],
+      "relations": [
+        {
+          "subject": "serpent_forms",
+          "type": "compose",
+          "object": "skirt"
+        },
+        {
+          "subject": "hands_hearts_and_skull",
+          "type": "compose",
+          "object": "necklace"
+        },
+        {
+          "subject": "serpent_belt",
+          "type": "at",
+          "object": "waist"
+        }
+      ],
+      "confusion_boundaries": [
+        "무작위 해골·뱀 여신과 같은 조합으로 축소하지 않는다",
+        "신격 동일성 논쟁·머리 구조의 세부는 원본 재검토까지 별도"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The selected sculpture retains the serpent skirt, specific necklace components and serpent belt as separate structures.",
+      "phase": "C",
+      "evidence_level": "SEARCH_EXCERPT_BODY_REACCESS_BLOCKED"
+    },
+    {
+      "unit_id": "ballgame_player",
+      "title": "공놀이 선수의 허리 장비",
+      "reference_rows": [
+        240,
+        241
+      ],
+      "source_ids": [
+        "ballplayer"
+      ],
+      "variant_scope": "노필로아 도기 선수 표본",
+      "observable_components": [
+        "선수의 몸",
+        "허리 둘레 장비",
+        "몸과 장비의 착용 연결"
+      ],
+      "relations": [
+        {
+          "subject": "protective_waist_gear",
+          "type": "encircles",
+          "object": "player.waist"
+        }
+      ],
+      "confusion_boundaries": [
+        "도기 표현의 장비가 실제 무거운 돌 요크 착용의 증거는 아니다",
+        "축구·농구 장면으로 대체하지 않는다"
+      ],
+      "slot_hint": "wearable_accessory",
+      "description_en": "The specified ballplayer wears a distinct protective waist form around the torso.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "hacha_notch",
+      "title": "아차의 연결 홈",
+      "reference_rows": [
+        241
+      ],
+      "source_ids": [
+        "hacha"
+      ],
+      "variant_scope": "베라크루스 7–9세기 석제품",
+      "observable_components": [
+        "도끼형 얇은 석조 형상",
+        "바닥의 각진 홈",
+        "요크 위에 얹히는 방향 관계"
+      ],
+      "relations": [
+        {
+          "subject": "hacha.base_notch",
+          "type": "fits_over",
+          "object": "yoke.top"
+        }
+      ],
+      "confusion_boundaries": [
+        "현대 도끼라는 이름에서 손잡이·찍기 동작을 추가하지 않는다",
+        "추정 연결 방식·끈 고정을 실물에 확인된 것으로 주장하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The hacha's angular base notch aligns over the yoke, without adding an unrecorded handle.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "ballgame_sacrifice_limit",
+      "title": "공놀이–희생–재생의 인과 한계",
+      "reference_rows": [
+        239,
+        240,
+        280,
+        281
+      ],
+      "source_ids": [
+        "ballgame"
+      ],
+      "variant_scope": "Met가 설명한 엘 타힌·치첸이트사 부조 사례",
+      "observable_components": [
+        "선택 희생 장면과 경기 공간",
+        "참수 인물 목에서 이어지는 뱀·식물",
+        "경기 인물과 희생 대상의 역할 분리"
+      ],
+      "relations": [
+        {
+          "subject": "serpents_and_vegetation",
+          "type": "emerge_from",
+          "object": "decapitated_neck"
+        }
+      ],
+      "confusion_boundaries": [
+        "경기 패자를 항상 희생했다고 규칙화하지 않는다",
+        "모든 경기 장면에 희생·피를 자동 삽입하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Preserve the selected regenerative motif while leaving the identity and timing of sacrifice source-dependent.",
+      "phase": "C",
+      "evidence_level": "HISTORICAL_MECHANISM_UNCERTAIN"
+    },
+    {
+      "unit_id": "hero_twins_xibalba",
+      "title": "영웅 쌍둥이와 시발바의 문헌 맥락",
+      "reference_rows": [
+        242,
+        243
+      ],
+      "source_ids": [
+        "ballgame"
+      ],
+      "variant_scope": "포폴 부와 경기·저승 서사의 설명",
+      "observable_components": [
+        "선택한 두 형제 또는 두 쌍의 사건 단계",
+        "공놀이와 저승의 관계",
+        "실제 인물 수는 해당 대목에 따라 확정"
+      ],
+      "relations": [
+        {
+          "subject": "named_brothers",
+          "type": "play_against",
+          "object": "lords_of_xibalba"
+        }
+      ],
+      "confusion_boundaries": [
+        "모든 장면을 두 사람으로 고정하지 않는다",
+        "그리스 카타바시스나 기독교 지하세계 구조로 자동 교체하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Choose the specific Popol Vuh episode before fixing actor count and Underworld imagery.",
+      "phase": "C",
+      "evidence_level": "NARRATIVE_SOURCE_NOT_FIXED_ICONOGRAPHY"
+    },
+    {
+      "unit_id": "hei_tiki_object",
+      "title": "헤이 티키의 실제 물건 기록",
+      "reference_rows": [
+        245
+      ],
+      "source_ids": [
+        "hei_tiki"
+      ],
+      "variant_scope": "Te Papa 1750–1850년 표본",
+      "observable_components": [
+        "목걸이형 인간 표상",
+        "선정 물건의 포우나무 재료·패화 눈"
+      ],
+      "relations": [
+        {
+          "subject": "carved_figure",
+          "type": "forms",
+          "object": "pendant"
+        },
+        {
+          "subject": "inset_eyes",
+          "type": "in",
+          "object": "carved_head"
+        }
+      ],
+      "confusion_boundaries": [
+        "모든 태평양 인물 조각을 tiki 하나로 묶지 않는다",
+        "풍요 기능·연대·진품성을 표면만으로 인증하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The selected hei-tiki retains its pendant form and documented inset-eye material.",
+      "phase": "B",
+      "evidence_level": "CURATORIAL_DESCRIPTION",
+      "non_pixel_claims": [
+        "정확한 관절·머리 방향은 물건별 확인"
+      ]
+    },
+    {
+      "unit_id": "ngalyod_regional",
+      "title": "서부 아넘랜드 무지개뱀",
+      "reference_rows": [
+        246
+      ],
+      "source_ids": [
+        "ngalyod"
+      ],
+      "variant_scope": "이리왈라·피터 마랄왕가 등 지역·작가 표본",
+      "observable_components": [
+        "선정 작가의 뱀 몸 형상",
+        "그 표본의 복합 동물 부분",
+        "명시된 경우 깃털 머리 장식"
+      ],
+      "relations": [
+        {
+          "subject": "selected_animal_parts",
+          "type": "compose",
+          "object": "regional_serpent_form"
+        }
+      ],
+      "confusion_boundaries": [
+        "이름에 rainbow가 있다고 무지개색 일반 뱀으로 대체하지 않는다",
+        "다른 원주민 지역·클랜의 문양 권한과 표상을 하나로 합치지 않는다"
+      ],
+      "slot_hint": "anatomical_connection",
+      "description_en": "Use the selected artist's regional serpent structure and documented headdress, rather than a generic rainbow-colored snake.",
+      "phase": "C",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "barong_rangda_balance",
+      "title": "바롱·랑다의 인물·가면·역할",
+      "reference_rows": [
+        247,
+        248
+      ],
+      "source_ids": [
+        "barong_rangda"
+      ],
+      "variant_scope": "박물관 전시 안내의 발리 설명",
+      "observable_components": [
+        "서로 구별되는 두 가면형",
+        "가면·의복·착용자 연결",
+        "선택 공연의 상대 위치"
+      ],
+      "relations": [
+        {
+          "subject": "performer",
+          "type": "wears",
+          "object": "named_mask"
+        },
+        {
+          "subject": "barong_form",
+          "type": "contrasts_with",
+          "object": "rangda_form"
+        }
+      ],
+      "confusion_boundaries": [
+        "두 도상의 균형 맥락을 단순 악역 제거로 변형하지 않는다",
+        "의례 가면을 실제 배우자의 생물학적 얼굴로 흡수하지 않는다"
+      ],
+      "slot_hint": "costume_style",
+      "description_en": "The selected performance keeps Barong and Rangda mask forms distinct from their wearers.",
+      "phase": "C",
+      "evidence_level": "REFERENCE_IMAGE_REVIEW_REQUIRED"
+    },
+    {
+      "unit_id": "dilukai_gable",
+      "title": "벨라우 딜루카이의 건축 설치",
+      "reference_rows": [
+        249,
+        269
+      ],
+      "source_ids": [
+        "dilukai"
+      ],
+      "variant_scope": "벨라우 19세기 말–20세기 초 gable figure",
+      "observable_components": [
+        "목조 여성형 도상",
+        "선정 실물의 자세·노출",
+        "남성 집 출입구 위 박공 설치"
+      ],
+      "relations": [
+        {
+          "subject": "dilukai_figure",
+          "type": "installed_above",
+          "object": "mens_house_entrance"
+        }
+      ],
+      "confusion_boundaries": [
+        "실라 나 긱과 동일한 기능·기원으로 합치지 않는다",
+        "박물관의 전승 설명과 살아 있는 사람의 성적 성향을 혼동하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The selected wooden Dilukai remains a gable figure above the men's-house entrance.",
+      "phase": "C",
+      "evidence_level": "REFERENCE_IMAGE_REVIEW_REQUIRED"
+    },
+    {
+      "unit_id": "coniunctio_scope",
+      "title": "콘융크티오의 합일 도상",
+      "reference_rows": [
+        252
+      ],
+      "source_ids": [
+        "alchemy"
+      ],
+      "variant_scope": "쿠스토스 1633년 해당 판화",
+      "observable_components": [
+        "선정 판화의 합일 도상",
+        "동일 판화 안 상징·문자 구역",
+        "물질 변환과 인물 사건의 해석 분리"
+      ],
+      "relations": [
+        {
+          "subject": "emblem_record",
+          "type": "represents",
+          "object": "alchemical_conjunction"
+        }
+      ],
+      "confusion_boundaries": [
+        "곧바로 성교·결혼·탄트라 합일로 동의어 처리하지 않는다",
+        "시대·저작이 다른 상징을 하나의 실험 레시피로 섞지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Scope conjunction symbolism to the selected alchemical plate.",
+      "phase": "C",
+      "evidence_level": "CONTEXT_ONLY"
+    },
+    {
+      "unit_id": "rebis_two_heads",
+      "title": "레비스의 두 머리·날개형",
+      "reference_rows": [
+        256,
+        267
+      ],
+      "source_ids": [
+        "rebis"
+      ],
+      "variant_scope": "Lux Lucens in tenebris 1584 도판",
+      "observable_components": [
+        "연결된 한 몸에 두 머리",
+        "선택 도판의 날개",
+        "각 손의 거울·돌 표지"
+      ],
+      "relations": [
+        {
+          "subject": "two_heads",
+          "type": "attach_to",
+          "object": "shared_body"
+        },
+        {
+          "subject": "wings",
+          "type": "attach_to",
+          "object": "shared_body"
+        }
+      ],
+      "confusion_boundaries": [
+        "한 머리 반신 아르다나리슈바라와 다르다",
+        "다른 레비스 도판의 도구·다리 수를 이 표본에 합치지 않는다"
+      ],
+      "slot_hint": "anatomical_connection",
+      "description_en": "The selected 1584 emblem connects two heads and wings to its shared body.",
+      "phase": "C",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "rebis_three_legs",
+      "title": "합성체의 세 다리 변형",
+      "reference_rows": [
+        256,
+        267
+      ],
+      "source_ids": [
+        "rebis"
+      ],
+      "variant_scope": "Zentralbibliothek 172, fol. VD 2, 15세기 도판",
+      "observable_components": [
+        "각기 머리·상체를 가진 두 인물부",
+        "골반에서 합쳐진 몸",
+        "공유된 세 다리와 뒤쪽 불사조"
+      ],
+      "relations": [
+        {
+          "subject": "two_torsos",
+          "type": "join_at",
+          "object": "hips"
+        },
+        {
+          "subject": "three_legs",
+          "type": "support",
+          "object": "joined_form"
+        },
+        {
+          "subject": "phoenix",
+          "type": "behind",
+          "object": "joined_form"
+        }
+      ],
+      "confusion_boundaries": [
+        "레비스 일반형을 한 몸 두 머리 두 다리로만 고정하지 않는다",
+        "세 번째 다리가 가려지면 성공으로 추정하지 않는다"
+      ],
+      "slot_hint": "anatomical_connection",
+      "description_en": "The selected joined-hip emblem keeps two torsos, three shared legs and the separate phoenix.",
+      "phase": "C",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "volvelle_layers",
+      "title": "볼벨의 회전 층 구조",
+      "reference_rows": [
+        260
+      ],
+      "source_ids": [
+        "alchemy"
+      ],
+      "variant_scope": "힐레·투르나이서 1574–75년 표본",
+      "observable_components": [
+        "한 중심축에 겹친 원판",
+        "층마다 별도 가장자리",
+        "회전 가능한 부재와 고정 바탕의 구별"
+      ],
+      "relations": [
+        {
+          "subject": "movable_discs",
+          "type": "pivot_around",
+          "object": "common_axis"
+        }
+      ],
+      "confusion_boundaries": [
+        "정적 동심원 그림을 볼벨로 판정하지 않는다",
+        "한 정지 사진에서 실제 회전 작동을 확인했다고 하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "Layered discs share a central pivot while retaining separate visible edges.",
+      "phase": "C",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "ripley_static_wheel",
+      "title": "리플리 정적 바퀴 도표",
+      "reference_rows": [
+        260
+      ],
+      "source_ids": [
+        "ripley_wheel"
+      ],
+      "variant_scope": "1652년 인쇄 도판",
+      "observable_components": [
+        "인쇄면의 동심 구역",
+        "도표 문자·행성 구역",
+        "회전 부재 없는 단일 면"
+      ],
+      "relations": [
+        {
+          "subject": "concentric_bands",
+          "type": "printed_on",
+          "object": "single_sheet"
+        }
+      ],
+      "confusion_boundaries": [
+        "wheel이라는 이름이 물리적 회전 도구를 뜻하지 않는다",
+        "볼벨의 회전판·피벗을 자동 추가하지 않는다"
+      ],
+      "slot_hint": "prop",
+      "description_en": "The Ripley diagram remains concentric printing on one sheet rather than layered rotating discs.",
+      "phase": "C",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "baphomet_levi_scope",
+      "title": "레비 바포메트의 역사적 범위",
+      "reference_rows": [
+        261
+      ],
+      "source_ids": [
+        "baphomet"
+      ],
+      "variant_scope": "레비 1854 최초 도상·1855–56 합본 속표지; Strube 2016",
+      "observable_components": [
+        "선정 레비 도상의 염소형 머리",
+        "인간형 몸과 도상 속 상반 표지"
+      ],
+      "relations": [
+        {
+          "subject": "goat_head",
+          "type": "joins",
+          "object": "selected_humanlike_emblem_body"
+        }
+      ],
+      "confusion_boundaries": [
+        "염소 머리 역오각별·현대 바포메트 동상과 같은 도상으로 병합하지 않는다",
+        "최초 등장 연도를 1856 하나로 단정하지 않는다"
+      ],
+      "slot_hint": "anatomical_connection",
+      "description_en": "Scope the goat-headed humanlike figure to the selected Levi print, preserving edition-specific details.",
+      "phase": "C",
+      "evidence_level": "CURATORIAL_DESCRIPTION",
+      "non_pixel_claims": [
+        "특정 도판의 제스처·문자는 원본 단위로 확인"
+      ]
+    },
+    {
+      "unit_id": "alchemy_process_context",
+      "title": "연금술의 실험실·색 단계 맥락",
+      "reference_rows": [
+        8,
+        250,
+        251,
+        253,
+        254,
+        255,
+        257,
+        258,
+        259,
+        262,
+        279
+      ],
+      "source_ids": [
+        "alchemy"
+      ],
+      "variant_scope": "전시 수준의 자료; 개별 용기·니그레도 등 별도 표본 필요",
+      "observable_components": [
+        "실험 도구·도식·상징 판화는 별도 매체",
+        "검정·흰색·적색은 요청된 변환 단계와 묶어 기록",
+        "특정 용기 형상·해체 인물은 출처 보강 전 보류"
+      ],
+      "relations": [
+        {
+          "subject": "process_stage_record",
+          "type": "scopes",
+          "object": "selected_emblem_or_apparatus"
+        }
+      ],
+      "confusion_boundaries": [
+        "검은 화면을 니그레도·붉은 화면을 루베도로 자동 판정하지 않는다",
+        "연금술을 모두 유럽 중세 실험실이나 하나의 마법 효능으로 고정하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Keep alchemical stage interpretations separate from the chosen apparatus or emblem's visible construction.",
+      "phase": "C",
+      "evidence_level": "CONTEXT_ONLY_REQUIRES_OBJECT_LEVEL_SOURCES"
+    },
+    {
+      "unit_id": "anasyrma_lifting",
+      "title": "아나시르마의 옷 올리기 관계",
+      "reference_rows": [
+        270
+      ],
+      "source_ids": [
+        "anasyrma"
+      ],
+      "variant_scope": "Met Journal 실물 연구의 치마 올림 모티프",
+      "observable_components": [
+        "입은 치마의 경계",
+        "손이 치마를 잡고 올림",
+        "옷의 움직임과 요청된 신체 노출 범위"
+      ],
+      "relations": [
+        {
+          "subject": "figure.hands",
+          "type": "lift",
+          "object": "figure.skirt"
+        }
+      ],
+      "confusion_boundaries": [
+        "금욕적 나체·옷 없는 인물·실라 나 긱과 같은 행위가 아니다",
+        "외형만으로 벽사·출산·음란 해석 하나를 확정하지 않는다"
+      ],
+      "slot_hint": "action",
+      "description_en": "The selected skirt-lifting motif preserves hand-to-cloth ownership and its requested exposure boundary.",
+      "phase": "C",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "danae_gold",
+      "title": "다나에의 황금비 서사",
+      "reference_rows": [
+        272
+      ],
+      "source_ids": [
+        "danae"
+      ],
+      "variant_scope": "티치아노 프라도 1565년 설명",
+      "observable_components": [
+        "다나에 인물",
+        "위에서 내려오는 황금비 표상",
+        "선택 그림의 침상·동반자 관계"
+      ],
+      "relations": [
+        {
+          "subject": "golden_shower",
+          "type": "descends_toward",
+          "object": "danae"
+        }
+      ],
+      "confusion_boundaries": [
+        "금색 조명·황금 드레스만으로 황금비 사건을 대체하지 않는다",
+        "인물의 실제 동의·욕망을 시각 표정에서 인증하지 않는다"
+      ],
+      "slot_hint": "composition",
+      "description_en": "The selected Danae representation keeps the descending golden shower distinct from ambient golden light.",
+      "phase": "C",
+      "evidence_level": "CURATORIAL_DESCRIPTION"
+    },
+    {
+      "unit_id": "leda_swan",
+      "title": "레다와 백조의 서사 변형",
+      "reference_rows": [
+        273
+      ],
+      "source_ids": [
+        "leda"
+      ],
+      "variant_scope": "NG151.1와 해당 신화의 복수 판본",
+      "observable_components": [
+        "레다와 별도 백조",
+        "선택 판본의 접촉 위치",
+        "그림 매체·시대형"
+      ],
+      "relations": [
+        {
+          "subject": "leda",
+          "type": "interacts_with",
+          "object": "separate_swan"
+        }
+      ],
+      "confusion_boundaries": [
+        "단순 백조 인물 사진이 이름 없이 이 신화를 자동 활성화하지 않는다",
+        "서사 판본의 관계·강제를 낭만이나 동의로 임의 번역하지 않는다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Select the requested Leda narrative version before assigning its contact geometry.",
+      "phase": "C",
+      "evidence_level": "NARRATIVE_VARIANTS_REQUIRE_OBJECT_REVIEW"
+    },
+    {
+      "unit_id": "persephone_abduction",
+      "title": "페르세포네 납치의 사건 경계",
+      "reference_rows": [
+        183,
+        274
+      ],
+      "source_ids": [
+        "persephone"
+      ],
+      "variant_scope": "Getty CONA의 명시적 납치 서사",
+      "observable_components": [
+        "명시된 데려가는 주체와 대상",
+        "요청한 이동·억류 관계",
+        "저승·계절 해석은 별도 맥락"
+      ],
+      "relations": [
+        {
+          "subject": "hades",
+          "type": "abducts",
+          "object": "persephone"
+        }
+      ],
+      "confusion_boundaries": [
+        "납치 사건을 자발적 연애·결혼 포즈로 바꾸지 않는다",
+        "모든 하데스·페르세포네 동반 장면이 납치 단계는 아니다"
+      ],
+      "slot_hint": "context_only",
+      "description_en": "Preserve the requested abduction event rather than inferring a consensual romance from a shared frame.",
+      "phase": "C",
+      "evidence_level": "NARRATIVE_SOURCE_NOT_FIXED_ICONOGRAPHY"
+    }
+  ]
+}

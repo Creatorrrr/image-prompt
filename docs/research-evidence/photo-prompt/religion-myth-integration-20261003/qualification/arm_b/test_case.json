@@ -1,0 +1,132 @@
+{
+  "schema_version": "religion-iconography-pixel-test/v1",
+  "arm": "arm_b",
+  "partial_is_fail": true,
+  "raw_request_file": "request_envelope.json",
+  "raw_request_sha256": "3b1ed5fc3c3b175976aedc3a3860a11e9e6c563a55ebab85c1c10b2ad1cd697a",
+  "test_stimuli_authority": "coordinator selected pool, not requester definition",
+  "randomization": {
+    "algorithm": "CPython random.Random(seed); randint(2,3) inclusive; sample(term_pool,n) without replacement; no reroll",
+    "python_version": "3.14.3 (main, Feb  3 2026, 15:32:20) [Clang 17.0.0 (clang-1700.6.3.2)]",
+    "random_seed": 1817895734,
+    "pool": [
+      "키마이라",
+      "그리스 세이렌",
+      "그리스 스핑크스",
+      "그리핀",
+      "사람 무릎이 남아 있는 네소스 켄타우로스"
+    ],
+    "selected_count": 2,
+    "selected_terms": [
+      "그리스 세이렌",
+      "키마이라"
+    ]
+  },
+  "concept_ko": "현대 박물관 블랙박스 무대에서 노래가 멎은 인간-새 세이렌과 사자·염소·뱀 키마이라가 마주하는 정교한 애니매트로닉 장면",
+  "choice_ownership": {
+    "selected_keywords": "agent randomized test choice from coordinator pool",
+    "counts_and_anatomical_variant": "agent test stimulus realization informed by primary sources",
+    "museum_staging_and_camera": "agent visual choice",
+    "reference_scope": "request derived limited visible appearance use, no identity claim"
+  },
+  "reference": {
+    "path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+    "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+    "inspected_with": "view_image",
+    "scope": [
+      "dark brown eyes",
+      "visible oval face appearance",
+      "straight short dark bob",
+      "wispy bangs"
+    ],
+    "fictional_subject": "explicitly adult female siren",
+    "identity_or_actual_age_inference": false
+  },
+  "keyword_tests": [
+    {
+      "keyword": "그리스 세이렌",
+      "entity_id": "siren_1",
+      "expected_count": 1,
+      "ALL_OF": [
+        {
+          "id": "siren_human_head",
+          "observable": "One adult human-shaped female face/head and neck on siren, with visible dark eyes and short dark bob cues."
+        },
+        {
+          "id": "siren_head_body_join",
+          "observable": "The same human neck enters one feather-covered avian trunk; junction is visible."
+        },
+        {
+          "id": "siren_two_wings",
+          "observable": "Exactly two feathered wings visibly root in that same avian trunk."
+        },
+        {
+          "id": "siren_two_bird_legs",
+          "observable": "Exactly two scaly avian legs end in taloned feet gripping the stone support, connected to the trunk."
+        },
+        {
+          "id": "siren_tail",
+          "observable": "Feathered bird tail is continuous with same trunk."
+        }
+      ],
+      "same_entity_join": "human neck -> bird trunk -> two wing roots, two avian legs, feathered tail",
+      "confusion_boundaries": [
+        "bird trunk must be visible, not just a woman with wing accessories",
+        "bird lower body with talons, not a mermaid fish tail",
+        "human face has a human mouth rather than eagle beak"
+      ]
+    },
+    {
+      "keyword": "키마이라",
+      "entity_id": "chimera_1",
+      "expected_count": 1,
+      "ALL_OF": [
+        {
+          "id": "chimera_lion_core",
+          "observable": "A lion head/mane connects to one tawny quadruped lion torso with four feline paw legs."
+        },
+        {
+          "id": "chimera_goat_head",
+          "observable": "One horned goat head and neck rise directly from the middle of that same lion back; dorsal junction visible."
+        },
+        {
+          "id": "chimera_snake_tail",
+          "observable": "A scaly tail starts at lion rump, follows a visible continuous curve, and ends in one distinct snake head."
+        },
+        {
+          "id": "chimera_single_body",
+          "observable": "Lion head, goat head and snake head all belong to the same continuous body; no independent goat or snake stands beside it."
+        }
+      ],
+      "same_entity_join": "lion head -> lion torso/back -> dorsal goat neck/head; lion rump -> snake-tail curve -> snake head",
+      "confusion_boundaries": [
+        "separate lion/goat/snake trio is not chimera",
+        "ordinary lion with ornamental goat emblem does not satisfy dorsal anatomy",
+        "lion with ordinary feline tail or unrelated ground snake fails snake-tail endpoint"
+      ]
+    }
+  ],
+  "shared_scene_tests": [
+    {
+      "id": "two_independent_entities",
+      "observable": "Exactly one siren and one chimera occupy the same floor/stage with separated contours and independent anatomies."
+    },
+    {
+      "id": "whole_structure_visibility",
+      "observable": "All required junctions and appendages are in frame and sufficiently exposed to inspect."
+    }
+  ],
+  "primary_sources": [
+    {
+      "term": "Greek siren bird form",
+      "url": "https://www.metmuseum.org/ko/perspectives/dangerous-beauty-interview-with-kiki-karoglou",
+      "used_for": "human head plus bird body and claws; human-bird rather than later mermaid variant"
+    },
+    {
+      "term": "Chimera joined anatomy",
+      "url": "https://www.getty.edu/cona/CONAIconographyRecord.aspx?iconid=901000661",
+      "used_for": "lion, goat head from back, tail terminating in snake head"
+    }
+  ],
+  "precore_access_attestation": "Only request/envelope, portrait via view_image, coordinator stimulus labels, SKILL.md files, neutral catalog, controls definitions/resolver and focused primary public sources consulted. No candidate/profile/source-script/test/research/sibling prompt accessed before this freeze."
+}

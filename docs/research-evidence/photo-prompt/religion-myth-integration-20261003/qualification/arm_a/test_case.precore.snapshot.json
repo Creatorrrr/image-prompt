@@ -1,0 +1,131 @@
+{
+  "schema_version": "religion-iconography-pixel-test-case/v1",
+  "arm": "arm_a",
+  "request_envelope_file_sha256": "3a20d3b7ce245b020abce78fc77ee3e412771ae62a3325958e91703257f297e7",
+  "request_sha256": "3b1ed5fc3c3b175976aedc3a3860a11e9e6c563a55ebab85c1c10b2ad1cd697a",
+  "stimuli_file_sha256": "b80458a5cf311ed539865df64cd150a28e68b053f0614855cf7473a6ddb21186",
+  "selection": {
+    "provenance": "coordinator_selected_labels_not_requester_definitions",
+    "random_seed": 297620939,
+    "python_version": "3.14.3",
+    "algorithm": "random.Random(seed); count=choice([2,3]); indices=sample(range(len(term_pool)),count)",
+    "term_pool": [
+      "무카르나스",
+      "미흐라브와 민바르",
+      "도교 의례복의 해·까마귀와 달·옥토끼",
+      "의례복 자수의 거북과 감긴 뱀",
+      "두광과 전신 만돌라"
+    ],
+    "count_draw": 2,
+    "indices_zero_based": [
+      3,
+      4
+    ],
+    "selected_terms": [
+      "의례복 자수의 거북과 감긴 뱀",
+      "두광과 전신 만돌라"
+    ],
+    "redraws": 0
+  },
+  "concept_ko": "북극의 봉합: 의복의 자수와 빛의 윤곽이 한 공연자를 잇는 드레스 리허설",
+  "historical_scope": "Fictional contemporary stage artwork; no claim that the combined costume and light forms describe an actual historical sect, ceremony, or person.",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+    "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+    "inspection": "view_image original, pre_core",
+    "role": "visible eye/face/bob-hair appearance reference only",
+    "fictional_subject_age": 28,
+    "identity_matching_evaluated": false,
+    "inferred_traits": []
+  },
+  "partial_is_fail": true,
+  "classification": [
+    "PASS",
+    "FAIL",
+    "UNOBSERVABLE"
+  ],
+  "overall_rule": "PASS only if every ALL_OF item is visibly supported in native pixels. Any missing required component is FAIL; obscured or too small to establish is UNOBSERVABLE and cannot make an overall PASS.",
+  "keywords": [
+    {
+      "keyword": "의례복 자수의 거북과 감긴 뱀",
+      "ownership": "One complete turtle-snake embroidered emblem on the central chest panel of the same robe worn by the single main performer.",
+      "ALL_OF": [
+        {
+          "id": "turtle_count",
+          "required": "Exactly one recognizable embroidered tortoise in the main chest emblem, with a domed segmented shell, distinct head, four visible legs, and short tail."
+        },
+        {
+          "id": "snake_count",
+          "required": "Exactly one embroidered snake in that emblem, with one distinct head and a continuous sinuous body."
+        },
+        {
+          "id": "entwined_relation",
+          "required": "That snake forms a readable coil around the same tortoise; a continuous section visibly crosses or encircles the shell rather than lying alongside it."
+        },
+        {
+          "id": "robe_embroidery_carrier",
+          "required": "The joined emblem is thread embroidery attached to one flat chest panel of the performer’s worn robe; it follows the textile surface and is visibly distinct from living animals or a loose accessory."
+        }
+      ],
+      "confusion_targets": [
+        "A tortoise and snake merely side by side",
+        "Dragon/serpent pattern without a tortoise",
+        "A snake-like robe tie or cord",
+        "Separate live animals",
+        "Generic scrollwork or a flower in place of the shell"
+      ]
+    },
+    {
+      "keyword": "두광과 전신 만돌라",
+      "ownership": "The same single performer owns both the head-centered circular nimbus and the full-body mandorla; both are stationary stage-light forms behind her.",
+      "ALL_OF": [
+        {
+          "id": "head_nimbus",
+          "required": "One circular luminous disk or ring centered directly behind the main performer’s head, visibly limited to the head region."
+        },
+        {
+          "id": "whole_body_mandorla",
+          "required": "One separate pointed almond-shaped luminous outline surrounds the entire performer from above the hair to below both shoes; both curved sides and top and bottom pointed cusps are visible."
+        },
+        {
+          "id": "distinct_nested_scopes",
+          "required": "The small circular head nimbus and large whole-body almond outline remain distinct forms, both aligned with and enclosing that same performer."
+        }
+      ],
+      "confusion_targets": [
+        "Only rim/back light on hair",
+        "A halo floating above the head",
+        "Only a head halo",
+        "A plain oval, circular ring, or doorway used as full-body mandorla",
+        "A cropped lower tip",
+        "Light outlines assigned to a second figure"
+      ]
+    }
+  ],
+  "gates_frozen_before_generation": true,
+  "source_provenance": [
+    {
+      "kind": "primary_public_web",
+      "url": "https://www.cooperhewitt.org/2017/12/02/robe-of-descent/",
+      "used_for": "Daoist robe material and the occurrence of turtle and snake motifs; museum discusses metallic thread embroidery. Specific joined staging is authored from the selected test label."
+    },
+    {
+      "kind": "primary_public_web_search_excerpt",
+      "url": "https://www.britishmuseum.org/collection/term/BIOG158294",
+      "used_for": "Xuanwu is documented as turtle-and-snake. Search excerpt used; direct open returned 403."
+    },
+    {
+      "kind": "primary_public_web_search_excerpt",
+      "url": "https://resources.metmuseum.org/resources/metpublications/pdf/The_Cloisters_Medieval_Art_and_Architecture_2005.pdf",
+      "used_for": "Mandorla glossary establishes the almond-shaped framing form; direct PDF open exceeded tool content length."
+    },
+    {
+      "kind": "agent_general_knowledge",
+      "used_for": "Difference between head nimbus and whole-body mandorla; contemporary engineered stage-light realization, observer view, and exact counts are agent choices."
+    }
+  ],
+  "candidate_data_access_before_freeze": false,
+  "candidate_exposure": null,
+  "adoptions": null,
+  "declines": null
+}
