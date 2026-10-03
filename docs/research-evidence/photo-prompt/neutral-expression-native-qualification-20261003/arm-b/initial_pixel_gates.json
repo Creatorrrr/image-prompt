@@ -1,0 +1,84 @@
+{
+  "contract_version": "agent-initial-native-pixel-gates/v1",
+  "arm": "B",
+  "provenance": "agent_authored_synthetic_test",
+  "not_requester_body_definition": true,
+  "timestamp_utc": "2026-10-03T02:35:50.942978+00:00",
+  "judgement_rule": "Each gate is mandatory for this synthetic test. partial_is_fail=true. Missing native pixels, occlusion or ambiguous evidence cannot pass. Prompt and retrieval evidence are separate from pixel evidence.",
+  "partial_is_fail": true,
+  "image_status": "not_generated",
+  "gates": [
+    {
+      "gate_id": "B1_vertical_length",
+      "axis": "willowy / length and proportion",
+      "requirement_ko": "머리부터 양발까지 크게 보이는 전신에서, 팔과 다리가 몸통에 비해 길게 이어지는 비율이 읽힌다. 광각 가장자리 늘어남이나 발끝 잘림으로 길이를 대신하지 않는다.",
+      "pixel_review_focus": [
+        "torso-to-leg relationship",
+        "arm length",
+        "both feet and full outline",
+        "projection distortion"
+      ],
+      "hard": true
+    },
+    {
+      "gate_id": "B2_narrow_frame",
+      "axis": "slender / lateral width",
+      "requirement_ko": "어깨와 골반의 가로 폭이 좁고 위팔·허벅지의 옆 윤곽이 가늘게 보인다. 긴 비율만으로 좁은 폭을 통과시키지 않는다.",
+      "pixel_review_focus": [
+        "shoulder outline",
+        "pelvic outline",
+        "upper-arm width",
+        "thigh width"
+      ],
+      "hard": true
+    },
+    {
+      "gate_id": "B3_shallow_arm_definition",
+      "axis": "sinewy / current surface definition",
+      "requirement_ko": "현재 가볍게 접촉 중인 팔에 길게 이어지는 얕은 근육 또는 힘줄 윤곽이 식별된다. 큰 근육 덩어리나 두드러진 혈관 망을 근거로 대체하지 않는다.",
+      "pixel_review_focus": [
+        "visible upper-arm and forearm surface",
+        "shallow elongated contour",
+        "lighting separable from anatomy"
+      ],
+      "hard": true
+    },
+    {
+      "gate_id": "B4_reference_face_hair",
+      "axis": "face and hair reference scope",
+      "requirement_ko": "참고의 짙은 단발·이마 앞 잔가닥·눈과 부드러운 얼굴 윤곽이 충분한 크기로 비교 가능하고 전반적인 얼굴·머리 외관 연결이 읽힌다. 체형은 참고 사진에서 가져온 것으로 판정하지 않는다.",
+      "pixel_review_focus": [
+        "face sufficiently resolved",
+        "chin-length dark bob",
+        "wispy forehead strands",
+        "overall visible face appearance"
+      ],
+      "boundary": "The authored subject is explicitly 28. Pixels do not establish numerical age or identity.",
+      "hard": true
+    },
+    {
+      "gate_id": "B5_hands_contact",
+      "axis": "action and consequential contact",
+      "requirement_ko": "서로 떨어진 양손이 각각 허리 높이의 다른 접근 가능한 짐벌 부품에 가볍게 닿고, 팔에서 손까지의 소유·연결·공간이 자연스럽게 이어진다.",
+      "pixel_review_focus": [
+        "two separated hands",
+        "one target per hand",
+        "reachable contact",
+        "connected joint chain"
+      ],
+      "hard": true
+    },
+    {
+      "gate_id": "B6_optical_scene",
+      "axis": "complex scene and visible moment",
+      "requirement_ko": "수직 분할 거울·원형 짐벌·저녁 작업등이 광학 시험실로 읽히며 작은 부품을 놓고 잠깐 멈춘 순간이 중앙 인물과 연결된다. 배경 물체만으로 행동을 판정하지 않는다.",
+      "pixel_review_focus": [
+        "vertical segmented mirror",
+        "circular gimbal",
+        "working-light setting",
+        "contact relation"
+      ],
+      "hard": true
+    }
+  ]
+}

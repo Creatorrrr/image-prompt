@@ -1,0 +1,100 @@
+{
+  "contract_version": "independent-supplemental-pixel-review/v1",
+  "arm": "a",
+  "initial_gate_file_sha256": "5fd4040ed869332f798cf9fc5e1580fdf4cb2be500825f16b5fb274e8fb24353",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/neutral-expression-native-qualification-20261003/arm-a/generated_images/arm-a-book-repair-20261003T032108Z/native.png",
+  "result_sha256": "7a2979a4cd3d3a4ce1f6cbb81bf87c33d8fac2caf7589c43ac45f1bb70361bbb",
+  "review_scale": "native_1237x1272",
+  "review_rule": "partial_is_fail",
+  "gates": [
+    {
+      "gate_id": "a_plump_lower_abdomen",
+      "frozen_meaning": "plump applied only to the lower abdomen",
+      "status": "fail",
+      "detail": "partial",
+      "region_xyxy": [
+        472,
+        688,
+        827,
+        917
+      ],
+      "evidence": "A faint lower-belly bulge is suggested under the ochre knit, but several horizontal rolls and hanging fabric folds dominate the below-navel area. The small localized soft forward body volume cannot be separated confidently from clothing bulk. Per the frozen confusion boundary, partial contour evidence fails."
+    },
+    {
+      "gate_id": "a_curvaceous_torso_contact",
+      "frozen_meaning": "curvaceous applied to the torso-side line, with lightly contacting rib knit",
+      "status": "fail",
+      "detail": "partial_and_unobservable",
+      "region_xyxy": [
+        464,
+        612,
+        846,
+        913
+      ],
+      "evidence": "The near arm overlaps the right-on-screen side outline through the lower rib and flank. The visible left/front textile edge changes only slightly, while horizontal wrinkles interrupt the side-to-belly read. Continuous inward and outward body curves under light knit contact cannot both be traced in the named near region."
+    },
+    {
+      "gate_id": "a_fleshy_upper_arms",
+      "frozen_meaning": "fleshy applied to exposed upper arms",
+      "status": "pass",
+      "detail": "observable",
+      "region_xyxy": [
+        722,
+        317,
+        926,
+        855
+      ],
+      "evidence": "The exposed near upper arm shows broad rounded soft thickness below the shoulder and a gently tapering transition toward the elbow. A soft inner-elbow shadow/fold is visible; there is no sharply segmented muscular plane. This is a local visual form observation, not a health or strength claim."
+    },
+    {
+      "gate_id": "a_reference_face_hair",
+      "frozen_meaning": "visible face/hair appearance reference only",
+      "status": "pass",
+      "detail": "observable_appearance_only",
+      "region_xyxy": [
+        409,
+        0,
+        777,
+        337
+      ],
+      "evidence": "The generated face keeps the reference-visible dark jaw-length bob, wispy separated fringe, natural eye structure and softly shaped lips, with a slight head/gaze change compatible with the work scene. The portrayal is adult; the exact authored age is only a text-side specification. No identity or source-person age claim is made."
+    },
+    {
+      "gate_id": "a_observable_evidence_space",
+      "frozen_meaning": "all three morphology signals remain assessable in one frame",
+      "status": "fail",
+      "detail": "critical_shape_occluded",
+      "region_xyxy": [
+        418,
+        0,
+        937,
+        1272
+      ],
+      "evidence": "The portrait crop retains the face, upper arm and lower torso, and the bench/book are to the side. However the near arm overlaps the essential lateral torso curve and the knit bunches across the lower belly; all three main morphology signals are not simultaneously resolvable."
+    },
+    {
+      "gate_id": "a_coherent_book_repair_scene",
+      "frozen_meaning": "complex authored context remains one plausible photograph",
+      "status": "pass",
+      "detail": "observable",
+      "region_xyxy": [
+        0,
+        542,
+        563,
+        1272
+      ],
+      "evidence": "One adult worker checks a loose cream thread at an open clothbound book resting on a low wooden workbench. The right fingers, thread loops and book edge have coherent contact. A wet alley and threshold behind her visibly ground the after-shower moment."
+    }
+  ],
+  "pass_count": 3,
+  "fail_count": 3,
+  "primary_meaning_results": {
+    "plump_lower_abdomen": "fail",
+    "curvaceous_torso": "fail",
+    "fleshy_upper_arm": "pass"
+  },
+  "overall_status": "fail",
+  "generation_status": "success",
+  "user_acceptance": "not_yet_received",
+  "interpretation_boundary": "The test definitions and pass/fail gates are this arm authored synthetic choices. A failed single render is evidence about this exact attempt, not proof that a lexical paraphrase or data update is generally wrong."
+}

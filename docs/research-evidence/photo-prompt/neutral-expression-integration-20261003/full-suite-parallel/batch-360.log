@@ -1,0 +1,24 @@
+..E
+======================================================================
+ERROR: test_v1_v2_exact_replay_and_photo_baseline_remain_immutable (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests.test_v1_v2_exact_replay_and_photo_baseline_remain_immutable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_subculture_illustration_universal_scene_v3.py", line 4697, in test_v1_v2_exact_replay_and_photo_baseline_remain_immutable
+    photo = validate_photo_regression_baseline(ASSET_ROOT)
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6408, in validate_photo_regression_baseline
+    _require(
+    ~~~~~~~~^
+        digest == baseline.get("sha256"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "current photo baseline candidate-pack bytes drift",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift
+
+----------------------------------------------------------------------
+Ran 3 tests in 23.670s
+
+FAILED (errors=1)

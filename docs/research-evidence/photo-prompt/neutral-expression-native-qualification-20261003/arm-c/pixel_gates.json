@@ -1,0 +1,73 @@
+{
+  "contract_version": "independent-native-pixel-gates/v1",
+  "arm": "c",
+  "author": "arm_c_agent",
+  "authority": "agent_synthetic_qualification_oracle_under_actual_user_test_authorization",
+  "not_actual_user_definitions": true,
+  "frozen_before_candidate_access": true,
+  "partial_is_fail": true,
+  "baseline_prompt_sha256": "fe789ae71227d3f9c505479068c768264a35316b6fd0f29e8c51fd93efcd10fc",
+  "raw_terms": [
+    "pouty lips",
+    "side-eye",
+    "supple",
+    "smooth"
+  ],
+  "inspection": "Full native image first, then native-resolution crops of face/eyes/lips, left hand/pouch and right hand/porcelain. No pixel-size enlargement can count as native detail.",
+  "gates": [
+    {
+      "gate_id": "c_reference_geometry_readability",
+      "term": "reference appearance",
+      "carrier": "main_subject_face_and_hair",
+      "pass": "The supplied short dark bob/wispy fringe and recognizable visible facial proportions guide the generated adult face. Eyes and natural upper/lower lip contours stay proportionate, and the face is large and clear enough for the mouth/gaze tests.",
+      "fail": "Face or hair appearance visibly drifts, eye/lip size is exaggerated to satisfy a label, or native facial detail is insufficient.",
+      "limits": "Face/hair visual appearance comparison only; no real identity, source age, consent, body or trait inference."
+    },
+    {
+      "gate_id": "c_current_eye_direction",
+      "term": "side-eye",
+      "carrier": "main_subject_eyes",
+      "pass": "Both pupils/irises visibly turn to the adult's anatomical left/screen right toward the raised lantern while her head remains nearly frontal.",
+      "fail": "Camera-directed eyes, opposing eye directions, a head turn substitutes for the lateral eyes, the target relation is contradictory, or native direction is unreadable.",
+      "limits": "Only current eye direction and target are judged. Distrust, irritation, personality and other inner states are not inferred."
+    },
+    {
+      "gate_id": "c_current_lip_action",
+      "term": "pouty lips",
+      "carrier": "main_subject_mouth",
+      "pass": "The current upper/lower lips visibly advance into a small compact forward pout/rounded opening with resting corners, retaining natural reference-relative contours.",
+      "fail": "Only larger intrinsic lip volume, a broad smile/grimace or neutral unprotruded mouth substitutes for the action, or native lips are too ambiguous to separate action from structure.",
+      "limits": "A single current mouth state; lip volume and current action are separate observations."
+    },
+    {
+      "gate_id": "c_skin_local_surface",
+      "term": "smooth",
+      "carrier": "main_subject_cheek_surface",
+      "pass": "Cheek planes show an even local surface and soft continuous light transitions with visible fine natural texture at native resolution.",
+      "fail": "Plastic/poreless rendering, exaggerated roughness, skin texture from a different carrier, or unreadable local texture.",
+      "limits": "Visible local surface only; no age, softness to touch, elasticity, hydration or health claims."
+    },
+    {
+      "gate_id": "c_pouch_visible_flex",
+      "term": "supple",
+      "carrier": "thin_dark_leather_map_pouch",
+      "pass": "The adult's left thumb visibly contacts and bends the thin leather pouch rim inward, forming broad soft folds while the table/left hand support the pouch.",
+      "fail": "Rigid pouch geometry, folds without relevant contact/deformation, deformation assigned to skin/cloth/another object, or unclear support/contact at native detail.",
+      "limits": "Current compliant-looking flexed state only; one still frame cannot prove recovery, repeated resilience or complete material behavior."
+    },
+    {
+      "gate_id": "c_porcelain_local_surface",
+      "term": "smooth",
+      "carrier": "palm_sized_porcelain_oval",
+      "pass": "The rigid oval in the right supporting palm has a continuous polished glazed surface and an even reflected highlight, visibly distinct from the leather folds and cheek texture.",
+      "fail": "Wrong material carrier, rough broken surface, flexible porcelain, missing/ambiguous sample, or a highlight alone with unreadable surface.",
+      "limits": "Visible local polish only; no tactile or internal material-property proof."
+    }
+  ],
+  "supplemental_whole_image_review": [
+    "The studio and market layer, print drying rack and raised lantern remain legible together with the sample-comparison pause.",
+    "The face and hands carry the focus without losing the complex current event.",
+    "Describe perceived impression without intensity labels before comparing the frozen sensual=1, fetish=0, creativity=1, surreal=0 direction.",
+    "Technical prompt/pixel qualification does not establish user aesthetic acceptance."
+  ]
+}

@@ -1,0 +1,485 @@
+{
+  "schema_version": "photo-prompt-research-extension/v1",
+  "slots": {
+    "silhouette_proportion": [
+      {
+        "id": "ne_regional_soft_volume",
+        "ko": "같은 성인의 지정한 몸 부위에 둥근 살집이 있고 인접 윤곽과 연속되는 형태",
+        "en": "Rounded fleshy volume of a named adult body region belongs to the same subject and continues into the neighboring regional contour.",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "adult",
+          "regional_contour"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "paraphrases": [
+          "같은 성인의 지정한 몸 부위에 둥근 살집이 있고 인접 윤곽과 연속되는 형태",
+          "Rounded fleshy volume of a named adult body region belongs to the same subject and continues into the neighboring regional contour.",
+          "지정된 아래배나 위팔의 국소 살집과 주변 윤곽이 같은 성인에게 연결된 형태",
+          "a plump named adult region with a rounded local volume and connected adjoining outline",
+          "a fleshy upper-arm region has rounded volume continuous with its connected arm contour"
+        ],
+        "keywords": [
+          "a named adult body region belongs to the same declared subject",
+          "rounded outward volume is visible in that named region",
+          "the regional outline joins its neighboring contour continuously"
+        ],
+        "embedding_text": "같은 성인의 지정한 몸 부위에 둥근 살집이 있고 인접 윤곽과 연속되는 형태 Rounded fleshy volume of a named adult body region belongs to the same subject and continues into the neighboring regional contour. 지정된 아래배나 위팔의 국소 살집과 주변 윤곽이 같은 성인에게 연결된 형태 a plump named adult region with a rounded local volume and connected adjoining outline a fleshy upper-arm region has rounded volume continuous with its connected arm contour",
+        "concept_units": [
+          "a named adult body region belongs to the same declared subject",
+          "rounded outward volume is visible in that named region",
+          "the regional outline joins its neighboring contour continuously"
+        ],
+        "relations": [
+          {
+            "id": "named_region_owner",
+            "type": "has_visible_property",
+            "subject": "main_subject",
+            "object": "Rounded fleshy volume of a named adult body region belongs to the same subject and continues into the neighboring regional contour."
+          }
+        ],
+        "affected_dimensions": [
+          "body_geometry"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body"
+          }
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "ne_regional_contour_transition",
+        "ko": "같은 성인 몸통의 지정 구간에서 들어간 선과 나온 선이 하나의 연속 윤곽으로 이어지는 형태",
+        "en": "A named segment of the same adult torso has both inward and outward curves joined continuously along its regional outline.",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "adult",
+          "regional_contour"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "paraphrases": [
+          "같은 성인 몸통의 지정 구간에서 들어간 선과 나온 선이 하나의 연속 윤곽으로 이어지는 형태",
+          "A named segment of the same adult torso has both inward and outward curves joined continuously along its regional outline.",
+          "지정한 옆몸통 구간에서 오목함과 볼록함이 연속되는 국소 곡선",
+          "a curvaceous regional torso outline joins an inward curve and an outward curve within the same stated segment"
+        ],
+        "keywords": [
+          "the named torso segment belongs to the same adult subject",
+          "an inward contour and an outward contour are both visible within that segment",
+          "the two curves join continuously along the same regional outline"
+        ],
+        "embedding_text": "같은 성인 몸통의 지정 구간에서 들어간 선과 나온 선이 하나의 연속 윤곽으로 이어지는 형태 A named segment of the same adult torso has both inward and outward curves joined continuously along its regional outline. 지정한 옆몸통 구간에서 오목함과 볼록함이 연속되는 국소 곡선 a curvaceous regional torso outline joins an inward curve and an outward curve within the same stated segment",
+        "concept_units": [
+          "the named torso segment belongs to the same adult subject",
+          "an inward contour and an outward contour are both visible within that segment",
+          "the two curves join continuously along the same regional outline"
+        ],
+        "relations": [
+          {
+            "id": "named_region_owner",
+            "type": "has_visible_property",
+            "subject": "main_subject",
+            "object": "A named segment of the same adult torso has both inward and outward curves joined continuously along its regional outline."
+          }
+        ],
+        "affected_dimensions": [
+          "body_geometry"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body"
+          }
+        ],
+        "core_assertion_discovery": true
+      }
+    ]
+  },
+  "existing_slot_context_extensions": {
+    "silhouette_proportion": {
+      "soft_full_figure_volume": {
+        "paraphrases": [
+          "몸통과 골반, 위팔과 허벅지에 둥근 살집이 연속된 성인 체형",
+          "a plump adult build with rounded soft volume through torso hips upper arms and thighs",
+          "여러 몸 구간의 풍부한 볼륨이 부드럽게 이어지는 성인 전신 형태",
+          "a fleshy full figure with continuous soft contours across several torso and limb regions"
+        ]
+      },
+      "slender_linear_build": {
+        "paraphrases": [
+          "성인 몸통과 팔다리의 가로 폭이 전반적으로 좁고 관절 연결이 자연스러운 체격",
+          "a slender adult frame with narrow torso and limb volumes and continuous joint transitions",
+          "몸통에서 팔과 다리까지 가는 가로 볼륨이 이어지는 선형 체형",
+          "a slim linear build whose narrow transverse contours continue from torso into limbs"
+        ]
+      },
+      "curvilinear_figure_relation": {
+        "paraphrases": [
+          "상체에서 자연 허리와 골반, 허벅지까지 안으로 들어가고 밖으로 나오는 선이 이어지는 성인 몸매",
+          "a curvaceous adult figure with alternating inward and outward contours across upper torso waist hips and thighs",
+          "위몸통과 옆허리, 골반과 허벅지 사이의 여러 둥근 전환이 연결된 형태",
+          "a curvy figure defined by several connected convex and concave torso-to-thigh transitions"
+        ]
+      },
+      "triangle_lower_body_dominant_relation": {
+        "paraphrases": [
+          "성인 상체보다 골반과 허벅지의 가로 볼륨이 넓게 읽히는 하체 중심 비율",
+          "a lower-body-dominant adult silhouette with hips and thighs broader than the upper torso",
+          "같은 인물의 위몸통과 비교해 골반과 위허벅지 폭이 상대적으로 큰 형태",
+          "a pear-like adult proportion defined by relative upper-torso hip and thigh widths"
+        ]
+      },
+      "bm_stature_scale": {
+        "paraphrases": [
+          "같은 깊이의 비교 물체 옆에서 성인 머리부터 발까지의 낮은 신장이 읽히는 관계",
+          "short adult stature measured visually against a same-plane reference with head-to-foot extent readable",
+          "머리와 발의 전체 높이를 같은 평면의 기준과 비교하는 작은 성인 신장",
+          "an adult's short vertical extent compared with an explicit reference at the same depth"
+        ]
+      },
+      "bm_compact_frame": {
+        "paraphrases": [
+          "키는 별도로 두고 몸통의 가로 규모와 사지 구간이 조밀하게 읽히는 성인 골격 비율",
+          "a compact adult torso-and-limb frame with stature specified independently",
+          "몸통 폭과 팔다리 구간의 규모가 함께 작은 틀을 이루는 성인 체격",
+          "a close-set adult body frame described by transverse torso extent and limb segment scale"
+        ]
+      },
+      "bm_stocky_build": {
+        "paraphrases": [
+          "사지 길이에 비해 몸통과 팔, 다리가 두툼한 성인 체격",
+          "a stocky adult build with thick torso and limb volumes relative to segment length",
+          "같은 인물의 몸통과 팔다리 가로 두께를 해당 구간 길이와 비교한 형태",
+          "a sturdy-looking adult frame defined by transverse torso and limb thickness against their lengths"
+        ]
+      },
+      "bm_wiry_definition": {
+        "paraphrases": [
+          "가는 성인 몸통과 팔다리에 국소 근육 면과 힘줄 선이 읽히는 체격",
+          "a sinewy adult build with narrow torso and limbs plus localized muscle planes and tendon contours",
+          "사지 폭은 가늘고 그 표면의 얕은 근육과 힘줄 윤곽이 구별되는 성인 형태",
+          "a wiry adult frame whose slender volumes retain readable local muscle and tendon definition"
+        ]
+      },
+      "bm_muscle_volume": {
+        "paraphrases": [
+          "명시한 성인 근육의 배가 두툼하고 양쪽 관절 부착으로 자연스럽게 이어지는 부피",
+          "substantial volume of a named adult muscle belly with continuous anatomical attachments",
+          "지정된 근육 부위의 팽창된 볼륨과 관절 연결을 함께 읽는 형태",
+          "regional muscular bulk anchored to the stated muscle and its connected joints"
+        ]
+      },
+      "bm_shoulder_width": {
+        "paraphrases": [
+          "같은 시점에서 양쪽 어깨 끝 사이 폭을 흉곽 폭과 비교하는 성인 비율",
+          "both adult shoulder endpoints define a width compared with the ribcage in the same view",
+          "흉곽 기준과 좌우 어깨 경계가 함께 보이는 가로 폭 관계",
+          "bilateral shoulder breadth read against the same torso's ribcage reference"
+        ]
+      },
+      "bm_breast_root_width": {
+        "paraphrases": [
+          "각 가슴이 흉벽에 붙는 안쪽부터 바깥쪽까지의 가로 바탕 범위",
+          "the medial-to-lateral attachment footprint of each breast on the same adult chest wall",
+          "같은 가슴의 내측과 외측 기저 경계를 흉곽 바탕 위에서 비교한 부착 폭",
+          "breast base width shown by medial and lateral attachment extents on its chest-wall owner"
+        ]
+      },
+      "bm_breast_root_height": {
+        "paraphrases": [
+          "성인 가슴이 흉벽에 붙는 위쪽부터 아래쪽까지의 세로 범위",
+          "the superior-to-inferior attachment extent of the adult breast on the chest wall",
+          "위 부착 경계와 아래 부착 구간을 흉벽 기준 안에서 읽는 세로 바탕 높이",
+          "vertical breast-root extent bounded by its upper and lower attachment regions"
+        ]
+      },
+      "bm_breast_fullness": {
+        "paraphrases": [
+          "같은 가슴의 위아래와 안팎 구간별로 나뉘어 읽히는 볼륨 분포",
+          "regional fullness distributed between the upper lower medial and lateral parts of the same adult breast",
+          "하나의 가슴에서 지정한 위·아래 또는 안·밖 구간의 둥근 볼륨을 비교하는 형태",
+          "breast fullness compared across named regional partitions within the same owner"
+        ]
+      },
+      "bm_breast_spacing": {
+        "paraphrases": [
+          "몸통 중앙선 양쪽의 가슴 안쪽 경계와 그 간격, 방향의 관계",
+          "the two medial breast contours define spacing and orientation about the adult torso midline",
+          "같은 성인의 좌우 가슴 경계를 정중선 기준에서 함께 비교하는 형태",
+          "bilateral breast separation and direction read against the same torso centerline"
+        ]
+      },
+      "bm_breast_vertical_position": {
+        "paraphrases": [
+          "같은 가슴의 아래 접힘을 기준으로 가슴 윤곽과 돌출점의 위아래 위치가 읽히는 관계",
+          "breast contour and nipple height read relative to the same adult inframammary fold",
+          "가슴 아래 주름과 가슴 앞 돌출점, 주변 윤곽을 한 상태에서 비교하는 세로 관계",
+          "the vertical positions of breast contour and nipple compared with their connected lower fold"
+        ]
+      },
+      "bm_waist_width_depth": {
+        "paraphrases": [
+          "갈비뼈와 골반 사이 자연 허리의 좌우 폭과 앞뒤 깊이를 따로 읽는 형태",
+          "adult waist width and front-to-back depth shown with rib and pelvis references",
+          "허리 양옆 경계와 앞뒤 윤곽이 같은 몸통 기준에 연결된 형태",
+          "transverse waist extent and sagittal depth compared within the same adult torso"
+        ]
+      },
+      "bm_abdominal_projection": {
+        "paraphrases": [
+          "같은 성인의 상복부와 하복부가 옆몸통 기준으로 얼마나 앞으로 나오는지 읽는 관계",
+          "upper and lower abdominal projection linked by a continuous adult side-torso contour",
+          "상복부와 아래배의 볼륨을 이어지는 옆선 안에서 구별하는 형태",
+          "the upper belly and lower abdomen have separately readable projections along the same torso"
+        ]
+      },
+      "bm_hip_width": {
+        "paraphrases": [
+          "같은 성인의 골반 양쪽 폭을 허리와 상체 폭에 견주어 읽는 형태",
+          "bilateral adult hip breadth compared with natural waist and upper-torso widths",
+          "양쪽 골반 바깥 경계와 허리, 위몸통이 같은 보기에서 연결되는 폭 비율",
+          "the left and right hip contours define width relative to the same waist and upper torso"
+        ]
+      },
+      "bm_gluteal_projection": {
+        "paraphrases": [
+          "골반 바탕에서 뒤로 나온 둔부 윤곽이 허벅지 부착으로 이어지는 깊이",
+          "posterior gluteal projection from the adult pelvis continuing into the thigh attachment",
+          "같은 골반의 뒤쪽 바탕과 둔부 돌출, 위허벅지 연결이 함께 읽히는 형태",
+          "buttock projection depth anchored to the same pelvis and connected upper thigh"
+        ]
+      },
+      "bm_gluteal_fullness": {
+        "paraphrases": [
+          "둔부 위쪽과 아래쪽의 살집이 하나의 연속된 뒤 윤곽 안에서 읽히는 분포",
+          "upper and lower adult gluteal fullness along one continuous posterior contour",
+          "같은 둔부의 상부와 하부 볼륨을 이어지는 뒤쪽 경계로 비교하는 형태",
+          "regional buttock fullness compared along the same connected upper-to-lower outline"
+        ]
+      },
+      "bm_thigh_volume": {
+        "paraphrases": [
+          "성인 위허벅지와 중간 허벅지의 가로 볼륨이 무릎 쪽으로 자연스럽게 이어지는 형태",
+          "adult thigh volume tapers coherently from the upper and middle thigh toward the knee",
+          "같은 다리의 윗부분 살집과 허벅지 중간 윤곽, 무릎 연결이 읽히는 형태",
+          "rounded thigh transverse volume with a continuous anatomical knee transition"
+        ]
+      }
+    },
+    "face_shape_relation": {
+      "bm_lip_volume": {
+        "paraphrases": [
+          "같은 얼굴의 윗입술과 아랫입술 붉은 면 두께, 입 틈 경계가 함께 읽히는 형태",
+          "upper and lower vermilion fullness and their mouth-opening boundary on the same adult face",
+          "윗입술과 아랫입술의 볼륨과 바깥 경계가 구별되는 입술 구조",
+          "the thickness of both lip surfaces and their perimeter remain separately readable"
+        ]
+      },
+      "bm_eye_aperture": {
+        "paraphrases": [
+          "같은 눈의 위아래 눈꺼풀 가장자리 사이 가로·세로 열린 크기",
+          "horizontal and vertical eye-opening extents bounded by the same adult eyelid margins",
+          "한 눈의 눈꺼풀 틈 폭과 높이를 가장자리 기준에서 비교하는 형태",
+          "eye aperture width and height measured visually between its upper and lower lid boundaries"
+        ]
+      }
+    },
+    "garment_detail": {
+      "bm_fabric_body_outline": {
+        "paraphrases": [
+          "연속된 불투명 옷이 같은 성인 몸에 닿아 국소 몸 윤곽을 바깥 천 표면으로 전달하는 모습",
+          "continuous opaque clothing follows the same adult body at contact and transmits its local contour",
+          "몸과 천의 접촉 때문에 바깥 옷 경계에 해당 부위 형태가 읽히는 관계",
+          "a body outline carried by a continuous opaque garment surface at the stated contact"
+        ]
+      },
+      "bm_garment_central_crease": {
+        "paraphrases": [
+          "같은 불투명 옷 중앙의 국소 접힘 양옆에 두 천 윤곽이 이어지는 형태",
+          "a localized central crease in the same opaque garment with adjacent paired fabric contours",
+          "중앙에 들어간 천 선과 그 양쪽의 의복 표면이 연결되는 국소 주름",
+          "a central garment fold bordered by two connected fabric contours"
+        ]
+      },
+      "bm_compression_contour": {
+        "paraphrases": [
+          "같은 옷 띠 가장자리가 성인 몸에 닿은 곳에서 주변 윤곽이 국소적으로 밀리는 형태",
+          "localized adult contour displacement beside the same garment band's contact edge",
+          "의복 띠의 식별 가능한 경계와 몸 접촉, 인접한 눌림 윤곽이 함께 읽히는 관계",
+          "a visible clothing-band edge contacts the named region beside a localized contour indentation"
+        ]
+      },
+      "pfe_cleavage_candidate": {
+        "paraphrases": [
+          "성인 옷 목선 안에서 양쪽 가슴 사이 피부의 중앙 오목한 선과 같은 옷 경계가 읽히는 관계",
+          "a central intermammary depression lies inside the adult neckline with continuous constructed garment edges",
+          "같은 네크라인 양쪽 경계가 가슴 사이 중앙 피부 윤곽을 둘러싸는 모습",
+          "the same garment neckline bounds a readable central skin depression between the breasts"
+        ]
+      },
+      "pfe_lateral_chest_candidate": {
+        "paraphrases": [
+          "같은 불투명 몸판의 옆 가장자리 밖에서 제한된 바깥 가슴 윤곽이 보이는 성인 의복 관계",
+          "a bounded lateral breast contour is visible beside the same adult opaque bodice edge",
+          "가슴 중앙은 덮고 옆 의복 경계 밖에서만 외측 윤곽이 드러나는 형태",
+          "the opaque bodice covers the central breast while its continuous side edge borders a limited outer contour"
+        ]
+      },
+      "pfe_lower_chest_candidate": {
+        "paraphrases": [
+          "같은 불투명 상의 밑단 아래에 제한된 가슴 하부 윤곽이 드러나는 성인 의복 관계",
+          "a bounded lower breast contour remains visible below the same adult opaque top hem",
+          "상의의 연속된 밑단과 그 아래 가슴 윤곽을 같은 인물에서 함께 읽는 형태",
+          "the continuous opaque top hem bounds the same adult's limited lower breast contour"
+        ]
+      }
+    },
+    "skin_finish": {
+      "bm_cellulite_relief": {
+        "paraphrases": [
+          "명시한 성인 피부 부위에 작은 오목함과 고르지 않은 지형이 연속 피부로 이어지는 모습",
+          "localized skin dimples and uneven adult surface relief continuous with neighboring skin",
+          "같은 피부 표면에서 읽히는 얕은 오목한 요철의 국소 분포",
+          "a localized dimpled skin surface whose small depressions retain continuous skin ownership"
+        ]
+      },
+      "bm_skin_tone_appearance": {
+        "paraphrases": [
+          "기록한 조명과 화이트밸런스 아래 같은 성인 피부에서 보이는 색",
+          "apparent adult skin color read under the declared lighting and white balance",
+          "같은 피부 부위의 현재 색을 빛과 색 균형 조건 안에서 읽는 모습",
+          "the current color appearance of a named skin region with illumination conditions stated"
+        ]
+      },
+      "bm_skin_relief_texture": {
+        "paraphrases": [
+          "미세 모공과 피부 지형은 남고 반사광과 표면 거칠기가 따로 읽히는 성인 피부",
+          "a smooth-looking adult skin surface retains fine pores and low relief distinct from specular finish",
+          "피부의 작은 모공과 얕은 미세 지형이 광택층과 구별되는 모습",
+          "fine pores and subtle skin microrelief remain readable beneath the independently selected surface finish"
+        ],
+        "contexts": [
+          {
+            "id": "ne_smooth_supple_surface_scope",
+            "application_conditions": [
+              "A named current skin region; preserve pores, surface relief and independent finish."
+            ],
+            "limits": [
+              "Smooth does not establish suppleness, elasticity, health, retouching history or material identity.",
+              "A single frame can show a bend or fold but cannot prove rebound or temporal elasticity."
+            ],
+            "status": "current_observable_surface_only"
+          }
+        ]
+      },
+      "realistic_skin_texture_no_retouch": {
+        "paraphrases": [
+          "얼굴 표면의 미세 질감과 자연스러운 모공이 남은 인물 사진",
+          "a portrait retains real fine skin texture and natural pore detail"
+        ]
+      }
+    },
+    "body_pose": {
+      "bm_pose_surface_change": {
+        "paraphrases": [
+          "같은 성인 부위의 현재 하중이나 굽힘, 접촉에 맞춰 국소 피부·옷 표면이 달라진 상태",
+          "a localized adult surface contour change follows the declared current load flexion or contact",
+          "지정한 몸 구간의 지금 자세와 물체 접촉에 연결된 표면 변화",
+          "the named body region's present surface change is tied to its visible flexion or contact state"
+        ]
+      }
+    },
+    "gaze_engagement": {
+      "pv_gaze_direct": {
+        "paraphrases": [
+          "같은 인물의 보이는 눈 축이 카메라 쪽으로 모이는 주시",
+          "the visible irises of the declared actor align with the camera direction"
+        ]
+      },
+      "pv_gaze_offcamera": {
+        "paraphrases": [
+          "얼굴 방향과 별도로 지정한 화면 밖 대상을 향하는 눈 축",
+          "the actor eye axes point toward the declared off-camera target"
+        ]
+      },
+      "pv_side_eye": {
+        "paraphrases": [
+          "얼굴 방향에 비해 양쪽 눈동자가 지정한 옆 대상으로 돌아간 현재 시선",
+          "a sideways glance with irises displaced laterally relative to the same face orientation",
+          "머리의 회전과 구분되는 눈동자의 옆 방향 이동",
+          "both visible irises look laterally toward the declared target while head yaw remains separately readable"
+        ],
+        "contexts": [
+          {
+            "id": "ne_lateral_gaze_scope",
+            "application_conditions": [
+              "Preserve a declared actor, face orientation and lateral gaze target."
+            ],
+            "limits": [
+              "A lateral eye position alone does not prove suspicion, scorn, desire or personality."
+            ],
+            "status": "current_gaze_not_inner_state"
+          }
+        ]
+      }
+    },
+    "expression": {
+      "pv_half_lidded": {
+        "paraphrases": [
+          "위아래 눈꺼풀 틈이 작아져도 눈동자가 일부 보이는 상태",
+          "narrowed eye apertures remain open with partly visible pupils"
+        ]
+      },
+      "pv_parted_lips": {
+        "paraphrases": [
+          "같은 얼굴의 위아래 입술 사이에 작고 보이는 틈이 남은 상태",
+          "a small readable gap remains between the same actor upper and lower lips"
+        ]
+      },
+      "ae_pucker": {
+        "paraphrases": [
+          "입 양끝이 중앙으로 모이고 입술이 앞으로 둥글게 나온 현재 표정",
+          "a current forward lip pout with rounded projecting lips and mouth corners gathered inward",
+          "원래 입술 두께와 별도로 입술을 앞으로 내민 순간",
+          "the lips currently protrude in a small rounded pucker while the corners move toward the center"
+        ],
+        "contexts": [
+          {
+            "id": "ne_pout_structure_action_split",
+            "application_conditions": [
+              "Use only the current-expression sense when the forward lip contour and gathered corners are intended."
+            ],
+            "limits": [
+              "Pouty as static full-lip appraisal uses lip structure instead; lip shape does not establish sulking or invitation."
+            ],
+            "status": "request_context_resolves_polysemy"
+          }
+        ]
+      },
+      "ae_purse": {
+        "paraphrases": [
+          "입 양끝이 가까워지고 입 틈이 좁고 둥글어진 상태",
+          "the mouth corners approach the center around a narrowed rounded lip opening"
+        ]
+      }
+    },
+    "texture": {
+      "skin_texture": {
+        "paraphrases": [
+          "표면의 미세 지형이 남은 자연스러운 피부 질감",
+          "natural skin microtexture remains visible"
+        ]
+      }
+    }
+  }
+}

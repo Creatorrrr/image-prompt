@@ -1,0 +1,164 @@
+{
+  "enabled": true,
+  "contract_version": "photo-visual-obligations/v1",
+  "scope": "request_only",
+  "strict_gate_set": true,
+  "obligations": [
+    {
+      "id": "bm_long_limb_build",
+      "category": "adult_local_morphology_relation",
+      "activation": {
+        "source": "composer_opt_in",
+        "scope": "request_only",
+        "source_intent_ids": []
+      },
+      "composition_instruction": "Bind each visible component to the same adult subject and specified body region; show torso reference length; upper and lower limb lengths; slender transverse volumes; retain the current garment boundary, pose state and requester property locks.",
+      "component_semantics": {
+        "minimum_component_groups": 4,
+        "required_group_ids": [
+          "component_1",
+          "component_2",
+          "component_3",
+          "owner_state"
+        ],
+        "groups": [
+          {
+            "id": "component_1",
+            "any_terms": [
+              "torso reference length",
+              "body torso length reference",
+              "몸통 길이 기준"
+            ]
+          },
+          {
+            "id": "component_2",
+            "any_terms": [
+              "upper and lower limb lengths",
+              "elongated arms and legs",
+              "long upper and lower limb segments",
+              "길게 이어진 팔과 다리"
+            ]
+          },
+          {
+            "id": "component_3",
+            "any_terms": [
+              "slender transverse volumes",
+              "slender limb widths",
+              "narrow limb volumes",
+              "가는 사지 가로 폭"
+            ]
+          },
+          {
+            "id": "owner_state",
+            "any_terms": [
+              "the stated contours belong to the same adult subject and specified body region",
+              "the named body region remains connected to the same adult subject",
+              "the same adult subject and named body region",
+              "같은 성인 인물의 지정한 몸 부위"
+            ]
+          }
+        ]
+      },
+      "prompt_binding": {
+        "composed_field": "visual_obligation_evidence",
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase",
+          "component_3_phrase",
+          "owner_state_phrase"
+        ],
+        "minimum_distinct_evidence_phrases": 4,
+        "prompt_evidence_must_be_literal": true,
+        "maximum_pairwise_content_token_overlap_ratio": 0.82,
+        "forbidden_filler_phrases": [
+          "visible evidence",
+          "visual evidence",
+          "required cue",
+          "prompt phrase"
+        ]
+      },
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "torso reference length",
+            "body torso length reference",
+            "몸통 길이 기준"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "upper and lower limb lengths",
+            "elongated arms and legs",
+            "long upper and lower limb segments",
+            "길게 이어진 팔과 다리"
+          ]
+        },
+        "component_3_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "slender transverse volumes",
+            "slender limb widths",
+            "narrow limb volumes",
+            "가는 사지 가로 폭"
+          ]
+        },
+        "owner_state_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "the stated contours belong to the same adult subject and specified body region",
+            "the named body region remains connected to the same adult subject",
+            "the same adult subject and named body region",
+            "같은 성인 인물의 지정한 몸 부위"
+          ]
+        }
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "long slender limb segments relative to a readable torso"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "render_gates": [
+        {
+          "id": "vo_bm_long_limb_build_component_1",
+          "review_scale": "both",
+          "description": "The same adult subject and specified region visibly establish torso reference length."
+        },
+        {
+          "id": "vo_bm_long_limb_build_component_2",
+          "review_scale": "both",
+          "description": "The same adult subject and specified region visibly establish upper and lower limb lengths."
+        },
+        {
+          "id": "vo_bm_long_limb_build_component_3",
+          "review_scale": "both",
+          "description": "The same adult subject and specified region visibly establish slender transverse volumes."
+        },
+        {
+          "id": "vo_bm_long_limb_build_owner_state",
+          "review_scale": "both",
+          "description": "The same adult subject and specified region visibly establish the stated contours belong to the same adult subject and specified body region."
+        }
+      ],
+      "reject_substitutes": [
+        "wrong_owner_or_body_region",
+        "garment_or_shadow_substitute",
+        "occluded_required_component",
+        "unsupported_history_or_quantity_inference"
+      ]
+    }
+  ],
+  "required_hard_gates": [
+    "vo_bm_long_limb_build_component_1",
+    "vo_bm_long_limb_build_component_2",
+    "vo_bm_long_limb_build_component_3",
+    "vo_bm_long_limb_build_owner_state"
+  ],
+  "selected_visual_concept_ids": [
+    "visual-concept:bm_long_limb_build"
+  ]
+}
