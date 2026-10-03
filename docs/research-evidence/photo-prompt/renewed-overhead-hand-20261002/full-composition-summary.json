@@ -1,0 +1,96 @@
+[
+  {
+    "case": "near-hand-no-prop",
+    "cli_command": [
+      "REPOSITORY_ROOT/.venv/bin/python",
+      "REPOSITORY_ROOT/skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py",
+      "--pack",
+      "EVIDENCE_ROOT/portrait-narrative-audit/public-cli/after/near-hand-no-prop-pack.json",
+      "--composed",
+      "EVIDENCE_ROOT/overhead-hand-review/after-evidence/near-hand-no-prop-complete-composed.json"
+    ],
+    "cli_exit": 0,
+    "status": "pass",
+    "failures": [],
+    "warnings": [
+      {
+        "check": "uncovered_intent",
+        "intent": "One clearly adult person",
+        "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+      },
+      {
+        "check": "uncovered_intent",
+        "intent": "The adult tilts the head upward and looks toward the elevated lens.",
+        "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+      },
+      {
+        "check": "uncovered_intent",
+        "intent": "A close camera above the person points steeply downward, keeping a readable floor plane around the entire figure.",
+        "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+      }
+    ],
+    "before_visual_failures": [
+      {
+        "check": "visual_obligation_semantic_evidence",
+        "reason": "visual evidence phrase lacks a profile-declared component anchor",
+        "profile_id": "overhead_social_snapshot_relation",
+        "field": "overhead_foreshortening_phrase",
+        "accepted_anchors": [
+          "head torso limbs and one near prop follow coherent top-down foreshortening and scale change"
+        ]
+      }
+    ],
+    "after_visual_failures": [],
+    "baseline_preserved": true,
+    "evidence_content_words": {
+      "overhead_camera_phrase": 14,
+      "overhead_ground_phrase": 15,
+      "overhead_response_phrase": 15,
+      "overhead_foreshortening_phrase": 20,
+      "overhead_boundary_phrase": 24
+    },
+    "new_prop_terms_in_hand_evidence": []
+  },
+  {
+    "case": "near-prop-control",
+    "cli_command": [
+      "REPOSITORY_ROOT/.venv/bin/python",
+      "REPOSITORY_ROOT/skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py",
+      "--pack",
+      "EVIDENCE_ROOT/portrait-narrative-audit/public-cli/after/near-prop-control-pack.json",
+      "--composed",
+      "EVIDENCE_ROOT/overhead-hand-review/after-evidence/near-prop-control-complete-composed.json"
+    ],
+    "cli_exit": 0,
+    "status": "pass",
+    "failures": [],
+    "warnings": [
+      {
+        "check": "uncovered_intent",
+        "intent": "One clearly adult person",
+        "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+      },
+      {
+        "check": "uncovered_intent",
+        "intent": "The adult tilts the head upward and looks toward the elevated lens.",
+        "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+      },
+      {
+        "check": "uncovered_intent",
+        "intent": "A close camera above the person points steeply downward, keeping a readable floor plane around the entire figure.",
+        "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+      }
+    ],
+    "before_visual_failures": [],
+    "after_visual_failures": [],
+    "baseline_preserved": true,
+    "evidence_content_words": {
+      "overhead_camera_phrase": 14,
+      "overhead_ground_phrase": 15,
+      "overhead_response_phrase": 15,
+      "overhead_foreshortening_phrase": 21,
+      "overhead_boundary_phrase": 24
+    },
+    "new_prop_terms_in_hand_evidence": []
+  }
+]

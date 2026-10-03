@@ -1,0 +1,826 @@
+[
+  {
+    "case": "blind_scene_001",
+    "id_sets_equal": true,
+    "slot_sets_equal": true,
+    "all_public_candidate_content_equal_except_applicability": true,
+    "only_added_core_anchors": true,
+    "added_anchors": [
+      {
+        "anchor_id": "blind_scene_001_property_01",
+        "source_text": "Photograph a red watering can on a garden table just after sunrise. The sun should sit behind the can, beyond the table, so its handle and spout have a bright thin edge while the side facing us stays dark.",
+        "dimension": "lighting",
+        "target": "watering_can",
+        "property": "illumination.source_direction",
+        "prompt_evidence": "Place the camera on the near side of the table and the rising sun on the far side, behind the can."
+      },
+      {
+        "anchor_id": "blind_scene_001_property_02",
+        "source_text": "Photograph a red watering can on a garden table just after sunrise. The sun should sit behind the can, beyond the table, so its handle and spout have a bright thin edge while the side facing us stays dark.",
+        "dimension": "lighting",
+        "target": "watering_can",
+        "property": "illumination.front_to_edge_relationship",
+        "prompt_evidence": "light arriving from behind the object and catching its edges, with a darker front that clearly faces the camera"
+      }
+    ],
+    "status_changes": [
+      {
+        "id": "slot:film_emulation:pe_red_edge_halation",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      },
+      {
+        "id": "slot:film_emulation:pe_edge_light_leak",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      }
+    ],
+    "remaining_eligible_count": 62,
+    "train_directions": []
+  },
+  {
+    "case": "blind_scene_002",
+    "id_sets_equal": true,
+    "slot_sets_equal": true,
+    "all_public_candidate_content_equal_except_applicability": true,
+    "only_added_core_anchors": true,
+    "added_anchors": [
+      {
+        "anchor_id": "blind_scene_002_property_01",
+        "source_text": "저녁 식탁 위에 흰 찻잔 하나를 놓고 찍어 주세요. 창문은 찻잔의 왼쪽에만 있어서 왼쪽 면은 밝고 오른쪽 면은 어두우며, 손잡이 그림자가 오른쪽 식탁 위로 길게 이어지게 해 주세요.",
+        "dimension": "lighting",
+        "target": "teacup",
+        "property": "illumination.side_relationship",
+        "prompt_evidence": "The light should strike the left side of the cup directly, giving that side a clear bright surface, while the right side turns into a quieter, visibly darker tone."
+      },
+      {
+        "anchor_id": "blind_scene_002_property_02",
+        "source_text": "저녁 식탁 위에 흰 찻잔 하나를 놓고 찍어 주세요. 창문은 찻잔의 왼쪽에만 있어서 왼쪽 면은 밝고 오른쪽 면은 어두우며, 손잡이 그림자가 오른쪽 식탁 위로 길게 이어지게 해 주세요.",
+        "dimension": "lighting",
+        "target": "teacup.handle",
+        "property": "shadow.direction",
+        "prompt_evidence": "a readable shadow on the tabletop, extending toward the right and away from the window"
+      }
+    ],
+    "status_changes": [
+      {
+        "id": "slot:film_emulation:pe_red_edge_halation",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      }
+    ],
+    "remaining_eligible_count": 55,
+    "train_directions": []
+  },
+  {
+    "case": "blind_scene_003",
+    "id_sets_equal": true,
+    "slot_sets_equal": true,
+    "all_public_candidate_content_equal_except_applicability": true,
+    "only_added_core_anchors": true,
+    "added_anchors": [
+      {
+        "anchor_id": "blind_scene_003_property_01",
+        "source_text": "Photograph a small desk lamp beside an open notebook at night. Let its light spread through a milky shade so the notebook is lit and the pencil beside it casts a pale shadow with a gradual, fuzzy edge.",
+        "dimension": "lighting",
+        "target": "desk_lamp",
+        "property": "illumination.diffusion",
+        "prompt_evidence": "The lamp should have a milky shade that spreads its light over the work area."
+      },
+      {
+        "anchor_id": "blind_scene_003_property_02",
+        "source_text": "Photograph a small desk lamp beside an open notebook at night. Let its light spread through a milky shade so the notebook is lit and the pencil beside it casts a pale shadow with a gradual, fuzzy edge.",
+        "dimension": "lighting",
+        "target": "pencil",
+        "property": "shadow.edge_transition",
+        "prompt_evidence": "a pale shadow whose edge fades gradually into the surrounding light instead of forming a sharply cut dark line"
+      }
+    ],
+    "status_changes": [
+      {
+        "id": "slot:lighting:pe_cheek_triangle",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      },
+      {
+        "id": "slot:camera_type:pe_compact_flash_noisy_finish",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      }
+    ],
+    "remaining_eligible_count": 62,
+    "train_directions": []
+  },
+  {
+    "case": "blind_scene_004",
+    "id_sets_equal": true,
+    "slot_sets_equal": true,
+    "all_public_candidate_content_equal_except_applicability": true,
+    "only_added_core_anchors": true,
+    "added_anchors": [
+      {
+        "anchor_id": "blind_scene_004_property_01",
+        "source_text": "밤에 주방 조리대 위의 유리병을 찍어 주세요. 병 왼쪽의 작은 스탠드가 가까운 소금통까지 환하게 비추지만, 훨씬 뒤쪽 벽에 놓인 도마는 거의 어둠 속에 남도록 해 주세요.",
+        "dimension": "lighting",
+        "target": "kitchen_counter",
+        "property": "illumination.distance_relationship",
+        "prompt_evidence": "the lamp's localized reach and the much weaker light at greater distance"
+      },
+      {
+        "anchor_id": "blind_scene_004_property_02",
+        "source_text": "밤에 주방 조리대 위의 유리병을 찍어 주세요. 병 왼쪽의 작은 스탠드가 가까운 소금통까지 환하게 비추지만, 훨씬 뒤쪽 벽에 놓인 도마는 거의 어둠 속에 남도록 해 주세요.",
+        "dimension": "lighting",
+        "target": "cutting_board",
+        "property": "illumination.relative_brightness",
+        "prompt_evidence": "The far cutting board should remain dim, still identifiable but receiving much less illumination than the nearby objects."
+      }
+    ],
+    "status_changes": [
+      {
+        "id": "slot:film_emulation:pe_edge_light_leak",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      }
+    ],
+    "remaining_eligible_count": 52,
+    "train_directions": []
+  },
+  {
+    "case": "blind_scene_005",
+    "id_sets_equal": true,
+    "slot_sets_equal": true,
+    "all_public_candidate_content_equal_except_applicability": true,
+    "only_added_core_anchors": true,
+    "added_anchors": [
+      {
+        "anchor_id": "blind_scene_005_property_01",
+        "source_text": "Photograph a round pizza in an open square box on a kitchen table, with the camera directly above its center and pointing straight down. Show the entire box, and keep the round pizza looking circular rather than squeezed into an oval.",
+        "dimension": "camera",
+        "target": "camera",
+        "property": "viewpoint.orientation_to_pizza",
+        "prompt_evidence": "Place the camera directly above the pizza's center and aim straight downward, with the camera facing the tabletop squarely."
+      },
+      {
+        "anchor_id": "blind_scene_005_property_02",
+        "source_text": "Photograph a round pizza in an open square box on a kitchen table, with the camera directly above its center and pointing straight down. Show the entire box, and keep the round pizza looking circular rather than squeezed into an oval.",
+        "dimension": "framing",
+        "target": "pizza_box",
+        "property": "visibility.extent",
+        "prompt_evidence": "Include the whole box within the frame, allowing a small border of table around it."
+      },
+      {
+        "anchor_id": "blind_scene_005_property_03",
+        "source_text": "Photograph a round pizza in an open square box on a kitchen table, with the camera directly above its center and pointing straight down. Show the entire box, and keep the round pizza looking circular rather than squeezed into an oval.",
+        "dimension": "composition",
+        "target": "pizza",
+        "property": "projection.shape",
+        "prompt_evidence": "The pizza should read as a circle rather than an ellipse"
+      }
+    ],
+    "status_changes": [
+      {
+        "id": "slot:lighting:pe_cheek_triangle",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      },
+      {
+        "id": "slot:film_emulation:pe_edge_light_leak",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      }
+    ],
+    "remaining_eligible_count": 62,
+    "train_directions": []
+  },
+  {
+    "case": "blind_scene_006",
+    "id_sets_equal": true,
+    "slot_sets_equal": true,
+    "all_public_candidate_content_equal_except_applicability": true,
+    "only_added_core_anchors": true,
+    "added_anchors": [
+      {
+        "anchor_id": "blind_scene_006_property_01",
+        "source_text": "선반 위 작은 장난감 기차를 찍어 주세요. 카메라는 선반보다 낮은 곳에 두고 앞쪽 기관차를 올려다보게 해서, 기관차가 뒤쪽 객차보다 우뚝 커 보이고 위의 천장도 함께 보이게 해 주세요.",
+        "dimension": "camera",
+        "target": "camera",
+        "property": "viewpoint.height_and_direction",
+        "prompt_evidence": "Position the camera below shelf level and tilt it upward toward the locomotive"
+      },
+      {
+        "anchor_id": "blind_scene_006_property_02",
+        "source_text": "선반 위 작은 장난감 기차를 찍어 주세요. 카메라는 선반보다 낮은 곳에 두고 앞쪽 기관차를 올려다보게 해서, 기관차가 뒤쪽 객차보다 우뚝 커 보이고 위의 천장도 함께 보이게 해 주세요.",
+        "dimension": "composition",
+        "target": "toy_train",
+        "property": "projection.relative_size",
+        "prompt_evidence": "The nearer locomotive should appear larger than the carriages behind it through its position and the viewing geometry"
+      },
+      {
+        "anchor_id": "blind_scene_006_property_03",
+        "source_text": "선반 위 작은 장난감 기차를 찍어 주세요. 카메라는 선반보다 낮은 곳에 두고 앞쪽 기관차를 올려다보게 해서, 기관차가 뒤쪽 객차보다 우뚝 커 보이고 위의 천장도 함께 보이게 해 주세요.",
+        "dimension": "framing",
+        "target": "ceiling",
+        "property": "visibility.above_train",
+        "prompt_evidence": "Include part of the ceiling above the train so the upward direction of the camera is visually clear."
+      }
+    ],
+    "status_changes": [
+      {
+        "id": "slot:film_emulation:pe_edge_light_leak",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      },
+      {
+        "id": "slot:quality:pe_rgb_split_picture_plane",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      }
+    ],
+    "remaining_eligible_count": 62,
+    "train_directions": [
+      {
+        "id": "slot:camera_direction:strict_top_down_flat_view",
+        "slot": "camera_direction",
+        "entry_id": "strict_top_down_flat_view",
+        "tags": [
+          "camera",
+          "top_down",
+          "flatlay"
+        ],
+        "kind": [],
+        "facets": {
+          "camera_angle": [
+            "overhead_top_down"
+          ]
+        },
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "strict top-down flat camera view"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "strict top-down flat camera view"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      },
+      {
+        "id": "slot:camera_direction:birds_eye",
+        "slot": "camera_direction",
+        "entry_id": "birds_eye",
+        "tags": [
+          "aerial",
+          "architecture",
+          "flatlay"
+        ],
+        "kind": [],
+        "facets": {
+          "camera_angle": [
+            "overhead_top_down"
+          ]
+        },
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "near-vertical bird’s-eye view"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "near-vertical bird’s-eye view"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      },
+      {
+        "id": "slot:camera_direction:dutch_tilt_dynamic_view",
+        "slot": "camera_direction",
+        "entry_id": "dutch_tilt_dynamic_view",
+        "tags": [
+          "camera",
+          "dutch",
+          "dynamic"
+        ],
+        "kind": [],
+        "facets": {
+          "camera_angle": [
+            "dutch"
+          ]
+        },
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "dynamic Dutch-tilt camera view"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "dynamic Dutch-tilt camera view"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      },
+      {
+        "id": "slot:camera_direction:mirror_reflection_camera_view",
+        "slot": "camera_direction",
+        "entry_id": "mirror_reflection_camera_view",
+        "tags": [
+          "camera",
+          "mirror",
+          "reflection",
+          "selfie"
+        ],
+        "kind": [],
+        "facets": {
+          "camera_angle": [
+            "reflection"
+          ]
+        },
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "camera view through a mirror reflection"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "camera view through a mirror reflection"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    ]
+  },
+  {
+    "case": "blind_scene_007",
+    "id_sets_equal": true,
+    "slot_sets_equal": true,
+    "all_public_candidate_content_equal_except_applicability": true,
+    "only_added_core_anchors": true,
+    "added_anchors": [
+      {
+        "anchor_id": "blind_scene_007_property_01",
+        "source_text": "Photograph three spice jars lined up away from the camera along a counter. Keep the middle jar's printed label easy to read, but let both the nearest jar and the farthest jar become visibly soft.",
+        "dimension": "camera",
+        "target": "spice_jars.middle",
+        "property": "focus.sharpness",
+        "prompt_evidence": "Make the printed label on the middle jar the sharp, readable part of the photograph."
+      },
+      {
+        "anchor_id": "blind_scene_007_property_02",
+        "source_text": "Photograph three spice jars lined up away from the camera along a counter. Keep the middle jar's printed label easy to read, but let both the nearest jar and the farthest jar become visibly soft.",
+        "dimension": "camera",
+        "target": "spice_jars.near_and_far",
+        "property": "focus.sharpness",
+        "prompt_evidence": "Both the closest jar and the farthest jar should appear visibly soft, with their general forms and positions still recognizable."
+      }
+    ],
+    "status_changes": [
+      {
+        "id": "slot:lighting:pe_soft_shadow_edges",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      },
+      {
+        "id": "slot:film_emulation:pe_instant_picture_area",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      }
+    ],
+    "remaining_eligible_count": 62,
+    "train_directions": []
+  },
+  {
+    "case": "blind_scene_008",
+    "id_sets_equal": true,
+    "slot_sets_equal": true,
+    "all_public_candidate_content_equal_except_applicability": true,
+    "only_added_core_anchors": true,
+    "added_anchors": [
+      {
+        "anchor_id": "blind_scene_008_property_01",
+        "source_text": "길가 벤치에 놓인 가방을 찍어 주세요. 렌즈 바로 가까이에 내민 우산 손잡이가 화면 한쪽에서 가방만큼 크게 보이고, 몇 걸음 뒤의 가방과 벤치는 작게 물러나 보이게 해 주세요.",
+        "dimension": "camera",
+        "target": "umbrella_handle",
+        "property": "viewpoint.distance_to_lens",
+        "prompt_evidence": "Bring an ordinary umbrella handle extremely close to the lens"
+      },
+      {
+        "anchor_id": "blind_scene_008_property_02",
+        "source_text": "길가 벤치에 놓인 가방을 찍어 주세요. 렌즈 바로 가까이에 내민 우산 손잡이가 화면 한쪽에서 가방만큼 크게 보이고, 몇 걸음 뒤의 가방과 벤치는 작게 물러나 보이게 해 주세요.",
+        "dimension": "composition",
+        "target": "umbrella_handle",
+        "property": "projection.size_relative_to_bag",
+        "prompt_evidence": "Through this difference in distance, the small handle should occupy roughly as much image space as the much larger bag."
+      },
+      {
+        "anchor_id": "blind_scene_008_property_03",
+        "source_text": "길가 벤치에 놓인 가방을 찍어 주세요. 렌즈 바로 가까이에 내민 우산 손잡이가 화면 한쪽에서 가방만큼 크게 보이고, 몇 걸음 뒤의 가방과 벤치는 작게 물러나 보이게 해 주세요.",
+        "dimension": "composition",
+        "target": "bag",
+        "property": "depth.relative_to_handle",
+        "prompt_evidence": "The bag and bench should appear to recede behind the close foreground object."
+      }
+    ],
+    "status_changes": [
+      {
+        "id": "slot:lighting:pe_low_key_island",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      },
+      {
+        "id": "slot:light_direction:pe_side_modeling",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      }
+    ],
+    "remaining_eligible_count": 62,
+    "train_directions": []
+  },
+  {
+    "case": "blind_scene_009",
+    "id_sets_equal": true,
+    "slot_sets_equal": true,
+    "all_public_candidate_content_equal_except_applicability": true,
+    "only_added_core_anchors": true,
+    "added_anchors": [
+      {
+        "anchor_id": "blind_scene_009_property_01",
+        "source_text": "Photograph a teaspoon resting across the rim of a ceramic bowl. Make the spoon's metal smooth enough to show a small, recognizable upside-down reflection of the kitchen window in its hollow end, while the bowl has a quiet, dull finish.",
+        "dimension": "material",
+        "target": "teaspoon.hollow_end",
+        "property": "reflection.recognizable_window",
+        "prompt_evidence": "a small recognizable upside-down image of it appears in that curved metal surface"
+      },
+      {
+        "anchor_id": "blind_scene_009_property_02",
+        "source_text": "Photograph a teaspoon resting across the rim of a ceramic bowl. Make the spoon's metal smooth enough to show a small, recognizable upside-down reflection of the kitchen window in its hollow end, while the bowl has a quiet, dull finish.",
+        "dimension": "material",
+        "target": "teaspoon",
+        "property": "surface.polish",
+        "prompt_evidence": "Preserve the sense of a smooth, polished spoon"
+      },
+      {
+        "anchor_id": "blind_scene_009_property_03",
+        "source_text": "Photograph a teaspoon resting across the rim of a ceramic bowl. Make the spoon's metal smooth enough to show a small, recognizable upside-down reflection of the kitchen window in its hollow end, while the bowl has a quiet, dull finish.",
+        "dimension": "material",
+        "target": "ceramic_bowl",
+        "property": "surface.reflectivity",
+        "prompt_evidence": "give the ceramic bowl a quiet, dull finish that does not carry an equally clear reflected window"
+      }
+    ],
+    "status_changes": [
+      {
+        "id": "slot:lighting:pe_cheek_triangle",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      },
+      {
+        "id": "slot:color_grading:pe_red_object_splash",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      }
+    ],
+    "remaining_eligible_count": 62,
+    "train_directions": []
+  },
+  {
+    "case": "blind_scene_010",
+    "id_sets_equal": true,
+    "slot_sets_equal": true,
+    "all_public_candidate_content_equal_except_applicability": true,
+    "only_added_core_anchors": true,
+    "added_anchors": [
+      {
+        "anchor_id": "blind_scene_010_property_01",
+        "source_text": "나무 의자에 걸친 회색 모직 목도리를 가까이서 찍어 주세요. 목도리 표면에서 잔털이 조금씩 솟아 있고 가장자리에도 부드러운 잔털이 보여, 매끈한 비닐처럼 빛나지 않게 해 주세요.",
+        "dimension": "material",
+        "target": "wool_scarf",
+        "property": "surface.fiber_texture",
+        "prompt_evidence": "fine individual fibers can be seen rising from its surface"
+      },
+      {
+        "anchor_id": "blind_scene_010_property_02",
+        "source_text": "나무 의자에 걸친 회색 모직 목도리를 가까이서 찍어 주세요. 목도리 표면에서 잔털이 조금씩 솟아 있고 가장자리에도 부드러운 잔털이 보여, 매끈한 비닐처럼 빛나지 않게 해 주세요.",
+        "dimension": "material",
+        "target": "wool_scarf.edge",
+        "property": "surface.fiber_texture",
+        "prompt_evidence": "Along the edge, include the soft fringe of tiny hairs that gives the wool its gently fuzzy character."
+      },
+      {
+        "anchor_id": "blind_scene_010_property_03",
+        "source_text": "나무 의자에 걸친 회색 모직 목도리를 가까이서 찍어 주세요. 목도리 표면에서 잔털이 조금씩 솟아 있고 가장자리에도 부드러운 잔털이 보여, 매끈한 비닐처럼 빛나지 않게 해 주세요.",
+        "dimension": "material",
+        "target": "wool_scarf",
+        "property": "surface.gloss",
+        "prompt_evidence": "Light it carefully enough for these fibers to be visible without making the scarf look coated in glossy plastic."
+      }
+    ],
+    "status_changes": [
+      {
+        "id": "slot:lighting:pe_soft_shadow_edges",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      },
+      {
+        "id": "slot:film_emulation:pe_edge_light_leak",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      },
+      {
+        "id": "slot:light_direction:pe_top_modeling",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      }
+    ],
+    "remaining_eligible_count": 61,
+    "train_directions": []
+  },
+  {
+    "case": "blind_scene_011",
+    "id_sets_equal": true,
+    "slot_sets_equal": true,
+    "all_public_candidate_content_equal_except_applicability": true,
+    "only_added_core_anchors": true,
+    "added_anchors": [
+      {
+        "anchor_id": "blind_scene_011_property_01",
+        "source_text": "Photograph a pale blue drinking glass on a table with a red apple immediately behind it. The apple should be visible through the glass as a recognizable red shape, but its outline should bend where the glass curves; the glass should have no milky coating.",
+        "dimension": "material",
+        "target": "drinking_glass",
+        "property": "transmission.recognizability",
+        "prompt_evidence": "The glass should be clear enough to transmit the apple's red shape"
+      },
+      {
+        "anchor_id": "blind_scene_011_property_02",
+        "source_text": "Photograph a pale blue drinking glass on a table with a red apple immediately behind it. The apple should be visible through the glass as a recognizable red shape, but its outline should bend where the glass curves; the glass should have no milky coating.",
+        "dimension": "material",
+        "target": "drinking_glass",
+        "property": "transmission.distortion",
+        "prompt_evidence": "the apple's outline bending or shifting where the curved glass changes the view"
+      },
+      {
+        "anchor_id": "blind_scene_011_property_03",
+        "source_text": "Photograph a pale blue drinking glass on a table with a red apple immediately behind it. The apple should be visible through the glass as a recognizable red shape, but its outline should bend where the glass curves; the glass should have no milky coating.",
+        "dimension": "material",
+        "target": "drinking_glass",
+        "property": "surface.clarity",
+        "prompt_evidence": "Preserve the glass as transparent material with a subtle blue tint, not an opaque blue cup and not a milky, frosted vessel."
+      }
+    ],
+    "status_changes": [
+      {
+        "id": "slot:lighting:pe_silhouette_outline",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      }
+    ],
+    "remaining_eligible_count": 63,
+    "train_directions": []
+  },
+  {
+    "case": "blind_scene_012",
+    "id_sets_equal": true,
+    "slot_sets_equal": true,
+    "all_public_candidate_content_equal_except_applicability": true,
+    "only_added_core_anchors": true,
+    "added_anchors": [
+      {
+        "anchor_id": "blind_scene_012_property_01",
+        "source_text": "빵집 카운터의 갈색 종이봉투를 가까이서 찍어 주세요. 접힌 부분마다 가는 주름과 종이 섬유가 보이고, 옆 조명을 받아도 표면에 거울 같은 번쩍임은 없이 차분하게 밝아지도록 해 주세요.",
+        "dimension": "material",
+        "target": "paper_bag",
+        "property": "surface.texture",
+        "prompt_evidence": "both fine creases and the subtle fibers of the paper can be inspected"
+      },
+      {
+        "anchor_id": "blind_scene_012_property_02",
+        "source_text": "빵집 카운터의 갈색 종이봉투를 가까이서 찍어 주세요. 접힌 부분마다 가는 주름과 종이 섬유가 보이고, 옆 조명을 받아도 표면에 거울 같은 번쩍임은 없이 차분하게 밝아지도록 해 주세요.",
+        "dimension": "material",
+        "target": "paper_bag",
+        "property": "surface.reflectivity",
+        "prompt_evidence": "The bright areas should spread gently across the paper rather than becoming sharp, mirrorlike white reflections."
+      }
+    ],
+    "status_changes": [
+      {
+        "id": "slot:lighting:pe_low_key_island",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      },
+      {
+        "id": "slot:film_emulation:pe_scan_picture_area",
+        "before": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "after": {
+          "status": "ineligible",
+          "source": "authored_property_scope",
+          "reason": "effect overlaps a protected requester property"
+        }
+      }
+    ],
+    "remaining_eligible_count": 62,
+    "train_directions": []
+  }
+]
