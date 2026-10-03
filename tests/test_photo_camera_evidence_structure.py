@@ -85,6 +85,19 @@ class CameraAuthoringStructureTests(unittest.TestCase):
         self.assertEqual(pg.intent_property_locks(core['intent_lock']), [])
         self.assertNotIn('camera', core['baseline_prompt_en'].lower())
 
+    def test_review_protocol_metadata_cannot_opt_in_an_unrelated_camera_observation(self):
+        core = normalize(read_inputs('en_open'))
+        entry = {'id': 'optical_axis', 'label': 'Camera axis calibration',
+                 'prompt': 'optical camera axis alignment', 'keywords': ['camera axis'],
+                 'affected_dimensions': ['camera'], 'affected_properties': [],
+                 'core_assertion_discovery': True}
+        corpus = {'camera_direction': [entry]}
+        index = pg._core_slot_index(json.dumps(corpus, sort_keys=True))
+        data = {'candidate_semantic_policy': {'core_assertion_discovery': {
+            'minimum_shared_content_words': 2, 'maximum_per_assertion': 4, 'maximum_candidates': 8}}}
+        self.assertEqual(pg.candidate_pack_assertion_discovery(data, core,
+            {'slot:camera_direction:optical_axis': entry}, index), [])
+
     def test_public_new_author_mode_rejects_omitted_declaration_before_data(self):
         inputs = read_inputs(); inputs['authorial-core']['semantic_assertions'] = []
         with tempfile.TemporaryDirectory() as folder:
