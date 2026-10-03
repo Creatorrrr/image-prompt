@@ -86,8 +86,8 @@ def authored_subject_category(assertions: list[dict], context: dict | None = Non
     context = context or {}
     if category == "human" and (context.get("subject_category") == "nonhuman" or context.get("no_people")):
         raise ValueError("typed human subject conflicts with the frozen creative context")
-    if category not in {None, "human", "unknown"} and context.get("subject_category") == "human":
-        raise ValueError("typed nonhuman subject conflicts with the frozen creative context")
+    if category not in {None, "human"} and context.get("subject_category") == "human":
+        raise ValueError("typed subject category conflicts with the frozen human creative context")
     return category
 
 
