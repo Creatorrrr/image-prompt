@@ -1,0 +1,811 @@
+{
+  "arm": "after",
+  "input_hashes_unchanged": true,
+  "cases": [
+    {
+      "id": "abandoned",
+      "preservation": {
+        "slots": true,
+        "core_retrieval": true,
+        "authorial_core": true,
+        "embodiment_preflight": true,
+        "semantic_clarification": true,
+        "negative_en": true,
+        "negative_intent_guard": true,
+        "intent_preservation": true,
+        "creative_controls": true,
+        "visual_concept_candidates": true,
+        "candidate_bundles": true,
+        "active_profile_ids": true,
+        "five_groups_gates_binding_and_rejects": true
+      }
+    },
+    {
+      "id": "active_use",
+      "preservation": {
+        "slots": true,
+        "core_retrieval": true,
+        "authorial_core": true,
+        "embodiment_preflight": true,
+        "semantic_clarification": true,
+        "negative_en": true,
+        "negative_intent_guard": true,
+        "intent_preservation": true,
+        "creative_controls": true,
+        "visual_concept_candidates": true,
+        "candidate_bundles": true,
+        "active_profile_ids": true,
+        "five_groups_gates_binding_and_rejects": true
+      }
+    },
+    {
+      "id": "closed",
+      "preservation": {
+        "slots": true,
+        "core_retrieval": true,
+        "authorial_core": true,
+        "embodiment_preflight": true,
+        "semantic_clarification": true,
+        "negative_en": true,
+        "negative_intent_guard": true,
+        "intent_preservation": true,
+        "creative_controls": true,
+        "visual_concept_candidates": true,
+        "candidate_bundles": true,
+        "active_profile_ids": true,
+        "five_groups_gates_binding_and_rejects": true
+      }
+    },
+    {
+      "id": "old_and",
+      "preservation": {
+        "slots": true,
+        "core_retrieval": true,
+        "authorial_core": true,
+        "embodiment_preflight": true,
+        "semantic_clarification": true,
+        "negative_en": true,
+        "negative_intent_guard": true,
+        "intent_preservation": true,
+        "creative_controls": true,
+        "visual_concept_candidates": true,
+        "candidate_bundles": true,
+        "active_profile_ids": true,
+        "five_groups_gates_binding_and_rejects": true
+      }
+    },
+    {
+      "id": "ordinary_empty",
+      "preservation": {
+        "slots": true,
+        "core_retrieval": true,
+        "authorial_core": true,
+        "embodiment_preflight": true,
+        "semantic_clarification": true,
+        "negative_en": true,
+        "negative_intent_guard": true,
+        "intent_preservation": true,
+        "creative_controls": true,
+        "visual_concept_candidates": true,
+        "candidate_bundles": true,
+        "active_profile_ids": true,
+        "five_groups_gates_binding_and_rejects": true
+      }
+    },
+    {
+      "id": "source_or",
+      "preservation": {
+        "slots": true,
+        "core_retrieval": true,
+        "authorial_core": true,
+        "embodiment_preflight": true,
+        "semantic_clarification": true,
+        "negative_en": true,
+        "negative_intent_guard": true,
+        "intent_preservation": true,
+        "creative_controls": true,
+        "visual_concept_candidates": true,
+        "candidate_bundles": true,
+        "active_profile_ids": true,
+        "five_groups_gates_binding_and_rejects": true
+      }
+    }
+  ],
+  "composition_changes": [
+    {
+      "id": "old_and",
+      "before": "pass",
+      "after": "pass",
+      "expected_before": "pass",
+      "expected_after": "pass",
+      "before_failures": [],
+      "after_failures": [],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    },
+    {
+      "id": "source_or",
+      "before": "fail",
+      "after": "pass",
+      "expected_before": "fail",
+      "expected_after": "pass",
+      "before_failures": [
+        {
+          "accepted_anchors": [
+            "working lights clean surfaces furniture and route markers imply normal service"
+          ],
+          "check": "visual_obligation_semantic_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "visual evidence phrase lacks a profile-declared component anchor"
+        }
+      ],
+      "after_failures": [],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    },
+    {
+      "id": "ordinary_empty",
+      "before": "pass",
+      "after": "pass",
+      "expected_before": "pass",
+      "expected_after": "pass",
+      "before_failures": [],
+      "after_failures": [],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    },
+    {
+      "id": "abandoned",
+      "before": "pass",
+      "after": "pass",
+      "expected_before": "pass",
+      "expected_after": "pass",
+      "before_failures": [],
+      "after_failures": [],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    },
+    {
+      "id": "closed",
+      "before": "pass",
+      "after": "pass",
+      "expected_before": "pass",
+      "expected_after": "pass",
+      "before_failures": [],
+      "after_failures": [],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    },
+    {
+      "id": "active_use",
+      "before": "pass",
+      "after": "pass",
+      "expected_before": "pass",
+      "expected_after": "pass",
+      "before_failures": [],
+      "after_failures": [],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    },
+    {
+      "id": "malformed_abandoned_missing_maintained_cues",
+      "before": "fail",
+      "after": "fail",
+      "expected_before": "fail",
+      "expected_after": "fail",
+      "before_failures": [
+        {
+          "accepted_anchors": [
+            "working lights clean surfaces furniture and route markers imply normal service"
+          ],
+          "check": "visual_obligation_semantic_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "visual evidence phrase lacks a profile-declared component anchor"
+        }
+      ],
+      "after_failures": [
+        {
+          "accepted_anchors": [
+            "working lights clean surfaces furniture and route markers imply normal service",
+            "working lights clean surfaces furniture signs or route markers imply normal use"
+          ],
+          "check": "visual_obligation_semantic_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "visual evidence phrase lacks a profile-declared component anchor"
+        }
+      ],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    },
+    {
+      "id": "malformed_closed_service_missing_maintained_cues",
+      "before": "fail",
+      "after": "fail",
+      "expected_before": "fail",
+      "expected_after": "fail",
+      "before_failures": [
+        {
+          "accepted_anchors": [
+            "working lights clean surfaces furniture and route markers imply normal service"
+          ],
+          "check": "visual_obligation_semantic_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "visual evidence phrase lacks a profile-declared component anchor"
+        }
+      ],
+      "after_failures": [
+        {
+          "accepted_anchors": [
+            "working lights clean surfaces furniture and route markers imply normal service",
+            "working lights clean surfaces furniture signs or route markers imply normal use"
+          ],
+          "check": "visual_obligation_semantic_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "visual evidence phrase lacks a profile-declared component anchor"
+        }
+      ],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    },
+    {
+      "id": "malformed_missing_activity_alone",
+      "before": "fail",
+      "after": "fail",
+      "expected_before": "fail",
+      "expected_after": "fail",
+      "before_failures": [
+        {
+          "check": "visual_obligation_evidence",
+          "extra": [],
+          "missing": [
+            "maintained_cues_phrase",
+            "temporal_residue_phrase",
+            "transition_function_phrase",
+            "unresolved_route_phrase"
+          ],
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "profile evidence fields must exactly match its prompt-binding contract"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "transition_function_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "temporal_residue_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "unresolved_route_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "actual": 1,
+          "check": "visual_obligation_distinct_evidence",
+          "minimum": 5,
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "different visual duties require distinct literal prompt phrases"
+        }
+      ],
+      "after_failures": [
+        {
+          "check": "visual_obligation_evidence",
+          "extra": [],
+          "missing": [
+            "maintained_cues_phrase",
+            "temporal_residue_phrase",
+            "transition_function_phrase",
+            "unresolved_route_phrase"
+          ],
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "profile evidence fields must exactly match its prompt-binding contract"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "transition_function_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "temporal_residue_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "unresolved_route_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "actual": 1,
+          "check": "visual_obligation_distinct_evidence",
+          "minimum": 5,
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "different visual duties require distinct literal prompt phrases"
+        }
+      ],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    },
+    {
+      "id": "malformed_missing_transition_function_phrase",
+      "before": "fail",
+      "after": "fail",
+      "expected_before": "fail",
+      "expected_after": "fail",
+      "before_failures": [
+        {
+          "check": "visual_obligation_evidence",
+          "extra": [],
+          "missing": [
+            "transition_function_phrase"
+          ],
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "profile evidence fields must exactly match its prompt-binding contract"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "transition_function_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "accepted_anchors": [
+            "working lights clean surfaces furniture and route markers imply normal service"
+          ],
+          "check": "visual_obligation_semantic_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "visual evidence phrase lacks a profile-declared component anchor"
+        },
+        {
+          "actual": 4,
+          "check": "visual_obligation_distinct_evidence",
+          "minimum": 5,
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "different visual duties require distinct literal prompt phrases"
+        }
+      ],
+      "after_failures": [
+        {
+          "check": "visual_obligation_evidence",
+          "extra": [],
+          "missing": [
+            "transition_function_phrase"
+          ],
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "profile evidence fields must exactly match its prompt-binding contract"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "transition_function_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "actual": 4,
+          "check": "visual_obligation_distinct_evidence",
+          "minimum": 5,
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "different visual duties require distinct literal prompt phrases"
+        }
+      ],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    },
+    {
+      "id": "malformed_missing_expected_use_gap_phrase",
+      "before": "fail",
+      "after": "fail",
+      "expected_before": "fail",
+      "expected_after": "fail",
+      "before_failures": [
+        {
+          "check": "visual_obligation_evidence",
+          "extra": [],
+          "missing": [
+            "expected_use_gap_phrase"
+          ],
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "profile evidence fields must exactly match its prompt-binding contract"
+        },
+        {
+          "accepted_anchors": [
+            "working lights clean surfaces furniture and route markers imply normal service"
+          ],
+          "check": "visual_obligation_semantic_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "visual evidence phrase lacks a profile-declared component anchor"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "expected_use_gap_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "actual": 4,
+          "check": "visual_obligation_distinct_evidence",
+          "minimum": 5,
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "different visual duties require distinct literal prompt phrases"
+        }
+      ],
+      "after_failures": [
+        {
+          "check": "visual_obligation_evidence",
+          "extra": [],
+          "missing": [
+            "expected_use_gap_phrase"
+          ],
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "profile evidence fields must exactly match its prompt-binding contract"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "expected_use_gap_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "actual": 4,
+          "check": "visual_obligation_distinct_evidence",
+          "minimum": 5,
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "different visual duties require distinct literal prompt phrases"
+        }
+      ],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    },
+    {
+      "id": "malformed_missing_temporal_residue_phrase",
+      "before": "fail",
+      "after": "fail",
+      "expected_before": "fail",
+      "expected_after": "fail",
+      "before_failures": [
+        {
+          "check": "visual_obligation_evidence",
+          "extra": [],
+          "missing": [
+            "temporal_residue_phrase"
+          ],
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "profile evidence fields must exactly match its prompt-binding contract"
+        },
+        {
+          "accepted_anchors": [
+            "working lights clean surfaces furniture and route markers imply normal service"
+          ],
+          "check": "visual_obligation_semantic_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "visual evidence phrase lacks a profile-declared component anchor"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "temporal_residue_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "actual": 4,
+          "check": "visual_obligation_distinct_evidence",
+          "minimum": 5,
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "different visual duties require distinct literal prompt phrases"
+        }
+      ],
+      "after_failures": [
+        {
+          "check": "visual_obligation_evidence",
+          "extra": [],
+          "missing": [
+            "temporal_residue_phrase"
+          ],
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "profile evidence fields must exactly match its prompt-binding contract"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "temporal_residue_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "actual": 4,
+          "check": "visual_obligation_distinct_evidence",
+          "minimum": 5,
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "different visual duties require distinct literal prompt phrases"
+        }
+      ],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    },
+    {
+      "id": "malformed_missing_unresolved_route_phrase",
+      "before": "fail",
+      "after": "fail",
+      "expected_before": "fail",
+      "expected_after": "fail",
+      "before_failures": [
+        {
+          "check": "visual_obligation_evidence",
+          "extra": [],
+          "missing": [
+            "unresolved_route_phrase"
+          ],
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "profile evidence fields must exactly match its prompt-binding contract"
+        },
+        {
+          "accepted_anchors": [
+            "working lights clean surfaces furniture and route markers imply normal service"
+          ],
+          "check": "visual_obligation_semantic_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "visual evidence phrase lacks a profile-declared component anchor"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "unresolved_route_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "actual": 4,
+          "check": "visual_obligation_distinct_evidence",
+          "minimum": 5,
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "different visual duties require distinct literal prompt phrases"
+        }
+      ],
+      "after_failures": [
+        {
+          "check": "visual_obligation_evidence",
+          "extra": [],
+          "missing": [
+            "unresolved_route_phrase"
+          ],
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "profile evidence fields must exactly match its prompt-binding contract"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "unresolved_route_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "actual": 4,
+          "check": "visual_obligation_distinct_evidence",
+          "minimum": 5,
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "different visual duties require distinct literal prompt phrases"
+        }
+      ],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    },
+    {
+      "id": "malformed_generic_cue_without_source_anchor",
+      "before": "fail",
+      "after": "fail",
+      "expected_before": "fail",
+      "expected_after": "fail",
+      "before_failures": [
+        {
+          "accepted_anchors": [
+            "working lights clean surfaces furniture and route markers imply normal service"
+          ],
+          "check": "visual_obligation_semantic_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "visual evidence phrase lacks a profile-declared component anchor"
+        }
+      ],
+      "after_failures": [
+        {
+          "accepted_anchors": [
+            "working lights clean surfaces furniture and route markers imply normal service",
+            "working lights clean surfaces furniture signs or route markers imply normal use"
+          ],
+          "check": "visual_obligation_semantic_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "visual evidence phrase lacks a profile-declared component anchor"
+        }
+      ],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    },
+    {
+      "id": "malformed_missing_maintained_cues_phrase",
+      "before": "fail",
+      "after": "fail",
+      "expected_before": "fail",
+      "expected_after": "fail",
+      "before_failures": [
+        {
+          "check": "visual_obligation_evidence",
+          "extra": [],
+          "missing": [
+            "maintained_cues_phrase"
+          ],
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "profile evidence fields must exactly match its prompt-binding contract"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "actual": 4,
+          "check": "visual_obligation_distinct_evidence",
+          "minimum": 5,
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "different visual duties require distinct literal prompt phrases"
+        }
+      ],
+      "after_failures": [
+        {
+          "check": "visual_obligation_evidence",
+          "extra": [],
+          "missing": [
+            "maintained_cues_phrase"
+          ],
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "profile evidence fields must exactly match its prompt-binding contract"
+        },
+        {
+          "check": "visual_obligation_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "required visual evidence must be a non-empty string"
+        },
+        {
+          "actual": 4,
+          "check": "visual_obligation_distinct_evidence",
+          "minimum": 5,
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "different visual duties require distinct literal prompt phrases"
+        }
+      ],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    },
+    {
+      "id": "malformed_active_use_replaces_gap",
+      "before": "fail",
+      "after": "fail",
+      "expected_before": "fail",
+      "expected_after": "fail",
+      "before_failures": [
+        {
+          "accepted_anchors": [
+            "working lights clean surfaces furniture and route markers imply normal service"
+          ],
+          "check": "visual_obligation_semantic_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "visual evidence phrase lacks a profile-declared component anchor"
+        },
+        {
+          "accepted_anchors": [
+            "the expected occupants destination activity and active service are conspicuously absent"
+          ],
+          "check": "visual_obligation_semantic_evidence",
+          "field": "expected_use_gap_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "visual evidence phrase lacks a profile-declared component anchor"
+        }
+      ],
+      "after_failures": [
+        {
+          "accepted_anchors": [
+            "the expected occupants destination activity and active service are conspicuously absent"
+          ],
+          "check": "visual_obligation_semantic_evidence",
+          "field": "expected_use_gap_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "visual evidence phrase lacks a profile-declared component anchor"
+        }
+      ],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    },
+    {
+      "id": "natural_cue_paraphrase_limitation",
+      "before": "fail",
+      "after": "fail",
+      "expected_before": "fail",
+      "expected_after": "fail",
+      "before_failures": [
+        {
+          "accepted_anchors": [
+            "working lights clean surfaces furniture and route markers imply normal service"
+          ],
+          "check": "visual_obligation_semantic_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "visual evidence phrase lacks a profile-declared component anchor"
+        }
+      ],
+      "after_failures": [
+        {
+          "accepted_anchors": [
+            "working lights clean surfaces furniture and route markers imply normal service",
+            "working lights clean surfaces furniture signs or route markers imply normal use"
+          ],
+          "check": "visual_obligation_semantic_evidence",
+          "field": "maintained_cues_phrase",
+          "profile_id": "liminal_transition_use_gap",
+          "reason": "visual evidence phrase lacks a profile-declared component anchor"
+        }
+      ],
+      "prompt_evidence_selections_and_authorship_unchanged": true
+    }
+  ],
+  "pack_leaf_changes": {
+    "abandoned": [],
+    "active_use": [],
+    "closed": [],
+    "old_and": [
+      {
+        "path": "/pack_id",
+        "before": "3ba42061f9489303",
+        "after": "d0dfce13b3fca5db"
+      },
+      {
+        "path": "/visual_obligations/obligations/0/evidence_requirements/maintained_cues_phrase/must_mention_any",
+        "before": [
+          "working lights clean surfaces furniture and route markers imply normal service"
+        ],
+        "after": [
+          "working lights clean surfaces furniture and route markers imply normal service",
+          "working lights clean surfaces furniture signs or route markers imply normal use"
+        ]
+      }
+    ],
+    "ordinary_empty": [],
+    "source_or": [
+      {
+        "path": "/pack_id",
+        "before": "eeb9b07aa38550da",
+        "after": "3bbeaa420bd73973"
+      },
+      {
+        "path": "/visual_obligations/obligations/0/evidence_requirements/maintained_cues_phrase/must_mention_any",
+        "before": [
+          "working lights clean surfaces furniture and route markers imply normal service"
+        ],
+        "after": [
+          "working lights clean surfaces furniture and route markers imply normal service",
+          "working lights clean surfaces furniture signs or route markers imply normal use"
+        ]
+      }
+    ]
+  },
+  "limitations": [
+    "Synthetic source-aware canonical metadata qualification, not clean pre-core authorship or natural-query recall.",
+    "Ordinary noncanonical maintained-cue paraphrase is deliberately still rejected.",
+    "No optional candidates were adopted. Eligibility, exposure and adoption remain separate.",
+    "No rendered images, provider calls, runtime changes, corpus edits or index writes by this harness."
+  ],
+  "issues": [],
+  "status": "pass"
+}
