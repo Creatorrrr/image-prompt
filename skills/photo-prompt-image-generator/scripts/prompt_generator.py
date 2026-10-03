@@ -10386,9 +10386,9 @@ def build_candidate_pack(
                     entry, slot, data.get("candidate_semantic_policy")
                 )
                 source = candidate["_v6_semantic_source"]
-                if "affected_properties" in source and not property_effects_allowed(
+                if not property_effects_allowed(
                     authorial_core.get("intent_lock") or {}, source.get("affected_dimensions") or [],
-                    source["affected_properties"]
+                    source.get("affected_properties", [])
                 ):
                     candidate["applicability"] = {
                         "status": "ineligible", "source": "authored_property_scope",
