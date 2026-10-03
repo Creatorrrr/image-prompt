@@ -3970,7 +3970,7 @@
           "상체 부분과 치마 부분이 하나의 옷으로 이어지며, 목둘레부터 밑단까지 연속된 윤곽 안에 봉제선과 여밈이 보인다.",
           "The bodice and skirt form one garment, with seams and a closure inside a continuous outline from neckline to hem.",
           "목둘레에서 상체를 지나 치마 밑단까지 한 벌로 이어진 의복을 보여준다. 허리 절개선이나 여러 패널이 있어도 위와 아래는 서로 분리된 옷이 아니다. 봉제선, 겹치는 여밈, 천의 낙하가 같은 드레스의 구조로 읽히며 하부에는 별도의 바지 다리가 없다.",
-          "Show one garment continuing from neckline through bodice to skirt hem. A waist seam or multiple panels may be present while upper and lower parts remain one dress. Seams, overlapping closure and fabric drape read as its construction, and the lower section does not divide into trouser legs."
+          "Show one garment continuing from neckline through bodice to skirt hem. A waist seam or multiple panels may be present while upper and lower parts remain one dress. Seams, overlapping closure and fabric drape read as its construction, and the lower section forms one continuous skirt-shaped dress silhouette."
         ],
         "component_semantics": {
           "minimum_component_groups": 3,
@@ -15557,7 +15557,8 @@
               "any_terms": [
                 "weighted damp sections adhere locally to the face neck or garment",
                 "moisture pulls selected bundles downward against nearby surfaces",
-                "젖은 다발이 얼굴 목 의복에 국소적으로 붙음"
+                "젖은 다발이 얼굴 목 의복에 국소적으로 붙음",
+                "moisture pulls selected damp bundles downward into weighted sections"
               ]
             },
             {
@@ -15605,7 +15606,7 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Show reduced airy volume, several visible damp strand bundles, weighted downward behavior, and localized adherence to nearby surfaces as one coherent moisture state. Specular shine may support the result, but dry gloss, rim light, oily roots, or sleek gel styling alone cannot substitute.",
+      "composition_instruction": "Show reduced airy volume, several visible damp strand bundles, weighted downward behavior or localized adherence to nearby surfaces as one coherent moisture state. Specular shine may support the result, but dry gloss, rim light, oily roots, or sleek gel styling alone cannot substitute.",
       "required_evidence_fields": [
         "reduced_volume_phrase",
         "strand_bundling_phrase",
@@ -15632,7 +15633,8 @@
           "min_content_words": 9,
           "must_mention_any": [
             "weighted damp sections adhere locally to the face neck or garment",
-            "moisture pulls selected bundles downward against nearby surfaces"
+            "moisture pulls selected bundles downward against nearby surfaces",
+            "moisture pulls selected damp bundles downward into weighted sections"
           ]
         },
         "moisture_coherence_phrase": {
@@ -15664,12 +15666,12 @@
         {
           "id": "vo_hair_wet_weighted_adherence",
           "review_scale": "native",
-          "description": "Weighted damp sections adhere locally to the face neck or garment."
+          "description": "Damp sections show moisture-weighted downward behavior or adhere locally to the face neck or garment."
         },
         {
           "id": "vo_hair_wet_moisture_coherence",
           "review_scale": "both",
-          "description": "Clumping volume reduction and adherence agree spatially as one moisture state."
+          "description": "Clumping volume reduction and the selected weighted behavior or adherence agree spatially as one moisture state."
         },
         {
           "id": "vo_hair_wet_not_dry_gloss",
@@ -16270,7 +16272,7 @@
               "id": "capture_confound_control",
               "any_terms": [
                 "physical scene geometry stays coherent and the breach is not generic blur fog hologram or exposure artifact",
-                "장면 기하가 유지되고 단순 블러 안개 홀로그램 노출 효과가 아님"
+                "장면 기하가 일관되게 유지되고 생전 인물과 연결된 불가능한 현현 및 국소 결과가 함께 읽힘"
               ]
             }
           ]
@@ -17300,7 +17302,8 @@
                 "embroidered voile",
                 "scalloped embroidered hem or edge",
                 "자수 보일 레이스 또는 가벼운 천",
-                "스캘럽 자수 밑단"
+                "스캘럽 자수 밑단",
+                "fine lightweight cloth retains visible weave and finished front edges"
               ]
             },
             {
@@ -17381,7 +17384,8 @@
           "min_content_words": 4,
           "must_mention_any": [
             "fine embroidered voile with finished scalloped edges",
-            "lightweight lace or embroidered cloth retains visible weave"
+            "lightweight lace or embroidered cloth retains visible weave",
+            "fine lightweight cloth retains visible weave and finished front edges"
           ]
         },
         "center_fastening_phrase": {
@@ -17982,7 +17986,7 @@
               "id": "variation_boundary",
               "any_terms": [
                 "regional form controls cut material and ornament",
-                "boubou is not automatically agbada dashiki or caftan",
+                "the selected regional boubou form retains its own cut layering and ornament",
                 "지역 형식에 따른 재단 재료 장식"
               ]
             }
@@ -23248,7 +23252,7 @@
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "A rapier morphology with a long slender straight double-edged blade tapering to an acute point, an elaborate swept or cup guard that encloses the hand, a one-hand grip, and a pommel on one continuous hilt-to-blade axis. Blade proportion and protective guard topology distinguish it from a broad two-hand greatsword, a short smallsword silhouette, or a plain cruciform medieval sword.",
+        "definition": "A rapier morphology with a long slender straight double-edged blade tapering to an acute point, an elaborate swept or cup guard around the grip, a one-hand grip, and a pommel on one continuous hilt-to-blade axis. Blade proportion and protective guard topology distinguish it from a broad two-hand greatsword, a short smallsword silhouette, or a plain cruciform medieval sword.",
         "paraphrase_examples": [
           "손을 감싸는 복잡한 가드와 가느다란 직선 양날 검신이 뾰족한 끝으로 이어지는 레이피어",
           "a slender thrusting sword whose ornate swept guard, one-hand grip, pommel, and acute point share one readable profile"
@@ -23281,7 +23285,9 @@
               "id": "elaborate_hand_guard",
               "any_terms": [
                 "a swept or cup guard visibly encloses and protects the gripping hand",
-                "스웹트 또는 컵 가드가 손을 감싸 보호하는 구조"
+                "스웹트 또는 컵 가드가 손을 감싸 보호하는 구조",
+                "a swept or cup guard forms an elaborate protective enclosure around the grip",
+                "스웹트 또는 컵 가드가 그립 둘레에 정교한 보호 구조를 형성"
               ]
             },
             {
@@ -23320,12 +23326,12 @@
       "runtime_expression": {
         "default_mode": "label_plus_definition",
         "prompt_label_terms": [
-          "rapier with an elaborate hand-enclosing guard"
+          "rapier with an elaborate swept or cup guard"
         ],
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Use an unobstructed side or three-quarter profile that keeps the elaborate guard, gripping hand, one-hand grip, pommel, complete slender blade, and acute point on one continuous readable axis.",
+      "composition_instruction": "Use an unobstructed side or three-quarter profile that keeps the elaborate guard, grip, pommel, complete slender blade, and acute point on one continuous readable axis. Preserve the requested object placement and whether any person is present.",
       "required_evidence_fields": [
         "blade_profile_phrase",
         "acute_point_phrase",
@@ -23349,6 +23355,7 @@
         "guard_phrase": {
           "min_content_words": 11,
           "must_mention_any": [
+            "a swept or cup guard forms an elaborate protective enclosure around the grip",
             "a swept or cup guard visibly encloses and protects the gripping hand"
           ]
         },
@@ -23379,7 +23386,7 @@
         {
           "id": "vo_weapon_rapier_elaborate_guard",
           "review_scale": "both",
-          "description": "A swept or cup guard visibly encloses the gripping hand rather than becoming a plain crossguard."
+          "description": "A swept or cup guard forms an elaborate protective structure around the grip rather than becoming a plain crossguard; no hand is required."
         },
         {
           "id": "vo_weapon_rapier_hilt_axis",
@@ -23493,7 +23500,7 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Frame the lower shaft, hand spacing, socket, lateral axe blade, apical spear point, and rear beak in one side-readable composition without cropping any head component.",
+      "composition_instruction": "Frame the lower shaft, socket, lateral axe blade, apical spear point, and rear beak in one side-readable composition without cropping any head component. Preserve the requested object placement and whether any person is present. When a person holds the shaft, keep their hand spacing and contacts coherent and visible without obscuring the head.",
       "required_evidence_fields": [
         "shaft_phrase",
         "axe_blade_phrase",
@@ -23586,10 +23593,11 @@
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "A compound bow morphology built around a rigid central riser, split or compact limbs, cams or pulleys at both limb tips, and visibly separate bowstring and cable paths. The complete vertical bow remains independent of a stock, preventing a recurve or longbow without cams and preventing a crossbow substitution.",
+        "definition": "A compound bow morphology built around a rigid central riser, split or compact limbs, cams or pulleys at both limb tips, and visibly separate bowstring and cable paths. The complete bow remains independent of a stock, preventing a recurve or longbow without cams and preventing a crossbow substitution.",
         "paraphrase_examples": [
           "중앙 라이저·분할 림·양끝 캠·서로 분리된 보우스트링과 케이블 경로가 보이는 컴파운드 보우",
-          "a vertical modern bow whose paired cams and distinct cable paths remain visible from limb tip to limb tip"
+          "a vertical modern bow whose paired cams and distinct cable paths remain visible from limb tip to limb tip",
+          "a modern bow whose paired cams and distinct cable paths remain visible from limb tip to limb tip"
         ],
         "component_semantics": {
           "minimum_component_groups": 5,
@@ -23663,7 +23671,7 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Keep the entire vertical bow inside frame, with both limb-tip cams, split limbs, central riser and grip, bowstring, and separate cable routes unobstructed by hands, hair, costume, or background clutter.",
+      "composition_instruction": "Keep the entire bow inside frame in the requested orientation, with both limb-tip cams, split limbs, central riser and grip, bowstring, and separate cable routes unobstructed. Preserve the requested object placement and whether any person is present.",
       "required_evidence_fields": [
         "riser_phrase",
         "split_limb_phrase",
@@ -23707,7 +23715,7 @@
         {
           "id": "vo_weapon_compound_bow_full_riser_limbs",
           "review_scale": "thumbnail",
-          "description": "The complete vertical riser and upper and lower limb system fit inside the frame."
+          "description": "The complete riser and both limb systems fit inside the frame in the requested orientation."
         },
         {
           "id": "vo_weapon_compound_bow_two_cams",
@@ -23722,7 +23730,7 @@
         {
           "id": "vo_weapon_compound_bow_grip_relation",
           "review_scale": "native",
-          "description": "The hand meets the central riser grip without hiding either cam or inventing extra strings."
+          "description": "The grip remains a coherent part of the central riser without hiding either cam or inventing extra strings; no hand is required."
         },
         {
           "id": "vo_weapon_compound_bow_not_simple_or_crossbow",
@@ -23833,7 +23841,7 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Use a side or elevated three-quarter view that reveals the full transverse prod, complete string span, longitudinal stock, bolt track, release housing, trigger region, and coherent support-hand contact in one object.",
+      "composition_instruction": "Use a side or elevated three-quarter view that reveals the full transverse prod, complete string span, longitudinal stock, bolt track, release housing, and trigger region in one object. Preserve the requested object placement and whether any person is present. When a person supports the crossbow, keep support-hand contact coherent without merging hands into or obscuring the stock, string, prod, or trigger region.",
       "required_evidence_fields": [
         "stock_phrase",
         "prod_phrase",
@@ -23892,7 +23900,7 @@
         {
           "id": "vo_weapon_crossbow_contact_coherence",
           "review_scale": "native",
-          "description": "Hands support one coherent crossbow without merging into the stock, string, prod, or trigger region."
+          "description": "The stock, string, prod, and trigger region remain distinct parts of one coherent crossbow. When hands support the object, their contacts remain coherent without merging into those parts; no hand is required for an object-only display."
         },
         {
           "id": "vo_weapon_crossbow_not_bow_or_rifle",
@@ -31085,7 +31093,7 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Frame a connected wetland surface where shallow water, saturated soil, emergent vegetation, and raised drier patches can all be compared in one view.",
+      "composition_instruction": "Frame a connected wetland surface where shallow water or visibly saturated low ground, water-shaped soil evidence, hydrophytic vegetation, and raised drier patches can all be compared in one view.",
       "required_evidence_fields": [
         "wetland_water_phrase",
         "wetland_soil_phrase",
@@ -31127,7 +31135,7 @@
         {
           "id": "vo_natural_wetland_soil_contact",
           "review_scale": "native",
-          "description": "Mud or saturated soil is visible at the water margin with plausible ground contact."
+          "description": "Exposed mud, dark saturated soil, or a soft waterlogged margin remains visible with plausible ground contact."
         },
         {
           "id": "vo_natural_wetland_hydrophytes",
@@ -31505,7 +31513,7 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Use a wide down-valley or oblique view that connects the U-shaped trough, continuous crevassed ice, moraine debris, and terminus meltwater without hiding their contacts.",
+      "composition_instruction": "Use a wide down-valley or oblique view that connects the U-shaped trough, continuous ice with crevasses, flow bands, or debris stripes providing a coherent down-valley surface direction, moraine debris, and terminus meltwater without hiding their contacts.",
       "required_evidence_fields": [
         "glacier_body_phrase",
         "glacier_flow_surface_phrase",
@@ -31645,7 +31653,7 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Use an oblique side view that keeps the gentle stoss slope, crest line, steep lee slip face, and aligned surface ripples on one connected dune body.",
+      "composition_instruction": "Use an oblique side view that keeps the gentle stoss slope, crest line, steep lee slip face, and aligned fine sand ripples or short saltation traces on one connected dune body.",
       "required_evidence_fields": [
         "dune_stoss_phrase",
         "dune_crest_phrase",
@@ -31785,7 +31793,7 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Use a wide vertical frame that preserves the low dark base, full convective tower, flattened fibrous anvil, and a descending precipitation shaft in one connected cloud system.",
+      "composition_instruction": "Use a wide vertical frame that preserves the low dark base, full convective tower, flattened fibrous or striated anvil, and a descending precipitation shaft in one connected cloud system.",
       "required_evidence_fields": [
         "storm_base_phrase",
         "convective_tower_phrase",
@@ -44910,7 +44918,9 @@
               "id": "diagonal_front_overlap",
               "any_terms": [
                 "one panel crosses diagonally over the other across the skirt front",
-                "한 판이 다른 판 위를 사선으로 가로질러 겹침"
+                "한 판이 다른 판 위를 사선으로 가로질러 겹침",
+                "one panel crosses diagonally over the other across the skirt side",
+                "한 판이 다른 판 위를 스커트 옆면에서 사선으로 가로질러 겹침"
               ]
             },
             {
@@ -44979,7 +44989,8 @@
         "diagonal_overlap_phrase": {
           "min_content_words": 10,
           "must_mention_any": [
-            "one panel crosses diagonally over the other across the skirt front"
+            "one panel crosses diagonally over the other across the skirt front",
+            "one panel crosses diagonally over the other across the skirt side"
           ]
         },
         "functional_fastening_phrase": {
@@ -48245,7 +48256,7 @@
         "concept_terms": [
           "critically sharp very-near anchor",
           "simultaneously sharp distant anchor",
-          "softer intervening depth band",
+          "softer intervening depth band or restrained optical transition",
           "continuous light and perspective across both zones",
           "two-zone split-field signature"
         ]
@@ -48321,11 +48332,11 @@
               "a softer middle-depth band separates the sharp anchors"
             ],
             "min_content_words": 6,
-            "instruction": "An intervening middle-depth band remains visibly softer than both anchors.",
+            "instruction": "An intervening middle-depth band or restrained optical transition remains visibly softer than both anchors.",
             "render_gate": {
               "id": "vo_capture_diopter_soft_middle_band",
               "review_scale": "both",
-              "description": "An intervening middle-depth band remains visibly softer than both anchors."
+              "description": "An intervening middle-depth band or restrained optical transition remains visibly softer than both anchors."
             }
           },
           {
@@ -48351,12 +48362,15 @@
           {
             "id": "diopter_not_stack_or_split_screen",
             "match_terms": [
+              "two separated sharp zones with a softer intervening band or restrained optical transition",
+              "분리된 두 선명 구역 사이에 더 부드러운 깊이 띠나 절제된 광학 전환이 남음",
               "two separated sharp zones with a softer intervening band",
               "분리된 두 선명 구역 사이에 더 부드러운 깊이 띠가 남음"
             ],
             "evidence_field": "diopter_boundary_phrase",
             "evidence_terms": [
               "only two separated focus zones are emphasized rather than uniform deep focus a focus stack collage or split screen",
+              "two separated sharp zones with a softer intervening band or restrained optical transition",
               "two separated sharp zones with a softer intervening band"
             ],
             "min_content_words": 6,
@@ -48739,11 +48753,11 @@
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "Sequential sensor readout records different rows at different instants, so fast lateral motion or rapid camera movement produces a coherent direction-dependent shear: straight structures lean or bend consistently, moving forms skew across their height, and some local detail can remain crisp. A Dutch angle, wide-angle convergence, global warp, or ordinary motion blur cannot substitute.",
+        "definition": "Temporally staggered sensor-row exposures record different image positions at different instants, so fast lateral subject motion or rapid camera movement produces coherent readout-axis shear according to each form's motion relative to the camera. Moving image forms lean or shear while stationary forms relative to a fixed camera retain stable geometry, and some local detail can remain crisp. A Dutch angle, wide-angle convergence, arbitrary warp, or ordinary motion blur cannot substitute.",
         "paraphrase_examples": [
-          "vertical posts lean consistently while a fast moving vehicle shears across its height yet retains crisp local texture",
-          "빠른 측면 움직임에서 수직 구조와 이동 물체가 같은 판독 방향으로 기울고 전단됨",
-          "row-timed distortion changes geometry without simply smearing every edge"
+          "a fast lateral vehicle shears across its height against upright stationary posts when the camera is fixed; staggered row exposure progressively displaces only the vehicle image while painted lettering stays crisp, distinguishing motion-owned shear from tilted framing, perspective convergence, lens warp and uniform blur",
+          "고정된 카메라 앞에서 빠르게 옆으로 이동하는 차량만 시차를 둔 센서 행 노출에 따라 높이 방향으로 점진적으로 전단되고 정지한 기둥은 곧게 유지되며, 차량의 글자는 국소적으로 선명하여 기울어진 구도나 원근 수렴, 렌즈 왜곡 또는 균일한 번짐과 구별됨",
+          "a rapid camera sweep shears stationary scene structures while crisp local detail separates row-timed geometry from ordinary blur"
         ],
         "component_semantics": {
           "minimum_component_groups": 5,
@@ -48765,6 +48779,8 @@
             {
               "id": "rolling_structure_lean",
               "any_terms": [
+                "scene geometry remains stable or shears consistently according to each form's motion relative to the camera",
+                "장면의 기하 형태가 각 형태의 카메라에 대한 상대 움직임에 따라 안정적으로 유지되거나 일관되게 전단됨",
                 "normally vertical repeated structures lean or bend consistently in one direction",
                 "일반적으로 수직인 반복 구조가 한 방향으로 일관되게 기울거나 휨"
               ]
@@ -48772,6 +48788,8 @@
             {
               "id": "rolling_moving_form_skew",
               "any_terms": [
+                "a recognizable form displaced by subject motion or camera movement shears progressively across the sensor readout axis",
+                "피사체 움직임이나 카메라 이동으로 영상 위치가 바뀌는 형태가 센서 판독 축을 가로질러 전단됨",
                 "the fast-moving subject shears across its height or width instead of remaining rigid",
                 "빠르게 움직이는 피사체가 강체로 유지되지 않고 높이나 너비를 가로질러 전단됨"
               ]
@@ -48797,14 +48815,14 @@
           "wide-angle converging buildings",
           "barrel distortion",
           "uniform motion blur",
-          "one bent object in an otherwise stable frame"
+          "an arbitrarily bent object with no coherent motion-related shear"
         ]
       },
       "concept_candidate": {
         "concept_terms": [
           "progressive readout-direction displacement",
-          "consistent lean in vertical structures",
-          "moving-form shear across height",
+          "scene geometry consistent with each form's motion relative to the camera",
+          "subject-motion or camera-motion shear across the readout axis",
           "crisp local edges inside skew",
           "sensor-readout distortion not camera angle"
         ]
@@ -48817,7 +48835,7 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Use fast lateral motion or a rapid sweep against repeated vertical structures. Make displacement change progressively along one sensor-readout direction, shear the moving form across its height or width, and preserve some crisp local edges so the result reads as rolling-shutter geometry rather than a tilted frame or generic blur.",
+      "composition_instruction": "Use fast lateral subject motion or a rapid camera sweep. Make geometric displacement vary progressively along one sensor-readout axis according to each form's relative image motion. Keep any stationary background structures stable with a fixed camera; a camera sweep can shear stationary scene structures without an independently moving subject. Preserve some crisp local edges so the result reads as row-timed geometry rather than a tilted frame or generic blur.",
       "required_evidence_fields": [
         "rolling_readout_phrase",
         "rolling_structure_phrase",
@@ -48835,12 +48853,14 @@
         "rolling_structure_phrase": {
           "min_content_words": 10,
           "must_mention_any": [
+            "scene geometry remains stable or shears consistently according to each form's motion relative to the camera",
             "normally vertical repeated structures lean or bend consistently in one direction"
           ]
         },
         "rolling_subject_phrase": {
           "min_content_words": 12,
           "must_mention_any": [
+            "a recognizable form displaced by subject motion or camera movement shears progressively across the sensor readout axis",
             "the fast-moving subject shears across its height or width instead of remaining rigid"
           ]
         },
@@ -48866,12 +48886,12 @@
         {
           "id": "vo_capture_rolling_consistent_vertical_lean",
           "review_scale": "thumbnail",
-          "description": "Repeated normally vertical structures lean or bend consistently."
+          "description": "Visible scene geometry is consistent with each form's motion relative to the camera. Stationary background structures, when present with a fixed camera, remain stable; a separate background structure is not required."
         },
         {
           "id": "vo_capture_rolling_subject_cross_axis_skew",
           "review_scale": "both",
-          "description": "The fast-moving form visibly shears across its height or width."
+          "description": "A form displaced in the image by subject motion or camera movement visibly shears across the sensor readout axis."
         },
         {
           "id": "vo_capture_rolling_crisp_local_edges",
@@ -48889,7 +48909,7 @@
         "wide_angle_convergence",
         "barrel_or_pincushion_distortion",
         "uniform_motion_blur",
-        "single_bent_object"
+        "arbitrary_bending_without_motion_related_shear"
       ]
     },
     {
@@ -49954,11 +49974,12 @@
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "A relatively small acting source creates one coherent direction, crisp cast-shadow boundaries, short penumbrae, decisive form shadows, and localized specular response without requiring darkness or clipping.",
+        "definition": "A relatively small acting source creates one coherent direction, crisp cast-shadow boundaries, short penumbrae, decisive form shadows, and material-appropriate surface response without requiring darkness or clipping.",
         "paraphrase_examples": [
-          "one coherent source direction links highlights form shadows and cast shadows",
-          "cast-shadow edges remain crisp with a short visible penumbra",
-          "shadow shapes correspond to the occluding subject or object geometry"
+          "one coherent source direction links highlights form shadows and cast shadows; cast-shadow edges remain crisp with a short visible penumbra; shadow shapes correspond to the occluding subject or object geometry; specular highlights are comparatively compact and directionally owned; lit surfaces and shadow structure remain exposed rather than clipped or crushed",
+          "one coherent source direction links highlights form shadows and cast shadows; cast-shadow edges remain crisp with a short visible penumbra; shadow shapes correspond to the occluding subject or object geometry; matte receivers retain diffuse shading while any visible specular response follows the same source and surface roughness; lit surfaces and shadow structure remain exposed rather than clipped or crushed",
+          "one coherent source direction links highlights form shadows and cast shadows; cast-shadow edges remain crisp with a short visible penumbra; shadow shapes correspond to the occluding subject or object geometry; 무광 수광면은 확산 음영을 유지하고 보이는 정반사 응답은 같은 광원과 표면 거칠기를 따름; lit surfaces and shadow structure remain exposed rather than clipped or crushed",
+          "one coherent source direction links highlights form shadows and cast shadows; cast-shadow edges remain crisp with a short visible penumbra; shadow shapes correspond to the occluding subject or object geometry; 정반사 하이라이트는 비교적 작고 같은 광원 방향에 종속됨; lit surfaces and shadow structure remain exposed rather than clipped or crushed"
         ],
         "component_semantics": {
           "minimum_component_groups": 5,
@@ -49991,7 +50012,10 @@
             {
               "id": "hard_light_shadow_edge_relation_component_4",
               "any_terms": [
-                "specular highlights are comparatively compact and directionally owned"
+                "specular highlights are comparatively compact and directionally owned",
+                "matte receivers retain diffuse shading while any visible specular response follows the same source and surface roughness",
+                "무광 수광면은 확산 음영을 유지하고 보이는 정반사 응답은 같은 광원과 표면 거칠기를 따름",
+                "정반사 하이라이트는 비교적 작고 같은 광원 방향에 종속됨"
               ]
             },
             {
@@ -50015,7 +50039,7 @@
           "one coherent source direction links highlights form shadows and cast shadows",
           "cast-shadow edges remain crisp with a short visible penumbra",
           "shadow shapes correspond to the occluding subject or object geometry",
-          "specular highlights are comparatively compact and directionally owned",
+          "existing receiver material retains diffuse shading or source-owned specular response compatible with its roughness and viewing geometry",
           "lit surfaces and shadow structure remain exposed rather than clipped or crushed"
         ]
       },
@@ -50028,7 +50052,7 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "A relatively small acting source creates one coherent direction, crisp cast-shadow boundaries, short penumbrae, decisive form shadows, and localized specular response without requiring darkness or clipping. Keep all five observable relations in the same frame; a mood label, grade, darkness, brightness, blur, glow, or visible lamp alone is not evidence.",
+      "composition_instruction": "A relatively small acting source creates one coherent direction, crisp cast-shadow boundaries, short penumbrae, decisive form shadows, and material-appropriate surface response without requiring darkness or clipping. Keep all five observable relations in the same frame; a mood label, grade, darkness, brightness, blur, glow, or visible lamp alone is not evidence. Preserve the requested material: diffuse response on matte receivers satisfies the surface-response relation; evaluate specular response only where material and viewing geometry support it, without adding gloss or another object.",
       "required_evidence_fields": [
         "hard_light_shadow_edge_relation_component_1_phrase",
         "hard_light_shadow_edge_relation_component_2_phrase",
@@ -50058,7 +50082,10 @@
         "hard_light_shadow_edge_relation_component_4_phrase": {
           "min_content_words": 5,
           "must_mention_any": [
-            "specular highlights are comparatively compact and directionally owned"
+            "specular highlights are comparatively compact and directionally owned",
+            "matte receivers retain diffuse shading while any visible specular response follows the same source and surface roughness",
+            "무광 수광면은 확산 음영을 유지하고 보이는 정반사 응답은 같은 광원과 표면 거칠기를 따름",
+            "정반사 하이라이트는 비교적 작고 같은 광원 방향에 종속됨"
           ]
         },
         "hard_light_shadow_edge_relation_component_5_phrase": {
@@ -50087,7 +50114,7 @@
         {
           "id": "vo_lighting_hard_light_shadow_edge_relation_4",
           "review_scale": "native",
-          "description": "Specular highlights are comparatively compact and directionally owned."
+          "description": "Existing matte receivers retain diffuse shading. Where material and viewing geometry support visible specular highlights, they are source-owned and comparatively compact for the same receiver roughness; roughness may broaden them. Preserve the requested material without adding gloss or another object."
         },
         {
           "id": "vo_lighting_hard_light_shadow_edge_relation_5",
@@ -50124,11 +50151,12 @@
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "A relatively large acting source keeps one readable direction while producing broad shadow-edge transitions, gradual form modeling, broad specular response, and open but still shaped shadows.",
+        "definition": "A relatively large acting source keeps one readable direction while producing broad shadow-edge transitions, gradual form modeling, material-appropriate surface response, and open but still shaped shadows.",
         "paraphrase_examples": [
-          "one readable source direction survives instead of becoming flat ambient wash",
-          "cast and form shadow edges cross a broad gradual transition",
-          "curved forms move progressively from light through midtone into shadow"
+          "one readable source direction survives instead of becoming flat ambient wash; cast and form shadow edges cross a broad gradual transition; curved forms move progressively from light through midtone into shadow; specular response spreads broadly across compatible glossy surfaces; shadow detail remains open while contours and volume stay legible",
+          "one readable source direction survives instead of becoming flat ambient wash; cast and form shadow edges cross a broad gradual transition; curved forms move progressively from light through midtone into shadow; matte receivers retain diffuse modeling while any visible glossy reflection follows the extended source and receiver geometry; shadow detail remains open while contours and volume stay legible",
+          "one readable source direction survives instead of becoming flat ambient wash; cast and form shadow edges cross a broad gradual transition; curved forms move progressively from light through midtone into shadow; 무광 수광면은 확산 명암을 유지하고 보이는 광택 반사는 넓은 광원과 수광면 기하를 따름; shadow detail remains open while contours and volume stay legible",
+          "one readable source direction survives instead of becoming flat ambient wash; cast and form shadow edges cross a broad gradual transition; curved forms move progressively from light through midtone into shadow; 정반사 응답이 호환되는 광택 표면에서 넓게 퍼짐; shadow detail remains open while contours and volume stay legible"
         ],
         "component_semantics": {
           "minimum_component_groups": 5,
@@ -50161,7 +50189,10 @@
             {
               "id": "soft_light_shadow_edge_relation_component_4",
               "any_terms": [
-                "specular response spreads broadly across compatible glossy surfaces"
+                "specular response spreads broadly across compatible glossy surfaces",
+                "matte receivers retain diffuse modeling while any visible glossy reflection follows the extended source and receiver geometry",
+                "무광 수광면은 확산 명암을 유지하고 보이는 광택 반사는 넓은 광원과 수광면 기하를 따름",
+                "정반사 응답이 호환되는 광택 표면에서 넓게 퍼짐"
               ]
             },
             {
@@ -50185,7 +50216,7 @@
           "one readable source direction survives instead of becoming flat ambient wash",
           "cast and form shadow edges cross a broad gradual transition",
           "curved forms move progressively from light through midtone into shadow",
-          "specular response spreads broadly across compatible glossy surfaces",
+          "existing receiver material retains diffuse modeling or glossy reflection compatible with the extended source and receiver geometry",
           "shadow detail remains open while contours and volume stay legible"
         ]
       },
@@ -50198,7 +50229,7 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "A relatively large acting source keeps one readable direction while producing broad shadow-edge transitions, gradual form modeling, broad specular response, and open but still shaped shadows. Keep all five observable relations in the same frame; a mood label, grade, darkness, brightness, blur, glow, or visible lamp alone is not evidence.",
+      "composition_instruction": "A relatively large acting source keeps one readable direction while producing broad shadow-edge transitions, gradual form modeling, material-appropriate surface response, and open but still shaped shadows. Keep all five observable relations in the same frame; a mood label, grade, darkness, brightness, blur, glow, or visible lamp alone is not evidence. Preserve the requested material: diffuse response on matte receivers satisfies the surface-response relation; evaluate specular response only where material and viewing geometry support it, without adding gloss or another object.",
       "required_evidence_fields": [
         "soft_light_shadow_edge_relation_component_1_phrase",
         "soft_light_shadow_edge_relation_component_2_phrase",
@@ -50228,7 +50259,10 @@
         "soft_light_shadow_edge_relation_component_4_phrase": {
           "min_content_words": 5,
           "must_mention_any": [
-            "specular response spreads broadly across compatible glossy surfaces"
+            "specular response spreads broadly across compatible glossy surfaces",
+            "matte receivers retain diffuse modeling while any visible glossy reflection follows the extended source and receiver geometry",
+            "무광 수광면은 확산 명암을 유지하고 보이는 광택 반사는 넓은 광원과 수광면 기하를 따름",
+            "정반사 응답이 호환되는 광택 표면에서 넓게 퍼짐"
           ]
         },
         "soft_light_shadow_edge_relation_component_5_phrase": {
@@ -50257,7 +50291,7 @@
         {
           "id": "vo_lighting_soft_light_shadow_edge_relation_4",
           "review_scale": "native",
-          "description": "Specular response spreads broadly across compatible glossy surfaces."
+          "description": "Existing matte receivers retain diffuse modeling. On compatible glossy receivers, visible specular response reflects the extended source broadly as allowed by receiver and viewing geometry. Preserve the requested material without adding gloss or another object."
         },
         {
           "id": "vo_lighting_soft_light_shadow_edge_relation_5",
@@ -54443,12 +54477,12 @@
         {
           "id": "vo_composition_line_origin_away",
           "review_scale": "thumbnail",
-          "description": "A physical line begins away from the primary subject."
+          "description": "A physical line or aligned scene edge begins away from the primary subject."
         },
         {
           "id": "vo_composition_line_path_continuous",
           "review_scale": "both",
-          "description": "The line remains visibly continuous across the intervening frame."
+          "description": "The line remains visibly continuous or rhythmically linked across the intervening frame."
         },
         {
           "id": "vo_composition_line_terminates_target",
@@ -55756,7 +55790,9 @@
               "id": "overhead_foreshortening",
               "any_terms": [
                 "head torso limbs and one near prop follow coherent top-down foreshortening and scale change",
-                "머리 몸통 팔다리와 가까운 소품이 일관된 탑다운 단축과 크기 변화를 따름"
+                "머리 몸통 팔다리와 가까운 소품이 일관된 탑다운 단축과 크기 변화를 따름",
+                "head torso limbs and one near hand follow coherent top-down foreshortening and scale change",
+                "머리 몸통 팔다리와 가까운 손이 일관된 탑다운 단축과 크기 변화를 따름"
               ]
             },
             {
@@ -55793,7 +55829,7 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Put the camera close above one clearly adult subject, point steeply down, retain a surrounding floor plane, direct one face, gaze, or raised-hand response upward, and keep top-down scale changes coherent across the body and a near prop.",
+      "composition_instruction": "Put the camera close above one clearly adult subject, point steeply down, retain a surrounding floor plane, direct one face, gaze, or raised-hand response upward, and keep top-down scale changes coherent across the body and a near hand or prop.",
       "required_evidence_fields": [
         "overhead_camera_phrase",
         "overhead_ground_phrase",
@@ -55823,7 +55859,8 @@
         "overhead_foreshortening_phrase": {
           "min_content_words": 13,
           "must_mention_any": [
-            "head torso limbs and one near prop follow coherent top-down foreshortening and scale change"
+            "head torso limbs and one near prop follow coherent top-down foreshortening and scale change",
+            "head torso limbs and one near hand follow coherent top-down foreshortening and scale change"
           ]
         },
         "overhead_boundary_phrase": {
@@ -55852,7 +55889,7 @@
         {
           "id": "vo_social_overhead_coherent_foreshortening",
           "review_scale": "native",
-          "description": "Body parts and one near prop follow coherent top-down foreshortening and scale change."
+          "description": "Body parts and one near hand or prop follow coherent top-down foreshortening and scale change."
         },
         {
           "id": "vo_social_overhead_not_drone_or_stretch",
