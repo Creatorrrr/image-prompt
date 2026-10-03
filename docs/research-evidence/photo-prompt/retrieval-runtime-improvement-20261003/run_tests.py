@@ -36,6 +36,8 @@ def main():
         executed = []
         runtime_sources = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                            for p in (args.repo / "skills/photo-prompt-image-generator/scripts").glob("*.py")}
+        data_sources = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
+                        for p in (args.repo / "skills/photo-prompt-image-generator/assets").glob("*.json")}
 
         class RecordedResult(unittest.TextTestResult):
             def startTest(self, test):
@@ -45,7 +47,7 @@ def main():
         suite = unittest.defaultTestLoader.loadTestsFromName(args.module)
         result = unittest.TextTestRunner(verbosity=2, resultclass=RecordedResult).run(suite)
         payload = {"module": args.module, "tests_run": result.testsRun, "executed_ids": executed,
-            "runtime_sources": runtime_sources,
+            "runtime_sources": runtime_sources, "data_sources": data_sources,
             "failures": [{"id": t.id(), "traceback": trace} for t, trace in result.failures],
             "errors": [{"id": t.id(), "traceback": trace} for t, trace in result.errors],
             "skipped": [{"id": t.id(), "reason": reason} for t, reason in result.skipped],
