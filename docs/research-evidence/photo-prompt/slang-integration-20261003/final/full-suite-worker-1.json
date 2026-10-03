@@ -1,0 +1,26 @@
+{
+  "modules": [
+    "tests.test_photo_visual_obligations"
+  ],
+  "tests_run": 26,
+  "failures": [
+    {
+      "test": "test_frozen_visual_concept_routing_holdout (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_frozen_visual_concept_routing_holdout) (fixture='visual_obligation_routing_holdout_v1.jsonl', case='holdout_candidate_overwhelmed_face')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_visual_obligations.py\", line 214, in assert_routing_fixture_cases\n    self.assertEqual(\n    ~~~~~~~~~~~~~~~~^\n        sorted(actual_candidate_ids),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        sorted(case[\"expected_candidate_profile_ids\"]),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: Lists differ: [] != ['composite_overwhelmed_expression']\n\nSecond list contains 1 additional elements.\nFirst extra element 0:\n'composite_overwhelmed_expression'\n\n- []\n+ ['composite_overwhelmed_expression']\n"
+    },
+    {
+      "test": "test_registry_and_request_scoped_routing_fixture (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture) (fixture='visual_obligation_routing_v1.jsonl', case='candidate_overwhelmed_components')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_visual_obligations.py\", line 214, in assert_routing_fixture_cases\n    self.assertEqual(\n    ~~~~~~~~~~~~~~~~^\n        sorted(actual_candidate_ids),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        sorted(case[\"expected_candidate_profile_ids\"]),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: Lists differ: [] != ['composite_overwhelmed_expression']\n\nSecond list contains 1 additional elements.\nFirst extra element 0:\n'composite_overwhelmed_expression'\n\n- []\n+ ['composite_overwhelmed_expression']\n"
+    }
+  ],
+  "errors": [
+    {
+      "test": "test_semantic_evidence_and_sensitive_runtime_labels_fail_closed (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_semantic_evidence_and_sensitive_runtime_labels_fail_closed)",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_visual_obligations.py\", line 799, in test_semantic_evidence_and_sensitive_runtime_labels_fail_closed\n    candidate = next(row for row in pack[\"visual_concept_candidates\"][\"candidates\"]\n                     if row[\"opt_in_contract\"][\"obligation\"][\"id\"] == \"composite_overwhelmed_expression\")\nStopIteration\n"
+    }
+  ],
+  "skipped": [],
+  "elapsed_seconds": 286.685,
+  "complete": true,
+  "successful": false
+}

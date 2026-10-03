@@ -1,0 +1,41 @@
+{
+  "modules": [
+    "tests.test_subculture_illustration_contract_v1",
+    "tests.test_photo_authorial_core_v6",
+    "tests.test_photo_religion_iconography_alternatives",
+    "tests.test_photo_candidate_semantics",
+    "tests.test_photo_acting_expression_data",
+    "tests.test_photo_womens_summer_trend_visual_semantics",
+    "tests.test_photo_portrait_composition_semantics",
+    "tests.test_photo_research_integration",
+    "tests.test_photo_model_editorial_semantics",
+    "tests.test_photo_fantasy_visual_semantics",
+    "tests.test_photo_body_morphology_semantics",
+    "tests.test_photo_rare_photo_visual_semantics",
+    "tests.test_photo_material_data_cleanup",
+    "tests.test_photo_capture_owner_data_cleanup",
+    "tests.test_photo_texture_data_cleanup",
+    "tests.test_photo_costume_cosplay_semantics",
+    "tests.test_photo_prepack_isolation",
+    "tests.test_photo_current_boundary_snapshot",
+    "tests.test_photo_slide_thickness_alternative",
+    "tests.test_photo_nonhuman_source_alternatives",
+    "tests.test_photo_convoy_route_alternative",
+    "tests.test_photo_wrap_skirt_side_alternative",
+    "tests.test_photo_prop_conditional_contact",
+    "tests.test_photo_ghost_ship_gate_alternative",
+    "tests.test_makeup_layer_dictionary"
+  ],
+  "tests_run": 221,
+  "failures": [],
+  "errors": [
+    {
+      "test": "test_aggregate_validator_does_not_hide_partial_pixel_qualification (tests.test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification)",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_subculture_illustration_contract_v1.py\", line 504, in test_aggregate_validator_does_not_hide_partial_pixel_qualification\n    summary = validate_all(ASSET_ROOT)\n  File \"/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 11561, in validate_all\n    photo_regression = validate_photo_regression_baseline(root)\n  File \"/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 6483, in validate_photo_regression_baseline\n    _require(\n    ~~~~~~~~^\n        digest == baseline.get(\"sha256\"),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        \"current photo baseline candidate-pack bytes drift\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 1280, in _require\n    raise ValidationFailure(message)\nvalidate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift\n"
+    }
+  ],
+  "skipped": [],
+  "elapsed_seconds": 592.796,
+  "complete": true,
+  "successful": false
+}

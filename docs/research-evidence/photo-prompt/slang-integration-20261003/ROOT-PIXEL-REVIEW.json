@@ -1,0 +1,95 @@
+{
+  "schema_version": "photo-slang-coordinator-pixel-review/v1",
+  "reviewer": "root coordinator, independent of the three author agents",
+  "method": "Direct visual inspection of all five saved native originals. The three latest originals were also re-inspected together after source use completed. This is an agent visual review, not a calibrated measurement or automated pixel classifier.",
+  "partial_is_fail": true,
+  "reference_scope": "Visible facial and hair appearance guidance only. The fictional adult casting, body, pose, wardrobe and scene are authored choices. The supplied portrait establishes no real identity, age, body traits or internal state.",
+  "attempts": [
+    {
+      "arm": "agent-1",
+      "attempt": 1,
+      "image": "tests/agent-1/attempt-1/native.png",
+      "sha256": "fc381f7d2e70e73f51dde70b2113400a18613276f3a71df07e4d99f718476e79",
+      "verdict": "PASS",
+      "observations": [
+        "Both pupils lie high within their eye openings and white sclera is visible below them.",
+        "A broad open mouth and one tongue projecting across the lower lip boundary coexist on that same face.",
+        "Both hands show separated index and middle fingers, folded remaining fingers, and continuous individual wrists and forearms leading to the same actor's elbows.",
+        "Face, both complete V hands and the relevant arm ownership are simultaneously visible."
+      ],
+      "formal_gate_result": "10/10 pass",
+      "supplemental_gate_result": "7/7 pass",
+      "qualification_limit": "The original slang's full genre/event meaning is not qualified by a neutral geometric expression. Real age and user acceptance are not proven by pixels."
+    },
+    {
+      "arm": "agent-2",
+      "attempt": 1,
+      "image": "tests/agent-2/native_attempt_1.png",
+      "sha256": "61318259bce6f0ac726500ee7034f82562d27ba968246b48dcbfa729fe03df87",
+      "verdict": "FAIL",
+      "observations": [
+        "The pelvis rests on the low road-case cushion; the two separated bent knees and individually grounded boots remain connected to that same pelvis in an M-like frontal outline.",
+        "The upper arms and torso do not show the requested continuous distributed soft volume. Loose trousers do not establish underlying thigh or calf tissue volume."
+      ],
+      "formal_gate_result": "8/12 pass; four soft-volume gates fail",
+      "supplemental_gate_result": "3/4 pass; distributed volume fails"
+    },
+    {
+      "arm": "agent-2",
+      "attempt": 2,
+      "image": "tests/agent-2/native_attempt_2.png",
+      "sha256": "5758ea1e89e6a2b147e31016f7a4d7f1ed99b0d080b00e8b2fe6a2824a8471ad",
+      "verdict": "FAIL",
+      "observations": [
+        "The supported pelvis, two bent separated knee peaks, connected leg chains and grounded boots remain readable.",
+        "Upper-arm and thigh fullness increased; the midsection still lacks the requested rounded abdominal and waist-side continuity.",
+        "Calf tissue volume remains unobservable beneath trousers and boot shafts."
+      ],
+      "formal_gate_result": "11/12 pass; vo_soft_full_torso_volume fails",
+      "supplemental_gate_result": "3/4 pass; distributed volume fails",
+      "qualification_limit": "A larger bust or larger garment is not evidence of the required whole-body volume. Different attempts cannot be combined into one passing image."
+    },
+    {
+      "arm": "agent-3",
+      "attempt": 1,
+      "image": "tests/agent-3/native-attempt-1.png",
+      "sha256": "1108fad48e3c81761f65e5edb4ac93f3ee588de85ca096b2c23a801346b4f747",
+      "verdict": "FAIL",
+      "observations": [
+        "Small crimson heart shapes appear in both pupil regions while surrounding eye structure remains visible.",
+        "The lower-abdominal skin bears four separate blue elements: a central closed diamond, two inward-facing C-curves and a lower stem, all above the waistband.",
+        "The navel-to-diamond-center gap is visibly too short relative to the whole marking width."
+      ],
+      "formal_gate_result": "5/5 generic embodiment pass; no selected target-profile gates",
+      "local_target_result": "FAIL",
+      "agent_estimated_spacing_ratio": 0.25,
+      "target_spacing_ratio": 0.6666666666666666
+    },
+    {
+      "arm": "agent-3",
+      "attempt": 2,
+      "image": "tests/agent-3/native-attempt-2.png",
+      "sha256": "e6272ed85ab14929b929b215fd2ecd69370e0f0adaec0500495b7a77ca9590e2",
+      "verdict": "FAIL",
+      "observations": [
+        "Both pupil-region hearts, the continuous lower-abdominal skin carrier and the selected four-element topology remain visible.",
+        "The navel-to-center gap increased but remains substantially below two-thirds of the complete marking width.",
+        "Transparent contact-lens edges are unresolved; printed physical lens fabrication cannot be certified from these pixels. Absolute centimeter dimensions lack a calibration reference."
+      ],
+      "formal_gate_result": "5/5 generic embodiment pass; no selected target-profile gates",
+      "local_target_result": "FAIL",
+      "agent_estimated_spacing_ratio": 0.3939393939393939,
+      "target_spacing_ratio": 0.6666666666666666,
+      "qualification_limit": "Only the visible motif location and topology are observable. The ratio estimates originate in the author's manual landmark review; root independently agrees that the gap is insufficient. Lens material and physical centimeter scale remain unobservable."
+    }
+  ],
+  "latest_arm_verdicts": {"agent-1": "PASS", "agent-2": "FAIL", "agent-3": "FAIL"},
+  "native_call_count": 5,
+  "attribution_limits": [
+    "Every target geometry was already present in its independently frozen baseline. No baseline-only image or controlled ablation establishes causal improvement from the new data.",
+    "Agent-3 used the original pre-repair pack, which exposed no target-specific candidates. Its visible target motifs have zero target-specific retrieval/adoption contribution.",
+    "The later same-input retrieval replay repairs ordinary candidate exposure only; it does not change or re-qualify an existing native image.",
+    "The twelve new profiles have not all received rendered qualification. One passing authored scene is not a universal rendering guarantee."
+  ],
+  "user_acceptance": "not_yet_received"
+}

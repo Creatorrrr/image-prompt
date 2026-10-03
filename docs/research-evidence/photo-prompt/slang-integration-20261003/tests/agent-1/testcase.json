@@ -1,0 +1,79 @@
+{
+  "contract_version": "independent-photo-testcase/v1",
+  "arm_id": "agent-1",
+  "test_id": "face-and-owner-connected-double-v",
+  "seed": 187680095935288485,
+  "concept": "Overwhelmed ticket clerk at a harbour-warehouse puppet-festival rehearsal, caught in a comic prop-malfunction punchline.",
+  "reference_scope": "Visible adult portrayal face/hair appearance guidance only; actual identity, age, body, preferences and consent are not inferred. Fictional portrayal age 26 is agent-authored.",
+  "control_scope": "sensual=0 and fetish=0 are agent choices for this nonsexual observation test, not requester-owned definitions or exclusions.",
+  "semantic_scope": "This arm evaluates morphological alternative expressions; it does not claim to validate the full original slang meaning or redefine it as a nonsexual equivalent.",
+  "baseline_prompt_sha256": "947b60a7e58d8ba839c314df3421b9fb3c98b7f7a9a5873051714086935b7e92",
+  "required_test_observations": [
+    {
+      "gate_id": "obs_upward_pupils",
+      "criterion": "Both pupil/iris centres lie visibly toward their corresponding upper lids, with white sclera visible below each iris; upward rather than inward pupil placement is the selected test state.",
+      "authority": "agent_authored_supplemental_fidelity",
+      "review_scale": [
+        "native"
+      ]
+    },
+    {
+      "gate_id": "obs_large_mouth_aperture",
+      "criterion": "The lips bound an unambiguous vertically open oral cavity visibly larger than a narrow lip slit.",
+      "authority": "agent_authored_supplemental_fidelity",
+      "review_scale": [
+        "native"
+      ]
+    },
+    {
+      "gate_id": "obs_central_protruding_tongue",
+      "criterion": "One broad visible tongue crosses the central lower-lip boundary and its tip extends visibly below that boundary. A tongue entirely behind the lips fails.",
+      "authority": "agent_authored_supplemental_fidelity",
+      "review_scale": [
+        "native"
+      ]
+    },
+    {
+      "gate_id": "obs_actor_right_v",
+      "criterion": "The performer's right bare hand (screen-left in the frontal composition) shows extended separated index/middle fingers forming a V, with ring/little fingers folded under the thumb.",
+      "authority": "agent_authored_supplemental_fidelity",
+      "review_scale": [
+        "native"
+      ]
+    },
+    {
+      "gate_id": "obs_actor_left_v",
+      "criterion": "The performer's left bare hand (screen-right in the frontal composition) shows extended separated index/middle fingers forming a V, with ring/little fingers folded under the thumb.",
+      "authority": "agent_authored_supplemental_fidelity",
+      "review_scale": [
+        "native"
+      ]
+    },
+    {
+      "gate_id": "obs_bilateral_owner_connection",
+      "criterion": "Two distinct wrists continue through their corresponding forearms and elbows toward the same performer's shoulders, with no detached or transferred hand.",
+      "authority": "agent_authored_supplemental_fidelity",
+      "review_scale": [
+        "native",
+        "full_frame"
+      ]
+    },
+    {
+      "gate_id": "obs_same_actor_same_instant",
+      "criterion": "Upward pupils, broad mouth opening, central projecting tongue, both hand V signs and their owner connections coexist on one performer in one saved photograph. Separate attempts cannot be combined into PASS.",
+      "authority": "agent_authored_supplemental_fidelity",
+      "review_scale": [
+        "native",
+        "full_frame"
+      ]
+    }
+  ],
+  "partial_is_fail": true,
+  "unobservable_rule": "A critical component hidden beyond assessment is UNOBSERVABLE in the supplemental review and fails any strict binary aggregate; this is not a diagnosed anatomical failure.",
+  "moderation_or_tool_error_rule": "BLOCKED_UNSCORED, distinct from image fidelity failure.",
+  "attempt_policy": {
+    "max_actual_image_calls": 2,
+    "retry_condition": "One targeted retry only after a concrete failed gate in attempt 1; preserve the scene, same scope, existing reference role and passed observations."
+  },
+  "independence": "No other agent's concept, prompt, image, research, pack or testcase has been read; project candidate access is still pending INTEGRATION_READY."
+}

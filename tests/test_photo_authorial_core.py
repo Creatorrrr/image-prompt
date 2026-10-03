@@ -458,11 +458,13 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
         overwhelmed = self.obligation(ahegao, "composite_overwhelmed_expression")
         self.assertIsNotNone(overwhelmed)
         self.assertIn(
-            "subtle_blush_phrase", overwhelmed["prompt_binding"]["required_evidence_fields"]
+            "open_mouth_phrase", overwhelmed["prompt_binding"]["required_evidence_fields"]
         )
         self.assertIn(
-            "fatigued_release_phrase", overwhelmed["prompt_binding"]["required_evidence_fields"]
+            "external_tongue_tip_phrase", overwhelmed["prompt_binding"]["required_evidence_fields"]
         )
+        self.assertNotIn("subtle_blush_phrase", overwhelmed["prompt_binding"]["required_evidence_fields"])
+        self.assertNotIn("fatigued_release_phrase", overwhelmed["prompt_binding"]["required_evidence_fields"])
         self.assertIn("아헤가오", overwhelmed["runtime_expression"]["forbidden_prompt_terms"])
 
         bare = self.run_current(

@@ -1,0 +1,128 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 시각 의미 데이터의 대체 표현을 추가/보강하는 작업을 중심으로 진행하고 후보팩에도 잘 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "e4aacb437230775d85ff91ac5d5911765e78a9eaca75765ebadafb1e334cdc04",
+  "interpreted_intent": "Independent author-selected nonsexual work portrait of a newly portrayed 28-year-old stage designer at an unfolding traveling shadow theatre. The random draw selected a canal-lock truck, rain-cleared twilight, a paper projection mask and a pause after unrolling a backdrop. The authorial test concentrates on one pelvis supported on a low padded seat, two outward raised bent knees and two planted feet whose continuous chain projects as an M; soft volume is distributed through several body regions. These geometry, role, age and tone choices are test design, not requester definitions or locks. The saved sensual=1 contributes quietly through attentive presence, warm contours and the material relationship; fetish=0 and surreal=0 add no special treatment. The supplied photo guides visible face and hair only and supplies no identity, body or actual-age evidence.",
+  "subject": "One newly portrayed 28-year-old adult stage designer; face/hair-only reference guidance and independently authored soft body volume.",
+  "setting": "A traveling shadow-theatre truck unfolded beside a canal lock at rain-cleared twilight.",
+  "event": "The designer pauses in a visible seated working state just after unrolling a new backdrop.",
+  "visual_priorities": [
+    "The low padded seat supports one pelvis while both connected bent legs project an M from the frontal camera.",
+    "Each complete shin ends in its own planted boot with a visible ground contact.",
+    "Soft rounded volume continues across upper arms, midsection, hip sides, thighs and calves.",
+    "Warm rehearsal light relates the designer to a newly unrolled shadow-theatre backdrop and the cool wet canal."
+  ],
+  "baseline_prompt_en": "A complex photographic scene centers a human subject in a visible physical state, with face-and-hair guidance drawn from the supplied portrait. The newly portrayed person is a 28-year-old adult stage designer pausing just after unrolling a new backdrop beside a canal lock. A traveling shadow-theatre truck has opened its side into a small rehearsal stage. She sits squarely on the broad padded top of a low road case, its cushion visibly compressed beneath her seated pelvis. Her thighs angle upward and outward from that pelvis to two clearly separated raised, bent knees; each shin descends to its own work boot, both soles flat on the wet quay. The uninterrupted leg chain reads as an M from this frontal view: left boot, raised outward left knee, low seated pelvis, raised outward right knee, right boot. Both complete legs and the seat contact remain clearly visible. Soft rounded fullness continues through her upper arms, midsection, hip sides, thighs and calves, with a naturally proportioned torso and gently curved waist. A close-fitting russet short-sleeve jersey work top and olive stretch-twill trousers follow this continuous volume; the trouser folds describe the bent knees. Her chin-length dark bob has wispy bangs; broad dark eyes and softly parted pink lips echo the visible portrait guidance. One forearm rests easily beside her on the case while the other hand loosely holds the backdrop cord at her side. A folded tracing-paper projection mask lies on a side worktable. The curled leading edge of the newly unrolled fabric hangs behind her, crossed by the soft shadow of a cut-paper tree. Rain-cleared twilight cools the canal beyond; warm rehearsal lamps reveal the fabric weave, rounded body contours and small wet reflections. A front-facing full-body view at knee height holds the connected leg silhouette, seat and both boot contacts within a spacious vertical frame, with quiet documentary attention to the pause between technical work and performance.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent random complex concept test",
+      "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여",
+      "basis": "request_context",
+      "resolution": "Author an independent coherent complex photographic scene with visible testable relations; select its particulars by an independently seeded draw before project-local retrieval.",
+      "sources": []
+    },
+    {
+      "term": "use the attached image",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use visible face and hair as reference guidance for a newly portrayed person; the reference is not evidence of real identity, age, body morphology, desire or consent.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "concept",
+        "prompt_evidence": "A complex photographic scene"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a human subject"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "event",
+        "prompt_evidence": "in a visible physical state"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "with face-and-hair guidance drawn from the supplied portrait"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "identity",
+      "count",
+      "age",
+      "role",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_human",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "attached_reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a human subject"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "environmental portrait photography",
+    "family": "quiet documentary work portrait",
+    "evidence": [
+      "wet quay reflections",
+      "fabric weave in warm rehearsal light"
+    ]
+  },
+  "variation_key": "agent-2-seed-8290468901664686725"
+}

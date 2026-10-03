@@ -19,41 +19,15 @@
           "Rounded fleshy volume of a named adult body region belongs to the same subject and continues into the neighboring regional contour.",
           "지정된 아래배나 위팔의 국소 살집과 주변 윤곽이 같은 성인에게 연결된 형태",
           "a plump named adult region with a rounded local volume and connected adjoining outline",
-          "a fleshy upper-arm region has rounded volume continuous with its connected arm contour"
+          "a fleshy upper-arm region has rounded volume continuous with its connected arm contour",
+          "같은 성인의 지정 부위가 둥글게 나오고 이웃 부위 윤곽에 자연스럽게 이어진 형태",
+          "a named adult region has rounded outward volume joined continuously to its neighboring contour"
         ],
         "visual_components": [
           "a named adult body region belongs to the same declared subject",
           "rounded outward volume is visible in that named region",
           "the regional outline joins its neighboring contour continuously"
         ],
-        "component_semantics": {
-          "minimum_component_groups": 3,
-          "required_group_ids": [
-            "component_1",
-            "component_2",
-            "component_3"
-          ],
-          "groups": [
-            {
-              "id": "component_1",
-              "any_terms": [
-                "a named adult body region belongs to the same declared subject"
-              ]
-            },
-            {
-              "id": "component_2",
-              "any_terms": [
-                "rounded outward volume is visible in that named region"
-              ]
-            },
-            {
-              "id": "component_3",
-              "any_terms": [
-                "the regional outline joins its neighboring contour continuously"
-              ]
-            }
-          ]
-        },
         "contrast_examples": [
           "whole-body build substituted for the named region",
           "garment padding substituted for bodily volume",
@@ -98,11 +72,15 @@
           {
             "id": "component_1",
             "match_terms": [
-              "a named adult body region belongs to the same declared subject"
+              "a named adult body region belongs to the same declared subject",
+              "the named region belongs to one adult actor",
+              "지정한 몸 부위가 같은 성인에게 속한다"
             ],
             "evidence_field": "component_1_phrase",
             "evidence_terms": [
-              "a named adult body region belongs to the same declared subject"
+              "a named adult body region belongs to the same declared subject",
+              "the named region belongs to one adult actor",
+              "지정한 몸 부위가 같은 성인에게 속한다"
             ],
             "min_content_words": 3,
             "instruction": "Preserve the declared owner and show this complete current relation: a named adult body region belongs to the same declared subject.",
@@ -115,11 +93,15 @@
           {
             "id": "component_2",
             "match_terms": [
-              "rounded outward volume is visible in that named region"
+              "rounded outward volume is visible in that named region",
+              "rounded local volume projects from that region",
+              "그 지정 부위에 둥근 국소 양감이 나온다"
             ],
             "evidence_field": "component_2_phrase",
             "evidence_terms": [
-              "rounded outward volume is visible in that named region"
+              "rounded outward volume is visible in that named region",
+              "rounded local volume projects from that region",
+              "그 지정 부위에 둥근 국소 양감이 나온다"
             ],
             "min_content_words": 3,
             "instruction": "Preserve the declared owner and show this complete current relation: rounded outward volume is visible in that named region.",
@@ -132,11 +114,15 @@
           {
             "id": "component_3",
             "match_terms": [
-              "the regional outline joins its neighboring contour continuously"
+              "the regional outline joins its neighboring contour continuously",
+              "the rounded outline continues into adjacent regional contours",
+              "둥근 외곽이 인접 부위의 윤곽으로 이어진다"
             ],
             "evidence_field": "component_3_phrase",
             "evidence_terms": [
-              "the regional outline joins its neighboring contour continuously"
+              "the regional outline joins its neighboring contour continuously",
+              "the rounded outline continues into adjacent regional contours",
+              "둥근 외곽이 인접 부위의 윤곽으로 이어진다"
             ],
             "min_content_words": 3,
             "instruction": "Preserve the declared owner and show this complete current relation: the regional outline joins its neighboring contour continuously.",
@@ -148,49 +134,6 @@
           }
         ]
       },
-      "required_evidence_fields": [
-        "component_1_phrase",
-        "component_2_phrase",
-        "component_3_phrase"
-      ],
-      "evidence_requirements": {
-        "component_1_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": [
-            "a named adult body region belongs to the same declared subject"
-          ]
-        },
-        "component_2_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": [
-            "rounded outward volume is visible in that named region"
-          ]
-        },
-        "component_3_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": [
-            "the regional outline joins its neighboring contour continuously"
-          ]
-        }
-      },
-      "render_gates": [
-        {
-          "id": "vo_ne_regional_soft_volume_1",
-          "review_scale": "native",
-          "description": "Inspect the declared owner at native resolution: a named adult body region belongs to the same declared subject. Every component is required; partial evidence fails and an occluded component is unobservable."
-        },
-        {
-          "id": "vo_ne_regional_soft_volume_2",
-          "review_scale": "native",
-          "description": "Inspect the declared owner at native resolution: rounded outward volume is visible in that named region. Every component is required; partial evidence fails and an occluded component is unobservable."
-        },
-        {
-          "id": "vo_ne_regional_soft_volume_3",
-          "review_scale": "native",
-          "description": "Inspect the declared owner at native resolution: the regional outline joins its neighboring contour continuously. Every component is required; partial evidence fails and an occluded component is unobservable."
-        }
-      ],
-      "composition_instruction": "Preserve the declared owner and show this complete current relation: a named adult body region belongs to the same declared subject. Preserve the declared owner and show this complete current relation: rounded outward volume is visible in that named region. Preserve the declared owner and show this complete current relation: the regional outline joins its neighboring contour continuously.",
       "reject_substitutes": [
         "wrong_owner_or_named_region",
         "occluded_required_component",
@@ -215,41 +158,15 @@
           "같은 성인 몸통의 지정 구간에서 들어간 선과 나온 선이 하나의 연속 윤곽으로 이어지는 형태",
           "A named segment of the same adult torso has both inward and outward curves joined continuously along its regional outline.",
           "지정한 옆몸통 구간에서 오목함과 볼록함이 연속되는 국소 곡선",
-          "a curvaceous regional torso outline joins an inward curve and an outward curve within the same stated segment"
+          "a curvaceous regional torso outline joins an inward curve and an outward curve within the same stated segment",
+          "같은 성인 몸통의 지정 구간 안에서 오목한 선과 볼록한 선이 이어지는 윤곽",
+          "a specified adult torso segment joins concave and convex curves along one continuous regional outline"
         ],
         "visual_components": [
           "the named torso segment belongs to the same adult subject",
           "an inward contour and an outward contour are both visible within that segment",
           "the two curves join continuously along the same regional outline"
         ],
-        "component_semantics": {
-          "minimum_component_groups": 3,
-          "required_group_ids": [
-            "component_1",
-            "component_2",
-            "component_3"
-          ],
-          "groups": [
-            {
-              "id": "component_1",
-              "any_terms": [
-                "the named torso segment belongs to the same adult subject"
-              ]
-            },
-            {
-              "id": "component_2",
-              "any_terms": [
-                "an inward contour and an outward contour are both visible within that segment"
-              ]
-            },
-            {
-              "id": "component_3",
-              "any_terms": [
-                "the two curves join continuously along the same regional outline"
-              ]
-            }
-          ]
-        },
         "contrast_examples": [
           "whole-body build substituted for the named region",
           "garment padding substituted for bodily volume",
@@ -294,11 +211,15 @@
           {
             "id": "component_1",
             "match_terms": [
-              "the named torso segment belongs to the same adult subject"
+              "the named torso segment belongs to the same adult subject",
+              "the specified torso segment belongs to the same adult",
+              "지정한 몸통 구간이 같은 성인에게 속한다"
             ],
             "evidence_field": "component_1_phrase",
             "evidence_terms": [
-              "the named torso segment belongs to the same adult subject"
+              "the named torso segment belongs to the same adult subject",
+              "the specified torso segment belongs to the same adult",
+              "지정한 몸통 구간이 같은 성인에게 속한다"
             ],
             "min_content_words": 3,
             "instruction": "Preserve the declared owner and show this complete current relation: the named torso segment belongs to the same adult subject.",
@@ -311,11 +232,15 @@
           {
             "id": "component_2",
             "match_terms": [
-              "an inward contour and an outward contour are both visible within that segment"
+              "an inward contour and an outward contour are both visible within that segment",
+              "concave and convex contours both occur in that segment",
+              "그 구간 안에 오목한 선과 볼록한 선이 모두 있다"
             ],
             "evidence_field": "component_2_phrase",
             "evidence_terms": [
-              "an inward contour and an outward contour are both visible within that segment"
+              "an inward contour and an outward contour are both visible within that segment",
+              "concave and convex contours both occur in that segment",
+              "그 구간 안에 오목한 선과 볼록한 선이 모두 있다"
             ],
             "min_content_words": 3,
             "instruction": "Preserve the declared owner and show this complete current relation: an inward contour and an outward contour are both visible within that segment.",
@@ -328,11 +253,15 @@
           {
             "id": "component_3",
             "match_terms": [
-              "the two curves join continuously along the same regional outline"
+              "the two curves join continuously along the same regional outline",
+              "the concave and convex curves join along one regional outline",
+              "오목함과 볼록함이 같은 국소 외곽선으로 이어진다"
             ],
             "evidence_field": "component_3_phrase",
             "evidence_terms": [
-              "the two curves join continuously along the same regional outline"
+              "the two curves join continuously along the same regional outline",
+              "the concave and convex curves join along one regional outline",
+              "오목함과 볼록함이 같은 국소 외곽선으로 이어진다"
             ],
             "min_content_words": 3,
             "instruction": "Preserve the declared owner and show this complete current relation: the two curves join continuously along the same regional outline.",
@@ -344,49 +273,6 @@
           }
         ]
       },
-      "required_evidence_fields": [
-        "component_1_phrase",
-        "component_2_phrase",
-        "component_3_phrase"
-      ],
-      "evidence_requirements": {
-        "component_1_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": [
-            "the named torso segment belongs to the same adult subject"
-          ]
-        },
-        "component_2_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": [
-            "an inward contour and an outward contour are both visible within that segment"
-          ]
-        },
-        "component_3_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": [
-            "the two curves join continuously along the same regional outline"
-          ]
-        }
-      },
-      "render_gates": [
-        {
-          "id": "vo_ne_regional_contour_transition_1",
-          "review_scale": "native",
-          "description": "Inspect the declared owner at native resolution: the named torso segment belongs to the same adult subject. Every component is required; partial evidence fails and an occluded component is unobservable."
-        },
-        {
-          "id": "vo_ne_regional_contour_transition_2",
-          "review_scale": "native",
-          "description": "Inspect the declared owner at native resolution: an inward contour and an outward contour are both visible within that segment. Every component is required; partial evidence fails and an occluded component is unobservable."
-        },
-        {
-          "id": "vo_ne_regional_contour_transition_3",
-          "review_scale": "native",
-          "description": "Inspect the declared owner at native resolution: the two curves join continuously along the same regional outline. Every component is required; partial evidence fails and an occluded component is unobservable."
-        }
-      ],
-      "composition_instruction": "Preserve the declared owner and show this complete current relation: the named torso segment belongs to the same adult subject. Preserve the declared owner and show this complete current relation: an inward contour and an outward contour are both visible within that segment. Preserve the declared owner and show this complete current relation: the two curves join continuously along the same regional outline.",
       "reject_substitutes": [
         "wrong_owner_or_named_region",
         "occluded_required_component",

@@ -82,6 +82,10 @@ class PhotoVisualObligationTests(unittest.TestCase):
                 "basis": "request_context", "resolution": text, "sources": [],
             } for index, text in enumerate([concept, *additional])),
         )
+        # These tests exercise optional expression opt-ins. Their synthetic
+        # studio core must leave that declared effect open; production scope
+        # checks must continue rejecting absent or locked expression freedom.
+        raw["intent_lock"]["open_dimensions"].append("expression")
         for anchor in raw["intent_lock"]["semantic_anchors"]:
             anchor["source_text"] = concept
         for index, text in enumerate(additional):
@@ -180,7 +184,19 @@ class PhotoVisualObligationTests(unittest.TestCase):
 
                 character_response = None
                 data = {prompt_generator.VISUAL_OBLIGATIONS_DATA_KEY: registry}
-                result = {"provenance": {"concept_lock": [case["text"]]}}
+                # The frozen rows qualify lexical routing, not property locks.
+                # Supply an explicitly open scope for current scoped profiles;
+                # leave every fixture byte and expected routing result intact.
+                result = {"provenance": {
+                    "concept_lock": [case["text"]],
+                    "authorial_core": {"intent_lock": {
+                        "contract_version": "photo-intent-lock/v2",
+                        "semantic_anchors": [], "locked_dimensions": [],
+                        "open_dimensions": sorted(
+                            prompt_generator.AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
+                        ),
+                    }},
+                }}
                 materialized = prompt_generator.candidate_pack_visual_obligations(
                     data,
                     result,
@@ -227,6 +243,30 @@ class PhotoVisualObligationTests(unittest.TestCase):
 
     def test_frozen_visual_concept_routing_holdout(self):
         self.assert_routing_fixture(ROUTING_HOLDOUT_PATH)
+
+    def test_scoped_composite_requires_explicit_expression_freedom(self):
+        registry = {**self.registry, "profiles": [
+            profile for profile in self.registry["profiles"]
+            if profile["id"] == "composite_overwhelmed_expression"
+        ]}
+        data = {prompt_generator.VISUAL_OBLIGATIONS_DATA_KEY: registry}
+        result = {"provenance": {"concept_lock": [
+            "An adult has eyes rolled upward and an open mouth with an external tongue tip"
+        ]}}
+        self.assertIsNone(prompt_generator.candidate_pack_visual_concept_candidates(
+            data, result, {}, None, None))
+        result["provenance"]["authorial_core"] = {"intent_lock": {
+            "contract_version": "photo-intent-lock/v2", "semantic_anchors": [],
+            "locked_dimensions": ["expression"], "open_dimensions": ["appearance"],
+        }}
+        self.assertIsNone(prompt_generator.candidate_pack_visual_concept_candidates(
+            data, result, {}, None, None))
+        lock = result["provenance"]["authorial_core"]["intent_lock"]
+        lock.update(locked_dimensions=[], open_dimensions=["expression"])
+        concepts = prompt_generator.candidate_pack_visual_concept_candidates(
+            data, result, {}, None, None)
+        self.assertEqual([row["id"] for row in concepts["candidates"]],
+                         ["visual-concept:composite_overwhelmed_expression"])
 
     def test_general_visual_profiles_route_without_adult_character_context(self):
         reality_result = {

@@ -1,0 +1,49 @@
+{
+  "modules": [
+    "tests.test_subculture_illustration_universal_scene_v3",
+    "tests.test_photo_slot_data_cleanup",
+    "tests.test_photo_adult_appeal_scope",
+    "tests.test_photo_portrait_fashion_exposure",
+    "tests.test_photo_space_visual_semantics",
+    "tests.test_photo_tactile_reality_semantics",
+    "tests.test_photo_wuxia_visual_semantics",
+    "tests.test_photo_photorealism_owner_data_cleanup",
+    "tests.test_photo_lighting_color_owner_data_cleanup",
+    "tests.test_photo_desire_visual_semantics",
+    "tests.test_photo_womens_casualwear_visual_semantics",
+    "tests.test_photo_pose_vocabulary_semantics",
+    "tests.test_photo_krummholz_korean_alias_data_cleanup",
+    "tests.test_photo_bound_context_surfaces",
+    "tests.test_photo_makeup_reference_balance",
+    "tests.test_photo_character_render_review",
+    "tests.test_photo_opening_era_semantics",
+    "tests.test_photo_positive_retrieval",
+    "tests.test_photo_single_allocator_recovery",
+    "tests.test_photo_liminal_maintained_alternative",
+    "tests.test_photo_capture_physics_alternatives",
+    "tests.test_photo_wet_hair_weight_alternative",
+    "tests.test_photo_overhead_hand_alternative",
+    "tests.test_photo_dress_positive_paraphrase",
+    "tests.test_photo_instrument_hand_roles"
+  ],
+  "tests_run": 199,
+  "failures": [],
+  "errors": [
+    {
+      "test": "test_existing_render_manifests_keep_historical_failure_labels (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneDataContractTests.test_existing_render_manifests_keep_historical_failure_labels)",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_subculture_illustration_universal_scene_v3.py\", line 1712, in test_existing_render_manifests_keep_historical_failure_labels\n    result = validate_all(str(ASSET_ROOT), verify_local_images=False)\n  File \"/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 11561, in validate_all\n    photo_regression = validate_photo_regression_baseline(root)\n  File \"/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 6483, in validate_photo_regression_baseline\n    _require(\n    ~~~~~~~~^\n        digest == baseline.get(\"sha256\"),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        \"current photo baseline candidate-pack bytes drift\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 1280, in _require\n    raise ValidationFailure(message)\nvalidate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift\n"
+    },
+    {
+      "test": "setUpClass (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests)",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_subculture_illustration_universal_scene_v3.py\", line 3367, in setUpClass\n    cls.holdouts = validate_universal_scene_holdouts(ASSET_ROOT, cls.research)\n                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 6244, in validate_universal_scene_holdouts\n    current_oracle_v2 = validate_universal_scene_current_oracle_v2(asset_dir)\n  File \"/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 4489, in validate_universal_scene_current_oracle_v2\n    _require(\n    ~~~~~~~~^\n        baseline.get(\"validator_contract\")\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<5 lines>...\n        \"universal v2 baseline validator binding drift\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 1280, in _require\n    raise ValidationFailure(message)\nvalidate_illustration_assets.ValidationFailure: universal v2 baseline validator binding drift\n"
+    },
+    {
+      "test": "test_reuse_appends_context_without_changing_existing_meaning_or_guards (tests.test_photo_pose_vocabulary_semantics.PhotoPoseVocabularySemanticsTests.test_reuse_appends_context_without_changing_existing_meaning_or_guards)",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_pose_vocabulary_semantics.py\", line 79, in test_reuse_appends_context_without_changing_existing_meaning_or_guards\n    before = generator.load_json(ASSETS / \"photo_prompt_tags.json\")\n  File \"/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py\", line 1322, in load_json\n    data = merge_research_extension(data, extension)\n  File \"/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py\", line 784, in merge_research_extension\n    photo_candidate_semantics.extend_slot_contexts(\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        slots, extension.get(\"existing_slot_context_extensions\"))\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_semantics.py\", line 88, in extend_slot_contexts\n    raise ValueError(f\"context extension references unknown entry {slot}.{entry_id}\")\nValueError: context extension references unknown entry expression.pv_half_lidded\n"
+    }
+  ],
+  "skipped": [],
+  "elapsed_seconds": 744.705,
+  "complete": true,
+  "successful": false
+}

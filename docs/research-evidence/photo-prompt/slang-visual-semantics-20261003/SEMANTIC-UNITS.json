@@ -1,0 +1,1135 @@
+{
+  "schema_version": "slang-semantic-units/research-v1",
+  "checked_on": "2026-10-03",
+  "language_note": "Operational descriptions are Korean; identifiers and relation fields use English for code mapping.",
+  "notes": [
+    "These are proposed observational units, not exact aliases, runtime profiles, medical findings, emotional diagnoses, or image qualification results.",
+    "Existing references may be contrasts rather than equivalents. For example bm_eye_aperture is structural and bm_breast_asymmetry is within one body."
+  ],
+  "units": [
+    {
+      "id": "U001",
+      "label": "동공의 상방 배치",
+      "domain": "expression",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "같은 얼굴의 눈꺼풀 사이에서 동공·홍채가 위쪽으로 치우친다.",
+        "머리 각도와 눈 안의 동공 위치를 따로 기록한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.face.eyes",
+        "relation": "eyes relative to their own eyelid apertures"
+      },
+      "do_not_infer": "고개를 든 모습만으로 대체하지 않는다. 사건·심리는 별도 근거가 필요하다.",
+      "source_ids": [
+        "S11",
+        "S39"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "composite_overwhelmed_expression"
+      ],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U002",
+      "label": "양눈의 안쪽 배치",
+      "domain": "expression",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "좌우 홍채가 각 눈의 코 쪽으로 치우친다.",
+        "두 눈이 같은 얼굴에 속한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.face.eyes",
+        "relation": "bilateral nasal-side displacement"
+      },
+      "do_not_infer": "상방 시선·눈 간격·얼굴 회전·생리 상태로 대체하지 않는다.",
+      "source_ids": [
+        "S39"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "composite_overwhelmed_expression"
+      ],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U003",
+      "label": "좌우 동공 배치 차이",
+      "domain": "expression",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "요청이 지정한 방향의 좌우 동공 위치 차이가 보인다.",
+        "고개 회전·가림으로 생긴 차이와 구분한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.face.eyes",
+        "relation": "left-right configuration contrast"
+      },
+      "do_not_infer": "비대칭만으로 질환·혼란·동의를 판정하지 않는다.",
+      "source_ids": [
+        "S11",
+        "S12"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "composite_overwhelmed_expression"
+      ],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U004",
+      "label": "일부 열린 눈꺼풀",
+      "domain": "expression",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "눈 사이 틈이 좁아지되 완전히 닫히지 않는다.",
+        "요청한 동공 일부가 보인다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.face.eyelids",
+        "relation": "lid occlusion of the same eye"
+      },
+      "do_not_infer": "고유 눈 형태·졸음·토로가오 전체·의식·쾌락을 자동 추가하지 않는다.",
+      "source_ids": [
+        "S11",
+        "S12",
+        "S40"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "bm_eye_aperture"
+      ],
+      "existing_candidate_ids": [
+        "pv_half_lidded"
+      ],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U005",
+      "label": "눈썹의 배치",
+      "domain": "expression",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "지정한 눈썹 높이·수축·좌우 차이를 관찰한다.",
+        "이완을 지정했을 때만 과도한 모임을 제외한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.face.brows",
+        "relation": "brow contour relative to eye and nasal root"
+      },
+      "do_not_infer": "이완·피로를 특정 표정 명칭의 보편 필수조건으로 고정하지 않는다.",
+      "source_ids": [
+        "S11",
+        "S12"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "composite_overwhelmed_expression"
+      ],
+      "existing_candidate_ids": [
+        "ae_deadpan_form"
+      ],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U006",
+      "label": "입술 사이 작은 틈",
+      "domain": "expression",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "위아래 입술 사이에 좁은 간격이 보인다.",
+        "치아·혀·입술 돌출은 별도 조건이다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.face.mouth",
+        "relation": "upper/lower lip separation"
+      },
+      "do_not_infer": "큰 입 벌림·혀 돌출·특정 사건과 같다고 처리하지 않는다.",
+      "source_ids": [
+        "S11",
+        "S12"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [
+        "pv_parted_lips"
+      ],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U007",
+      "label": "턱 하강과 큰 개구",
+      "domain": "expression",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "좁은 입술 틈보다 큰 입 벌림이 보인다.",
+        "입 너비·외곽과 아래턱 하강을 따로 지정·관찰한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.face.mouth",
+        "relation": "jaw/lip opening relative to same face"
+      },
+      "do_not_infer": "모든 용례를 작은 대칭 O자로 바꾸지 않는다. 감정·사건은 별도 근거가 필요하다.",
+      "source_ids": [
+        "S11",
+        "S12",
+        "S39"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "composite_overwhelmed_expression"
+      ],
+      "existing_candidate_ids": [
+        "ae_slack_jaw"
+      ],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U008",
+      "label": "입술 경계를 넘는 혀",
+      "domain": "expression",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "혀의 보이는 부분이 입술 경계를 넘는다.",
+        "같은 입에 이어지고, 중앙·편측 위치와 크기는 요청에 따라 선택한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.face.mouth.tongue",
+        "relation": "tongue crosses lip boundary and remains connected"
+      },
+      "do_not_infer": "입 안의 혀·치아·아랫입술로 대체하거나 작은 중앙 혀끝으로 고정하지 않는다.",
+      "source_ids": [
+        "S01",
+        "S39"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "composite_overwhelmed_expression"
+      ],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U009",
+      "label": "볼 표면의 붉은색",
+      "domain": "appearance",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "지정한 볼 표면에 국소적인 색 차이가 있다.",
+        "그림자·반사광·화장 가능성을 별도로 기록한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.face.cheeks",
+        "relation": "local visible color, cause unspecified"
+      },
+      "do_not_infer": "조명과 피부색을 같게 처리하지 않는다. 흥분·수치심·질환·동의를 판정하지 않는다.",
+      "source_ids": [
+        "S01",
+        "S12"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "composite_overwhelmed_expression"
+      ],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U010",
+      "label": "양손 각각의 V",
+      "domain": "pose",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "각 손의 검지와 중지가 갈라져 V를 이룬다.",
+        "각 손목이 같은 인물의 서로 다른 팔로 이어진다.",
+        "양손의 손바닥 방향이 지정한 상태와 일치한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.hands",
+        "relation": "two V configurations; two wrists; same actor arms"
+      },
+      "do_not_infer": "한 손·다른 인물·추가 손가락이나 팔·떠 있는 기호로 대체하지 않는다.",
+      "source_ids": [
+        "S02"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "pv_profile_double_v",
+        "pv_profile_v_sign"
+      ],
+      "existing_candidate_ids": [
+        "pv_double_v",
+        "pv_v_sign"
+      ],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U011",
+      "label": "같은 인물의 얼굴과 양손 동시 관계",
+      "domain": "composite",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "지정한 표정과 두 손 V가 같은 인물에 속한다.",
+        "필요한 얼굴과 양손이 같은 장면·시점에 보인다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor",
+        "relation": "same_target(face, left_hand, right_hand) AND simultaneous"
+      },
+      "do_not_infer": "얼굴만·손만 성공한 부분 결과, 다른 인물, 필수 얼굴 가림을 합격으로 처리하지 않는다.",
+      "source_ids": [
+        "S02",
+        "S39"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "composite_overwhelmed_expression",
+        "pv_profile_double_v"
+      ],
+      "existing_candidate_ids": [
+        "pv_double_v"
+      ],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U012",
+      "label": "동공 영역의 하트 문양",
+      "domain": "appearance",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "지정한 좌우 동공 영역에 하트 윤곽이 있다.",
+        "홍채·눈꺼풀·동공 위치 관계가 유지된다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.eyes",
+        "relation": "motif contained in specified pupil region"
+      },
+      "do_not_infer": "떠 있는 하트·목걸이·홍채색으로 대체하거나 동공과 홍채를 해부학적으로 같다고 기술하지 않는다.",
+      "source_ids": [
+        "S40"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U013",
+      "label": "눈을 대신하는 하트 기호",
+      "domain": "appearance",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "기호 표현으로 눈 자리를 하트가 차지한다.",
+        "개수와 매체가 지정한 코어와 일치한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.eye_representation",
+        "relation": "symbol replaces specified eye representation"
+      },
+      "do_not_infer": "실사 코어의 눈을 무단 치환하지 않는다. 하트동공과 같은 후보로 취급하지 않는다.",
+      "source_ids": [
+        "S13"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U014",
+      "label": "하트 반사·렌즈·후가공",
+      "domain": "appearance",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "명시된 매체에 하트 무늬가 있다.",
+        "반사광·렌즈 무늬·후가공 중 어느 표현인지 기록한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.eye_surface_or_declared_edit_layer",
+        "relation": "motif carrier selected before rendering"
+      },
+      "do_not_infer": "반사 형태로 가공 이력·감정을 입증하거나 카메라·재질을 몰래 바꾸지 않는다.",
+      "source_ids": [
+        "S40"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U015",
+      "label": "착좌 상태의 떨어진 무릎",
+      "domain": "pose",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "골반이 지정된 좌면에 지지된다.",
+        "좌우 무릎이 떨어지고 허벅지가 같은 골반으로 이어진다.",
+        "발의 접지 여부가 지정 상태와 일치한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.legs",
+        "relation": "seated support + separated knees"
+      },
+      "do_not_infer": "발만 벌린 서기·의자 걸터앉기·노출로 대체하거나 각도를 임의로 고정하지 않는다.",
+      "source_ids": [
+        "S07",
+        "S10"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U016",
+      "label": "발의 넓은 지지 폭",
+      "domain": "pose",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "접지한 양발이 좌우로 떨어진다.",
+        "발 사이 폭과 무릎·발끝 방향을 분리한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.feet",
+        "relation": "feet-ground contact + lateral separation"
+      },
+      "do_not_infer": "발 간격에서 무릎 간격·M형·착좌·체격을 추론하지 않는다.",
+      "source_ids": [
+        "S10"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [
+        "pv_wide_stance"
+      ],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U017",
+      "label": "M형으로 읽히는 굽힌 다리",
+      "domain": "pose",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "양 무릎이 굽혀지고 양쪽 허벅지·종아리가 이어진다.",
+        "지정한 시점에서 양다리 외곽이 M처럼 읽힌다.",
+        "골반·발의 지지 위치를 별도로 기록한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.legs",
+        "relation": "view-dependent contour + bilateral flexion + support"
+      },
+      "do_not_infer": "보편 각도·의자·바닥·발끝 방향을 창작하거나 카메라 투영만으로 실제 관절 형태를 판정하지 않는다.",
+      "source_ids": [
+        "S08",
+        "S10"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U018",
+      "label": "양팔·양다리 벌림 관계",
+      "domain": "pose",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "같은 몸통에서 네 팔다리가 좌우로 이어져 벌어진다.",
+        "지정한 지지면·접촉·몸의 방향이 일치한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.whole_body",
+        "relation": "four connected limbs + declared support"
+      },
+      "do_not_infer": "구속·노출·침구·십자가·성적 사건을 추가하지 않는다.",
+      "source_ids": [
+        "S09"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "pv_profile_supine",
+        "pv_profile_prone"
+      ],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U019",
+      "label": "여러 부위에 이어지는 부드러운 양감",
+      "domain": "body_geometry",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "지정한 여러 신체 영역에 둥근 양감이 있다.",
+        "각 영역이 인접 윤곽으로 이어진다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_adult_body",
+        "relation": "regional soft volume with body continuity"
+      },
+      "do_not_infer": "큰 가슴만·잘록한 허리·비만 진단·체중·생식 능력과 같다고 처리하지 않는다.",
+      "source_ids": [
+        "S14"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "soft_full_figure_volume",
+        "ne_regional_soft_volume"
+      ],
+      "existing_candidate_ids": [
+        "ne_regional_soft_volume"
+      ],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U020",
+      "label": "복부의 전방 돌출",
+      "domain": "body_geometry",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "상복부·하복부의 전방 윤곽이 보인다.",
+        "같은 흉곽·골반·몸통으로 이어진다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_adult_body.abdomen",
+        "relation": "regional projection relative to own torso"
+      },
+      "do_not_infer": "의복 부풀음·임신·지방·질환·건강·원인을 형태로 확정하지 않는다.",
+      "source_ids": [
+        "S15"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "bm_abdominal_projection"
+      ],
+      "existing_candidate_ids": [
+        "bm_abdominal_projection"
+      ],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U021",
+      "label": "가슴 부위 지시",
+      "domain": "lexical",
+      "evidence_mode": "CONTEXT_ONLY",
+      "observable_or_contextual_components": [
+        "부위가 이미 코어에 지정되어 있는지 확인한다.",
+        "크기·모양·노출 수식이 별도 주장인지 확인한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "request_referent",
+        "relation": "body-region referent, no size assertion"
+      },
+      "do_not_infer": "명칭만으로 체격·피부 노출·표정·동작을 추가하지 않는다.",
+      "source_ids": [
+        "S18",
+        "S20",
+        "S25"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "bust_prominence_relation"
+      ],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "pixel_inference_allowed": false,
+        "context_required": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U022",
+      "label": "엉덩이 부위 지시",
+      "domain": "lexical",
+      "evidence_mode": "CONTEXT_ONLY",
+      "observable_or_contextual_components": [
+        "신체와 일반 사물의 뜻을 문맥으로 구분한다.",
+        "기존 인물의 어느 부위를 가리키는지 확인한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "request_referent",
+        "relation": "body-region referent, no volume assertion"
+      },
+      "do_not_infer": "명칭만으로 크기·노출·자세·의복 변경을 추가하지 않는다.",
+      "source_ids": [
+        "S21",
+        "S22"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "bm_gluteal_projection"
+      ],
+      "existing_candidate_ids": [
+        "bm_gluteal_projection"
+      ],
+      "render_gate_policy": {
+        "pixel_inference_allowed": false,
+        "context_required": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U023",
+      "label": "가슴의 상대적 존재감",
+      "domain": "body_geometry",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "명시한 흉곽·몸통에 대한 상대적 돌출이 보인다.",
+        "의복·패딩·원근의 외관과 실제 형태 단정을 구분한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_adult_body.breast_region",
+        "relation": "regional prominence relative to own torso"
+      },
+      "do_not_infer": "모든 비유에 큰 크기를 강제하거나 수치·수유·나이·노출을 추가하지 않는다.",
+      "source_ids": [
+        "S23",
+        "S24"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "bust_prominence_relation"
+      ],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U024",
+      "label": "기존 두 인물의 겉보기 비교",
+      "domain": "composite",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "코어에 이미 있는 A/B의 부위를 지정된 비교 조건에서 관찰한다.",
+        "차이의 방향과 겉보기·측정의 구분을 기록한다."
+      ],
+      "ownership_and_relation": {
+        "owner": [
+          "existing_actor_A",
+          "existing_actor_B"
+        ],
+        "relation": "compare(region_of_A, region_of_B), no actor creation"
+      },
+      "do_not_infer": "한 인물 좌우 차이로 대체하거나 의복·자세·원근에서 해부학적 크기를 확정하지 않는다.",
+      "source_ids": [
+        "S25"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [
+        "bm_breast_asymmetry"
+      ],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U025",
+      "label": "시간에 따른 신체 변위",
+      "domain": "temporal",
+      "evidence_mode": "TEMPORAL_EVIDENCE_ONLY",
+      "observable_or_contextual_components": [
+        "두 시점 이상에서 윤곽·위치와 시간 순서를 확인한다.",
+        "같은 인물·부위·가시 조건이 유지된다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.region_across_time",
+        "relation": "same_target + temporal_order + displacement"
+      },
+      "do_not_infer": "정지 이미지로 흔들림·탄성·운동 원인을 증명하지 않는다.",
+      "source_ids": [
+        "S25"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "pixel_inference_allowed": false,
+        "context_required": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U026",
+      "label": "의복·패딩에 의한 외관 양감",
+      "domain": "appearance",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "의복 구조·패딩이 요청에 명시되어 있다.",
+        "신체와 의복 표면 윤곽을 따로 기술한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.wardrobe",
+        "relation": "garment/padding carrier separate from anatomy"
+      },
+      "do_not_infer": "윤곽만으로 패딩 존재를 확정하거나 실제 신체 확대·노출·건강의 증거로 삼지 않는다.",
+      "source_ids": [
+        "S25"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U027",
+      "label": "가공 전후 차이",
+      "domain": "temporal",
+      "evidence_mode": "TEMPORAL_EVIDENCE_ONLY",
+      "observable_or_contextual_components": [
+        "명시한 전후 자료에서 같은 대상이 대응된다.",
+        "가공된 층과 근거가 기록된다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_image_pair",
+        "relation": "registered before/after correspondence"
+      },
+      "do_not_infer": "한 사진으로 가공 이력을 인정하거나 의복 형태를 가공과 동일시하지 않는다.",
+      "source_ids": [
+        "S25"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "pixel_inference_allowed": false,
+        "context_required": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U028",
+      "label": "하복부 피부 표면의 문양",
+      "domain": "appearance",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "문양이 피부면을 따라 지정한 배꼽·골반 상대 위치에 있다.",
+        "같은 몸의 외곽과 일관되게 연결된다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_actor.body_marking",
+        "relation": "skin carrier + relative navel position"
+      },
+      "do_not_infer": "의복 프린트·떠 있는 기호·모형 데칼로 대체하거나 내부 자궁·역할·소유를 추론하지 않는다.",
+      "source_ids": [
+        "S16",
+        "S17"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [
+        "ctx_c151"
+      ],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U029",
+      "label": "선택된 문양의 형태와 매체",
+      "domain": "appearance",
+      "evidence_mode": "VISIBLE_COMPONENTS",
+      "observable_or_contextual_components": [
+        "선·닫힌 영역·대칭·하트 여부를 각각 지정한다.",
+        "색·발광·재료·위치는 별도 조건이다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_marking_carrier",
+        "relation": "chosen topology, not a universal slang prototype"
+      },
+      "do_not_infer": "인몬 전체에 같은 하트·대칭·발광을 강제하지 않는다.",
+      "source_ids": [
+        "S16",
+        "S17"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "all_of_required": true,
+        "partial_is_fail": true,
+        "occluded_required_component": "UNOBSERVABLE",
+        "frame_change_requires_open_dimension": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U030",
+      "label": "사건·시점 주장",
+      "domain": "context",
+      "evidence_mode": "CONTEXT_ONLY",
+      "observable_or_contextual_components": [
+        "누가 어떤 뜻으로 사건을 기술하는지 확인한다.",
+        "전후·반응·완료의 주장과 근거를 확인한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "request_or_narrative_statement",
+        "relation": "event attribution, separate from visible geometry"
+      },
+      "do_not_infer": "얼굴·자세로 선행 사건·절정·완료·관계를 확정하지 않는다.",
+      "source_ids": [
+        "S12",
+        "S31",
+        "S41"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "pixel_inference_allowed": false,
+        "context_required": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U031",
+      "label": "변화 전후의 연속성",
+      "domain": "context",
+      "evidence_mode": "CONTEXT_ONLY",
+      "observable_or_contextual_components": [
+        "같은 대상의 전후 조건과 명시된 변화 축을 확인한다.",
+        "변했다고 주장하는 성격·의복·역할을 구분한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_narrative_subject",
+        "relation": "same_target + temporal_order + explicit change"
+      },
+      "do_not_infer": "한 이미지에서 이전 성격·성별·역할·동의를 복원하지 않는다.",
+      "source_ids": [
+        "S33"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "pixel_inference_allowed": false,
+        "context_required": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U032",
+      "label": "음성·텍스트 반응",
+      "domain": "context",
+      "evidence_mode": "CONTEXT_ONLY",
+      "observable_or_contextual_components": [
+        "실제 발화·자막과 화자·시간을 확인한다.",
+        "사진의 입 모양과 발화 근거를 분리한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_speaker_or_caption",
+        "relation": "utterance belongs to declared source"
+      },
+      "do_not_infer": "입 모양만으로 특정 단어·목소리·사건을 입증하지 않는다.",
+      "source_ids": [],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "pixel_inference_allowed": false,
+        "context_required": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U033",
+      "label": "해부학·물질어의 뜻",
+      "domain": "lexical",
+      "evidence_mode": "CONTEXT_ONLY",
+      "observable_or_contextual_components": [
+        "명시한 지시 대상·수식과 일반 뜻을 확인한다.",
+        "보이는 부위와 가려진 부위를 구분한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "request_referent",
+        "relation": "lexical reference without automatic visibility"
+      },
+      "do_not_infer": "명칭으로 성별·형태·크기·액체 종류·노출·행위를 추가하지 않는다.",
+      "source_ids": [
+        "S36"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "pixel_inference_allowed": false,
+        "context_required": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U034",
+      "label": "평가와 평가 주체",
+      "domain": "context",
+      "evidence_mode": "CONTEXT_ONLY",
+      "observable_or_contextual_components": [
+        "누가 누구를 어떻게 평가했다는 언어적 주장인지 확인한다.",
+        "매력·쾌락·목적·지성과 보이는 특징을 분리한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "declared_evaluator",
+        "relation": "attributed evaluation directed at a referent"
+      },
+      "do_not_infer": "외모를 동의·실제 욕망·지성·건강의 증거로 삼지 않는다.",
+      "source_ids": [
+        "S12",
+        "S26",
+        "S27",
+        "S28",
+        "S32",
+        "S34"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "pixel_inference_allowed": false,
+        "context_required": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U035",
+      "label": "역할·속성·관계 주장",
+      "domain": "context",
+      "evidence_mode": "CONTEXT_ONLY",
+      "observable_or_contextual_components": [
+        "요청·서사에 명시된 역할과 대상을 확인한다.",
+        "확정 사실·화자의 평가·장르 분류를 구분한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "request_or_narrative_statement",
+        "relation": "attributed role/relationship, no fixed body prototype"
+      },
+      "do_not_infer": "부모 이력·성 정체성·성적 이력·소유·생식 능력·동의를 픽셀에서 추론하지 않는다.",
+      "source_ids": [
+        "S30",
+        "S31",
+        "S32",
+        "S42"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "pixel_inference_allowed": false,
+        "context_required": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    },
+    {
+      "id": "U036",
+      "label": "일반어와 은어의 다의성",
+      "domain": "lexical",
+      "evidence_mode": "CONTEXT_ONLY",
+      "observable_or_contextual_components": [
+        "음식·통화·스포츠·도구·이름의 목적어와 수식을 확인한다.",
+        "부정·인용·해설 대상인지 실제 요구인지 구분한다."
+      ],
+      "ownership_and_relation": {
+        "owner": "request_language_context",
+        "relation": "select sense before visual activation"
+      },
+      "do_not_infer": "동형어·약어·장 분류만으로 성적 뜻을 필수 계약으로 만들지 않는다.",
+      "source_ids": [
+        "S18",
+        "S19",
+        "S20",
+        "S21",
+        "S22",
+        "S24",
+        "S29",
+        "S35",
+        "S36"
+      ],
+      "evidence_basis": "Researcher-authored operational decomposition. Sources support lexical or conceptual distinctions; they do not certify these proposed render gates.",
+      "existing_profile_ids": [],
+      "existing_candidate_ids": [],
+      "render_gate_policy": {
+        "pixel_inference_allowed": false,
+        "context_required": true
+      },
+      "runtime_export_allowed": false,
+      "status": "PROPOSED_RESEARCH_UNIT"
+    }
+  ]
+}

@@ -1,0 +1,492 @@
+{
+  "schema_version": "photo-slang-integration-receipt/v1",
+  "new_profiles": [
+    {
+      "id": "sv_upward_pupils",
+      "draft_id": "SV01"
+    },
+    {
+      "id": "sv_inward_pupils",
+      "draft_id": "SV02"
+    },
+    {
+      "id": "sv_left_right_pupil_relation",
+      "draft_id": "SV03"
+    },
+    {
+      "id": "sv_tongue_lip_boundary",
+      "draft_id": "SV08"
+    },
+    {
+      "id": "sv_local_cheek_redness",
+      "draft_id": "SV09"
+    },
+    {
+      "id": "sv_pupil_heart_motif",
+      "draft_id": "SV12"
+    },
+    {
+      "id": "sv_seated_knees_apart",
+      "draft_id": "SV15"
+    },
+    {
+      "id": "sv_supported_m_legs",
+      "draft_id": "SV17"
+    },
+    {
+      "id": "sv_supine_limb_spread",
+      "draft_id": "SV18"
+    },
+    {
+      "id": "sv_padded_garment_contour",
+      "draft_id": "SV24"
+    },
+    {
+      "id": "sv_lower_abdominal_skin_marking",
+      "draft_id": "SV26"
+    },
+    {
+      "id": "sv_declared_skin_motif_topology",
+      "draft_id": "SV27"
+    }
+  ],
+  "new_candidates": [
+    {
+      "id": "sv_upward_pupils",
+      "slot": "expression",
+      "draft_id": "SV01"
+    },
+    {
+      "id": "sv_inward_pupils",
+      "slot": "expression",
+      "draft_id": "SV02"
+    },
+    {
+      "id": "sv_left_right_pupil_relation",
+      "slot": "expression",
+      "draft_id": "SV03"
+    },
+    {
+      "id": "sv_tongue_lip_boundary",
+      "slot": "expression",
+      "draft_id": "SV08"
+    },
+    {
+      "id": "sv_local_cheek_redness",
+      "slot": "skin_condition",
+      "draft_id": "SV09"
+    },
+    {
+      "id": "sv_pupil_heart_motif",
+      "slot": "eye_detail",
+      "draft_id": "SV12"
+    },
+    {
+      "id": "sv_seated_knees_apart",
+      "slot": "body_pose",
+      "draft_id": "SV15"
+    },
+    {
+      "id": "sv_supported_m_legs",
+      "slot": "body_pose",
+      "draft_id": "SV17"
+    },
+    {
+      "id": "sv_supine_limb_spread",
+      "slot": "body_pose",
+      "draft_id": "SV18"
+    },
+    {
+      "id": "sv_padded_garment_contour",
+      "slot": "garment_detail",
+      "draft_id": "SV24"
+    },
+    {
+      "id": "sv_lower_abdominal_skin_marking",
+      "slot": "body_marking",
+      "draft_id": "SV26"
+    },
+    {
+      "id": "sv_declared_skin_motif_topology",
+      "slot": "body_marking",
+      "draft_id": "SV27"
+    }
+  ],
+  "alternative_candidate_ids": [
+    {
+      "id": "pv_half_lidded",
+      "slot": "expression",
+      "owner": "photo_prompt_pose_vocabulary_extension.json",
+      "added": [
+        "윗눈꺼풀과 아랫눈꺼풀 사이가 좁아졌지만 동공이 부분적으로 보이는 눈",
+        "partly open eyes with reduced lid apertures and partly visible pupils"
+      ]
+    },
+    {
+      "id": "pv_parted_lips",
+      "slot": "expression",
+      "owner": "photo_prompt_pose_vocabulary_extension.json",
+      "added": [
+        "윗입술과 아랫입술 사이에 작은 틈이 보이는 현재 입 형태",
+        "a small visible separation between the upper and lower lip margins"
+      ]
+    },
+    {
+      "id": "ae_slack_jaw",
+      "slot": "expression",
+      "owner": "photo_prompt_acting_expression_extension.json",
+      "added": [
+        "턱이 아래로 내려가 작은 입술 틈보다 크게 열린 입",
+        "a dropped lower jaw with a mouth aperture larger than a slight lip part"
+      ]
+    },
+    {
+      "id": "ae_deadpan_form",
+      "slot": "expression",
+      "owner": "photo_prompt_acting_expression_extension.json",
+      "added": [
+        "입꼬리는 수평이고 눈썹 윤곽은 과장되지 않은 얼굴",
+        "level mouth corners with comparatively unaccented eyebrow contours"
+      ]
+    },
+    {
+      "id": "pv_double_v",
+      "slot": "hand_pose",
+      "owner": "photo_prompt_pose_vocabulary_extension.json",
+      "added": [
+        "같은 인물의 두 손에서 각각 검지와 중지가 V를 만들고 별개의 손목과 팔로 이어지는 자세",
+        "two separate actor-owned V hands with index-middle splits and continuous wrists and arms"
+      ]
+    },
+    {
+      "id": "pv_v_sign",
+      "slot": "hand_pose",
+      "owner": "photo_prompt_pose_vocabulary_extension.json",
+      "added": [
+        "검지와 중지는 벌어지고 약지와 새끼손가락은 접히며 엄지가 붙어 있는 한 손의 V",
+        "one connected hand separates the index and middle fingers while ring and little fingers fold beside an attached thumb"
+      ]
+    },
+    {
+      "id": "pv_wide_stance",
+      "slot": "body_pose",
+      "owner": "photo_prompt_pose_vocabulary_extension.json",
+      "added": [
+        "같은 인물의 두 발이 바닥에 닿은 채 좌우 지지 폭을 넓힌 서 있는 자세",
+        "a standing base with both actor-owned feet grounded and laterally spaced"
+      ]
+    },
+    {
+      "id": "pv_chair_straddle",
+      "slot": "body_pose",
+      "owner": "photo_prompt_pose_vocabulary_extension.json",
+      "added": [
+        "골반은 의자 좌면에 닿고 의자 구조의 양옆에 다리가 하나씩 이어진 앉은 자세",
+        "a supported chair straddle with the pelvis on the seat and one connected leg on each side of the chair structure"
+      ]
+    },
+    {
+      "id": "pv_supine",
+      "slot": "body_pose",
+      "owner": "photo_prompt_pose_vocabulary_extension.json",
+      "added": [
+        "등 쪽 몸통이 지지 면에 닿고 앞몸통은 그 면의 반대쪽을 향하는 누운 자세",
+        "a reclining actor with posterior torso contact and the anterior torso facing away from the support"
+      ]
+    },
+    {
+      "id": "soft_full_figure_volume",
+      "slot": "silhouette_proportion",
+      "owner": "photo_prompt_tags.json",
+      "added": [
+        "성인 위팔과 몸통, 골반과 허벅지의 둥근 양감이 한 시점에서 연속되고 허리 경계도 읽히는 체형",
+        "continuous rounded soft volume across adult upper arms torso hips and thighs with a distinct readable waist contour"
+      ]
+    },
+    {
+      "id": "ne_regional_soft_volume",
+      "slot": "silhouette_proportion",
+      "owner": "photo_prompt_neutral_expression_extension.json",
+      "added": [
+        "같은 성인의 지정 부위가 둥글게 나오고 이웃 부위 윤곽에 자연스럽게 이어진 형태",
+        "a named adult region has rounded outward volume joined continuously to its neighboring contour"
+      ]
+    },
+    {
+      "id": "ne_regional_contour_transition",
+      "slot": "silhouette_proportion",
+      "owner": "photo_prompt_neutral_expression_extension.json",
+      "added": [
+        "같은 성인 몸통의 지정 구간 안에서 오목한 선과 볼록한 선이 이어지는 윤곽",
+        "a specified adult torso segment joins concave and convex curves along one continuous regional outline"
+      ]
+    },
+    {
+      "id": "bm_abdominal_projection",
+      "slot": "silhouette_proportion",
+      "owner": "photo_prompt_body_morphology_extension.json",
+      "added": [
+        "같은 성인의 상복부와 하복부가 이어지는 옆몸통 선을 기준으로 각각 앞으로 나온 관계",
+        "separately readable upper and lower belly projections along the same adult continuous side-torso contour"
+      ]
+    },
+    {
+      "id": "bm_breast_fullness",
+      "slot": "silhouette_proportion",
+      "owner": "photo_prompt_body_morphology_extension.json",
+      "added": [
+        "같은 성인의 가슴을 위아래와 안팎 구간으로 나눠 각 부위 양감을 구별하는 형태",
+        "upper lower medial and lateral fullness partitions of the same adult breast region"
+      ]
+    },
+    {
+      "id": "bm_breast_root_width",
+      "slot": "silhouette_proportion",
+      "owner": "photo_prompt_body_morphology_extension.json",
+      "added": [
+        "같은 흉벽 위에서 가슴의 안쪽 부착점부터 바깥 부착점까지 읽히는 가로 범위",
+        "medial-to-lateral breast attachment extent on the same declared chest wall"
+      ]
+    },
+    {
+      "id": "bm_breast_spacing",
+      "slot": "silhouette_proportion",
+      "owner": "photo_prompt_body_morphology_extension.json",
+      "added": [
+        "같은 성인의 몸통 정중선을 기준으로 양쪽 가슴 안쪽 경계의 간격과 방향이 보이는 관계",
+        "bilateral medial breast contours spaced and oriented around the same adult torso centerline"
+      ]
+    },
+    {
+      "id": "bm_breast_asymmetry",
+      "slot": "silhouette_proportion",
+      "owner": "photo_prompt_body_morphology_extension.json",
+      "added": [
+        "같은 성인의 한 시점에서 왼쪽과 오른쪽 가슴의 지정한 양감이나 위치 차이를 비교하는 관계",
+        "the selected left-right breast volume or position difference within one adult body and the same view"
+      ]
+    },
+    {
+      "id": "bm_gluteal_projection",
+      "slot": "silhouette_proportion",
+      "owner": "photo_prompt_body_morphology_extension.json",
+      "added": [
+        "같은 성인의 골반 기준 뒤쪽 둔부 돌출이 허벅지 부착으로 이어지는 윤곽",
+        "posterior gluteal projection anchored to the same adult pelvis and continuing into the thigh attachment"
+      ]
+    },
+    {
+      "id": "bm_gluteal_fullness",
+      "slot": "silhouette_proportion",
+      "owner": "photo_prompt_body_morphology_extension.json",
+      "added": [
+        "같은 성인의 이어진 뒤쪽 둔부 윤곽에서 위와 아래 구간의 양감이 구별되는 형태",
+        "separately readable upper and lower gluteal fullness along the same adult continuous posterior contour"
+      ]
+    },
+    {
+      "id": "bm_fabric_body_outline",
+      "slot": "garment_detail",
+      "owner": "photo_prompt_body_morphology_extension.json",
+      "added": [
+        "불투명한 같은 의복 면이 신체에 닿는 구간에서 몸의 윤곽을 전하는 형태",
+        "the continuous opaque garment surface transmits the outline at its declared body-contact region"
+      ]
+    },
+    {
+      "id": "bm_garment_bulge",
+      "slot": "garment_detail",
+      "owner": "photo_prompt_body_morphology_extension.json",
+      "added": [
+        "같은 불투명 의복의 지정 접촉 부위에 국소적으로 솟은 원단 면",
+        "a localized outward fabric projection at the specified contact on the same opaque garment"
+      ]
+    },
+    {
+      "id": "bm_garment_central_crease",
+      "slot": "garment_detail",
+      "owner": "photo_prompt_body_morphology_extension.json",
+      "added": [
+        "이어진 불투명 의복 면 가운데 주름과 그 양옆의 한 쌍 윤곽이 구별되는 형태",
+        "one continuous opaque garment has a central crease and two separately readable adjoining contours"
+      ]
+    }
+  ],
+  "alternative_profile_ids": [
+    {
+      "id": "soft_full_figure_volume",
+      "owner": "photo_prompt_visual_obligations.json",
+      "added": [
+        "성인 위팔과 몸통, 골반과 허벅지의 둥근 양감이 한 시점에서 연속되고 허리 경계도 읽히는 체형",
+        "continuous rounded soft volume across adult upper arms torso hips and thighs with a distinct readable waist contour"
+      ]
+    },
+    {
+      "id": "bust_prominence_relation",
+      "owner": "photo_prompt_visual_obligations.json",
+      "added": [
+        "같은 성인의 양측 가슴이 흉곽 바탕과 자연 허리를 기준으로 앞과 옆으로 두드러지는 관계",
+        "both adult breast contours project forward and laterally relative to the same ribcage and natural waist"
+      ]
+    },
+    {
+      "id": "bm_breast_root_width",
+      "owner": "photo_prompt_visual_obligations_body_morphology.json",
+      "added": [
+        "같은 흉벽 위에서 가슴의 안쪽 부착점부터 바깥 부착점까지 읽히는 가로 범위",
+        "medial-to-lateral breast attachment extent on the same declared chest wall"
+      ]
+    },
+    {
+      "id": "bm_breast_fullness",
+      "owner": "photo_prompt_visual_obligations_body_morphology.json",
+      "added": [
+        "같은 성인의 가슴을 위아래와 안팎 구간으로 나눠 각 부위 양감을 구별하는 형태",
+        "upper lower medial and lateral fullness partitions of the same adult breast region"
+      ]
+    },
+    {
+      "id": "bm_breast_spacing",
+      "owner": "photo_prompt_visual_obligations_body_morphology.json",
+      "added": [
+        "같은 성인의 몸통 정중선을 기준으로 양쪽 가슴 안쪽 경계의 간격과 방향이 보이는 관계",
+        "bilateral medial breast contours spaced and oriented around the same adult torso centerline"
+      ]
+    },
+    {
+      "id": "bm_breast_asymmetry",
+      "owner": "photo_prompt_visual_obligations_body_morphology.json",
+      "added": [
+        "같은 성인의 한 시점에서 왼쪽과 오른쪽 가슴의 지정한 양감이나 위치 차이를 비교하는 관계",
+        "the selected left-right breast volume or position difference within one adult body and the same view"
+      ]
+    },
+    {
+      "id": "bm_abdominal_projection",
+      "owner": "photo_prompt_visual_obligations_body_morphology.json",
+      "added": [
+        "같은 성인의 상복부와 하복부가 이어지는 옆몸통 선을 기준으로 각각 앞으로 나온 관계",
+        "separately readable upper and lower belly projections along the same adult continuous side-torso contour"
+      ]
+    },
+    {
+      "id": "bm_gluteal_projection",
+      "owner": "photo_prompt_visual_obligations_body_morphology.json",
+      "added": [
+        "같은 성인의 골반 기준 뒤쪽 둔부 돌출이 허벅지 부착으로 이어지는 윤곽",
+        "posterior gluteal projection anchored to the same adult pelvis and continuing into the thigh attachment"
+      ]
+    },
+    {
+      "id": "bm_gluteal_fullness",
+      "owner": "photo_prompt_visual_obligations_body_morphology.json",
+      "added": [
+        "같은 성인의 이어진 뒤쪽 둔부 윤곽에서 위와 아래 구간의 양감이 구별되는 형태",
+        "separately readable upper and lower gluteal fullness along the same adult continuous posterior contour"
+      ]
+    },
+    {
+      "id": "bm_fabric_body_outline",
+      "owner": "photo_prompt_visual_obligations_body_morphology.json",
+      "added": [
+        "불투명한 같은 의복 면이 신체에 닿는 구간에서 몸의 윤곽을 전하는 형태",
+        "the continuous opaque garment surface transmits the outline at its declared body-contact region"
+      ]
+    },
+    {
+      "id": "bm_garment_bulge",
+      "owner": "photo_prompt_visual_obligations_body_morphology.json",
+      "added": [
+        "같은 불투명 의복의 지정 접촉 부위에 국소적으로 솟은 원단 면",
+        "a localized outward fabric projection at the specified contact on the same opaque garment"
+      ]
+    },
+    {
+      "id": "bm_garment_central_crease",
+      "owner": "photo_prompt_visual_obligations_body_morphology.json",
+      "added": [
+        "이어진 불투명 의복 면 가운데 주름과 그 양옆의 한 쌍 윤곽이 구별되는 형태",
+        "one continuous opaque garment has a central crease and two separately readable adjoining contours"
+      ]
+    },
+    {
+      "id": "ne_regional_soft_volume",
+      "owner": "photo_prompt_visual_obligations_neutral_expression.json",
+      "added": [
+        "같은 성인의 지정 부위가 둥글게 나오고 이웃 부위 윤곽에 자연스럽게 이어진 형태",
+        "a named adult region has rounded outward volume joined continuously to its neighboring contour"
+      ]
+    },
+    {
+      "id": "ne_regional_contour_transition",
+      "owner": "photo_prompt_visual_obligations_neutral_expression.json",
+      "added": [
+        "같은 성인 몸통의 지정 구간 안에서 오목한 선과 볼록한 선이 이어지는 윤곽",
+        "a specified adult torso segment joins concave and convex curves along one continuous regional outline"
+      ]
+    },
+    {
+      "id": "pv_profile_chair_straddle",
+      "owner": "photo_prompt_visual_obligations_pose_vocabulary.json",
+      "added": [
+        "골반은 의자 좌면에 닿고 의자 구조의 양옆에 다리가 하나씩 이어진 앉은 자세",
+        "a supported chair straddle with the pelvis on the seat and one connected leg on each side of the chair structure"
+      ]
+    },
+    {
+      "id": "pv_profile_supine",
+      "owner": "photo_prompt_visual_obligations_pose_vocabulary.json",
+      "added": [
+        "등 쪽 몸통이 지지 면에 닿고 앞몸통은 그 면의 반대쪽을 향하는 누운 자세",
+        "a reclining actor with posterior torso contact and the anterior torso facing away from the support"
+      ]
+    },
+    {
+      "id": "pv_profile_v_sign",
+      "owner": "photo_prompt_visual_obligations_pose_vocabulary.json",
+      "added": [
+        "검지와 중지는 벌어지고 약지와 새끼손가락은 접히며 엄지가 붙어 있는 한 손의 V",
+        "one connected hand separates the index and middle fingers while ring and little fingers fold beside an attached thumb"
+      ]
+    },
+    {
+      "id": "pv_profile_double_v",
+      "owner": "photo_prompt_visual_obligations_pose_vocabulary.json",
+      "added": [
+        "같은 인물의 두 손에서 각각 검지와 중지가 V를 만들고 별개의 손목과 팔로 이어지는 자세",
+        "two separate actor-owned V hands with index-middle splits and continuous wrists and arms"
+      ]
+    }
+  ],
+  "component_alternatives": [
+    "ne_regional_soft_volume",
+    "ne_regional_contour_transition",
+    "pv_profile_v_sign",
+    "pv_profile_double_v"
+  ],
+  "contract_corrections": [
+    {
+      "id": "composite_overwhelmed_expression",
+      "owner": "photo_prompt_visual_obligations.json",
+      "reason": "The original genre label has multiple visible variants. Small symmetric O mouth, tiny centered tongue, blush, fatigue and no-smirk were unjustified universal requirements."
+    },
+    {
+      "id": "soft_full_figure_volume",
+      "owner": "photo_prompt_visual_obligations.json",
+      "reason": "Evidence now uses the existing positive contour-relation group rather than requiring a nonvisual disclaimer; body effects are explicitly conservative."
+    },
+    {
+      "id": "bust_prominence_relation",
+      "owner": "photo_prompt_visual_obligations.json",
+      "reason": "Evidence now uses the existing positive contour-relation group rather than requiring a nonvisual disclaimer; body effects are explicitly conservative."
+    }
+  ],
+  "held_drafts": [
+    "SV11",
+    "SV13",
+    "SV14",
+    "SV22",
+    "SV23",
+    "SV25"
+  ]
+}

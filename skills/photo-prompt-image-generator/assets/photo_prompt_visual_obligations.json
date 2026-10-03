@@ -273,14 +273,12 @@
         "requires_adult_character": true
       },
       "semantics": {
-        "definition": "A simultaneous comic overwhelmed expression composed from upward or slightly asymmetric pupils, relaxed brows, a small rounded open mouth, a centered tongue tip beyond the lips, subtle blush, and a tired release.",
+        "definition": "One declared adult face simultaneously shows upward or explicitly asymmetric pupil placement, an open mouth and a tongue crossing its lip boundary; their chosen visible variants remain independent.",
         "paraphrase_examples": [
-          "우스운 멍한 표정",
-          "정신이 잠깐 풀린 표정",
-          "눈동자가 위를 향하고 혀끝을 내민 지친 홍조 표정",
-          "comic overwhelmed expression",
-          "dazed composure loss",
-          "overwhelmed bliss expression"
+          "한 성인의 얼굴에서 위쪽 또는 명시한 비대칭 눈동자 배치, 벌어진 입, 입술 밖 혀가 동시에 보이는 복합 표정",
+          "one adult face simultaneously shows upward or specified asymmetric pupils, an open mouth and a tongue beyond the lips",
+          "eyes rolled upward with a dropped open jaw and the tongue visibly crossing the lip boundary on the same adult face",
+          "upward pupils with a small rounded open mouth and an external tongue tip in the same expression"
         ],
         "component_semantics": {
           "minimum_component_groups": 2,
@@ -299,50 +297,77 @@
                 "pupils drift upward",
                 "asymmetric upward eyes",
                 "eyes rolled upward",
-                "upward eye drift"
+                "upward eye drift",
+                "both pupils sit high inside the eye openings"
               ]
             },
             {
-              "id": "rounded_open_mouth",
+              "id": "open_mouth",
               "any_terms": [
                 "둥글게 벌린 입",
-                "작은 o자 입",
+                "크게 벌어진 입",
+                "턱이 내려간 입",
                 "small rounded open mouth",
                 "round open mouth",
-                "symmetric open mouth"
+                "open mouth",
+                "dropped open jaw",
+                "jaw lowers beneath a visibly open mouth"
               ]
             },
             {
               "id": "external_tongue_tip",
               "any_terms": [
                 "혀끝이 입술 밖",
-                "혀를 살짝 내민",
+                "혀가 입술 경계를 넘",
                 "tongue tip past the lips",
                 "external tongue tip",
-                "tongue protrudes"
+                "tongue protrudes",
+                "tongue visibly crosses the outer lip boundary",
+                "tongue projects beyond the lip edge"
               ]
             }
           ]
         },
         "contrast_examples": [
-          "a contemptuous smug tongue-out taunt",
-          "ordinary eye contact with a neutral smile",
-          "an expression described only by a sensitive shorthand label"
+          "ordinary eye contact with a closed mouth",
+          "tongue entirely inside an open mouth",
+          "components assigned to separate faces",
+          "genre label without observable component realization"
         ],
         "claim_limits": [
-          "Facial configuration alone does not establish an event, sexual activity, consent, wardrobe, or a medical or psychological state.",
-          "Scene and wardrobe constraints come from the requester and governing platform policy, independently of this expression profile."
+          "The original ahegao genre term can denote a stylized depiction of sexual ecstasy. Neutral facial geometry is a partial visual projection, not a complete synonym or evidence of that event.",
+          "Brow state, mouth size, tongue position, cheek color and fatigue are independent variant choices; the label does not make one variant universally mandatory.",
+          "Facial configuration alone does not establish an event, sexual activity, consent, wardrobe, emotion, or a medical or psychological state.",
+          "Preserve the requesting user meaning and exclusions independently of the selected runtime description; forbidden labels are not erased from meaning retrieval."
+        ],
+        "visual_components": [
+          "specified upward or left-right pupil geometry",
+          "selected mouth opening",
+          "connected tongue beyond the lip boundary",
+          "all components on the same adult face simultaneously"
         ]
       },
       "concept_candidate": {
         "concept_terms": [
-          "comic overwhelmed composure loss",
-          "asymmetric upward eye drift",
-          "relaxed brows",
-          "small rounded open mouth",
-          "centered external tongue tip",
-          "subtle cheek blush",
-          "slightly fatigued release"
+          "한 성인의 얼굴에서 위쪽 또는 명시한 비대칭 눈동자 배치, 벌어진 입, 입술 밖 혀가 동시에 보이는 복합 표정",
+          "one adult face simultaneously shows upward or specified asymmetric pupils, an open mouth and a tongue beyond the lips",
+          "eyes rolled upward with a dropped open jaw and the tongue visibly crossing the lip boundary on the same adult face",
+          "upward pupils with a small rounded open mouth and an external tongue tip in the same expression",
+          "specified upward or left-right pupil geometry",
+          "selected mouth opening",
+          "connected tongue beyond the lip boundary",
+          "all components on the same adult face simultaneously"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
         ]
       },
       "runtime_expression": {
@@ -361,21 +386,17 @@
           "アヘ顔"
         ]
       },
-      "composition_instruction": "Realize the named expression through simultaneous facial components on an unmistakably adult subject: asymmetric upward eye drift, relaxed brows, a small symmetric rounded-open mouth, a centered tongue tip visibly crossing the outer lip boundary, subtle cheek blush, and a slightly fatigued release. Preserve the requester's separate event, wardrobe, and scene choices.",
+      "composition_instruction": "Show the specified eye placement, chosen mouth opening and connected external tongue simultaneously on the same declared adult face. Retain the requested mouth size, tongue placement and extent; choose brow contour and cheek color only from the frozen core or a separately accepted option.",
       "required_evidence_fields": [
         "adult_safe_context_phrase",
         "eye_configuration_phrase",
-        "relaxed_brow_phrase",
-        "rounded_open_mouth_phrase",
+        "open_mouth_phrase",
         "external_tongue_tip_phrase",
-        "subtle_blush_phrase",
-        "fatigued_release_phrase",
-        "no_smirk_phrase",
         "simultaneous_expression_phrase"
       ],
       "evidence_requirements": {
         "adult_safe_context_phrase": {
-          "min_content_words": 4,
+          "min_content_words": 3,
           "must_mention_any": [
             "adult",
             "mid-twenties"
@@ -392,24 +413,19 @@
             "upward eye drift",
             "pupils drift upward",
             "asymmetric upward",
-            "eyes rolled upward"
+            "eyes rolled upward",
+            "pupils sit high",
+            "specified asymmetric pupils"
           ]
         },
-        "relaxed_brow_phrase": {
-          "min_content_words": 2,
-          "must_mention_any": [
-            "relaxed brow",
-            "soft brow",
-            "unfurrowed brow"
-          ]
-        },
-        "rounded_open_mouth_phrase": {
+        "open_mouth_phrase": {
           "min_content_words": 3,
           "must_mention_any": [
-            "rounded-open mouth",
-            "rounded open mouth",
+            "open mouth",
+            "open jaw",
+            "mouth opening",
             "small open O",
-            "symmetric open mouth"
+            "rounded-open mouth"
           ]
         },
         "external_tongue_tip_phrase": {
@@ -418,44 +434,21 @@
             "tongue tip crosses",
             "tongue tip past",
             "external tongue tip",
-            "tongue tip outside"
-          ]
-        },
-        "subtle_blush_phrase": {
-          "min_content_words": 2,
-          "must_mention_any": [
-            "subtle cheek blush",
-            "faint blush",
-            "lightly flushed cheeks",
-            "soft facial flush"
-          ]
-        },
-        "fatigued_release_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": [
-            "slightly fatigued",
-            "tired release",
-            "spent composure",
-            "weary facial release"
-          ]
-        },
-        "no_smirk_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": [
-            "not a smirk",
-            "no contempt",
-            "without contempt",
-            "no mockery",
-            "not mocking"
+            "tongue tip outside",
+            "tongue crosses",
+            "tongue crossing",
+            "tongue projects beyond",
+            "tongue visibly crossing"
           ]
         },
         "simultaneous_expression_phrase": {
-          "min_content_words": 3,
+          "min_content_words": 4,
           "must_mention_any": [
             "simultaneously",
             "same expression",
             "coexist",
-            "at once"
+            "at once",
+            "same adult face"
           ]
         }
       },
@@ -463,45 +456,35 @@
         {
           "id": "vo_overwhelmed_adult_safe_context",
           "review_scale": "both",
-          "description": "The visible fictional subject is unmistakably adult, as required by this profile applicability condition."
+          "description": "The authored fictional adult context remains consistent with the depicted subject; visible appearance alone does not verify real age or identity."
         },
         {
           "id": "vo_overwhelmed_eye_configuration",
           "review_scale": "native",
-          "description": "The eyes visibly use the specified asymmetric upward drift rather than an ordinary glare or side-eye."
+          "description": "The same face shows the specified upward or actor-relative asymmetric pupil positions inside readable eye apertures."
         },
         {
-          "id": "vo_overwhelmed_rounded_open_mouth",
+          "id": "vo_overwhelmed_open_mouth",
           "review_scale": "native",
-          "description": "The mouth is small, symmetric, rounded, and visibly open rather than closed or crooked."
+          "description": "The mouth is visibly open with the chosen size and jaw configuration; small-O and large openings are distinct allowed variants."
         },
         {
           "id": "vo_overwhelmed_external_tongue_tip",
           "review_scale": "native",
-          "description": "A small centered tongue tip crosses the outer lip boundary and is not wholly contained inside the mouth."
-        },
-        {
-          "id": "vo_overwhelmed_blush_and_fatigue",
-          "review_scale": "both",
-          "description": "A subtle cheek blush and slightly fatigued release coexist with the eye and mouth configuration."
-        },
-        {
-          "id": "vo_overwhelmed_no_contempt_smirk",
-          "review_scale": "thumbnail",
-          "description": "The combined expression reads as comic overwhelmed composure loss, not contempt, disgust, mockery, or a one-sided smirk."
+          "description": "The tongue visibly crosses the lip boundary and continues into its own mouth with the chosen placement and extent."
         },
         {
           "id": "vo_overwhelmed_components_coexist",
           "review_scale": "both",
-          "description": "The eye, brow, open-mouth, and external-tongue components coexist in the same final frame."
+          "description": "The specified eyes, open mouth and external tongue coexist on the same adult face in the same frame; partial evidence fails and occluded components are unobservable."
         }
       ],
       "reject_substitutes": [
-        "disgust_glare_only",
-        "ordinary_side_eye",
-        "asymmetric_mocking_smirk",
+        "ordinary_eye_contact_only",
         "tongue_wholly_inside_mouth",
-        "closed_mouth_with_tongue"
+        "closed_mouth_with_tongue",
+        "components_on_different_actors",
+        "occluded_required_component"
       ]
     },
     {
@@ -7326,7 +7309,9 @@
           "몸통과 골반, 위팔과 허벅지에 둥근 살집이 연속된 성인 체형",
           "a plump adult build with rounded soft volume through torso hips upper arms and thighs",
           "여러 몸 구간의 풍부한 볼륨이 부드럽게 이어지는 성인 전신 형태",
-          "a fleshy full figure with continuous soft contours across several torso and limb regions"
+          "a fleshy full figure with continuous soft contours across several torso and limb regions",
+          "성인 위팔과 몸통, 골반과 허벅지의 둥근 양감이 한 시점에서 연속되고 허리 경계도 읽히는 체형",
+          "continuous rounded soft volume across adult upper arms torso hips and thighs with a distinct readable waist contour"
         ],
         "component_semantics": {
           "minimum_component_groups": 4,
@@ -7379,6 +7364,12 @@
         "claim_limits": [
           "The visible volume does not establish clothing size, body weight, health, attractiveness, sexual availability, or personal value.",
           "A specific waist silhouette is a separate request-owned dimension."
+        ],
+        "visual_components": [
+          "adult torso arms hips and thighs remain readable",
+          "substantial continuous soft torso volume",
+          "full upper-arm and thigh volume",
+          "torso and limb volumes remain comparable across one coherent view"
         ]
       },
       "concept_candidate": {
@@ -7391,6 +7382,16 @@
           "soft torso contour",
           "soft limb contour",
           "multi-region continuity"
+        ],
+        "affected_dimensions": [
+          "body_geometry"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body"
+          }
         ]
       },
       "runtime_expression": {
@@ -7439,8 +7440,8 @@
         "neutral_separation_phrase": {
           "min_content_words": 5,
           "must_mention_any": [
-            "waist shape clothing size and weight declared separately",
-            "no health attractiveness or sexual inference"
+            "torso and limb volumes remain comparable across one coherent view",
+            "visible waist contour remains distinct within the continuous soft volume"
           ]
         }
       },
@@ -7856,7 +7857,9 @@
           "같은 성인의 양쪽 가슴 볼륨이 흉곽보다 앞과 옆으로 나와 자연 허리와 비교되는 형태",
           "a bust-prominent adult torso with bilateral breast volume projecting from the ribcage beside the natural waist",
           "양측 가슴의 돌출을 흉곽 바탕과 허리 관계 안에서 함께 읽는 성인 실루엣",
-          "bilateral breast prominence shown with coherent front and side projection relative to ribcage and waist"
+          "bilateral breast prominence shown with coherent front and side projection relative to ribcage and waist",
+          "같은 성인의 양측 가슴이 흉곽 바탕과 자연 허리를 기준으로 앞과 옆으로 두드러지는 관계",
+          "both adult breast contours project forward and laterally relative to the same ribcage and natural waist"
         ],
         "component_semantics": {
           "minimum_component_groups": 4,
@@ -7909,6 +7912,12 @@
         "claim_limits": [
           "A regional volume does not establish clothing size, attractiveness, fertility, sexual availability, or personal value.",
           "The whole-body silhouette and waist-to-hip relationship remain separate dimensions."
+        ],
+        "visual_components": [
+          "adult bilateral upper torso remains visible",
+          "ribcage breadth and depth remain the reference",
+          "bilateral bust volume projects from the ribcage",
+          "ribcage bust waist and hip contours remain separately readable"
         ]
       },
       "concept_candidate": {
@@ -7921,6 +7930,16 @@
           "neutral regional geometry",
           "ribcage comparison",
           "natural waist reference"
+        ],
+        "affected_dimensions": [
+          "body_geometry"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body"
+          }
         ]
       },
       "runtime_expression": {
@@ -7969,8 +7988,8 @@
         "whole_body_separation_phrase": {
           "min_content_words": 5,
           "must_mention_any": [
-            "waist hips size and attractiveness declared separately",
-            "no fertility or sexual-availability inference"
+            "ribcage bust waist and hip contours remain separately readable",
+            "the regional projection stays anchored to visible ribcage and natural waist landmarks"
           ]
         }
       },

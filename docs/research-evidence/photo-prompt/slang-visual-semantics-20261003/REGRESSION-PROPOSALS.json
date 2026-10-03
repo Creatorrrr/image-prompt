@@ -1,0 +1,1629 @@
+{
+  "schema_version": "slang-regression-proposals/research-v1",
+  "checked_on": "2026-10-03",
+  "notes": [
+    "All cases are proposed and unexecuted. Current diagnostic probes are recorded separately in CURRENT-DATA-AUDIT.json.",
+    "Cases are holdouts and must not be copied into indexed alias/paraphrase fields.",
+    "Some requests are lexical research rather than rendering prompts. No prohibited or erotic scene generation is required to test them."
+  ],
+  "cases": [
+    {
+      "id": "RG001",
+      "category": "face_scope",
+      "request_ko": "용어 조사: 아헤가오의 용례와 현재 표정 계약을 비교한다.",
+      "semantic_unit_ids": [
+        "U007",
+        "U008"
+      ],
+      "candidate_draft_ids": [
+        "SV07",
+        "SV08"
+      ],
+      "expected_behavior": "사건 명칭을 보존하고 현재 작은 O자·작은 중앙 혀끝·피로 필수와 넓은 용례의 차이를 보고한다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG002",
+      "category": "face_scope",
+      "request_ko": "비성적 성인 표정 연구: 크게 벌린 입을 유지한다.",
+      "semantic_unit_ids": [
+        "U007"
+      ],
+      "candidate_draft_ids": [
+        "SV07"
+      ],
+      "expected_behavior": "작은 O자 입으로 대체하지 않고 명시된 큰 개구를 보존한다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG003",
+      "category": "face_scope",
+      "request_ko": "비성적 성인 표정 연구: 입술 사이 작은 틈만 있다.",
+      "semantic_unit_ids": [
+        "U006"
+      ],
+      "candidate_draft_ids": [
+        "SV06"
+      ],
+      "expected_behavior": "큰 턱 하강이나 혀 돌출을 추가하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG004",
+      "category": "face_scope",
+      "request_ko": "비성적 성인 표정 연구: 눈 안의 동공을 위로 둔다. 고개는 정면이다.",
+      "semantic_unit_ids": [
+        "U001"
+      ],
+      "candidate_draft_ids": [
+        "SV01"
+      ],
+      "expected_behavior": "고개 각도와 동공 배치를 분리한다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG005",
+      "category": "face_scope",
+      "request_ko": "비성적 성인 표정 연구: 고개를 든 채 동공은 각 눈 중앙이다.",
+      "semantic_unit_ids": [
+        "U001"
+      ],
+      "candidate_draft_ids": [
+        "SV01"
+      ],
+      "expected_behavior": "고개만 위를 향한 상태를 상방 동공 PASS로 세지 않는다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG006",
+      "category": "face_scope",
+      "request_ko": "비성적 성인 표정 연구: 양눈 홍채가 코 쪽으로 치우친다.",
+      "semantic_unit_ids": [
+        "U002"
+      ],
+      "candidate_draft_ids": [
+        "SV02"
+      ],
+      "expected_behavior": "안쪽 배치를 상방 시선과 구분한다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG007",
+      "category": "face_scope",
+      "request_ko": "비성적 성인 표정 연구: 왼쪽과 오른쪽 동공 위치 차이를 지정한다.",
+      "semantic_unit_ids": [
+        "U003"
+      ],
+      "candidate_draft_ids": [
+        "SV03"
+      ],
+      "expected_behavior": "같은 얼굴의 좌우 차이를 확인하며 고개 회전 착시를 분리한다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG008",
+      "category": "face_scope",
+      "request_ko": "성인 배우의 반쯤 열린 눈. 입은 닫혀 있다.",
+      "semantic_unit_ids": [
+        "U004"
+      ],
+      "candidate_draft_ids": [
+        "SV04"
+      ],
+      "expected_behavior": "부분 개안만 적용하고 입·혀·졸음·쾌락을 추가하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG009",
+      "category": "face_scope",
+      "request_ko": "성인 배우의 눈이 완전히 닫혀 있다.",
+      "semantic_unit_ids": [
+        "U004"
+      ],
+      "candidate_draft_ids": [
+        "SV04"
+      ],
+      "expected_behavior": "부분 개안 필수 증거로 인정하지 않는다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG010",
+      "category": "face_scope",
+      "request_ko": "성인 배우의 원래 작은 눈 형태를 유지하고 눈꺼풀을 더 좁히지 않는다.",
+      "semantic_unit_ids": [
+        "U004"
+      ],
+      "candidate_draft_ids": [
+        "SV04"
+      ],
+      "expected_behavior": "bm_eye_aperture 구조와 현재 눈꺼풀 상태를 분리한다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG011",
+      "category": "face_scope",
+      "request_ko": "비성적 성인 얼굴 연구: 혀는 입 안에만 보인다.",
+      "semantic_unit_ids": [
+        "U008"
+      ],
+      "candidate_draft_ids": [
+        "SV08"
+      ],
+      "expected_behavior": "입술 경계를 넘는 혀의 증거로 인정하지 않는다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG012",
+      "category": "face_scope",
+      "request_ko": "비성적 성인 얼굴 연구: 혀가 입술 경계를 넘고 중앙보다 왼쪽에 보인다.",
+      "semantic_unit_ids": [
+        "U008"
+      ],
+      "candidate_draft_ids": [
+        "SV08"
+      ],
+      "expected_behavior": "작은 중앙 혀끝으로 수정하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG013",
+      "category": "face_scope",
+      "request_ko": "성인 배우가 우스운 멍한 표정을 한다.",
+      "semantic_unit_ids": [
+        "U034"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "이 일반적 표현만으로 아헤가오 전체·질환·특정 사건의 필수 계약을 활성화하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG014",
+      "category": "face_scope",
+      "request_ko": "성인 배우의 입꼬리는 모였고 입술이 앞으로 나온다.",
+      "semantic_unit_ids": [
+        "U006",
+        "U007"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "현재 입술 돌출을 구조적 입술 두께나 큰 개구로 대체하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG015",
+      "category": "face_scope",
+      "request_ko": "성인 얼굴에 붉은 조명이 비친다. 피부색 변화는 요구하지 않는다.",
+      "semantic_unit_ids": [
+        "U009"
+      ],
+      "candidate_draft_ids": [
+        "SV09"
+      ],
+      "expected_behavior": "조명 붉은색과 볼 표면의 국소 색 주장을 분리한다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG016",
+      "category": "face_scope",
+      "request_ko": "토로가오라는 용어의 정의만 설명한다.",
+      "semantic_unit_ids": [
+        "U004",
+        "U034"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "반개안·큰 입·혀·동의를 모두 필수화하지 않는다. 전체 얼굴어와 토로메 눈 어휘를 구분한다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG017",
+      "category": "hands_relation",
+      "request_ko": "성인 배우가 양손으로 V를 한다.",
+      "semantic_unit_ids": [
+        "U010"
+      ],
+      "candidate_draft_ids": [
+        "SV10"
+      ],
+      "expected_behavior": "검지·중지 V 두 개, 두 손목·팔의 같은 인물 연결을 확인한다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG018",
+      "category": "hands_relation",
+      "request_ko": "성인 배우가 한 손만 V를 하고 다른 손은 주먹이다.",
+      "semantic_unit_ids": [
+        "U010"
+      ],
+      "candidate_draft_ids": [
+        "SV10"
+      ],
+      "expected_behavior": "double V의 완전한 증거로 인정하지 않는다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG019",
+      "category": "hands_relation",
+      "request_ko": "성인 배우 둘이 한 손씩 V를 한다.",
+      "semantic_unit_ids": [
+        "U010",
+        "U011"
+      ],
+      "candidate_draft_ids": [
+        "SV10",
+        "SV11"
+      ],
+      "expected_behavior": "한 인물의 양손 V와 구분한다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG020",
+      "category": "hands_relation",
+      "request_ko": "같은 성인 배우의 표정과 양손 V를 한 장면에 보인다.",
+      "semantic_unit_ids": [
+        "U011"
+      ],
+      "candidate_draft_ids": [
+        "SV11"
+      ],
+      "expected_behavior": "얼굴·양손·동일 소유·동시성을 모두 검사한다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG021",
+      "category": "hands_relation",
+      "request_ko": "같은 성인 배우의 얼굴은 보이지만 한 손이 화면 밖이다.",
+      "semantic_unit_ids": [
+        "U011"
+      ],
+      "candidate_draft_ids": [
+        "SV11"
+      ],
+      "expected_behavior": "필수 양손 관계는 UNOBSERVABLE이며 부분 PASS하지 않는다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG022",
+      "category": "hands_relation",
+      "request_ko": "성인 배우가 양손 V를 했지만 한 손목이 다른 인물 팔로 이어진다.",
+      "semantic_unit_ids": [
+        "U010",
+        "U011"
+      ],
+      "candidate_draft_ids": [
+        "SV10",
+        "SV11"
+      ],
+      "expected_behavior": "잘못된 소유 관계로 FAIL한다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG023",
+      "category": "eye_symbol",
+      "request_ko": "일러스트 성인의 동공 영역에 하트 문양을 넣는다.",
+      "semantic_unit_ids": [
+        "U012"
+      ],
+      "candidate_draft_ids": [
+        "SV12"
+      ],
+      "expected_behavior": "동공 내부 문양과 눈 전체 치환을 구분한다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG024",
+      "category": "eye_symbol",
+      "request_ko": "성인 캐릭터 얼굴 옆에 떠 있는 하트가 있다.",
+      "semantic_unit_ids": [
+        "U012"
+      ],
+      "candidate_draft_ids": [
+        "SV12"
+      ],
+      "expected_behavior": "하트동공 증거로 인정하지 않는다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG025",
+      "category": "eye_symbol",
+      "request_ko": "성인 캐릭터의 양눈을 하트 기호로 표현한 그래픽이다.",
+      "semantic_unit_ids": [
+        "U013"
+      ],
+      "candidate_draft_ids": [
+        "SV13"
+      ],
+      "expected_behavior": "눈 전체 기호 표현을 별도 매체 계약으로 처리한다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG026",
+      "category": "eye_symbol",
+      "request_ko": "실사 성인 모델의 눈에 하트처럼 보이는 반사광이 있다.",
+      "semantic_unit_ids": [
+        "U014"
+      ],
+      "candidate_draft_ids": [
+        "SV14"
+      ],
+      "expected_behavior": "반사광을 실제 동공 형태나 후가공 이력으로 확정하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG027",
+      "category": "eye_symbol",
+      "request_ko": "성인 모델의 하트 목걸이만 보인다.",
+      "semantic_unit_ids": [
+        "U012",
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "눈 문양 후보·의무를 활성화하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG028",
+      "category": "eye_symbol",
+      "request_ko": "오른쪽 눈만 하트 문양이며 왼쪽 눈은 기존 상태를 유지한다.",
+      "semantic_unit_ids": [
+        "U012"
+      ],
+      "candidate_draft_ids": [
+        "SV12"
+      ],
+      "expected_behavior": "양눈 하트로 확대하지 않고 좌우 개수 잠금을 지킨다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG029",
+      "category": "pose_support",
+      "request_ko": "성인 모델이 발을 넓게 벌리고 서 있다.",
+      "semantic_unit_ids": [
+        "U016"
+      ],
+      "candidate_draft_ids": [
+        "SV16"
+      ],
+      "expected_behavior": "접지 발 폭과 무릎 벌림·앉은 M형을 분리한다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG030",
+      "category": "pose_support",
+      "request_ko": "성인 모델이 의자에 앉아 무릎을 벌리고 양발은 접지한다.",
+      "semantic_unit_ids": [
+        "U015"
+      ],
+      "candidate_draft_ids": [
+        "SV15"
+      ],
+      "expected_behavior": "골반·좌면 접촉, 무릎 간격, 발 상태를 모두 보존한다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG031",
+      "category": "pose_support",
+      "request_ko": "성인 모델은 양발이 떨어져 있지만 무릎은 붙어 있다.",
+      "semantic_unit_ids": [
+        "U015",
+        "U016"
+      ],
+      "candidate_draft_ids": [
+        "SV15",
+        "SV16"
+      ],
+      "expected_behavior": "벌린 무릎 관계 PASS로 인정하지 않는다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG032",
+      "category": "pose_support",
+      "request_ko": "성인 모델의 굽힌 양다리가 지정한 정면에서 M형으로 읽힌다.",
+      "semantic_unit_ids": [
+        "U017"
+      ],
+      "candidate_draft_ids": [
+        "SV17"
+      ],
+      "expected_behavior": "양다리 연속·무릎 굽힘·시점·지지점을 검사하고 보편 각도는 추가하지 않는다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG033",
+      "category": "pose_support",
+      "request_ko": "성인 모델의 M형 다리 요청이나 카메라는 고정된 옆면이다.",
+      "semantic_unit_ids": [
+        "U017"
+      ],
+      "candidate_draft_ids": [
+        "SV17"
+      ],
+      "expected_behavior": "카메라를 바꾸지 않고 필요한 관계가 보이지 않으면 UNOBSERVABLE 또는 후보 보류한다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": {
+        "dimension": "camera",
+        "property": "camera.view"
+      },
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG034",
+      "category": "pose_support",
+      "request_ko": "성인 모델이 대자로 누웠다.",
+      "semantic_unit_ids": [
+        "U018"
+      ],
+      "candidate_draft_ids": [
+        "SV18"
+      ],
+      "expected_behavior": "팔·다리 네 개와 같은 몸통·지지 관계를 검사하며 구속·노출·사건을 추가하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG035",
+      "category": "pose_support",
+      "request_ko": "성인 모델이 다리만 벌리고 팔은 모았다.",
+      "semantic_unit_ids": [
+        "U018"
+      ],
+      "candidate_draft_ids": [
+        "SV18"
+      ],
+      "expected_behavior": "대자 전신 관계의 완전한 증거로 인정하지 않는다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG036",
+      "category": "pose_support",
+      "request_ko": "성인 모델이 의자 구조 양쪽에 다리를 두고 걸터앉는다.",
+      "semantic_unit_ids": [
+        "U015"
+      ],
+      "candidate_draft_ids": [
+        "SV28"
+      ],
+      "expected_behavior": "명시된 의자·좌면 관계가 있을 때 기존 chair-straddle을 재사용한다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG037",
+      "category": "pose_support",
+      "request_ko": "성인 모델의 다리 벌림 자세. 의자는 없다.",
+      "semantic_unit_ids": [
+        "U015"
+      ],
+      "candidate_draft_ids": [
+        "SV28"
+      ],
+      "expected_behavior": "chair-straddle을 적용해 의자나 접촉 관계를 추가하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG038",
+      "category": "body_geometry",
+      "request_ko": "육덕진 성인 체형을 묘사한다.",
+      "semantic_unit_ids": [
+        "U019"
+      ],
+      "candidate_draft_ids": [
+        "SV19"
+      ],
+      "expected_behavior": "지정한 여러 영역의 부드러운 양감을 검토하며 큰 가슴·잘록한 허리를 자동 강제하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG039",
+      "category": "body_geometry",
+      "request_ko": "六德이라는 유교 용어를 설명한다.",
+      "semantic_unit_ids": [
+        "U019",
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "육덕 체형 필수 계약을 활성화하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG040",
+      "category": "body_geometry",
+      "request_ko": "성인 인물의 복부 앞쪽이 둥글게 돌출된다. 원인은 지정하지 않는다.",
+      "semantic_unit_ids": [
+        "U020"
+      ],
+      "candidate_draft_ids": [
+        "SV20"
+      ],
+      "expected_behavior": "복부 형태만 기록하며 임신·체중·질환을 추정하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG041",
+      "category": "body_geometry",
+      "request_ko": "성인 인물의 옷만 부풀어 있고 복부 형태는 가려졌다.",
+      "semantic_unit_ids": [
+        "U020"
+      ],
+      "candidate_draft_ids": [
+        "SV20"
+      ],
+      "expected_behavior": "실제 복부 돌출 증거는 UNOBSERVABLE로 처리한다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG042",
+      "category": "body_geometry",
+      "request_ko": "용어 설명: boobs는 가슴 부위를 지시한다.",
+      "semantic_unit_ids": [
+        "U021"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "크기·노출·모양 수식이 없다면 신체 크기 후보를 추가하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG043",
+      "category": "body_geometry",
+      "request_ko": "용어 설명: booty는 신체 부위와 전리품 뜻을 문맥으로 나눈다.",
+      "semantic_unit_ids": [
+        "U022"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "신체 부위 뜻에도 큰 크기·노출을 자동 추가하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG044",
+      "category": "body_geometry",
+      "request_ko": "비교 자료에 이미 있는 성인 A/B의 가슴 외관이 다르다.",
+      "semantic_unit_ids": [
+        "U024"
+      ],
+      "candidate_draft_ids": [
+        "SV22"
+      ],
+      "expected_behavior": "두 대상의 겉보기 비교를 한 인물 좌우 비대칭으로 대체하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG045",
+      "category": "body_geometry",
+      "request_ko": "한 성인 인물의 좌우 가슴 모양 차이를 명시한다.",
+      "semantic_unit_ids": [
+        "U024"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "한 인물의 양측 비대칭이며 두 인물 비교를 추가하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG046",
+      "category": "body_geometry",
+      "request_ko": "큰 크기를 뜻하는 calcium cannons 용례를 어휘적으로 설명한다.",
+      "semantic_unit_ids": [
+        "U023",
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "상대 크기 어휘만 기록하고 유즙·의학·무기·고정 수치를 추가하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG047",
+      "category": "temporal_and_material",
+      "request_ko": "슴부먼트의 용례를 한 정지 이미지로 평가한다.",
+      "semantic_unit_ids": [
+        "U025"
+      ],
+      "candidate_draft_ids": [
+        "SV23"
+      ],
+      "expected_behavior": "정지 이미지의 실제 형태와 운동 주장 사이에 증거 한계를 기록한다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG048",
+      "category": "temporal_and_material",
+      "request_ko": "의복 패딩으로 외관 윤곽이 바뀐 성인 의상 연구다.",
+      "semantic_unit_ids": [
+        "U026"
+      ],
+      "candidate_draft_ids": [
+        "SV24"
+      ],
+      "expected_behavior": "의복 층 변화로 처리하고 몸 자체 크기를 바꾸지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG049",
+      "category": "temporal_and_material",
+      "request_ko": "슴부조작이라는 용어를 조사한다.",
+      "semantic_unit_ids": [
+        "U026",
+        "U027"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "패딩·의복 용례를 포함하며 항상 포토샵 전후라고 단정하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG050",
+      "category": "temporal_and_material",
+      "request_ko": "가공 이력이 없는 단일 사진에서 보정 전후를 추정한다.",
+      "semantic_unit_ids": [
+        "U027"
+      ],
+      "candidate_draft_ids": [
+        "SV25"
+      ],
+      "expected_behavior": "전후 가공의 확정 결과를 제공하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG051",
+      "category": "temporal_and_material",
+      "request_ko": "하복부 피부의 추상 문양을 배꼽 아래 지정 위치에 둔다.",
+      "semantic_unit_ids": [
+        "U028"
+      ],
+      "candidate_draft_ids": [
+        "SV26"
+      ],
+      "expected_behavior": "피부 표면·같은 몸·배꼽 상대 위치·요청 문양을 검사한다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG052",
+      "category": "temporal_and_material",
+      "request_ko": "하복부를 덮은 옷에 문양이 인쇄되어 있다.",
+      "semantic_unit_ids": [
+        "U028",
+        "U029"
+      ],
+      "candidate_draft_ids": [
+        "SV26"
+      ],
+      "expected_behavior": "피부 타투 증거로 인정하지 않는다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG053",
+      "category": "temporal_and_material",
+      "request_ko": "모형용 INMON 전사 데칼 제품을 설명한다.",
+      "semantic_unit_ids": [
+        "U028",
+        "U029"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "모형 재질과 실제 피부 문양을 분리한다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG054",
+      "category": "temporal_and_material",
+      "request_ko": "인몬 명칭만 있고 문양의 하트·대칭·발광은 지정하지 않는다.",
+      "semantic_unit_ids": [
+        "U029"
+      ],
+      "candidate_draft_ids": [
+        "SV27"
+      ],
+      "expected_behavior": "고정 문양 토폴로지를 필수화하지 않고 세부는 선택·보류한다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG055",
+      "category": "polysemy",
+      "request_ko": "테이블 위의 melons를 음식 사진으로 만든다.",
+      "semantic_unit_ids": [
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "과일을 신체 부위로 바꾸지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG056",
+      "category": "polysemy",
+      "request_ko": "booba라는 이름의 버블티 음료를 묘사한다.",
+      "semantic_unit_ids": [
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "음료 문맥에서 가슴 후보를 활성화하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG057",
+      "category": "polysemy",
+      "request_ko": "빵집 진열대에 buns가 있다.",
+      "semantic_unit_ids": [
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "빵 문맥을 신체 후보로 바꾸지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG058",
+      "category": "polysemy",
+      "request_ko": "성인 인물의 space buns 헤어스타일이다.",
+      "semantic_unit_ids": [
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "머리 모양을 엉덩이 체형으로 처리하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG059",
+      "category": "polysemy",
+      "request_ko": "전리품을 뜻하는 booty가 담긴 상자다.",
+      "semantic_unit_ids": [
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "신체 후보를 활성화하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG060",
+      "category": "polysemy",
+      "request_ko": "bazookas가 진열된 군사 박물관이다.",
+      "semantic_unit_ids": [
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "무기를 신체 크기 비유로 바꾸지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG061",
+      "category": "polysemy",
+      "request_ko": "성인 Arsenal gooner가 팀 목도리를 한다.",
+      "semantic_unit_ids": [
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "축구 팬 뜻을 보존하고 성적 행위를 추가하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG062",
+      "category": "polysemy",
+      "request_ko": "a doable assignment라는 업무 문장이다.",
+      "semantic_unit_ids": [
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "실행 가능성 뜻을 매력 평가·인물 후보로 바꾸지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG063",
+      "category": "polysemy",
+      "request_ko": "dong 지폐를 보여 주는 환전 안내다.",
+      "semantic_unit_ids": [
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "통화를 해부학 부위로 바꾸지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG064",
+      "category": "polysemy",
+      "request_ko": "오곡으로 만든 식품을 설명한다.",
+      "semantic_unit_ids": [
+        "U032",
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "곡식 의미를 소리·성적 반응으로 바꾸지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG065",
+      "category": "polysemy",
+      "request_ko": "못을 박다, 나사를 screw로 돌리는 작업이다.",
+      "semantic_unit_ids": [
+        "U030",
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "공구 동사를 성적 사건으로 바꾸지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG066",
+      "category": "polysemy",
+      "request_ko": "조교가 대학 실습을 돕는다.",
+      "semantic_unit_ids": [
+        "U035",
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "교육 보조 역할을 성적 훈련·복종 장면으로 바꾸지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG067",
+      "category": "context_only",
+      "request_ko": "bimbo라는 단어의 비하 용법을 언어적으로 조사한다.",
+      "semantic_unit_ids": [
+        "U034",
+        "U035"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "금발·큰 가슴·지능·표정을 인물의 확정 속성으로 설치하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG068",
+      "category": "context_only",
+      "request_ko": "himbo라는 평가어를 설명한다.",
+      "semantic_unit_ids": [
+        "U034",
+        "U035"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "근육·정해진 복장·실제 지능을 자동 부여하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG069",
+      "category": "context_only",
+      "request_ko": "MILF·DILF라는 매력 평가어를 설명한다.",
+      "semantic_unit_ids": [
+        "U034",
+        "U035"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "부모 이력을 픽셀로 확정하거나 고정 신체·나이 수치를 창작하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG070",
+      "category": "context_only",
+      "request_ko": "thirst trap의 사진·게시물 용례를 설명한다.",
+      "semantic_unit_ids": [
+        "U034"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "관심 유도 기능을 고정 포즈·노출·실제 개인 의도로 치환하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG071",
+      "category": "context_only",
+      "request_ko": "임최몸의 화자 평가를 연구한다.",
+      "semantic_unit_ids": [
+        "U034",
+        "U035"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "체형 수치·생식 적합성·임신 가능성 진단으로 만들지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG072",
+      "category": "context_only",
+      "request_ko": "NTR과 네토리의 서사 시점 차이를 조사한다.",
+      "semantic_unit_ids": [
+        "U030",
+        "U035"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "관계·시점 정의를 보존하고 자동 세 인물·눈물·행위를 추가하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG073",
+      "category": "context_only",
+      "request_ko": "헤으응이라는 텍스트 반응을 연구한다.",
+      "semantic_unit_ids": [
+        "U032"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "특정 입·혀 모양의 필수 의무로 바꾸지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG074",
+      "category": "context_only",
+      "request_ko": "암컷타락의 변화 전후 서사 구조를 조사한다.",
+      "semantic_unit_ids": [
+        "U031",
+        "U035"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "이전 인물의 성격·신체·의복·동의를 한 장에서 복원하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG075",
+      "category": "context_only",
+      "request_ko": "ㅇㅆ라는 약어의 의미를 맥락 없이 제시한다.",
+      "semantic_unit_ids": [
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "단일 의미·장면·외형으로 자동 활성화하지 않고 용례 확인 대상으로 남긴다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG076",
+      "category": "context_only",
+      "request_ko": "메스이키와 이키가오를 같은 시각 정의로 묶으려 한다.",
+      "semantic_unit_ids": [
+        "U030",
+        "U034",
+        "U035"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "반응·수식 맥락과 사건 명칭을 구분하고 같은 필수 얼굴로 단정하지 않는다.",
+      "verification_layer": "core_and_retrieval",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG077",
+      "category": "locks_and_budget",
+      "request_ko": "양손 V 후보를 선택하되 기존 손 모양은 잠겨 있다.",
+      "semantic_unit_ids": [
+        "U010"
+      ],
+      "candidate_draft_ids": [
+        "SV10"
+      ],
+      "expected_behavior": "pose가 열려도 겹치는 body.hand_configuration 잠금이 후보를 차단한다.",
+      "verification_layer": "property_lock",
+      "core_or_lock_precondition": {
+        "dimension": "pose",
+        "target": "main_subject",
+        "property": "body.hand_configuration"
+      },
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG078",
+      "category": "locks_and_budget",
+      "request_ko": "부위 양감 후보를 선택하되 복부 형태가 잠겨 있다.",
+      "semantic_unit_ids": [
+        "U019"
+      ],
+      "candidate_draft_ids": [
+        "SV19"
+      ],
+      "expected_behavior": "broad body 효과는 body.abdomen 잠금과 겹치므로 선택을 차단한다.",
+      "verification_layer": "property_lock",
+      "core_or_lock_precondition": {
+        "dimension": "body_geometry",
+        "target": "main_subject",
+        "property": "body.abdomen"
+      },
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG079",
+      "category": "locks_and_budget",
+      "request_ko": "얼굴·양손 결합 후보를 expression 슬롯에 넣으려 한다.",
+      "semantic_unit_ids": [
+        "U011"
+      ],
+      "candidate_draft_ids": [
+        "SV11"
+      ],
+      "expected_behavior": "expression 전용 정책에 pose 효과를 숨기지 않고 보류한다.",
+      "verification_layer": "slot_policy",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG080",
+      "category": "locks_and_budget",
+      "request_ko": "단일 인물 코어에 슴부격차 비교 후보를 넣으려 한다.",
+      "semantic_unit_ids": [
+        "U024"
+      ],
+      "candidate_draft_ids": [
+        "SV22"
+      ],
+      "expected_behavior": "두 번째 인물을 만들지 않고 해당 후보를 보류한다.",
+      "verification_layer": "property_lock",
+      "core_or_lock_precondition": {
+        "dimension": "count",
+        "target": "scene",
+        "property": "subject_count"
+      },
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG081",
+      "category": "locks_and_budget",
+      "request_ko": "하트동공 후보의 target이 지정 인물이 아닌 배경 인물이다.",
+      "semantic_unit_ids": [
+        "U012"
+      ],
+      "candidate_draft_ids": [
+        "SV12"
+      ],
+      "expected_behavior": "target 불일치로 후보를 채택하지 않는다.",
+      "verification_layer": "target_binding",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG082",
+      "category": "locks_and_budget",
+      "request_ko": "BM25F 검색이 토로가오 관련 얼굴 후보를 찾았다.",
+      "semantic_unit_ids": [
+        "U004",
+        "U034"
+      ],
+      "candidate_draft_ids": [
+        "SV04"
+      ],
+      "expected_behavior": "검색 적중만으로 필수 의미·동의·사건을 추가하지 않는다.",
+      "verification_layer": "retrieval_authority",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG083",
+      "category": "locks_and_budget",
+      "request_ko": "임베딩 검색에서 몸 부위 후보가 높은 순위다.",
+      "semantic_unit_ids": [
+        "U019",
+        "U020"
+      ],
+      "candidate_draft_ids": [
+        "SV19",
+        "SV20"
+      ],
+      "expected_behavior": "advisory 노출과 채택을 분리하고 대상·열린 속성·배제·증거를 재검사한다.",
+      "verification_layer": "retrieval_authority",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG084",
+      "category": "locks_and_budget",
+      "request_ko": "원문에서 아헤가오를 제외한다고 명시한다.",
+      "semantic_unit_ids": [
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "정규화한 excluded 의미와 요청 배제 목록을 보존해 긍정 계약으로 활성화하지 않는다.",
+      "verification_layer": "normalized_envelope",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG085",
+      "category": "locks_and_budget",
+      "request_ko": "후보가 각 슬롯과 팩에 매우 많이 적중한다.",
+      "semantic_unit_ids": [],
+      "candidate_draft_ids": [],
+      "expected_behavior": "현재 core4·support2·total64 상한을 지키고 중복·부적합 후보는 전부 거절할 수 있다.",
+      "verification_layer": "v6_pack_budget",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG086",
+      "category": "locks_and_budget",
+      "request_ko": "하복부 피부 문양 요청에 의복 범위와 crop이 잠겨 있다.",
+      "semantic_unit_ids": [
+        "U028"
+      ],
+      "candidate_draft_ids": [
+        "SV26"
+      ],
+      "expected_behavior": "의복이나 crop을 바꾸지 않고 가려진 필수 문양은 UNOBSERVABLE/보류로 기록한다.",
+      "verification_layer": "native_pixels",
+      "core_or_lock_precondition": {
+        "dimensions": [
+          "appearance",
+          "framing"
+        ],
+        "properties": [
+          "wardrobe.coverage",
+          "framing.crop"
+        ]
+      },
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "Check all named components on the same declared actor in original pixels. partial_is_fail; occluded required evidence is UNOBSERVABLE."
+    },
+    {
+      "id": "RG087",
+      "category": "provenance",
+      "request_ko": "토로가오 정의의 접근 실패 페이지를 근거로 exact alias를 추가한다.",
+      "semantic_unit_ids": [
+        "U036"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "접근 실패는 뜻이 없다는 근거도 동치 근거도 아니므로 exact 승격하지 않는다.",
+      "verification_layer": "source_audit",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG088",
+      "category": "provenance",
+      "request_ko": "영어 ahegao 출처를 한국어 아헤가오 철자의 직접 검증으로 표기한다.",
+      "semantic_unit_ids": [],
+      "candidate_draft_ids": [],
+      "expected_behavior": "원어 근거와 음차·번역 매핑 검토를 구분한다.",
+      "verification_layer": "source_audit",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG089",
+      "category": "provenance",
+      "request_ko": "한 커뮤니티 댓글로 모든 임최몸 사용자의 체형 정의를 일반화한다.",
+      "semantic_unit_ids": [
+        "U034"
+      ],
+      "candidate_draft_ids": [],
+      "expected_behavior": "해당 실제 용례만 기록하고 빈도·대표성·정량 형상 주장으로 확대하지 않는다.",
+      "verification_layer": "source_audit",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG090",
+      "category": "provenance",
+      "request_ko": "연구 JSON을 runtime extension으로 곧바로 복사한다.",
+      "semantic_unit_ids": [],
+      "candidate_draft_ids": [],
+      "expected_behavior": "research schema는 수입하지 않는다. 기존 owner·slot·property·lock을 검토하고 authored schema로 별도 작성한다.",
+      "verification_layer": "promotion_boundary",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG091",
+      "category": "provenance",
+      "request_ko": "후보 노출과 프롬프트 검사가 통과했으므로 이미지를 성공으로 판정한다.",
+      "semantic_unit_ids": [],
+      "candidate_draft_ids": [],
+      "expected_behavior": "프롬프트·네이티브 픽셀·서비스 차단·사용자 수용을 각각 별도 결과로 기록한다.",
+      "verification_layer": "evidence_layers",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    },
+    {
+      "id": "RG092",
+      "category": "provenance",
+      "request_ko": "회귀 예시를 검색 paraphrase에도 넣어 평가한다.",
+      "semantic_unit_ids": [],
+      "candidate_draft_ids": [],
+      "expected_behavior": "holdout을 인덱스에서 제외해 검색 누수를 막는다.",
+      "verification_layer": "holdout_leakage",
+      "core_or_lock_precondition": null,
+      "status": "PROPOSED_NOT_RUN",
+      "is_holdout": true,
+      "export_to_search_index": false,
+      "native_pixel_criteria": "No native-pixel result is claimed by this case."
+    }
+  ]
+}
