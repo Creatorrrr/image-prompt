@@ -6,9 +6,79 @@ Unresolved ownership stays unresolved; projection never creates a property lock.
 from __future__ import annotations
 
 import re
+from photo_camera_clauses import bounded_camera_clauses
 
 
 CAMERA_AXES = ("direction", "height")
+AUTHORING_MARKER = "camera_axis_review_v1"
+
+
+def camera_authoring_declaration(core: dict, *, required: bool = False) -> dict | None:
+    """Validate declarations, literal binding and existing locks, not semantics.
+
+    This uses the existing assertion/anchor wire. A partial-camera handoff is
+    advisory; its requester duties remain mandatory property anchors. Reviewing
+    every axis makes omission visible, but code cannot prove an author correctly
+    understood a request or attributed the capture owner.
+    """
+    rows = [a for a in core.get("semantic_assertions") or []
+            if a.get("dimension") == "camera" and "camera_axis_review" in (a.get("axes") or {})]
+    if not rows:
+        if required:
+            raise ValueError("new camera authoring requires a separate direction/height declaration")
+        return None
+    if len(rows) != 1:
+        raise ValueError("camera authoring requires exactly one axis declaration")
+    row = rows[0]
+    axes, evidence = row.get("axes") or {}, row.get("evidence") or {}
+    expected = {"camera_axis_review", "capture_owner", "direction_requirement", "height_requirement"}
+    if set(axes) != expected or axes["camera_axis_review"] != AUTHORING_MARKER:
+        raise ValueError("camera authoring declaration has unsupported axes or version")
+    if row.get("polarity") not in {"required", "advisory"}:
+        raise ValueError("camera authoring declaration must use the existing required/advisory contract")
+    states = {axis: axes[axis + "_requirement"] for axis in CAMERA_AXES}
+    if any(not isinstance(state, str) or state not in {"requested", "open", "excluded"} for state in states.values()):
+        raise ValueError("camera authoring must review direction and height as requested/open/excluded")
+    requested = [axis for axis, state in states.items() if state == "requested"]
+    if axes["capture_owner"] != ("camera" if requested else "unprescribed"):
+        raise ValueError("requested camera axes require the declared capture owner camera")
+    fields = {axis + "_phrase" for axis in requested} | ({"owner_phrase"} if requested else set())
+    if set(evidence) != fields:
+        raise ValueError("camera authoring requires exactly the owner and requested-axis literal evidence")
+    baseline = core.get("baseline_prompt_en") or ""
+    for key, phrase in evidence.items():
+        maximum = 16 if key == "owner_phrase" else 24
+        if not isinstance(phrase, str) or not 2 <= len(phrase.split()) <= maximum or phrase not in baseline:
+            raise ValueError("camera authoring evidence must be a bounded exact literal baseline phrase")
+        if re.search(r"[!?;]|\.(?:\s|$)", phrase):
+            raise ValueError("camera authoring evidence must stay within one clause, not broad scene prose")
+    if requested and not re.search(r"\bcamera\b", evidence["owner_phrase"], re.I):
+        raise ValueError("camera authoring owner evidence must name the capture camera")
+    lock = core.get("intent_lock") or {}
+    anchors = [a for a in lock.get("semantic_anchors") or [] if a.get("dimension") == "camera"]
+    whole = "camera" in (lock.get("locked_dimensions") or [])
+    for axis, state in states.items():
+        related = [a for a in anchors if a.get("property", "").startswith("viewpoint.")
+                   and axis in re.findall(r"[a-z]+", a["property"])]
+        if state == "requested":
+            applicable = anchors if whole else [a for a in related if a.get("target") == "camera"]
+            if not any(evidence[axis + "_phrase"] in (a.get("prompt_evidence") or "") for a in applicable):
+                raise ValueError(f"camera {axis} declaration must bind an existing camera viewpoint anchor")
+        elif related or whole:
+            raise ValueError(f"camera {axis} declaration conflicts with existing requester property locks")
+        if state == "excluded" and not core.get("user_exclusions"):
+            raise ValueError("excluded camera axis requires requester-grounded user_exclusions")
+    return row
+
+
+def authored_camera_query(core: dict, axis: str) -> tuple[list[str], list[str]] | None:
+    row = camera_authoring_declaration(core)
+    if row is None or row["axes"][axis + "_requirement"] == "open":
+        return None
+    if row["axes"][axis + "_requirement"] == "excluded":
+        return [], ["semantic_assertions.camera_axis_excluded"]
+    evidence = row["evidence"]
+    return [evidence["owner_phrase"] + " | " + evidence[axis + "_phrase"]], ["semantic_assertions.camera_axis_evidence"]
 
 
 def require_camera_evidence(core: dict, axes: list[str]) -> None:
@@ -76,8 +146,8 @@ def legacy_camera_clauses(core: dict, axis: str) -> list[str]:
             spatial = r"(?:above|below|under|low|high|lower|higher)\b|(?:at|near)\s+(?:[\w-]+\s+){0,3}(?:height|level)\b"
             supported = (
                 command in {"position", "place", "put", "set", "keep", "mount", "hold"} and re.match(spatial, body, re.I)
-                or re.match(r"(?:(?:is|sits|stands|remains|stays|rests)\s+(?:(?:positioned|placed|mounted|held|located)\s+)?)?" + spatial, body, re.I)
+                or not command and re.match(r"(?:(?:is|sits|stands|remains|stays|rests)\s+(?:(?:positioned|placed|mounted|held|located)\s+)?)?" + spatial, body, re.I)
             )
         if supported and clause not in queries:
             queries.append(clause)
-    return queries
+    return queries or bounded_camera_clauses(text, axis)
