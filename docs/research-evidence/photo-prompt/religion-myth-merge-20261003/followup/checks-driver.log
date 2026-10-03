@@ -1,0 +1,30 @@
+Completed 1/11: tests.test_photo_ghost_ship_gate_alternative rc=0
+Completed 2/11: tests.test_photo_slide_thickness_alternative rc=0
+Completed 3/11: tests.test_photo_convoy_route_alternative rc=0
+Completed 4/11: tests.test_photo_semantic_index rc=0
+Completed 5/11: tests.test_photo_era_visual_semantics rc=0
+Completed 6/11: tests.test_photo_religion_iconography_boundary_history rc=0
+Completed 7/11: tests.test_subculture_illustration_photo_boundary rc=0
+Completed 8/11: tests.test_photo_current_boundary_snapshot rc=0
+Completed 9/11: tests.test_photo_religion_iconography_alternatives rc=0
+Completed 10/11: tests.test_photo_visual_profile_retrieval rc=0
+Completed 11/11: tests.test_photo_mythology_visual_semantics rc=0
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/religion-myth-merge-20261003/followup/run_checks.py", line 91, in <module>
+    main()
+    ~~~~^^
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/religion-myth-merge-20261003/followup/run_checks.py", line 71, in main
+    boundary = boundary_future.result()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 443, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 395, in __get_result
+    raise self._exception
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/religion-myth-merge-20261003/followup/run_checks.py", line 59, in run_boundary
+    assert pack["pack_id"] == baseline["pack_id"]
+           ~~~~^^^^^^^^^^^
+TypeError: list indices must be integers or slices, not str
