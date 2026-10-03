@@ -29,6 +29,7 @@ _SCRIPTS_IMPORT_DIR_ADDED = _SCRIPTS_IMPORT_DIR not in sys.path
 if _SCRIPTS_IMPORT_DIR_ADDED:
     sys.path.insert(0, _SCRIPTS_IMPORT_DIR)
 try:
+    import photo_camera_evidence
     import photo_candidate_semantics
     import photo_contextual_appeal
     import photo_embodiment
@@ -11298,6 +11299,20 @@ def core_slot_focus_queries(data: dict, core: dict, slot: str) -> tuple[list[str
             if text and text not in queries:
                 queries.append(text)
         return queries, list(dict.fromkeys(evidence_fields)) if queries else []
+    if slot in {"camera_direction", "camera_height"}:
+        clauses = photo_camera_evidence.legacy_camera_clauses(core, slot.removeprefix("camera_"))
+        queries = []
+        for clause in clauses:
+            text, _ = authorial_core_retrieval_text({
+                "contract_version": core["contract_version"], "request_binding": {"active_spans": []},
+                "user_exclusions": core.get("user_exclusions") or [], "baseline_prompt_en": clause,
+            })
+            # Redaction may remove an excluded owner or verb. Do not turn its
+            # remaining fragments into a positive camera clause.
+            if text == clause:
+                queries.append(text)
+        if queries:
+            return queries, ["baseline_prompt_en.camera_clause"]
     text, fields = candidate_pack_slot_focus_text(core, slot)
     if text:
         return [text], fields
