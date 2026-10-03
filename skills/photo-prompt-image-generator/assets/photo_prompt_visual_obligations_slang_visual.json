@@ -1,0 +1,1897 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "profiles": [
+    {
+      "id": "sv_upward_pupils",
+      "category": "observable_slang_component_relation",
+      "activation": {
+        "exact_terms": [
+          "upward pupils within both eye apertures",
+          "같은 인물의 양쪽 눈 안에서 위로 놓인 동공"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "declared_carrier_context",
+              "any_terms": [
+                "eye",
+                "eyes",
+                "pupil",
+                "mouth",
+                "tongue",
+                "face",
+                "actor",
+                "눈",
+                "동공",
+                "혀",
+                "입"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "both pupils sit toward the upper part of their eye apertures; lower sclera is visible beneath both pupils; both eyes belong to the same actor",
+        "paraphrase_examples": [
+          "both pupils sit high inside the eye openings; visible white sclera below each raised pupil; the same face owns both visible eyes",
+          "양쪽 눈동자가 각 눈의 개안부 위쪽에 놓인다; 올라간 양쪽 동공 아래로 흰자위가 보인다; 두 눈이 같은 인물의 얼굴에 연결된다"
+        ],
+        "visual_components": [
+          "both pupils sit toward the upper part of their eye apertures",
+          "lower sclera is visible beneath both pupils",
+          "both eyes belong to the same actor"
+        ],
+        "contrast_examples": [
+          "head tilt with centered pupils",
+          "one obscured eye",
+          "upward-facing head alone"
+        ],
+        "claim_limits": [
+          "Preserve the same declared actor, carrier, existing medium, view, garment coverage, count and property locks.",
+          "The technical relation is one observable component, not a synonym for every original genre, event, role or evaluative meaning of a slang word.",
+          "A still image establishes current visible geometry only; it does not establish identity, emotion, health, desire, consent, action history or user acceptance.",
+          "Every required relation must pass in original pixels; occlusion is unobservable and partial evidence fails."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "upward pupils within both eye apertures",
+          "같은 인물의 양쪽 눈 안에서 위로 놓인 동공",
+          "both pupils sit high inside the eye openings; visible white sclera below each raised pupil; the same face owns both visible eyes",
+          "양쪽 눈동자가 각 눈의 개안부 위쪽에 놓인다; 올라간 양쪽 동공 아래로 흰자위가 보인다; 두 눈이 같은 인물의 얼굴에 연결된다",
+          "both pupils sit toward the upper part of their eye apertures",
+          "lower sclera is visible beneath both pupils",
+          "both eyes belong to the same actor"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "both pupils sit toward the upper part of their eye apertures",
+              "both pupils sit high inside the eye openings",
+              "양쪽 눈동자가 각 눈의 개안부 위쪽에 놓인다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "both pupils sit toward the upper part of their eye apertures",
+              "both pupils sit high inside the eye openings",
+              "양쪽 눈동자가 각 눈의 개안부 위쪽에 놓인다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: both pupils sit toward the upper part of their eye apertures.",
+            "render_gate": {
+              "id": "vo_sv_upward_pupils_1",
+              "review_scale": "native",
+              "description": "both pupils sit toward the upper part of their eye apertures. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "lower sclera is visible beneath both pupils",
+              "visible white sclera below each raised pupil",
+              "올라간 양쪽 동공 아래로 흰자위가 보인다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "lower sclera is visible beneath both pupils",
+              "visible white sclera below each raised pupil",
+              "올라간 양쪽 동공 아래로 흰자위가 보인다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: lower sclera is visible beneath both pupils.",
+            "render_gate": {
+              "id": "vo_sv_upward_pupils_2",
+              "review_scale": "native",
+              "description": "lower sclera is visible beneath both pupils. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "both eyes belong to the same actor",
+              "the same face owns both visible eyes",
+              "두 눈이 같은 인물의 얼굴에 연결된다"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "both eyes belong to the same actor",
+              "the same face owns both visible eyes",
+              "두 눈이 같은 인물의 얼굴에 연결된다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: both eyes belong to the same actor.",
+            "render_gate": {
+              "id": "vo_sv_upward_pupils_3",
+              "review_scale": "native",
+              "description": "both eyes belong to the same actor. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "head tilt with centered pupils",
+        "one obscured eye",
+        "upward-facing head alone"
+      ]
+    },
+    {
+      "id": "sv_inward_pupils",
+      "category": "observable_slang_component_relation",
+      "activation": {
+        "exact_terms": [
+          "bilateral nasal-side pupil placement",
+          "양쪽 눈동자가 각 눈의 코 쪽으로 모인 현재 배치"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "declared_carrier_context",
+              "any_terms": [
+                "eye",
+                "eyes",
+                "pupil",
+                "mouth",
+                "tongue",
+                "face",
+                "actor",
+                "눈",
+                "동공",
+                "혀",
+                "입"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "each pupil sits toward the nasal side of its own eye aperture; both eye apertures and their inner corners remain visible; both eyes belong to the same actor",
+        "paraphrase_examples": [
+          "both pupils move toward their respective inner eye corners; two readable eye openings retain their nasal corner landmarks; the same face owns both visible eyes",
+          "각 동공이 자기 눈의 코 쪽 가장자리에 가깝다; 양쪽 개안부와 안쪽 눈구석이 함께 보인다; 두 눈이 같은 인물의 얼굴에 연결된다"
+        ],
+        "visual_components": [
+          "each pupil sits toward the nasal side of its own eye aperture",
+          "both eye apertures and their inner corners remain visible",
+          "both eyes belong to the same actor"
+        ],
+        "contrast_examples": [
+          "ordinary side gaze of both eyes",
+          "diagnosis from pupil placement",
+          "one eye duplicated"
+        ],
+        "claim_limits": [
+          "Preserve the same declared actor, carrier, existing medium, view, garment coverage, count and property locks.",
+          "The technical relation is one observable component, not a synonym for every original genre, event, role or evaluative meaning of a slang word.",
+          "A still image establishes current visible geometry only; it does not establish identity, emotion, health, desire, consent, action history or user acceptance.",
+          "Every required relation must pass in original pixels; occlusion is unobservable and partial evidence fails."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "bilateral nasal-side pupil placement",
+          "양쪽 눈동자가 각 눈의 코 쪽으로 모인 현재 배치",
+          "both pupils move toward their respective inner eye corners; two readable eye openings retain their nasal corner landmarks; the same face owns both visible eyes",
+          "각 동공이 자기 눈의 코 쪽 가장자리에 가깝다; 양쪽 개안부와 안쪽 눈구석이 함께 보인다; 두 눈이 같은 인물의 얼굴에 연결된다",
+          "each pupil sits toward the nasal side of its own eye aperture",
+          "both eye apertures and their inner corners remain visible",
+          "both eyes belong to the same actor"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "each pupil sits toward the nasal side of its own eye aperture",
+              "both pupils move toward their respective inner eye corners",
+              "각 동공이 자기 눈의 코 쪽 가장자리에 가깝다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "each pupil sits toward the nasal side of its own eye aperture",
+              "both pupils move toward their respective inner eye corners",
+              "각 동공이 자기 눈의 코 쪽 가장자리에 가깝다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: each pupil sits toward the nasal side of its own eye aperture.",
+            "render_gate": {
+              "id": "vo_sv_inward_pupils_1",
+              "review_scale": "native",
+              "description": "each pupil sits toward the nasal side of its own eye aperture. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "both eye apertures and their inner corners remain visible",
+              "two readable eye openings retain their nasal corner landmarks",
+              "양쪽 개안부와 안쪽 눈구석이 함께 보인다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "both eye apertures and their inner corners remain visible",
+              "two readable eye openings retain their nasal corner landmarks",
+              "양쪽 개안부와 안쪽 눈구석이 함께 보인다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: both eye apertures and their inner corners remain visible.",
+            "render_gate": {
+              "id": "vo_sv_inward_pupils_2",
+              "review_scale": "native",
+              "description": "both eye apertures and their inner corners remain visible. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "both eyes belong to the same actor",
+              "the same face owns both visible eyes",
+              "두 눈이 같은 인물의 얼굴에 연결된다"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "both eyes belong to the same actor",
+              "the same face owns both visible eyes",
+              "두 눈이 같은 인물의 얼굴에 연결된다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: both eyes belong to the same actor.",
+            "render_gate": {
+              "id": "vo_sv_inward_pupils_3",
+              "review_scale": "native",
+              "description": "both eyes belong to the same actor. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "ordinary side gaze of both eyes",
+        "diagnosis from pupil placement",
+        "one eye duplicated"
+      ]
+    },
+    {
+      "id": "sv_left_right_pupil_relation",
+      "category": "observable_slang_component_relation",
+      "activation": {
+        "exact_terms": [
+          "explicit actor-relative left-right pupil difference",
+          "명시한 좌우 동공 위치 차이"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "declared_carrier_context",
+              "any_terms": [
+                "eye",
+                "eyes",
+                "pupil",
+                "mouth",
+                "tongue",
+                "face",
+                "actor",
+                "눈",
+                "동공",
+                "혀",
+                "입"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the actor-left pupil has its explicitly chosen position within its eye aperture; the actor-right pupil has its separately chosen position within its eye aperture; both visible pupil positions belong to one face in the same frame",
+        "paraphrase_examples": [
+          "the left eye retains its stated pupil position; the right eye retains its separately stated pupil position; one actor shows both specified eye positions simultaneously",
+          "인물 기준 왼쪽 동공이 지정한 눈 안 위치에 놓인다; 인물 기준 오른쪽 동공이 별도로 지정한 눈 안 위치에 놓인다; 한 얼굴의 두 동공 배치가 같은 화면에 함께 보인다"
+        ],
+        "visual_components": [
+          "the actor-left pupil has its explicitly chosen position within its eye aperture",
+          "the actor-right pupil has its separately chosen position within its eye aperture",
+          "both visible pupil positions belong to one face in the same frame"
+        ],
+        "contrast_examples": [
+          "random asymmetry without specified laterality",
+          "head perspective mistaken for eye position",
+          "two different actors"
+        ],
+        "claim_limits": [
+          "Preserve the same declared actor, carrier, existing medium, view, garment coverage, count and property locks.",
+          "The technical relation is one observable component, not a synonym for every original genre, event, role or evaluative meaning of a slang word.",
+          "A still image establishes current visible geometry only; it does not establish identity, emotion, health, desire, consent, action history or user acceptance.",
+          "Every required relation must pass in original pixels; occlusion is unobservable and partial evidence fails."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "explicit actor-relative left-right pupil difference",
+          "명시한 좌우 동공 위치 차이",
+          "the left eye retains its stated pupil position; the right eye retains its separately stated pupil position; one actor shows both specified eye positions simultaneously",
+          "인물 기준 왼쪽 동공이 지정한 눈 안 위치에 놓인다; 인물 기준 오른쪽 동공이 별도로 지정한 눈 안 위치에 놓인다; 한 얼굴의 두 동공 배치가 같은 화면에 함께 보인다",
+          "the actor-left pupil has its explicitly chosen position within its eye aperture",
+          "the actor-right pupil has its separately chosen position within its eye aperture",
+          "both visible pupil positions belong to one face in the same frame"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the actor-left pupil has its explicitly chosen position within its eye aperture",
+              "the left eye retains its stated pupil position",
+              "인물 기준 왼쪽 동공이 지정한 눈 안 위치에 놓인다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the actor-left pupil has its explicitly chosen position within its eye aperture",
+              "the left eye retains its stated pupil position",
+              "인물 기준 왼쪽 동공이 지정한 눈 안 위치에 놓인다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the actor-left pupil has its explicitly chosen position within its eye aperture.",
+            "render_gate": {
+              "id": "vo_sv_left_right_pupil_relation_1",
+              "review_scale": "native",
+              "description": "the actor-left pupil has its explicitly chosen position within its eye aperture. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the actor-right pupil has its separately chosen position within its eye aperture",
+              "the right eye retains its separately stated pupil position",
+              "인물 기준 오른쪽 동공이 별도로 지정한 눈 안 위치에 놓인다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the actor-right pupil has its separately chosen position within its eye aperture",
+              "the right eye retains its separately stated pupil position",
+              "인물 기준 오른쪽 동공이 별도로 지정한 눈 안 위치에 놓인다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the actor-right pupil has its separately chosen position within its eye aperture.",
+            "render_gate": {
+              "id": "vo_sv_left_right_pupil_relation_2",
+              "review_scale": "native",
+              "description": "the actor-right pupil has its separately chosen position within its eye aperture. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "both visible pupil positions belong to one face in the same frame",
+              "one actor shows both specified eye positions simultaneously",
+              "한 얼굴의 두 동공 배치가 같은 화면에 함께 보인다"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "both visible pupil positions belong to one face in the same frame",
+              "one actor shows both specified eye positions simultaneously",
+              "한 얼굴의 두 동공 배치가 같은 화면에 함께 보인다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: both visible pupil positions belong to one face in the same frame.",
+            "render_gate": {
+              "id": "vo_sv_left_right_pupil_relation_3",
+              "review_scale": "native",
+              "description": "both visible pupil positions belong to one face in the same frame. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "random asymmetry without specified laterality",
+        "head perspective mistaken for eye position",
+        "two different actors"
+      ]
+    },
+    {
+      "id": "sv_tongue_lip_boundary",
+      "category": "observable_slang_component_relation",
+      "activation": {
+        "exact_terms": [
+          "tongue crossing the lip boundary of the same mouth",
+          "같은 입의 혀가 명시한 위치에서 입술 경계를 넘은 형태"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "declared_carrier_context",
+              "any_terms": [
+                "eye",
+                "eyes",
+                "pupil",
+                "mouth",
+                "tongue",
+                "face",
+                "actor",
+                "눈",
+                "동공",
+                "혀",
+                "입"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the tongue visibly crosses the outer lip boundary; the visible tongue remains connected to the same actor mouth; tongue position and protrusion extent follow the explicitly chosen variant",
+        "paraphrase_examples": [
+          "tongue projects beyond the lip edge; one tongue continues out of its own mouth; the selected tongue placement and visible extent remain readable",
+          "혀가 입술의 바깥 경계를 넘어 보인다; 보이는 혀가 같은 인물의 입 안에서 이어진다; 혀의 위치와 밖으로 나온 길이가 명시한 변형을 따른다"
+        ],
+        "visual_components": [
+          "the tongue visibly crosses the outer lip boundary",
+          "the visible tongue remains connected to the same actor mouth",
+          "tongue position and protrusion extent follow the explicitly chosen variant"
+        ],
+        "contrast_examples": [
+          "tongue wholly inside the mouth",
+          "detached tongue prop",
+          "automatic small centered tongue variant"
+        ],
+        "claim_limits": [
+          "Preserve the same declared actor, carrier, existing medium, view, garment coverage, count and property locks.",
+          "The technical relation is one observable component, not a synonym for every original genre, event, role or evaluative meaning of a slang word.",
+          "A still image establishes current visible geometry only; it does not establish identity, emotion, health, desire, consent, action history or user acceptance.",
+          "Every required relation must pass in original pixels; occlusion is unobservable and partial evidence fails."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "tongue crossing the lip boundary of the same mouth",
+          "같은 입의 혀가 명시한 위치에서 입술 경계를 넘은 형태",
+          "tongue projects beyond the lip edge; one tongue continues out of its own mouth; the selected tongue placement and visible extent remain readable",
+          "혀가 입술의 바깥 경계를 넘어 보인다; 보이는 혀가 같은 인물의 입 안에서 이어진다; 혀의 위치와 밖으로 나온 길이가 명시한 변형을 따른다",
+          "the tongue visibly crosses the outer lip boundary",
+          "the visible tongue remains connected to the same actor mouth",
+          "tongue position and protrusion extent follow the explicitly chosen variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the tongue visibly crosses the outer lip boundary",
+              "tongue projects beyond the lip edge",
+              "혀가 입술의 바깥 경계를 넘어 보인다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the tongue visibly crosses the outer lip boundary",
+              "tongue projects beyond the lip edge",
+              "혀가 입술의 바깥 경계를 넘어 보인다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the tongue visibly crosses the outer lip boundary.",
+            "render_gate": {
+              "id": "vo_sv_tongue_lip_boundary_1",
+              "review_scale": "native",
+              "description": "the tongue visibly crosses the outer lip boundary. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the visible tongue remains connected to the same actor mouth",
+              "one tongue continues out of its own mouth",
+              "보이는 혀가 같은 인물의 입 안에서 이어진다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the visible tongue remains connected to the same actor mouth",
+              "one tongue continues out of its own mouth",
+              "보이는 혀가 같은 인물의 입 안에서 이어진다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the visible tongue remains connected to the same actor mouth.",
+            "render_gate": {
+              "id": "vo_sv_tongue_lip_boundary_2",
+              "review_scale": "native",
+              "description": "the visible tongue remains connected to the same actor mouth. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "tongue position and protrusion extent follow the explicitly chosen variant",
+              "the selected tongue placement and visible extent remain readable",
+              "혀의 위치와 밖으로 나온 길이가 명시한 변형을 따른다"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "tongue position and protrusion extent follow the explicitly chosen variant",
+              "the selected tongue placement and visible extent remain readable",
+              "혀의 위치와 밖으로 나온 길이가 명시한 변형을 따른다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: tongue position and protrusion extent follow the explicitly chosen variant.",
+            "render_gate": {
+              "id": "vo_sv_tongue_lip_boundary_3",
+              "review_scale": "native",
+              "description": "tongue position and protrusion extent follow the explicitly chosen variant. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "tongue wholly inside the mouth",
+        "detached tongue prop",
+        "automatic small centered tongue variant"
+      ]
+    },
+    {
+      "id": "sv_local_cheek_redness",
+      "category": "observable_slang_component_relation",
+      "activation": {
+        "exact_terms": [
+          "localized reddish cheek-surface color",
+          "지정한 볼 피부의 국소 붉은 색"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "declared_carrier_context",
+              "any_terms": [
+                "actor",
+                "person",
+                "adult",
+                "eye",
+                "skin",
+                "garment",
+                "cheek",
+                "성인",
+                "피부",
+                "문양",
+                "의복",
+                "눈"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "a reddish patch occupies the specified cheek skin; the color follows the same actor cheek surface",
+        "paraphrase_examples": [
+          "local red color is visible on the chosen cheek surface; the reddish area remains on its own facial skin",
+          "지정한 볼 피부에 국소적인 붉은 색이 보인다; 붉은 영역이 같은 인물의 볼 피부 면을 따른다"
+        ],
+        "visual_components": [
+          "a reddish patch occupies the specified cheek skin",
+          "the color follows the same actor cheek surface"
+        ],
+        "contrast_examples": [
+          "red lighting over the entire frame",
+          "illness or emotion inferred from color",
+          "unrequested makeup cause"
+        ],
+        "claim_limits": [
+          "Preserve the same declared actor, carrier, existing medium, view, garment coverage, count and property locks.",
+          "The technical relation is one observable component, not a synonym for every original genre, event, role or evaluative meaning of a slang word.",
+          "A still image establishes current visible geometry only; it does not establish identity, emotion, health, desire, consent, action history or user acceptance.",
+          "Every required relation must pass in original pixels; occlusion is unobservable and partial evidence fails."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "localized reddish cheek-surface color",
+          "지정한 볼 피부의 국소 붉은 색",
+          "local red color is visible on the chosen cheek surface; the reddish area remains on its own facial skin",
+          "지정한 볼 피부에 국소적인 붉은 색이 보인다; 붉은 영역이 같은 인물의 볼 피부 면을 따른다",
+          "a reddish patch occupies the specified cheek skin",
+          "the color follows the same actor cheek surface"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "face"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a reddish patch occupies the specified cheek skin",
+              "local red color is visible on the chosen cheek surface",
+              "지정한 볼 피부에 국소적인 붉은 색이 보인다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a reddish patch occupies the specified cheek skin",
+              "local red color is visible on the chosen cheek surface",
+              "지정한 볼 피부에 국소적인 붉은 색이 보인다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: a reddish patch occupies the specified cheek skin.",
+            "render_gate": {
+              "id": "vo_sv_local_cheek_redness_1",
+              "review_scale": "native",
+              "description": "a reddish patch occupies the specified cheek skin. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the color follows the same actor cheek surface",
+              "the reddish area remains on its own facial skin",
+              "붉은 영역이 같은 인물의 볼 피부 면을 따른다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the color follows the same actor cheek surface",
+              "the reddish area remains on its own facial skin",
+              "붉은 영역이 같은 인물의 볼 피부 면을 따른다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the color follows the same actor cheek surface.",
+            "render_gate": {
+              "id": "vo_sv_local_cheek_redness_2",
+              "review_scale": "native",
+              "description": "the color follows the same actor cheek surface. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "red lighting over the entire frame",
+        "illness or emotion inferred from color",
+        "unrequested makeup cause"
+      ]
+    },
+    {
+      "id": "sv_pupil_heart_motif",
+      "category": "observable_slang_component_relation",
+      "activation": {
+        "exact_terms": [
+          "pupil-contained heart motif on an explicitly chosen carrier",
+          "지정한 매체 위에서 동공 영역 안에 놓인 하트 문양"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "declared_carrier_context",
+              "any_terms": [
+                "actor",
+                "person",
+                "adult",
+                "eye",
+                "skin",
+                "garment",
+                "cheek",
+                "성인",
+                "피부",
+                "문양",
+                "의복",
+                "눈"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the chosen heart motif remains within the specified pupil region; the visible eye contours continue around the pupil motif; the motif carrier is explicitly selected for the same actor eyes",
+        "paraphrase_examples": [
+          "a small heart is contained inside each requested pupil area; natural eye outlines and iris boundaries surround the small heart; the declared contact lens or other stated carrier places the motif on those eyes",
+          "하트 문양이 지정한 동공 영역 안에 놓인다; 하트 주변으로 눈 윤곽과 홍채 경계가 이어진다; 같은 인물의 눈 문양을 담는 렌즈 등 매체가 별도로 지정된다"
+        ],
+        "visual_components": [
+          "the chosen heart motif remains within the specified pupil region",
+          "the visible eye contours continue around the pupil motif",
+          "the motif carrier is explicitly selected for the same actor eyes"
+        ],
+        "contrast_examples": [
+          "heart replacing the whole eye",
+          "heart-shaped catchlight substituted for a lens motif",
+          "unrequested contact lenses or medium change"
+        ],
+        "claim_limits": [
+          "Preserve the same declared actor, carrier, existing medium, view, garment coverage, count and property locks.",
+          "The technical relation is one observable component, not a synonym for every original genre, event, role or evaluative meaning of a slang word.",
+          "A still image establishes current visible geometry only; it does not establish identity, emotion, health, desire, consent, action history or user acceptance.",
+          "Every required relation must pass in original pixels; occlusion is unobservable and partial evidence fails."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "pupil-contained heart motif on an explicitly chosen carrier",
+          "지정한 매체 위에서 동공 영역 안에 놓인 하트 문양",
+          "a small heart is contained inside each requested pupil area; natural eye outlines and iris boundaries surround the small heart; the declared contact lens or other stated carrier places the motif on those eyes",
+          "하트 문양이 지정한 동공 영역 안에 놓인다; 하트 주변으로 눈 윤곽과 홍채 경계가 이어진다; 같은 인물의 눈 문양을 담는 렌즈 등 매체가 별도로 지정된다",
+          "the chosen heart motif remains within the specified pupil region",
+          "the visible eye contours continue around the pupil motif",
+          "the motif carrier is explicitly selected for the same actor eyes"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "face"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the chosen heart motif remains within the specified pupil region",
+              "a small heart is contained inside each requested pupil area",
+              "하트 문양이 지정한 동공 영역 안에 놓인다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the chosen heart motif remains within the specified pupil region",
+              "a small heart is contained inside each requested pupil area",
+              "하트 문양이 지정한 동공 영역 안에 놓인다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the chosen heart motif remains within the specified pupil region.",
+            "render_gate": {
+              "id": "vo_sv_pupil_heart_motif_1",
+              "review_scale": "native",
+              "description": "the chosen heart motif remains within the specified pupil region. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the visible eye contours continue around the pupil motif",
+              "natural eye outlines and iris boundaries surround the small heart",
+              "하트 주변으로 눈 윤곽과 홍채 경계가 이어진다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the visible eye contours continue around the pupil motif",
+              "natural eye outlines and iris boundaries surround the small heart",
+              "하트 주변으로 눈 윤곽과 홍채 경계가 이어진다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the visible eye contours continue around the pupil motif.",
+            "render_gate": {
+              "id": "vo_sv_pupil_heart_motif_2",
+              "review_scale": "native",
+              "description": "the visible eye contours continue around the pupil motif. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the motif carrier is explicitly selected for the same actor eyes",
+              "the declared contact lens or other stated carrier places the motif on those eyes",
+              "같은 인물의 눈 문양을 담는 렌즈 등 매체가 별도로 지정된다"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the motif carrier is explicitly selected for the same actor eyes",
+              "the declared contact lens or other stated carrier places the motif on those eyes",
+              "같은 인물의 눈 문양을 담는 렌즈 등 매체가 별도로 지정된다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the motif carrier is explicitly selected for the same actor eyes.",
+            "render_gate": {
+              "id": "vo_sv_pupil_heart_motif_3",
+              "review_scale": "native",
+              "description": "the motif carrier is explicitly selected for the same actor eyes. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "heart replacing the whole eye",
+        "heart-shaped catchlight substituted for a lens motif",
+        "unrequested contact lenses or medium change"
+      ]
+    },
+    {
+      "id": "sv_seated_knees_apart",
+      "category": "observable_slang_component_relation",
+      "activation": {
+        "exact_terms": [
+          "seated separated knees with visible pelvis support",
+          "좌면에 골반을 지지하고 무릎을 떨어뜨린 앉은 자세"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "declared_carrier_context",
+              "any_terms": [
+                "pose",
+                "actor",
+                "person",
+                "seated",
+                "leg",
+                "legs",
+                "support",
+                "자세",
+                "다리",
+                "무릎",
+                "골반"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the pelvis rests on the specified seat surface; the two bent knees remain laterally separated; each leg connects to the same pelvis and keeps its chosen foot support",
+        "paraphrase_examples": [
+          "the chosen sitting surface supports the pelvis; both flexed knees are apart in the seated pose; both connected legs retain separately stated foot contacts",
+          "골반이 지정한 좌면에 닿아 지지된다; 앉은 자세에서 굽힌 양 무릎이 좌우로 떨어져 있다; 두 다리가 같은 골반에서 이어지고 지정한 발 지지를 유지한다"
+        ],
+        "visual_components": [
+          "the pelvis rests on the specified seat surface",
+          "the two bent knees remain laterally separated",
+          "each leg connects to the same pelvis and keeps its chosen foot support"
+        ],
+        "contrast_examples": [
+          "standing feet apart",
+          "chair straddle without requested chair relation",
+          "disconnected knee or foot"
+        ],
+        "claim_limits": [
+          "Preserve the same declared actor, carrier, existing medium, view, garment coverage, count and property locks.",
+          "The technical relation is one observable component, not a synonym for every original genre, event, role or evaluative meaning of a slang word.",
+          "A still image establishes current visible geometry only; it does not establish identity, emotion, health, desire, consent, action history or user acceptance.",
+          "Every required relation must pass in original pixels; occlusion is unobservable and partial evidence fails."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "seated separated knees with visible pelvis support",
+          "좌면에 골반을 지지하고 무릎을 떨어뜨린 앉은 자세",
+          "the chosen sitting surface supports the pelvis; both flexed knees are apart in the seated pose; both connected legs retain separately stated foot contacts",
+          "골반이 지정한 좌면에 닿아 지지된다; 앉은 자세에서 굽힌 양 무릎이 좌우로 떨어져 있다; 두 다리가 같은 골반에서 이어지고 지정한 발 지지를 유지한다",
+          "the pelvis rests on the specified seat surface",
+          "the two bent knees remain laterally separated",
+          "each leg connects to the same pelvis and keeps its chosen foot support"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.support_and_configuration"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the pelvis rests on the specified seat surface",
+              "the chosen sitting surface supports the pelvis",
+              "골반이 지정한 좌면에 닿아 지지된다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the pelvis rests on the specified seat surface",
+              "the chosen sitting surface supports the pelvis",
+              "골반이 지정한 좌면에 닿아 지지된다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the pelvis rests on the specified seat surface.",
+            "render_gate": {
+              "id": "vo_sv_seated_knees_apart_1",
+              "review_scale": "native",
+              "description": "the pelvis rests on the specified seat surface. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the two bent knees remain laterally separated",
+              "both flexed knees are apart in the seated pose",
+              "앉은 자세에서 굽힌 양 무릎이 좌우로 떨어져 있다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the two bent knees remain laterally separated",
+              "both flexed knees are apart in the seated pose",
+              "앉은 자세에서 굽힌 양 무릎이 좌우로 떨어져 있다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the two bent knees remain laterally separated.",
+            "render_gate": {
+              "id": "vo_sv_seated_knees_apart_2",
+              "review_scale": "native",
+              "description": "the two bent knees remain laterally separated. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "each leg connects to the same pelvis and keeps its chosen foot support",
+              "both connected legs retain separately stated foot contacts",
+              "두 다리가 같은 골반에서 이어지고 지정한 발 지지를 유지한다"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "each leg connects to the same pelvis and keeps its chosen foot support",
+              "both connected legs retain separately stated foot contacts",
+              "두 다리가 같은 골반에서 이어지고 지정한 발 지지를 유지한다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: each leg connects to the same pelvis and keeps its chosen foot support.",
+            "render_gate": {
+              "id": "vo_sv_seated_knees_apart_3",
+              "review_scale": "native",
+              "description": "each leg connects to the same pelvis and keeps its chosen foot support. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "standing feet apart",
+        "chair straddle without requested chair relation",
+        "disconnected knee or foot"
+      ]
+    },
+    {
+      "id": "sv_supported_m_legs",
+      "category": "observable_slang_component_relation",
+      "activation": {
+        "exact_terms": [
+          "front-view seated M-shaped bent legs with pelvis and foot support",
+          "골반과 발 지지가 보이는 정면 앉은 M형 굽힌 양다리"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "declared_carrier_context",
+              "any_terms": [
+                "pose",
+                "actor",
+                "person",
+                "seated",
+                "leg",
+                "legs",
+                "support",
+                "자세",
+                "다리",
+                "무릎",
+                "골반"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the seated pelvis rests below two raised separated bent knees; each thigh continues through its own knee into its own shin and foot; the pelvis and both feet retain their specified support contacts; the already selected frontal view shows the connected leg contours as an M",
+        "paraphrase_examples": [
+          "the low supported pelvis lies between higher flexed knees; both connected upper and lower leg segments remain individually traceable; the sitting surface and separate foot contacts remain readable; the stated front view makes the two bent-leg outlines read as an M-like shape",
+          "지지된 낮은 골반 양옆으로 굽힌 두 무릎이 높게 떨어져 있다; 각 허벅지가 자기 무릎과 정강이와 발로 이어진다; 좌면의 골반 지지와 양발의 개별 지지가 함께 보인다; 이미 선택한 정면 시점에서 연결된 다리 윤곽이 M형으로 읽힌다"
+        ],
+        "visual_components": [
+          "the seated pelvis rests below two raised separated bent knees",
+          "each thigh continues through its own knee into its own shin and foot",
+          "the pelvis and both feet retain their specified support contacts",
+          "the already selected frontal view shows the connected leg contours as an M"
+        ],
+        "contrast_examples": [
+          "standing wide stance",
+          "letter M prop",
+          "knees cropped away",
+          "changed camera view to force the silhouette"
+        ],
+        "claim_limits": [
+          "Preserve the same declared actor, carrier, existing medium, view, garment coverage, count and property locks.",
+          "The technical relation is one observable component, not a synonym for every original genre, event, role or evaluative meaning of a slang word.",
+          "A still image establishes current visible geometry only; it does not establish identity, emotion, health, desire, consent, action history or user acceptance.",
+          "Every required relation must pass in original pixels; occlusion is unobservable and partial evidence fails."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "front-view seated M-shaped bent legs with pelvis and foot support",
+          "골반과 발 지지가 보이는 정면 앉은 M형 굽힌 양다리",
+          "the low supported pelvis lies between higher flexed knees; both connected upper and lower leg segments remain individually traceable; the sitting surface and separate foot contacts remain readable; the stated front view makes the two bent-leg outlines read as an M-like shape",
+          "지지된 낮은 골반 양옆으로 굽힌 두 무릎이 높게 떨어져 있다; 각 허벅지가 자기 무릎과 정강이와 발로 이어진다; 좌면의 골반 지지와 양발의 개별 지지가 함께 보인다; 이미 선택한 정면 시점에서 연결된 다리 윤곽이 M형으로 읽힌다",
+          "the seated pelvis rests below two raised separated bent knees",
+          "each thigh continues through its own knee into its own shin and foot",
+          "the pelvis and both feet retain their specified support contacts",
+          "the already selected frontal view shows the connected leg contours as an M"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.support_and_configuration"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the seated pelvis rests below two raised separated bent knees",
+              "the low supported pelvis lies between higher flexed knees",
+              "지지된 낮은 골반 양옆으로 굽힌 두 무릎이 높게 떨어져 있다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the seated pelvis rests below two raised separated bent knees",
+              "the low supported pelvis lies between higher flexed knees",
+              "지지된 낮은 골반 양옆으로 굽힌 두 무릎이 높게 떨어져 있다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the seated pelvis rests below two raised separated bent knees.",
+            "render_gate": {
+              "id": "vo_sv_supported_m_legs_1",
+              "review_scale": "native",
+              "description": "the seated pelvis rests below two raised separated bent knees. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "each thigh continues through its own knee into its own shin and foot",
+              "both connected upper and lower leg segments remain individually traceable",
+              "각 허벅지가 자기 무릎과 정강이와 발로 이어진다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "each thigh continues through its own knee into its own shin and foot",
+              "both connected upper and lower leg segments remain individually traceable",
+              "각 허벅지가 자기 무릎과 정강이와 발로 이어진다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: each thigh continues through its own knee into its own shin and foot.",
+            "render_gate": {
+              "id": "vo_sv_supported_m_legs_2",
+              "review_scale": "native",
+              "description": "each thigh continues through its own knee into its own shin and foot. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the pelvis and both feet retain their specified support contacts",
+              "the sitting surface and separate foot contacts remain readable",
+              "좌면의 골반 지지와 양발의 개별 지지가 함께 보인다"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the pelvis and both feet retain their specified support contacts",
+              "the sitting surface and separate foot contacts remain readable",
+              "좌면의 골반 지지와 양발의 개별 지지가 함께 보인다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the pelvis and both feet retain their specified support contacts.",
+            "render_gate": {
+              "id": "vo_sv_supported_m_legs_3",
+              "review_scale": "native",
+              "description": "the pelvis and both feet retain their specified support contacts. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the already selected frontal view shows the connected leg contours as an M",
+              "the stated front view makes the two bent-leg outlines read as an M-like shape",
+              "이미 선택한 정면 시점에서 연결된 다리 윤곽이 M형으로 읽힌다"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the already selected frontal view shows the connected leg contours as an M",
+              "the stated front view makes the two bent-leg outlines read as an M-like shape",
+              "이미 선택한 정면 시점에서 연결된 다리 윤곽이 M형으로 읽힌다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the already selected frontal view shows the connected leg contours as an M.",
+            "render_gate": {
+              "id": "vo_sv_supported_m_legs_4",
+              "review_scale": "native",
+              "description": "the already selected frontal view shows the connected leg contours as an M. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "standing wide stance",
+        "letter M prop",
+        "knees cropped away",
+        "changed camera view to force the silhouette"
+      ]
+    },
+    {
+      "id": "sv_supine_limb_spread",
+      "category": "observable_slang_component_relation",
+      "activation": {
+        "exact_terms": [
+          "four-limb spread on a specified supine support",
+          "등이 지지된 같은 인물의 양팔과 양다리 벌림"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "declared_carrier_context",
+              "any_terms": [
+                "pose",
+                "actor",
+                "person",
+                "seated",
+                "leg",
+                "legs",
+                "support",
+                "자세",
+                "다리",
+                "무릎",
+                "골반"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the back of the same actor torso contacts the chosen support; both connected arms extend apart from that torso; both connected legs extend apart from that pelvis",
+        "paraphrase_examples": [
+          "the reclining actor retains posterior torso support; the two actor-owned arms separate across the support; the two actor-owned legs separate across the support",
+          "같은 인물의 등 쪽 몸통이 지정한 지지 면에 닿는다; 그 몸통에 연결된 두 팔이 서로 벌어진다; 같은 골반에서 이어진 두 다리가 서로 벌어진다"
+        ],
+        "visual_components": [
+          "the back of the same actor torso contacts the chosen support",
+          "both connected arms extend apart from that torso",
+          "both connected legs extend apart from that pelvis"
+        ],
+        "contrast_examples": [
+          "one arm and one leg only",
+          "arms belonging to a second actor",
+          "standing stance substituted for supine support"
+        ],
+        "claim_limits": [
+          "Preserve the same declared actor, carrier, existing medium, view, garment coverage, count and property locks.",
+          "The technical relation is one observable component, not a synonym for every original genre, event, role or evaluative meaning of a slang word.",
+          "A still image establishes current visible geometry only; it does not establish identity, emotion, health, desire, consent, action history or user acceptance.",
+          "Every required relation must pass in original pixels; occlusion is unobservable and partial evidence fails."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "four-limb spread on a specified supine support",
+          "등이 지지된 같은 인물의 양팔과 양다리 벌림",
+          "the reclining actor retains posterior torso support; the two actor-owned arms separate across the support; the two actor-owned legs separate across the support",
+          "같은 인물의 등 쪽 몸통이 지정한 지지 면에 닿는다; 그 몸통에 연결된 두 팔이 서로 벌어진다; 같은 골반에서 이어진 두 다리가 서로 벌어진다",
+          "the back of the same actor torso contacts the chosen support",
+          "both connected arms extend apart from that torso",
+          "both connected legs extend apart from that pelvis"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.support_and_configuration"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the back of the same actor torso contacts the chosen support",
+              "the reclining actor retains posterior torso support",
+              "같은 인물의 등 쪽 몸통이 지정한 지지 면에 닿는다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the back of the same actor torso contacts the chosen support",
+              "the reclining actor retains posterior torso support",
+              "같은 인물의 등 쪽 몸통이 지정한 지지 면에 닿는다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the back of the same actor torso contacts the chosen support.",
+            "render_gate": {
+              "id": "vo_sv_supine_limb_spread_1",
+              "review_scale": "native",
+              "description": "the back of the same actor torso contacts the chosen support. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "both connected arms extend apart from that torso",
+              "the two actor-owned arms separate across the support",
+              "그 몸통에 연결된 두 팔이 서로 벌어진다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "both connected arms extend apart from that torso",
+              "the two actor-owned arms separate across the support",
+              "그 몸통에 연결된 두 팔이 서로 벌어진다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: both connected arms extend apart from that torso.",
+            "render_gate": {
+              "id": "vo_sv_supine_limb_spread_2",
+              "review_scale": "native",
+              "description": "both connected arms extend apart from that torso. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "both connected legs extend apart from that pelvis",
+              "the two actor-owned legs separate across the support",
+              "같은 골반에서 이어진 두 다리가 서로 벌어진다"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "both connected legs extend apart from that pelvis",
+              "the two actor-owned legs separate across the support",
+              "같은 골반에서 이어진 두 다리가 서로 벌어진다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: both connected legs extend apart from that pelvis.",
+            "render_gate": {
+              "id": "vo_sv_supine_limb_spread_3",
+              "review_scale": "native",
+              "description": "both connected legs extend apart from that pelvis. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "one arm and one leg only",
+        "arms belonging to a second actor",
+        "standing stance substituted for supine support"
+      ]
+    },
+    {
+      "id": "sv_padded_garment_contour",
+      "category": "observable_slang_component_relation",
+      "activation": {
+        "exact_terms": [
+          "outer contour contributed by the declared garment padding",
+          "명시된 의복 패딩이 만드는 바깥 윤곽"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "declared_carrier_context",
+              "any_terms": [
+                "actor",
+                "person",
+                "adult",
+                "eye",
+                "skin",
+                "garment",
+                "cheek",
+                "성인",
+                "피부",
+                "문양",
+                "의복",
+                "눈"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the specified padding belongs inside the already chosen garment; the garment outer contour reflects that specified padding; the actor anatomical proportions remain separately specified",
+        "paraphrase_examples": [
+          "the declared garment contains the requested padding; the padded clothing shell has the selected exterior contour; the padded garment contour is separate from bodily volume",
+          "패딩이 이미 선택한 의복의 지정된 안쪽 부분에 속한다; 의복의 바깥 윤곽에 지정한 패딩 형태가 드러난다; 패딩 의복 외곽과 인물의 신체 양감이 별도로 구분된다"
+        ],
+        "visual_components": [
+          "the specified padding belongs inside the already chosen garment",
+          "the garment outer contour reflects that specified padding",
+          "the actor anatomical proportions remain separately specified"
+        ],
+        "contrast_examples": [
+          "anatomical enlargement",
+          "before-after photo edit claim",
+          "unrequested padded costume"
+        ],
+        "claim_limits": [
+          "Preserve the same declared actor, carrier, existing medium, view, garment coverage, count and property locks.",
+          "The technical relation is one observable component, not a synonym for every original genre, event, role or evaluative meaning of a slang word.",
+          "A still image establishes current visible geometry only; it does not establish identity, emotion, health, desire, consent, action history or user acceptance.",
+          "Every required relation must pass in original pixels; occlusion is unobservable and partial evidence fails."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "outer contour contributed by the declared garment padding",
+          "명시된 의복 패딩이 만드는 바깥 윤곽",
+          "the declared garment contains the requested padding; the padded clothing shell has the selected exterior contour; the padded garment contour is separate from bodily volume",
+          "패딩이 이미 선택한 의복의 지정된 안쪽 부분에 속한다; 의복의 바깥 윤곽에 지정한 패딩 형태가 드러난다; 패딩 의복 외곽과 인물의 신체 양감이 별도로 구분된다",
+          "the specified padding belongs inside the already chosen garment",
+          "the garment outer contour reflects that specified padding",
+          "the actor anatomical proportions remain separately specified"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "body.garment"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the specified padding belongs inside the already chosen garment",
+              "the declared garment contains the requested padding",
+              "패딩이 이미 선택한 의복의 지정된 안쪽 부분에 속한다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the specified padding belongs inside the already chosen garment",
+              "the declared garment contains the requested padding",
+              "패딩이 이미 선택한 의복의 지정된 안쪽 부분에 속한다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the specified padding belongs inside the already chosen garment.",
+            "render_gate": {
+              "id": "vo_sv_padded_garment_contour_1",
+              "review_scale": "native",
+              "description": "the specified padding belongs inside the already chosen garment. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the garment outer contour reflects that specified padding",
+              "the padded clothing shell has the selected exterior contour",
+              "의복의 바깥 윤곽에 지정한 패딩 형태가 드러난다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the garment outer contour reflects that specified padding",
+              "the padded clothing shell has the selected exterior contour",
+              "의복의 바깥 윤곽에 지정한 패딩 형태가 드러난다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the garment outer contour reflects that specified padding.",
+            "render_gate": {
+              "id": "vo_sv_padded_garment_contour_2",
+              "review_scale": "native",
+              "description": "the garment outer contour reflects that specified padding. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the actor anatomical proportions remain separately specified",
+              "the padded garment contour is separate from bodily volume",
+              "패딩 의복 외곽과 인물의 신체 양감이 별도로 구분된다"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the actor anatomical proportions remain separately specified",
+              "the padded garment contour is separate from bodily volume",
+              "패딩 의복 외곽과 인물의 신체 양감이 별도로 구분된다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the actor anatomical proportions remain separately specified.",
+            "render_gate": {
+              "id": "vo_sv_padded_garment_contour_3",
+              "review_scale": "native",
+              "description": "the actor anatomical proportions remain separately specified. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "anatomical enlargement",
+        "before-after photo edit claim",
+        "unrequested padded costume"
+      ]
+    },
+    {
+      "id": "sv_lower_abdominal_skin_marking",
+      "category": "observable_slang_component_relation",
+      "activation": {
+        "exact_terms": [
+          "navel-relative lower-abdominal skin marking",
+          "배꼽 기준 위치가 명시된 하복부 피부 문양"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "declared_carrier_context",
+              "any_terms": [
+                "actor",
+                "person",
+                "adult",
+                "eye",
+                "skin",
+                "garment",
+                "cheek",
+                "성인",
+                "피부",
+                "문양",
+                "의복",
+                "눈"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the marking lies on the same adult lower-abdominal skin; the navel and marking have the explicitly selected spatial relation; the marking follows the continuous skin surface inside the existing wardrobe boundaries",
+        "paraphrase_examples": [
+          "the chosen motif sits directly on the declared adult lower belly skin; the skin design keeps its specified distance and direction from the navel; the motif follows the same belly skin while the chosen garment coverage stays fixed",
+          "선택한 문양이 같은 성인의 하복부 피부에 놓인다; 배꼽과 문양이 지정한 방향과 거리 관계를 유지한다; 문양이 이어진 피부 면을 따르고 기존 의복 경계를 유지한다"
+        ],
+        "visual_components": [
+          "the marking lies on the same adult lower-abdominal skin",
+          "the navel and marking have the explicitly selected spatial relation",
+          "the marking follows the continuous skin surface inside the existing wardrobe boundaries"
+        ],
+        "contrast_examples": [
+          "symbol on clothing",
+          "generic upper-arm tattoo",
+          "automatic exposure or glowing heart motif"
+        ],
+        "claim_limits": [
+          "Preserve the same declared actor, carrier, existing medium, view, garment coverage, count and property locks.",
+          "The technical relation is one observable component, not a synonym for every original genre, event, role or evaluative meaning of a slang word.",
+          "A still image establishes current visible geometry only; it does not establish identity, emotion, health, desire, consent, action history or user acceptance.",
+          "Every required relation must pass in original pixels; occlusion is unobservable and partial evidence fails."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "navel-relative lower-abdominal skin marking",
+          "배꼽 기준 위치가 명시된 하복부 피부 문양",
+          "the chosen motif sits directly on the declared adult lower belly skin; the skin design keeps its specified distance and direction from the navel; the motif follows the same belly skin while the chosen garment coverage stays fixed",
+          "선택한 문양이 같은 성인의 하복부 피부에 놓인다; 배꼽과 문양이 지정한 방향과 거리 관계를 유지한다; 문양이 이어진 피부 면을 따르고 기존 의복 경계를 유지한다",
+          "the marking lies on the same adult lower-abdominal skin",
+          "the navel and marking have the explicitly selected spatial relation",
+          "the marking follows the continuous skin surface inside the existing wardrobe boundaries"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "body.markings"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the marking lies on the same adult lower-abdominal skin",
+              "the chosen motif sits directly on the declared adult lower belly skin",
+              "선택한 문양이 같은 성인의 하복부 피부에 놓인다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the marking lies on the same adult lower-abdominal skin",
+              "the chosen motif sits directly on the declared adult lower belly skin",
+              "선택한 문양이 같은 성인의 하복부 피부에 놓인다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the marking lies on the same adult lower-abdominal skin.",
+            "render_gate": {
+              "id": "vo_sv_lower_abdominal_skin_marking_1",
+              "review_scale": "native",
+              "description": "the marking lies on the same adult lower-abdominal skin. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the navel and marking have the explicitly selected spatial relation",
+              "the skin design keeps its specified distance and direction from the navel",
+              "배꼽과 문양이 지정한 방향과 거리 관계를 유지한다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the navel and marking have the explicitly selected spatial relation",
+              "the skin design keeps its specified distance and direction from the navel",
+              "배꼽과 문양이 지정한 방향과 거리 관계를 유지한다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the navel and marking have the explicitly selected spatial relation.",
+            "render_gate": {
+              "id": "vo_sv_lower_abdominal_skin_marking_2",
+              "review_scale": "native",
+              "description": "the navel and marking have the explicitly selected spatial relation. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the marking follows the continuous skin surface inside the existing wardrobe boundaries",
+              "the motif follows the same belly skin while the chosen garment coverage stays fixed",
+              "문양이 이어진 피부 면을 따르고 기존 의복 경계를 유지한다"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the marking follows the continuous skin surface inside the existing wardrobe boundaries",
+              "the motif follows the same belly skin while the chosen garment coverage stays fixed",
+              "문양이 이어진 피부 면을 따르고 기존 의복 경계를 유지한다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the marking follows the continuous skin surface inside the existing wardrobe boundaries.",
+            "render_gate": {
+              "id": "vo_sv_lower_abdominal_skin_marking_3",
+              "review_scale": "native",
+              "description": "the marking follows the continuous skin surface inside the existing wardrobe boundaries. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "symbol on clothing",
+        "generic upper-arm tattoo",
+        "automatic exposure or glowing heart motif"
+      ]
+    },
+    {
+      "id": "sv_declared_skin_motif_topology",
+      "category": "observable_slang_component_relation",
+      "activation": {
+        "exact_terms": [
+          "explicit line topology and symmetry of the chosen skin motif",
+          "이미 선택한 피부 문양의 명시된 선 연결과 대칭"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "declared_carrier_context",
+              "any_terms": [
+                "actor",
+                "person",
+                "adult",
+                "eye",
+                "skin",
+                "garment",
+                "cheek",
+                "성인",
+                "피부",
+                "문양",
+                "의복",
+                "눈"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the skin motif retains the explicitly chosen connected and disconnected elements; the motif follows the separately selected symmetry and color; all motif elements occupy the same declared skin carrier",
+        "paraphrase_examples": [
+          "the requested open and closed shapes retain their separate line connections; the chosen symmetry relation and pigment color remain visible; every selected shape belongs to the same skin design",
+          "피부 문양의 열린 선과 닫힌 도형이 지정한 연결과 분리를 유지한다; 문양의 지정한 대칭 관계와 색이 보인다; 선택한 모든 도형이 같은 피부 문양에 속한다"
+        ],
+        "visual_components": [
+          "the skin motif retains the explicitly chosen connected and disconnected elements",
+          "the motif follows the separately selected symmetry and color",
+          "all motif elements occupy the same declared skin carrier"
+        ],
+        "contrast_examples": [
+          "universal heart silhouette",
+          "unrequested bilateral symmetry",
+          "floating disconnected prop instead of skin marking"
+        ],
+        "claim_limits": [
+          "Preserve the same declared actor, carrier, existing medium, view, garment coverage, count and property locks.",
+          "The technical relation is one observable component, not a synonym for every original genre, event, role or evaluative meaning of a slang word.",
+          "A still image establishes current visible geometry only; it does not establish identity, emotion, health, desire, consent, action history or user acceptance.",
+          "Every required relation must pass in original pixels; occlusion is unobservable and partial evidence fails."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "explicit line topology and symmetry of the chosen skin motif",
+          "이미 선택한 피부 문양의 명시된 선 연결과 대칭",
+          "the requested open and closed shapes retain their separate line connections; the chosen symmetry relation and pigment color remain visible; every selected shape belongs to the same skin design",
+          "피부 문양의 열린 선과 닫힌 도형이 지정한 연결과 분리를 유지한다; 문양의 지정한 대칭 관계와 색이 보인다; 선택한 모든 도형이 같은 피부 문양에 속한다",
+          "the skin motif retains the explicitly chosen connected and disconnected elements",
+          "the motif follows the separately selected symmetry and color",
+          "all motif elements occupy the same declared skin carrier"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "body.markings"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the skin motif retains the explicitly chosen connected and disconnected elements",
+              "the requested open and closed shapes retain their separate line connections",
+              "피부 문양의 열린 선과 닫힌 도형이 지정한 연결과 분리를 유지한다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the skin motif retains the explicitly chosen connected and disconnected elements",
+              "the requested open and closed shapes retain their separate line connections",
+              "피부 문양의 열린 선과 닫힌 도형이 지정한 연결과 분리를 유지한다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the skin motif retains the explicitly chosen connected and disconnected elements.",
+            "render_gate": {
+              "id": "vo_sv_declared_skin_motif_topology_1",
+              "review_scale": "native",
+              "description": "the skin motif retains the explicitly chosen connected and disconnected elements. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the motif follows the separately selected symmetry and color",
+              "the chosen symmetry relation and pigment color remain visible",
+              "문양의 지정한 대칭 관계와 색이 보인다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the motif follows the separately selected symmetry and color",
+              "the chosen symmetry relation and pigment color remain visible",
+              "문양의 지정한 대칭 관계와 색이 보인다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: the motif follows the separately selected symmetry and color.",
+            "render_gate": {
+              "id": "vo_sv_declared_skin_motif_topology_2",
+              "review_scale": "native",
+              "description": "the motif follows the separately selected symmetry and color. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "all motif elements occupy the same declared skin carrier",
+              "every selected shape belongs to the same skin design",
+              "선택한 모든 도형이 같은 피부 문양에 속한다"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "all motif elements occupy the same declared skin carrier",
+              "every selected shape belongs to the same skin design",
+              "선택한 모든 도형이 같은 피부 문양에 속한다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared actor, carrier and current configuration: all motif elements occupy the same declared skin carrier.",
+            "render_gate": {
+              "id": "vo_sv_declared_skin_motif_topology_3",
+              "review_scale": "native",
+              "description": "all motif elements occupy the same declared skin carrier. Inspect the original pixels; every component is required, partial evidence fails, and a hidden prerequisite is unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "universal heart silhouette",
+        "unrequested bilateral symmetry",
+        "floating disconnected prop instead of skin marking"
+      ]
+    }
+  ]
+}

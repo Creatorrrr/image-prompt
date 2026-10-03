@@ -6279,7 +6279,7 @@ def _public_photo_candidate_count(pack: Mapping[str, Any]) -> int:
 
 
 def validate_photo_regression_baseline(
-    asset_dir: Path, *, baseline_version: int = 7
+    asset_dir: Path, *, baseline_version: int | None = None
 ) -> dict[str, Any]:
     """Validate immutable photo history plus the current sibling boundary."""
 
@@ -6288,8 +6288,11 @@ def validate_photo_regression_baseline(
     intermediate_path = asset_dir / "photo_regression_baseline_v3.json"
     bound_path = asset_dir / "photo_regression_baseline_v4.json"
     previous_path = asset_dir / "photo_regression_baseline_v5.json"
-    _require(baseline_version in {6, 7}, "unsupported photo baseline version")
-    baseline_path = asset_dir / f"photo_regression_baseline_v{baseline_version}.json"
+    if baseline_version is None:
+        baseline_version = 8 if (asset_dir / "photo_regression_baseline_v8.json").exists() else 7
+    _require(baseline_version in {6, 7, 8}, "unsupported photo baseline version")
+    lineage_version = min(baseline_version, 7)
+    baseline_path = asset_dir / f"photo_regression_baseline_v{lineage_version}.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
     photo_boundary = universal_baseline.get("photo_boundary")
     _require(
@@ -6350,7 +6353,7 @@ def validate_photo_regression_baseline(
         "previous photo baseline lineage mismatch",
     )
     predecessor_path, predecessor = previous_path, previous
-    if baseline_version == 7:
+    if lineage_version == 7:
         predecessor_path = asset_dir / "photo_regression_baseline_v6.json"
         predecessor = _load_json(predecessor_path)
         _require(
@@ -6363,7 +6366,7 @@ def validate_photo_regression_baseline(
         )
     baseline = _load_json(baseline_path)
     _require(
-        baseline.get("schema") == f"photo_regression_baseline/v{baseline_version}"
+        baseline.get("schema") == f"photo_regression_baseline/v{lineage_version}"
         and baseline.get("status") == "current"
         and baseline.get("historical_baseline") == {
             "path": predecessor_path.name, "schema": predecessor["schema"],
@@ -6371,7 +6374,7 @@ def validate_photo_regression_baseline(
         },
         "current photo baseline lineage mismatch",
     )
-    if baseline_version == 7:
+    if lineage_version == 7:
         parallel_path = asset_dir / "photo_regression_baseline_v6_religion_iconography.json"
         parallel = _load_json(parallel_path)
         _require(
@@ -6395,6 +6398,26 @@ def validate_photo_regression_baseline(
         )),
         "photo retrieval successor changed the preserved public boundary",
     )
+    if baseline_version == 8:
+        successor_path = asset_dir / "photo_regression_baseline_v8.json"
+        successor = _load_json(successor_path)
+        _require(
+            successor.get("schema") == "photo_regression_baseline/v8"
+            and successor.get("status") == "current"
+            and successor.get("historical_baseline") == {
+                "path": baseline_path.name, "schema": baseline["schema"],
+                "sha256": _sha256(baseline_path),
+            },
+            "current photo successor lineage mismatch",
+        )
+        _require(
+            all(successor.get(key) == baseline.get(key) for key in (
+                "preserved_contract_sha256", "frozen_inputs", "contract_version",
+                "public_candidate_count", "negative_en", "private_fields_absent",
+            )),
+            "photo successor changed the frozen scene or public boundary",
+        )
+        baseline_path, baseline = successor_path, successor
     command = baseline.get("command")
     _require(
         isinstance(command, list) and all(isinstance(value, str) for value in command),

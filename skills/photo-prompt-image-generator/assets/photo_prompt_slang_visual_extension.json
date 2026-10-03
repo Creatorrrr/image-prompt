@@ -1,0 +1,773 @@
+{
+  "schema_version": "photo-prompt-research-extension/v1",
+  "slots": {
+    "expression": [
+      {
+        "id": "sv_upward_pupils",
+        "ko": "같은 인물의 양쪽 눈 안에서 위로 놓인 동공",
+        "en": "both pupils sit toward the upper part of their eye apertures; lower sclera is visible beneath both pupils; both eyes belong to the same actor",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "adult",
+          "age_context_only",
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "paraphrases": [
+          "upward pupils within both eye apertures",
+          "같은 인물의 양쪽 눈 안에서 위로 놓인 동공",
+          "both pupils sit high inside the eye openings; visible white sclera below each raised pupil; the same face owns both visible eyes",
+          "양쪽 눈동자가 각 눈의 개안부 위쪽에 놓인다; 올라간 양쪽 동공 아래로 흰자위가 보인다; 두 눈이 같은 인물의 얼굴에 연결된다"
+        ],
+        "keywords": [
+          "both pupils sit toward the upper part of their eye apertures",
+          "lower sclera is visible beneath both pupils",
+          "both eyes belong to the same actor"
+        ],
+        "embedding_text": "upward pupils within both eye apertures 같은 인물의 양쪽 눈 안에서 위로 놓인 동공 both pupils sit high inside the eye openings; visible white sclera below each raised pupil; the same face owns both visible eyes 양쪽 눈동자가 각 눈의 개안부 위쪽에 놓인다; 올라간 양쪽 동공 아래로 흰자위가 보인다; 두 눈이 같은 인물의 얼굴에 연결된다 both pupils sit toward the upper part of their eye apertures; lower sclera is visible beneath both pupils; both eyes belong to the same actor",
+        "concept_units": [
+          "both pupils sit toward the upper part of their eye apertures",
+          "lower sclera is visible beneath both pupils",
+          "both eyes belong to the same actor"
+        ],
+        "relations": [
+          {
+            "id": "declared_carrier_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "both pupils sit toward the upper part of their eye apertures; lower sclera is visible beneath both pupils; both eyes belong to the same actor"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "sv_inward_pupils",
+        "ko": "양쪽 눈동자가 각 눈의 코 쪽으로 모인 현재 배치",
+        "en": "each pupil sits toward the nasal side of its own eye aperture; both eye apertures and their inner corners remain visible; both eyes belong to the same actor",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "adult",
+          "age_context_only",
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "paraphrases": [
+          "bilateral nasal-side pupil placement",
+          "양쪽 눈동자가 각 눈의 코 쪽으로 모인 현재 배치",
+          "both pupils move toward their respective inner eye corners; two readable eye openings retain their nasal corner landmarks; the same face owns both visible eyes",
+          "각 동공이 자기 눈의 코 쪽 가장자리에 가깝다; 양쪽 개안부와 안쪽 눈구석이 함께 보인다; 두 눈이 같은 인물의 얼굴에 연결된다"
+        ],
+        "keywords": [
+          "each pupil sits toward the nasal side of its own eye aperture",
+          "both eye apertures and their inner corners remain visible",
+          "both eyes belong to the same actor"
+        ],
+        "embedding_text": "bilateral nasal-side pupil placement 양쪽 눈동자가 각 눈의 코 쪽으로 모인 현재 배치 both pupils move toward their respective inner eye corners; two readable eye openings retain their nasal corner landmarks; the same face owns both visible eyes 각 동공이 자기 눈의 코 쪽 가장자리에 가깝다; 양쪽 개안부와 안쪽 눈구석이 함께 보인다; 두 눈이 같은 인물의 얼굴에 연결된다 each pupil sits toward the nasal side of its own eye aperture; both eye apertures and their inner corners remain visible; both eyes belong to the same actor",
+        "concept_units": [
+          "each pupil sits toward the nasal side of its own eye aperture",
+          "both eye apertures and their inner corners remain visible",
+          "both eyes belong to the same actor"
+        ],
+        "relations": [
+          {
+            "id": "declared_carrier_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "each pupil sits toward the nasal side of its own eye aperture; both eye apertures and their inner corners remain visible; both eyes belong to the same actor"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "sv_left_right_pupil_relation",
+        "ko": "명시한 좌우 동공 위치 차이",
+        "en": "the actor-left pupil has its explicitly chosen position within its eye aperture; the actor-right pupil has its separately chosen position within its eye aperture; both visible pupil positions belong to one face in the same frame",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "adult",
+          "age_context_only",
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "paraphrases": [
+          "explicit actor-relative left-right pupil difference",
+          "명시한 좌우 동공 위치 차이",
+          "the left eye retains its stated pupil position; the right eye retains its separately stated pupil position; one actor shows both specified eye positions simultaneously",
+          "인물 기준 왼쪽 동공이 지정한 눈 안 위치에 놓인다; 인물 기준 오른쪽 동공이 별도로 지정한 눈 안 위치에 놓인다; 한 얼굴의 두 동공 배치가 같은 화면에 함께 보인다"
+        ],
+        "keywords": [
+          "the actor-left pupil has its explicitly chosen position within its eye aperture",
+          "the actor-right pupil has its separately chosen position within its eye aperture",
+          "both visible pupil positions belong to one face in the same frame"
+        ],
+        "embedding_text": "explicit actor-relative left-right pupil difference 명시한 좌우 동공 위치 차이 the left eye retains its stated pupil position; the right eye retains its separately stated pupil position; one actor shows both specified eye positions simultaneously 인물 기준 왼쪽 동공이 지정한 눈 안 위치에 놓인다; 인물 기준 오른쪽 동공이 별도로 지정한 눈 안 위치에 놓인다; 한 얼굴의 두 동공 배치가 같은 화면에 함께 보인다 the actor-left pupil has its explicitly chosen position within its eye aperture; the actor-right pupil has its separately chosen position within its eye aperture; both visible pupil positions belong to one face in the same frame",
+        "concept_units": [
+          "the actor-left pupil has its explicitly chosen position within its eye aperture",
+          "the actor-right pupil has its separately chosen position within its eye aperture",
+          "both visible pupil positions belong to one face in the same frame"
+        ],
+        "relations": [
+          {
+            "id": "declared_carrier_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the actor-left pupil has its explicitly chosen position within its eye aperture; the actor-right pupil has its separately chosen position within its eye aperture; both visible pupil positions belong to one face in the same frame"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "sv_tongue_lip_boundary",
+        "ko": "같은 입의 혀가 명시한 위치에서 입술 경계를 넘은 형태",
+        "en": "the tongue visibly crosses the outer lip boundary; the visible tongue remains connected to the same actor mouth; tongue position and protrusion extent follow the explicitly chosen variant",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "adult",
+          "age_context_only",
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "paraphrases": [
+          "tongue crossing the lip boundary of the same mouth",
+          "같은 입의 혀가 명시한 위치에서 입술 경계를 넘은 형태",
+          "tongue projects beyond the lip edge; one tongue continues out of its own mouth; the selected tongue placement and visible extent remain readable",
+          "혀가 입술의 바깥 경계를 넘어 보인다; 보이는 혀가 같은 인물의 입 안에서 이어진다; 혀의 위치와 밖으로 나온 길이가 명시한 변형을 따른다"
+        ],
+        "keywords": [
+          "the tongue visibly crosses the outer lip boundary",
+          "the visible tongue remains connected to the same actor mouth",
+          "tongue position and protrusion extent follow the explicitly chosen variant"
+        ],
+        "embedding_text": "tongue crossing the lip boundary of the same mouth 같은 입의 혀가 명시한 위치에서 입술 경계를 넘은 형태 tongue projects beyond the lip edge; one tongue continues out of its own mouth; the selected tongue placement and visible extent remain readable 혀가 입술의 바깥 경계를 넘어 보인다; 보이는 혀가 같은 인물의 입 안에서 이어진다; 혀의 위치와 밖으로 나온 길이가 명시한 변형을 따른다 the tongue visibly crosses the outer lip boundary; the visible tongue remains connected to the same actor mouth; tongue position and protrusion extent follow the explicitly chosen variant",
+        "concept_units": [
+          "the tongue visibly crosses the outer lip boundary",
+          "the visible tongue remains connected to the same actor mouth",
+          "tongue position and protrusion extent follow the explicitly chosen variant"
+        ],
+        "relations": [
+          {
+            "id": "declared_carrier_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the tongue visibly crosses the outer lip boundary; the visible tongue remains connected to the same actor mouth; tongue position and protrusion extent follow the explicitly chosen variant"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "core_assertion_discovery": true
+      }
+    ],
+    "skin_condition": [
+      {
+        "id": "sv_local_cheek_redness",
+        "ko": "지정한 볼 피부의 국소 붉은 색",
+        "en": "a reddish patch occupies the specified cheek skin; the color follows the same actor cheek surface",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "adult",
+          "age_context_only",
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "paraphrases": [
+          "localized reddish cheek-surface color",
+          "지정한 볼 피부의 국소 붉은 색",
+          "local red color is visible on the chosen cheek surface; the reddish area remains on its own facial skin",
+          "지정한 볼 피부에 국소적인 붉은 색이 보인다; 붉은 영역이 같은 인물의 볼 피부 면을 따른다"
+        ],
+        "keywords": [
+          "a reddish patch occupies the specified cheek skin",
+          "the color follows the same actor cheek surface"
+        ],
+        "embedding_text": "localized reddish cheek-surface color 지정한 볼 피부의 국소 붉은 색 local red color is visible on the chosen cheek surface; the reddish area remains on its own facial skin 지정한 볼 피부에 국소적인 붉은 색이 보인다; 붉은 영역이 같은 인물의 볼 피부 면을 따른다 a reddish patch occupies the specified cheek skin; the color follows the same actor cheek surface",
+        "concept_units": [
+          "a reddish patch occupies the specified cheek skin",
+          "the color follows the same actor cheek surface"
+        ],
+        "relations": [
+          {
+            "id": "declared_carrier_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "a reddish patch occupies the specified cheek skin; the color follows the same actor cheek surface"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "face"
+          }
+        ],
+        "core_assertion_discovery": true
+      }
+    ],
+    "eye_detail": [
+      {
+        "id": "sv_pupil_heart_motif",
+        "ko": "지정한 매체 위에서 동공 영역 안에 놓인 하트 문양",
+        "en": "the chosen heart motif remains within the specified pupil region; the visible eye contours continue around the pupil motif; the motif carrier is explicitly selected for the same actor eyes",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "adult",
+          "age_context_only",
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "paraphrases": [
+          "pupil-contained heart motif on an explicitly chosen carrier",
+          "지정한 매체 위에서 동공 영역 안에 놓인 하트 문양",
+          "a small heart is contained inside each requested pupil area; natural eye outlines and iris boundaries surround the small heart; the declared contact lens or other stated carrier places the motif on those eyes",
+          "하트 문양이 지정한 동공 영역 안에 놓인다; 하트 주변으로 눈 윤곽과 홍채 경계가 이어진다; 같은 인물의 눈 문양을 담는 렌즈 등 매체가 별도로 지정된다"
+        ],
+        "keywords": [
+          "the chosen heart motif remains within the specified pupil region",
+          "the visible eye contours continue around the pupil motif",
+          "the motif carrier is explicitly selected for the same actor eyes"
+        ],
+        "embedding_text": "pupil-contained heart motif on an explicitly chosen carrier 지정한 매체 위에서 동공 영역 안에 놓인 하트 문양 a small heart is contained inside each requested pupil area; natural eye outlines and iris boundaries surround the small heart; the declared contact lens or other stated carrier places the motif on those eyes 하트 문양이 지정한 동공 영역 안에 놓인다; 하트 주변으로 눈 윤곽과 홍채 경계가 이어진다; 같은 인물의 눈 문양을 담는 렌즈 등 매체가 별도로 지정된다 the chosen heart motif remains within the specified pupil region; the visible eye contours continue around the pupil motif; the motif carrier is explicitly selected for the same actor eyes",
+        "concept_units": [
+          "the chosen heart motif remains within the specified pupil region",
+          "the visible eye contours continue around the pupil motif",
+          "the motif carrier is explicitly selected for the same actor eyes"
+        ],
+        "relations": [
+          {
+            "id": "declared_carrier_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the chosen heart motif remains within the specified pupil region; the visible eye contours continue around the pupil motif; the motif carrier is explicitly selected for the same actor eyes"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "face"
+          }
+        ],
+        "core_assertion_discovery": true
+      }
+    ],
+    "body_pose": [
+      {
+        "id": "sv_seated_knees_apart",
+        "ko": "좌면에 골반을 지지하고 무릎을 떨어뜨린 앉은 자세",
+        "en": "the pelvis rests on the specified seat surface; the two bent knees remain laterally separated; each leg connects to the same pelvis and keeps its chosen foot support",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "adult",
+          "age_context_only",
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "paraphrases": [
+          "seated separated knees with visible pelvis support",
+          "좌면에 골반을 지지하고 무릎을 떨어뜨린 앉은 자세",
+          "the chosen sitting surface supports the pelvis; both flexed knees are apart in the seated pose; both connected legs retain separately stated foot contacts",
+          "골반이 지정한 좌면에 닿아 지지된다; 앉은 자세에서 굽힌 양 무릎이 좌우로 떨어져 있다; 두 다리가 같은 골반에서 이어지고 지정한 발 지지를 유지한다"
+        ],
+        "keywords": [
+          "the pelvis rests on the specified seat surface",
+          "the two bent knees remain laterally separated",
+          "each leg connects to the same pelvis and keeps its chosen foot support"
+        ],
+        "embedding_text": "seated separated knees with visible pelvis support 좌면에 골반을 지지하고 무릎을 떨어뜨린 앉은 자세 the chosen sitting surface supports the pelvis; both flexed knees are apart in the seated pose; both connected legs retain separately stated foot contacts 골반이 지정한 좌면에 닿아 지지된다; 앉은 자세에서 굽힌 양 무릎이 좌우로 떨어져 있다; 두 다리가 같은 골반에서 이어지고 지정한 발 지지를 유지한다 the pelvis rests on the specified seat surface; the two bent knees remain laterally separated; each leg connects to the same pelvis and keeps its chosen foot support",
+        "concept_units": [
+          "the pelvis rests on the specified seat surface",
+          "the two bent knees remain laterally separated",
+          "each leg connects to the same pelvis and keeps its chosen foot support"
+        ],
+        "relations": [
+          {
+            "id": "declared_carrier_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the pelvis rests on the specified seat surface; the two bent knees remain laterally separated; each leg connects to the same pelvis and keeps its chosen foot support"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.support_and_configuration"
+          }
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "sv_supported_m_legs",
+        "ko": "골반과 발 지지가 보이는 정면 앉은 M형 굽힌 양다리",
+        "en": "the seated pelvis rests below two raised separated bent knees; each thigh continues through its own knee into its own shin and foot; the pelvis and both feet retain their specified support contacts; the already selected frontal view shows the connected leg contours as an M",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "adult",
+          "age_context_only",
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "paraphrases": [
+          "front-view seated M-shaped bent legs with pelvis and foot support",
+          "골반과 발 지지가 보이는 정면 앉은 M형 굽힌 양다리",
+          "the low supported pelvis lies between higher flexed knees; both connected upper and lower leg segments remain individually traceable; the sitting surface and separate foot contacts remain readable; the stated front view makes the two bent-leg outlines read as an M-like shape",
+          "지지된 낮은 골반 양옆으로 굽힌 두 무릎이 높게 떨어져 있다; 각 허벅지가 자기 무릎과 정강이와 발로 이어진다; 좌면의 골반 지지와 양발의 개별 지지가 함께 보인다; 이미 선택한 정면 시점에서 연결된 다리 윤곽이 M형으로 읽힌다"
+        ],
+        "keywords": [
+          "the seated pelvis rests below two raised separated bent knees",
+          "each thigh continues through its own knee into its own shin and foot",
+          "the pelvis and both feet retain their specified support contacts",
+          "the already selected frontal view shows the connected leg contours as an M"
+        ],
+        "embedding_text": "front-view seated M-shaped bent legs with pelvis and foot support 골반과 발 지지가 보이는 정면 앉은 M형 굽힌 양다리 the low supported pelvis lies between higher flexed knees; both connected upper and lower leg segments remain individually traceable; the sitting surface and separate foot contacts remain readable; the stated front view makes the two bent-leg outlines read as an M-like shape 지지된 낮은 골반 양옆으로 굽힌 두 무릎이 높게 떨어져 있다; 각 허벅지가 자기 무릎과 정강이와 발로 이어진다; 좌면의 골반 지지와 양발의 개별 지지가 함께 보인다; 이미 선택한 정면 시점에서 연결된 다리 윤곽이 M형으로 읽힌다 the seated pelvis rests below two raised separated bent knees; each thigh continues through its own knee into its own shin and foot; the pelvis and both feet retain their specified support contacts; the already selected frontal view shows the connected leg contours as an M",
+        "concept_units": [
+          "the seated pelvis rests below two raised separated bent knees",
+          "each thigh continues through its own knee into its own shin and foot",
+          "the pelvis and both feet retain their specified support contacts",
+          "the already selected frontal view shows the connected leg contours as an M"
+        ],
+        "relations": [
+          {
+            "id": "declared_carrier_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the seated pelvis rests below two raised separated bent knees; each thigh continues through its own knee into its own shin and foot; the pelvis and both feet retain their specified support contacts; the already selected frontal view shows the connected leg contours as an M"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.support_and_configuration"
+          }
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "sv_supine_limb_spread",
+        "ko": "등이 지지된 같은 인물의 양팔과 양다리 벌림",
+        "en": "the back of the same actor torso contacts the chosen support; both connected arms extend apart from that torso; both connected legs extend apart from that pelvis",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "adult",
+          "age_context_only",
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "paraphrases": [
+          "four-limb spread on a specified supine support",
+          "등이 지지된 같은 인물의 양팔과 양다리 벌림",
+          "the reclining actor retains posterior torso support; the two actor-owned arms separate across the support; the two actor-owned legs separate across the support",
+          "같은 인물의 등 쪽 몸통이 지정한 지지 면에 닿는다; 그 몸통에 연결된 두 팔이 서로 벌어진다; 같은 골반에서 이어진 두 다리가 서로 벌어진다"
+        ],
+        "keywords": [
+          "the back of the same actor torso contacts the chosen support",
+          "both connected arms extend apart from that torso",
+          "both connected legs extend apart from that pelvis"
+        ],
+        "embedding_text": "four-limb spread on a specified supine support 등이 지지된 같은 인물의 양팔과 양다리 벌림 the reclining actor retains posterior torso support; the two actor-owned arms separate across the support; the two actor-owned legs separate across the support 같은 인물의 등 쪽 몸통이 지정한 지지 면에 닿는다; 그 몸통에 연결된 두 팔이 서로 벌어진다; 같은 골반에서 이어진 두 다리가 서로 벌어진다 the back of the same actor torso contacts the chosen support; both connected arms extend apart from that torso; both connected legs extend apart from that pelvis",
+        "concept_units": [
+          "the back of the same actor torso contacts the chosen support",
+          "both connected arms extend apart from that torso",
+          "both connected legs extend apart from that pelvis"
+        ],
+        "relations": [
+          {
+            "id": "declared_carrier_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the back of the same actor torso contacts the chosen support; both connected arms extend apart from that torso; both connected legs extend apart from that pelvis"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.support_and_configuration"
+          }
+        ],
+        "core_assertion_discovery": true
+      }
+    ],
+    "garment_detail": [
+      {
+        "id": "sv_padded_garment_contour",
+        "ko": "명시된 의복 패딩이 만드는 바깥 윤곽",
+        "en": "the specified padding belongs inside the already chosen garment; the garment outer contour reflects that specified padding; the actor anatomical proportions remain separately specified",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "adult",
+          "age_context_only",
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "paraphrases": [
+          "outer contour contributed by the declared garment padding",
+          "명시된 의복 패딩이 만드는 바깥 윤곽",
+          "the declared garment contains the requested padding; the padded clothing shell has the selected exterior contour; the padded garment contour is separate from bodily volume",
+          "패딩이 이미 선택한 의복의 지정된 안쪽 부분에 속한다; 의복의 바깥 윤곽에 지정한 패딩 형태가 드러난다; 패딩 의복 외곽과 인물의 신체 양감이 별도로 구분된다"
+        ],
+        "keywords": [
+          "the specified padding belongs inside the already chosen garment",
+          "the garment outer contour reflects that specified padding",
+          "the actor anatomical proportions remain separately specified"
+        ],
+        "embedding_text": "outer contour contributed by the declared garment padding 명시된 의복 패딩이 만드는 바깥 윤곽 the declared garment contains the requested padding; the padded clothing shell has the selected exterior contour; the padded garment contour is separate from bodily volume 패딩이 이미 선택한 의복의 지정된 안쪽 부분에 속한다; 의복의 바깥 윤곽에 지정한 패딩 형태가 드러난다; 패딩 의복 외곽과 인물의 신체 양감이 별도로 구분된다 the specified padding belongs inside the already chosen garment; the garment outer contour reflects that specified padding; the actor anatomical proportions remain separately specified",
+        "concept_units": [
+          "the specified padding belongs inside the already chosen garment",
+          "the garment outer contour reflects that specified padding",
+          "the actor anatomical proportions remain separately specified"
+        ],
+        "relations": [
+          {
+            "id": "declared_carrier_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the specified padding belongs inside the already chosen garment; the garment outer contour reflects that specified padding; the actor anatomical proportions remain separately specified"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "body.garment"
+          }
+        ],
+        "core_assertion_discovery": true
+      }
+    ],
+    "body_marking": [
+      {
+        "id": "sv_lower_abdominal_skin_marking",
+        "ko": "배꼽 기준 위치가 명시된 하복부 피부 문양",
+        "en": "the marking lies on the same adult lower-abdominal skin; the navel and marking have the explicitly selected spatial relation; the marking follows the continuous skin surface inside the existing wardrobe boundaries",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "adult",
+          "age_context_only",
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "paraphrases": [
+          "navel-relative lower-abdominal skin marking",
+          "배꼽 기준 위치가 명시된 하복부 피부 문양",
+          "the chosen motif sits directly on the declared adult lower belly skin; the skin design keeps its specified distance and direction from the navel; the motif follows the same belly skin while the chosen garment coverage stays fixed",
+          "선택한 문양이 같은 성인의 하복부 피부에 놓인다; 배꼽과 문양이 지정한 방향과 거리 관계를 유지한다; 문양이 이어진 피부 면을 따르고 기존 의복 경계를 유지한다"
+        ],
+        "keywords": [
+          "the marking lies on the same adult lower-abdominal skin",
+          "the navel and marking have the explicitly selected spatial relation",
+          "the marking follows the continuous skin surface inside the existing wardrobe boundaries"
+        ],
+        "embedding_text": "navel-relative lower-abdominal skin marking 배꼽 기준 위치가 명시된 하복부 피부 문양 the chosen motif sits directly on the declared adult lower belly skin; the skin design keeps its specified distance and direction from the navel; the motif follows the same belly skin while the chosen garment coverage stays fixed 선택한 문양이 같은 성인의 하복부 피부에 놓인다; 배꼽과 문양이 지정한 방향과 거리 관계를 유지한다; 문양이 이어진 피부 면을 따르고 기존 의복 경계를 유지한다 the marking lies on the same adult lower-abdominal skin; the navel and marking have the explicitly selected spatial relation; the marking follows the continuous skin surface inside the existing wardrobe boundaries",
+        "concept_units": [
+          "the marking lies on the same adult lower-abdominal skin",
+          "the navel and marking have the explicitly selected spatial relation",
+          "the marking follows the continuous skin surface inside the existing wardrobe boundaries"
+        ],
+        "relations": [
+          {
+            "id": "declared_carrier_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the marking lies on the same adult lower-abdominal skin; the navel and marking have the explicitly selected spatial relation; the marking follows the continuous skin surface inside the existing wardrobe boundaries"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "body.markings"
+          }
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "sv_declared_skin_motif_topology",
+        "ko": "이미 선택한 피부 문양의 명시된 선 연결과 대칭",
+        "en": "the skin motif retains the explicitly chosen connected and disconnected elements; the motif follows the separately selected symmetry and color; all motif elements occupy the same declared skin carrier",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "adult",
+          "age_context_only",
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "paraphrases": [
+          "explicit line topology and symmetry of the chosen skin motif",
+          "이미 선택한 피부 문양의 명시된 선 연결과 대칭",
+          "the requested open and closed shapes retain their separate line connections; the chosen symmetry relation and pigment color remain visible; every selected shape belongs to the same skin design",
+          "피부 문양의 열린 선과 닫힌 도형이 지정한 연결과 분리를 유지한다; 문양의 지정한 대칭 관계와 색이 보인다; 선택한 모든 도형이 같은 피부 문양에 속한다"
+        ],
+        "keywords": [
+          "the skin motif retains the explicitly chosen connected and disconnected elements",
+          "the motif follows the separately selected symmetry and color",
+          "all motif elements occupy the same declared skin carrier"
+        ],
+        "embedding_text": "explicit line topology and symmetry of the chosen skin motif 이미 선택한 피부 문양의 명시된 선 연결과 대칭 the requested open and closed shapes retain their separate line connections; the chosen symmetry relation and pigment color remain visible; every selected shape belongs to the same skin design 피부 문양의 열린 선과 닫힌 도형이 지정한 연결과 분리를 유지한다; 문양의 지정한 대칭 관계와 색이 보인다; 선택한 모든 도형이 같은 피부 문양에 속한다 the skin motif retains the explicitly chosen connected and disconnected elements; the motif follows the separately selected symmetry and color; all motif elements occupy the same declared skin carrier",
+        "concept_units": [
+          "the skin motif retains the explicitly chosen connected and disconnected elements",
+          "the motif follows the separately selected symmetry and color",
+          "all motif elements occupy the same declared skin carrier"
+        ],
+        "relations": [
+          {
+            "id": "declared_carrier_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the skin motif retains the explicitly chosen connected and disconnected elements; the motif follows the separately selected symmetry and color; all motif elements occupy the same declared skin carrier"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "body.markings"
+          }
+        ],
+        "core_assertion_discovery": true
+      }
+    ]
+  },
+  "existing_slot_context_extensions": {
+    "expression": {
+      "pv_half_lidded": {
+        "paraphrases": [
+          "윗눈꺼풀과 아랫눈꺼풀 사이가 좁아졌지만 동공이 부분적으로 보이는 눈",
+          "partly open eyes with reduced lid apertures and partly visible pupils"
+        ]
+      },
+      "pv_parted_lips": {
+        "paraphrases": [
+          "윗입술과 아랫입술 사이에 작은 틈이 보이는 현재 입 형태",
+          "a small visible separation between the upper and lower lip margins"
+        ]
+      },
+      "ae_slack_jaw": {
+        "paraphrases": [
+          "턱이 아래로 내려가 작은 입술 틈보다 크게 열린 입",
+          "a dropped lower jaw with a mouth aperture larger than a slight lip part"
+        ]
+      },
+      "ae_deadpan_form": {
+        "paraphrases": [
+          "입꼬리는 수평이고 눈썹 윤곽은 과장되지 않은 얼굴",
+          "level mouth corners with comparatively unaccented eyebrow contours"
+        ]
+      }
+    },
+    "hand_pose": {
+      "pv_double_v": {
+        "paraphrases": [
+          "같은 인물의 두 손에서 각각 검지와 중지가 V를 만들고 별개의 손목과 팔로 이어지는 자세",
+          "two separate actor-owned V hands with index-middle splits and continuous wrists and arms"
+        ]
+      },
+      "pv_v_sign": {
+        "paraphrases": [
+          "검지와 중지는 벌어지고 약지와 새끼손가락은 접히며 엄지가 붙어 있는 한 손의 V",
+          "one connected hand separates the index and middle fingers while ring and little fingers fold beside an attached thumb"
+        ]
+      }
+    },
+    "body_pose": {
+      "pv_wide_stance": {
+        "paraphrases": [
+          "같은 인물의 두 발이 바닥에 닿은 채 좌우 지지 폭을 넓힌 서 있는 자세",
+          "a standing base with both actor-owned feet grounded and laterally spaced"
+        ]
+      },
+      "pv_chair_straddle": {
+        "paraphrases": [
+          "골반은 의자 좌면에 닿고 의자 구조의 양옆에 다리가 하나씩 이어진 앉은 자세",
+          "a supported chair straddle with the pelvis on the seat and one connected leg on each side of the chair structure"
+        ]
+      },
+      "pv_supine": {
+        "paraphrases": [
+          "등 쪽 몸통이 지지 면에 닿고 앞몸통은 그 면의 반대쪽을 향하는 누운 자세",
+          "a reclining actor with posterior torso contact and the anterior torso facing away from the support"
+        ]
+      }
+    },
+    "silhouette_proportion": {
+      "soft_full_figure_volume": {
+        "paraphrases": [
+          "성인 위팔과 몸통, 골반과 허벅지의 둥근 양감이 한 시점에서 연속되고 허리 경계도 읽히는 체형",
+          "continuous rounded soft volume across adult upper arms torso hips and thighs with a distinct readable waist contour"
+        ]
+      },
+      "ne_regional_soft_volume": {
+        "paraphrases": [
+          "같은 성인의 지정 부위가 둥글게 나오고 이웃 부위 윤곽에 자연스럽게 이어진 형태",
+          "a named adult region has rounded outward volume joined continuously to its neighboring contour"
+        ]
+      },
+      "ne_regional_contour_transition": {
+        "paraphrases": [
+          "같은 성인 몸통의 지정 구간 안에서 오목한 선과 볼록한 선이 이어지는 윤곽",
+          "a specified adult torso segment joins concave and convex curves along one continuous regional outline"
+        ]
+      },
+      "bm_abdominal_projection": {
+        "paraphrases": [
+          "같은 성인의 상복부와 하복부가 이어지는 옆몸통 선을 기준으로 각각 앞으로 나온 관계",
+          "separately readable upper and lower belly projections along the same adult continuous side-torso contour"
+        ]
+      },
+      "bm_breast_fullness": {
+        "paraphrases": [
+          "같은 성인의 가슴을 위아래와 안팎 구간으로 나눠 각 부위 양감을 구별하는 형태",
+          "upper lower medial and lateral fullness partitions of the same adult breast region"
+        ]
+      },
+      "bm_breast_root_width": {
+        "paraphrases": [
+          "같은 흉벽 위에서 가슴의 안쪽 부착점부터 바깥 부착점까지 읽히는 가로 범위",
+          "medial-to-lateral breast attachment extent on the same declared chest wall"
+        ]
+      },
+      "bm_breast_spacing": {
+        "paraphrases": [
+          "같은 성인의 몸통 정중선을 기준으로 양쪽 가슴 안쪽 경계의 간격과 방향이 보이는 관계",
+          "bilateral medial breast contours spaced and oriented around the same adult torso centerline"
+        ]
+      },
+      "bm_breast_asymmetry": {
+        "paraphrases": [
+          "같은 성인의 한 시점에서 왼쪽과 오른쪽 가슴의 지정한 양감이나 위치 차이를 비교하는 관계",
+          "the selected left-right breast volume or position difference within one adult body and the same view"
+        ]
+      },
+      "bm_gluteal_projection": {
+        "paraphrases": [
+          "같은 성인의 골반 기준 뒤쪽 둔부 돌출이 허벅지 부착으로 이어지는 윤곽",
+          "posterior gluteal projection anchored to the same adult pelvis and continuing into the thigh attachment"
+        ]
+      },
+      "bm_gluteal_fullness": {
+        "paraphrases": [
+          "같은 성인의 이어진 뒤쪽 둔부 윤곽에서 위와 아래 구간의 양감이 구별되는 형태",
+          "separately readable upper and lower gluteal fullness along the same adult continuous posterior contour"
+        ]
+      }
+    },
+    "garment_detail": {
+      "bm_fabric_body_outline": {
+        "paraphrases": [
+          "불투명한 같은 의복 면이 신체에 닿는 구간에서 몸의 윤곽을 전하는 형태",
+          "the continuous opaque garment surface transmits the outline at its declared body-contact region"
+        ]
+      },
+      "bm_garment_bulge": {
+        "paraphrases": [
+          "같은 불투명 의복의 지정 접촉 부위에 국소적으로 솟은 원단 면",
+          "a localized outward fabric projection at the specified contact on the same opaque garment"
+        ]
+      },
+      "bm_garment_central_crease": {
+        "paraphrases": [
+          "이어진 불투명 의복 면 가운데 주름과 그 양옆의 한 쌍 윤곽이 구별되는 형태",
+          "one continuous opaque garment has a central crease and two separately readable adjoining contours"
+        ]
+      }
+    }
+  }
+}

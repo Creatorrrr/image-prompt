@@ -74,7 +74,8 @@ class PhotoPoseVocabularySemanticsTests(unittest.TestCase):
         # dependent overlay while reconstructing the pre-pose historical state.
         filenames = tuple(name for name in generator.RESEARCH_EXTENSION_FILENAMES
                           if name not in {EXTENSION, "photo_prompt_acting_expression_extension.json",
-                                          "photo_prompt_neutral_expression_extension.json"})
+                                          "photo_prompt_neutral_expression_extension.json",
+                                          "photo_prompt_slang_visual_extension.json"})
         with mock.patch.object(generator, "RESEARCH_EXTENSION_FILENAMES", filenames):
             before = generator.load_json(ASSETS / "photo_prompt_tags.json")
         for slot, additions in self.extension["existing_slot_context_extensions"].items():
