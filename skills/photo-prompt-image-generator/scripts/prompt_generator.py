@@ -11375,13 +11375,15 @@ def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, d
     discovery_slots = list(dict.fromkeys(document_id.split(":", 2)[1] for document_id in discovery))
     discovery_order = {slot: i for i, slot in enumerate(discovery_slots)}
     slots, active = {}, {}
-    total = 0
-    # Authored observations get first access to the shared cap. The remaining
-    # inventory follows scene-field ownership; neither path creates a duty.
-    for slot in sorted(data["slots"], key=lambda value: (
+    ranked_slots = {}
+    # Rank every grounded slot before admission. Authored observations retain
+    # priority within each round, but an early slot cannot spend the entire cap
+    # before a later, successfully retrieved observation gets its first option.
+    slot_order = sorted(data["slots"], key=lambda value: (
         value not in discovery_order, discovery_order.get(value, len(discovery_order)),
         value not in CANDIDATE_PACK_CORE_SLOTS, value,
-    )):
+    ))
+    for slot in slot_order:
         query, fields = core_slot_focus_text(data, core, slot)
         if not query or slot_block_reason(data, slot, contract):
             continue
@@ -11402,22 +11404,34 @@ def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, d
         ranked = [row["document_id"] for row in fused if row["document_id"] in intersection]
         ranked = ranked or ([focal[0]["document_id"]] if focal else [])
         ranked = list(dict.fromkeys(observed + ranked))
+        if ranked:
+            ranked_slots[slot] = (ranked[:limit], fields, observed, query)
+    admitted = {slot: [] for slot in ranked_slots}
+    total = 0
+    for position in range(max((len(rows[0]) for rows in ranked_slots.values()), default=0)):
+        for slot, (ranked, _, _, _) in ranked_slots.items():
+            if total >= CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT:
+                break
+            if position < len(ranked):
+                admitted[slot].append(ranked[position])
+                total += 1
+    for slot, document_ids in admitted.items():
+        if not document_ids:
+            continue
+        _, fields, observed, query = ranked_slots[slot]
         candidates = []
-        for document_id in ranked[:min(limit, CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT - total)]:
+        for document_id in document_ids:
             entry_id = document_id.split(":", 2)[2]
             candidate, _ = candidate_pack_summarize_slot_candidate(data, slot, {
                 "id": entry_id, "applicability_status": "eligible",
                 "applicability_source": "frozen_core_slot_contract",
             })
             candidates.append(candidate)
-        if not candidates:
-            continue
         active[slot] = {"source_fields": list(dict.fromkeys(fields + (observation_fields if observed else []))),
                         "focus_query_sha256": hashlib.sha256(query.encode()).hexdigest()}
         slots[slot] = {"slot": slot, "role": "core" if slot in CANDIDATE_PACK_CORE_SLOTS else "support",
-                       "selected": None, "candidates": candidates, "candidate_count": len(entries),
-                       "candidate_limit": limit}
-        total += len(candidates)
+                       "selected": None, "candidates": candidates, "candidate_count": len(eligible[slot]),
+                       "candidate_limit": candidate_pack_slot_limit(slot)}
     binding = {
         "contract_version": "photo-core-retrieval/v1",
         "source_authorial_core_sha256": core["canonical_sha256"],
@@ -11426,6 +11440,7 @@ def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, d
         "slot_applicability_sha256": canonical_json_sha256(slot_applicability_from_source(data)["slots"]),
         "whole_scene_query_sha256": hashlib.sha256(global_query.encode()).hexdigest(),
         "active_slots": active, "retrieval": "same_slot_core_focus_and_frozen_observation_bm25f_rrf",
+        "candidate_allocation": "one_supported_hit_per_slot_per_round",
         "candidate_adoption": "optional",
     }
     binding["canonical_sha256"] = canonical_json_sha256(binding)

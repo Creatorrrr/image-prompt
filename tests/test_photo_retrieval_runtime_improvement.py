@@ -15,6 +15,53 @@ import prompt_generator as pg
 HOLDOUT = Path(__file__).parent / "fixtures/photo_prompt/retrieval_runtime_holdout_v1.json"
 
 
+class PhotoRetrievalAdmissionTests(unittest.TestCase):
+    def inputs(self):
+        raw = fixtures.core("Photograph a copper lantern with a legible wick and a rough surface.",
+            subject="a copper lantern", event="the copper lantern rests on a rough surface",
+            visual_priorities=("copper lantern wick", "rough copper surface"),
+            baseline_prompt_en="A copper lantern rests on a rough surface beside an open window. The copper lantern wick is clearly legible through the glass, and the rough copper surface catches a gentle sheen. A dark tabletop supports the quiet still life. Soft window light reveals the shallow dents and preserves the warm metal color across the frame.")
+        controls = pg.creative_controls.resolve(raw["source_request"],
+            context={"subject_category": "nonhuman"}, overrides={"sensual": 0, "fetish": 0}, seed=19)
+        raw["creative_controls_sha256"] = controls["canonical_sha256"]
+        core = pg.normalize_authorial_core(raw,
+            request_envelope=pg.normalize_request_envelope(fixtures.envelope(raw["source_request"])),
+            creative_control_snapshot=controls)
+        names = [f"a_detail_{n:03d}" for n in range(35)] + ["focus", "texture"]
+        data = {"slots": {s: [{"id": f"{s}_{n}", "en": "copper lantern wick rough surface"}
+                              for n in range(3)] for s in names},
+                "candidate_semantic_policy": {"slot_dimensions": {s: ["material"] for s in names}}}
+        return data, core, controls
+
+    def test_late_supported_slots_get_admission_without_increasing_budget(self):
+        data, core, controls = self.inputs()
+        slots, binding, _ = pg.retrieve_core_slots(data, core, controls)
+        self.assertIn("focus", slots)
+        self.assertIn("texture", slots)
+        ids = [c["id"] for s in slots.values() for c in s["candidates"]]
+        self.assertEqual(len(ids), 64)
+        self.assertEqual(len(set(ids)), len(ids))
+        self.assertTrue(all(len(s["candidates"]) <= s["candidate_limit"] for s in slots.values()))
+        self.assertTrue(all(s["candidates"] for s in slots.values()))
+        self.assertEqual(binding["candidate_adoption"], "optional")
+        self.assertEqual(binding["candidate_allocation"], "one_supported_hit_per_slot_per_round")
+
+    def test_source_iteration_order_does_not_change_admission(self):
+        data, core, controls = self.inputs()
+        expected = pg.retrieve_core_slots(data, core, controls)
+        data["slots"] = dict(reversed(list(data["slots"].items())))
+        self.assertEqual(pg.retrieve_core_slots(data, core, controls), expected)
+
+    def test_empty_or_guarded_slots_do_not_receive_a_quota(self):
+        data, core, controls = self.inputs()
+        data["slots"]["texture"] = [{"id": "unrelated", "en": "interplanetary navigation"}]
+        data["slots"]["focus"] = [{"id": "blocked", "en": "copper lantern wick rough surface",
+                                    "requires_all": ["missing_primary_context"]}]
+        data["slots"]["unowned"] = [{"id": "padding", "en": "copper lantern wick rough surface"}]
+        slots, _, _ = pg.retrieve_core_slots(data, core, controls)
+        self.assertFalse({"texture", "focus", "unowned"} & set(slots))
+
+
 class PhotoRetrievalPropertyEligibilityTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
