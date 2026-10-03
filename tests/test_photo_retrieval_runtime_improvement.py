@@ -83,13 +83,13 @@ class PhotoRetrievalPropertyEligibilityTests(unittest.TestCase):
     def setUpClass(cls):
         cls.data = pg.load_runtime_data()
 
-    def core(self, *, partial=True):
+    def core(self, *, partial=True, property_path="viewpoint.direction"):
         raw = fixtures.core("Photograph a blue porcelain teacup viewed from below.",
             baseline_prompt_en="A blue porcelain teacup rests on a dark kitchen counter while delicate rising steam catches rainlit window reflections. The camera views the cup from below, showing its raised rim against the window. The curved handle and soft reflections establish depth, while quiet domestic colors hold the frame together.")
         if partial:
             raw["intent_lock"]["semantic_anchors"].append({
                 "anchor_id": "camera_direction", "source_text": raw["source_request"],
-                "dimension": "camera", "target": "camera", "property": "viewpoint.direction",
+                "dimension": "camera", "target": "camera", "property": property_path,
                 "prompt_evidence": "The camera views the cup from below",
             })
         controls = pg.creative_controls.resolve(raw["source_request"],
@@ -118,8 +118,8 @@ class PhotoRetrievalPropertyEligibilityTests(unittest.TestCase):
             entries.append(entry)
         return {**self.data, "slots": {"camera_direction": entries}}
 
-    def pack(self, partial=True):
-        core, controls = self.core(partial=partial)
+    def pack(self, partial=True, *, property_path="viewpoint.direction"):
+        core, controls = self.core(partial=partial, property_path=property_path)
         # Exercise every effect control in the same pack, independently of the
         # production admission limits tested below.
         with mock.patch.object(pg, "candidate_pack_slot_limit", return_value=8):
@@ -137,6 +137,15 @@ class PhotoRetrievalPropertyEligibilityTests(unittest.TestCase):
                     "eligible" if name in {"other_target", "other_property", "other_dimension"} else "ineligible")
         self.assertIn("missing", rows)
         self.assertIn("empty", rows)
+        # Unknown camera effects must remain unknown for equivalent authored
+        # owner paths; no candidate metadata is fitted to one fixture spelling.
+        for property_path in ("viewpoint.height_and_direction", "viewpoint.orientation_to_cup"):
+            pack = self.pack(property_path=property_path)
+            rows = {c["entry_id"]: c for c in pack["slots"]["camera_direction"]["candidates"]}
+            with self.subTest(property_path=property_path):
+                self.assertTrue(all(rows[name]["applicability"]["status"] == "ineligible"
+                                    for name in ("missing", "empty")))
+                self.assertEqual(rows["other_dimension"]["applicability"]["status"], "eligible")
 
     def test_no_property_lock_preserves_legacy_eligibility(self):
         pack = self.pack(partial=False)
