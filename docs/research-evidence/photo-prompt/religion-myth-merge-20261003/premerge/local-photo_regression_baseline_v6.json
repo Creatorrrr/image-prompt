@@ -1,0 +1,41 @@
+{
+  "schema": "photo_regression_baseline/v6",
+  "created_at": "2026-10-03",
+  "status": "current",
+  "historical_baseline": {
+    "path": "photo_regression_baseline_v5.json",
+    "schema": "photo_regression_baseline/v5",
+    "sha256": "96d13676e1c0635a35ac27d03ddea87859c92551c1105211f3556e15cadc5473"
+  },
+  "change_scope": "religion_iconography_alternatives_and_corpus_bindings",
+  "command": [
+    ".venv/bin/python",
+    "skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py",
+    "--seed",
+    "910000",
+    "--authorial-core-json",
+    "tests/fixtures/photo_prompt/current_boundary/core.json",
+    "--request-envelope-json",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json",
+    "--creative-controls-json",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json",
+    "--embodiment-review-json",
+    "tests/fixtures/photo_prompt/current_boundary/review.json",
+    "--output-file",
+    "/tmp/subculture-illustration-photo-baseline-v6.json"
+  ],
+  "sha256": "e4a282fd72dd0b7b74541b000bc801693c2c6b8514d0e7f7603739926dc4320c",
+  "pack_id": "29021cacfe653f92",
+  "contract_version": "photo-candidate-pack/v6",
+  "public_candidate_count": 64,
+  "private_fields_absent": [
+    "argv",
+    "sample_prompt_id",
+    "concept_gate_results",
+    "concept_scene_variants",
+    "character_response",
+    "adult_appeal"
+  ],
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "purpose": "Verify current corpus-bound V6 output after source-scoped religion/myth alternatives; immutable V1-V5 retain original observations. Preintegration replay matches V5; final ordinary teacup exposes no ri_* profiles and keeps core, mandatory intents and negative bytes."
+}
