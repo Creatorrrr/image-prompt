@@ -5,17 +5,21 @@ indexes, build a candidate pack, call an image API, or execute proposed regressi
 """
 from collections import Counter
 from pathlib import Path
+import argparse
 import csv
 import hashlib
 import json
 import re
+import subprocess
 import sys
 
 OUT = Path(__file__).resolve().parent
 ROOT = OUT.parents[3]
 SKILL = ROOT / "skills/photo-prompt-image-generator"
-sys.path.insert(0, str(SKILL / "scripts"))
-import prompt_generator as pg
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--reference-mode", choices=["recorded", "live"], default="recorded",
+                    help="Use the recorded successful reference check by default; live mode requires a valid current checkout.")
+args = parser.parse_args()
 
 
 def read(name):
@@ -41,21 +45,28 @@ def unique(rows):
 
 inventory = json.loads((OUT / "TERM-INVENTORY.json").read_text())
 audit = json.loads((OUT / "CURRENT-DATA-AUDIT.json").read_text())
-registry = pg.load_visual_obligation_registry(SKILL / "assets/photo_prompt_visual_obligations.json")
-corpus = pg.load_json(SKILL / "assets/photo_prompt_tags.json")
-owners = {}
-for path in [SKILL / "assets/photo_prompt_visual_obligations.json", *[
-    SKILL / "assets" / name for name in pg.VISUAL_OBLIGATION_EXTENSION_FILENAMES
-]]:
-    for profile in json.loads(path.read_text()).get("profiles", []):
-        owners[profile["id"]] = str(path.relative_to(ROOT))
-assert len(owners) == len(registry["profiles"])
-candidate_ids = {
-    slot: {entry["id"] for entry in entries}
-    for slot, entries in corpus["slots"].items()
-}
+if args.reference_mode == "live":
+    sys.path.insert(0, str(SKILL / "scripts"))
+    import prompt_generator as pg
+    registry = pg.load_visual_obligation_registry(SKILL / "assets/photo_prompt_visual_obligations.json")
+    corpus = pg.load_json(SKILL / "assets/photo_prompt_tags.json")
+    owners = {}
+    for path in [SKILL / "assets/photo_prompt_visual_obligations.json", *[
+        SKILL / "assets" / name for name in pg.VISUAL_OBLIGATION_EXTENSION_FILENAMES
+    ]]:
+        for profile in json.loads(path.read_text()).get("profiles", []):
+            owners[profile["id"]] = str(path.relative_to(ROOT))
+    assert len(owners) == len(registry["profiles"])
+    candidate_ids = {slot: {entry["id"] for entry in entries} for slot, entries in corpus["slots"].items()}
+    slot_dimensions = corpus["candidate_semantic_policy"]["slot_dimensions"]
+    known_slots = set(corpus["slots"])
+else:
+    reference = json.loads((OUT / "REFERENCE-CATALOG-SNAPSHOT.json").read_text())
+    owners = reference["profile_owners"]
+    candidate_ids = {slot: set(ids) for slot, ids in reference["candidate_ids_by_slot"].items()}
+    slot_dimensions = reference["slot_dimensions"]
+    known_slots = set(candidate_ids) | set(slot_dimensions)
 all_candidate_ids = set().union(*candidate_ids.values())
-slot_dimensions = corpus["candidate_semantic_policy"]["slot_dimensions"]
 
 sources = read("SOURCE-SPECS.psv")
 source_ids = unique(sources)
@@ -118,7 +129,8 @@ for term in inventory["terms"]:
     assert set(evidence_ids) <= source_ids, spec
     scope = ("no_external_source_attached_lexical_verification_pending" if not evidence_ids else
              "form_basis_not_lexical_alias_verification" if "form_basis" in spec["decision"] else
-             "analytic_concept_support_not_lexical_verification" if spec["kind"] == "objectification_analysis" else
+             "analytic_concept_support_not_lexical_verification" if set(evidence_ids) <= {"S28", "S29"} else
+             "related_entry_support_not_full_lemma_verification" if spec["decision"] == "related_entry_scope_review" else
              "source_entry_attached_group_scope_review_required")
     decisions.append({"id": term["id"], "expression_group": term["expression_group"],
         "row_kind": term["row_kind"], "domain": term["domain"],
@@ -149,8 +161,8 @@ for row in candidates:
     row["affected_dimensions"] = split(row["affected_dimensions"])
     props = split(row["affected_properties"])
     assert set(row["units"]) <= unit_ids, row
-    assert row["slot"] in corpus["slots"], row
-    assert set(row["existing_candidate_ids"]) <= candidate_ids[row["slot"]], row
+    assert row["slot"] in known_slots, row
+    assert set(row["existing_candidate_ids"]) <= candidate_ids.get(row["slot"], set()), row
     row["affected_properties"] = [{"dimension": properties_dimension.get(prop, row["affected_dimensions"][0]),
         "property": prop, "target": "$core.bound_owner_id"} for prop in props]
     assert set(p["dimension"] for p in row["affected_properties"]) == set(row["affected_dimensions"]), row
@@ -188,11 +200,15 @@ for path in OUT.glob("*.psv"):
     for line_number, line in enumerate(path.read_text().splitlines(), 1):
         assert line == line.rstrip(), (path.name, line_number, "trailing whitespace")
 
+unmerged_paths = subprocess.check_output(["git", "diff", "--name-only", "--diff-filter=U"], cwd=ROOT, text=True).splitlines()
+input_status = "LIVE_CHECKOUT_MERGE_CONFLICTED" if unmerged_paths else "INPUT_DRIFT_REVIEW_REQUIRED" if changed_sources else "UNCHANGED"
 report = {
     "schema_version": "neutral-expression-package-validation/v1",
     "checked_on": "2026-10-03", "structural_status": "PASS",
-    "input_snapshot_status": "UNCHANGED" if not changed_sources else "INPUT_DRIFT_REVIEW_REQUIRED",
-    "status": "PASS" if not changed_sources else "INPUT_DRIFT_REVIEW_REQUIRED",
+    "reference_validation_mode": args.reference_mode,
+    "reference_validation_scope": "current merged loader" if args.reference_mode == "live" else "catalog from previous successful live check; not the current checkout",
+    "input_snapshot_status": input_status,
+    "status": "PASS" if input_status == "UNCHANGED" else input_status,
     "counts": {"keyword_groups": sum(d["row_kind"] == "keyword_group" for d in decisions),
         "authoring_examples": sum(d["row_kind"] == "authoring_example" for d in decisions),
         "term_decisions": len(decisions), "external_sources": len(sources), "observable_relation_units": len(units),
@@ -205,13 +221,14 @@ report = {
     "keyword_evidence_scopes": dict(Counter(d["external_evidence_scope"] for d in decisions if d["row_kind"] == "keyword_group")),
     "candidate_readiness": dict(Counter(c["readiness"] for c in candidates)),
     "checks": ["Every extracted row has exactly one decision", "All source and unit references resolve",
-        "All named existing profile ids exist in the live merged registry",
-        "All named reused candidate ids exist in the declared live slot",
+        "All named existing profile ids resolve in the declared reference-validation mode",
+        "All named reused candidate ids resolve in the declared slot and reference-validation mode",
         "All property effects have a dimension and an explicitly unbound target",
         "Every cross-slot-dimension proposal is held", "All proposals are non-exportable",
         "All planned regressions remain PROPOSED_NOT_RUN", "Input file hashes compared after research compilation"],
     "protected_source_changes": changed_sources,
-    "limits": ["PASS validates the research package structure and current references only.",
+    "current_unmerged_paths": unmerged_paths,
+    "limits": ["PASS validates the research package structure and references in the declared validation mode only.",
         "It does not qualify lexical equivalence, new aliases, production core behavior, candidate packs or images.",
         "Named properties and target placeholders are proposals, not a directly importable runtime schema."]}
 write("VALIDATION.json", report)

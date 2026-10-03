@@ -1,0 +1,139 @@
+{
+  "contract_version": "agent-initial-native-pixel-review/v1",
+  "arm": "B",
+  "reviewer": "/root/neutral_image_b",
+  "reviewed_at_utc": "2026-10-03T03:38:33.858288+00:00",
+  "source_initial_gates_sha256": "c84be93ec8f85c8bb0cd85bed1073f85aa6e91ce10d9f42b8f0741aa31d870dc",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/neutral-expression-native-qualification-20261003/arm-b/generated_images/optical-bay-attempt-01.png",
+  "result_sha256": "a06b1b31592b418025b36404decc9333a16e33ba647edd7fe5f249395f2b9d4a",
+  "dimensions": [
+    1024,
+    1536
+  ],
+  "views": {
+    "whole_frame": {
+      "method": "view_image high plus full-frame native tool output",
+      "source_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/neutral-expression-native-qualification-20261003/arm-b/generated_images/optical-bay-attempt-01.png",
+      "source_sha256": "a06b1b31592b418025b36404decc9333a16e33ba647edd7fe5f249395f2b9d4a",
+      "observation": "At whole-frame presentation the long narrow figure, exposed torso-to-leg relation, two separated hand contacts and one central actor remain readable."
+    },
+    "native": {
+      "method": "view_image original",
+      "source_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/neutral-expression-native-qualification-20261003/arm-b/generated_images/optical-bay-attempt-01.png",
+      "source_sha256": "a06b1b31592b418025b36404decc9333a16e33ba647edd7fe5f249395f2b9d4a",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "observation": "Unchanged native PNG inspected for face/hair, arm surface, hand-target height, bracket component and foot support. No crop, upscale or regenerated image substituted for native evidence."
+    },
+    "reference": {
+      "method": "view_image original",
+      "source_image": "/tmp/codex-remote-attachments/01a0fd79-2285-74a3-aa0a-d730ee5f3d68/4534277A-EC33-4F2A-A046-29E8AB66DBBE/1-사진-1.jpg",
+      "source_sha256": "048adbd3e4343a3725fec6aa0455aa1f367878560bc15d4493a18fde1ce8604c",
+      "scope": "Visible face and hair only. No identity, numerical age, body shape, health, capacity or personality inferred."
+    }
+  },
+  "partial_is_fail": true,
+  "gates": [
+    {
+      "gate_id": "B1_vertical_length",
+      "axis": "willowy / length and proportion",
+      "requirement_ko": "머리부터 양발까지 크게 보이는 전신에서, 팔과 다리가 몸통에 비해 길게 이어지는 비율이 읽힌다. 광각 가장자리 늘어남이나 발끝 잘림으로 길이를 대신하지 않는다.",
+      "pixel_review_focus": [
+        "torso-to-leg relationship",
+        "arm length",
+        "both feet and full outline",
+        "projection distortion"
+      ],
+      "hard": true,
+      "status": "pass",
+      "evidence": "The complete head-to-two-shoe figure occupies most of the 1024x1536 frame. The torso is a readable shorter reference beside long thigh/shin segments and a long near shoulder-elbow-wrist chain. Head and both soles remain inside the frame with natural perspective; no edge stretching or cropped feet substitutes for length.",
+      "evidence_ko": "몸통과 길게 이어지는 다리·가까운 팔의 비율을 같은 전신에서 비교할 수 있다. 머리와 양발이 모두 들어오고 가장자리 늘어남은 두드러지지 않는다."
+    },
+    {
+      "gate_id": "B2_narrow_frame",
+      "axis": "slender / lateral width",
+      "requirement_ko": "어깨와 골반의 가로 폭이 좁고 위팔·허벅지의 옆 윤곽이 가늘게 보인다. 긴 비율만으로 좁은 폭을 통과시키지 않는다.",
+      "pixel_review_focus": [
+        "shoulder outline",
+        "pelvic outline",
+        "upper-arm width",
+        "thigh width"
+      ],
+      "hard": true,
+      "status": "pass",
+      "evidence": "In the rendered view the shoulder and pelvic outlines read narrow, and the exposed upper arm and both thighs have slim transverse outlines. This decision uses lateral silhouette widths in this image, separately from long legs. The mildly oblique stance is noted; no hidden physical measurements are claimed.",
+      "evidence_ko": "어깨·골반과 위팔·허벅지의 가로 윤곽이 좁고 가늘게 읽힌다. 긴 다리만으로 통과시키지 않았으며 이미지 밖 실제 체격 수치를 추정하지 않았다."
+    },
+    {
+      "gate_id": "B3_shallow_arm_definition",
+      "axis": "sinewy / current surface definition",
+      "requirement_ko": "현재 가볍게 접촉 중인 팔에 길게 이어지는 얕은 근육 또는 힘줄 윤곽이 식별된다. 큰 근육 덩어리나 두드러진 혈관 망을 근거로 대체하지 않는다.",
+      "pixel_review_focus": [
+        "visible upper-arm and forearm surface",
+        "shallow elongated contour",
+        "lighting separable from anatomy"
+      ],
+      "hard": true,
+      "status": "fail",
+      "failure_type": "ambiguous_native_surface_partial_is_fail",
+      "evidence": "The visible upper arm and long near forearm are mostly smooth, with broad illumination gradients and ordinary outer contours. Shallow elongated muscular or tendon traces cannot be confidently separated from lighting; the far upper arm is partly occluded. Slimness and a small wrist highlight do not supply the required sinewy surface definition.",
+      "evidence_ko": "가까운 위팔·전완은 주로 매끈한 표면과 조명 그라데이션으로 보인다. 길게 이어지는 얕은 근육·힘줄 윤곽을 조명과 분리하여 식별하기 어렵고 먼 위팔은 일부 가려진다. 가늘다는 것만으로 sinewy를 통과시키지 않는다."
+    },
+    {
+      "gate_id": "B4_reference_face_hair",
+      "axis": "face and hair reference scope",
+      "requirement_ko": "참고의 짙은 단발·이마 앞 잔가닥·눈과 부드러운 얼굴 윤곽이 충분한 크기로 비교 가능하고 전반적인 얼굴·머리 외관 연결이 읽힌다. 체형은 참고 사진에서 가져온 것으로 판정하지 않는다.",
+      "pixel_review_focus": [
+        "face sufficiently resolved",
+        "chin-length dark bob",
+        "wispy forehead strands",
+        "overall visible face appearance"
+      ],
+      "boundary": "The authored subject is explicitly 28. Pixels do not establish numerical age or identity.",
+      "hard": true,
+      "status": "pass",
+      "evidence": "The native face is sufficiently resolved to compare the dark chin-length bob, fine forehead strands, large brown eyes, pink lips and soft oval outline against the reference. These visible face/hair cues form an overall appearance connection. The authored age is 28; native pixels do not establish numerical age or identity, and reference body shape was not used.",
+      "evidence_ko": "원본에서 짙은 단발·이마 잔가닥·눈·입술·부드러운 얼굴 윤곽을 참고와 비교할 수 있다. 얼굴·머리 외관 연결만 판정하며 28세는 작성한 조건이고 픽셀로 나이나 정체성을 인증하지 않는다."
+    },
+    {
+      "gate_id": "B5_hands_contact",
+      "axis": "action and consequential contact",
+      "requirement_ko": "서로 떨어진 양손이 각각 허리 높이의 다른 접근 가능한 짐벌 부품에 가볍게 닿고, 팔에서 손까지의 소유·연결·공간이 자연스럽게 이어진다.",
+      "pixel_review_focus": [
+        "two separated hands",
+        "one target per hand",
+        "reachable contact",
+        "connected joint chain"
+      ],
+      "hard": true,
+      "status": "fail",
+      "failure_type": "visible_height_mismatch",
+      "evidence": "Two separate hands do contact distinct reachable gimbal controls through plausible arm chains. However, the nearer latch hand is near hip level and the brass-wheel hand is at chest level. They are not both waist-height contacts on either side of the waist, so the frozen conjunctive contact requirement fails despite coherent local contact.",
+      "evidence_ko": "두 손과 서로 다른 접촉 대상은 보이지만 가까운 손은 골반 부근, 조절 휠 손은 가슴 높이이다. 양손이 각각 허리 높이에 있어야 한다는 초기 관계를 충족하지 못한다."
+    },
+    {
+      "gate_id": "B6_optical_scene",
+      "axis": "complex scene and visible moment",
+      "requirement_ko": "수직 분할 거울·원형 짐벌·저녁 작업등이 광학 시험실로 읽히며 작은 부품을 놓고 잠깐 멈춘 순간이 중앙 인물과 연결된다. 배경 물체만으로 행동을 판정하지 않는다.",
+      "pixel_review_focus": [
+        "vertical segmented mirror",
+        "circular gimbal",
+        "working-light setting",
+        "contact relation"
+      ],
+      "hard": true,
+      "status": "fail",
+      "failure_type": "event_component_unobservable_partial_is_fail",
+      "evidence": "A vertical segmented mirror, circular gimbal and warm work lamps with a cool strip clearly establish the optical bay. The actor is linked to the apparatus by both hand contacts. The image does not distinguish the newly seated small optical component from existing rim brackets and controls, so a pause just after placing that component cannot be verified. Scene and adjustment context alone cannot satisfy the frozen placement-moment requirement.",
+      "evidence_ko": "수직 분할 거울·원형 짐벌·작업등과 인물의 접촉은 확인된다. 다만 새로 놓인 작은 광학 부품을 기존 브래킷·조절부에서 특정할 수 없어 그 부품을 막 놓고 멈춘 순간은 불관측으로 실패이다."
+    }
+  ],
+  "total_gate_count": 6,
+  "pass_count": 3,
+  "fail_count": 3,
+  "technical_qualified": false,
+  "provenance": "Agent-authored synthetic keyword tests, not requester body definitions.",
+  "user_acceptance": "pending"
+}

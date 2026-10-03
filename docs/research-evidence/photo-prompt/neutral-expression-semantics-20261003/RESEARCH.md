@@ -23,7 +23,7 @@
 
 원 대화의 인용 표시는 외부 URL 없이 캐시된 `chatgpt-content-reference`였다. 이를 독립 근거로 승격하지 않았다. [대화 영수증](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/neutral-expression-semantics-20261003/CONVERSATION-RECEIPT.json), [원문 행 목록](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/neutral-expression-semantics-20261003/TERM-INVENTORY.json), [외부 자료와 접근 한계](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/neutral-expression-semantics-20261003/SOURCES.md)를 따로 보존했다.
 
-외부 근거 범위는 솔직하게 제한했다. 키워드 181행 중 90행에는 관련 어휘 항목이 연결돼 있지만 행에 묶인 모든 철자·다의어가 검증된 것은 아니다. 4행은 피팅 형태 분류의 근거, 9행은 대상화 분석 개념의 근거이며, 78행은 직접 외부 근거를 아직 연결하지 못했다. 특히 한국어 인터넷 표현·비유와 일부 부위 속어는 넓은 exact 별칭 추가를 보류한다. 이 행들도 어떤 관찰 축으로 분해할지와 어떤 뜻을 만들면 안 되는지는 개별 기록했다. 외부 근거 없는 별칭과 기존의 좁은 관찰 계약 재사용은 다른 결정이다.
+외부 근거 범위는 솔직하게 제한했다. 키워드 181행 중 89행에는 어휘 또는 관련 항목이 연결돼 있지만 행에 묶인 모든 철자·다의어가 검증된 것은 아니다. 4행은 피팅 형태 분류의 근거, 10행은 대상화 분석 개념의 근거이며, 78행은 직접 외부 근거를 아직 연결하지 못했다. 특히 한국어 인터넷 표현·비유와 일부 부위 속어는 넓은 exact 별칭 추가를 보류한다. 이 행들도 어떤 관찰 축으로 분해할지와 어떤 뜻을 만들면 안 되는지는 개별 기록했다. 외부 근거 없는 별칭과 기존의 좁은 관찰 계약 재사용은 다른 결정이다.
 
 Merriam-Webster·Cambridge의 자체 항목은 어휘 범위, Fanlore·Wiktionary는 해당 공동체와 사전의 기록된 용례, Understance는 해당 브랜드의 피팅 분류에 사용했다. Fanlore의 일부 페이지는 직접 접근이 403이라 검색 발췌만 활용했다. Langton의 추가 대상화 차원은 원저를 읽지 않고 Stanford Encyclopedia의 설명에 의존하므로 이차 근거라고 표시했다. 사용 빈도·시대별 대표성·최초 발생·보편적 인체 분류는 이번 근거로 주장하지 않는다.
 
@@ -45,7 +45,7 @@ Merriam-Webster·Cambridge의 자체 항목은 어휘 범위, Fanlore·Wiktionar
 | 의복의 윤곽·광학·지역적 노출 | `bm_fabric_body_outline`, `sheer_garment_optical_layering`, `pfe_lateral_chest`, `pfe_lower_chest` | 직물·부위·가장자리의 연결과 넓은 속어의 범위 차이 |
 | 초대·장난스러운 상호작용 | `target_directed_seductive_display`, `playful_flirtation_interaction` | 주체·동일 대상·사건·대상에 연결된 결과 유지 |
 
-파일별 소유권, 실제 계약 원문, 후보가 존재하는 슬롯과 시작 해시는 [현재 데이터 감사](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/neutral-expression-semantics-20261003/CURRENT-DATA-AUDIT.json)에 기록했다. 조사 도중 74개 추적 입력 중 7개 파일의 해시가 달라졌다. 이번 작성 도구의 수정 범위는 이 리서치 폴더이며 기존 변경을 되돌리지 않았다. 이름이 참조된 프로필·후보는 패키지 검증 시 최신 병합 데이터에서 존재를 재확인했다. 초기 exact 진단은 초기 스냅샷의 관찰로 남긴다.
+파일별 소유권, 실제 계약 원문, 후보가 존재하는 슬롯과 시작 해시는 [현재 데이터 감사](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/neutral-expression-semantics-20261003/CURRENT-DATA-AUDIT.json)에 기록했다. 조사 도중 먼저 7개 파일의 해시 변화가 관찰됐고, 마감 시에는 공유 작업 트리가 병합 충돌 상태가 되어 8개 입력의 해시가 시작과 달라졌다. 이번 작성 도구의 수정 범위는 이 리서치 폴더이며 기존 변경·충돌을 되돌리지 않았다. 이름이 참조된 프로필·후보는 충돌 발생 전 성공한 live 검증에서 존재를 재확인했고, 그 참조 목록을 [스냅샷](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/neutral-expression-semantics-20261003/REFERENCE-CATALOG-SNAPSHOT.json)으로 보존했다. 마감 구조 검증은 이 기록을 사용한다. 초기 exact 진단은 초기 스냅샷의 관찰로 남기며 현재 충돌 작업본의 실행 결과라고 부르지 않는다.
 
 ## 3. 형태 표현에서 유지해야 할 독립 축
 
@@ -106,7 +106,7 @@ dominant/submissive는 명시된 관계 역학, top/bottom은 특정 활동 역�
 | 얇은 입술을 현재 내민 성인 얼굴 | 얇은 입술이 현재 조금 앞으로 나와 있다 | 원래 두께와 현재 동작;불만·욕망은 명시된 경우 별도 |
 | doe-eyed라는 인상 | 원문이 지정한 큰 눈 개구를 기술 | 순진해 보인다는 화자 평가;실제 성격·나이 아님 |
 | 성인 A가 B를 leering이라고 평가받는 문맥 | A의 눈과 머리가 B 쪽을 향한다 | 부정적 시선 평가·동기·지속은 원문 근거에 귀속 |
-| thrift/성적 의미 없는 Gooner 문맥 | 요청된 축구 응원 행동과 장면 | 명칭의 축구 뜻;성적 행위자로 변환하지 않음 |
+| 축구 응원의 Gooner 문맥 | 요청된 축구 응원 행동과 장면 | 명칭의 축구 뜻;성적 행위자로 변환하지 않음 |
 | 주목 목적 게시 사진 | 요청된 카메라 방향과 의복·구도를 기술 | 게시 목적은 명시된 사실;야간·노출이 정의는 아님 |
 | 역할을 상징하는 콜라를 명시 | 착용자의 목에 부착된 장식·재질·잠금을 기술 | 명시 역할 상징을 별도 보존;장식만으로 추정하지 않음 |
 | 특정 옷 구조와 sideboob를 함께 명시 | 같은 몸판 옆 가장자리와 해당 바깥 부위 윤곽을 기술 | 구조가 없는 일반 용어에는 해당 옷을 발명하지 않음 |
@@ -134,4 +134,4 @@ dominant/submissive는 명시된 관계 역학, top/bottom은 특정 활동 역�
 
 [회귀 84개](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/neutral-expression-semantics-20261003/REGRESSION-PROPOSALS.json)는 `PROPOSED_NOT_RUN`이다. 구현 후 도덕/신체 타락·정의 우선·부정·다의어·형태 축 독립·대상 뒤집기·역할/합의·시간 한계·속성 잠금·64개 후보 예산·부정 예제 검색 오염·부분 픽셀 충족을 검증한다. 세부 순서와 파일별 변경안은 [반영 계획](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/neutral-expression-semantics-20261003/IMPLEMENTATION-PLAN.md)에 있다.
 
-[패키지 검증](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/neutral-expression-semantics-20261003/VALIDATION.json)은 모든 행의 결정 연결, source/unit 참조, 실제 owner·슬롯·재사용 후보의 존재, 속성 효과 축, 복수 축 보류, 비수출 상태를 확인했다. 구조 검증은 PASS이며 입력 스냅샷은 `INPUT_DRIFT_REVIEW_REQUIRED`다. 이는 연구 결과를 검토할 수 있다는 뜻이며 운영 반영·검색 성능·픽셀·사용자 선호의 통과 판정은 아니다.
+[패키지 검증](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/neutral-expression-semantics-20261003/VALIDATION.json)은 모든 행의 결정 연결, source/unit 참조, 선언한 기록 모드에서의 owner·슬롯·재사용 후보 참조, 속성 효과 축, 복수 축 보류, 비수출 상태를 확인했다. 구조 검증은 PASS이며 최신 입력 상태는 `LIVE_CHECKOUT_MERGE_CONFLICTED`다. 마감 live 검증 두 번은 시각 계약 JSON에 남은 충돌 때문에 로더 단계에서 실패했다. 기록 참조 모드로 연구 패키지를 재구성했으며 최신 live 재검증을 했다고 표시하지 않았다. 이는 연구 결과를 검토할 수 있다는 뜻이며 운영 반영·검색 성능·픽셀·사용자 선호의 통과 판정은 아니다.

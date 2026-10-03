@@ -1,0 +1,57 @@
+{
+  "contract_version": "independent-initial-pixel-gates/v1",
+  "arm": "a",
+  "authorship": "agent-authored synthetic qualification gates, not human body-shape definitions",
+  "created_at_utc": "2026-10-03T02:36:34.922564+00:00",
+  "review_rule": "partial_is_fail",
+  "pixel_success_requires_all_gates": true,
+  "meaning_focus": [
+    "local lower-abdomen fullness",
+    "continuous torso-side curvature under light clothing contact",
+    "soft rounded upper-arm fullness"
+  ],
+  "gates": [
+    {
+      "gate_id": "a_plump_lower_abdomen",
+      "meaning": "plump applied only to the lower abdomen",
+      "pass_observation": "Below the navel, the clothed lower abdomen has a clearly visible softly rounded, forward-projecting volume localized to that region.",
+      "confusion_boundary": "A flat lower belly, a sharp muscular plane, or a skirt fold alone does not establish soft lower-abdomen fullness. General body enlargement without the specific contour is insufficient.",
+      "pixel_region": "lower torso between navel level and trousers waistband"
+    },
+    {
+      "gate_id": "a_curvaceous_torso_contact",
+      "meaning": "curvaceous applied to the torso-side line, with lightly contacting rib knit",
+      "pass_observation": "The side outline changes direction smoothly from the lower ribcage inward at the waist and outward toward the lower abdomen, while the rib knit visibly follows that contour in a continuous contact line.",
+      "confusion_boundary": "Large breasts or large hips alone do not establish this torso curve. A hanging straight fabric edge, an isolated crease, or a severe angular waist notch is insufficient.",
+      "pixel_region": "near side of torso from lower ribs through flank and belly"
+    },
+    {
+      "gate_id": "a_fleshy_upper_arms",
+      "meaning": "fleshy applied to exposed upper arms",
+      "pass_observation": "At least the near exposed upper arm shows rounded soft thickness and smooth transitions, with a gentle contact or elbow fold rather than a sharply separated muscle outline.",
+      "confusion_boundary": "A broad sleeve, shoulder width, or thick rigid muscle definition alone is insufficient. No health or strength inference is made.",
+      "pixel_region": "exposed near upper arm and its connection to shoulder and elbow"
+    },
+    {
+      "gate_id": "a_reference_face_hair",
+      "meaning": "visible face/hair appearance reference only",
+      "pass_observation": "The face and hair visibly retain the reference bob-and-fringe arrangement and recognizable facial proportions, including the unforced eye and lip shapes. Adult presentation is visible; exact age remains a text-side specification.",
+      "confusion_boundary": "This is visual appearance comparison, not identity verification or evidence about the reference person age, body, personality, or acceptance.",
+      "pixel_region": "head and face"
+    },
+    {
+      "gate_id": "a_observable_evidence_space",
+      "meaning": "all three morphology signals remain assessable in one frame",
+      "pass_observation": "The head-to-mid-thigh three-quarter side frame exposes the upper arm and torso contour; the book, hands, and workbench are beside or below the lower abdomen so the three target regions can be inspected.",
+      "confusion_boundary": "Correct clauses or hidden plausible shapes do not pass. Obscured or unresolvable primary evidence is a fail.",
+      "pixel_region": "whole frame and each main morphology region"
+    },
+    {
+      "gate_id": "a_coherent_book_repair_scene",
+      "meaning": "complex authored context remains one plausible photograph",
+      "pass_observation": "One adult book repairer stands beside a low workbench with an open clothbound book and a loose binding thread; visible hand contact and object support are coherent, and a damp threshold or reflected wet alley light grounds the after-shower moment.",
+      "confusion_boundary": "A decorative book cover, impossible hand ownership, or a floating book/thread contact does not pass. The exact off-screen pickup cannot be proven from pixels and is not separately gated.",
+      "pixel_region": "hands, book, bench, entrance and environmental traces"
+    }
+  ]
+}

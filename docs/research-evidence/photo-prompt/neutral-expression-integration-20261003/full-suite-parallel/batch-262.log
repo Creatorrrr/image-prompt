@@ -1,0 +1,22 @@
+.E
+======================================================================
+ERROR: test_prior_twenty_three_edited_rows_are_byte_semantically_preserved (tests.test_photo_scene_data_cleanup.ScenePreservationTests.test_prior_twenty_three_edited_rows_are_byte_semantically_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_scene_data_cleanup.py", line 124, in test_prior_twenty_three_edited_rows_are_byte_semantically_preserved
+    source=generator.load_json(ROOT/'skills/photo-prompt-image-generator/assets/photo_prompt_tags.json')
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 1317, in load_json
+    data = merge_research_extension(data, extension)
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 779, in merge_research_extension
+    photo_candidate_semantics.extend_slot_contexts(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        slots, extension.get("existing_slot_context_extensions"))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_semantics.py", line 88, in extend_slot_contexts
+    raise ValueError(f"context extension references unknown entry {slot}.{entry_id}")
+ValueError: context extension references unknown entry gaze_engagement.pv_gaze_direct
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.527s
+
+FAILED (errors=1)

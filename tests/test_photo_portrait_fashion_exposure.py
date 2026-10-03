@@ -156,7 +156,15 @@ class PortraitFashionExposureTests(unittest.TestCase):
         old = next(p for p in self.all_registry["profiles"] if p["id"] == "inner_thigh_negative_space")
         original = json.loads((EVIDENCE / "revisions/initial/photo_prompt_visual_profile_index.json").read_text())
         current = json.loads((SKILL / "assets/photo_prompt_visual_profile_index.json").read_text())
-        self.assertEqual(current["entries"][old["id"]], original["entries"][old["id"]])
+        # Reconstruct only the explicitly recorded later alternatives. The
+        # frozen initial text stays exact; a new text needs a new vector.
+        receipt = json.loads((ROOT / "docs/research-evidence/photo-prompt/neutral-expression-integration-20261003/DATA-CHANGE-RECEIPT.json").read_text())
+        additions = next(p["added_paraphrases"] for f in receipt["existing_profile_updates"] for p in f["profiles"] if p["id"] == old["id"])
+        historical = copy.deepcopy(old)
+        historical["semantics"]["paraphrase_examples"] = [p for p in historical["semantics"]["paraphrase_examples"] if p not in additions]
+        self.assertEqual(pg.visual_profile_semantic_text(historical), original["entries"][old["id"]]["text"])
+        self.assertEqual(current["entries"][old["id"]]["text"], pg.visual_profile_semantic_text(old))
+        self.assertEqual(len(current["entries"][old["id"]]["vector"]), 768)
         self.assertIn("절대공역", old["activation"]["project_glossary_aliases"])
         self.assertNotIn("절대영역", old["activation"]["project_glossary_aliases"])
         new = self.profiles["pfe_thigh_skin_band"]
@@ -184,6 +192,14 @@ class PortraitFashionExposureTests(unittest.TestCase):
                         comparable["semantics"][field] = original
                     else:
                         comparable["semantics"].pop(field, None)
+            if p["id"] == "pfe_cleavage":
+                original = p["semantics"]["paraphrase_examples"]
+                current = comparable["semantics"]["paraphrase_examples"]
+                self.assertEqual(current[:len(original)], original)
+                receipt = json.loads((ROOT / "docs/research-evidence/photo-prompt/neutral-expression-integration-20261003/DATA-CHANGE-RECEIPT.json").read_text())
+                additions = next(row["added_paraphrases"] for f in receipt["existing_profile_updates"] for row in f["profiles"] if row["id"] == p["id"])
+                self.assertEqual(current[len(original):], additions)
+                comparable["semantics"]["paraphrase_examples"] = original
             self.assertEqual(p, comparable)
         initial = json.loads((EVIDENCE / "revisions/initial/photo_prompt_portrait_fashion_exposure_extension.json").read_text())
         for slot, rows in initial["slots"].items():

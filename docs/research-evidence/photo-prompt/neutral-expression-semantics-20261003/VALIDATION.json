@@ -2,8 +2,10 @@
   "schema_version": "neutral-expression-package-validation/v1",
   "checked_on": "2026-10-03",
   "structural_status": "PASS",
-  "input_snapshot_status": "INPUT_DRIFT_REVIEW_REQUIRED",
-  "status": "INPUT_DRIFT_REVIEW_REQUIRED",
+  "reference_validation_mode": "recorded",
+  "reference_validation_scope": "catalog from previous successful live check; not the current checkout",
+  "input_snapshot_status": "LIVE_CHECKOUT_MERGE_CONFLICTED",
+  "status": "LIVE_CHECKOUT_MERGE_CONFLICTED",
   "counts": {
     "keyword_groups": 181,
     "authoring_examples": 25,
@@ -21,9 +23,10 @@
   },
   "keyword_evidence_scopes": {
     "no_external_source_attached_lexical_verification_pending": 78,
-    "source_entry_attached_group_scope_review_required": 90,
+    "source_entry_attached_group_scope_review_required": 88,
     "form_basis_not_lexical_alias_verification": 4,
-    "analytic_concept_support_not_lexical_verification": 9
+    "related_entry_support_not_full_lemma_verification": 1,
+    "analytic_concept_support_not_lexical_verification": 10
   },
   "candidate_readiness": {
     "existing_owner_clause_review": 9,
@@ -39,8 +42,8 @@
   "checks": [
     "Every extracted row has exactly one decision",
     "All source and unit references resolve",
-    "All named existing profile ids exist in the live merged registry",
-    "All named reused candidate ids exist in the declared live slot",
+    "All named existing profile ids resolve in the declared reference-validation mode",
+    "All named reused candidate ids resolve in the declared slot and reference-validation mode",
     "All property effects have a dimension and an explicitly unbound target",
     "Every cross-slot-dimension proposal is held",
     "All proposals are non-exportable",
@@ -56,12 +59,17 @@
     {
       "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
       "before": "44339e938029ad94022831476882e1db41cb2928d177277453bb1f6b4db3dd9e",
-      "after": "e6a4d24bc9982a2723022c946246b023a3f872b2c8ecaeac0aab9695fd7c9f4d"
+      "after": "8cc5d0db577a083ad50cbf0bf8335b951f1db64fb1975c6347c64182d7182ec5"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "before": "cce76a962dd83b90560c2f3d6e4de8831f0ad99b07bf86ef60b1f84063d22bac",
+      "after": "747a19251bbe7cfe357b13714cad837dc10e61e8c610df8fc6e7d46221181be3"
     },
     {
       "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
       "before": "8cdf23c06a5d63d2207e3f531b7fcea2217ba961ea6dc9d7e99d9d00d5dff1b2",
-      "after": "6c7edb9cd2b4be33d4cb3bfd3437002aaccc86198aa0d44887b3d1e154df0c07"
+      "after": "1a7e087ea28e1c3bdb8adf03ce2f0eb3b302fb09f142937db4f54d77391e3cd1"
     },
     {
       "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_clothing_structure.json",
@@ -81,11 +89,16 @@
     {
       "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
       "before": "9879616056d119012ae3e894c85db19265dc264bab6b5a4c72abbdc488766213",
-      "after": "788e0c6bd1300bc2c4f9fbe5ccdde8073662c44c97be3394f1f0fe05ec3bd731"
+      "after": "a9f371745c30b43e050a89ee5587a694cd68818843297a875547874e95db9019"
     }
   ],
+  "current_unmerged_paths": [
+    "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json"
+  ],
   "limits": [
-    "PASS validates the research package structure and current references only.",
+    "PASS validates the research package structure and references in the declared validation mode only.",
     "It does not qualify lexical equivalence, new aliases, production core behavior, candidate packs or images.",
     "Named properties and target placeholders are proposals, not a directly importable runtime schema."
   ]

@@ -1,0 +1,22 @@
+..E.
+======================================================================
+ERROR: test_reuse_appends_context_without_changing_existing_meaning_or_guards (tests.test_photo_pose_vocabulary_semantics.PhotoPoseVocabularySemanticsTests.test_reuse_appends_context_without_changing_existing_meaning_or_guards)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_pose_vocabulary_semantics.py", line 78, in test_reuse_appends_context_without_changing_existing_meaning_or_guards
+    before = generator.load_json(ASSETS / "photo_prompt_tags.json")
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 1317, in load_json
+    data = merge_research_extension(data, extension)
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 779, in merge_research_extension
+    photo_candidate_semantics.extend_slot_contexts(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        slots, extension.get("existing_slot_context_extensions"))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_semantics.py", line 88, in extend_slot_contexts
+    raise ValueError(f"context extension references unknown entry {slot}.{entry_id}")
+ValueError: context extension references unknown entry gaze_engagement.pv_gaze_direct
+
+----------------------------------------------------------------------
+Ran 4 tests in 40.259s
+
+FAILED (errors=1)
