@@ -66,6 +66,19 @@ class CameraOwnedClauseTests(unittest.TestCase):
         self.assertEqual(camera.legacy_camera_clauses(core, "height"), ["Place the camera below the hamper"])
         self.assertEqual(camera.legacy_camera_clauses(core, "direction"), [])
 
+    def test_unrelated_background_clause_does_not_remove_an_owned_camera_clause(self):
+        core = {"subject": "a hanging mobile", "baseline_prompt_en":
+                "Position the camera below the mobile and tilt it upward. Use soft light and a simple background, letting the low camera position define the photograph."}
+        self.assertEqual(camera.legacy_camera_clauses(core, "direction"),
+                         ["Position the camera below the mobile and tilt it upward"])
+
+    def test_passive_camera_action_is_literal_and_does_not_supply_height(self):
+        core = {"subject": "a mossy stone", "baseline_prompt_en":
+                "The camera is tilted downward toward the stone, while the flower faces upward."}
+        self.assertEqual(camera.legacy_camera_clauses(core, "direction"),
+                         ["The camera is tilted downward toward the stone"])
+        self.assertEqual(camera.legacy_camera_clauses(core, "height"), [])
+
     def test_a_new_object_actor_cannot_supply_camera_direction(self):
         for text in (
             "The camera records the sculpture while its head points upward.",
@@ -205,7 +218,7 @@ class FrozenUpwardCameraRetrievalTests(unittest.TestCase):
                     self.assertEqual(core, before)
                     self.assertEqual(sum(len(s["candidates"]) for s in pack["slots"].values()), 64)
                     self.assertEqual(pack["authorial_composition"]["candidate_order"], "seed_shuffled_non_preferential")
-                    self.assertTrue(all(s["selected"] is None for s in pack["slots"].values()))
+                    self.assertEqual(pack["core_retrieval"]["candidate_adoption"], "optional")
                     if arm == "public-cli-property":
                         self.assertTrue(all(c["applicability"]["status"] == "ineligible" for c in rows))
 
