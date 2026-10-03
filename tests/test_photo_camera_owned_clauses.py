@@ -89,6 +89,18 @@ class CameraOwnedClauseTests(unittest.TestCase):
             with self.subTest(text=text):
                 self.assertEqual(camera.legacy_camera_clauses({"subject": "a sculpture", "baseline_prompt_en": text}, "direction"), [])
 
+    def test_bare_coordinated_actors_are_not_part_of_a_camera_query(self):
+        core = {"subject": "an ornament", "baseline_prompt_en":
+                "Place the camera below the ornament and children look upward beside it."}
+        self.assertEqual(camera.legacy_camera_clauses(core, "height"), ["Place the camera below the ornament"])
+        self.assertEqual(camera.legacy_camera_clauses(core, "direction"), [])
+
+    def test_coordinated_background_does_not_describe_the_camera(self):
+        core = {"subject": "a lampshade", "baseline_prompt_en":
+                "The camera looks upward toward the lampshade and the background stays plain."}
+        self.assertEqual(camera.legacy_camera_clauses(core, "direction"),
+                         ["The camera looks upward toward the lampshade"])
+
     def test_depicted_camera_subject_needs_explicit_owner_evidence(self):
         for subject in ("an old camera", "진열된 카메라"):
             core = {"subject": subject, "baseline_prompt_en": "The camera points upward toward a shelf."}
