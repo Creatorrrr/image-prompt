@@ -6285,7 +6285,8 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
     prior_path = asset_dir / "photo_regression_baseline_v2.json"
     intermediate_path = asset_dir / "photo_regression_baseline_v3.json"
     bound_path = asset_dir / "photo_regression_baseline_v4.json"
-    baseline_path = asset_dir / "photo_regression_baseline_v5.json"
+    previous_path = asset_dir / "photo_regression_baseline_v5.json"
+    baseline_path = asset_dir / "photo_regression_baseline_v6.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
     photo_boundary = universal_baseline.get("photo_boundary")
     _require(
@@ -6335,15 +6336,31 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
         },
         "bound photo history lineage mismatch",
     )
-    baseline = _load_json(baseline_path)
+    previous = _load_json(previous_path)
     _require(
-        baseline.get("schema") == "photo_regression_baseline/v5"
-        and baseline.get("status") == "current"
-        and baseline.get("historical_baseline") == {
+        previous.get("schema") == "photo_regression_baseline/v5"
+        and previous.get("status") == "current"
+        and previous.get("historical_baseline") == {
             "path": bound_path.name, "schema": "photo_regression_baseline/v4",
             "sha256": _sha256(bound_path),
         },
+        "previous photo baseline lineage mismatch",
+    )
+    baseline = _load_json(baseline_path)
+    _require(
+        baseline.get("schema") == "photo_regression_baseline/v6"
+        and baseline.get("status") == "current"
+        and baseline.get("historical_baseline") == {
+            "path": previous_path.name, "schema": "photo_regression_baseline/v5",
+            "sha256": _sha256(previous_path),
+        },
         "current photo baseline lineage mismatch",
+    )
+    _require(
+        all(baseline.get(key) == previous.get(key) for key in (
+            "contract_version", "public_candidate_count", "negative_en", "private_fields_absent",
+        )),
+        "photo retrieval successor changed the preserved public boundary",
     )
     command = baseline.get("command")
     _require(
@@ -6360,6 +6377,21 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
     )
     output_index = command.index("--output-file") + 1
     repo_root = Path(__file__).resolve().parents[3]
+    previous_command = previous.get("command") or []
+    _require(
+        len(command) == len(previous_command)
+        and all(a == b for i, (a, b) in enumerate(zip(command, previous_command)) if i != output_index),
+        "photo retrieval successor changed the frozen generation command",
+    )
+    frozen_inputs = baseline.get("frozen_inputs")
+    expected_input_paths = {command[command.index(flag) + 1] for flag in (
+        "--request-envelope-json", "--authorial-core-json", "--creative-controls-json", "--embodiment-review-json",
+    )}
+    _require(
+        isinstance(frozen_inputs, dict) and set(frozen_inputs) == expected_input_paths
+        and all(frozen_inputs[path] == _sha256(repo_root / path) for path in expected_input_paths),
+        "photo retrieval successor frozen input bytes drift",
+    )
     with tempfile.TemporaryDirectory(prefix="illustration-photo-boundary-") as temp_dir:
         temporary_output = Path(temp_dir) / "photo-candidate-pack.json"
         actual_command = list(command)
@@ -6389,6 +6421,16 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
         "photo baseline output shape mismatch",
     )
     pack = payload[0]
+    preserved_contract = {key: pack.get(key) for key in (
+        "authorial_core", "creative_controls", "embodiment_review", "authorial_composition", "negative_en",
+    )}
+    preserved_digest = hashlib.sha256(json.dumps(
+        preserved_contract, ensure_ascii=False, sort_keys=True, separators=(",", ":"),
+    ).encode("utf-8")).hexdigest()
+    _require(
+        preserved_digest == baseline.get("preserved_contract_sha256"),
+        "photo retrieval successor changed the frozen scene or composition contract",
+    )
     provenance = pack.get("provenance")
     _require(
         isinstance(provenance, dict)
