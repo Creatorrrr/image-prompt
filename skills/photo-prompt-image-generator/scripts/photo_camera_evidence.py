@@ -46,7 +46,9 @@ def legacy_camera_clauses(core: dict, axis: str) -> list[str]:
                          r"|\bcamera\b[^,;.!?]{0,60}\bbackground\b"
                          r"|\b(?:toy|miniature|antique)\s+camera\b"
                          r"|\bcamera\b[^,;.!?]{0,40}\bon\s+display\b")
-    if any(re.search(background_camera, sentence, re.I) for sentence in sentences):
+    camera_parts = [part for sentence in sentences
+                    for part in re.split(r",|\b(?:and|but|while|whereas)\b", sentence, flags=re.I)]
+    if any(re.search(background_camera, part, re.I) for part in camera_parts):
         return []
     queries = []
     direction = r"(?:upwards?|downwards?|up|down|horizontally|vertically|forward|backward|ahead|left|right|towards?|from|above|below)\b"
@@ -55,7 +57,8 @@ def legacy_camera_clauses(core: dict, axis: str) -> list[str]:
                       for part in sentence.split(",")]
     for part in positive_parts:
         # Stop before another scene actor, a relative clause or a consequence.
-        clause = re.split(r"\b(?:while|whereas|because|making|which|whose|that|with)\b|\band\s+(?=the|a\b|an\b|its\b|they\b|it\s+(?:is|looks|faces|points)\b)", part, flags=re.I)[0].strip()
+        # Keep a coordination only when its literal object is this camera.
+        clause = re.split(r"\b(?:while|whereas|because|making|which|whose|that|with|but)\b|\band\b(?!\s+(?:tilt|aim|point|turn)\s+(?:it|the\s+camera)\b)", part, maxsplit=1, flags=re.I)[0].strip()
         head = re.fullmatch(
             r"(?:(?P<command>Position|Place|Put|Set|Keep|Mount|Hold|Tilt|Aim|Point|Turn)\s+(?:(?:the|our)\s+)?(?:shooting\s+)?camera\b|(?:The|Our)\s+(?:shooting\s+)?camera\b)\s*(?P<body>.+)",
             clause, re.I)

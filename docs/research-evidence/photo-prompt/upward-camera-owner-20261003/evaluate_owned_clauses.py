@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -35,7 +36,8 @@ def main():
     report = {"runtime_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=args.runtime_repo, text=True).strip(),
               "runtime_sources": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in scripts.glob("*.py")},
               "fixture_sha256": hashlib.sha256(raw).hexdigest(), "authorship": inputs.get("authorship"),
-              "provider_calls": 0, "pixel_quality_evaluated": False, "rows": []}
+              "provider_calls": 0, "pixel_quality_evaluated": False,
+              "caller_probe_kind": "Synthetic normalized adapter over unchanged authored prose, not an independently authored frozen scene core.", "rows": []}
     with mock.patch.object(pg, "cached_gemini_client", side_effect=AssertionError("offline owner evaluation")), \
          mock.patch.object(pg, "embed_texts_with_gemini", side_effect=AssertionError("offline owner evaluation")):
         data = pg.load_runtime_data(args.data_repo / "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json")
@@ -46,9 +48,18 @@ def main():
         for case in inputs["cases"]:
             text = case.get("text") or case["baseline_prompt_en"]
             request = case.get("request") or text
-            authored = fixtures.core(request, interpreted_intent=text, subject=case["subject"],
+            # Supply only candidate-free wire/budget scaffolding for the caller
+            # probe. Expected owner spans never become input anchors or locks.
+            baseline = text
+            while len(re.findall(r"[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*", baseline)) < pg.AUTHORIAL_PROMPT_MIN_WORDS:
+                baseline += " " + fixtures._TEST_PROMPT_BUDGET_EXTENSION
+            words = baseline.split()
+            anchors = list(dict.fromkeys(" ".join(words[i:i + 6]).strip(" ,.;:!?")
+                for i in range(0, len(words) - 5, 3)
+                if len(pg.authorial_request_content_words(" ".join(words[i:i + 6]))) >= 2))[:3]
+            authored = fixtures.core(request, interpreted_intent=text, subject=case["subject"] + " photographic subject",
                 event=text.split(".")[0], visual_priorities=("readable subject structure", "natural material detail"),
-                baseline_prompt_en=text)
+                baseline_prompt_en=baseline, anchor_evidence=tuple(anchors))
             controls = pg.creative_controls.resolve(request, overrides={"sensual": 0, "fetish": 0}, seed=47)
             authored["creative_controls_sha256"] = controls["canonical_sha256"]
             normalization_error = None
