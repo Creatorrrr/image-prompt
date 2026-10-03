@@ -32,7 +32,14 @@ class TextureDataCleanupTests(unittest.TestCase):
         kept = [r for r in self.frozen['inventory'] if r['decision'] == 'keep']
         self.assertEqual(len(kept), 35)
         for row in kept:
-            self.assertEqual(self.rows[row['id']], row['before'], row['id'])
+            expected = copy.deepcopy(row['before'])
+            if row['id'] == 'skin_texture':
+                # The later neutral-language overlay changes only reviewed
+                # alternatives; every frozen original value remains exact.
+                extension = json.loads((ASSETS / 'photo_prompt_neutral_expression_extension.json').read_text())
+                additions = extension['existing_slot_context_extensions']['texture']['skin_texture']['paraphrases']
+                expected['paraphrases'] = additions
+            self.assertEqual(self.rows[row['id']], expected, row['id'])
 
     def test_only_eight_alias_arrays_and_one_translation_are_changed(self):
         fixed = [r for r in self.frozen['inventory'] if r['decision'] == 'fix']

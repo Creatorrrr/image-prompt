@@ -1,0 +1,173 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 시각 의미 데이터의 대체 표현을 추가/보강하는 작업을 중심으로 진행하고 후보팩에도 잘 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "cda695ce7e543298b84c732c215c7d4e2a1291ba6c0e8a35907a743e382b918f",
+  "interpreted_intent": "The requester authorizes independent random complex test concepts using the attached image. Arm B is an agent-authored synthetic test, not a requester body definition. General knowledge resolves willowy as long limb and vertical proportions, slender as narrow lateral shoulders/pelvis/limbs, and sinewy as shallow elongated visible arm contours; these are independent observation axes, not ability, occupation, vascularity or body-fat claims. My chosen photograph catches a quiet present-tense contact after a small optical adjustment. The face and gentle gesture carry subtle attraction at sensual=1, with a circular gimbal contrasting the elongated figure. A close full-figure view retains native evidence for the reference face/hair and the three authored morphology tests.",
+  "subject": "one explicitly 28-year-old adult woman using the attachment for face and hair appearance only",
+  "setting": "evening industrial optical test bay with a vertical segmented mirror in its circular gimbal",
+  "event": "a pause just after positioning a small optical component, with separated light hand contacts on two low gimbal controls",
+  "visual_priorities": [
+    "The reference-guided face and dark bob remain resolved within a large full-figure portrait.",
+    "Long limb proportions and a narrow lateral frame remain distinguishable as separate shape axes.",
+    "Shallow elongated arm contours remain visible in the present gentle-contact action.",
+    "Each separated hand meets its own reachable control beside the hips while the component sits flush in its bracket.",
+    "The circular optical gimbal and warm work lamps place the quiet gesture within a technical evening scene."
+  ],
+  "baseline_prompt_en": "A photograph built around a small optical adjustment, made as a close environmental portrait of one 28-year-old adult woman in an evening industrial optical test bay. Use the supplied photograph as a face-and-hair appearance reference: a chin-length dark bob with fine strands across the forehead, large brown eyes, natural pink lips and a softly oval facial contour. Her arms and legs read long relative to her torso. Her shoulders and pelvis form a narrow lateral frame, with slim upper arms and thighs. Shallow elongated muscular contours trace her exposed upper arms and forearms, with fine tendon lines beside the wrists. She wears a fitted petrol-blue sleeveless rib-knit top, close dark shorts and low dark shoes. A large vertical segmented mirror sits in its circular gimbal behind her, its pale facets catching distant work lights. Two low controls project forward beside her hips. She pauses just after positioning a small optical component, which now sits flush in its rim-mounted bracket. Her left fingertips touch a small fixed latch on the lower rim; her right thumb and index finger rest against a separate brass adjustment wheel. Her hands stay separated at either side of her waist, with both elbows in an easy bend. Both feet rest flat on the concrete floor and her weight remains centered. She gives the camera a relaxed, brief glance, lips resting softly apart, while her fingertips remain in place. Warm work lamps graze her face and arms against a cool light strip across the bay. A vertical 2:3 frame contains her complete figure from hair to both shoe soles at nearly nine tenths of frame height. A chest-height camera and near-frontal view keep the face, lateral body outline and both hand contacts clearly resolved with natural perspective. The face and gentle hand contact lead the image; the mirrored ring supplies a quiet circular counterpoint to her elongated figure.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+      "basis": "request_context",
+      "resolution": "The user permits an independently selected complex image test; the optical-bay subject and moment are agent-owned choices.",
+      "sources": []
+    },
+    {
+      "term": "키워드가 이미지에 실제로 반영되는지",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+      "basis": "request_context",
+      "resolution": "Compare seed-word exposure and the agent-authored observable meanings against saved native pixels. The synthesized willowy/slender/sinewy meanings are test conditions, not definitions supplied by the user.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the visible face and hair appearance of the attachment for the explicitly adult authored subject; derive body geometry independently.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "A photograph built around a small optical adjustment"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "subject",
+        "prompt_evidence": "one 28-year-old adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "event",
+        "prompt_evidence": "She pauses just after positioning a small optical component"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the supplied photograph as a face-and-hair appearance reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "age",
+      "count",
+      "role",
+      "appearance",
+      "body_geometry",
+      "pose",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere",
+      "format"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "arm_b_vertical_length_test",
+      "dimension": "body_geometry",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "random_keyword_reference_test"
+      ],
+      "affected_dimensions": [
+        "body_geometry"
+      ],
+      "axes": {
+        "agent_test_keyword": "willowy",
+        "observation_axis": "length_and_vertical_proportion",
+        "scope": "arms_and_legs_relative_to_torso"
+      },
+      "evidence": {
+        "length_phrase": "Her arms and legs read long relative to her torso"
+      }
+    },
+    {
+      "assertion_id": "arm_b_lateral_width_test",
+      "dimension": "body_geometry",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "random_keyword_reference_test"
+      ],
+      "affected_dimensions": [
+        "body_geometry"
+      ],
+      "axes": {
+        "agent_test_keyword": "slender",
+        "observation_axis": "lateral_frame_width",
+        "scope": "shoulders_pelvis_upper_arms_thighs"
+      },
+      "evidence": {
+        "width_phrase": "Her shoulders and pelvis form a narrow lateral frame, with slim upper arms and thighs"
+      }
+    },
+    {
+      "assertion_id": "arm_b_visible_arm_definition_test",
+      "dimension": "body_geometry",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "random_keyword_reference_test"
+      ],
+      "affected_dimensions": [
+        "body_geometry"
+      ],
+      "axes": {
+        "agent_test_keyword": "sinewy",
+        "observation_axis": "visible_definition",
+        "scope": "exposed_arms_and_wrists_current_action"
+      },
+      "evidence": {
+        "definition_phrase": "Shallow elongated muscular contours trace her exposed upper arms and forearms, with fine tendon lines beside the wrists"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "environmental portrait photography",
+    "family": "quiet technical portrait with restrained intimate presence",
+    "evidence": [
+      "Warm work lamps graze her face and arms",
+      "The face and gentle hand contact lead the image"
+    ]
+  },
+  "variation_key": "neutral-expression-20261003-arm-b-independent-optical-bay"
+}

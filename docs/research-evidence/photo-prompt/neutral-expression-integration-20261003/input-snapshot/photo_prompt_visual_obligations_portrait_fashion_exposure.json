@@ -1,0 +1,3165 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "description": "Adult portrait garment relations; complete owner relations alone are exact, broad labels remain advisory.",
+  "profiles": [
+    {
+      "id": "pfe_cleavage",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a central depression between the breasts is visible inside the adult subject's neckline; the neckline edges remain attached to a continuous constructed garment; the central skin contour stays distinguishable from fabric folds and cast shadows"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false,
+        "exclude_if_any_terms": [
+          "mineral cleavage",
+          "crystal cleavage",
+          "geological cleavage",
+          "광물 벽개"
+        ]
+      },
+      "semantics": {
+        "definition": "a central depression between the breasts is visible inside the adult subject's neckline; the neckline edges remain attached to a continuous constructed garment; the central skin contour stays distinguishable from fabric folds and cast shadows",
+        "paraphrase_examples": [
+          "목선 안에서 보이는 가슴골",
+          "가슴골",
+          "cleavage",
+          "intermammary contour"
+        ],
+        "contrast_examples": [
+          "deep V neckline without a central skin depression",
+          "large bust alone",
+          "clavicle shadow",
+          "a painted black line on fabric",
+          "mineral cleavage"
+        ],
+        "claim_limits": [
+          "크기·좌우 대칭·골의 깊이·관능성은 요구하지 않는다. 목선과 피부 표면의 소유권만 판별한다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "목선 안에서 보이는 가슴골",
+          "가슴골",
+          "cleavage",
+          "intermammary contour",
+          "a central depression between the breasts is visible inside the adult subject's neckline",
+          "the neckline edges remain attached to a continuous constructed garment",
+          "the central skin contour stays distinguishable from fabric folds and cast shadows"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "deep V neckline without a central skin depression",
+        "large bust alone",
+        "clavicle shadow",
+        "a painted black line on fabric",
+        "mineral cleavage"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a central depression between the breasts is visible inside the adult subject's neckline"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a central depression between the breasts is visible inside the adult subject's neckline"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a central depression between the breasts is visible inside the adult subject's neckline",
+            "render_gate": {
+              "id": "vo_pfe_cleavage_1",
+              "review_scale": "both",
+              "description": "a central depression between the breasts is visible inside the adult subject's neckline. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the neckline edges remain attached to a continuous constructed garment"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the neckline edges remain attached to a continuous constructed garment"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the neckline edges remain attached to a continuous constructed garment",
+            "render_gate": {
+              "id": "vo_pfe_cleavage_2",
+              "review_scale": "both",
+              "description": "the neckline edges remain attached to a continuous constructed garment. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the central skin contour stays distinguishable from fabric folds and cast shadows"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the central skin contour stays distinguishable from fabric folds and cast shadows"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the central skin contour stays distinguishable from fabric folds and cast shadows",
+            "render_gate": {
+              "id": "vo_pfe_cleavage_3",
+              "review_scale": "native",
+              "description": "the central skin contour stays distinguishable from fabric folds and cast shadows. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_back_face",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "the open back is bounded by visible garment edges on the same adult torso; the returned face remains readable beside the exposed back in the same frame; the head neck shoulders and torso connect continuously through the turn"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the open back is bounded by visible garment edges on the same adult torso; the returned face remains readable beside the exposed back in the same frame; the head neck shoulders and torso connect continuously through the turn",
+        "paraphrase_examples": [
+          "열린 등과 돌아본 얼굴의 동시 가독성",
+          "백리스",
+          "open-back portrait",
+          "backless",
+          "over-the-shoulder glance"
+        ],
+        "contrast_examples": [
+          "a rear portrait with the face entirely hidden",
+          "a front neckline substituted for the back opening",
+          "a detached head turned beyond the neck connection"
+        ],
+        "claim_limits": [
+          "얼굴 포함은 이 좁은 구성의 선택 조건이다. backless라는 단어만으로 모든 사진에 얼굴이나 특정 각도를 강제하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "열린 등과 돌아본 얼굴의 동시 가독성",
+          "백리스",
+          "open-back portrait",
+          "backless",
+          "over-the-shoulder glance",
+          "the open back is bounded by visible garment edges on the same adult torso",
+          "the returned face remains readable beside the exposed back in the same frame",
+          "the head neck shoulders and torso connect continuously through the turn"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a rear portrait with the face entirely hidden",
+        "a front neckline substituted for the back opening",
+        "a detached head turned beyond the neck connection"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the open back is bounded by visible garment edges on the same adult torso"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the open back is bounded by visible garment edges on the same adult torso"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the open back is bounded by visible garment edges on the same adult torso",
+            "render_gate": {
+              "id": "vo_pfe_back_face_1",
+              "review_scale": "both",
+              "description": "the open back is bounded by visible garment edges on the same adult torso. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the returned face remains readable beside the exposed back in the same frame"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the returned face remains readable beside the exposed back in the same frame"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the returned face remains readable beside the exposed back in the same frame",
+            "render_gate": {
+              "id": "vo_pfe_back_face_2",
+              "review_scale": "both",
+              "description": "the returned face remains readable beside the exposed back in the same frame. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the head neck shoulders and torso connect continuously through the turn"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the head neck shoulders and torso connect continuously through the turn"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the head neck shoulders and torso connect continuously through the turn",
+            "render_gate": {
+              "id": "vo_pfe_back_face_3",
+              "review_scale": "native",
+              "description": "the head neck shoulders and torso connect continuously through the turn. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_cowl",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "soft hanging folds descend between the neckline's visible attachment points; the folded edge belongs to the same continuous garment opening; fold depth and contact shadows keep the fabric separate from the underlying surface"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "soft hanging folds descend between the neckline's visible attachment points; the folded edge belongs to the same continuous garment opening; fold depth and contact shadows keep the fabric separate from the underlying surface",
+        "paraphrase_examples": [
+          "목선에 매달린 카울 드레이프",
+          "카울넥",
+          "cowl neck",
+          "draped neckline",
+          "같은 옷의 목둘레 부착점 사이에서 천이 느슨하게 처진다. 접힌 가장자리는 그 목둘레에 이어지고, 겹친 주름 아래에 그림자가 남는다.",
+          "Fabric hangs loosely between attachment points of the same garment opening. Its folded edge continues into that neckline, with overlap shadows under the hanging folds.",
+          "상의의 목둘레 가장자리를 따라가면 양쪽 부착점 사이의 여분 천이 아래로 처지는 모습을 볼 수 있다. 곡선으로 접힌 가장자리는 별도 장신구가 아니라 같은 옷의 연속된 천이다. 겹의 깊이와 주름 아래 그림자가 천의 표면과 아래층을 구별한다. 대칭 여부와 처짐의 깊이는 요청에서 정한다.",
+          "Following the top's neckline reveals surplus fabric hanging between its attachment points. The curved folded edge belongs to the same continuous garment, rather than an independent accessory. Fold depth and shadows distinguish fabric from the underlying layer. Symmetry and drape depth follow the request."
+        ],
+        "contrast_examples": [
+          "an independent scarf placed over a plain neckline",
+          "ruching gathered at a fixed seam",
+          "a drawn V stripe",
+          "a raised knitted cowl collar",
+          "평평한 목둘레 위에 독립된 스카프를 둘러줘.",
+          "Place an independent scarf over a flat neckline.",
+          "수도사의 cowl hood를 자료로 설명해줘.",
+          "Explain a monk's cowl hood as a reference concept.",
+          "목 위로 올라오는 두꺼운 니트 카울 칼라를 보여줘.",
+          "Show a thick knitted cowl collar rising around the neck."
+        ],
+        "claim_limits": [
+          "낮게 늘어지는 드레스 카울을 다룬다. 두꺼운 니트 카울 칼라와 구분하며 재단 방향은 픽셀에서 확정하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims.",
+          "스카프 같은 형태와 실제 별도 스카프를 단어만으로 구별하지 않는다.",
+          "접힌 외관만으로 바이어스 재단이나 내부 봉제 방식을 확정하지 않는다.",
+          "이 항목에서 제외한 두꺼운 니트 카울이나 후드는 다른 카울 용례이다. 그 자체가 잘못된 의복이라는 뜻은 아니다."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "목선에 매달린 카울 드레이프",
+          "카울넥",
+          "cowl neck",
+          "draped neckline",
+          "soft hanging folds descend between the neckline's visible attachment points",
+          "the folded edge belongs to the same continuous garment opening",
+          "fold depth and contact shadows keep the fabric separate from the underlying surface"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "an independent scarf placed over a plain neckline",
+        "ruching gathered at a fixed seam",
+        "a drawn V stripe",
+        "a raised knitted cowl collar"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "soft hanging folds descend between the neckline's visible attachment points"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "soft hanging folds descend between the neckline's visible attachment points"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: soft hanging folds descend between the neckline's visible attachment points",
+            "render_gate": {
+              "id": "vo_pfe_cowl_1",
+              "review_scale": "both",
+              "description": "soft hanging folds descend between the neckline's visible attachment points. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the folded edge belongs to the same continuous garment opening"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the folded edge belongs to the same continuous garment opening"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the folded edge belongs to the same continuous garment opening",
+            "render_gate": {
+              "id": "vo_pfe_cowl_2",
+              "review_scale": "both",
+              "description": "the folded edge belongs to the same continuous garment opening. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "fold depth and contact shadows keep the fabric separate from the underlying surface"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "fold depth and contact shadows keep the fabric separate from the underlying surface"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: fold depth and contact shadows keep the fabric separate from the underlying surface",
+            "render_gate": {
+              "id": "vo_pfe_cowl_3",
+              "review_scale": "native",
+              "description": "fold depth and contact shadows keep the fabric separate from the underlying surface. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_halter",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "the bodice connects to a strap or fabric band passing around the neck; the shoulders remain outside that visible neck-supported path; strap joins and garment contact remain continuous on the same adult subject"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false,
+        "exclude_if_any_terms": [
+          "horse halter",
+          "horse headstall",
+          "halter for a horse",
+          "말 굴레"
+        ]
+      },
+      "semantics": {
+        "definition": "the bodice connects to a strap or fabric band passing around the neck; the shoulders remain outside that visible neck-supported path; strap joins and garment contact remain continuous on the same adult subject",
+        "paraphrase_examples": [
+          "목 주변으로 연결되는 홀터 지지",
+          "홀터넥",
+          "halter neck",
+          "neck-supported straps"
+        ],
+        "contrast_examples": [
+          "two ordinary shoulder straps",
+          "a necklace detached from the bodice",
+          "an open back without a neck support",
+          "a scarf over a strapless top"
+        ],
+        "claim_limits": [
+          "사전의 전형적 목 지지와 일반 형태 지식에 기반한 설계이다. 등·복부가 항상 드러난다는 상의 정의를 모든 홀터 드레스에 강제하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "목 주변으로 연결되는 홀터 지지",
+          "홀터넥",
+          "halter neck",
+          "neck-supported straps",
+          "the bodice connects to a strap or fabric band passing around the neck",
+          "the shoulders remain outside that visible neck-supported path",
+          "strap joins and garment contact remain continuous on the same adult subject"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "two ordinary shoulder straps",
+        "a necklace detached from the bodice",
+        "an open back without a neck support",
+        "a scarf over a strapless top"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the bodice connects to a strap or fabric band passing around the neck"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the bodice connects to a strap or fabric band passing around the neck"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the bodice connects to a strap or fabric band passing around the neck",
+            "render_gate": {
+              "id": "vo_pfe_halter_1",
+              "review_scale": "both",
+              "description": "the bodice connects to a strap or fabric band passing around the neck. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the shoulders remain outside that visible neck-supported path"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the shoulders remain outside that visible neck-supported path"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the shoulders remain outside that visible neck-supported path",
+            "render_gate": {
+              "id": "vo_pfe_halter_2",
+              "review_scale": "both",
+              "description": "the shoulders remain outside that visible neck-supported path. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "strap joins and garment contact remain continuous on the same adult subject"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "strap joins and garment contact remain continuous on the same adult subject"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: strap joins and garment contact remain continuous on the same adult subject",
+            "render_gate": {
+              "id": "vo_pfe_halter_3",
+              "review_scale": "native",
+              "description": "strap joins and garment contact remain continuous on the same adult subject. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_one_shoulder",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "one garment support passes over a single shoulder of the adult subject; the opposite shoulder is outside the same asymmetrical neckline edge; the diagonal garment edge and its attachment remain visibly continuous"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "one garment support passes over a single shoulder of the adult subject; the opposite shoulder is outside the same asymmetrical neckline edge; the diagonal garment edge and its attachment remain visibly continuous",
+        "paraphrase_examples": [
+          "원숄더의 비대칭 지지 경로",
+          "원숄더",
+          "one-shoulder",
+          "asymmetric neckline",
+          "같은 상의는 한쪽 어깨 위에서 지지되고 반대 어깨는 목둘레 경계 밖에 있다. 비스듬한 가장자리가 그 지지점으로 연속해서 이어진다.",
+          "The same top is supported over one shoulder while the opposite shoulder lies outside its neckline. A diagonal edge continues into that support.",
+          "성인 상의의 지지 경로는 한쪽 어깨 위를 지나 같은 몸판으로 이어진다. 반대 어깨는 그 비대칭 목둘레 바깥에 남는다. 목둘레의 비스듬한 천 가장자리와 어깨의 연결이 함께 읽힌다. 어깨 위의 지지 천이 갈라지더라도 모든 지지 조각은 같은 한쪽 어깨와 몸판에 이어진다.",
+          "The adult top's support passes over one shoulder and continues into the same bodice. The opposite shoulder remains outside its asymmetrical opening. The diagonal fabric edge and shoulder connection are readable together. If the support divides into narrow pieces, they all continue over that same shoulder into the same bodice."
+        ],
+        "contrast_examples": [
+          "two straps partly hidden by hair",
+          "both shoulders below an off-shoulder neckline",
+          "asymmetric hair over a symmetric top",
+          "양쪽 어깨 아래로 목둘레가 내려오는 상의를 보여줘.",
+          "Show a top whose neckline sits below both shoulders.",
+          "한쪽 끈은 머리카락에 가려진 두 끈 상의를 원해.",
+          "I want a two-strap top with one strap hidden by hair.",
+          "대칭 상의 위로 머리만 한쪽에 늘어뜨려 비대칭으로 보여줘.",
+          "Make a symmetric top look asymmetrical by draping hair to one side."
+        ],
+        "claim_limits": [
+          "비대칭과 원숄더는 동의어가 아니다. 여러 가는 끈이 한 어깨를 지지할 수도 있으므로 끈 개수 대신 지지하는 어깨를 판별한다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims.",
+          "한쪽 어깨 구조는 성별·체형·매력의 주장과 별개다.",
+          "가려진 지지점을 실제로 확인했다고 기록하지 않는다. 역사적 용례의 소재·문양을 일반 요구로 옮기지 않는다.",
+          "연결되는 어깨 수를 평가한다. 끈의 조각 수, 장식 리본 유무, 앞뒤 도식의 화면 좌우는 같은 개념의 필수 기준이 아니다."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "원숄더의 비대칭 지지 경로",
+          "원숄더",
+          "one-shoulder",
+          "asymmetric neckline",
+          "one garment support passes over a single shoulder of the adult subject",
+          "the opposite shoulder is outside the same asymmetrical neckline edge",
+          "the diagonal garment edge and its attachment remain visibly continuous"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "two straps partly hidden by hair",
+        "both shoulders below an off-shoulder neckline",
+        "asymmetric hair over a symmetric top"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "one garment support passes over a single shoulder of the adult subject"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "one garment support passes over a single shoulder of the adult subject"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: one garment support passes over a single shoulder of the adult subject",
+            "render_gate": {
+              "id": "vo_pfe_one_shoulder_1",
+              "review_scale": "both",
+              "description": "one garment support passes over a single shoulder of the adult subject. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the opposite shoulder is outside the same asymmetrical neckline edge"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the opposite shoulder is outside the same asymmetrical neckline edge"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the opposite shoulder is outside the same asymmetrical neckline edge",
+            "render_gate": {
+              "id": "vo_pfe_one_shoulder_2",
+              "review_scale": "both",
+              "description": "the opposite shoulder is outside the same asymmetrical neckline edge. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the diagonal garment edge and its attachment remain visibly continuous"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the diagonal garment edge and its attachment remain visibly continuous"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the diagonal garment edge and its attachment remain visibly continuous",
+            "render_gate": {
+              "id": "vo_pfe_one_shoulder_3",
+              "review_scale": "native",
+              "description": "the diagonal garment edge and its attachment remain visibly continuous. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_skimming",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "the garment follows the adult torso and hip contour with local hanging ease; continuous folds bridge between contact areas rather than compressing every body plane; the hem and side edges remain visible as a separate textile layer"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the garment follows the adult torso and hip contour with local hanging ease; continuous folds bridge between contact areas rather than compressing every body plane; the hem and side edges remain visible as a separate textile layer",
+        "paraphrase_examples": [
+          "몸을 따라 흐르면서 여유가 남는 핏",
+          "보디스키밍",
+          "body-skimming",
+          "fluid body-following drape"
+        ],
+        "contrast_examples": [
+          "uniform tight compression without hanging ease",
+          "a loose sack with no body-following contour",
+          "a satin highlight alone",
+          "assumed bias grain from silhouette"
+        ],
+        "claim_limits": [
+          "bodycon과 겹칠 수 있는 연속적인 핏이다. 보이지 않는 바이어스 재단, 섬유 종류, 보정 정도를 확정하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "몸을 따라 흐르면서 여유가 남는 핏",
+          "보디스키밍",
+          "body-skimming",
+          "fluid body-following drape",
+          "the garment follows the adult torso and hip contour with local hanging ease",
+          "continuous folds bridge between contact areas rather than compressing every body plane",
+          "the hem and side edges remain visible as a separate textile layer"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "uniform tight compression without hanging ease",
+        "a loose sack with no body-following contour",
+        "a satin highlight alone",
+        "assumed bias grain from silhouette"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the garment follows the adult torso and hip contour with local hanging ease"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the garment follows the adult torso and hip contour with local hanging ease"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the garment follows the adult torso and hip contour with local hanging ease",
+            "render_gate": {
+              "id": "vo_pfe_skimming_1",
+              "review_scale": "both",
+              "description": "the garment follows the adult torso and hip contour with local hanging ease. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "continuous folds bridge between contact areas rather than compressing every body plane"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "continuous folds bridge between contact areas rather than compressing every body plane"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: continuous folds bridge between contact areas rather than compressing every body plane",
+            "render_gate": {
+              "id": "vo_pfe_skimming_2",
+              "review_scale": "both",
+              "description": "continuous folds bridge between contact areas rather than compressing every body plane. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the hem and side edges remain visible as a separate textile layer"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the hem and side edges remain visible as a separate textile layer"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the hem and side edges remain visible as a separate textile layer",
+            "render_gate": {
+              "id": "vo_pfe_skimming_3",
+              "review_scale": "native",
+              "description": "the hem and side edges remain visible as a separate textile layer. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_ruching",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "small repeated folds converge into the declared gathered seam or attachment; the gathering stays localized within the same adult garment panel; surrounding fabric remains continuous through the gathered region"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "small repeated folds converge into the declared gathered seam or attachment; the gathering stays localized within the same adult garment panel; surrounding fabric remains continuous through the gathered region",
+        "paraphrase_examples": [
+          "지정 부위에 고정되는 루싱",
+          "루싱",
+          "ruching",
+          "ruched detail",
+          "gathered seam",
+          "같은 옷 패널의 지정 봉제선으로 작은 천 주름들이 반복해 모인다. 모인 부분과 주변의 비교적 평평한 천이 끊기지 않고 이어진다.",
+          "Small repeated folds in the same garment panel converge at the requested seam. The gathered area continues into the surrounding, flatter fabric.",
+          "요청한 패널 위치의 고정선으로 여분 천이 모여 작은 주름을 반복해서 만든다. 주름들은 그 선이나 부착점을 향하고, 주위의 덜 모인 천까지 같은 패널로 연속된다. 반복되는 작은 주름 마루와 골의 그림자가 모임의 위치와 방향을 읽을 수 있게 한다.",
+          "Surplus fabric forms repeated small folds toward a fixed line at the requested panel position. The folds converge on that seam or attachment and continue into less-gathered fabric in the same panel. Small repeating fold ridges and valley shadows make the location and direction of gathering readable."
+        ],
+        "contrast_examples": [
+          "unanchored wrinkles across the entire dress",
+          "regular pleats with no localized gathering",
+          "skin compression lines",
+          "floating cords unrelated to fabric",
+          "고정점 없이 드레스 전체가 불규칙하게 구겨진 모습을 보여줘.",
+          "Show irregular wrinkles across a whole dress with no gathering attachment.",
+          "국소 모임 없이 일정한 폭의 접힌 플리츠가 늘어서는 치마를 보여줘.",
+          "Show a skirt with evenly spaced folded pleats and no localized gathering.",
+          "요청한 옆선 대신 독립된 장식 주름 띠를 목둘레에 달아줘.",
+          "Add a separate ruched trim around the neckline instead of gathering the requested side seam."
+        ],
+        "claim_limits": [
+          "루싱 위치는 요청에서 정한다. 모든 주름, 드레이프, 플리츠를 같은 항목으로 취급하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims.",
+          "루싱·셔링·스모킹을 모든 문맥에서 완전 동의어로 묶지 않는다.",
+          "탄성·신축 성능은 보이는 주름만으로 확정할 수 없다.",
+          "국소적인 천 모임과 그 소유 경계를 보인다. 사진의 모든 주름을 동일한 봉제 방법의 증거로 보지 않으며 셔링·스모킹의 시각적 유사성을 인정한다."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "지정 부위에 고정되는 루싱",
+          "루싱",
+          "ruching",
+          "ruched detail",
+          "gathered seam",
+          "small repeated folds converge into the declared gathered seam or attachment",
+          "the gathering stays localized within the same adult garment panel",
+          "surrounding fabric remains continuous through the gathered region"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "unanchored wrinkles across the entire dress",
+        "regular pleats with no localized gathering",
+        "skin compression lines",
+        "floating cords unrelated to fabric"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "small repeated folds converge into the declared gathered seam or attachment"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "small repeated folds converge into the declared gathered seam or attachment"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: small repeated folds converge into the declared gathered seam or attachment",
+            "render_gate": {
+              "id": "vo_pfe_ruching_1",
+              "review_scale": "both",
+              "description": "small repeated folds converge into the declared gathered seam or attachment. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the gathering stays localized within the same adult garment panel"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the gathering stays localized within the same adult garment panel"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the gathering stays localized within the same adult garment panel",
+            "render_gate": {
+              "id": "vo_pfe_ruching_2",
+              "review_scale": "both",
+              "description": "the gathering stays localized within the same adult garment panel. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "surrounding fabric remains continuous through the gathered region"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "surrounding fabric remains continuous through the gathered region"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: surrounding fabric remains continuous through the gathered region",
+            "render_gate": {
+              "id": "vo_pfe_ruching_3",
+              "review_scale": "native",
+              "description": "surrounding fabric remains continuous through the gathered region. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_slit",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "two finished edges form a side opening in a continuous skirt panel; one anatomically continuous leg is visible through that bounded opening; the remaining skirt panel keeps its own hem and plausible hanging folds"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false,
+        "exclude_if_any_terms": [
+          "slit-scan",
+          "slit scan",
+          "slit lamp",
+          "슬릿 스캔",
+          "세극등"
+        ]
+      },
+      "semantics": {
+        "definition": "two finished edges form a side opening in a continuous skirt panel; one anatomically continuous leg is visible through that bounded opening; the remaining skirt panel keeps its own hem and plausible hanging folds",
+        "paraphrase_examples": [
+          "옆선 트임과 한쪽 다리의 연속성",
+          "사이드 슬릿",
+          "side slit",
+          "thigh-high slit",
+          "walking slit"
+        ],
+        "contrast_examples": [
+          "the whole skirt lifted as one hem",
+          "a gap between shorts legs",
+          "a waist cutout",
+          "a detached extra leg",
+          "slit-scan photography"
+        ],
+        "claim_limits": [
+          "정지와 보행 모두 가능하다. thigh-high가 기본 높이를 강제하지 않으며, 보행 위상은 추가 요청일 때만 별도로 묶는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "옆선 트임과 한쪽 다리의 연속성",
+          "사이드 슬릿",
+          "side slit",
+          "thigh-high slit",
+          "walking slit",
+          "two finished edges form a side opening in a continuous skirt panel",
+          "one anatomically continuous leg is visible through that bounded opening",
+          "the remaining skirt panel keeps its own hem and plausible hanging folds"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "the whole skirt lifted as one hem",
+        "a gap between shorts legs",
+        "a waist cutout",
+        "a detached extra leg",
+        "slit-scan photography"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "two finished edges form a side opening in a continuous skirt panel"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "two finished edges form a side opening in a continuous skirt panel"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: two finished edges form a side opening in a continuous skirt panel",
+            "render_gate": {
+              "id": "vo_pfe_slit_1",
+              "review_scale": "both",
+              "description": "two finished edges form a side opening in a continuous skirt panel. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "one anatomically continuous leg is visible through that bounded opening"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "one anatomically continuous leg is visible through that bounded opening"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: one anatomically continuous leg is visible through that bounded opening",
+            "render_gate": {
+              "id": "vo_pfe_slit_2",
+              "review_scale": "both",
+              "description": "one anatomically continuous leg is visible through that bounded opening. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the remaining skirt panel keeps its own hem and plausible hanging folds"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the remaining skirt panel keeps its own hem and plausible hanging folds"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the remaining skirt panel keeps its own hem and plausible hanging folds",
+            "render_gate": {
+              "id": "vo_pfe_slit_3",
+              "review_scale": "native",
+              "description": "the remaining skirt panel keeps its own hem and plausible hanging folds. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_cutout",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a closed garment edge bounds the declared waist opening on the adult subject; visible fabric bridges connect the panels around that opening; the opening exposes the same body surface while its garment edge retains thickness"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a closed garment edge bounds the declared waist opening on the adult subject; visible fabric bridges connect the panels around that opening; the opening exposes the same body surface while its garment edge retains thickness",
+        "paraphrase_examples": [
+          "허리 컷아웃의 닫힌 의복 경계",
+          "허리 컷아웃",
+          "waist cut-out",
+          "side cut-out",
+          "peekaboo cutout"
+        ],
+        "contrast_examples": [
+          "the gap between a crop top and separate trousers",
+          "an open jacket front",
+          "a dark printed patch",
+          "a tear without a designed closed boundary"
+        ],
+        "claim_limits": [
+          "주변 의복의 닫힌 경계가 이 설계의 판별 조건이다. cut-out 전체를 허리 형태로 환원하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "허리 컷아웃의 닫힌 의복 경계",
+          "허리 컷아웃",
+          "waist cut-out",
+          "side cut-out",
+          "peekaboo cutout",
+          "a closed garment edge bounds the declared waist opening on the adult subject",
+          "visible fabric bridges connect the panels around that opening",
+          "the opening exposes the same body surface while its garment edge retains thickness"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "the gap between a crop top and separate trousers",
+        "an open jacket front",
+        "a dark printed patch",
+        "a tear without a designed closed boundary"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a closed garment edge bounds the declared waist opening on the adult subject"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a closed garment edge bounds the declared waist opening on the adult subject"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a closed garment edge bounds the declared waist opening on the adult subject",
+            "render_gate": {
+              "id": "vo_pfe_cutout_1",
+              "review_scale": "both",
+              "description": "a closed garment edge bounds the declared waist opening on the adult subject. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "visible fabric bridges connect the panels around that opening"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "visible fabric bridges connect the panels around that opening"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: visible fabric bridges connect the panels around that opening",
+            "render_gate": {
+              "id": "vo_pfe_cutout_2",
+              "review_scale": "both",
+              "description": "visible fabric bridges connect the panels around that opening. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the opening exposes the same body surface while its garment edge retains thickness"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the opening exposes the same body surface while its garment edge retains thickness"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the opening exposes the same body surface while its garment edge retains thickness",
+            "render_gate": {
+              "id": "vo_pfe_cutout_3",
+              "review_scale": "native",
+              "description": "the opening exposes the same body surface while its garment edge retains thickness. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_midriff",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a separate top hem and lower garment waistband bound a visible midriff band; both garment edges remain continuous around the same adult torso; the skin band stays distinct from any printed panel or garment cutout"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a separate top hem and lower garment waistband bound a visible midriff band; both garment edges remain continuous around the same adult torso; the skin band stays distinct from any printed panel or garment cutout",
+        "paraphrase_examples": [
+          "크롭 톱과 하의 사이의 복부 띠",
+          "크롭 톱",
+          "exposed midriff",
+          "crop top gap",
+          "복부 노출"
+        ],
+        "contrast_examples": [
+          "a waist cutout inside a one-piece garment",
+          "a skin-tone fabric panel",
+          "a low waistband under a long covering top"
+        ],
+        "claim_limits": [
+          "밴드 높이, 배꼽 가시성, 복부 형태, low-rise 여부는 독립적인 추가 선택이다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "크롭 톱과 하의 사이의 복부 띠",
+          "크롭 톱",
+          "exposed midriff",
+          "crop top gap",
+          "복부 노출",
+          "a separate top hem and lower garment waistband bound a visible midriff band",
+          "both garment edges remain continuous around the same adult torso",
+          "the skin band stays distinct from any printed panel or garment cutout"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a waist cutout inside a one-piece garment",
+        "a skin-tone fabric panel",
+        "a low waistband under a long covering top"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a separate top hem and lower garment waistband bound a visible midriff band"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a separate top hem and lower garment waistband bound a visible midriff band"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a separate top hem and lower garment waistband bound a visible midriff band",
+            "render_gate": {
+              "id": "vo_pfe_midriff_1",
+              "review_scale": "both",
+              "description": "a separate top hem and lower garment waistband bound a visible midriff band. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "both garment edges remain continuous around the same adult torso"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "both garment edges remain continuous around the same adult torso"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: both garment edges remain continuous around the same adult torso",
+            "render_gate": {
+              "id": "vo_pfe_midriff_2",
+              "review_scale": "both",
+              "description": "both garment edges remain continuous around the same adult torso. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the skin band stays distinct from any printed panel or garment cutout"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the skin band stays distinct from any printed panel or garment cutout"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the skin band stays distinct from any printed panel or garment cutout",
+            "render_gate": {
+              "id": "vo_pfe_midriff_3",
+              "review_scale": "native",
+              "description": "the skin band stays distinct from any printed panel or garment cutout. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_volume_contrast",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a fitted inner garment and a separate loose outer garment remain individually readable; the outer layer stands away from the body while the inner follows its local contour; visible overlaps hems or lapels establish the two garments' layer order"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a fitted inner garment and a separate loose outer garment remain individually readable; the outer layer stands away from the body while the inner follows its local contour; visible overlaps hems or lapels establish the two garments' layer order",
+        "paraphrase_examples": [
+          "몸에 맞는 이너와 여유 있는 외층",
+          "작은 이너 큰 겉옷",
+          "fitted inner oversized outerwear",
+          "layer volume contrast"
+        ],
+        "contrast_examples": [
+          "one loose garment with a printed inner panel",
+          "two equally tight layers",
+          "bare skin mistaken for an inner garment",
+          "unrelated background volume"
+        ],
+        "claim_limits": [
+          "이너는 티셔츠·니트·캐미솔·브라렛 등 독립 선택이다. 언더웨어와 성적 어필을 자동 활성화하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "몸에 맞는 이너와 여유 있는 외층",
+          "작은 이너 큰 겉옷",
+          "fitted inner oversized outerwear",
+          "layer volume contrast",
+          "a fitted inner garment and a separate loose outer garment remain individually readable",
+          "the outer layer stands away from the body while the inner follows its local contour",
+          "visible overlaps hems or lapels establish the two garments' layer order"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "one loose garment with a printed inner panel",
+        "two equally tight layers",
+        "bare skin mistaken for an inner garment",
+        "unrelated background volume"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a fitted inner garment and a separate loose outer garment remain individually readable"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a fitted inner garment and a separate loose outer garment remain individually readable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a fitted inner garment and a separate loose outer garment remain individually readable",
+            "render_gate": {
+              "id": "vo_pfe_volume_contrast_1",
+              "review_scale": "both",
+              "description": "a fitted inner garment and a separate loose outer garment remain individually readable. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the outer layer stands away from the body while the inner follows its local contour"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the outer layer stands away from the body while the inner follows its local contour"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the outer layer stands away from the body while the inner follows its local contour",
+            "render_gate": {
+              "id": "vo_pfe_volume_contrast_2",
+              "review_scale": "both",
+              "description": "the outer layer stands away from the body while the inner follows its local contour. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "visible overlaps hems or lapels establish the two garments' layer order"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "visible overlaps hems or lapels establish the two garments' layer order"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: visible overlaps hems or lapels establish the two garments' layer order",
+            "render_gate": {
+              "id": "vo_pfe_volume_contrast_3",
+              "review_scale": "native",
+              "description": "visible overlaps hems or lapels establish the two garments' layer order. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_hem_foundation",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a skirt hem occludes most of a separate opaque brief layer on the adult subject; a bounded part of that layer remains visible beside the occluding hem; a curved leg-opening edge and adjacent fabric panel identify the same separate brief layer"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a skirt hem occludes most of a separate opaque brief layer on the adult subject; a bounded part of that layer remains visible beside the occluding hem; a curved leg-opening edge and adjacent fabric panel identify the same separate brief layer",
+        "paraphrase_examples": [
+          "밑단 뒤 기반층의 한정된 부분 보임",
+          "판치라",
+          "panchira",
+          "パンチラ",
+          "skirt hem underwear glimpse"
+        ],
+        "contrast_examples": [
+          "a trouser waistband with an inner strap above it",
+          "a petticoat hem",
+          "safety shorts with separate leg hems",
+          "a printed underwear motif",
+          "underwear seen through transparent fabric"
+        ],
+        "claim_limits": [
+          "정지 사진은 실제 순간성·우연성·동의·촬영 의도를 증명하지 않는다. 이 좁은 의복 관계는 몰래 촬영하는 시점이나 치마를 들추는 행동을 지정하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "밑단 뒤 기반층의 한정된 부분 보임",
+          "판치라",
+          "panchira",
+          "パンチラ",
+          "skirt hem underwear glimpse",
+          "a skirt hem occludes most of a separate opaque brief layer on the adult subject",
+          "a bounded part of that layer remains visible beside the occluding hem",
+          "a curved leg-opening edge and adjacent fabric panel identify the same separate brief layer"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a trouser waistband with an inner strap above it",
+        "a petticoat hem",
+        "safety shorts with separate leg hems",
+        "a printed underwear motif",
+        "underwear seen through transparent fabric"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a skirt hem occludes most of a separate opaque brief layer on the adult subject"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a skirt hem occludes most of a separate opaque brief layer on the adult subject"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a skirt hem occludes most of a separate opaque brief layer on the adult subject",
+            "render_gate": {
+              "id": "vo_pfe_hem_foundation_1",
+              "review_scale": "both",
+              "description": "a skirt hem occludes most of a separate opaque brief layer on the adult subject. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a bounded part of that layer remains visible beside the occluding hem"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a bounded part of that layer remains visible beside the occluding hem"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a bounded part of that layer remains visible beside the occluding hem",
+            "render_gate": {
+              "id": "vo_pfe_hem_foundation_2",
+              "review_scale": "both",
+              "description": "a bounded part of that layer remains visible beside the occluding hem. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "a curved leg-opening edge and adjacent fabric panel identify the same separate brief layer"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "a curved leg-opening edge and adjacent fabric panel identify the same separate brief layer"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a curved leg-opening edge and adjacent fabric panel identify the same separate brief layer",
+            "render_gate": {
+              "id": "vo_pfe_hem_foundation_3",
+              "review_scale": "native",
+              "description": "a curved leg-opening edge and adjacent fabric panel identify the same separate brief layer. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_neck_foundation",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "the outer neckline occludes part of a separate opaque bra or bralette layer; the visible inner edge belongs to that constructed layer rather than a necklace or printed trim; both layers keep a readable overlap order on the same adult subject"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the outer neckline occludes part of a separate opaque bra or bralette layer; the visible inner edge belongs to that constructed layer rather than a necklace or printed trim; both layers keep a readable overlap order on the same adult subject",
+        "paraphrase_examples": [
+          "네크라인 뒤 별도 기반층의 가장자리",
+          "브라치라",
+          "brachira",
+          "ブラチラ",
+          "neckline bra edge glimpse"
+        ],
+        "contrast_examples": [
+          "cleavage without an inner garment",
+          "a necklace inside a neckline",
+          "integrated lace trim on one garment",
+          "underwear as the only top layer"
+        ],
+        "claim_limits": [
+          "브라치라와 가슴골·무네치라는 보이는 대상이 다르다. 스트랩만 보이는 경우는 별도 형태이며 이 네크라인 관계의 필수 조건이 아니다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "네크라인 뒤 별도 기반층의 가장자리",
+          "브라치라",
+          "brachira",
+          "ブラチラ",
+          "neckline bra edge glimpse",
+          "the outer neckline occludes part of a separate opaque bra or bralette layer",
+          "the visible inner edge belongs to that constructed layer rather than a necklace or printed trim",
+          "both layers keep a readable overlap order on the same adult subject"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "cleavage without an inner garment",
+        "a necklace inside a neckline",
+        "integrated lace trim on one garment",
+        "underwear as the only top layer"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the outer neckline occludes part of a separate opaque bra or bralette layer"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the outer neckline occludes part of a separate opaque bra or bralette layer"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the outer neckline occludes part of a separate opaque bra or bralette layer",
+            "render_gate": {
+              "id": "vo_pfe_neck_foundation_1",
+              "review_scale": "both",
+              "description": "the outer neckline occludes part of a separate opaque bra or bralette layer. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the visible inner edge belongs to that constructed layer rather than a necklace or printed trim"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the visible inner edge belongs to that constructed layer rather than a necklace or printed trim"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the visible inner edge belongs to that constructed layer rather than a necklace or printed trim",
+            "render_gate": {
+              "id": "vo_pfe_neck_foundation_2",
+              "review_scale": "both",
+              "description": "the visible inner edge belongs to that constructed layer rather than a necklace or printed trim. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "both layers keep a readable overlap order on the same adult subject"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "both layers keep a readable overlap order on the same adult subject"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: both layers keep a readable overlap order on the same adult subject",
+            "render_gate": {
+              "id": "vo_pfe_neck_foundation_3",
+              "review_scale": "native",
+              "description": "both layers keep a readable overlap order on the same adult subject. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_face_garment",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "the adult subject's visible face and selected garment feature occupy the same coherent frame; focus light and scale keep both the facial expression and garment feature readable; supporting hands hair and foreground leave those two declared regions distinguishable"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the adult subject's visible face and selected garment feature occupy the same coherent frame; focus light and scale keep both the facial expression and garment feature readable; supporting hands hair and foreground leave those two declared regions distinguishable",
+        "paraphrase_examples": [
+          "얼굴과 선택한 의복 디테일의 동시 가독성",
+          "인물 중심 패션 사진",
+          "face and garment detail readable",
+          "face-focused fashion portrait"
+        ],
+        "contrast_examples": [
+          "a face crop that removes the requested garment feature",
+          "a body-only crop",
+          "an unreadably small face",
+          "a bright garment patch substituted for expression"
+        ],
+        "claim_limits": [
+          "동시 가독성은 직접 관찰 조건이다. 얼굴이 항상 가장 밝아야 한다거나 가까운 사진만 매력적이라는 규칙은 만들지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "얼굴과 선택한 의복 디테일의 동시 가독성",
+          "인물 중심 패션 사진",
+          "face and garment detail readable",
+          "face-focused fashion portrait",
+          "the adult subject's visible face and selected garment feature occupy the same coherent frame",
+          "focus light and scale keep both the facial expression and garment feature readable",
+          "supporting hands hair and foreground leave those two declared regions distinguishable"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a face crop that removes the requested garment feature",
+        "a body-only crop",
+        "an unreadably small face",
+        "a bright garment patch substituted for expression"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the adult subject's visible face and selected garment feature occupy the same coherent frame"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the adult subject's visible face and selected garment feature occupy the same coherent frame"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the adult subject's visible face and selected garment feature occupy the same coherent frame",
+            "render_gate": {
+              "id": "vo_pfe_face_garment_1",
+              "review_scale": "both",
+              "description": "the adult subject's visible face and selected garment feature occupy the same coherent frame. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "focus light and scale keep both the facial expression and garment feature readable"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "focus light and scale keep both the facial expression and garment feature readable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: focus light and scale keep both the facial expression and garment feature readable",
+            "render_gate": {
+              "id": "vo_pfe_face_garment_2",
+              "review_scale": "both",
+              "description": "focus light and scale keep both the facial expression and garment feature readable. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "supporting hands hair and foreground leave those two declared regions distinguishable"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "supporting hands hair and foreground leave those two declared regions distinguishable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: supporting hands hair and foreground leave those two declared regions distinguishable",
+            "render_gate": {
+              "id": "vo_pfe_face_garment_3",
+              "review_scale": "native",
+              "description": "supporting hands hair and foreground leave those two declared regions distinguishable. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_lateral_chest",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a bounded outer breast contour is visible beside the adult garment's arm opening; the same opaque bodice covers the central breast surface and retains a continuous side edge; the exposed lateral contour remains distinguishable from the upper arm and back"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a bounded outer breast contour is visible beside the adult garment's arm opening; the same opaque bodice covers the central breast surface and retains a continuous side edge; the exposed lateral contour remains distinguishable from the upper arm and back",
+        "paraphrase_examples": [
+          "의복 옆 경계의 가슴 측면",
+          "사이드부브",
+          "sideboob",
+          "side breast exposure"
+        ],
+        "contrast_examples": [
+          "central cleavage alone",
+          "an open back without a lateral breast contour",
+          "the upper arm beside a closed side seam",
+          "a dark printed patch"
+        ],
+        "claim_limits": [
+          "측면 위치를 판별하는 좁은 설계다. 크기·노출 깊이·중앙 골·성적 반응은 독립이며, 광범위한 sideboob 사용 전체를 이 구조로 환원하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "의복 옆 경계의 가슴 측면",
+          "사이드부브",
+          "sideboob",
+          "side breast exposure",
+          "a bounded outer breast contour is visible beside the adult garment's arm opening",
+          "the same opaque bodice covers the central breast surface and retains a continuous side edge",
+          "the exposed lateral contour remains distinguishable from the upper arm and back"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "central cleavage alone",
+        "an open back without a lateral breast contour",
+        "the upper arm beside a closed side seam",
+        "a dark printed patch"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a bounded outer breast contour is visible beside the adult garment's arm opening"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a bounded outer breast contour is visible beside the adult garment's arm opening"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a bounded outer breast contour is visible beside the adult garment's arm opening",
+            "render_gate": {
+              "id": "vo_pfe_lateral_chest_1",
+              "review_scale": "both",
+              "description": "a bounded outer breast contour is visible beside the adult garment's arm opening. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the same opaque bodice covers the central breast surface and retains a continuous side edge"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the same opaque bodice covers the central breast surface and retains a continuous side edge"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the same opaque bodice covers the central breast surface and retains a continuous side edge",
+            "render_gate": {
+              "id": "vo_pfe_lateral_chest_2",
+              "review_scale": "both",
+              "description": "the same opaque bodice covers the central breast surface and retains a continuous side edge. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the exposed lateral contour remains distinguishable from the upper arm and back"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the exposed lateral contour remains distinguishable from the upper arm and back"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the exposed lateral contour remains distinguishable from the upper arm and back",
+            "render_gate": {
+              "id": "vo_pfe_lateral_chest_3",
+              "review_scale": "native",
+              "description": "the exposed lateral contour remains distinguishable from the upper arm and back. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_lower_chest",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a bounded lower breast contour is visible below the adult top's lower edge; the same opaque top covers the central breast surface with an identifiable textile hem; the lower breast contour remains distinct from the abdominal surface below it"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a bounded lower breast contour is visible below the adult top's lower edge; the same opaque top covers the central breast surface with an identifiable textile hem; the lower breast contour remains distinct from the abdominal surface below it",
+        "paraphrase_examples": [
+          "상의 하단 경계의 가슴 하부",
+          "언더부브",
+          "underboob",
+          "lower breast edge exposure"
+        ],
+        "contrast_examples": [
+          "an exposed midriff with fully covered breasts",
+          "central cleavage",
+          "a fold in the top hem",
+          "a painted crescent on fabric"
+        ],
+        "claim_limits": [
+          "가슴 하부와 복부를 구분한다. 특정 크기·자세·젖꼭지 노출·노출 면적을 요구하지 않으며 사전 속어를 해부학의 공식 명칭으로 취급하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "상의 하단 경계의 가슴 하부",
+          "언더부브",
+          "underboob",
+          "lower breast edge exposure",
+          "a bounded lower breast contour is visible below the adult top's lower edge",
+          "the same opaque top covers the central breast surface with an identifiable textile hem",
+          "the lower breast contour remains distinct from the abdominal surface below it"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "an exposed midriff with fully covered breasts",
+        "central cleavage",
+        "a fold in the top hem",
+        "a painted crescent on fabric"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a bounded lower breast contour is visible below the adult top's lower edge"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a bounded lower breast contour is visible below the adult top's lower edge"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a bounded lower breast contour is visible below the adult top's lower edge",
+            "render_gate": {
+              "id": "vo_pfe_lower_chest_1",
+              "review_scale": "both",
+              "description": "a bounded lower breast contour is visible below the adult top's lower edge. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the same opaque top covers the central breast surface with an identifiable textile hem"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the same opaque top covers the central breast surface with an identifiable textile hem"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the same opaque top covers the central breast surface with an identifiable textile hem",
+            "render_gate": {
+              "id": "vo_pfe_lower_chest_2",
+              "review_scale": "both",
+              "description": "the same opaque top covers the central breast surface with an identifiable textile hem. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the lower breast contour remains distinct from the abdominal surface below it"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the lower breast contour remains distinct from the abdominal surface below it"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the lower breast contour remains distinct from the abdominal surface below it",
+            "render_gate": {
+              "id": "vo_pfe_lower_chest_3",
+              "review_scale": "native",
+              "description": "the lower breast contour remains distinct from the abdominal surface below it. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_navel",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "the adult subject's identifiable navel is visible on continuous abdominal skin; a separate upper garment hem and lower waistband leave that navel uncovered; the navel remains distinguishable from a printed dot piercing or cast fabric shadow"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false,
+        "exclude_if_any_terms": [
+          "navel orange",
+          "navel oranges",
+          "navel-gazing",
+          "네이블 오렌지"
+        ]
+      },
+      "semantics": {
+        "definition": "the adult subject's identifiable navel is visible on continuous abdominal skin; a separate upper garment hem and lower waistband leave that navel uncovered; the navel remains distinguishable from a printed dot piercing or cast fabric shadow",
+        "paraphrase_examples": [
+          "의복 사이에서 식별되는 배꼽",
+          "배꼽 노출",
+          "navel-baring",
+          "visible navel",
+          "umbilicus"
+        ],
+        "contrast_examples": [
+          "midriff skin with the navel covered",
+          "a dark button on fabric",
+          "a waist cutout away from the navel",
+          "navel orange"
+        ],
+        "claim_limits": [
+          "이 좁은 프로필은 상하의 사이 배꼽 관계다. 배꼽의 돌출·함몰 정도나 아랫배 체형을 고정하지 않으며 모든 navel-baring 의상을 이 형태로 제한하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "의복 사이에서 식별되는 배꼽",
+          "배꼽 노출",
+          "navel-baring",
+          "visible navel",
+          "umbilicus",
+          "the adult subject's identifiable navel is visible on continuous abdominal skin",
+          "a separate upper garment hem and lower waistband leave that navel uncovered",
+          "the navel remains distinguishable from a printed dot piercing or cast fabric shadow"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "midriff skin with the navel covered",
+        "a dark button on fabric",
+        "a waist cutout away from the navel",
+        "navel orange"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the adult subject's identifiable navel is visible on continuous abdominal skin"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the adult subject's identifiable navel is visible on continuous abdominal skin"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the adult subject's identifiable navel is visible on continuous abdominal skin",
+            "render_gate": {
+              "id": "vo_pfe_navel_1",
+              "review_scale": "both",
+              "description": "the adult subject's identifiable navel is visible on continuous abdominal skin. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a separate upper garment hem and lower waistband leave that navel uncovered"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a separate upper garment hem and lower waistband leave that navel uncovered"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a separate upper garment hem and lower waistband leave that navel uncovered",
+            "render_gate": {
+              "id": "vo_pfe_navel_2",
+              "review_scale": "both",
+              "description": "a separate upper garment hem and lower waistband leave that navel uncovered. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the navel remains distinguishable from a printed dot piercing or cast fabric shadow"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the navel remains distinguishable from a printed dot piercing or cast fabric shadow"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the navel remains distinguishable from a printed dot piercing or cast fabric shadow",
+            "render_gate": {
+              "id": "vo_pfe_navel_3",
+              "review_scale": "native",
+              "description": "the navel remains distinguishable from a printed dot piercing or cast fabric shadow. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_opaque_fit",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "an opaque garment closely follows the adult torso waist and hip outline; continuous fabric covers those regions without transmitting underlying skin detail; visible hems seams and local folds identify a textile surface separate from skin"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "an opaque garment closely follows the adult torso waist and hip outline; continuous fabric covers those regions without transmitting underlying skin detail; visible hems seams and local folds identify a textile surface separate from skin",
+        "paraphrase_examples": [
+          "불투명 의복의 몸 윤곽을 따르는 핏",
+          "불투명 밀착 실루엣",
+          "opaque figure-hugging silhouette",
+          "form-fitting",
+          "bodycon",
+          "skin-tight",
+          "second-skin fit"
+        ],
+        "contrast_examples": [
+          "body paint substituted for clothing",
+          "a sheer panel exposing skin detail",
+          "a loose sack silhouette",
+          "a digitally narrowed body substituted for garment fit"
+        ],
+        "claim_limits": [
+          "밀착과 비침의 독립성을 보여주는 선택안이다. 모든 bodycon이 불투명하거나 압박성이 강하다는 뜻이 아니며 기존 인물의 체형 변경을 지시하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "불투명 의복의 몸 윤곽을 따르는 핏",
+          "불투명 밀착 실루엣",
+          "opaque figure-hugging silhouette",
+          "form-fitting",
+          "bodycon",
+          "skin-tight",
+          "second-skin fit",
+          "an opaque garment closely follows the adult torso waist and hip outline",
+          "continuous fabric covers those regions without transmitting underlying skin detail",
+          "visible hems seams and local folds identify a textile surface separate from skin"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "body paint substituted for clothing",
+        "a sheer panel exposing skin detail",
+        "a loose sack silhouette",
+        "a digitally narrowed body substituted for garment fit"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "an opaque garment closely follows the adult torso waist and hip outline"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "an opaque garment closely follows the adult torso waist and hip outline"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: an opaque garment closely follows the adult torso waist and hip outline",
+            "render_gate": {
+              "id": "vo_pfe_opaque_fit_1",
+              "review_scale": "both",
+              "description": "an opaque garment closely follows the adult torso waist and hip outline. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "continuous fabric covers those regions without transmitting underlying skin detail"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "continuous fabric covers those regions without transmitting underlying skin detail"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: continuous fabric covers those regions without transmitting underlying skin detail",
+            "render_gate": {
+              "id": "vo_pfe_opaque_fit_2",
+              "review_scale": "both",
+              "description": "continuous fabric covers those regions without transmitting underlying skin detail. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "visible hems seams and local folds identify a textile surface separate from skin"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "visible hems seams and local folds identify a textile surface separate from skin"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: visible hems seams and local folds identify a textile surface separate from skin",
+            "render_gate": {
+              "id": "vo_pfe_opaque_fit_3",
+              "review_scale": "native",
+              "description": "visible hems seams and local folds identify a textile surface separate from skin. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_mesh_skin",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "an interconnected mesh pattern remains visible across the adult abdominal panel; the abdominal skin surface remains visible through that same mesh's openings; attached opaque garment panels retain continuous edges beside the mesh region"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "an interconnected mesh pattern remains visible across the adult abdominal panel; the abdominal skin surface remains visible through that same mesh's openings; attached opaque garment panels retain continuous edges beside the mesh region",
+        "paraphrase_examples": [
+          "비친 복부 피부와 연속된 망눈",
+          "메쉬 너머 피부",
+          "visible mesh pattern over abdominal skin",
+          "fine mesh",
+          "fitted semi-sheer mesh"
+        ],
+        "contrast_examples": [
+          "a mesh pattern printed on opaque fabric",
+          "an empty cutout without threads",
+          "a smooth sheer panel without visible mesh",
+          "a fishnet backdrop behind the subject"
+        ],
+        "claim_limits": [
+          "복부라는 지정 부위의 관찰 관계다. 망눈 크기·압박·소재·안감 유무·노출 부위는 독립 선택이며 모든 mesh가 피부를 비치게 한다는 뜻이 아니다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "비친 복부 피부와 연속된 망눈",
+          "메쉬 너머 피부",
+          "visible mesh pattern over abdominal skin",
+          "fine mesh",
+          "fitted semi-sheer mesh",
+          "an interconnected mesh pattern remains visible across the adult abdominal panel",
+          "the abdominal skin surface remains visible through that same mesh's openings",
+          "attached opaque garment panels retain continuous edges beside the mesh region"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a mesh pattern printed on opaque fabric",
+        "an empty cutout without threads",
+        "a smooth sheer panel without visible mesh",
+        "a fishnet backdrop behind the subject"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "an interconnected mesh pattern remains visible across the adult abdominal panel"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "an interconnected mesh pattern remains visible across the adult abdominal panel"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: an interconnected mesh pattern remains visible across the adult abdominal panel",
+            "render_gate": {
+              "id": "vo_pfe_mesh_skin_1",
+              "review_scale": "both",
+              "description": "an interconnected mesh pattern remains visible across the adult abdominal panel. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the abdominal skin surface remains visible through that same mesh's openings"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the abdominal skin surface remains visible through that same mesh's openings"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the abdominal skin surface remains visible through that same mesh's openings",
+            "render_gate": {
+              "id": "vo_pfe_mesh_skin_2",
+              "review_scale": "both",
+              "description": "the abdominal skin surface remains visible through that same mesh's openings. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "attached opaque garment panels retain continuous edges beside the mesh region"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "attached opaque garment panels retain continuous edges beside the mesh region"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: attached opaque garment panels retain continuous edges beside the mesh region",
+            "render_gate": {
+              "id": "vo_pfe_mesh_skin_3",
+              "review_scale": "native",
+              "description": "attached opaque garment panels retain continuous edges beside the mesh region. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_illusion_panel",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a fine net panel spans between the adult garment's upper neckline edge and opaque bodice; visible net threads or attached decoration identify fabric across the apparently open region; the panel's lower join remains continuous with the same opaque bodice"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a fine net panel spans between the adult garment's upper neckline edge and opaque bodice; visible net threads or attached decoration identify fabric across the apparently open region; the panel's lower join remains continuous with the same opaque bodice",
+        "paraphrase_examples": [
+          "불투명 몸판에 연결된 착시 목선 패널",
+          "일루전 네크라인",
+          "illusion neckline",
+          "illusion panel"
+        ],
+        "contrast_examples": [
+          "an empty neckline cutout",
+          "a necklace floating above a strapless bodice",
+          "opaque skin-tone fabric without a readable net layer",
+          "beads painted onto bare skin"
+        ],
+        "claim_limits": [
+          "메쉬 기반 착시 패널의 좁은 설계다. 일부 상품의 fully lined 문구로 목선까지 불투명하다고 단정하지 않으며 실제 원단·안감 구성은 제작 정보와 구분한다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "불투명 몸판에 연결된 착시 목선 패널",
+          "일루전 네크라인",
+          "illusion neckline",
+          "illusion panel",
+          "a fine net panel spans between the adult garment's upper neckline edge and opaque bodice",
+          "visible net threads or attached decoration identify fabric across the apparently open region",
+          "the panel's lower join remains continuous with the same opaque bodice"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "an empty neckline cutout",
+        "a necklace floating above a strapless bodice",
+        "opaque skin-tone fabric without a readable net layer",
+        "beads painted onto bare skin"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a fine net panel spans between the adult garment's upper neckline edge and opaque bodice"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a fine net panel spans between the adult garment's upper neckline edge and opaque bodice"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a fine net panel spans between the adult garment's upper neckline edge and opaque bodice",
+            "render_gate": {
+              "id": "vo_pfe_illusion_panel_1",
+              "review_scale": "both",
+              "description": "a fine net panel spans between the adult garment's upper neckline edge and opaque bodice. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "visible net threads or attached decoration identify fabric across the apparently open region"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "visible net threads or attached decoration identify fabric across the apparently open region"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: visible net threads or attached decoration identify fabric across the apparently open region",
+            "render_gate": {
+              "id": "vo_pfe_illusion_panel_2",
+              "review_scale": "both",
+              "description": "visible net threads or attached decoration identify fabric across the apparently open region. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the panel's lower join remains continuous with the same opaque bodice"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the panel's lower join remains continuous with the same opaque bodice"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the panel's lower join remains continuous with the same opaque bodice",
+            "render_gate": {
+              "id": "vo_pfe_illusion_panel_3",
+              "review_scale": "native",
+              "description": "the panel's lower join remains continuous with the same opaque bodice. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_hosiery_sheer",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "the adult leg's skin tone remains visible through a continuous hosiery layer; a readable hosiery boundary or fabric texture identifies the layer on that same leg; the hosiery surface follows the connected knee calf and ankle without replacing their anatomy"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the adult leg's skin tone remains visible through a continuous hosiery layer; a readable hosiery boundary or fabric texture identifies the layer on that same leg; the hosiery surface follows the connected knee calf and ankle without replacing their anatomy",
+        "paraphrase_examples": [
+          "피부색이 비치는 다리의 스타킹 층",
+          "시어 타이츠",
+          "sheer hosiery",
+          "sheer tights",
+          "semi-sheer stockings"
+        ],
+        "contrast_examples": [
+          "a bare leg with no hosiery evidence",
+          "opaque tights without transmitted skin tone",
+          "a detached extra leg",
+          "a patterned background mistaken for leg fabric"
+        ],
+        "claim_limits": [
+          "투과의 가시적 결과만 요구한다. 색·광택·데니어·허벅지형 또는 허리형·고정 방식은 자동 결정하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "피부색이 비치는 다리의 스타킹 층",
+          "시어 타이츠",
+          "sheer hosiery",
+          "sheer tights",
+          "semi-sheer stockings",
+          "the adult leg's skin tone remains visible through a continuous hosiery layer",
+          "a readable hosiery boundary or fabric texture identifies the layer on that same leg",
+          "the hosiery surface follows the connected knee calf and ankle without replacing their anatomy"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a bare leg with no hosiery evidence",
+        "opaque tights without transmitted skin tone",
+        "a detached extra leg",
+        "a patterned background mistaken for leg fabric"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the adult leg's skin tone remains visible through a continuous hosiery layer"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the adult leg's skin tone remains visible through a continuous hosiery layer"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the adult leg's skin tone remains visible through a continuous hosiery layer",
+            "render_gate": {
+              "id": "vo_pfe_hosiery_sheer_1",
+              "review_scale": "both",
+              "description": "the adult leg's skin tone remains visible through a continuous hosiery layer. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a readable hosiery boundary or fabric texture identifies the layer on that same leg"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a readable hosiery boundary or fabric texture identifies the layer on that same leg"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a readable hosiery boundary or fabric texture identifies the layer on that same leg",
+            "render_gate": {
+              "id": "vo_pfe_hosiery_sheer_2",
+              "review_scale": "both",
+              "description": "a readable hosiery boundary or fabric texture identifies the layer on that same leg. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the hosiery surface follows the connected knee calf and ankle without replacing their anatomy"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the hosiery surface follows the connected knee calf and ankle without replacing their anatomy"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the hosiery surface follows the connected knee calf and ankle without replacing their anatomy",
+            "render_gate": {
+              "id": "vo_pfe_hosiery_sheer_3",
+              "review_scale": "native",
+              "description": "the hosiery surface follows the connected knee calf and ankle without replacing their anatomy. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_hosiery_opaque",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "opaque hosiery covers the adult leg without transmitting underlying skin detail; the fabric follows the continuous knee calf and ankle contour; a readable fabric boundary or surface texture distinguishes the hosiery from bare skin"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "opaque hosiery covers the adult leg without transmitting underlying skin detail; the fabric follows the continuous knee calf and ankle contour; a readable fabric boundary or surface texture distinguishes the hosiery from bare skin",
+        "paraphrase_examples": [
+          "피부 세부를 가리는 불투명 타이츠",
+          "불투명 타이츠",
+          "opaque tights",
+          "opaque hosiery"
+        ],
+        "contrast_examples": [
+          "a dark bare leg",
+          "a translucent stocking showing skin detail",
+          "loose trousers substituted for hosiery",
+          "a boot covering the entire declared region"
+        ],
+        "claim_limits": [
+          "색이 검다는 것과 불투명함은 동의어가 아니다. 픽셀에서 정확한 데니어를 요구하지 않으며 광택과 지지 방식은 독립이다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "피부 세부를 가리는 불투명 타이츠",
+          "불투명 타이츠",
+          "opaque tights",
+          "opaque hosiery",
+          "opaque hosiery covers the adult leg without transmitting underlying skin detail",
+          "the fabric follows the continuous knee calf and ankle contour",
+          "a readable fabric boundary or surface texture distinguishes the hosiery from bare skin"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a dark bare leg",
+        "a translucent stocking showing skin detail",
+        "loose trousers substituted for hosiery",
+        "a boot covering the entire declared region"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "opaque hosiery covers the adult leg without transmitting underlying skin detail"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "opaque hosiery covers the adult leg without transmitting underlying skin detail"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: opaque hosiery covers the adult leg without transmitting underlying skin detail",
+            "render_gate": {
+              "id": "vo_pfe_hosiery_opaque_1",
+              "review_scale": "both",
+              "description": "opaque hosiery covers the adult leg without transmitting underlying skin detail. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the fabric follows the continuous knee calf and ankle contour"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the fabric follows the continuous knee calf and ankle contour"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the fabric follows the continuous knee calf and ankle contour",
+            "render_gate": {
+              "id": "vo_pfe_hosiery_opaque_2",
+              "review_scale": "both",
+              "description": "the fabric follows the continuous knee calf and ankle contour. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "a readable fabric boundary or surface texture distinguishes the hosiery from bare skin"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "a readable fabric boundary or surface texture distinguishes the hosiery from bare skin"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a readable fabric boundary or surface texture distinguishes the hosiery from bare skin",
+            "render_gate": {
+              "id": "vo_pfe_hosiery_opaque_3",
+              "review_scale": "native",
+              "description": "a readable fabric boundary or surface texture distinguishes the hosiery from bare skin. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_hosiery_sheen",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "directional highlights follow the adult leg's curved hosiery surface; visible fabric evidence locates those highlights on hosiery rather than bare skin; the same continuous leg contour remains readable beside the highlight bands"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "directional highlights follow the adult leg's curved hosiery surface; visible fabric evidence locates those highlights on hosiery rather than bare skin; the same continuous leg contour remains readable beside the highlight bands",
+        "paraphrase_examples": [
+          "스타킹 표면을 따라 이어지는 광택",
+          "광택 스타킹",
+          "glossy hosiery",
+          "high-shine tights",
+          "wet-look finish",
+          "soft sheen"
+        ],
+        "contrast_examples": [
+          "oiled bare skin without hosiery",
+          "a flat painted white stripe",
+          "a wet pavement reflection",
+          "a clipped white patch hiding the leg contour"
+        ],
+        "claim_limits": [
+          "광택 강도는 별도 선택이다. wet-look은 외관 표현이며 실제 물·젖음·특정 섬유·비침을 증명하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "스타킹 표면을 따라 이어지는 광택",
+          "광택 스타킹",
+          "glossy hosiery",
+          "high-shine tights",
+          "wet-look finish",
+          "soft sheen",
+          "directional highlights follow the adult leg's curved hosiery surface",
+          "visible fabric evidence locates those highlights on hosiery rather than bare skin",
+          "the same continuous leg contour remains readable beside the highlight bands"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "oiled bare skin without hosiery",
+        "a flat painted white stripe",
+        "a wet pavement reflection",
+        "a clipped white patch hiding the leg contour"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "directional highlights follow the adult leg's curved hosiery surface"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "directional highlights follow the adult leg's curved hosiery surface"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: directional highlights follow the adult leg's curved hosiery surface",
+            "render_gate": {
+              "id": "vo_pfe_hosiery_sheen_1",
+              "review_scale": "both",
+              "description": "directional highlights follow the adult leg's curved hosiery surface. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "visible fabric evidence locates those highlights on hosiery rather than bare skin"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "visible fabric evidence locates those highlights on hosiery rather than bare skin"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: visible fabric evidence locates those highlights on hosiery rather than bare skin",
+            "render_gate": {
+              "id": "vo_pfe_hosiery_sheen_2",
+              "review_scale": "both",
+              "description": "visible fabric evidence locates those highlights on hosiery rather than bare skin. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the same continuous leg contour remains readable beside the highlight bands"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the same continuous leg contour remains readable beside the highlight bands"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the same continuous leg contour remains readable beside the highlight bands",
+            "render_gate": {
+              "id": "vo_pfe_hosiery_sheen_3",
+              "review_scale": "native",
+              "description": "the same continuous leg contour remains readable beside the highlight bands. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_hosiery_backline",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a posterior line follows the same adult hosiery leg from the heel region upward; the line stays attached to the curved hosiery surface through the calf region; visible surrounding fabric distinguishes the line from a mark on bare skin"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a posterior line follows the same adult hosiery leg from the heel region upward; the line stays attached to the curved hosiery surface through the calf region; visible surrounding fabric distinguishes the line from a mark on bare skin",
+        "paraphrase_examples": [
+          "스타킹 뒤면의 이어진 세로선",
+          "백심 스타킹",
+          "back-seam stockings",
+          "faux backseam",
+          "knitted-in back seam"
+        ],
+        "contrast_examples": [
+          "a tattoo on a bare calf",
+          "a line on the front of unrelated trousers",
+          "a background pole behind the leg",
+          "a broken floating stripe"
+        ],
+        "claim_limits": [
+          "시각적인 뒤 세로선과 실제 봉제 접합은 구분한다. knitted-in 또는 faux 선도 이 관찰 관계를 구현할 수 있고 봉제 방식은 픽셀에서 확정하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "스타킹 뒤면의 이어진 세로선",
+          "백심 스타킹",
+          "back-seam stockings",
+          "faux backseam",
+          "knitted-in back seam",
+          "a posterior line follows the same adult hosiery leg from the heel region upward",
+          "the line stays attached to the curved hosiery surface through the calf region",
+          "visible surrounding fabric distinguishes the line from a mark on bare skin"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a tattoo on a bare calf",
+        "a line on the front of unrelated trousers",
+        "a background pole behind the leg",
+        "a broken floating stripe"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a posterior line follows the same adult hosiery leg from the heel region upward"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a posterior line follows the same adult hosiery leg from the heel region upward"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a posterior line follows the same adult hosiery leg from the heel region upward",
+            "render_gate": {
+              "id": "vo_pfe_hosiery_backline_1",
+              "review_scale": "both",
+              "description": "a posterior line follows the same adult hosiery leg from the heel region upward. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the line stays attached to the curved hosiery surface through the calf region"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the line stays attached to the curved hosiery surface through the calf region"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the line stays attached to the curved hosiery surface through the calf region",
+            "render_gate": {
+              "id": "vo_pfe_hosiery_backline_2",
+              "review_scale": "both",
+              "description": "the line stays attached to the curved hosiery surface through the calf region. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "visible surrounding fabric distinguishes the line from a mark on bare skin"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "visible surrounding fabric distinguishes the line from a mark on bare skin"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: visible surrounding fabric distinguishes the line from a mark on bare skin",
+            "render_gate": {
+              "id": "vo_pfe_hosiery_backline_3",
+              "review_scale": "native",
+              "description": "visible surrounding fabric distinguishes the line from a mark on bare skin. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_garter_path",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a visible strap descends from the adult waist support to a stocking's upper band; the strap's lower fastener visibly attaches to that same hosiery welt; the belt strap and stocking retain separate continuous textile boundaries"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a visible strap descends from the adult waist support to a stocking's upper band; the strap's lower fastener visibly attaches to that same hosiery welt; the belt strap and stocking retain separate continuous textile boundaries",
+        "paraphrase_examples": [
+          "벨트에서 스타킹 상단으로 이어진 지지 끈",
+          "가터벨트 연결",
+          "garter belt",
+          "suspender straps",
+          "stocking support path"
+        ],
+        "contrast_examples": [
+          "a thigh-high stocking with no visible strap",
+          "an unattached hanging ribbon",
+          "an ordinary shoulder suspender",
+          "a tattoo mimicking a garter strap"
+        ],
+        "claim_limits": [
+          "한 연결 경로의 가시성만 요구한다. 숨은 접합·실제 하중·실리콘 유무는 추정하지 않고 thigh-high 길이가 가터 지지를 자동 의미하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "벨트에서 스타킹 상단으로 이어진 지지 끈",
+          "가터벨트 연결",
+          "garter belt",
+          "suspender straps",
+          "stocking support path",
+          "a visible strap descends from the adult waist support to a stocking's upper band",
+          "the strap's lower fastener visibly attaches to that same hosiery welt",
+          "the belt strap and stocking retain separate continuous textile boundaries"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a thigh-high stocking with no visible strap",
+        "an unattached hanging ribbon",
+        "an ordinary shoulder suspender",
+        "a tattoo mimicking a garter strap"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a visible strap descends from the adult waist support to a stocking's upper band"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a visible strap descends from the adult waist support to a stocking's upper band"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a visible strap descends from the adult waist support to a stocking's upper band",
+            "render_gate": {
+              "id": "vo_pfe_garter_path_1",
+              "review_scale": "both",
+              "description": "a visible strap descends from the adult waist support to a stocking's upper band. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the strap's lower fastener visibly attaches to that same hosiery welt"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the strap's lower fastener visibly attaches to that same hosiery welt"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the strap's lower fastener visibly attaches to that same hosiery welt",
+            "render_gate": {
+              "id": "vo_pfe_garter_path_2",
+              "review_scale": "both",
+              "description": "the strap's lower fastener visibly attaches to that same hosiery welt. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the belt strap and stocking retain separate continuous textile boundaries"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the belt strap and stocking retain separate continuous textile boundaries"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the belt strap and stocking retain separate continuous textile boundaries",
+            "render_gate": {
+              "id": "vo_pfe_garter_path_3",
+              "review_scale": "native",
+              "description": "the belt strap and stocking retain separate continuous textile boundaries. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_thigh_skin_band",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a short outer garment hem ends above the adult leg's above-knee hosiery boundary; a visible band of thigh skin lies between those two garment edges on the same leg; both textile edges remain identifiable beside the continuous uncovered skin band"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a short outer garment hem ends above the adult leg's above-knee hosiery boundary; a visible band of thigh skin lies between those two garment edges on the same leg; both textile edges remain identifiable beside the continuous uncovered skin band",
+        "paraphrase_examples": [
+          "짧은 밑단과 긴 양말 사이의 허벅지 피부 띠",
+          "절대영역",
+          "絶対領域",
+          "zettai ryōiki",
+          "zettai ryoiki",
+          "hem-to-stocking skin band"
+        ],
+        "contrast_examples": [
+          "background space between the inner thighs",
+          "continuous tights covering the thigh",
+          "a knee-high sock ending below the knee",
+          "underwear fabric substituted for the skin band"
+        ],
+        "claim_limits": [
+          "일본어 커뮤니티의 용례를 바탕으로 한 경계 설계다. 길이 비율·매력·현행 유행·용어의 기원을 주장하지 않으며 기존 절대공역의 다리 사이 배경 공간과 구분한다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "짧은 밑단과 긴 양말 사이의 허벅지 피부 띠",
+          "절대영역",
+          "絶対領域",
+          "zettai ryōiki",
+          "zettai ryoiki",
+          "hem-to-stocking skin band",
+          "a short outer garment hem ends above the adult leg's above-knee hosiery boundary",
+          "a visible band of thigh skin lies between those two garment edges on the same leg",
+          "both textile edges remain identifiable beside the continuous uncovered skin band"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "background space between the inner thighs",
+        "continuous tights covering the thigh",
+        "a knee-high sock ending below the knee",
+        "underwear fabric substituted for the skin band"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a short outer garment hem ends above the adult leg's above-knee hosiery boundary"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a short outer garment hem ends above the adult leg's above-knee hosiery boundary"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a short outer garment hem ends above the adult leg's above-knee hosiery boundary",
+            "render_gate": {
+              "id": "vo_pfe_thigh_skin_band_1",
+              "review_scale": "both",
+              "description": "a short outer garment hem ends above the adult leg's above-knee hosiery boundary. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a visible band of thigh skin lies between those two garment edges on the same leg"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a visible band of thigh skin lies between those two garment edges on the same leg"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a visible band of thigh skin lies between those two garment edges on the same leg",
+            "render_gate": {
+              "id": "vo_pfe_thigh_skin_band_2",
+              "review_scale": "both",
+              "description": "a visible band of thigh skin lies between those two garment edges on the same leg. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "both textile edges remain identifiable beside the continuous uncovered skin band"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "both textile edges remain identifiable beside the continuous uncovered skin band"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: both textile edges remain identifiable beside the continuous uncovered skin band",
+            "render_gate": {
+              "id": "vo_pfe_thigh_skin_band_3",
+              "review_scale": "native",
+              "description": "both textile edges remain identifiable beside the continuous uncovered skin band. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_covered_underlayer_relief",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a localized edge-shaped ridge or depression reads across the adult outer garment surface; continuous opaque outer fabric covers the declared underlayer edge across that relief; the relief stays distinguishable from an outer seam printed stripe or ordinary drape fold"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a localized edge-shaped ridge or depression reads across the adult outer garment surface; continuous opaque outer fabric covers the declared underlayer edge across that relief; the relief stays distinguishable from an outer seam printed stripe or ordinary drape fold",
+        "paraphrase_examples": [
+          "겉옷이 덮고 있는 기반층 가장자리의 요철",
+          "겉옷 위 속옷선",
+          "visible panty line",
+          "VPL",
+          "covered underlayer edge relief"
+        ],
+        "contrast_examples": [
+          "exposed underwear fabric beyond a hem",
+          "a transparent panel showing the underlayer itself",
+          "the outer garment's own seam",
+          "a printed stripe"
+        ],
+        "claim_limits": [
+          "VPL 가운데 불투명 겉옷 표면 요철이라는 좁은 방식이다. 사전의 through clothes는 투과 방식도 포괄할 수 있다. 픽셀만으로 안쪽 의복 종류를 확정하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "겉옷이 덮고 있는 기반층 가장자리의 요철",
+          "겉옷 위 속옷선",
+          "visible panty line",
+          "VPL",
+          "covered underlayer edge relief",
+          "a localized edge-shaped ridge or depression reads across the adult outer garment surface",
+          "continuous opaque outer fabric covers the declared underlayer edge across that relief",
+          "the relief stays distinguishable from an outer seam printed stripe or ordinary drape fold"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "exposed underwear fabric beyond a hem",
+        "a transparent panel showing the underlayer itself",
+        "the outer garment's own seam",
+        "a printed stripe"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a localized edge-shaped ridge or depression reads across the adult outer garment surface"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a localized edge-shaped ridge or depression reads across the adult outer garment surface"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: a localized edge-shaped ridge or depression reads across the adult outer garment surface",
+            "render_gate": {
+              "id": "vo_pfe_covered_underlayer_relief_1",
+              "review_scale": "both",
+              "description": "a localized edge-shaped ridge or depression reads across the adult outer garment surface. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "continuous opaque outer fabric covers the declared underlayer edge across that relief"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "continuous opaque outer fabric covers the declared underlayer edge across that relief"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: continuous opaque outer fabric covers the declared underlayer edge across that relief",
+            "render_gate": {
+              "id": "vo_pfe_covered_underlayer_relief_2",
+              "review_scale": "both",
+              "description": "continuous opaque outer fabric covers the declared underlayer edge across that relief. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the relief stays distinguishable from an outer seam printed stripe or ordinary drape fold"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the relief stays distinguishable from an outer seam printed stripe or ordinary drape fold"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the relief stays distinguishable from an outer seam printed stripe or ordinary drape fold",
+            "render_gate": {
+              "id": "vo_pfe_covered_underlayer_relief_3",
+              "review_scale": "native",
+              "description": "the relief stays distinguishable from an outer seam printed stripe or ordinary drape fold. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pfe_mini_outer_leg",
+      "category": "portrait_garment_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "the adult skirt's outer hem ends visibly above the knee region; connected legs continue below that outer hem to the declared footwear; the visible skirt panel and leg contours remain readable in one coherent frame"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the adult skirt's outer hem ends visibly above the knee region; connected legs continue below that outer hem to the declared footwear; the visible skirt panel and leg contours remain readable in one coherent frame",
+        "paraphrase_examples": [
+          "짧은 치마 바깥의 연결된 다리",
+          "미니 치마 다리 구도",
+          "mini hemline and outer leg silhouette",
+          "thigh-baring",
+          "micro-mini"
+        ],
+        "contrast_examples": [
+          "a long skirt with only a side slit",
+          "a floating cropped leg",
+          "footwear removed by the requested full-leg crop",
+          "underwear substituted for the outer skirt panel"
+        ],
+        "claim_limits": [
+          "짧은 밑단의 위치와 바깥 실루엣을 조합한 설계다. micro-mini의 보편적 길이·로우앵글·속옷 보임·실제 다리 길이 증가를 강제하지 않는다.",
+          "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "짧은 치마 바깥의 연결된 다리",
+          "미니 치마 다리 구도",
+          "mini hemline and outer leg silhouette",
+          "thigh-baring",
+          "micro-mini",
+          "the adult skirt's outer hem ends visibly above the knee region",
+          "connected legs continue below that outer hem to the declared footwear",
+          "the visible skirt panel and leg contours remain readable in one coherent frame"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a long skirt with only a side slit",
+        "a floating cropped leg",
+        "footwear removed by the requested full-leg crop",
+        "underwear substituted for the outer skirt panel"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the adult skirt's outer hem ends visibly above the knee region"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the adult skirt's outer hem ends visibly above the knee region"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the adult skirt's outer hem ends visibly above the knee region",
+            "render_gate": {
+              "id": "vo_pfe_mini_outer_leg_1",
+              "review_scale": "both",
+              "description": "the adult skirt's outer hem ends visibly above the knee region. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "connected legs continue below that outer hem to the declared footwear"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "connected legs continue below that outer hem to the declared footwear"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: connected legs continue below that outer hem to the declared footwear",
+            "render_gate": {
+              "id": "vo_pfe_mini_outer_leg_2",
+              "review_scale": "both",
+              "description": "connected legs continue below that outer hem to the declared footwear. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the visible skirt panel and leg contours remain readable in one coherent frame"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the visible skirt panel and leg contours remain readable in one coherent frame"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and make this selected relation visible: the visible skirt panel and leg contours remain readable in one coherent frame",
+            "render_gate": {
+              "id": "vo_pfe_mini_outer_leg_3",
+              "review_scale": "native",
+              "description": "the visible skirt panel and leg contours remain readable in one coherent frame. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
