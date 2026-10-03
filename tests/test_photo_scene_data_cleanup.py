@@ -121,7 +121,8 @@ class ScenePreservationTests(DataCase):
                         if name not in {'photo_prompt_pose_vocabulary_extension.json',
                                         'photo_prompt_acting_expression_extension.json',
                                         'photo_prompt_neutral_expression_extension.json',
-                                        'photo_prompt_slang_visual_extension.json'})
+                                        'photo_prompt_slang_visual_extension.json',
+                                        'photo_prompt_subculture_appearance_extension.json'})
         with patch.object(generator,'RESEARCH_EXTENSION_FILENAMES',filenames):
             source=generator.load_json(ROOT/'skills/photo-prompt-image-generator/assets/photo_prompt_tags.json')
         for record in evidence['prior_23_rows']:
