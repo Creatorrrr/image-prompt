@@ -1,0 +1,30 @@
+test_biohybrid_required_components_and_pixel_gates_are_preserved (planned_nonhuman_tests.NonhumanSourceAlternativesTests.test_biohybrid_required_components_and_pixel_gates_are_preserved) ... ok
+test_existing_operator_boundaries_and_incomplete_substitutes_remain_distinct (planned_nonhuman_tests.NonhumanSourceAlternativesTests.test_existing_operator_boundaries_and_incomplete_substitutes_remain_distinct) ... ok
+test_independent_biohybrid_without_visible_operator_has_ownership_evidence (planned_nonhuman_tests.NonhumanSourceAlternativesTests.test_independent_biohybrid_without_visible_operator_has_ownership_evidence) ... ERROR
+test_summoner_composition_keeps_its_existing_local_consequence_alternatives (planned_nonhuman_tests.NonhumanSourceAlternativesTests.test_summoner_composition_keeps_its_existing_local_consequence_alternatives) ... FAIL
+
+======================================================================
+ERROR: test_independent_biohybrid_without_visible_operator_has_ownership_evidence (planned_nonhuman_tests.NonhumanSourceAlternativesTests.test_independent_biohybrid_without_visible_operator_has_ownership_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "../daylong-progress-20261002/planned_test_photo_nonhuman_source_alternatives.py", line 21, in test_independent_biohybrid_without_visible_operator_has_ownership_evidence
+    self.check_binding('biohybrid_robot_living_synthetic_integration', 'operator_separation_phrase',
+  File "../daylong-progress-20261002/planned_test_photo_nonhuman_source_alternatives.py", line 17, in check_binding
+    pg.validate_visual_intent_binding(obligation_index=0, field=field, phrase=phrase,
+  File "/workspace/scratch/ce8f20680f5a/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 6774, in validate_visual_intent_binding
+    raise ValueError(
+ValueError: visual intent obligation 0 binding 'operator_separation_phrase' must contain one profile component anchor: ["cables end at the robot rather than entering the engineer's body", 'robot remains separate from the operator', 'separate human operator']
+
+======================================================================
+FAIL: test_summoner_composition_keeps_its_existing_local_consequence_alternatives (planned_nonhuman_tests.NonhumanSourceAlternativesTests.test_summoner_composition_keeps_its_existing_local_consequence_alternatives)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "../daylong-progress-20261002/planned_test_photo_nonhuman_source_alternatives.py", line 59, in test_summoner_composition_keeps_its_existing_local_consequence_alternatives
+    self.assertIn('local dust, light, shadow, or displaced-object response', o['composition_instruction'])
+AssertionError: 'local dust, light, shadow, or displaced-object response' not found in 'Keep the operator, complete source boundary, emerging entity, directional gesture or gaze, and contact shadow or displaced material inside one readable cause-and-effect frame.'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.197s
+
+FAILED (failures=1, errors=1)
+EXPECTED_BEFORE failures 1 errors 1 tests 4
