@@ -64,3 +64,11 @@ Baseline commit: `3c3b3a649afc04a5b39abc23a0e57084ba34fec2`. Full-suite regressi
 `diagnostic-evidence.tar.gz` contains the research, both unchanged proposals, independent synthetic input revisions/manifests, all preflight outcomes, 18 emitted packs, actual slot-budget/discovery traces, semantic review and containment diagnostic. `export-manifest.json` binds each archived file. Local workspace paths in textual artifacts are replaced by `REPOSITORY_ROOT` and `EVIDENCE_ROOT`; frozen request/proposal bytes contain no such paths and remain unchanged.
 
 Archive SHA-256: `c07bc9b0207482e38656ccf356003b0b8a02f4191ce95bea794effd197330754`
+
+## Recheck after independent upstream data integration
+
+After publication, origin/main's separate acting-expression work was merged without conflicts into `18a46eb413a40ace4eb7b8913755ff739ac5c3cb`. Its 11 new profiles and 37 candidates are not attributed to this investigation. The only upstream script changes register the two existing-schema extensions; this investigation makes no runtime edit.
+
+All 18 frozen r4 producer executions were rerun at that merged commit. Target-proposal presence/absence is identical in all six scenes and both proposal arms. Full candidate ID sets remain equal in four scenes; cart and strap sets differ with the new upstream corpus. Those changes are preserved, not presented as an improvement from the rejected proposal. The unchanged KEEP decision still holds. The 12 acting-data tests pass locally and dictionary metadata validation passes. This targeted integration check is not a full-suite claim.
+
+The original diagnostic archive remains unchanged. Additional 18-pack outputs, comparison and targeted logs are in `integration-recheck-evidence.tar.gz`, SHA-256 `cdbc2fd7d0d3666715a7423c6628999d2d5e32f6a9448b9cbe38090aafc0667d`.
