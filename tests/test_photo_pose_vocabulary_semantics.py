@@ -70,7 +70,10 @@ class PhotoPoseVocabularySemanticsTests(unittest.TestCase):
         self.assertEqual(self.extension["maintenance_ref"]["sha256"], semantics.digest(self.ledger))
 
     def test_reuse_appends_context_without_changing_existing_meaning_or_guards(self):
-        filenames = tuple(name for name in generator.RESEARCH_EXTENSION_FILENAMES if name != EXTENSION)
+        # Acting context reuses pose-owned facial entries; exclude that later
+        # dependent overlay while reconstructing the pre-pose historical state.
+        filenames = tuple(name for name in generator.RESEARCH_EXTENSION_FILENAMES
+                          if name not in {EXTENSION, "photo_prompt_acting_expression_extension.json"})
         with mock.patch.object(generator, "RESEARCH_EXTENSION_FILENAMES", filenames):
             before = generator.load_json(ASSETS / "photo_prompt_tags.json")
         for slot, additions in self.extension["existing_slot_context_extensions"].items():

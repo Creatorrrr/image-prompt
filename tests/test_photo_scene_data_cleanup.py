@@ -115,10 +115,11 @@ class ScenePreservationTests(DataCase):
     def test_prior_twenty_three_edited_rows_are_byte_semantically_preserved(self):
         evidence=json.loads((EVIDENCE/'baseline-preservation.json').read_text())
         self.assertEqual(len(evidence['prior_23_rows']),23)
-        # The pose extension adds equivalent context to reviewed existing rows.
+        # Pose and its later acting overlay add equivalent reviewed context.
         # Keep the historical source hash and separately protect its live meaning.
         filenames=tuple(name for name in generator.RESEARCH_EXTENSION_FILENAMES
-                        if name != 'photo_prompt_pose_vocabulary_extension.json')
+                        if name not in {'photo_prompt_pose_vocabulary_extension.json',
+                                        'photo_prompt_acting_expression_extension.json'})
         with patch.object(generator,'RESEARCH_EXTENSION_FILENAMES',filenames):
             source=generator.load_json(ROOT/'skills/photo-prompt-image-generator/assets/photo_prompt_tags.json')
         for record in evidence['prior_23_rows']:
