@@ -215,6 +215,11 @@ class PhotoRetrievalSubjectHandoffTests(unittest.TestCase):
         raw["creative_controls_sha256"] = controls["canonical_sha256"]
         with self.assertRaisesRegex(ValueError, "conflicts"):
             self.normalized(raw, controls)
+        raw, _ = self.inputs(self.cases[-1])
+        controls = pg.creative_controls.resolve(raw["source_request"], context={"subject_category": "human"}, seed=31)
+        raw["creative_controls_sha256"] = controls["canonical_sha256"]
+        with self.assertRaisesRegex(ValueError, "conflicts"):
+            self.normalized(raw, controls)
         raw, _ = self.inputs(self.cases[-2])
         controls = pg.creative_controls.resolve(raw["source_request"],
             context={"subject_category": "nonhuman", "no_people": True}, seed=31)
