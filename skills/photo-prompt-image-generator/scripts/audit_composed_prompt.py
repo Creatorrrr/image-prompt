@@ -2849,15 +2849,15 @@ def audit_candidate_semantic_contracts(
             source_entry = candidate_semantics_generator.candidate_pack_slot_entry_by_id(
                 source_data, str(candidate.get("slot") or ""), str(candidate.get("entry_id") or "")
             )
-            if source_entry and "affected_properties" in source_entry:
+            if source_entry:
                 trusted = photo_candidate_semantics.semantic_source(
                     source_entry, str(candidate.get("slot") or ""), source_data.get("candidate_semantic_policy")
                 )
-                if (candidate.get("affected_properties") != trusted["affected_properties"]
+                if (candidate.get("affected_properties", []) != trusted.get("affected_properties", [])
                         or candidate.get("affected_dimensions") != trusted["affected_dimensions"]
                         or not property_effects_allowed(
                             (pack.get("authorial_core") or {}).get("intent_lock") or {},
-                            trusted["affected_dimensions"], trusted["affected_properties"])):
+                            trusted["affected_dimensions"], trusted.get("affected_properties", []))):
                     fail(candidate_id, "selected property effects must match the source and preserve requester property locks")
         interpretation = by_id.get(candidate_id, {})
         for field, expected_ids in (
