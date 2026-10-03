@@ -45,7 +45,9 @@
               "id": "pattern_occluder_grammar",
               "any_terms": [
                 "an identifiable leaf or slat occluder grammar shapes the cast pattern",
-                "식별 가능한 잎 또는 슬랫 차폐 문법이 투사 패턴을 만듦"
+                "식별 가능한 잎 또는 슬랫 차폐 문법이 투사 패턴을 만듦",
+                "an identifiable lattice occluder grammar shapes the cast pattern",
+                "식별 가능한 격자 차폐 문법이 투사 패턴을 만듦"
               ]
             },
             {
@@ -86,12 +88,15 @@
           "curvature-dependent deformation",
           "connected receiver continuity",
           "thumbnail pattern salience",
-          "native shadow-edge coherence"
+          "native shadow-edge coherence",
+          "lattice occluder grammar"
         ]
       },
       "runtime_expression": {
         "default_mode": "definition_with_optional_label",
-        "prompt_label_terms": ["patterned cast shadow"],
+        "prompt_label_terms": [
+          "patterned cast shadow"
+        ],
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
@@ -106,23 +111,34 @@
       "evidence_requirements": {
         "pattern_source_phrase": {
           "min_content_words": 8,
-          "must_mention_any": ["one coherent directional source defines the shadow direction"]
+          "must_mention_any": [
+            "one coherent directional source defines the shadow direction"
+          ]
         },
         "pattern_occluder_phrase": {
           "min_content_words": 10,
-          "must_mention_any": ["an identifiable leaf or slat occluder grammar shapes the cast pattern"]
+          "must_mention_any": [
+            "an identifiable leaf or slat occluder grammar shapes the cast pattern",
+            "an identifiable lattice occluder grammar shapes the cast pattern"
+          ]
         },
         "pattern_structure_phrase": {
           "min_content_words": 8,
-          "must_mention_any": ["alternating bright and dark cast bands remain distinct"]
+          "must_mention_any": [
+            "alternating bright and dark cast bands remain distinct"
+          ]
         },
         "pattern_deformation_phrase": {
           "min_content_words": 8,
-          "must_mention_any": ["the pattern bends with surface curvature and depth"]
+          "must_mention_any": [
+            "the pattern bends with surface curvature and depth"
+          ]
         },
         "pattern_receivers_phrase": {
           "min_content_words": 10,
-          "must_mention_any": ["the same cast pattern continues across two connected receiver regions"]
+          "must_mention_any": [
+            "the same cast pattern continues across two connected receiver regions"
+          ]
         }
       },
       "render_gates": [
@@ -172,13 +188,41 @@
           "confidence": "high"
         },
         "owner_axis": "cast_shadow_receiver_continuity",
-        "entities": ["directional_source", "occluder", "receiver_region_a", "receiver_region_b"],
-        "visible_regions": ["main_subject", "receiver_region_a", "receiver_region_b", "pattern_edges"],
-        "relations": ["source_to_occluder", "occluder_to_cast_pattern", "pattern_across_connected_receivers"],
-        "observable_effects": ["alternating_bright_dark_structure", "curvature_deformation", "depth_scaled_continuity"],
-        "confusion_negatives": ["printed_pattern", "projection_overlay", "global_contrast_grade", "single_random_stripe"],
+        "entities": [
+          "directional_source",
+          "occluder",
+          "receiver_region_a",
+          "receiver_region_b"
+        ],
+        "visible_regions": [
+          "main_subject",
+          "receiver_region_a",
+          "receiver_region_b",
+          "pattern_edges"
+        ],
+        "relations": [
+          "source_to_occluder",
+          "occluder_to_cast_pattern",
+          "pattern_across_connected_receivers"
+        ],
+        "observable_effects": [
+          "alternating_bright_dark_structure",
+          "curvature_deformation",
+          "depth_scaled_continuity"
+        ],
+        "confusion_negatives": [
+          "printed_pattern",
+          "projection_overlay",
+          "global_contrast_grade",
+          "single_random_stripe"
+        ],
         "observability": {
-          "required_visible_regions": ["main_subject", "receiver_region_a", "receiver_region_b", "pattern_edges"],
+          "required_visible_regions": [
+            "main_subject",
+            "receiver_region_a",
+            "receiver_region_b",
+            "pattern_edges"
+          ],
           "minimum_review_scale": "both",
           "crop_policy": "keep both connected receiver regions inside the evaluated frame",
           "occlusion_policy": "occlusion may not hide the cross-surface pattern transition",
@@ -193,8 +237,16 @@
           "embedding_only_is_advisory": true,
           "all_required_components_coexist": true
         },
-        "invariant_fields": ["source_direction", "occluder_grammar", "connected_receiver_continuity"],
-        "flexible_fields": ["occluder_species_or_shape", "subject_identity", "camera_height"]
+        "invariant_fields": [
+          "source_direction",
+          "occluder_grammar",
+          "connected_receiver_continuity"
+        ],
+        "flexible_fields": [
+          "occluder_species_or_shape",
+          "subject_identity",
+          "camera_height"
+        ]
       }
     },
     {
@@ -285,7 +337,9 @@
       },
       "runtime_expression": {
         "default_mode": "definition_with_optional_label",
-        "prompt_label_terms": ["single-object handoff"],
+        "prompt_label_terms": [
+          "single-object handoff"
+        ],
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
@@ -300,23 +354,33 @@
       "evidence_requirements": {
         "handoff_adults_phrase": {
           "min_content_words": 7,
-          "must_mention_any": ["two unmistakably adult actors remain separately legible"]
+          "must_mention_any": [
+            "two unmistakably adult actors remain separately legible"
+          ]
         },
         "handoff_object_phrase": {
           "min_content_words": 7,
-          "must_mention_any": ["one visible handoff object stays between them"]
+          "must_mention_any": [
+            "one visible handoff object stays between them"
+          ]
         },
         "handoff_giver_phrase": {
           "min_content_words": 8,
-          "must_mention_any": ["the giver's hand actively releases the same object"]
+          "must_mention_any": [
+            "the giver's hand actively releases the same object"
+          ]
         },
         "handoff_receiver_phrase": {
           "min_content_words": 10,
-          "must_mention_any": ["the receiver's hand aligns to accept it with a visible response"]
+          "must_mention_any": [
+            "the receiver's hand aligns to accept it with a visible response"
+          ]
         },
         "handoff_ownership_phrase": {
           "min_content_words": 8,
-          "must_mention_any": ["each hand remains anatomically owned and non-conflicting"]
+          "must_mention_any": [
+            "each hand remains anatomically owned and non-conflicting"
+          ]
         }
       },
       "render_gates": [
@@ -366,13 +430,44 @@
           "confidence": "high"
         },
         "owner_axis": "giver_receiver_shared_object_handoff",
-        "entities": ["giver_adult", "receiver_adult", "shared_object", "giver_hand", "receiver_hand"],
-        "visible_regions": ["giver_face_or_body", "receiver_face_or_body", "shared_object", "giver_hand", "receiver_hand"],
-        "relations": ["giver_releases_shared_object", "receiver_aligns_to_shared_object", "both_actions_same_target"],
-        "observable_effects": ["unfinished_transfer_phase", "compatible_hand_vectors", "visible_receiver_response"],
-        "confusion_negatives": ["different_objects", "static_proximity", "camera_gaze_only", "ownerless_hands"],
+        "entities": [
+          "giver_adult",
+          "receiver_adult",
+          "shared_object",
+          "giver_hand",
+          "receiver_hand"
+        ],
+        "visible_regions": [
+          "giver_face_or_body",
+          "receiver_face_or_body",
+          "shared_object",
+          "giver_hand",
+          "receiver_hand"
+        ],
+        "relations": [
+          "giver_releases_shared_object",
+          "receiver_aligns_to_shared_object",
+          "both_actions_same_target"
+        ],
+        "observable_effects": [
+          "unfinished_transfer_phase",
+          "compatible_hand_vectors",
+          "visible_receiver_response"
+        ],
+        "confusion_negatives": [
+          "different_objects",
+          "static_proximity",
+          "camera_gaze_only",
+          "ownerless_hands"
+        ],
         "observability": {
-          "required_visible_regions": ["giver_face_or_body", "receiver_face_or_body", "shared_object", "giver_hand", "receiver_hand"],
+          "required_visible_regions": [
+            "giver_face_or_body",
+            "receiver_face_or_body",
+            "shared_object",
+            "giver_hand",
+            "receiver_hand"
+          ],
           "minimum_review_scale": "both",
           "crop_policy": "retain both actors both acting hands and the shared object",
           "occlusion_policy": "partial overlap may not hide object ownership or receiving alignment",
@@ -387,8 +482,17 @@
           "embedding_only_is_advisory": true,
           "all_required_components_coexist": true
         },
-        "invariant_fields": ["two_adult_actors", "one_shared_object", "giver_receiver_phase", "hand_ownership"],
-        "flexible_fields": ["object_class", "setting", "camera_side"]
+        "invariant_fields": [
+          "two_adult_actors",
+          "one_shared_object",
+          "giver_receiver_phase",
+          "hand_ownership"
+        ],
+        "flexible_fields": [
+          "object_class",
+          "setting",
+          "camera_side"
+        ]
       }
     },
     {
@@ -479,7 +583,9 @@
       },
       "runtime_expression": {
         "default_mode": "definition_with_optional_label",
-        "prompt_label_terms": ["satin directional luster"],
+        "prompt_label_terms": [
+          "satin directional luster"
+        ],
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
@@ -494,23 +600,33 @@
       "evidence_requirements": {
         "satin_surface_phrase": {
           "min_content_words": 8,
-          "must_mention_any": ["one continuous satin-like garment surface remains traceable"]
+          "must_mention_any": [
+            "one continuous satin-like garment surface remains traceable"
+          ]
         },
         "satin_fold_phrase": {
           "min_content_words": 9,
-          "must_mention_any": ["fold ridges and curvature define a coherent drape direction"]
+          "must_mention_any": [
+            "fold ridges and curvature define a coherent drape direction"
+          ]
         },
         "satin_highlight_phrase": {
           "min_content_words": 7,
-          "must_mention_any": ["a broad smooth highlight follows those folds"]
+          "must_mention_any": [
+            "a broad smooth highlight follows those folds"
+          ]
         },
         "satin_dark_plane_phrase": {
           "min_content_words": 8,
-          "must_mention_any": ["material detail remains visible through the darker planes"]
+          "must_mention_any": [
+            "material detail remains visible through the darker planes"
+          ]
         },
         "satin_ownership_phrase": {
           "min_content_words": 7,
-          "must_mention_any": ["seams and garment edges preserve surface ownership"]
+          "must_mention_any": [
+            "seams and garment edges preserve surface ownership"
+          ]
         }
       },
       "render_gates": [
@@ -553,18 +669,52 @@
         "status": "request_scoped",
         "source": {
           "kind": "request_exact",
-          "literal_evidence": ["satin directional luster", "새틴 방향성 광택"],
+          "literal_evidence": [
+            "satin directional luster",
+            "새틴 방향성 광택"
+          ],
           "priority": "P0",
           "confidence": "high"
         },
         "owner_axis": "garment_fold_highlight_coupling",
-        "entities": ["garment_surface", "fold_ridges", "broad_highlight", "dark_planes", "seams_and_edges"],
-        "visible_regions": ["garment_silhouette", "fold_region", "highlight_region", "shadow_region", "seam_or_edge_region"],
-        "relations": ["highlight_follows_fold_curvature", "dark_planes_continue_same_material", "seams_bind_effect_to_garment"],
-        "observable_effects": ["directional_luster", "fluid_drape", "highlight_shadow_continuity"],
-        "confusion_negatives": ["global_bloom", "metallic_reflection", "wet_skin_shine", "background_drape"],
+        "entities": [
+          "garment_surface",
+          "fold_ridges",
+          "broad_highlight",
+          "dark_planes",
+          "seams_and_edges"
+        ],
+        "visible_regions": [
+          "garment_silhouette",
+          "fold_region",
+          "highlight_region",
+          "shadow_region",
+          "seam_or_edge_region"
+        ],
+        "relations": [
+          "highlight_follows_fold_curvature",
+          "dark_planes_continue_same_material",
+          "seams_bind_effect_to_garment"
+        ],
+        "observable_effects": [
+          "directional_luster",
+          "fluid_drape",
+          "highlight_shadow_continuity"
+        ],
+        "confusion_negatives": [
+          "global_bloom",
+          "metallic_reflection",
+          "wet_skin_shine",
+          "background_drape"
+        ],
         "observability": {
-          "required_visible_regions": ["garment_silhouette", "fold_region", "highlight_region", "shadow_region", "seam_or_edge_region"],
+          "required_visible_regions": [
+            "garment_silhouette",
+            "fold_region",
+            "highlight_region",
+            "shadow_region",
+            "seam_or_edge_region"
+          ],
           "minimum_review_scale": "both",
           "crop_policy": "retain the luminous garment mass plus one native detail region",
           "occlusion_policy": "occlusion may not hide fold highlight or seam continuity",
@@ -579,8 +729,18 @@
           "embedding_only_is_advisory": true,
           "all_required_components_coexist": true
         },
-        "invariant_fields": ["one_garment_surface", "fold_highlight_coupling", "dark_plane_continuity", "seam_ownership"],
-        "flexible_fields": ["garment_type", "garment_color", "light_direction", "pose"]
+        "invariant_fields": [
+          "one_garment_surface",
+          "fold_highlight_coupling",
+          "dark_plane_continuity",
+          "seam_ownership"
+        ],
+        "flexible_fields": [
+          "garment_type",
+          "garment_color",
+          "light_direction",
+          "pose"
+        ]
       }
     }
   ]

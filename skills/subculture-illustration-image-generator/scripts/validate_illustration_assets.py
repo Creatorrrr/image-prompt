@@ -6278,15 +6278,18 @@ def _public_photo_candidate_count(pack: Mapping[str, Any]) -> int:
     )
 
 
-def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
+def validate_photo_regression_baseline(
+    asset_dir: Path, *, baseline_version: int = 7
+) -> dict[str, Any]:
     """Validate immutable photo history plus the current sibling boundary."""
 
     historical_path = asset_dir / "photo_regression_baseline_v1.json"
     prior_path = asset_dir / "photo_regression_baseline_v2.json"
     intermediate_path = asset_dir / "photo_regression_baseline_v3.json"
     bound_path = asset_dir / "photo_regression_baseline_v4.json"
-    prior_current_path = asset_dir / "photo_regression_baseline_v5.json"
-    baseline_path = asset_dir / "photo_regression_baseline_v6.json"
+    previous_path = asset_dir / "photo_regression_baseline_v5.json"
+    _require(baseline_version in {6, 7}, "unsupported photo baseline version")
+    baseline_path = asset_dir / f"photo_regression_baseline_v{baseline_version}.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
     photo_boundary = universal_baseline.get("photo_boundary")
     _require(
@@ -6336,25 +6339,61 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
         },
         "bound photo history lineage mismatch",
     )
-    prior_current = _load_json(prior_current_path)
+    previous = _load_json(previous_path)
     _require(
-        prior_current.get("schema") == "photo_regression_baseline/v5"
-        and prior_current.get("status") == "current"
-        and prior_current.get("historical_baseline") == {
+        previous.get("schema") == "photo_regression_baseline/v5"
+        and previous.get("status") == "current"
+        and previous.get("historical_baseline") == {
             "path": bound_path.name, "schema": "photo_regression_baseline/v4",
             "sha256": _sha256(bound_path),
         },
-        "prior current photo baseline lineage mismatch",
+        "previous photo baseline lineage mismatch",
     )
+    predecessor_path, predecessor = previous_path, previous
+    if baseline_version == 7:
+        predecessor_path = asset_dir / "photo_regression_baseline_v6.json"
+        predecessor = _load_json(predecessor_path)
+        _require(
+            predecessor.get("schema") == "photo_regression_baseline/v6"
+            and predecessor.get("historical_baseline") == {
+                "path": previous_path.name, "schema": "photo_regression_baseline/v5",
+                "sha256": _sha256(previous_path),
+            },
+            "merged photo predecessor lineage mismatch",
+        )
     baseline = _load_json(baseline_path)
     _require(
-        baseline.get("schema") == "photo_regression_baseline/v6"
+        baseline.get("schema") == f"photo_regression_baseline/v{baseline_version}"
         and baseline.get("status") == "current"
         and baseline.get("historical_baseline") == {
-            "path": prior_current_path.name, "schema": "photo_regression_baseline/v5",
-            "sha256": _sha256(prior_current_path),
+            "path": predecessor_path.name, "schema": predecessor["schema"],
+            "sha256": _sha256(predecessor_path),
         },
         "current photo baseline lineage mismatch",
+    )
+    if baseline_version == 7:
+        parallel_path = asset_dir / "photo_regression_baseline_v6_religion_iconography.json"
+        parallel = _load_json(parallel_path)
+        _require(
+            parallel.get("schema") == "photo_regression_baseline/v6"
+            and parallel.get("historical_baseline") == predecessor.get("historical_baseline")
+            and baseline.get("parallel_local_baseline") == {
+                "path": parallel_path.name, "schema": "photo_regression_baseline/v6",
+                "sha256": _sha256(parallel_path),
+            }
+            and all(parallel.get(key) == predecessor.get(key) for key in (
+                "contract_version", "public_candidate_count", "negative_en", "private_fields_absent",
+            ))
+            and all(baseline.get(key) == predecessor.get(key) for key in (
+                "preserved_contract_sha256", "frozen_inputs",
+            )),
+            "merged photo parallel baseline or frozen contract drift",
+        )
+    _require(
+        all(baseline.get(key) == previous.get(key) for key in (
+            "contract_version", "public_candidate_count", "negative_en", "private_fields_absent",
+        )),
+        "photo retrieval successor changed the preserved public boundary",
     )
     command = baseline.get("command")
     _require(
@@ -6371,6 +6410,21 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
     )
     output_index = command.index("--output-file") + 1
     repo_root = Path(__file__).resolve().parents[3]
+    previous_command = previous.get("command") or []
+    _require(
+        len(command) == len(previous_command)
+        and all(a == b for i, (a, b) in enumerate(zip(command, previous_command)) if i != output_index),
+        "photo retrieval successor changed the frozen generation command",
+    )
+    frozen_inputs = baseline.get("frozen_inputs")
+    expected_input_paths = {command[command.index(flag) + 1] for flag in (
+        "--request-envelope-json", "--authorial-core-json", "--creative-controls-json", "--embodiment-review-json",
+    )}
+    _require(
+        isinstance(frozen_inputs, dict) and set(frozen_inputs) == expected_input_paths
+        and all(frozen_inputs[path] == _sha256(repo_root / path) for path in expected_input_paths),
+        "photo retrieval successor frozen input bytes drift",
+    )
     with tempfile.TemporaryDirectory(prefix="illustration-photo-boundary-") as temp_dir:
         temporary_output = Path(temp_dir) / "photo-candidate-pack.json"
         actual_command = list(command)
@@ -6400,6 +6454,16 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
         "photo baseline output shape mismatch",
     )
     pack = payload[0]
+    preserved_contract = {key: pack.get(key) for key in (
+        "authorial_core", "creative_controls", "embodiment_review", "authorial_composition", "negative_en",
+    )}
+    preserved_digest = hashlib.sha256(json.dumps(
+        preserved_contract, ensure_ascii=False, sort_keys=True, separators=(",", ":"),
+    ).encode("utf-8")).hexdigest()
+    _require(
+        preserved_digest == baseline.get("preserved_contract_sha256"),
+        "photo retrieval successor changed the frozen scene or composition contract",
+    )
     provenance = pack.get("provenance")
     _require(
         isinstance(provenance, dict)

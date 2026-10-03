@@ -27,15 +27,23 @@ class ReligionIconographyBoundaryHistoryTests(unittest.TestCase):
             with self.subTest(version=version):
                 path = SKILL / 'assets' / f'photo_regression_baseline_v{version}.json'
                 self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), digest)
+        # The two branches independently authored V6; retain both byte records.
+        parallel = {
+            'photo_regression_baseline_v6.json': 'c1285744b58639b4b31bf665dcd3dc0ccbf48bc0c0197b662142842cbe54421d',
+            'photo_regression_baseline_v6_religion_iconography.json': '691aca1ba73acb0e6324596ab10d5c96356f9bdfc981f9dfd46618b4d0eb40ca',
+        }
+        for filename, digest in parallel.items():
+            self.assertEqual(hashlib.sha256((SKILL / 'assets' / filename).read_bytes()).hexdigest(), digest)
 
     def test_current_lineage_mutation_fails_before_any_replay(self):
         with tempfile.TemporaryDirectory() as directory:
             assets = Path(directory)
             names = ['universal_scene_baseline_v1.json'] + [
-                f'photo_regression_baseline_v{v}.json' for v in range(1, 7)]
+                f'photo_regression_baseline_v{v}.json' for v in range(1, 8)]
+            names.append('photo_regression_baseline_v6_religion_iconography.json')
             for name in names:
                 shutil.copyfile(SKILL / 'assets' / name, assets / name)
-            path = assets / 'photo_regression_baseline_v6.json'
+            path = assets / 'photo_regression_baseline_v7.json'
             original = json.loads(path.read_text())
             for field, value in (('path', 'photo_regression_baseline_v4.json'),
                                  ('sha256', '0' * 64)):
@@ -48,6 +56,21 @@ class ReligionIconographyBoundaryHistoryTests(unittest.TestCase):
                                 'current photo baseline lineage mismatch'):
                             validator.validate_photo_regression_baseline(assets)
                         run.assert_not_called()
+
+    def test_parallel_local_observation_tampering_is_rejected_before_replay(self):
+        with tempfile.TemporaryDirectory() as directory:
+            assets = Path(directory)
+            for path in (SKILL / 'assets').glob('photo_regression_baseline_v*.json'):
+                shutil.copyfile(path, assets / path.name)
+            shutil.copyfile(SKILL / 'assets/universal_scene_baseline_v1.json',
+                assets / 'universal_scene_baseline_v1.json')
+            path = assets / 'photo_regression_baseline_v6_religion_iconography.json'
+            path.write_text(path.read_text() + '\n')
+            with patch.object(validator.subprocess, 'run') as run:
+                with self.assertRaisesRegex(validator.ValidationFailure,
+                        'merged photo parallel baseline or frozen contract drift'):
+                    validator.validate_photo_regression_baseline(assets)
+                run.assert_not_called()
 
 
 if __name__ == '__main__':
