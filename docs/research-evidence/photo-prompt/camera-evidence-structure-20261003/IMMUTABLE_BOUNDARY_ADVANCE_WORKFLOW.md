@@ -55,12 +55,22 @@ a metadata-only successor. Full-image quality is outside this proof.
    its immediate predecessor and pinned proof; V10's V9 comparison remains
    unchanged. The existing lineage loop validates all prior links. Merely adding
    a manifest file never authorizes a version or weakens historical validation.
+   Validator edits also require the existing current universal V2 descriptor's
+   `validator_contract.sha256` to match the actual source bytes. Archive its
+   previous raw file and prove that this one metadata leaf is the only change;
+   do not alter historical universal V1, oracle constants, holdouts or expected
+   outcomes. This supported maintenance step already exists in the religion/myth
+   integration's ILLUSTRATION-VALIDATOR-BINDING-UPDATE.json procedure. Keep sibling
+   locations derived from the frozen command and hash source bytes only; never
+   import the photo runtime or ingest its semantic DATA into illustration.
 6. Test explicit historical-version replay, default current dispatch and complete
    successor lineage. Reject wrong predecessor bytes, DATA commit/source hashes,
    evidence provenance, missing/extra changed fields, candidate edits/reordering,
    scene/composition/negative/privacy drift and recomputed output checksums.
    Re-run affected integration and feasible full tests; preserve missing-asset
    failures and distinguish explicit historical versions from current dispatch.
+   Historical generation replay uses that version's qualified runtime and DATA
+   snapshot; a current DATA packet must not be silently accepted as an old version.
 7. Before publishing, fetch current main and reconcile authorized updates without
    absorbing unqualified DATA. Report the validated head and current main SHA to
    pause the DATA publisher, then perform the ordinary authorized merge/push and
