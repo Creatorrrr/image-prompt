@@ -11316,9 +11316,8 @@ def core_slot_focus_text(data: dict, core: dict, slot: str) -> tuple[str, list[s
     return " | ".join(queries), fields
 
 
-def core_focal_hit_supported(index: dict, query: str, document_id: str) -> bool:
+def core_focal_hit_supported(index: dict, query_terms: set[str], document_id: str) -> bool:
     """Require authored content overlap, not function words or boilerplate."""
-    query_terms = set(tokenize_bm25f_text(query, lexicon=index.get("lexicon") or [])) - CANDIDATE_PACK_CONCEPT_STOPWORDS
     fields = index["documents"][document_id]["fields"]
     terms = {term for name, field in fields.items() if name != "semantic_caption"
              for term in field["term_frequencies"]}
@@ -11452,7 +11451,8 @@ def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, d
         focal_lists = []
         for focus_query in queries:
             hits = rank_bm25f(bm25f, {"slot_focus": focus_query}, allowed_ids=ids, limit=max(12, limit * 6))
-            focal_lists.append([row for row in hits if core_focal_hit_supported(bm25f, focus_query, row["document_id"])])
+            query_terms = set(tokenize_bm25f_text(focus_query, lexicon=bm25f.get("lexicon") or [])) - CANDIDATE_PACK_CONCEPT_STOPWORDS
+            focal_lists.append([row for row in hits if core_focal_hit_supported(bm25f, query_terms, row["document_id"])])
         focal = [row for hits in focal_lists for row in hits]
         observed = [document_id for document_id in discovery if document_id in ids]
         if (not broad or not focal) and not observed:
@@ -11477,11 +11477,21 @@ def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, d
             ranked_slots[slot] = (ranked[:limit], fields, observed, query)
     admitted = {slot: [] for slot in ranked_slots}
     total = 0
+    # A frozen observation can independently support more than one candidate
+    # in its slot. Preserve those bounded discoveries before generic options
+    # consume the first round; optional adoption and every slot limit remain.
+    for document_id in discovery:
+        slot = document_id.split(":", 2)[1]
+        if total >= CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT:
+            break
+        if slot in ranked_slots and document_id in ranked_slots[slot][0] and document_id not in admitted[slot]:
+            admitted[slot].append(document_id)
+            total += 1
     for position in range(max((len(rows[0]) for rows in ranked_slots.values()), default=0)):
         for slot, (ranked, _, _, _) in ranked_slots.items():
             if total >= CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT:
                 break
-            if position < len(ranked):
+            if position < len(ranked) and ranked[position] not in admitted[slot]:
                 admitted[slot].append(ranked[position])
                 total += 1
     for slot, document_ids in admitted.items():
@@ -11510,6 +11520,7 @@ def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, d
         "whole_scene_query_sha256": hashlib.sha256(global_query.encode()).hexdigest(),
         "active_slots": active, "retrieval": "same_slot_core_focus_and_frozen_observation_bm25f_rrf",
         "candidate_allocation": "one_supported_hit_per_slot_per_round",
+        "observation_priority": "bounded_frozen_evidence_before_slot_rounds",
         "candidate_adoption": "optional",
     }
     binding["canonical_sha256"] = canonical_json_sha256(binding)

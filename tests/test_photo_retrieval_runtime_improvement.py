@@ -53,6 +53,21 @@ class PhotoRetrievalAdmissionTests(unittest.TestCase):
         data["slots"] = dict(reversed(list(data["slots"].items())))
         self.assertEqual(pg.retrieve_core_slots(data, core, controls), expected)
 
+    def test_multiple_discovered_options_survive_without_starving_supported_slots(self):
+        data, core, controls = self.inputs()
+        observed = ["slot:a_detail_034:a_detail_034_0", "slot:a_detail_034:a_detail_034_1"]
+        # Isolate admission from discovery scoring. The existing three frozen
+        # editing arms separately exercise actual production discovery.
+        with mock.patch.object(pg, "candidate_pack_assertion_discovery", return_value=observed):
+            slots, binding, _ = pg.retrieve_core_slots(data, core, controls)
+        ids = [c["id"] for s in slots.values() for c in s["candidates"]]
+        self.assertTrue(set(observed) <= set(ids))
+        self.assertTrue({"focus", "texture"} <= set(slots))
+        self.assertEqual(len(ids), 64)
+        self.assertEqual(len(set(ids)), len(ids))
+        self.assertTrue(all(len(s["candidates"]) <= s["candidate_limit"] for s in slots.values()))
+        self.assertEqual(binding["candidate_adoption"], "optional")
+
     def test_empty_or_guarded_slots_do_not_receive_a_quota(self):
         data, core, controls = self.inputs()
         data["slots"]["texture"] = [{"id": "unrelated", "en": "interplanetary navigation"}]
