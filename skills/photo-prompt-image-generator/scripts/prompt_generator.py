@@ -2201,7 +2201,7 @@ def candidate_pack_slot_focus_text(core: JsonDict, slot: str) -> tuple[str, List
     elif slot in SLOT_FOCUS_AFFECT_SLOTS:
         fields = ["event", "visual_priorities"]
     elif slot in SLOT_FOCUS_LIGHT_SLOTS:
-        fields = ["setting"]
+        fields = ["setting", "visual_priorities"]
     elif slot in SLOT_FOCUS_STYLE_SLOTS:
         fields = ["style", "visual_priorities"]
     if not fields:
@@ -11252,17 +11252,49 @@ DIMENSION_FIELDS = {
     "viewer_outcome": ["visual_priorities"], "sexual_tone": ["subject", "style"],
 }
 
-def core_slot_focus_text(data: dict, core: dict, slot: str) -> tuple[str, list[str]]:
-    ownership = list(dict.fromkeys(
-        photo_candidate_semantics.slot_dimensions(slot, data.get("candidate_semantic_policy"))
-        + [dimension for entry in data.get("slots", {}).get(slot, [])
-           for dimension in normalize_list(entry.get("affected_dimensions"))]
+def core_slot_focus_queries(data: dict, core: dict, slot: str) -> tuple[list[str], list[str]]:
+    ownership = photo_candidate_semantics.slot_dimensions(slot, data.get("candidate_semantic_policy"))
+    ownership = ownership or list(dict.fromkeys(
+        dimension for entry in data.get("slots", {}).get(slot, [])
+        for dimension in normalize_list(entry.get("affected_dimensions"))
     ))
     if not ownership:
-        return "", []
+        return [], []
+    # Prefer literal, typed owner evidence to a generic field projection. The
+    # property path distinguishes direction, height, focus, etc. within one
+    # dimension; another owner's left/right words cannot supply this evidence.
+    slot_parts = set(slot.split("_")) - {"camera", "light", "subject", "surface", "body"}
+    evidence, evidence_fields = [], []
+    anchors = [a for a in (core.get("intent_lock") or {}).get("semantic_anchors") or []
+               if a.get("dimension") in ownership]
+    # Keep the same owner's related evidence together (for example source
+    # direction and its front/edge response), without borrowing focus evidence
+    # for viewpoint or another object's property.
+    property_scopes = {(a["dimension"], a["target"], a["property"].split(".")[0])
+                       for a in anchors if "property" in a
+                       and slot_parts & set(re.findall(r"[a-z]+", a["property"]))}
+    for anchor in anchors:
+        if "property" in anchor and (anchor["dimension"], anchor["target"], anchor["property"].split(".")[0]) not in property_scopes:
+            continue
+        evidence.append(anchor["prompt_evidence"])
+        evidence_fields.append("intent_lock.semantic_anchors")
+    for assertion in core.get("semantic_assertions") or []:
+        if assertion.get("dimension") in ownership and assertion.get("polarity") in {"required", "advisory"}:
+            evidence.extend((assertion.get("evidence") or {}).values())
+            evidence_fields.append("semantic_assertions")
+    if evidence:
+        queries = []
+        for phrase in dict.fromkeys(evidence):
+            text, _ = authorial_core_retrieval_text({
+                "contract_version": core["contract_version"], "request_binding": {"active_spans": []},
+                "user_exclusions": core.get("user_exclusions") or [], "baseline_prompt_en": phrase,
+            })
+            if text and text not in queries:
+                queries.append(text)
+        return queries, list(dict.fromkeys(evidence_fields)) if queries else []
     text, fields = candidate_pack_slot_focus_text(core, slot)
     if text:
-        return text, fields
+        return [text], fields
     fields = list(dict.fromkeys(
         field for dimension in ownership for field in DIMENSION_FIELDS.get(dimension, [])
         if core.get(field)
@@ -11274,7 +11306,21 @@ def core_slot_focus_text(data: dict, core: dict, slot: str) -> tuple[str, list[s
         **{field: core[field] for field in fields},
     }
     text, _ = authorial_core_retrieval_text(projection)
-    return text, fields if text else []
+    return [text] if text else [], fields if text else []
+
+
+def core_slot_focus_text(data: dict, core: dict, slot: str) -> tuple[str, list[str]]:
+    queries, fields = core_slot_focus_queries(data, core, slot)
+    return " | ".join(queries), fields
+
+
+def core_focal_hit_supported(index: dict, query: str, document_id: str) -> bool:
+    """Require authored content overlap, not function words or boilerplate."""
+    query_terms = set(tokenize_bm25f_text(query, lexicon=index.get("lexicon") or [])) - CANDIDATE_PACK_CONCEPT_STOPWORDS
+    fields = index["documents"][document_id]["fields"]
+    terms = {term for name, field in fields.items() if name != "semantic_caption"
+             for term in field["term_frequencies"]}
+    return bool(query_terms & terms)
 
 def frozen_core_context(data: dict, core: dict, controls: dict) -> tuple[dict, dict]:
     constraints = resolve_request_intent_constraints(data, None, {}, authorial_core=core)
@@ -11393,14 +11439,19 @@ def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, d
         value not in CANDIDATE_PACK_CORE_SLOTS, value,
     ))
     for slot in slot_order:
-        query, fields = core_slot_focus_text(data, core, slot)
-        if not query or slot_block_reason(data, slot, contract):
+        queries, fields = core_slot_focus_queries(data, core, slot)
+        query = " | ".join(queries)
+        if not queries or slot_block_reason(data, slot, contract):
             continue
         entries = eligible[slot]
         ids = [f"slot:{slot}:{entry_id}" for entry_id in entries]
         limit = candidate_pack_slot_limit(slot)
         broad = rank_bm25f(bm25f, {"global_context": global_query}, allowed_ids=ids, limit=max(12, limit * 6))
-        focal = rank_bm25f(bm25f, {"slot_focus": query}, allowed_ids=ids, limit=max(12, limit * 6))
+        focal_lists = []
+        for focus_query in queries:
+            hits = rank_bm25f(bm25f, {"slot_focus": focus_query}, allowed_ids=ids, limit=max(12, limit * 6))
+            focal_lists.append([row for row in hits if core_focal_hit_supported(bm25f, focus_query, row["document_id"])])
+        focal = [row for hits in focal_lists for row in hits]
         observed = [document_id for document_id in discovery if document_id in ids]
         if (not broad or not focal) and not observed:
             continue
@@ -11408,11 +11459,18 @@ def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, d
         focal_ids = {row["document_id"] for row in focal}
         intersection = broad_ids & focal_ids
         fused = reciprocal_rank_fusion(
-            [[row["document_id"] for row in broad], [row["document_id"] for row in focal]], k=30,
+            [[row["document_id"] for row in hits] for hits in [broad, *focal_lists]], k=30,
         )
         ranked = [row["document_id"] for row in fused if row["document_id"] in intersection]
         ranked = ranked or ([focal[0]["document_id"]] if focal else [])
-        ranked = list(dict.fromkeys(observed + ranked))
+        # Separate scoped statements can describe a source and its visible
+        # consequence. Give each supported owner query a representative before
+        # consensus fusion, so repeated incidental words cannot erase a cause.
+        representatives = []
+        if {"intent_lock.semantic_anchors", "semantic_assertions"} & set(fields):
+            representatives = [next((row["document_id"] for row in hits if row["document_id"] in broad_ids), "")
+                               for hits in focal_lists]
+        ranked = list(dict.fromkeys(observed + [value for value in representatives if value] + ranked))
         if ranked:
             ranked_slots[slot] = (ranked[:limit], fields, observed, query)
     admitted = {slot: [] for slot in ranked_slots}
