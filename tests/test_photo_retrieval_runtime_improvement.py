@@ -287,14 +287,21 @@ class PhotoRetrievalOwnerQueryTests(unittest.TestCase):
                 self.assertNotIn(case["irrelevant"], query)
 
     def test_background_source_and_other_carrier_do_not_establish_subject_light_direction(self):
-        case = self.cases[-1]
-        data, core, controls = self.inputs(case)
-        data["slots"]["light_direction"] = [{"id": "wrong_owner", "en": case["evidence"]}]
-        query, fields = pg.core_slot_focus_text(data, core, "light_direction")
-        self.assertNotIn(case["evidence"], query)
-        self.assertNotIn("intent_lock.semantic_anchors", fields)
-        slots, _, _ = pg.retrieve_core_slots(data, core, controls)
-        self.assertNotIn("light_direction", slots)
+        cases = [self.cases[-1],
+            {**self.cases[-1], "id": "camera_left", "evidence": "the camera views the lantern from its left"},
+            {**self.cases[-1], "id": "object_left", "dimension": "appearance", "target": "lantern_handle",
+                "property": "orientation.direction", "evidence": "the lantern handle points toward its own left"},
+            {**self.cases[-1], "id": "background_visibility", "dimension": "lighting", "target": "background_sign",
+                "property": "illumination.visibility", "evidence": "a glowing sign lights only the distant background"}]
+        for case in cases:
+            with self.subTest(case=case["id"]):
+                data, core, controls = self.inputs(case)
+                data["slots"]["light_direction"] = [{"id": "wrong_owner", "en": case["evidence"]}]
+                query, fields = pg.core_slot_focus_text(data, core, "light_direction")
+                self.assertNotIn(case["evidence"], query)
+                self.assertNotIn("intent_lock.semantic_anchors", fields)
+                slots, _, _ = pg.retrieve_core_slots(data, core, controls)
+                self.assertNotIn("light_direction", slots)
 
     def test_focus_property_is_not_camera_direction_evidence(self):
         case = {**self.cases[2], "property": "focus.sharpness", "evidence": "the rear lantern wick remains sharp"}
