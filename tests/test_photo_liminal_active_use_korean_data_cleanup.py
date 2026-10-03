@@ -77,13 +77,14 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
         self.assertEqual(live['runtime_keys'], ['schema_version', 'slots'])
 
     def test_complete_merged_state_and_twenty_one_keeps_remain_exact(self):
-        # Compare the historical authored source before later pose/body overlays.
+        # Compare the historical source before later pose/body/acting overlays.
         # Body integration adds structured semantics to these 13 base entries;
         # every pre-existing field must still equal the frozen historical row.
         # Neither the historical expected values nor the lexical holdouts change.
         filenames = tuple(name for name in common.g.RESEARCH_EXTENSION_FILENAMES
                           if name not in {'photo_prompt_pose_vocabulary_extension.json',
-                                          'photo_prompt_body_morphology_extension.json'})
+                                          'photo_prompt_body_morphology_extension.json',
+                                          'photo_prompt_acting_expression_extension.json'})
         with patch.object(common.g, 'RESEARCH_EXTENSION_FILENAMES', filenames):
             historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
         body_enriched_ids = {
