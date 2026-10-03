@@ -1,0 +1,156 @@
+{
+  "before_runtime_commit": "31dbed9f0d22af97025cebcbceffc07b4250de35",
+  "after_runtime_commit": "c2b171001e4b7973ecdebadac0f03b4bc697e50c",
+  "merged_upstream_commit": "bcb671ba488a31f4e84e5e0d8b0a740e4dd9c706",
+  "upstream_delta_after_baseline": "docs only; runtime and DATA bytes unchanged",
+  "provider_calls": 0,
+  "pixel_quality_evaluated": false,
+  "data_sha256_identical_before_after": "ba85a857febb6e23f84b6ffc7f668c7cde9203217f424bff62bbf019eaceadc3",
+  "semantic_entries": 9819,
+  "visual_profiles": 1564,
+  "quality_layers_loaded": true,
+  "input_and_core_hashes_unchanged": 24,
+  "all_after_candidate_counts": [
+    64
+  ],
+  "all_candidate_id_set_differences": [
+    {
+      "arm": "public-cli",
+      "case": "blind_scene_006",
+      "differences": {
+        "camera_height": {
+          "removed": [
+            "slot:camera_height:pr_fixed_surveillance_observation_candidate"
+          ],
+          "added": [
+            "slot:camera_height:chest_level_service_counter",
+            "slot:camera_height:eye_level_observer"
+          ]
+        },
+        "camera_direction": {
+          "removed": [
+            "slot:camera_direction:dutch_tilt_dynamic_view",
+            "slot:camera_direction:mirror_reflection_camera_view"
+          ],
+          "added": [
+            "slot:camera_direction:extreme_low_angle_under_subject",
+            "slot:camera_direction:extreme_low_hero_angle"
+          ]
+        },
+        "motion": {
+          "removed": [
+            "slot:motion:rb_local_motion_blur_candidate"
+          ],
+          "added": []
+        }
+      }
+    }
+  ],
+  "zero_adoption_audits": {
+    "passed": 24,
+    "unchanged_prompt": 24
+  },
+  "upward_006": [
+    {
+      "arm": "public-cli",
+      "before": {
+        "correct_public_ids": [],
+        "correct_raw_broad_focal_intersection": [],
+        "public_eligibility": {
+          "slot:camera_direction:dutch_tilt_dynamic_view": {
+            "status": "eligible",
+            "source": "frozen_core_slot_contract",
+            "reason": null
+          },
+          "slot:camera_direction:mirror_reflection_camera_view": {
+            "status": "eligible",
+            "source": "frozen_core_slot_contract",
+            "reason": null
+          }
+        },
+        "query": [
+          "선반보다 낮은 카메라 | 가까운 기관차의 큰 모습 | 뒤 객차와 위쪽 천장이 함께 보임 | general_photo | independently authored scene study"
+        ]
+      },
+      "after": {
+        "correct_public_ids": [
+          "slot:camera_direction:extreme_low_angle_under_subject",
+          "slot:camera_direction:extreme_low_hero_angle"
+        ],
+        "correct_raw_broad_focal_intersection": [
+          "slot:camera_direction:extreme_low_angle_under_subject",
+          "slot:camera_direction:extreme_low_hero_angle",
+          "slot:camera_direction:worms_eye"
+        ],
+        "public_eligibility": {
+          "slot:camera_direction:extreme_low_angle_under_subject": {
+            "status": "eligible",
+            "source": "frozen_core_slot_contract",
+            "reason": null
+          },
+          "slot:camera_direction:extreme_low_hero_angle": {
+            "status": "eligible",
+            "source": "frozen_core_slot_contract",
+            "reason": null
+          }
+        },
+        "query": [
+          "Position the camera below shelf level and tilt it upward toward the locomotive"
+        ]
+      }
+    },
+    {
+      "arm": "public-cli-property",
+      "before": {
+        "correct_public_ids": [
+          "slot:camera_direction:extreme_low_angle_under_subject"
+        ],
+        "correct_raw_broad_focal_intersection": [
+          "slot:camera_direction:extreme_low_angle_under_subject",
+          "slot:camera_direction:extreme_low_hero_angle",
+          "slot:camera_direction:worms_eye"
+        ],
+        "public_eligibility": {
+          "slot:camera_direction:extreme_low_angle_under_subject": {
+            "status": "ineligible",
+            "source": "authored_property_scope",
+            "reason": "effect overlaps a protected requester property"
+          },
+          "slot:camera_direction:dutch_tilt_dynamic_view": {
+            "status": "ineligible",
+            "source": "authored_property_scope",
+            "reason": "effect overlaps a protected requester property"
+          }
+        },
+        "query": [
+          "Position the camera below shelf level and tilt it upward toward the locomotive"
+        ]
+      },
+      "after": {
+        "correct_public_ids": [
+          "slot:camera_direction:extreme_low_angle_under_subject"
+        ],
+        "correct_raw_broad_focal_intersection": [
+          "slot:camera_direction:extreme_low_angle_under_subject",
+          "slot:camera_direction:extreme_low_hero_angle",
+          "slot:camera_direction:worms_eye"
+        ],
+        "public_eligibility": {
+          "slot:camera_direction:extreme_low_angle_under_subject": {
+            "status": "ineligible",
+            "source": "authored_property_scope",
+            "reason": "effect overlaps a protected requester property"
+          },
+          "slot:camera_direction:dutch_tilt_dynamic_view": {
+            "status": "ineligible",
+            "source": "authored_property_scope",
+            "reason": "effect overlaps a protected requester property"
+          }
+        },
+        "query": [
+          "Position the camera below shelf level and tilt it upward toward the locomotive"
+        ]
+      }
+    }
+  ]
+}
