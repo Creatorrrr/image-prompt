@@ -58,9 +58,9 @@ def main():
             ids = kwargs.get("allowed_ids") or []
             if ids:
                 slot = next(iter(ids)).split(":", 2)[1]
-                traces.setdefault(slot, {})[next(iter(queries))] = {
+                traces.setdefault(slot, {}).setdefault(next(iter(queries)), []).append({
                     "query": next(iter(queries.values())), "ranks": rows,
-                }
+                })
         return rows
 
     for arm in ("public-cli", "public-cli-property"):

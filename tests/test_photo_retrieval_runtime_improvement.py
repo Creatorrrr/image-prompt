@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import json
 from pathlib import Path
+import tarfile
 import unittest
 from unittest import mock
 
@@ -220,6 +221,98 @@ class PhotoRetrievalSubjectHandoffTests(unittest.TestCase):
         raw["creative_controls_sha256"] = controls["canonical_sha256"]
         with self.assertRaisesRegex(ValueError, "conflicts"):
             self.normalized(raw, controls)
+
+
+class PhotoRetrievalOwnerQueryTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.cases = json.loads(HOLDOUT.read_text())["owner_cases"]
+
+    def inputs(self, case):
+        core = {"contract_version": "photo-authorial-core/v3", "canonical_sha256": "f" * 64,
+            "source_request": case["evidence"], "subject": "a metal lantern",
+            "setting": "a quiet workshop table", "event": "the lantern rests beside metal bolts",
+            "baseline_prompt_en": case["evidence"] + ". " + case["irrelevant"],
+            "visual_priorities": ["visible metal seams", "readable object shape"],
+            "style": {"domain": "general_photo", "family": "quiet object study"},
+            "request_binding": {"active_spans": [{"span_id": "request", "text": case["evidence"]}]},
+            "semantic_assertions": [], "user_exclusions": [],
+            "intent_lock": {"contract_version": "photo-intent-lock/v2", "locked_dimensions": ["subject", "event", "concept"],
+                "open_dimensions": ["camera", "lighting"], "semantic_anchors": [{
+                    "anchor_id": "owner", "dimension": case["dimension"], "target": case["target"],
+                    "property": case["property"], "prompt_evidence": case["evidence"]}]}}
+        controls = pg.creative_controls.resolve(core["source_request"],
+            context={"subject_category": "nonhuman"}, overrides={"sensual": 0, "fetish": 0}, seed=37)
+        core["creative_controls_sha256"] = controls["canonical_sha256"]
+        data = {"slots": {case["slot"]: []}, "candidate_semantic_policy": {"slot_dimensions": {
+            "light_direction": ["lighting"], "camera_direction": ["camera"], "focus": ["camera"]}}}
+        return data, core, controls
+
+    def test_direction_queries_carry_owner_evidence_without_unrelated_scene_prose(self):
+        for case in self.cases[:-1]:
+            with self.subTest(case=case["id"]):
+                data, core, _ = self.inputs(case)
+                query, fields = pg.core_slot_focus_text(data, core, case["slot"])
+                self.assertEqual(query, case["evidence"])
+                self.assertEqual(fields, ["intent_lock.semantic_anchors"])
+                self.assertNotIn(case["irrelevant"], query)
+
+    def test_background_source_and_other_carrier_do_not_establish_subject_light_direction(self):
+        case = self.cases[-1]
+        data, core, controls = self.inputs(case)
+        data["slots"]["light_direction"] = [{"id": "wrong_owner", "en": case["evidence"]}]
+        query, fields = pg.core_slot_focus_text(data, core, "light_direction")
+        self.assertNotIn(case["evidence"], query)
+        self.assertNotIn("intent_lock.semantic_anchors", fields)
+        slots, _, _ = pg.retrieve_core_slots(data, core, controls)
+        self.assertNotIn("light_direction", slots)
+
+    def test_focus_property_is_not_camera_direction_evidence(self):
+        case = {**self.cases[2], "property": "focus.sharpness", "evidence": "the rear lantern wick remains sharp"}
+        data, core, _ = self.inputs(case)
+        query, _ = pg.core_slot_focus_text(data, core, "camera_direction")
+        self.assertNotIn(case["evidence"], query)
+        focus_query, fields = pg.core_slot_focus_text(data, core, "focus")
+        self.assertEqual(focus_query, case["evidence"])
+        self.assertEqual(fields, ["intent_lock.semantic_anchors"])
+
+    def test_excluded_owner_phrase_cannot_create_a_positive_slot_query(self):
+        case = self.cases[0]
+        data, core, controls = self.inputs(case)
+        core["user_exclusions"] = [case["evidence"]]
+        data["slots"][case["slot"]] = [{"id": "excluded", "en": case["evidence"]}]
+        self.assertEqual(pg.core_slot_focus_text(data, core, case["slot"]), ("", []))
+        self.assertNotIn(case["slot"], pg.retrieve_core_slots(data, core, controls)[0])
+
+    def test_new_upward_scene_survives_broad_focal_intersection(self):
+        case = self.cases[2]
+        data, core, controls = self.inputs(case)
+        data["slots"][case["slot"]] = [
+            {"id": "upward", "en": "the camera looks upward from below the weather vane"},
+            {"id": "distractor", "en": "quiet object study visible metal seams"},
+        ]
+        slots, _, _ = pg.retrieve_core_slots(data, core, controls)
+        self.assertEqual({c["entry_id"] for c in slots[case["slot"]]["candidates"]}, {"upward"})
+
+    def test_frozen_property_arm_retrieves_existing_upward_and_backlight_coverage(self):
+        data = pg.load_runtime_data()
+        root = Path(__file__).resolve().parents[1]
+        archive = root / "docs/research-evidence/photo-prompt/renewed-blind-scene-retrieval-20261003/diagnostic-evidence.tar.gz"
+        with tarfile.open(archive) as tar:
+            for n, slot, expected in ((1, "light_direction", {"backlight", "pe_rear_rim"}),
+                    (6, "camera_direction", {"worms_eye", "extreme_low_angle_under_subject", "extreme_low_hero_angle"})):
+                path = f"public-cli-property/inputs/blind_scene_{n:03d}"
+                inputs = {name: json.load(tar.extractfile(f"{path}/{name}.json"))
+                          for name in ("authorial-core", "creative-controls", "request-envelope")}
+                controls = inputs["creative-controls"]
+                core = pg.normalize_authorial_core(inputs["authorial-core"],
+                    request_envelope=pg.normalize_request_envelope(inputs["request-envelope"]),
+                    creative_control_snapshot=controls)
+                before = copy.deepcopy(core)
+                slots, _, _ = pg.retrieve_core_slots(data, core, controls)
+                ids = {c["entry_id"] for c in slots.get(slot, {}).get("candidates", [])}
+                self.assertTrue(ids & expected, (n, slot, ids))
+                self.assertEqual(core, before)
 
 
 if __name__ == "__main__":
