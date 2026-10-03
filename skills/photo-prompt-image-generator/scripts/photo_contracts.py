@@ -56,6 +56,41 @@ def intent_property_locks(intent_lock: dict) -> list[dict]:
     return [dict(row) for row in intent_lock.get("semantic_anchors", []) if "property" in row]
 
 
+SUBJECT_CATEGORIES = frozenset({
+    "human", "animal", "object", "food", "plant", "environment", "sign", "unknown",
+})
+
+
+def authored_subject_category(assertions: list[dict], context: dict | None = None) -> str | None:
+    """Read the optional primary-subject type from frozen, grounded assertions.
+
+    This is a handoff, never a noun classifier. The coarse nonhuman creative
+    context and an absent/unknown type do not authorize object-only slots.
+    """
+    categories = set()
+    for row in assertions:
+        axes = row.get("axes") or {}
+        if "subject_category" not in axes:
+            continue
+        value = axes["subject_category"]
+        values = value if isinstance(value, list) else [value]
+        if (row.get("dimension") != "subject" or row.get("polarity") != "required"
+                or "subject" not in (row.get("affected_dimensions") or [])
+                or len(values) != 1 or not isinstance(values[0], str)
+                or values[0] not in SUBJECT_CATEGORIES):
+            raise ValueError("subject_category requires one supported category in a required subject assertion")
+        categories.add(values[0])
+    if len(categories) > 1:
+        raise ValueError("subject_category assertions disagree about the primary subject")
+    category = next(iter(categories), None)
+    context = context or {}
+    if category == "human" and (context.get("subject_category") == "nonhuman" or context.get("no_people")):
+        raise ValueError("typed human subject conflicts with the frozen creative context")
+    if category not in {None, "human", "unknown"} and context.get("subject_category") == "human":
+        raise ValueError("typed nonhuman subject conflicts with the frozen creative context")
+    return category
+
+
 def property_effects_allowed(intent_lock: dict, dimensions, effects) -> bool:
     """Check declared property effects; semantic truth still needs agent review.
 
