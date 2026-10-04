@@ -318,6 +318,58 @@ def bundle_meanings(bundles: list, *, within: list | None = None) -> list:
             for row in bundles]
 
 
+def seduction_scope_delta() -> dict:
+    """Read the sealed metadata delta; historical expected rows stay untouched."""
+    import json
+    path = ROOT / 'tests/fixtures/photo_prompt/seduction_expression_scope_delta.json'
+    raw = path.read_bytes()
+    assert hashlib.sha256(raw).hexdigest() == 'd8fba33b9a40ac6bf190fb785fb001ab70582a0112f67ca4394f7301f25250a4'
+    return json.loads(raw)
+
+
+def seduction_historical_source_scope(data: dict) -> dict:
+    """Reverse only ten exact metadata edits for an older source comparison."""
+    import copy
+    result = copy.deepcopy(data)
+    for change in seduction_scope_delta()['metadata_rows']:
+        row = next((r for r in result['slots'].get(change['slot'], [])
+                    if r['id'] == change['id']), None)
+        if row is None:
+            continue  # The historical loader may exclude the owning extension.
+        for field in change['changed_fields']:
+            assert row.get(field) == change['after'].get(field), (change['id'], field)
+            if field in change['before']:
+                row[field] = copy.deepcopy(change['before'][field])
+            else:
+                row.pop(field, None)
+    return result
+
+
+def seduction_historical_bundles(bundles: list) -> list:
+    """Reverse exact scoped member metadata, preserving every bundle duty."""
+    import copy
+    import json
+    import photo_candidate_semantics as semantics
+    policy = json.loads((ROOT / 'skills/photo-prompt-image-generator/assets/photo_prompt_tags.json').read_text())['candidate_semantic_policy']
+    changes = {(row['slot'], row['id']): row for row in seduction_scope_delta()['metadata_rows']}
+    result = copy.deepcopy(bundles)
+    for bundle in result:
+        for member in bundle['member_candidates']:
+            change = changes.get((member['slot'], member['entry_id']))
+            if change is None:
+                continue
+            before = semantics.semantic_source(change['before'], member['slot'], policy)
+            after = semantics.semantic_source(change['after'], member['slot'], policy)
+            actual = {key: value for key, value in member.items() if key not in {'id', 'slot', 'entry_id'}}
+            assert actual in (before, after), f'Unsealed bundle member change: {member["id"]}'
+            for field in set(before) | set(after):
+                if field in before:
+                    member[field] = copy.deepcopy(before[field])
+                else:
+                    member.pop(field, None)
+    return result
+
+
 def project_slot_candidate(data: dict, slot: str, entry: dict) -> tuple[dict, dict]:
     """Exercise current public projection and lossless detail, without retrieval."""
     import copy

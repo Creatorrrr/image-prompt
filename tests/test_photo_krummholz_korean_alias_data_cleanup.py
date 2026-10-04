@@ -74,7 +74,7 @@ class KrummholzKoreanAliasDataCleanupTests(unittest.TestCase):
     def test_historical_merged_state_and_current_ten_keeps_are_exact(self):
         self.assertEqual(self.accepted_snapshot, self.states['proposal'])
         historical = self.states['baseline']['candidate_bundles']
-        self.assertEqual(fixtures.bundle_meanings(self.current['candidate_bundles'], within=historical),
+        self.assertEqual(fixtures.bundle_meanings(fixtures.seduction_historical_bundles(self.current['candidate_bundles']), within=historical),
                          fixtures.bundle_meanings(historical))
         for item in self.frozen['inventory']:
             row = next(r for r in self.current['slots'][item['slot']] if r['id'] == item['id'])

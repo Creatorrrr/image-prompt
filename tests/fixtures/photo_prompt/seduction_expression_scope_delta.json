@@ -1,0 +1,1057 @@
+{
+  "contract_version": "seduction-source-scope-delta/v1",
+  "integration_record_id": "seduction-expression-integration-20261005-v2",
+  "integration_record_sha256": "e7b91cfa7bd30783119dcdcaaeb68c2b0223c6d76b7c98a614e6392a83a1c9d4",
+  "metadata_rows": [
+    {
+      "file": "photo_prompt_tags.json",
+      "slot": "hand_pose",
+      "id": "tucking_hair_behind_ear",
+      "changed_fields": [
+        "affected_dimensions",
+        "affected_properties",
+        "concept_units",
+        "core_assertion_discovery",
+        "relations"
+      ],
+      "before": {
+        "id": "tucking_hair_behind_ear",
+        "ko": "손으로 머리카락을 귀 뒤로 넘기는 포즈",
+        "en": "hand tucking hair behind the ear",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "hand",
+          "hair",
+          "portrait"
+        ],
+        "embedding_text": "hand tucking hair behind the ear",
+        "for_any": [
+          "human"
+        ]
+      },
+      "after": {
+        "id": "tucking_hair_behind_ear",
+        "ko": "손으로 머리카락을 귀 뒤로 넘기는 포즈",
+        "en": "hand tucking hair behind the ear",
+        "weight": 0.78,
+        "tags": [
+          "human",
+          "hand",
+          "hair",
+          "portrait"
+        ],
+        "embedding_text": "hand tucking hair behind the ear",
+        "for_any": [
+          "human"
+        ],
+        "concept_units": [
+          "fingers guide the same actor hair behind the same ear",
+          "the fingers wrist and forearm remain attached to that actor"
+        ],
+        "relations": [
+          {
+            "id": "se_hair_tuck_contact",
+            "type": "guides_behind",
+            "subject": "main_subject.fingers",
+            "object": "main_subject.hair_near_ear"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "hair"
+          }
+        ],
+        "core_assertion_discovery": true
+      },
+      "baseline_source_sha256": "0a8d433d6ac091c8913daae0e08ac41fecc1bf5aea9fe648a4076f7990e946de"
+    },
+    {
+      "file": "photo_prompt_tags.json",
+      "slot": "hand_pose",
+      "id": "reaching_toward_camera",
+      "changed_fields": [
+        "affected_dimensions",
+        "affected_properties",
+        "concept_units",
+        "core_assertion_discovery",
+        "relations"
+      ],
+      "before": {
+        "id": "reaching_toward_camera",
+        "ko": "카메라 쪽으로 손을 뻗음",
+        "en": "hand reaching toward the camera",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "hand",
+          "camera",
+          "foreground"
+        ],
+        "embedding_text": "hand reaching toward the camera",
+        "for_any": [
+          "human"
+        ]
+      },
+      "after": {
+        "id": "reaching_toward_camera",
+        "ko": "카메라 쪽으로 손을 뻗음",
+        "en": "hand reaching toward the camera",
+        "weight": 0.5,
+        "tags": [
+          "human",
+          "hand",
+          "camera",
+          "foreground"
+        ],
+        "embedding_text": "hand reaching toward the camera",
+        "for_any": [
+          "human"
+        ],
+        "concept_units": [
+          "the actor arm extends toward the camera",
+          "the attached hand occupies a nearer depth plane than the torso",
+          "shoulder elbow wrist and hand remain continuous"
+        ],
+        "relations": [
+          {
+            "id": "se_hand_depth",
+            "type": "nearer_than",
+            "subject": "main_subject.hand",
+            "object": "main_subject.torso"
+          },
+          {
+            "id": "se_arm_direction",
+            "type": "extends_toward",
+            "subject": "main_subject.arm",
+            "object": "camera"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          }
+        ],
+        "core_assertion_discovery": true
+      },
+      "baseline_source_sha256": "0a8d433d6ac091c8913daae0e08ac41fecc1bf5aea9fe648a4076f7990e946de"
+    },
+    {
+      "file": "photo_prompt_contextual_appeal_extension.json",
+      "slot": "expression",
+      "id": "ctx_c126",
+      "changed_fields": [
+        "affected_properties"
+      ],
+      "before": {
+        "id": "ctx_c126",
+        "ko": "성인이 생각에 잠겨 아랫입술을 가볍게 누르는 얼굴과 작업 맥락을 함께 담는다.",
+        "en": "adult lightly biting the lower lip while concentrating on a task",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "adult",
+          "contextual_visual_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [],
+        "paraphrases": [],
+        "concept_units": [
+          "adult lightly biting the lower lip while concentrating on a task"
+        ],
+        "relations": [
+          {
+            "id": "ctx_c126_relation",
+            "type": "visible_configuration",
+            "subject": "the established adult subject and scene elements",
+            "object": "adult lightly biting the lower lip while concentrating on a task"
+          }
+        ],
+        "affected_dimensions": [
+          "action",
+          "expression"
+        ],
+        "expression_scope": "portrayal_or_scene_relation",
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "context_C126",
+              "ordinary": "무의식적인 습관.",
+              "expressive": {
+                "sensual": "「유혹하려는 게 아니라 생각하다 입술을 깨묾」에 대한 관찰된 호감은 보존한다. 관능적으로 읽힐 가능성은 상황·관계에 달려 있다; 노출량이나 단일 자세가 이를 보장하지 않는다.",
+                "fetish": "특정 단서에 집중한다는 것만으로 페티시로 분류하지 않는다. 개인이 어떤 성적 의미를 부여하는지는 추가 맥락이 필요하다."
+              },
+              "limits": [
+                "의도적인 성적 포즈와 구분; 실제 불안 수준은 추정하지 않는다.",
+                "냄새·소리·시간적 변화·관계 이력·동의·욕망은 사진만으로 확인할 수 없다. 해당 핵심이 빠지면 전체 취향의 재현이라고 주장하지 않는다."
+              ],
+              "status": "optional_contextual_reading; visible configuration is not proof of desire or a universal preference",
+              "application_conditions": [
+                "This is an optional configuration, not a sensual/fetish classification.",
+                "Every mentioned actor, object, garment and place outside the declared change scope must already be established in the frozen core; otherwise the candidate is inapplicable.",
+                "Any actual wardrobe, material, appearance or scene change must fit the declared effects and the current property locks.",
+                "Established reference appearance and requester-owned identity remain unchanged; natural physical traits are alternatives only when explicitly open."
+              ]
+            }
+          ]
+        }
+      },
+      "after": {
+        "id": "ctx_c126",
+        "ko": "성인이 생각에 잠겨 아랫입술을 가볍게 누르는 얼굴과 작업 맥락을 함께 담는다.",
+        "en": "adult lightly biting the lower lip while concentrating on a task",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "adult",
+          "contextual_visual_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [],
+        "paraphrases": [],
+        "concept_units": [
+          "adult lightly biting the lower lip while concentrating on a task"
+        ],
+        "relations": [
+          {
+            "id": "ctx_c126_relation",
+            "type": "visible_configuration",
+            "subject": "the established adult subject and scene elements",
+            "object": "adult lightly biting the lower lip while concentrating on a task"
+          }
+        ],
+        "affected_dimensions": [
+          "action",
+          "expression"
+        ],
+        "expression_scope": "portrayal_or_scene_relation",
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "context_C126",
+              "ordinary": "무의식적인 습관.",
+              "expressive": {
+                "sensual": "「유혹하려는 게 아니라 생각하다 입술을 깨묾」에 대한 관찰된 호감은 보존한다. 관능적으로 읽힐 가능성은 상황·관계에 달려 있다; 노출량이나 단일 자세가 이를 보장하지 않는다.",
+                "fetish": "특정 단서에 집중한다는 것만으로 페티시로 분류하지 않는다. 개인이 어떤 성적 의미를 부여하는지는 추가 맥락이 필요하다."
+              },
+              "limits": [
+                "의도적인 성적 포즈와 구분; 실제 불안 수준은 추정하지 않는다.",
+                "냄새·소리·시간적 변화·관계 이력·동의·욕망은 사진만으로 확인할 수 없다. 해당 핵심이 빠지면 전체 취향의 재현이라고 주장하지 않는다."
+              ],
+              "status": "optional_contextual_reading; visible configuration is not proof of desire or a universal preference",
+              "application_conditions": [
+                "This is an optional configuration, not a sensual/fetish classification.",
+                "Every mentioned actor, object, garment and place outside the declared change scope must already be established in the frozen core; otherwise the candidate is inapplicable.",
+                "Any actual wardrobe, material, appearance or scene change must fit the declared effects and the current property locks.",
+                "Established reference appearance and requester-owned identity remain unchanged; natural physical traits are alternatives only when explicitly open."
+              ]
+            }
+          ]
+        },
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          },
+          {
+            "dimension": "action",
+            "target": "main_subject",
+            "property": "body.action_configuration"
+          }
+        ]
+      },
+      "baseline_source_sha256": "8330f7938f0afc1cfd0bb805e8a9c14c864253eeb57d0ee30ba7a45217507f2b"
+    },
+    {
+      "file": "photo_prompt_sensual_fetish_fashion_extension.json",
+      "slot": "lighting",
+      "id": "sff_pro_l01",
+      "changed_fields": [
+        "affected_properties"
+      ],
+      "before": {
+        "id": "sff_pro_l01",
+        "ko": "스플릿의 한쪽 얼굴 명암",
+        "en": "split lighting",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "adult",
+          "fashion",
+          "sensual_editorial",
+          "fetish_fashion"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "split lighting",
+          "스플릿의 한쪽 얼굴 명암"
+        ],
+        "keywords": [
+          "split lighting",
+          "스플릿의 한쪽 얼굴 명암"
+        ],
+        "embedding_text": "스플릿의 한쪽 얼굴 명암; split lighting; 한쪽 면 명; 반대 면 암; 코/턱 연속",
+        "concept_units": [
+          "split lighting",
+          "한쪽 면 명",
+          "반대 면 암",
+          "코/턱 연속"
+        ],
+        "relations": [
+          {
+            "id": "sff_pro_l01_owner",
+            "type": "visible_owner_and_boundary",
+            "subject": "split lighting",
+            "object": "성인 얼굴"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "research_source_urls": [
+          "https://www.ppa.com/ppmag/articles/9-types-of-portrait-lighting"
+        ],
+        "research_origin_id": "pro:L01",
+        "research_confusions": [
+          "얼굴의 두 인물을 합침"
+        ]
+      },
+      "after": {
+        "id": "sff_pro_l01",
+        "ko": "스플릿의 한쪽 얼굴 명암",
+        "en": "split lighting",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "adult",
+          "fashion",
+          "sensual_editorial",
+          "fetish_fashion"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "split lighting",
+          "스플릿의 한쪽 얼굴 명암"
+        ],
+        "keywords": [
+          "split lighting",
+          "스플릿의 한쪽 얼굴 명암"
+        ],
+        "embedding_text": "스플릿의 한쪽 얼굴 명암; split lighting; 한쪽 면 명; 반대 면 암; 코/턱 연속",
+        "concept_units": [
+          "split lighting",
+          "한쪽 면 명",
+          "반대 면 암",
+          "코/턱 연속"
+        ],
+        "relations": [
+          {
+            "id": "sff_pro_l01_owner",
+            "type": "visible_owner_and_boundary",
+            "subject": "split lighting",
+            "object": "성인 얼굴"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "research_source_urls": [
+          "https://www.ppa.com/ppmag/articles/9-types-of-portrait-lighting"
+        ],
+        "research_origin_id": "pro:L01",
+        "research_confusions": [
+          "얼굴의 두 인물을 합침"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "main_subject",
+            "property": "face"
+          }
+        ]
+      },
+      "baseline_source_sha256": "81eed54110f2fb355170c46b9d42006afcdee4907956c6c721fe0e4e8a8c8bf4"
+    },
+    {
+      "file": "photo_prompt_sensual_fetish_fashion_extension.json",
+      "slot": "lighting",
+      "id": "sff_pro_l05",
+      "changed_fields": [
+        "affected_properties"
+      ],
+      "before": {
+        "id": "sff_pro_l05",
+        "ko": "루프의 옆 코 그림자",
+        "en": "loop lighting",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "adult",
+          "fashion",
+          "sensual_editorial",
+          "fetish_fashion"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "loop lighting",
+          "루프의 옆 코 그림자"
+        ],
+        "keywords": [
+          "loop lighting",
+          "루프의 옆 코 그림자"
+        ],
+        "embedding_text": "루프의 옆 코 그림자; loop lighting; 코 옆 짧은 그림자; 볼 암부와 분리",
+        "concept_units": [
+          "loop lighting",
+          "코 옆 짧은 그림자",
+          "볼 암부와 분리"
+        ],
+        "relations": [
+          {
+            "id": "sff_pro_l05_owner",
+            "type": "visible_owner_and_boundary",
+            "subject": "loop lighting",
+            "object": "얼굴"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "research_source_urls": [
+          "https://www.ppa.com/ppmag/articles/9-types-of-portrait-lighting"
+        ],
+        "research_origin_id": "pro:L05",
+        "research_confusions": [
+          "렘브란트 삼각형"
+        ]
+      },
+      "after": {
+        "id": "sff_pro_l05",
+        "ko": "루프의 옆 코 그림자",
+        "en": "loop lighting",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "adult",
+          "fashion",
+          "sensual_editorial",
+          "fetish_fashion"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "loop lighting",
+          "루프의 옆 코 그림자"
+        ],
+        "keywords": [
+          "loop lighting",
+          "루프의 옆 코 그림자"
+        ],
+        "embedding_text": "루프의 옆 코 그림자; loop lighting; 코 옆 짧은 그림자; 볼 암부와 분리",
+        "concept_units": [
+          "loop lighting",
+          "코 옆 짧은 그림자",
+          "볼 암부와 분리"
+        ],
+        "relations": [
+          {
+            "id": "sff_pro_l05_owner",
+            "type": "visible_owner_and_boundary",
+            "subject": "loop lighting",
+            "object": "얼굴"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "research_source_urls": [
+          "https://www.ppa.com/ppmag/articles/9-types-of-portrait-lighting"
+        ],
+        "research_origin_id": "pro:L05",
+        "research_confusions": [
+          "렘브란트 삼각형"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "main_subject",
+            "property": "face"
+          }
+        ]
+      },
+      "baseline_source_sha256": "81eed54110f2fb355170c46b9d42006afcdee4907956c6c721fe0e4e8a8c8bf4"
+    },
+    {
+      "file": "photo_prompt_sensual_fetish_fashion_extension.json",
+      "slot": "lighting",
+      "id": "sff_pro_l07",
+      "changed_fields": [
+        "affected_properties"
+      ],
+      "before": {
+        "id": "sff_pro_l07",
+        "ko": "쇼트 라이팅의 먼쪽 밝음",
+        "en": "short lighting",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "adult",
+          "fashion",
+          "sensual_editorial",
+          "fetish_fashion"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "short lighting",
+          "쇼트 라이팅의 먼쪽 밝음"
+        ],
+        "keywords": [
+          "short lighting",
+          "쇼트 라이팅의 먼쪽 밝음"
+        ],
+        "embedding_text": "쇼트 라이팅의 먼쪽 밝음; short lighting; 카메라에서 먼 볼이 밝음; 가까운 면은 어두움",
+        "concept_units": [
+          "short lighting",
+          "카메라에서 먼 볼이 밝음",
+          "가까운 면은 어두움"
+        ],
+        "relations": [
+          {
+            "id": "sff_pro_l07_owner",
+            "type": "visible_owner_and_boundary",
+            "subject": "short lighting",
+            "object": "돌아선 얼굴"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "research_source_urls": [
+          "https://www.ppa.com/ppmag/articles/9-types-of-portrait-lighting"
+        ],
+        "research_origin_id": "pro:L07",
+        "research_confusions": [
+          "카메라 가까운 볼이 밝음"
+        ]
+      },
+      "after": {
+        "id": "sff_pro_l07",
+        "ko": "쇼트 라이팅의 먼쪽 밝음",
+        "en": "short lighting",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "adult",
+          "fashion",
+          "sensual_editorial",
+          "fetish_fashion"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "short lighting",
+          "쇼트 라이팅의 먼쪽 밝음"
+        ],
+        "keywords": [
+          "short lighting",
+          "쇼트 라이팅의 먼쪽 밝음"
+        ],
+        "embedding_text": "쇼트 라이팅의 먼쪽 밝음; short lighting; 카메라에서 먼 볼이 밝음; 가까운 면은 어두움",
+        "concept_units": [
+          "short lighting",
+          "카메라에서 먼 볼이 밝음",
+          "가까운 면은 어두움"
+        ],
+        "relations": [
+          {
+            "id": "sff_pro_l07_owner",
+            "type": "visible_owner_and_boundary",
+            "subject": "short lighting",
+            "object": "돌아선 얼굴"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "research_source_urls": [
+          "https://www.ppa.com/ppmag/articles/9-types-of-portrait-lighting"
+        ],
+        "research_origin_id": "pro:L07",
+        "research_confusions": [
+          "카메라 가까운 볼이 밝음"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "main_subject",
+            "property": "face"
+          }
+        ]
+      },
+      "baseline_source_sha256": "81eed54110f2fb355170c46b9d42006afcdee4907956c6c721fe0e4e8a8c8bf4"
+    },
+    {
+      "file": "photo_prompt_sensual_fetish_fashion_extension.json",
+      "slot": "lighting",
+      "id": "sff_pro_l08",
+      "changed_fields": [
+        "affected_properties"
+      ],
+      "before": {
+        "id": "sff_pro_l08",
+        "ko": "브로드 라이팅의 가까운 면 밝음",
+        "en": "broad lighting",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "adult",
+          "fashion",
+          "sensual_editorial",
+          "fetish_fashion"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "broad lighting",
+          "브로드 라이팅의 가까운 면 밝음"
+        ],
+        "keywords": [
+          "broad lighting",
+          "브로드 라이팅의 가까운 면 밝음"
+        ],
+        "embedding_text": "브로드 라이팅의 가까운 면 밝음; broad lighting; 카메라에 넓게 보이는 볼이 밝음",
+        "concept_units": [
+          "broad lighting",
+          "카메라에 넓게 보이는 볼이 밝음"
+        ],
+        "relations": [
+          {
+            "id": "sff_pro_l08_owner",
+            "type": "visible_owner_and_boundary",
+            "subject": "broad lighting",
+            "object": "돌아선 얼굴"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "research_source_urls": [
+          "https://www.ppa.com/ppmag/articles/9-types-of-portrait-lighting"
+        ],
+        "research_origin_id": "pro:L08",
+        "research_confusions": [
+          "쇼트 라이팅"
+        ]
+      },
+      "after": {
+        "id": "sff_pro_l08",
+        "ko": "브로드 라이팅의 가까운 면 밝음",
+        "en": "broad lighting",
+        "weight": 0.42,
+        "tags": [
+          "human",
+          "adult",
+          "fashion",
+          "sensual_editorial",
+          "fetish_fashion"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "broad lighting",
+          "브로드 라이팅의 가까운 면 밝음"
+        ],
+        "keywords": [
+          "broad lighting",
+          "브로드 라이팅의 가까운 면 밝음"
+        ],
+        "embedding_text": "브로드 라이팅의 가까운 면 밝음; broad lighting; 카메라에 넓게 보이는 볼이 밝음",
+        "concept_units": [
+          "broad lighting",
+          "카메라에 넓게 보이는 볼이 밝음"
+        ],
+        "relations": [
+          {
+            "id": "sff_pro_l08_owner",
+            "type": "visible_owner_and_boundary",
+            "subject": "broad lighting",
+            "object": "돌아선 얼굴"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "research_source_urls": [
+          "https://www.ppa.com/ppmag/articles/9-types-of-portrait-lighting"
+        ],
+        "research_origin_id": "pro:L08",
+        "research_confusions": [
+          "쇼트 라이팅"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "main_subject",
+            "property": "face"
+          }
+        ]
+      },
+      "baseline_source_sha256": "81eed54110f2fb355170c46b9d42006afcdee4907956c6c721fe0e4e8a8c8bf4"
+    },
+    {
+      "file": "photo_prompt_lighting_extension.json",
+      "slot": "light_shape",
+      "id": "lit_clean_vertical_catchlight_pair",
+      "changed_fields": [
+        "affected_dimensions",
+        "affected_properties"
+      ],
+      "before": {
+        "id": "lit_clean_vertical_catchlight_pair",
+        "ko": "눈에 수직으로 보이는 상하 캐치라이트",
+        "en": "vertical high-low catchlight evidence",
+        "weight": 0.72,
+        "tags": [
+          "lighting_visual_semantics",
+          "clean_beauty_clamshell",
+          "light_shape"
+        ],
+        "requires_any_tags": [
+          "clean_beauty_clamshell"
+        ],
+        "aliases": [
+          "눈에 수직으로 보이는 상하 캐치라이트",
+          "vertical high-low catchlight evidence"
+        ],
+        "keywords": [
+          "lit",
+          "clean",
+          "vertical",
+          "catchlight",
+          "pair",
+          "beauty",
+          "clamshell"
+        ],
+        "embedding_text": "vertical high-low catchlight evidence; part of the clean beauty clamshell lighting cluster; remains source-owned and rejects ring light disk, shadowless skin retouch, strong underlight",
+        "concept_units": [
+          "vertical high-low catchlight pair"
+        ],
+        "relations": [
+          {
+            "id": "catchlights_vertical_pair",
+            "type": "above",
+            "subject": "upper catchlight",
+            "object": "lower catchlight"
+          }
+        ]
+      },
+      "after": {
+        "id": "lit_clean_vertical_catchlight_pair",
+        "ko": "눈에 수직으로 보이는 상하 캐치라이트",
+        "en": "vertical high-low catchlight evidence",
+        "weight": 0.72,
+        "tags": [
+          "lighting_visual_semantics",
+          "clean_beauty_clamshell",
+          "light_shape"
+        ],
+        "requires_any_tags": [
+          "clean_beauty_clamshell"
+        ],
+        "aliases": [
+          "눈에 수직으로 보이는 상하 캐치라이트",
+          "vertical high-low catchlight evidence"
+        ],
+        "keywords": [
+          "lit",
+          "clean",
+          "vertical",
+          "catchlight",
+          "pair",
+          "beauty",
+          "clamshell"
+        ],
+        "embedding_text": "vertical high-low catchlight evidence; part of the clean beauty clamshell lighting cluster; remains source-owned and rejects ring light disk, shadowless skin retouch, strong underlight",
+        "concept_units": [
+          "vertical high-low catchlight pair"
+        ],
+        "relations": [
+          {
+            "id": "catchlights_vertical_pair",
+            "type": "above",
+            "subject": "upper catchlight",
+            "object": "lower catchlight"
+          }
+        ],
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "main_subject",
+            "property": "eyes.light_reflection"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ]
+      },
+      "baseline_source_sha256": "0636df30c4d86a1c13dbb2ae65917f305a5f384058208ac0c90cab0fa78b587f"
+    },
+    {
+      "file": "photo_prompt_portrait_composition_extension.json",
+      "slot": "composition",
+      "id": "pc_pc17_component_2",
+      "changed_fields": [
+        "affected_properties"
+      ],
+      "before": {
+        "id": "pc_pc17_component_2",
+        "ko": "카메라는 그 보조 인물의 어깨 너머로 주인공의 얼굴을 본다",
+        "en": "the camera observes the main face beyond that secondary shoulder",
+        "weight": 0.45,
+        "tags": [
+          "human",
+          "portrait",
+          "composition"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "타인의 어깨 너머 주인공",
+          "over-the-shoulder shot",
+          "OTS portrait",
+          "카메라는 그 보조 인물의 어깨 너머로 주인공의 얼굴을 본다"
+        ],
+        "keywords": [
+          "타인의 어깨 너머 주인공",
+          "over-the-shoulder shot",
+          "OTS portrait",
+          "카메라는 그 보조 인물의 어깨 너머로 주인공의 얼굴을 본다"
+        ],
+        "embedding_text": "the camera observes the main face beyond that secondary shoulder | 타인의 어깨 너머 주인공 | over-the-shoulder shot | OTS portrait | 카메라는 그 보조 인물의 어깨 너머로 주인공의 얼굴을 본다",
+        "concept_units": [
+          "the camera observes the main face beyond that secondary shoulder"
+        ],
+        "relations": [
+          {
+            "id": "pc_pc17_component_2_owner",
+            "type": "declared_owner_scope",
+            "subject": "camera secondary shoulder and main face",
+            "object": "the requester-supported main portrait and frame"
+          }
+        ],
+        "affected_dimensions": [
+          "camera",
+          "composition"
+        ]
+      },
+      "after": {
+        "id": "pc_pc17_component_2",
+        "ko": "카메라는 그 보조 인물의 어깨 너머로 주인공의 얼굴을 본다",
+        "en": "the camera observes the main face beyond that secondary shoulder",
+        "weight": 0.45,
+        "tags": [
+          "human",
+          "portrait",
+          "composition"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "타인의 어깨 너머 주인공",
+          "over-the-shoulder shot",
+          "OTS portrait",
+          "카메라는 그 보조 인물의 어깨 너머로 주인공의 얼굴을 본다"
+        ],
+        "keywords": [
+          "타인의 어깨 너머 주인공",
+          "over-the-shoulder shot",
+          "OTS portrait",
+          "카메라는 그 보조 인물의 어깨 너머로 주인공의 얼굴을 본다"
+        ],
+        "embedding_text": "the camera observes the main face beyond that secondary shoulder | 타인의 어깨 너머 주인공 | over-the-shoulder shot | OTS portrait | 카메라는 그 보조 인물의 어깨 너머로 주인공의 얼굴을 본다",
+        "concept_units": [
+          "the camera observes the main face beyond that secondary shoulder"
+        ],
+        "relations": [
+          {
+            "id": "pc_pc17_component_2_owner",
+            "type": "declared_owner_scope",
+            "subject": "camera secondary shoulder and main face",
+            "object": "the requester-supported main portrait and frame"
+          }
+        ],
+        "affected_dimensions": [
+          "camera",
+          "composition"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "camera",
+            "target": "*",
+            "property": "*"
+          },
+          {
+            "dimension": "composition",
+            "target": "*",
+            "property": "*"
+          }
+        ]
+      },
+      "baseline_source_sha256": "c7005ea38a91c0444988264c26f61159341c3f81e7d7c27210960385be278d69"
+    },
+    {
+      "file": "photo_prompt_reactorprompt_visual_relations_extension.json",
+      "slot": "gaze_target",
+      "id": "head_eye_counterorientation_relation",
+      "changed_fields": [
+        "affected_dimensions",
+        "affected_properties",
+        "concept_units",
+        "core_assertion_discovery",
+        "relations"
+      ],
+      "before": {
+        "id": "head_eye_counterorientation_relation",
+        "ko": "머리 방향과 눈동자 방향이 서로 다른 표적 관계",
+        "en": "head and eye counter-orientation toward two readable directions without breaking anatomy",
+        "weight": 0.52,
+        "tags": [
+          "human",
+          "gaze_relation",
+          "facial_display",
+          "reactorprompt_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "counter-oriented head and eyes",
+          "머리 눈 반대 방향"
+        ],
+        "keywords": [
+          "head vector",
+          "iris vector",
+          "visible target",
+          "eye aperture",
+          "neck coherence"
+        ],
+        "embedding_text": "the head turns toward one readable direction while the irises return toward a second visible target, preserving believable eye aperture, sclera balance, neck connection, and target geometry"
+      },
+      "after": {
+        "id": "head_eye_counterorientation_relation",
+        "ko": "머리 방향과 눈동자 방향이 서로 다른 표적 관계",
+        "en": "head and eye counter-orientation toward two readable directions without breaking anatomy",
+        "weight": 0.52,
+        "tags": [
+          "human",
+          "gaze_relation",
+          "facial_display",
+          "reactorprompt_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "counter-oriented head and eyes",
+          "머리 눈 반대 방향"
+        ],
+        "keywords": [
+          "head vector",
+          "iris vector",
+          "visible target",
+          "eye aperture",
+          "neck coherence"
+        ],
+        "embedding_text": "the head turns toward one readable direction while the irises return toward a second visible target, preserving believable eye aperture, sclera balance, neck connection, and target geometry",
+        "concept_units": [
+          "the head turns toward one stated direction",
+          "the irises point toward a second specified target",
+          "both directions belong to the same connected head and eyes"
+        ],
+        "relations": [
+          {
+            "id": "se_head_eye_direction_difference",
+            "type": "counterorientation",
+            "subject": "main_subject.head",
+            "object": "main_subject.eyes"
+          },
+          {
+            "id": "se_counteroriented_eye_target",
+            "type": "directed_gaze",
+            "subject": "main_subject.eyes",
+            "object": "the specified existing gaze target"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "head.orientation"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.gaze_direction"
+          }
+        ],
+        "core_assertion_discovery": true
+      },
+      "baseline_source_sha256": "ba83d270ddf7ef7aa42321385881b4702a6ca1c68feca081709522e14c8ac3aa"
+    }
+  ],
+  "limits": "Historical projection reverses only these exact metadata fields. Authored labels, aliases, eligibility guards and the historical expected values stay exact."
+}

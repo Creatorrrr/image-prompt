@@ -364,7 +364,8 @@
       "photo_prompt_acting_expression_extension.json",
       "photo_prompt_neutral_expression_extension.json",
       "photo_prompt_religion_iconography_extension.json",
-      "photo_prompt_motion_graphics_extension.json"
+      "photo_prompt_motion_graphics_extension.json",
+      "photo_prompt_seduction_expression_extension.json"
     ],
     "core_assertion_discovery": {
       "maximum_candidates": 15,
@@ -97878,7 +97879,46 @@
         "embedding_text": "hand tucking hair behind the ear",
         "for_any": [
           "human"
-        ]
+        ],
+        "concept_units": [
+          "fingers guide the same actor hair behind the same ear",
+          "the fingers wrist and forearm remain attached to that actor"
+        ],
+        "relations": [
+          {
+            "id": "se_hair_tuck_contact",
+            "type": "guides_behind",
+            "subject": "main_subject.fingers",
+            "object": "main_subject.hair_near_ear"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "hair"
+          }
+        ],
+        "core_assertion_discovery": true
       },
       {
         "id": "hand_near_lips",
@@ -98023,7 +98063,42 @@
         "embedding_text": "hand reaching toward the camera",
         "for_any": [
           "human"
-        ]
+        ],
+        "concept_units": [
+          "the actor arm extends toward the camera",
+          "the attached hand occupies a nearer depth plane than the torso",
+          "shoulder elbow wrist and hand remain continuous"
+        ],
+        "relations": [
+          {
+            "id": "se_hand_depth",
+            "type": "nearer_than",
+            "subject": "main_subject.hand",
+            "object": "main_subject.torso"
+          },
+          {
+            "id": "se_arm_direction",
+            "type": "extends_toward",
+            "subject": "main_subject.arm",
+            "object": "camera"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          }
+        ],
+        "core_assertion_discovery": true
       },
       {
         "id": "hands_in_pockets",

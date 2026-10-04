@@ -118,7 +118,7 @@ class ShelfReturnKoreanStateDataCleanupTests(unittest.TestCase):
         # and its order must still survive unchanged in the current corpus.
         current_historical = [row for row in self.current['candidate_bundles']
                               if row['id'] in historical_ids]
-        self.assertEqual(fixtures.bundle_meanings(current_historical),
+        self.assertEqual(fixtures.bundle_meanings(fixtures.seduction_historical_bundles(current_historical)),
                          fixtures.bundle_meanings(historical_bundles))
         for item in self.frozen['inventory']:
             current = next(r for r in self.current['slots'][item['slot']] if r['id'] == item['id'])
