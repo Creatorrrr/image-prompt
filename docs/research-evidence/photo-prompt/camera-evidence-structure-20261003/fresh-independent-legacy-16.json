@@ -1,0 +1,552 @@
+{
+  "schema_version": "1.0",
+  "set_name": "fresh_camera_ownership_16",
+  "frozen": true,
+  "provenance": "Independently authored without reading any repository, implementation, prior holdout, or network source.",
+  "span_convention": "Case-sensitive literal substrings in english_baseline; offsets are zero-based half-open Unicode character offsets. Abstention cases intentionally have null expected extraction spans; rejected_evidence identifies nonqualifying or unresolved literal evidence.",
+  "word_count_convention": "Whitespace-delimited English baseline words.",
+  "cases": [
+    {
+      "id": "fresh_camera_01",
+      "request_language": "en",
+      "case_type": "direct_up",
+      "natural_request": "Make an image of an adult repairing a ceiling light, photographed from the floor with the camera pointing straight up.",
+      "english_baseline": "An adult electrician stands on a sturdy ladder beneath a simple ceiling fixture. The capture camera rests at floor level and points straight up, showing the underside of the ladder and the electrician's hands around the fixture. A folded cloth and a closed toolbox sit nearby. Soft daylight enters the room, revealing pale walls, clean wooden boards, and ordinary signs of careful maintenance.",
+      "expected": {
+        "abstain": false,
+        "owner_span": "capture camera",
+        "height_span": "at floor level",
+        "direction_span": "points straight up",
+        "reason": null,
+        "span_offsets": {
+          "owner_span": [
+            85,
+            99
+          ],
+          "height_span": [
+            106,
+            120
+          ],
+          "direction_span": [
+            125,
+            143
+          ]
+        }
+      },
+      "rejected_evidence": [],
+      "baseline_word_count": 63
+    },
+    {
+      "id": "fresh_camera_02",
+      "request_language": "en",
+      "case_type": "direct_down",
+      "natural_request": "Show a neat arrangement of pottery tools from a camera mounted high above the table and aimed straight down.",
+      "english_baseline": "A pottery worktable holds a wooden rib, a wire cutter, two sponges, and several small clay bowls. The capture camera is mounted high above the table and aims straight down, keeping the tools clearly separated against the stained canvas surface. Gentle window light reveals damp clay marks and fine scratches. The surrounding studio remains quiet, with muted colors and no people entering the composition.",
+      "expected": {
+        "abstain": false,
+        "owner_span": "capture camera",
+        "height_span": "high above the table",
+        "direction_span": "aims straight down",
+        "reason": null,
+        "span_offsets": {
+          "owner_span": [
+            102,
+            116
+          ],
+          "height_span": [
+            128,
+            148
+          ],
+          "direction_span": [
+            153,
+            171
+          ]
+        }
+      },
+      "rejected_evidence": [],
+      "baseline_word_count": 64
+    },
+    {
+      "id": "fresh_camera_03",
+      "request_language": "en",
+      "case_type": "low_horizontal",
+      "natural_request": "Photograph an adult waiting beside a bicycle using a low camera that stays level rather than tilting upward.",
+      "english_baseline": "An adult commuter waits beside a blue bicycle on a quiet paved path. The low capture camera sits just above the pavement and remains aimed horizontally, without tilting upward toward the rider. Fallen leaves collect near the bicycle tires, and a plain bench stands farther along the path. Overcast daylight gives the scene soft shadows, natural skin tones, and a calm, everyday atmosphere.",
+      "expected": {
+        "abstain": false,
+        "owner_span": "low capture camera",
+        "height_span": "just above the pavement",
+        "direction_span": "aimed horizontally",
+        "reason": null,
+        "span_offsets": {
+          "owner_span": [
+            73,
+            91
+          ],
+          "height_span": [
+            97,
+            120
+          ],
+          "direction_span": [
+            133,
+            151
+          ]
+        }
+      },
+      "rejected_evidence": [],
+      "baseline_word_count": 63
+    },
+    {
+      "id": "fresh_camera_04",
+      "request_language": "en",
+      "case_type": "modified_camera_noun_phrase",
+      "natural_request": "Create a bookstore scene using a downward-facing capture camera positioned above the adult bookseller.",
+      "english_baseline": "An adult bookseller sorts a small stack of secondhand novels beside a narrow wooden counter. A downward-facing capture camera positioned above the bookseller records the open pages, the person's hands, and the worn counter surface. Warm lamps illuminate faded book spines along the shelves. A ceramic mug and a handwritten price card add ordinary detail without obscuring the bookseller's patient, methodical work.",
+      "expected": {
+        "abstain": false,
+        "owner_span": "downward-facing capture camera",
+        "height_span": "above the bookseller",
+        "direction_span": "downward-facing",
+        "reason": null,
+        "span_offsets": {
+          "owner_span": [
+            95,
+            125
+          ],
+          "height_span": [
+            137,
+            157
+          ],
+          "direction_span": [
+            95,
+            110
+          ]
+        }
+      },
+      "rejected_evidence": [],
+      "baseline_word_count": 62
+    },
+    {
+      "id": "fresh_camera_05",
+      "request_language": "en",
+      "case_type": "background_depicted_camera",
+      "natural_request": "Show an adult shopping for a lamp, with a downward-pointing vintage camera displayed on a shelf in the background.",
+      "english_baseline": "An adult shopper examines a brass desk lamp in a small secondhand store. In the background, a vintage camera on an upper shelf points downward toward a decorative globe; it is merchandise within the scene. Shelves hold old radios, ceramic bowls, and neatly folded linens. Warm ambient light reveals scuffed wood and polished brass, while the shopper studies the lamp's switch and shade.",
+      "expected": {
+        "abstain": true,
+        "owner_span": null,
+        "height_span": null,
+        "direction_span": null,
+        "reason": "The only camera direction belongs to a displayed background object, not the capture camera.",
+        "span_offsets": {}
+      },
+      "rejected_evidence": [
+        {
+          "owner_span": "vintage camera",
+          "height_span": "on an upper shelf",
+          "direction_span": "points downward",
+          "span_offsets": {
+            "owner_span": [
+              94,
+              108
+            ],
+            "height_span": [
+              109,
+              126
+            ],
+            "direction_span": [
+              127,
+              142
+            ]
+          }
+        }
+      ],
+      "baseline_word_count": 63
+    },
+    {
+      "id": "fresh_camera_06",
+      "request_language": "en",
+      "case_type": "object_only_up_orientation",
+      "natural_request": "Make a quiet still life of an upward-pointing desk lamp and notebooks.",
+      "english_baseline": "A blue desk lamp points upward beside three closed notebooks on a simple writing desk. Its shade directs a soft pool of light onto a pale wall, while a pencil and a small eraser lie near the notebooks. The room contains a wooden chair and a plain curtain. Scratches in the desk finish and slightly bent paper corners give the still life an ordinary, lived-in quality.",
+      "expected": {
+        "abstain": true,
+        "owner_span": null,
+        "height_span": null,
+        "direction_span": null,
+        "reason": "Upward orientation describes the desk lamp; no capture camera height or direction is stated.",
+        "span_offsets": {}
+      },
+      "rejected_evidence": [
+        {
+          "owner_span": "desk lamp",
+          "height_span": null,
+          "direction_span": "points upward",
+          "span_offsets": {
+            "owner_span": [
+              7,
+              16
+            ],
+            "direction_span": [
+              17,
+              30
+            ]
+          }
+        }
+      ],
+      "baseline_word_count": 66
+    },
+    {
+      "id": "fresh_camera_07",
+      "request_language": "en",
+      "case_type": "unresolved_multiple_cameras",
+      "natural_request": "Describe an adult rehearsal scene filmed with two cameras, one low and upward-looking and one high and downward-looking, without choosing the final view.",
+      "english_baseline": "An adult violinist rehearses beside a music stand in a plain practice room. One recording camera stands near the floor and aims upward, while another recording camera sits above head height and aims downward. Either camera could supply the final image; no recording view is selected. A closed instrument case rests beside the chair, and soft daylight spreads across the pale wall and wooden flooring.",
+      "expected": {
+        "abstain": true,
+        "owner_span": null,
+        "height_span": null,
+        "direction_span": null,
+        "reason": "Two eligible capture cameras have conflicting height and direction evidence, and the final view is explicitly unresolved.",
+        "span_offsets": {}
+      },
+      "rejected_evidence": [
+        {
+          "owner_span": "One recording camera",
+          "height_span": "near the floor",
+          "direction_span": "aims upward",
+          "span_offsets": {
+            "owner_span": [
+              76,
+              96
+            ],
+            "height_span": [
+              104,
+              118
+            ],
+            "direction_span": [
+              123,
+              134
+            ]
+          }
+        },
+        {
+          "owner_span": "another recording camera",
+          "height_span": "above head height",
+          "direction_span": "aims downward",
+          "span_offsets": {
+            "owner_span": [
+              142,
+              166
+            ],
+            "height_span": [
+              172,
+              189
+            ],
+            "direction_span": [
+              194,
+              207
+            ]
+          }
+        }
+      ],
+      "baseline_word_count": 65
+    },
+    {
+      "id": "fresh_camera_08",
+      "request_language": "en",
+      "case_type": "no_capture_evidence",
+      "natural_request": "Show an adult gardener standing beside tall sunflowers and a low stone border.",
+      "english_baseline": "An adult gardener stands beside tall sunflowers in a small community garden. A low stone border separates the planting bed from a gravel path, and a watering can rests beside a folded pair of gloves. The gardener checks a leaf for damage while a light breeze moves the flower heads. Soft afternoon light brings out the green foliage, rough stone, and warm yellow petals.",
+      "expected": {
+        "abstain": true,
+        "owner_span": null,
+        "height_span": null,
+        "direction_span": null,
+        "reason": "Tall flowers and a low border describe scene objects only; no capture camera is specified.",
+        "span_offsets": {}
+      },
+      "rejected_evidence": [],
+      "baseline_word_count": 64
+    },
+    {
+      "id": "fresh_camera_09",
+      "request_language": "ko",
+      "case_type": "lens_same_owner_relation",
+      "natural_request": "성인이 작은 모형 배를 만드는 장면을 바닥 가까이에 둔 촬영 카메라로 보여 줘. 그 카메라의 렌즈는 위쪽을 향하게 해 줘.",
+      "english_baseline": "An adult hobbyist assembles a small model boat at a wooden workbench. The capture camera is set close to the floor; its lens is tilted upward toward the careful hands and the boat's unfinished mast. Small brushes, thread, and a closed glue bottle remain neatly arranged nearby. Warm room light highlights the wood grain and the delicate construction without turning the workspace into a dramatic stage.",
+      "expected": {
+        "abstain": false,
+        "owner_span": "capture camera",
+        "height_span": "close to the floor",
+        "direction_span": "its lens is tilted upward",
+        "reason": null,
+        "span_offsets": {
+          "owner_span": [
+            74,
+            88
+          ],
+          "height_span": [
+            96,
+            114
+          ],
+          "direction_span": [
+            116,
+            141
+          ]
+        }
+      },
+      "rejected_evidence": [],
+      "baseline_word_count": 66
+    },
+    {
+      "id": "fresh_camera_10",
+      "request_language": "ko",
+      "case_type": "local_negation_positive_other_direction",
+      "natural_request": "성인이 도자기 접시를 정리하는 모습을 보여 줘. 높은 곳에 설치한 촬영 카메라는 위가 아니라 아래를 향하게 해 줘.",
+      "english_baseline": "An adult ceramic artist arranges finished plates on a broad studio table. The capture camera is mounted above the artist's head and does not point upward; instead, it points downward toward the plates and the artist's hands. Pale window light makes the glazed surfaces gently shine. A clean apron, a folded towel, and a simple wooden stool complete the practical workspace around the table.",
+      "expected": {
+        "abstain": false,
+        "owner_span": "capture camera",
+        "height_span": "above the artist's head",
+        "direction_span": "it points downward",
+        "reason": null,
+        "span_offsets": {
+          "owner_span": [
+            78,
+            92
+          ],
+          "height_span": [
+            104,
+            127
+          ],
+          "direction_span": [
+            164,
+            182
+          ]
+        }
+      },
+      "rejected_evidence": [],
+      "baseline_word_count": 64
+    },
+    {
+      "id": "fresh_camera_11",
+      "request_language": "ko",
+      "case_type": "direct_up",
+      "natural_request": "성인이 온실에서 덩굴을 돌보는 장면을 만들어 줘. 촬영 카메라는 허리 높이에 놓고 위쪽을 향하게 해 줘.",
+      "english_baseline": "An adult gardener gently ties a climbing vine to a support inside a modest greenhouse. The capture camera is placed at waist height and points upward toward the gardener's raised hands and the overhead leaves. Terracotta pots line a narrow gravel walkway, while clear glass panels admit soft morning light. A small basket of plant ties rests nearby, keeping the scene practical and unhurried.",
+      "expected": {
+        "abstain": false,
+        "owner_span": "capture camera",
+        "height_span": "at waist height",
+        "direction_span": "points upward",
+        "reason": null,
+        "span_offsets": {
+          "owner_span": [
+            91,
+            105
+          ],
+          "height_span": [
+            116,
+            131
+          ],
+          "direction_span": [
+            136,
+            149
+          ]
+        }
+      },
+      "rejected_evidence": [],
+      "baseline_word_count": 64
+    },
+    {
+      "id": "fresh_camera_12",
+      "request_language": "ko",
+      "case_type": "modified_camera_noun_phrase",
+      "natural_request": "성인이 기차역 승강장에서 기다리는 장면을 낮은 위치의 수평 방향 촬영 카메라로 담아 줘.",
+      "english_baseline": "An adult traveler waits with a small suitcase on a quiet station platform. A horizontally aimed capture camera positioned near ground level records the traveler, the suitcase, and the long platform edge. The traveler holds a folded paper ticket beside a plain coat pocket. Soft cloud cover keeps the colors subdued, while a distant sign and a row of empty seats establish the everyday setting.",
+      "expected": {
+        "abstain": false,
+        "owner_span": "horizontally aimed capture camera",
+        "height_span": "near ground level",
+        "direction_span": "horizontally aimed",
+        "reason": null,
+        "span_offsets": {
+          "owner_span": [
+            77,
+            110
+          ],
+          "height_span": [
+            122,
+            139
+          ],
+          "direction_span": [
+            77,
+            95
+          ]
+        }
+      },
+      "rejected_evidence": [],
+      "baseline_word_count": 65
+    },
+    {
+      "id": "fresh_camera_13",
+      "request_language": "ko",
+      "case_type": "background_depicted_camera",
+      "natural_request": "성인이 사진 전시를 보는 장면을 보여 줘. 뒤쪽 전시 사진에는 높은 선반에서 아래를 향하는 카메라가 나오게 해 줘.",
+      "english_baseline": "An adult visitor studies a framed photograph in a small gallery. The photograph depicts a camera perched on a high shelf and aimed downward at a toy train; this camera belongs to the displayed photograph. Nearby prints show ordinary household objects against plain backgrounds. Even gallery lighting reveals the visitor's thoughtful posture, the pale walls, and the simple wooden frames without adding theatrical shadows.",
+      "expected": {
+        "abstain": true,
+        "owner_span": null,
+        "height_span": null,
+        "direction_span": null,
+        "reason": "Camera evidence is inside a displayed photograph, not the camera capturing the requested gallery scene.",
+        "span_offsets": {}
+      },
+      "rejected_evidence": [
+        {
+          "owner_span": "a camera",
+          "height_span": "on a high shelf",
+          "direction_span": "aimed downward",
+          "span_offsets": {
+            "owner_span": [
+              88,
+              96
+            ],
+            "height_span": [
+              105,
+              120
+            ],
+            "direction_span": [
+              125,
+              139
+            ]
+          }
+        }
+      ],
+      "baseline_word_count": 64
+    },
+    {
+      "id": "fresh_camera_14",
+      "request_language": "ko",
+      "case_type": "object_only_up_orientation",
+      "natural_request": "위를 향한 작은 망원경과 접이식 의자가 있는 조용한 정원을 보여 줘.",
+      "english_baseline": "A small telescope points upward beside a folding chair in a quiet garden. Its tripod stands on a square of paving stones, with a closed notebook resting on the chair seat. A few planters border the space, and the evening sky remains pale rather than fully dark. The scene emphasizes ordinary equipment, worn fabric, and a peaceful place to spend time outdoors.",
+      "expected": {
+        "abstain": true,
+        "owner_span": null,
+        "height_span": null,
+        "direction_span": null,
+        "reason": "The telescope points upward; its orientation is not capture-camera evidence.",
+        "span_offsets": {}
+      },
+      "rejected_evidence": [
+        {
+          "owner_span": "small telescope",
+          "height_span": null,
+          "direction_span": "points upward",
+          "span_offsets": {
+            "owner_span": [
+              2,
+              17
+            ],
+            "direction_span": [
+              18,
+              31
+            ]
+          }
+        }
+      ],
+      "baseline_word_count": 62
+    },
+    {
+      "id": "fresh_camera_15",
+      "request_language": "ko",
+      "case_type": "unresolved_multiple_cameras",
+      "natural_request": "성인이 빵을 만드는 모습을 두 촬영 카메라로 담는 장면을 설명해 줘. 낮은 카메라는 위를, 높은 카메라는 아래를 향하지만 최종 시점은 정하지 마.",
+      "english_baseline": "An adult baker kneads dough on a flour-dusted counter in a small kitchen. The first capture camera is placed below counter height and points upward; the second capture camera is mounted near the ceiling and points downward. The final viewpoint remains undecided between these cameras. A mixing bowl, a folded towel, and a tray of shaped rolls fill the workspace under gentle natural light.",
+      "expected": {
+        "abstain": true,
+        "owner_span": null,
+        "height_span": null,
+        "direction_span": null,
+        "reason": "Two capture cameras have incompatible viewpoints, with no chosen source for the final image.",
+        "span_offsets": {}
+      },
+      "rejected_evidence": [
+        {
+          "owner_span": "first capture camera",
+          "height_span": "below counter height",
+          "direction_span": "points upward",
+          "span_offsets": {
+            "owner_span": [
+              78,
+              98
+            ],
+            "height_span": [
+              109,
+              129
+            ],
+            "direction_span": [
+              134,
+              147
+            ]
+          }
+        },
+        {
+          "owner_span": "second capture camera",
+          "height_span": "near the ceiling",
+          "direction_span": "points downward",
+          "span_offsets": {
+            "owner_span": [
+              153,
+              174
+            ],
+            "height_span": [
+              186,
+              202
+            ],
+            "direction_span": [
+              207,
+              222
+            ]
+          }
+        }
+      ],
+      "baseline_word_count": 64
+    },
+    {
+      "id": "fresh_camera_16",
+      "request_language": "ko",
+      "case_type": "negated_only_capture_direction",
+      "natural_request": "성인이 책상에서 편지를 읽는 장면을 보여 줘. 촬영 카메라가 위쪽을 향하지 않는다는 것만 정하고 실제 방향과 높이는 정하지 마.",
+      "english_baseline": "An adult reader sits at a plain desk with an opened letter and a ceramic cup. The capture camera does not point upward, but its actual direction and height are left unspecified. A soft curtain filters daylight onto the desk, revealing the paper's folds and the reader's relaxed hands. A closed book and a small dish complete the quiet room without suggesting a particular viewing angle.",
+      "expected": {
+        "abstain": true,
+        "owner_span": null,
+        "height_span": null,
+        "direction_span": null,
+        "reason": "The capture camera is identified, but only an upward direction is negated; no positive height or direction is supported.",
+        "span_offsets": {}
+      },
+      "rejected_evidence": [
+        {
+          "owner_span": "capture camera",
+          "height_span": null,
+          "direction_span": "does not point upward",
+          "span_offsets": {
+            "owner_span": [
+              82,
+              96
+            ],
+            "direction_span": [
+              97,
+              118
+            ]
+          }
+        }
+      ],
+      "baseline_word_count": 66
+    }
+  ]
+}

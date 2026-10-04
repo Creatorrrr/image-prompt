@@ -1,0 +1,676 @@
+{
+  "runtime_commit": "5818b258133eb8ac8a53750631807570911bc24b",
+  "runtime_sources": {
+    "audit_composed_prompt.py": "093102f5f305f5348cf68f51b7974bab705c5895a74d2430b5ab5a06da6684a2",
+    "audit_image_render_request.py": "268a83751e5711af3db1c857b368df5e1985236f0a9c662caa7369e6ed5f42e2",
+    "audit_image_render_review.py": "7bca0b39904b2662ce5c32512ce7d586a974409af8158c29191768a04bed5c65",
+    "audit_moe_render_review.py": "9250806f376b4f6b9ba68dc9f5a5558a9bb32b2f3e7c1fe2e3dd98faa5cdbc18",
+    "bm25f_retrieval.py": "15568f2ea6a2e0d84e53165ff558f0e5521c604af5583af76fa8496c5e85f124",
+    "build_semantic_index.py": "c7d60b6771c0c947377a46640c8b975c20f2e4d5f13290253fd8eec4d0c14859",
+    "build_visual_profile_index.py": "f7f5f9cceeb2a54dfef946de31fc9d02c29802bac6fd703b47dd2b395cbca692",
+    "compose_pack_view.py": "ec0a862c8759d6e88eb77109d0ce4ce5e264fee5f45994bc37f234dde7728a38",
+    "generate_images_via_api.py": "7c1e48d4d226fa845e36574760cf04af8f30bab9746dd69badcefd4fecdd6bd6",
+    "generate_photo_prompt.py": "4604c77eb085c10f3d20d90d1b32ccb7dcc7c78775ff0443a28afb69e95c4e81",
+    "image_attempt_evidence.py": "44522e4bef979867840366c560c37960b856be1673f4126708152d706a681b87",
+    "photo_candidate_context.py": "154913e1f901c66602ce69f25bcd7eb2fb63947536b2ebfd041bfd8500bc432c",
+    "photo_candidate_semantics.py": "b890f6531b3b136fc86252fca3749420612f6f9bb67ec22444674cbdd79c8a50",
+    "photo_contextual_appeal.py": "4efd3bd7884b6afddd3068a8e90a7cf3ec35c8f441dd905a73a17ebb8ad865cf",
+    "photo_contracts.py": "c8135190c0b7d527b2b6e21be946ddab392ff43e7e6a9660b403ecc97dcee68d",
+    "photo_creative_controls.py": "d69d8a6c90de1d983749373f5e92afcb7e5854ce2d2a28009c94c1be533c2092",
+    "photo_embodiment.py": "e6a4c6f1480d35a0ebb3d5f0b612950f0a516342aa8a4521e30fb3af750f7373",
+    "photo_visual_retrieval.py": "2f6e36330eeb988e3b69742f9feb716c7395e46b45b93121a066c56194a61257",
+    "prompt_generator.py": "fb8a57b281aaad5578556db06e76d65ceec35aa5037891a3ae1dad3af7cde1bb",
+    "record_image_run.py": "105e0c84413cacc8e079141b8be0873ecf814d9a0956f0a0febe7f6aa21efe73",
+    "validate_photo_prompt_dictionary.py": "2326212216b985355b736d6bd655a243c41b0636f62dc64c6f23d0b2e5ee7a5e",
+    "validate_precore_feature_selection.py": "7879779a95fb6aae773d7c439e15b7d7d66513fdf8065d32d22b3e46ddc4ac13",
+    "visual_profile_contracts.py": "af2dc5c930e6e4b92cc0630a8a672aaae876421b60e1e8e1d0fa2fca91f00a2a",
+    "photo_camera_evidence.py": "f604381c62a0df99a1afe6277b919509b3d41fc0de3ac477602b51ac1620fa7c",
+    "photo_camera_clauses.py": "1eef3ad942ebb0fe88040d5fffd092105287304022ff71b82764a795fea23e32"
+  },
+  "provider_calls": 0,
+  "pixel_quality_evaluated": false,
+  "complete_author_inputs": true,
+  "new_author_cli_mode_supported": true,
+  "rows": [
+    {
+      "id": "background_camera_ko",
+      "input_hashes": {
+        "embodiment-review.json": "afd85819f32745ddaea8251b8fe3a35769b6927b9d08b2299cd2a55048b3137c",
+        "creative-controls.json": "d930be0ee8a0a0e3deb7530b8f442fb0f68cac4b5f665054207c613fb39e6f55",
+        "precore_feature_selection.json": "ea11ce0a7ca588642fd598e271daf934c1f9094982f5b7d89b10c794bcedf5e0",
+        "author-context.json": "14992dc2538d261ff28f8763b8250bed5db183bd91fa821e99de5c06a604bfe7",
+        "request-envelope.json": "1e9973488d5171b0edef05f1effe2317ccc991c08385d8e74fd68cf94694e9f0",
+        "authorial-core.json": "a3d4d995f3ed499bb499fba394908ad9e642a801ddd9233ab74cc30c4cf5a8a7"
+      },
+      "request_axis_requirements": {
+        "direction": "requested",
+        "height": "requested"
+      },
+      "core_sha256": "324c87a2484f12302ff011d229ebd73019a9426ae1aea82cc023a0a136549360",
+      "baseline_sha256": "a5f5c42bd2cf921da498bd244495652980699ea7b7125cf00f838779037107d2",
+      "property_locks": [
+        {
+          "anchor_id": "capture_height",
+          "source_text": "실제 촬영은 수첩보다 높은 위치에서",
+          "dimension": "camera",
+          "prompt_evidence": "The capture camera is higher than the notebook",
+          "target": "camera",
+          "property": "viewpoint.height"
+        },
+        {
+          "anchor_id": "capture_direction",
+          "source_text": "비스듬히 내려다보는 구도로",
+          "dimension": "camera",
+          "prompt_evidence": "looking diagonally downward toward it",
+          "target": "camera",
+          "property": "viewpoint.direction"
+        },
+        {
+          "anchor_id": "shelf_camera",
+          "source_text": "뒤쪽 선반에는 천장을 향해 세워 둔 오래된 필름 카메라",
+          "dimension": "composition",
+          "prompt_evidence": "On the shelf behind the table, an old film camera sits with its lens pointing toward the ceiling",
+          "target": "shelf_camera",
+          "property": "placement.orientation"
+        },
+        {
+          "anchor_id": "shelf_camera_blur",
+          "source_text": "오래된 필름 카메라가 흐릿하게 보이면",
+          "dimension": "framing",
+          "prompt_evidence": "softly blurred in the background",
+          "target": "shelf_camera",
+          "property": "focus"
+        }
+      ],
+      "feature_selection": {
+        "valid": true,
+        "contract_version": "photo-precore-feature-selection/v1",
+        "request_id": "background_camera_ko",
+        "selected_category_ids": [
+          "feature.primary_object",
+          "feature.location",
+          "feature.props",
+          "feature.background",
+          "feature.camera_height",
+          "feature.camera_angle"
+        ],
+        "selected_count": 6,
+        "warnings": []
+      },
+      "error": null,
+      "pack_sha256": "e96ae1427600aa5971460c9c4e97e572ddd7ee83872a97a3d8d8f86b8b3f9e1c",
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "candidate_order": "seed_shuffled_non_preferential",
+      "axes": {
+        "direction": {
+          "query": [
+            "The capture camera | looking diagonally downward toward it"
+          ],
+          "query_fields": [
+            "semantic_assertions.camera_axis_evidence"
+          ],
+          "candidates": [
+            {
+              "entry_id": "mirror_reflection_camera_view",
+              "label": null,
+              "applicability": {
+                "status": "ineligible",
+                "source": "authored_property_scope",
+                "reason": "effect overlaps a protected requester property"
+              }
+            },
+            {
+              "entry_id": "extreme_high_overhead_angle",
+              "label": null,
+              "applicability": {
+                "status": "ineligible",
+                "source": "authored_property_scope",
+                "reason": "effect overlaps a protected requester property"
+              }
+            }
+          ]
+        },
+        "height": {
+          "query": [
+            "The capture camera | The capture camera is higher than the notebook"
+          ],
+          "query_fields": [
+            "semantic_assertions.camera_axis_evidence"
+          ],
+          "candidates": [
+            {
+              "entry_id": "chest_level_service_counter",
+              "label": null,
+              "applicability": {
+                "status": "ineligible",
+                "source": "authored_property_scope",
+                "reason": "effect overlaps a protected requester property"
+              }
+            },
+            {
+              "entry_id": "eye_level_observer",
+              "label": null,
+              "applicability": {
+                "status": "ineligible",
+                "source": "authored_property_scope",
+                "reason": "effect overlaps a protected requester property"
+              }
+            }
+          ]
+        }
+      },
+      "all_input_bytes_unchanged": true
+    },
+    {
+      "id": "downward_still_life_en",
+      "input_hashes": {
+        "embodiment-review.json": "d651a8766c4716ef64a4a0d54ddeeb21972bf05aa4053a77cac540b464e7f6ef",
+        "creative-controls.json": "f426183d179fb577d0d3ccf5be4e04e0a72985f66d5fe7f967f1840ddf2c7471",
+        "precore_feature_selection.json": "1273b10da3f1f7a11bde5afca978faa9955a29f041e53f2dd664a7f904b4d03b",
+        "author-context.json": "561ae5d594c4b77a3270b3cfcdfe26e8e2cd30bc46cf84361ff93ab8cab6b360",
+        "request-envelope.json": "293814d8aa62ff656b50fc1390c8115d3e834a71016b607db1f3a24eaa2f283a",
+        "authorial-core.json": "42627f4d09b72f16f71c7393757c69d8d9a6b483aebcffd6dec9d97634f6cd43"
+      },
+      "request_axis_requirements": {
+        "direction": "requested",
+        "height": "requested"
+      },
+      "core_sha256": "565e361e7182e21ebd241f5666ef63264593be4c947770e9393f6b94585c6f7b",
+      "baseline_sha256": "fd7eb0d9f18f9d65dbfcab17a8ad49e8ea638becd8721c116f66bb397459b264",
+      "property_locks": [
+        {
+          "anchor_id": "capture_height",
+          "source_text": "Shoot from directly above",
+          "dimension": "camera",
+          "prompt_evidence": "The capture camera is directly above the tabletop",
+          "target": "camera",
+          "property": "viewpoint.height"
+        },
+        {
+          "anchor_id": "capture_direction",
+          "source_text": "looking straight down",
+          "dimension": "camera",
+          "prompt_evidence": "looking straight down at the arrangement",
+          "target": "camera",
+          "property": "viewpoint.direction"
+        },
+        {
+          "anchor_id": "morning_light",
+          "source_text": "with soft morning light",
+          "dimension": "lighting",
+          "prompt_evidence": "Soft morning light",
+          "target": "scene",
+          "property": "illumination.quality_time"
+        },
+        {
+          "anchor_id": "visible_crumbs",
+          "source_text": "a few crumbs left in the frame",
+          "dimension": "composition",
+          "prompt_evidence": "A few crumbs remain within the frame near the plate",
+          "target": "crumbs",
+          "property": "visibility"
+        }
+      ],
+      "feature_selection": {
+        "valid": true,
+        "contract_version": "photo-precore-feature-selection/v1",
+        "request_id": "downward_still_life_en",
+        "selected_category_ids": [
+          "feature.primary_object",
+          "feature.location",
+          "feature.props",
+          "feature.time",
+          "feature.light_quality",
+          "feature.camera_height",
+          "feature.camera_angle"
+        ],
+        "selected_count": 7,
+        "warnings": []
+      },
+      "error": null,
+      "pack_sha256": "ebb78f96e54025435ae17e13c1cef51519d43f5e9e122233650182049462112d",
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "candidate_order": "seed_shuffled_non_preferential",
+      "axes": {
+        "direction": {
+          "query": [
+            "The capture camera | looking straight down at the arrangement"
+          ],
+          "query_fields": [
+            "semantic_assertions.camera_axis_evidence"
+          ],
+          "candidates": [
+            {
+              "entry_id": "extreme_high_overhead_angle",
+              "label": null,
+              "applicability": {
+                "status": "ineligible",
+                "source": "authored_property_scope",
+                "reason": "effect overlaps a protected requester property"
+              }
+            },
+            {
+              "entry_id": "strict_top_down_flat_view",
+              "label": null,
+              "applicability": {
+                "status": "ineligible",
+                "source": "authored_property_scope",
+                "reason": "effect overlaps a protected requester property"
+              }
+            }
+          ]
+        },
+        "height": {
+          "query": [
+            "The capture camera | The capture camera is directly above the tabletop"
+          ],
+          "query_fields": [
+            "semantic_assertions.camera_axis_evidence"
+          ],
+          "candidates": [
+            {
+              "entry_id": "chest_level_service_counter",
+              "label": null,
+              "applicability": {
+                "status": "ineligible",
+                "source": "authored_property_scope",
+                "reason": "effect overlaps a protected requester property"
+              }
+            },
+            {
+              "entry_id": "pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "ineligible",
+                "source": "authored_property_scope",
+                "reason": "effect overlaps a protected requester property"
+              }
+            }
+          ]
+        }
+      },
+      "all_input_bytes_unchanged": true
+    },
+    {
+      "id": "low_horizontal_portrait_ko",
+      "input_hashes": {
+        "embodiment-review.json": "945cfd5c1536263a86867125c670a4f35ef099419928f5171a2b4c128a144b79",
+        "creative-controls.json": "99338bc55ecf4e20b2138184eb45f7fba7e7a9723c3997fe25aededcaec60f1e",
+        "precore_feature_selection.json": "b6cfa0586d0a33f7c3bfc258010a296dc4958d2d8f947cd8aaa31e0c7d2426a3",
+        "author-context.json": "2ea9fd23ca974e3194f8f51d784f09114e852971626b311b6b8fba5981b4d7d9",
+        "request-envelope.json": "8b4ff1e23124e178c1e8ee5fd1483787107d4453f0161de2570f76320b7705cf",
+        "authorial-core.json": "83819428e09361f9e8b4099215b1d53801165bc262edae0e13cf99e2afdefbee"
+      },
+      "request_axis_requirements": {
+        "direction": "requested",
+        "height": "requested"
+      },
+      "error": "photo-authorial-core/v3 user_exclusions must be grounded in active requesting-user spans: upward camera tilt",
+      "all_input_bytes_unchanged": true
+    },
+    {
+      "id": "two_cameras_en",
+      "input_hashes": {
+        "embodiment-review.json": "c64eea37c79604e573b3ad7a35f377917c47cc223e6c591f8dcf93cc6902ec8e",
+        "creative-controls.json": "67288c0832945bd79d5d04b8c2bc4409e503825c0691702a82d91c59f75bed1a",
+        "precore_feature_selection.json": "74d5970557fd3ba2211d3c9bb74df082b5502c642e4485b3af2b6d37489dd9e4",
+        "author-context.json": "a7ba2accf326a302446f3921fedba57245a098449954bbf65e993e31d00b8f45",
+        "request-envelope.json": "0e2c4092e33f78e611dea0f2cfa70690ac3550793bc72d46b3a9c703525c3342",
+        "authorial-core.json": "01d5aa5b62e9e2014755dc5596a753c35c075cd5a6764d8e209b6d7ad2376db2"
+      },
+      "request_axis_requirements": {
+        "direction": "requested",
+        "height": "open"
+      },
+      "core_sha256": "a6ff2796517ef0c012aeee3549d28c66d3199df4de2b65a20c69e4ee07ec4033",
+      "baseline_sha256": "9cbe5ab28595194d5da230eeb769ef952b69ca3aa7b5b9dcb6c84ab2a952fbd5",
+      "property_locks": [
+        {
+          "anchor_id": "capture_operator",
+          "source_text": "Use the separate camera held by the seated assistant to take the picture",
+          "dimension": "camera",
+          "prompt_evidence": "The separate camera held by the seated adult assistant takes this photograph",
+          "target": "camera",
+          "property": "capture.operator"
+        },
+        {
+          "anchor_id": "capture_direction",
+          "source_text": "aiming upward at the standing photographer",
+          "dimension": "camera",
+          "prompt_evidence": "aiming upward at the standing photographer",
+          "target": "camera",
+          "property": "viewpoint.direction"
+        },
+        {
+          "anchor_id": "ceiling_background",
+          "source_text": "so the studio ceiling shows behind them",
+          "dimension": "composition",
+          "prompt_evidence": "The studio ceiling shows behind the photographer",
+          "target": "background",
+          "property": "ceiling.visibility"
+        }
+      ],
+      "feature_selection": {
+        "valid": true,
+        "contract_version": "photo-precore-feature-selection/v1",
+        "request_id": "two_cameras_en",
+        "selected_category_ids": [
+          "feature.subject",
+          "feature.pose",
+          "feature.props",
+          "feature.background",
+          "feature.off_screen_context",
+          "feature.camera_angle"
+        ],
+        "selected_count": 6,
+        "warnings": []
+      },
+      "error": null,
+      "pack_sha256": "555c8c68d1eeb00cbb58070396509155c589ab1305b1a15bea7366b6e92070ff",
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "candidate_order": "seed_shuffled_non_preferential",
+      "axes": {
+        "direction": {
+          "query": [
+            "The separate camera held by the seated adult assistant | aiming upward at the standing photographer"
+          ],
+          "query_fields": [
+            "semantic_assertions.camera_axis_evidence"
+          ],
+          "candidates": [
+            {
+              "entry_id": "overhead_social_snapshot_relation",
+              "label": null,
+              "applicability": {
+                "status": "ineligible",
+                "source": "authored_property_scope",
+                "reason": "effect overlaps a protected requester property"
+              }
+            }
+          ]
+        },
+        "height": {
+          "query": [
+            "The standing photographer beside the downward-tilted tripod camera | The upward capture from the seated assistant's separate handheld camera | The studio ceiling visible behind the photographer | studio documentary portrait photography | candid working-studio portrait | warm light across the neck | a small, unforced smile"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "candidates": [
+            {
+              "entry_id": "pc_pc11_component_2",
+              "label": null,
+              "applicability": {
+                "status": "ineligible",
+                "source": "authored_property_scope",
+                "reason": "effect overlaps a protected requester property"
+              }
+            }
+          ]
+        }
+      },
+      "all_input_bytes_unchanged": true
+    },
+    {
+      "id": "upward_object_en",
+      "input_hashes": {
+        "embodiment-review.json": "fa4ca00f1eee08629863d6ad388efa4c2ca42d76028f196db13cb210d06631cb",
+        "creative-controls.json": "eb30a46282b82f54426b72fa9023c1801baee89da9f471b09134bf5171e74c6c",
+        "precore_feature_selection.json": "49d978eb42768d7cede5c554099558b9282318d0a04691c4b7b193f9af0f673a",
+        "author-context.json": "20f6d567f7063ed9b7b8462968bc2303f783fb90f90bfcf024ea2e9d19448d4a",
+        "request-envelope.json": "ecf75a26508d6f99a3161108c1fb4fe6f0429f4ace637dd554b6e91e423289b8",
+        "authorial-core.json": "42a32138960ff9284376de4ed4d3b67f99363f09d8ef53188c82a5f591d3c193"
+      },
+      "request_axis_requirements": {
+        "direction": "open",
+        "height": "open"
+      },
+      "core_sha256": "a89a43b13a99b7d1a7a2ec00c3460719b979014927e0db489f7660a82018f9e4",
+      "baseline_sha256": "61e3d02c2119390766889d3912272dac6a3d36f827af6ff50a0344446e4de952",
+      "property_locks": [
+        {
+          "anchor_id": "paper_star",
+          "source_text": "Put a folded paper star beside it",
+          "dimension": "composition",
+          "prompt_evidence": "a folded paper star rests beside it",
+          "target": "paper_star",
+          "property": "placement"
+        },
+        {
+          "anchor_id": "wood_finish",
+          "source_text": "give the wood a warm, slightly worn finish",
+          "dimension": "appearance",
+          "prompt_evidence": "The rocket's wood has a warm, slightly worn finish",
+          "target": "rocket",
+          "property": "surface.finish"
+        }
+      ],
+      "feature_selection": {
+        "valid": true,
+        "contract_version": "photo-precore-feature-selection/v1",
+        "request_id": "upward_object_en",
+        "selected_category_ids": [
+          "feature.primary_object",
+          "feature.location",
+          "feature.props",
+          "feature.situation",
+          "feature.light_quality"
+        ],
+        "selected_count": 5,
+        "warnings": []
+      },
+      "error": null,
+      "pack_sha256": "c95f8e0dfbbf5031461453abafc8f20c7796f44f91fac02bf73002199939dbc1",
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "candidate_order": "seed_shuffled_non_preferential",
+      "axes": {
+        "direction": {
+          "query": [
+            "The small wooden rocket's upward-pointing nose | Warm, slightly worn grain against crisp paper folds | The folded paper star beside the rocket | product still-life photography | warm handmade object study | grain crossing the rounded body | Soft side light makes the paper's crisp folds distinct from the mellow wood"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "candidates": [
+            {
+              "entry_id": "dutch_tilt_direction",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "entry_id": "high_observer_angle",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ]
+        },
+        "height": {
+          "query": [
+            "The small wooden rocket's upward-pointing nose | Warm, slightly worn grain against crisp paper folds | The folded paper star beside the rocket | product still-life photography | warm handmade object study | grain crossing the rounded body | Soft side light makes the paper's crisp folds distinct from the mellow wood"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "candidates": [
+            {
+              "entry_id": "pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ]
+        }
+      },
+      "all_input_bytes_unchanged": true
+    },
+    {
+      "id": "upward_portrait_ko",
+      "input_hashes": {
+        "embodiment-review.json": "0450a4338c9745fdb215c6fb877bf43803716c5066708ac51ca77f6b5ed8bbfb",
+        "creative-controls.json": "1a7b6b52da80273a54f4b9e132599f2c751e7a31607b31c2906de1a67e73009f",
+        "precore_feature_selection.json": "964d7166bbb17e44425a7d52ac3ce728feb2681cf4b33f6a4f7dae248f181553",
+        "author-context.json": "5857085724a4e67f011a718469f204649666049f37a5601a3bf459ddc0f878b9",
+        "request-envelope.json": "5b1035eac9bafb1f11cc521e5c7a22f3b6c4e67ab7c7b14870c1abe25b1be371",
+        "authorial-core.json": "0fe4621ce9e8d9afc91c04f2b1e8a58462fb9815a9b45cffc02f1c72e0e5824d"
+      },
+      "request_axis_requirements": {
+        "direction": "requested",
+        "height": "requested"
+      },
+      "core_sha256": "ea188443f302c03daea65734bf9e32d1a84cb5b8d82c910b81bcdb0628347d84",
+      "baseline_sha256": "8c28f3223639032addc22a2da6ac298d8de07dbf1bb700b5313d23b23024e238",
+      "property_locks": [
+        {
+          "anchor_id": "capture_height",
+          "source_text": "촬영하는 카메라는 계단 아래에 두고",
+          "dimension": "camera",
+          "prompt_evidence": "The capture camera is below the staircase",
+          "target": "camera",
+          "property": "viewpoint.height"
+        },
+        {
+          "anchor_id": "capture_direction",
+          "source_text": "위를 올려다보게 해서",
+          "dimension": "camera",
+          "prompt_evidence": "looking upward toward the dancer",
+          "target": "camera",
+          "property": "viewpoint.direction"
+        },
+        {
+          "anchor_id": "sky_background",
+          "source_text": "무용수 뒤로 하늘이 넓게 보이면",
+          "dimension": "composition",
+          "prompt_evidence": "a broad expanse of sky behind the dancer",
+          "target": "background",
+          "property": "sky.extent"
+        }
+      ],
+      "feature_selection": {
+        "valid": true,
+        "contract_version": "photo-precore-feature-selection/v1",
+        "request_id": "upward_portrait_ko",
+        "selected_category_ids": [
+          "feature.subject",
+          "feature.pose",
+          "feature.location",
+          "feature.background",
+          "feature.camera_height",
+          "feature.camera_angle",
+          "feature.clothing"
+        ],
+        "selected_count": 7,
+        "warnings": []
+      },
+      "error": null,
+      "pack_sha256": "390806a5bdc7f71c9158b0326194f39480ccd775a587e032b114a348ebe0f059",
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "candidate_order": "seed_shuffled_non_preferential",
+      "axes": {
+        "direction": {
+          "query": [
+            "The capture camera | looking upward toward the dancer"
+          ],
+          "query_fields": [
+            "semantic_assertions.camera_axis_evidence"
+          ],
+          "candidates": [
+            {
+              "entry_id": "overhead_social_snapshot_relation",
+              "label": null,
+              "applicability": {
+                "status": "ineligible",
+                "source": "authored_property_scope",
+                "reason": "effect overlaps a protected requester property"
+              }
+            }
+          ]
+        },
+        "height": {
+          "query": [
+            "The capture camera | The capture camera is below the staircase"
+          ],
+          "query_fields": [
+            "semantic_assertions.camera_axis_evidence"
+          ],
+          "candidates": [
+            {
+              "entry_id": "pc_pc07_component_2",
+              "label": null,
+              "applicability": {
+                "status": "ineligible",
+                "source": "authored_property_scope",
+                "reason": "effect overlaps a protected requester property"
+              }
+            }
+          ]
+        }
+      },
+      "all_input_bytes_unchanged": true
+    }
+  ],
+  "request_axis_review": {
+    "basis": "Coordinator review of the six byte-exact stage1 requests. No axes inferred from candidates, operator posture, object orientation or format success.",
+    "stage1_commit": "bc8e93bcdf6d61835ec51cf64324b3b18113c2b9",
+    "cases": {
+      "upward_portrait_ko": {
+        "direction": "requested",
+        "height": "requested"
+      },
+      "downward_still_life_en": {
+        "direction": "requested",
+        "height": "requested"
+      },
+      "low_horizontal_portrait_ko": {
+        "direction": "requested",
+        "height": "requested"
+      },
+      "upward_object_en": {
+        "direction": "open",
+        "height": "open"
+      },
+      "background_camera_ko": {
+        "direction": "requested",
+        "height": "requested"
+      },
+      "two_cameras_en": {
+        "direction": "requested",
+        "height": "open"
+      }
+    },
+    "review_notes": {
+      "low_horizontal_portrait_ko": "Positive horizontal direction plus exclusion of upward tilt; not negative-only direction.",
+      "upward_object_en": "Upward belongs to the wooden rocket, not the capture camera.",
+      "background_camera_ko": "The actual capture is higher and downward; the ceiling-facing shelf camera is depicted background.",
+      "two_cameras_en": "The assistant's separate camera is the actual capture owner and points upward. Seated operator posture does not prescribe capture height."
+    }
+  },
+  "request_axis_review_sha256": "c777f9dfb0dc3454a576e9619f08d8d8b70b402aa715678fc361c279882cbea3",
+  "data_dictionary_hash": "8ae1cb27efdaaaff234e3bfd8eefed3c933a101997ddd8063f186903ef3f2105",
+  "quality_layers_loaded": true,
+  "semantic_entries": 9876,
+  "visual_profiles": 1622,
+  "summary": {
+    "inputs": 6,
+    "admitted": 5,
+    "unchanged_inputs": 6
+  }
+}

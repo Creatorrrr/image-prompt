@@ -1,0 +1,1454 @@
+{
+  "runtime_commit": "0b1b9f61e6f095d8258e2282018d44c22a1bcb9b",
+  "runtime_sources": {
+    "audit_composed_prompt.py": "093102f5f305f5348cf68f51b7974bab705c5895a74d2430b5ab5a06da6684a2",
+    "audit_image_render_request.py": "268a83751e5711af3db1c857b368df5e1985236f0a9c662caa7369e6ed5f42e2",
+    "audit_image_render_review.py": "7bca0b39904b2662ce5c32512ce7d586a974409af8158c29191768a04bed5c65",
+    "audit_moe_render_review.py": "9250806f376b4f6b9ba68dc9f5a5558a9bb32b2f3e7c1fe2e3dd98faa5cdbc18",
+    "bm25f_retrieval.py": "15568f2ea6a2e0d84e53165ff558f0e5521c604af5583af76fa8496c5e85f124",
+    "build_semantic_index.py": "c7d60b6771c0c947377a46640c8b975c20f2e4d5f13290253fd8eec4d0c14859",
+    "build_visual_profile_index.py": "f7f5f9cceeb2a54dfef946de31fc9d02c29802bac6fd703b47dd2b395cbca692",
+    "compose_pack_view.py": "ec0a862c8759d6e88eb77109d0ce4ce5e264fee5f45994bc37f234dde7728a38",
+    "generate_images_via_api.py": "7c1e48d4d226fa845e36574760cf04af8f30bab9746dd69badcefd4fecdd6bd6",
+    "generate_photo_prompt.py": "41271430b4c73e3a591393c34decf42faee01b6cc76f2bf18bdbaa49869faaca",
+    "image_attempt_evidence.py": "44522e4bef979867840366c560c37960b856be1673f4126708152d706a681b87",
+    "photo_candidate_context.py": "154913e1f901c66602ce69f25bcd7eb2fb63947536b2ebfd041bfd8500bc432c",
+    "photo_candidate_semantics.py": "b890f6531b3b136fc86252fca3749420612f6f9bb67ec22444674cbdd79c8a50",
+    "photo_contextual_appeal.py": "4efd3bd7884b6afddd3068a8e90a7cf3ec35c8f441dd905a73a17ebb8ad865cf",
+    "photo_contracts.py": "c8135190c0b7d527b2b6e21be946ddab392ff43e7e6a9660b403ecc97dcee68d",
+    "photo_creative_controls.py": "d69d8a6c90de1d983749373f5e92afcb7e5854ce2d2a28009c94c1be533c2092",
+    "photo_embodiment.py": "e6a4c6f1480d35a0ebb3d5f0b612950f0a516342aa8a4521e30fb3af750f7373",
+    "photo_visual_retrieval.py": "2f6e36330eeb988e3b69742f9feb716c7395e46b45b93121a066c56194a61257",
+    "prompt_generator.py": "fb8a57b281aaad5578556db06e76d65ceec35aa5037891a3ae1dad3af7cde1bb",
+    "record_image_run.py": "105e0c84413cacc8e079141b8be0873ecf814d9a0956f0a0febe7f6aa21efe73",
+    "validate_photo_prompt_dictionary.py": "2326212216b985355b736d6bd655a243c41b0636f62dc64c6f23d0b2e5ee7a5e",
+    "validate_precore_feature_selection.py": "7879779a95fb6aae773d7c439e15b7d7d66513fdf8065d32d22b3e46ddc4ac13",
+    "visual_profile_contracts.py": "af2dc5c930e6e4b92cc0630a8a672aaae876421b60e1e8e1d0fa2fca91f00a2a",
+    "photo_camera_evidence.py": "1ed1499de6a8de269343d7cf48580a19a92a69325a2e55aa08157369da5a0340",
+    "photo_camera_clauses.py": "ec2e6d837dd566a80c4517c8b06916ea025104b11a1429facde352bdf211c049"
+  },
+  "fixture_sha256": "5c73a0ddb796bb89c96a35ff818660bd602d6de34238086eda23c06088ac7150",
+  "provider_calls": 0,
+  "pixel_quality_evaluated": false,
+  "caller_probe": "Synthetic core over unchanged complete baseline. Subject/event are first baseline sentence; setting/style are neutral scaffold. No oracle input anchors, no baseline padding, no property locks inferred. This is not the actual independent authoring workflow.",
+  "rows": [
+    {
+      "id": "fresh_camera_01",
+      "expected": {
+        "abstain": false,
+        "owner_span": "capture camera",
+        "height_span": "at floor level",
+        "direction_span": "points straight up",
+        "reason": null,
+        "span_offsets": {
+          "owner_span": [
+            85,
+            99
+          ],
+          "height_span": [
+            106,
+            120
+          ],
+          "direction_span": [
+            125,
+            143
+          ]
+        }
+      },
+      "raw_text_sha256": "c5a1245c0402726bee96f55a9c7e6cc74abbc617c0ae2118e3f79332181e14be",
+      "axes": {
+        "direction": {
+          "expected_literal_axis": "points straight up",
+          "extracted_owned_clauses": [],
+          "exact_span_match": false,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_direction:extreme_high_overhead_angle",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "id": "slot:camera_direction:extreme_low_angle_under_subject",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 28
+        },
+        "height": {
+          "expected_literal_axis": "at floor level",
+          "extracted_owned_clauses": [],
+          "exact_span_match": false,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 7
+        }
+      },
+      "preflight_error": null,
+      "core_sha256": "7e22285ce3a5a7f2cc4a7192f8478b87b4c2953b05644bbdb395fb15c7a60a28",
+      "property_locks": [],
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "counterfactual_property_lock_compatible_direction_rows": 0,
+      "total_direction_rows": 49
+    },
+    {
+      "id": "fresh_camera_02",
+      "expected": {
+        "abstain": false,
+        "owner_span": "capture camera",
+        "height_span": "high above the table",
+        "direction_span": "aims straight down",
+        "reason": null,
+        "span_offsets": {
+          "owner_span": [
+            102,
+            116
+          ],
+          "height_span": [
+            128,
+            148
+          ],
+          "direction_span": [
+            153,
+            171
+          ]
+        }
+      },
+      "raw_text_sha256": "dc0141f143052801f4a70bfc20e5a45da02037fe70602dae7f8f1c602480c37b",
+      "axes": {
+        "direction": {
+          "expected_literal_axis": "aims straight down",
+          "extracted_owned_clauses": [],
+          "exact_span_match": false,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_direction:extreme_high_overhead_angle",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "id": "slot:camera_direction:extreme_low_hero_angle",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 24
+        },
+        "height": {
+          "expected_literal_axis": "high above the table",
+          "extracted_owned_clauses": [],
+          "exact_span_match": false,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 7
+        }
+      },
+      "preflight_error": null,
+      "core_sha256": "1c3f2408bb993006d717f7af5035ff5e351071b48b8407dbe53bace0440ee0f1",
+      "property_locks": [],
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "counterfactual_property_lock_compatible_direction_rows": 0,
+      "total_direction_rows": 49
+    },
+    {
+      "id": "fresh_camera_03",
+      "expected": {
+        "abstain": false,
+        "owner_span": "low capture camera",
+        "height_span": "just above the pavement",
+        "direction_span": "aimed horizontally",
+        "reason": null,
+        "span_offsets": {
+          "owner_span": [
+            73,
+            91
+          ],
+          "height_span": [
+            97,
+            120
+          ],
+          "direction_span": [
+            133,
+            151
+          ]
+        }
+      },
+      "raw_text_sha256": "21be412d58246b2e3128f1746eec6a9c076f8f9aff09f431a27dfd71fd159885",
+      "axes": {
+        "direction": {
+          "expected_literal_axis": "aimed horizontally",
+          "extracted_owned_clauses": [],
+          "exact_span_match": false,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_direction:extreme_low_hero_angle",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "id": "slot:camera_direction:extreme_high_overhead_angle",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 28
+        },
+        "height": {
+          "expected_literal_axis": "just above the pavement",
+          "extracted_owned_clauses": [],
+          "exact_span_match": false,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 7
+        }
+      },
+      "preflight_error": null,
+      "core_sha256": "bfab62b4256fc8a42aed442340a9dc36fee8c00ca3c3b21a0fdeb221ab5149ff",
+      "property_locks": [],
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "counterfactual_property_lock_compatible_direction_rows": 0,
+      "total_direction_rows": 49
+    },
+    {
+      "id": "fresh_camera_04",
+      "expected": {
+        "abstain": false,
+        "owner_span": "downward-facing capture camera",
+        "height_span": "above the bookseller",
+        "direction_span": "downward-facing",
+        "reason": null,
+        "span_offsets": {
+          "owner_span": [
+            95,
+            125
+          ],
+          "height_span": [
+            137,
+            157
+          ],
+          "direction_span": [
+            95,
+            110
+          ]
+        }
+      },
+      "raw_text_sha256": "419fa36ea1eb7b6f41c3dbfc3a0316746ab0acf8ceb79e9efdd6775b8b1b602e",
+      "axes": {
+        "direction": {
+          "expected_literal_axis": "downward-facing",
+          "extracted_owned_clauses": [],
+          "exact_span_match": false,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_direction:rear_view",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "id": "slot:camera_direction:extreme_low_angle_under_subject",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 28
+        },
+        "height": {
+          "expected_literal_axis": "above the bookseller",
+          "extracted_owned_clauses": [],
+          "exact_span_match": false,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 7
+        }
+      },
+      "preflight_error": null,
+      "core_sha256": "81c4dcd0eeed0263c40ce63ddb7f5e8dbee01689df5f4c5efdf21660725690a1",
+      "property_locks": [],
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "counterfactual_property_lock_compatible_direction_rows": 0,
+      "total_direction_rows": 49
+    },
+    {
+      "id": "fresh_camera_05",
+      "expected": {
+        "abstain": true,
+        "owner_span": null,
+        "height_span": null,
+        "direction_span": null,
+        "reason": "The only camera direction belongs to a displayed background object, not the capture camera.",
+        "span_offsets": {}
+      },
+      "raw_text_sha256": "52077120a878732045bad1a75ce1d731bf334d861ec371595a21fb9e5ff83186",
+      "axes": {
+        "direction": {
+          "expected_literal_axis": null,
+          "extracted_owned_clauses": [],
+          "exact_span_match": true,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_direction:rear_view",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "id": "slot:camera_direction:extreme_high_overhead_angle",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 28
+        },
+        "height": {
+          "expected_literal_axis": null,
+          "extracted_owned_clauses": [],
+          "exact_span_match": true,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 7
+        }
+      },
+      "preflight_error": null,
+      "core_sha256": "7ed0561687f51c831b011da3bcf6d3ed8a180c3892db3fe4d5616a3a0a137265",
+      "property_locks": [],
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "counterfactual_property_lock_compatible_direction_rows": 49,
+      "total_direction_rows": 49
+    },
+    {
+      "id": "fresh_camera_06",
+      "expected": {
+        "abstain": true,
+        "owner_span": null,
+        "height_span": null,
+        "direction_span": null,
+        "reason": "Upward orientation describes the desk lamp; no capture camera height or direction is stated.",
+        "span_offsets": {}
+      },
+      "raw_text_sha256": "49522512ce939da6e0c38618c538f86f83dca17e92733ee839a9ab88627b3ced",
+      "axes": {
+        "direction": {
+          "expected_literal_axis": null,
+          "extracted_owned_clauses": [],
+          "exact_span_match": true,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_direction:extreme_high_overhead_angle",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "id": "slot:camera_direction:rear_view",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 28
+        },
+        "height": {
+          "expected_literal_axis": null,
+          "extracted_owned_clauses": [],
+          "exact_span_match": true,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 7
+        }
+      },
+      "preflight_error": null,
+      "core_sha256": "6ce4d894a603c6dcb5645a84a44685dbb6c47ea983c16e56b5625ef108290638",
+      "property_locks": [],
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "counterfactual_property_lock_compatible_direction_rows": 49,
+      "total_direction_rows": 49
+    },
+    {
+      "id": "fresh_camera_07",
+      "expected": {
+        "abstain": true,
+        "owner_span": null,
+        "height_span": null,
+        "direction_span": null,
+        "reason": "Two eligible capture cameras have conflicting height and direction evidence, and the final view is explicitly unresolved.",
+        "span_offsets": {}
+      },
+      "raw_text_sha256": "f7e0591fe33c7f4a82fdeba1b525ebc1f9cbe7f41eb3f84e7af90bef32824e23",
+      "axes": {
+        "direction": {
+          "expected_literal_axis": null,
+          "extracted_owned_clauses": [],
+          "exact_span_match": true,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true
+        },
+        "height": {
+          "expected_literal_axis": null,
+          "extracted_owned_clauses": [],
+          "exact_span_match": true,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true
+        }
+      },
+      "preflight_error": "authorial core baseline_prompt_en contains blanket negative directives; keep semantic exclusions in request-grounded user_exclusions, keep platform policy outside prompt prose, and express local boundaries as positive geometry or visible state: no recording view is selected",
+      "counterfactual_property_lock_compatible_direction_rows": 49,
+      "total_direction_rows": 49
+    },
+    {
+      "id": "fresh_camera_08",
+      "expected": {
+        "abstain": true,
+        "owner_span": null,
+        "height_span": null,
+        "direction_span": null,
+        "reason": "Tall flowers and a low border describe scene objects only; no capture camera is specified.",
+        "span_offsets": {}
+      },
+      "raw_text_sha256": "89b72cc1b33182ed48dece8f14c41ab516ae4d9dcafa1c30c5a4435761b2e98f",
+      "axes": {
+        "direction": {
+          "expected_literal_axis": null,
+          "extracted_owned_clauses": [],
+          "exact_span_match": true,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_direction:extreme_low_hero_angle",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "id": "slot:camera_direction:extreme_low_angle_under_subject",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 28
+        },
+        "height": {
+          "expected_literal_axis": null,
+          "extracted_owned_clauses": [],
+          "exact_span_match": true,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 7
+        }
+      },
+      "preflight_error": null,
+      "core_sha256": "29629cc45790952cbafa568de3ecf9d1a3f6d049c8769318c5de5a70451887ef",
+      "property_locks": [],
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "counterfactual_property_lock_compatible_direction_rows": 49,
+      "total_direction_rows": 49
+    },
+    {
+      "id": "fresh_camera_09",
+      "expected": {
+        "abstain": false,
+        "owner_span": "capture camera",
+        "height_span": "close to the floor",
+        "direction_span": "its lens is tilted upward",
+        "reason": null,
+        "span_offsets": {
+          "owner_span": [
+            74,
+            88
+          ],
+          "height_span": [
+            96,
+            114
+          ],
+          "direction_span": [
+            116,
+            141
+          ]
+        }
+      },
+      "raw_text_sha256": "5f9326841525fdf0de93c845e648cc431b4c8b538ba1c4068ad2fc7b47e3c687",
+      "axes": {
+        "direction": {
+          "expected_literal_axis": "its lens is tilted upward",
+          "extracted_owned_clauses": [],
+          "exact_span_match": false,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_direction:rear_view",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "id": "slot:camera_direction:extreme_low_angle_under_subject",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 28
+        },
+        "height": {
+          "expected_literal_axis": "close to the floor",
+          "extracted_owned_clauses": [],
+          "exact_span_match": false,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 7
+        }
+      },
+      "preflight_error": null,
+      "core_sha256": "ad06a33324940a72ece0fd150ae4441c9d566af8e6f11b6070057da239d6215c",
+      "property_locks": [],
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "counterfactual_property_lock_compatible_direction_rows": 0,
+      "total_direction_rows": 49
+    },
+    {
+      "id": "fresh_camera_10",
+      "expected": {
+        "abstain": false,
+        "owner_span": "capture camera",
+        "height_span": "above the artist's head",
+        "direction_span": "it points downward",
+        "reason": null,
+        "span_offsets": {
+          "owner_span": [
+            78,
+            92
+          ],
+          "height_span": [
+            104,
+            127
+          ],
+          "direction_span": [
+            164,
+            182
+          ]
+        }
+      },
+      "raw_text_sha256": "505fcf153e7b7bb78f16bf507188094d40347ae67cd1070fe7ce15cca8949199",
+      "axes": {
+        "direction": {
+          "expected_literal_axis": "it points downward",
+          "extracted_owned_clauses": [],
+          "exact_span_match": false,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_direction:extreme_low_angle_under_subject",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "id": "slot:camera_direction:extreme_high_overhead_angle",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 28
+        },
+        "height": {
+          "expected_literal_axis": "above the artist's head",
+          "extracted_owned_clauses": [],
+          "exact_span_match": false,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 7
+        }
+      },
+      "preflight_error": null,
+      "core_sha256": "3607d3764055e3c911756057d126b9f3eda9df23a81963cee0b987601b72d653",
+      "property_locks": [],
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "counterfactual_property_lock_compatible_direction_rows": 0,
+      "total_direction_rows": 49
+    },
+    {
+      "id": "fresh_camera_11",
+      "expected": {
+        "abstain": false,
+        "owner_span": "capture camera",
+        "height_span": "at waist height",
+        "direction_span": "points upward",
+        "reason": null,
+        "span_offsets": {
+          "owner_span": [
+            91,
+            105
+          ],
+          "height_span": [
+            116,
+            131
+          ],
+          "direction_span": [
+            136,
+            149
+          ]
+        }
+      },
+      "raw_text_sha256": "41915aa802abf07b8e88de95f89787677b6c808d6da4812760aca4e091cee285",
+      "axes": {
+        "direction": {
+          "expected_literal_axis": "points upward",
+          "extracted_owned_clauses": [],
+          "exact_span_match": false,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_direction:extreme_high_overhead_angle",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "id": "slot:camera_direction:rear_view",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 28
+        },
+        "height": {
+          "expected_literal_axis": "at waist height",
+          "extracted_owned_clauses": [],
+          "exact_span_match": false,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 7
+        }
+      },
+      "preflight_error": null,
+      "core_sha256": "acdb931130ced6eeac39b116e9e5493ced4c4b1131969133390a133a47217160",
+      "property_locks": [],
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "counterfactual_property_lock_compatible_direction_rows": 0,
+      "total_direction_rows": 49
+    },
+    {
+      "id": "fresh_camera_12",
+      "expected": {
+        "abstain": false,
+        "owner_span": "horizontally aimed capture camera",
+        "height_span": "near ground level",
+        "direction_span": "horizontally aimed",
+        "reason": null,
+        "span_offsets": {
+          "owner_span": [
+            77,
+            110
+          ],
+          "height_span": [
+            122,
+            139
+          ],
+          "direction_span": [
+            77,
+            95
+          ]
+        }
+      },
+      "raw_text_sha256": "d7f8cf1a4b8b6affa38ca8696ad3960f3f8b75f8078a0c6eafc5890a242359eb",
+      "axes": {
+        "direction": {
+          "expected_literal_axis": "horizontally aimed",
+          "extracted_owned_clauses": [],
+          "exact_span_match": false,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_direction:rear_view",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "id": "slot:camera_direction:extreme_high_overhead_angle",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 28
+        },
+        "height": {
+          "expected_literal_axis": "near ground level",
+          "extracted_owned_clauses": [],
+          "exact_span_match": false,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 7
+        }
+      },
+      "preflight_error": null,
+      "core_sha256": "9341edfeec405b07e0ac289842794da31c10698fbad1fac1f0e52df18e6afd9d",
+      "property_locks": [],
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "counterfactual_property_lock_compatible_direction_rows": 0,
+      "total_direction_rows": 49
+    },
+    {
+      "id": "fresh_camera_13",
+      "expected": {
+        "abstain": true,
+        "owner_span": null,
+        "height_span": null,
+        "direction_span": null,
+        "reason": "Camera evidence is inside a displayed photograph, not the camera capturing the requested gallery scene.",
+        "span_offsets": {}
+      },
+      "raw_text_sha256": "06d33117816e495782e6b7f223fe45303a2f845fb2cfeb3577f4d1aa0bed8cdc",
+      "axes": {
+        "direction": {
+          "expected_literal_axis": null,
+          "extracted_owned_clauses": [],
+          "exact_span_match": true,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_direction:extreme_high_overhead_angle",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "id": "slot:camera_direction:extreme_low_angle_under_subject",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 28
+        },
+        "height": {
+          "expected_literal_axis": null,
+          "extracted_owned_clauses": [],
+          "exact_span_match": true,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 7
+        }
+      },
+      "preflight_error": null,
+      "core_sha256": "981da577466a874c1583a64276330df14f8bee7c2d3254d836450413a35d5632",
+      "property_locks": [],
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "counterfactual_property_lock_compatible_direction_rows": 49,
+      "total_direction_rows": 49
+    },
+    {
+      "id": "fresh_camera_14",
+      "expected": {
+        "abstain": true,
+        "owner_span": null,
+        "height_span": null,
+        "direction_span": null,
+        "reason": "The telescope points upward; its orientation is not capture-camera evidence.",
+        "span_offsets": {}
+      },
+      "raw_text_sha256": "9af908254fc327839bbc981ed8d4d947851b40ba41e3083520ea66474ebe83f9",
+      "axes": {
+        "direction": {
+          "expected_literal_axis": null,
+          "extracted_owned_clauses": [],
+          "exact_span_match": true,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_direction:extreme_high_overhead_angle",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "id": "slot:camera_direction:rear_view",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 28
+        },
+        "height": {
+          "expected_literal_axis": null,
+          "extracted_owned_clauses": [],
+          "exact_span_match": true,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 7
+        }
+      },
+      "preflight_error": null,
+      "core_sha256": "20f8f3fdb3ab4231388cddfea8885c5a0458d3d6abeb2f794cc8a76bf234df41",
+      "property_locks": [],
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "counterfactual_property_lock_compatible_direction_rows": 49,
+      "total_direction_rows": 49
+    },
+    {
+      "id": "fresh_camera_15",
+      "expected": {
+        "abstain": true,
+        "owner_span": null,
+        "height_span": null,
+        "direction_span": null,
+        "reason": "Two capture cameras have incompatible viewpoints, with no chosen source for the final image.",
+        "span_offsets": {}
+      },
+      "raw_text_sha256": "58891ceb734a13439024d2ad6b006a7ae6a6733d5a3b35ff1baa7029d17d9e51",
+      "axes": {
+        "direction": {
+          "expected_literal_axis": null,
+          "extracted_owned_clauses": [],
+          "exact_span_match": true,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_direction:extreme_low_angle_under_subject",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "id": "slot:camera_direction:rear_view",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 28
+        },
+        "height": {
+          "expected_literal_axis": null,
+          "extracted_owned_clauses": [],
+          "exact_span_match": true,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 7
+        }
+      },
+      "preflight_error": null,
+      "core_sha256": "263981cb9a2b5981a36d036fe32c39f00894a1ac80d35535d05862da4697c1a6",
+      "property_locks": [],
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "counterfactual_property_lock_compatible_direction_rows": 49,
+      "total_direction_rows": 49
+    },
+    {
+      "id": "fresh_camera_16",
+      "expected": {
+        "abstain": true,
+        "owner_span": null,
+        "height_span": null,
+        "direction_span": null,
+        "reason": "The capture camera is identified, but only an upward direction is negated; no positive height or direction is supported.",
+        "span_offsets": {}
+      },
+      "raw_text_sha256": "b4eac384d299278bdb007a2b6c41fe3a40d7bcdbc334a9375ea3357ca56e3cc2",
+      "axes": {
+        "direction": {
+          "expected_literal_axis": null,
+          "extracted_owned_clauses": [],
+          "exact_span_match": true,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_direction:extreme_low_hero_angle",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "id": "slot:camera_direction:extreme_high_overhead_angle",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            },
+            {
+              "id": "slot:camera_direction:rear_view",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 28
+        },
+        "height": {
+          "expected_literal_axis": null,
+          "extracted_owned_clauses": [],
+          "exact_span_match": true,
+          "owner_and_axis_literal_coverage": false,
+          "abstention": true,
+          "query": [
+            "readable subject structure | natural material detail | general_photo | context-led photographic study | restrained color hierarchy | tactile material detail"
+          ],
+          "query_fields": [
+            "style",
+            "visual_priorities"
+          ],
+          "legacy_clause_forwarded": false,
+          "exposed_candidates": [
+            {
+              "id": "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+              "label": null,
+              "applicability": {
+                "status": "eligible",
+                "source": "frozen_core_slot_contract",
+                "reason": null
+              }
+            }
+          ],
+          "eligible_before_ranking": 7
+        }
+      },
+      "preflight_error": null,
+      "core_sha256": "45daa765df1ef4e34556c4e6d035e5ec1db79c5a28d4741f7d38743f1c5cbd0a",
+      "property_locks": [],
+      "total_candidates": 64,
+      "candidate_adoption": "optional",
+      "counterfactual_property_lock_compatible_direction_rows": 49,
+      "total_direction_rows": 49
+    }
+  ],
+  "dictionary_hash": "f8e589f947a2b5900c11e117d6a6e7581ba5ca76983033591307fa7cd9f82beb",
+  "quality_layers_loaded": true,
+  "semantic_entries": 9876,
+  "visual_profiles": 1622,
+  "summary": {
+    "positive_cases": 8,
+    "positive_cases_exact_axis_span_match": 0,
+    "positive_cases_owner_and_axis_literal_coverage": 0,
+    "negative_cases": 8,
+    "negative_cases_abstained": 8,
+    "preflight_admitted": 15,
+    "axes_with_owned_clause_query": 0,
+    "max_candidates": 64
+  }
+}
