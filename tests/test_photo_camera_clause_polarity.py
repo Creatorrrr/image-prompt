@@ -47,6 +47,9 @@ class CameraClausePolarityTests(unittest.TestCase):
             'The camera looks upward, with its lens aimed downward.',
             'The camera points left and right.',
             'The camera faces forward and backward.',
+            'The camera points horizontally forward and backward.',
+            'The camera points forward upward and downward.',
+            'The camera points upward downward.',
             'The camera is above the shelf and looks upward and downward at once.',
         ):
             with self.subTest(clause=clause): self.assertEqual(self.extract(clause), [])
@@ -59,6 +62,8 @@ class CameraClausePolarityTests(unittest.TestCase):
             'The camera points upward or its lens is aimed downward.',
             'The camera points upward or the camera is tilted downward.',
             'The camera points upward then downward.',
+            'The camera points upward left or downward right.',
+            'The camera points horizontally forward or backward.',
             'The camera points upward, alternatively downward.',
         ):
             with self.subTest(clause=clause): self.assertEqual(self.extract(clause), [])
@@ -79,6 +84,10 @@ class CameraClausePolarityTests(unittest.TestCase):
 
     def test_foreign_subject_or_target_orientation_does_not_contradict_the_capture(self):
         for clause, expected in (
+            ('The camera points horizontally forward toward a backward-pointing arrow.',
+             'The camera points horizontally forward toward a backward-pointing arrow'),
+            ('The camera points upward left toward a downward-facing arrow.',
+             'The camera points upward left toward a downward-facing arrow'),
             ('The camera looks upward toward a downward-pointing arrow.',
              'The camera looks upward toward a downward-pointing arrow'),
             ('The camera looks upward and a worker faces downward.', 'The camera looks upward'),
@@ -89,7 +98,9 @@ class CameraClausePolarityTests(unittest.TestCase):
             with self.subTest(clause=clause): self.assertEqual(self.extract(clause), [expected])
 
     def test_compatible_diagonal_and_repeated_predicates_preserve_complete_literal_clause(self):
-        for clause in ('The camera looks upward and left.',
+        for clause in ('The camera points horizontally forward.',
+                       'The camera points upward left.',
+                       'The camera looks upward and left.',
                        'The camera looks upward and it points upward.',
                        'The camera is below the shelf and looks upward.',
                        'Keep the camera below the shelf and aim it horizontally forward.'):
@@ -97,7 +108,9 @@ class CameraClausePolarityTests(unittest.TestCase):
 
     def test_actual_core_normalization_keeps_review_inputs_but_retrieval_abstains(self):
         for clause in ('The camera points upward under no circumstances.',
-                       'The camera looks upward and downward.'):
+                       'The camera looks upward and downward.',
+                       'The camera points horizontally forward and backward.',
+                       'The camera points upward left or downward right.'):
             rows = inputs_for(clause); untouched = copy.deepcopy(rows)
             core = pg.normalize_authorial_core(rows['authorial-core'],
                 request_envelope=pg.normalize_request_envelope(rows['request-envelope']),
@@ -131,6 +144,8 @@ class CameraClausePublicLegacyTests(unittest.TestCase):
         original = {p.name: p.read_bytes() for p in AUTHOR.glob('*.json')}
         for clause in ('The camera points upward under no circumstances.',
                        'The camera looks upward and downward.',
+                       'The camera points horizontally forward and backward.',
+                       'The camera points upward left or downward right.',
                        'The camera looks upward toward the blanket.'):
             rows = inputs_for(clause)
             with self.subTest(clause=clause), tempfile.TemporaryDirectory() as directory:
