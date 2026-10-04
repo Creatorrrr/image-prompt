@@ -1,0 +1,117 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "접힌 지도와 나무 쟁반을 사진으로 보여 주세요. 실제 촬영 카메라는 쟁반 위에 놓고 아래쪽 지도를 내려다보게 해 주세요.",
+  "creative_controls_sha256": "d9da71c9acd5f7b0fd864bb151681e477bb5845f4ef7716f5edabec613b97367",
+  "interpreted_intent": "접힌 지도와 나무 쟁반을 주제로, 요청된 쟁반 위의 카메라 위치와 아래쪽을 향한 시선을 구분하여 보존한다.",
+  "subject": "a folded map",
+  "setting": "a small study with a table",
+  "event": "a folded map rests inside a wooden tray",
+  "visual_priorities": [
+    "readable folded paper edges",
+    "distinct paper folds and tray grain"
+  ],
+  "baseline_prompt_en": "A folded map lies inside a wooden tray on a table in a small study. The map rests beside a plain pencil, with its creased paper edges visible against the smooth wood. The camera used to take this picture is above the wooden tray and looks downward toward the map. Gentle window light reveals the paper folds and the tray grain, while a simple arrangement keeps these two requested objects distinct.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "requested scene",
+      "source_text": "접힌 지도와 나무 쟁반을 사진으로 보여 주세요. 실제 촬영 카메라는 쟁반 위에 놓고 아래쪽 지도를 내려다보게 해 주세요.",
+      "basis": "request_context",
+      "resolution": "접힌 지도와 나무 쟁반을 주제로, 요청된 쟁반 위의 카메라 위치와 아래쪽을 향한 시선을 구분하여 보존한다.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "접힌 지도와 나무 쟁반을 사진으로 보여 주세요. 실제 촬영 카메라는 쟁반 위에 놓고 아래쪽 지도를 내려다보게 해 주세요.",
+        "dimension": "concept",
+        "prompt_evidence": "folded map lies"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "접힌 지도와 나무 쟁반을 사진으로 보여 주세요. 실제 촬영 카메라는 쟁반 위에 놓고 아래쪽 지도를 내려다보게 해 주세요.",
+        "dimension": "subject",
+        "prompt_evidence": "folded map"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "접힌 지도와 나무 쟁반을 사진으로 보여 주세요. 실제 촬영 카메라는 쟁반 위에 놓고 아래쪽 지도를 내려다보게 해 주세요.",
+        "dimension": "event",
+        "prompt_evidence": "map rests"
+      },
+      {
+        "anchor_id": "camera_direction",
+        "dimension": "camera",
+        "target": "camera",
+        "property": "viewpoint.direction",
+        "source_text": "접힌 지도와 나무 쟁반을 사진으로 보여 주세요. 실제 촬영 카메라는 쟁반 위에 놓고 아래쪽 지도를 내려다보게 해 주세요.",
+        "prompt_evidence": "looks downward toward the map"
+      },
+      {
+        "anchor_id": "camera_height",
+        "dimension": "camera",
+        "target": "camera",
+        "property": "viewpoint.height",
+        "source_text": "접힌 지도와 나무 쟁반을 사진으로 보여 주세요. 실제 촬영 카메라는 쟁반 위에 놓고 아래쪽 지도를 내려다보게 해 주세요.",
+        "prompt_evidence": "above the wooden tray"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "setting",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "camera_axes",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "camera",
+        "direction_requirement": "requested",
+        "height_requirement": "requested"
+      },
+      "evidence": {
+        "owner_phrase": "The camera used to take this picture",
+        "direction_phrase": "looks downward toward the map",
+        "height_phrase": "above the wooden tray"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "general_photo",
+    "family": "restrained object study",
+    "evidence": [
+      "clear material separation",
+      "quiet surrounding space"
+    ]
+  },
+  "variation_key": "ko_down"
+}
