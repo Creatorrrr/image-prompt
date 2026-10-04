@@ -1,0 +1,108 @@
+{
+  "schema_version": "vocaloid-appearance-pixel-plan/v1",
+  "runtime_artifact": false,
+  "case_family_count": 8,
+  "execution_status": "not_run",
+  "arms": [
+    "unchanged_baseline",
+    "qualified_enriched_sources"
+  ],
+  "framing_rule": "The requester/frozen core owns medium, pose, viewpoint and framing. A candidate cannot override a locked frame to make its gate visible.",
+  "pass_rule": "Every selected component and directed same-owner relation must be satisfied in saved original pixels. Partial evidence is FAIL; required hidden relation is UNOBSERVABLE. Source artwork review, prompt audit and generated pixels have separate result fields.",
+  "cases": [
+    {
+      "id": "P01",
+      "family": "머리 지역 길이",
+      "related_card_ids": [
+        "K09"
+      ],
+      "request_definition_seed": "성인 인물/가발, 뒤 짧은 영역과 두 긴 앞다발이 함께 읽히는 시점",
+      "gate_ko": "후두부 길이와 얼굴 옆 두 긴 다발이 같은 머리에 속한다.",
+      "dependency": "data/profile/index/holdout gates complete",
+      "status": "planned_not_run"
+    },
+    {
+      "id": "P02",
+      "family": "평면 의상 무늬",
+      "related_card_ids": [
+        "K53",
+        "K54",
+        "K55"
+      ],
+      "request_definition_seed": "일러스트, 소매와 치마 면이 충분히 큰 구도",
+      "gate_ko": "막대 높이차·긴/짧은 건반 배치·사각 패널이 각 지정 의복면에 붙어 있다. 실제 악기/돌출 버튼/발광으로 바뀌면 FAIL.",
+      "dependency": "data/profile/index/holdout gates complete",
+      "status": "planned_not_run"
+    },
+    {
+      "id": "P03",
+      "family": "머리 장치와 입 마이크",
+      "related_card_ids": [
+        "K51",
+        "K52"
+      ],
+      "request_definition_seed": "같은 착용자의 머리 묶임점과 귀/입이 함께 보이는 구도",
+      "gate_ko": "머리 hardware의 모발 부착과 earpiece-boom-mouth 연결을 서로 다른 조립체로 모두 확인한다.",
+      "dependency": "data/profile/index/holdout gates complete",
+      "status": "planned_not_run"
+    },
+    {
+      "id": "P04",
+      "family": "의상 개방 구조",
+      "related_card_ids": [
+        "K34",
+        "K35"
+      ],
+      "request_definition_seed": "별도 두 frozen requests: crop hem / 한 벌의 bounded abdominal opening",
+      "gate_ko": "각 request에 해당하는 밑단 또는 closed cutout만 요구한다. 두 벌 간격을 한 벌 구멍으로 치환하면 FAIL.",
+      "dependency": "data/profile/index/holdout gates complete",
+      "status": "planned_not_run"
+    },
+    {
+      "id": "P05",
+      "family": "팔의 원형 착용 장치",
+      "related_card_ids": [
+        "K56"
+      ],
+      "request_definition_seed": "상반신과 장치 지지부가 가려지지 않는 일러스트",
+      "gate_ko": "원형 외곽·동심원 면·팔 부착·상대 크기가 모두 동일한 owner 관계를 만족한다.",
+      "dependency": "data/profile/index/holdout gates complete",
+      "status": "planned_not_run"
+    },
+    {
+      "id": "P06",
+      "family": "외부 날개 판",
+      "related_card_ids": [
+        "K62"
+      ],
+      "request_definition_seed": "외부 프레임이 보이는 피규어 표현",
+      "gate_ko": "얇은 판과 내부 선무늬·판 사이 겹침/투과·외부 지지부를 확인한다. 생물 관절이나 발광 기능으로 바뀌면 FAIL.",
+      "dependency": "data/profile/index/holdout gates complete",
+      "status": "planned_not_run"
+    },
+    {
+      "id": "P07",
+      "family": "뺨 표식과 모자 표식",
+      "related_card_ids": [
+        "K17",
+        "K68"
+      ],
+      "request_definition_seed": "성인 인물/모자, 피부 표식과 모자 앞면을 모두 읽는 구도",
+      "gate_ko": "별은 뺨 피부, 십자는 모자 앞면에 각각 귀속되고 도상/위치가 맞는다. owner가 뒤바뀌면 FAIL.",
+      "dependency": "data/profile/index/holdout gates complete",
+      "status": "planned_not_run"
+    },
+    {
+      "id": "P08",
+      "family": "독립 소품/동료 소유자",
+      "related_card_ids": [
+        "K58",
+        "K70"
+      ],
+      "request_definition_seed": "사람·봉제 소품·별도 동료를 요청이 명시한 장면",
+      "gate_ko": "소품과 동료의 경계·부착/손 접촉·가시 코드 등 요청된 연결만 확인한다. 신체융합/무연결 부유 추정은 FAIL.",
+      "dependency": "P2 independent prop owner/effect routing must be resolved first; otherwise do not execute",
+      "status": "planned_not_run"
+    }
+  ]
+}

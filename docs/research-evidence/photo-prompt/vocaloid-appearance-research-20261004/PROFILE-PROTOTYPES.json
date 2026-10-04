@@ -1,0 +1,606 @@
+{
+  "schema_version": "vocaloid-profile-proposals/v1",
+  "runtime_artifact": false,
+  "proposal_count": 3,
+  "proposals": [
+    {
+      "research_card_id": "K09",
+      "destination_file": "photo_prompt_visual_obligations_subculture_appearance.json",
+      "profile": {
+        "id": "sca_short_rear_long_sidelocks",
+        "category": "selected_local_appearance_relation",
+        "activation": {
+          "exact_terms": [
+            "rear scalp hair ends above the neck; only two face-side locks extend downward toward the chest",
+            "후두부의 머리는 목 위에서 짧게 끝난다 · 얼굴 양옆의 두 다발만 가슴 쪽까지 이어진다"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "declared_carrier",
+                "any_terms": [
+                  "hair",
+                  "hairstyle",
+                  "wig",
+                  "머리",
+                  "모발",
+                  "가발"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "rear scalp hair ends above the neck; only two face-side locks extend downward toward the chest; the short rear hair and paired long face-side locks belong to the same hairstyle",
+          "paraphrase_examples": [
+            "rear scalp hair ends above the neck; only two face-side locks extend downward toward the chest",
+            "후두부의 머리는 목 위에서 짧게 끝난다; 얼굴 양옆의 두 다발만 가슴 쪽까지 이어진다; 짧은 뒤머리와 두 긴 얼굴 옆 다발이 같은 모발 구조에 속한다"
+          ],
+          "visual_components": [
+            "rear scalp hair ends above the neck",
+            "only two face-side locks extend downward toward the chest",
+            "the short rear hair and paired long face-side locks belong to the same hairstyle"
+          ],
+          "contrast_examples": [
+            "뒷머리가 긴 히메컷",
+            "두피 양쪽의 전체 트윈테일"
+          ],
+          "claim_limits": [
+            "2011 설정 자료에서 직접 확인했다. hime_cut_structural은 긴 뒷머리를 유지하므로 이 형태의 대체 프로파일이 아니다.",
+            "All requested components must coexist on the declared owner. Source artwork review does not prove prompt coverage or generated pixels."
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "rear scalp hair ends above the neck; only two face-side locks extend downward toward the chest",
+            "후두부의 머리는 목 위에서 짧게 끝난다 · 얼굴 양옆의 두 다발만 가슴 쪽까지 이어진다",
+            "rear scalp hair ends above the neck",
+            "only two face-side locks extend downward toward the chest",
+            "the short rear hair and paired long face-side locks belong to the same hairstyle"
+          ],
+          "core_assertion_discovery": true,
+          "affected_dimensions": [
+            "appearance"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "appearance",
+              "target": "main_subject",
+              "property": "hair.style.length.regional_partition"
+            }
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "component_1",
+              "match_terms": [
+                "rear scalp hair ends above the neck",
+                "후두부의 머리는 목 위에서 짧게 끝난다"
+              ],
+              "evidence_field": "component_1_phrase",
+              "evidence_terms": [
+                "rear scalp hair ends above the neck",
+                "후두부의 머리는 목 위에서 짧게 끝난다"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this selected carrier relation explicit: rear scalp hair ends above the neck.",
+              "render_gate": {
+                "id": "vo_sca_short_rear_long_sidelocks_1",
+                "review_scale": "native",
+                "description": "rear scalp hair ends above the neck. Inspect this relation on the selected same owner in original pixels. Partial evidence fails; an occluded required relation is unobservable."
+              }
+            },
+            {
+              "id": "component_2",
+              "match_terms": [
+                "only two face-side locks extend downward toward the chest",
+                "얼굴 양옆의 두 다발만 가슴 쪽까지 이어진다"
+              ],
+              "evidence_field": "component_2_phrase",
+              "evidence_terms": [
+                "only two face-side locks extend downward toward the chest",
+                "얼굴 양옆의 두 다발만 가슴 쪽까지 이어진다"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this selected carrier relation explicit: only two face-side locks extend downward toward the chest.",
+              "render_gate": {
+                "id": "vo_sca_short_rear_long_sidelocks_2",
+                "review_scale": "native",
+                "description": "only two face-side locks extend downward toward the chest. Inspect this relation on the selected same owner in original pixels. Partial evidence fails; an occluded required relation is unobservable."
+              }
+            },
+            {
+              "id": "component_3",
+              "match_terms": [
+                "the short rear hair and paired long face-side locks belong to the same hairstyle",
+                "짧은 뒤머리와 두 긴 얼굴 옆 다발이 같은 모발 구조에 속한다"
+              ],
+              "evidence_field": "component_3_phrase",
+              "evidence_terms": [
+                "the short rear hair and paired long face-side locks belong to the same hairstyle",
+                "짧은 뒤머리와 두 긴 얼굴 옆 다발이 같은 모발 구조에 속한다"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this selected carrier relation explicit: the short rear hair and paired long face-side locks belong to the same hairstyle.",
+              "render_gate": {
+                "id": "vo_sca_short_rear_long_sidelocks_3",
+                "review_scale": "native",
+                "description": "the short rear hair and paired long face-side locks belong to the same hairstyle. Inspect this relation on the selected same owner in original pixels. Partial evidence fails; an occluded required relation is unobservable."
+              }
+            }
+          ]
+        },
+        "reject_substitutes": [
+          "뒷머리가 긴 히메컷",
+          "두피 양쪽의 전체 트윈테일"
+        ]
+      },
+      "proposed_visual_semantics_bundle": {
+        "id": "vr_short_rear_long_sidelocks_bundle",
+        "primary_visual_proposition": "rear scalp hair ends above the neck; only two face-side locks extend downward toward the chest",
+        "component_groups": [
+          {
+            "id": "component_1",
+            "visible_evidence": [
+              "rear scalp hair ends above the neck"
+            ]
+          },
+          {
+            "id": "component_2",
+            "visible_evidence": [
+              "only two face-side locks extend downward toward the chest"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "vr_short_rear_long_sidelocks"
+        ],
+        "candidate_slots": {
+          "vr_short_rear_long_sidelocks": "hair_style"
+        },
+        "hard_profile_ids": [
+          "sca_short_rear_long_sidelocks"
+        ],
+        "relations": [
+          {
+            "id": "declared_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject.hair",
+            "object": "main_subject"
+          },
+          {
+            "id": "k09_r1",
+            "type": "shorter_than",
+            "subject": "rear hair",
+            "object": "paired face-side locks"
+          },
+          {
+            "id": "k09_r2",
+            "type": "flank",
+            "subject": "long locks",
+            "object": "same face"
+          }
+        ],
+        "confusion_boundaries": [
+          "뒷머리가 긴 히메컷",
+          "두피 양쪽의 전체 트윈테일"
+        ],
+        "candidate_only": true,
+        "activation_mode": "independent_component_request_evidence_only",
+        "source_keywords": [
+          "긴 옆머리·사이드록"
+        ]
+      },
+      "qualification": "syntax_example_only; not installed or render-qualified"
+    },
+    {
+      "research_card_id": "K51",
+      "destination_file": "photo_prompt_visual_obligations_accessory_structure.json",
+      "profile": {
+        "id": "accessory_earpiece_mouth_boom",
+        "category": "selected_local_appearance_relation",
+        "activation": {
+          "exact_terms": [
+            "a thin microphone boom connects to an earpiece; the boom tip terminates beside the same face mouth",
+            "귀 옆의 장치에 가는 마이크 막대가 붙어 있다 · 막대 끝이 같은 얼굴의 입 근처에 놓인다"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "declared_carrier",
+                "any_terms": [
+                  "headset",
+                  "earpiece",
+                  "microphone",
+                  "헤드셋",
+                  "귀 장치",
+                  "마이크"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "a thin microphone boom connects to an earpiece; the boom tip terminates beside the same face mouth; the boom and mouth endpoint remain on the same wearer as the earpiece",
+          "paraphrase_examples": [
+            "a thin microphone boom connects to an earpiece; the boom tip terminates beside the same face mouth",
+            "귀 옆의 장치에 가는 마이크 막대가 붙어 있다; 막대 끝이 같은 얼굴의 입 근처에 놓인다; 마이크 막대와 입 옆 끝점이 귀 장치를 쓴 같은 얼굴에 속한다"
+          ],
+          "visual_components": [
+            "a thin microphone boom connects to an earpiece",
+            "the boom tip terminates beside the same face mouth",
+            "the boom and mouth endpoint remain on the same wearer as the earpiece"
+          ],
+          "contrast_examples": [
+            "마이크 없는 헤드폰",
+            "손으로 든 마이크"
+          ],
+          "claim_limits": [
+            "sca_x16은 두 earcup과 돌출 장치 연결이며 mouth boom까지 보장하지 않는다. 음향 작동 여부는 별도다.",
+            "All requested components must coexist on the declared owner. Source artwork review does not prove prompt coverage or generated pixels."
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "a thin microphone boom connects to an earpiece; the boom tip terminates beside the same face mouth",
+            "귀 옆의 장치에 가는 마이크 막대가 붙어 있다 · 막대 끝이 같은 얼굴의 입 근처에 놓인다",
+            "a thin microphone boom connects to an earpiece",
+            "the boom tip terminates beside the same face mouth",
+            "the boom and mouth endpoint remain on the same wearer as the earpiece"
+          ],
+          "core_assertion_discovery": true,
+          "affected_dimensions": [
+            "appearance"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "appearance",
+              "target": "main_subject",
+              "property": "wardrobe.accessories.headset_boom_route"
+            }
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "component_1",
+              "match_terms": [
+                "a thin microphone boom connects to an earpiece",
+                "귀 옆의 장치에 가는 마이크 막대가 붙어 있다"
+              ],
+              "evidence_field": "component_1_phrase",
+              "evidence_terms": [
+                "a thin microphone boom connects to an earpiece",
+                "귀 옆의 장치에 가는 마이크 막대가 붙어 있다"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this selected carrier relation explicit: a thin microphone boom connects to an earpiece.",
+              "render_gate": {
+                "id": "vo_accessory_earpiece_mouth_boom_1",
+                "review_scale": "native",
+                "description": "a thin microphone boom connects to an earpiece. Inspect this relation on the selected same owner in original pixels. Partial evidence fails; an occluded required relation is unobservable."
+              }
+            },
+            {
+              "id": "component_2",
+              "match_terms": [
+                "the boom tip terminates beside the same face mouth",
+                "막대 끝이 같은 얼굴의 입 근처에 놓인다"
+              ],
+              "evidence_field": "component_2_phrase",
+              "evidence_terms": [
+                "the boom tip terminates beside the same face mouth",
+                "막대 끝이 같은 얼굴의 입 근처에 놓인다"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this selected carrier relation explicit: the boom tip terminates beside the same face mouth.",
+              "render_gate": {
+                "id": "vo_accessory_earpiece_mouth_boom_2",
+                "review_scale": "native",
+                "description": "the boom tip terminates beside the same face mouth. Inspect this relation on the selected same owner in original pixels. Partial evidence fails; an occluded required relation is unobservable."
+              }
+            },
+            {
+              "id": "component_3",
+              "match_terms": [
+                "the boom and mouth endpoint remain on the same wearer as the earpiece",
+                "마이크 막대와 입 옆 끝점이 귀 장치를 쓴 같은 얼굴에 속한다"
+              ],
+              "evidence_field": "component_3_phrase",
+              "evidence_terms": [
+                "the boom and mouth endpoint remain on the same wearer as the earpiece",
+                "마이크 막대와 입 옆 끝점이 귀 장치를 쓴 같은 얼굴에 속한다"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this selected carrier relation explicit: the boom and mouth endpoint remain on the same wearer as the earpiece.",
+              "render_gate": {
+                "id": "vo_accessory_earpiece_mouth_boom_3",
+                "review_scale": "native",
+                "description": "the boom and mouth endpoint remain on the same wearer as the earpiece. Inspect this relation on the selected same owner in original pixels. Partial evidence fails; an occluded required relation is unobservable."
+              }
+            }
+          ]
+        },
+        "reject_substitutes": [
+          "마이크 없는 헤드폰",
+          "손으로 든 마이크"
+        ]
+      },
+      "proposed_visual_semantics_bundle": {
+        "id": "vr_earpiece_mouth_boom_bundle",
+        "primary_visual_proposition": "a thin microphone boom connects to an earpiece; the boom tip terminates beside the same face mouth",
+        "component_groups": [
+          {
+            "id": "component_1",
+            "visible_evidence": [
+              "a thin microphone boom connects to an earpiece"
+            ]
+          },
+          {
+            "id": "component_2",
+            "visible_evidence": [
+              "the boom tip terminates beside the same face mouth"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "vr_earpiece_mouth_boom"
+        ],
+        "candidate_slots": {
+          "vr_earpiece_mouth_boom": "wearable_accessory"
+        },
+        "hard_profile_ids": [
+          "accessory_earpiece_mouth_boom"
+        ],
+        "relations": [
+          {
+            "id": "declared_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject.wardrobe.headset",
+            "object": "main_subject"
+          },
+          {
+            "id": "k51_r1",
+            "type": "connected_to",
+            "subject": "microphone boom",
+            "object": "earpiece"
+          },
+          {
+            "id": "k51_r2",
+            "type": "beside",
+            "subject": "boom tip",
+            "object": "same mouth"
+          }
+        ],
+        "confusion_boundaries": [
+          "마이크 없는 헤드폰",
+          "손으로 든 마이크"
+        ],
+        "candidate_only": true,
+        "activation_mode": "independent_component_request_evidence_only",
+        "source_keywords": [
+          "헤드셋"
+        ]
+      },
+      "qualification": "syntax_example_only; not installed or render-qualified"
+    },
+    {
+      "research_card_id": "K53",
+      "destination_file": "photo_prompt_visual_obligations_subculture_appearance.json",
+      "profile": {
+        "id": "sca_flat_equalizer_bars",
+        "category": "selected_local_appearance_relation",
+        "activation": {
+          "exact_terms": [
+            "parallel vertical bars repeat at regular intervals; bar heights differ while the marks remain on one garment surface",
+            "평행한 세로 막대가 일정 간격으로 반복된다 · 막대 높이가 달라도 같은 의복 표면에 놓인다"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "declared_carrier",
+                "any_terms": [
+                  "garment",
+                  "skirt",
+                  "sleeve",
+                  "fabric",
+                  "의복",
+                  "치마",
+                  "소매",
+                  "옷"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "parallel vertical bars repeat at regular intervals; bar heights differ while the marks remain on one garment surface; all variable-height bars remain printed on one continuous garment panel",
+          "paraphrase_examples": [
+            "parallel vertical bars repeat at regular intervals; bar heights differ while the marks remain on one garment surface",
+            "평행한 세로 막대가 일정 간격으로 반복된다; 막대 높이가 달라도 같은 의복 표면에 놓인다; 높이가 다른 막대들이 같은 연속된 의복 패널에 인쇄되어 있다"
+          ],
+          "visual_components": [
+            "parallel vertical bars repeat at regular intervals",
+            "bar heights differ while the marks remain on one garment surface",
+            "all variable-height bars remain printed on one continuous garment panel"
+          ],
+          "contrast_examples": [
+            "같은 길이 세로 줄",
+            "실제 소리를 분석하는 전자 표시창"
+          ],
+          "claim_limits": [
+            "픽셀 블록을 쌓은 열도 변형으로 정의할 수 있다. 막대 무늬는 소리·박자·실시간 반응을 뜻하지 않는다.",
+            "All requested components must coexist on the declared owner. Source artwork review does not prove prompt coverage or generated pixels."
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "parallel vertical bars repeat at regular intervals; bar heights differ while the marks remain on one garment surface",
+            "평행한 세로 막대가 일정 간격으로 반복된다 · 막대 높이가 달라도 같은 의복 표면에 놓인다",
+            "parallel vertical bars repeat at regular intervals",
+            "bar heights differ while the marks remain on one garment surface",
+            "all variable-height bars remain printed on one continuous garment panel"
+          ],
+          "core_assertion_discovery": true,
+          "affected_dimensions": [
+            "appearance"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "appearance",
+              "target": "main_subject",
+              "property": "wardrobe.surface.equalizer_bar_layout"
+            }
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "component_1",
+              "match_terms": [
+                "parallel vertical bars repeat at regular intervals",
+                "평행한 세로 막대가 일정 간격으로 반복된다"
+              ],
+              "evidence_field": "component_1_phrase",
+              "evidence_terms": [
+                "parallel vertical bars repeat at regular intervals",
+                "평행한 세로 막대가 일정 간격으로 반복된다"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this selected carrier relation explicit: parallel vertical bars repeat at regular intervals.",
+              "render_gate": {
+                "id": "vo_sca_flat_equalizer_bars_1",
+                "review_scale": "native",
+                "description": "parallel vertical bars repeat at regular intervals. Inspect this relation on the selected same owner in original pixels. Partial evidence fails; an occluded required relation is unobservable."
+              }
+            },
+            {
+              "id": "component_2",
+              "match_terms": [
+                "bar heights differ while the marks remain on one garment surface",
+                "막대 높이가 달라도 같은 의복 표면에 놓인다"
+              ],
+              "evidence_field": "component_2_phrase",
+              "evidence_terms": [
+                "bar heights differ while the marks remain on one garment surface",
+                "막대 높이가 달라도 같은 의복 표면에 놓인다"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this selected carrier relation explicit: bar heights differ while the marks remain on one garment surface.",
+              "render_gate": {
+                "id": "vo_sca_flat_equalizer_bars_2",
+                "review_scale": "native",
+                "description": "bar heights differ while the marks remain on one garment surface. Inspect this relation on the selected same owner in original pixels. Partial evidence fails; an occluded required relation is unobservable."
+              }
+            },
+            {
+              "id": "component_3",
+              "match_terms": [
+                "all variable-height bars remain printed on one continuous garment panel",
+                "높이가 다른 막대들이 같은 연속된 의복 패널에 인쇄되어 있다"
+              ],
+              "evidence_field": "component_3_phrase",
+              "evidence_terms": [
+                "all variable-height bars remain printed on one continuous garment panel",
+                "높이가 다른 막대들이 같은 연속된 의복 패널에 인쇄되어 있다"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this selected carrier relation explicit: all variable-height bars remain printed on one continuous garment panel.",
+              "render_gate": {
+                "id": "vo_sca_flat_equalizer_bars_3",
+                "review_scale": "native",
+                "description": "all variable-height bars remain printed on one continuous garment panel. Inspect this relation on the selected same owner in original pixels. Partial evidence fails; an occluded required relation is unobservable."
+              }
+            }
+          ]
+        },
+        "reject_substitutes": [
+          "같은 길이 세로 줄",
+          "실제 소리를 분석하는 전자 표시창"
+        ]
+      },
+      "proposed_visual_semantics_bundle": {
+        "id": "vr_flat_equalizer_bars_bundle",
+        "primary_visual_proposition": "parallel vertical bars repeat at regular intervals; bar heights differ while the marks remain on one garment surface",
+        "component_groups": [
+          {
+            "id": "component_1",
+            "visible_evidence": [
+              "parallel vertical bars repeat at regular intervals"
+            ]
+          },
+          {
+            "id": "component_2",
+            "visible_evidence": [
+              "bar heights differ while the marks remain on one garment surface"
+            ]
+          }
+        ],
+        "candidate_ids": [
+          "vr_flat_equalizer_bars"
+        ],
+        "candidate_slots": {
+          "vr_flat_equalizer_bars": "garment_detail"
+        },
+        "hard_profile_ids": [
+          "sca_flat_equalizer_bars"
+        ],
+        "relations": [
+          {
+            "id": "declared_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject.wardrobe.surface",
+            "object": "main_subject"
+          },
+          {
+            "id": "k53_r1",
+            "type": "printed_on",
+            "subject": "variable-height bars",
+            "object": "same garment panel"
+          }
+        ],
+        "confusion_boundaries": [
+          "같은 길이 세로 줄",
+          "실제 소리를 분석하는 전자 표시창"
+        ],
+        "candidate_only": true,
+        "activation_mode": "independent_component_request_evidence_only",
+        "source_keywords": [
+          "이퀄라이저 무늬"
+        ]
+      },
+      "qualification": "syntax_example_only; not installed or render-qualified"
+    }
+  ]
+}
