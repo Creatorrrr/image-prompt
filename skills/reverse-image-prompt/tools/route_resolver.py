@@ -78,6 +78,34 @@ MAX_NON_CORE_MODULES = 8
 ANALYSIS_PROFILES = {"prompt", "audited"}
 PROMPT_REPORT_SCHEMA = "reverse-image-analysis-lane-report/compact-v2"
 AUDITED_REPORT_SCHEMA = "reverse-image-analysis-lane-report/v2"
+EFFORT_POLICY = "reverse-image-analysis-effort/v1"
+
+
+def analysis_lane_effort(
+    profile: str, module_ids: list[str], modules: dict[str, dict[str, Any]]
+) -> dict[str, Any]:
+    """Choose a dispatch default from this lane's scope, never the parent effort.
+
+    Source-aware adjustments, supported model values, and explicit user requests
+    remain caller responsibilities; the route is not an API scheduler.
+    """
+
+    assigned = [modules[mid] for mid in module_ids if int(modules[mid]["tier"]) != 0]
+    reasons: list[str] = []
+    if profile == "audited":
+        reasons.append("complete-audited-obligations")
+    if any(module["facet"] == "relationship" for module in assigned):
+        reasons.append("material-relationship-interpretation")
+    if sum(module["facet"] == "detail-risk" for module in assigned) >= 2:
+        reasons.append("multiple-specialized-fidelity-risks")
+    if sum(module["facet"] == "subject" for module in assigned) >= 2:
+        reasons.append("multiple-subject-domains")
+    if sum(module["facet"] == "medium" for module in assigned) >= 2:
+        reasons.append("multiple-medium-layers")
+    return {
+        "reasoning_effort": "high" if reasons else "medium",
+        "effort_rationale": reasons or ["standard-compact-visual-analysis"],
+    }
 
 
 def analysis_execution_budget(profile: str) -> dict[str, Any]:
@@ -262,8 +290,14 @@ def resolve_analysis_route(
             "analysis lane coverage missing for routed module(s): " + ", ".join(missing)
         )
 
+    shared_files = [
+        "SKILL.md",
+        "references/analysis-orchestration.md",
+        "references/analysis-runtime.md",
+        "references/integration-contract.md",
+    ]
     context_files = list(dict.fromkeys(
-        ["SKILL.md", "references/analysis-orchestration.md", "references/integration-contract.md"]
+        shared_files
         + [modules[mid]["file"] for mid in resolved_modules]
         + [lane["file"] for lane in lane_entries]
     ))
@@ -296,6 +330,7 @@ def resolve_analysis_route(
             "module_ids": lane["module_ids"],
             "owns_sections": lane["owns_sections"],
             "required_topics": lane["required_topics"],
+            **analysis_lane_effort(profile, lane["module_ids"], modules),
         }
         for lane in lane_entries
     ]
@@ -303,7 +338,20 @@ def resolve_analysis_route(
         "schema_version": "reverse-image-analysis-route/v2",
         "analysis_profile": profile,
         "execution_budget": execution_budget,
-        "shared_instruction_inputs": [context_by_path[path] for path in context_files[:3]],
+        "effort_policy": EFFORT_POLICY,
+        "critic": {
+            "reasoning_effort": (
+                "high" if any(lane["reasoning_effort"] == "high" for lane in lanes)
+                else "medium"
+            ),
+            "effort_rationale": (
+                ["audited-source-ledger-reconciliation"] if profile == "audited"
+                else ["complex-route-review"]
+                if any(lane["reasoning_effort"] == "high" for lane in lanes)
+                else ["standard-compact-critic"]
+            ),
+        },
+        "shared_instruction_inputs": [context_by_path[path] for path in shared_files],
         "normalized_facets": _canonical_facets(facets),
         "resolved_modules": resolved_modules,
         "required_lane_ids": [lane["id"] for lane in lanes],

@@ -44,7 +44,7 @@ Resolve facets through `manifest.json` or `modules/_registry.md`. Every lane rea
 Conditional references:
 
 - Named downstream generator: `references/model-adapters.md`. It owns supported tool settings and formatting, while core salience and causal order remain authoritative.
-- Analysis harness/model binding or execution telemetry: `references/analysis-runtime.md`. Analysis configuration is separate from generator settings and never enters the production prompt.
+- Delegation, analysis harness/model binding, or execution telemetry: `references/analysis-runtime.md`. Read its task-adaptive effort policy before spawning lanes or a critic. Analysis configuration is separate from generator settings and never enters the production prompt.
 - Selected color or lighting fidelity with measurement, controlled revision, generation, or source/render comparison: `references/color-reproduction-evaluation.md` or `references/lighting-reproduction-evaluation.md`.
 - Measured surface vocabulary or a surface descriptor/label: `references/surface-color-language.md`. Composite/friendly lighting language: `references/lighting-language.md`. Use current-source axes and explicit provenance; never start from a preferred label or demographic proxy.
 - Skill evaluation/revision: `references/behavior-evaluation.md`.
@@ -71,7 +71,7 @@ python3 tools/route_resolver.py --facets '<JSON>' --analysis-route --analysis-pr
 
 Choose subject and medium, all material visible relationships, and only material detail/style risks. Readable/prominent faces route `face-detail`; body-form, color-tone, and lighting fidelity route only when first-order or explicitly prioritized. Ordinary relationships, cropped edges, and small props are core-handled. The normal non-core module maximum is eight. If all excess risks are material, report the coverage limit rather than silently dropping one. The resolved route is authoritative for lane count; currently three to six lanes may activate.
 
-When clean-context delegation is available and permitted, run required lanes as one read-only wave, concurrently up to available capacity. Queued lanes still receive fresh contexts. Each receives the same source bytes/hash, raw request, intent, route/profile/budget, its lane file and assigned module views, and report schema. Do not supply another lane's conclusions, prior prompts/renders, or preferred wording. Workers do not write files, generate, author final prompts, or delegate again.
+When clean-context delegation is available and permitted, run required lanes as one read-only wave, concurrently up to available capacity. Queued lanes still receive fresh contexts. Each receives the same source bytes/hash, raw request, intent, route/profile/budget, its lane file and assigned module views, and report schema. Explicitly bind each worker's task-selected `reasoning_effort` at creation; do not inherit the parent effort as the selection policy. The route supplies per-lane and critic defaults; use the runtime policy for source-supported adjustments and explicit user overrides. Do not supply another lane's conclusions, prior prompts/renders, or preferred wording. Workers do not write files, generate, author final prompts, or delegate again.
 
 If isolated delegation is unavailable, freeze each sequential report and mark `sequential-fallback`; do not claim independence. A malformed lane may be retried once; a route gap/source mismatch may reroute the affected work once. Never rerun a successful lane for extra detail. Use a compact report's structured P0/P1 handoff to close an absent causal owner, lane, or required module before integration.
 
@@ -117,7 +117,7 @@ Both profiles use the same source-routed lane set (currently three to six lanes)
 
 ## 2. Run one isolated lane wave
 
-When clean-context delegation is available and permitted, run all required lanes concurrently. Respect available worker capacity: lanes in the same logical wave may queue, but each starts with a fresh context. Queueing is not a retry or another analysis wave; never reuse a previous lane's transcript. Each read-only worker receives only:
+When clean-context delegation is available and permitted, run all required lanes concurrently. Apply `references/analysis-runtime.md` before dispatch: bind each lane's task-selected `reasoning_effort` explicitly, with a fresh context (`fork_turns="none"` for Codex). The route supplies defaults and rationales; record source-supported adjustments and user overrides without changing the route. Respect available worker capacity: lanes in the same logical wave may queue, but each starts with a fresh context. Queueing is not a retry or another analysis wave; never reuse a previous lane's transcript. Each read-only worker receives only:
 
 - the same source artifact and SHA-256;
 - raw request and resolved intent;
@@ -235,7 +235,7 @@ Draft the prompt from P0 to P2. Give each P0/P1 effect one causal owner and one 
 
 ## 5. Compact independent critic and repair budget
 
-Give one independent read-only critic the source/hash, route, compact reports, priority map, and draft prompt without the main reasoning transcript. It checks only blocking visual failures:
+Give one independent read-only critic the source/hash, route, compact reports, priority map, and draft prompt without the main reasoning transcript. Explicitly bind its effort separately under the runtime policy: a standard compact review uses `medium`, while complex or audited reconciliation uses `high`; a documented exceptional P0/P1 conflict can justify `xhigh` for an already authorized call. Do not copy the parent's or all lanes' effort. It checks only blocking visual failures:
 
 - lost or contradicted P0/P1 evidence;
 - a generic attractiveness, mood, or style prior replacing source-specific appearance instead of leading an owned decomposition;
@@ -273,6 +273,59 @@ The audited critic binds to source, route, reports, obligations, plan hash, and 
 ## 7. Evidence boundary
 
 Route validity, package validity, lane coverage, prompt behavior, delivered pixels, and user judgment are separate evidence layers. A compact prompt can be useful without claiming audited completeness, and an audited bundle can be valid without proving visual fidelity.
+
+
+---
+
+# Analysis runtime and generation binding
+
+Read before delegating analysis tasks, configuring an analysis harness, or recording execution evidence. The analysis model reads an image and authors text; the downstream image generator produces pixels. Their settings, capability evidence, and identities are separate.
+
+## Configuration ownership
+
+The caller owns the analysis model, available delegation, tool permissions, and image-input transport, and applies the task-adaptive reasoning-effort policy below. An explicit user effort request takes precedence within its stated scope; the parent's configured effort alone is not such a request. Record only exposed values; use `unknown` or `not-exposed` otherwise. A skill cannot prove which backend ran merely by naming a model. The generator adapter owns supported generation settings; never put analysis model IDs, reasoning settings, telemetry, or internal hashes into `PROMPT:`.
+
+For an API-harness migration, consult the current [OpenAI latest-model guide](https://developers.openai.com/api/docs/guides/latest-model) for supported parameters and compare results under matched effective settings. Tool calling, async operations, and prompt caching are caller capabilities, not instructions to invent settings on an unavailable tool.
+
+## Task-adaptive effort policy
+
+`reverse-image-analysis-effort/v1` chooses effort separately for each lane, critic, and any authorized delegated repair. Select the smallest level that can complete that task's required evidence and checks:
+
+| Task level | Selected effort | Work that justifies it |
+|---|---|---|
+| Routine | `low` | Narrow mechanical or format checks, or one unambiguous visible fact without material interpretation or interacting constraints. |
+| Standard | `medium` | Ordinary compact visual analysis, source-relative evidence selection, or a compact critic for a straightforward route. |
+| Complex | `high` | Material topology/occlusion or mixed-medium interpretation, multiple interacting fidelity risks, or complete audited obligations and source/ledger reconciliation. |
+| Exceptional | `xhigh` | A specific unresolved P0/P1 causal conflict or coupled constraint that the affected task must reconcile and that `high` cannot adequately cover. |
+
+Do not select `max` automatically. Use it only for an explicit user request that applies to that task. A human, readable face, long report, many lanes, or parent set to `max` does not by itself justify escalation. `prompt` and `audited` govern evidence scope; effort does not change the selected profile, lane count, coverage, or retry/repair limits.
+
+`tools/route_resolver.py --analysis-route` supplies `reasoning_effort` and `effort_rationale` for every lane and the critic. Its route-based defaults are `medium` for standard compact tasks, `high` for materially specialized scope or audited work, and a critic selected from the actual review burden. The router does not inspect pixels or claim these defaults are empirically optimal. Before dispatch, the caller assesses the exact task against the source and table; a routine task may use `low`, and only an evidenced exceptional task may use `xhigh`. Record any adjustment and its task-local reason separately from the immutable route. Recompute for the critic's actual draft/reports, an allowed affected-lane reroute, or a targeted repair; do not raise unaffected or successful tasks.
+
+When the delegation tool exposes an effort parameter, pass the selected value explicitly. With Codex `spawn_agent`, pass `reasoning_effort` and `fork_turns="none"`, then supply only the clean-context inputs allowed by the orchestration contract. A prose instruction inside the worker message does not bind runtime effort, and omitting the parameter can inherit the parent's setting. Keep the inherited model unless the user or applicable instructions request a model change. Do not use a full-history fork to get around clean-context isolation or an effort override restriction.
+
+Bind only effort values supported by the actual tool/model. For automatic selection, use the selected level if supported; otherwise use the next higher supported level up to `xhigh`. If none is available, use the highest supported lower level and disclose the limitation. Never fall back silently to `max` or pretend an unsupported user-requested value was applied. If effort is not controllable, record `not-exposed` or `unsupported`; keep declared selection separate from effective execution. Sequential fallback cannot change the already running parent's effort and must disclose that boundary.
+
+An effort increase does not authorize another lane wave, critic, or repair. Adjust only a call already allowed by the execution budget; report unresolved P0/P1 limits when no authorized call remains. Validate selection/dispatch separately from image fidelity and measure any latency or quality benefit before claiming it.
+
+## Evidence to retain
+
+For a live test, record:
+
+- Exact source bytes/hash and known dimensions; attached preview dimensions are not a substitute.
+- The skill snapshot file manifest and route fingerprint; profile-context reads include source and rendered-view hashes.
+- Per-case workspace and context mode (`delegated`, `sequential-fallback`, or `mixed`). A separate folder alone is not independent reasoning; record whether conversation history or earlier results were supplied.
+- Per-task selected/requested effort, selection reason, exposed applied effort/model, any user override or supported-value fallback, and downstream tool/model separately. Mark unavailable applied values explicitly; a selected value or submitted argument alone is not backend confirmation.
+- Start/end timestamps and actual route/lane/integration/critic/repair events, report bytes, retry/reroute counts, and prompt hashes. Do not estimate timings from analysis prose.
+- Exact generation request, attempted prompt hash, reference handling, supplied settings, response artifact, delivered dimensions, and attempt outcome.
+
+The route's `execution_budget` is a declared limit. The caller must enforce it around scheduling and repairs; route validation alone does not establish observed compliance. Report actual counts beside limits and mark unavailable telemetry as unavailable. Do not claim that this package includes an API scheduler.
+
+## Generation boundary
+
+Follow the user's requested conditioning. For text-only reconstruction, submit the frozen extracted prompt verbatim and no source/reference image. Record tool options as applied, unsupported, auto, or unbound; a prompt suggestion is not an API parameter. An exact size setting is established only by supported tool binding and delivered dimensions. Do not silently switch generators or change prompt bytes after a failure.
+
+Use a bounded attempt policy declared before generation. Record every result, including a block or transport failure. Assess delivered pixels independently of structural validators; a successful tool call does not prove fidelity, and a single attempt cannot establish comparative superiority.
 
 
 ---

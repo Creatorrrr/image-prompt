@@ -208,7 +208,7 @@ def build_manifest(root: Path = ROOT) -> dict[str, Any]:
     return {
         "name": "reverse-image-prompt",
         "architecture": "distributed modular facet router",
-        "version": "3.8.0-profile-context-and-prompt-boundary",
+        "version": "3.9.0-task-adaptive-analysis-effort",
         "entrypoint": "SKILL.md",
         "source": "generated from module/lane frontmatter and content hashes by tools/gen_manifest.py",
         "analysis_orchestration": {
@@ -220,6 +220,8 @@ def build_manifest(root: Path = ROOT) -> dict[str, Any]:
             "audited_report_schema": "reverse-image-analysis-lane-report/v2",
             "audited_bundle_schema": "reverse-image-analysis-bundle/v2",
             "reference": "references/analysis-orchestration.md",
+            "effort_policy": "reverse-image-analysis-effort/v1",
+            "effort_reference": "references/analysis-runtime.md",
         },
         "analysis_lanes": lanes,
         "tiers": {str(k): v for k, v in TIERS.items()},
