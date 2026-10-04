@@ -1,0 +1,25 @@
+======================================================================
+ERROR: test_actual_optional_delta_does_not_claim_unchanged_candidate_inventory (tests.test_photo_motion_inventory_boundary_history.MotionOptionalInventoryBoundaryTests.test_actual_optional_delta_does_not_claim_unchanged_candidate_inventory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/seduction-main-merge/image-prompt/tests/test_photo_motion_inventory_boundary_history.py", line 96, in test_actual_optional_delta_does_not_claim_unchanged_candidate_inventory
+    self.direct()
+    ~~~~~~~~~~~^^
+  File "/Users/chasoik/.codex/worktrees/seduction-main-merge/image-prompt/tests/test_photo_motion_inventory_boundary_history.py", line 73, in direct
+    return v._validate_v15_motion_inventory_successor(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.assets, repo, self.baseline,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.pack if pack is None else pack, self.output if raw is None else raw)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/seduction-main-merge/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6524, in _validate_v15_motion_inventory_successor
+    _require(inventory == proof["source_inventory_after"], "photo V15 exact DATA inventory drift")
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/seduction-main-merge/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: photo V15 exact DATA inventory drift
+
+----------------------------------------------------------------------
+Ran 68 tests in 15.116s
+
+FAILED (errors=1)
