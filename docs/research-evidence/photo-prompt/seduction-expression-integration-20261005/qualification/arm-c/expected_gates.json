@@ -1,0 +1,77 @@
+{
+  "contract_version": "agent-owned-independent-pixel-gates/v1",
+  "frozen_before_retrieval": true,
+  "frozen_before_render": true,
+  "source": "independent agent design after randomized scene selection; not requester definitions, active spans, semantic assertions, or automatic profile render gates",
+  "partial_is_fail": true,
+  "aggregation": "all gates must PASS; FAIL and UNOBSERVABLE both prevent PASS; no rounding or partial credit",
+  "native_pixel_rule": "Judge saved original generated pixels; no enhancement, synthetic magnification, prompt/audit substitution, or inference from candidate labels. Record native image path, SHA-256 and dimensions at review.",
+  "gates": [
+    {
+      "gate_id": "C01_reference_face_hair",
+      "expected": "One clearly adult designed subject with reference-guided short dark jaw-length bob, separated wispy fringe and recognizable visible eye/nose/mouth contour relationships.",
+      "confusion": "Hair alone or a generic different face is partial; appearance does not establish real identity or original age.",
+      "unobservable": "Face too small, obscured or blurred to compare contours."
+    },
+    {
+      "gate_id": "C02_test_event",
+      "expected": "Open signal cabinet, handheld meter-to-cabinet test cable, clipped log card and pencil visibly support the cable-test-recording pause.",
+      "confusion": "Decorative wire, unconnected meter or clipboard alone is partial.",
+      "unobservable": "Handheld tools or cable endpoints cannot be distinguished."
+    },
+    {
+      "gate_id": "C03_left_knee_support",
+      "expected": "The woman's left knee visibly loads a dark pad directly on the level concrete.",
+      "confusion": "Squat, floating knee, hidden pad or two knees raised is failure.",
+      "unobservable": "Knee/pad/ground interface is obscured or lost in fabric."
+    },
+    {
+      "gate_id": "C04_front_sole_shin",
+      "expected": "Actor-right boot sole is planted flat forward with a nearly upright right shin.",
+      "confusion": "Only toe touch, heel lift, crossed or folded front leg is failure.",
+      "unobservable": "Foot edge, sole plane or shin chain cannot be resolved."
+    },
+    {
+      "gate_id": "C05_rear_forefoot",
+      "expected": "Actor-left lower leg extends rearward to a distinct boot forefoot touching concrete while heel is raised.",
+      "confusion": "An entire rear sole flat, a floating boot, an extra unattached shoe or foot hidden by thigh is not enough.",
+      "unobservable": "Rear forefoot contact or heel elevation cannot be seen."
+    },
+    {
+      "gate_id": "C06_support_body_direction",
+      "expected": "Hip placement is visually between left knee and right forward foot; torso inclines slightly forward and both legs connect plausibly to this one body.",
+      "confusion": "Sitting on heel, detached leg, impossible chain or hip outside the support base is failure.",
+      "unobservable": "Joint continuity or hip projection is concealed. Pixel judgment is visible plausibility rather than measured force balance."
+    },
+    {
+      "gate_id": "C07_broad_camera_side",
+      "expected": "Nose points slightly image-right; wider camera-facing image-left cheek is brighter than narrower image-right cheek.",
+      "confusion": "Bright background, generic side-light, inverse short-lighting or merely a bright nose is partial.",
+      "unobservable": "Face orientation or relative cheek brightness cannot be judged."
+    },
+    {
+      "gate_id": "C08_loop_nose_shadow",
+      "expected": "Small oval nose-shadow lies on darker image-right cheek with a visible lit gap separating it from the cheek shadow.",
+      "confusion": "Connected Rembrandt triangle, butterfly shadow beneath nose, split half-face or diffuse undifferentiated darkening fails this target.",
+      "unobservable": "Nose-shadow edge or the separating gap is absent from discernible native detail."
+    },
+    {
+      "gate_id": "C09_eye_catchlights",
+      "expected": "One small crisp lamp reflection is visible in each of the two visible eyes.",
+      "confusion": "An eye-white highlight, whole glowing iris, large soft bloom or a reflection in only one eye is partial.",
+      "unobservable": "Either eye lacks enough native pixels for a distinct reflection."
+    },
+    {
+      "gate_id": "C10_expression",
+      "expected": "Relaxed upper eyelids with softly parted lips coexist with lens-directed eyes.",
+      "confusion": "Closed eyes, a broad tooth smile, tightly closed mouth or sideways attention does not satisfy the combined form.",
+      "unobservable": "Lid or lip aperture cannot be resolved."
+    },
+    {
+      "gate_id": "C11_observation_compatibility",
+      "expected": "A single full-body frame includes head, hands, both knees and both boots and preserves readable facial light and every ground-contact plane.",
+      "confusion": "A montage, face close-up cutting feet, feet view losing facial detail or cropped support point is failure.",
+      "unobservable": "Required small forms remain unreadable even though broad framing is correct."
+    }
+  ]
+}

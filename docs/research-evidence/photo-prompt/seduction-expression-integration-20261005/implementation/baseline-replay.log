@@ -1,0 +1,61 @@
+test_maintenance_prose_is_external_and_hash_bound (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_maintenance_prose_is_external_and_hash_bound) ... ok
+test_authored_sources_and_generated_indexes_bind_every_registered_variant (tests.test_photo_clothing_terminology_semantics.ClothingTerminologySemanticsTests.test_authored_sources_and_generated_indexes_bind_every_registered_variant) ... ok
+test_source_record_and_generated_indexes_bind_the_actual_runtime_data (tests.test_photo_costume_cosplay_semantics.CostumeCosplaySemanticsTests.test_source_record_and_generated_indexes_bind_the_actual_runtime_data) ... ok
+test_source_observation_is_hash_bound_and_identity_independent (tests.test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_source_observation_is_hash_bound_and_identity_independent) ... ok
+test_owner_gates_are_complete_and_maintenance_is_external (tests.test_photo_y2k_visual_semantics.PhotoY2KVisualSemanticsTests.test_owner_gates_are_complete_and_maintenance_is_external) ... ok
+test_aggregate_validator_does_not_hide_partial_pixel_qualification (tests.test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification) ... ERROR
+test_existing_render_manifests_keep_historical_failure_labels (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneDataContractTests.test_existing_render_manifests_keep_historical_failure_labels) ... ERROR
+test_v1_v2_exact_replay_and_photo_baseline_remain_immutable (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests.test_v1_v2_exact_replay_and_photo_baseline_remain_immutable) ... ERROR
+test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract (tests.test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract) ... ok
+test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (tests.test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed) ... ok
+test_three_arm_fixture_is_frozen_and_reference_bound (tests.test_photo_rare_photo_visual_semantics.PhotoRarePhotoVisualSemanticsTests.test_three_arm_fixture_is_frozen_and_reference_bound) ... ok
+
+======================================================================
+ERROR: test_aggregate_validator_does_not_hide_partial_pixel_qualification (tests.test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/tests/test_subculture_illustration_contract_v1.py", line 504, in test_aggregate_validator_does_not_hide_partial_pixel_qualification
+    summary = validate_all(ASSET_ROOT)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 11587, in validate_all
+    photo_regression = validate_photo_regression_baseline(root)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6509, in validate_photo_regression_baseline
+    _require(
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift
+
+======================================================================
+ERROR: test_existing_render_manifests_keep_historical_failure_labels (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneDataContractTests.test_existing_render_manifests_keep_historical_failure_labels)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/tests/test_subculture_illustration_universal_scene_v3.py", line 1712, in test_existing_render_manifests_keep_historical_failure_labels
+    result = validate_all(str(ASSET_ROOT), verify_local_images=False)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 11587, in validate_all
+    photo_regression = validate_photo_regression_baseline(root)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6509, in validate_photo_regression_baseline
+    _require(
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift
+
+======================================================================
+ERROR: test_v1_v2_exact_replay_and_photo_baseline_remain_immutable (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests.test_v1_v2_exact_replay_and_photo_baseline_remain_immutable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/tests/test_subculture_illustration_universal_scene_v3.py", line 4697, in test_v1_v2_exact_replay_and_photo_baseline_remain_immutable
+    photo = validate_photo_regression_baseline(ASSET_ROOT)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6509, in validate_photo_regression_baseline
+    _require(
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift
+
+----------------------------------------------------------------------
+Ran 11 tests in 67.376s
+
+FAILED (errors=3)

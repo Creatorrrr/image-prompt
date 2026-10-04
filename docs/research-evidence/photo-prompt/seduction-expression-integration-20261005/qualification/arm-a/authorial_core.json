@@ -1,0 +1,122 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 시각 의미 데이터의 대체 표현을 추가/보강하는 작업을 중심으로 진행하고 후보 데이터에도 잘 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "11a9ae6be3f046acf79a4cdc43cf5bf83d7982e555cbeb04c63ab004adb9cfbb",
+  "interpreted_intent": "The requester asks for an independent randomized complex photographic qualification using the attachment. This arm independently chose a city-pool lost-property counter and conflicting directional clues. WHO is an expressly adult visitor whose visible face/hair is referenced, WHERE is an ordinary public desk, HOW is a near-frontal encounter at a respectful waist-up distance, and WHY NOW is the pause between guide and sign. The tiny eye/mouth asymmetries and unequal self-hand contact are agent-owned test choices, not requester definitions or personality. At saved sensual=1 her everyday presence and local facial light provide only a subtle supporting appeal; fetish=0, surreal=0 and creativity=1 retain a restrained plausible scene. Alternatives such as a broad smiling portrait would weaken the independently selected microform test; the chosen moment remains observational.",
+  "subject": "One clearly adult 29-year-old female visitor, with the attached image used as visible face-and-hair reference only",
+  "setting": "Indoor lost-property counter of a city public swimming pool with pale tiles, locker-key tags and swimming-cap tray",
+  "event": "One photographed pause between a printed floor guide and a differently pointing wall arrow, with asymmetrical facial forms and contrasting self-hand contact",
+  "visual_priorities": [
+    "The near-frontal eyes stay open with unequal upper-lid lowering and rightward iris displacement.",
+    "The narrow lip opening shows an upper-incisor edge under a subtly raised left corner.",
+    "The right index indents her own lower cheek while the left index remains separated from her own temple by air.",
+    "The two directional arrows and lost-property objects establish the guide-checking event in a public interior.",
+    "Adult subject presence retains the attachment visible face/hair while both hand ownership chains remain in frame."
+  ],
+  "baseline_prompt_en": "A complex photographic test scene centers on a human subject in one observable moment at the indoor lost-property counter of a city public swimming pool. She is a clearly adult 29-year-old woman with the visible face and hair appearance supplied in the attached image, wearing a dry slate-blue rain jacket over a plain ivory crew-neck top. A folded floor guide lies open on the counter with its printed arrow pointing left, while a simple wall wayfinding arrow behind her points right; numbered locker-key tags and a rolled swimming cap in a shallow tray establish the public-pool desk. She has paused between comparing those two directions. Her head is nearly frontal with a slight tilt, and both eyes remain visibly open. The upper eyelids are partially lowered, with her subject-left upper lid visibly lower than her subject-right, while both pupils remain visible. Both irises shift toward her own right, screen left. Her lips are parted by a narrow central gap showing a thin upper-incisor edge, and her subject-left mouth corner sits subtly higher than her subject-right. Her right index fingertip presses her own right lower cheek just beside the mouth, making a small visible indentation; the other right fingers curl naturally below it. Her left index fingertip hovers beside her own left temple with a clearly visible five-centimeter air gap, and the left hand remains separate from her hair. Both elbows are bent freely in front of her torso, with continuous forearms leading to their respective hands. Make an eye-height waist-up environmental portrait with both hands and her full head in frame, enough facial detail to separate eyelid edges, tooth edge, and finger contact. Soft window fill balances neutral overhead room light, giving the face delicate local contrast while pale tile seams and the two arrows stay legible. The restrained off-center composition gives her small asymmetries an intimate everyday presence within an ordinary public errand.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "An independently chosen complex photographic test scene in which visible forms can be checked in original pixels; particular location, event, expressions and hand arrangements remain agent-owned.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the attached photograph as visible appearance reference in the new image; this arm limits reference use to visible face and hair and designs a clearly adult new subject. The reference supplies no personality or body inference.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "random_complex_test",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "A complex photographic test scene"
+      },
+      {
+        "anchor_id": "visible_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a human subject"
+      },
+      {
+        "anchor_id": "visible_test_moment",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "one observable moment"
+      },
+      {
+        "anchor_id": "visible_reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "visible face and hair appearance supplied in the attached image"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "age",
+      "role",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_human_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a human subject"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "restrained candid environmental portrait",
+    "evidence": [
+      "Soft window fill balances neutral overhead room light",
+      "restrained off-center composition"
+    ]
+  },
+  "variation_key": "arm-a-independent-city-pool-microforms"
+}

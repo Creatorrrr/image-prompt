@@ -1,0 +1,59 @@
+test_aggregate_validator_does_not_hide_partial_pixel_qualification (tests.test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification) ... ERROR
+setUpClass (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneDataContractTests) ... ERROR
+setUpClass (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests) ... ERROR
+
+======================================================================
+ERROR: test_aggregate_validator_does_not_hide_partial_pixel_qualification (tests.test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/tests/test_subculture_illustration_contract_v1.py", line 504, in test_aggregate_validator_does_not_hide_partial_pixel_qualification
+    summary = validate_all(ASSET_ROOT)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 11581, in validate_all
+    universal_holdouts = validate_universal_scene_holdouts(root, universal_research)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6244, in validate_universal_scene_holdouts
+    current_oracle_v2 = validate_universal_scene_current_oracle_v2(asset_dir)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 4489, in validate_universal_scene_current_oracle_v2
+    _require(
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: universal v2 baseline validator binding drift
+
+======================================================================
+ERROR: setUpClass (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneDataContractTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/tests/test_subculture_illustration_universal_scene_v3.py", line 634, in setUpClass
+    cls.holdouts = validate_universal_scene_holdouts(ASSET_ROOT, cls.research)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6244, in validate_universal_scene_holdouts
+    current_oracle_v2 = validate_universal_scene_current_oracle_v2(asset_dir)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 4489, in validate_universal_scene_current_oracle_v2
+    _require(
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: universal v2 baseline validator binding drift
+
+======================================================================
+ERROR: setUpClass (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/tests/test_subculture_illustration_universal_scene_v3.py", line 3367, in setUpClass
+    cls.holdouts = validate_universal_scene_holdouts(ASSET_ROOT, cls.research)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6244, in validate_universal_scene_holdouts
+    current_oracle_v2 = validate_universal_scene_current_oracle_v2(asset_dir)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 4489, in validate_universal_scene_current_oracle_v2
+    _require(
+  File "/Users/chasoik/.codex/worktrees/seduction-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: universal v2 baseline validator binding drift
+
+----------------------------------------------------------------------
+Ran 1 test in 0.531s
+
+FAILED (errors=3)

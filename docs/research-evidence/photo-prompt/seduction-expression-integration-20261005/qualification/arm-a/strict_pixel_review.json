@@ -1,0 +1,94 @@
+{
+  "contract_version": "independent-pixel-review/v1",
+  "provenance": "agent_pixel_review_original_native_output",
+  "reviewer": "arm-a independent agent",
+  "pack_id": "8f54da2d1b670d0b",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/seduction-expression-integration-20261005/qualification/arm-a/generated_original.png",
+  "result_sha256": "17e632e5c9f964177aa71a9ae00ab17a3c58dec8d3335b011ad1a2af7f62e283",
+  "review_scale": "native original 1237x1272 and whole frame; no crop reconstruction or pixel editing",
+  "frozen_expected_gates_sha256": "f4ab6fc4576d3117383c0e88714dc0f3ce7ce90d4cc5ed380bcfac469f8fe050",
+  "expected_gates_unchanged": true,
+  "partial_is_fail": true,
+  "leaf_gate_count": 7,
+  "leaf_pass_count": 3,
+  "leaf_fail_count": 2,
+  "leaf_unobservable_count": 2,
+  "whole_scene_all_of": "FAIL",
+  "gates": [
+    {
+      "id": "adult_scene",
+      "status": "PASS",
+      "evidence": "One foreground adult-designed woman wears the dry slate rain jacket and crew-neck top at a tiled indoor pool lost-property counter. Pool and Lost Property signs, open floor guide with a left-pointing arrow, wall right-pointing arrow, locker-key tags and cap tray are all visible together.",
+      "scope": "New subject is explicitly 29 in audited request; no age claim about the original reference."
+    },
+    {
+      "id": "eyelid_asymmetry",
+      "status": "FAIL",
+      "evidence": "Both eyes are open and iris/pupil edges are visible, but the actor-left eye at screen right is visibly more open than the actor-right eye at screen left. The requested actor-left upper lid being lower than actor-right is not established; the smaller aperture is on the opposite side. Head tilt does not supply the specified upper-lid relation.",
+      "components": {
+        "both_open": "PASS",
+        "requested_left_upper_lid_lower": "FAIL"
+      }
+    },
+    {
+      "id": "sideways_iris",
+      "status": "FAIL",
+      "evidence": "Both dark pupil/iris centers are shifted toward screen right, the actor-left side of the near-frontal face. The audited prompt and frozen gate specify actor-right, screen left. The lateral eye displacement is observable, but its direction is reversed.",
+      "direction_expected": "actor-right / screen-left",
+      "direction_observed": "actor-left / screen-right"
+    },
+    {
+      "id": "mouth_microform",
+      "status": "UNOBSERVABLE",
+      "strict_failure": true,
+      "evidence": "A narrow central lip opening and thin pale upper-incisor edge are visible. The screen-right corner sits higher in image coordinates, but the eyes and mouth share the same oblique head roll, so a small independent actor-left mouth-corner lift cannot be distinguished confidently from head tilt. Passing the opening/tooth subcomponents does not pass the compound gate.",
+      "components": {
+        "narrow_lip_gap": "PASS",
+        "thin_upper_incisor_edge": "PASS",
+        "independent_left_corner_raise": "UNOBSERVABLE"
+      }
+    },
+    {
+      "id": "right_self_contact",
+      "status": "PASS",
+      "evidence": "The screen-left index finger belongs to the actor-right forearm and meets her right lower cheek beside the mouth. The fingertip lies on the cheek plane with a local shallow crease/displacement at its boundary; it is not merely a detached finger across a face silhouette. The remaining right fingers curl below it."
+    },
+    {
+      "id": "left_noncontact",
+      "status": "UNOBSERVABLE",
+      "strict_failure": true,
+      "evidence": "The screen-right index fingertip belongs to the actor-left hand and hovers beside the left temple with a clearly visible air gap. The exact frozen 4-6 cm requirement cannot be verified from this single uncalibrated image; the apparent spacing is small and perspective prevents a dependable physical-length claim. Noncontact survives, but the complete numeric gate is not a pass.",
+      "components": {
+        "actor_left_ownership": "PASS",
+        "visible_air_gap": "PASS",
+        "four_to_six_cm_gap": "UNOBSERVABLE"
+      }
+    },
+    {
+      "id": "reference_visible_form",
+      "status": "PASS",
+      "evidence": "The resulting face and hair visibly retain the reference short dark bob, airy fringe, overall eye/nose/lip shapes and facial appearance. New jacket, public setting, hand positions and explicit adult age belong to the new designed scene. This comparison establishes visible resemblance only, not identity, original age, character or body proportions."
+    },
+    {
+      "id": "whole_scene_all_of",
+      "status": "FAIL",
+      "evidence": "Required leaf gates total seven: three PASS, two FAIL and two UNOBSERVABLE in this same original output. All-of fails because the specified upper-lid relation and gaze direction are not met, and mouth-corner/gap precision remain unobservable.",
+      "partial_is_fail": true
+    }
+  ],
+  "user_acceptance": "not_yet_received",
+  "candidate_pixel_results": [
+    {
+      "candidate_id": "slot:expression:se_upper_lid_dominant_half_lid",
+      "status": "UNOBSERVABLE",
+      "strict_failure": true,
+      "evidence": "Visible open apertures and lower-lid contours survive. Upper-lid narrowing is stronger on one side, while the other eye remains comparatively open; a complete distinct upper-lid-dominant half-lid configuration on both independently specified eyes is not confidently established, and the independently specified asymmetry reverses."
+    },
+    {
+      "candidate_id": "slot:hand_pose:se_two_hands_different_heights",
+      "status": "PASS",
+      "evidence": "The actor-left temple-level index/hand is above the actor-right lower-cheek-level hand relative to the upright torso. Both wrist/forearm chains remain visible and retain their independently authored finger configurations."
+    }
+  ],
+  "separation": "Candidate source existence, pack exposure, selection and prompt audit are preflight evidence. They do not override these native-pixel results; the unexposed cheek-touch candidate gets no causal credit for an independently authored visible touch."
+}

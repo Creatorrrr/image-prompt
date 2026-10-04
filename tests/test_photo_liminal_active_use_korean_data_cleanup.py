@@ -89,9 +89,11 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
                                           'photo_prompt_religion_iconography_extension.json',
                                           'photo_prompt_slang_visual_extension.json',
                                           'photo_prompt_subculture_appearance_extension.json',
-                                          'photo_prompt_motion_graphics_extension.json'})
+                                          'photo_prompt_motion_graphics_extension.json',
+                                          'photo_prompt_seduction_expression_extension.json'})
         with patch.object(common.g, 'RESEARCH_EXTENSION_FILENAMES', filenames):
             historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
+        historical_current = fixtures.seduction_historical_source_scope(historical_current)
         # Undo only the independently sealed uniform overlay before the
         # older Vocaloid/body projections. The historical oracle stays exact.
         uniform = ROOT / 'docs/research-evidence/photo-prompt/uniform-costume-integration-20261004'
@@ -239,7 +241,7 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
         self.assertEqual(seen_revisions, set(instrument_revisions))
         self.assertEqual(historical_current['slots'], self.states['proposal']['slots'])
         historical_bundles = self.states['baseline']['candidate_bundles']
-        self.assertEqual(fixtures.bundle_meanings(self.current['candidate_bundles'], within=historical_bundles),
+        self.assertEqual(fixtures.bundle_meanings(fixtures.seduction_historical_bundles(self.current['candidate_bundles']), within=historical_bundles),
                          fixtures.bundle_meanings(historical_bundles))
         differences = []
         for slot, rows in self.states['baseline']['slots'].items():

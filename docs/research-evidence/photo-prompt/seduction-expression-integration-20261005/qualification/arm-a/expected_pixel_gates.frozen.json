@@ -1,0 +1,60 @@
+{
+  "contract_version": "independent-pixel-gates/v1",
+  "provenance": "agent_owned_pre_render_test_design",
+  "design_file_sha256": "3727c1971ebdbc87fcf3896cbb91175dbda0f51cf6887dc58255f2929db4521e",
+  "core_file_sha256": "05c024684ae17192d3ee8ff429cdbfcf2a11d4625c86aa013151dd0d13e41dc1",
+  "baseline_prompt_sha256": "b5e7c31735a84c93fb788ffbde165bb0de091c85770d01e72de7bd58953d2beb",
+  "ownership": "Test-specific forms are agent-owned evaluation criteria; not requester-owned hard semantic obligations. They are fixed before retrieval and render.",
+  "scoring": "All required gates must PASS in the same original output; FAIL or UNOBSERVABLE is whole_scene FAIL; partial_is_fail.",
+  "actor_coordinates": "For nearly frontal head: actor right is screen left; actor left is screen right. Explicit ownership beats screen placement.",
+  "gates": [
+    {
+      "id": "adult_scene",
+      "expected": "single explicitly adult-looking subject in dry street clothing at recognizable indoor public-pool lost-property counter; guide and different-oriented wall arrow both visible",
+      "fail": "missing desk/guide/arrow relation or replacement by glamour/swimwear scene",
+      "unobservable": "context cut off, clothing/props obscured"
+    },
+    {
+      "id": "eyelid_asymmetry",
+      "expected": "both eyes visibly open with iris/pupil visible; subject-left upper lid covers more of iris than subject-right by observable margin",
+      "fail": "equal fully open eyes, complete wink, closed eyes, squint dominated by lower lids",
+      "unobservable": "blur, occlusion, too small, head angle preventing comparison"
+    },
+    {
+      "id": "sideways_iris",
+      "expected": "pupils/irises shifted toward subject-right relative to near frontal head",
+      "fail": "gaze straight into lens or in opposite direction; head turn substituted for iris shift",
+      "unobservable": "eye detail cannot locate irises reliably"
+    },
+    {
+      "id": "mouth_microform",
+      "expected": "a narrow central inter-lip opening exposes a thin upper-incisor edge while subject-left corner is a little higher than right",
+      "fail": "fully closed lips, broad grin, wide open mouth, symmetric corners, glossy highlight alone mistaken as a gap/tooth",
+      "unobservable": "resolution/occlusion prevents separation of tooth and highlight or corner height"
+    },
+    {
+      "id": "right_self_contact",
+      "expected": "right index fingertip in direct visible contact with own right lower cheek beside mouth; local indentation/displacement supports contact",
+      "fail": "hovering finger, contact with lips/chin instead, other hand, finger merely overlaps silhouette",
+      "unobservable": "contact point hidden or too soft to resolve"
+    },
+    {
+      "id": "left_noncontact",
+      "expected": "left index fingertip near own left temple, separated by visible 4-6cm air gap; ownership clear",
+      "fail": "touches temple/hair/face, detached hand ownership ambiguous, gap absent or hand missing",
+      "unobservable": "cropped finger/temple or depth alignment hiding gap"
+    },
+    {
+      "id": "reference_visible_form",
+      "expected": "attached image used only for visible face and hair appearance; resulting subject remains expressly adult in request and final scene",
+      "fail": "reference replaced by unrelated face/hair, added inferred identity/character/body proportion",
+      "unobservable": "likeness cannot be established from output/ref comparison"
+    },
+    {
+      "id": "whole_scene_all_of",
+      "expected": "all required gates pass in the same original generated image",
+      "fail": "any FAIL or UNOBSERVABLE in required gates; partial_is_fail",
+      "unobservable": "original pixels unavailable"
+    }
+  ]
+}

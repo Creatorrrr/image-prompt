@@ -1,0 +1,1225 @@
+{
+  "provenance": "postcore_source_existence_inspection_only",
+  "candidate_rows": [
+    {
+      "id": "se_edge_on_hand_to_camera",
+      "ko": "카메라에 좁은 손날을 보이는 손",
+      "en": "the declared hand presents its narrow edge toward the camera while its wrist remains connected",
+      "weight": 0.6,
+      "tags": [
+        "human",
+        "hand_pose"
+      ],
+      "for_any": [
+        "human"
+      ],
+      "aliases": [
+        "카메라에 좁은 손날을 보이는 손",
+        "the declared hand presents its narrow edge toward the camera while its wrist remains connected"
+      ],
+      "keywords": [
+        "카메라에 좁은 손날을 보이는 손",
+        "the declared hand presents its narrow edge toward the camera while its wrist remains connected"
+      ],
+      "embedding_text": "the declared hand presents its narrow edge toward the camera while its wrist remains connected; the palm and dorsal planes lie oblique to the camera axis; the narrow radial or ulnar hand edge faces the camera as explicitly specified; the wrist and forearm connect to the same actor hand",
+      "concept_units": [
+        "the palm and dorsal planes lie oblique to the camera axis",
+        "the narrow radial or ulnar hand edge faces the camera as explicitly specified",
+        "the wrist and forearm connect to the same actor hand"
+      ],
+      "relations": [
+        {
+          "id": "se_edge_on_hand_to_camera_r1",
+          "type": "orientation_to",
+          "subject": "main_subject.declared_hand_plane",
+          "object": "camera.axis"
+        },
+        {
+          "id": "se_edge_on_hand_to_camera_r2",
+          "type": "attached_to",
+          "subject": "main_subject.declared_hand",
+          "object": "main_subject.declared_forearm"
+        }
+      ],
+      "affected_dimensions": [
+        "pose"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "pose",
+          "target": "main_subject",
+          "property": "body.hand_configuration"
+        }
+      ],
+      "paraphrases": [
+        "카메라에 좁은 손날을 보이는 손",
+        "the declared hand presents its narrow edge toward the camera while its wrist remains connected",
+        "The narrow side of the connected hand faces the lens while the palm and back turn obliquely away.",
+        "몸에 이어진 손의 좁은 옆면이 렌즈를 향하고 손바닥과 손등은 비껴 돌아간다."
+      ],
+      "core_assertion_discovery": true
+    },
+    {
+      "id": "se_lapel_fingertip_touch",
+      "ko": "자기 옷 라펠에 손끝만 가볍게 대기",
+      "en": "fingertips lightly meet the edge of an existing garment lapel",
+      "weight": 0.6,
+      "tags": [
+        "human",
+        "contact_point"
+      ],
+      "for_any": [
+        "human"
+      ],
+      "aliases": [
+        "자기 옷 라펠에 손끝만 가볍게 대기",
+        "fingertips lightly meet the edge of an existing garment lapel"
+      ],
+      "keywords": [
+        "자기 옷 라펠에 손끝만 가볍게 대기",
+        "fingertips lightly meet the edge of an existing garment lapel"
+      ],
+      "embedding_text": "fingertips lightly meet the edge of an existing garment lapel; an existing lapel edge remains connected to the same actor garment; declared fingertips contact that lapel edge; fingertip pads meet one exposed side of the lapel edge",
+      "concept_units": [
+        "an existing lapel edge remains connected to the same actor garment",
+        "declared fingertips contact that lapel edge",
+        "fingertip pads meet one exposed side of the lapel edge"
+      ],
+      "relations": [
+        {
+          "id": "se_lapel_fingertip_touch_r1",
+          "type": "light_contact",
+          "subject": "main_subject.declared_fingertips",
+          "object": "main_subject.wardrobe.lapel_edge"
+        }
+      ],
+      "affected_dimensions": [
+        "pose"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "pose",
+          "target": "main_subject",
+          "property": "body.contact_configuration"
+        },
+        {
+          "dimension": "pose",
+          "target": "main_subject",
+          "property": "body.hand_configuration"
+        }
+      ],
+      "paraphrases": [
+        "자기 옷 라펠에 손끝만 가볍게 대기",
+        "fingertips lightly meet the edge of an existing garment lapel",
+        "Finger pads meet one side of an attached lapel edge on the person's own garment.",
+        "손가락 패드가 자기 옷에 이어진 라펠 가장자리 한 면에 닿는다."
+      ],
+      "core_assertion_discovery": true,
+      "requires_primary_any_tags": [
+        "lapel",
+        "collar",
+        "jacket",
+        "blazer",
+        "라펠",
+        "옷깃"
+      ]
+    },
+    {
+      "id": "se_small_garment_fold_pinch",
+      "ko": "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+      "en": "a thumb and fingertip pinch a small visible fold of the existing garment fabric",
+      "weight": 0.6,
+      "tags": [
+        "human",
+        "contact_point"
+      ],
+      "for_any": [
+        "human"
+      ],
+      "aliases": [
+        "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+        "a thumb and fingertip pinch a small visible fold of the existing garment fabric"
+      ],
+      "keywords": [
+        "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+        "a thumb and fingertip pinch a small visible fold of the existing garment fabric"
+      ],
+      "embedding_text": "a thumb and fingertip pinch a small visible fold of the existing garment fabric; opposing thumb and fingertip hold the same small cloth fold; cloth is visibly interposed between the fingertips; the fold continues into the existing garment; the existing garment remains connected around the small local fold",
+      "concept_units": [
+        "opposing thumb and fingertip hold the same small cloth fold",
+        "cloth is visibly interposed between the fingertips",
+        "the fold continues into the existing garment",
+        "the existing garment remains connected around the small local fold"
+      ],
+      "relations": [
+        {
+          "id": "se_small_garment_fold_pinch_r1",
+          "type": "pinches",
+          "subject": "main_subject.declared_thumb_and_finger",
+          "object": "main_subject.wardrobe.small_fold"
+        },
+        {
+          "id": "se_small_garment_fold_pinch_r2",
+          "type": "part_of",
+          "subject": "main_subject.wardrobe.small_fold",
+          "object": "main_subject.wardrobe"
+        }
+      ],
+      "affected_dimensions": [
+        "pose",
+        "appearance"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "pose",
+          "target": "main_subject",
+          "property": "body.hand_configuration"
+        },
+        {
+          "dimension": "pose",
+          "target": "main_subject",
+          "property": "body.contact_configuration"
+        },
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe"
+        }
+      ],
+      "paraphrases": [
+        "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+        "a thumb and fingertip pinch a small visible fold of the existing garment fabric",
+        "A small attached cloth fold sits between an opposing thumb and fingertip.",
+        "옷에 이어진 작은 천 주름이 마주 보는 엄지와 손끝 사이에 놓인다."
+      ],
+      "core_assertion_discovery": true,
+      "requires_primary_any_tags": [
+        "garment",
+        "clothing",
+        "fabric",
+        "apron",
+        "shirt",
+        "dress",
+        "옷",
+        "천",
+        "앞치마"
+      ]
+    }
+  ],
+  "profile_rows": [
+    {
+      "id": "se_profile_edge_on_hand_to_camera",
+      "category": "observable_portrait_configuration",
+      "activation": {
+        "exact_terms": [
+          "카메라에 좁은 손날을 보이는 손",
+          "the declared hand presents its narrow edge toward the camera while its wrist remains connected"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "the declared hand presents its narrow edge toward the camera while its wrist remains connected",
+        "paraphrase_examples": [
+          "The narrow side of the connected hand faces the lens while the palm and back turn obliquely away.",
+          "몸에 이어진 손의 좁은 옆면이 렌즈를 향하고 손바닥과 손등은 비껴 돌아간다."
+        ],
+        "visual_components": [
+          "the palm and dorsal planes lie oblique to the camera axis",
+          "the narrow radial or ulnar hand edge faces the camera as explicitly specified",
+          "the wrist and forearm connect to the same actor hand"
+        ],
+        "contrast_examples": [
+          "손을 얇게 변형하는 것이 아님",
+          "손바닥 정면·손등 정면과 구분",
+          "손날의 어느 쪽은 명시 때만 고정"
+        ],
+        "claim_limits": [
+          "Only the current visible configuration is established by a still image."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "카메라에 좁은 손날을 보이는 손",
+          "the declared hand presents its narrow edge toward the camera while its wrist remains connected",
+          "the palm and dorsal planes lie oblique to the camera axis",
+          "the narrow radial or ulnar hand edge faces the camera as explicitly specified",
+          "the wrist and forearm connect to the same actor hand",
+          "The narrow side of the connected hand faces the lens while the palm and back turn obliquely away.",
+          "몸에 이어진 손의 좁은 옆면이 렌즈를 향하고 손바닥과 손등은 비껴 돌아간다.",
+          "palm and back-of-hand planes angle obliquely to the lens",
+          "손바닥과 손등의 면이 렌즈에 비스듬한 각도다",
+          "the specified narrow side of the hand points at the camera",
+          "지정한 손의 좁은 옆면이 카메라를 향한다",
+          "the same hand continues through the wrist to its forearm",
+          "같은 손이 손목을 거쳐 자기 전완으로 이어진다"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "손을 얇게 변형하는 것이 아님",
+        "손바닥 정면·손등 정면과 구분",
+        "손날의 어느 쪽은 명시 때만 고정"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "c1",
+            "match_terms": [
+              "the palm and dorsal planes lie oblique to the camera axis",
+              "palm and back-of-hand planes angle obliquely to the lens",
+              "손바닥과 손등의 면이 렌즈에 비스듬한 각도다"
+            ],
+            "evidence_field": "c1_phrase",
+            "evidence_terms": [
+              "the palm and dorsal planes lie oblique to the camera axis",
+              "palm and back-of-hand planes angle obliquely to the lens",
+              "손바닥과 손등의 면이 렌즈에 비스듬한 각도다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this visible configuration on the specified actor: the palm and dorsal planes lie oblique to the camera axis.",
+            "render_gate": {
+              "id": "vo_se_profile_edge_on_hand_to_camera_c1",
+              "review_scale": "native",
+              "description": "The image visibly shows that the palm and dorsal planes lie oblique to the camera axis."
+            }
+          },
+          {
+            "id": "c2",
+            "match_terms": [
+              "the narrow radial or ulnar hand edge faces the camera as explicitly specified",
+              "the specified narrow side of the hand points at the camera",
+              "지정한 손의 좁은 옆면이 카메라를 향한다"
+            ],
+            "evidence_field": "c2_phrase",
+            "evidence_terms": [
+              "the narrow radial or ulnar hand edge faces the camera as explicitly specified",
+              "the specified narrow side of the hand points at the camera",
+              "지정한 손의 좁은 옆면이 카메라를 향한다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this visible configuration on the specified actor: the narrow radial or ulnar hand edge faces the camera as explicitly specified.",
+            "render_gate": {
+              "id": "vo_se_profile_edge_on_hand_to_camera_c2",
+              "review_scale": "native",
+              "description": "The image visibly shows that the narrow radial or ulnar hand edge faces the camera as explicitly specified."
+            }
+          },
+          {
+            "id": "c3",
+            "match_terms": [
+              "the wrist and forearm connect to the same actor hand",
+              "the same hand continues through the wrist to its forearm",
+              "같은 손이 손목을 거쳐 자기 전완으로 이어진다"
+            ],
+            "evidence_field": "c3_phrase",
+            "evidence_terms": [
+              "the wrist and forearm connect to the same actor hand",
+              "the same hand continues through the wrist to its forearm",
+              "같은 손이 손목을 거쳐 자기 전완으로 이어진다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this visible configuration on the specified actor: the wrist and forearm connect to the same actor hand.",
+            "render_gate": {
+              "id": "vo_se_profile_edge_on_hand_to_camera_c3",
+              "review_scale": "native",
+              "description": "The image visibly shows that the wrist and forearm connect to the same actor hand."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "se_profile_lapel_fingertip_touch",
+      "category": "observable_portrait_configuration",
+      "activation": {
+        "exact_terms": [
+          "자기 옷 라펠에 손끝만 가볍게 대기",
+          "fingertips lightly meet the edge of an existing garment lapel"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "fingertips lightly meet the edge of an existing garment lapel",
+        "paraphrase_examples": [
+          "Finger pads meet one side of an attached lapel edge on the person's own garment.",
+          "손가락 패드가 자기 옷에 이어진 라펠 가장자리 한 면에 닿는다."
+        ],
+        "visual_components": [
+          "an existing lapel edge remains connected to the same actor garment",
+          "declared fingertips contact that lapel edge",
+          "fingertip pads meet one exposed side of the lapel edge"
+        ],
+        "contrast_examples": [
+          "손을 쇄골에 댐·옷깃 없는 옷·목걸이 잡기와 구분",
+          "집음이 기본값 아님"
+        ],
+        "claim_limits": [
+          "Only the current visible configuration is established by a still image."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "자기 옷 라펠에 손끝만 가볍게 대기",
+          "fingertips lightly meet the edge of an existing garment lapel",
+          "an existing lapel edge remains connected to the same actor garment",
+          "declared fingertips contact that lapel edge",
+          "fingertip pads meet one exposed side of the lapel edge",
+          "Finger pads meet one side of an attached lapel edge on the person's own garment.",
+          "손가락 패드가 자기 옷에 이어진 라펠 가장자리 한 면에 닿는다.",
+          "the lapel rim continues into the actor own clothing",
+          "라펠 테두리가 인물 자신의 옷으로 이어진다",
+          "the chosen finger pads contact that lapel rim",
+          "지정한 손가락 패드가 그 라펠 테두리에 닿는다",
+          "the fingertip pads meet a single exposed lapel face",
+          "손가락 패드가 드러난 라펠 한 면에 맞닿는다"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "손을 쇄골에 댐·옷깃 없는 옷·목걸이 잡기와 구분",
+        "집음이 기본값 아님"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "c1",
+            "match_terms": [
+              "an existing lapel edge remains connected to the same actor garment",
+              "the lapel rim continues into the actor own clothing",
+              "라펠 테두리가 인물 자신의 옷으로 이어진다"
+            ],
+            "evidence_field": "c1_phrase",
+            "evidence_terms": [
+              "an existing lapel edge remains connected to the same actor garment",
+              "the lapel rim continues into the actor own clothing",
+              "라펠 테두리가 인물 자신의 옷으로 이어진다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this visible configuration on the specified actor: an existing lapel edge remains connected to the same actor garment.",
+            "render_gate": {
+              "id": "vo_se_profile_lapel_fingertip_touch_c1",
+              "review_scale": "native",
+              "description": "The image visibly shows that an existing lapel edge remains connected to the same actor garment."
+            }
+          },
+          {
+            "id": "c2",
+            "match_terms": [
+              "declared fingertips contact that lapel edge",
+              "the chosen finger pads contact that lapel rim",
+              "지정한 손가락 패드가 그 라펠 테두리에 닿는다"
+            ],
+            "evidence_field": "c2_phrase",
+            "evidence_terms": [
+              "declared fingertips contact that lapel edge",
+              "the chosen finger pads contact that lapel rim",
+              "지정한 손가락 패드가 그 라펠 테두리에 닿는다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this visible configuration on the specified actor: declared fingertips contact that lapel edge.",
+            "render_gate": {
+              "id": "vo_se_profile_lapel_fingertip_touch_c2",
+              "review_scale": "native",
+              "description": "The image visibly shows that declared fingertips contact that lapel edge."
+            }
+          },
+          {
+            "id": "c3",
+            "match_terms": [
+              "fingertip pads meet one exposed side of the lapel edge",
+              "the fingertip pads meet a single exposed lapel face",
+              "손가락 패드가 드러난 라펠 한 면에 맞닿는다"
+            ],
+            "evidence_field": "c3_phrase",
+            "evidence_terms": [
+              "fingertip pads meet one exposed side of the lapel edge",
+              "the fingertip pads meet a single exposed lapel face",
+              "손가락 패드가 드러난 라펠 한 면에 맞닿는다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this visible configuration on the specified actor: fingertip pads meet one exposed side of the lapel edge.",
+            "render_gate": {
+              "id": "vo_se_profile_lapel_fingertip_touch_c3",
+              "review_scale": "native",
+              "description": "The image visibly shows that fingertip pads meet one exposed side of the lapel edge."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "se_profile_small_garment_fold_pinch",
+      "category": "observable_portrait_configuration",
+      "activation": {
+        "exact_terms": [
+          "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+          "a thumb and fingertip pinch a small visible fold of the existing garment fabric"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "a thumb and fingertip pinch a small visible fold of the existing garment fabric",
+        "paraphrase_examples": [
+          "A small attached cloth fold sits between an opposing thumb and fingertip.",
+          "옷에 이어진 작은 천 주름이 마주 보는 엄지와 손끝 사이에 놓인다."
+        ],
+        "visual_components": [
+          "opposing thumb and fingertip hold the same small cloth fold",
+          "cloth is visibly interposed between the fingertips",
+          "the fold continues into the existing garment",
+          "the existing garment remains connected around the small local fold"
+        ],
+        "contrast_examples": [
+          "실/피부를 집음·밑단 전체 잡기·허공 pinch와 구분",
+          "옷 벗기·노출 증대를 자동 추가하지 않음"
+        ],
+        "claim_limits": [
+          "Only the current visible configuration is established by a still image."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+          "a thumb and fingertip pinch a small visible fold of the existing garment fabric",
+          "opposing thumb and fingertip hold the same small cloth fold",
+          "cloth is visibly interposed between the fingertips",
+          "the fold continues into the existing garment",
+          "the existing garment remains connected around the small local fold",
+          "A small attached cloth fold sits between an opposing thumb and fingertip.",
+          "옷에 이어진 작은 천 주름이 마주 보는 엄지와 손끝 사이에 놓인다.",
+          "thumb and opposing fingertip grasp one small cloth fold",
+          "엄지와 반대 손끝이 작은 천 주름 하나를 잡는다",
+          "the cloth lies between the two opposing finger pads",
+          "천이 마주 보는 두 손가락 패드 사이에 놓인다",
+          "the pinched fold continues into the present garment",
+          "집힌 주름이 현재 옷으로 이어진다",
+          "the surrounding garment stays connected around the local fold",
+          "국소 주름 주위의 옷이 계속 연결되어 있다"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose",
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "실/피부를 집음·밑단 전체 잡기·허공 pinch와 구분",
+        "옷 벗기·노출 증대를 자동 추가하지 않음"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "c1",
+            "match_terms": [
+              "opposing thumb and fingertip hold the same small cloth fold",
+              "thumb and opposing fingertip grasp one small cloth fold",
+              "엄지와 반대 손끝이 작은 천 주름 하나를 잡는다"
+            ],
+            "evidence_field": "c1_phrase",
+            "evidence_terms": [
+              "opposing thumb and fingertip hold the same small cloth fold",
+              "thumb and opposing fingertip grasp one small cloth fold",
+              "엄지와 반대 손끝이 작은 천 주름 하나를 잡는다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this visible configuration on the specified actor: opposing thumb and fingertip hold the same small cloth fold.",
+            "render_gate": {
+              "id": "vo_se_profile_small_garment_fold_pinch_c1",
+              "review_scale": "native",
+              "description": "The image visibly shows that opposing thumb and fingertip hold the same small cloth fold."
+            }
+          },
+          {
+            "id": "c2",
+            "match_terms": [
+              "cloth is visibly interposed between the fingertips",
+              "the cloth lies between the two opposing finger pads",
+              "천이 마주 보는 두 손가락 패드 사이에 놓인다"
+            ],
+            "evidence_field": "c2_phrase",
+            "evidence_terms": [
+              "cloth is visibly interposed between the fingertips",
+              "the cloth lies between the two opposing finger pads",
+              "천이 마주 보는 두 손가락 패드 사이에 놓인다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this visible configuration on the specified actor: cloth is visibly interposed between the fingertips.",
+            "render_gate": {
+              "id": "vo_se_profile_small_garment_fold_pinch_c2",
+              "review_scale": "native",
+              "description": "The image visibly shows that cloth is visibly interposed between the fingertips."
+            }
+          },
+          {
+            "id": "c3",
+            "match_terms": [
+              "the fold continues into the existing garment",
+              "the pinched fold continues into the present garment",
+              "집힌 주름이 현재 옷으로 이어진다"
+            ],
+            "evidence_field": "c3_phrase",
+            "evidence_terms": [
+              "the fold continues into the existing garment",
+              "the pinched fold continues into the present garment",
+              "집힌 주름이 현재 옷으로 이어진다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this visible configuration on the specified actor: the fold continues into the existing garment.",
+            "render_gate": {
+              "id": "vo_se_profile_small_garment_fold_pinch_c3",
+              "review_scale": "native",
+              "description": "The image visibly shows that the fold continues into the existing garment."
+            }
+          },
+          {
+            "id": "c4",
+            "match_terms": [
+              "the existing garment remains connected around the small local fold",
+              "the surrounding garment stays connected around the local fold",
+              "국소 주름 주위의 옷이 계속 연결되어 있다"
+            ],
+            "evidence_field": "c4_phrase",
+            "evidence_terms": [
+              "the existing garment remains connected around the small local fold",
+              "the surrounding garment stays connected around the local fold",
+              "국소 주름 주위의 옷이 계속 연결되어 있다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this visible configuration on the specified actor: the existing garment remains connected around the small local fold.",
+            "render_gate": {
+              "id": "vo_se_profile_small_garment_fold_pinch_c4",
+              "review_scale": "native",
+              "description": "The image visibly shows that the existing garment remains connected around the small local fold."
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "existing_extensions": {
+    "expression": {
+      "ae_squinch": {
+        "paraphrases": [
+          "Raised lower lid rims narrow both eyes while each aperture stays open.",
+          "아래 눈꺼풀 가장자리가 올라와 양눈의 열린 틈을 좁힌다."
+        ]
+      },
+      "pv_half_lidded": {
+        "paraphrases": [
+          "Both eye openings are partly narrowed, with some pupil area still visible.",
+          "양눈의 틈이 일부 좁아져 있고 동공 일부는 계속 보인다."
+        ]
+      },
+      "pv_asymmetric_mouth": {
+        "paraphrases": [
+          "The two lip corners differ in height or curvature after face yaw is accounted for.",
+          "얼굴 회전을 고려해도 두 입꼬리의 높이나 굽음이 서로 다르다."
+        ]
+      },
+      "playful_smirk": {
+        "paraphrases": [
+          "A small smirk is used in a playful expression.",
+          "장난스러운 표정에서 작은 스머크를 짓는다."
+        ]
+      },
+      "ae_lip_bite": {
+        "paraphrases": [
+          "The upper teeth rest against the same person's lower lip.",
+          "윗니가 같은 인물의 아랫입술에 가볍게 닿아 있다."
+        ]
+      },
+      "ctx_c126": {
+        "paraphrases": [
+          "An adult working on a task lightly holds the lower lip between the upper teeth and mouth.",
+          "과제에 집중하는 성인이 윗니로 아랫입술을 가볍게 문 상태다."
+        ]
+      },
+      "ae_sultry_variant": {
+        "paraphrases": [
+          "The partly lowered upper lids retain the same target-directed eyeline.",
+          "일부 내려온 윗눈꺼풀과 함께 같은 대상을 향한 시선 방향을 유지한다."
+        ]
+      },
+      "ae_coquettish_variant": {
+        "paraphrases": [
+          "One eye shuts while the other stays open above a small smile.",
+          "작은 미소를 유지하면서 한 눈은 감고 다른 눈은 열어 둔다."
+        ]
+      },
+      "ae_smolder_attraction": {
+        "paraphrases": [
+          "The irises point at the established target with the specified eye aperture retained.",
+          "홍채가 이미 정한 대상을 향하고 지정한 눈의 열린 정도를 유지한다."
+        ]
+      },
+      "pv_parted_lips": {
+        "paraphrases": [
+          "A small opening remains between the upper and lower lip edges.",
+          "윗입술과 아랫입술 가장자리 사이에 작은 틈이 남는다."
+        ]
+      },
+      "pv_wink": {
+        "paraphrases": [
+          "The specified eye closes while the opposite eye remains open.",
+          "지정한 쪽 눈은 감고 반대쪽 눈은 열어 둔다."
+        ]
+      },
+      "ae_single_brow": {
+        "paraphrases": [
+          "The specified eyebrow sits higher than the unraised opposite brow.",
+          "지정한 눈썹이 올리지 않은 반대 눈썹보다 높다."
+        ]
+      },
+      "pv_eyes_closed": {
+        "paraphrases": [
+          "Both eyelid margins meet over the eyes.",
+          "양눈의 눈꺼풀 가장자리가 서로 맞닿아 눈을 덮는다."
+        ]
+      },
+      "pv_smile_closed": {
+        "paraphrases": [
+          "The lip corners rise slightly while the mouth seam stays closed.",
+          "입술 틈이 닫힌 채 입꼬리가 조금 올라간다."
+        ]
+      },
+      "ae_purse": {
+        "paraphrases": [
+          "The mouth corners draw inward around a small rounded lip opening.",
+          "입꼬리가 안쪽으로 모이고 입술 틈은 작고 둥글게 좁아진다."
+        ]
+      },
+      "ae_pucker": {
+        "paraphrases": [
+          "The gathered lip contour projects forward in a rounded shape.",
+          "모인 입술 윤곽이 둥근 형태로 앞으로 돌출된다."
+        ]
+      },
+      "ae_lip_press": {
+        "paraphrases": [
+          "The lip edges meet and compress along a fully closed seam.",
+          "입술 가장자리가 완전히 닫힌 접합선을 따라 맞닿아 눌린다."
+        ]
+      }
+    },
+    "body_orientation": {
+      "pv_shoulder_lower": {
+        "paraphrases": [
+          "One shoulder sits lower against the neck and torso reference.",
+          "한쪽 어깨가 목과 몸통의 기준에 비해 낮게 놓인다."
+        ]
+      },
+      "pv_head_tilt": {
+        "paraphrases": [
+          "The head inclines toward one shoulder relative to the torso.",
+          "고개가 몸통을 기준으로 한쪽 어깨 쪽으로 기운다."
+        ]
+      },
+      "pv_chin_down": {
+        "paraphrases": [
+          "The head pitches downward against the thorax reference.",
+          "고개가 가슴 기준에 비해 아래로 기울어진다."
+        ]
+      },
+      "pv_chin_up": {
+        "paraphrases": [
+          "The head pitches upward against the thorax reference.",
+          "고개가 가슴 기준에 비해 위로 기울어진다."
+        ]
+      },
+      "pv_head_turn": {
+        "paraphrases": [
+          "The head rotates horizontally relative to the thorax.",
+          "고개가 가슴을 기준으로 수평 방향으로 돌아간다."
+        ]
+      },
+      "pv_back_arch": {
+        "paraphrases": [
+          "The torso extends backward relative to the pelvis with the support chain retained.",
+          "지지 경로를 유지하면서 몸통이 골반에 비해 뒤로 신전된다."
+        ]
+      },
+      "pv_forward_torso_lean": {
+        "paraphrases": [
+          "The chest inclines forward from a readable pelvis and support base.",
+          "식별되는 골반과 지지 기반 위에서 가슴이 앞으로 기운다."
+        ]
+      },
+      "pv_shoulder_forward": {
+        "paraphrases": [
+          "One shoulder advances relative to the chest reference.",
+          "한쪽 어깨가 가슴 기준보다 앞으로 나온다."
+        ]
+      },
+      "three_quarter_body_turn": {
+        "paraphrases": [
+          "The torso presents a three-quarter turn toward the camera.",
+          "몸통이 카메라를 향해 사선으로 돌아선다."
+        ]
+      },
+      "thorax_pelvis_opposed_azimuth": {
+        "paraphrases": [
+          "The chest and pelvis point in opposed horizontal directions.",
+          "가슴과 골반이 서로 반대의 수평 방향으로 돌아간다."
+        ]
+      }
+    },
+    "hand_pose": {
+      "tucking_hair_behind_ear": {
+        "paraphrases": [
+          "The same person's fingers guide their hair behind their ear.",
+          "자기 손가락으로 자기 귀 뒤에 머리카락을 넘긴다."
+        ]
+      },
+      "reaching_toward_camera": {
+        "paraphrases": [
+          "An attached hand extends toward the lens and lies nearer than the torso.",
+          "몸에 이어진 손이 렌즈 쪽으로 뻗어 몸통보다 가까이 놓인다."
+        ]
+      },
+      "pv_relaxed_fingers": {
+        "paraphrases": [
+          "The fingers have varied shallow bends with coherent joints.",
+          "손가락이 일관된 관절 구조 안에서 조금씩 다른 작은 굽힘을 보인다."
+        ]
+      },
+      "relaxed_wrist_offset_line": {
+        "paraphrases": [
+          "The hand rests at a soft offset from the forearm line.",
+          "손이 전완의 선에서 부드럽게 비낀 각도로 놓인다."
+        ]
+      },
+      "pv_wrists_cross_overhead": {
+        "paraphrases": [
+          "Both arms reach over the head and meet at a visible wrist crossing.",
+          "양팔이 머리 위로 올라가 보이는 손목 교차점에서 만난다."
+        ]
+      },
+      "pc_pc16_component_1": {
+        "paraphrases": [
+          "The subject's connected hand extends closer toward the lens.",
+          "주체의 몸에 이어진 손이 렌즈 쪽으로 가까이 뻗는다."
+        ]
+      }
+    },
+    "contact_point": {
+      "pv_chin_support": {
+        "paraphrases": [
+          "The chin rests on a palm or knuckles with the loaded arm supported.",
+          "턱이 손바닥이나 손마디에 기대고 하중을 받는 팔이 지지된다."
+        ]
+      },
+      "pv_collarbone_touch": {
+        "paraphrases": [
+          "The owned hand meets the upper chest over the collarbone region.",
+          "소유자가 분명한 손이 쇄골 부근의 윗가슴에 닿는다."
+        ]
+      },
+      "pv_lapel_grip": {
+        "paraphrases": [
+          "Fingers hold a collar edge with the cloth reacting at their grasp.",
+          "손가락이 옷깃 가장자리를 잡고 잡힌 곳의 천이 그 접촉에 반응한다."
+        ]
+      },
+      "pv_wall_shoulder_support": {
+        "paraphrases": [
+          "A shoulder or the back touches the wall over a readable foot support base.",
+          "발 지지 기반이 보이는 상태에서 어깨나 등이 벽에 닿는다."
+        ]
+      },
+      "pv_temple_touch": {
+        "paraphrases": [
+          "The owned fingertips meet the temple region at the side of the head.",
+          "소유자가 분명한 손끝이 머리 옆 관자 부위에 닿는다."
+        ]
+      }
+    },
+    "lighting": {
+      "sff_pro_l01": {
+        "paraphrases": [
+          "A side key divides the face into an illuminated half and a shaded half.",
+          "측면 주광이 얼굴을 밝은 반쪽과 그늘진 반쪽으로 나눈다."
+        ]
+      },
+      "sff_pro_l05": {
+        "paraphrases": [
+          "The small side-offset nose shadow stops before the cheek shadow.",
+          "코 옆으로 비낀 작은 그림자가 볼 그림자에 닿기 전에 끝난다."
+        ]
+      },
+      "sff_pro_l07": {
+        "paraphrases": [
+          "The narrow camera-visible cheek is lit and the broad near cheek is shaded.",
+          "카메라에 좁게 보이는 볼은 밝고 넓은 가까운 볼은 그늘진다."
+        ]
+      },
+      "sff_pro_l08": {
+        "paraphrases": [
+          "The broad camera-visible cheek takes the key and the narrow far cheek is shaded.",
+          "카메라에 넓게 보이는 볼이 주광을 받고 좁은 먼 볼은 그늘진다."
+        ]
+      },
+      "chiaroscuro_window_light": {
+        "paraphrases": [
+          "Window light models a bright area against deep shadows.",
+          "창빛이 깊은 그늘과 대비되는 밝은 영역의 형태를 드러낸다."
+        ]
+      },
+      "butterfly_lighting": {
+        "paraphrases": [
+          "A high frontal beauty key leaves a small shadow directly under the nose.",
+          "높은 전방 뷰티 주광이 코 바로 아래에 작은 그림자를 남긴다."
+        ]
+      }
+    },
+    "light_shape": {
+      "lit_clean_vertical_catchlight_pair": {
+        "paraphrases": [
+          "Two separate eye reflections occupy upper and lower positions on the cornea.",
+          "서로 분리된 두 눈 반사점이 각막 위쪽과 아래쪽에 놓인다."
+        ]
+      }
+    },
+    "composition": {
+      "pc_pc17_component_2": {
+        "paraphrases": [
+          "The main person's face is seen beyond another person's near shoulder.",
+          "다른 사람의 가까운 어깨 너머로 주인공의 얼굴이 보인다."
+        ]
+      },
+      "centered_symmetric": {
+        "paraphrases": [
+          "The main arrangement is centered with balanced corresponding sides.",
+          "주된 배열이 중앙에 있고 서로 대응하는 양쪽의 균형이 맞는다."
+        ]
+      },
+      "third_grid_off_center_subject": {
+        "paraphrases": [
+          "The subject sits off center along the thirds grid.",
+          "주체가 삼분할 격자를 따라 중심에서 벗어나 놓인다."
+        ]
+      },
+      "large_negative_space_top_area": {
+        "paraphrases": [
+          "A large relatively empty area stays above the subject.",
+          "주체 위에 넓고 비교적 비어 있는 영역이 남는다."
+        ]
+      },
+      "pc_pc20_component_1": {
+        "paraphrases": [
+          "A physical opening surrounds the main subject with a visible boundary.",
+          "실제 개구부가 보이는 경계로 주체 주위를 둘러싼다."
+        ]
+      },
+      "pc_pc20_component_2": {
+        "paraphrases": [
+          "Boundary thickness or overlap establishes a nearer framing plane.",
+          "경계의 두께나 겹침이 더 가까운 프레이밍 면을 만든다."
+        ]
+      },
+      "occlusion_continuity_lock": {
+        "paraphrases": [
+          "Hidden and visible subject edges align across the foreground occluder.",
+          "전경 가림물 양쪽에서 숨은 부분과 보이는 주체 경계가 이어진다."
+        ]
+      },
+      "strong_leading_lines_vanish": {
+        "paraphrases": [
+          "Strong scene lines converge toward a visible vanishing point.",
+          "뚜렷한 장면 선들이 보이는 소실점 쪽으로 모인다."
+        ]
+      }
+    },
+    "gaze_engagement": {
+      "pv_gaze_direct": {
+        "paraphrases": [
+          "The visible pupils point toward the camera while head direction is stated separately.",
+          "보이는 동공은 카메라 쪽을 향하고 고개 방향은 별도로 정한다."
+        ]
+      },
+      "pv_side_eye": {
+        "paraphrases": [
+          "The irises shift sideways relative to the direction of the face.",
+          "홍채가 얼굴이 향한 방향에 비해 옆으로 이동한다."
+        ]
+      },
+      "pv_gaze_down": {
+        "paraphrases": [
+          "The eyes aim below the face-forward axis toward a lower target.",
+          "눈이 얼굴 정면 축보다 아래에 있는 대상을 향한다."
+        ]
+      },
+      "pv_gaze_up": {
+        "paraphrases": [
+          "The eyes aim toward a target higher than the face-forward axis.",
+          "눈이 얼굴 정면 축보다 높은 대상을 향한다."
+        ]
+      },
+      "pv_gaze_offcamera": {
+        "paraphrases": [
+          "The eye direction points toward a specified target away from the camera.",
+          "눈의 방향이 카메라와 떨어진 지정 대상을 향한다."
+        ]
+      }
+    },
+    "gaze_target": {
+      "head_eye_counterorientation_relation": {
+        "paraphrases": [
+          "The head and eyes point along different specified directions.",
+          "고개와 눈이 각각 지정한 다른 방향을 향한다."
+        ]
+      },
+      "pc_pc17_component_3": {
+        "paraphrases": [
+          "The main response points toward the companion at the near shoulder position.",
+          "주체의 반응이 가까운 어깨 위치의 동료에게 향한다."
+        ]
+      }
+    },
+    "body_pose": {
+      "contrapposto_full_body": {
+        "paraphrases": [
+          "One extended leg bears the standing body while the free leg relaxes and the hip and shoulder slopes oppose.",
+          "뻗은 한 다리가 선 몸을 받치고 다른 다리는 풀린 채 골반과 어깨 경사가 반대다."
+        ]
+      },
+      "pv_single_support": {
+        "paraphrases": [
+          "One leg carries the main body weight and the other stays comparatively unloaded.",
+          "한 다리가 몸의 주된 하중을 받고 반대 다리는 상대적으로 하중이 작다."
+        ]
+      },
+      "perched_edge_sit_grounded_support": {
+        "paraphrases": [
+          "The pelvis perches at the seat edge with a readable grounded support path.",
+          "골반이 좌면 가장자리에 걸터앉고 바닥으로 이어진 지지 경로가 보인다."
+        ]
+      },
+      "pv_sideways_seat": {
+        "paraphrases": [
+          "The seated body turns sideways against the chair axes.",
+          "앉은 몸이 의자 축에 비해 옆으로 돌아간다."
+        ]
+      },
+      "propped_elbow_recline_support": {
+        "paraphrases": [
+          "The reclining torso rests through one elbow and forearm onto its support.",
+          "기대 누운 몸통이 한 팔꿈치와 전완을 통해 지지면에 기대어 있다."
+        ]
+      },
+      "pv_side_lying": {
+        "paraphrases": [
+          "The side of the trunk or hip lies on the support with side-oriented shoulders and hips.",
+          "몸통이나 골반의 옆면이 지지면에 닿고 어깨와 골반은 옆으로 향한다."
+        ]
+      },
+      "pv_prone_forearms": {
+        "paraphrases": [
+          "The belly faces the support while both forearms hold the upper body above it.",
+          "배가 지지면을 향하고 양전완이 상체를 그 위로 받친다."
+        ]
+      },
+      "pv_knee_over_knee": {
+        "paraphrases": [
+          "One thigh crosses over the other above the knees in a seated pose.",
+          "앉은 자세에서 한 허벅지가 무릎 위쪽에서 반대 허벅지 위로 교차한다."
+        ]
+      },
+      "pv_ankle_cross_seated": {
+        "paraphrases": [
+          "The seated legs cross at the ankles while the knees remain separately placed.",
+          "앉은 다리의 발목이 교차하고 무릎 위치는 따로 놓인다."
+        ]
+      },
+      "pv_half_kneel": {
+        "paraphrases": [
+          "One knee rests on the support while the opposite foot is planted forward.",
+          "한 무릎은 지지면에 놓이고 반대 발은 앞쪽 바닥에 딛는다."
+        ]
+      },
+      "pv_reverse_chair": {
+        "paraphrases": [
+          "The seated torso faces the chair back while the pelvis remains on its seat.",
+          "골반은 의자 좌면에 앉아 있고 몸통은 등받이를 마주 본다."
+        ]
+      },
+      "pv_chair_straddle": {
+        "paraphrases": [
+          "The seated pelvis rests between legs placed on opposite sides of the chair.",
+          "앉은 골반이 의자 양옆에 나누어 둔 다리 사이의 좌면에 놓인다."
+        ]
+      },
+      "lower_limb_plantarflexed_line": {
+        "paraphrases": [
+          "The ankle extends in plantar flexion to continue the lower leg line through the foot.",
+          "발목이 발바닥 굽힘으로 펴져 하퇴의 선이 발까지 이어진다."
+        ]
+      }
+    },
+    "shot_scale": {
+      "close_up_face_shot": {
+        "paraphrases": [
+          "The face occupies a close portrait crop.",
+          "얼굴이 가까운 초상 크롭을 차지한다."
+        ]
+      },
+      "extreme_close_detail_shot": {
+        "paraphrases": [
+          "A small selected detail fills the extreme close crop.",
+          "작게 지정한 세부 부위가 극근접 크롭을 채운다."
+        ]
+      },
+      "medium_close_chest_up_shot": {
+        "paraphrases": [
+          "The person is framed from the upper chest to the head.",
+          "인물이 윗가슴부터 머리까지의 범위로 담긴다."
+        ]
+      },
+      "medium_waist_up_shot": {
+        "paraphrases": [
+          "The frame includes the person from the waist upward.",
+          "프레임이 인물의 허리 위쪽을 포함한다."
+        ]
+      },
+      "medium_long_knee_up_shot": {
+        "paraphrases": [
+          "The crop runs from the knees upward to include the head.",
+          "크롭이 무릎 위쪽에서 머리까지를 포함한다."
+        ]
+      },
+      "full_length_body_shot": {
+        "paraphrases": [
+          "The entire figure is included from head through feet.",
+          "머리부터 발까지 인물 전체가 프레임 안에 들어온다."
+        ]
+      }
+    },
+    "camera_direction": {
+      "high_observer_angle": {
+        "paraphrases": [
+          "The camera looks down from above the subject.",
+          "카메라가 주체보다 높은 곳에서 아래를 바라본다."
+        ]
+      },
+      "strict_top_down_flat_view": {
+        "paraphrases": [
+          "The camera axis points straight down over the selected surface.",
+          "카메라 축이 지정한 면 위에서 수직 아래로 향한다."
+        ]
+      },
+      "dutch_tilt_direction": {
+        "paraphrases": [
+          "The camera roll tilts the scene reference against the image axes.",
+          "카메라 롤이 장면의 기준선을 이미지 축에 비해 기울인다."
+        ]
+      },
+      "pc_pc30_component_1": {
+        "paraphrases": [
+          "A stable scene line rotates against the frame axes under camera roll.",
+          "카메라 롤로 안정된 장면 선이 프레임 축에 비해 회전한다."
+        ]
+      }
+    },
+    "partner_framing": {
+      "pc_pc17_component_1": {
+        "paraphrases": [
+          "A companion's closer shoulder creates a partial foreground outline.",
+          "동료의 가까운 어깨가 전경에 부분 윤곽을 만든다."
+        ]
+      }
+    },
+    "focus": {
+      "pc_pc17_component_4": {
+        "paraphrases": [
+          "The main face has focus priority over the companion's nearer shoulder.",
+          "주체 얼굴이 동료의 가까운 어깨보다 초점 우선순위를 갖는다."
+        ]
+      },
+      "shallow_depth": {
+        "paraphrases": [
+          "The focus zone is shallow and the background is strongly defocused.",
+          "초점이 맞는 깊이 범위가 얕고 배경은 크게 흐려진다."
+        ]
+      }
+    },
+    "subject_framing": {
+      "group_two_shot": {
+        "paraphrases": [
+          "Both people share one two-person frame.",
+          "두 사람이 하나의 두 인물 프레임 안에 함께 들어온다."
+        ]
+      },
+      "pc_pc20_component_3": {
+        "paraphrases": [
+          "The main face is readable within the opening.",
+          "주체 얼굴이 개구부 안에서 식별된다."
+        ]
+      }
+    }
+  }
+}

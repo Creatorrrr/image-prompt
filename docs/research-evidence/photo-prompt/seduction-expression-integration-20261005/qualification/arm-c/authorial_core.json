@@ -1,0 +1,111 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 시각 의미 데이터의 대체 표현을 추가/보강하는 작업을 중심으로 진행하고 후보 데이터에도 잘 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "0d1410bb4e9ca377e18eb4040315301a868fddaebfc3353f01a92a0e42cce689",
+  "interpreted_intent": "The requester asks for independently chosen complex photographic qualification using the supplied reference. Arm C independently selected a field-work moment at a rural crossing before any project data access. Scene, pose, facial lighting, expression, wardrobe and camera are agent-owned choices, not requester definitions. WHO: an explicitly adult technician looks up with quiet approachable presence; WHERE: open signal cabinet and cable make the outdoor maintenance situation legible; HOW: close full-body camera makes face and grounded support points observable; WHY NOW: a pencil suspended over the log records the brief pause during a test. Sensual=1 is expressed subtly through relaxed eyelids and softly parted lips within the practical moment; fetish=0 and surreal=0 add no treatment. The broad loop pattern and kneeling contacts are pre-frozen agent evaluation targets whose success will be judged from native pixels.",
+  "subject": "an explicitly adult woman, face and hair appearance referenced from the attached image",
+  "setting": "a closed rural level crossing beside an open grey signal cabinet in blue dusk",
+  "event": "a brief still moment during a cable test",
+  "visual_priorities": [
+    "Three distinct grounded lower-body supports form a plausible half-kneeling base.",
+    "The broad camera-facing cheek is bright and the nose-shadow is visibly disconnected from the opposite cheek shadow.",
+    "Two small lamp catchlights remain legible in the reference-guided face.",
+    "Meter-to-cabinet cable and the paused pencil show the test-recording event.",
+    "A close full-body view keeps the face and lower contact planes simultaneously observable."
+  ],
+  "baseline_prompt_en": "A close full-body documentary photograph of field work at a closed rural level crossing in blue dusk. One clearly adult woman in her thirties is momentarily still during a cable test beside an open grey signal cabinet. Use the attached image for her visible face and hair appearance: a short dark jaw-length bob, wispy separated fringe, the visible eye shape, nose and mouth contours. She wears charcoal utility coveralls with the sleeves folded below her elbows and lightly scuffed flat work boots. Her right hand holds a pencil just above a clipped log card on a low service tray; her left fingertips steady the connected handheld meter beside it. A test cable visibly runs from the meter into the cabinet. She has looked up toward the lens with relaxed upper eyelids and softly parted lips, giving the practical moment a quiet personal presence. Her body remains in a stable half-kneeling stance. Her left knee presses directly onto a dark knee pad on the concrete; her right boot has its whole sole planted flat forward, with the right shin rising almost vertically. Her left lower leg extends backward, its boot forefoot touching the concrete with its heel lifted. Her hips remain between the planted left knee and forward right foot, and her torso inclines slightly forward. The front-right camera viewpoint leaves a clear view of her rear boot and all three ground contacts. Her nose points slightly toward image right. A small neutral-white work lamp just above eye height at camera left produces broad loop lighting: the wider camera-facing cheek on image left is bright, the narrower cheek on image right is darker, and a small oval nose-shadow sits on that darker cheek separated from the cheek shadow by a visible lit gap. Each visible eye contains one small crisp lamp catchlight. Head, hands, both knees and both boots fit inside the close vertical frame, with the face and contact planes sharply resolved. A striped crossing barrier and faint amber signal behind her establish the closed lane; wet concrete picks up a dim amber streak while her face keeps neutral skin colour.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "Select an independent photographic scene for data-to-pixel testing; the particular roadside scene and all tested forms are agent-owned choices rather than meanings defined by the requester.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied photograph as a visible face and hair appearance reference for a new adult photographic subject. Reference pixels establish visible appearance only.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "documentary photograph of field work"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "One clearly adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "during a cable test"
+      },
+      {
+        "anchor_id": "core_reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the attached image for her visible face and hair appearance"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "identity",
+      "count",
+      "age",
+      "role",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "outdoor photographic portrait",
+    "family": "restrained documentary field-work",
+    "evidence": [
+      "blue dusk",
+      "wet concrete picks up a dim amber streak"
+    ]
+  },
+  "variation_key": "arm-c-independent-rural-signal-support-loop"
+}

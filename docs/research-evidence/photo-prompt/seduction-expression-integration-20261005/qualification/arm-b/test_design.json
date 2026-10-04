@@ -1,0 +1,123 @@
+{
+  "contract_version": "independent-photo-qualification-test/v1",
+  "provenance": "agent_owned_independent_design",
+  "arm": "b",
+  "independence": {
+    "selected_before_candidate_access": true,
+    "other_arms_read": false,
+    "prior_prompt_read": false,
+    "data_or_fixtures_read": false,
+    "inputs_at_selection": [
+      "parent task scope",
+      "general knowledge",
+      "unseeded random choice among three independently authored place-role-event choices"
+    ]
+  },
+  "random_draw": {
+    "place": "무대 의상 수선 작업실",
+    "role": "무대 의상 수선사",
+    "event": "갑자기 끊어진 장식 끈을 수리하는 순간"
+  },
+  "concept": "Backstage costume seamstress separates a snapped gold braid on an adult performer cape from her own apron while turning her gaze back toward the camera.",
+  "reference_scope": {
+    "path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+    "use": "visible face and hair appearance only",
+    "source_age_identity_personality_body_shape_inferred": false,
+    "new_main_subject_age": 32,
+    "new_secondary_subject_age": 38
+  },
+  "agent_owned_forms": [
+    {
+      "id": "self_garment_pinching",
+      "form": "Main adult seamstress right thumb and index finger visibly pinch the top canvas edge of her own ivory apron at her upper chest; palm surface faces camera."
+    },
+    {
+      "id": "other_garment_braid_hook",
+      "form": "The seamstress left index finger visibly hooks beneath a gold braided cord attached to the other adult performer upper lapel; the back of this hand faces camera."
+    },
+    {
+      "id": "view_relative_hand_orientation",
+      "form": "The right palm creases face the lens, while left knuckles and nails face the lens; directions belong to one traced subject, not screen-side hand guesses."
+    },
+    {
+      "id": "gaze_back_to_lens",
+      "form": "Her face points modestly toward the performer on screen right while her pupils look back toward the camera; a slight asymmetric closed-mouth smile."
+    },
+    {
+      "id": "broken_cord_event",
+      "form": "A hanging pair of short frayed cord ends under a small star brooch supports the repair moment."
+    },
+    {
+      "id": "shared_frame_owner_visibility",
+      "form": "Both main hands have visible wrist-to-forearm continuity; apron remains connected to seamstress and cape remains worn by performer; frame reaches from adult heads through upper hips."
+    }
+  ],
+  "evaluation_policy": "strict partial_is_fail; any FAIL or UNOBSERVABLE in required test gates prevents whole_scene_all_of PASS; candidate presence, exposure, selection, hard obligation, prompt and pixels are separate.",
+  "expected_gates": [
+    {
+      "gate_id": "b1_reference_face_hair",
+      "expected": "Main subject visible face/hair qualitatively follows reference dark chin-length bob, separated wispy fringe, dark eyes and softly tapered jaw without transfer of reference outfit or crop.",
+      "pass": "All face and hair features are observable and reasonably corresponding.",
+      "fail": "Distinct incompatible visible face or hair construction.",
+      "unobservable": "Main face or hair obscured, blurred, too small or unavailable."
+    },
+    {
+      "gate_id": "b2_adult_workshop_scene",
+      "expected": "Two newly designed adults in a theatrical costume repair room with a workbench and garment-rack context.",
+      "pass": "The central seamstress and performer are both visibly adult and the backstage repair setting reads as such.",
+      "fail": "Childlike subjects or materially different scene.",
+      "unobservable": "A subject age presentation or workshop context cannot be assessed."
+    },
+    {
+      "gate_id": "b3_self_apron_contact",
+      "expected": "The seamstress right thumb and index pinch her own ivory apron top edge at upper chest, producing a local canvas fold.",
+      "pass": "Both digit-to-canvas contact and apron ownership are visible.",
+      "fail": "Hand floats, touches body instead, merely gestures near apron, or pinches other person garment.",
+      "unobservable": "Finger contact or apron ownership is occluded or cropped."
+    },
+    {
+      "gate_id": "b4_right_palm_to_camera",
+      "expected": "The seamstress right palm surface faces the lens at own-apron contact.",
+      "pass": "Palm skin and its inner surface are visible at that contact, with right limb continuity.",
+      "fail": "Dorsal hand surface faces camera or a different hand supplies the palm.",
+      "unobservable": "Palm surface or limb ownership cannot be traced."
+    },
+    {
+      "gate_id": "b5_other_cord_contact",
+      "expected": "Seamstress left index curves beneath gold braid that remains attached to performer cape upper lapel.",
+      "pass": "A finger-under-cord contact and cord-to-performer-garment continuity are visible.",
+      "fail": "Finger points beside cord, grasps detached unrelated ornament, or touches own garment instead.",
+      "unobservable": "Cord contact or attachment cannot be resolved."
+    },
+    {
+      "gate_id": "b6_left_back_to_camera",
+      "expected": "Seamstress left hand back faces lens at performer cord contact, showing knuckles or nails.",
+      "pass": "Dorsal left surface and corresponding limb ownership are visible.",
+      "fail": "Palm faces lens or another owner supplies the dorsal hand.",
+      "unobservable": "Orientation or ownership is unreadable."
+    },
+    {
+      "gate_id": "b7_head_turn_eye_contact",
+      "expected": "Seamstress head modestly turns toward screen-right performer while eyes return toward the lens.",
+      "pass": "Both head turn and camera-directed pupil alignment are visible together.",
+      "fail": "Straight front head instead of modest turn, or gaze toward performer/down to task rather than camera.",
+      "unobservable": "Pupils or head orientation cannot be judged."
+    },
+    {
+      "gate_id": "b8_broken_braid_trace",
+      "expected": "Two short frayed cord ends hang below a small star brooch as immediate visible trace of cord snapping.",
+      "pass": "Brooch plus visibly separated/frayed braid ends coexist.",
+      "fail": "Continuous intact cord or missing visible snapped trace.",
+      "unobservable": "Ends/brooch too small, blurred or occluded."
+    },
+    {
+      "gate_id": "b9_framing_continuity",
+      "expected": "Frame includes both adult heads through upper hips and all main hand/wrist/forearm connections with both contact sites.",
+      "pass": "The specified crop and continuity preserve all consequential contacts.",
+      "fail": "Specified crop or clear limb connection is contradicted.",
+      "unobservable": "A consequential limb connection is hidden or a contact is outside frame."
+    }
+  ],
+  "candidate_effect_expectation": "No profile or candidate is required by this agent-owned test. After freeze, inspect compatible data existence and pack exposure independently; selected opt-in candidates alone promote their own hard render gates.",
+  "freeze_note": "This file fixes visual forms and pixel gates before all candidate access; it does not add requester spans, definitions, assertions or exclusions."
+}

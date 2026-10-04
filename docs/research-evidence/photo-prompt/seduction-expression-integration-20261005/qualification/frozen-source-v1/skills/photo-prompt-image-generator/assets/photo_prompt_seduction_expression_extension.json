@@ -1,0 +1,2009 @@
+{
+  "schema_version": "photo-prompt-research-extension/v1",
+  "maintenance_ref": {
+    "contract_version": "photo-extension-maintenance-ref/v1",
+    "record_id": "seduction-expression-integration-20261005",
+    "sha256": "05e6fb13840391d6d08ae765a467b372d11c6300ca1d59b46472d05697537577"
+  },
+  "slots": {
+    "gaze_engagement": [
+      {
+        "id": "se_lash_occluded_upward_gaze",
+        "ko": "턱을 내린 채 윗속눈썹 아래로 올려다보기",
+        "en": "upward target gaze beneath visible upper lashes with the chin pitched slightly down",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "gaze_engagement"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "턱을 내린 채 윗속눈썹 아래로 올려다보기",
+          "upward target gaze beneath visible upper lashes with the chin pitched slightly down"
+        ],
+        "keywords": [
+          "턱을 내린 채 윗속눈썹 아래로 올려다보기",
+          "upward target gaze beneath visible upper lashes with the chin pitched slightly down"
+        ],
+        "embedding_text": "upward target gaze beneath visible upper lashes with the chin pitched slightly down; the declared actor chin is pitched slightly downward; the eyes aim above the head-facing axis toward the specified target; upper lashes partially overlap the visible upper eye apertures; the specified eyes remain visibly open",
+        "concept_units": [
+          "the declared actor chin is pitched slightly downward",
+          "the eyes aim above the head-facing axis toward the specified target",
+          "upper lashes partially overlap the visible upper eye apertures",
+          "the specified eyes remain visibly open"
+        ],
+        "relations": [
+          {
+            "id": "se_lash_occluded_upward_gaze_r1",
+            "type": "relative_direction",
+            "subject": "main_subject.eyes",
+            "object": "the specified gaze target"
+          },
+          {
+            "id": "se_lash_occluded_upward_gaze_r2",
+            "type": "counterorientation",
+            "subject": "main_subject.head",
+            "object": "main_subject.eyes"
+          }
+        ],
+        "affected_dimensions": [
+          "expression",
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.gaze_direction"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "head.orientation"
+          }
+        ],
+        "paraphrases": [
+          "턱을 내린 채 윗속눈썹 아래로 올려다보기",
+          "upward target gaze beneath visible upper lashes with the chin pitched slightly down",
+          "The chin points slightly down while open eyes look higher through the overlapping upper lashes.",
+          "턱은 조금 아래로 향하고 열린 눈은 겹쳐 보이는 윗속눈썹 아래에서 더 높은 목표를 본다."
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "se_eye_visible_through_own_hair",
+        "ko": "자기 머리카락 사이로 식별되는 눈과 시선",
+        "en": "a readable target-facing eye aperture remains visible between strands of the same actor hair",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "gaze_engagement"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "자기 머리카락 사이로 식별되는 눈과 시선",
+          "a readable target-facing eye aperture remains visible between strands of the same actor hair"
+        ],
+        "keywords": [
+          "자기 머리카락 사이로 식별되는 눈과 시선",
+          "a readable target-facing eye aperture remains visible between strands of the same actor hair"
+        ],
+        "embedding_text": "a readable target-facing eye aperture remains visible between strands of the same actor hair; existing hair strands overlap part of the declared actor eye region; the specified eye aperture and iris-direction cue remain visible; the hair and eye belong to the same actor",
+        "concept_units": [
+          "existing hair strands overlap part of the declared actor eye region",
+          "the specified eye aperture and iris-direction cue remain visible",
+          "the hair and eye belong to the same actor"
+        ],
+        "relations": [
+          {
+            "id": "se_eye_visible_through_own_hair_r1",
+            "type": "partial_occlusion",
+            "subject": "main_subject.hair",
+            "object": "main_subject.eye_region"
+          },
+          {
+            "id": "se_eye_visible_through_own_hair_r2",
+            "type": "directed_gaze",
+            "subject": "main_subject.eyes",
+            "object": "the specified gaze target"
+          }
+        ],
+        "affected_dimensions": [
+          "expression",
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.gaze_direction"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "hair"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "paraphrases": [
+          "자기 머리카락 사이로 식별되는 눈과 시선",
+          "a readable target-facing eye aperture remains visible between strands of the same actor hair",
+          "Strands of the same person's hair partly cross the eye region while an open eye and its iris direction stay readable.",
+          "자기 머리카락이 눈 부위를 일부 가로지르지만 열린 눈과 홍채 방향은 식별된다."
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "se_gaze_at_existing_partner_lips_state",
+        "ko": "기존 상대의 입술을 향한 현재 시선 상태",
+        "en": "the declared actor current gaze is aimed at the already present partner lip region",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "gaze_engagement"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "기존 상대의 입술을 향한 현재 시선 상태",
+          "the declared actor current gaze is aimed at the already present partner lip region"
+        ],
+        "keywords": [
+          "기존 상대의 입술을 향한 현재 시선 상태",
+          "the declared actor current gaze is aimed at the already present partner lip region"
+        ],
+        "embedding_text": "the declared actor current gaze is aimed at the already present partner lip region; the declared actor eye direction points to the existing partner lip region; the target lips belong to that same existing partner; both actor eyes and target lip region remain spatially distinct",
+        "concept_units": [
+          "the declared actor eye direction points to the existing partner lip region",
+          "the target lips belong to that same existing partner",
+          "both actor eyes and target lip region remain spatially distinct"
+        ],
+        "relations": [
+          {
+            "id": "se_gaze_at_existing_partner_lips_state_r1",
+            "type": "directed_gaze",
+            "subject": "main_subject.eyes",
+            "object": "the specified existing partner lip region"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.gaze_direction"
+          }
+        ],
+        "paraphrases": [
+          "기존 상대의 입술을 향한 현재 시선 상태",
+          "the declared actor current gaze is aimed at the already present partner lip region",
+          "The person's visible eye direction ends at the already present partner's distinct lip region.",
+          "보이는 눈의 방향이 이미 함께 있는 상대의 구분되는 입술 부위로 향한다."
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "se_gaze_at_existing_partner_lips_state_still_boundary",
+              "application_conditions": [
+                "The stated target already exists in the final scene."
+              ],
+              "limits": [
+                "One still establishes the current direction or flexion only; temporal order and repeated movement require separate frames."
+              ],
+              "status": "current_visible_state_only"
+            }
+          ]
+        }
+      }
+    ],
+    "expression": [
+      {
+        "id": "se_upper_lid_dominant_half_lid",
+        "ko": "윗눈꺼풀 중심으로 좁아진 열린 눈",
+        "en": "partly open eyes narrowed primarily by lower-positioned upper eyelid margins",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "expression"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "윗눈꺼풀 중심으로 좁아진 열린 눈",
+          "partly open eyes narrowed primarily by lower-positioned upper eyelid margins"
+        ],
+        "keywords": [
+          "윗눈꺼풀 중심으로 좁아진 열린 눈",
+          "partly open eyes narrowed primarily by lower-positioned upper eyelid margins"
+        ],
+        "embedding_text": "partly open eyes narrowed primarily by lower-positioned upper eyelid margins; upper eyelid margins cover more of the upper irises; the specified eyes retain visible open apertures; lower eyelid contours are comparatively open beneath the narrowed upper contours",
+        "concept_units": [
+          "upper eyelid margins cover more of the upper irises",
+          "the specified eyes retain visible open apertures",
+          "lower eyelid contours are comparatively open beneath the narrowed upper contours"
+        ],
+        "relations": [
+          {
+            "id": "se_upper_lid_dominant_half_lid_r1",
+            "type": "visible_configuration",
+            "subject": "main_subject.upper_eyelids",
+            "object": "main_subject.irises"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "paraphrases": [
+          "윗눈꺼풀 중심으로 좁아진 열린 눈",
+          "partly open eyes narrowed primarily by lower-positioned upper eyelid margins",
+          "Lowered upper lid rims cover the upper iris while the eye gaps stay partly open.",
+          "내려온 윗눈꺼풀 가장자리가 홍채 위쪽을 덮고 눈 틈은 일부 열린 채다."
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "se_tongue_lip_contact_state",
+        "ko": "같은 입의 혀끝과 바깥 입술의 접촉 상태",
+        "en": "the tongue tip from the same mouth touches the specified outer lip surface",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "expression"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "same-mouth tongue tip on the outer lip",
+          "같은 입의 혀끝이 바깥 입술에 닿음"
+        ],
+        "keywords": [
+          "tongue tip lip contact",
+          "혀끝 입술 접촉"
+        ],
+        "concept_units": [
+          "the visible tongue tip meets the stated outer lip surface",
+          "the tongue continues into the same actor mouth",
+          "the touching tongue tip and receiving lip area are both visible"
+        ],
+        "relations": [
+          {
+            "id": "se_tongue_lip_contact",
+            "type": "contact",
+            "subject": "main_subject.tongue.tip",
+            "object": "main_subject.specified_outer_lip"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "paraphrases": [
+          "The visible tongue tip from the same mouth rests on the specified outer lip surface.",
+          "같은 입에서 나온 보이는 혀끝이 지정한 바깥 입술 면에 닿아 있다."
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "se_tongue_lip_contact_still",
+              "limits": [
+                "A still shows contact; it does not establish a complete lick, wetting or movement sequence."
+              ],
+              "status": "current_visible_state_only"
+            }
+          ]
+        },
+        "embedding_text": "같은 입의 혀끝과 바깥 입술의 접촉 상태; the tongue tip from the same mouth touches the specified outer lip surface; the visible tongue tip meets the stated outer lip surface; the tongue continues into the same actor mouth; the touching tongue tip and receiving lip area are both visible; The visible tongue tip from the same mouth rests on the specified outer lip surface.; 같은 입에서 나온 보이는 혀끝이 지정한 바깥 입술 면에 닿아 있다."
+      }
+    ],
+    "hand_pose": [
+      {
+        "id": "se_edge_on_hand_to_camera",
+        "ko": "카메라에 좁은 손날을 보이는 손",
+        "en": "the declared hand presents its narrow edge toward the camera while its wrist remains connected",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "hand_pose"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "카메라에 좁은 손날을 보이는 손",
+          "the declared hand presents its narrow edge toward the camera while its wrist remains connected"
+        ],
+        "keywords": [
+          "카메라에 좁은 손날을 보이는 손",
+          "the declared hand presents its narrow edge toward the camera while its wrist remains connected"
+        ],
+        "embedding_text": "the declared hand presents its narrow edge toward the camera while its wrist remains connected; the palm and dorsal planes lie oblique to the camera axis; the narrow radial or ulnar hand edge faces the camera as explicitly specified; the wrist and forearm connect to the same actor hand",
+        "concept_units": [
+          "the palm and dorsal planes lie oblique to the camera axis",
+          "the narrow radial or ulnar hand edge faces the camera as explicitly specified",
+          "the wrist and forearm connect to the same actor hand"
+        ],
+        "relations": [
+          {
+            "id": "se_edge_on_hand_to_camera_r1",
+            "type": "orientation_to",
+            "subject": "main_subject.declared_hand_plane",
+            "object": "camera.axis"
+          },
+          {
+            "id": "se_edge_on_hand_to_camera_r2",
+            "type": "attached_to",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.declared_forearm"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          }
+        ],
+        "paraphrases": [
+          "카메라에 좁은 손날을 보이는 손",
+          "the declared hand presents its narrow edge toward the camera while its wrist remains connected",
+          "The narrow side of the connected hand faces the lens while the palm and back turn obliquely away.",
+          "몸에 이어진 손의 좁은 옆면이 렌즈를 향하고 손바닥과 손등은 비껴 돌아간다."
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "se_two_hands_different_heights",
+        "ko": "같은 사람의 양손을 서로 다른 높이에 놓기",
+        "en": "both hands of the same actor occupy distinct heights relative to the torso axis",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "hand_pose"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "같은 사람의 양손을 서로 다른 높이에 놓기",
+          "both hands of the same actor occupy distinct heights relative to the torso axis"
+        ],
+        "keywords": [
+          "같은 사람의 양손을 서로 다른 높이에 놓기",
+          "both hands of the same actor occupy distinct heights relative to the torso axis"
+        ],
+        "embedding_text": "both hands of the same actor occupy distinct heights relative to the torso axis; both declared hands remain visibly attached to the same actor arms; the hands lie at different torso-relative heights; each hand retains its existing finger configuration",
+        "concept_units": [
+          "both declared hands remain visibly attached to the same actor arms",
+          "the hands lie at different torso-relative heights",
+          "each hand retains its existing finger configuration"
+        ],
+        "relations": [
+          {
+            "id": "se_two_hands_different_heights_r1",
+            "type": "height_difference",
+            "subject": "main_subject.left_hand",
+            "object": "main_subject.right_hand"
+          },
+          {
+            "id": "se_two_hands_different_heights_r2",
+            "type": "reference_axis",
+            "subject": "main_subject.hands",
+            "object": "main_subject.torso"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          }
+        ],
+        "paraphrases": [
+          "같은 사람의 양손을 서로 다른 높이에 놓기",
+          "both hands of the same actor occupy distinct heights relative to the torso axis",
+          "The same person's two attached hands sit at unequal heights along the torso.",
+          "같은 사람의 몸에 이어진 두 손이 몸통을 따라 서로 다른 높이에 놓인다."
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "se_hand_hover_below_chin",
+        "ko": "턱 아래에 간격을 두고 놓은 자기 손",
+        "en": "the actor hand is placed below the chin with a visible air gap",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "hand_pose"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "턱 아래에 간격을 두고 놓은 자기 손",
+          "the actor hand is placed below the chin with a visible air gap"
+        ],
+        "keywords": [
+          "턱 아래에 간격을 두고 놓은 자기 손",
+          "the actor hand is placed below the chin with a visible air gap"
+        ],
+        "embedding_text": "the actor hand is placed below the chin with a visible air gap; the declared hand sits below the same actor chin; a visible gap separates the hand from the chin; the hand and forearm belong to the same actor",
+        "concept_units": [
+          "the declared hand sits below the same actor chin",
+          "a visible gap separates the hand from the chin",
+          "the hand and forearm belong to the same actor"
+        ],
+        "relations": [
+          {
+            "id": "se_hand_hover_below_chin_r1",
+            "type": "below",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.chin"
+          },
+          {
+            "id": "se_hand_hover_below_chin_r2",
+            "type": "separated_by_visible_gap",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.chin"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          }
+        ],
+        "paraphrases": [
+          "턱 아래에 간격을 두고 놓은 자기 손",
+          "the actor hand is placed below the chin with a visible air gap",
+          "The person's hand floats beneath their chin with a readable air gap.",
+          "자기 손이 턱 아래에 있고 그 사이에 식별되는 빈 간격이 남는다."
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "se_one_hand_behind_head",
+        "ko": "한 손만 자기 뒤통수에 놓기",
+        "en": "exactly the specified one hand rests at the actor posterior head while the other arm retains its existing posture",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "hand_pose"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "한 손만 자기 뒤통수에 놓기",
+          "exactly the specified one hand rests at the actor posterior head while the other arm retains its existing posture"
+        ],
+        "keywords": [
+          "한 손만 자기 뒤통수에 놓기",
+          "exactly the specified one hand rests at the actor posterior head while the other arm retains its existing posture"
+        ],
+        "embedding_text": "exactly the specified one hand rests at the actor posterior head while the other arm retains its existing posture; the specified single hand lies at the same actor posterior head; its elbow forearm and wrist form one continuous arm chain; the other hand retains its existing posture",
+        "concept_units": [
+          "the specified single hand lies at the same actor posterior head",
+          "its elbow forearm and wrist form one continuous arm chain",
+          "the other hand retains its existing posture"
+        ],
+        "relations": [
+          {
+            "id": "se_one_hand_behind_head_r1",
+            "type": "placed_at",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.posterior_head"
+          },
+          {
+            "id": "se_one_hand_behind_head_r2",
+            "type": "attached_to",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.declared_arm"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          }
+        ],
+        "paraphrases": [
+          "한 손만 자기 뒤통수에 놓기",
+          "exactly the specified one hand rests at the actor posterior head while the other arm retains its existing posture",
+          "One specified hand lies behind its own head on a continuous bent arm.",
+          "지정한 한 손이 이어진 굽은 팔을 따라 자기 머리 뒤에 놓인다."
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "se_beckon_shaped_finger_static_state",
+        "ko": "손바닥 방향이 읽히는 굽힌 손가락의 정지 상태",
+        "en": "the specified finger is visibly flexed against a readable hand plane in a beckoning-shaped current state",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "hand_pose"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "손바닥 방향이 읽히는 굽힌 손가락의 정지 상태",
+          "the specified finger is visibly flexed against a readable hand plane in a beckoning-shaped current state"
+        ],
+        "keywords": [
+          "손바닥 방향이 읽히는 굽힌 손가락의 정지 상태",
+          "the specified finger is visibly flexed against a readable hand plane in a beckoning-shaped current state"
+        ],
+        "embedding_text": "the specified finger is visibly flexed against a readable hand plane in a beckoning-shaped current state; the specified finger bends at its connected joints; the palm-facing direction is readable relative to the specified target; the remaining fingers retain their existing arrangement",
+        "concept_units": [
+          "the specified finger bends at its connected joints",
+          "the palm-facing direction is readable relative to the specified target",
+          "the remaining fingers retain their existing arrangement"
+        ],
+        "relations": [
+          {
+            "id": "se_beckon_shaped_finger_static_state_r1",
+            "type": "flexed_state",
+            "subject": "main_subject.declared_finger",
+            "object": "main_subject.declared_hand_plane"
+          },
+          {
+            "id": "se_beckon_shaped_finger_static_state_r2",
+            "type": "orientation_to",
+            "subject": "main_subject.declared_hand_plane",
+            "object": "the specified gesture target"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          }
+        ],
+        "paraphrases": [
+          "손바닥 방향이 읽히는 굽힌 손가락의 정지 상태",
+          "the specified finger is visibly flexed against a readable hand plane in a beckoning-shaped current state",
+          "A connected finger is flexed while the hand plane faces the specified target.",
+          "몸에 이어진 손가락이 굽혀지고 손 면의 방향이 지정 대상에 맞춰져 있다."
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "se_beckon_shaped_finger_static_state_still_boundary",
+              "application_conditions": [
+                "The stated target already exists in the final scene."
+              ],
+              "limits": [
+                "One still establishes the current direction or flexion only; temporal order and repeated movement require separate frames."
+              ],
+              "status": "current_visible_state_only"
+            }
+          ]
+        }
+      }
+    ],
+    "contact_point": [
+      {
+        "id": "se_cheek_fingertip_light_touch",
+        "ko": "손끝으로 자기 볼 가볍게 접촉",
+        "en": "one or more fingertips lightly contact the same actor cheek with the palm remaining off the cheek",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "contact_point"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "손끝으로 자기 볼 가볍게 접촉",
+          "one or more fingertips lightly contact the same actor cheek with the palm remaining off the cheek"
+        ],
+        "keywords": [
+          "손끝으로 자기 볼 가볍게 접촉",
+          "one or more fingertips lightly contact the same actor cheek with the palm remaining off the cheek"
+        ],
+        "embedding_text": "one or more fingertips lightly contact the same actor cheek with the palm remaining off the cheek; declared fingertips meet the same actor cheek surface; a visible gap separates the palm from the cheek; the finger hand and forearm remain continuous",
+        "concept_units": [
+          "declared fingertips meet the same actor cheek surface",
+          "a visible gap separates the palm from the cheek",
+          "the finger hand and forearm remain continuous"
+        ],
+        "relations": [
+          {
+            "id": "se_cheek_fingertip_light_touch_r1",
+            "type": "light_contact",
+            "subject": "main_subject.declared_fingertips",
+            "object": "main_subject.declared_cheek"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          }
+        ],
+        "paraphrases": [
+          "손끝으로 자기 볼 가볍게 접촉",
+          "one or more fingertips lightly contact the same actor cheek with the palm remaining off the cheek",
+          "The fingertips meet their own cheek while the palm stays visibly away from the skin.",
+          "손끝이 자기 볼에 닿고 손바닥은 피부에서 보이는 간격을 두고 떨어져 있다."
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "se_lapel_fingertip_touch",
+        "ko": "자기 옷 라펠에 손끝만 가볍게 대기",
+        "en": "fingertips lightly meet the edge of an existing garment lapel",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "contact_point"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "자기 옷 라펠에 손끝만 가볍게 대기",
+          "fingertips lightly meet the edge of an existing garment lapel"
+        ],
+        "keywords": [
+          "자기 옷 라펠에 손끝만 가볍게 대기",
+          "fingertips lightly meet the edge of an existing garment lapel"
+        ],
+        "embedding_text": "fingertips lightly meet the edge of an existing garment lapel; an existing lapel edge remains connected to the same actor garment; declared fingertips contact that lapel edge; fingertip pads meet one exposed side of the lapel edge",
+        "concept_units": [
+          "an existing lapel edge remains connected to the same actor garment",
+          "declared fingertips contact that lapel edge",
+          "fingertip pads meet one exposed side of the lapel edge"
+        ],
+        "relations": [
+          {
+            "id": "se_lapel_fingertip_touch_r1",
+            "type": "light_contact",
+            "subject": "main_subject.declared_fingertips",
+            "object": "main_subject.wardrobe.lapel_edge"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          }
+        ],
+        "paraphrases": [
+          "자기 옷 라펠에 손끝만 가볍게 대기",
+          "fingertips lightly meet the edge of an existing garment lapel",
+          "Finger pads meet one side of an attached lapel edge on the person's own garment.",
+          "손가락 패드가 자기 옷에 이어진 라펠 가장자리 한 면에 닿는다."
+        ],
+        "core_assertion_discovery": true,
+        "requires_primary_any_tags": [
+          "lapel",
+          "collar",
+          "jacket",
+          "blazer",
+          "라펠",
+          "옷깃"
+        ]
+      },
+      {
+        "id": "se_small_garment_fold_pinch",
+        "ko": "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+        "en": "a thumb and fingertip pinch a small visible fold of the existing garment fabric",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "contact_point"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+          "a thumb and fingertip pinch a small visible fold of the existing garment fabric"
+        ],
+        "keywords": [
+          "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+          "a thumb and fingertip pinch a small visible fold of the existing garment fabric"
+        ],
+        "embedding_text": "a thumb and fingertip pinch a small visible fold of the existing garment fabric; opposing thumb and fingertip hold the same small cloth fold; cloth is visibly interposed between the fingertips; the fold continues into the existing garment; the existing garment remains connected around the small local fold",
+        "concept_units": [
+          "opposing thumb and fingertip hold the same small cloth fold",
+          "cloth is visibly interposed between the fingertips",
+          "the fold continues into the existing garment",
+          "the existing garment remains connected around the small local fold"
+        ],
+        "relations": [
+          {
+            "id": "se_small_garment_fold_pinch_r1",
+            "type": "pinches",
+            "subject": "main_subject.declared_thumb_and_finger",
+            "object": "main_subject.wardrobe.small_fold"
+          },
+          {
+            "id": "se_small_garment_fold_pinch_r2",
+            "type": "part_of",
+            "subject": "main_subject.wardrobe.small_fold",
+            "object": "main_subject.wardrobe"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe"
+          }
+        ],
+        "paraphrases": [
+          "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+          "a thumb and fingertip pinch a small visible fold of the existing garment fabric",
+          "A small attached cloth fold sits between an opposing thumb and fingertip.",
+          "옷에 이어진 작은 천 주름이 마주 보는 엄지와 손끝 사이에 놓인다."
+        ],
+        "core_assertion_discovery": true,
+        "requires_primary_any_tags": [
+          "garment",
+          "clothing",
+          "fabric",
+          "apron",
+          "shirt",
+          "dress",
+          "옷",
+          "천",
+          "앞치마"
+        ]
+      },
+      {
+        "id": "se_existing_pendant_fingertip_hold",
+        "ko": "기존 목걸이 펜던트 본체를 손끝으로 잡기",
+        "en": "fingertips hold the existing pendant body while it remains visibly connected to its necklace chain",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "contact_point"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "기존 목걸이 펜던트 본체를 손끝으로 잡기",
+          "fingertips hold the existing pendant body while it remains visibly connected to its necklace chain"
+        ],
+        "keywords": [
+          "기존 목걸이 펜던트 본체를 손끝으로 잡기",
+          "fingertips hold the existing pendant body while it remains visibly connected to its necklace chain"
+        ],
+        "embedding_text": "fingertips hold the existing pendant body while it remains visibly connected to its necklace chain; declared fingertips contact and hold the existing pendant body; the pendant remains attached to the same necklace chain; the chain belongs to the same actor accessory; the hand belongs to that actor",
+        "concept_units": [
+          "declared fingertips contact and hold the existing pendant body",
+          "the pendant remains attached to the same necklace chain",
+          "the chain belongs to the same actor accessory",
+          "the hand belongs to that actor"
+        ],
+        "relations": [
+          {
+            "id": "se_existing_pendant_fingertip_hold_r1",
+            "type": "holds",
+            "subject": "main_subject.declared_fingertips",
+            "object": "main_subject.accessories.pendant.body"
+          },
+          {
+            "id": "se_existing_pendant_fingertip_hold_r2",
+            "type": "attached_to",
+            "subject": "main_subject.accessories.pendant.body",
+            "object": "main_subject.accessories.necklace.chain"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "accessories"
+          }
+        ],
+        "paraphrases": [
+          "기존 목걸이 펜던트 본체를 손끝으로 잡기",
+          "fingertips hold the existing pendant body while it remains visibly connected to its necklace chain",
+          "The person's fingertips hold their pendant while it remains connected to the worn chain.",
+          "자기 손끝으로 펜던트를 잡고 펜던트는 착용한 체인에 계속 이어져 있다."
+        ],
+        "core_assertion_discovery": true,
+        "requires_primary_any_tags": [
+          "pendant",
+          "necklace",
+          "펜던트",
+          "목걸이"
+        ]
+      }
+    ],
+    "light_shape": [
+      {
+        "id": "se_cornea_catchlight_without_wetness",
+        "ko": "각막 표면의 작은 광원 반사점",
+        "en": "a small bounded source reflection is visible on the specified corneal surface",
+        "weight": 0.6,
+        "tags": [
+          "human",
+          "light_shape"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "각막 표면의 작은 광원 반사점",
+          "a small bounded source reflection is visible on the specified corneal surface"
+        ],
+        "keywords": [
+          "각막 표면의 작은 광원 반사점",
+          "a small bounded source reflection is visible on the specified corneal surface"
+        ],
+        "embedding_text": "a small bounded source reflection is visible on the specified corneal surface; a small bounded highlight lies on the specified actor corneal surface; iris and lid boundaries remain visible around the reflection; iris texture remains readable around the bounded source reflection",
+        "concept_units": [
+          "a small bounded highlight lies on the specified actor corneal surface",
+          "iris and lid boundaries remain visible around the reflection",
+          "iris texture remains readable around the bounded source reflection"
+        ],
+        "relations": [
+          {
+            "id": "se_cornea_catchlight_without_wetness_r1",
+            "type": "reflected_on",
+            "subject": "the specified light source",
+            "object": "main_subject.declared_cornea"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "main_subject",
+            "property": "eyes.light_reflection"
+          }
+        ],
+        "paraphrases": [
+          "각막 표면의 작은 광원 반사점",
+          "a small bounded source reflection is visible on the specified corneal surface",
+          "A small bounded source reflection appears on the cornea with iris texture and lid edges readable around it.",
+          "각막에 경계가 있는 작은 광원 반사가 있고 그 주변 홍채 질감과 눈꺼풀 경계가 읽힌다."
+        ],
+        "core_assertion_discovery": true
+      }
+    ]
+  },
+  "existing_slot_context_extensions": {
+    "expression": {
+      "ae_squinch": {
+        "paraphrases": [
+          "Raised lower lid rims narrow both eyes while each aperture stays open.",
+          "아래 눈꺼풀 가장자리가 올라와 양눈의 열린 틈을 좁힌다."
+        ]
+      },
+      "pv_half_lidded": {
+        "paraphrases": [
+          "Both eye openings are partly narrowed, with some pupil area still visible.",
+          "양눈의 틈이 일부 좁아져 있고 동공 일부는 계속 보인다."
+        ]
+      },
+      "pv_asymmetric_mouth": {
+        "paraphrases": [
+          "The two lip corners differ in height or curvature after face yaw is accounted for.",
+          "얼굴 회전을 고려해도 두 입꼬리의 높이나 굽음이 서로 다르다."
+        ]
+      },
+      "playful_smirk": {
+        "paraphrases": [
+          "A small smirk is used in a playful expression.",
+          "장난스러운 표정에서 작은 스머크를 짓는다."
+        ]
+      },
+      "ae_lip_bite": {
+        "paraphrases": [
+          "The upper teeth rest against the same person's lower lip.",
+          "윗니가 같은 인물의 아랫입술에 가볍게 닿아 있다."
+        ]
+      },
+      "ctx_c126": {
+        "paraphrases": [
+          "An adult working on a task lightly holds the lower lip between the upper teeth and mouth.",
+          "과제에 집중하는 성인이 윗니로 아랫입술을 가볍게 문 상태다."
+        ]
+      },
+      "ae_sultry_variant": {
+        "paraphrases": [
+          "The partly lowered upper lids retain the same target-directed eyeline.",
+          "일부 내려온 윗눈꺼풀과 함께 같은 대상을 향한 시선 방향을 유지한다."
+        ]
+      },
+      "ae_coquettish_variant": {
+        "paraphrases": [
+          "One eye shuts while the other stays open above a small smile.",
+          "작은 미소를 유지하면서 한 눈은 감고 다른 눈은 열어 둔다."
+        ]
+      },
+      "ae_smolder_attraction": {
+        "paraphrases": [
+          "The irises point at the established target with the specified eye aperture retained.",
+          "홍채가 이미 정한 대상을 향하고 지정한 눈의 열린 정도를 유지한다."
+        ]
+      },
+      "pv_parted_lips": {
+        "paraphrases": [
+          "A small opening remains between the upper and lower lip edges.",
+          "윗입술과 아랫입술 가장자리 사이에 작은 틈이 남는다."
+        ]
+      },
+      "pv_wink": {
+        "paraphrases": [
+          "The specified eye closes while the opposite eye remains open.",
+          "지정한 쪽 눈은 감고 반대쪽 눈은 열어 둔다."
+        ]
+      },
+      "ae_single_brow": {
+        "paraphrases": [
+          "The specified eyebrow sits higher than the unraised opposite brow.",
+          "지정한 눈썹이 올리지 않은 반대 눈썹보다 높다."
+        ]
+      },
+      "pv_eyes_closed": {
+        "paraphrases": [
+          "Both eyelid margins meet over the eyes.",
+          "양눈의 눈꺼풀 가장자리가 서로 맞닿아 눈을 덮는다."
+        ]
+      },
+      "pv_smile_closed": {
+        "paraphrases": [
+          "The lip corners rise slightly while the mouth seam stays closed.",
+          "입술 틈이 닫힌 채 입꼬리가 조금 올라간다."
+        ]
+      },
+      "ae_purse": {
+        "paraphrases": [
+          "The mouth corners draw inward around a small rounded lip opening.",
+          "입꼬리가 안쪽으로 모이고 입술 틈은 작고 둥글게 좁아진다."
+        ]
+      },
+      "ae_pucker": {
+        "paraphrases": [
+          "The gathered lip contour projects forward in a rounded shape.",
+          "모인 입술 윤곽이 둥근 형태로 앞으로 돌출된다."
+        ]
+      },
+      "ae_lip_press": {
+        "paraphrases": [
+          "The lip edges meet and compress along a fully closed seam.",
+          "입술 가장자리가 완전히 닫힌 접합선을 따라 맞닿아 눌린다."
+        ]
+      }
+    },
+    "body_orientation": {
+      "pv_shoulder_lower": {
+        "paraphrases": [
+          "One shoulder sits lower against the neck and torso reference.",
+          "한쪽 어깨가 목과 몸통의 기준에 비해 낮게 놓인다."
+        ]
+      },
+      "pv_head_tilt": {
+        "paraphrases": [
+          "The head inclines toward one shoulder relative to the torso.",
+          "고개가 몸통을 기준으로 한쪽 어깨 쪽으로 기운다."
+        ]
+      },
+      "pv_chin_down": {
+        "paraphrases": [
+          "The head pitches downward against the thorax reference.",
+          "고개가 가슴 기준에 비해 아래로 기울어진다."
+        ]
+      },
+      "pv_chin_up": {
+        "paraphrases": [
+          "The head pitches upward against the thorax reference.",
+          "고개가 가슴 기준에 비해 위로 기울어진다."
+        ]
+      },
+      "pv_head_turn": {
+        "paraphrases": [
+          "The head rotates horizontally relative to the thorax.",
+          "고개가 가슴을 기준으로 수평 방향으로 돌아간다."
+        ]
+      },
+      "pv_back_arch": {
+        "paraphrases": [
+          "The torso extends backward relative to the pelvis with the support chain retained.",
+          "지지 경로를 유지하면서 몸통이 골반에 비해 뒤로 신전된다."
+        ]
+      },
+      "pv_forward_torso_lean": {
+        "paraphrases": [
+          "The chest inclines forward from a readable pelvis and support base.",
+          "식별되는 골반과 지지 기반 위에서 가슴이 앞으로 기운다."
+        ]
+      },
+      "pv_shoulder_forward": {
+        "paraphrases": [
+          "One shoulder advances relative to the chest reference.",
+          "한쪽 어깨가 가슴 기준보다 앞으로 나온다."
+        ]
+      },
+      "three_quarter_body_turn": {
+        "paraphrases": [
+          "The torso presents a three-quarter turn toward the camera.",
+          "몸통이 카메라를 향해 사선으로 돌아선다."
+        ]
+      },
+      "thorax_pelvis_opposed_azimuth": {
+        "paraphrases": [
+          "The chest and pelvis point in opposed horizontal directions.",
+          "가슴과 골반이 서로 반대의 수평 방향으로 돌아간다."
+        ]
+      }
+    },
+    "hand_pose": {
+      "tucking_hair_behind_ear": {
+        "paraphrases": [
+          "The same person's fingers guide their hair behind their ear.",
+          "자기 손가락으로 자기 귀 뒤에 머리카락을 넘긴다."
+        ]
+      },
+      "reaching_toward_camera": {
+        "paraphrases": [
+          "An attached hand extends toward the lens and lies nearer than the torso.",
+          "몸에 이어진 손이 렌즈 쪽으로 뻗어 몸통보다 가까이 놓인다."
+        ]
+      },
+      "pv_relaxed_fingers": {
+        "paraphrases": [
+          "The fingers have varied shallow bends with coherent joints.",
+          "손가락이 일관된 관절 구조 안에서 조금씩 다른 작은 굽힘을 보인다."
+        ]
+      },
+      "relaxed_wrist_offset_line": {
+        "paraphrases": [
+          "The hand rests at a soft offset from the forearm line.",
+          "손이 전완의 선에서 부드럽게 비낀 각도로 놓인다."
+        ]
+      },
+      "pv_wrists_cross_overhead": {
+        "paraphrases": [
+          "Both arms reach over the head and meet at a visible wrist crossing.",
+          "양팔이 머리 위로 올라가 보이는 손목 교차점에서 만난다."
+        ]
+      },
+      "pc_pc16_component_1": {
+        "paraphrases": [
+          "The subject's connected hand extends closer toward the lens.",
+          "주체의 몸에 이어진 손이 렌즈 쪽으로 가까이 뻗는다."
+        ]
+      }
+    },
+    "contact_point": {
+      "pv_chin_support": {
+        "paraphrases": [
+          "The chin rests on a palm or knuckles with the loaded arm supported.",
+          "턱이 손바닥이나 손마디에 기대고 하중을 받는 팔이 지지된다."
+        ]
+      },
+      "pv_collarbone_touch": {
+        "paraphrases": [
+          "The owned hand meets the upper chest over the collarbone region.",
+          "소유자가 분명한 손이 쇄골 부근의 윗가슴에 닿는다."
+        ]
+      },
+      "pv_lapel_grip": {
+        "paraphrases": [
+          "Fingers hold a collar edge with the cloth reacting at their grasp.",
+          "손가락이 옷깃 가장자리를 잡고 잡힌 곳의 천이 그 접촉에 반응한다."
+        ]
+      },
+      "pv_wall_shoulder_support": {
+        "paraphrases": [
+          "A shoulder or the back touches the wall over a readable foot support base.",
+          "발 지지 기반이 보이는 상태에서 어깨나 등이 벽에 닿는다."
+        ]
+      },
+      "pv_temple_touch": {
+        "paraphrases": [
+          "The owned fingertips meet the temple region at the side of the head.",
+          "소유자가 분명한 손끝이 머리 옆 관자 부위에 닿는다."
+        ]
+      }
+    },
+    "lighting": {
+      "sff_pro_l01": {
+        "paraphrases": [
+          "A side key divides the face into an illuminated half and a shaded half.",
+          "측면 주광이 얼굴을 밝은 반쪽과 그늘진 반쪽으로 나눈다."
+        ]
+      },
+      "sff_pro_l05": {
+        "paraphrases": [
+          "The small side-offset nose shadow stops before the cheek shadow.",
+          "코 옆으로 비낀 작은 그림자가 볼 그림자에 닿기 전에 끝난다."
+        ]
+      },
+      "sff_pro_l07": {
+        "paraphrases": [
+          "The narrow camera-visible cheek is lit and the broad near cheek is shaded.",
+          "카메라에 좁게 보이는 볼은 밝고 넓은 가까운 볼은 그늘진다."
+        ]
+      },
+      "sff_pro_l08": {
+        "paraphrases": [
+          "The broad camera-visible cheek takes the key and the narrow far cheek is shaded.",
+          "카메라에 넓게 보이는 볼이 주광을 받고 좁은 먼 볼은 그늘진다."
+        ]
+      },
+      "chiaroscuro_window_light": {
+        "paraphrases": [
+          "Window light models a bright area against deep shadows.",
+          "창빛이 깊은 그늘과 대비되는 밝은 영역의 형태를 드러낸다."
+        ]
+      },
+      "butterfly_lighting": {
+        "paraphrases": [
+          "A high frontal beauty key leaves a small shadow directly under the nose.",
+          "높은 전방 뷰티 주광이 코 바로 아래에 작은 그림자를 남긴다."
+        ]
+      }
+    },
+    "light_shape": {
+      "lit_clean_vertical_catchlight_pair": {
+        "paraphrases": [
+          "Two separate eye reflections occupy upper and lower positions on the cornea.",
+          "서로 분리된 두 눈 반사점이 각막 위쪽과 아래쪽에 놓인다."
+        ]
+      }
+    },
+    "composition": {
+      "pc_pc17_component_2": {
+        "paraphrases": [
+          "The main person's face is seen beyond another person's near shoulder.",
+          "다른 사람의 가까운 어깨 너머로 주인공의 얼굴이 보인다."
+        ]
+      },
+      "centered_symmetric": {
+        "paraphrases": [
+          "The main arrangement is centered with balanced corresponding sides.",
+          "주된 배열이 중앙에 있고 서로 대응하는 양쪽의 균형이 맞는다."
+        ]
+      },
+      "third_grid_off_center_subject": {
+        "paraphrases": [
+          "The subject sits off center along the thirds grid.",
+          "주체가 삼분할 격자를 따라 중심에서 벗어나 놓인다."
+        ]
+      },
+      "large_negative_space_top_area": {
+        "paraphrases": [
+          "A large relatively empty area stays above the subject.",
+          "주체 위에 넓고 비교적 비어 있는 영역이 남는다."
+        ]
+      },
+      "pc_pc20_component_1": {
+        "paraphrases": [
+          "A physical opening surrounds the main subject with a visible boundary.",
+          "실제 개구부가 보이는 경계로 주체 주위를 둘러싼다."
+        ]
+      },
+      "pc_pc20_component_2": {
+        "paraphrases": [
+          "Boundary thickness or overlap establishes a nearer framing plane.",
+          "경계의 두께나 겹침이 더 가까운 프레이밍 면을 만든다."
+        ]
+      },
+      "occlusion_continuity_lock": {
+        "paraphrases": [
+          "Hidden and visible subject edges align across the foreground occluder.",
+          "전경 가림물 양쪽에서 숨은 부분과 보이는 주체 경계가 이어진다."
+        ]
+      },
+      "strong_leading_lines_vanish": {
+        "paraphrases": [
+          "Strong scene lines converge toward a visible vanishing point.",
+          "뚜렷한 장면 선들이 보이는 소실점 쪽으로 모인다."
+        ]
+      }
+    },
+    "gaze_engagement": {
+      "pv_gaze_direct": {
+        "paraphrases": [
+          "The visible pupils point toward the camera while head direction is stated separately.",
+          "보이는 동공은 카메라 쪽을 향하고 고개 방향은 별도로 정한다."
+        ]
+      },
+      "pv_side_eye": {
+        "paraphrases": [
+          "The irises shift sideways relative to the direction of the face.",
+          "홍채가 얼굴이 향한 방향에 비해 옆으로 이동한다."
+        ]
+      },
+      "pv_gaze_down": {
+        "paraphrases": [
+          "The eyes aim below the face-forward axis toward a lower target.",
+          "눈이 얼굴 정면 축보다 아래에 있는 대상을 향한다."
+        ]
+      },
+      "pv_gaze_up": {
+        "paraphrases": [
+          "The eyes aim toward a target higher than the face-forward axis.",
+          "눈이 얼굴 정면 축보다 높은 대상을 향한다."
+        ]
+      },
+      "pv_gaze_offcamera": {
+        "paraphrases": [
+          "The eye direction points toward a specified target away from the camera.",
+          "눈의 방향이 카메라와 떨어진 지정 대상을 향한다."
+        ]
+      }
+    },
+    "gaze_target": {
+      "head_eye_counterorientation_relation": {
+        "paraphrases": [
+          "The head and eyes point along different specified directions.",
+          "고개와 눈이 각각 지정한 다른 방향을 향한다."
+        ]
+      },
+      "pc_pc17_component_3": {
+        "paraphrases": [
+          "The main response points toward the companion at the near shoulder position.",
+          "주체의 반응이 가까운 어깨 위치의 동료에게 향한다."
+        ]
+      }
+    },
+    "body_pose": {
+      "contrapposto_full_body": {
+        "paraphrases": [
+          "One extended leg bears the standing body while the free leg relaxes and the hip and shoulder slopes oppose.",
+          "뻗은 한 다리가 선 몸을 받치고 다른 다리는 풀린 채 골반과 어깨 경사가 반대다."
+        ]
+      },
+      "pv_single_support": {
+        "paraphrases": [
+          "One leg carries the main body weight and the other stays comparatively unloaded.",
+          "한 다리가 몸의 주된 하중을 받고 반대 다리는 상대적으로 하중이 작다."
+        ]
+      },
+      "perched_edge_sit_grounded_support": {
+        "paraphrases": [
+          "The pelvis perches at the seat edge with a readable grounded support path.",
+          "골반이 좌면 가장자리에 걸터앉고 바닥으로 이어진 지지 경로가 보인다."
+        ]
+      },
+      "pv_sideways_seat": {
+        "paraphrases": [
+          "The seated body turns sideways against the chair axes.",
+          "앉은 몸이 의자 축에 비해 옆으로 돌아간다."
+        ]
+      },
+      "propped_elbow_recline_support": {
+        "paraphrases": [
+          "The reclining torso rests through one elbow and forearm onto its support.",
+          "기대 누운 몸통이 한 팔꿈치와 전완을 통해 지지면에 기대어 있다."
+        ]
+      },
+      "pv_side_lying": {
+        "paraphrases": [
+          "The side of the trunk or hip lies on the support with side-oriented shoulders and hips.",
+          "몸통이나 골반의 옆면이 지지면에 닿고 어깨와 골반은 옆으로 향한다."
+        ]
+      },
+      "pv_prone_forearms": {
+        "paraphrases": [
+          "The belly faces the support while both forearms hold the upper body above it.",
+          "배가 지지면을 향하고 양전완이 상체를 그 위로 받친다."
+        ]
+      },
+      "pv_knee_over_knee": {
+        "paraphrases": [
+          "One thigh crosses over the other above the knees in a seated pose.",
+          "앉은 자세에서 한 허벅지가 무릎 위쪽에서 반대 허벅지 위로 교차한다."
+        ]
+      },
+      "pv_ankle_cross_seated": {
+        "paraphrases": [
+          "The seated legs cross at the ankles while the knees remain separately placed.",
+          "앉은 다리의 발목이 교차하고 무릎 위치는 따로 놓인다."
+        ]
+      },
+      "pv_half_kneel": {
+        "paraphrases": [
+          "One knee rests on the support while the opposite foot is planted forward.",
+          "한 무릎은 지지면에 놓이고 반대 발은 앞쪽 바닥에 딛는다."
+        ]
+      },
+      "pv_reverse_chair": {
+        "paraphrases": [
+          "The seated torso faces the chair back while the pelvis remains on its seat.",
+          "골반은 의자 좌면에 앉아 있고 몸통은 등받이를 마주 본다."
+        ]
+      },
+      "pv_chair_straddle": {
+        "paraphrases": [
+          "The seated pelvis rests between legs placed on opposite sides of the chair.",
+          "앉은 골반이 의자 양옆에 나누어 둔 다리 사이의 좌면에 놓인다."
+        ]
+      },
+      "lower_limb_plantarflexed_line": {
+        "paraphrases": [
+          "The ankle extends in plantar flexion to continue the lower leg line through the foot.",
+          "발목이 발바닥 굽힘으로 펴져 하퇴의 선이 발까지 이어진다."
+        ]
+      }
+    },
+    "shot_scale": {
+      "close_up_face_shot": {
+        "paraphrases": [
+          "The face occupies a close portrait crop.",
+          "얼굴이 가까운 초상 크롭을 차지한다."
+        ]
+      },
+      "extreme_close_detail_shot": {
+        "paraphrases": [
+          "A small selected detail fills the extreme close crop.",
+          "작게 지정한 세부 부위가 극근접 크롭을 채운다."
+        ]
+      },
+      "medium_close_chest_up_shot": {
+        "paraphrases": [
+          "The person is framed from the upper chest to the head.",
+          "인물이 윗가슴부터 머리까지의 범위로 담긴다."
+        ]
+      },
+      "medium_waist_up_shot": {
+        "paraphrases": [
+          "The frame includes the person from the waist upward.",
+          "프레임이 인물의 허리 위쪽을 포함한다."
+        ]
+      },
+      "medium_long_knee_up_shot": {
+        "paraphrases": [
+          "The crop runs from the knees upward to include the head.",
+          "크롭이 무릎 위쪽에서 머리까지를 포함한다."
+        ]
+      },
+      "full_length_body_shot": {
+        "paraphrases": [
+          "The entire figure is included from head through feet.",
+          "머리부터 발까지 인물 전체가 프레임 안에 들어온다."
+        ]
+      }
+    },
+    "camera_direction": {
+      "high_observer_angle": {
+        "paraphrases": [
+          "The camera looks down from above the subject.",
+          "카메라가 주체보다 높은 곳에서 아래를 바라본다."
+        ]
+      },
+      "strict_top_down_flat_view": {
+        "paraphrases": [
+          "The camera axis points straight down over the selected surface.",
+          "카메라 축이 지정한 면 위에서 수직 아래로 향한다."
+        ]
+      },
+      "dutch_tilt_direction": {
+        "paraphrases": [
+          "The camera roll tilts the scene reference against the image axes.",
+          "카메라 롤이 장면의 기준선을 이미지 축에 비해 기울인다."
+        ]
+      },
+      "pc_pc30_component_1": {
+        "paraphrases": [
+          "A stable scene line rotates against the frame axes under camera roll.",
+          "카메라 롤로 안정된 장면 선이 프레임 축에 비해 회전한다."
+        ]
+      }
+    },
+    "partner_framing": {
+      "pc_pc17_component_1": {
+        "paraphrases": [
+          "A companion's closer shoulder creates a partial foreground outline.",
+          "동료의 가까운 어깨가 전경에 부분 윤곽을 만든다."
+        ]
+      }
+    },
+    "focus": {
+      "pc_pc17_component_4": {
+        "paraphrases": [
+          "The main face has focus priority over the companion's nearer shoulder.",
+          "주체 얼굴이 동료의 가까운 어깨보다 초점 우선순위를 갖는다."
+        ]
+      },
+      "shallow_depth": {
+        "paraphrases": [
+          "The focus zone is shallow and the background is strongly defocused.",
+          "초점이 맞는 깊이 범위가 얕고 배경은 크게 흐려진다."
+        ]
+      }
+    },
+    "subject_framing": {
+      "group_two_shot": {
+        "paraphrases": [
+          "Both people share one two-person frame.",
+          "두 사람이 하나의 두 인물 프레임 안에 함께 들어온다."
+        ]
+      },
+      "pc_pc20_component_3": {
+        "paraphrases": [
+          "The main face is readable within the opening.",
+          "주체 얼굴이 개구부 안에서 식별된다."
+        ]
+      }
+    }
+  },
+  "visual_semantics": [
+    {
+      "id": "se_option_lash_gaze_lapel",
+      "candidate_only": true,
+      "primary_visual_proposition": "Optional combination of the stated visible configurations.",
+      "candidate_ids": [
+        "se_lash_occluded_upward_gaze",
+        "pv_smile_closed",
+        "se_lapel_fingertip_touch"
+      ],
+      "candidate_slots": {
+        "se_lash_occluded_upward_gaze": "gaze_engagement",
+        "pv_smile_closed": "expression",
+        "se_lapel_fingertip_touch": "contact_point"
+      },
+      "hard_profile_ids": [
+        "se_profile_lash_occluded_upward_gaze",
+        "se_profile_lapel_fingertip_touch"
+      ],
+      "component_groups": [
+        {
+          "id": "option_1",
+          "visible_evidence": [
+            "the declared actor chin is pitched slightly downward",
+            "the eyes aim above the head-facing axis toward the specified target",
+            "upper lashes partially overlap the visible upper eye apertures",
+            "the specified eyes remain visibly open"
+          ]
+        },
+        {
+          "id": "option_2",
+          "visible_evidence": [
+            "mouth corners rise visibly",
+            "lips remain closed without visible teeth",
+            "eye expression is independently specified"
+          ]
+        },
+        {
+          "id": "option_3",
+          "visible_evidence": [
+            "an existing lapel edge remains connected to the same actor garment",
+            "declared fingertips contact that lapel edge",
+            "fingertip pads meet one exposed side of the lapel edge"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "Only selected components change the final scene.",
+        "Each component retains its declared owner, dependencies and property effects.",
+        "Profile activation requires independent request evidence."
+      ],
+      "relations": []
+    },
+    {
+      "id": "se_option_small_asymmetry",
+      "candidate_only": true,
+      "primary_visual_proposition": "Optional combination of the stated visible configurations.",
+      "candidate_ids": [
+        "pv_side_eye",
+        "pv_asymmetric_mouth",
+        "lit_window_large_soft_source"
+      ],
+      "candidate_slots": {
+        "pv_side_eye": "gaze_engagement",
+        "pv_asymmetric_mouth": "expression",
+        "lit_window_large_soft_source": "lighting"
+      },
+      "hard_profile_ids": [],
+      "component_groups": [
+        {
+          "id": "option_1",
+          "visible_evidence": [
+            "pupils shift laterally relative to face direction",
+            "both head yaw and eye direction can be compared",
+            "no emotional attitude is inferred from the pose"
+          ]
+        },
+        {
+          "id": "option_2",
+          "visible_evidence": [
+            "one mouth corner differs visibly from the other",
+            "face yaw does not alone explain the asymmetry",
+            "no personality or motive is inferred"
+          ]
+        },
+        {
+          "id": "option_3",
+          "visible_evidence": [
+            "large-window soft directional light"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "Only selected components change the final scene.",
+        "Each component retains its declared owner, dependencies and property effects.",
+        "Profile activation requires independent request evidence."
+      ],
+      "relations": []
+    },
+    {
+      "id": "se_option_squinch_reflection",
+      "candidate_only": true,
+      "primary_visual_proposition": "Optional combination of the stated visible configurations.",
+      "candidate_ids": [
+        "ae_squinch",
+        "se_cornea_catchlight_without_wetness"
+      ],
+      "candidate_slots": {
+        "ae_squinch": "expression",
+        "se_cornea_catchlight_without_wetness": "light_shape"
+      },
+      "hard_profile_ids": [
+        "se_profile_cornea_catchlight_without_wetness"
+      ],
+      "component_groups": [
+        {
+          "id": "option_1",
+          "visible_evidence": [
+            "lower eyelid margins lift toward the irises",
+            "both eyes remain visibly open through narrowed apertures"
+          ]
+        },
+        {
+          "id": "option_2",
+          "visible_evidence": [
+            "a small bounded highlight lies on the specified actor corneal surface",
+            "iris and lid boundaries remain visible around the reflection",
+            "iris texture remains readable around the bounded source reflection"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "Only selected components change the final scene.",
+        "Each component retains its declared owner, dependencies and property effects.",
+        "Profile activation requires independent request evidence."
+      ],
+      "relations": []
+    },
+    {
+      "id": "se_option_seated_support",
+      "candidate_only": true,
+      "primary_visual_proposition": "Optional combination of the stated visible configurations.",
+      "candidate_ids": [
+        "pv_seated_palm_brace",
+        "perched_edge_sit_grounded_support",
+        "pv_relaxed_fingers"
+      ],
+      "candidate_slots": {
+        "pv_seated_palm_brace": "contact_point",
+        "perched_edge_sit_grounded_support": "body_pose",
+        "pv_relaxed_fingers": "hand_pose"
+      },
+      "hard_profile_ids": [],
+      "component_groups": [
+        {
+          "id": "option_1",
+          "visible_evidence": [
+            "one declared palm contacts the sitting surface beside or behind the pelvis",
+            "that hand connects through its wrist and elbow to the same shoulder",
+            "the arm and sitting surface form a visible bracing arrangement",
+            "the seated pelvis and folded or planted legs maintain the remaining support base"
+          ]
+        },
+        {
+          "id": "option_2",
+          "visible_evidence": [
+            "perched edge-sit with visible grounded support"
+          ]
+        },
+        {
+          "id": "option_3",
+          "visible_evidence": [
+            "digits show small varied bends",
+            "finger count and joints remain coherent",
+            "wrist position is separately declared"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "Only selected components change the final scene.",
+        "Each component retains its declared owner, dependencies and property effects.",
+        "Profile activation requires independent request evidence."
+      ],
+      "relations": []
+    },
+    {
+      "id": "se_option_chin_hover",
+      "candidate_only": true,
+      "primary_visual_proposition": "Optional combination of the stated visible configurations.",
+      "candidate_ids": [
+        "pv_smile_closed",
+        "se_hand_hover_below_chin",
+        "close_up_face_shot"
+      ],
+      "candidate_slots": {
+        "pv_smile_closed": "expression",
+        "se_hand_hover_below_chin": "hand_pose",
+        "close_up_face_shot": "shot_scale"
+      },
+      "hard_profile_ids": [
+        "se_profile_hand_hover_below_chin"
+      ],
+      "component_groups": [
+        {
+          "id": "option_1",
+          "visible_evidence": [
+            "mouth corners rise visibly",
+            "lips remain closed without visible teeth",
+            "eye expression is independently specified"
+          ]
+        },
+        {
+          "id": "option_2",
+          "visible_evidence": [
+            "the declared hand sits below the same actor chin",
+            "a visible gap separates the hand from the chin",
+            "the hand and forearm belong to the same actor"
+          ]
+        },
+        {
+          "id": "option_3",
+          "visible_evidence": [
+            "close-up face shot scale"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "Only selected components change the final scene.",
+        "Each component retains its declared owner, dependencies and property effects.",
+        "Profile activation requires independent request evidence."
+      ],
+      "relations": []
+    },
+    {
+      "id": "se_option_one_hand_head",
+      "candidate_only": true,
+      "primary_visual_proposition": "Optional combination of the stated visible configurations.",
+      "candidate_ids": [
+        "pv_gaze_direct",
+        "axial_elongation_relaxed_shoulders",
+        "se_one_hand_behind_head"
+      ],
+      "candidate_slots": {
+        "pv_gaze_direct": "gaze_engagement",
+        "axial_elongation_relaxed_shoulders": "body_orientation",
+        "se_one_hand_behind_head": "hand_pose"
+      },
+      "hard_profile_ids": [
+        "se_profile_one_hand_behind_head"
+      ],
+      "component_groups": [
+        {
+          "id": "option_1",
+          "visible_evidence": [
+            "visible pupils or eye axes converge toward the camera direction",
+            "face direction is separately stated",
+            "occluded eyes cannot establish eye contact"
+          ]
+        },
+        {
+          "id": "option_2",
+          "visible_evidence": [
+            "axially elongated torso with relaxed lowered shoulders"
+          ]
+        },
+        {
+          "id": "option_3",
+          "visible_evidence": [
+            "the specified single hand lies at the same actor posterior head",
+            "its elbow forearm and wrist form one continuous arm chain",
+            "the other hand retains its existing posture"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "Only selected components change the final scene.",
+        "Each component retains its declared owner, dependencies and property effects.",
+        "Profile activation requires independent request evidence."
+      ],
+      "relations": []
+    },
+    {
+      "id": "se_option_own_shoulder",
+      "candidate_only": true,
+      "primary_visual_proposition": "Optional combination of the stated visible configurations.",
+      "candidate_ids": [
+        "looking_back_over_shoulder_orientation",
+        "medium_close_chest_up_shot",
+        "lit_rembrandt_cheek_triangle_key"
+      ],
+      "candidate_slots": {
+        "looking_back_over_shoulder_orientation": "body_orientation",
+        "medium_close_chest_up_shot": "shot_scale",
+        "lit_rembrandt_cheek_triangle_key": "lighting"
+      },
+      "hard_profile_ids": [],
+      "component_groups": [
+        {
+          "id": "option_1",
+          "visible_evidence": [
+            "body turned away while looking back over the shoulder"
+          ]
+        },
+        {
+          "id": "option_2",
+          "visible_evidence": [
+            "medium close chest-up shot scale"
+          ]
+        },
+        {
+          "id": "option_3",
+          "visible_evidence": [
+            "Rembrandt key preserving a contained shadow-cheek triangle"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "Only selected components change the final scene.",
+        "Each component retains its declared owner, dependencies and property effects.",
+        "Profile activation requires independent request evidence."
+      ],
+      "relations": []
+    },
+    {
+      "id": "se_option_existing_partner_ots",
+      "candidate_only": true,
+      "primary_visual_proposition": "Optional combination of the stated visible configurations.",
+      "candidate_ids": [
+        "pc_pc17_component_1",
+        "pc_pc17_component_2",
+        "pc_pc17_component_4"
+      ],
+      "candidate_slots": {
+        "pc_pc17_component_1": "partner_framing",
+        "pc_pc17_component_2": "composition",
+        "pc_pc17_component_4": "focus"
+      },
+      "hard_profile_ids": [],
+      "component_groups": [
+        {
+          "id": "option_1",
+          "visible_evidence": [
+            "another person shoulder forms a partial near-plane silhouette"
+          ]
+        },
+        {
+          "id": "option_2",
+          "visible_evidence": [
+            "the camera observes the main face beyond that secondary shoulder"
+          ]
+        },
+        {
+          "id": "option_3",
+          "visible_evidence": [
+            "the main face receives the requested focus priority over the foreground shoulder"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "Only selected components change the final scene.",
+        "Each component retains its declared owner, dependencies and property effects.",
+        "Profile activation requires independent request evidence."
+      ],
+      "relations": []
+    },
+    {
+      "id": "se_option_short_loop",
+      "candidate_only": true,
+      "primary_visual_proposition": "Optional combination of the stated visible configurations.",
+      "candidate_ids": [
+        "close_up_face_shot",
+        "sff_pro_l05",
+        "sff_pro_l07"
+      ],
+      "candidate_slots": {
+        "close_up_face_shot": "shot_scale",
+        "sff_pro_l05": "lighting",
+        "sff_pro_l07": "lighting"
+      },
+      "hard_profile_ids": [],
+      "component_groups": [
+        {
+          "id": "option_1",
+          "visible_evidence": [
+            "close-up face shot scale"
+          ]
+        },
+        {
+          "id": "option_2",
+          "visible_evidence": [
+            "loop lighting",
+            "코 옆 짧은 그림자",
+            "볼 암부와 분리"
+          ]
+        },
+        {
+          "id": "option_3",
+          "visible_evidence": [
+            "short lighting",
+            "카메라에서 먼 볼이 밝음",
+            "가까운 면은 어두움"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "Only selected components change the final scene.",
+        "Each component retains its declared owner, dependencies and property effects.",
+        "Profile activation requires independent request evidence."
+      ],
+      "relations": []
+    },
+    {
+      "id": "se_option_existing_pendant",
+      "candidate_only": true,
+      "primary_visual_proposition": "Optional combination of the stated visible configurations.",
+      "candidate_ids": [
+        "pv_smile_closed",
+        "se_existing_pendant_fingertip_hold",
+        "lit_window_large_soft_source"
+      ],
+      "candidate_slots": {
+        "pv_smile_closed": "expression",
+        "se_existing_pendant_fingertip_hold": "contact_point",
+        "lit_window_large_soft_source": "lighting"
+      },
+      "hard_profile_ids": [
+        "se_profile_existing_pendant_fingertip_hold"
+      ],
+      "component_groups": [
+        {
+          "id": "option_1",
+          "visible_evidence": [
+            "mouth corners rise visibly",
+            "lips remain closed without visible teeth",
+            "eye expression is independently specified"
+          ]
+        },
+        {
+          "id": "option_2",
+          "visible_evidence": [
+            "declared fingertips contact and hold the existing pendant body",
+            "the pendant remains attached to the same necklace chain",
+            "the chain belongs to the same actor accessory",
+            "the hand belongs to that actor"
+          ]
+        },
+        {
+          "id": "option_3",
+          "visible_evidence": [
+            "large-window soft directional light"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "Only selected components change the final scene.",
+        "Each component retains its declared owner, dependencies and property effects.",
+        "Profile activation requires independent request evidence."
+      ],
+      "relations": []
+    }
+  ]
+}

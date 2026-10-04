@@ -1,0 +1,139 @@
+{
+  "contract_version": "independent-photo-pixel-test-review/v1",
+  "provenance": "agent_pixel_review",
+  "arm": "b",
+  "reviewer": "independent arm-b agent",
+  "pack_id": "ac476ded4e547dab",
+  "test_design_sha256": "eb6960c1a60ef73cc6a1025c8a3df7822f5ccc0adccb149b647a081bbce045fe",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/seduction-expression-integration-20261005/qualification/arm-b/generated_images/backstage-snapped-braid-native-1/original.png",
+  "result_sha256": "821532369caf4d10cb3500dcafb373aafd5f671fe28c302f7d6894129aa7deda",
+  "reviewed_resolution": [
+    1536,
+    1024
+  ],
+  "source_reference": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/seduction-expression-integration-20261005/qualification/arm-b/reference_original.jpeg",
+  "reference_scope": "visible face/hair only; source age, identity, personality and body shape are not inferred",
+  "policy": "strict partial_is_fail; any FAIL or UNOBSERVABLE blocks all-of PASS",
+  "gates": [
+    {
+      "gate_id": "b1_reference_face_hair",
+      "expected": "Main subject visible face/hair qualitatively follows reference dark chin-length bob, separated wispy fringe, dark eyes and softly tapered jaw without transfer of reference outfit or crop.",
+      "pass": "All face and hair features are observable and reasonably corresponding.",
+      "fail": "Distinct incompatible visible face or hair construction.",
+      "unobservable": "Main face or hair obscured, blurred, too small or unavailable.",
+      "status": "PASS",
+      "strict_binary_status": "pass",
+      "image_grounded_evidence": "Main woman has a dark jaw/chin-length bob, separated wispy fringe, dark eyes, tapered jaw and rounded lips corresponding qualitatively to the source face/hair. Work shirt, apron and workshop are new. This checks visible appearance, not identity.",
+      "review_scale": "native",
+      "coordinate_system": "zero-based approximate pixels in 1536x1024 original"
+    },
+    {
+      "gate_id": "b2_adult_workshop_scene",
+      "expected": "Two newly designed adults in a theatrical costume repair room with a workbench and garment-rack context.",
+      "pass": "The central seamstress and performer are both visibly adult and the backstage repair setting reads as such.",
+      "fail": "Childlike subjects or materially different scene.",
+      "unobservable": "A subject age presentation or workshop context cannot be assessed.",
+      "status": "PASS",
+      "strict_binary_status": "pass",
+      "image_grounded_evidence": "Two adult-presenting subjects stand beside an actual costume workbench with spools, garment racks, a dressed mannequin and task lights. Exact numerical ages are not measurable from pixels; newly authored adult scene is observable.",
+      "review_scale": "native",
+      "coordinate_system": "zero-based approximate pixels in 1536x1024 original"
+    },
+    {
+      "gate_id": "b3_self_apron_contact",
+      "expected": "The seamstress right thumb and index pinch her own ivory apron top edge at upper chest, producing a local canvas fold.",
+      "pass": "Both digit-to-canvas contact and apron ownership are visible.",
+      "fail": "Hand floats, touches body instead, merely gestures near apron, or pinches other person garment.",
+      "unobservable": "Finger contact or apron ownership is occluded or cropped.",
+      "status": "PASS",
+      "strict_binary_status": "pass",
+      "image_grounded_evidence": "At approximately x=500,y=585, the main right thumb and index grip the ivory apron upper edge and raise a small local canvas fold. The apron straps and bib continue on her own torso.",
+      "review_scale": "native",
+      "coordinate_system": "zero-based approximate pixels in 1536x1024 original"
+    },
+    {
+      "gate_id": "b4_right_palm_to_camera",
+      "expected": "The seamstress right palm surface faces the lens at own-apron contact.",
+      "pass": "Palm skin and its inner surface are visible at that contact, with right limb continuity.",
+      "fail": "Dorsal hand surface faces camera or a different hand supplies the palm.",
+      "unobservable": "Palm surface or limb ownership cannot be traced.",
+      "status": "FAIL",
+      "strict_binary_status": "fail",
+      "image_grounded_evidence": "At the own-apron contact the visible surface is the back of her right hand, with knuckles and nails toward the lens. The palm creases specified in the frozen baseline are not camera-facing.",
+      "review_scale": "native",
+      "coordinate_system": "zero-based approximate pixels in 1536x1024 original"
+    },
+    {
+      "gate_id": "b5_other_cord_contact",
+      "expected": "Seamstress left index curves beneath gold braid that remains attached to performer cape upper lapel.",
+      "pass": "A finger-under-cord contact and cord-to-performer-garment continuity are visible.",
+      "fail": "Finger points beside cord, grasps detached unrelated ornament, or touches own garment instead.",
+      "unobservable": "Cord contact or attachment cannot be resolved.",
+      "status": "UNOBSERVABLE",
+      "strict_binary_status": "fail",
+      "image_grounded_evidence": "At approximately x=1030,y=530 her left fingertips visibly hold a frayed gold knot/cord section attached to the performer cape. The specifically required left index curving beneath an attached braid is not separately readable; contact with the cord alone does not establish the hook mechanism.",
+      "review_scale": "native",
+      "coordinate_system": "zero-based approximate pixels in 1536x1024 original"
+    },
+    {
+      "gate_id": "b6_left_back_to_camera",
+      "expected": "Seamstress left hand back faces lens at performer cord contact, showing knuckles or nails.",
+      "pass": "Dorsal left surface and corresponding limb ownership are visible.",
+      "fail": "Palm faces lens or another owner supplies the dorsal hand.",
+      "unobservable": "Orientation or ownership is unreadable.",
+      "status": "FAIL",
+      "strict_binary_status": "fail",
+      "image_grounded_evidence": "At the performer-cord contact the inner palm of her left hand faces the lens, including its palm surface; the dorsum with knuckles/nails facing the lens is absent. The connected left forearm confirms the owner.",
+      "review_scale": "native",
+      "coordinate_system": "zero-based approximate pixels in 1536x1024 original"
+    },
+    {
+      "gate_id": "b7_head_turn_eye_contact",
+      "expected": "Seamstress head modestly turns toward screen-right performer while eyes return toward the lens.",
+      "pass": "Both head turn and camera-directed pupil alignment are visible together.",
+      "fail": "Straight front head instead of modest turn, or gaze toward performer/down to task rather than camera.",
+      "unobservable": "Pupils or head orientation cannot be judged.",
+      "status": "PASS",
+      "strict_binary_status": "pass",
+      "image_grounded_evidence": "Her head is modestly turned toward screen-right while both eyes return toward the lens. The face remains readable and her closed mouth forms a small asymmetric smile; the glance does not infer an emotional attitude.",
+      "review_scale": "native",
+      "coordinate_system": "zero-based approximate pixels in 1536x1024 original"
+    },
+    {
+      "gate_id": "b8_broken_braid_trace",
+      "expected": "Two short frayed cord ends hang below a small star brooch as immediate visible trace of cord snapping.",
+      "pass": "Brooch plus visibly separated/frayed braid ends coexist.",
+      "fail": "Continuous intact cord or missing visible snapped trace.",
+      "unobservable": "Ends/brooch too small, blurred or occluded.",
+      "status": "FAIL",
+      "strict_binary_status": "fail",
+      "image_grounded_evidence": "A frayed gold section is visible by the hand on the viewer-left lapel. The star brooch is on the opposite viewer-right side with a separate ornamental hanging cord/tassel. Two short frayed ends directly beneath the same star brooch are not established.",
+      "review_scale": "native",
+      "coordinate_system": "zero-based approximate pixels in 1536x1024 original"
+    },
+    {
+      "gate_id": "b9_framing_continuity",
+      "expected": "Frame includes both adult heads through upper hips and all main hand/wrist/forearm connections with both contact sites.",
+      "pass": "The specified crop and continuity preserve all consequential contacts.",
+      "fail": "Specified crop or clear limb connection is contradicted.",
+      "unobservable": "A consequential limb connection is hidden or a contact is outside frame.",
+      "status": "FAIL",
+      "strict_binary_status": "fail",
+      "image_grounded_evidence": "Both main wrist/forearm chains and both contact zones are visible in a landscape upper-hip frame, but the male performer crown is clipped by the top image boundary. The frozen gate requires both full adult heads through upper hips, so this partial match fails.",
+      "review_scale": "native",
+      "coordinate_system": "zero-based approximate pixels in 1536x1024 original"
+    }
+  ],
+  "pass_count": 4,
+  "fail_count": 4,
+  "unobservable_count": 1,
+  "required_gate_count": 9,
+  "whole_scene_all_of": "FAIL",
+  "native_image_call_count": 1,
+  "candidate_causality_established": false,
+  "pixel_scope_note": "The scene and its forms were independently authored before retrieval. Visible candidate-related forms are not proof that the integrated source caused the result; no before/after comparison is available.",
+  "user_judgment": {
+    "source": "not_yet_received",
+    "accepted": null
+  }
+}

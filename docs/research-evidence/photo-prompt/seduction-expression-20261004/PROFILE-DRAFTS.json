@@ -1,0 +1,2053 @@
+{
+  "schema_version": "seduction-profile-research-drafts/v1",
+  "runtime_schema": false,
+  "relation_contract_version": "photo-visual-relation/v1",
+  "new_narrow_profile_proposal_count": 12,
+  "existing_profile_enrichment_count": 14,
+  "new_profile_proposals": [
+    {
+      "proposal_id": "draft:se_profile_lash_occluded_upward_gaze",
+      "status": "narrow_profile_template_requires_context_and_owner_review",
+      "reference_numbers": [
+        18
+      ],
+      "candidate_key": "gaze_engagement.se_lash_occluded_upward_gaze",
+      "profile_template": {
+        "id": "se_profile_lash_occluded_upward_gaze",
+        "category": "observable_portrait_configuration",
+        "activation": {
+          "exact_terms": [
+            "턱을 내린 채 윗속눈썹 아래로 올려다보기",
+            "upward target gaze beneath visible upper lashes with the chin pitched slightly down"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "semantics": {
+          "definition": "upward target gaze beneath visible upper lashes with the chin pitched slightly down",
+          "paraphrase_examples": [
+            "턱을 내린 채 윗속눈썹 아래로 올려다보기",
+            "upward target gaze beneath visible upper lashes with the chin pitched slightly down"
+          ],
+          "visual_components": [
+            "the declared actor chin is pitched slightly downward",
+            "the eyes aim above the head-facing axis toward the specified target",
+            "upper lashes partially overlap the visible upper eye apertures",
+            "the specified eyes remain visibly open"
+          ],
+          "component_semantics": {
+            "minimum_component_groups": 4,
+            "required_group_ids": [
+              "c1",
+              "c2",
+              "c3",
+              "c4"
+            ],
+            "groups": [
+              {
+                "id": "c1",
+                "any_terms": [
+                  "the declared actor chin is pitched slightly downward"
+                ]
+              },
+              {
+                "id": "c2",
+                "any_terms": [
+                  "the eyes aim above the head-facing axis toward the specified target"
+                ]
+              },
+              {
+                "id": "c3",
+                "any_terms": [
+                  "upper lashes partially overlap the visible upper eye apertures"
+                ]
+              },
+              {
+                "id": "c4",
+                "any_terms": [
+                  "the specified eyes remain visibly open"
+                ]
+              }
+            ]
+          },
+          "contrast_examples": [
+            "위에서 찍은 하이 앵글이 필수 아님",
+            "스퀸치·눈 감기·단순 아래 시선과 구분"
+          ],
+          "claim_limits": [
+            "Visible geometry on the frozen actor only; no inferred emotion, consent, health or relationship history.",
+            "Retain frozen crop, existing entities and exclusions; hidden required evidence is UNOBSERVABLE.",
+            "Every independently requested component must pass; partial_is_fail."
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "턱을 내린 채 윗속눈썹 아래로 올려다보기",
+            "upward target gaze beneath visible upper lashes with the chin pitched slightly down",
+            "the declared actor chin is pitched slightly downward",
+            "the eyes aim above the head-facing axis toward the specified target",
+            "upper lashes partially overlap the visible upper eye apertures",
+            "the specified eyes remain visibly open"
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "reject_substitutes": [
+          "위에서 찍은 하이 앵글이 필수 아님",
+          "스퀸치·눈 감기·단순 아래 시선과 구분"
+        ],
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "c1",
+              "match_terms": [
+                "the declared actor chin is pitched slightly downward"
+              ],
+              "evidence_field": "c1_phrase",
+              "evidence_terms": [
+                "the declared actor chin is pitched slightly downward"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the declared actor chin is pitched slightly downward",
+              "render_gate": {
+                "id": "vo_se_profile_lash_occluded_upward_gaze_c1",
+                "review_scale": "native",
+                "description": "the declared actor chin is pitched slightly downward"
+              }
+            },
+            {
+              "id": "c2",
+              "match_terms": [
+                "the eyes aim above the head-facing axis toward the specified target"
+              ],
+              "evidence_field": "c2_phrase",
+              "evidence_terms": [
+                "the eyes aim above the head-facing axis toward the specified target"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the eyes aim above the head-facing axis toward the specified target",
+              "render_gate": {
+                "id": "vo_se_profile_lash_occluded_upward_gaze_c2",
+                "review_scale": "native",
+                "description": "the eyes aim above the head-facing axis toward the specified target"
+              }
+            },
+            {
+              "id": "c3",
+              "match_terms": [
+                "upper lashes partially overlap the visible upper eye apertures"
+              ],
+              "evidence_field": "c3_phrase",
+              "evidence_terms": [
+                "upper lashes partially overlap the visible upper eye apertures"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: upper lashes partially overlap the visible upper eye apertures",
+              "render_gate": {
+                "id": "vo_se_profile_lash_occluded_upward_gaze_c3",
+                "review_scale": "native",
+                "description": "upper lashes partially overlap the visible upper eye apertures"
+              }
+            },
+            {
+              "id": "c4",
+              "match_terms": [
+                "the specified eyes remain visibly open"
+              ],
+              "evidence_field": "c4_phrase",
+              "evidence_terms": [
+                "the specified eyes remain visibly open"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the specified eyes remain visibly open",
+              "render_gate": {
+                "id": "vo_se_profile_lash_occluded_upward_gaze_c4",
+                "review_scale": "native",
+                "description": "the specified eyes remain visibly open"
+              }
+            }
+          ]
+        }
+      },
+      "source_ids": [
+        "P02",
+        "R02"
+      ],
+      "required_context_before_activation_ko": "인물의 눈·턱·속눈썹과 시선 목표가 core에 있고 얼굴 방향/표정 변경 차원이 열려 있어야 한다.",
+      "install_blocker": "Core entity/owner checks and target-property mapping must be implemented with already supported contracts before this template can activate; exact text alone does not create missing entities."
+    },
+    {
+      "proposal_id": "draft:se_profile_upper_lid_dominant_half_lid",
+      "status": "narrow_profile_template_requires_context_and_owner_review",
+      "reference_numbers": [
+        19
+      ],
+      "candidate_key": "expression.se_upper_lid_dominant_half_lid",
+      "profile_template": {
+        "id": "se_profile_upper_lid_dominant_half_lid",
+        "category": "observable_portrait_configuration",
+        "activation": {
+          "exact_terms": [
+            "윗눈꺼풀 중심으로 좁아진 열린 눈",
+            "partly open eyes narrowed primarily by lower-positioned upper eyelid margins"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "semantics": {
+          "definition": "partly open eyes narrowed primarily by lower-positioned upper eyelid margins",
+          "paraphrase_examples": [
+            "윗눈꺼풀 중심으로 좁아진 열린 눈",
+            "partly open eyes narrowed primarily by lower-positioned upper eyelid margins"
+          ],
+          "visual_components": [
+            "upper eyelid margins cover more of the upper irises",
+            "the specified eyes retain visible open apertures",
+            "lower eyelid contours are comparatively open beneath the narrowed upper contours"
+          ],
+          "component_semantics": {
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "c1",
+              "c2",
+              "c3"
+            ],
+            "groups": [
+              {
+                "id": "c1",
+                "any_terms": [
+                  "upper eyelid margins cover more of the upper irises"
+                ]
+              },
+              {
+                "id": "c2",
+                "any_terms": [
+                  "the specified eyes retain visible open apertures"
+                ]
+              },
+              {
+                "id": "c3",
+                "any_terms": [
+                  "lower eyelid contours are comparatively open beneath the narrowed upper contours"
+                ]
+              }
+            ]
+          },
+          "contrast_examples": [
+            "눈을 완전히 감음과 구분",
+            "squinch의 아래 눈꺼풀 중심 형태를 덮어쓰지 않음"
+          ],
+          "claim_limits": [
+            "Visible geometry on the frozen actor only; no inferred emotion, consent, health or relationship history.",
+            "Retain frozen crop, existing entities and exclusions; hidden required evidence is UNOBSERVABLE.",
+            "Every independently requested component must pass; partial_is_fail."
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "윗눈꺼풀 중심으로 좁아진 열린 눈",
+            "partly open eyes narrowed primarily by lower-positioned upper eyelid margins",
+            "upper eyelid margins cover more of the upper irises",
+            "the specified eyes retain visible open apertures",
+            "lower eyelid contours are comparatively open beneath the narrowed upper contours"
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "reject_substitutes": [
+          "눈을 완전히 감음과 구분",
+          "squinch의 아래 눈꺼풀 중심 형태를 덮어쓰지 않음"
+        ],
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "c1",
+              "match_terms": [
+                "upper eyelid margins cover more of the upper irises"
+              ],
+              "evidence_field": "c1_phrase",
+              "evidence_terms": [
+                "upper eyelid margins cover more of the upper irises"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: upper eyelid margins cover more of the upper irises",
+              "render_gate": {
+                "id": "vo_se_profile_upper_lid_dominant_half_lid_c1",
+                "review_scale": "native",
+                "description": "upper eyelid margins cover more of the upper irises"
+              }
+            },
+            {
+              "id": "c2",
+              "match_terms": [
+                "the specified eyes retain visible open apertures"
+              ],
+              "evidence_field": "c2_phrase",
+              "evidence_terms": [
+                "the specified eyes retain visible open apertures"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the specified eyes retain visible open apertures",
+              "render_gate": {
+                "id": "vo_se_profile_upper_lid_dominant_half_lid_c2",
+                "review_scale": "native",
+                "description": "the specified eyes retain visible open apertures"
+              }
+            },
+            {
+              "id": "c3",
+              "match_terms": [
+                "lower eyelid contours are comparatively open beneath the narrowed upper contours"
+              ],
+              "evidence_field": "c3_phrase",
+              "evidence_terms": [
+                "lower eyelid contours are comparatively open beneath the narrowed upper contours"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: lower eyelid contours are comparatively open beneath the narrowed upper contours",
+              "render_gate": {
+                "id": "vo_se_profile_upper_lid_dominant_half_lid_c3",
+                "review_scale": "native",
+                "description": "lower eyelid contours are comparatively open beneath the narrowed upper contours"
+              }
+            }
+          ]
+        }
+      },
+      "source_ids": [
+        "P01",
+        "R02"
+      ],
+      "required_context_before_activation_ko": "눈꺼풀 구분이 가능한 얼굴 크롭과 열린 눈 조건이 필요하다.",
+      "install_blocker": "Core entity/owner checks and target-property mapping must be implemented with already supported contracts before this template can activate; exact text alone does not create missing entities."
+    },
+    {
+      "proposal_id": "draft:se_profile_eye_visible_through_own_hair",
+      "status": "narrow_profile_template_requires_context_and_owner_review",
+      "reference_numbers": [
+        30
+      ],
+      "candidate_key": "gaze_engagement.se_eye_visible_through_own_hair",
+      "profile_template": {
+        "id": "se_profile_eye_visible_through_own_hair",
+        "category": "observable_portrait_configuration",
+        "activation": {
+          "exact_terms": [
+            "자기 머리카락 사이로 식별되는 눈과 시선",
+            "a readable target-facing eye aperture remains visible between strands of the same actor hair"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "semantics": {
+          "definition": "a readable target-facing eye aperture remains visible between strands of the same actor hair",
+          "paraphrase_examples": [
+            "자기 머리카락 사이로 식별되는 눈과 시선",
+            "a readable target-facing eye aperture remains visible between strands of the same actor hair"
+          ],
+          "visual_components": [
+            "existing hair strands overlap part of the declared actor eye region",
+            "the specified eye aperture and iris-direction cue remain visible",
+            "the hair and eye belong to the same actor"
+          ],
+          "component_semantics": {
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "c1",
+              "c2",
+              "c3"
+            ],
+            "groups": [
+              {
+                "id": "c1",
+                "any_terms": [
+                  "existing hair strands overlap part of the declared actor eye region"
+                ]
+              },
+              {
+                "id": "c2",
+                "any_terms": [
+                  "the specified eye aperture and iris-direction cue remain visible"
+                ]
+              },
+              {
+                "id": "c3",
+                "any_terms": [
+                  "the hair and eye belong to the same actor"
+                ]
+              }
+            ]
+          },
+          "contrast_examples": [
+            "머리카락 뒤 완전히 숨은 눈에 시선을 추정하지 않음",
+            "앞머리 스타일 전체를 새로 바꾸지 않음"
+          ],
+          "claim_limits": [
+            "Visible geometry on the frozen actor only; no inferred emotion, consent, health or relationship history.",
+            "Retain frozen crop, existing entities and exclusions; hidden required evidence is UNOBSERVABLE.",
+            "Every independently requested component must pass; partial_is_fail."
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "자기 머리카락 사이로 식별되는 눈과 시선",
+            "a readable target-facing eye aperture remains visible between strands of the same actor hair",
+            "existing hair strands overlap part of the declared actor eye region",
+            "the specified eye aperture and iris-direction cue remain visible",
+            "the hair and eye belong to the same actor"
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "reject_substitutes": [
+          "머리카락 뒤 완전히 숨은 눈에 시선을 추정하지 않음",
+          "앞머리 스타일 전체를 새로 바꾸지 않음"
+        ],
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "c1",
+              "match_terms": [
+                "existing hair strands overlap part of the declared actor eye region"
+              ],
+              "evidence_field": "c1_phrase",
+              "evidence_terms": [
+                "existing hair strands overlap part of the declared actor eye region"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: existing hair strands overlap part of the declared actor eye region",
+              "render_gate": {
+                "id": "vo_se_profile_eye_visible_through_own_hair_c1",
+                "review_scale": "native",
+                "description": "existing hair strands overlap part of the declared actor eye region"
+              }
+            },
+            {
+              "id": "c2",
+              "match_terms": [
+                "the specified eye aperture and iris-direction cue remain visible"
+              ],
+              "evidence_field": "c2_phrase",
+              "evidence_terms": [
+                "the specified eye aperture and iris-direction cue remain visible"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the specified eye aperture and iris-direction cue remain visible",
+              "render_gate": {
+                "id": "vo_se_profile_eye_visible_through_own_hair_c2",
+                "review_scale": "native",
+                "description": "the specified eye aperture and iris-direction cue remain visible"
+              }
+            },
+            {
+              "id": "c3",
+              "match_terms": [
+                "the hair and eye belong to the same actor"
+              ],
+              "evidence_field": "c3_phrase",
+              "evidence_terms": [
+                "the hair and eye belong to the same actor"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the hair and eye belong to the same actor",
+              "render_gate": {
+                "id": "vo_se_profile_eye_visible_through_own_hair_c3",
+                "review_scale": "native",
+                "description": "the hair and eye belong to the same actor"
+              }
+            }
+          ]
+        }
+      },
+      "source_ids": [
+        "P02",
+        "R02"
+      ],
+      "required_context_before_activation_ko": "원래 모발 길이/배치가 가능한 경우만 적용; hair 경로는 보수적 제안이며 실제 잠금 경로와 대조 전 채택 금지.",
+      "install_blocker": "Core entity/owner checks and target-property mapping must be implemented with already supported contracts before this template can activate; exact text alone does not create missing entities."
+    },
+    {
+      "proposal_id": "draft:se_profile_edge_on_hand_to_camera",
+      "status": "narrow_profile_template_requires_context_and_owner_review",
+      "reference_numbers": [
+        71
+      ],
+      "candidate_key": "hand_pose.se_edge_on_hand_to_camera",
+      "profile_template": {
+        "id": "se_profile_edge_on_hand_to_camera",
+        "category": "observable_portrait_configuration",
+        "activation": {
+          "exact_terms": [
+            "카메라에 좁은 손날을 보이는 손",
+            "the declared hand presents its narrow edge toward the camera while its wrist remains connected"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "semantics": {
+          "definition": "the declared hand presents its narrow edge toward the camera while its wrist remains connected",
+          "paraphrase_examples": [
+            "카메라에 좁은 손날을 보이는 손",
+            "the declared hand presents its narrow edge toward the camera while its wrist remains connected"
+          ],
+          "visual_components": [
+            "the palm and dorsal planes lie oblique to the camera axis",
+            "the narrow radial or ulnar hand edge faces the camera as explicitly specified",
+            "the wrist and forearm connect to the same actor hand"
+          ],
+          "component_semantics": {
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "c1",
+              "c2",
+              "c3"
+            ],
+            "groups": [
+              {
+                "id": "c1",
+                "any_terms": [
+                  "the palm and dorsal planes lie oblique to the camera axis"
+                ]
+              },
+              {
+                "id": "c2",
+                "any_terms": [
+                  "the narrow radial or ulnar hand edge faces the camera as explicitly specified"
+                ]
+              },
+              {
+                "id": "c3",
+                "any_terms": [
+                  "the wrist and forearm connect to the same actor hand"
+                ]
+              }
+            ]
+          },
+          "contrast_examples": [
+            "손을 얇게 변형하는 것이 아님",
+            "손바닥 정면·손등 정면과 구분",
+            "손날의 어느 쪽은 명시 때만 고정"
+          ],
+          "claim_limits": [
+            "Visible geometry on the frozen actor only; no inferred emotion, consent, health or relationship history.",
+            "Retain frozen crop, existing entities and exclusions; hidden required evidence is UNOBSERVABLE.",
+            "Every independently requested component must pass; partial_is_fail."
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "카메라에 좁은 손날을 보이는 손",
+            "the declared hand presents its narrow edge toward the camera while its wrist remains connected",
+            "the palm and dorsal planes lie oblique to the camera axis",
+            "the narrow radial or ulnar hand edge faces the camera as explicitly specified",
+            "the wrist and forearm connect to the same actor hand"
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "reject_substitutes": [
+          "손을 얇게 변형하는 것이 아님",
+          "손바닥 정면·손등 정면과 구분",
+          "손날의 어느 쪽은 명시 때만 고정"
+        ],
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "c1",
+              "match_terms": [
+                "the palm and dorsal planes lie oblique to the camera axis"
+              ],
+              "evidence_field": "c1_phrase",
+              "evidence_terms": [
+                "the palm and dorsal planes lie oblique to the camera axis"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the palm and dorsal planes lie oblique to the camera axis",
+              "render_gate": {
+                "id": "vo_se_profile_edge_on_hand_to_camera_c1",
+                "review_scale": "native",
+                "description": "the palm and dorsal planes lie oblique to the camera axis"
+              }
+            },
+            {
+              "id": "c2",
+              "match_terms": [
+                "the narrow radial or ulnar hand edge faces the camera as explicitly specified"
+              ],
+              "evidence_field": "c2_phrase",
+              "evidence_terms": [
+                "the narrow radial or ulnar hand edge faces the camera as explicitly specified"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the narrow radial or ulnar hand edge faces the camera as explicitly specified",
+              "render_gate": {
+                "id": "vo_se_profile_edge_on_hand_to_camera_c2",
+                "review_scale": "native",
+                "description": "the narrow radial or ulnar hand edge faces the camera as explicitly specified"
+              }
+            },
+            {
+              "id": "c3",
+              "match_terms": [
+                "the wrist and forearm connect to the same actor hand"
+              ],
+              "evidence_field": "c3_phrase",
+              "evidence_terms": [
+                "the wrist and forearm connect to the same actor hand"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the wrist and forearm connect to the same actor hand",
+              "render_gate": {
+                "id": "vo_se_profile_edge_on_hand_to_camera_c3",
+                "review_scale": "native",
+                "description": "the wrist and forearm connect to the same actor hand"
+              }
+            }
+          ]
+        }
+      },
+      "source_ids": [
+        "P03"
+      ],
+      "required_context_before_activation_ko": "지정 손 소유와 카메라 기준이 고정되어야 하며 손 크기/비율은 바꾸지 않는다.",
+      "install_blocker": "Core entity/owner checks and target-property mapping must be implemented with already supported contracts before this template can activate; exact text alone does not create missing entities."
+    },
+    {
+      "proposal_id": "draft:se_profile_two_hands_different_heights",
+      "status": "narrow_profile_template_requires_context_and_owner_review",
+      "reference_numbers": [
+        72
+      ],
+      "candidate_key": "hand_pose.se_two_hands_different_heights",
+      "profile_template": {
+        "id": "se_profile_two_hands_different_heights",
+        "category": "observable_portrait_configuration",
+        "activation": {
+          "exact_terms": [
+            "같은 사람의 양손을 서로 다른 높이에 놓기",
+            "both hands of the same actor occupy distinct heights relative to the torso axis"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "semantics": {
+          "definition": "both hands of the same actor occupy distinct heights relative to the torso axis",
+          "paraphrase_examples": [
+            "같은 사람의 양손을 서로 다른 높이에 놓기",
+            "both hands of the same actor occupy distinct heights relative to the torso axis"
+          ],
+          "visual_components": [
+            "both declared hands remain visibly attached to the same actor arms",
+            "the hands lie at different torso-relative heights",
+            "each hand retains its existing finger configuration"
+          ],
+          "component_semantics": {
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "c1",
+              "c2",
+              "c3"
+            ],
+            "groups": [
+              {
+                "id": "c1",
+                "any_terms": [
+                  "both declared hands remain visibly attached to the same actor arms"
+                ]
+              },
+              {
+                "id": "c2",
+                "any_terms": [
+                  "the hands lie at different torso-relative heights"
+                ]
+              },
+              {
+                "id": "c3",
+                "any_terms": [
+                  "each hand retains its existing finger configuration"
+                ]
+              }
+            ]
+          },
+          "contrast_examples": [
+            "한손만 보임·카메라 roll만으로 화면 높이차·다른 사람 손과 구분"
+          ],
+          "claim_limits": [
+            "Visible geometry on the frozen actor only; no inferred emotion, consent, health or relationship history.",
+            "Retain frozen crop, existing entities and exclusions; hidden required evidence is UNOBSERVABLE.",
+            "Every independently requested component must pass; partial_is_fail."
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "같은 사람의 양손을 서로 다른 높이에 놓기",
+            "both hands of the same actor occupy distinct heights relative to the torso axis",
+            "both declared hands remain visibly attached to the same actor arms",
+            "the hands lie at different torso-relative heights",
+            "each hand retains its existing finger configuration"
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "reject_substitutes": [
+          "한손만 보임·카메라 roll만으로 화면 높이차·다른 사람 손과 구분"
+        ],
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "c1",
+              "match_terms": [
+                "both declared hands remain visibly attached to the same actor arms"
+              ],
+              "evidence_field": "c1_phrase",
+              "evidence_terms": [
+                "both declared hands remain visibly attached to the same actor arms"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: both declared hands remain visibly attached to the same actor arms",
+              "render_gate": {
+                "id": "vo_se_profile_two_hands_different_heights_c1",
+                "review_scale": "native",
+                "description": "both declared hands remain visibly attached to the same actor arms"
+              }
+            },
+            {
+              "id": "c2",
+              "match_terms": [
+                "the hands lie at different torso-relative heights"
+              ],
+              "evidence_field": "c2_phrase",
+              "evidence_terms": [
+                "the hands lie at different torso-relative heights"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the hands lie at different torso-relative heights",
+              "render_gate": {
+                "id": "vo_se_profile_two_hands_different_heights_c2",
+                "review_scale": "native",
+                "description": "the hands lie at different torso-relative heights"
+              }
+            },
+            {
+              "id": "c3",
+              "match_terms": [
+                "each hand retains its existing finger configuration"
+              ],
+              "evidence_field": "c3_phrase",
+              "evidence_terms": [
+                "each hand retains its existing finger configuration"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: each hand retains its existing finger configuration",
+              "render_gate": {
+                "id": "vo_se_profile_two_hands_different_heights_c3",
+                "review_scale": "native",
+                "description": "each hand retains its existing finger configuration"
+              }
+            }
+          ]
+        }
+      },
+      "source_ids": [
+        "P03"
+      ],
+      "required_context_before_activation_ko": "두 손/팔과 몸통 축이 보이고 다른 인물 손을 대체 사용하지 않아야 한다.",
+      "install_blocker": "Core entity/owner checks and target-property mapping must be implemented with already supported contracts before this template can activate; exact text alone does not create missing entities."
+    },
+    {
+      "proposal_id": "draft:se_profile_cheek_fingertip_light_touch",
+      "status": "narrow_profile_template_requires_context_and_owner_review",
+      "reference_numbers": [
+        73
+      ],
+      "candidate_key": "contact_point.se_cheek_fingertip_light_touch",
+      "profile_template": {
+        "id": "se_profile_cheek_fingertip_light_touch",
+        "category": "observable_portrait_configuration",
+        "activation": {
+          "exact_terms": [
+            "손끝으로 자기 볼 가볍게 접촉",
+            "one or more fingertips lightly contact the same actor cheek with the palm remaining off the cheek"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "semantics": {
+          "definition": "one or more fingertips lightly contact the same actor cheek with the palm remaining off the cheek",
+          "paraphrase_examples": [
+            "손끝으로 자기 볼 가볍게 접촉",
+            "one or more fingertips lightly contact the same actor cheek with the palm remaining off the cheek"
+          ],
+          "visual_components": [
+            "declared fingertips meet the same actor cheek surface",
+            "a visible gap separates the palm from the cheek",
+            "the finger hand and forearm remain continuous"
+          ],
+          "component_semantics": {
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "c1",
+              "c2",
+              "c3"
+            ],
+            "groups": [
+              {
+                "id": "c1",
+                "any_terms": [
+                  "declared fingertips meet the same actor cheek surface"
+                ]
+              },
+              {
+                "id": "c2",
+                "any_terms": [
+                  "a visible gap separates the palm from the cheek"
+                ]
+              },
+              {
+                "id": "c3",
+                "any_terms": [
+                  "the finger hand and forearm remain continuous"
+                ]
+              }
+            ]
+          },
+          "contrast_examples": [
+            "턱 지지·관자놀이 접촉·얼굴 앞 허공 손과 구분",
+            "접촉이 뺨의 압축을 필수화하지 않음"
+          ],
+          "claim_limits": [
+            "Visible geometry on the frozen actor only; no inferred emotion, consent, health or relationship history.",
+            "Retain frozen crop, existing entities and exclusions; hidden required evidence is UNOBSERVABLE.",
+            "Every independently requested component must pass; partial_is_fail."
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "손끝으로 자기 볼 가볍게 접촉",
+            "one or more fingertips lightly contact the same actor cheek with the palm remaining off the cheek",
+            "declared fingertips meet the same actor cheek surface",
+            "a visible gap separates the palm from the cheek",
+            "the finger hand and forearm remain continuous"
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "reject_substitutes": [
+          "턱 지지·관자놀이 접촉·얼굴 앞 허공 손과 구분",
+          "접촉이 뺨의 압축을 필수화하지 않음"
+        ],
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "c1",
+              "match_terms": [
+                "declared fingertips meet the same actor cheek surface"
+              ],
+              "evidence_field": "c1_phrase",
+              "evidence_terms": [
+                "declared fingertips meet the same actor cheek surface"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: declared fingertips meet the same actor cheek surface",
+              "render_gate": {
+                "id": "vo_se_profile_cheek_fingertip_light_touch_c1",
+                "review_scale": "native",
+                "description": "declared fingertips meet the same actor cheek surface"
+              }
+            },
+            {
+              "id": "c2",
+              "match_terms": [
+                "a visible gap separates the palm from the cheek"
+              ],
+              "evidence_field": "c2_phrase",
+              "evidence_terms": [
+                "a visible gap separates the palm from the cheek"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: a visible gap separates the palm from the cheek",
+              "render_gate": {
+                "id": "vo_se_profile_cheek_fingertip_light_touch_c2",
+                "review_scale": "native",
+                "description": "a visible gap separates the palm from the cheek"
+              }
+            },
+            {
+              "id": "c3",
+              "match_terms": [
+                "the finger hand and forearm remain continuous"
+              ],
+              "evidence_field": "c3_phrase",
+              "evidence_terms": [
+                "the finger hand and forearm remain continuous"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the finger hand and forearm remain continuous",
+              "render_gate": {
+                "id": "vo_se_profile_cheek_fingertip_light_touch_c3",
+                "review_scale": "native",
+                "description": "the finger hand and forearm remain continuous"
+              }
+            }
+          ]
+        }
+      },
+      "source_ids": [
+        "P03"
+      ],
+      "required_context_before_activation_ko": "주체/볼 좌우/손 소유를 고정하고 손끝-볼 접점을 확인한다.",
+      "install_blocker": "Core entity/owner checks and target-property mapping must be implemented with already supported contracts before this template can activate; exact text alone does not create missing entities."
+    },
+    {
+      "proposal_id": "draft:se_profile_hand_hover_below_chin",
+      "status": "narrow_profile_template_requires_context_and_owner_review",
+      "reference_numbers": [
+        74
+      ],
+      "candidate_key": "hand_pose.se_hand_hover_below_chin",
+      "profile_template": {
+        "id": "se_profile_hand_hover_below_chin",
+        "category": "observable_portrait_configuration",
+        "activation": {
+          "exact_terms": [
+            "턱 아래에 간격을 두고 놓은 자기 손",
+            "the actor hand is placed below the chin with a visible air gap"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "semantics": {
+          "definition": "the actor hand is placed below the chin with a visible air gap",
+          "paraphrase_examples": [
+            "턱 아래에 간격을 두고 놓은 자기 손",
+            "the actor hand is placed below the chin with a visible air gap"
+          ],
+          "visual_components": [
+            "the declared hand sits below the same actor chin",
+            "a visible gap separates the hand from the chin",
+            "the hand and forearm belong to the same actor"
+          ],
+          "component_semantics": {
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "c1",
+              "c2",
+              "c3"
+            ],
+            "groups": [
+              {
+                "id": "c1",
+                "any_terms": [
+                  "the declared hand sits below the same actor chin"
+                ]
+              },
+              {
+                "id": "c2",
+                "any_terms": [
+                  "a visible gap separates the hand from the chin"
+                ]
+              },
+              {
+                "id": "c3",
+                "any_terms": [
+                  "the hand and forearm belong to the same actor"
+                ]
+              }
+            ]
+          },
+          "contrast_examples": [
+            "hand-under-chin 전체를 chin support로 합치지 않음",
+            "손이 턱을 받친다면 하중은 별도 증거"
+          ],
+          "claim_limits": [
+            "Visible geometry on the frozen actor only; no inferred emotion, consent, health or relationship history.",
+            "Retain frozen crop, existing entities and exclusions; hidden required evidence is UNOBSERVABLE.",
+            "Every independently requested component must pass; partial_is_fail."
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "턱 아래에 간격을 두고 놓은 자기 손",
+            "the actor hand is placed below the chin with a visible air gap",
+            "the declared hand sits below the same actor chin",
+            "a visible gap separates the hand from the chin",
+            "the hand and forearm belong to the same actor"
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "reject_substitutes": [
+          "hand-under-chin 전체를 chin support로 합치지 않음",
+          "손이 턱을 받친다면 하중은 별도 증거"
+        ],
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "c1",
+              "match_terms": [
+                "the declared hand sits below the same actor chin"
+              ],
+              "evidence_field": "c1_phrase",
+              "evidence_terms": [
+                "the declared hand sits below the same actor chin"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the declared hand sits below the same actor chin",
+              "render_gate": {
+                "id": "vo_se_profile_hand_hover_below_chin_c1",
+                "review_scale": "native",
+                "description": "the declared hand sits below the same actor chin"
+              }
+            },
+            {
+              "id": "c2",
+              "match_terms": [
+                "a visible gap separates the hand from the chin"
+              ],
+              "evidence_field": "c2_phrase",
+              "evidence_terms": [
+                "a visible gap separates the hand from the chin"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: a visible gap separates the hand from the chin",
+              "render_gate": {
+                "id": "vo_se_profile_hand_hover_below_chin_c2",
+                "review_scale": "native",
+                "description": "a visible gap separates the hand from the chin"
+              }
+            },
+            {
+              "id": "c3",
+              "match_terms": [
+                "the hand and forearm belong to the same actor"
+              ],
+              "evidence_field": "c3_phrase",
+              "evidence_terms": [
+                "the hand and forearm belong to the same actor"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the hand and forearm belong to the same actor",
+              "render_gate": {
+                "id": "vo_se_profile_hand_hover_below_chin_c3",
+                "review_scale": "native",
+                "description": "the hand and forearm belong to the same actor"
+              }
+            }
+          ]
+        }
+      },
+      "source_ids": [
+        "P03"
+      ],
+      "required_context_before_activation_ko": "턱-손 경계와 간격이 보이는 크롭; 실제 지지/접촉이 요청되면 이 후보 제외.",
+      "install_blocker": "Core entity/owner checks and target-property mapping must be implemented with already supported contracts before this template can activate; exact text alone does not create missing entities."
+    },
+    {
+      "proposal_id": "draft:se_profile_one_hand_behind_head",
+      "status": "narrow_profile_template_requires_context_and_owner_review",
+      "reference_numbers": [
+        76
+      ],
+      "candidate_key": "hand_pose.se_one_hand_behind_head",
+      "profile_template": {
+        "id": "se_profile_one_hand_behind_head",
+        "category": "observable_portrait_configuration",
+        "activation": {
+          "exact_terms": [
+            "한 손만 자기 뒤통수에 놓기",
+            "exactly the specified one hand rests at the actor posterior head while the other arm retains its existing posture"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "semantics": {
+          "definition": "exactly the specified one hand rests at the actor posterior head while the other arm retains its existing posture",
+          "paraphrase_examples": [
+            "한 손만 자기 뒤통수에 놓기",
+            "exactly the specified one hand rests at the actor posterior head while the other arm retains its existing posture"
+          ],
+          "visual_components": [
+            "the specified single hand lies at the same actor posterior head",
+            "its elbow forearm and wrist form one continuous arm chain",
+            "the other hand retains its existing posture"
+          ],
+          "component_semantics": {
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "c1",
+              "c2",
+              "c3"
+            ],
+            "groups": [
+              {
+                "id": "c1",
+                "any_terms": [
+                  "the specified single hand lies at the same actor posterior head"
+                ]
+              },
+              {
+                "id": "c2",
+                "any_terms": [
+                  "its elbow forearm and wrist form one continuous arm chain"
+                ]
+              },
+              {
+                "id": "c3",
+                "any_terms": [
+                  "the other hand retains its existing posture"
+                ]
+              }
+            ]
+          },
+          "contrast_examples": [
+            "양손 뒤통수의 기존 pv_arms_behind_head와 다름",
+            "손목 교차 머리위와 구분"
+          ],
+          "claim_limits": [
+            "Visible geometry on the frozen actor only; no inferred emotion, consent, health or relationship history.",
+            "Retain frozen crop, existing entities and exclusions; hidden required evidence is UNOBSERVABLE.",
+            "Every independently requested component must pass; partial_is_fail."
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "한 손만 자기 뒤통수에 놓기",
+            "exactly the specified one hand rests at the actor posterior head while the other arm retains its existing posture",
+            "the specified single hand lies at the same actor posterior head",
+            "its elbow forearm and wrist form one continuous arm chain",
+            "the other hand retains its existing posture"
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "reject_substitutes": [
+          "양손 뒤통수의 기존 pv_arms_behind_head와 다름",
+          "손목 교차 머리위와 구분"
+        ],
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "c1",
+              "match_terms": [
+                "the specified single hand lies at the same actor posterior head"
+              ],
+              "evidence_field": "c1_phrase",
+              "evidence_terms": [
+                "the specified single hand lies at the same actor posterior head"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the specified single hand lies at the same actor posterior head",
+              "render_gate": {
+                "id": "vo_se_profile_one_hand_behind_head_c1",
+                "review_scale": "native",
+                "description": "the specified single hand lies at the same actor posterior head"
+              }
+            },
+            {
+              "id": "c2",
+              "match_terms": [
+                "its elbow forearm and wrist form one continuous arm chain"
+              ],
+              "evidence_field": "c2_phrase",
+              "evidence_terms": [
+                "its elbow forearm and wrist form one continuous arm chain"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: its elbow forearm and wrist form one continuous arm chain",
+              "render_gate": {
+                "id": "vo_se_profile_one_hand_behind_head_c2",
+                "review_scale": "native",
+                "description": "its elbow forearm and wrist form one continuous arm chain"
+              }
+            },
+            {
+              "id": "c3",
+              "match_terms": [
+                "the other hand retains its existing posture"
+              ],
+              "evidence_field": "c3_phrase",
+              "evidence_terms": [
+                "the other hand retains its existing posture"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the other hand retains its existing posture",
+              "render_gate": {
+                "id": "vo_se_profile_one_hand_behind_head_c3",
+                "review_scale": "native",
+                "description": "the other hand retains its existing posture"
+              }
+            }
+          ]
+        }
+      },
+      "source_ids": [
+        "P03"
+      ],
+      "required_context_before_activation_ko": "한 손의 laterality와 반대 손 잠금을 보존한다.",
+      "install_blocker": "Core entity/owner checks and target-property mapping must be implemented with already supported contracts before this template can activate; exact text alone does not create missing entities."
+    },
+    {
+      "proposal_id": "draft:se_profile_lapel_fingertip_touch",
+      "status": "narrow_profile_template_requires_context_and_owner_review",
+      "reference_numbers": [
+        78
+      ],
+      "candidate_key": "contact_point.se_lapel_fingertip_touch",
+      "profile_template": {
+        "id": "se_profile_lapel_fingertip_touch",
+        "category": "observable_portrait_configuration",
+        "activation": {
+          "exact_terms": [
+            "자기 옷 라펠에 손끝만 가볍게 대기",
+            "fingertips lightly meet the edge of an existing garment lapel"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "semantics": {
+          "definition": "fingertips lightly meet the edge of an existing garment lapel",
+          "paraphrase_examples": [
+            "자기 옷 라펠에 손끝만 가볍게 대기",
+            "fingertips lightly meet the edge of an existing garment lapel"
+          ],
+          "visual_components": [
+            "an existing lapel edge remains connected to the same actor garment",
+            "declared fingertips contact that lapel edge",
+            "fingertip pads meet one exposed side of the lapel edge"
+          ],
+          "component_semantics": {
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "c1",
+              "c2",
+              "c3"
+            ],
+            "groups": [
+              {
+                "id": "c1",
+                "any_terms": [
+                  "an existing lapel edge remains connected to the same actor garment"
+                ]
+              },
+              {
+                "id": "c2",
+                "any_terms": [
+                  "declared fingertips contact that lapel edge"
+                ]
+              },
+              {
+                "id": "c3",
+                "any_terms": [
+                  "fingertip pads meet one exposed side of the lapel edge"
+                ]
+              }
+            ]
+          },
+          "contrast_examples": [
+            "손을 쇄골에 댐·옷깃 없는 옷·목걸이 잡기와 구분",
+            "집음이 기본값 아님"
+          ],
+          "claim_limits": [
+            "Visible geometry on the frozen actor only; no inferred emotion, consent, health or relationship history.",
+            "Retain frozen crop, existing entities and exclusions; hidden required evidence is UNOBSERVABLE.",
+            "Every independently requested component must pass; partial_is_fail."
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "자기 옷 라펠에 손끝만 가볍게 대기",
+            "fingertips lightly meet the edge of an existing garment lapel",
+            "an existing lapel edge remains connected to the same actor garment",
+            "declared fingertips contact that lapel edge",
+            "fingertip pads meet one exposed side of the lapel edge"
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "reject_substitutes": [
+          "손을 쇄골에 댐·옷깃 없는 옷·목걸이 잡기와 구분",
+          "집음이 기본값 아님"
+        ],
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "c1",
+              "match_terms": [
+                "an existing lapel edge remains connected to the same actor garment"
+              ],
+              "evidence_field": "c1_phrase",
+              "evidence_terms": [
+                "an existing lapel edge remains connected to the same actor garment"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: an existing lapel edge remains connected to the same actor garment",
+              "render_gate": {
+                "id": "vo_se_profile_lapel_fingertip_touch_c1",
+                "review_scale": "native",
+                "description": "an existing lapel edge remains connected to the same actor garment"
+              }
+            },
+            {
+              "id": "c2",
+              "match_terms": [
+                "declared fingertips contact that lapel edge"
+              ],
+              "evidence_field": "c2_phrase",
+              "evidence_terms": [
+                "declared fingertips contact that lapel edge"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: declared fingertips contact that lapel edge",
+              "render_gate": {
+                "id": "vo_se_profile_lapel_fingertip_touch_c2",
+                "review_scale": "native",
+                "description": "declared fingertips contact that lapel edge"
+              }
+            },
+            {
+              "id": "c3",
+              "match_terms": [
+                "fingertip pads meet one exposed side of the lapel edge"
+              ],
+              "evidence_field": "c3_phrase",
+              "evidence_terms": [
+                "fingertip pads meet one exposed side of the lapel edge"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: fingertip pads meet one exposed side of the lapel edge",
+              "render_gate": {
+                "id": "vo_se_profile_lapel_fingertip_touch_c3",
+                "review_scale": "native",
+                "description": "fingertip pads meet one exposed side of the lapel edge"
+              }
+            }
+          ]
+        }
+      },
+      "source_ids": [
+        "P03"
+      ],
+      "required_context_before_activation_ko": "core에 라펠 있는 옷이 이미 존재해야 함; 새 옷깃/재킷 생성 금지.",
+      "install_blocker": "Core entity/owner checks and target-property mapping must be implemented with already supported contracts before this template can activate; exact text alone does not create missing entities."
+    },
+    {
+      "proposal_id": "draft:se_profile_small_garment_fold_pinch",
+      "status": "narrow_profile_template_requires_context_and_owner_review",
+      "reference_numbers": [
+        79
+      ],
+      "candidate_key": "contact_point.se_small_garment_fold_pinch",
+      "profile_template": {
+        "id": "se_profile_small_garment_fold_pinch",
+        "category": "observable_portrait_configuration",
+        "activation": {
+          "exact_terms": [
+            "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+            "a thumb and fingertip pinch a small visible fold of the existing garment fabric"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "semantics": {
+          "definition": "a thumb and fingertip pinch a small visible fold of the existing garment fabric",
+          "paraphrase_examples": [
+            "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+            "a thumb and fingertip pinch a small visible fold of the existing garment fabric"
+          ],
+          "visual_components": [
+            "opposing thumb and fingertip hold the same small cloth fold",
+            "cloth is visibly interposed between the fingertips",
+            "the fold continues into the existing garment",
+            "the existing garment remains connected around the small local fold"
+          ],
+          "component_semantics": {
+            "minimum_component_groups": 4,
+            "required_group_ids": [
+              "c1",
+              "c2",
+              "c3",
+              "c4"
+            ],
+            "groups": [
+              {
+                "id": "c1",
+                "any_terms": [
+                  "opposing thumb and fingertip hold the same small cloth fold"
+                ]
+              },
+              {
+                "id": "c2",
+                "any_terms": [
+                  "cloth is visibly interposed between the fingertips"
+                ]
+              },
+              {
+                "id": "c3",
+                "any_terms": [
+                  "the fold continues into the existing garment"
+                ]
+              },
+              {
+                "id": "c4",
+                "any_terms": [
+                  "the existing garment remains connected around the small local fold"
+                ]
+              }
+            ]
+          },
+          "contrast_examples": [
+            "실/피부를 집음·밑단 전체 잡기·허공 pinch와 구분",
+            "옷 벗기·노출 증대를 자동 추가하지 않음"
+          ],
+          "claim_limits": [
+            "Visible geometry on the frozen actor only; no inferred emotion, consent, health or relationship history.",
+            "Retain frozen crop, existing entities and exclusions; hidden required evidence is UNOBSERVABLE.",
+            "Every independently requested component must pass; partial_is_fail."
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+            "a thumb and fingertip pinch a small visible fold of the existing garment fabric",
+            "opposing thumb and fingertip hold the same small cloth fold",
+            "cloth is visibly interposed between the fingertips",
+            "the fold continues into the existing garment",
+            "the existing garment remains connected around the small local fold"
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "reject_substitutes": [
+          "실/피부를 집음·밑단 전체 잡기·허공 pinch와 구분",
+          "옷 벗기·노출 증대를 자동 추가하지 않음"
+        ],
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "c1",
+              "match_terms": [
+                "opposing thumb and fingertip hold the same small cloth fold"
+              ],
+              "evidence_field": "c1_phrase",
+              "evidence_terms": [
+                "opposing thumb and fingertip hold the same small cloth fold"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: opposing thumb and fingertip hold the same small cloth fold",
+              "render_gate": {
+                "id": "vo_se_profile_small_garment_fold_pinch_c1",
+                "review_scale": "native",
+                "description": "opposing thumb and fingertip hold the same small cloth fold"
+              }
+            },
+            {
+              "id": "c2",
+              "match_terms": [
+                "cloth is visibly interposed between the fingertips"
+              ],
+              "evidence_field": "c2_phrase",
+              "evidence_terms": [
+                "cloth is visibly interposed between the fingertips"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: cloth is visibly interposed between the fingertips",
+              "render_gate": {
+                "id": "vo_se_profile_small_garment_fold_pinch_c2",
+                "review_scale": "native",
+                "description": "cloth is visibly interposed between the fingertips"
+              }
+            },
+            {
+              "id": "c3",
+              "match_terms": [
+                "the fold continues into the existing garment"
+              ],
+              "evidence_field": "c3_phrase",
+              "evidence_terms": [
+                "the fold continues into the existing garment"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the fold continues into the existing garment",
+              "render_gate": {
+                "id": "vo_se_profile_small_garment_fold_pinch_c3",
+                "review_scale": "native",
+                "description": "the fold continues into the existing garment"
+              }
+            },
+            {
+              "id": "c4",
+              "match_terms": [
+                "the existing garment remains connected around the small local fold"
+              ],
+              "evidence_field": "c4_phrase",
+              "evidence_terms": [
+                "the existing garment remains connected around the small local fold"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the existing garment remains connected around the small local fold",
+              "render_gate": {
+                "id": "vo_se_profile_small_garment_fold_pinch_c4",
+                "review_scale": "native",
+                "description": "the existing garment remains connected around the small local fold"
+              }
+            }
+          ]
+        }
+      },
+      "source_ids": [
+        "P03"
+      ],
+      "required_context_before_activation_ko": "기존 옷과 작은 변형 허용 범위가 필요; garment 경로는 실제 의복 잠금과 검토 전 채택 금지.",
+      "install_blocker": "Core entity/owner checks and target-property mapping must be implemented with already supported contracts before this template can activate; exact text alone does not create missing entities."
+    },
+    {
+      "proposal_id": "draft:se_profile_existing_pendant_fingertip_hold",
+      "status": "narrow_profile_template_requires_context_and_owner_review",
+      "reference_numbers": [
+        80
+      ],
+      "candidate_key": "contact_point.se_existing_pendant_fingertip_hold",
+      "profile_template": {
+        "id": "se_profile_existing_pendant_fingertip_hold",
+        "category": "observable_portrait_configuration",
+        "activation": {
+          "exact_terms": [
+            "기존 목걸이 펜던트 본체를 손끝으로 잡기",
+            "fingertips hold the existing pendant body while it remains visibly connected to its necklace chain"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "semantics": {
+          "definition": "fingertips hold the existing pendant body while it remains visibly connected to its necklace chain",
+          "paraphrase_examples": [
+            "기존 목걸이 펜던트 본체를 손끝으로 잡기",
+            "fingertips hold the existing pendant body while it remains visibly connected to its necklace chain"
+          ],
+          "visual_components": [
+            "declared fingertips contact and hold the existing pendant body",
+            "the pendant remains attached to the same necklace chain",
+            "the chain belongs to the same actor accessory",
+            "the hand belongs to that actor"
+          ],
+          "component_semantics": {
+            "minimum_component_groups": 4,
+            "required_group_ids": [
+              "c1",
+              "c2",
+              "c3",
+              "c4"
+            ],
+            "groups": [
+              {
+                "id": "c1",
+                "any_terms": [
+                  "declared fingertips contact and hold the existing pendant body"
+                ]
+              },
+              {
+                "id": "c2",
+                "any_terms": [
+                  "the pendant remains attached to the same necklace chain"
+                ]
+              },
+              {
+                "id": "c3",
+                "any_terms": [
+                  "the chain belongs to the same actor accessory"
+                ]
+              },
+              {
+                "id": "c4",
+                "any_terms": [
+                  "the hand belongs to that actor"
+                ]
+              }
+            ]
+          },
+          "contrast_examples": [
+            "체인만 잡기·단추 만짐·펜던트 새로 추가와 구분",
+            "잡음만으로 의미/관계사를 추정하지 않음"
+          ],
+          "claim_limits": [
+            "Visible geometry on the frozen actor only; no inferred emotion, consent, health or relationship history.",
+            "Retain frozen crop, existing entities and exclusions; hidden required evidence is UNOBSERVABLE.",
+            "Every independently requested component must pass; partial_is_fail."
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "기존 목걸이 펜던트 본체를 손끝으로 잡기",
+            "fingertips hold the existing pendant body while it remains visibly connected to its necklace chain",
+            "declared fingertips contact and hold the existing pendant body",
+            "the pendant remains attached to the same necklace chain",
+            "the chain belongs to the same actor accessory",
+            "the hand belongs to that actor"
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "reject_substitutes": [
+          "체인만 잡기·단추 만짐·펜던트 새로 추가와 구분",
+          "잡음만으로 의미/관계사를 추정하지 않음"
+        ],
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "c1",
+              "match_terms": [
+                "declared fingertips contact and hold the existing pendant body"
+              ],
+              "evidence_field": "c1_phrase",
+              "evidence_terms": [
+                "declared fingertips contact and hold the existing pendant body"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: declared fingertips contact and hold the existing pendant body",
+              "render_gate": {
+                "id": "vo_se_profile_existing_pendant_fingertip_hold_c1",
+                "review_scale": "native",
+                "description": "declared fingertips contact and hold the existing pendant body"
+              }
+            },
+            {
+              "id": "c2",
+              "match_terms": [
+                "the pendant remains attached to the same necklace chain"
+              ],
+              "evidence_field": "c2_phrase",
+              "evidence_terms": [
+                "the pendant remains attached to the same necklace chain"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the pendant remains attached to the same necklace chain",
+              "render_gate": {
+                "id": "vo_se_profile_existing_pendant_fingertip_hold_c2",
+                "review_scale": "native",
+                "description": "the pendant remains attached to the same necklace chain"
+              }
+            },
+            {
+              "id": "c3",
+              "match_terms": [
+                "the chain belongs to the same actor accessory"
+              ],
+              "evidence_field": "c3_phrase",
+              "evidence_terms": [
+                "the chain belongs to the same actor accessory"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the chain belongs to the same actor accessory",
+              "render_gate": {
+                "id": "vo_se_profile_existing_pendant_fingertip_hold_c3",
+                "review_scale": "native",
+                "description": "the chain belongs to the same actor accessory"
+              }
+            },
+            {
+              "id": "c4",
+              "match_terms": [
+                "the hand belongs to that actor"
+              ],
+              "evidence_field": "c4_phrase",
+              "evidence_terms": [
+                "the hand belongs to that actor"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: the hand belongs to that actor",
+              "render_gate": {
+                "id": "vo_se_profile_existing_pendant_fingertip_hold_c4",
+                "review_scale": "native",
+                "description": "the hand belongs to that actor"
+              }
+            }
+          ]
+        }
+      },
+      "source_ids": [
+        "P03"
+      ],
+      "required_context_before_activation_ko": "core에 펜던트/체인이 이미 있음; 액세서리 추가/분리 없이 가시적 접점만 바꿀 수 있어야 함.",
+      "install_blocker": "Core entity/owner checks and target-property mapping must be implemented with already supported contracts before this template can activate; exact text alone does not create missing entities."
+    },
+    {
+      "proposal_id": "draft:se_profile_cornea_catchlight_without_wetness",
+      "status": "narrow_profile_template_requires_context_and_owner_review",
+      "reference_numbers": [
+        119
+      ],
+      "candidate_key": "light_shape.se_cornea_catchlight_without_wetness",
+      "profile_template": {
+        "id": "se_profile_cornea_catchlight_without_wetness",
+        "category": "observable_portrait_configuration",
+        "activation": {
+          "exact_terms": [
+            "각막 표면의 작은 광원 반사점",
+            "a small bounded source reflection is visible on the specified corneal surface"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "semantics": {
+          "definition": "a small bounded source reflection is visible on the specified corneal surface",
+          "paraphrase_examples": [
+            "각막 표면의 작은 광원 반사점",
+            "a small bounded source reflection is visible on the specified corneal surface"
+          ],
+          "visual_components": [
+            "a small bounded highlight lies on the specified actor corneal surface",
+            "iris and lid boundaries remain visible around the reflection",
+            "iris texture remains readable around the bounded source reflection"
+          ],
+          "component_semantics": {
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "c1",
+              "c2",
+              "c3"
+            ],
+            "groups": [
+              {
+                "id": "c1",
+                "any_terms": [
+                  "a small bounded highlight lies on the specified actor corneal surface"
+                ]
+              },
+              {
+                "id": "c2",
+                "any_terms": [
+                  "iris and lid boundaries remain visible around the reflection"
+                ]
+              },
+              {
+                "id": "c3",
+                "any_terms": [
+                  "iris texture remains readable around the bounded source reflection"
+                ]
+              }
+            ]
+          },
+          "contrast_examples": [
+            "눈가 펄/아이섀도·눈물·눈 전체 glow와 구분",
+            "젖은 눈·큰 홍채·특정 감정을 자동 추가하지 않음"
+          ],
+          "claim_limits": [
+            "Visible geometry on the frozen actor only; no inferred emotion, consent, health or relationship history.",
+            "Retain frozen crop, existing entities and exclusions; hidden required evidence is UNOBSERVABLE.",
+            "Every independently requested component must pass; partial_is_fail."
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "각막 표면의 작은 광원 반사점",
+            "a small bounded source reflection is visible on the specified corneal surface",
+            "a small bounded highlight lies on the specified actor corneal surface",
+            "iris and lid boundaries remain visible around the reflection",
+            "iris texture remains readable around the bounded source reflection"
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "reject_substitutes": [
+          "눈가 펄/아이섀도·눈물·눈 전체 glow와 구분",
+          "젖은 눈·큰 홍채·특정 감정을 자동 추가하지 않음"
+        ],
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "c1",
+              "match_terms": [
+                "a small bounded highlight lies on the specified actor corneal surface"
+              ],
+              "evidence_field": "c1_phrase",
+              "evidence_terms": [
+                "a small bounded highlight lies on the specified actor corneal surface"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: a small bounded highlight lies on the specified actor corneal surface",
+              "render_gate": {
+                "id": "vo_se_profile_cornea_catchlight_without_wetness_c1",
+                "review_scale": "native",
+                "description": "a small bounded highlight lies on the specified actor corneal surface"
+              }
+            },
+            {
+              "id": "c2",
+              "match_terms": [
+                "iris and lid boundaries remain visible around the reflection"
+              ],
+              "evidence_field": "c2_phrase",
+              "evidence_terms": [
+                "iris and lid boundaries remain visible around the reflection"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: iris and lid boundaries remain visible around the reflection",
+              "render_gate": {
+                "id": "vo_se_profile_cornea_catchlight_without_wetness_c2",
+                "review_scale": "native",
+                "description": "iris and lid boundaries remain visible around the reflection"
+              }
+            },
+            {
+              "id": "c3",
+              "match_terms": [
+                "iris texture remains readable around the bounded source reflection"
+              ],
+              "evidence_field": "c3_phrase",
+              "evidence_terms": [
+                "iris texture remains readable around the bounded source reflection"
+              ],
+              "min_content_words": 3,
+              "instruction": "Keep this current visible relation on the frozen actor: iris texture remains readable around the bounded source reflection",
+              "render_gate": {
+                "id": "vo_se_profile_cornea_catchlight_without_wetness_c3",
+                "review_scale": "native",
+                "description": "iris texture remains readable around the bounded source reflection"
+              }
+            }
+          ]
+        }
+      },
+      "source_ids": [
+        "A04",
+        "L05"
+      ],
+      "required_context_before_activation_ko": "조명/반사 경로와 눈 소유를 고정; eyes.light_reflection은 신규 세분 경로 제안으로 잠금 매핑 검토 필수.",
+      "install_blocker": "Core entity/owner checks and target-property mapping must be implemented with already supported contracts before this template can activate; exact text alone does not create missing entities."
+    }
+  ],
+  "existing_profile_enrichments": [
+    {
+      "profile_id": "ae_profile_squinch",
+      "reference_numbers": [
+        20
+      ],
+      "proposal_ko": "아랫눈꺼풀 중심과 윗눈꺼풀 닫힘의 구분을 추가하고 단일 사진에서는 실제 이동/유지 시간을 요구하지 않음",
+      "source_ids": [
+        "P01",
+        "R02",
+        "R03"
+      ],
+      "preservation_policy": "Preserve stable ID, existing supported definition, exclusions and authored components; change only reviewed missing distinctions."
+    },
+    {
+      "profile_id": "contrapposto_weight_shift",
+      "reference_numbers": [
+        45
+      ],
+      "proposal_ko": "지지 발/자유 다리·골반/어깨 대응과 전신 관찰 유지;S 윤곽 대체를 PASS로 보지 않음",
+      "source_ids": [
+        "M01",
+        "P02"
+      ],
+      "preservation_policy": "Preserve stable ID, existing supported definition, exclusions and authored components; change only reviewed missing distinctions."
+    },
+    {
+      "profile_id": "pv_profile_chin_support",
+      "reference_numbers": [
+        74
+      ],
+      "proposal_ko": "접촉·하중 지지와 hover/light touch의 차이를 독립 증거로 검사",
+      "source_ids": [
+        "P03"
+      ],
+      "preservation_policy": "Preserve stable ID, existing supported definition, exclusions and authored components; change only reviewed missing distinctions."
+    },
+    {
+      "profile_id": "pv_profile_reverse_chair",
+      "reference_numbers": [
+        68
+      ],
+      "proposal_ko": "등받이 방향과 좌면 지지를 보존하며 straddle 다리 배치를 자동 요구하지 않음",
+      "source_ids": [
+        "P02",
+        "P03"
+      ],
+      "preservation_policy": "Preserve stable ID, existing supported definition, exclusions and authored components; change only reviewed missing distinctions."
+    },
+    {
+      "profile_id": "pv_profile_chair_straddle",
+      "reference_numbers": [
+        68
+      ],
+      "proposal_ko": "다리의 등받이/좌면 양옆 배열과 골반 지지를 검사하며 reverse orientation과 구분",
+      "source_ids": [
+        "P02",
+        "P03"
+      ],
+      "preservation_policy": "Preserve stable ID, existing supported definition, exclusions and authored components; change only reviewed missing distinctions."
+    },
+    {
+      "profile_id": "pc_pc17_owner_relation",
+      "reference_numbers": [
+        95
+      ],
+      "proposal_ko": "전경 shoulder는 secondary actor 소유;주인공 자기 어깨 포즈와 좌표/초점 경계 보강",
+      "source_ids": [
+        "C04"
+      ],
+      "preservation_policy": "Preserve stable ID, existing supported definition, exclusions and authored components; change only reviewed missing distinctions."
+    },
+    {
+      "profile_id": "rembrandt_face_light_pattern",
+      "reference_numbers": [
+        113
+      ],
+      "proposal_ko": "triangle의 shadow-side와 camera-near/far 구분을 유지;가려진 코-볼 연결은 미관찰",
+      "source_ids": [
+        "L02",
+        "P04",
+        "L05"
+      ],
+      "preservation_policy": "Preserve stable ID, existing supported definition, exclusions and authored components; change only reviewed missing distinctions."
+    },
+    {
+      "profile_id": "butterfly_face_light_pattern",
+      "reference_numbers": [
+        114
+      ],
+      "proposal_ko": "중앙 코밑 그림자와 loop/clamshell 구분;나비 장신구가 프로필을 활성화하지 않게 검사",
+      "source_ids": [
+        "L03",
+        "P04",
+        "L05"
+      ],
+      "preservation_policy": "Preserve stable ID, existing supported definition, exclusions and authored components; change only reviewed missing distinctions."
+    },
+    {
+      "profile_id": "split_face_light_pattern",
+      "reference_numbers": [
+        115
+      ],
+      "proposal_ko": "반쪽 명암 경계와 makeup/occlusion 구분;short/broad는 별도 좌표 축",
+      "source_ids": [
+        "L04",
+        "P04",
+        "L05"
+      ],
+      "preservation_policy": "Preserve stable ID, existing supported definition, exclusions and authored components; change only reviewed missing distinctions."
+    },
+    {
+      "profile_id": "loop_face_light_pattern",
+      "reference_numbers": [
+        116
+      ],
+      "proposal_ko": "코/볼 그림자의 분리 간격을 원본 얼굴에서 검사;삼각광 대체는 실패",
+      "source_ids": [
+        "P04",
+        "L05"
+      ],
+      "preservation_policy": "Preserve stable ID, existing supported definition, exclusions and authored components; change only reviewed missing distinctions."
+    },
+    {
+      "profile_id": "short_face_light_orientation_relation",
+      "reference_numbers": [
+        117
+      ],
+      "proposal_ko": "카메라 투영 폭으로 좁은 면을 정의하고 얼굴 회전/좌우 반전 교차 검사",
+      "source_ids": [
+        "P04",
+        "L05"
+      ],
+      "preservation_policy": "Preserve stable ID, existing supported definition, exclusions and authored components; change only reviewed missing distinctions."
+    },
+    {
+      "profile_id": "broad_face_light_orientation_relation",
+      "reference_numbers": [
+        118
+      ],
+      "proposal_ko": "카메라 투영 폭으로 넓은 면을 정의;실제 얼굴 폭 변경 금지",
+      "source_ids": [
+        "P04",
+        "L05"
+      ],
+      "preservation_policy": "Preserve stable ID, existing supported definition, exclusions and authored components; change only reviewed missing distinctions."
+    },
+    {
+      "profile_id": "controlled_languid_movement_display",
+      "reference_numbers": [
+        10
+      ],
+      "proposal_ko": "선택된 미완료 동작/지지를 보존하고 느린 속도/지속 전체는 시간 증거 없으면 미검증",
+      "source_ids": [
+        "D10",
+        "R03"
+      ],
+      "preservation_policy": "Preserve stable ID, existing supported definition, exclusions and authored components; change only reviewed missing distinctions."
+    },
+    {
+      "profile_id": "sv_tongue_lip_boundary",
+      "reference_numbers": [
+        35
+      ],
+      "proposal_ko": "혀의 구강 연속성·같은 입술 접점을 보강;lip-lick 이동 완료는 단일 사진으로 PASS 불가",
+      "source_ids": [
+        "R02",
+        "R03"
+      ],
+      "preservation_policy": "Preserve stable ID, existing supported definition, exclusions and authored components; change only reviewed missing distinctions."
+    }
+  ],
+  "broad_label_rule": "No new exact hard profile for seductive, coquettish, sultry, smoldering, bedroom eyes, provocative, commanding, femme fatale or smirk.",
+  "static_time_rule": "No exact hard promotion of the whole temporal term from one current state."
+}

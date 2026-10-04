@@ -1,0 +1,72 @@
+{
+  "arm": "A",
+  "design_origin": "agent-owned test design; not requester wording; chosen independently before any repo/catalog/research reads",
+  "randomization": {
+    "method": "uniform secrets.choice from 5 public indoor places, 3 adult roles, 3 events using general knowledge only",
+    "place": "도심 공공 수영장의 실내 분실물 접수 창구",
+    "role": "새로 도착한 성인 이용자",
+    "event": "인쇄된 안내지와 벽의 방향 표지가 서로 다른 방향을 가리키는 순간"
+  },
+  "subject": "one clearly adult 29-year-old woman; dry everyday rain jacket and plain crew-neck top; attached image is visible face/hair reference only, with no inference of original age, identity, character, proportions, health, or desire",
+  "composition": "waist-up environmental portrait at eye height, head yaw no more than 15 degrees, 75-85mm-like perspective; both hands and full face visible; tiled public-pool lost-property desk with numbered locker-key tags, tray holding one rolled swim cap, folded floor guide lying on desk and a wall directional arrow pointing differently; fluorescent-neutral room light plus soft window side fill",
+  "independent_neutral_forms": [
+    "both eyes remain visibly open; upper eyelids partially lowered, subject-left upper eyelid visibly lower than subject-right",
+    "irises displaced toward subject-right side while face remains nearly frontal; no whole-eye closure",
+    "narrow central lip gap, thin upper-incisor edge visible, subject-left mouth corner subtly raised relative to subject-right",
+    "right index fingertip touches her own right lower cheek beside mouth, with clear local contact and slight cheek displacement",
+    "left index fingertip is raised near her own left temple but separated by a visible 4-6 cm air gap; no self contact on that side"
+  ],
+  "natural_action": "the guide is already on the counter; she has paused between comparing the flat printed guide and the wall arrow; hands are free and independently visible",
+  "pre_render_gates": [
+    {
+      "id": "adult_scene",
+      "expected": "single explicitly adult-looking subject in dry street clothing at recognizable indoor public-pool lost-property counter; guide and different-oriented wall arrow both visible",
+      "fail": "missing desk/guide/arrow relation or replacement by glamour/swimwear scene",
+      "unobservable": "context cut off, clothing/props obscured"
+    },
+    {
+      "id": "eyelid_asymmetry",
+      "expected": "both eyes visibly open with iris/pupil visible; subject-left upper lid covers more of iris than subject-right by observable margin",
+      "fail": "equal fully open eyes, complete wink, closed eyes, squint dominated by lower lids",
+      "unobservable": "blur, occlusion, too small, head angle preventing comparison"
+    },
+    {
+      "id": "sideways_iris",
+      "expected": "pupils/irises shifted toward subject-right relative to near frontal head",
+      "fail": "gaze straight into lens or in opposite direction; head turn substituted for iris shift",
+      "unobservable": "eye detail cannot locate irises reliably"
+    },
+    {
+      "id": "mouth_microform",
+      "expected": "a narrow central inter-lip opening exposes a thin upper-incisor edge while subject-left corner is a little higher than right",
+      "fail": "fully closed lips, broad grin, wide open mouth, symmetric corners, glossy highlight alone mistaken as a gap/tooth",
+      "unobservable": "resolution/occlusion prevents separation of tooth and highlight or corner height"
+    },
+    {
+      "id": "right_self_contact",
+      "expected": "right index fingertip in direct visible contact with own right lower cheek beside mouth; local indentation/displacement supports contact",
+      "fail": "hovering finger, contact with lips/chin instead, other hand, finger merely overlaps silhouette",
+      "unobservable": "contact point hidden or too soft to resolve"
+    },
+    {
+      "id": "left_noncontact",
+      "expected": "left index fingertip near own left temple, separated by visible 4-6cm air gap; ownership clear",
+      "fail": "touches temple/hair/face, detached hand ownership ambiguous, gap absent or hand missing",
+      "unobservable": "cropped finger/temple or depth alignment hiding gap"
+    },
+    {
+      "id": "reference_visible_form",
+      "expected": "attached image used only for visible face and hair appearance; resulting subject remains expressly adult in request and final scene",
+      "fail": "reference replaced by unrelated face/hair, added inferred identity/character/body proportion",
+      "unobservable": "likeness cannot be established from output/ref comparison"
+    },
+    {
+      "id": "whole_scene_all_of",
+      "expected": "all required gates pass in the same original generated image",
+      "fail": "any FAIL or UNOBSERVABLE in required gates; partial_is_fail",
+      "unobservable": "original pixels unavailable"
+    }
+  ],
+  "scoring": "strict all-of; partial_is_fail; no inference of thoughts, intent, attraction, consent, health or relationship from forms",
+  "independence": "No other arms, current active data, previous research, candidate pack, or fixture read before this record."
+}

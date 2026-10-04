@@ -1,0 +1,2914 @@
+{
+  "schema_version": "seduction-candidate-research-drafts/v1",
+  "runtime_schema": false,
+  "active_installation_performed": false,
+  "new_candidate_proposal_count": 14,
+  "existing_candidate_enrichment_count": 22,
+  "dedup_policy": "Prefer existing IDs and owner files. New records below are proposals, not proof that no semantically equivalent record exists.",
+  "positive_retrieval_text_policy": "Only visible definitions, units and narrow positive paraphrases enter future embeddings. Research provenance, claim limits and negative examples stay in evidence or appropriate exclusion fields.",
+  "new_candidate_proposals": [
+    {
+      "proposal_id": "draft:gaze_engagement.se_lash_occluded_upward_gaze",
+      "status": "new_candidate_proposal_requires_dedup_and_effect_mapping",
+      "slot": "gaze_engagement",
+      "reference_numbers": [
+        18
+      ],
+      "candidate_entry_template": {
+        "id": "se_lash_occluded_upward_gaze",
+        "ko": "턱을 내린 채 윗속눈썹 아래로 올려다보기",
+        "en": "upward target gaze beneath visible upper lashes with the chin pitched slightly down",
+        "weight": 1,
+        "tags": [
+          "human",
+          "portrait"
+        ],
+        "for_any": [
+          "human",
+          "portrait"
+        ],
+        "aliases": [
+          "턱을 내린 채 윗속눈썹 아래로 올려다보기",
+          "upward target gaze beneath visible upper lashes with the chin pitched slightly down"
+        ],
+        "keywords": [
+          "턱을 내린 채 윗속눈썹 아래로 올려다보기",
+          "upward target gaze beneath visible upper lashes with the chin pitched slightly down"
+        ],
+        "embedding_text": "upward target gaze beneath visible upper lashes with the chin pitched slightly down; the declared actor chin is pitched slightly downward; the eyes aim above the head-facing axis toward the specified target; upper lashes partially overlap the visible upper eye apertures; the specified eyes remain visibly open",
+        "concept_units": [
+          "the declared actor chin is pitched slightly downward",
+          "the eyes aim above the head-facing axis toward the specified target",
+          "upper lashes partially overlap the visible upper eye apertures",
+          "the specified eyes remain visibly open"
+        ],
+        "relations": [
+          {
+            "id": "se_lash_occluded_upward_gaze_r1",
+            "type": "relative_direction",
+            "subject": "main_subject.eyes",
+            "object": "core_declared_gaze_target"
+          },
+          {
+            "id": "se_lash_occluded_upward_gaze_r2",
+            "type": "counterorientation",
+            "subject": "main_subject.head",
+            "object": "main_subject.eyes"
+          }
+        ],
+        "affected_dimensions": [
+          "expression",
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.gaze_direction"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "head.orientation"
+          }
+        ],
+        "paraphrases": [
+          "턱을 내린 채 윗속눈썹 아래로 올려다보기",
+          "upward target gaze beneath visible upper lashes with the chin pitched slightly down"
+        ]
+      },
+      "source_ids": [
+        "P02",
+        "R02"
+      ],
+      "required_core_bindings_ko": "인물의 눈·턱·속눈썹과 시선 목표가 core에 있고 얼굴 방향/표정 변경 차원이 열려 있어야 한다.",
+      "dedup_review_ko": "ae_bashful_direct와 의미 단위·적용 범위가 같으면 신규 생성 대신 그 후보 보강으로 합친다.",
+      "effect_mapping_status": "All target/property paths are proposed. Existing coarse paths are conservative; new paths and core_existing_* relations require an explicit owner/lock audit before activation.",
+      "render_gate_ko": "얼굴 가까운 크롭에서 속눈썹/눈/턱의 관계가 모두 식별되어야 함",
+      "forbidden_interpretation_promotions_ko": [
+        "위에서 찍은 하이 앵글이 필수 아님",
+        "스퀸치·눈 감기·단순 아래 시선과 구분"
+      ]
+    },
+    {
+      "proposal_id": "draft:expression.se_upper_lid_dominant_half_lid",
+      "status": "new_candidate_proposal_requires_dedup_and_effect_mapping",
+      "slot": "expression",
+      "reference_numbers": [
+        19
+      ],
+      "candidate_entry_template": {
+        "id": "se_upper_lid_dominant_half_lid",
+        "ko": "윗눈꺼풀 중심으로 좁아진 열린 눈",
+        "en": "partly open eyes narrowed primarily by lower-positioned upper eyelid margins",
+        "weight": 1,
+        "tags": [
+          "human",
+          "portrait"
+        ],
+        "for_any": [
+          "human",
+          "portrait"
+        ],
+        "aliases": [
+          "윗눈꺼풀 중심으로 좁아진 열린 눈",
+          "partly open eyes narrowed primarily by lower-positioned upper eyelid margins"
+        ],
+        "keywords": [
+          "윗눈꺼풀 중심으로 좁아진 열린 눈",
+          "partly open eyes narrowed primarily by lower-positioned upper eyelid margins"
+        ],
+        "embedding_text": "partly open eyes narrowed primarily by lower-positioned upper eyelid margins; upper eyelid margins cover more of the upper irises; the specified eyes retain visible open apertures; lower eyelid contours are comparatively open beneath the narrowed upper contours",
+        "concept_units": [
+          "upper eyelid margins cover more of the upper irises",
+          "the specified eyes retain visible open apertures",
+          "lower eyelid contours are comparatively open beneath the narrowed upper contours"
+        ],
+        "relations": [
+          {
+            "id": "se_upper_lid_dominant_half_lid_r1",
+            "type": "visible_configuration",
+            "subject": "main_subject.upper_eyelids",
+            "object": "main_subject.irises"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "paraphrases": [
+          "윗눈꺼풀 중심으로 좁아진 열린 눈",
+          "partly open eyes narrowed primarily by lower-positioned upper eyelid margins"
+        ]
+      },
+      "source_ids": [
+        "P01",
+        "R02"
+      ],
+      "required_core_bindings_ko": "눈꺼풀 구분이 가능한 얼굴 크롭과 열린 눈 조건이 필요하다.",
+      "dedup_review_ko": "pv_half_lidded는 넓은 의미로 유지한다. 윗눈꺼풀 변형을 별도 후보로 둘지 기존 하위 문맥으로 둘지 검토한다.",
+      "effect_mapping_status": "All target/property paths are proposed. Existing coarse paths are conservative; new paths and core_existing_* relations require an explicit owner/lock audit before activation.",
+      "render_gate_ko": "열린 눈 틈과 눈꺼풀 경계 확인;윗/아랫눈꺼풀 구분이 안 되면 좁은 하위 변형은 미관찰",
+      "forbidden_interpretation_promotions_ko": [
+        "눈을 완전히 감음과 구분",
+        "squinch의 아래 눈꺼풀 중심 형태를 덮어쓰지 않음"
+      ]
+    },
+    {
+      "proposal_id": "draft:gaze_engagement.se_eye_visible_through_own_hair",
+      "status": "new_candidate_proposal_requires_dedup_and_effect_mapping",
+      "slot": "gaze_engagement",
+      "reference_numbers": [
+        30
+      ],
+      "candidate_entry_template": {
+        "id": "se_eye_visible_through_own_hair",
+        "ko": "자기 머리카락 사이로 식별되는 눈과 시선",
+        "en": "a readable target-facing eye aperture remains visible between strands of the same actor hair",
+        "weight": 1,
+        "tags": [
+          "human",
+          "portrait"
+        ],
+        "for_any": [
+          "human",
+          "portrait"
+        ],
+        "aliases": [
+          "자기 머리카락 사이로 식별되는 눈과 시선",
+          "a readable target-facing eye aperture remains visible between strands of the same actor hair"
+        ],
+        "keywords": [
+          "자기 머리카락 사이로 식별되는 눈과 시선",
+          "a readable target-facing eye aperture remains visible between strands of the same actor hair"
+        ],
+        "embedding_text": "a readable target-facing eye aperture remains visible between strands of the same actor hair; existing hair strands overlap part of the declared actor eye region; the specified eye aperture and iris-direction cue remain visible; the hair and eye belong to the same actor",
+        "concept_units": [
+          "existing hair strands overlap part of the declared actor eye region",
+          "the specified eye aperture and iris-direction cue remain visible",
+          "the hair and eye belong to the same actor"
+        ],
+        "relations": [
+          {
+            "id": "se_eye_visible_through_own_hair_r1",
+            "type": "partial_occlusion",
+            "subject": "main_subject.hair",
+            "object": "main_subject.eye_region"
+          },
+          {
+            "id": "se_eye_visible_through_own_hair_r2",
+            "type": "directed_gaze",
+            "subject": "main_subject.eyes",
+            "object": "core_declared_gaze_target"
+          }
+        ],
+        "affected_dimensions": [
+          "expression",
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.gaze_direction"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "hair"
+          }
+        ],
+        "paraphrases": [
+          "자기 머리카락 사이로 식별되는 눈과 시선",
+          "a readable target-facing eye aperture remains visible between strands of the same actor hair"
+        ]
+      },
+      "source_ids": [
+        "P02",
+        "R02"
+      ],
+      "required_core_bindings_ko": "원래 모발 길이/배치가 가능한 경우만 적용; hair 경로는 보수적 제안이며 실제 잠금 경로와 대조 전 채택 금지.",
+      "dedup_review_ko": "앞머리/부분 가림 후보들과 actor-owned eye readability 의미가 동일하면 기존 관계 보강으로 전환한다.",
+      "effect_mapping_status": "All target/property paths are proposed. Existing coarse paths are conservative; new paths and core_existing_* relations require an explicit owner/lock audit before activation.",
+      "render_gate_ko": "머리카락 경계와 지정 눈의 방향 단서가 동시에 보여야 함",
+      "forbidden_interpretation_promotions_ko": [
+        "머리카락 뒤 완전히 숨은 눈에 시선을 추정하지 않음",
+        "앞머리 스타일 전체를 새로 바꾸지 않음"
+      ]
+    },
+    {
+      "proposal_id": "draft:hand_pose.se_edge_on_hand_to_camera",
+      "status": "new_candidate_proposal_requires_dedup_and_effect_mapping",
+      "slot": "hand_pose",
+      "reference_numbers": [
+        71
+      ],
+      "candidate_entry_template": {
+        "id": "se_edge_on_hand_to_camera",
+        "ko": "카메라에 좁은 손날을 보이는 손",
+        "en": "the declared hand presents its narrow edge toward the camera while its wrist remains connected",
+        "weight": 1,
+        "tags": [
+          "human",
+          "portrait"
+        ],
+        "for_any": [
+          "human",
+          "portrait"
+        ],
+        "aliases": [
+          "카메라에 좁은 손날을 보이는 손",
+          "the declared hand presents its narrow edge toward the camera while its wrist remains connected"
+        ],
+        "keywords": [
+          "카메라에 좁은 손날을 보이는 손",
+          "the declared hand presents its narrow edge toward the camera while its wrist remains connected"
+        ],
+        "embedding_text": "the declared hand presents its narrow edge toward the camera while its wrist remains connected; the palm and dorsal planes lie oblique to the camera axis; the narrow radial or ulnar hand edge faces the camera as explicitly specified; the wrist and forearm connect to the same actor hand",
+        "concept_units": [
+          "the palm and dorsal planes lie oblique to the camera axis",
+          "the narrow radial or ulnar hand edge faces the camera as explicitly specified",
+          "the wrist and forearm connect to the same actor hand"
+        ],
+        "relations": [
+          {
+            "id": "se_edge_on_hand_to_camera_r1",
+            "type": "orientation_to",
+            "subject": "main_subject.declared_hand_plane",
+            "object": "camera.axis"
+          },
+          {
+            "id": "se_edge_on_hand_to_camera_r2",
+            "type": "attached_to",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.declared_forearm"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          }
+        ],
+        "paraphrases": [
+          "카메라에 좁은 손날을 보이는 손",
+          "the declared hand presents its narrow edge toward the camera while its wrist remains connected"
+        ]
+      },
+      "source_ids": [
+        "P03"
+      ],
+      "required_core_bindings_ko": "지정 손 소유와 카메라 기준이 고정되어야 하며 손 크기/비율은 바꾸지 않는다.",
+      "dedup_review_ko": "손 회전·프로파일 손 후보에 이미 동일 관계가 있으면 alias/relations만 보강한다.",
+      "effect_mapping_status": "All target/property paths are proposed. Existing coarse paths are conservative; new paths and core_existing_* relations require an explicit owner/lock audit before activation.",
+      "render_gate_ko": "손 양면과 손날의 폭·손목 연결을 읽을 크롭",
+      "forbidden_interpretation_promotions_ko": [
+        "손을 얇게 변형하는 것이 아님",
+        "손바닥 정면·손등 정면과 구분",
+        "손날의 어느 쪽은 명시 때만 고정"
+      ]
+    },
+    {
+      "proposal_id": "draft:hand_pose.se_two_hands_different_heights",
+      "status": "new_candidate_proposal_requires_dedup_and_effect_mapping",
+      "slot": "hand_pose",
+      "reference_numbers": [
+        72
+      ],
+      "candidate_entry_template": {
+        "id": "se_two_hands_different_heights",
+        "ko": "같은 사람의 양손을 서로 다른 높이에 놓기",
+        "en": "both hands of the same actor occupy distinct heights relative to the torso axis",
+        "weight": 1,
+        "tags": [
+          "human",
+          "portrait"
+        ],
+        "for_any": [
+          "human",
+          "portrait"
+        ],
+        "aliases": [
+          "같은 사람의 양손을 서로 다른 높이에 놓기",
+          "both hands of the same actor occupy distinct heights relative to the torso axis"
+        ],
+        "keywords": [
+          "같은 사람의 양손을 서로 다른 높이에 놓기",
+          "both hands of the same actor occupy distinct heights relative to the torso axis"
+        ],
+        "embedding_text": "both hands of the same actor occupy distinct heights relative to the torso axis; both declared hands remain visibly attached to the same actor arms; the hands lie at different torso-relative heights; each hand retains its existing finger configuration",
+        "concept_units": [
+          "both declared hands remain visibly attached to the same actor arms",
+          "the hands lie at different torso-relative heights",
+          "each hand retains its existing finger configuration"
+        ],
+        "relations": [
+          {
+            "id": "se_two_hands_different_heights_r1",
+            "type": "height_difference",
+            "subject": "main_subject.left_hand",
+            "object": "main_subject.right_hand"
+          },
+          {
+            "id": "se_two_hands_different_heights_r2",
+            "type": "reference_axis",
+            "subject": "main_subject.hands",
+            "object": "main_subject.torso"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          }
+        ],
+        "paraphrases": [
+          "같은 사람의 양손을 서로 다른 높이에 놓기",
+          "both hands of the same actor occupy distinct heights relative to the torso axis"
+        ]
+      },
+      "source_ids": [
+        "P03"
+      ],
+      "required_core_bindings_ko": "두 손/팔과 몸통 축이 보이고 다른 인물 손을 대체 사용하지 않아야 한다.",
+      "dedup_review_ko": "stacked hands나 교차 손목과 같지 않다. 기존 비대칭 손 배치가 같은 범위면 재사용한다.",
+      "effect_mapping_status": "All target/property paths are proposed. Existing coarse paths are conservative; new paths and core_existing_* relations require an explicit owner/lock audit before activation.",
+      "render_gate_ko": "두 손과 몸통 축이 함께 보여야 함",
+      "forbidden_interpretation_promotions_ko": [
+        "한손만 보임·카메라 roll만으로 화면 높이차·다른 사람 손과 구분"
+      ]
+    },
+    {
+      "proposal_id": "draft:contact_point.se_cheek_fingertip_light_touch",
+      "status": "new_candidate_proposal_requires_dedup_and_effect_mapping",
+      "slot": "contact_point",
+      "reference_numbers": [
+        73
+      ],
+      "candidate_entry_template": {
+        "id": "se_cheek_fingertip_light_touch",
+        "ko": "손끝으로 자기 볼 가볍게 접촉",
+        "en": "one or more fingertips lightly contact the same actor cheek with the palm remaining off the cheek",
+        "weight": 1,
+        "tags": [
+          "human",
+          "portrait"
+        ],
+        "for_any": [
+          "human",
+          "portrait"
+        ],
+        "aliases": [
+          "손끝으로 자기 볼 가볍게 접촉",
+          "one or more fingertips lightly contact the same actor cheek with the palm remaining off the cheek"
+        ],
+        "keywords": [
+          "손끝으로 자기 볼 가볍게 접촉",
+          "one or more fingertips lightly contact the same actor cheek with the palm remaining off the cheek"
+        ],
+        "embedding_text": "one or more fingertips lightly contact the same actor cheek with the palm remaining off the cheek; declared fingertips meet the same actor cheek surface; a visible gap separates the palm from the cheek; the finger hand and forearm remain continuous",
+        "concept_units": [
+          "declared fingertips meet the same actor cheek surface",
+          "a visible gap separates the palm from the cheek",
+          "the finger hand and forearm remain continuous"
+        ],
+        "relations": [
+          {
+            "id": "se_cheek_fingertip_light_touch_r1",
+            "type": "light_contact",
+            "subject": "main_subject.declared_fingertips",
+            "object": "main_subject.declared_cheek"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          }
+        ],
+        "paraphrases": [
+          "손끝으로 자기 볼 가볍게 접촉",
+          "one or more fingertips lightly contact the same actor cheek with the palm remaining off the cheek"
+        ]
+      },
+      "source_ids": [
+        "P03"
+      ],
+      "required_core_bindings_ko": "주체/볼 좌우/손 소유를 고정하고 손끝-볼 접점을 확인한다.",
+      "dedup_review_ko": "hand_touching_face의 넓은 하위형; temple touch나 chin support의 동의어로 만들지 않는다.",
+      "effect_mapping_status": "All target/property paths are proposed. Existing coarse paths are conservative; new paths and core_existing_* relations require an explicit owner/lock audit before activation.",
+      "render_gate_ko": "손끝-볼 접점과 손 전체 소유가 읽히는 MCU/CU",
+      "forbidden_interpretation_promotions_ko": [
+        "턱 지지·관자놀이 접촉·얼굴 앞 허공 손과 구분",
+        "접촉이 뺨의 압축을 필수화하지 않음"
+      ]
+    },
+    {
+      "proposal_id": "draft:hand_pose.se_hand_hover_below_chin",
+      "status": "new_candidate_proposal_requires_dedup_and_effect_mapping",
+      "slot": "hand_pose",
+      "reference_numbers": [
+        74
+      ],
+      "candidate_entry_template": {
+        "id": "se_hand_hover_below_chin",
+        "ko": "턱 아래에 간격을 두고 놓은 자기 손",
+        "en": "the actor hand is placed below the chin with a visible air gap",
+        "weight": 1,
+        "tags": [
+          "human",
+          "portrait"
+        ],
+        "for_any": [
+          "human",
+          "portrait"
+        ],
+        "aliases": [
+          "턱 아래에 간격을 두고 놓은 자기 손",
+          "the actor hand is placed below the chin with a visible air gap"
+        ],
+        "keywords": [
+          "턱 아래에 간격을 두고 놓은 자기 손",
+          "the actor hand is placed below the chin with a visible air gap"
+        ],
+        "embedding_text": "the actor hand is placed below the chin with a visible air gap; the declared hand sits below the same actor chin; a visible gap separates the hand from the chin; the hand and forearm belong to the same actor",
+        "concept_units": [
+          "the declared hand sits below the same actor chin",
+          "a visible gap separates the hand from the chin",
+          "the hand and forearm belong to the same actor"
+        ],
+        "relations": [
+          {
+            "id": "se_hand_hover_below_chin_r1",
+            "type": "below",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.chin"
+          },
+          {
+            "id": "se_hand_hover_below_chin_r2",
+            "type": "separated_by_visible_gap",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.chin"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          }
+        ],
+        "paraphrases": [
+          "턱 아래에 간격을 두고 놓은 자기 손",
+          "the actor hand is placed below the chin with a visible air gap"
+        ]
+      },
+      "source_ids": [
+        "P03"
+      ],
+      "required_core_bindings_ko": "턱-손 경계와 간격이 보이는 크롭; 실제 지지/접촉이 요청되면 이 후보 제외.",
+      "dedup_review_ko": "pv_chin_support와 반대 접촉 조건이며 범용 hand-under-chin의 하드 동의어로 삼지 않는다.",
+      "effect_mapping_status": "All target/property paths are proposed. Existing coarse paths are conservative; new paths and core_existing_* relations require an explicit owner/lock audit before activation.",
+      "render_gate_ko": "턱-손 사이 경계와 전완 소유가 보여야 함",
+      "forbidden_interpretation_promotions_ko": [
+        "hand-under-chin 전체를 chin support로 합치지 않음",
+        "손이 턱을 받친다면 하중은 별도 증거"
+      ]
+    },
+    {
+      "proposal_id": "draft:hand_pose.se_one_hand_behind_head",
+      "status": "new_candidate_proposal_requires_dedup_and_effect_mapping",
+      "slot": "hand_pose",
+      "reference_numbers": [
+        76
+      ],
+      "candidate_entry_template": {
+        "id": "se_one_hand_behind_head",
+        "ko": "한 손만 자기 뒤통수에 놓기",
+        "en": "exactly the specified one hand rests at the actor posterior head while the other arm retains its existing posture",
+        "weight": 1,
+        "tags": [
+          "human",
+          "portrait"
+        ],
+        "for_any": [
+          "human",
+          "portrait"
+        ],
+        "aliases": [
+          "한 손만 자기 뒤통수에 놓기",
+          "exactly the specified one hand rests at the actor posterior head while the other arm retains its existing posture"
+        ],
+        "keywords": [
+          "한 손만 자기 뒤통수에 놓기",
+          "exactly the specified one hand rests at the actor posterior head while the other arm retains its existing posture"
+        ],
+        "embedding_text": "exactly the specified one hand rests at the actor posterior head while the other arm retains its existing posture; the specified single hand lies at the same actor posterior head; its elbow forearm and wrist form one continuous arm chain; the other hand retains its existing posture",
+        "concept_units": [
+          "the specified single hand lies at the same actor posterior head",
+          "its elbow forearm and wrist form one continuous arm chain",
+          "the other hand retains its existing posture"
+        ],
+        "relations": [
+          {
+            "id": "se_one_hand_behind_head_r1",
+            "type": "placed_at",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.posterior_head"
+          },
+          {
+            "id": "se_one_hand_behind_head_r2",
+            "type": "attached_to",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.declared_arm"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          }
+        ],
+        "paraphrases": [
+          "한 손만 자기 뒤통수에 놓기",
+          "exactly the specified one hand rests at the actor posterior head while the other arm retains its existing posture"
+        ]
+      },
+      "source_ids": [
+        "P03"
+      ],
+      "required_core_bindings_ko": "한 손의 laterality와 반대 손 잠금을 보존한다.",
+      "dedup_review_ko": "pv_arms_behind_head는 양손 변형으로 유지. 후보 이름만 바꾸어 양손형을 재사용하지 않는다.",
+      "effect_mapping_status": "All target/property paths are proposed. Existing coarse paths are conservative; new paths and core_existing_* relations require an explicit owner/lock audit before activation.",
+      "render_gate_ko": "선택 손/팔꿈치 연결과 뒤통수 접촉 위치가 읽혀야 함",
+      "forbidden_interpretation_promotions_ko": [
+        "양손 뒤통수의 기존 pv_arms_behind_head와 다름",
+        "손목 교차 머리위와 구분"
+      ]
+    },
+    {
+      "proposal_id": "draft:contact_point.se_lapel_fingertip_touch",
+      "status": "new_candidate_proposal_requires_dedup_and_effect_mapping",
+      "slot": "contact_point",
+      "reference_numbers": [
+        78
+      ],
+      "candidate_entry_template": {
+        "id": "se_lapel_fingertip_touch",
+        "ko": "자기 옷 라펠에 손끝만 가볍게 대기",
+        "en": "fingertips lightly meet the edge of an existing garment lapel",
+        "weight": 1,
+        "tags": [
+          "human",
+          "portrait"
+        ],
+        "for_any": [
+          "human",
+          "portrait"
+        ],
+        "aliases": [
+          "자기 옷 라펠에 손끝만 가볍게 대기",
+          "fingertips lightly meet the edge of an existing garment lapel"
+        ],
+        "keywords": [
+          "자기 옷 라펠에 손끝만 가볍게 대기",
+          "fingertips lightly meet the edge of an existing garment lapel"
+        ],
+        "embedding_text": "fingertips lightly meet the edge of an existing garment lapel; an existing lapel edge remains connected to the same actor garment; declared fingertips contact that lapel edge; fingertip pads meet one exposed side of the lapel edge",
+        "concept_units": [
+          "an existing lapel edge remains connected to the same actor garment",
+          "declared fingertips contact that lapel edge",
+          "fingertip pads meet one exposed side of the lapel edge"
+        ],
+        "relations": [
+          {
+            "id": "se_lapel_fingertip_touch_r1",
+            "type": "light_contact",
+            "subject": "main_subject.declared_fingertips",
+            "object": "core_existing_garment.lapel_edge"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          }
+        ],
+        "paraphrases": [
+          "자기 옷 라펠에 손끝만 가볍게 대기",
+          "fingertips lightly meet the edge of an existing garment lapel"
+        ]
+      },
+      "source_ids": [
+        "P03"
+      ],
+      "required_core_bindings_ko": "core에 라펠 있는 옷이 이미 존재해야 함; 새 옷깃/재킷 생성 금지.",
+      "dedup_review_ko": "pv_lapel_grip와 실제 pinch 유무로 구분한다.",
+      "effect_mapping_status": "All target/property paths are proposed. Existing coarse paths are conservative; new paths and core_existing_* relations require an explicit owner/lock audit before activation.",
+      "render_gate_ko": "손끝과 라펠 모서리의 실제 관계가 보여야 함",
+      "forbidden_interpretation_promotions_ko": [
+        "손을 쇄골에 댐·옷깃 없는 옷·목걸이 잡기와 구분",
+        "집음이 기본값 아님"
+      ]
+    },
+    {
+      "proposal_id": "draft:contact_point.se_small_garment_fold_pinch",
+      "status": "new_candidate_proposal_requires_dedup_and_effect_mapping",
+      "slot": "contact_point",
+      "reference_numbers": [
+        79
+      ],
+      "candidate_entry_template": {
+        "id": "se_small_garment_fold_pinch",
+        "ko": "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+        "en": "a thumb and fingertip pinch a small visible fold of the existing garment fabric",
+        "weight": 1,
+        "tags": [
+          "human",
+          "portrait"
+        ],
+        "for_any": [
+          "human",
+          "portrait"
+        ],
+        "aliases": [
+          "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+          "a thumb and fingertip pinch a small visible fold of the existing garment fabric"
+        ],
+        "keywords": [
+          "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+          "a thumb and fingertip pinch a small visible fold of the existing garment fabric"
+        ],
+        "embedding_text": "a thumb and fingertip pinch a small visible fold of the existing garment fabric; opposing thumb and fingertip hold the same small cloth fold; cloth is visibly interposed between the fingertips; the fold continues into the existing garment; the existing garment remains connected around the small local fold",
+        "concept_units": [
+          "opposing thumb and fingertip hold the same small cloth fold",
+          "cloth is visibly interposed between the fingertips",
+          "the fold continues into the existing garment",
+          "the existing garment remains connected around the small local fold"
+        ],
+        "relations": [
+          {
+            "id": "se_small_garment_fold_pinch_r1",
+            "type": "pinches",
+            "subject": "main_subject.declared_thumb_and_finger",
+            "object": "core_existing_garment.small_fold"
+          },
+          {
+            "id": "se_small_garment_fold_pinch_r2",
+            "type": "part_of",
+            "subject": "core_existing_garment.small_fold",
+            "object": "core_existing_garment"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "garment"
+          }
+        ],
+        "paraphrases": [
+          "기존 옷감의 작은 접힌 부분을 손끝으로 집기",
+          "a thumb and fingertip pinch a small visible fold of the existing garment fabric"
+        ]
+      },
+      "source_ids": [
+        "P03"
+      ],
+      "required_core_bindings_ko": "기존 옷과 작은 변형 허용 범위가 필요; garment 경로는 실제 의복 잠금과 검토 전 채택 금지.",
+      "dedup_review_ko": "pv_hem_hold와 fingers_pinching_thread는 재질/집는 부위가 달라 단순 alias로 병합하지 않는다.",
+      "effect_mapping_status": "All target/property paths are proposed. Existing coarse paths are conservative; new paths and core_existing_* relations require an explicit owner/lock audit before activation.",
+      "render_gate_ko": "손끝 두 면·원단 끼임·연결된 옷이 보여야 함",
+      "forbidden_interpretation_promotions_ko": [
+        "실/피부를 집음·밑단 전체 잡기·허공 pinch와 구분",
+        "옷 벗기·노출 증대를 자동 추가하지 않음"
+      ]
+    },
+    {
+      "proposal_id": "draft:contact_point.se_existing_pendant_fingertip_hold",
+      "status": "new_candidate_proposal_requires_dedup_and_effect_mapping",
+      "slot": "contact_point",
+      "reference_numbers": [
+        80
+      ],
+      "candidate_entry_template": {
+        "id": "se_existing_pendant_fingertip_hold",
+        "ko": "기존 목걸이 펜던트 본체를 손끝으로 잡기",
+        "en": "fingertips hold the existing pendant body while it remains visibly connected to its necklace chain",
+        "weight": 1,
+        "tags": [
+          "human",
+          "portrait"
+        ],
+        "for_any": [
+          "human",
+          "portrait"
+        ],
+        "aliases": [
+          "기존 목걸이 펜던트 본체를 손끝으로 잡기",
+          "fingertips hold the existing pendant body while it remains visibly connected to its necklace chain"
+        ],
+        "keywords": [
+          "기존 목걸이 펜던트 본체를 손끝으로 잡기",
+          "fingertips hold the existing pendant body while it remains visibly connected to its necklace chain"
+        ],
+        "embedding_text": "fingertips hold the existing pendant body while it remains visibly connected to its necklace chain; declared fingertips contact and hold the existing pendant body; the pendant remains attached to the same necklace chain; the chain belongs to the same actor accessory; the hand belongs to that actor",
+        "concept_units": [
+          "declared fingertips contact and hold the existing pendant body",
+          "the pendant remains attached to the same necklace chain",
+          "the chain belongs to the same actor accessory",
+          "the hand belongs to that actor"
+        ],
+        "relations": [
+          {
+            "id": "se_existing_pendant_fingertip_hold_r1",
+            "type": "holds",
+            "subject": "main_subject.declared_fingertips",
+            "object": "core_existing_pendant.body"
+          },
+          {
+            "id": "se_existing_pendant_fingertip_hold_r2",
+            "type": "attached_to",
+            "subject": "core_existing_pendant.body",
+            "object": "core_existing_necklace.chain"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          }
+        ],
+        "paraphrases": [
+          "기존 목걸이 펜던트 본체를 손끝으로 잡기",
+          "fingertips hold the existing pendant body while it remains visibly connected to its necklace chain"
+        ]
+      },
+      "source_ids": [
+        "P03"
+      ],
+      "required_core_bindings_ko": "core에 펜던트/체인이 이미 있음; 액세서리 추가/분리 없이 가시적 접점만 바꿀 수 있어야 함.",
+      "dedup_review_ko": "액세서리 외형 후보와 분리된 접촉 의미다. 기존 장신구 만짐 후보에 동일 관계가 있으면 보강으로 합친다.",
+      "effect_mapping_status": "All target/property paths are proposed. Existing coarse paths are conservative; new paths and core_existing_* relations require an explicit owner/lock audit before activation.",
+      "render_gate_ko": "손-장식-체인의 연결이 MCU/CU에서 보여야 함",
+      "forbidden_interpretation_promotions_ko": [
+        "체인만 잡기·단추 만짐·펜던트 새로 추가와 구분",
+        "잡음만으로 의미/관계사를 추정하지 않음"
+      ]
+    },
+    {
+      "proposal_id": "draft:light_shape.se_cornea_catchlight_without_wetness",
+      "status": "new_candidate_proposal_requires_dedup_and_effect_mapping",
+      "slot": "light_shape",
+      "reference_numbers": [
+        119
+      ],
+      "candidate_entry_template": {
+        "id": "se_cornea_catchlight_without_wetness",
+        "ko": "각막 표면의 작은 광원 반사점",
+        "en": "a small bounded source reflection is visible on the specified corneal surface",
+        "weight": 1,
+        "tags": [
+          "human",
+          "portrait"
+        ],
+        "for_any": [
+          "human",
+          "portrait"
+        ],
+        "aliases": [
+          "각막 표면의 작은 광원 반사점",
+          "a small bounded source reflection is visible on the specified corneal surface"
+        ],
+        "keywords": [
+          "각막 표면의 작은 광원 반사점",
+          "a small bounded source reflection is visible on the specified corneal surface"
+        ],
+        "embedding_text": "a small bounded source reflection is visible on the specified corneal surface; a small bounded highlight lies on the specified actor corneal surface; iris and lid boundaries remain visible around the reflection; iris texture remains readable around the bounded source reflection",
+        "concept_units": [
+          "a small bounded highlight lies on the specified actor corneal surface",
+          "iris and lid boundaries remain visible around the reflection",
+          "iris texture remains readable around the bounded source reflection"
+        ],
+        "relations": [
+          {
+            "id": "se_cornea_catchlight_without_wetness_r1",
+            "type": "reflected_on",
+            "subject": "core_declared_light",
+            "object": "main_subject.declared_cornea"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "main_subject",
+            "property": "eyes.light_reflection"
+          }
+        ],
+        "paraphrases": [
+          "각막 표면의 작은 광원 반사점",
+          "a small bounded source reflection is visible on the specified corneal surface"
+        ]
+      },
+      "source_ids": [
+        "A04",
+        "L05"
+      ],
+      "required_core_bindings_ko": "조명/반사 경로와 눈 소유를 고정; eyes.light_reflection은 신규 세분 경로 제안으로 잠금 매핑 검토 필수.",
+      "dedup_review_ko": "glossy_wet_catchlight_eyes와 vertical pair는 더 좁거나 복합 조건이므로 순수 반사점 전체를 대체할 수 없다.",
+      "effect_mapping_status": "All target/property paths are proposed. Existing coarse paths are conservative; new paths and core_existing_* relations require an explicit owner/lock audit before activation.",
+      "render_gate_ko": "지정 눈 표면의 반사점과 눈꺼풀/홍채 경계가 원본에서 보여야 함",
+      "forbidden_interpretation_promotions_ko": [
+        "눈가 펄/아이섀도·눈물·눈 전체 glow와 구분",
+        "젖은 눈·큰 홍채·특정 감정을 자동 추가하지 않음"
+      ]
+    },
+    {
+      "proposal_id": "draft:gaze_engagement.se_gaze_at_existing_partner_lips_state",
+      "status": "new_candidate_proposal_requires_dedup_and_effect_mapping",
+      "slot": "gaze_engagement",
+      "reference_numbers": [
+        28
+      ],
+      "candidate_entry_template": {
+        "id": "se_gaze_at_existing_partner_lips_state",
+        "ko": "기존 상대의 입술을 향한 현재 시선 상태",
+        "en": "the declared actor current gaze is aimed at the already present partner lip region",
+        "weight": 1,
+        "tags": [
+          "human",
+          "portrait"
+        ],
+        "for_any": [
+          "human",
+          "portrait"
+        ],
+        "aliases": [
+          "기존 상대의 입술을 향한 현재 시선 상태",
+          "the declared actor current gaze is aimed at the already present partner lip region"
+        ],
+        "keywords": [
+          "기존 상대의 입술을 향한 현재 시선 상태",
+          "the declared actor current gaze is aimed at the already present partner lip region"
+        ],
+        "embedding_text": "the declared actor current gaze is aimed at the already present partner lip region; the declared actor eye direction points to the existing partner lip region; the target lips belong to that same existing partner; both actor eyes and target lip region remain spatially distinct",
+        "concept_units": [
+          "the declared actor eye direction points to the existing partner lip region",
+          "the target lips belong to that same existing partner",
+          "both actor eyes and target lip region remain spatially distinct"
+        ],
+        "relations": [
+          {
+            "id": "se_gaze_at_existing_partner_lips_state_r1",
+            "type": "directed_gaze",
+            "subject": "main_subject.eyes",
+            "object": "core_existing_partner.lips"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.gaze_direction"
+          }
+        ],
+        "paraphrases": [
+          "기존 상대의 입술을 향한 현재 시선 상태",
+          "the declared actor current gaze is aimed at the already present partner lip region"
+        ]
+      },
+      "source_ids": [
+        "R03"
+      ],
+      "required_core_bindings_ko": "core에 상대가 이미 존재하고 입 위치가 정의됨; 자동 상대 추가·키스 동작 추가 금지.",
+      "dedup_review_ko": "to_partner_face_then_away는 시간/대상이 달라 동일하지 않다. eye-to-lip 전체 용어는 이 정지 상태에 하드 alias로 넣지 않는다.",
+      "effect_mapping_status": "All target/property paths are proposed. Existing coarse paths are conservative; new paths and core_existing_* relations require an explicit owner/lock audit before activation.",
+      "render_gate_ko": "정지: 상대 입 방향 상태만;두 얼굴 또는 목표 위치가 식별되어야 함;순서는 연속 증거 필요",
+      "forbidden_interpretation_promotions_ko": [
+        "자기 입·카메라·불특정 두 번째 인물과 구분",
+        "입맞춤·동의·욕망을 자동 추가하지 않음"
+      ]
+    },
+    {
+      "proposal_id": "draft:hand_pose.se_beckon_shaped_finger_static_state",
+      "status": "new_candidate_proposal_requires_dedup_and_effect_mapping",
+      "slot": "hand_pose",
+      "reference_numbers": [
+        81
+      ],
+      "candidate_entry_template": {
+        "id": "se_beckon_shaped_finger_static_state",
+        "ko": "손바닥 방향이 읽히는 굽힌 손가락의 정지 상태",
+        "en": "the specified finger is visibly flexed against a readable hand plane in a beckoning-shaped current state",
+        "weight": 1,
+        "tags": [
+          "human",
+          "portrait"
+        ],
+        "for_any": [
+          "human",
+          "portrait"
+        ],
+        "aliases": [
+          "손바닥 방향이 읽히는 굽힌 손가락의 정지 상태",
+          "the specified finger is visibly flexed against a readable hand plane in a beckoning-shaped current state"
+        ],
+        "keywords": [
+          "손바닥 방향이 읽히는 굽힌 손가락의 정지 상태",
+          "the specified finger is visibly flexed against a readable hand plane in a beckoning-shaped current state"
+        ],
+        "embedding_text": "the specified finger is visibly flexed against a readable hand plane in a beckoning-shaped current state; the specified finger bends at its connected joints; the palm-facing direction is readable relative to the specified target; the remaining fingers retain their existing arrangement",
+        "concept_units": [
+          "the specified finger bends at its connected joints",
+          "the palm-facing direction is readable relative to the specified target",
+          "the remaining fingers retain their existing arrangement"
+        ],
+        "relations": [
+          {
+            "id": "se_beckon_shaped_finger_static_state_r1",
+            "type": "flexed_state",
+            "subject": "main_subject.declared_finger",
+            "object": "main_subject.declared_hand_plane"
+          },
+          {
+            "id": "se_beckon_shaped_finger_static_state_r2",
+            "type": "orientation_to",
+            "subject": "main_subject.declared_hand_plane",
+            "object": "core_declared_gesture_target"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          }
+        ],
+        "paraphrases": [
+          "손바닥 방향이 읽히는 굽힌 손가락의 정지 상태",
+          "the specified finger is visibly flexed against a readable hand plane in a beckoning-shaped current state"
+        ]
+      },
+      "source_ids": [
+        "P03",
+        "R03"
+      ],
+      "required_core_bindings_ko": "손/손가락 수/대상 방향 고정; 반복 굽힘이나 초대 성공을 주장하지 않음.",
+      "dedup_review_ko": "beckoning이라는 포괄 의도와 정지 모양을 분리한다. 기존 finger-curled 후보가 있으면 재사용한다.",
+      "effect_mapping_status": "All target/property paths are proposed. Existing coarse paths are conservative; new paths and core_existing_* relations require an explicit owner/lock audit before activation.",
+      "render_gate_ko": "정지: 굽힌 손가락/손바닥 방향 확인;전체 손짓: 굽힘 반복의 프레임 증거 필요",
+      "forbidden_interpretation_promotions_ko": [
+        "손가락 지시·주먹·임의 오므림과 구분",
+        "정지 상태만으로 초대 의도를 확정하지 않음"
+      ]
+    }
+  ],
+  "existing_candidate_enrichments": [
+    {
+      "proposal_id": "enrich:expression.ae_squinch",
+      "candidate_key": "expression.ae_squinch",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        20
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "lower eyelid margins lift toward the irises",
+          "both eyes remain visibly open through narrowed apertures"
+        ],
+        "relations": [
+          {
+            "id": "actor_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the declared actor's stated local face and eye configuration"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": [
+          "스퀸치",
+          "squinch",
+          "lifted lower eyelids"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "lower eyelid margins lift toward the irises",
+          "both eyes remain visibly open through narrowed apertures",
+          "lower eyelid margins sit raised toward the irises",
+          "both eyes remain visibly open",
+          "upper-lid closure is not the dominant source of narrowing"
+        ],
+        "relations": [
+          {
+            "id": "actor_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the declared actor's stated local face and eye configuration"
+          },
+          {
+            "id": "se_r1",
+            "type": "visible_configuration",
+            "subject": "main_subject.lower_eyelids",
+            "object": "main_subject.irises"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "migration_note_ko": "현재 두 구성요소를 보존하며 lower/upper 경계를 보강. 움직였다/유지했다는 시간 주장은 추가하지 않는다.",
+      "source_ids": [
+        "P01",
+        "R02",
+        "R03"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:expression.pv_half_lidded",
+      "candidate_key": "expression.pv_half_lidded",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        19
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "eye apertures are reduced but remain open",
+          "pupils are partially visible",
+          "upper and lower lid contributions are not assumed without close evidence"
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": [
+          "일부 열린 눈꺼풀",
+          "Half-lidded eyes",
+          "반쯤 감은 눈"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "eye apertures are reduced but remain open",
+          "pupils are partially visible",
+          "upper and lower lid contributions are not assumed without close evidence",
+          "upper and lower contributions remain unspecified unless independently visible"
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration"
+          },
+          {
+            "id": "se_r1",
+            "type": "visible_configuration",
+            "subject": "main_subject.eyelids",
+            "object": "main_subject.eye_apertures"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "migration_note_ko": "넓은 의미를 유지. 윗눈꺼풀 하위 변형을 범용 후보의 강제 정의로 덮어쓰지 않는다.",
+      "source_ids": [
+        "P01",
+        "R02"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:expression.pv_asymmetric_mouth",
+      "candidate_key": "expression.pv_asymmetric_mouth",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        32
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "one mouth corner differs visibly from the other",
+          "face yaw does not alone explain the asymmetry",
+          "no personality or motive is inferred"
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": [
+          "좌우가 다른 입꼬리",
+          "Smirk",
+          "Asymmetrical smile",
+          "한쪽 입꼬리"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "one mouth corner differs visibly from the other",
+          "face yaw does not alone explain the asymmetry",
+          "no personality or motive is inferred",
+          "same actor lip corners differ in height or curvature",
+          "face pose is accounted for when reading asymmetry"
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration"
+          },
+          {
+            "id": "se_r1",
+            "type": "asymmetric_configuration",
+            "subject": "main_subject.left_lip_corner",
+            "object": "main_subject.right_lip_corner"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "migration_note_ko": "Smirk 별칭을 단순 형태의 정확 동의어로 유지할지 검토. 평가 의미는 별도 문맥 후보에 남긴다.",
+      "source_ids": [
+        "R02",
+        "R03",
+        "D15"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:expression.playful_smirk",
+      "candidate_key": "expression.playful_smirk",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        33
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json"
+      ],
+      "baseline_fields": {
+        "concept_units": null,
+        "relations": null,
+        "affected_dimensions": null,
+        "affected_properties": null,
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": [
+          "playful smirk",
+          "a playful smirk"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "a small requested lip-corner configuration remains visible",
+          "the playful or self-satisfied reading stays in requester context"
+        ],
+        "relations": [
+          {
+            "id": "se_r1",
+            "type": "actor_owner",
+            "subject": "main_subject",
+            "object": "main_subject.lip_corners"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "migration_note_ko": "비대칭은 선택 대안으로 두고 내면 상태를 하드 증거로 만들지 않는다.",
+      "source_ids": [
+        "D15",
+        "R03"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:expression.ae_lip_bite",
+      "candidate_key": "expression.ae_lip_bite",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        38
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "upper teeth contact the lower lip",
+          "the contact belongs to the actor's own mouth"
+        ],
+        "relations": [
+          {
+            "id": "actor_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the declared actor's stated local face and eye configuration"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": [
+          "아랫입술을 가볍게 문 상태",
+          "upper teeth gently contact the lower lip"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "upper teeth contact the lower lip",
+          "the contact belongs to the actor's own mouth",
+          "upper teeth visibly meet the same actor lower lip",
+          "the lower lip partly tucks beneath the tooth boundary"
+        ],
+        "relations": [
+          {
+            "id": "actor_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the declared actor's stated local face and eye configuration"
+          },
+          {
+            "id": "se_r1",
+            "type": "contact",
+            "subject": "main_subject.upper_teeth",
+            "object": "main_subject.lower_lip"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "migration_note_ko": "lip roll·lip press·tongue contact와 분리하며 행동 문맥을 보존한다.",
+      "source_ids": [
+        "R02",
+        "R03"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:expression.ctx_c126",
+      "candidate_key": "expression.ctx_c126",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        38
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_contextual_appeal_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "adult lightly biting the lower lip while concentrating on a task"
+        ],
+        "relations": [
+          {
+            "id": "ctx_c126_relation",
+            "type": "visible_configuration",
+            "subject": "the established adult subject and scene elements",
+            "object": "adult lightly biting the lower lip while concentrating on a task"
+          }
+        ],
+        "affected_dimensions": [
+          "action",
+          "expression"
+        ],
+        "affected_properties": null,
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": []
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "adult lightly biting the lower lip while concentrating on a task",
+          "the task-engaged actor retains the authored lower-lip bite form",
+          "gaze and hands remain attached to the frozen task"
+        ],
+        "relations": [
+          {
+            "id": "ctx_c126_relation",
+            "type": "visible_configuration",
+            "subject": "the established adult subject and scene elements",
+            "object": "adult lightly biting the lower lip while concentrating on a task"
+          },
+          {
+            "id": "se_r1",
+            "type": "actor_owner",
+            "subject": "main_subject",
+            "object": "the authored task-concentration expression"
+          }
+        ],
+        "affected_dimensions": [
+          "action",
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "migration_note_ko": "원래 작업 집중 맥락/가드/행동을 보존. 유혹 후보로 전환하는 patch가 아니다.",
+      "source_ids": [
+        "R02",
+        "R03"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:body_orientation.pv_shoulder_lower",
+      "candidate_key": "body_orientation.pv_shoulder_lower",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        52
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "selected shoulder girdle lowers relative to neck or other shoulder",
+          "neck and clavicle region remain readable",
+          "camera horizon does not supply the difference alone"
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.segment_orientation"
+          }
+        ],
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": [
+          "어깨의 아래쪽 이동",
+          "Shoulder depression",
+          "One shoulder dropped",
+          "어깨 내리기"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "selected shoulder girdle lowers relative to neck or other shoulder",
+          "neck and clavicle region remain readable",
+          "camera horizon does not supply the difference alone",
+          "the specified shoulder girdle sits lower relative to the torso axis",
+          "the opposite shoulder and neck remain connected"
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration"
+          },
+          {
+            "id": "se_r1",
+            "type": "relative_height",
+            "subject": "main_subject.declared_shoulder",
+            "object": "main_subject.torso_axis"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.segment_orientation"
+          }
+        ]
+      },
+      "migration_note_ko": "옷의 dropped-shoulder seam 별칭을 신체 자세 exact cue로 섞지 않는다.",
+      "source_ids": [
+        "P02",
+        "R02"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:hand_pose.tucking_hair_behind_ear",
+      "candidate_key": "hand_pose.tucking_hair_behind_ear",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        75
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json"
+      ],
+      "baseline_fields": {
+        "concept_units": null,
+        "relations": null,
+        "affected_dimensions": null,
+        "affected_properties": null,
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": null
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "the declared fingers meet the same actor hair near the same ear",
+          "hair strands continue toward the region behind that ear",
+          "the wrist and arm retain actor ownership"
+        ],
+        "relations": [
+          {
+            "id": "se_r1",
+            "type": "contact",
+            "subject": "main_subject.declared_fingers",
+            "object": "main_subject.hair_near_ear"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          }
+        ]
+      },
+      "migration_note_ko": "정지 상태에서는 현재 접촉만 주장. 고정된 헤어스타일의 변경 효과가 있으면 별도 appearance 잠금도 검사한다.",
+      "source_ids": [
+        "P03"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:hand_pose.reaching_toward_camera",
+      "candidate_key": "hand_pose.reaching_toward_camera",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        82
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json"
+      ],
+      "baseline_fields": {
+        "concept_units": null,
+        "relations": null,
+        "affected_dimensions": null,
+        "affected_properties": null,
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": null
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "the declared actor arm extends toward the camera",
+          "the attached hand occupies a nearer depth plane than the torso",
+          "wrist elbow and shoulder remain continuous"
+        ],
+        "relations": [
+          {
+            "id": "se_r1",
+            "type": "depth_nearer_than",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.torso"
+          },
+          {
+            "id": "se_r2",
+            "type": "orientation_to",
+            "subject": "main_subject.declared_arm",
+            "object": "camera"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          }
+        ]
+      },
+      "migration_note_ko": "기존 en 중심 레거시 항목에 단위/관계/효과를 추가. 실제 손 크기 변경은 제외한다.",
+      "source_ids": [
+        "P03",
+        "C01"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:contact_point.pv_chin_support",
+      "candidate_key": "contact_point.pv_chin_support",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        74
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "chin rests on a stated palm or knuckle area",
+          "elbow or forearm has a visible receiving support when loaded",
+          "hand-arm-head continuity is readable"
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "relationship"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "relationship",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          }
+        ],
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": [
+          "턱을 받치는 손과 팔의 지지",
+          "Chin on hand",
+          "Chin rest",
+          "Prone chin-rest pose",
+          "턱 괴기"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "chin rests on a stated palm or knuckle area",
+          "elbow or forearm has a visible receiving support when loaded",
+          "hand-arm-head continuity is readable",
+          "the actor chin visibly contacts the declared hand support surface",
+          "the hand forearm and torso form a readable support chain"
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration"
+          },
+          {
+            "id": "se_r1",
+            "type": "supports",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.chin"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "relationship"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "relationship",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          }
+        ]
+      },
+      "migration_note_ko": "기존 지지 의미는 유지하고 비접촉 hover·가벼운 접촉과 정확하게 분리한다.",
+      "source_ids": [
+        "P03"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:contact_point.pv_collarbone_touch",
+      "candidate_key": "contact_point.pv_collarbone_touch",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        77
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "fingers or palm contact the visible upper-chest/clavicle region",
+          "hand owner is explicit",
+          "the position is distinct from garment gripping"
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "relationship"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "relationship",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          }
+        ],
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": [
+          "쇄골 부근의 손 접촉",
+          "Hand on collarbone",
+          "쇄골에 손"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "fingers or palm contact the visible upper-chest/clavicle region",
+          "hand owner is explicit",
+          "the position is distinct from garment gripping",
+          "fingers meet the same actor clavicle-region surface",
+          "existing garment coverage remains unchanged"
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration"
+          },
+          {
+            "id": "se_r1",
+            "type": "contact",
+            "subject": "main_subject.declared_fingers",
+            "object": "main_subject.clavicle_region"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "relationship"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "relationship",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          }
+        ]
+      },
+      "migration_note_ko": "기존 relationship 효과를 삭제하는 안이 아님. 손/접촉 변경을 보수적으로 합산하고 원래 의복 조건 보존.",
+      "source_ids": [
+        "P03"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:contact_point.pv_lapel_grip",
+      "candidate_key": "contact_point.pv_lapel_grip",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        78
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "fingers pinch or grip a visible collar or lapel edge",
+          "the fabric edge responds to that contact",
+          "hand remains attached to its owner"
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "relationship"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "relationship",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          }
+        ],
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": [
+          "옷깃을 잡은 손가락",
+          "Collar hold",
+          "Lapel hold",
+          "Collar / Lapel hold",
+          "옷깃 잡기"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "fingers pinch or grip a visible collar or lapel edge",
+          "the fabric edge responds to that contact",
+          "hand remains attached to its owner",
+          "the same actor fingers actually grip the existing garment lapel",
+          "cloth lies between the relevant fingers at the lapel edge"
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration"
+          },
+          {
+            "id": "se_r1",
+            "type": "grips",
+            "subject": "main_subject.declared_fingers",
+            "object": "core_existing_garment.lapel"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "relationship"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "relationship",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          }
+        ]
+      },
+      "migration_note_ko": "집음은 유지. 단순 touch를 별칭으로 합치지 않는다. 의복 국소 변형이 있으면 appearance 효과 추가 검토.",
+      "source_ids": [
+        "P03"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:lighting.sff_pro_l01",
+      "candidate_key": "lighting.sff_pro_l01",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        115
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_sensual_fetish_fashion_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "split lighting",
+          "한쪽 면 명",
+          "반대 면 암",
+          "코/턱 연속"
+        ],
+        "relations": [
+          {
+            "id": "sff_pro_l01_owner",
+            "type": "visible_owner_and_boundary",
+            "subject": "split lighting",
+            "object": "성인 얼굴"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "affected_properties": null,
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": [
+          "split lighting",
+          "스플릿의 한쪽 얼굴 명암"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "split lighting",
+          "한쪽 면 명",
+          "반대 면 암",
+          "코/턱 연속",
+          "the key divides the same face into a lit side and a shadow side",
+          "the dividing boundary follows the face geometry"
+        ],
+        "relations": [
+          {
+            "id": "sff_pro_l01_owner",
+            "type": "visible_owner_and_boundary",
+            "subject": "split lighting",
+            "object": "성인 얼굴"
+          },
+          {
+            "id": "se_r1",
+            "type": "illuminates",
+            "subject": "core_declared_key",
+            "object": "main_subject.declared_face_side"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "main_subject",
+            "property": "face.illumination_pattern"
+          }
+        ]
+      },
+      "migration_note_ko": "현재 자료는 affected_properties가 없음. 광원/얼굴 owner와 잠금 경로를 먼저 확정한다.",
+      "source_ids": [
+        "L04",
+        "P04",
+        "L05"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:lighting.sff_pro_l05",
+      "candidate_key": "lighting.sff_pro_l05",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        116
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_sensual_fetish_fashion_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "loop lighting",
+          "코 옆 짧은 그림자",
+          "볼 암부와 분리"
+        ],
+        "relations": [
+          {
+            "id": "sff_pro_l05_owner",
+            "type": "visible_owner_and_boundary",
+            "subject": "loop lighting",
+            "object": "얼굴"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "affected_properties": null,
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": [
+          "loop lighting",
+          "루프의 옆 코 그림자"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "loop lighting",
+          "코 옆 짧은 그림자",
+          "볼 암부와 분리",
+          "the off-axis nose shadow forms a small offset loop",
+          "a visible gap separates nose and cheek shadows"
+        ],
+        "relations": [
+          {
+            "id": "sff_pro_l05_owner",
+            "type": "visible_owner_and_boundary",
+            "subject": "loop lighting",
+            "object": "얼굴"
+          },
+          {
+            "id": "se_r1",
+            "type": "separated_by_gap",
+            "subject": "main_subject.nose_shadow",
+            "object": "main_subject.cheek_shadow"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "main_subject",
+            "property": "face.illumination_pattern"
+          }
+        ]
+      },
+      "migration_note_ko": "분리 간격을 보강하고 Rembrandt의 연결된 그림자와 구분한다.",
+      "source_ids": [
+        "P04",
+        "L05"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:lighting.sff_pro_l07",
+      "candidate_key": "lighting.sff_pro_l07",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        117
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_sensual_fetish_fashion_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "short lighting",
+          "카메라에서 먼 볼이 밝음",
+          "가까운 면은 어두움"
+        ],
+        "relations": [
+          {
+            "id": "sff_pro_l07_owner",
+            "type": "visible_owner_and_boundary",
+            "subject": "short lighting",
+            "object": "돌아선 얼굴"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "affected_properties": null,
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": [
+          "short lighting",
+          "쇼트 라이팅의 먼쪽 밝음"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "short lighting",
+          "카메라에서 먼 볼이 밝음",
+          "가까운 면은 어두움",
+          "the face has unequal camera-projected sides due to head yaw",
+          "the camera-projected narrower face side receives the key",
+          "the broader side is relatively shadowed"
+        ],
+        "relations": [
+          {
+            "id": "sff_pro_l07_owner",
+            "type": "visible_owner_and_boundary",
+            "subject": "short lighting",
+            "object": "돌아선 얼굴"
+          },
+          {
+            "id": "se_r1",
+            "type": "illuminates",
+            "subject": "core_declared_key",
+            "object": "main_subject.camera_projected_narrow_face_side"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "main_subject",
+            "property": "face.illumination_pattern"
+          }
+        ]
+      },
+      "migration_note_ko": "항상 먼 볼이라는 축약을 좁은 투영 면 관계로 보강. 배우 좌우를 고정하지 않는다.",
+      "source_ids": [
+        "P04",
+        "L05"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:lighting.sff_pro_l08",
+      "candidate_key": "lighting.sff_pro_l08",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        118
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_sensual_fetish_fashion_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "broad lighting",
+          "카메라에 넓게 보이는 볼이 밝음"
+        ],
+        "relations": [
+          {
+            "id": "sff_pro_l08_owner",
+            "type": "visible_owner_and_boundary",
+            "subject": "broad lighting",
+            "object": "돌아선 얼굴"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "affected_properties": null,
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": [
+          "broad lighting",
+          "브로드 라이팅의 가까운 면 밝음"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "broad lighting",
+          "카메라에 넓게 보이는 볼이 밝음",
+          "the face has unequal camera-projected sides due to head yaw",
+          "the camera-projected broader face side receives the key",
+          "the narrower side is relatively shadowed"
+        ],
+        "relations": [
+          {
+            "id": "sff_pro_l08_owner",
+            "type": "visible_owner_and_boundary",
+            "subject": "broad lighting",
+            "object": "돌아선 얼굴"
+          },
+          {
+            "id": "se_r1",
+            "type": "illuminates",
+            "subject": "core_declared_key",
+            "object": "main_subject.camera_projected_broad_face_side"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "main_subject",
+            "property": "face.illumination_pattern"
+          }
+        ]
+      },
+      "migration_note_ko": "넓게 비추는 관계와 실제 얼굴 폭 변경을 분리한다.",
+      "source_ids": [
+        "P04",
+        "L05"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:light_shape.lit_clean_vertical_catchlight_pair",
+      "candidate_key": "light_shape.lit_clean_vertical_catchlight_pair",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        119
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_lighting_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "vertical high-low catchlight pair"
+        ],
+        "relations": [
+          {
+            "id": "catchlights_vertical_pair",
+            "type": "above",
+            "subject": "upper catchlight",
+            "object": "lower catchlight"
+          }
+        ],
+        "affected_dimensions": null,
+        "affected_properties": null,
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": [
+          "눈에 수직으로 보이는 상하 캐치라이트",
+          "vertical high-low catchlight evidence"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "vertical high-low catchlight pair",
+          "two distinct source reflections form the already authored high-low pair",
+          "both reflections belong to the same specified corneal surface"
+        ],
+        "relations": [
+          {
+            "id": "catchlights_vertical_pair",
+            "type": "above",
+            "subject": "upper catchlight",
+            "object": "lower catchlight"
+          },
+          {
+            "id": "se_r1",
+            "type": "above",
+            "subject": "main_subject.upper_catchlight",
+            "object": "main_subject.lower_catchlight"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "main_subject",
+            "property": "eyes.light_reflection"
+          }
+        ]
+      },
+      "migration_note_ko": "두 반사점이라는 좁은 기존 의미 유지. 모든 catchlight에 두 점을 강제하지 않는다.",
+      "source_ids": [
+        "A04",
+        "L05"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:composition.pc_pc17_component_2",
+      "candidate_key": "composition.pc_pc17_component_2",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        95
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_portrait_composition_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "the camera observes the main face beyond that secondary shoulder"
+        ],
+        "relations": [
+          {
+            "id": "pc_pc17_component_2_owner",
+            "type": "declared_owner_scope",
+            "subject": "camera secondary shoulder and main face",
+            "object": "the requester-supported main portrait and frame"
+          }
+        ],
+        "affected_dimensions": [
+          "camera",
+          "composition"
+        ],
+        "affected_properties": null,
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": [
+          "타인의 어깨 너머 주인공",
+          "over-the-shoulder shot",
+          "OTS portrait",
+          "카메라는 그 보조 인물의 어깨 너머로 주인공의 얼굴을 본다"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "the camera observes the main face beyond that secondary shoulder",
+          "the camera sees the main actor beyond a different actor foreground shoulder",
+          "the foreground shoulder retains secondary actor ownership"
+        ],
+        "relations": [
+          {
+            "id": "pc_pc17_component_2_owner",
+            "type": "declared_owner_scope",
+            "subject": "camera secondary shoulder and main face",
+            "object": "the requester-supported main portrait and frame"
+          },
+          {
+            "id": "se_r1",
+            "type": "beyond",
+            "subject": "main_subject.face",
+            "object": "core_existing_secondary_actor.shoulder"
+          }
+        ],
+        "affected_dimensions": [
+          "camera",
+          "composition"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "camera",
+            "target": "camera",
+            "property": "viewpoint"
+          },
+          {
+            "dimension": "composition",
+            "target": "scene",
+            "property": "foreground_subject_relation"
+          }
+        ]
+      },
+      "migration_note_ko": "기존 camera/composition 차원을 보존하고 실제 camera/scene target mapping을 확인한다. 단독 자기어깨 포즈와 분리.",
+      "source_ids": [
+        "C04"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:expression.ae_sultry_variant",
+      "candidate_key": "expression.ae_sultry_variant",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        5
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "upper eyelids are partly lowered",
+          "the requested target-directed eyeline is retained"
+        ],
+        "relations": [
+          {
+            "id": "actor_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the declared actor's stated local face and eye configuration"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.eyeline"
+          }
+        ],
+        "requires_all_tags": [
+          "adult"
+        ],
+        "requires_primary_any_tags": [
+          "attraction",
+          "alluring",
+          "seductive",
+          "sensual",
+          "매혹",
+          "유혹"
+        ],
+        "aliases": [
+          "차분한 성인 호감 표현의 선택형",
+          "an adult subject retains a target-directed gaze with lowered upper eyelids"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "upper eyelids are partly lowered",
+          "the requested target-directed eyeline is retained",
+          "the requester-selected current eye or lip configuration remains visible",
+          "the adult attraction context remains an independent prerequisite"
+        ],
+        "relations": [
+          {
+            "id": "actor_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the declared actor's stated local face and eye configuration"
+          },
+          {
+            "id": "se_r1",
+            "type": "actor_owner",
+            "subject": "main_subject",
+            "object": "the expressly selected current facial configuration"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.eyeline"
+          }
+        ]
+      },
+      "migration_note_ko": "기존 requires_all_tags=adult와 attraction 문맥 가드 보존. 날씨/졸림 음성례와 입 벌림 없는 대안 보강.",
+      "source_ids": [
+        "D05",
+        "R03"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:expression.ae_coquettish_variant",
+      "candidate_key": "expression.ae_coquettish_variant",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        3
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "one eye is closed and the other stays open",
+          "a small smile remains visible"
+        ],
+        "relations": [
+          {
+            "id": "actor_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the declared actor's stated local face and eye configuration"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "requires_all_tags": [
+          "adult"
+        ],
+        "requires_primary_any_tags": [
+          "flirting",
+          "flirtatious",
+          "flirtation",
+          "coquettish",
+          "플러팅",
+          "교태"
+        ],
+        "aliases": [
+          "장난스러운 성인 교류의 윙크 선택형",
+          "a wink and small smile in explicitly requested adult playful flirtation"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "one eye is closed and the other stays open",
+          "a small smile remains visible",
+          "the chosen small smile or playful eye configuration remains visible",
+          "alternative forms are selected independently rather than jointly mandated"
+        ],
+        "relations": [
+          {
+            "id": "actor_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the declared actor's stated local face and eye configuration"
+          },
+          {
+            "id": "se_r1",
+            "type": "actor_owner",
+            "subject": "main_subject",
+            "object": "the selected playful facial configuration"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.eyeline"
+          }
+        ]
+      },
+      "migration_note_ko": "기존 성인 문맥 가드를 유지. 윙크/성별을 보편 정의에 추가하지 않는다.",
+      "source_ids": [
+        "D03",
+        "D17",
+        "R03"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:expression.ae_smolder_attraction",
+      "candidate_key": "expression.ae_smolder_attraction",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        6
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "the irises align with the already requested target",
+          "the eye opening retains the requested form"
+        ],
+        "relations": [
+          {
+            "id": "actor_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the declared actor's stated local face and eye configuration"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.eyeline"
+          }
+        ],
+        "requires_all_tags": [
+          "adult"
+        ],
+        "requires_primary_any_tags": [
+          "attraction",
+          "alluring",
+          "flirting",
+          "seductive",
+          "매혹",
+          "유혹"
+        ],
+        "aliases": [
+          "성인 호감 연기의 집중 시선 선택형",
+          "a sustained-looking target-directed gaze in an explicitly adult attraction portrayal"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "the irises align with the already requested target",
+          "the eye opening retains the requested form",
+          "the selected directed gaze and lip state remain visible",
+          "the attraction reading is anchored in the requester context"
+        ],
+        "relations": [
+          {
+            "id": "actor_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the declared actor's stated local face and eye configuration"
+          },
+          {
+            "id": "se_r1",
+            "type": "directed_gaze",
+            "subject": "main_subject.eyes",
+            "object": "core_declared_gaze_target"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.eyeline"
+          }
+        ]
+      },
+      "migration_note_ko": "ae_smolder_anger와 형태/라벨 공유 때문에 분노 문맥이 침범하지 않도록 문맥 회귀 추가.",
+      "source_ids": [
+        "D06",
+        "R03"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    },
+    {
+      "proposal_id": "enrich:expression.pv_parted_lips",
+      "candidate_key": "expression.pv_parted_lips",
+      "status": "existing_candidate_field_enrichment_proposal",
+      "reference_numbers": [
+        34
+      ],
+      "source_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json"
+      ],
+      "baseline_fields": {
+        "concept_units": [
+          "upper and lower lips have a visible small gap",
+          "teeth exposure is optional",
+          "eye shape and lip protrusion are independent"
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "requires_all_tags": null,
+        "requires_primary_any_tags": null,
+        "aliases": [
+          "입술 사이 작은 틈",
+          "Parted lips",
+          "입술 살짝 벌리기"
+        ]
+      },
+      "proposed_field_patch": {
+        "concept_units": [
+          "upper and lower lips have a visible small gap",
+          "teeth exposure is optional",
+          "eye shape and lip protrusion are independent",
+          "a visible opening separates upper and lower lip boundaries",
+          "jaw opening stays within the requested small gap",
+          "teeth and tongue visibility are independently specified"
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration"
+          },
+          {
+            "id": "se_r1",
+            "type": "separated_by_gap",
+            "subject": "main_subject.upper_lip",
+            "object": "main_subject.lower_lip"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "migration_note_ko": "현재 중립 형태를 보존하며 sexualized meaning·slack jaw 자동 전이를 배제.",
+      "source_ids": [
+        "R02",
+        "R03"
+      ],
+      "guard_policy": "Preserve executable guards and original context. Prose conditions are not executable guards. Do not broaden applicability to force retrieval.",
+      "patch_policy": "Additive illustration only. Contradictory old units/aliases must be edited deliberately rather than blindly unioned; reviewed final fields must have one coherent meaning.",
+      "effect_mapping_status": "Proposed targets/paths require actual core binding and lock inspection; parent paths remain conservative."
+    }
+  ]
+}

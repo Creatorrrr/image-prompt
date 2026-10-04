@@ -1,0 +1,92 @@
+{
+  "contract_version": "independent-retrieval-layer-review/v1",
+  "pack_id": "ac476ded4e547dab",
+  "agent_test_design_not_requester_profile_requirement": true,
+  "source_data": {
+    "candidate_dictionary_sha256": "32f7adada688cfc6298fa9fb2d9f1dc39227d2a8d234f1c26d4b979b9cf0e279",
+    "visual_registry_sha256": "6cbb140740a04892764910abcc4d3d86be1355395dcb55ffb38d905f462ea2f1"
+  },
+  "desired_form_rows": [
+    {
+      "test_gate_ids": [
+        "b3_self_apron_contact"
+      ],
+      "source_id": "se_small_garment_fold_pinch",
+      "data_exists": true,
+      "compatible_with_independent_form": true,
+      "slot_exposed": false,
+      "visual_profile_exposed": false,
+      "selected": false,
+      "hard_obligation": false,
+      "prompt_source": "independent_precore_baseline",
+      "note": "Compatible small cloth fold pinch exists but normal contact_point slot returns only pv_shush; no manual insertion."
+    },
+    {
+      "test_gate_ids": [
+        "b4_right_palm_to_camera",
+        "b6_left_back_to_camera"
+      ],
+      "source_id": "se_edge_on_hand_to_camera",
+      "data_exists": true,
+      "compatible_with_independent_form": false,
+      "slot_exposed": true,
+      "visual_profile_exposed": false,
+      "selected": false,
+      "hard_obligation": false,
+      "prompt_source": "independent_precore_baseline",
+      "note": "A hand edge facing camera is different from the independently required palm-facing and dorsal-facing planes; candidate rejected."
+    },
+    {
+      "test_gate_ids": [
+        "b5_other_cord_contact"
+      ],
+      "source_id": "se_lapel_fingertip_touch",
+      "data_exists": true,
+      "compatible_with_independent_form": false,
+      "slot_exposed": false,
+      "visual_profile_exposed": false,
+      "selected": false,
+      "hard_obligation": false,
+      "prompt_source": "independent_precore_baseline",
+      "note": "Own lapel fingertip-only contact does not supply a finger under another adult attached cord; no claim of coverage."
+    },
+    {
+      "test_gate_ids": [
+        "b7_head_turn_eye_contact"
+      ],
+      "source_id": "pv_side_eye",
+      "data_exists": true,
+      "compatible_with_independent_form": true,
+      "slot_exposed": true,
+      "visual_profile_exposed": false,
+      "selected": true,
+      "hard_obligation": false,
+      "prompt_source": "independent_precore_baseline retained by selected compatible candidate"
+    },
+    {
+      "test_gate_ids": [
+        "b7_head_turn_eye_contact"
+      ],
+      "source_id": "head_eye_counterorientation_relation",
+      "data_exists": true,
+      "compatible_with_independent_form": true,
+      "slot_exposed": true,
+      "visual_profile_exposed": false,
+      "selected": false,
+      "hard_obligation": false,
+      "prompt_source": "independent_precore_baseline",
+      "note": "Initial selection rejected at mandatory composed audit because source affected_dimensions is empty; declared source scope cannot establish compatibility with reference-use property lock. Candidate was removed rather than inventing source effects."
+    }
+  ],
+  "se_visual_profiles_exposed": [],
+  "selected_visual_concept_ids": [],
+  "selected_candidate_ids": [
+    "slot:gaze_engagement:pv_side_eye"
+  ],
+  "effective_hard_gates": "five embodiment checks only; custom independent test gates remain a separate strict holdout review",
+  "bound_normalized_core_sha256": "305b405d02544c5a1ad3037b1de6753c175b5e809d4312f97ecac777ecd4cafc",
+  "bound_intent_lock_sha256": "e122ddcdb0a76a3af07f02cd6289b48302ef8e2b67d018be2cb1ac0eb05e7b93",
+  "baseline_sha256": "4292bdb541e749e65bd8fef694e6fff246082f0baa4ae9b727b78f95d87ac536",
+  "baseline_unchanged": true,
+  "postcore_caveat": "A compatible meaning that was independently authored can be visible in pixels without proving the integrated source candidate caused it. No before/after image comparison is performed."
+}

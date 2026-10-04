@@ -1,0 +1,114 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 시각 의미 데이터의 대체 표현을 추가/보강하는 작업을 중심으로 진행하고 후보 데이터에도 잘 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "7abdb2c485be3f55d352bd7f592e0db57f7ebb8953ce3009f3c9894d7608ee09",
+  "interpreted_intent": "The requester asks for an independent random complex photo test using the attachment, then checks actual image realization. The theater repair role, adult ages, snapped-braid event, two-person staging, opposing hand surfaces, self/other garment contact, sidelong lens glance and crop are agent-owned test-design choices. WHO is an attentive adult craft worker whose slight inviting smile supports sensual=1 while precise repair dominates. WHERE is a tactile backstage workshop. HOW is a nearby observer acknowledged by a glance. WHY NOW is the stopped beat after a braid snapped and snagged the apron. Compared with an isolated tool portrait and a fully busy downward-looking repair, this two-person paused repair makes ownership and contrasting hand surfaces legible. Face/hair reference appearance supplies no biography, age, identity, personality or body-shape inference.",
+  "subject": "A newly designed 32-year-old woman costume seamstress using visible face and hair appearance from the attachment, beside a newly designed 38-year-old male stage performer.",
+  "setting": "A theatrical costume repair room, beside a workbench with garment racks and a spool tray.",
+  "event": "Seamstress separates a snapped gold braid attached to the performer cape from her own apron while holding a brief glance toward the camera.",
+  "visual_priorities": [
+    "The central adult seamstress keeps the attachment visible face and hair appearance within a new backstage scene.",
+    "Her camera-facing right palm pinches her own apron edge while her camera-facing left hand back accompanies an index finger under the performer cape braid.",
+    "The snapped braid, star brooch and two frayed ends make the paused repair event readable.",
+    "A modest head turn and return glance acknowledge the nearby camera while both adult garments and arm connections remain visible."
+  ],
+  "baseline_prompt_en": "An intricate photographic scene captures a single visible action in a theatrical costume repair room. The central seamstress is a newly designed 32-year-old woman; her visible face and hair follow the supplied image: a dark chin-length bob, separated wispy fringe, dark eyes, softly tapered jaw and softly rounded lips. She stands on screen left beside a workbench, wearing a sage cotton work shirt, an ivory canvas apron and charcoal trousers. A newly designed 38-year-old male stage performer stands on screen right in a plum velvet cape over a dark jacket. She is separating a snapped gold braided cord on his cape from the top edge of her own apron, holding the interrupted repair for one attentive beat. Her right thumb and index finger pinch the top canvas edge of her own apron at her upper chest, making a small raised fold; the inner surface of her right palm and its creases face the camera. Her left forearm reaches toward the performer, and her left index finger curves visibly beneath the gold braid where it remains attached to his upper lapel. The back of her left hand faces the lens, displaying its knuckles and short nails while its palm faces his jacket. A small star brooch sits above two short frayed cord ends hanging on his cape. Her shoulders remain nearly frontal, her head turns modestly toward him, and her eyes glance back toward the lens. An asymmetric closed-mouth smile gives this brief professional pause a quietly inviting presence. Both of her wrists and connected forearms remain visible between the separate contact sites. A landscape frame includes both adult heads through upper hips; the apron clearly belongs to her and the cape stays worn by him. Warm task-lamp light falls across her face and the two hands, with garment racks and a spool tray softly receding behind them. Crisp canvas folds, velvet nap and metal glints keep the repair tactile within a restrained backstage editorial photograph.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent complex photographic test",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "The requester delegates the choice of a random complex concept for observing incorporated visual meanings in actual pixels. The particular craft scene and forms are independently agent-authored test choices, rather than requester definitions.",
+      "sources": []
+    },
+    {
+      "term": "attached image use",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "The attachment supplies visible face and hair reference in a new photograph. The delegated task restricts this use to appearance; the scene explicitly designs adult subjects without inferring original age, identity, personality or body shape.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "complex_photo",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "An intricate photographic scene"
+      },
+      {
+        "anchor_id": "visible_test_action",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "captures a single visible action"
+      },
+      {
+        "anchor_id": "reference_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "her visible face and hair follow the supplied image"
+      },
+      {
+        "anchor_id": "reference_appearance_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "target": "main_subject",
+        "property": "reference.scope",
+        "prompt_evidence": "her visible face and hair follow the supplied image"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "identity",
+      "count",
+      "age",
+      "role",
+      "species",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "reference_use",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere",
+      "character_response"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "restrained backstage editorial",
+    "evidence": [
+      "Warm task-lamp light",
+      "Crisp canvas folds, velvet nap and metal glints"
+    ]
+  },
+  "variation_key": "arm-b-backstage-snapped-braid"
+}
