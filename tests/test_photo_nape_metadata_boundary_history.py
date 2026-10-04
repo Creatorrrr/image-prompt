@@ -34,16 +34,18 @@ class NapeMetadataBoundaryHistoryTests(unittest.TestCase):
             archive = ROOT / 'docs/research-evidence/photo-prompt/camera-evidence-structure-20261003/independent-v9-boundary-diagnostics.tar.gz'
             with tarfile.open(archive) as saved:
                 self.output = saved.extractfile('latest-current-boundary-after.json').read()
-        else:
+        elif self.version == 11:
             self.output = (ROOT / 'docs/research-evidence/photo-prompt/camera-evidence-structure-20261003/pr-review-followup/latest-qualified-boundary-pack.json').read_bytes()
+        else:
+            self.output = (SKILL / 'assets' / f'photo_regression_baseline_v{self.version}_pack.json').read_bytes()
         self.pack = json.loads(self.output)[0]
         self.historical_source_hashes = dict(self.baseline['metadata_only_transition']['source_files'])
 
     def source_hash(self, path):
-        # V10's saved pack is replayed with its original qualified DATA identity,
-        # never the later corpus. Production validation still reads actual bytes.
+        # V10/V11 replay their original qualified DATA identities after V12.
+        # Production validation and the current V12 fixture read actual bytes.
         relative = str(path.relative_to(ROOT)) if path.is_relative_to(ROOT) else None
-        if self.version == 10 and relative in self.historical_source_hashes:
+        if self.version in {10, 11} and relative in self.historical_source_hashes:
             return self.historical_source_hashes[relative]
         return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -51,7 +53,7 @@ class NapeMetadataBoundaryHistoryTests(unittest.TestCase):
         def replay(command, **kwargs):
             Path(command[command.index('--output-file') + 1]).write_bytes(self.output)
             return SimpleNamespace(returncode=0, stderr='', stdout='')
-        version = 10 if version is None and self.version == 10 else version
+        version = self.version if version is None else version
         with mock.patch.object(validator.subprocess, 'run', side_effect=replay), \
              mock.patch.object(validator, '_sha256', side_effect=self.source_hash):
             return validator.validate_photo_regression_baseline(self.assets, baseline_version=version)

@@ -6288,10 +6288,14 @@ def _validate_metadata_only_photo_successor(
              "pre_nape_runtime_and_data_commit", "pre_nape_data_commit", "pre_nape_pack_sha256"),
         11: ("pr-review-followup/V11-four-leaf-proof.json", "current_data_commit",
              "previous_data_commit", "previous_data_commit", "previous_pack_sha256"),
+        12: ("V12-FOUR-LEAF-PROOF.json", "current_data_commit",
+             "previous_data_commit", "previous_data_commit", "previous_pack_sha256"),
     }
     _require(version in registrations, "unregistered photo metadata successor")
     proof_path, current_commit_key, previous_commit_key, previous_transition_key, previous_pack_key = registrations[version]
     evidence_path = repo_root / "docs/research-evidence/photo-prompt/camera-evidence-structure-20261003" / proof_path
+    if version == 12:
+        evidence_path = repo_root / "docs/research-evidence/photo-prompt/vocaloid-appearance-integration-20261004/main-merge" / proof_path
     _require(transition.get("evidence_sha256") == _sha256(evidence_path),
              "photo metadata successor comparison provenance drift")
     evidence = _load_json(evidence_path)
@@ -6345,10 +6349,10 @@ def validate_photo_regression_baseline(
     previous_path = asset_dir / "photo_regression_baseline_v5.json"
     if baseline_version is None:
         baseline_version = next(
-            version for version in (11, 10, 9, 8, 7)
+            version for version in (12, 11, 10, 9, 8, 7)
             if (asset_dir / f"photo_regression_baseline_v{version}.json").exists()
         )
-    _require(baseline_version in {6, 7, 8, 9, 10, 11}, "unsupported photo baseline version")
+    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12}, "unsupported photo baseline version")
     lineage_version = min(baseline_version, 7)
     baseline_path = asset_dir / f"photo_regression_baseline_v{lineage_version}.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
@@ -6583,7 +6587,7 @@ def validate_photo_regression_baseline(
         pack.get("negative_en") == baseline.get("negative_en"),
         "photo baseline negative prompt drift",
     )
-    if baseline_version in {10, 11}:
+    if baseline_version in {10, 11, 12}:
         _validate_metadata_only_photo_successor(asset_dir, repo_root, baseline, pack, version=baseline_version)
     return {
         "status": "pass",
