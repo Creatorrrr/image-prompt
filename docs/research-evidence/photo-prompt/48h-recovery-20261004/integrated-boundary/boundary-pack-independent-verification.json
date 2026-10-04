@@ -1,0 +1,67 @@
+{
+  "scope": "Independent actual boundary pack verification; validator outcome recorded separately",
+  "before_sha256": "6c097471705589a4db45daf5aa164017f2c7b512dcaab880e9e58bb3882f5589",
+  "after_sha256": "6c097471705589a4db45daf5aa164017f2c7b512dcaab880e9e58bb3882f5589",
+  "v11_expected_sha256": "6c097471705589a4db45daf5aa164017f2c7b512dcaab880e9e58bb3882f5589",
+  "both_match_v11_expected": true,
+  "raw_bytes_equal": true,
+  "complete_json_objects_equal": true,
+  "all_slot_candidate_objects_and_order_equal": true,
+  "candidate_count": 64,
+  "pack_ids": [
+    "96a0c50349d492f5",
+    "96a0c50349d492f5"
+  ],
+  "baseline_source_files": [
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "v11_expected": "ccdd4eb2245f3f5b4f6aaae5f3e27a3e452cac9f0386b67f4c00b791d9c1e7e6",
+      "before": "ccdd4eb2245f3f5b4f6aaae5f3e27a3e452cac9f0386b67f4c00b791d9c1e7e6",
+      "after": "ccdd4eb2245f3f5b4f6aaae5f3e27a3e452cac9f0386b67f4c00b791d9c1e7e6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json",
+      "v11_expected": "8c348126f41f71e6a284b755a329d82781c25493d6a3a862fb7e618bd678d23c",
+      "before": "8c348126f41f71e6a284b755a329d82781c25493d6a3a862fb7e618bd678d23c",
+      "after": "8c348126f41f71e6a284b755a329d82781c25493d6a3a862fb7e618bd678d23c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "v11_expected": "a7e26c2d4c5f806811a32c310adb088f9704c7cdb8834c4e84eea947005070bf",
+      "before": "a7e26c2d4c5f806811a32c310adb088f9704c7cdb8834c4e84eea947005070bf",
+      "after": "a7e26c2d4c5f806811a32c310adb088f9704c7cdb8834c4e84eea947005070bf"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "v11_expected": "9a279002707290f79ad3b4de646644dfe4146bf4948dd07977e3d16a458482c6",
+      "before": "9a279002707290f79ad3b4de646644dfe4146bf4948dd07977e3d16a458482c6",
+      "after": "eb2b1b5359132de1f0dc62dca074dc71d42d11c17840e35f4cf58c6c879b42f0"
+    }
+  ],
+  "before_actual_validator": {
+    "consumer": "Unmodified validate_photo_regression_baseline, default current dispatch, real nested production CLI",
+    "baseline_version_override": null,
+    "mocking": false,
+    "validator_file_sha256": "9f972a9ab0ca1fa031f772c888009d7c2a5c052c60cbdfe0431cb9a2988c7d4d",
+    "python_executable": "/workspace/scratch/ce8f20680f5a/data-progress-48h-recovery-20261004/new-architecture-qualification/runs/integrated-0efc2dfde7de-001/before/.venv/bin/python",
+    "status": "pass",
+    "result": {
+      "status": "pass",
+      "schema": "photo_regression_baseline/v11",
+      "historical_sha256": "3db499287144390ea4724a916069ef1a01b7b6d86064cebee56dd4a496d252c8",
+      "sha256": "6c097471705589a4db45daf5aa164017f2c7b512dcaab880e9e58bb3882f5589",
+      "pack_id": "96a0c50349d492f5"
+    }
+  },
+  "after_actual_validator": {
+    "consumer": "Unmodified validate_photo_regression_baseline, default current dispatch, real nested production CLI",
+    "baseline_version_override": null,
+    "mocking": false,
+    "validator_file_sha256": "9f972a9ab0ca1fa031f772c888009d7c2a5c052c60cbdfe0431cb9a2988c7d4d",
+    "python_executable": "/workspace/scratch/ce8f20680f5a/data-progress-48h-recovery-20261004/new-architecture-qualification/runs/integrated-0efc2dfde7de-001/after/.venv/bin/python",
+    "status": "fail",
+    "error_type": "ValidationFailure",
+    "error": "photo metadata successor DATA source bytes drift",
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/scratch/ce8f20680f5a/data-progress-48h-recovery-20261004/new-architecture-qualification/integrated-plan-20261004/boundary_current_validator.py\", line 9, in <module>\n    result=validator.validate_photo_regression_baseline(root/'skills/subculture-illustration-image-generator/assets')\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/ce8f20680f5a/data-progress-48h-recovery-20261004/new-architecture-qualification/runs/integrated-0efc2dfde7de-001/after/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 6587, in validate_photo_regression_baseline\n    _validate_metadata_only_photo_successor(asset_dir, repo_root, baseline, pack, version=baseline_version)\n  File \"/workspace/scratch/ce8f20680f5a/data-progress-48h-recovery-20261004/new-architecture-qualification/runs/integrated-0efc2dfde7de-001/after/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 6309, in _validate_metadata_only_photo_successor\n    _require(isinstance(sources, dict) and set(sources) == source_paths\n  File \"/workspace/scratch/ce8f20680f5a/data-progress-48h-recovery-20261004/new-architecture-qualification/runs/integrated-0efc2dfde7de-001/after/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 1280, in _require\n    raise ValidationFailure(message)\nvalidate_illustration_assets.ValidationFailure: photo metadata successor DATA source bytes drift\n"
+  }
+}
