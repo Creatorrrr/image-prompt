@@ -16,7 +16,8 @@ CAPTURE_MODIFIER = (
     r"|used\s+(?:to\s+(?:take|make|record|capture)\s+|for\s+))" + IMAGE_NP
 )
 COMMAND = r"(?:position|place|put|set|keep|mount|hold|tilt|aim|point|turn)"
-DIRECTION = r"(?:upwards?|downwards?|up|down|horizontally|vertically|forward|backward|ahead|left|right|towards?|from|above|below)\b"
+ORIENTATION_ADVERB = r"(?:upwards?|downwards?|up|down|horizontally|vertically|forward|backward|ahead|left|right)\b"
+DIRECTION = r"(?:" + ORIENTATION_ADVERB + r"|towards?|from|above|below)\b"
 LOCATIVE = (r"(?:(?:just|very|slightly)\s+)?(?:above|below|under|low|high|lower|higher)\b"
             r"|(?:close|near)\s+to\s+(?:the\s+)?(?:floor|ground|pavement)\b"
             r"|(?:at|near)\s+(?:[\w-]+\s+){0,3}(?:height|level)\b"
@@ -42,17 +43,26 @@ def _direction_values(predicate: str, command: str = "", *, shared: bool = False
             if shared else _direction_head(predicate, command))
     if not head:
         return set(), False
-    value = head['direction'].lower()
-    value = {'upward': 'up', 'upwards': 'up', 'downward': 'down', 'downwards': 'down',
-             'horizontally': 'horizontal', 'vertically': 'vertical', 'ahead': 'forward'}.get(value, value)
+    canonical = {'upward': 'up', 'upwards': 'up', 'downward': 'down', 'downwards': 'down',
+                 'horizontally': 'horizontal', 'vertically': 'vertical', 'ahead': 'forward'}
+    first = head['direction'].lower()
+    values, end = {canonical.get(first, first)}, head.end()
+    # Consecutive orientation adverbs share this finite camera predicate.
+    # Stop before prepositions, target nouns and hyphenated target adjectives;
+    # target orientation must never become capture-direction evidence.
+    while following := re.match(r"\s+(?:straight\s+)?(?P<direction>" + ORIENTATION_ADVERB
+                                + r")(?!-)", predicate[end:], re.I):
+        value = following['direction'].lower()
+        values.add(canonical.get(value, value))
+        end += following.end()
     # An unselected alternative cannot become one positive capture direction.
-    choice = re.match(r"\s+(?:or|versus|then)\s+(.+)", predicate[head.end():], re.I)
+    choice = re.match(r"\s+(?:or|versus|then)\s+(.+)", predicate[end:], re.I)
     alternative = False
     if choice:
         body = re.sub(r"^(?:it|(?:the|our)\s+(?:shooting\s+)?camera|(?:its|the)\s+lens)\s+",
                       "", choice[1], count=1, flags=re.I)
         alternative = bool(_direction_head(body) or re.match(r"(?:straight\s+)?" + DIRECTION, body, re.I))
-    return {value}, alternative
+    return values, alternative
 
 
 def _conflicting_directions(values: set[str]) -> bool:
