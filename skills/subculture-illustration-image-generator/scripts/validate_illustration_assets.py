@@ -6460,6 +6460,88 @@ def _validate_v14_zero_delta_photo_successor(
              "photo V14 undeclared alias or source-byte change")
 
 
+# Explicit reviewed V15 inventory transition. Later DATA needs its own
+# qualification; neither a rewritten manifest nor a current checksum can
+# authorize material candidate changes.
+PHOTO_V15_INVENTORY_PROOF_SHA256 = "5b8cf18f907eb19120f32e928c8c906c533192a86d305f8dcf4c875544fcb98e"
+
+
+def _validate_v15_motion_inventory_successor(
+    asset_dir: Path, repo_root: Path, baseline: dict[str, Any],
+    pack: dict[str, Any], raw: bytes,
+) -> None:
+    evidence_dir = repo_root / "docs/research-evidence/photo-prompt/motion-graphics-main-merge-20261004"
+    evidence_path = evidence_dir / "V15-OPTIONAL-INVENTORY-PROOF.json"
+    _require(_sha256(evidence_path) == PHOTO_V15_INVENTORY_PROOF_SHA256,
+             "photo V15 immutable inventory proof drift")
+    proof = _load_json(evidence_path)
+    _require(proof.get("schema") == "photo-optional-inventory-transition/v15"
+             and proof.get("data_commit") == "cfc8156d0b85cc433bd54744224add76e444ec95"
+             and proof.get("data_parent_commit") == "6b1862aa4ac91a70834fdfdcbb1905a41e73dafe",
+             "photo V15 DATA commit binding drift")
+    _require(baseline.get("optional_inventory_transition") == {
+        "data_commit": proof["data_commit"], "data_parent_commit": proof["data_parent_commit"],
+        "evidence_sha256": PHOTO_V15_INVENTORY_PROOF_SHA256, "source_files": proof["source_files"],
+    }, "photo V15 inventory provenance drift")
+    _require("zero_pack_delta_transition" not in baseline and "metadata_only_transition" not in baseline,
+             "photo V15 cannot relabel optional inventory as a metadata-only transition")
+    _require(all(_sha256(repo_root / name) == digest for name, digest in proof["immutable_history"].items()),
+             "photo V15 immutable predecessor artifact drift")
+    _require(_sha256(repo_root / proof["source_parent_archive"]) == proof["source_parent_archive_sha256"],
+             "photo V15 historical source archive drift")
+    previous_manifest = asset_dir / "photo_regression_baseline_v14.json"
+    previous_pack = asset_dir / "photo_regression_baseline_v14_pack.json"
+    current_pack = asset_dir / "photo_regression_baseline_v15_pack.json"
+    _require(_sha256(previous_manifest) == proof["previous_manifest_sha256"]
+             and _sha256(previous_pack) == proof["previous_pack_sha256"]
+             and _sha256(current_pack) == proof["current_pack_sha256"]
+             == baseline.get("sha256") and raw == current_pack.read_bytes(),
+             "photo V15 immutable current or predecessor pack binding drift")
+    old = _load_json(previous_pack)[0]
+    expected = _load_json(current_pack)[0]
+    _require(pack == expected and pack.get("pack_id") == proof["current_pack_id"]
+             == _canonical_photo_pack_id(pack), "photo V15 current pack equality drift")
+    _require(_public_photo_candidate_count(pack) == proof["public_candidate_count"] == 64,
+             "photo V15 public candidate count drift")
+
+    def leaf_deltas(left: Any, right: Any, path: str = "") -> list[dict[str, str]]:
+        if left == right:
+            return []
+        if isinstance(left, dict) and isinstance(right, dict):
+            return [row for key in sorted(set(left) | set(right))
+                    for row in leaf_deltas(left.get(key), right.get(key), path + "/" + key)]
+        if isinstance(left, list) and isinstance(right, list) and len(left) == len(right):
+            return [row for index, (a, b) in enumerate(zip(left, right))
+                    for row in leaf_deltas(a, b, path + "/" + str(index))]
+        return [{"path": path,
+                 "previous_sha256": hashlib.sha256(canonical_json_bytes(left)).hexdigest(),
+                 "current_sha256": hashlib.sha256(canonical_json_bytes(right)).hexdigest()}]
+
+    _require(leaf_deltas(old, pack) == proof["reviewed_pack_leaf_deltas"],
+             "photo V15 undeclared material or binding pack delta")
+    source_assets = Path(baseline["command"][1]).parent.parent / "assets"
+    inventory = {path.name: _sha256(path) for path in (repo_root / source_assets).glob("*.json")}
+    _require(inventory == proof["source_inventory_after"], "photo V15 exact DATA inventory drift")
+    _require(all(_sha256(repo_root / path) == digest for path, digest in proof["source_files"].items()),
+             "photo V15 DATA source binding drift")
+    shards = proof["active_semantic_shards"]
+    expected_shards = {str(source_assets / "photo_prompt_semantic_index_shards/f7b8729f8011ce85" / f"shard-{i:03d}.json")
+                       for i in range(16)}
+    actual_shards = {str(path.relative_to(repo_root)): _sha256(path)
+                     for path in (repo_root / source_assets / "photo_prompt_semantic_index_shards/f7b8729f8011ce85").glob("*.json")}
+    _require(set(shards) == expected_shards and actual_shards == shards,
+             "photo V15 active semantic shard bytes drift")
+    descriptor = evidence_dir / "universal_scene_baseline_v2.before.json"
+    _require(_sha256(descriptor) == proof["universal_v2_before_sha256"],
+             "photo V15 universal descriptor archive drift")
+    old_descriptor = descriptor.read_bytes()
+    old_sha = proof["previous_validator_sha256"].encode("ascii")
+    _require(old_descriptor.count(old_sha) == 1
+             and (asset_dir / "universal_scene_baseline_v2.json").read_bytes()
+             == old_descriptor.replace(old_sha, _sha256(Path(__file__)).encode("ascii"), 1),
+             "photo V15 universal descriptor changed beyond validator hash")
+
+
 def validate_photo_regression_baseline(
     asset_dir: Path, *, baseline_version: int | None = None
 ) -> dict[str, Any]:
@@ -6472,10 +6554,10 @@ def validate_photo_regression_baseline(
     previous_path = asset_dir / "photo_regression_baseline_v5.json"
     if baseline_version is None:
         baseline_version = next(
-            version for version in (14, 13, 12, 11, 10, 9, 8, 7)
+            version for version in (15, 14, 13, 12, 11, 10, 9, 8, 7)
             if (asset_dir / f"photo_regression_baseline_v{version}.json").exists()
         )
-    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14}, "unsupported photo baseline version")
+    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15}, "unsupported photo baseline version")
     lineage_version = min(baseline_version, 7)
     baseline_path = asset_dir / f"photo_regression_baseline_v{lineage_version}.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
@@ -6714,6 +6796,8 @@ def validate_photo_regression_baseline(
         _validate_metadata_only_photo_successor(asset_dir, repo_root, baseline, pack, version=baseline_version)
     if baseline_version == 14:
         _validate_v14_zero_delta_photo_successor(asset_dir, repo_root, baseline, pack, raw)
+    if baseline_version == 15:
+        _validate_v15_motion_inventory_successor(asset_dir, repo_root, baseline, pack, raw)
     return {
         "status": "pass",
         "schema": baseline["schema"],

@@ -7,6 +7,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import zipfile
 from pathlib import Path
 import shutil
 import sys
@@ -23,6 +24,33 @@ import validate_illustration_assets as v
 
 
 class ArchitectureZeroDeltaBoundaryTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        global ROOT, ILLUSTRATION
+        live_root = ROOT
+        cls.source_temp = tempfile.TemporaryDirectory(prefix="immutable-v14-parent-")
+        cls.addClassCleanup(cls.source_temp.cleanup)
+        source_root = Path(cls.source_temp.name)
+        archive = live_root / "docs/research-evidence/photo-prompt/motion-graphics-main-merge-20261004/V14-source-parent.zip"
+        if hashlib.sha256(archive.read_bytes()).hexdigest() != "191eba6829139e34f0ad51cce324f6c4a000531eb7ac0c8f03e524781407a47a":
+            raise AssertionError("Frozen V14 source archive drift")
+        with zipfile.ZipFile(archive) as saved:
+            if any(Path(name).is_absolute() or ".." in Path(name).parts for name in saved.namelist()):
+                raise AssertionError("Unsafe historical source path")
+            saved.extractall(source_root)
+        validator_path = source_root / "skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py"
+        validator_path.parent.mkdir(parents=True, exist_ok=True)
+        validator_path.write_bytes(Path(v.__file__).read_bytes())
+        descriptor = source_root / "skills/subculture-illustration-image-generator/assets/universal_scene_baseline_v2.json"
+        raw = descriptor.read_bytes()
+        old_sha = json.loads(raw)["validator_contract"]["sha256"].encode()
+        if raw.count(old_sha) != 1:
+            raise AssertionError("Historical descriptive seal is not unique")
+        descriptor.write_bytes(raw.replace(old_sha, hashlib.sha256(validator_path.read_bytes()).hexdigest().encode(), 1))
+        ROOT = source_root
+        ILLUSTRATION = ROOT / "skills/subculture-illustration-image-generator"
+        cls.validator_replay_path = validator_path
+
     def setUp(self):
         temp = tempfile.TemporaryDirectory(); self.addCleanup(temp.cleanup)
         self.directory = Path(temp.name)
@@ -41,12 +69,12 @@ class ArchitectureZeroDeltaBoundaryTests(unittest.TestCase):
         def replay(command, **kwargs):
             Path(command[command.index('--output-file') + 1]).write_bytes(self.output)
             return SimpleNamespace(returncode=0, stderr='', stdout='')
-        with mock.patch.object(v.subprocess, 'run', side_effect=replay):
-            return v.validate_photo_regression_baseline(self.assets, baseline_version=version)
+        with mock.patch.object(v.subprocess, 'run', side_effect=replay), mock.patch.object(v, '__file__', str(self.validator_replay_path)):
+            return v.validate_photo_regression_baseline(self.assets, baseline_version=14 if version is None else version)
 
-    def direct(self, *, repo=ROOT, pack=None, raw=None):
+    def direct(self, *, repo=None, pack=None, raw=None):
         return v._validate_v14_zero_delta_photo_successor(
-            self.assets, repo, self.baseline,
+            self.assets, ROOT if repo is None else repo, self.baseline,
             self.pack if pack is None else pack, self.output if raw is None else raw)
 
     def sandbox_sources(self):
@@ -64,12 +92,12 @@ class ArchitectureZeroDeltaBoundaryTests(unittest.TestCase):
             shutil.copyfile(ROOT / name, target)
         return repo, source
 
-    def test_default_dispatch_requires_registered_v14_and_ignores_unregistered_v15(self):
+    def test_historical_v14_replay_rejects_unregistered_v16(self):
         self.assertEqual(self.validate()['schema'], 'photo_regression_baseline/v14')
-        (self.assets / 'photo_regression_baseline_v15.json').write_text(json.dumps({'schema':'photo_regression_baseline/v15','status':'current'}))
+        (self.assets / 'photo_regression_baseline_v16.json').write_text(json.dumps({'schema':'photo_regression_baseline/v16','status':'current'}))
         self.assertEqual(self.validate()['schema'], 'photo_regression_baseline/v14')
         with self.assertRaisesRegex(v.ValidationFailure, 'unsupported'):
-            self.validate(15)
+            self.validate(16)
 
     def test_live_v13_rejects_after_source_even_when_its_pack_is_identical(self):
         with self.assertRaisesRegex(v.ValidationFailure, 'DATA source bytes drift'):
