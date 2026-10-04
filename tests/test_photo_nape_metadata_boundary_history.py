@@ -40,10 +40,10 @@ class NapeMetadataBoundaryHistoryTests(unittest.TestCase):
         self.historical_source_hashes = dict(self.baseline['metadata_only_transition']['source_files'])
 
     def source_hash(self, path):
-        # V10's saved pack is replayed with its original qualified DATA identity,
+        # Historical V10/V11 mocked replays use their saved qualified DATA identity,
         # never the later corpus. Production validation still reads actual bytes.
         relative = str(path.relative_to(ROOT)) if path.is_relative_to(ROOT) else None
-        if self.version == 10 and relative in self.historical_source_hashes:
+        if relative in self.historical_source_hashes:
             return self.historical_source_hashes[relative]
         return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -51,7 +51,7 @@ class NapeMetadataBoundaryHistoryTests(unittest.TestCase):
         def replay(command, **kwargs):
             Path(command[command.index('--output-file') + 1]).write_bytes(self.output)
             return SimpleNamespace(returncode=0, stderr='', stdout='')
-        version = 10 if version is None and self.version == 10 else version
+        version = self.version if version is None else version
         with mock.patch.object(validator.subprocess, 'run', side_effect=replay), \
              mock.patch.object(validator, '_sha256', side_effect=self.source_hash):
             return validator.validate_photo_regression_baseline(self.assets, baseline_version=version)

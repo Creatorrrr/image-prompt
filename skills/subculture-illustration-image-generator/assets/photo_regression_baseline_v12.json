@@ -1,0 +1,65 @@
+{
+  "schema": "photo_regression_baseline/v12",
+  "created_at": "2026-10-04",
+  "status": "current",
+  "historical_baseline": {
+    "path": "photo_regression_baseline_v11.json",
+    "schema": "photo_regression_baseline/v11",
+    "sha256": "b6280e500da723e4e017297246bc4a8d2eed71b8325db1d4a650fd4cbf92fa40"
+  },
+  "change_scope": "two_qualified_korean_architecture_aliases_zero_pack_delta",
+  "command": [
+    ".venv/bin/python",
+    "skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py",
+    "--seed",
+    "910000",
+    "--authorial-core-json",
+    "tests/fixtures/photo_prompt/current_boundary/core.json",
+    "--request-envelope-json",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json",
+    "--creative-controls-json",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json",
+    "--embodiment-review-json",
+    "tests/fixtures/photo_prompt/current_boundary/review.json",
+    "--output-file",
+    "/tmp/subculture-illustration-photo-baseline-v12.json"
+  ],
+  "sha256": "6c097471705589a4db45daf5aa164017f2c7b512dcaab880e9e58bb3882f5589",
+  "pack_id": "96a0c50349d492f5",
+  "contract_version": "photo-candidate-pack/v6",
+  "public_candidate_count": 64,
+  "private_fields_absent": [
+    "argv",
+    "sample_prompt_id",
+    "concept_gate_results",
+    "concept_scene_variants",
+    "character_response",
+    "adult_appeal"
+  ],
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "purpose": "Explicit immutable zero-pack-delta successor. Only the two reviewed Korean alias leaves and regenerated visual index change; the full frozen public pack remains byte-identical. No image or general recall claim.",
+  "preserved_contract_sha256": "4dd926370d017e22d41e0a1c05f49d9b00ec42b37c050eaa246a8fd2697c9c19",
+  "frozen_inputs": {
+    "tests/fixtures/photo_prompt/current_boundary/core.json": "7be72244a8aa95c92a0bfc041f16bf544d376a9664366ad92c92cc728ebf6316",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json": "170ca49644a3ae0703d5d98875007bbaa74a0794202089ded9f617d532443524",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json": "0958274c1f1d5ec8b2faef5f3f7409d15f0256505411613cc33ad05f3a124896",
+    "tests/fixtures/photo_prompt/current_boundary/review.json": "0039a9afdb6b7fa6d3989dc0187297eba8e3de436c012ce13d20f570bb55f7fd"
+  },
+  "parallel_local_baseline": {
+    "path": "photo_regression_baseline_v6_religion_iconography.json",
+    "schema": "photo_regression_baseline/v6",
+    "sha256": "691aca1ba73acb0e6324596ab10d5c96356f9bdfc981f9dfd46618b4d0eb40ca"
+  },
+  "zero_pack_delta_transition": {
+    "data_commit": "cd52f366f0b27ca16a20edef2b64cfea8de07c3a",
+    "data_parent_commit": "0efc2dfde7de9693799d3c84618705332e59920c",
+    "previous_data_commit": "b7578916eca10c00fb421a8d6bd73ae0e2d52684",
+    "evidence_sha256": "14b94f3d85c56a43826ff331d7c7b5a8b1bf98b6397c878d5982d2a99ce317d6",
+    "source_files": {
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json": "ccdd4eb2245f3f5b4f6aaae5f3e27a3e452cac9f0386b67f4c00b791d9c1e7e6",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json": "8c348126f41f71e6a284b755a329d82781c25493d6a3a862fb7e618bd678d23c",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json": "a7e26c2d4c5f806811a32c310adb088f9704c7cdb8834c4e84eea947005070bf",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json": "eb2b1b5359132de1f0dc62dca074dc71d42d11c17840e35f4cf58c6c879b42f0"
+    }
+  }
+}

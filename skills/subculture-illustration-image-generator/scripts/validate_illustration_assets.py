@@ -6333,6 +6333,108 @@ def _validate_metadata_only_photo_successor(
              "photo metadata successor changed candidates/order or scene/core/composition/negative/privacy semantics")
 
 
+
+# Explicit immutable registration; a manifest cannot choose a different proof.
+PHOTO_V12_ZERO_DELTA_PROOF_SHA256 = "14b94f3d85c56a43826ff331d7c7b5a8b1bf98b6397c878d5982d2a99ce317d6"
+
+
+def _validate_zero_delta_photo_successor(
+    asset_dir: Path, repo_root: Path, baseline: dict[str, Any],
+    pack: dict[str, Any], raw: bytes,
+) -> None:
+    """V12 alone binds two alias-byte replacements and no pack-byte change.
+
+    Source files are opaque bytes. This boundary neither imports the sibling
+    runtime nor interprets its semantic DATA. The proof is a fixed reviewed
+    artifact, not a configurable delta policy.
+    """
+    evidence_dir = repo_root / "docs/research-evidence/photo-prompt/architecture-zero-delta-20261004"
+    evidence_path = evidence_dir / "V12-zero-delta-proof.json"
+    _require(_sha256(evidence_path) == PHOTO_V12_ZERO_DELTA_PROOF_SHA256,
+             "photo V12 immutable proof drift")
+    proof = _load_json(evidence_path)
+    _require(all(_sha256(evidence_dir / name) == digest
+                 for name, digest in proof["qualification_artifacts"].items()),
+             "photo V12 qualification artifact drift")
+    _require(all(_sha256(repo_root / path) == digest
+                 for path, digest in proof["immutable_history"].items()),
+             "photo V12 immutable historical artifact drift")
+    old_descriptor_path = evidence_dir / "universal_scene_baseline_v2.before.json"
+    _require(_sha256(old_descriptor_path) == proof["universal_v2_before_sha256"],
+             "photo V12 universal descriptor archive drift")
+    old_descriptor = old_descriptor_path.read_bytes()
+    old_validator_sha = proof["previous_validator_sha256"].encode("ascii")
+    _require(old_descriptor.count(old_validator_sha) == 1
+             and (asset_dir / "universal_scene_baseline_v2.json").read_bytes()
+             == old_descriptor.replace(old_validator_sha, _sha256(Path(__file__)).encode("ascii"), 1),
+             "photo V12 universal descriptor changed beyond validator hash")
+    transition = baseline.get("zero_pack_delta_transition")
+    _require(transition == {
+        "data_commit": proof["data_commit"],
+        "data_parent_commit": proof["data_parent_commit"],
+        "previous_data_commit": proof["previous_data_commit"],
+        "evidence_sha256": PHOTO_V12_ZERO_DELTA_PROOF_SHA256,
+        "source_files": proof["after_source_files"],
+    }, "photo V12 DATA provenance or source binding drift")
+    _require("metadata_only_transition" not in baseline,
+             "photo V12 cannot declare the four-leaf transition")
+    previous_path = asset_dir / "photo_regression_baseline_v11.json"
+    previous_pack_path = asset_dir / "photo_regression_baseline_v11_pack.json"
+    previous = _load_json(previous_path)
+    _require(_sha256(previous_path) == proof["previous_manifest_sha256"]
+             and previous["metadata_only_transition"]["data_commit"] == proof["previous_data_commit"]
+             and previous["metadata_only_transition"]["source_files"] == proof["before_source_files"],
+             "photo V12 predecessor provenance drift")
+    _require(_sha256(previous_pack_path) == previous.get("sha256")
+             == baseline.get("sha256") == proof["pack_sha256"]
+             and raw == previous_pack_path.read_bytes(),
+             "photo V12 zero-delta historical pack binding drift")
+    old_payload = _load_json(previous_pack_path)
+    _require(isinstance(old_payload, list) and len(old_payload) == 1
+             and old_payload[0] == pack
+             and pack.get("pack_id") == previous.get("pack_id") == proof["pack_id"]
+             == _canonical_photo_pack_id(pack),
+             "photo V12 requires zero changed pack leaves or candidate order")
+    source_assets = Path(baseline["command"][1]).parent.parent / "assets"
+    source_paths = {str(source_assets / name) for name in (
+        "photo_prompt_tags.json", "photo_prompt_quality_layers.json",
+        "photo_prompt_semantic_index.json", "photo_prompt_visual_profile_index.json",
+    )}
+    before, after = proof["before_source_files"], proof["after_source_files"]
+    index_path = str(source_assets / "photo_prompt_visual_profile_index.json")
+    _require(set(before) == set(after) == source_paths
+             and {path for path in source_paths if before[path] != after[path]} == {index_path}
+             and all(_sha256(repo_root / path) == after[path] for path in source_paths),
+             "photo V12 DATA source bytes drift")
+    # The fixed proof pins the whole top-level DATA inventory, including all
+    # visual registry extensions. Missing, extra and unrelated edits fail closed.
+    inventory_before, inventory_after = proof["source_inventory_before"], proof["source_inventory_after"]
+    actual = {path.name: _sha256(path) for path in (repo_root / source_assets).glob("*.json")}
+    palace_name = "photo_prompt_visual_obligations_palace_fortification.json"
+    _require(actual == inventory_after and set(inventory_before) == set(inventory_after)
+             and {name for name in inventory_before if inventory_before[name] != inventory_after[name]}
+             == {palace_name, "photo_prompt_visual_profile_index.json"},
+             "photo V12 exact DATA inventory drift")
+    archive_path = evidence_dir / "palace-before.json"
+    _require(_sha256(archive_path) == inventory_before[palace_name],
+             "photo V12 alias predecessor bytes drift")
+    reconstructed = archive_path.read_bytes()
+    edits = proof["alias_edits"]
+    _require(len(edits) == 2 and {edit["profile_id"] for edit in edits}
+             == {"pf_rib_vault_chapel", "pf_venetian_arcade"}
+             and all(edit["field"] == "activation.exact_terms[1]" for edit in edits),
+             "photo V12 exact two-alias scope drift")
+    for edit in edits:
+        old = json.dumps(edit["old_value"], ensure_ascii=False).encode("utf-8")
+        new = json.dumps(edit["new_value"], ensure_ascii=False).encode("utf-8")
+        _require(old != new and reconstructed.count(old) == 1
+                 and reconstructed.count(new) == 0,
+                 "photo V12 alias replacement occurrence drift")
+        reconstructed = reconstructed.replace(old, new, 1)
+    _require(reconstructed == (repo_root / source_assets / palace_name).read_bytes(),
+             "photo V12 undeclared alias or source-byte change")
+
+
 def validate_photo_regression_baseline(
     asset_dir: Path, *, baseline_version: int | None = None
 ) -> dict[str, Any]:
@@ -6345,10 +6447,10 @@ def validate_photo_regression_baseline(
     previous_path = asset_dir / "photo_regression_baseline_v5.json"
     if baseline_version is None:
         baseline_version = next(
-            version for version in (11, 10, 9, 8, 7)
+            version for version in (12, 11, 10, 9, 8, 7)
             if (asset_dir / f"photo_regression_baseline_v{version}.json").exists()
         )
-    _require(baseline_version in {6, 7, 8, 9, 10, 11}, "unsupported photo baseline version")
+    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12}, "unsupported photo baseline version")
     lineage_version = min(baseline_version, 7)
     baseline_path = asset_dir / f"photo_regression_baseline_v{lineage_version}.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
@@ -6585,6 +6687,8 @@ def validate_photo_regression_baseline(
     )
     if baseline_version in {10, 11}:
         _validate_metadata_only_photo_successor(asset_dir, repo_root, baseline, pack, version=baseline_version)
+    if baseline_version == 12:
+        _validate_zero_delta_photo_successor(asset_dir, repo_root, baseline, pack, raw)
     return {
         "status": "pass",
         "schema": baseline["schema"],

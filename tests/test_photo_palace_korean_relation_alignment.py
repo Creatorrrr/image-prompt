@@ -73,7 +73,73 @@ CASES = {'pf_window_seat': {'ko_clauses': ('붙박이 좌석이 조적 벽의 �
                                                'cleared from the floor, leaving only smooth stone '
                                                'slabs.'),
                       'relation_substitution': ('파손된 상부 구조 아래에 떨어진 조적 잔해가 국소적으로 놓여 있고',
-                                                '파손된 상부 구조 아래에는 잔해를 모두 치운 석판 바닥만 있고')}}
+                                                '파손된 상부 구조 아래에는 잔해를 모두 치운 석판 바닥만 있고')},
+ 'pf_rib_vault_chapel': {'ko_clauses': ('예배당 천장에 걸쳐 돌 리브가 교차한다',
+                                        '리브가 상단이 뾰족한 개구부 옆의 벽측 지지부와 연속된다',
+                                        '예배당 끝의 예배 영역이 구분된다'),
+                         'english_duties': ('stone ribs intersect across the chapel ceiling',
+                                            'the ribs continue toward supports beside pointed '
+                                            'openings',
+                                            'a distinct worship area occupies the chapel end'),
+                         'compatible_negatives': ('건축 사진을 만들어 주세요: 천장 리브가 교차한다; 리브가 벽측 지지부와 '
+                                                  '연속된다; 공간 끝의 예배 영역이 구분된다. 이곳은 예배당이며 교차하는 천장 리브 '
+                                                  '전체가 나무로 되어 있다. 리브는 상단이 뾰족한 개구부 옆 벽측 지지부와 연결되고 '
+                                                  '예배 영역은 예배당 끝에 있다.',
+                                                  'Make an architectural photograph: timber ribs '
+                                                  'intersect across the chapel ceiling; the ribs '
+                                                  'continue toward supports beside pointed '
+                                                  'openings; a distinct worship area occupies '
+                                                  'the chapel end; those supports stand along '
+                                                  'the chapel walls.',
+                                                  '건축 사진을 만들어 주세요: 천장 리브가 교차한다; 리브가 벽측 지지부와 '
+                                                  '연속된다; 공간 끝의 예배 영역이 구분된다. 이곳은 예배당이고 천장 리브는 돌로 '
+                                                  '되어 있다. 리브와 이어지는 벽측 지지부 옆 개구부의 상단은 모두 둥근 '
+                                                  '반원형이다. 예배 영역은 예배당 끝에 있다.',
+                                                  'Make an architectural photograph: stone ribs '
+                                                  'intersect across the chapel ceiling; the ribs '
+                                                  'continue toward supports beside round-headed '
+                                                  'openings; a distinct worship area occupies '
+                                                  'the chapel end; those supports stand along '
+                                                  'the chapel walls.'),
+                         'relation_substitution': ('상단이 뾰족한 개구부', '상단이 둥근 반원형 개구부')},
+ 'pf_venetian_arcade': {'ko_clauses': ('열린 아래 아케이드가 보이며 물가를 향한다',
+                                       '그 위층에 아래 아케이드보다 더 섬세한 투각형 갤러리가 자리하고 위층 개구 리듬이 아래층과 구별된다',
+                                       '넓은 상부 벽체가 그 갤러리 위에 실제로 지지된다'),
+                        'english_duties': ('an open lower arcade faces the waterside',
+                                           'a finer openwork gallery occupies the level above it',
+                                           'a broad upper wall mass rests above the gallery'),
+                        'compatible_negatives': ('건축 사진을 만들어 주세요: 열린 아래 아케이드가 보인다; 위층 개구 리듬이 '
+                                                 '아래층과 구별된다; 상부 벽체가 갤러리 위에 실제로 지지된다. 아래 아케이드는 '
+                                                 '건조한 내륙 광장을 향한다. 바로 위에는 아래 아케이드보다 섬세한 투각형 갤러리가 '
+                                                 '있고, 넓은 상부 벽체가 그 갤러리 위에 지지된다.',
+                                                 'Make an architectural photograph: an open '
+                                                 'lower arcade faces a dry inland plaza; a finer '
+                                                 'openwork gallery occupies the level above it; '
+                                                 'a broad upper wall mass rests above the '
+                                                 'gallery; the upper openings have a rhythm '
+                                                 'distinct from those of the lower arcade.',
+                                                 '건축 사진을 만들어 주세요: 열린 아래 아케이드가 보인다; 위층 개구 리듬이 '
+                                                 '아래층과 구별된다; 상부 벽체가 갤러리 위에 실제로 지지된다. 아래 아케이드는 '
+                                                 '물가를 향한다. 바로 위층 갤러리는 불투명한 연속 벽으로 둘러싸인 폐쇄형이고, 넓은 '
+                                                 '상부 벽체가 그 갤러리 위에 지지된다.',
+                                                 'Make an architectural photograph: an open '
+                                                 'lower arcade faces the waterside; a '
+                                                 'solid-walled enclosed gallery occupies the '
+                                                 'level above the lower arcade; a broad upper '
+                                                 'wall mass rests above the gallery; the upper '
+                                                 'openings have a rhythm distinct from those of '
+                                                 'the lower arcade.',
+                                                 '건축 사진을 만들어 주세요: 열린 아래 아케이드가 보인다; 위층 개구 리듬이 '
+                                                 '아래층과 구별된다; 상부 벽체가 갤러리 위에 실제로 지지된다. 아래 아케이드는 '
+                                                 '물가를 향한다. 바로 위층에는 아래 아케이드보다 섬세한 투각형 갤러리가 있다. '
+                                                 '갤러리 위에 지지되는 상부 벽체는 폭이 좁고 높이가 낮은 난간벽이다.',
+                                                 'Make an architectural photograph: an open '
+                                                 'lower arcade faces the waterside; a finer '
+                                                 'openwork gallery occupies the level above it; '
+                                                 'a narrow low parapet rests above the gallery; '
+                                                 'the upper openings have a rhythm distinct from '
+                                                 'those of the lower arcade.'),
+                        'relation_substitution': ('물가를 향한다', '건조한 내륙 광장을 향한다')}}
 
 class PalaceKoreanRelationAlignmentTests(unittest.TestCase):
     @classmethod
@@ -157,11 +223,12 @@ class PalaceKoreanRelationAlignmentTests(unittest.TestCase):
                 )
 
     def test_compatible_korean_and_english_negatives_do_not_force_selected_variant(self):
-        # Same-owner timber, straight flights and a cleared ruin floor contradict
-        # the selected duty while satisfying the inherited Korean description.
+        # Each Korean/English pair satisfies the inherited Korean description
+        # while contradicting one selected component duty.
         for pid, case in CASES.items():
-            for language, text in zip(("ko", "en"), case["compatible_negatives"]):
-                with self.subTest(profile=pid, language=language):
+            for index, text in enumerate(case["compatible_negatives"]):
+                language = ("ko", "en")[index % 2]
+                with self.subTest(profile=pid, language=language, scenario=index // 2 + 1):
                     self.assertNotIn(pid, self.hard(text))
 
     def test_missing_clauses_and_substituted_relations_remain_nonhard(self):
@@ -181,7 +248,12 @@ class PalaceKoreanRelationAlignmentTests(unittest.TestCase):
     def test_generic_names_do_not_force_selected_geometry_or_material(self):
         for text in ("an architectural photograph of a window seat",
                      "an architectural photograph of two stair routes",
-                     "an architectural photograph of a roofless hall"):
+                     "an architectural photograph of a roofless hall",
+                     "an architectural photograph of a ribbed vault",
+                     "an architectural photograph of a castle chapel",
+                     "an architectural photograph of Venetian Gothic",
+                     "an architectural photograph of a Doge palace",
+                     "리브 볼트", "예배당", "베네치아 고딕"):
             with self.subTest(text=text):
                 self.assertFalse(set(CASES) & self.hard(text))
 
