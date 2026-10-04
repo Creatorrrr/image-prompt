@@ -18,6 +18,12 @@ An undelivered render is unscored, not a visual-quality failure. A single stocha
 
 Evaluate `prompt` and `audited` as different execution contracts. A prompt-profile pass does not claim atomic-ledger completeness; an audited pass does not establish acceptable interactive latency.
 
+## Effort selection and dispatch checks
+
+Exercise the task-adaptive policy independently of prompt or pixel fidelity. Include an ordinary single-domain route, a readable face without additional interacting risks, material topology, combined Color/Tone and Light/Form scope, mixed media, and an audited route. Check every lane and the critic for a selected effort and task-local rationale; an ordinary route must not acquire `max` merely because the parent uses it. Check routine `low`, standard `medium`, complex/audited `high`, and an evidenced exceptional `xhigh` adjustment, plus an explicit scoped user override.
+
+Route fields prove default selection only. For runtime binding, inspect actual creation arguments for explicit `reasoning_effort` and clean-context isolation, and retain exposed applied values separately. Include unsupported-value and unavailable-control cases; selection prose is not runtime evidence. A format retry or targeted repair stays within the existing budget, and successful/unaffected tasks are not rerun to increase effort. Keep policy/dispatch PASS, latency comparison, prompt fidelity, and pixel fidelity separate; a routing test does not establish a speed or quality benefit.
+
 ## Held-out case design
 
 Do not derive the evaluation set from one reported failure. Use raw images or artifacts that were not used to write the current correction and cover materially different subjects, media, and dominant fidelity modes.

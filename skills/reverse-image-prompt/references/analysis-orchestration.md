@@ -15,7 +15,7 @@ Both profiles use the same source-routed lane set (currently three to six lanes)
 
 ## 2. Run one isolated lane wave
 
-When clean-context delegation is available and permitted, run all required lanes concurrently. Respect available worker capacity: lanes in the same logical wave may queue, but each starts with a fresh context. Queueing is not a retry or another analysis wave; never reuse a previous lane's transcript. Each read-only worker receives only:
+When clean-context delegation is available and permitted, run all required lanes concurrently. Apply `references/analysis-runtime.md` before dispatch: bind each lane's task-selected `reasoning_effort` explicitly, with a fresh context (`fork_turns="none"` for Codex). The route supplies defaults and rationales; record source-supported adjustments and user overrides without changing the route. Respect available worker capacity: lanes in the same logical wave may queue, but each starts with a fresh context. Queueing is not a retry or another analysis wave; never reuse a previous lane's transcript. Each read-only worker receives only:
 
 - the same source artifact and SHA-256;
 - raw request and resolved intent;
@@ -133,7 +133,7 @@ Draft the prompt from P0 to P2. Give each P0/P1 effect one causal owner and one 
 
 ## 5. Compact independent critic and repair budget
 
-Give one independent read-only critic the source/hash, route, compact reports, priority map, and draft prompt without the main reasoning transcript. It checks only blocking visual failures:
+Give one independent read-only critic the source/hash, route, compact reports, priority map, and draft prompt without the main reasoning transcript. Explicitly bind its effort separately under the runtime policy: a standard compact review uses `medium`, while complex or audited reconciliation uses `high`; a documented exceptional P0/P1 conflict can justify `xhigh` for an already authorized call. Do not copy the parent's or all lanes' effort. It checks only blocking visual failures:
 
 - lost or contradicted P0/P1 evidence;
 - a generic attractiveness, mood, or style prior replacing source-specific appearance instead of leading an owned decomposition;

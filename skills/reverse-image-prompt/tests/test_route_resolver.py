@@ -37,6 +37,77 @@ class RouteResolverTests(unittest.TestCase):
         for lane in prompt["lanes"]:
             self.assertEqual(len(lane["module_inputs"]), len(lane["module_ids"]))
             self.assertNotIn("content", lane["instruction_input"])
+        self.assertIn("references/analysis-runtime.md", prompt_inputs)
+        self.assertEqual(
+            prompt_inputs["references/analysis-runtime.md"]["view_sha256"],
+            audited_inputs["references/analysis-runtime.md"]["view_sha256"],
+        )
+
+    def test_ordinary_and_face_only_routes_select_explicit_medium_effort(self) -> None:
+        cases = [
+            {"subjects": ["generic-object"], "medium": ["photographic"]},
+            {
+                "subjects": ["human"],
+                "medium": ["photographic"],
+                "detail_risks": ["face-detail"],
+            },
+        ]
+        for facets in cases:
+            with self.subTest(facets=facets):
+                route = resolve_analysis_route(facets, self.manifest)
+                self.assertEqual(route["effort_policy"], "reverse-image-analysis-effort/v1")
+                self.assertEqual(route["critic"]["reasoning_effort"], "medium")
+                for task in [*route["lanes"], route["critic"]]:
+                    self.assertEqual(task["reasoning_effort"], "medium")
+                    self.assertTrue(task["effort_rationale"])
+
+    def test_material_risks_raise_only_the_assigned_lane_and_critic(self) -> None:
+        cases = [
+            ({"relationships": ["occlusion"]}, "lane.spatial-topology"),
+            (
+                {"detail_risks": ["color-tone", "lighting-fidelity"]},
+                "lane.color-light-material",
+            ),
+            (
+                {"subjects": ["human"], "detail_risks": ["face-detail", "body-form"]},
+                "lane.subject-appearance",
+            ),
+        ]
+        for extra_facets, owner in cases:
+            with self.subTest(owner=owner):
+                facets = {"subjects": ["generic-object"], "medium": ["photographic"]}
+                facets.update(extra_facets)
+                route = resolve_analysis_route(facets, self.manifest)
+                raised = {
+                    lane["id"] for lane in route["lanes"]
+                    if lane["reasoning_effort"] == "high"
+                }
+                self.assertEqual(raised, {owner})
+                self.assertEqual(route["critic"]["reasoning_effort"], "high")
+                self.assertTrue(all(
+                    task["reasoning_effort"] != "max"
+                    for task in [*route["lanes"], route["critic"]]
+                ))
+
+    def test_mixed_medium_scope_raises_capture_without_raising_ordinary_subject(self) -> None:
+        route = resolve_analysis_route(
+            {"subjects": ["human"], "medium": ["photographic", "non-photographic"]},
+            self.manifest,
+        )
+        tasks = {lane["id"]: lane for lane in route["lanes"]}
+        self.assertEqual(tasks["lane.medium-aesthetic-capture"]["reasoning_effort"], "high")
+        self.assertEqual(tasks["lane.subject-appearance"]["reasoning_effort"], "medium")
+        self.assertEqual(tasks["lane.spatial-topology"]["reasoning_effort"], "medium")
+
+    def test_audited_tasks_select_high_without_defaulting_to_max(self) -> None:
+        route = resolve_analysis_route(
+            {"subjects": ["human"], "medium": ["photographic"]},
+            self.manifest,
+            analysis_profile="audited",
+        )
+        for task in [*route["lanes"], route["critic"]]:
+            self.assertEqual(task["reasoning_effort"], "high")
+            self.assertTrue(task["effort_rationale"])
 
     def test_stale_manifest_content_is_not_an_instruction_snapshot(self) -> None:
         from copy import deepcopy
