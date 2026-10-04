@@ -1,0 +1,129 @@
+{
+  "schema": "motion-coordinator-native-evidence/v1",
+  "runtime_manifest_sha256": "57d633325c497c4e067dfa207ca1f8c3304440048bf443f5438630aa2100c665",
+  "photo_runtime_files_verified": 130,
+  "primary_matches_pinned_photo_runtime": true,
+  "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+  "arm_count": 3,
+  "actual_image_call_count": 3,
+  "case_review_basis": "Direct agent and coordinator observation of original pixels; metadata audits validate bindings only.",
+  "partial_is_fail_mutation_checks": {
+    "source_arm": "case_a",
+    "source_gate_was_pass": "vo_mg_marked_curve_2",
+    "partial_component_rejected": true,
+    "missing_component_rejected": true,
+    "original_review_modified": false
+  },
+  "arms": [
+    {
+      "arm": "case_a",
+      "pack_id": "bd524066c5da3419",
+      "image_file": "case_a.png",
+      "image_sha256": "1981912e9c8a2269a695140c5ee8b464cbba5fe0c4cc68225d6ee4f5f1a1c0f5",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "actual_tool": "image_gen.imagegen",
+      "image_call_count": 1,
+      "frozen_file_count_verified": 13,
+      "request_source_exact": true,
+      "exact_tool_prompt_and_negative_verified": true,
+      "original_reference_bytes_verified": true,
+      "composed_status": "pass",
+      "composed_warning_count": 5,
+      "runtime_status": "pass",
+      "review_schema_failure_count": 0,
+      "native_hard_gate_counts": {
+        "pass": 7,
+        "fail": 1
+      },
+      "native_overall_status": "FAIL",
+      "failed_hard_gates": [
+        {
+          "gate": "embodiment_contact_and_space",
+          "status": "fail",
+          "evidence": "In the front-facing shirt/body view, the actor-left arm on screen right holds the card edge, while the actor-right arm on screen left hangs beside the hip. The exact reviewed prompt requires actor-right thumb/forefinger card contact and the left arm hanging. Finger/card boundaries are coherent, but the declared contact laterality does not survive. The held edge is also above the visible trouser waist."
+        }
+      ],
+      "user_acceptance": "not_yet_received"
+    },
+    {
+      "arm": "case_b",
+      "pack_id": "235d60e12175e4ce",
+      "image_file": "case_b.png",
+      "image_sha256": "50797218e87f0f29fd40b4721be2373f6b213a5ccc4b37c310376028888c1e09",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "actual_tool": "image_gen.imagegen",
+      "image_call_count": 1,
+      "frozen_file_count_verified": 12,
+      "request_source_exact": true,
+      "exact_tool_prompt_and_negative_verified": true,
+      "original_reference_bytes_verified": true,
+      "composed_status": "pass",
+      "composed_warning_count": 3,
+      "runtime_status": "pass",
+      "review_schema_failure_count": 0,
+      "native_hard_gate_counts": {
+        "pass": 3,
+        "fail": 2
+      },
+      "native_overall_status": "FAIL",
+      "failed_hard_gates": [
+        {
+          "gate": "embodiment_joint_chain_and_reach",
+          "status": "fail",
+          "evidence": "The actual raised chain at x350-465,y389-554 is anatomically connected and reaches the clamp, but it is the actor's left arm on image-right. The reviewed prompt explicitly assigned the contact to her right elbow/hand while the left arm rested by her side. This is an intended acting-chain mismatch, not a diagnosed broken joint."
+        },
+        {
+          "gate": "embodiment_contact_and_space",
+          "status": "fail",
+          "evidence": "Fingers visibly grip a side clamp near x450,y467 with coherent contact boundaries. However, the clamp is near chest height at the middle side of the pane, above the waist near y650. The lower alignment clamp near x452,y807 remains untouched, so the requested waist-high lower-clamp contact is not realized."
+        }
+      ],
+      "user_acceptance": "not_yet_received"
+    },
+    {
+      "arm": "case_c",
+      "pack_id": "7eb2a902a7a0987c",
+      "image_file": "case_c.png",
+      "image_sha256": "916c5d0bb8c060d7873180981ebb1dd8cf16bdb727eef33c08e831e52c0de1f7",
+      "dimensions": [
+        1237,
+        1272
+      ],
+      "actual_tool": "image_gen.imagegen",
+      "image_call_count": 1,
+      "frozen_file_count_verified": 12,
+      "request_source_exact": true,
+      "exact_tool_prompt_and_negative_verified": true,
+      "original_reference_bytes_verified": true,
+      "composed_status": "pass",
+      "composed_warning_count": 5,
+      "runtime_status": "pass",
+      "review_schema_failure_count": 0,
+      "native_hard_gate_counts": {
+        "fail": 2,
+        "pass": 6
+      },
+      "native_overall_status": "FAIL",
+      "failed_hard_gates": [
+        {
+          "gate": "vo_mg_marked_curve_1",
+          "status": "fail",
+          "evidence": "In artwork_native.png, the cobalt segment inside the circular opening ends at the opaque stencil rim. The next orange node and cobalt segment reappear beyond the black stencil and vertical frame. The wide hidden interval prevents native pixels from proving one continuous curve between these marked positions; continuity cannot be promoted from geometric plausibility."
+        },
+        {
+          "gate": "embodiment_contact_and_space",
+          "status": "fail",
+          "evidence": "The native hand crop shows fingers wrapped around a tall vertical post near upper-torso or shoulder height. The intended exterior waist-height handle is absent at the contact. The hand and arm remain outside the circular opening, but this visible substitute does not preserve the reviewed handle interaction."
+        }
+      ],
+      "user_acceptance": "not_yet_received"
+    }
+  ],
+  "preservation_note": "This receipt records the three earlier independent renders under its original runtime_manifest_sha256. The main merge performed zero image calls and does not promote the three FAIL results or claim that the merged runtime rendered these pixels."
+}
