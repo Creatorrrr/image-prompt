@@ -1,0 +1,64 @@
+{
+  "schema": "photo_regression_baseline/v13",
+  "created_at": "2026-10-04",
+  "status": "current",
+  "historical_baseline": {
+    "path": "photo_regression_baseline_v12.json",
+    "schema": "photo_regression_baseline/v12",
+    "sha256": "308455efd82dd2a03c3fa408e5dc2b8a72251ce99f3ab2bf8a3be54115ee1812"
+  },
+  "change_scope": "uniform_costume_alternatives_integrated_with_latest_main",
+  "command": [
+    ".venv/bin/python",
+    "skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py",
+    "--seed",
+    "910000",
+    "--authorial-core-json",
+    "tests/fixtures/photo_prompt/current_boundary/core.json",
+    "--request-envelope-json",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json",
+    "--creative-controls-json",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json",
+    "--embodiment-review-json",
+    "tests/fixtures/photo_prompt/current_boundary/review.json",
+    "--output-file",
+    "/tmp/subculture-illustration-photo-baseline-v13.json"
+  ],
+  "sha256": "6a452cd3cdaf37488efe5c45c6ce71f1dd3569df0b9f48dde7293c707f34e795",
+  "pack_id": "86d7eb6965ce1e2c",
+  "contract_version": "photo-candidate-pack/v6",
+  "public_candidate_count": 64,
+  "private_fields_absent": [
+    "argv",
+    "sample_prompt_id",
+    "concept_gate_results",
+    "concept_scene_variants",
+    "character_response",
+    "adult_appeal"
+  ],
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "purpose": "Immutable successor after uniform integration with main. Preserve V1-V12, frozen inputs, all 64 candidates and their order, scene/core/composition/negative/privacy semantics. Exactly four data/pack binding fields change. Existing native evaluation remains separately qualified.",
+  "preserved_contract_sha256": "4dd926370d017e22d41e0a1c05f49d9b00ec42b37c050eaa246a8fd2697c9c19",
+  "frozen_inputs": {
+    "tests/fixtures/photo_prompt/current_boundary/core.json": "7be72244a8aa95c92a0bfc041f16bf544d376a9664366ad92c92cc728ebf6316",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json": "170ca49644a3ae0703d5d98875007bbaa74a0794202089ded9f617d532443524",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json": "0958274c1f1d5ec8b2faef5f3f7409d15f0256505411613cc33ad05f3a124896",
+    "tests/fixtures/photo_prompt/current_boundary/review.json": "0039a9afdb6b7fa6d3989dc0187297eba8e3de436c012ce13d20f570bb55f7fd"
+  },
+  "parallel_local_baseline": {
+    "path": "photo_regression_baseline_v6_religion_iconography.json",
+    "schema": "photo_regression_baseline/v6",
+    "sha256": "691aca1ba73acb0e6324596ab10d5c96356f9bdfc981f9dfd46618b4d0eb40ca"
+  },
+  "metadata_only_transition": {
+    "data_commit": "a099111a7fb1bb7e108c360b9dcf2dfb652947af",
+    "previous_data_commit": "9544c624efee343e3c97ce428b4bec42fd1dfebb",
+    "evidence_sha256": "20983c8cedff0d5218368ecc8c5295b4e0a7788236f324dc07c3f67081045534",
+    "source_files": {
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json": "cfa406af8514db134411d0503ad8b2258608795d5b42dd5a31a0a6d76b10a553",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json": "8c348126f41f71e6a284b755a329d82781c25493d6a3a862fb7e618bd678d23c",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json": "c0a0fcd95a06703ad193bf66d97b8f533dc244ebc48a4cf40bbd1f76b4cd295f",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json": "10de7c7e3c2939438f041feaae44bcc49f6315940beb34369b668520780a4372"
+    }
+  }
+}
