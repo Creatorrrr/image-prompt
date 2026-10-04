@@ -42,10 +42,10 @@ class NapeMetadataBoundaryHistoryTests(unittest.TestCase):
         self.historical_source_hashes = dict(self.baseline['metadata_only_transition']['source_files'])
 
     def source_hash(self, path):
-        # V10-V12 replay their original qualified DATA identities after V13.
-        # Production validation and the current V13 fixture read actual bytes.
+        # V10-V13 explicitly replay their own qualified historical DATA identities.
+        # Production validation reads actual bytes; V14 tests retain live V13 rejection.
         relative = str(path.relative_to(ROOT)) if path.is_relative_to(ROOT) else None
-        if self.version in {10, 11, 12} and relative in self.historical_source_hashes:
+        if self.version in {10, 11, 12, 13} and relative in self.historical_source_hashes:
             return self.historical_source_hashes[relative]
         return hashlib.sha256(path.read_bytes()).hexdigest()
 
