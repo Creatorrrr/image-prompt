@@ -1,0 +1,1618 @@
+{
+  "source_commit": "bc8e93bcdf6d61835ec51cf64324b3b18113c2b9",
+  "phase": "initial_independent_authoring_pre_runtime_validation",
+  "notes": [
+    "Read access limited to the exact coordinator-allowed stage1 folder at the pinned commit. No candidates, implementation, tests, prior fixtures, holdouts, or provider outputs read.",
+    "Camera direction and height reviewed independently. In two_cameras_en height remains open because seated operator posture does not prescribe a capture-camera height.",
+    "low_horizontal_portrait_ko has a positive horizontal direction prescription and an explicit exclusion of upward camera tilt; it is not a negative-only camera direction request.",
+    "The supplied original requests and creative contexts are preserved in each case's envelope and author_context.",
+    "The supplied envelopes label the synthetic independent-author requests as requesting_user. They are preserved as provided; these are authored evaluation requests, not claims of independently observed end-user messages.",
+    "No external runtime validation has been run. Semantic outputs below are initial authored inputs and are to remain frozen, including any contract failures."
+  ],
+  "cases": {
+    "upward_portrait_ko": {
+      "request_envelope": {
+        "contract_version": "photo-request-envelope/v1",
+        "provenance": "requesting_user",
+        "request_id": "upward_portrait_ko",
+        "request_text": "성인 무용수가 야외 계단 꼭대기에 서 있는 사진을 만들어 주세요. 촬영하는 카메라는 계단 아래에 두고 위를 올려다보게 해서, 무용수 뒤로 하늘이 넓게 보이면 좋겠어요.",
+        "request_sha256": "f63e8ad60c6744af21c8bdd2d3fab36edc23e756db845bb0c4a1c1da1dab9afc",
+        "active_spans": [
+          {
+            "span_id": "topic",
+            "start": 0,
+            "end": 93,
+            "text": "성인 무용수가 야외 계단 꼭대기에 서 있는 사진을 만들어 주세요. 촬영하는 카메라는 계단 아래에 두고 위를 올려다보게 해서, 무용수 뒤로 하늘이 넓게 보이면 좋겠어요."
+          }
+        ]
+      },
+      "author_context": {
+        "request_language": "ko",
+        "context": "독립 무용 공연 포스터에 쓸 힘 있고 시원한 분위기의 사진이에요.",
+        "provenance": "independent_author_request_stage1"
+      },
+      "authorial_core": {
+        "contract_version": "photo-authorial-core/v3",
+        "provenance": "agent_prepack",
+        "source_request": "성인 무용수가 야외 계단 꼭대기에 서 있는 사진을 만들어 주세요. 촬영하는 카메라는 계단 아래에 두고 위를 올려다보게 해서, 무용수 뒤로 하늘이 넓게 보이면 좋겠어요.",
+        "creative_controls_sha256": "ab783bc36c44059b901755c69ab50a451b6879ec6b45cfd7103666172eb81203",
+        "interpreted_intent": "Preserve the adult dancer standing above the viewer on exterior stairs, with the capture camera below and directed upward. The supplied poster context guides an expansive, assured portrait. As restrained authorial choices, a fitted charcoal dance outfit and relaxed, open bearing give subtle sensual presence; clear daylight and spare sky keep the image realistic and energetic.",
+        "subject": "An adult dancer",
+        "setting": "The top landing of an outdoor staircase",
+        "event": "The dancer stands on the top landing with broad sky behind them",
+        "visual_priorities": [
+          "The dancer's grounded standing silhouette at the top of the stairs",
+          "A broad expanse of sky behind the dancer",
+          "The upward view from the capture camera below the staircase"
+        ],
+        "baseline_prompt_en": "An outdoor dance portrait shows an adult dancer standing at the top of an outdoor staircase, with a broad expanse of sky behind the dancer. The capture camera is below the staircase, looking upward toward the dancer. Their feet rest firmly apart on the top landing, arms hanging easily beside the torso. A fitted charcoal dance outfit follows the body's long lines, and a relaxed, slightly parted mouth gives the still pose an intimate ease. Clear daylight draws a clean edge along the shoulders. The staircase occupies the lower frame while blue sky gives the poised figure generous breathing room.",
+        "user_definitions": [],
+        "interpretation_provenance": [
+          {
+            "term": "adult dancer photographed from below",
+            "source_text": "성인 무용수가 야외 계단 꼭대기에 서 있는 사진을 만들어 주세요. 촬영하는 카메라는 계단 아래에 두고 위를 올려다보게 해서, 무용수 뒤로 하늘이 넓게 보이면 좋겠어요.",
+            "basis": "request_context",
+            "resolution": "The Korean request specifies an adult dancer standing atop exterior stairs, a capture-camera position below the staircase, upward capture direction, and ample sky behind the dancer. The position of the dancer and the capture direction belong to different owners and are preserved separately.",
+            "sources": []
+          }
+        ],
+        "unresolved_ambiguities": [],
+        "user_exclusions": [],
+        "runtime_forbidden_labels": [],
+        "intent_lock": {
+          "contract_version": "photo-intent-lock/v2",
+          "priority": "requesting_user",
+          "semantic_anchors": [
+            {
+              "anchor_id": "core_concept",
+              "source_text": "성인 무용수가 야외 계단 꼭대기에 서 있는 사진",
+              "dimension": "concept",
+              "prompt_evidence": "An outdoor dance portrait"
+            },
+            {
+              "anchor_id": "core_subject",
+              "source_text": "성인 무용수가",
+              "dimension": "subject",
+              "prompt_evidence": "an adult dancer"
+            },
+            {
+              "anchor_id": "core_event",
+              "source_text": "야외 계단 꼭대기에 서 있는",
+              "dimension": "event",
+              "prompt_evidence": "standing at the top of an outdoor staircase"
+            },
+            {
+              "anchor_id": "capture_height",
+              "source_text": "촬영하는 카메라는 계단 아래에 두고",
+              "dimension": "camera",
+              "prompt_evidence": "The capture camera is below the staircase",
+              "target": "camera",
+              "property": "viewpoint.height"
+            },
+            {
+              "anchor_id": "capture_direction",
+              "source_text": "위를 올려다보게 해서",
+              "dimension": "camera",
+              "prompt_evidence": "looking upward toward the dancer",
+              "target": "camera",
+              "property": "viewpoint.direction"
+            },
+            {
+              "anchor_id": "sky_background",
+              "source_text": "무용수 뒤로 하늘이 넓게 보이면",
+              "dimension": "composition",
+              "prompt_evidence": "a broad expanse of sky behind the dancer",
+              "target": "background",
+              "property": "sky.extent"
+            }
+          ],
+          "locked_dimensions": [
+            "concept",
+            "subject",
+            "event"
+          ],
+          "open_dimensions": [
+            "identity",
+            "appearance",
+            "pose",
+            "body_geometry",
+            "expression",
+            "setting",
+            "framing",
+            "composition",
+            "lighting",
+            "camera",
+            "color",
+            "material",
+            "timing",
+            "atmosphere",
+            "style"
+          ]
+        },
+        "semantic_assertions": [
+          {
+            "assertion_id": "capture_camera_review",
+            "dimension": "camera",
+            "polarity": "advisory",
+            "source_span_ids": [
+              "topic"
+            ],
+            "affected_dimensions": [
+              "camera"
+            ],
+            "axes": {
+              "camera_axis_review": "camera_axis_review_v1",
+              "capture_owner": "camera",
+              "direction_requirement": "requested",
+              "height_requirement": "requested"
+            },
+            "evidence": {
+              "owner_phrase": "The capture camera",
+              "direction_phrase": "looking upward toward the dancer",
+              "height_phrase": "The capture camera is below the staircase"
+            }
+          }
+        ],
+        "request_lineage": null,
+        "style": {
+          "domain": "dance portrait photography",
+          "family": "spare daylight performance portrait",
+          "evidence": [
+            "fitted charcoal dance outfit",
+            "blue sky gives the poised figure generous breathing room"
+          ]
+        },
+        "variation_key": "upward_portrait_ko"
+      },
+      "precore_feature_selection": {
+        "contract_version": "photo-precore-feature-selection/v1",
+        "request_id": "upward_portrait_ko",
+        "active_span_ids": [
+          "topic"
+        ],
+        "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+        "catalog_schema_version": "photo-precore-feature-catalog/v1",
+        "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+        "request_sha256": "f63e8ad60c6744af21c8bdd2d3fab36edc23e756db845bb0c4a1c1da1dab9afc",
+        "baseline_prompt_sha256": "8c28f3223639032addc22a2da6ac298d8de07dbf1bb700b5313d23b23024e238",
+        "selected": [
+          {
+            "category_id": "feature.subject",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "성인 무용수가",
+            "derivation": null,
+            "reason": "Adult performer identity is the image's focal subject.",
+            "baseline_evidence": "an adult dancer"
+          },
+          {
+            "category_id": "feature.pose",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "서 있는",
+            "derivation": null,
+            "reason": "The requested still stance supplies the portrait's central bodily state.",
+            "baseline_evidence": "standing at the top of an outdoor staircase"
+          },
+          {
+            "category_id": "feature.location",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "야외 계단 꼭대기에",
+            "derivation": null,
+            "reason": "The elevated exterior landing establishes the subject's physical place.",
+            "baseline_evidence": "the top of an outdoor staircase"
+          },
+          {
+            "category_id": "feature.background",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "무용수 뒤로 하늘이 넓게 보이면",
+            "derivation": null,
+            "reason": "The sky must read as substantial space behind the performer.",
+            "baseline_evidence": "a broad expanse of sky behind the dancer"
+          },
+          {
+            "category_id": "feature.camera_height",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "촬영하는 카메라는 계단 아래에 두고",
+            "derivation": null,
+            "reason": "The camera's below-stair position is independently requested.",
+            "baseline_evidence": "The capture camera is below the staircase"
+          },
+          {
+            "category_id": "feature.camera_angle",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "위를 올려다보게 해서",
+            "derivation": null,
+            "reason": "The upward capture direction governs the viewer's relationship to the dancer.",
+            "baseline_evidence": "looking upward toward the dancer"
+          },
+          {
+            "category_id": "feature.clothing",
+            "basis": "agent_visual_choice",
+            "source_span_ids": [],
+            "source_text": null,
+            "derivation": null,
+            "reason": "Close-fitting simple clothing supports the body's assured lines without competing with the sky.",
+            "baseline_evidence": "A fitted charcoal dance outfit follows the body's long lines"
+          }
+        ]
+      },
+      "embodiment_review": {
+        "contract_version": "photo-embodiment-review/v1",
+        "provenance": "agent_prepack",
+        "prompt_sha256": "8c28f3223639032addc22a2da6ac298d8de07dbf1bb700b5313d23b23024e238",
+        "scope": "body_action",
+        "summary": "One adult dancer stands supported by the top landing; both feet and the relaxed arms belong to the same visible person.",
+        "checks": {
+          "body_ownership": {
+            "status": "supported",
+            "reason": "The pronoun refers to the sole dancer, and the arms attach naturally beside that torso.",
+            "prompt_evidence": [
+              "an adult dancer",
+              "arms hanging easily beside the torso"
+            ]
+          },
+          "joint_chain_and_reach": {
+            "status": "supported",
+            "reason": "Resting arms require no unusual reach or articulation.",
+            "prompt_evidence": [
+              "arms hanging easily beside the torso"
+            ]
+          },
+          "support_and_balance": {
+            "status": "supported",
+            "reason": "Two separated feet rest on the landing and support the standing torso.",
+            "prompt_evidence": [
+              "Their feet rest firmly apart on the top landing"
+            ]
+          },
+          "contact_and_space": {
+            "status": "supported",
+            "reason": "The feet have a broad solid landing and the arms hang beside rather than through the torso.",
+            "prompt_evidence": [
+              "Their feet rest firmly apart on the top landing",
+              "arms hanging easily beside the torso"
+            ]
+          },
+          "visibility_and_projection": {
+            "status": "supported",
+            "reason": "An upward view can show the figure against sky while the lower stairs remain visible; slight foreshortening does not conflict with the grounded stance.",
+            "prompt_evidence": [
+              "looking upward toward the dancer",
+              "The staircase occupies the lower frame"
+            ]
+          }
+        }
+      }
+    },
+    "downward_still_life_en": {
+      "request_envelope": {
+        "contract_version": "photo-request-envelope/v1",
+        "provenance": "requesting_user",
+        "request_id": "downward_still_life_en",
+        "request_text": "Make a photo of a half-peeled orange beside a blue ceramic plate on a kitchen table. Shoot from directly above, looking straight down, with soft morning light and a few crumbs left in the frame.",
+        "request_sha256": "89a4c0433465b20a96b8c26d9ac585c9f1e9c9cf38e17a3fbeae3422aead76f3",
+        "active_spans": [
+          {
+            "span_id": "topic",
+            "start": 0,
+            "end": 194,
+            "text": "Make a photo of a half-peeled orange beside a blue ceramic plate on a kitchen table. Shoot from directly above, looking straight down, with soft morning light and a few crumbs left in the frame."
+          }
+        ]
+      },
+      "author_context": {
+        "request_language": "en",
+        "context": "This is for a quiet breakfast story in a small food magazine.",
+        "provenance": "independent_author_request_stage1"
+      },
+      "authorial_core": {
+        "contract_version": "photo-authorial-core/v3",
+        "provenance": "agent_prepack",
+        "source_request": "Make a photo of a half-peeled orange beside a blue ceramic plate on a kitchen table. Shoot from directly above, looking straight down, with soft morning light and a few crumbs left in the frame.",
+        "creative_controls_sha256": "b5a168a9a8c57f05cce2ffdb6cc0cc978ac1157572098816cb902f6cf5946159",
+        "interpreted_intent": "A quiet breakfast still life preserves the half-peeled orange, blue ceramic plate, kitchen table, crumbs, soft morning light, and directly overhead downward view. Restrained authorial choices of pale wood and a loose peel curl make the everyday material contrast inviting; there is no added sensual, fetish, or surreal treatment.",
+        "subject": "A half-peeled orange beside a blue ceramic plate",
+        "setting": "A kitchen table in morning light",
+        "event": "The half-peeled orange rests beside the plate with a few crumbs nearby",
+        "visual_priorities": [
+          "The half-peeled orange beside the blue ceramic plate",
+          "Soft morning light revealing peel, pith, and glaze",
+          "A few crumbs retained within the overhead arrangement"
+        ],
+        "baseline_prompt_en": "A breakfast still-life photograph shows a half-peeled orange beside a blue ceramic plate on a kitchen table. The capture camera is directly above the tabletop, looking straight down at the arrangement. Soft morning light spreads across the objects and leaves gentle shadows along the plate's rim. The loosened peel curls outward from the orange, exposing pale pith and a small patch of glossy fruit. A few crumbs remain within the frame near the plate. Pale wood and a little breathing space around the two objects give this ordinary breakfast moment a quiet, tactile simplicity.",
+        "user_definitions": [],
+        "interpretation_provenance": [
+          {
+            "term": "directly overhead breakfast still life",
+            "source_text": "Make a photo of a half-peeled orange beside a blue ceramic plate on a kitchen table. Shoot from directly above, looking straight down, with soft morning light and a few crumbs left in the frame.",
+            "basis": "request_context",
+            "resolution": "The requester specifies both capture height directly above the scene and capture direction straight downward. The orange is partly peeled rather than cut, the plate is blue ceramic, and a few crumbs are retained rather than cleaned away.",
+            "sources": []
+          }
+        ],
+        "unresolved_ambiguities": [],
+        "user_exclusions": [],
+        "runtime_forbidden_labels": [],
+        "intent_lock": {
+          "contract_version": "photo-intent-lock/v2",
+          "priority": "requesting_user",
+          "semantic_anchors": [
+            {
+              "anchor_id": "core_concept",
+              "source_text": "Make a photo of a half-peeled orange beside a blue ceramic plate on a kitchen table.",
+              "dimension": "concept",
+              "prompt_evidence": "A breakfast still-life photograph"
+            },
+            {
+              "anchor_id": "core_subject",
+              "source_text": "a half-peeled orange beside a blue ceramic plate",
+              "dimension": "subject",
+              "prompt_evidence": "a half-peeled orange beside a blue ceramic plate"
+            },
+            {
+              "anchor_id": "core_event",
+              "source_text": "a half-peeled orange beside a blue ceramic plate on a kitchen table",
+              "dimension": "event",
+              "prompt_evidence": "a half-peeled orange beside a blue ceramic plate on a kitchen table"
+            },
+            {
+              "anchor_id": "capture_height",
+              "source_text": "Shoot from directly above",
+              "dimension": "camera",
+              "prompt_evidence": "The capture camera is directly above the tabletop",
+              "target": "camera",
+              "property": "viewpoint.height"
+            },
+            {
+              "anchor_id": "capture_direction",
+              "source_text": "looking straight down",
+              "dimension": "camera",
+              "prompt_evidence": "looking straight down at the arrangement",
+              "target": "camera",
+              "property": "viewpoint.direction"
+            },
+            {
+              "anchor_id": "morning_light",
+              "source_text": "with soft morning light",
+              "dimension": "lighting",
+              "prompt_evidence": "Soft morning light",
+              "target": "scene",
+              "property": "illumination.quality_time"
+            },
+            {
+              "anchor_id": "visible_crumbs",
+              "source_text": "a few crumbs left in the frame",
+              "dimension": "composition",
+              "prompt_evidence": "A few crumbs remain within the frame near the plate",
+              "target": "crumbs",
+              "property": "visibility"
+            }
+          ],
+          "locked_dimensions": [
+            "concept",
+            "subject",
+            "event"
+          ],
+          "open_dimensions": [
+            "appearance",
+            "setting",
+            "framing",
+            "composition",
+            "lighting",
+            "camera",
+            "color",
+            "material",
+            "timing",
+            "atmosphere",
+            "style"
+          ]
+        },
+        "semantic_assertions": [
+          {
+            "assertion_id": "capture_camera_review",
+            "dimension": "camera",
+            "polarity": "advisory",
+            "source_span_ids": [
+              "topic"
+            ],
+            "affected_dimensions": [
+              "camera"
+            ],
+            "axes": {
+              "camera_axis_review": "camera_axis_review_v1",
+              "capture_owner": "camera",
+              "direction_requirement": "requested",
+              "height_requirement": "requested"
+            },
+            "evidence": {
+              "owner_phrase": "The capture camera",
+              "direction_phrase": "looking straight down at the arrangement",
+              "height_phrase": "The capture camera is directly above the tabletop"
+            }
+          }
+        ],
+        "request_lineage": null,
+        "style": {
+          "domain": "food still-life photography",
+          "family": "quiet morning editorial still life",
+          "evidence": [
+            "gentle shadows along the plate's rim",
+            "Pale wood and a little breathing space"
+          ]
+        },
+        "variation_key": "downward_still_life_en"
+      },
+      "precore_feature_selection": {
+        "contract_version": "photo-precore-feature-selection/v1",
+        "request_id": "downward_still_life_en",
+        "active_span_ids": [
+          "topic"
+        ],
+        "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+        "catalog_schema_version": "photo-precore-feature-catalog/v1",
+        "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+        "request_sha256": "89a4c0433465b20a96b8c26d9ac585c9f1e9c9cf38e17a3fbeae3422aead76f3",
+        "baseline_prompt_sha256": "fd7eb0d9f18f9d65dbfcab17a8ad49e8ea638becd8721c116f66bb397459b264",
+        "selected": [
+          {
+            "category_id": "feature.primary_object",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "a half-peeled orange",
+            "derivation": null,
+            "reason": "Partial peeling gives the primary food subject its recognizable material state.",
+            "baseline_evidence": "a half-peeled orange"
+          },
+          {
+            "category_id": "feature.location",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "on a kitchen table",
+            "derivation": null,
+            "reason": "The domestic surface makes this a breakfast scene.",
+            "baseline_evidence": "on a kitchen table"
+          },
+          {
+            "category_id": "feature.props",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "a blue ceramic plate",
+            "derivation": null,
+            "reason": "The accompanying plate supplies the requested cool glazed contrast.",
+            "baseline_evidence": "a blue ceramic plate"
+          },
+          {
+            "category_id": "feature.time",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "morning",
+            "derivation": null,
+            "reason": "Morning is a requested temporal atmosphere conveyed by the incoming light.",
+            "baseline_evidence": "Soft morning light spreads across the objects"
+          },
+          {
+            "category_id": "feature.light_quality",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "soft morning light",
+            "derivation": null,
+            "reason": "Softness must remain visible through gentle object shadows.",
+            "baseline_evidence": "Soft morning light"
+          },
+          {
+            "category_id": "feature.camera_height",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "Shoot from directly above",
+            "derivation": null,
+            "reason": "Directly overhead placement makes the arrangement planar.",
+            "baseline_evidence": "The capture camera is directly above the tabletop"
+          },
+          {
+            "category_id": "feature.camera_angle",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "looking straight down",
+            "derivation": null,
+            "reason": "The capture direction is straight downward rather than an oblique overhead view.",
+            "baseline_evidence": "looking straight down at the arrangement"
+          }
+        ]
+      },
+      "embodiment_review": {
+        "contract_version": "photo-embodiment-review/v1",
+        "provenance": "agent_prepack",
+        "prompt_sha256": "fd7eb0d9f18f9d65dbfcab17a8ad49e8ea638becd8721c116f66bb397459b264",
+        "scope": "not_applicable",
+        "summary": "This is an object-and-food still life with no depicted body, bodily contact, or bodily action to review.",
+        "checks": {}
+      }
+    },
+    "low_horizontal_portrait_ko": {
+      "request_envelope": {
+        "contract_version": "photo-request-envelope/v1",
+        "provenance": "requesting_user",
+        "request_id": "low_horizontal_portrait_ko",
+        "request_text": "성인 정원사가 온실 바닥에 앉아 모종을 옮겨 심는 모습을 찍어 주세요. 카메라는 바닥 가까이 낮게 두되 위로 기울이지 않고 수평으로 향하게 해서, 앞쪽 화분과 정원사가 함께 보이게 해 주세요.",
+        "request_sha256": "1632cecc1fb57e98cc22ddbe252220f3909904d0aceac377cdc9cab22acd1168",
+        "active_spans": [
+          {
+            "span_id": "topic",
+            "start": 0,
+            "end": 107,
+            "text": "성인 정원사가 온실 바닥에 앉아 모종을 옮겨 심는 모습을 찍어 주세요. 카메라는 바닥 가까이 낮게 두되 위로 기울이지 않고 수평으로 향하게 해서, 앞쪽 화분과 정원사가 함께 보이게 해 주세요."
+          }
+        ]
+      },
+      "author_context": {
+        "request_language": "ko",
+        "context": "동네 정원사의 일상을 차분하게 소개하는 잡지 사진이에요.",
+        "provenance": "independent_author_request_stage1"
+      },
+      "authorial_core": {
+        "contract_version": "photo-authorial-core/v3",
+        "provenance": "agent_prepack",
+        "source_request": "성인 정원사가 온실 바닥에 앉아 모종을 옮겨 심는 모습을 찍어 주세요. 카메라는 바닥 가까이 낮게 두되 위로 기울이지 않고 수평으로 향하게 해서, 앞쪽 화분과 정원사가 함께 보이게 해 주세요.",
+        "creative_controls_sha256": "564c42aa26864bdec3b64356e3cb6856f326f839c827af39b494c6e275df6afc",
+        "interpreted_intent": "Keep the adult gardener seated on the greenhouse floor while transplanting seedlings, with foreground pots and the gardener visible together from a low, horizontal capture camera. The magazine context guides quiet observation. Restrained warm skin light, an open linen collar, and absorbed attention give subtle human attraction without changing the work or camera duty.",
+        "subject": "An adult gardener",
+        "setting": "The floor of a greenhouse with foreground pots",
+        "event": "The seated gardener transfers a seedling into a pot",
+        "visual_priorities": [
+          "The seated gardener's hands supporting the seedling's root ball over a receiving pot",
+          "Foreground pots sharing the frame with the gardener",
+          "A near-floor camera position whose lens points horizontally"
+        ],
+        "baseline_prompt_en": "A greenhouse work portrait shows an adult gardener seated on the greenhouse floor, transplanting seedlings. The capture camera is low near the floor, with its lens pointing horizontally. Foreground pots and the gardener appear together in the frame, separated enough to reveal the work. The gardener sits cross-legged, supporting a seedling's root ball in both hands just above a pot between their knees; bent elbows bring the load close to the torso. Their eyes follow the roots with absorbed attention. Soft filtered light warms the skin at an open linen collar, while damp soil and fresh leaves keep the everyday task central.",
+        "user_definitions": [],
+        "interpretation_provenance": [
+          {
+            "term": "low horizontal greenhouse work portrait",
+            "source_text": "성인 정원사가 온실 바닥에 앉아 모종을 옮겨 심는 모습을 찍어 주세요. 카메라는 바닥 가까이 낮게 두되 위로 기울이지 않고 수평으로 향하게 해서, 앞쪽 화분과 정원사가 함께 보이게 해 주세요.",
+            "basis": "request_context",
+            "resolution": "The request positively prescribes a horizontal capture direction as well as a low near-floor capture position; low placement is not upward tilt. It also explicitly excludes upward camera tilt. The gardener sits on the greenhouse floor, transplants seedlings, and shares the frame with foreground pots.",
+            "sources": []
+          }
+        ],
+        "unresolved_ambiguities": [],
+        "user_exclusions": [
+          "upward camera tilt"
+        ],
+        "runtime_forbidden_labels": [],
+        "intent_lock": {
+          "contract_version": "photo-intent-lock/v2",
+          "priority": "requesting_user",
+          "semantic_anchors": [
+            {
+              "anchor_id": "core_concept",
+              "source_text": "성인 정원사가 온실 바닥에 앉아 모종을 옮겨 심는 모습",
+              "dimension": "concept",
+              "prompt_evidence": "A greenhouse work portrait"
+            },
+            {
+              "anchor_id": "core_subject",
+              "source_text": "성인 정원사가",
+              "dimension": "subject",
+              "prompt_evidence": "an adult gardener"
+            },
+            {
+              "anchor_id": "core_event",
+              "source_text": "온실 바닥에 앉아 모종을 옮겨 심는",
+              "dimension": "event",
+              "prompt_evidence": "seated on the greenhouse floor, transplanting seedlings"
+            },
+            {
+              "anchor_id": "capture_height",
+              "source_text": "카메라는 바닥 가까이 낮게 두되",
+              "dimension": "camera",
+              "prompt_evidence": "The capture camera is low near the floor",
+              "target": "camera",
+              "property": "viewpoint.height"
+            },
+            {
+              "anchor_id": "capture_direction",
+              "source_text": "수평으로 향하게 해서",
+              "dimension": "camera",
+              "prompt_evidence": "its lens pointing horizontally",
+              "target": "camera",
+              "property": "viewpoint.direction"
+            },
+            {
+              "anchor_id": "shared_frame",
+              "source_text": "앞쪽 화분과 정원사가 함께 보이게",
+              "dimension": "composition",
+              "prompt_evidence": "Foreground pots and the gardener appear together in the frame",
+              "target": "scene",
+              "property": "foreground.subject_visibility"
+            }
+          ],
+          "locked_dimensions": [
+            "concept",
+            "subject",
+            "event"
+          ],
+          "open_dimensions": [
+            "identity",
+            "appearance",
+            "pose",
+            "body_geometry",
+            "expression",
+            "action",
+            "setting",
+            "framing",
+            "composition",
+            "lighting",
+            "camera",
+            "color",
+            "material",
+            "timing",
+            "atmosphere",
+            "style"
+          ]
+        },
+        "semantic_assertions": [
+          {
+            "assertion_id": "capture_camera_review",
+            "dimension": "camera",
+            "polarity": "advisory",
+            "source_span_ids": [
+              "topic"
+            ],
+            "affected_dimensions": [
+              "camera"
+            ],
+            "axes": {
+              "camera_axis_review": "camera_axis_review_v1",
+              "capture_owner": "camera",
+              "direction_requirement": "requested",
+              "height_requirement": "requested"
+            },
+            "evidence": {
+              "owner_phrase": "The capture camera",
+              "direction_phrase": "its lens pointing horizontally",
+              "height_phrase": "The capture camera is low near the floor"
+            }
+          }
+        ],
+        "request_lineage": null,
+        "style": {
+          "domain": "environmental portrait photography",
+          "family": "quiet greenhouse work study",
+          "evidence": [
+            "Their eyes follow the roots with absorbed attention",
+            "Soft filtered light warms the skin at an open linen collar"
+          ]
+        },
+        "variation_key": "low_horizontal_portrait_ko"
+      },
+      "precore_feature_selection": {
+        "contract_version": "photo-precore-feature-selection/v1",
+        "request_id": "low_horizontal_portrait_ko",
+        "active_span_ids": [
+          "topic"
+        ],
+        "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+        "catalog_schema_version": "photo-precore-feature-catalog/v1",
+        "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+        "request_sha256": "1632cecc1fb57e98cc22ddbe252220f3909904d0aceac377cdc9cab22acd1168",
+        "baseline_prompt_sha256": "63df44c412e6cbf02d451eeaaba6d68535108dbccb2947f9170150251ebc08e0",
+        "selected": [
+          {
+            "category_id": "feature.subject",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "성인 정원사가",
+            "derivation": null,
+            "reason": "The image is centered on an adult working gardener.",
+            "baseline_evidence": "an adult gardener"
+          },
+          {
+            "category_id": "feature.action",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "모종을 옮겨 심는",
+            "derivation": null,
+            "reason": "Transplanting rather than merely holding a plant is the requested visible task.",
+            "baseline_evidence": "transplanting seedlings"
+          },
+          {
+            "category_id": "feature.pose",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "온실 바닥에 앉아",
+            "derivation": null,
+            "reason": "The requested seated state places the gardener on the floor.",
+            "baseline_evidence": "seated on the greenhouse floor"
+          },
+          {
+            "category_id": "feature.location",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "온실 바닥",
+            "derivation": null,
+            "reason": "The greenhouse is the requested workplace.",
+            "baseline_evidence": "the greenhouse floor"
+          },
+          {
+            "category_id": "feature.props",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "앞쪽 화분",
+            "derivation": null,
+            "reason": "Foreground pots must remain part of the shared composition.",
+            "baseline_evidence": "Foreground pots and the gardener appear together in the frame"
+          },
+          {
+            "category_id": "feature.camera_height",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "카메라는 바닥 가까이 낮게 두되",
+            "derivation": null,
+            "reason": "Near-floor placement is a requested camera property distinct from direction.",
+            "baseline_evidence": "The capture camera is low near the floor"
+          },
+          {
+            "category_id": "feature.camera_angle",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "수평으로 향하게 해서",
+            "derivation": null,
+            "reason": "The lens must point horizontally despite the low position.",
+            "baseline_evidence": "its lens pointing horizontally"
+          },
+          {
+            "category_id": "feature.gaze",
+            "basis": "agent_visual_choice",
+            "source_span_ids": [],
+            "source_text": null,
+            "derivation": null,
+            "reason": "Attention to the root ball makes the quiet act of transplanting readable.",
+            "baseline_evidence": "Their eyes follow the roots with absorbed attention"
+          }
+        ]
+      },
+      "embodiment_review": {
+        "contract_version": "photo-embodiment-review/v1",
+        "provenance": "agent_prepack",
+        "prompt_sha256": "63df44c412e6cbf02d451eeaaba6d68535108dbccb2947f9170150251ebc08e0",
+        "scope": "body_action",
+        "summary": "The floor-seated gardener supports one small root ball with both hands above a pot within the space between their crossed legs.",
+        "checks": {
+          "body_ownership": {
+            "status": "supported",
+            "reason": "Both hands and bent elbows are assigned to the same gardener.",
+            "prompt_evidence": [
+              "The gardener sits cross-legged",
+              "supporting a seedling's root ball in both hands"
+            ]
+          },
+          "joint_chain_and_reach": {
+            "status": "supported",
+            "reason": "The receiving pot is between the knees; bent elbows keep the small root ball within ordinary forearm reach.",
+            "prompt_evidence": [
+              "just above a pot between their knees",
+              "bent elbows bring the load close to the torso"
+            ]
+          },
+          "support_and_balance": {
+            "status": "supported",
+            "reason": "The seated pelvis and crossed legs rest on the greenhouse floor while both arms handle a light seedling.",
+            "prompt_evidence": [
+              "seated on the greenhouse floor",
+              "The gardener sits cross-legged"
+            ]
+          },
+          "contact_and_space": {
+            "status": "supported",
+            "reason": "Hands contact the root ball and the pot sits below it in a clear central gap; the task is a plausible instant during transfer.",
+            "prompt_evidence": [
+              "supporting a seedling's root ball in both hands just above a pot between their knees"
+            ]
+          },
+          "visibility_and_projection": {
+            "status": "supported",
+            "reason": "The low horizontal capture is paired with foreground spacing so pots do not conceal the hands and root ball.",
+            "prompt_evidence": [
+              "its lens pointing horizontally",
+              "separated enough to reveal the work"
+            ]
+          }
+        }
+      }
+    },
+    "upward_object_en": {
+      "request_envelope": {
+        "contract_version": "photo-request-envelope/v1",
+        "provenance": "requesting_user",
+        "request_id": "upward_object_en",
+        "request_text": "Create a photo of a small handmade wooden rocket on a desk, with its nose pointing upward. Put a folded paper star beside it and give the wood a warm, slightly worn finish.",
+        "request_sha256": "8ab6b917dcf58447507ebbd77a6e59b53e445799b014f6d81546b2e2df89bebf",
+        "active_spans": [
+          {
+            "span_id": "topic",
+            "start": 0,
+            "end": 172,
+            "text": "Create a photo of a small handmade wooden rocket on a desk, with its nose pointing upward. Put a folded paper star beside it and give the wood a warm, slightly worn finish."
+          }
+        ]
+      },
+      "author_context": {
+        "request_language": "en",
+        "context": "This image will introduce a collection of playful handmade desk ornaments.",
+        "provenance": "independent_author_request_stage1"
+      },
+      "authorial_core": {
+        "contract_version": "photo-authorial-core/v3",
+        "provenance": "agent_prepack",
+        "source_request": "Create a photo of a small handmade wooden rocket on a desk, with its nose pointing upward. Put a folded paper star beside it and give the wood a warm, slightly worn finish.",
+        "creative_controls_sha256": "aa43e8281a9e200d1e895aceb5196d7781412b2d48dde60cead6edddb4708cda",
+        "interpreted_intent": "Present a playful handmade desk ornament through the requested upward-pointing wooden rocket, folded paper star, and warm worn surface. The upward direction belongs to the rocket's nose, not the capture camera. Restrained side light and visible grain support the object's character; camera viewpoint remains unprescribed.",
+        "subject": "A small handmade wooden rocket",
+        "setting": "A desk beside a folded paper star",
+        "event": "The rocket rests upright with its nose pointing upward and the paper star beside it",
+        "visual_priorities": [
+          "The small wooden rocket's upward-pointing nose",
+          "Warm, slightly worn grain against crisp paper folds",
+          "The folded paper star beside the rocket"
+        ],
+        "baseline_prompt_en": "A handmade desk-ornament photograph features a small handmade wooden rocket on a desk. Its nose points upward, and a folded paper star rests beside it. The rocket's wood has a warm, slightly worn finish, with grain crossing the rounded body and gentle rubbing along the fins. The desk supports the rocket on its flat base. Soft side light makes the paper's crisp folds distinct from the mellow wood, while the compact arrangement feels playful and familiar. A restrained neutral background keeps the two simple shapes easy to read.",
+        "user_definitions": [],
+        "interpretation_provenance": [
+          {
+            "term": "upward-pointing handmade rocket",
+            "source_text": "Create a photo of a small handmade wooden rocket on a desk, with its nose pointing upward. Put a folded paper star beside it and give the wood a warm, slightly worn finish.",
+            "basis": "request_context",
+            "resolution": "Upward is the physical orientation of the rocket's nose. The request specifies no capture direction or capture height. The wooden rocket, desktop placement, neighboring folded paper star, and warm slightly worn finish are requester-owned.",
+            "sources": []
+          }
+        ],
+        "unresolved_ambiguities": [],
+        "user_exclusions": [],
+        "runtime_forbidden_labels": [],
+        "intent_lock": {
+          "contract_version": "photo-intent-lock/v2",
+          "priority": "requesting_user",
+          "semantic_anchors": [
+            {
+              "anchor_id": "core_concept",
+              "source_text": "a small handmade wooden rocket on a desk",
+              "dimension": "concept",
+              "prompt_evidence": "A handmade desk-ornament photograph"
+            },
+            {
+              "anchor_id": "core_subject",
+              "source_text": "a small handmade wooden rocket",
+              "dimension": "subject",
+              "prompt_evidence": "a small handmade wooden rocket"
+            },
+            {
+              "anchor_id": "core_event",
+              "source_text": "a small handmade wooden rocket on a desk, with its nose pointing upward",
+              "dimension": "event",
+              "prompt_evidence": "a small handmade wooden rocket on a desk. Its nose points upward"
+            },
+            {
+              "anchor_id": "paper_star",
+              "source_text": "Put a folded paper star beside it",
+              "dimension": "composition",
+              "prompt_evidence": "a folded paper star rests beside it",
+              "target": "paper_star",
+              "property": "placement"
+            },
+            {
+              "anchor_id": "wood_finish",
+              "source_text": "give the wood a warm, slightly worn finish",
+              "dimension": "appearance",
+              "prompt_evidence": "The rocket's wood has a warm, slightly worn finish",
+              "target": "rocket",
+              "property": "surface.finish"
+            }
+          ],
+          "locked_dimensions": [
+            "concept",
+            "subject",
+            "event"
+          ],
+          "open_dimensions": [
+            "appearance",
+            "pose",
+            "setting",
+            "framing",
+            "composition",
+            "lighting",
+            "camera",
+            "color",
+            "material",
+            "timing",
+            "atmosphere",
+            "style"
+          ]
+        },
+        "semantic_assertions": [
+          {
+            "assertion_id": "capture_camera_review",
+            "dimension": "camera",
+            "polarity": "advisory",
+            "source_span_ids": [
+              "topic"
+            ],
+            "affected_dimensions": [
+              "camera"
+            ],
+            "axes": {
+              "camera_axis_review": "camera_axis_review_v1",
+              "capture_owner": "unprescribed",
+              "direction_requirement": "open",
+              "height_requirement": "open"
+            },
+            "evidence": {}
+          }
+        ],
+        "request_lineage": null,
+        "style": {
+          "domain": "product still-life photography",
+          "family": "warm handmade object study",
+          "evidence": [
+            "grain crossing the rounded body",
+            "Soft side light makes the paper's crisp folds distinct from the mellow wood"
+          ]
+        },
+        "variation_key": "upward_object_en"
+      },
+      "precore_feature_selection": {
+        "contract_version": "photo-precore-feature-selection/v1",
+        "request_id": "upward_object_en",
+        "active_span_ids": [
+          "topic"
+        ],
+        "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+        "catalog_schema_version": "photo-precore-feature-catalog/v1",
+        "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+        "request_sha256": "8ab6b917dcf58447507ebbd77a6e59b53e445799b014f6d81546b2e2df89bebf",
+        "baseline_prompt_sha256": "61e3d02c2119390766889d3912272dac6a3d36f827af6ff50a0344446e4de952",
+        "selected": [
+          {
+            "category_id": "feature.primary_object",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "a small handmade wooden rocket",
+            "derivation": null,
+            "reason": "The handmade wooden rocket is the principal object rather than a camera-direction cue.",
+            "baseline_evidence": "a small handmade wooden rocket"
+          },
+          {
+            "category_id": "feature.location",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "on a desk",
+            "derivation": null,
+            "reason": "The desktop gives the ornament its requested use context.",
+            "baseline_evidence": "on a desk"
+          },
+          {
+            "category_id": "feature.props",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "a folded paper star beside it",
+            "derivation": null,
+            "reason": "The adjacent folded star supplies the requested companion shape.",
+            "baseline_evidence": "a folded paper star rests beside it"
+          },
+          {
+            "category_id": "feature.situation",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "with its nose pointing upward",
+            "derivation": null,
+            "reason": "The rocket's static upward orientation is the requested visible state.",
+            "baseline_evidence": "Its nose points upward"
+          },
+          {
+            "category_id": "feature.light_quality",
+            "basis": "agent_visual_choice",
+            "source_span_ids": [],
+            "source_text": null,
+            "derivation": null,
+            "reason": "Soft light reveals paper folds and worn wood without overwhelming the small objects.",
+            "baseline_evidence": "Soft side light makes the paper's crisp folds distinct from the mellow wood"
+          }
+        ]
+      },
+      "embodiment_review": {
+        "contract_version": "photo-embodiment-review/v1",
+        "provenance": "agent_prepack",
+        "prompt_sha256": "61e3d02c2119390766889d3912272dac6a3d36f827af6ff50a0344446e4de952",
+        "scope": "not_applicable",
+        "summary": "The scene contains two desk objects and no bodily mechanism; the rocket is supported by its flat base.",
+        "checks": {}
+      }
+    },
+    "background_camera_ko": {
+      "request_envelope": {
+        "contract_version": "photo-request-envelope/v1",
+        "provenance": "requesting_user",
+        "request_id": "background_camera_ko",
+        "request_text": "사진 작업실 테이블 위에 놓인 빨간 가죽 수첩을 찍어 주세요. 실제 촬영은 수첩보다 높은 위치에서 비스듬히 내려다보는 구도로 하고, 뒤쪽 선반에는 천장을 향해 세워 둔 오래된 필름 카메라가 흐릿하게 보이면 좋겠어요.",
+        "request_sha256": "a87d07afc765a5b33a6b10341a37fc36ca6bbd96b00313c3cdeeb9d6652c9ff6",
+        "active_spans": [
+          {
+            "span_id": "topic",
+            "start": 0,
+            "end": 120,
+            "text": "사진 작업실 테이블 위에 놓인 빨간 가죽 수첩을 찍어 주세요. 실제 촬영은 수첩보다 높은 위치에서 비스듬히 내려다보는 구도로 하고, 뒤쪽 선반에는 천장을 향해 세워 둔 오래된 필름 카메라가 흐릿하게 보이면 좋겠어요."
+          }
+        ]
+      },
+      "author_context": {
+        "request_language": "ko",
+        "context": "오래된 사진 작업실의 온기를 담은 문구 브랜드 사진이에요.",
+        "provenance": "independent_author_request_stage1"
+      },
+      "authorial_core": {
+        "contract_version": "photo-authorial-core/v3",
+        "provenance": "agent_prepack",
+        "source_request": "사진 작업실 테이블 위에 놓인 빨간 가죽 수첩을 찍어 주세요. 실제 촬영은 수첩보다 높은 위치에서 비스듬히 내려다보는 구도로 하고, 뒤쪽 선반에는 천장을 향해 세워 둔 오래된 필름 카메라가 흐릿하게 보이면 좋겠어요.",
+        "creative_controls_sha256": "b11c23d4a9815c5fe9c37766b45aec84177680619fb0e91d9400bc02e5fd9236",
+        "interpreted_intent": "Make a warm stationery still life with a red leather notebook on a photographic studio table and an old film camera softly visible on the rear shelf. Preserve the actual capture camera above the notebook looking diagonally downward; the upward-pointing shelf camera is a depicted object. Restrained amber daylight and worn surfaces serve the supplied brand context.",
+        "subject": "A red leather notebook",
+        "setting": "A photographic studio table with a shelf behind it",
+        "event": "The notebook rests on the table while an old film camera sits blurred on the rear shelf",
+        "visual_priorities": [
+          "The red leather notebook as the sharp foreground subject",
+          "The old film camera softly visible on the shelf with its lens directed toward the ceiling",
+          "The actual capture camera's elevated, obliquely downward view"
+        ],
+        "baseline_prompt_en": "A stationery still-life photograph centers a red leather notebook resting on a table in a photographic studio. The capture camera is higher than the notebook, looking diagonally downward toward it. On the shelf behind the table, an old film camera sits with its lens pointing toward the ceiling, softly blurred in the background. The notebook's fine leather grain and rubbed corners stay crisp. Amber daylight crosses the table and brings a quiet warmth to the red cover. The shelf camera remains recognizable as a separate object, giving the simple tabletop arrangement the lived-in character of an older studio.",
+        "user_definitions": [],
+        "interpretation_provenance": [
+          {
+            "term": "capture camera and depicted shelf camera",
+            "source_text": "사진 작업실 테이블 위에 놓인 빨간 가죽 수첩을 찍어 주세요. 실제 촬영은 수첩보다 높은 위치에서 비스듬히 내려다보는 구도로 하고, 뒤쪽 선반에는 천장을 향해 세워 둔 오래된 필름 카메라가 흐릿하게 보이면 좋겠어요.",
+            "basis": "request_context",
+            "resolution": "The actual capture camera is explicitly higher than the notebook and directed obliquely down. The old film camera placed on the shelf is a separate depicted object facing the ceiling; its orientation does not govern the photograph's viewpoint. Red leather, table placement, rear shelf, and soft background visibility are preserved.",
+            "sources": []
+          }
+        ],
+        "unresolved_ambiguities": [],
+        "user_exclusions": [],
+        "runtime_forbidden_labels": [],
+        "intent_lock": {
+          "contract_version": "photo-intent-lock/v2",
+          "priority": "requesting_user",
+          "semantic_anchors": [
+            {
+              "anchor_id": "core_concept",
+              "source_text": "사진 작업실 테이블 위에 놓인 빨간 가죽 수첩을 찍어 주세요.",
+              "dimension": "concept",
+              "prompt_evidence": "A stationery still-life photograph"
+            },
+            {
+              "anchor_id": "core_subject",
+              "source_text": "빨간 가죽 수첩",
+              "dimension": "subject",
+              "prompt_evidence": "a red leather notebook"
+            },
+            {
+              "anchor_id": "core_event",
+              "source_text": "사진 작업실 테이블 위에 놓인",
+              "dimension": "event",
+              "prompt_evidence": "resting on a table in a photographic studio"
+            },
+            {
+              "anchor_id": "capture_height",
+              "source_text": "실제 촬영은 수첩보다 높은 위치에서",
+              "dimension": "camera",
+              "prompt_evidence": "The capture camera is higher than the notebook",
+              "target": "camera",
+              "property": "viewpoint.height"
+            },
+            {
+              "anchor_id": "capture_direction",
+              "source_text": "비스듬히 내려다보는 구도로",
+              "dimension": "camera",
+              "prompt_evidence": "looking diagonally downward toward it",
+              "target": "camera",
+              "property": "viewpoint.direction"
+            },
+            {
+              "anchor_id": "shelf_camera",
+              "source_text": "뒤쪽 선반에는 천장을 향해 세워 둔 오래된 필름 카메라",
+              "dimension": "composition",
+              "prompt_evidence": "On the shelf behind the table, an old film camera sits with its lens pointing toward the ceiling",
+              "target": "shelf_camera",
+              "property": "placement.orientation"
+            },
+            {
+              "anchor_id": "shelf_camera_blur",
+              "source_text": "오래된 필름 카메라가 흐릿하게 보이면",
+              "dimension": "framing",
+              "prompt_evidence": "softly blurred in the background",
+              "target": "shelf_camera",
+              "property": "focus"
+            }
+          ],
+          "locked_dimensions": [
+            "concept",
+            "subject",
+            "event"
+          ],
+          "open_dimensions": [
+            "appearance",
+            "setting",
+            "framing",
+            "composition",
+            "lighting",
+            "camera",
+            "color",
+            "material",
+            "timing",
+            "atmosphere",
+            "style"
+          ]
+        },
+        "semantic_assertions": [
+          {
+            "assertion_id": "capture_camera_review",
+            "dimension": "camera",
+            "polarity": "advisory",
+            "source_span_ids": [
+              "topic"
+            ],
+            "affected_dimensions": [
+              "camera"
+            ],
+            "axes": {
+              "camera_axis_review": "camera_axis_review_v1",
+              "capture_owner": "camera",
+              "direction_requirement": "requested",
+              "height_requirement": "requested"
+            },
+            "evidence": {
+              "owner_phrase": "The capture camera",
+              "direction_phrase": "looking diagonally downward toward it",
+              "height_phrase": "The capture camera is higher than the notebook"
+            }
+          }
+        ],
+        "request_lineage": null,
+        "style": {
+          "domain": "stationery product photography",
+          "family": "warm lived-in studio still life",
+          "evidence": [
+            "fine leather grain and rubbed corners stay crisp",
+            "Amber daylight crosses the table"
+          ]
+        },
+        "variation_key": "background_camera_ko"
+      },
+      "precore_feature_selection": {
+        "contract_version": "photo-precore-feature-selection/v1",
+        "request_id": "background_camera_ko",
+        "active_span_ids": [
+          "topic"
+        ],
+        "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+        "catalog_schema_version": "photo-precore-feature-catalog/v1",
+        "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+        "request_sha256": "a87d07afc765a5b33a6b10341a37fc36ca6bbd96b00313c3cdeeb9d6652c9ff6",
+        "baseline_prompt_sha256": "a5f5c42bd2cf921da498bd244495652980699ea7b7125cf00f838779037107d2",
+        "selected": [
+          {
+            "category_id": "feature.primary_object",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "빨간 가죽 수첩",
+            "derivation": null,
+            "reason": "The red leather notebook supplies the central product and material identity.",
+            "baseline_evidence": "a red leather notebook"
+          },
+          {
+            "category_id": "feature.location",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "사진 작업실 테이블 위에",
+            "derivation": null,
+            "reason": "The photographic studio table is the requested setting.",
+            "baseline_evidence": "resting on a table in a photographic studio"
+          },
+          {
+            "category_id": "feature.props",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "천장을 향해 세워 둔 오래된 필름 카메라",
+            "derivation": null,
+            "reason": "The shelf camera is a depicted prop with its own orientation.",
+            "baseline_evidence": "an old film camera sits with its lens pointing toward the ceiling"
+          },
+          {
+            "category_id": "feature.background",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "뒤쪽 선반에는",
+            "derivation": null,
+            "reason": "The shelf places the secondary camera behind the main subject.",
+            "baseline_evidence": "On the shelf behind the table"
+          },
+          {
+            "category_id": "feature.camera_height",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "실제 촬영은 수첩보다 높은 위치에서",
+            "derivation": null,
+            "reason": "The actual capture camera is above the notebook.",
+            "baseline_evidence": "The capture camera is higher than the notebook"
+          },
+          {
+            "category_id": "feature.camera_angle",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "비스듬히 내려다보는 구도로",
+            "derivation": null,
+            "reason": "The actual photograph looks obliquely downward.",
+            "baseline_evidence": "looking diagonally downward toward it"
+          }
+        ]
+      },
+      "embodiment_review": {
+        "contract_version": "photo-embodiment-review/v1",
+        "provenance": "agent_prepack",
+        "prompt_sha256": "a5f5c42bd2cf921da498bd244495652980699ea7b7125cf00f838779037107d2",
+        "scope": "not_applicable",
+        "summary": "The notebook and shelf camera are stationary objects, with no visible body or bodily action.",
+        "checks": {}
+      }
+    },
+    "two_cameras_en": {
+      "request_envelope": {
+        "contract_version": "photo-request-envelope/v1",
+        "provenance": "requesting_user",
+        "request_id": "two_cameras_en",
+        "request_text": "Photograph an adult photographer standing beside a tripod-mounted camera whose lens is tilted toward the floor. Use the separate camera held by the seated assistant to take the picture, aiming upward at the standing photographer so the studio ceiling shows behind them.",
+        "request_sha256": "da00a9381ce3f46c76f0dd985380fdc73090f1a1ae97ec616a96200dc9ed2361",
+        "active_spans": [
+          {
+            "span_id": "topic",
+            "start": 0,
+            "end": 269,
+            "text": "Photograph an adult photographer standing beside a tripod-mounted camera whose lens is tilted toward the floor. Use the separate camera held by the seated assistant to take the picture, aiming upward at the standing photographer so the studio ceiling shows behind them."
+          }
+        ]
+      },
+      "author_context": {
+        "request_language": "en",
+        "context": "This is a candid behind-the-scenes image for a portrait studio's journal.",
+        "provenance": "independent_author_request_stage1"
+      },
+      "authorial_core": {
+        "contract_version": "photo-authorial-core/v3",
+        "provenance": "agent_prepack",
+        "source_request": "Photograph an adult photographer standing beside a tripod-mounted camera whose lens is tilted toward the floor. Use the separate camera held by the seated assistant to take the picture, aiming upward at the standing photographer so the studio ceiling shows behind them.",
+        "creative_controls_sha256": "0961e89975e588df0996997e5ece5e3997a8b128861e578a7a34b05487dd3a67",
+        "interpreted_intent": "Preserve an adult standing photographer beside a tripod camera aimed at the floor, while the separate camera held by the seated assistant actually captures the scene looking upward. The assistant's seated posture identifies the operator but does not fix a capture-camera height. The supplied candid journal context guides an unforced pause, with restrained open-collar warmth supporting subtle adult appeal.",
+        "subject": "An adult photographer",
+        "setting": "A portrait studio with a visible ceiling and a tripod-mounted camera",
+        "event": "The photographer stands beside the tripod camera while the seated assistant takes the photograph with a separate camera",
+        "visual_priorities": [
+          "The standing photographer beside the downward-tilted tripod camera",
+          "The upward capture from the seated assistant's separate handheld camera",
+          "The studio ceiling visible behind the photographer"
+        ],
+        "baseline_prompt_en": "A behind-the-scenes studio portrait shows an adult photographer standing beside a tripod-mounted camera whose lens tilts toward the floor. The separate camera held by the seated adult assistant takes this photograph, aiming upward at the standing photographer. The studio ceiling shows behind the photographer. The tripod's three feet spread on the studio floor, and the photographer stands comfortably alongside it, hands resting at their sides. A loose open-collar shirt and warm light across the neck lend the pause an easy intimacy. The photographer glances toward the assistant's camera with a small, unforced smile, as if caught between ordinary working moments.",
+        "user_definitions": [],
+        "interpretation_provenance": [
+          {
+            "term": "two cameras with distinct owners and directions",
+            "source_text": "Photograph an adult photographer standing beside a tripod-mounted camera whose lens is tilted toward the floor. Use the separate camera held by the seated assistant to take the picture, aiming upward at the standing photographer so the studio ceiling shows behind them.",
+            "basis": "request_context",
+            "resolution": "The tripod-mounted camera is depicted beside the photographer and points toward the floor. The separate handheld camera belongs to the seated assistant and is the capture camera; its direction is explicitly upward. A seated operator does not uniquely specify capture height, which remains open. The ceiling is visible behind the adult photographer.",
+            "sources": []
+          }
+        ],
+        "unresolved_ambiguities": [],
+        "user_exclusions": [],
+        "runtime_forbidden_labels": [],
+        "intent_lock": {
+          "contract_version": "photo-intent-lock/v2",
+          "priority": "requesting_user",
+          "semantic_anchors": [
+            {
+              "anchor_id": "core_concept",
+              "source_text": "Photograph an adult photographer standing beside a tripod-mounted camera",
+              "dimension": "concept",
+              "prompt_evidence": "A behind-the-scenes studio portrait"
+            },
+            {
+              "anchor_id": "core_subject",
+              "source_text": "an adult photographer",
+              "dimension": "subject",
+              "prompt_evidence": "an adult photographer"
+            },
+            {
+              "anchor_id": "core_event",
+              "source_text": "standing beside a tripod-mounted camera whose lens is tilted toward the floor",
+              "dimension": "event",
+              "prompt_evidence": "standing beside a tripod-mounted camera whose lens tilts toward the floor"
+            },
+            {
+              "anchor_id": "capture_operator",
+              "source_text": "Use the separate camera held by the seated assistant to take the picture",
+              "dimension": "camera",
+              "prompt_evidence": "The separate camera held by the seated adult assistant takes this photograph",
+              "target": "camera",
+              "property": "capture.operator"
+            },
+            {
+              "anchor_id": "capture_direction",
+              "source_text": "aiming upward at the standing photographer",
+              "dimension": "camera",
+              "prompt_evidence": "aiming upward at the standing photographer",
+              "target": "camera",
+              "property": "viewpoint.direction"
+            },
+            {
+              "anchor_id": "ceiling_background",
+              "source_text": "so the studio ceiling shows behind them",
+              "dimension": "composition",
+              "prompt_evidence": "The studio ceiling shows behind the photographer",
+              "target": "background",
+              "property": "ceiling.visibility"
+            }
+          ],
+          "locked_dimensions": [
+            "concept",
+            "subject",
+            "event"
+          ],
+          "open_dimensions": [
+            "identity",
+            "appearance",
+            "pose",
+            "body_geometry",
+            "expression",
+            "setting",
+            "framing",
+            "composition",
+            "lighting",
+            "camera",
+            "color",
+            "material",
+            "timing",
+            "atmosphere",
+            "style"
+          ]
+        },
+        "semantic_assertions": [
+          {
+            "assertion_id": "capture_camera_review",
+            "dimension": "camera",
+            "polarity": "advisory",
+            "source_span_ids": [
+              "topic"
+            ],
+            "affected_dimensions": [
+              "camera"
+            ],
+            "axes": {
+              "camera_axis_review": "camera_axis_review_v1",
+              "capture_owner": "camera",
+              "direction_requirement": "requested",
+              "height_requirement": "open"
+            },
+            "evidence": {
+              "owner_phrase": "The separate camera held by the seated adult assistant",
+              "direction_phrase": "aiming upward at the standing photographer"
+            }
+          }
+        ],
+        "request_lineage": null,
+        "style": {
+          "domain": "studio documentary portrait photography",
+          "family": "candid working-studio portrait",
+          "evidence": [
+            "warm light across the neck",
+            "a small, unforced smile"
+          ]
+        },
+        "variation_key": "two_cameras_en"
+      },
+      "precore_feature_selection": {
+        "contract_version": "photo-precore-feature-selection/v1",
+        "request_id": "two_cameras_en",
+        "active_span_ids": [
+          "topic"
+        ],
+        "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+        "catalog_schema_version": "photo-precore-feature-catalog/v1",
+        "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+        "request_sha256": "da00a9381ce3f46c76f0dd985380fdc73090f1a1ae97ec616a96200dc9ed2361",
+        "baseline_prompt_sha256": "9cbe5ab28595194d5da230eeb769ef952b69ca3aa7b5b9dcb6c84ab2a952fbd5",
+        "selected": [
+          {
+            "category_id": "feature.subject",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "an adult photographer",
+            "derivation": null,
+            "reason": "The standing adult professional is the photographed subject.",
+            "baseline_evidence": "an adult photographer"
+          },
+          {
+            "category_id": "feature.pose",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "standing beside a tripod-mounted camera",
+            "derivation": null,
+            "reason": "Standing next to the equipment is the required subject state.",
+            "baseline_evidence": "standing beside a tripod-mounted camera"
+          },
+          {
+            "category_id": "feature.props",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "a tripod-mounted camera whose lens is tilted toward the floor",
+            "derivation": null,
+            "reason": "The visible tripod camera has a downward direction separate from the capture view.",
+            "baseline_evidence": "a tripod-mounted camera whose lens tilts toward the floor"
+          },
+          {
+            "category_id": "feature.background",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "the studio ceiling shows behind them",
+            "derivation": null,
+            "reason": "Visible ceiling reinforces the requested background relationship.",
+            "baseline_evidence": "The studio ceiling shows behind the photographer"
+          },
+          {
+            "category_id": "feature.off_screen_context",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "Use the separate camera held by the seated assistant to take the picture",
+            "derivation": null,
+            "reason": "The operator and the actual taking camera are outside their own frame.",
+            "baseline_evidence": "The separate camera held by the seated adult assistant takes this photograph"
+          },
+          {
+            "category_id": "feature.camera_angle",
+            "basis": "explicit_request",
+            "source_span_ids": [
+              "topic"
+            ],
+            "source_text": "aiming upward at the standing photographer",
+            "derivation": null,
+            "reason": "Upward direction applies to the assistant's taking camera.",
+            "baseline_evidence": "aiming upward at the standing photographer"
+          }
+        ]
+      },
+      "embodiment_review": {
+        "contract_version": "photo-embodiment-review/v1",
+        "provenance": "agent_prepack",
+        "prompt_sha256": "9cbe5ab28595194d5da230eeb769ef952b69ca3aa7b5b9dcb6c84ab2a952fbd5",
+        "scope": "body_action",
+        "summary": "One visible adult stands beside independently supported tripod equipment. An adult assistant sits outside the frame and holds the separate capture camera; their own camera does not depict its operator.",
+        "checks": {
+          "body_ownership": {
+            "status": "supported",
+            "reason": "Resting hands belong to the standing photographer; the handheld capture camera belongs to the seated assistant.",
+            "prompt_evidence": [
+              "the photographer stands comfortably alongside it, hands resting at their sides",
+              "The separate camera held by the seated adult assistant"
+            ]
+          },
+          "joint_chain_and_reach": {
+            "status": "supported",
+            "reason": "The photographed adult's arms rest alongside the body. The seated assistant can hold and tip a camera upward within ordinary arm and wrist articulation.",
+            "prompt_evidence": [
+              "hands resting at their sides",
+              "The separate camera held by the seated adult assistant",
+              "aiming upward at the standing photographer"
+            ]
+          },
+          "support_and_balance": {
+            "status": "supported",
+            "reason": "The photographer stands on the studio floor next to a tripod with a spread base. The off-frame assistant has a seated support state.",
+            "prompt_evidence": [
+              "The tripod's three feet spread on the studio floor",
+              "the photographer stands comfortably alongside it",
+              "the seated adult assistant"
+            ]
+          },
+          "contact_and_space": {
+            "status": "supported",
+            "reason": "The photographer stands alongside rather than on the equipment; the assistant holds the separate camera, leaving the tripod camera supported by its own legs.",
+            "prompt_evidence": [
+              "The tripod's three feet spread on the studio floor",
+              "the photographer stands comfortably alongside it",
+              "camera held by the seated adult assistant"
+            ]
+          },
+          "visibility_and_projection": {
+            "status": "supported",
+            "reason": "The actual camera looks upward, revealing ceiling behind the photographer. The tripod camera remains visible as a second camera directed toward the floor; the assistant and capture camera are outside their own field.",
+            "prompt_evidence": [
+              "aiming upward at the standing photographer",
+              "The studio ceiling shows behind the photographer",
+              "a tripod-mounted camera whose lens tilts toward the floor"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

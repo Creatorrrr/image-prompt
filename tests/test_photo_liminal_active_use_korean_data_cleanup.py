@@ -91,6 +91,63 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
                                           'photo_prompt_subculture_appearance_extension.json'})
         with patch.object(common.g, 'RESEARCH_EXTENSION_FILENAMES', filenames):
             historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
+        # Project only the declared later Vocaloid additions. Verify every
+        # prior field and the exact positive additions before comparing the
+        # original historical dictionary; new IDs cannot shadow existing rows.
+        vocaloid = ROOT / 'docs/research-evidence/photo-prompt/vocaloid-appearance-integration-20261004'
+        ledger = json.loads((vocaloid / 'INTEGRATION-LEDGER.json').read_text())
+        declared = {(item['slot'], item['id']): item for item in ledger['candidate_changes']
+                    if item['file'] == 'photo_prompt_tags.json' or item['file'] in filenames}
+        with patch.object(common.g, 'RESEARCH_EXTENSION_FILENAMES', filenames):
+            before_vocaloid = common.g.load_json(vocaloid / 'baseline/photo_prompt_tags.json')
+        original_rows = {(slot, row['id']): row for slot, rows in before_vocaloid['slots'].items() for row in rows}
+        current_keys = {(slot, row['id']) for slot, rows in historical_current['slots'].items() for row in rows}
+        new_keys = {key for key, item in declared.items() if item['new']}
+        self.assertEqual(current_keys - set(original_rows), new_keys)
+        self.assertTrue(set(original_rows).issubset(current_keys))
+        enriched_fields = {'paraphrases', 'keywords', 'embedding_text'}
+        seen_updates = set()
+        for slot, rows in historical_current['slots'].items():
+            rows[:] = [row for row in rows if (slot, row['id']) not in new_keys]
+            for row in rows:
+                key = (slot, row['id'])
+                item = declared.get(key)
+                if not item:
+                    continue
+                original = original_rows[key]
+                self.assertEqual({field: value for field, value in row.items() if field not in enriched_fields},
+                                 {field: value for field, value in original.items() if field not in enriched_fields})
+                for field in ('paraphrases', 'keywords'):
+                    expected_values = list(dict.fromkeys(original.get(field, []) + item['added_paraphrases']))
+                    self.assertEqual(row[field], expected_values)
+                expected_text = original.get('embedding_text', original.get('en', ''))
+                for phrase in item['added_paraphrases']:
+                    if phrase not in expected_text:
+                        expected_text += ' | ' + phrase
+                self.assertEqual(row['embedding_text'], expected_text)
+                for field in enriched_fields:
+                    if field in original:
+                        row[field] = copy.deepcopy(original[field])
+                    else:
+                        row.pop(field)
+                seen_updates.add(key)
+        self.assertEqual(seen_updates, set(declared) - new_keys)
+        # Main subsequently adds exact canonical opacity effects to two
+        # textile candidates. Check those additions before this older replay.
+        scope = json.loads((vocaloid / 'main-merge/UPSTREAM-EFFECT-ADDITIONS.json').read_text())
+        seen_effects = set()
+        for item in scope['changes']:
+            if item['kind'] != 'candidate' or item['file'] not in filenames:
+                continue
+            self.assertEqual(item['removed'], [])
+            self.assertEqual(item['added'], [{'dimension': 'appearance', 'target': 'main_subject',
+                                             'property': 'wardrobe.surface.sheer_opacity'}])
+            row = next(row for rows in historical_current['slots'].values() for row in rows
+                       if row['id'] == item['id'])
+            self.assertEqual(row['affected_properties'], item['after'])
+            row['affected_properties'] = copy.deepcopy(item['before'])
+            seen_effects.add(item['id'])
+        self.assertEqual(seen_effects, {'clt_ct091_v1', 'clt_ct091_v2'})
         body_enriched_ids = {
             'philtral_columns_cupid_bow', 'clavicle_supraclavicular_hollow',
             'decolletage_neckline_exposure_boundary', 'trochanteric_depression_hip_dip',

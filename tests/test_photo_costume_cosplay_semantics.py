@@ -116,7 +116,10 @@ class CostumeCosplaySemanticsTests(unittest.TestCase):
         semantic_index = pg.load_semantic_index_payload(ASSETS / "photo_prompt_semantic_index.json")
         pg.validate_semantic_index_metadata(semantic_index, self.data)
         ids = {f"slot:{slot}:{e['id']}" for slot, es in self.extension["slots"].items() for e in es}
-        self.assertEqual(len(ids), 94)
+        legacy_family_ids = {f"slot:{slot}:{e['id']}"
+                             for slot, es in self.extension["slots"].items() for e in es
+                             if e["id"].startswith("ccx_")}
+        self.assertEqual(len(legacy_family_ids), 94)
         self.assertTrue(ids <= set(semantic_index["entries"]))
         full_registry = pg.load_visual_obligation_registry(ASSETS / "photo_prompt_visual_obligations.json")
         visual_index = pg.load_visual_profile_index(ASSETS / "photo_prompt_visual_profile_index.json", full_registry)

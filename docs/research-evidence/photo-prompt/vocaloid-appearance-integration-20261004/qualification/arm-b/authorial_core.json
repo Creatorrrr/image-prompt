@@ -1,0 +1,99 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 시각 의미 데이터의 대체 표현을 추가/보강하는 작업을 중심으로 진행하고 후보 데이터에도 잘 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "3a26a9caaee861fe98203d343b5d7093cf435cfc45cfcaae87cc73b4e08241ad",
+  "interpreted_intent": "The requester asks for a randomly chosen complex photographic qualification scene using the attached image, without specifying exterior keywords in this active span. My independent choice is an original electronic-orchard-recital costume portrait: a poised adult model pauses after a turn among living plum branches and curved ceramic fins. The face appearance is guided by the supplied photograph; wig, attire, palette, gesture, adulthood, role and full-length viewpoint are authorial choices. The viewer should first notice her quiet camera-aware presence, then read six modular exterior relationships as one wearable design. Saved sensual 1 supports the appeal through relaxed lips, direct eyes and bearing; fetish 0 adds no specialized erotic focus, creativity 1 uses a coherent local variation, and surreal 0 keeps the sculpture setting physically plausible. The attached photo establishes no actual identity, age, personality or biography.",
+  "subject": "An adult woman in an original electronic-performance costume, with facial appearance drawn from the attached reference.",
+  "setting": "A level granite path in an outdoor plum-orchard sculpture garden with narrow curved ceramic fins.",
+  "event": "A brief rehearsal pause after a turn, with both boot soles planted, an open left palm echoing a ceramic fin and eyes meeting the camera.",
+  "visual_priorities": [
+    "The referenced facial relationships and camera-directed eyes give the adult performer a particular presence inside the landscape.",
+    "Two high bilateral hair tails and paired ear modules form separate legible structures around the face, with the microphone boom ending at the mouth side.",
+    "Upper-arm gaps separate the forearm sleeves from the fitted sleeveless bodice, while a loose necktie overlays the bodice front.",
+    "Pleated skirt, distinct thigh-high stocking tops and ankle boots read as layered pieces along the lower silhouette.",
+    "Small amber interface marks connect the separate headset, cuff plates and bodice seam surfaces into one modular costume.",
+    "The open palm, curved ceramic fin and living plum trunks relate the performer to a physical outdoor sculpture space."
+  ],
+  "baseline_prompt_en": "An intricate photographic scene centers an adult woman with facial appearance drawn from the attached reference, embodying several clearly visible styling relationships. She pauses after a rehearsal turn on a level granite path in a plum-orchard sculpture garden, beside narrow curved ceramic fins rising between living trunks. Both boot soles rest on the path; her torso turns gently toward the camera. Her left elbow is bent, with the open left palm at waist height outside the torso silhouette, echoing a nearby fin's curve; her relaxed right hand hangs beside her hip, clear of the skirt. The ceramic fin stands beyond her fingertips. Her ash-blond wig forms two long hair tails tied high on opposite sides of her head, descending outside her upper arms; angular pewter ornaments sit at the two tie points. Paired compact ear modules sit beside her ears, both headset housings exposed beside her face, with a thin microphone boom curving toward one corner of her mouth. A deep-aubergine sleeveless fitted bodice has a standing collar and a loose narrow necktie hanging over its front. Separate forearm sleeves extend from just above each elbow to each wrist, leaving visible upper-arm gaps between sleeves and bodice. A short pleated skirt sits over thigh-high stockings, whose upper edges remain distinct below the skirt hem; matte ankle boots finish the lower layers. Small amber interface marks sit on headset housings, cuff plates and bodice seam segments, crisp against fabric and metal. A vertical full-length frame from a near eye-level three-quarter front viewpoint includes a narrow strip of path around both boot soles. Her eyes meet the camera, lips softly relaxed; the face preserves the reference's eye, nose, lip and jaw relationships. Bright overcast midday light gently models skin and pleats. Slight residual sway in the tail ends and skirt gives the still pose a recent-turn trace, while softly receding branches and ceramic contours keep her presence dominant.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "random_complex_reference_guided_photo_test",
+      "source_text": "서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "The active request delegates a randomly selected complex photographic test and asks to use the attached image. Its pictured face is used as facial appearance guidance. No exact costume, hair, color, proportion, exposure, scene, gesture or camera property is requester-specified in the active span; those are independently authored test choices.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "An intricate photographic scene"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "facial appearance drawn from the attached reference"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "event",
+        "prompt_evidence": "embodying several clearly visible styling relationships"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "count",
+      "age",
+      "role",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "reference_use",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "Outdoor staged costume portrait with restrained recital timing",
+    "evidence": [
+      "Bright overcast midday light gently models skin and pleats",
+      "Slight residual sway in the tail ends and skirt",
+      "softly receding branches and ceramic contours keep her presence dominant"
+    ]
+  },
+  "variation_key": "vocaloid-appearance-integration-20261004-arm-b-seed-3973169522791745412"
+}

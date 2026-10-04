@@ -1,0 +1,468 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "profiles": [
+    {
+      "id": "ne_regional_soft_volume",
+      "category": "adult_regional_contour_relation",
+      "activation": {
+        "exact_terms": [
+          "adult regional rounded soft volume",
+          "성인 특정 부위의 둥근 살집 윤곽"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Rounded fleshy volume of a named adult body region belongs to the same subject and continues into the neighboring regional contour.",
+        "paraphrase_examples": [
+          "같은 성인의 지정한 몸 부위에 둥근 살집이 있고 인접 윤곽과 연속되는 형태",
+          "Rounded fleshy volume of a named adult body region belongs to the same subject and continues into the neighboring regional contour.",
+          "지정된 아래배나 위팔의 국소 살집과 주변 윤곽이 같은 성인에게 연결된 형태",
+          "a plump named adult region with a rounded local volume and connected adjoining outline",
+          "a fleshy upper-arm region has rounded volume continuous with its connected arm contour",
+          "같은 성인의 지정 부위가 둥글게 나오고 이웃 부위 윤곽에 자연스럽게 이어진 형태",
+          "a named adult region has rounded outward volume joined continuously to its neighboring contour"
+        ],
+        "visual_components": [
+          "a named adult body region belongs to the same declared subject",
+          "rounded outward volume is visible in that named region",
+          "the regional outline joins its neighboring contour continuously"
+        ],
+        "contrast_examples": [
+          "whole-body build substituted for the named region",
+          "garment padding substituted for bodily volume",
+          "shadow alone substituted for the continuous outline"
+        ],
+        "claim_limits": [
+          "All evidence belongs to the same declared owner and current state; occlusion is unobservable and partial evidence fails complete qualification.",
+          "Visible shape does not establish real emotion, health, body composition, attractiveness, intent, consent or history.",
+          "Retrieve broad labels only as advisory interpretations; no bare plump, fleshy, curvaceous or pouty exact alias is supplied.",
+          "Regional body alternatives declare broad body effects and cannot bypass a partial body-property lock."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "같은 성인의 지정한 몸 부위에 둥근 살집이 있고 인접 윤곽과 연속되는 형태",
+          "Rounded fleshy volume of a named adult body region belongs to the same subject and continues into the neighboring regional contour.",
+          "a named adult body region belongs to the same declared subject",
+          "rounded outward volume is visible in that named region",
+          "the regional outline joins its neighboring contour continuously"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "body_geometry"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a named adult body region belongs to the same declared subject",
+              "the named region belongs to one adult actor",
+              "지정한 몸 부위가 같은 성인에게 속한다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a named adult body region belongs to the same declared subject",
+              "the named region belongs to one adult actor",
+              "지정한 몸 부위가 같은 성인에게 속한다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and show this complete current relation: a named adult body region belongs to the same declared subject.",
+            "render_gate": {
+              "id": "vo_ne_regional_soft_volume_1",
+              "review_scale": "native",
+              "description": "Inspect the declared owner at native resolution: a named adult body region belongs to the same declared subject. Every component is required; partial evidence fails and an occluded component is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "rounded outward volume is visible in that named region",
+              "rounded local volume projects from that region",
+              "그 지정 부위에 둥근 국소 양감이 나온다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "rounded outward volume is visible in that named region",
+              "rounded local volume projects from that region",
+              "그 지정 부위에 둥근 국소 양감이 나온다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and show this complete current relation: rounded outward volume is visible in that named region.",
+            "render_gate": {
+              "id": "vo_ne_regional_soft_volume_2",
+              "review_scale": "native",
+              "description": "Inspect the declared owner at native resolution: rounded outward volume is visible in that named region. Every component is required; partial evidence fails and an occluded component is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the regional outline joins its neighboring contour continuously",
+              "the rounded outline continues into adjacent regional contours",
+              "둥근 외곽이 인접 부위의 윤곽으로 이어진다"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the regional outline joins its neighboring contour continuously",
+              "the rounded outline continues into adjacent regional contours",
+              "둥근 외곽이 인접 부위의 윤곽으로 이어진다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and show this complete current relation: the regional outline joins its neighboring contour continuously.",
+            "render_gate": {
+              "id": "vo_ne_regional_soft_volume_3",
+              "review_scale": "native",
+              "description": "Inspect the declared owner at native resolution: the regional outline joins its neighboring contour continuously. Every component is required; partial evidence fails and an occluded component is unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "wrong_owner_or_named_region",
+        "occluded_required_component",
+        "clothing_bulk_for_body_contour",
+        "one_component_for_complete_regional_relation"
+      ]
+    },
+    {
+      "id": "ne_regional_contour_transition",
+      "category": "adult_regional_contour_relation",
+      "activation": {
+        "exact_terms": [
+          "adult regional convex-concave contour transition",
+          "성인 지정 몸통 구간의 안팎 곡선 연결"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A named segment of the same adult torso has both inward and outward curves joined continuously along its regional outline.",
+        "paraphrase_examples": [
+          "같은 성인 몸통의 지정 구간에서 들어간 선과 나온 선이 하나의 연속 윤곽으로 이어지는 형태",
+          "A named segment of the same adult torso has both inward and outward curves joined continuously along its regional outline.",
+          "지정한 옆몸통 구간에서 오목함과 볼록함이 연속되는 국소 곡선",
+          "a curvaceous regional torso outline joins an inward curve and an outward curve within the same stated segment",
+          "같은 성인 몸통의 지정 구간 안에서 오목한 선과 볼록한 선이 이어지는 윤곽",
+          "a specified adult torso segment joins concave and convex curves along one continuous regional outline"
+        ],
+        "visual_components": [
+          "the named torso segment belongs to the same adult subject",
+          "an inward contour and an outward contour are both visible within that segment",
+          "the two curves join continuously along the same regional outline"
+        ],
+        "contrast_examples": [
+          "whole-body build substituted for the named region",
+          "garment padding substituted for bodily volume",
+          "shadow alone substituted for the continuous outline"
+        ],
+        "claim_limits": [
+          "All evidence belongs to the same declared owner and current state; occlusion is unobservable and partial evidence fails complete qualification.",
+          "Visible shape does not establish real emotion, health, body composition, attractiveness, intent, consent or history.",
+          "Retrieve broad labels only as advisory interpretations; no bare plump, fleshy, curvaceous or pouty exact alias is supplied.",
+          "Regional body alternatives declare broad body effects and cannot bypass a partial body-property lock."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "같은 성인 몸통의 지정 구간에서 들어간 선과 나온 선이 하나의 연속 윤곽으로 이어지는 형태",
+          "A named segment of the same adult torso has both inward and outward curves joined continuously along its regional outline.",
+          "the named torso segment belongs to the same adult subject",
+          "an inward contour and an outward contour are both visible within that segment",
+          "the two curves join continuously along the same regional outline"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "body_geometry"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "body"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the named torso segment belongs to the same adult subject",
+              "the specified torso segment belongs to the same adult",
+              "지정한 몸통 구간이 같은 성인에게 속한다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the named torso segment belongs to the same adult subject",
+              "the specified torso segment belongs to the same adult",
+              "지정한 몸통 구간이 같은 성인에게 속한다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and show this complete current relation: the named torso segment belongs to the same adult subject.",
+            "render_gate": {
+              "id": "vo_ne_regional_contour_transition_1",
+              "review_scale": "native",
+              "description": "Inspect the declared owner at native resolution: the named torso segment belongs to the same adult subject. Every component is required; partial evidence fails and an occluded component is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "an inward contour and an outward contour are both visible within that segment",
+              "concave and convex contours both occur in that segment",
+              "그 구간 안에 오목한 선과 볼록한 선이 모두 있다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "an inward contour and an outward contour are both visible within that segment",
+              "concave and convex contours both occur in that segment",
+              "그 구간 안에 오목한 선과 볼록한 선이 모두 있다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and show this complete current relation: an inward contour and an outward contour are both visible within that segment.",
+            "render_gate": {
+              "id": "vo_ne_regional_contour_transition_2",
+              "review_scale": "native",
+              "description": "Inspect the declared owner at native resolution: an inward contour and an outward contour are both visible within that segment. Every component is required; partial evidence fails and an occluded component is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the two curves join continuously along the same regional outline",
+              "the concave and convex curves join along one regional outline",
+              "오목함과 볼록함이 같은 국소 외곽선으로 이어진다"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the two curves join continuously along the same regional outline",
+              "the concave and convex curves join along one regional outline",
+              "오목함과 볼록함이 같은 국소 외곽선으로 이어진다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and show this complete current relation: the two curves join continuously along the same regional outline.",
+            "render_gate": {
+              "id": "vo_ne_regional_contour_transition_3",
+              "review_scale": "native",
+              "description": "Inspect the declared owner at native resolution: the two curves join continuously along the same regional outline. Every component is required; partial evidence fails and an occluded component is unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "wrong_owner_or_named_region",
+        "occluded_required_component",
+        "clothing_bulk_for_body_contour",
+        "one_component_for_complete_regional_relation"
+      ]
+    },
+    {
+      "id": "ne_current_lip_protrusion",
+      "category": "observable_current_expression",
+      "activation": {
+        "exact_terms": [
+          "current forward lip pout",
+          "현재 입술을 앞으로 내민 표정"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "actor_face_context",
+              "any_terms": [
+                "face",
+                "facial",
+                "portrait",
+                "actor",
+                "person",
+                "human",
+                "woman",
+                "man",
+                "얼굴",
+                "표정",
+                "인물",
+                "사람",
+                "배우",
+                "초상"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "The same face currently has rounded forward-projecting lips with its mouth corners gathered toward the center.",
+        "paraphrase_examples": [
+          "같은 얼굴의 입술이 현재 앞으로 둥글게 나오고 입 양끝이 중앙 쪽으로 모이는 표정",
+          "The same face currently has rounded forward-projecting lips with its mouth corners gathered toward the center.",
+          "pouty lips in the current-expression sense project forward while the mouth corners gather inward",
+          "a small forward pucker is visible on the same face with gathered mouth corners"
+        ],
+        "visual_components": [
+          "the upper and lower lips of the same declared face project forward in a rounded contour",
+          "the mouth corners of that same face gather toward the center"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "component_1",
+            "component_2"
+          ],
+          "groups": [
+            {
+              "id": "component_1",
+              "any_terms": [
+                "the upper and lower lips of the same declared face project forward in a rounded contour"
+              ]
+            },
+            {
+              "id": "component_2",
+              "any_terms": [
+                "the mouth corners of that same face gather toward the center"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "full lips without current forward motion",
+          "lip pressing alone",
+          "lip gloss without a projecting contour",
+          "assumed sulking or invitation"
+        ],
+        "claim_limits": [
+          "All evidence belongs to the same declared owner and current state; occlusion is unobservable and partial evidence fails complete qualification.",
+          "Visible shape does not establish real emotion, health, body composition, attractiveness, intent, consent or history.",
+          "Retrieve broad labels only as advisory interpretations; no bare plump, fleshy, curvaceous or pouty exact alias is supplied.",
+          "Regional body alternatives declare broad body effects and cannot bypass a partial body-property lock."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "같은 얼굴의 입술이 현재 앞으로 둥글게 나오고 입 양끝이 중앙 쪽으로 모이는 표정",
+          "The same face currently has rounded forward-projecting lips with its mouth corners gathered toward the center.",
+          "the upper and lower lips of the same declared face project forward in a rounded contour",
+          "the mouth corners of that same face gather toward the center"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the upper and lower lips of the same declared face project forward in a rounded contour"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the upper and lower lips of the same declared face project forward in a rounded contour"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and show this complete current relation: the upper and lower lips of the same declared face project forward in a rounded contour.",
+            "render_gate": {
+              "id": "vo_ne_current_lip_protrusion_1",
+              "review_scale": "native",
+              "description": "Inspect the declared owner at native resolution: the upper and lower lips of the same declared face project forward in a rounded contour. Every component is required; partial evidence fails and an occluded component is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the mouth corners of that same face gather toward the center"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the mouth corners of that same face gather toward the center"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared owner and show this complete current relation: the mouth corners of that same face gather toward the center.",
+            "render_gate": {
+              "id": "vo_ne_current_lip_protrusion_2",
+              "review_scale": "native",
+              "description": "Inspect the declared owner at native resolution: the mouth corners of that same face gather toward the center. Every component is required; partial evidence fails and an occluded component is unobservable."
+            }
+          }
+        ]
+      },
+      "required_evidence_fields": [
+        "component_1_phrase",
+        "component_2_phrase"
+      ],
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "the upper and lower lips of the same declared face project forward in a rounded contour"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "the mouth corners of that same face gather toward the center"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_ne_current_lip_protrusion_1",
+          "review_scale": "native",
+          "description": "Inspect the declared owner at native resolution: the upper and lower lips of the same declared face project forward in a rounded contour. Every component is required; partial evidence fails and an occluded component is unobservable."
+        },
+        {
+          "id": "vo_ne_current_lip_protrusion_2",
+          "review_scale": "native",
+          "description": "Inspect the declared owner at native resolution: the mouth corners of that same face gather toward the center. Every component is required; partial evidence fails and an occluded component is unobservable."
+        }
+      ],
+      "composition_instruction": "Preserve the declared owner and show this complete current relation: the upper and lower lips of the same declared face project forward in a rounded contour. Preserve the declared owner and show this complete current relation: the mouth corners of that same face gather toward the center.",
+      "reject_substitutes": [
+        "wrong_owner_or_named_region",
+        "occluded_required_component",
+        "static_lip_volume_for_current_expression",
+        "motive_inferred_from_lip_shape"
+      ]
+    }
+  ],
+  "relation_contract_version": "photo-visual-relation/v1"
+}

@@ -1,0 +1,108 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "Photograph a hanging ceramic bowl. The camera taking the photograph should look upward toward the bowl. Leave camera height open.",
+  "creative_controls_sha256": "1d4b96e46ac465787cd2d3441f64713d9f97f01b621f1a8a7df0389e18d2599f",
+  "interpreted_intent": "A suspended ceramic bowl shown with the requester-prescribed upward camera direction; camera height remains an authorial choice.",
+  "subject": "a ceramic bowl",
+  "setting": "a bright display room",
+  "event": "a ceramic bowl hangs from a slender cord",
+  "visual_priorities": [
+    "readable glazed rim and rounded underside",
+    "gentle variations in the ceramic surface"
+  ],
+  "baseline_prompt_en": "A hanging ceramic bowl occupies the center of a bright display room. The bowl hangs from a slender cord beneath a plain wooden beam. The camera taking this photograph looks upward toward the bowl. A pale wall separates its glazed rim and rounded underside from the surrounding space. Soft daylight reveals small variations in the ceramic surface, and a restrained composition keeps the suspended form legible.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "requested scene",
+      "source_text": "Photograph a hanging ceramic bowl. The camera taking the photograph should look upward toward the bowl. Leave camera height open.",
+      "basis": "request_context",
+      "resolution": "A suspended ceramic bowl shown with the requester-prescribed upward camera direction; camera height remains an authorial choice.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "Photograph a hanging ceramic bowl. The camera taking the photograph should look upward toward the bowl. Leave camera height open.",
+        "dimension": "concept",
+        "prompt_evidence": "hanging ceramic bowl"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "Photograph a hanging ceramic bowl. The camera taking the photograph should look upward toward the bowl. Leave camera height open.",
+        "dimension": "subject",
+        "prompt_evidence": "ceramic bowl"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "Photograph a hanging ceramic bowl. The camera taking the photograph should look upward toward the bowl. Leave camera height open.",
+        "dimension": "event",
+        "prompt_evidence": "bowl hangs"
+      },
+      {
+        "anchor_id": "camera_direction",
+        "dimension": "camera",
+        "target": "camera",
+        "property": "viewpoint.direction",
+        "source_text": "Photograph a hanging ceramic bowl. The camera taking the photograph should look upward toward the bowl. Leave camera height open.",
+        "prompt_evidence": "looks upward toward the bowl"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "setting",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "camera_axes",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "camera",
+        "direction_requirement": "requested",
+        "height_requirement": "open"
+      },
+      "evidence": {
+        "owner_phrase": "The camera taking this photograph",
+        "direction_phrase": "looks upward toward the bowl"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "general_photo",
+    "family": "restrained object study",
+    "evidence": [
+      "clear material separation",
+      "quiet surrounding space"
+    ]
+  },
+  "variation_key": "en_up"
+}

@@ -143,6 +143,7 @@ VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
     "photo_prompt_visual_obligations_slang_visual.json",
     "photo_prompt_visual_obligations_religion_iconography.json",
     "photo_prompt_visual_obligations_subculture_appearance.json",
+    "photo_prompt_visual_obligations_character_appearance.json",
 )
 VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
     "photo-visual-obligation-registry-extension/v1"
@@ -2294,7 +2295,11 @@ def candidate_pack_assertion_discovery(
             if isinstance(node, list):
                 return [text for value in node for text in values(value)]
             return [str(node).replace("_", " ")] if isinstance(node, str) else []
-        return clean_spaces(" ".join(values(assertion.get("evidence")) + values(assertion.get("axes"))))
+        axes = assertion.get("axes") or {}
+        # Camera review states are protocol metadata, not observations. Only
+        # the author's literal owner/axis evidence can opt in a discovery.
+        axis_values = [] if "camera_axis_review" in axes else values(axes)
+        return clean_spaces(" ".join(values(assertion.get("evidence")) + axis_values))
 
     minimum = policy["minimum_shared_content_words"]
     excluded = [str(text) for text in core.get("user_exclusions") or []]
@@ -4976,6 +4981,7 @@ def normalize_authorial_core(
         intent_lock=normalized["intent_lock"],
         baseline_prompt_en=normalized["baseline_prompt_en"],
     )
+    photo_camera_evidence.camera_authoring_declaration(normalized)
     authored_subject_category(normalized["semantic_assertions"],
         (creative_control_snapshot or {}).get("context"))
     normalized["request_lineage"] = normalize_request_lineage(
@@ -11269,6 +11275,19 @@ def core_slot_focus_queries(data: dict, core: dict, slot: str) -> tuple[list[str
     ))
     if not ownership:
         return [], []
+    if slot in {"camera_direction", "camera_height"}:
+        authored = photo_camera_evidence.authored_camera_query(core, slot.removeprefix("camera_"))
+        if authored is not None:
+            phrases, fields = authored
+            queries = []
+            for phrase in phrases:
+                text, _ = authorial_core_retrieval_text({
+                    "contract_version": core["contract_version"], "request_binding": {"active_spans": []},
+                    "user_exclusions": core.get("user_exclusions") or [], "baseline_prompt_en": phrase,
+                })
+                if text == phrase:
+                    queries.append(text)
+            return queries, fields if queries or not phrases else []
     # Prefer literal, typed owner evidence to a generic field projection. The
     # property path distinguishes direction, height, focus, etc. within one
     # dimension; another owner's left/right words cannot supply this evidence.
@@ -11288,6 +11307,8 @@ def core_slot_focus_queries(data: dict, core: dict, slot: str) -> tuple[list[str
         evidence.append(anchor["prompt_evidence"])
         evidence_fields.append("intent_lock.semantic_anchors")
     for assertion in core.get("semantic_assertions") or []:
+        if "camera_axis_review" in (assertion.get("axes") or {}):
+            continue
         if assertion.get("dimension") in ownership and assertion.get("polarity") in {"required", "advisory"}:
             evidence.extend((assertion.get("evidence") or {}).values())
             evidence_fields.append("semantic_assertions")
