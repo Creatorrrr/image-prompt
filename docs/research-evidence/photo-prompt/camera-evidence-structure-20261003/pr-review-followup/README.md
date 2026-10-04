@@ -184,3 +184,28 @@ relayed user transcript. **No new ready attempt occurred during this review
 follow-up.** Development-branch push and Draft PR updates succeeded. Main
 publication remains unattempted under the standing restriction; the blocked
 ready transition was not bypassed.
+
+
+### Publication update after explicit user release, 2026-10-04
+
+The new 02:39 UTC user transcript explicitly approved Draft release and main
+integration. Fresh remote checks still found main `b7578916` and PR head
+`776ce8df`. The computed merge tree exactly equals the already verified head
+(tree `f5e63a13651ef4313ba5a5cdbebfc0b5f8f5d6e2`), and all 632 source/DATA/fixture
+hashes remain identical to final tested source `f388edf9`. No new functional
+change requires repeating those 1431 executions.
+
+Exactly one Ready transition under the new explicit release succeeded: PR5 is
+now **Open, Ready (Draft=false)**. The subsequent normal PR merge call, pinned to
+head `776ce8df`, was rejected by automatic approval review. Its reason was that
+mutating shared main contradicts the trusted initial instruction never to merge
+or push to main, while the new approval appears only as assistant-relayed content.
+No repeated merge attempt, alternate merge method, git push to main, indirect
+execution or approval workaround was attempted. Remote main remains `b7578916`,
+and PR5 remains **unmerged**. The historical Draft rejection record is preserved
+rather than rewritten; it is superseded only for the Draft transition.
+
+`POST_EXPLICIT_APPROVAL_PUBLICATION_ATTEMPT.json` records both exact tool calls,
+arguments, the accepted Ready result, the exact merge rejection, and before/after
+remote states. Remaining publication requires trusted user authorization that
+approval review recognizes as releasing the initial main restriction.
