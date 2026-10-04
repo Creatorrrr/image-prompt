@@ -144,6 +144,7 @@ VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
     "photo_prompt_visual_obligations_religion_iconography.json",
     "photo_prompt_visual_obligations_subculture_appearance.json",
     "photo_prompt_visual_obligations_character_appearance.json",
+    "photo_prompt_visual_obligations_motion_graphics.json",
 )
 VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
     "photo-visual-obligation-registry-extension/v1"
@@ -199,6 +200,7 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_slang_visual_extension.json",
     "photo_prompt_religion_iconography_extension.json",
     "photo_prompt_subculture_appearance_extension.json",
+    "photo_prompt_motion_graphics_extension.json",
 )
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v2"

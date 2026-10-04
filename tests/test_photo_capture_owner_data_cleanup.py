@@ -4,6 +4,7 @@ import hashlib
 import json
 import sys
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'skills/photo-prompt-image-generator/assets'
@@ -18,7 +19,13 @@ class CaptureOwnerDataCleanupTests(unittest.TestCase):
     def setUpClass(cls):
         cls.frozen = json.loads((EVIDENCE / 'frozen-inventory-queries.json').read_text())
         cls.acceptance = json.loads((EVIDENCE / 'acceptance-decisions.json').read_text())
-        cls.data = generator.load_json(ASSETS / 'photo_prompt_tags.json')
+        # This oracle freezes the 20261001 ownership revision. Exclude only
+        # the later additive motion paraphrase overlay; its current merged
+        # data and activation contracts are tested independently.
+        filenames = tuple(name for name in generator.RESEARCH_EXTENSION_FILENAMES
+                          if name != 'photo_prompt_motion_graphics_extension.json')
+        with patch.object(generator, 'RESEARCH_EXTENSION_FILENAMES', filenames):
+            cls.data = generator.load_json(ASSETS / 'photo_prompt_tags.json')
         cls.rows = {(slot, row['id']): row for slot, rows in cls.data['slots'].items() for row in rows}
 
     def test_inventory_queries_and_bound_are_frozen(self):

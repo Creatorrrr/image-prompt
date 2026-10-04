@@ -226,9 +226,12 @@ class PhotoEditingEffectsSemanticsTests(unittest.TestCase):
                 core = json.loads((RESEARCH / "qualification" / arm / "authorial_core.json").read_text())
                 result = {"provenance": {"authorial_core": core}}
                 resolution = generator.candidate_pack_resolve_visual_profiles(self.data, result, {}, None)
-                focused = [h for h in resolution["hits"] if h.get("match_basis") == "bm25f_frozen_assertion"]
-                self.assertTrue(expected <= {h["profile_id"] for h in focused})
-                self.assertTrue(all(h["optional_eligible"] and not h["hard_eligible"] and not h["source_intent_ids"] for h in focused))
+                # Equivalent expressions can expose the same optional profile
+                # through whole-scene BM25F before the focused discovery lane.
+                # Authority and coverage must survive that ranking change.
+                discovered = [h for h in resolution["hits"] if h["profile_id"] in expected]
+                self.assertTrue(expected <= {h["profile_id"] for h in discovered})
+                self.assertTrue(all(h["optional_eligible"] and not h["hard_eligible"] and not h["source_intent_ids"] for h in discovered))
 
     def test_retrieval_cannot_bypass_declared_context_guards(self):
         old = json.loads((RESEARCH / "qualification/arm-a-film-optics/candidate_pack.json").read_text())
