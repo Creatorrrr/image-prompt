@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import zipfile
 from pathlib import Path
 import shutil
 import sys
@@ -19,6 +20,32 @@ import validate_illustration_assets as v
 
 
 class MotionOptionalInventoryBoundaryTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        global ROOT, ILLUSTRATION
+        live_root = ROOT
+        cls.source_temp = tempfile.TemporaryDirectory(prefix='immutable-v15-parent-')
+        cls.addClassCleanup(cls.source_temp.cleanup)
+        source_root = Path(cls.source_temp.name)
+        archive = live_root / 'docs/research-evidence/photo-prompt/seduction-expression-main-merge-20261005/V15-source-parent.zip'
+        if hashlib.sha256(archive.read_bytes()).hexdigest() != 'dd1bb1f996c99b34f8e0eddc9fa6c3f7acc9ee1175d2d25b1cb56478f2163ecf':
+            raise AssertionError('Frozen V15 source archive drift')
+        with zipfile.ZipFile(archive) as saved:
+            if any(Path(name).is_absolute() or '..' in Path(name).parts for name in saved.namelist()):
+                raise AssertionError('Unsafe historical source path')
+            saved.extractall(source_root)
+        validator_path = source_root / 'skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py'
+        validator_path.write_bytes(Path(v.__file__).read_bytes())
+        descriptor = source_root / 'skills/subculture-illustration-image-generator/assets/universal_scene_baseline_v2.json'
+        raw = descriptor.read_bytes()
+        old_sha = json.loads(raw)['validator_contract']['sha256'].encode()
+        if raw.count(old_sha) != 1:
+            raise AssertionError('Historical descriptive seal is not unique')
+        descriptor.write_bytes(raw.replace(old_sha, hashlib.sha256(validator_path.read_bytes()).hexdigest().encode(), 1))
+        ROOT = source_root
+        ILLUSTRATION = ROOT / 'skills/subculture-illustration-image-generator'
+        cls.validator_replay_path = validator_path
+
     def setUp(self):
         directory = tempfile.TemporaryDirectory()
         self.addCleanup(directory.cleanup)
@@ -39,20 +66,20 @@ class MotionOptionalInventoryBoundaryTests(unittest.TestCase):
         def replay(command, **kwargs):
             Path(command[command.index('--output-file') + 1]).write_bytes(self.output)
             return SimpleNamespace(returncode=0, stderr='', stdout='')
-        with mock.patch.object(v.subprocess, 'run', side_effect=replay):
+        with mock.patch.object(v.subprocess, 'run', side_effect=replay), mock.patch.object(v, '__file__', str(self.validator_replay_path)):
             return v.validate_photo_regression_baseline(self.assets, baseline_version=version)
 
-    def direct(self, *, repo=ROOT, pack=None, raw=None):
+    def direct(self, *, repo=None, pack=None, raw=None):
         return v._validate_v15_motion_inventory_successor(
-            self.assets, repo, self.baseline,
+            self.assets, ROOT if repo is None else repo, self.baseline,
             self.pack if pack is None else pack, self.output if raw is None else raw)
 
     def test_registered_current_default_and_unregistered_future(self):
         self.assertEqual(self.validate()['schema'], 'photo_regression_baseline/v15')
-        (self.assets / 'photo_regression_baseline_v16.json').write_text(json.dumps({'schema':'photo_regression_baseline/v16','status':'current'}))
+        (self.assets / 'photo_regression_baseline_v17.json').write_text(json.dumps({'schema':'photo_regression_baseline/v17','status':'current'}))
         self.assertEqual(self.validate()['schema'], 'photo_regression_baseline/v15')
         with self.assertRaisesRegex(v.ValidationFailure,'unsupported'):
-            self.validate(16)
+            self.validate(17)
 
     def test_actual_optional_delta_does_not_claim_unchanged_candidate_inventory(self):
         old = json.loads((self.assets / 'photo_regression_baseline_v14_pack.json').read_bytes())[0]

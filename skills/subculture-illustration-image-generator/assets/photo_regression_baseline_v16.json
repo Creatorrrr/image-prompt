@@ -1,0 +1,64 @@
+{
+  "schema": "photo_regression_baseline/v16",
+  "created_at": "2026-10-05",
+  "status": "current",
+  "historical_baseline": {
+    "path": "photo_regression_baseline_v15.json",
+    "schema": "photo_regression_baseline/v15",
+    "sha256": "bb54e62a0f4bbd40baddd4faaa7abeba246663c00ce29ff93c2751d3394d3806"
+  },
+  "change_scope": "seduction_visual_alternatives_and_complete_candidate_effect_ownership",
+  "command": [
+    ".venv/bin/python",
+    "skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py",
+    "--seed",
+    "910000",
+    "--authorial-core-json",
+    "tests/fixtures/photo_prompt/current_boundary/core.json",
+    "--request-envelope-json",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json",
+    "--creative-controls-json",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json",
+    "--embodiment-review-json",
+    "tests/fixtures/photo_prompt/current_boundary/review.json",
+    "--output-file",
+    "/tmp/subculture-illustration-photo-baseline-v16.json"
+  ],
+  "sha256": "e3bd0fb80ea219ce55b5945fbd486362bbd8db2d6b8e237e4ff17530e68305e3",
+  "pack_id": "4a68288028996a44",
+  "contract_version": "photo-candidate-pack/v6",
+  "public_candidate_count": 64,
+  "private_fields_absent": [
+    "argv",
+    "sample_prompt_id",
+    "concept_gate_results",
+    "concept_scene_variants",
+    "character_response",
+    "adult_appeal"
+  ],
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "purpose": "Reviewed successor with exactly five source/ownership binding changes. Preserve candidate objects/order, frozen scene/core/controls/review/composition, negative/privacy semantics, and V1-V15 history. No new native-image or acceptance claim.",
+  "preserved_contract_sha256": "4dd926370d017e22d41e0a1c05f49d9b00ec42b37c050eaa246a8fd2697c9c19",
+  "frozen_inputs": {
+    "tests/fixtures/photo_prompt/current_boundary/core.json": "7be72244a8aa95c92a0bfc041f16bf544d376a9664366ad92c92cc728ebf6316",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json": "170ca49644a3ae0703d5d98875007bbaa74a0794202089ded9f617d532443524",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json": "0958274c1f1d5ec8b2faef5f3f7409d15f0256505411613cc33ad05f3a124896",
+    "tests/fixtures/photo_prompt/current_boundary/review.json": "0039a9afdb6b7fa6d3989dc0187297eba8e3de436c012ce13d20f570bb55f7fd"
+  },
+  "parallel_local_baseline": {
+    "path": "docs/research-evidence/photo-prompt/seduction-expression-main-merge-20261005/parallel-local-seduction-v13.json",
+    "sha256": "11ac31b9ab126b2a0711724cf625644772592adc2c688a760d9a6c6b37894850",
+    "purpose": "Preserved original pre-main seduction observation; independent of main V13 uniform history."
+  },
+  "authored_metadata_ownership_transition": {
+    "data_commit": "06f938789e071112cc8c4f953038f0911f425e69",
+    "data_parent_commit": "e2d505d4a2ca51cc3b3eba89d422f7fca42fa8a7",
+    "evidence_sha256": "25c1653e292bd80e81c1ab491e4a0f1a88d1a9020ea9b323dd8ea6ee6b9189d4",
+    "source_files": {
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json": "4ebd54879314a6833413897fe3c0628043db54a366529c1ed741d59e64cdef51",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json": "8c348126f41f71e6a284b755a329d82781c25493d6a3a862fb7e618bd678d23c",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json": "f28b1882bf35ebbf257b215ad6a4642fbfd5842b9e26bda15a128774777dc3c3",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json": "2a40c6d95a9cc16e578670c79241ce962f275e8237d47658c4af02b33c92b8e1"
+    }
+  }
+}

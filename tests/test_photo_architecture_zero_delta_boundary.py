@@ -92,12 +92,12 @@ class ArchitectureZeroDeltaBoundaryTests(unittest.TestCase):
             shutil.copyfile(ROOT / name, target)
         return repo, source
 
-    def test_historical_v14_replay_rejects_unregistered_v16(self):
+    def test_historical_v14_replay_rejects_unregistered_v17(self):
         self.assertEqual(self.validate()['schema'], 'photo_regression_baseline/v14')
-        (self.assets / 'photo_regression_baseline_v16.json').write_text(json.dumps({'schema':'photo_regression_baseline/v16','status':'current'}))
+        (self.assets / 'photo_regression_baseline_v17.json').write_text(json.dumps({'schema':'photo_regression_baseline/v17','status':'current'}))
         self.assertEqual(self.validate()['schema'], 'photo_regression_baseline/v14')
         with self.assertRaisesRegex(v.ValidationFailure, 'unsupported'):
-            self.validate(16)
+            self.validate(17)
 
     def test_live_v13_rejects_after_source_even_when_its_pack_is_identical(self):
         with self.assertRaisesRegex(v.ValidationFailure, 'DATA source bytes drift'):
