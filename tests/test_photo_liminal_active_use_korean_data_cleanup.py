@@ -91,6 +91,35 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
                                           'photo_prompt_subculture_appearance_extension.json'})
         with patch.object(common.g, 'RESEARCH_EXTENSION_FILENAMES', filenames):
             historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
+        # Undo only the independently sealed uniform overlay before the
+        # older Vocaloid/body projections. The historical oracle stays exact.
+        uniform = ROOT / 'docs/research-evidence/photo-prompt/uniform-costume-integration-20261004'
+        delta_path = uniform / 'authored-candidate-delta.json'
+        self.assertEqual(common.sha(delta_path.read_bytes()),
+                         '531c31e6602b378228bba0005cd4dcaf8703ddfd2d1de8f4d06034a4516a4cb1')
+        delta = json.loads(delta_path.read_text())
+        uniform_rows = {(item['slot'], item['id']): item for item in delta['rows']
+                        if item['file'] == 'photo_prompt_tags.json' or item['file'] in filenames}
+        seen_uniform = set()
+        for slot, rows in historical_current['slots'].items():
+            retained = []
+            for row in rows:
+                key = (slot, row['id'])
+                change = uniform_rows.get(key)
+                if change is None:
+                    retained.append(row)
+                    continue
+                self.assertEqual(row, change['after'])
+                self.assertEqual(change['before'] is None, change['new'])
+                if not change['new']:
+                    self.assertEqual({k: v for k, v in row.items()
+                                      if k not in {'paraphrases', 'keywords', 'embedding_text'}},
+                                     {k: v for k, v in change['before'].items()
+                                      if k not in {'paraphrases', 'keywords', 'embedding_text'}})
+                    retained.append(copy.deepcopy(change['before']))
+                seen_uniform.add(key)
+            rows[:] = retained
+        self.assertEqual(seen_uniform, set(uniform_rows))
         # Project only the declared later Vocaloid additions. Verify every
         # prior field and the exact positive additions before comparing the
         # original historical dictionary; new IDs cannot shadow existing rows.

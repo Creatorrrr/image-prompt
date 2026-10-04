@@ -1,0 +1,88 @@
+{
+  "schema_version": "independent-uniform-testcase/v1",
+  "testcase_id": "arm-b-flight-suit-rainy-passage",
+  "provenance": "agent_authored",
+  "request_sha256": "6c159fff928f5d491122149c43d8880663fe7c6f31a87edbde275e75d0d7d472",
+  "core_file_sha256": "a6c7bb5027a7ff629396cf7a9ae1305cb04cdd3dc9eec32ff784c199cf709d1d",
+  "random_seed": 792606917928791112,
+  "keywords": [
+    "비행복"
+  ],
+  "generic_meaning": "A practical one-piece fabric aviation flight suit or coverall; no particular present-day institution, official uniform specification, identity or age is claimed.",
+  "concept": "비가 그친 격납고 유리 통로에서 서비스 카트의 흰 리넨 모서리를 고르는 성인 가상 모델의 일반 비행복 사진",
+  "not_requester_definition": true,
+  "not_required_semantic_assertion": true,
+  "pre_registered_before_native_generation": true,
+  "keyword_checks": [
+    {
+      "id": "keyword_flight_suit_one_piece",
+      "question": "Does cloth visibly continue from the same wearer torso through the waist into two distinct trouser legs rather than a jacket ending over separate trousers?",
+      "baseline_evidence": "a generic sage-green one-piece flight suit",
+      "scale": "native_and_whole_image",
+      "partial_is_fail": true
+    },
+    {
+      "id": "keyword_flight_suit_front_zip",
+      "question": "Does a readable main zipped closing edge belong to the center front of that same continuous suit?",
+      "baseline_evidence": "with a zipped center front",
+      "scale": "native",
+      "partial_is_fail": true
+    },
+    {
+      "id": "keyword_flight_suit_utility_pockets",
+      "question": "Are the selected chest and thigh utility pockets separately bounded on the suit worn by the one model?",
+      "baseline_evidence": "separate chest and thigh utility pockets",
+      "scale": "native",
+      "partial_is_fail": true
+    },
+    {
+      "id": "keyword_flight_suit_waist_belt",
+      "question": "Does the defined waist belt encircle that same suit at the waist without transferring its support to a separate shirt or cart?",
+      "baseline_evidence": "a defined waist belt",
+      "scale": "native",
+      "partial_is_fail": true
+    },
+    {
+      "id": "keyword_flight_suit_fabric_color_boundaries",
+      "question": "Does the main sage-green matte woven cloth remain on the same suit torso, sleeves and legs, separately bounded from white linen and dark boots?",
+      "baseline_evidence": "The matte woven flight-suit fabric, crisp linen, brushed metal, and translucent wet glass have distinct surfaces",
+      "scale": "native_and_whole_image",
+      "partial_is_fail": true
+    }
+  ],
+  "scene_checks": [
+    {
+      "id": "reference_face_and_bob",
+      "question": "Are dark eyes, wispy parted fringe and a jaw-length dark rounded bob visibly guided by the supplied reference without asserting identity?",
+      "evidence_basis": "actual supplied reference pixels"
+    },
+    {
+      "id": "linen_corner_right_fingertips",
+      "question": "Do the model right thumb and index finger visibly meet the linen corner on the cart tray, with both attached to her wrist and sleeve?"
+    },
+    {
+      "id": "left_hand_cart_rim",
+      "question": "Does the other hand visibly rest on the near cart rim as authored, with readable hand-to-rim contact?"
+    },
+    {
+      "id": "glass_rain_mixed_material_light",
+      "question": "Are rain traces on rear glass, cool side window light, warm wall lamp and distinct fabric/linen/metal/glass surfaces visible in the same photograph?"
+    }
+  ],
+  "judgment_policy": {
+    "allowed_supplemental_statuses": [
+      "PASS",
+      "FAIL",
+      "UNOBSERVABLE",
+      "UNSCORED"
+    ],
+    "partial": "FAIL",
+    "hidden_critical_relation": "UNOBSERVABLE; never PASS",
+    "moderation_block": "UNSCORED",
+    "all_passed_components_must_coexist_in_one_image": true,
+    "native_pixels_required": true,
+    "user_acceptance": "pending until direct user judgment"
+  },
+  "compiled_gate_policy": "Keep the exact pack-plus-selection compiler gate set in a separate active-gates.json before any image call; these independently authored keyword checks never manufacture runtime profile authority.",
+  "registered_at": "2026-10-04T05:14:32.183878+00:00"
+}

@@ -1,0 +1,106 @@
+{
+  "schema_version": "uniform-propagation-review/v1",
+  "provenance": "agent_postcore_review",
+  "snapshot_round": 1,
+  "pack_id": "bfd7588a534a725e",
+  "selected_keywords": [
+    "비행복"
+  ],
+  "source_ledger_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/uniform-costume-integration-20261004/INTEGRATION-LEDGER.json",
+  "source_ledger_sha256": "494556181d7361e418fe4fc2f6bb4398e0d8e9b7926f5e0ec23c8a0eda0bac34",
+  "source_changes_count": 66,
+  "source_new_candidate_count": 37,
+  "source_existing_enriched_candidate_count": 29,
+  "retrieved_changed_candidates": [
+    {
+      "candidate_id": "slot:garment_detail:unif_front_belt_rear_dress_zip",
+      "entry_id": "unif_front_belt_rear_dress_zip",
+      "integration_profile_id": "uniform_front_belt_rear_dress_zip",
+      "new": true,
+      "concept_units": [
+        "a separate red belt wraps outside the dress waist",
+        "an independent zipper closure runs on the back of that same dress"
+      ],
+      "relations": [
+        {
+          "id": "declared_owner",
+          "type": "declared_owner_scope",
+          "subject": "wardrobe.details.belt_rear_zip",
+          "object": "main_subject"
+        },
+        {
+          "id": "U45_assertion",
+          "type": "encircles",
+          "subject": "the red waist belt",
+          "object": "the dress with a separate rear zipper"
+        }
+      ],
+      "selected": false
+    },
+    {
+      "candidate_id": "slot:garment_detail:unif_continuous_coverall_front_closure",
+      "entry_id": "unif_continuous_coverall_front_closure",
+      "integration_profile_id": "uniform_continuous_coverall_front_closure",
+      "new": true,
+      "concept_units": [
+        "the coverall cloth body continues across the waist into the trouser section",
+        "a separate front closure runs along that same garment body"
+      ],
+      "relations": [
+        {
+          "id": "declared_owner",
+          "type": "declared_owner_scope",
+          "subject": "wardrobe.details.one_piece_coverall",
+          "object": "main_subject"
+        },
+        {
+          "id": "U37_assertion",
+          "type": "continues_into",
+          "subject": "the coverall upper body",
+          "object": "the trouser section of the same garment"
+        }
+      ],
+      "selected": true
+    }
+  ],
+  "selected_changed_candidate_ids": [
+    "slot:garment_detail:unif_continuous_coverall_front_closure"
+  ],
+  "selected_visual_concept_ids": [],
+  "available_visual_concept_ids": [
+    "visual-concept:pr_instant_print_material_object",
+    "visual-concept:composite_overwhelmed_expression",
+    "visual-concept:aircraft_pilot_operation",
+    "visual-concept:pc_pc21_owner_relation",
+    "visual-concept:sheer_garment_optical_layering",
+    "visual-concept:rb_material_response_contrast",
+    "visual-concept:kuudere_composed_warmth_relation",
+    "visual-concept:pc_pc23_owner_relation"
+  ],
+  "uniform_profile_exposure": {
+    "available_uniform_profile_ids": [],
+    "selected_uniform_profile_ids": [],
+    "active_uniform_profile_gate_ids": [],
+    "status": "NOT_EXPOSED",
+    "failure_boundary": "The new continuous-coverall ordinary candidate is present and selected, but no uniform opt-in profile appears in the pack visual-concept inventory; arbitrary source-profile activation is unavailable."
+  },
+  "not_returned_relevant_candidate_ids": [
+    "unif_fabric_flight_coverall_zips"
+  ],
+  "rejected_changed_candidates": [
+    {
+      "candidate_id": "slot:garment_detail:unif_front_belt_rear_dress_zip",
+      "reason": "Separate red belt plus rear-zip dress is not the independently sampled one-piece aviation coverall construction."
+    }
+  ],
+  "runtime_selection_mode": "core_bm25f",
+  "render_status": "HOLD_COORDINATOR_DATA_REFINEMENT",
+  "actual_native_image_call_count": 0,
+  "meaning_unchanged": true,
+  "artifact_paths": {
+    "core": "/Users/chasoik/Projects/image-prompt/outputs/uniform-costume-qualification-20261004/arm-b/authorial_core.json",
+    "pack": "/Users/chasoik/Projects/image-prompt/outputs/uniform-costume-qualification-20261004/arm-b/candidate_pack.json",
+    "composed": "/Users/chasoik/Projects/image-prompt/outputs/uniform-costume-qualification-20261004/arm-b/composed_prompt.json"
+  },
+  "evaluated_at": "2026-10-04T05:09:53.169028+00:00"
+}

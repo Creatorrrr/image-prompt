@@ -1,0 +1,152 @@
+{
+  "schema": "uniform-costume-runtime-example-research/v1",
+  "runtime_ready": false,
+  "research_source_ids": [
+    "S02"
+  ],
+  "research_atom_id": "U02",
+  "candidate_slot_proposal": "garment_detail",
+  "limits_ko": [
+    "현행 구조를 따라 작성한 검토용 예제다. 배포 검증기·속성 충돌·회귀 테스트는 실행하지 않았다.",
+    "for_any human은 이 인간 착용자 예제에만 적용한다. 다른 종/기계 캐릭터에 그대로 복사하지 않는다.",
+    "전복이라는 단어만으로 exact hard activation을 만들지 않는다. 의복 문맥의 형태 관계를 요구한다.",
+    "affected_properties는 실제 appearance 소유·속성 경로 확인 뒤 추가한다. 연구의 임시 property 키를 복사하지 않는다."
+  ],
+  "candidate": {
+    "id": "uniform_draft_sleeveless_robe_over_inner_sleeves",
+    "ko": "민소매 전복의 진동에서 별도 안쪽 옷 소매가 나옴",
+    "en": "the inner sleeves emerge through the open armholes of a separate sleeveless outer robe on the same wearer",
+    "weight": 0.45,
+    "for_any": [
+      "human"
+    ],
+    "aliases": [
+      "민소매 전복의 진동에서 별도 안쪽 옷 소매가 나옴"
+    ],
+    "keywords": [
+      "민소매 전복의 진동에서 별도 안쪽 옷 소매가 나옴",
+      "민소매 겉옷과 별도 안쪽 소매의 겹침"
+    ],
+    "embedding_text": "the inner sleeves emerge through the open armholes of a separate sleeveless outer robe on the same wearer | 민소매 전복의 진동에서 별도 안쪽 옷 소매가 나옴",
+    "concept_units": [
+      "the inner sleeves emerge through the open armholes of a separate sleeveless outer robe on the same wearer"
+    ],
+    "relations": [
+      {
+        "id": "draft_sleeveless_robe_owner",
+        "type": "declared_owner_scope",
+        "subject": "the sleeveless outer robe",
+        "object": "the request-supported costume wearer"
+      },
+      {
+        "id": "draft_sleeveless_robe_layer",
+        "type": "layered_over",
+        "subject": "the sleeveless outer robe",
+        "object": "the independent inner long-sleeved garment"
+      }
+    ],
+    "tags": [
+      "human",
+      "costume",
+      "cosplay"
+    ],
+    "affected_dimensions": [
+      "appearance"
+    ]
+  },
+  "profile": {
+    "id": "uniform_draft_sleeveless_robe_over_inner_sleeves",
+    "category": "costume_cosplay_visible_relation",
+    "activation": {
+      "exact_terms": [
+        "the inner sleeves emerge through the open armholes of a separate sleeveless outer robe on the same wearer",
+        "민소매 전복의 진동에서 별도 안쪽 옷 소매가 나옴"
+      ],
+      "requires_adult_character": false,
+      "semantic_discovery_requires_component_evidence": true,
+      "hard_activation": {
+        "contract_version": "photo-visual-hard-activation/v1",
+        "required_any_groups": [
+          {
+            "id": "selected_relation",
+            "any_terms": [
+              "the inner sleeves emerge through the open armholes of a separate sleeveless outer robe on the same wearer",
+              "민소매 전복의 진동에서 별도 안쪽 옷 소매가 나옴"
+            ]
+          }
+        ]
+      }
+    },
+    "semantics": {
+      "definition": "the inner sleeves emerge through the open armholes of a separate sleeveless outer robe on the same wearer",
+      "paraphrase_examples": [
+        "open outer armholes reveal independently owned inner sleeves"
+      ],
+      "contrast_examples": [
+        "a sleeved outer coat",
+        "abalone food on a plate"
+      ],
+      "claim_limits": [
+        "One selected garment relation, not a full historical date or rank definition.",
+        "No role, action, age or body change follows from this garment."
+      ]
+    },
+    "concept_candidate": {
+      "concept_terms": [
+        "민소매 전복의 진동에서 별도 안쪽 옷 소매가 나옴",
+        "민소매 겉옷과 별도 안쪽 소매의 겹침"
+      ]
+    },
+    "runtime_expression": {
+      "default_mode": "definition_with_optional_label",
+      "prompt_label_terms": [],
+      "forbidden_prompt_terms": [],
+      "runtime_forbidden_labels": []
+    },
+    "reject_substitutes": [
+      "outer sleeves mistaken for inner sleeves",
+      "one unlayered robe"
+    ],
+    "authored_components": {
+      "contract_version": "photo-authored-visual-components/v1",
+      "components": [
+        {
+          "id": "component_1",
+          "match_terms": [
+            "the inner sleeves emerge through the open armholes of a separate sleeveless outer robe on the same wearer",
+            "민소매 전복의 진동에서 별도 안쪽 옷 소매가 나옴"
+          ],
+          "evidence_field": "component_1_phrase",
+          "evidence_terms": [
+            "the separate sleeveless outer robe has open armholes"
+          ],
+          "min_content_words": 3,
+          "instruction": "Preserve this selected owner relation: the separate sleeveless outer robe has open armholes",
+          "render_gate": {
+            "id": "vo_uniform_draft_robe_1",
+            "review_scale": "native",
+            "description": "the separate sleeveless outer robe has open armholes. A partial, misplaced or occluded relation does not pass."
+          }
+        },
+        {
+          "id": "component_2",
+          "match_terms": [
+            "the inner sleeves emerge through the open armholes of a separate sleeveless outer robe on the same wearer",
+            "민소매 전복의 진동에서 별도 안쪽 옷 소매가 나옴"
+          ],
+          "evidence_field": "component_2_phrase",
+          "evidence_terms": [
+            "the inner sleeves emerge through those outer armholes on the same wearer"
+          ],
+          "min_content_words": 3,
+          "instruction": "Preserve this selected owner relation: the inner sleeves emerge through those outer armholes on the same wearer",
+          "render_gate": {
+            "id": "vo_uniform_draft_robe_2",
+            "review_scale": "native",
+            "description": "the inner sleeves emerge through those outer armholes on the same wearer. A partial, misplaced or occluded relation does not pass."
+          }
+        }
+      ]
+    }
+  }
+}

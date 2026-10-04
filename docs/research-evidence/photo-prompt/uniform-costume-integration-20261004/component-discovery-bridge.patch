@@ -1,0 +1,53 @@
+--- before-uniform-component-bridge
++++ skills/photo-prompt-image-generator/scripts/prompt_generator.py
+@@ -2272,7 +2272,7 @@
+ 
+ def candidate_pack_assertion_discovery(
+     data: JsonDict, core: JsonDict, documents: JsonDict, bm25f: JsonDict,
+-    *, include_visual_priorities: bool = False,
++    *, include_visual_priorities: bool = False, include_frozen_baseline: bool = False,
+ ) -> List[str]:
+     """Find source-opted-in options per frozen assertion, never hard duties.
+ 
+@@ -2324,6 +2324,11 @@
+         # Keep them advisory and subject to the same opt-in/effect/lock guards.
+         queries.extend(str(value) for value in core.get("visual_priorities") or []
+                        if isinstance(value, str) and value.strip())
++    if include_frozen_baseline:
++        # Only the component-constrained profile lane opts into these
++        # frozen authorial observations. They remain optional discoveries.
++        queries.extend(str(core.get(field) or "") for field in
++                       ("baseline_prompt_en", "interpreted_intent") if core.get(field))
+     for query in queries:
+         tokens = candidate_pack_relevance_tokens(query)
+         eligible = {key for key, source_tokens in allowed.items() if len(tokens & source_tokens) >= minimum}
+@@ -7346,6 +7351,29 @@
+             "applicability_status": "eligible", "hard_eligible": False,
+             "optional_eligible": True, "source_intent_ids": [],
+         })
++    # A fully observed, source-opted-in relation can be drowned out by a
++    # long scene's broad similarity hits. Rank this narrow lane separately;
++    # preserve the same effect, lock, exclusion and optionality guards.
++    observed_text = " ".join(str(row.get("text") or "") for row in source_rows)
++    component_documents = {
++        profile["id"]: documents[profile["id"]]
++        for profile in registry.get("profiles") or []
++        if profile["id"] in documents
++        and (profile.get("activation") or {}).get(
++            "semantic_discovery_requires_component_evidence") is True
++        and candidate_pack_visual_component_match(profile, observed_text) is not None
++    }
++    existing_ids = {hit["profile_id"] for hit in resolution.get("hits") or []}
++    for profile_id in candidate_pack_assertion_discovery(
++        data, core, component_documents, visual_profile_index.get("bm25f") or {},
++        include_frozen_baseline=True,
++    ):
++        if profile_id not in existing_ids:
++            resolution.setdefault("hits", []).append({
++                "profile_id": profile_id, "match_basis": "bm25f_frozen_components",
++                "applicability_status": "eligible", "hard_eligible": False,
++                "optional_eligible": True, "source_intent_ids": [],
++            })
+     return resolution
+ 
+ 

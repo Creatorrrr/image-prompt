@@ -1,0 +1,71 @@
+E.....................................................................................................................................................................................................................................Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/uniform-costume-integration-20261004/full-suite/run_group.py", line 66, in <module>
+    result = unittest.TextTestRunner(stream=sys.stdout, verbosity=1, resultclass=RetainedResult).run(suite)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/runner.py", line 257, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 725, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 669, in run
+    self._callTestMethod(testMethod)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 615, in _callTestMethod
+    result = method()
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_adult_appeal_visual_semantics.py", line 223, in test_exact_composites_activate_only_their_profile
+    self.hard_matches(
+    ~~~~~~~~~~~~~~~~~^
+        f"명백한 성인 인물을 위한 {contract['exact_term']} 사진"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_adult_appeal_visual_semantics.py", line 165, in hard_matches
+    prompt_generator.candidate_pack_auto_visual_obligation_matches(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.registry,
+        ^^^^^^^^^^^^^^
+        self.source_rows(text),
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 7093, in candidate_pack_auto_visual_obligation_matches
+    resolution = resolve_visual_profile_hits(
+        registry,
+        source_rows,
+        adult_context=True,
+    )
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 6395, in resolve_visual_profile_hits
+    term and intent_term_is_negated(text, term)
+             ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 2709, in intent_term_is_negated
+    or re.search(korean_prefix, lowered)
+       ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/__init__.py", line 177, in search
+    return _compile(pattern, flags).search(string)
+           ~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/__init__.py", line 350, in _compile
+    p = _compiler.compile(pattern, flags)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_compiler.py", line 766, in compile
+    code = _code(p, flags)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_compiler.py", line 596, in _code
+    _compile_info(code, p, flags)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_compiler.py", line 546, in _compile_info
+    charset, hascased = _optimize_charset(charset)
+                        ~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_compiler.py", line 386, in _optimize_charset
+    mapping[i // 256] = comps[chunk]
+    ~~~~~~~^^^^^^^^^^
+KeyboardInterrupt

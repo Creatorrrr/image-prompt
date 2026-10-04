@@ -1,0 +1,46 @@
+..................................................Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/uniform-costume-integration-20261004/full-suite/run_group.py", line 66, in <module>
+    result = unittest.TextTestRunner(stream=sys.stdout, verbosity=1, resultclass=RetainedResult).run(suite)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/runner.py", line 257, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 725, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 669, in run
+    self._callTestMethod(testMethod)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 615, in _callTestMethod
+    result = method()
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py", line 245, in test_surreal_level_and_saved_brief_survive_retrieval_and_public_pack
+    pack = generator.build_candidate_pack(result, self.data, "v6")
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 10205, in build_candidate_pack
+    adult_appeal = candidate_pack_contextual_adult_appeal(data, result, candidate_entries, authorial_core=authorial_core)
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 3795, in candidate_pack_contextual_adult_appeal
+    inventory, traces[axis] = photo_contextual_appeal.rank_candidates(
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        rows,
+        ^^^^^
+    ...<5 lines>...
+        scene_query=scene_query,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_contextual_appeal.py", line 116, in rank_candidates
+    lexical = rank_bm25f(lexical_index, {"global_context": query}, limit=max(1, len(rows)))
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/bm25f_retrieval.py", line 412, in rank_bm25f
+    field_data = indexed_fields.get(field) or {}
+                 ~~~~~~~~~~~~~~~~~~^^^^^^^
+KeyboardInterrupt

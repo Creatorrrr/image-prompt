@@ -1,0 +1,47 @@
+...........E..............................E......................................................E...Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/uniform-costume-integration-20261004/full-suite/run_group.py", line 66, in <module>
+    result = unittest.TextTestRunner(stream=sys.stdout, verbosity=1, resultclass=RetainedResult).run(suite)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/runner.py", line 257, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 725, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 669, in run
+    self._callTestMethod(testMethod)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 615, in _callTestMethod
+    result = method()
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_candidate_semantics.py", line 195, in test_real_generator_builds_an_adoptable_bundle_with_full_view_and_audit
+    pack = generator.build_candidate_pack(result, data, "v6")
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 10198, in build_candidate_pack
+    slots, core_retrieval, contract = retrieve_core_slots(data, authorial_core, provenance["creative_controls"])
+                                      ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 11441, in retrieve_core_slots
+    bm25f = _core_slot_index(corpus_json)
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 11430, in _core_slot_index
+    return build_bm25f_index(
+        documents, policy=SEMANTIC_BM25F_POLICY,
+        lexicon=_bm25f_lexicon_from_documents(documents, ("aliases", "labels", "paraphrases")),
+    )
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/bm25f_retrieval.py", line 300, in build_bm25f_index
+    tokens.extend(_tokenize_bm25f_text(value, lexicon=prepared_lexicon))
+                  ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/bm25f_retrieval.py", line 206, in _tokenize_bm25f_text
+    normalized = normalize_bm25f_text(value)
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/bm25f_retrieval.py", line 98, in normalize_bm25f_text
+    unicodedata.normalize("NFKC", str(value or "")).casefold().split()
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

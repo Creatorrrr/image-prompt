@@ -1,0 +1,109 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 시각 의미 데이터의 대체 표현을 추가/보강하는 작업을 중심으로 진행하고 후보 데이터에도 잘 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "2750f6f1b885f44fd9df083826cf237b2ed14c2befa6c86e59e82beac1826965",
+  "interpreted_intent": "The user asks for independent randomized complex scenes to test visible realization of newly reflected costume keywords and use the attached image. This arm independently selected retro space workwear with a seeded random draw. The particular adult fictional technician, end-of-shift workshop, lever action, garment cut and warm/cool material lighting are agent-owned choices within open dimensions, not user definitions. The photograph should convey a quiet practical presence and subtle human attraction through the relaxed bearing, reference-guided face and tactile workwear. The uniform remains the focal object of the keyword test.",
+  "subject": "An adult fictional model guided by the face and short dark bob in the attached portrait, wearing retro space workwear.",
+  "setting": "An old orbital maintenance workshop with a grated floor, ribbed walls, service hatch and frosted circular observation window.",
+  "event": "A model wears a clearly visible costume while making a small quarter turn of a waist-high service-door lever.",
+  "visual_priorities": [
+    "The recognizable one-piece work uniform and calm reference-guided person remain the primary visual center.",
+    "The gloved hand and quarter-turned lever are connected through a plausible arm at the wearer's side.",
+    "Amber practical light and blue window light reveal contrasting cloth, glove folds and brushed metal.",
+    "Receding ribbed panels and a frosted window locate the small end-of-shift action in a layered orbital workshop."
+  ],
+  "baseline_prompt_en": "A layered costume photograph shows a model guided by the attached portrait, portrayed as an adult fictional spacecraft technician. Her short dark bob, airy separated bangs, gently rounded face and large dark eyes follow the visual cues of the reference. She wears a plainly visible costume: a retro space workwear one-piece jumpsuit in matte ivory woven fabric, with a compact upright collar, a central front zipper, rust-orange shoulder and chest panels, two utility chest pockets, a narrow webbing waist belt with a small metal buckle, reinforced knee patches, pale work gloves and ankle-high utility boots. At the end of a maintenance shift she stands beside a waist-high service-door lever in an old orbital workshop, turning the lever through a small quarter turn with her right gloved hand. Her right elbow is softly bent and the lever is beside her right hip, clear of her torso; her left arm hangs relaxed and both boots rest on the grated floor. The turned lever sits in a diagonal position against its circular mounting plate. Behind her, ribbed wall panels and a partly open service hatch recede toward a round frosted observation window. Amber light from a caged work lamp grazes the zipper teeth and glove creases, while cool blue window light rims her bob and separates the matte cloth from a brushed-metal door. A full-length three-quarter front view keeps her face, the whole garment and the hand-to-lever contact readable, with the calm end-of-shift expression and tactile uniform as the visual center.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "keyword realization test",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지",
+      "basis": "request_context",
+      "resolution": "Represent the chosen costume visibly enough to inspect the keyword in rendered pixels; the particular keyword is an independent agent choice.",
+      "sources": []
+    },
+    {
+      "term": "random complex concept",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "Select one keyword using a recorded independent random seed and author one coherent scene with interacting place, small action, lighting and materials. Specific staging remains agent-owned.",
+      "sources": []
+    },
+    {
+      "term": "attached image use",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use visible facial appearance and short dark bob as guidance for a fictional model, without inferring real identity or age.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "A layered costume photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a model guided by the attached portrait"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지",
+        "dimension": "event",
+        "prompt_evidence": "She wears a plainly visible costume"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "guided by the attached portrait"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "role",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photographic adult costume study",
+    "family": "quiet retro-futurist workshop editorial",
+    "evidence": [
+      "matte ivory woven fabric",
+      "Amber light from a caged work lamp"
+    ]
+  },
+  "variation_key": "uniform-costume-qualification-c-seed-2026100403"
+}

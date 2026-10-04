@@ -1,0 +1,172 @@
+{
+  "schema_version": "arm-active-gate-freeze/v1",
+  "attempt": 2,
+  "native_calls_at_freeze": 1,
+  "pack_id": "d441ffa1f2b93970",
+  "derived_effective_visual_contract": {
+    "enabled": true,
+    "contract_version": "photo-visual-obligations/v1",
+    "scope": "request_only",
+    "strict_gate_set": true,
+    "obligations": [
+      {
+        "id": "uniform_continuous_coverall_front_closure",
+        "category": "selected_uniform_garment_relation",
+        "activation": {
+          "source": "composer_opt_in",
+          "scope": "request_only",
+          "source_intent_ids": []
+        },
+        "composition_instruction": "Keep this selected relation literal on the declared wearer: the coverall cloth body continues across the waist into the trouser section. Keep this selected relation literal on the declared wearer: a separate front closure runs along that same garment body.",
+        "component_semantics": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "component_1",
+            "component_2"
+          ],
+          "groups": [
+            {
+              "id": "component_1",
+              "any_terms": [
+                "the coverall cloth body continues across the waist into the trouser section",
+                "커버올 천 몸체가 허리를 가로질러 바지 구간으로 이어진다",
+                "one continuous garment surrounds the torso and separate legs",
+                "하나의 연속된 의복이 몸통과 분리된 다리를 둘러싼다",
+                "a one-piece jumpsuit crossing the waist",
+                "허리를 가로질러 이어진 일체형 작업복",
+                "one-piece flight suit",
+                "one-piece jumpsuit",
+                "one-piece coverall",
+                "일체형 비행복",
+                "원피스 작업복"
+              ]
+            },
+            {
+              "id": "component_2",
+              "any_terms": [
+                "a separate front closure runs along that same garment body",
+                "별도 앞여밈이 같은 의복 몸체를 따라 이어진다",
+                "its own opening edge lies along the front rather than ending at a jacket hem",
+                "자체 열린 가장자리가 재킷 밑단에서 끝나는 대신 앞면을 따라 놓인다",
+                "its central front zipper",
+                "같은 작업복의 중앙 앞지퍼",
+                "zipped center front",
+                "central front zipper",
+                "center-front closure",
+                "같은 일체복의 앞여밈",
+                "중앙 앞지퍼"
+              ]
+            }
+          ]
+        },
+        "prompt_binding": {
+          "composed_field": "visual_obligation_evidence",
+          "required_evidence_fields": [
+            "component_1_phrase",
+            "component_2_phrase"
+          ],
+          "minimum_distinct_evidence_phrases": 2,
+          "prompt_evidence_must_be_literal": true,
+          "maximum_pairwise_content_token_overlap_ratio": 0.82,
+          "forbidden_filler_phrases": [
+            "visible evidence",
+            "visual evidence",
+            "required cue",
+            "prompt phrase"
+          ]
+        },
+        "evidence_requirements": {
+          "component_1_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "the coverall cloth body continues across the waist into the trouser section",
+              "커버올 천 몸체가 허리를 가로질러 바지 구간으로 이어진다",
+              "one continuous garment surrounds the torso and separate legs",
+              "하나의 연속된 의복이 몸통과 분리된 다리를 둘러싼다",
+              "a one-piece jumpsuit crossing the waist",
+              "허리를 가로질러 이어진 일체형 작업복",
+              "one-piece flight suit",
+              "one-piece jumpsuit",
+              "one-piece coverall",
+              "일체형 비행복",
+              "원피스 작업복"
+            ]
+          },
+          "component_2_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "a separate front closure runs along that same garment body",
+              "별도 앞여밈이 같은 의복 몸체를 따라 이어진다",
+              "its own opening edge lies along the front rather than ending at a jacket hem",
+              "자체 열린 가장자리가 재킷 밑단에서 끝나는 대신 앞면을 따라 놓인다",
+              "its central front zipper",
+              "같은 작업복의 중앙 앞지퍼",
+              "zipped center front",
+              "central front zipper",
+              "center-front closure",
+              "같은 일체복의 앞여밈",
+              "중앙 앞지퍼"
+            ]
+          }
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "render_gates": [
+          {
+            "id": "vo_uniform_continuous_coverall_front_closure_1",
+            "review_scale": "native",
+            "description": "the coverall cloth body continues across the waist into the trouser section. Inspect the original image at native resolution on the same wearer; partial or wrong-owner evidence fails and hidden connections are unobservable."
+          },
+          {
+            "id": "vo_uniform_continuous_coverall_front_closure_2",
+            "review_scale": "native",
+            "description": "a separate front closure runs along that same garment body. Inspect the original image at native resolution on the same wearer; partial or wrong-owner evidence fails and hidden connections are unobservable."
+          }
+        ],
+        "reject_substitutes": [
+          "드라마 소품의 주황색을 실제 전 세계 수용복 규정으로 일반화"
+        ]
+      }
+    ],
+    "required_hard_gates": [
+      "vo_uniform_continuous_coverall_front_closure_1",
+      "vo_uniform_continuous_coverall_front_closure_2"
+    ],
+    "selected_visual_concept_ids": [
+      "visual-concept:uniform_continuous_coverall_front_closure"
+    ]
+  },
+  "effective_visual_contract_sha256": "33a613f26b3dd537e42485cf2739f66e5eb55c84dedaf247a94d11d7247cff7c",
+  "visual_selection_failures": [],
+  "embodiment_gate_ids": [
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ],
+  "embodiment_failures": [],
+  "actual_compiled_gate_ids": [
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection",
+    "vo_uniform_continuous_coverall_front_closure_1",
+    "vo_uniform_continuous_coverall_front_closure_2"
+  ],
+  "original_keyword_check_ids": [
+    "keyword_flight_suit_one_piece",
+    "keyword_flight_suit_front_zip",
+    "keyword_flight_suit_utility_pockets",
+    "keyword_flight_suit_waist_belt",
+    "keyword_flight_suit_fabric_color_boundaries"
+  ],
+  "exact_same_gate_set_as_first": true,
+  "prompt_sha256": "1392266ff2057c9bcf0e6afac9b684c5850df6499a6c99bf2f88cc3cd3eb89a7",
+  "repair_whitelist_file_sha256": "091d172bd0626536ac9d7ea82b8c37300b585ebc90bbfa379ca389fa4a1355ef"
+}

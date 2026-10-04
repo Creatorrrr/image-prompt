@@ -1,0 +1,122 @@
+{
+  "provenance": "agent_postcore_same_core_comparison",
+  "old_pack_id": "ae9a4276a69e4d0d",
+  "new_pack_id": "7368cb12b1aef16e",
+  "same_pack_seed": 7583216431674104022,
+  "source_authorial_core_sha256": "706d69e02bd16ec25db96dc51b732120bf6194cff04c1cc4886d22fc1a7eab3b",
+  "source_intent_lock_sha256": "1fc073f838ab00be49c69b4feb9f38bd19ff0dc0f53b98307471e7b7c22275b5",
+  "core_bytes_unchanged": true,
+  "request_bytes_unchanged": true,
+  "old_new_core_canonical_equal": true,
+  "core_retrieval_sha256": "61e52ae4e52d3fa644733bd51c590f804fca136e52e2c472440ea226d9ecb86b",
+  "selection_mode": "core_bm25f",
+  "retrieval": "same_slot_core_focus_and_frozen_observation_bm25f_rrf",
+  "newly_returned_visual_concepts": [
+    "visual-concept:uniform_full_trousers_gathered_cuffs"
+  ],
+  "selected_changed_visual_concept_ids": [
+    "visual-concept:uniform_full_trousers_gathered_cuffs"
+  ],
+  "selected_profile_ids": [
+    "uniform_full_trousers_gathered_cuffs"
+  ],
+  "selected_changed_ordinary_candidate_ids": [],
+  "retrieved_changed_ordinary_candidates": [
+    {
+      "id": "slot:garment_detail:unif_shoulder_draped_empty_sleeve",
+      "entry_id": "unif_shoulder_draped_empty_sleeve",
+      "slot": "garment_detail"
+    },
+    {
+      "id": "slot:garment_detail:unif_jacket_attached_false_vest",
+      "entry_id": "unif_jacket_attached_false_vest",
+      "slot": "garment_detail"
+    }
+  ],
+  "rejected_changed_ordinary_candidates": [
+    {
+      "id": "slot:garment_detail:unif_shoulder_draped_empty_sleeve",
+      "reason": "The shoulder-draped fur coat is Hussar/pelisse construction outside the chosen Zouave family."
+    },
+    {
+      "id": "slot:garment_detail:unif_jacket_attached_false_vest",
+      "reason": "Attached false vest would contradict the independently worn waistcoat in the frozen initial concept."
+    }
+  ],
+  "compiled_visual_gate_ids": [
+    "vo_uniform_full_trousers_gathered_cuffs_1",
+    "vo_uniform_full_trousers_gathered_cuffs_2"
+  ],
+  "compiled_visual_gate_count": 2,
+  "effective_visual_contract_sha256": "9792cbe28f926ba9ab97c2f10defaed2a0b6a3d24bcd0c6baf0a6fd8ae388219",
+  "final_prompt_sha256": "de04be1a05623b07c90300d726c76308afaba1213e7aa40af3ef39a7ef3b6d88",
+  "active_evidence": {
+    "uniform_full_trousers_gathered_cuffs": {
+      "component_1_phrase": "Her two voluminous trouser legs bulge independently around her thighs",
+      "component_2_phrase": "gathered trouser cuffs form narrow puckered scarlet rings just above both white gaiter edges"
+    }
+  },
+  "integration_end_to_end_status": "SELECTED_UNIFORM_PROFILE_RENDERED_AFTER_LOCAL_REPAIR_OVERALL_QUALIFICATION_FAILED",
+  "boundary": "The selected new uniform profile achieves both actual native gates in the second image. Whole-scene compiled gates and original supplemental Zouave criteria still fail. No new ordinary candidate was adopted, no cross-image component combination is used, and requesting-user acceptance is pending.",
+  "native_image_tool_call_count": 2,
+  "attempt_results": [
+    {
+      "attempt": 1,
+      "image": "/Users/chasoik/Projects/image-prompt/outputs/uniform-costume-qualification-20261004/arm-a/snapshot-2/zouave-native-attempt-1.png",
+      "image_sha256": "c356e7d0b15667e624c6cf08e381857e16e6f3da98f76ea26b7d68b5150d0c91",
+      "compiled": {
+        "pass": 3,
+        "fail": 2,
+        "unobservable": 2,
+        "denominator": 7,
+        "pass_fraction": "3/7",
+        "selected_uniform_profile_pass": 1,
+        "selected_uniform_profile_denominator": 2,
+        "selected_uniform_profile_fraction": "1/2"
+      },
+      "supplemental": {
+        "pass": 4,
+        "fail": 2,
+        "unobservable": 1,
+        "gate_denominator": 7,
+        "gate_fraction": "4/7",
+        "component_pass": 15,
+        "component_fail": 2,
+        "component_unobservable": 1,
+        "component_denominator": 18,
+        "component_fraction": "15/18"
+      },
+      "overall": "FAIL",
+      "pixel_review_file_sha256": "58015197c174e78a0c97e2081026e285ffc676b820b1cbdb43b041717a535131"
+    },
+    {
+      "attempt": 2,
+      "image": "/Users/chasoik/Projects/image-prompt/outputs/uniform-costume-qualification-20261004/arm-a/snapshot-2/zouave-native-attempt-2.png",
+      "image_sha256": "4c03f980e26f66fc4508daadc436b238df5efff20a0751443dc37d9f6716d1a1",
+      "compiled": {
+        "pass": 5,
+        "fail": 0,
+        "unobservable": 2,
+        "denominator": 7,
+        "pass_fraction": "5/7",
+        "selected_uniform_profile_pass": 2,
+        "selected_uniform_profile_denominator": 2,
+        "selected_uniform_profile_fraction": "2/2"
+      },
+      "supplemental": {
+        "pass": 3,
+        "fail": 2,
+        "unobservable": 2,
+        "gate_denominator": 7,
+        "gate_fraction": "3/7",
+        "component_pass": 14,
+        "component_fail": 2,
+        "component_unobservable": 2,
+        "component_denominator": 18,
+        "component_fraction": "14/18"
+      },
+      "overall": "FAIL",
+      "pixel_review_file_sha256": "d0b696ac16096eef25b6a2cddb008f3e884ea591f2b5743e80999dba101b42d6"
+    }
+  ]
+}

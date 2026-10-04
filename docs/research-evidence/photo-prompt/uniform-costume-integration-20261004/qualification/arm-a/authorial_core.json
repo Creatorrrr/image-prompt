@@ -1,0 +1,108 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 시각 의미 데이터의 대체 표현을 추가/보강하는 작업을 중심으로 진행하고 후보 데이터에도 잘 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "d72007d712c46f908bc982ad8962e29735213fe12d72c080da452808ef463152",
+  "interpreted_intent": "The user requests an independent random complex reference-guided keyword rendering test. Agent-selected direction: Zouave historical costume layers worn by a fictional adult woman in a quiet station baggage hall, caught finishing a sash adjustment. The random names, station, colors, pose, adulthood, and wardrobe configuration are agent-authored choices in open dimensions, not user definitions or required typed assertions. The whole-frame appeal is quiet self-possession with subtle sensual presence from direct attention and soft mouth, ordinary reality, and readable wool/canvas/material relationships. A baggage-hall variant was chosen over a formal display because the small adjustment gives the ensemble an inhabited transition without busy staging. Reference scope is face and bob-hair appearance, not actual identity or age.",
+  "subject": "a fictional adult woman model with face and bob hair guided by the reference",
+  "setting": "quiet station baggage hall beside a low wooden costume trunk",
+  "event": "the model wears the chosen historical uniform layers while finishing a waist-sash adjustment",
+  "visual_priorities": [
+    "The short open jacket, waistcoat, broad sash and voluminous trousers read as a connected Zouave costume on one wearer.",
+    "The reference-guided face and bob stay visible beneath a low felt fez.",
+    "A small fingertip sash adjustment gives the still standing model a credible present-tense moment.",
+    "Raking warm window light distinguishes wool braid, woven sash, canvas gaiters and worn trunk material."
+  ],
+  "baseline_prompt_en": "A natural photographic costume portrait of a fictional model, explicitly an adult woman, wearing a complete historical uniform ensemble in an intricately staged single scene. Use the supplied portrait as the face and bob-hair reference, retaining the soft oval face, dark almond-shaped eyes, delicate nose, natural lips, and dark chin-length bob with wispy center-parted fringe. She stands in a quiet station baggage hall beside a low wooden costume trunk, just finishing a small adjustment at her waist. Her Zouave costume consists of a short open navy wool jacket with curved scarlet braid edging, a fitted navy waistcoat beneath it, a broad red woven sash wrapped around her waist, and very full scarlet trousers gathered toward the ankles. The jacket ends above the sash, the visible waistcoat sits within the jacket opening, and the sash separates the short upper layers from the ballooning trousers. White canvas gaiters enclose the lower trouser ends above dark leather shoes. A low red felt fez with a dark tassel rests above her visible bob. Her right fingertips tuck a short sash tail into the waist wrap while her left hand rests loosely at her side; both feet settle flat on the stone floor with a small gap between them. Long afternoon window light rakes across the wool nap, raised braid, sash folds, and cotton gaiters, with cooler hall light filling her face. The brass corners and pale tissue lining of the open trunk echo the warm light. She glances toward the camera with quiet confidence and a softly relaxed mouth. A full-length, nearly frontal frame includes her head, hands, waist, ankles, and shoes; the clothing junctions and generous trouser volume remain clearly readable against the subdued hall.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "keyword rendering test",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지",
+      "basis": "request_context",
+      "resolution": "Test whether the agent-selected historical costume keyword has a coherent visible realization in the generated photograph; the specific sampled wardrobe name is agent-owned.",
+      "sources": []
+    },
+    {
+      "term": "random complex concept",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "Independently sample a coherent costume family and scene axes, then combine location, a small action, light and material relationships into one photographic moment.",
+      "sources": []
+    },
+    {
+      "term": "attached reference use",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the attached portrait as a face and bob-hair appearance reference for a fictional model; do not infer the reference person identity or age.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "requested_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "an intricately staged single scene"
+      },
+      {
+        "anchor_id": "requested_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a fictional model"
+      },
+      {
+        "anchor_id": "requested_keyword_event",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지",
+        "dimension": "event",
+        "prompt_evidence": "wearing a complete historical uniform ensemble"
+      },
+      {
+        "anchor_id": "requested_reference",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the supplied portrait as the face and bob-hair reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "action",
+      "expression",
+      "setting",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere",
+      "format"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "natural historical costume portrait",
+    "evidence": [
+      "quiet station baggage hall",
+      "Long afternoon window light"
+    ]
+  },
+  "variation_key": "uniform-qualification-arm-a-seed-3294407901809763550"
+}

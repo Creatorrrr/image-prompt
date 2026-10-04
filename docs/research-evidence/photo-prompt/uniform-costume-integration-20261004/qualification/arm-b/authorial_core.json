@@ -1,0 +1,119 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 시각 의미 데이터의 대체 표현을 추가/보강하는 작업을 중심으로 진행하고 후보 데이터에도 잘 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "3e18f3c28aa8437dc2f68bd2a873d4f9da2015bc6380791ae720d8d1228479cf",
+  "interpreted_intent": "Requester asks independent complex random test concepts that use the supplied image and visibly realize enriched keywords. I independently sampled the flight-suit family, rainy glass passage, linen-adjustment micro-action, and cool/warm light combination. The chosen image is a generic aviation-costume editorial with an explicitly adult fictional model; face/hair use the reference, while clothing, place, action and camera staging are agent-owned open choices. Subtle ease and eye contact support sensual=1; fetish=0 and surreal=0 add no treatment. The flight suit is ordinary apparel, with an intentionally calm material contrast between fabric, linen, metal and wet glass. A more ceremonial cabin-service scene was considered but rejected because the sampled family is a flight suit. This concept and all its specific geometry are agent-authored, not a requester definition or semantic assertion.",
+  "subject": "Adult fictional woman model in a generic sage-green flight suit; face and dark bob guided by attached image",
+  "setting": "Glass-enclosed hangar passage after rain beside a waist-height service cart",
+  "event": "Visible clothing construction during a small linen-corner adjustment",
+  "visual_priorities": [
+    "Reference-guided face and dark bob lead the frame with quiet eye contact",
+    "One-piece sage flight-suit closure, waist and separate utility-pocket boundaries are readable",
+    "A sleeve-owned hand pinches the linen corner while the other rests on the cart rim",
+    "Cool glass light and a warm lamp distinguish matte fabric, crisp linen and brushed metal"
+  ],
+  "baseline_prompt_en": "A complex costume-photography concept set in a glass-enclosed hangar passage just after rain. The photograph shows an adult fictional woman, a model using the supplied reference, wearing a generic sage-green one-piece flight suit with a zipped center front, long sleeves, separate chest and thigh utility pockets, and a defined waist belt. Her face and short dark bob follow the supplied reference image: dark eyes, gently curved brows, wispy parted fringe, and the rounded jaw-length hair silhouette. The garment construction is visibly readable. Beside a waist-height brushed-metal service cart, her right thumb and index finger pinch a corner of folded white linen on the flat tray while her left hand rests on the near cart rim; both wrists connect visibly to her sleeves. Her weight rests evenly on two planted feet, and the long trouser legs end at ankle cuffs above plain dark boots. She glances toward the camera with quiet ease while finishing this small adjustment. Rain beads and a faint wet reflection remain on the glass behind her; a hangar door recedes in the background. Cool window light crosses the sage fabric from one side, while a small warm wall lamp gives a soft amber edge to the metal tray and her hair. The matte woven flight-suit fabric, crisp linen, brushed metal, and translucent wet glass have distinct surfaces. A front three-quarter full-length environmental portrait keeps the zipper, waist, pocket boundaries, both hands, and boots legible, with the face leading and the linen gesture reading second. The clothing is a generic fictional aviation costume.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "반영한 키워드가 이미지에 실제로 반영되는지",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지",
+      "basis": "request_context",
+      "resolution": "Create a visual garment-construction test photograph whose detailed clothing can be inspected in the rendered image; specific keyword choice is independent agent selection.",
+      "sources": []
+    },
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "Independently sample compatible open creative dimensions and compose one integrated photograph with place, material, light and a small action.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the attached face and short dark bob as reference appearance for the fictional model; no claim about actual identity or age.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "A complex costume-photography concept"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a model using the supplied reference"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지",
+        "dimension": "event",
+        "prompt_evidence": "The garment construction is visibly readable"
+      },
+      {
+        "anchor_id": "reference_face_hair",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "target": "main_subject",
+        "property": "appearance.face_and_hair",
+        "prompt_evidence": "Her face and short dark bob follow the supplied reference image"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "identity",
+      "count",
+      "age",
+      "role",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "reference_use",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photographic",
+    "family": "aviation-costume environmental editorial",
+    "evidence": [
+      "matte sage utility clothing against wet glass",
+      "calm micro-action with coherent mixed light"
+    ]
+  },
+  "variation_key": "uniform-20261004-b-792606917928791112"
+}

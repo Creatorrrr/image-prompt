@@ -1,0 +1,210 @@
+{
+  "schema_version": "arm-parent-bound-repair-whitelist/v1",
+  "provenance": "coordinator_authorized_visibility_repair",
+  "parent_request_sha256": "6c159fff928f5d491122149c43d8880663fe7c6f31a87edbde275e75d0d7d472",
+  "parent_authorial_core_sha256": "43ce29b02dcd8f7c75f7ced9920cbbc9bf947f80558546f461844193ef8224b4",
+  "parent_intent_lock_sha256": "c4e7c412401adebff05c1e1eff249893148b3aed61e2c60fe7a33de39e25e7ef",
+  "parent_composed_file_sha256": "eab9cd465b73646900f85d29ddaa48c6dc2bbefb16bc6159f861466c30175b0c",
+  "parent_image_sha256": "0d831f789e2fefe90b0409de842fd0dbdc38e87babb4fb282d307a8489dd9330",
+  "parent_pixel_review_file_sha256": "d6dcf67a39facaa29891393ce819c8c4ebf8000d52c10aee1c94817d0ac85dbd",
+  "parent_effective_visual_contract_sha256": "33a613f26b3dd537e42485cf2739f66e5eb55c84dedaf247a94d11d7247cff7c",
+  "failed_or_hidden_gates": [
+    "vo_uniform_continuous_coverall_front_closure_1"
+  ],
+  "allowed_changes": [
+    {
+      "dimension": "appearance",
+      "target": "main_subject",
+      "property": "wardrobe.belt.closure_state",
+      "change": "Keep the same waist-level belt threaded through two waist loops; unfasten only its front buckle and rest its ends a few centimeters apart."
+    },
+    {
+      "dimension": "appearance",
+      "target": "main_subject",
+      "property": "wardrobe.details.waist_visibility",
+      "change": "Expose a small central waist cloth strip and front zipper continuation into the trouser section through the opened belt gap."
+    }
+  ],
+  "preserved_authorial_scene": [
+    "one-piece flight suit",
+    "defined waist belt at waist height",
+    "right fingertips pinching white linen",
+    "other hand on cart near rim",
+    "same cart and rainy hangar passage",
+    "reference-guided face and short dark bob",
+    "same sage cloth and distinct white linen and dark boots",
+    "same light and framing"
+  ],
+  "preserved_anchors": [
+    {
+      "anchor_id": "core_concept",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "dimension": "concept",
+      "prompt_evidence": "A complex costume-photography concept"
+    },
+    {
+      "anchor_id": "core_subject",
+      "source_text": "첨부한 이미지를 활용하여",
+      "dimension": "subject",
+      "prompt_evidence": "a model using the supplied reference"
+    },
+    {
+      "anchor_id": "core_event",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지",
+      "dimension": "event",
+      "prompt_evidence": "The garment construction is visibly readable"
+    },
+    {
+      "anchor_id": "reference_face_hair",
+      "source_text": "첨부한 이미지를 활용하여",
+      "dimension": "reference_use",
+      "prompt_evidence": "Her face and short dark bob follow the supplied reference image",
+      "target": "main_subject",
+      "property": "appearance.face_and_hair"
+    }
+  ],
+  "effective_hard_obligations": [
+    {
+      "id": "uniform_continuous_coverall_front_closure",
+      "category": "selected_uniform_garment_relation",
+      "activation": {
+        "source": "composer_opt_in",
+        "scope": "request_only",
+        "source_intent_ids": []
+      },
+      "composition_instruction": "Keep this selected relation literal on the declared wearer: the coverall cloth body continues across the waist into the trouser section. Keep this selected relation literal on the declared wearer: a separate front closure runs along that same garment body.",
+      "component_semantics": {
+        "minimum_component_groups": 2,
+        "required_group_ids": [
+          "component_1",
+          "component_2"
+        ],
+        "groups": [
+          {
+            "id": "component_1",
+            "any_terms": [
+              "the coverall cloth body continues across the waist into the trouser section",
+              "커버올 천 몸체가 허리를 가로질러 바지 구간으로 이어진다",
+              "one continuous garment surrounds the torso and separate legs",
+              "하나의 연속된 의복이 몸통과 분리된 다리를 둘러싼다",
+              "a one-piece jumpsuit crossing the waist",
+              "허리를 가로질러 이어진 일체형 작업복",
+              "one-piece flight suit",
+              "one-piece jumpsuit",
+              "one-piece coverall",
+              "일체형 비행복",
+              "원피스 작업복"
+            ]
+          },
+          {
+            "id": "component_2",
+            "any_terms": [
+              "a separate front closure runs along that same garment body",
+              "별도 앞여밈이 같은 의복 몸체를 따라 이어진다",
+              "its own opening edge lies along the front rather than ending at a jacket hem",
+              "자체 열린 가장자리가 재킷 밑단에서 끝나는 대신 앞면을 따라 놓인다",
+              "its central front zipper",
+              "같은 작업복의 중앙 앞지퍼",
+              "zipped center front",
+              "central front zipper",
+              "center-front closure",
+              "같은 일체복의 앞여밈",
+              "중앙 앞지퍼"
+            ]
+          }
+        ]
+      },
+      "prompt_binding": {
+        "composed_field": "visual_obligation_evidence",
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase"
+        ],
+        "minimum_distinct_evidence_phrases": 2,
+        "prompt_evidence_must_be_literal": true,
+        "maximum_pairwise_content_token_overlap_ratio": 0.82,
+        "forbidden_filler_phrases": [
+          "visible evidence",
+          "visual evidence",
+          "required cue",
+          "prompt phrase"
+        ]
+      },
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "the coverall cloth body continues across the waist into the trouser section",
+            "커버올 천 몸체가 허리를 가로질러 바지 구간으로 이어진다",
+            "one continuous garment surrounds the torso and separate legs",
+            "하나의 연속된 의복이 몸통과 분리된 다리를 둘러싼다",
+            "a one-piece jumpsuit crossing the waist",
+            "허리를 가로질러 이어진 일체형 작업복",
+            "one-piece flight suit",
+            "one-piece jumpsuit",
+            "one-piece coverall",
+            "일체형 비행복",
+            "원피스 작업복"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "a separate front closure runs along that same garment body",
+            "별도 앞여밈이 같은 의복 몸체를 따라 이어진다",
+            "its own opening edge lies along the front rather than ending at a jacket hem",
+            "자체 열린 가장자리가 재킷 밑단에서 끝나는 대신 앞면을 따라 놓인다",
+            "its central front zipper",
+            "같은 작업복의 중앙 앞지퍼",
+            "zipped center front",
+            "central front zipper",
+            "center-front closure",
+            "같은 일체복의 앞여밈",
+            "중앙 앞지퍼"
+          ]
+        }
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "render_gates": [
+        {
+          "id": "vo_uniform_continuous_coverall_front_closure_1",
+          "review_scale": "native",
+          "description": "the coverall cloth body continues across the waist into the trouser section. Inspect the original image at native resolution on the same wearer; partial or wrong-owner evidence fails and hidden connections are unobservable."
+        },
+        {
+          "id": "vo_uniform_continuous_coverall_front_closure_2",
+          "review_scale": "native",
+          "description": "a separate front closure runs along that same garment body. Inspect the original image at native resolution on the same wearer; partial or wrong-owner evidence fails and hidden connections are unobservable."
+        }
+      ],
+      "reject_substitutes": [
+        "드라마 소품의 주황색을 실제 전 세계 수용복 규정으로 일반화"
+      ]
+    }
+  ],
+  "exact_gate_ids": [
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection",
+    "vo_uniform_continuous_coverall_front_closure_1",
+    "vo_uniform_continuous_coverall_front_closure_2"
+  ],
+  "exact_keyword_check_ids": [
+    "keyword_flight_suit_one_piece",
+    "keyword_flight_suit_front_zip",
+    "keyword_flight_suit_utility_pockets",
+    "keyword_flight_suit_waist_belt",
+    "keyword_flight_suit_fabric_color_boundaries"
+  ],
+  "maximum_additional_native_calls": 1,
+  "parent_request_envelope_is_unchanged": true,
+  "compatibility_review": "The core whole locks are concept, subject and event. Its partial reference-use face/hair anchor remains literal. Appearance is open; the selected coverall-continuity and front-closure obligations are strengthened in visibility, not reinterpreted. A defined belt remains at waist, and the hands keep their contacts. No frozen evidence phrase or assertion changes.",
+  "created_at": "2026-10-04T05:58:34.632196+00:00"
+}
