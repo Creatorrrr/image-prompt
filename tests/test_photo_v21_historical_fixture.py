@@ -1,4 +1,4 @@
-"""V20's original validator and source are explicit, sealed, offline fixtures."""
+"""V21's original validator and source are explicit, sealed, offline fixtures."""
 import hashlib
 import json
 from pathlib import Path
@@ -11,43 +11,43 @@ import photo_prompt_fixtures as fixtures
 ROOT = Path(__file__).resolve().parents[1]
 
 
-class V20HistoricalFixtureTests(unittest.TestCase):
+class V21HistoricalFixtureTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        temp = tempfile.TemporaryDirectory(prefix='verified-v20-fixture-')
+        temp = tempfile.TemporaryDirectory(prefix='verified-v21-fixture-')
         cls.addClassCleanup(temp.cleanup)
         cls.root = Path(temp.name)
         with mock.patch('subprocess.Popen', side_effect=AssertionError('Fixture invoked subprocess')):
-            cls.validator = fixtures.archived_validator_with_v21_source(cls.root, version=20, source_root=ROOT)
-        cls.manifest = fixtures._v20_parent_manifest(ROOT)
+            cls.validator = fixtures.archived_v21_validator(cls.root, source_root=ROOT)
+        cls.manifest = fixtures._v21_parent_manifest(ROOT)
 
     def setUp(self):
         temp = tempfile.TemporaryDirectory()
         self.addCleanup(temp.cleanup)
         self.temp = Path(temp.name)
 
-    def test_exact_1d30_source_and_dependencies_are_loaded_without_git(self):
-        self.assertEqual('1d30c96a3a05abfa91f49ac98f205f4e09202a19', self.manifest['source_pin'])
-        self.assertEqual((149, 207), (len(self.manifest['members']), len(self.manifest['dependencies'])))
-        self.assertEqual(634887, sum(row['bytes'] for row in self.manifest['members']
-                                   if row['kind'] == 'new_immutable_snapshot_same_git_blob'))
+    def test_exact_726c_source_and_dependencies_are_loaded_without_git(self):
+        self.assertEqual('726c51b015294930f0ad98ca126cde11e6caead2', self.manifest['source_pin'])
+        self.assertEqual((166, 216), (len(self.manifest['members']), len(self.manifest['dependencies'])))
+        self.assertEqual(9, sum(row['kind'] == 'new_immutable_snapshot_same_git_blob'
+                                for row in self.manifest['members']))
         for row in self.manifest['members'] + self.manifest['dependencies']:
             raw = (self.root / row['path']).read_bytes()
             self.assertEqual(row['sha256'], hashlib.sha256(raw).hexdigest(), row['path'])
             self.assertEqual(row['bytes'], len(raw), row['path'])
         self.assertEqual(self.root / fixtures.V17_PARENT_VALIDATOR, Path(self.validator.__file__))
-        self.assertFalse(hasattr(self.validator, '_validate_v21_visual_storage_successor'))
+        self.assertFalse(hasattr(self.validator, '_validate_v22_ornament_data_successor'))
 
     def test_manifest_rejects_path_traversal_duplicate_missing_and_coordinated_rehash(self):
-        original = (ROOT / fixtures.V20_PARENT_MANIFEST).read_bytes()
+        original = (ROOT / fixtures.V21_PARENT_MANIFEST).read_bytes()
         source = self.temp / 'input'
-        target = source / fixtures.V20_PARENT_MANIFEST
+        target = source / fixtures.V21_PARENT_MANIFEST
         target.parent.mkdir(parents=True)
         for kind in ('absolute', 'traversal', 'duplicate', 'missing', 'source_pin',
                      'live_source', 'coordinated_rehash'):
             manifest = json.loads(original)
-            if kind == 'absolute': manifest['members'][0]['path'] = '/tmp/escaped-v20-fixture'
-            elif kind == 'traversal': manifest['members'][0]['source_path'] = '../escaped-v20-fixture'
+            if kind == 'absolute': manifest['members'][0]['path'] = '/tmp/escaped-v21-fixture'
+            elif kind == 'traversal': manifest['members'][0]['source_path'] = '../escaped-v21-fixture'
             elif kind == 'duplicate': manifest['members'][1] = manifest['members'][0]
             elif kind == 'missing': manifest['members'].pop()
             elif kind == 'source_pin': manifest['source_pin'] = '0' * 40
@@ -63,8 +63,8 @@ class V20HistoricalFixtureTests(unittest.TestCase):
                            git_blob=hashlib.sha1(f'blob {len(raw)}\0'.encode() + raw).hexdigest())
             target.write_text(json.dumps(manifest))
             output = self.temp / 'invalid-output'
-            with self.subTest(kind=kind), self.assertRaisesRegex(AssertionError, 'V20 parent source manifest drift'):
-                fixtures.materialize_v20_parent_source(output, source_root=source)
+            with self.subTest(kind=kind), self.assertRaisesRegex(AssertionError, 'V21 parent source manifest drift'):
+                fixtures.materialize_v21_parent_source(output, source_root=source)
             self.assertFalse(output.exists())
 
     def test_source_payload_rejects_missing_mutated_and_symlink_bytes(self):
@@ -94,7 +94,7 @@ class V20HistoricalFixtureTests(unittest.TestCase):
         linked.symlink_to(existing, target_is_directory=True)
         for destination in (existing, linked):
             with self.subTest(path=destination), self.assertRaisesRegex(AssertionError, 'empty directory'):
-                fixtures.materialize_v20_parent_source(destination, source_root=ROOT)
+                fixtures.materialize_v21_parent_source(destination, source_root=ROOT)
         self.assertEqual('keep', (existing / 'keep').read_text())
 
 

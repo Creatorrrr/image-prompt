@@ -7,6 +7,7 @@ import importlib.util
 import json
 import shutil
 import sys
+import tempfile
 import zipfile
 from pathlib import Path, PurePosixPath
 
@@ -42,6 +43,11 @@ V20_PARENT_MANIFEST = Path(
 )
 V20_PARENT_MANIFEST_SHA256 = '0949707e066ccfb73396b5825f4d70bdc79b2155e091d4233913bd7eba147e6b'
 V20_PARENT_COMMIT = '1d30c96a3a05abfa91f49ac98f205f4e09202a19'
+V21_PARENT_MANIFEST = Path(
+    'docs/research-evidence/photo-prompt/gothic-sharded-main-merge-20261005/V21-PARENT-SOURCE.json'
+)
+V21_PARENT_MANIFEST_SHA256 = 'ceea06a904b6605e5ee359eefb1f2b9e031d7a385ca17beeca89d4bb8c289088'
+V21_PARENT_COMMIT = '726c51b015294930f0ad98ca126cde11e6caead2'
 
 
 def _v17_safe_path(value: str) -> Path:
@@ -465,6 +471,92 @@ def archived_v20_validator(directory: Path, *, source_root: Path = ROOT):
     row = next(row for row in manifest['members'] if row['path'] == V17_PARENT_VALIDATOR)
     raw = _v17_verified_payload(source_root, row)
     return _isolated_parent_validator(directory, raw, directory, version=20)
+
+
+def _v21_parent_manifest(source_root: Path = ROOT) -> dict:
+    """Authenticate the V21 source independently of today's expanded DATA."""
+    raw = _v17_regular_path(source_root, V21_PARENT_MANIFEST.as_posix()).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != V21_PARENT_MANIFEST_SHA256:
+        raise AssertionError('Frozen V21 parent source manifest drift')
+    manifest = json.loads(raw)
+    counts = {'reuse_v20_parent_source': 141,
+              'reuse_content_addressed_vector_shard': 16,
+              'new_immutable_snapshot_same_git_blob': 9}
+    if (manifest['schema'] != 'photo-v21-parent-source-manifest/v1'
+            or manifest['source_pin'] != V21_PARENT_COMMIT
+            or manifest['member_count'] != 166 or len(manifest['members']) != 166
+            or manifest['dependency_count'] != 216 or len(manifest['dependencies']) != 216
+            or manifest['counts'] != counts
+            or manifest['previous_manifest_path'] != V20_PARENT_MANIFEST.as_posix()
+            or manifest['previous_manifest_sha256'] != V20_PARENT_MANIFEST_SHA256):
+        raise AssertionError('Frozen V21 parent source manifest shape drift')
+    previous = {row['path']: row for row in _v20_parent_manifest(source_root)['members']}
+    paths = set()
+    for row in manifest['members'] + manifest['dependencies']:
+        path = _v17_safe_path(row['path']).as_posix()
+        _v17_safe_path(row['source_path'])
+        if path in paths:
+            raise AssertionError('Duplicate V21 historical source path')
+        paths.add(path)
+        if (row['git_commit'] != V21_PARENT_COMMIT or row['git_path'] != path
+                or row['mode'] not in ('100644', '100755') or type(row['bytes']) is not int
+                or row['bytes'] < 0 or len(row['sha256']) != 64 or len(row['git_blob']) != 40
+                or any(c not in '0123456789abcdef' for c in row['sha256'] + row['git_blob'])):
+            raise AssertionError('Frozen V21 historical source provenance drift')
+    for row in manifest['members']:
+        if row['kind'] == 'reuse_v20_parent_source':
+            old = previous.get(row['path'], {})
+            allowed = all(row[key] == old.get(key) for key in ('source_path', 'git_blob', 'mode', 'bytes', 'sha256'))
+        elif row['kind'] == 'reuse_content_addressed_vector_shard':
+            allowed = (row['source_path'] == row['path']
+                       and row['path'].startswith('skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/'))
+        else:
+            allowed = row['source_path'] == (
+                V21_PARENT_MANIFEST.parent / 'v21-parent-source-files' / row['path']).as_posix()
+        if not allowed:
+            raise AssertionError('Unregistered V21 historical source backing path')
+    if (len({row['source_path'] for row in manifest['members']}) != 166
+            or {kind: sum(row['kind'] == kind for row in manifest['members']) for kind in counts} != counts
+            or sum(row['bytes'] for row in manifest['members']) != manifest['total_member_bytes']
+            or any(row['source_path'] != row['path'] for row in manifest['dependencies'])):
+        raise AssertionError('Frozen V21 historical source inventory drift')
+    return manifest
+
+
+def materialize_v21_parent_source(directory: Path, *, source_root: Path = ROOT) -> dict:
+    """Restore all sealed V21 files before replay; no Git or live-source fallback."""
+    manifest = _v21_parent_manifest(source_root)
+    records = manifest['members'] + manifest['dependencies']
+    if directory.is_symlink() or (directory.exists() and any(directory.iterdir())):
+        raise AssertionError('V21 historical destination must be an empty directory')
+    for row in records:
+        _v17_verified_payload(source_root, row)
+    directory.mkdir(parents=True, exist_ok=True)
+    for row in records:
+        raw = _v17_verified_payload(source_root, row)
+        target = directory / _v17_safe_path(row['path'])
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(raw)
+        target.chmod(int(row['mode'][-3:], 8))
+    return manifest
+
+
+def archived_v21_validator(directory: Path, *, source_root: Path = ROOT):
+    manifest = materialize_v21_parent_source(directory, source_root=source_root)
+    row = next(row for row in manifest['members'] if row['path'] == V17_PARENT_VALIDATOR)
+    raw = _v17_verified_payload(source_root, row)
+    return _isolated_parent_validator(directory, raw, directory, version=21)
+
+
+def archived_validator_with_v21_source(directory: Path, *, version: int, source_root: Path = ROOT):
+    """Explicitly feed unchanged predecessor helpers their frozen V21 inputs."""
+    helpers = {18: archived_v18_validator, 19: archived_v19_validator, 20: archived_v20_validator}
+    if version not in helpers:
+        raise AssertionError('Unsupported V21-backed predecessor fixture')
+    with tempfile.TemporaryDirectory(prefix='sealed-v21-inputs-') as saved:
+        frozen = Path(saved)
+        materialize_v21_parent_source(frozen, source_root=source_root)
+        return helpers[version](directory, source_root=frozen)
 
 
 def archived_v16_validator(directory: Path):

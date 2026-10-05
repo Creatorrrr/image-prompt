@@ -91,7 +91,8 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
                                           'photo_prompt_subculture_appearance_extension.json',
                                           'photo_prompt_motion_graphics_extension.json',
                                           'photo_prompt_seduction_expression_extension.json',
-                                          'photo_prompt_cute_visual_forms_extension.json'})
+                                          'photo_prompt_cute_visual_forms_extension.json',
+                                          'photo_prompt_ornament_structure_extension.json'})
         with patch.object(common.g, 'RESEARCH_EXTENSION_FILENAMES', filenames):
             historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
         historical_current = fixtures.seduction_historical_source_scope(historical_current)
