@@ -18,7 +18,7 @@ class V19HistoricalFixtureTests(unittest.TestCase):
         cls.addClassCleanup(temp.cleanup)
         cls.root = Path(temp.name)
         with mock.patch('subprocess.Popen', side_effect=AssertionError('Fixture invoked subprocess')):
-            cls.validator = fixtures.archived_v19_validator(cls.root, source_root=ROOT)
+            cls.validator = fixtures.archived_validator_with_v21_source(cls.root, version=19, source_root=ROOT)
         cls.manifest = fixtures._v19_parent_manifest(ROOT)
 
     def setUp(self):
