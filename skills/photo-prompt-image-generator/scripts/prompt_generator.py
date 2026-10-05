@@ -148,6 +148,7 @@ VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
     "photo_prompt_visual_obligations_motion_graphics.json",
     "photo_prompt_visual_obligations_seduction_expression.json",
     "photo_prompt_visual_obligations_cute_visual_forms.json",
+    "photo_prompt_visual_obligations_ornament_structure.json",
 )
 VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
     "photo-visual-obligation-registry-extension/v1"
@@ -206,6 +207,7 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_motion_graphics_extension.json",
     "photo_prompt_seduction_expression_extension.json",
     "photo_prompt_cute_visual_forms_extension.json",
+    "photo_prompt_ornament_structure_extension.json",
 )
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v2"

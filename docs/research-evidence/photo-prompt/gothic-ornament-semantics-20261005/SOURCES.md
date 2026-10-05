@@ -1,0 +1,65 @@
+# 출처와 증거 범위
+
+2026-10-05 KST. 60개 출처의 본문/반환 텍스트/메타데이터/초록을 확인했다. S11은 PDF 접근이 실패한 후속 문헌이므로 의미 근거에서 제외한다. 도판 원본 픽셀과 영상은 미검토다. 각 출처의 좁은 사실과 연구자의 가시 형태·관계·채택 설계는 별도 증거다.
+
+- **S01** [Gothic Art](https://www.metmuseum.org/essays/gothic-art) — The Metropolitan Museum of Art; `opened_text`. 첨두아치와 리브·버트레스의 연결, 공예로 옮겨간 고딕 어휘.
+- **S02** [Gothic Architecture](https://www.riba.org/explore/riba-collections/architectural-styles/gothic-movement/) — RIBA; `opened_text`. 첨두아치·리브 볼트·트레이서리·첨탑의 건축 어휘.
+- **S03** [Architectural Canopy, c. 1450–1475](https://www.clevelandart.org/art/1974.4.2) — Cleveland Museum of Art; `opened_text`. 플랑부아양의 불꽃형 석조 트레이서리와 미니어처 건축.
+- **S04** [The Rococo style – an introduction](https://www.vam.ac.uk/articles/the-rococo-style-an-introduction) — Victoria and Albert Museum; `opened_text`. 비대칭 C·S 곡선과 바위·조개 유래의 로카유.
+- **S05** [The Baroque style](https://www.vam.ac.uk/articles/the-baroque-style) — Victoria and Albert Museum; `retrieved_text`. 장르 통합·운동감, 아칸서스 스크롤과 오리큘러 형태.
+- **S06** [Art Nouveau – an international style](https://www.vam.ac.uk/articles/art-nouveau-an-international-style) — Victoria and Albert Museum; `retrieved_text`. 자연 모티프·유려한 선과 구조/장식 통합; 지역별 변이.
+- **S07** [Arts and Crafts: an introduction](https://www.vam.ac.uk/articles/arts-and-crafts-an-introduction) — Victoria and Albert Museum; `retrieved_excerpt`. 고정된 외형 하나보다 공예와 디자인의 이상을 공유하는 운동.
+- **S08** [With Pleasure: Pattern and Decoration in American Art 1972–1985](https://www.moca.org/exhibitions/with-pleasure) — MOCA Los Angeles; `retrieved_text`. 꽃·아라베스크·패치워크 등 반복 장식과 다양한 매체.
+- **S09** [Vegetal Patterns in Islamic Art](https://www.metmuseum.org/es/essays/vegetal-patterns-in-islamic-art) — The Metropolitan Museum of Art; `retrieved_text`. 식물·기하·서예·인물 장식을 별개의 범주로 설명.
+- **S10** [Art of the Islamic World: Unit Three, Introduction](https://www.metmuseum.org/de/learn/educators/curriculum-resources/art-of-the-islamic-world/unit-three/introduction) — The Metropolitan Museum of Art; `retrieved_excerpt`. 식물 문양, 기하학적 반복, 서예의 범주 구별.
+- **S11** [Looking at European Frames: A Guide to Terms, Styles, and Techniques](https://www.getty.edu/publications/resources/virtuallibrary/9780892369812.pdf) — Getty Publications; `bibliographic_excerpt_only_open_failed_404`. 관련 문헌의 검색 단서만 확보했다. PDF open은 404로 실패하여 세부 정의의 근거로 사용하지 않는다.
+- **S12** [A guide to metalworking techniques](https://www.vam.ac.uk/articles/metalworking-techniques) — Victoria and Albert Museum; `opened_and_targeted_text`. 선재/판재/입자/상감/에나멜의 기법 구별; 필리그리의 바탕판 변형도 설명.
+- **S13** [Keum-Boo Technique](https://www.ganoksin.com/article/keum-boo-technique/) — Charles Lewton-Brain / Ganoksin; `retrieved_excerpt`. 작가가 설명한 얇은 금과 은의 결합 기법; 영상은 보지 않음.
+- **S14** [Embroidery styles: an illustrated guide](https://www.vam.ac.uk/articles/embroidery-styles-an-illustrated-guide) — Victoria and Albert Museum; `retrieved_text`. 표면실 고정·금속사·입체 자수·단색 반복·화이트워크 구별.
+- **S15** [Professional Embroidery Tutor Programme: Techniques](https://royal-needlework.org.uk/courses/professional-embroidery-tutor-programme/techniques/) — Royal School of Needlework; `retrieved_text`. 골드워크·블랙워크·아플리케·스텀프워크·화이트워크.
+- **S16** [New Stumpwork Video Course](https://royal-needlework.org.uk/new-stumpwork-video-course/) — Royal School of Needlework; `retrieved_text`. 입체 요소를 사용하는 스텀프워크; 판매 영상의 내용은 검증하지 않음.
+- **S17** [Textile Production in Europe: Silk, 1600–1800](https://www.metmuseum.org/ru/essays/textile-production-in-europe-silk-1600-1800) — The Metropolitan Museum of Art; `retrieved_excerpt`. 직조 무늬와 견직물 생산의 역사적 문맥.
+- **S18** [Chasuble, ca. 1850, reassembled ca. 1900](https://www.metmuseum.org/art/collection/search/156536) — The Metropolitan Museum of Art; `retrieved_text`. 보조 위사와 브로케이드/다마스크가 결합한 실물 사례.
+- **S19** [Breadth of Woven Textile](https://www.metmuseum.org/art/collection/search/44579) — The Metropolitan Museum of Art; `retrieved_text`. 새틴 다마스크와 금속사를 포함한 브로케이드가 공존하는 실물.
+- **S20** [Gothic: Dark Glamour](https://www.fitnyc.edu/museum/exhibitions/gothic-dark-glamour.php) — The Museum at FIT; `retrieved_text`. 패션의 고딕 서사, 쇠락·죽음·관능과 여러 시대의 의상.
+- **S21** [Gothic: Opening Reception Video Transcript](https://sites.fitnyc.edu/depts/museum/Gothic/transcription1.html) — The Museum at FIT; `retrieved_text`. 고딕 서사를 환기하는 패션이라는 큐레이터의 설명; 영상은 미시청.
+- **S22** [Death Becomes Her: A Century of Mourning Attire](https://www.metmuseum.org/exhibitions/listings/2014/death-becomes-her) — The Metropolitan Museum of Art; `opened_text`. 19세기와 20세기 초 상복의 문화·복식 문맥.
+- **S23** [Camp: Notes on Fashion](https://www.metmuseum.org/exhibitions/listings/2019/camp-notes-on-fashion) — The Metropolitan Museum of Art; `retrieved_text`. 인공성·과장·연극성·아이러니의 감수성.
+- **S24** [WorldPride at The Met: The Camp Pose](https://www.metmuseum.org/fr/perspectives/worldpride-met-camp-pose) — The Metropolitan Museum of Art; `retrieved_text`. 드래그·보깅·캠프가 교차해도 동일 범주는 아님.
+- **S25** [Ornament design with a winged term and grotesque motifs](https://www.metmuseum.org/art/collection/search/751281) — The Metropolitan Museum of Art; `retrieved_text`. 인물/동물/식물/스크롤의 혼성 장식 사례.
+- **S26** [Tanizaki Jun'ichirō as Cultural Critic, Sadami Suzuki, Japan Review 7](https://www.jstor.org/stable/25790963) — International Research Center for Japanese Studies / JSTOR; `abstract_only`. 에로·그로·넌센스의 근대 일본 대중문화 문맥; 전문 미검토.
+- **S27** [Console table, 1735–40](https://www.metmuseum.org/art/collection/search/189464) — The Metropolitan Museum of Art; `retrieved_text`. 오픈워크 카르투슈·로카유·아칸서스의 한 대상 내 결합.
+- **S28** [Commode: French Rococo Ébénisterie](https://www.getty.edu/publications/rococo/catalogue/16/) — Getty Publications; `retrieved_excerpt`. 로코코 가구의 장식·마케트리 사례; 추가 도판 검토 필요.
+- **S29** [Gothic Revival Architecture](https://www.riba.org/explore/riba-collections/architectural-styles/gothic-revival-movement/) — RIBA; `retrieved_text`. 중세 형식의 후대 재해석과 다양한 재료·실내 장식.
+- **S30** [Stained glass: the Gothic Revival and beyond](https://www.vam.ac.uk/articles/stained-glass-gothic-revival-and-beyond/) — Victoria and Albert Museum; `retrieved_text`. 리바이벌과 중세식 납 구획 유리의 재도입.
+- **S31** [Appearance of guilloché in watchmaking](https://www.breguet.com/en/breguet-house/1775-1801/appearance-guilloche-watchmaking) — Breguet; `retrieved_text`. 제작사가 설명한 정밀 반복 선각과 엔진 터닝.
+- **S32** [Set of jewelry, Etruscan](https://www.metmuseum.org/art/collection/search/256976) — The Metropolitan Museum of Art; `retrieved_text`. 미세 금속 구슬과 선재 장식이 결합한 사례.
+- **S33** [Fragment from sample set of Chinese cloisonné](https://www.metmuseum.org/art/collection/search/40608) — The Metropolitan Museum of Art; `retrieved_text`. 금속선 구획에 유리질 색을 채우는 클루아조네.
+- **S34** [How was it made? Furniture](https://www.vam.ac.uk/articles/furniture-how-was-it-made) — Victoria and Albert Museum; `retrieved_text`. 다른 얇은 재료를 맞추는 마케트리 제작 문맥; 영상 미시청.
+- **S35** [AAT: needle lace](https://www.getty.edu/vow/AATFullDisplay?find=&logic=AND&note=&subjectid=300231662) — Getty Research Institute; `retrieved_text`. 바늘/실의 루프를 사용하는 수제 레이스 범주.
+- **S36** [AAT: bobbin lace](https://www.getty.edu/vow/AATFullDisplay?find=&logic=AND&note=&subjectid=300132869) — Getty Research Institute; `retrieved_excerpt`. 보빈 레이스의 제작 범주; 기법은 외형과 별도.
+- **S37** [Piece, French, Chantilly, 19th century](https://www.metmuseum.org/art/collection/search/215207) — The Metropolitan Museum of Art; `catalog_metadata`. 샹티이·보빈 레이스로 분류된 소장품; 픽셀 미검토.
+- **S38** [Yves Saint Laurent Evening dress, 1963](https://www.metmuseum.org/art/collection/search/83327) — The Metropolitan Museum of Art; `retrieved_text`. 기퓌르의 흰색 입체 표면과 단순한 의상 실루엣.
+- **S39** [Finger-ring; memento mori; intaglio](https://www.britishmuseum.org/collection/object/H_AF-978) — British Museum; `retrieved_text`. 반지의 해골 모티프와 니엘로 식물 장식의 실제 기록.
+- **S40** [Orpheus seated playing his lyre, Peregrino da Cesena](https://www.metmuseum.org/art/collection/search/363363) — The Metropolitan Museum of Art; `retrieved_text`. 니엘로의 어두운 선 채움과 이를 옮긴 판화의 구별.
+- **S41** [King's College Chapel: Up to 1515](https://www.kings.cam.ac.uk/kings-college-chapel-1515) — King's College Cambridge; `retrieved_text`. 팬 볼트의 실제 건축 문맥.
+- **S42** [Queen Victoria Jubilee Fountain, List entry 1113571](https://historicengland.org.uk/listing/the-list/list-entry/1113571) — Historic England; `retrieved_text`. 입에서 물이 나왔던 가고일의 기록; 기능은 문맥 근거가 필요.
+- **S43** [University of Alcalá de Henares, College of San Ildefonso](https://www.spain.info/en/places-of-interest/university-college-san-ildefonso/) — Spain Tourism Board; `retrieved_text`. 필라스터·기둥으로 나누어진 플라테레스코 정면.
+- **S44** [Old City of Salamanca](https://whc.unesco.org/en/list/381) — UNESCO World Heritage Centre; `retrieved_text`. 추리게라 가문과 추리게레스코의 지역·역사적 문맥.
+- **S45** [Symbolism](https://www.metmuseum.org/ja/essays/symbolism) — The Metropolitan Museum of Art; `retrieved_text`. 객관적 재현보다 관념/정서의 표현을 중시하는 흐름.
+- **S46** [Making of Star Wars: Skeleton Crew's Mama Crab](https://www.starwars.com/news/skeleton-crew-tippett-studio-interview) — Lucasfilm / StarWars.com; `retrieved_text`. 제작자 인터뷰의 킷배싱·그리블 부품과 스케일.
+- **S47** [Where to begin with David Cronenberg](https://www.bfi.org.uk/features/where-begin-with-david-cronenberg) — British Film Institute; `opened_text`. 허구적 몸의 변형·혼성·쇠락이 관념과 연결되는 바디 호러 문맥.
+- **S48** [5 reasons to watch cyberpunk body-horror Tetsuo: The Iron Man](https://www.bfi.org.uk/features/5-reasons-tetsuo-iron-man) — British Film Institute; `retrieved_text`. 몸과 금속의 허구적 변형; 생체역학 학문과 별도.
+- **S49** [Lolita fashion: Japanese street style](https://www.vam.ac.uk/articles/lolita-fashion-japanese-street-style) — Victoria and Albert Museum; `retrieved_text`. 레이스/프릴/러플과 고딕 등 여러 하위 범주; 성적 명칭으로 환원하지 않음.
+- **S50** [Passementerie, silk and metal thread](https://www.metmuseum.org/art/collection/search/220674) — The Metropolitan Museum of Art; `catalog_metadata`. 실크·금속사 트리밍 실물의 분류/재료; 픽셀 미검토.
+- **S51** [AAT: horror vacui](https://www.getty.edu/vow/AATFullDisplay?find=&logic=&note=&subjectid=300266827) — Getty Research Institute; `opened_text`. 빈 공간을 거의 남기지 않는 복잡하고 혼잡한 구성 개념.
+- **S52** [Chiaroscuro](https://www.nationalgallery.org.uk/paintings/glossary/chiaroscuro) — National Gallery London; `opened_text`. 명암의 대비로 부피를 모델링하는 표현.
+- **S53** [Tenebrism](https://www.nationalgallery.org.uk/paintings/glossary/tenebrism) — National Gallery London; `opened_text`. 어두운 환경 속 얼굴·손 등의 선택적인 밝은 영역.
+- **S54** [Vanitas](https://www.nationalgallery.org.uk/paintings/glossary/vanitas) — National Gallery London; `opened_text`. 성취의 물건과 죽음/덧없음의 단서를 관계짓는 정물 주제.
+- **S55** [Petticoat and corset underpinnings, 1830s](https://www.metmuseum.org/art/collection/search/82076) — The Metropolitan Museum of Art; `opened_text`. 보닝·코딩·센터 프런트 busk를 설명한 복식 기록.
+- **S56** [AAT: plate tracery](https://www.getty.edu/vow/AATFullDisplay?find=&logic=AND&note=clay&subjectid=300003202) — Getty Research Institute; `retrieved_text`. 석판에 뚫었거나 뚫은 듯 보이는 개구부의 판형 트레이서리.
+- **S57** [Masjid-i Imam (Isfahan)](https://www.archnet.org/sites/1622?media_content_id=63198) — Archnet; `retrieved_text`. 이완과 미나레트의 여러 층 무카르나스 단위.
+- **S58** [AAT: ogee arches](https://www.getty.edu/vow/AATFullDisplay?find=church&logic=null&note=&subjectid=300001032) — Getty Research Institute; `retrieved_text`. 반전하는 곡선으로 이루어진 첨두아치.
+- **S59** [AAT: Chantilly lace](https://www.getty.edu/vow/AATFullDisplay?find=&logic=AND&note=work&subjectid=300264619) — Getty Research Institute; `retrieved_text`. 고운 망 바탕과 꽃/스크롤을 가진 샹티이; 수제·기계형을 구분.
+- **S60** [Cartouche with interlaced band pattern, after Vredeman de Vries](https://www.metmuseum.org/art/collection/search/629245) — The Metropolitan Museum of Art; `retrieved_text`. 중앙 구획과 교차 띠, 프레임의 장식 관계.
+- **S61** [AAT: tape lace](https://www.getty.edu/vow/AATFullDisplay?find=goat&logic=AND&note=&subjectid=300312139) — Getty Research Institute; `retrieved_text`. tape guipure라는 용례도 있으며 브리지 또는 망으로 연결; guipure의 범위를 하나로 환원하지 않음.
