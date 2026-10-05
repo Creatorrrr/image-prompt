@@ -52,6 +52,20 @@ Character-response meanings, multilingual paraphrases, abstract axis classes, se
 
 Other required typed meanings use `photo-semantic-assertion-obligations/v1`. The composed audit recomputes the contract from the core, rejects missing or mutated blocks, and requires a byte-identical assertion/evidence map with every phrase literal in `prompt_en`.
 
+## Interpreting applicability diagnostics
+
+Use this post-core guidance when a consequential rejection needs investigation or the requester asks how data was used. It applies across subjects and wording; it is not a keyword-triggered route or a requirement to inspect implementation for every candidate. Read the relevant saved inputs and full source detail first. Inspect the exact bound implementation only when those records do not explain the predicate; current source may differ from an archived run.
+
+- Separate absent input from a present value that did not match registered classes. Report the latter as unrecognized by that matcher, not absent or semantically opposite. Class matches are also bounded evidence: check negation, contrasting senses and context before treating them as compatibility.
+- Separate lack of a positive context match from an explicit different sense or exclusion. Inspect which fields and conditions were evaluated. Do not manufacture a preferred activation phrase, requester definition, age, role or relationship to make a condition pass.
+- Separate common input requirements from additional profile requirements. Identify the extra field actually demanded; validity under the common authoring contract does not guarantee conformity to every advisory profile. Missing extra information does not authorize guessing it or treating the request's meaning as invalid.
+- Separate a missing relation operator from a present operator with different members or endpoints. Compare participants, ownership, direction, causal stage and literal evidence. A generic starting-state role is not universally equivalent to an affect or result role, and a trigger-to-result edge does not automatically prove a trigger-to-action edge. A role connection needs its own evidence; do not alter signatures just to obtain conformance.
+- Separate a valid source meaning from its applicability to this scene and from authorial preference. Record the concrete unmet prerequisite or locked effect when known. A valid but declined option is not evidence of faulty data.
+
+These are explanations, not new serialized statuses or eligibility overrides. Preserve the exact pack, core, assertions and bindings. Advisory recognition failure does not erase a clear requester instruction. Continue with the frozen meaning when the optional hit adds no usable assistance; use the existing rebuild or repair path if required evidence must change. If a binding required gate remains unresolved, report the concrete limitation rather than claim success or waive it. Ask only for genuinely unresolved requester meaning, not because an optional matcher failed.
+
+When explaining the run, distinguish lookup execution, exposed candidates, actual review, selection, final prompt realization, and native-pixel results. Ground each claim in the corresponding records and stable IDs; count duplicate hits once when reporting unique candidates. Preserve uncertainty when a stage was not recorded. Zero selection alone proves neither failed search nor universal incompatibility. Definition correctness, predicate behavior, prompt integrity and image fidelity are separate findings.
+
 ## Compact composition view
 
 `scripts/compose_pack_view.py --pack candidate_pack.json` projects an immutable v6 source pack into requirements and a candidate catalog. `--output composer_view.json` saves that view; repeatable `--candidate-id <id>` returns complete candidate details bound to the same source hash.
