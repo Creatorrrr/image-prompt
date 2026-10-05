@@ -121,7 +121,7 @@ class ColorRelationsTests(unittest.TestCase):
         ids={f"slot:{slot}:{e['id']}" for slot,entries in self.extension['slots'].items() for e in entries}
         self.assertTrue(ids<=set(index['entries']))
         raw=pg.load_visual_obligation_registry(SKILL/'assets/photo_prompt_visual_obligations.json')
-        vindex=json.loads((SKILL/'assets/photo_prompt_visual_profile_index.json').read_text())
+        vindex=pg.load_visual_profile_index_payload(SKILL/'assets/photo_prompt_visual_profile_index.json')
         pg.validate_visual_profile_index_metadata(vindex,raw)
 
 if __name__=='__main__':unittest.main()

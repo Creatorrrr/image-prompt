@@ -37,6 +37,11 @@ V19_PARENT_MANIFEST = Path(
 )
 V19_PARENT_MANIFEST_SHA256 = '114862610fdc1bba449bcefd8d86ec79b17806c56bd051958a8bf69089f43416'
 V19_PARENT_COMMIT = '9105a63d9b261f91219875e15f346d6d52e477bc'
+V20_PARENT_MANIFEST = Path(
+    'docs/research-evidence/photo-prompt/visual-profile-shards-20261005/V20-PARENT-SOURCE.json'
+)
+V20_PARENT_MANIFEST_SHA256 = '0949707e066ccfb73396b5825f4d70bdc79b2155e091d4233913bd7eba147e6b'
+V20_PARENT_COMMIT = '1d30c96a3a05abfa91f49ac98f205f4e09202a19'
 
 
 def _v17_safe_path(value: str) -> Path:
@@ -383,6 +388,83 @@ def archived_v19_validator(directory: Path, *, source_root: Path = ROOT):
     row = next(row for row in manifest['members'] if row['path'] == V17_PARENT_VALIDATOR)
     raw = _v17_verified_payload(source_root, row)
     return _isolated_parent_validator(directory, raw, directory, version=19)
+
+
+def _v20_parent_manifest(source_root: Path = ROOT) -> dict:
+    """Authenticate the exact V20 source; never substitute current guidance."""
+    raw = _v17_regular_path(source_root, V20_PARENT_MANIFEST.as_posix()).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != V20_PARENT_MANIFEST_SHA256:
+        raise AssertionError('Frozen V20 parent source manifest drift')
+    manifest = json.loads(raw)
+    counts = {'reuse_v19_parent_source': 144,
+              'new_immutable_snapshot_same_git_blob': 5}
+    if (manifest['schema'] != 'photo-v20-parent-source-manifest/v1'
+            or manifest['source_pin'] != V20_PARENT_COMMIT
+            or manifest['member_count'] != 149 or len(manifest['members']) != 149
+            or manifest['dependency_count'] != 207 or len(manifest['dependencies']) != 207
+            or manifest['counts'] != counts
+            or manifest['validator_support_manifest'] != V17_SUPPORT_MANIFEST.as_posix()
+            or manifest['validator_support_manifest_sha256'] != V17_SUPPORT_MANIFEST_SHA256):
+        raise AssertionError('Frozen V20 parent source manifest shape drift')
+    previous = {row['path']: row for row in _v19_parent_manifest(source_root)['members']}
+    members = manifest['members']
+    paths = set()
+    for row in members + manifest['dependencies']:
+        path = _v17_safe_path(row['path']).as_posix()
+        _v17_safe_path(row['source_path'])
+        if path in paths:
+            raise AssertionError('Duplicate V20 historical source path')
+        paths.add(path)
+        if (row['git_commit'] != V20_PARENT_COMMIT or row['git_path'] != path
+                or row['mode'] not in ('100644', '100755') or type(row['bytes']) is not int
+                or row['bytes'] < 0 or len(row['sha256']) != 64 or len(row['git_blob']) != 40
+                or any(c not in '0123456789abcdef' for c in row['sha256'] + row['git_blob'])):
+            raise AssertionError('Frozen V20 historical source provenance drift')
+    if (len({row['source_path'] for row in members}) != 149
+            or {kind: sum(row['kind'] == kind for row in members) for kind in counts} != counts
+            or sum(row['bytes'] for row in members) != manifest['total_member_bytes']):
+        raise AssertionError('Frozen V20 historical source inventory drift')
+    snapshots = {V17_PARENT_VALIDATOR, 'skills/photo-prompt-image-generator/SKILL.md',
+                 'skills/photo-prompt-image-generator/references/composition-contract.md',
+                 'skills/photo-prompt-image-generator/references/retrieval-contract.md',
+                 'skills/subculture-illustration-image-generator/assets/universal_scene_baseline_v2.json'}
+    for row in members:
+        if row['kind'] == 'reuse_v19_parent_source':
+            old = previous.get(row['path'], {})
+            allowed = all(row[key] == old.get(key) for key in ('source_path', 'git_blob', 'mode', 'bytes', 'sha256'))
+        else:
+            allowed = row['path'] in snapshots and row['source_path'] == (
+                V20_PARENT_MANIFEST.parent / 'v20-parent-source-files' / row['path']).as_posix()
+        if not allowed:
+            raise AssertionError('Unregistered V20 historical source backing path')
+    if any(row['source_path'] != row['path'] for row in manifest['dependencies']):
+        raise AssertionError('Unregistered V20 historical dependency backing path')
+    return manifest
+
+
+def materialize_v20_parent_source(directory: Path, *, source_root: Path = ROOT) -> dict:
+    """Copy only the pinned 1d30 source and its sealed dependencies, without Git."""
+    manifest = _v20_parent_manifest(source_root)
+    records = manifest['members'] + manifest['dependencies']
+    if directory.is_symlink() or (directory.exists() and any(directory.iterdir())):
+        raise AssertionError('V20 historical destination must be an empty directory')
+    for row in records:
+        _v17_verified_payload(source_root, row)
+    directory.mkdir(parents=True, exist_ok=True)
+    for row in records:
+        raw = _v17_verified_payload(source_root, row)
+        target = directory / _v17_safe_path(row['path'])
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(raw)
+        target.chmod(int(row['mode'][-3:], 8))
+    return manifest
+
+
+def archived_v20_validator(directory: Path, *, source_root: Path = ROOT):
+    manifest = materialize_v20_parent_source(directory, source_root=source_root)
+    row = next(row for row in manifest['members'] if row['path'] == V17_PARENT_VALIDATOR)
+    raw = _v17_verified_payload(source_root, row)
+    return _isolated_parent_validator(directory, raw, directory, version=20)
 
 
 def archived_v16_validator(directory: Path):

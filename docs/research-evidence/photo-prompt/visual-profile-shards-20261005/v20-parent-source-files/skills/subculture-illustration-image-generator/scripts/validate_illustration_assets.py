@@ -6963,129 +6963,6 @@ def _validate_v20_authoring_source_successor(
              "photo V20 universal descriptor changed beyond validator hash")
 
 
-# V21 changes only visual-index storage and its bound loader/builder sources.
-PHOTO_V21_STORAGE_PROOF_SHA256 = "ccaa457a707645d6863d5a08a30b77b7b72dd70847ca191d263c2f7f429fbf47"
-PHOTO_V21_STORAGE_SOURCE_COMMIT = "4da854c640d50b85703ad8471779afb02ccdeaa6"
-PHOTO_V21_STORAGE_PARENT_COMMIT = "1d30c96a3a05abfa91f49ac98f205f4e09202a19"
-
-
-def _validate_v21_visual_storage_successor(
-    asset_dir: Path, repo_root: Path, baseline: dict[str, Any],
-    pack: dict[str, Any], raw: bytes,
-) -> None:
-    """Bind an exact storage migration with identical logical index and pack."""
-    evidence_dir = repo_root / "docs/research-evidence/photo-prompt/visual-profile-shards-20261005"
-    evidence_path = evidence_dir / "V21-STORAGE-BINDING-PROOF.json"
-    _require(_sha256(evidence_path) == PHOTO_V21_STORAGE_PROOF_SHA256,
-             "photo V21 immutable storage proof drift")
-    proof = _load_json(evidence_path)
-    _require(re.fullmatch(r"[0-9a-f]{40}", PHOTO_V21_STORAGE_SOURCE_COMMIT) is not None
-             and proof.get("schema") == "photo-visual-index-storage-zero-pack-delta-transition/v21"
-             and proof.get("source_commit") == PHOTO_V21_STORAGE_SOURCE_COMMIT
-             and proof.get("previous_qualified_commit") == PHOTO_V21_STORAGE_PARENT_COMMIT,
-             "photo V21 integration source commit is unresolved or changed")
-    _require(baseline.get("visual_index_storage_transition") == {
-        "source_commit": proof["source_commit"], "source_tree": proof["source_tree"],
-        "previous_qualified_commit": proof["previous_qualified_commit"],
-        "evidence_sha256": PHOTO_V21_STORAGE_PROOF_SHA256,
-        "source_files": proof["source_files"],
-        "active_visual_shards": proof["active_visual_shards"],
-        "logical_index_sha256": proof["logical_index_sha256"],
-    }, "photo V21 storage provenance drift")
-    _require(not any(key in baseline for key in (
-        "metadata_only_transition", "zero_pack_delta_transition", "optional_inventory_transition",
-        "authored_metadata_ownership_transition", "cute_equivalent_language_inventory_transition",
-        "glass_interface_inventory_transition", "authoring_source_transition")),
-        "photo V21 cannot relabel the storage transition")
-    _require(all(_sha256(repo_root / name) == digest
-                 for name, digest in proof["immutable_history"].items()),
-             "photo V21 immutable predecessor artifact drift")
-    _require(all(_sha256(repo_root / name) == digest
-                 for name, digest in proof["historical_dependencies"].items()),
-             "photo V21 historical dependency drift")
-    _require(_sha256(repo_root / proof["source_parent_manifest"])
-             == proof["source_parent_manifest_sha256"]
-             and len(proof["source_parent_files"]) == 149
-             and all(_sha256(repo_root / name) == digest
-                     for name, digest in proof["source_parent_files"].items()),
-             "photo V21 historical source manifest or bytes drift")
-    previous_manifest = asset_dir / "photo_regression_baseline_v20.json"
-    previous_pack = asset_dir / "photo_regression_baseline_v20_pack.json"
-    current_pack = asset_dir / "photo_regression_baseline_v21_pack.json"
-    _require(_sha256(previous_manifest) == proof["previous_manifest_sha256"]
-             and _sha256(previous_pack) == _sha256(current_pack)
-             == proof["unchanged_pack_sha256"] == baseline.get("sha256")
-             and raw == previous_pack.read_bytes() == current_pack.read_bytes(),
-             "photo V21 zero pack delta binding drift")
-    _require(pack == _load_json(previous_pack)[0]
-             and pack.get("pack_id") == proof["unchanged_pack_id"] == _canonical_photo_pack_id(pack)
-             and _public_photo_candidate_count(pack) == proof["public_candidate_count"] == 64
-             and proof["changed_pack_leaves"] == [], "photo V21 frozen pack changed")
-    previous_proof = _load_json(repo_root / proof["previous_proof_path"])
-    old_sources, current_sources = previous_proof["source_files"], proof["source_files"]
-    source_skill = Path(baseline["command"][1]).parent.parent
-    source_assets = repo_root / source_skill / "assets"
-    expected_changes = {str(source_skill / "assets/photo_prompt_visual_profile_index.json"),
-                        str(source_skill / "scripts/prompt_generator.py"),
-                        str(source_skill / "scripts/build_visual_profile_index.py"),
-                        str(source_skill / "references/maintenance.md")}
-    expected_additions = {str(source_skill / "scripts/visual_profile_index_storage.py")}
-    _require(set(current_sources) - set(old_sources) == expected_additions
-             and not (set(old_sources) - set(current_sources)),
-             "photo V21 source inventory membership drift")
-    deltas = [{"path": name, "previous": old_sources[name], "current": current_sources[name]}
-              for name in sorted(old_sources) if old_sources[name] != current_sources[name]]
-    _require({row["path"] for row in deltas} == expected_changes
-             and deltas == proof["reviewed_source_deltas"],
-             "photo V21 exact storage source changes drift")
-    _require({path.name: _sha256(path) for path in source_assets.glob("*.json")}
-             == proof["source_inventory_after"], "photo V21 exact DATA inventory drift")
-    _require(all(_sha256(repo_root / name) == digest for name, digest in current_sources.items()),
-             "photo V21 DATA, guidance or runtime source binding drift")
-    semantic_root = source_assets / "photo_prompt_semantic_index_shards/7ff3e10cc7163368"
-    semantic_paths = {str((semantic_root / f"shard-{index:03d}.json").relative_to(repo_root))
-                      for index in range(16)}
-    actual_semantic = {str(path.relative_to(repo_root)): _sha256(path)
-                       for path in semantic_root.glob("*.json")}
-    _require(set(proof["active_semantic_shards"]) == semantic_paths
-             and actual_semantic == proof["active_semantic_shards"] == previous_proof["active_semantic_shards"],
-             "photo V21 unchanged active semantic shards drift")
-    index_path = source_assets / "photo_prompt_visual_profile_index.json"
-    manifest = _load_json(index_path)
-    visual_root = source_assets / "photo_prompt_visual_profile_index_shards"
-    actual_visual = {str(path.relative_to(repo_root)): _sha256(path)
-                     for path in visual_root.glob("*.json")}
-    _require(manifest.get("storage") == {
-        "format": "visual-profile-sharded-json-v1", "hash_algorithm": "sha256", "shard_count": 16,
-    } and len(manifest.get("shards", [])) == 16
-             and len(actual_visual) == 16 and actual_visual == proof["active_visual_shards"],
-             "photo V21 exact active visual shard inventory drift")
-    # Load the source-bound storage module rather than a cached same-named import.
-    import importlib.util
-    spec = importlib.util.spec_from_file_location(
-        "_photo_v21_bound_storage", source_assets.parent / "scripts/visual_profile_index_storage.py")
-    storage_module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(storage_module)
-    logical = storage_module.load_visual_profile_index_payload(index_path)
-    previous_logical = _load_json(repo_root / proof["previous_visual_index_path"])
-    logical_digest = hashlib.sha256(json.dumps(
-        logical, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False,
-    ).encode("utf-8")).hexdigest()
-    _require(logical == previous_logical
-             and list(logical["entries"]) == list(previous_logical["entries"])
-             and len(logical["entries"]) == proof["visual_entry_count"] == 1813
-             and logical_digest == proof["logical_index_sha256"],
-             "photo V21 logical visual index or entry order changed")
-    descriptor = repo_root / proof["universal_v2_before_path"]
-    _require(_sha256(descriptor) == proof["universal_v2_before_sha256"],
-             "photo V21 universal descriptor archive drift")
-    old_descriptor, old_sha = descriptor.read_bytes(), proof["previous_validator_sha256"].encode("ascii")
-    _require(old_descriptor.count(old_sha) == 1
-             and (asset_dir / "universal_scene_baseline_v2.json").read_bytes()
-             == old_descriptor.replace(old_sha, _sha256(Path(__file__)).encode("ascii"), 1),
-             "photo V21 universal descriptor changed beyond validator hash")
-
-
 def validate_photo_regression_baseline(
     asset_dir: Path, *, baseline_version: int | None = None
 ) -> dict[str, Any]:
@@ -7098,10 +6975,10 @@ def validate_photo_regression_baseline(
     previous_path = asset_dir / "photo_regression_baseline_v5.json"
     if baseline_version is None:
         baseline_version = next(
-            version for version in (21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
+            version for version in (20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
             if (asset_dir / f"photo_regression_baseline_v{version}.json").exists()
         )
-    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21}, "unsupported photo baseline version")
+    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, "unsupported photo baseline version")
     lineage_version = min(baseline_version, 7)
     baseline_path = asset_dir / f"photo_regression_baseline_v{lineage_version}.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
@@ -7352,8 +7229,6 @@ def validate_photo_regression_baseline(
         _validate_v19_authoring_source_successor(asset_dir, repo_root, baseline, pack, raw)
     if baseline_version == 20:
         _validate_v20_authoring_source_successor(asset_dir, repo_root, baseline, pack, raw)
-    if baseline_version == 21:
-        _validate_v21_visual_storage_successor(asset_dir, repo_root, baseline, pack, raw)
     return {
         "status": "pass",
         "schema": baseline["schema"],

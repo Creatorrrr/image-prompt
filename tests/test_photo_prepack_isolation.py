@@ -159,10 +159,8 @@ class PhotoPrepackIsolationTests(unittest.TestCase):
             str(profile.get("id") or "").casefold()
             for profile in self.registry.get("profiles") or []
         }
-        profile_index = json.loads(
-            (SKILL_DIR / "assets" / "photo_prompt_visual_profile_index.json").read_text(
-                encoding="utf-8"
-            )
+        profile_index = prompt_generator.load_visual_profile_index_payload(
+            SKILL_DIR / "assets" / "photo_prompt_visual_profile_index.json"
         )
         profile_ids.update(str(profile_id).casefold() for profile_id in profile_index["entries"])
         self.assertEqual(

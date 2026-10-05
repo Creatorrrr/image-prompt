@@ -82,7 +82,7 @@ class PhotoImaginalVisualSemanticsTests(unittest.TestCase):
         cls.extension = json.loads(EXTENSION_PATH.read_text(encoding="utf-8"))
         cls.tags = prompt_generator.load_json(TAGS_PATH)
         cls.registry = prompt_generator.load_visual_obligation_registry(REGISTRY_PATH)
-        cls.index = json.loads(INDEX_PATH.read_text(encoding="utf-8"))
+        cls.index = prompt_generator.load_visual_profile_index_payload(INDEX_PATH)
         cls.routing_registry = {
             **cls.registry,
             "profiles": [
