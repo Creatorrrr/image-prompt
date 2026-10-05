@@ -10,6 +10,8 @@ import time
 from pathlib import Path
 from typing import Sequence
 
+from visual_profile_index_storage import write_sharded_visual_profile_index
+
 from prompt_generator import (
     DEFAULT_SEMANTIC_DIMENSIONS,
     SEMANTIC_MODEL_ID,
@@ -18,7 +20,7 @@ from prompt_generator import (
     VISUAL_PROFILE_INDEX_FILENAME,
     build_visual_profile_index_payload,
     embed_texts_with_gemini,
-    load_json,
+    load_visual_profile_index_payload,
     load_visual_obligation_registry,
     load_visual_profile_index,
     visual_profile_semantic_text,
@@ -65,10 +67,7 @@ def reusable_vectors(
     for path in paths:
         if not path.exists():
             continue
-        try:
-            payload = load_json(path)
-        except (OSError, json.JSONDecodeError):
-            continue
+        payload = load_visual_profile_index_payload(path)
         if (
             payload.get("provider") != provider
             or payload.get("embedding_model") != model
@@ -86,13 +85,7 @@ def reusable_vectors(
 
 
 def write_payload(path: Path, payload: dict) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_name(path.name + ".tmp")
-    temporary.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    temporary.replace(path)
+    write_sharded_visual_profile_index(path, payload)
 
 
 def main() -> int:

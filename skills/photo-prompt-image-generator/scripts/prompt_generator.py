@@ -29,6 +29,7 @@ _SCRIPTS_IMPORT_DIR_ADDED = _SCRIPTS_IMPORT_DIR not in sys.path
 if _SCRIPTS_IMPORT_DIR_ADDED:
     sys.path.insert(0, _SCRIPTS_IMPORT_DIR)
 try:
+    from visual_profile_index_storage import load_visual_profile_index_payload
     import photo_camera_evidence
     import photo_candidate_semantics
     import photo_contextual_appeal
@@ -1681,7 +1682,7 @@ def load_visual_profile_index(
     index_path = Path(path)
     if not index_path.exists():
         raise FileNotFoundError(f"visual profile index not found: {index_path}")
-    payload = load_json(index_path)
+    payload = load_visual_profile_index_payload(index_path)
     validate_visual_profile_index_metadata(
         payload,
         registry,
