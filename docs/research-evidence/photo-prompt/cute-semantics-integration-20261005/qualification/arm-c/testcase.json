@@ -1,0 +1,81 @@
+{
+  "contract_version": "agent-independent-image-testcase/v1",
+  "agent_authored": true,
+  "request_envelope_file_sha256": "baf9da11e26c6773b5bd098f78ddffe0f37af9c1d4c8d3e8af9990850f38776c",
+  "request_sha256": "6c159fff928f5d491122149c43d8880663fe7c6f31a87edbde275e75d0d7d472",
+  "random_draws_sha256": "43aadfa53dca1299124bbfad11fc4f6b85a25dce99fd9dd14302a4e8410332b6",
+  "selected_keywords": [
+    "고개 갸웃",
+    "꽃받침",
+    "하이키",
+    "복슬복슬",
+    "캐치라이트"
+  ],
+  "concept": "A fictional adult curator in an eccentric museum of cloud-making contraptions, playfully posing with a flower-cup gesture at the counter.",
+  "semantic_scope_note": "These chosen realizations define only this independently frozen test, not universal meanings of genre labels or requester-owned locks. Source clothes, expression and composition are not automatic obligations.",
+  "reference_scope": "Visible face and short black hair only; fictional adult subject; no actual identity/age/personality/health inference.",
+  "creative_controls_sha256": "469a9beb95d2e6e37fda1ad474f5789a4d73c1e1819789bfdc2912a648150b55",
+  "baseline_prompt_sha256": "4edd80ef734540749f2d1fab5f71f0f650d4b1977de5444a1a0f2e00b9e8f33f",
+  "criteria": [
+    {
+      "id": "T01_head_tilt",
+      "keyword": "고개 갸웃",
+      "condition": "Head visibly tilts toward screen right approximately 10–20 degrees relative to nearly level shoulders; facial midline/eye line visibly incline.",
+      "required_observation": "Both eyes, facial axis and shoulders are visible."
+    },
+    {
+      "id": "T02_flower_cup",
+      "keyword": "꽃받침",
+      "condition": "Two complete open hands frame the lower face; palms face the viewer, both lower-jaw/palm-heel contacts are visible, wrists meet below chin, and ten separately traceable attached fingers fan beside the cheeks.",
+      "required_observation": "All fingertips, both palm contours, two wrist connections and jaw-contact boundaries remain assessable."
+    },
+    {
+      "id": "T03_high_key",
+      "keyword": "하이키",
+      "condition": "The whole frame reads bright and luminous with a pale background, softly filled facial shadows and retained skin/hand detail; a bright face inside a predominantly dark frame is insufficient.",
+      "required_observation": "Whole image luminance and face/hand shadow transitions."
+    },
+    {
+      "id": "T04_fluffy",
+      "keyword": "복슬복슬",
+      "condition": "The cream vest shows visibly long soft pile at its edges, and at least one background fiber-cloud sculpture shows shaggy fibers with readable texture rather than a smooth blob.",
+      "required_observation": "Vest fringe and a fiber-cloud edge are visible."
+    },
+    {
+      "id": "T05_catchlights",
+      "keyword": "캐치라이트",
+      "condition": "Both eyes are open and each pupil has a distinct small bright light-source reflection, separated from eyelid/skin highlights. Rectangle shape is the authored target, with a distinct coherent small light reflection sufficient for the keyword.",
+      "required_observation": "Original-pixel pupil reflections visible in each eye."
+    },
+    {
+      "id": "T06_reference",
+      "keyword": null,
+      "condition": "Short black bob and the broad visible facial structure remain visually guided by the supplied reference, without asserting actual identity or age.",
+      "required_observation": "Reference and generated visible face/hair can be compared directly."
+    },
+    {
+      "id": "T07_complex_scene",
+      "keyword": null,
+      "condition": "A recognizable museum display counter, glass/brass bell-jar exhibit with fiber clouds/copper weather gauges, deeper hanging fabric kites/line-drawing wall, distinct hard/soft materials and coherent foreground-to-background depth are visible. At least four independent conditions among setting, action, material, light and spatial layers must be assessable.",
+      "required_observation": "Whole native frame shows a single coherent layered museum scene."
+    },
+    {
+      "id": "T08_embodiment",
+      "keyword": null,
+      "condition": "Both elbows visibly rest on the counter, forearms connect to the shown hands, fingers and jaw contacts are anatomically coherent, and facial features remain readable alongside simultaneous tilted-head/open-palm state.",
+      "required_observation": "The required interaction is readable as one possible human pose."
+    }
+  ],
+  "verdict_rule": "PASS only when every independently frozen condition and every effective pack hard gate passes. Any FAIL or UNOBSERVABLE yields FAIL under partial_is_fail. Runtime blocking yields BLOCKED_UNSCORED. User acceptance remains pending.",
+  "retry_limit": 1,
+  "precore_inputs": [
+    "request_envelope.json",
+    "reference native image",
+    "skills/photo-prompt-image-generator/SKILL.md",
+    "skills/photo-prompt-image-generator/precore/creative_controls.json",
+    "candidate-free creative controls resolver output",
+    "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+    "independent general knowledge"
+  ],
+  "project_candidate_access_before_freeze": false
+}

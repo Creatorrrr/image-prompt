@@ -1,0 +1,131 @@
+{
+  "diagnostic": "new cute candidate/profile overlays disabled in memory only",
+  "not_a_complete_historical_checkout": true,
+  "test_names": [
+    "tests.test_photo_nape_effect_scope.PhotoNapeEffectScopeTests.test_both_source_surfaces_declare_nape_and_preserve_original_effect",
+    "tests.test_photo_nape_effect_scope.PhotoNapeEffectScopeTests.test_nape_parent_and_declared_leaf_are_protected",
+    "tests.test_photo_textile_opacity_effect_scope.PhotoTextileOpacityEffectScopeTests.test_matching_sources_append_opacity_preserving_family_owner_and_carrier",
+    "tests.test_photo_textile_opacity_effect_scope.PhotoTextileOpacityEffectScopeTests.test_canonical_opacity_and_ancestor_locks_reject",
+    "tests.test_photo_character_appearance_100.CharacterAppearance100Tests.test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates",
+    "tests.test_photo_liminal_active_use_korean_data_cleanup.LiminalActiveUseKoreanDataCleanupTests.test_complete_merged_state_and_twenty_one_keeps_remain_exact",
+    "tests.test_photo_nape_metadata_boundary_history.NapeMetadataBoundaryHistoryTests.test_registered_version_replay_and_all_legacy_artifacts_are_unchanged"
+  ],
+  "tests_run": 7,
+  "failures": [
+    {
+      "test": "tests.test_photo_nape_effect_scope.PhotoNapeEffectScopeTests.test_both_source_surfaces_declare_nape_and_preserve_original_effect (profile='sca_h15')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_nape_effect_scope.py\", line 37, in test_both_source_surfaces_declare_nape_and_preserve_original_effect\n    self.assertIn({'dimension': 'appearance', 'target': 'main_subject', 'property': path}, effects)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: {'dimension': 'appearance', 'target': 'main_subject', 'property': 'hair.style.nape.layer_length'} not found in [{'dimension': 'appearance', 'target': 'main_subject', 'property': 'hair.style.layers.crown_nape_length'}]\n"
+    },
+    {
+      "test": "tests.test_photo_nape_effect_scope.PhotoNapeEffectScopeTests.test_both_source_surfaces_declare_nape_and_preserve_original_effect (profile='sca_h16')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_nape_effect_scope.py\", line 37, in test_both_source_surfaces_declare_nape_and_preserve_original_effect\n    self.assertIn({'dimension': 'appearance', 'target': 'main_subject', 'property': path}, effects)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: {'dimension': 'appearance', 'target': 'main_subject', 'property': 'hair.style.nape.undercut_length'} not found in [{'dimension': 'appearance', 'target': 'main_subject', 'property': 'hair.style.side.undercut_length'}]\n"
+    },
+    {
+      "test": "tests.test_photo_nape_effect_scope.PhotoNapeEffectScopeTests.test_nape_parent_and_declared_leaf_are_protected (profile='sca_h15', path='hair.style.nape')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_nape_effect_scope.py\", line 45, in test_nape_parent_and_declared_leaf_are_protected\n    self.assertFalse(contracts.property_effects_allowed(self.lock(path), e['affected_dimensions'], e['affected_properties']))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n"
+    },
+    {
+      "test": "tests.test_photo_nape_effect_scope.PhotoNapeEffectScopeTests.test_nape_parent_and_declared_leaf_are_protected (profile='sca_h15', path='hair.style.nape.layer_length')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_nape_effect_scope.py\", line 45, in test_nape_parent_and_declared_leaf_are_protected\n    self.assertFalse(contracts.property_effects_allowed(self.lock(path), e['affected_dimensions'], e['affected_properties']))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n"
+    },
+    {
+      "test": "tests.test_photo_nape_effect_scope.PhotoNapeEffectScopeTests.test_nape_parent_and_declared_leaf_are_protected (profile='sca_h16', path='hair.style.nape')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_nape_effect_scope.py\", line 45, in test_nape_parent_and_declared_leaf_are_protected\n    self.assertFalse(contracts.property_effects_allowed(self.lock(path), e['affected_dimensions'], e['affected_properties']))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n"
+    },
+    {
+      "test": "tests.test_photo_nape_effect_scope.PhotoNapeEffectScopeTests.test_nape_parent_and_declared_leaf_are_protected (profile='sca_h16', path='hair.style.nape.undercut_length')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_nape_effect_scope.py\", line 45, in test_nape_parent_and_declared_leaf_are_protected\n    self.assertFalse(contracts.property_effects_allowed(self.lock(path), e['affected_dimensions'], e['affected_properties']))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n"
+    },
+    {
+      "test": "tests.test_photo_textile_opacity_effect_scope.PhotoTextileOpacityEffectScopeTests.test_matching_sources_append_opacity_preserving_family_owner_and_carrier (candidate='clt_ct091_v1')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_textile_opacity_effect_scope.py\", line 41, in test_matching_sources_append_opacity_preserving_family_owner_and_carrier\n    self.assertEqual(row['affected_properties'], expected)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [{'di[100 chars]eta'}] != [{'di[100 chars]eta'}, {'dimension': 'appearance', 'target': '[56 chars]ty'}]\n\nSecond list contains 1 additional elements.\nFirst extra element 1:\n{'dimension': 'appearance', 'target': 'main_subject', 'property': 'wardrobe.surface.sheer_opacity'}\n\n  [{'dimension': 'appearance',\n    'property': 'wardrobe.surface.chiffon_organza_taffeta',\n+   'target': 'main_subject'},\n+  {'dimension': 'appearance',\n+   'property': 'wardrobe.surface.sheer_opacity',\n    'target': 'main_subject'}]\n"
+    },
+    {
+      "test": "tests.test_photo_textile_opacity_effect_scope.PhotoTextileOpacityEffectScopeTests.test_matching_sources_append_opacity_preserving_family_owner_and_carrier (candidate='clt_ct091_v2')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_textile_opacity_effect_scope.py\", line 41, in test_matching_sources_append_opacity_preserving_family_owner_and_carrier\n    self.assertEqual(row['affected_properties'], expected)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [{'di[100 chars]eta'}] != [{'di[100 chars]eta'}, {'dimension': 'appearance', 'target': '[56 chars]ty'}]\n\nSecond list contains 1 additional elements.\nFirst extra element 1:\n{'dimension': 'appearance', 'target': 'main_subject', 'property': 'wardrobe.surface.sheer_opacity'}\n\n  [{'dimension': 'appearance',\n    'property': 'wardrobe.surface.chiffon_organza_taffeta',\n+   'target': 'main_subject'},\n+  {'dimension': 'appearance',\n+   'property': 'wardrobe.surface.sheer_opacity',\n    'target': 'main_subject'}]\n"
+    },
+    {
+      "test": "tests.test_photo_textile_opacity_effect_scope.PhotoTextileOpacityEffectScopeTests.test_canonical_opacity_and_ancestor_locks_reject (candidate='clt_ct091_v1', path='wardrobe.surface.sheer_opacity')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_textile_opacity_effect_scope.py\", line 48, in test_canonical_opacity_and_ancestor_locks_reject\n    self.assertFalse(self.allowed(cid, path))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n"
+    },
+    {
+      "test": "tests.test_photo_textile_opacity_effect_scope.PhotoTextileOpacityEffectScopeTests.test_canonical_opacity_and_ancestor_locks_reject (candidate='clt_ct091_v2', path='wardrobe.surface.sheer_opacity')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_textile_opacity_effect_scope.py\", line 48, in test_canonical_opacity_and_ancestor_locks_reject\n    self.assertFalse(self.allowed(cid, path))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n"
+    },
+    {
+      "test": "tests.test_photo_character_appearance_100.CharacterAppearance100Tests.test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates (profile='pf_portcullis')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_character_appearance_100.py\", line 72, in test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates\n    self.assertEqual(p[field],q[field])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\nAssertionError: {'exa[205 chars]물린다; 문짝 회전이 아닌 상하 이동 구조가 읽힌다'], 'requires_adul[71 chars]True} != {'exa[205 chars]물린다; 격자가 그 수직 홈을 따라 부분적으로 내려와 있다'], 'requires_[75 chars]True}\nDiff is 744 characters long. Set self.maxDiff to None to see it.\n"
+    },
+    {
+      "test": "tests.test_photo_character_appearance_100.CharacterAppearance100Tests.test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates (profile='pf_window_seat')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_character_appearance_100.py\", line 72, in test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates\n    self.assertEqual(p[field],q[field])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\nAssertionError: {'exa[175 chars]e', '좌석이 벽 깊이 안에 들어간다; 창 측벽과 바깥 개구부가 연결된다; 가구 [108 chars]True} != {'exa[175 chars]e', '붙박이 좌석이 조적 벽의 창 오목부 깊이 안에 자리한다; 창 측벽이 그 좌[153 chars]True}\n  {'exact_terms': ['a built-in seat occupies the depth of the masonry recess; '\n                   'the side reveals connect the seat space to the outer window; '\n                   'the outer opening sits beyond the seat plane',\n-                  '좌석이 벽 깊이 안에 들어간다; 창 측벽과 바깥 개구부가 연결된다; 가구 하나를 창 앞에 둔 장면과 '\n-                  '구별된다'],\n+                  '붙박이 좌석이 조적 벽의 창 오목부 깊이 안에 자리한다; 창 측벽이 그 좌석 공간을 바깥 창과 연결한다; '\n+                  '바깥 개구부는 좌석 면보다 바깥쪽에 놓이며 가구 하나를 창 앞에 둔 장면과 구별된다'],\n   'requires_adult_character': False,\n   'semantic_discovery_requires_component_evidence': True}\n"
+    },
+    {
+      "test": "tests.test_photo_character_appearance_100.CharacterAppearance100Tests.test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates (profile='pf_rib_vault_chapel')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_character_appearance_100.py\", line 72, in test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates\n    self.assertEqual(p[field],q[field])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\nAssertionError: {'exa[166 chars]d', '천장 리브가 교차한다; 리브가 벽측 지지부와 연속된다; 공간 끝의 예배 영[96 chars]True} != {'exa[166 chars]d', '예배당 천장에 걸쳐 돌 리브가 교차한다; 리브가 상단이 뾰족한 개구부 옆의[122 chars]True}\n  {'exact_terms': ['stone ribs intersect across the chapel ceiling; the ribs '\n                   'continue toward supports beside pointed openings; a distinct '\n                   'worship area occupies the chapel end',\n-                  '천장 리브가 교차한다; 리브가 벽측 지지부와 연속된다; 공간 끝의 예배 영역이 구분된다'],\n+                  '예배당 천장에 걸쳐 돌 리브가 교차한다; 리브가 상단이 뾰족한 개구부 옆의 벽측 지지부와 연속된다; 예배당 '\n+                  '끝의 예배 영역이 구분된다'],\n   'requires_adult_character': False,\n   'semantic_discovery_requires_component_evidence': True}\n"
+    },
+    {
+      "test": "tests.test_photo_character_appearance_100.CharacterAppearance100Tests.test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates (profile='pf_double_helix')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_character_appearance_100.py\", line 72, in test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates\n    self.assertEqual(p[field],q[field])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\nAssertionError: {'exa[175 chars]h', '두 개의 계단 경로가 추적된다; 공유 중심부가 비어 보인다; 두 경로가 중[111 chars]True} != {'exa[175 chars]h', '서로 다른 두 나선형 계단 구간이 하나의 중심부 둘레를 감아 돈다; 두 계[178 chars]True}\nDiff is 667 characters long. Set self.maxDiff to None to see it.\n"
+    },
+    {
+      "test": "tests.test_photo_character_appearance_100.CharacterAppearance100Tests.test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates (profile='pf_venetian_arcade')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_character_appearance_100.py\", line 72, in test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates\n    self.assertEqual(p[field],q[field])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\nAssertionError: {'exa[168 chars]이드가 보인다; 위층 개구 리듬이 아래층과 구별된다; 상부 벽체가 갤러리 위에 실제[95 chars]True} != {'exa[168 chars]이드가 보이며 물가를 향한다; 그 위층에 아래 아케이드보다 더 섬세한 투각형 갤러리[144 chars]True}\nDiff is 680 characters long. Set self.maxDiff to None to see it.\n"
+    },
+    {
+      "test": "tests.test_photo_character_appearance_100.CharacterAppearance100Tests.test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates (profile='pf_roofless_ruin')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_character_appearance_100.py\", line 72, in test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates\n    self.assertEqual(p[field],q[field])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\nAssertionError: {'exa[218 chars]이 없어 방 안에서 하늘이 보인다; 남은 벽·창·바닥이 이전 실내를 이룬다; 파손이[112 chars]True} != {'exa[218 chars]이 없어 옛 방 안에서 그 방 위의 열린 하늘이 보인다; 남아 있는 벽과 창 개구부[176 chars]True}\nDiff is 774 characters long. Set self.maxDiff to None to see it.\n"
+    },
+    {
+      "test": "tests.test_photo_liminal_active_use_korean_data_cleanup.LiminalActiveUseKoreanDataCleanupTests.test_complete_merged_state_and_twenty_one_keeps_remain_exact",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_liminal_active_use_korean_data_cleanup.py\", line 180, in test_complete_merged_state_and_twenty_one_keeps_remain_exact\n    self.assertEqual(row['affected_properties'], item['after'])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [{'di[100 chars]eta'}] != [{'di[100 chars]eta'}, {'dimension': 'appearance', 'target': '[56 chars]ty'}]\n\nSecond list contains 1 additional elements.\nFirst extra element 1:\n{'dimension': 'appearance', 'target': 'main_subject', 'property': 'wardrobe.surface.sheer_opacity'}\n\n  [{'dimension': 'appearance',\n    'property': 'wardrobe.surface.chiffon_organza_taffeta',\n+   'target': 'main_subject'},\n+  {'dimension': 'appearance',\n+   'property': 'wardrobe.surface.sheer_opacity',\n    'target': 'main_subject'}]\n"
+    }
+  ],
+  "errors": [
+    {
+      "test": "tests.test_photo_nape_metadata_boundary_history.NapeMetadataBoundaryHistoryTests.test_registered_version_replay_and_all_legacy_artifacts_are_unchanged",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_nape_metadata_boundary_history.py\", line 42, in setUp\n    self.historical_source_hashes = dict(self.baseline['metadata_only_transition']['source_files'])\n                                         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nKeyError: 'metadata_only_transition'\n"
+    }
+  ],
+  "unchanged_relevant_authored_sources": {
+    "skills/photo-prompt-image-generator/assets/photo_prompt_subculture_appearance_extension.json": {
+      "initial_sha256": "219dc469aefc13dc086e87c29b7c2f9bdac1f52cb9c73ea5c2bf7f1cdd35ed57",
+      "current_sha256": "219dc469aefc13dc086e87c29b7c2f9bdac1f52cb9c73ea5c2bf7f1cdd35ed57",
+      "unchanged_from_initial": true
+    },
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_subculture_appearance.json": {
+      "initial_sha256": "affa788ae2ba12a34377f9b6e66f4a6423c6ae7a73f164c49f641ab0deab2b23",
+      "current_sha256": "affa788ae2ba12a34377f9b6e66f4a6423c6ae7a73f164c49f641ab0deab2b23",
+      "unchanged_from_initial": true
+    },
+    "skills/photo-prompt-image-generator/assets/photo_prompt_textile_surface_extension.json": {
+      "initial_sha256": "9f663ddfa6312313d3bd3cfafbfc1b9a0f167edc6afcd6b076ab7c9d7826fbc1",
+      "current_sha256": "9f663ddfa6312313d3bd3cfafbfc1b9a0f167edc6afcd6b076ab7c9d7826fbc1",
+      "unchanged_from_initial": true
+    },
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_textile_surface.json": {
+      "initial_sha256": "ceb537c3dbd023bee1bb4d8881593cd2c60578ad5732212ee2a3e0247e42c26e",
+      "current_sha256": "ceb537c3dbd023bee1bb4d8881593cd2c60578ad5732212ee2a3e0247e42c26e",
+      "unchanged_from_initial": true
+    },
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_palace_fortification.json": {
+      "initial_sha256": "73b31f77aabc17b4ce21f774a541a1ef119b8faa1dacd5658a6014e395a372f7",
+      "current_sha256": "73b31f77aabc17b4ce21f774a541a1ef119b8faa1dacd5658a6014e395a372f7",
+      "unchanged_from_initial": true
+    }
+  },
+  "preexisting_modified_lineage_files": [
+    " M skills/subculture-illustration-image-generator/assets/photo_regression_baseline_v10.json",
+    " M skills/subculture-illustration-image-generator/assets/photo_regression_baseline_v11.json",
+    " M skills/subculture-illustration-image-generator/assets/photo_regression_baseline_v12.json"
+  ],
+  "current_lineage_hash_mismatches": [
+    {
+      "version": 13,
+      "predecessor": "photo_regression_baseline_v12.json",
+      "expected_sha256": "308455efd82dd2a03c3fa408e5dc2b8a72251ce99f3ab2bf8a3be54115ee1812",
+      "actual_sha256": "98a074b07283fdfc1df82f99af81c09ed18b8a20091dab43ad4a08a9d35e7f8a"
+    }
+  ],
+  "limitation": "The two enriched pose/expression files and regenerated indexes remain current; the observed failures concern separate unchanged sources or existing lineage fixtures."
+}

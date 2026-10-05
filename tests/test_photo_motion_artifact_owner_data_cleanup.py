@@ -20,10 +20,11 @@ class MotionArtifactOwnerDataCleanupTests(unittest.TestCase):
         cls.frozen = json.loads((EVIDENCE / 'frozen-inventory-queries.json').read_text())
         cls.acceptance = json.loads((EVIDENCE / 'acceptance-decisions.json').read_text())
         # This oracle freezes the 20261001 ownership revision. Exclude only
-        # the later additive motion paraphrase overlay; its current merged
-        # data and activation contracts are tested independently.
+        # the later additive motion paraphrase overlay and its dependent cute
+        # context overlay; current merged data is tested independently.
         filenames = tuple(name for name in generator.RESEARCH_EXTENSION_FILENAMES
-                          if name != 'photo_prompt_motion_graphics_extension.json')
+                          if name not in {'photo_prompt_motion_graphics_extension.json',
+                                          'photo_prompt_cute_visual_forms_extension.json'})
         with patch.object(generator, 'RESEARCH_EXTENSION_FILENAMES', filenames):
             cls.data = generator.load_json(ASSETS / 'photo_prompt_tags.json')
         cls.rows = {(slot, row['id']): row for slot, rows in cls.data['slots'].items() for row in rows}

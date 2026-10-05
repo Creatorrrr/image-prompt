@@ -1,0 +1,131 @@
+{
+  "contract_version": "agent-qualification-result/v1",
+  "arm": "C",
+  "verdict": "FAIL",
+  "partial_is_fail": true,
+  "user_acceptance": "pending",
+  "random_seed": 17340368523501746970,
+  "selected_keywords": [
+    "고개 갸웃",
+    "꽃받침",
+    "하이키",
+    "복슬복슬",
+    "캐치라이트"
+  ],
+  "concept": "Fictional adult curator at an eccentric cloud-making museum counter.",
+  "precore_independence": "Core, testcase, controls, neutral feature selection and embodiment review frozen before DATA access; no other arm output was used.",
+  "pack_id": "6510a34a03bc8482",
+  "source_core_sha256": "d75f99e6b3e622c27610cbaea93e9746525d2eb0ea37bcd1161377a64f26cc5c",
+  "source_intent_lock_sha256": "ae6ad60c365fd3fdbdba2df9268273b5cb96d396928b5a958173ccc4fd9e7b34",
+  "source_data_freeze_sha256": "b72b757dfa8491fbb56c3cefb1368e463f8209c35b14aa5c5ce1c18aa54ab054",
+  "composed_audits": "PASS / PASS, four nonblocking candidate-coverage warnings each, exact anchor phrases preserved",
+  "runtime_audits": "PASS / PASS",
+  "image_generation": {
+    "tool": "image_gen.imagegen",
+    "actual_call_count": 2,
+    "generated_image_count": 2,
+    "attempt_policy": "one initial + one local pose repair; limit exhausted",
+    "reference_conditioned": true,
+    "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+    "transparent_background": false,
+    "CLI_or_Python_generation_fallback": false
+  },
+  "initial_native": {
+    "verdict": "FAIL",
+    "testcase_passed": 6,
+    "testcase_total": 8,
+    "pack_gates_passed": 4,
+    "pack_gates_total": 5,
+    "failed_testcase": [
+      "T01_head_tilt",
+      "T02_flower_cup"
+    ],
+    "failed_pack_gates": [
+      "embodiment_visibility_and_projection"
+    ],
+    "image_sha256": "f6f0e6d3e981b5ba9ace650e1bbd59ceeb9a8712f637170a9b047b54fa6d3e98"
+  },
+  "final_native": {
+    "verdict": "FAIL",
+    "testcase_passed": 6,
+    "testcase_total": 8,
+    "pack_gates_passed": 4,
+    "pack_gates_total": 5,
+    "failed_testcase": [
+      "T01_head_tilt: correct direction but approximately 27-degree roll exceeds frozen 10–20-degree realization",
+      "T02_flower_cup: fingertips/thumbs partly overlap, so ten individual attached digits remain UNOBSERVABLE"
+    ],
+    "failed_pack_gates": [
+      "embodiment_visibility_and_projection"
+    ],
+    "passed_keywords": [
+      "하이키",
+      "복슬복슬",
+      "캐치라이트"
+    ],
+    "image_sha256": "6709941a78ec97a50000a63ef1693047b4889867dfb2f276b91c76ccef9d0174"
+  },
+  "data_effect": {
+    "selected_candidate_ids": [
+      "bundle:cv_bundle_flower_chin",
+      "slot:color_grading:pe_high_key_tones"
+    ],
+    "new_cute_bundle_exposed_and_selected": [
+      "bundle:cv_bundle_flower_chin"
+    ],
+    "target_direct_visual_profile_exposure": 0,
+    "target_visual_profile_selection": 0,
+    "associated_profile_reference_exposed": [
+      "cv_profile_flower_chin"
+    ],
+    "associated_reference_is_not_profile_activation": true,
+    "gaps": [
+      "고개 갸웃 target candidate/profile exposure-adoption 0",
+      "복슬복슬 target candidate/profile exposure-adoption 0",
+      "캐치라이트 target candidate/profile exposure-adoption 0",
+      "All target visual profiles directly exposed/selected 0; independent baseline carries their conditions"
+    ],
+    "causal_improvement": "not established"
+  },
+  "paths": {
+    "initial_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/attempt1_original.png",
+    "final_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/attempt2_original.png",
+    "testcase": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/testcase.json",
+    "request_envelope": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/request_envelope.json",
+    "random_draws": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/random_draws.json",
+    "precore_freeze": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/PRECORE-FREEZE.json",
+    "precore_feature_selection": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/precore_feature_selection.json",
+    "precore_selection_validation": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/precore_selection_validation.json",
+    "authorial_core": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/authorial_core.json",
+    "creative_controls": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/creative_controls.json",
+    "baseline_embodiment_review": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/embodiment_review.json",
+    "candidate_pack": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/candidate_pack.json",
+    "compact_composer_view": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/composer_view.json",
+    "selected_candidate_details": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/candidate_details.json",
+    "high_key_candidate_detail": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/high_key_candidate_detail.json",
+    "initial_composed": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/composed_prompt.json",
+    "final_composed": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/composed_prompt_attempt2.json",
+    "initial_composed_audit": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/composed_audit.json",
+    "final_composed_audit": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/composed_audit_attempt2.json",
+    "initial_runtime_request": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/runtime_request.json",
+    "final_runtime_request": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/runtime_request_attempt2.json",
+    "initial_runtime_audit": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/runtime_audit.json",
+    "final_runtime_audit": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/runtime_audit_attempt2.json",
+    "initial_tool_args": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/imagegen_tool_args.json",
+    "final_tool_args": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/imagegen_tool_args_attempt2.json",
+    "final_prompt": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/final_prompt_attempt2.txt",
+    "negative_prompt": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/negative_prompt.txt",
+    "initial_native_review": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/attempt1_native_review.json",
+    "final_native_review": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/attempt2_native_review.json",
+    "initial_pack_render_review": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/attempt1_pack_render_review.json",
+    "final_pack_render_review": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/attempt2_pack_render_review.json",
+    "initial_pack_render_audit": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/attempt1_pack_render_audit.json",
+    "final_pack_render_audit": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/attempt2_pack_render_audit.json",
+    "local_repair": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/local_repair.json",
+    "exposure_selection": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/exposure_adoption.json",
+    "run_manifest": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/run_manifest.json",
+    "run_ledger": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/image_runs.ndjson",
+    "source_snapshot_binding": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/source_snapshot_binding.json",
+    "final_integrity_verification": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/final_integrity_verification.json"
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 시각 의미 데이터의 대체 표현을 추가/보강하는 작업을 중심으로 진행하고 후보 데이터에도 잘 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "457d4ac9342e9a9fa2c1cda05308f4bf48d0ddc071b85305584b80a32e007ba5",
+  "interpreted_intent": "The user authorized independently chosen random complex concepts to test the integrated keyword forms and use the attachment. Arm B independently chose a small evening lantern festival, tenderness with playful paw hands, and warm/cool spatial contrast. Among possible festival directions, an intimate seated celebration makes simultaneous eye, hand and cuff details legible; a distant walking view would weaken the fixed native-pixel test. WHO is an agent-authored fictional adult with reference-guided face/hair; WHERE is a wet neighborhood festival; HOW is a conversational viewer relationship; WHY NOW is the one already-visible celebration state. Sensual 1 is subtle human attraction in the close gaze, neckline and relaxed bearing; fetish 0 and surreal 0 add no treatment; creativity 1 keeps one ordinary coherent situation. Named gestures, clothing, festival scenery and camera are agent choices rather than user definitions or exclusions. Their frozen testcase duties remain external evidence, not requester-owned locks.",
+  "subject": "A reference-guided fictional adult woman",
+  "setting": "Tiny neighborhood lantern festival after a brief shower, beside a drink cart and broad stone steps",
+  "event": "One visible moment of tender celebration, with both hands in a paw gesture and a smiling wink with pooled tears in the open eye",
+  "visual_priorities": [
+    "Recognizable reference face and short dark bob inside an adult fictional portrayal",
+    "Two drooping human paw hands remain readable through long cuffs",
+    "One closed eyelid, one open wet lower lid and a simultaneous soft smile",
+    "Warm lantern bokeh, wet stone and kettle steam establish an ordinary evening festival depth"
+  ],
+  "baseline_prompt_en": "One complex photographic scene presents a reference-guided fictional adult woman in a single visible moment at a tiny neighborhood lantern festival after a brief shower. Use the reference image for the visible face and short dark hair: the softly tapered jaw, dark eyes, broad facial proportions, short dark bob and airy fringe remain recognizable. She sits upright on a broad wet stone step beside a small drink cart, meeting the viewer with a playful, intimate presence. Her elbows are bent close to her ribs and both forearms rise toward her chest; both wrists droop downward and the fingertips curl loosely inward as small human cat-paw gestures. A rust-colored ribbed-knit cardigan over a charcoal scoop-neck top gives her relaxed adult bearing; both long cuffs extend over the bases of the fingers, with curled fingertips emerging clearly. She gives a soft, unmistakable smile, her right eye visibly winking closed while her left eye remains open; a distinct small pool of clear tears visibly gathers along the lower lid of her open left eye. The expression reads as a tender moment of celebration. Behind her, paper lanterns and distant stall lights dissolve into round bokeh while the face and both hands remain sharply readable. A pale cloth canopy slopes above the cart and a thin plume of steam rises beside a metal kettle; wet stone catches warm lantern reflections against cool evening air. A vertical, mid-thigh-up photograph at conversational distance keeps both hands separate from the face, every fingertip contact with its cuff clear, and enough layered festival space around her to connect the close moment to its setting. Warm soft light brushes her cheeks and knit fibers; natural skin texture and quiet color retain the feeling of a real photograph.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여",
+      "basis": "request_context",
+      "resolution": "The commission delegates scene selection to the agent; I independently draw one scene domain and compatible keyword names before candidate data. A complex single photographic frame must combine several observable scene relationships. The specific festival and keyword realizations are agent-authored testcase choices.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the observed face and short dark hair as appearance reference for an agent-authored fictional adult; supplied appearance is not evidence of real identity, age, personality or health.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "concept",
+        "prompt_evidence": "One complex photographic scene"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a reference-guided fictional adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "event",
+        "prompt_evidence": "a single visible moment"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the reference image for the visible face and short dark hair"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere",
+      "sexual_tone"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "subject_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "scope_2"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a reference-guided fictional adult woman"
+      }
+    },
+    {
+      "assertion_id": "camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "scope_1"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "portrait",
+    "family": "intimate evening festival photography",
+    "evidence": [
+      "warm lantern reflections against cool evening air",
+      "natural skin texture and quiet color"
+    ]
+  },
+  "variation_key": "cute-20261005-arm-b-seed-7582531431900127391"
+}

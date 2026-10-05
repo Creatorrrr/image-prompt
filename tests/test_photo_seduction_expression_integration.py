@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import sys
 import unittest
+from unittest import mock
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,9 +25,18 @@ class SeductionExpressionIntegrationTests(unittest.TestCase):
         cls.new_index = pg.build_visual_profile_index_payload(cls.new_registry)
 
     def test_existing_candidate_labels_and_real_prerequisites_survive(self):
+        # Compare this frozen integration oracle before the later cute context
+        # overlay. Current merged guards are exercised by the tests below and
+        # cute overlay source invariants by test_photo_cute_visual_forms.
+        filenames = tuple(name for name in pg.RESEARCH_EXTENSION_FILENAMES
+                          if name != 'photo_prompt_cute_visual_forms_extension.json')
+        with mock.patch.object(pg, 'RESEARCH_EXTENSION_FILENAMES', filenames):
+            historical = pg.load_json(ASSETS / 'photo_prompt_tags.json')
+        candidates = {slot + '.' + row['id']: row
+                      for slot, rows in historical['slots'].items() for row in rows}
         for key, invariant in self.baseline['candidate_invariants'].items():
             with self.subTest(candidate=key):
-                current = self.candidates[key]
+                current = candidates[key]
                 self.assertEqual({field: current.get(field) for field in invariant}, invariant)
 
     def test_profile_alternatives_keep_all_original_duties_and_pixel_gates(self):

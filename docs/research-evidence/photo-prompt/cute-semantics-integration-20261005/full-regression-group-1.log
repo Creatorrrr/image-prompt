@@ -1,0 +1,171 @@
+......................................../opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 400: 'fixture'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+............................................................................................................................................................................................EFFFFFFFF.FE.......................
+======================================================================
+ERROR: test_all_candidate_order_scene_and_privacy_fields_survive (tests.test_photo_seduction_source_boundary_history.SeductionSourceBoundaryHistoryTests.test_all_candidate_order_scene_and_privacy_fields_survive)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 69, in test_all_candidate_order_scene_and_privacy_fields_survive
+    self.direct()
+    ~~~~~~~~~~~^^
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 46, in direct
+    return v._validate_v16_seduction_source_successor(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.assets, repo, self.baseline,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.pack if pack is None else pack, self.output if raw is None else raw)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6569, in _validate_v16_seduction_source_successor
+    _require(all(_sha256(repo_root / name) == digest for name, digest in proof["immutable_history"].items()),
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+             "photo V16 immutable predecessor artifact drift")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: photo V16 immutable predecessor artifact drift
+
+======================================================================
+ERROR: test_registered_default_and_unregistered_future (tests.test_photo_seduction_source_boundary_history.SeductionSourceBoundaryHistoryTests.test_registered_default_and_unregistered_future)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 51, in test_registered_default_and_unregistered_future
+    self.assertEqual(self.validate()['schema'], 'photo_regression_baseline/v16')
+                     ~~~~~~~~~~~~~^^
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 43, in validate
+    return v.validate_photo_regression_baseline(self.assets, baseline_version=version)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6748, in validate_photo_regression_baseline
+    _require(
+    ~~~~~~~~^
+        successor.get("schema") == f"photo_regression_baseline/v{successor_version}"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        "current photo successor lineage mismatch",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: current photo successor lineage mismatch
+
+======================================================================
+FAIL: test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes (tests.test_photo_seduction_source_boundary_history.SeductionSourceBoundaryHistoryTests.test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes) (kind='candidate')
+----------------------------------------------------------------------
+validate_illustration_assets.ValidationFailure: photo V16 immutable predecessor artifact drift
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 89, in test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes
+    with self.subTest(kind=kind), self.assertRaisesRegex(v.ValidationFailure, 'pack binding'):
+                                  ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "pack binding" does not match "photo V16 immutable predecessor artifact drift"
+
+======================================================================
+FAIL: test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes (tests.test_photo_seduction_source_boundary_history.SeductionSourceBoundaryHistoryTests.test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes) (kind='order')
+----------------------------------------------------------------------
+validate_illustration_assets.ValidationFailure: photo V16 immutable predecessor artifact drift
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 89, in test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes
+    with self.subTest(kind=kind), self.assertRaisesRegex(v.ValidationFailure, 'pack binding'):
+                                  ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "pack binding" does not match "photo V16 immutable predecessor artifact drift"
+
+======================================================================
+FAIL: test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes (tests.test_photo_seduction_source_boundary_history.SeductionSourceBoundaryHistoryTests.test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes) (kind='core')
+----------------------------------------------------------------------
+validate_illustration_assets.ValidationFailure: photo V16 immutable predecessor artifact drift
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 89, in test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes
+    with self.subTest(kind=kind), self.assertRaisesRegex(v.ValidationFailure, 'pack binding'):
+                                  ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "pack binding" does not match "photo V16 immutable predecessor artifact drift"
+
+======================================================================
+FAIL: test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes (tests.test_photo_seduction_source_boundary_history.SeductionSourceBoundaryHistoryTests.test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes) (kind='controls')
+----------------------------------------------------------------------
+validate_illustration_assets.ValidationFailure: photo V16 immutable predecessor artifact drift
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 89, in test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes
+    with self.subTest(kind=kind), self.assertRaisesRegex(v.ValidationFailure, 'pack binding'):
+                                  ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "pack binding" does not match "photo V16 immutable predecessor artifact drift"
+
+======================================================================
+FAIL: test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes (tests.test_photo_seduction_source_boundary_history.SeductionSourceBoundaryHistoryTests.test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes) (kind='composition')
+----------------------------------------------------------------------
+validate_illustration_assets.ValidationFailure: photo V16 immutable predecessor artifact drift
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 89, in test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes
+    with self.subTest(kind=kind), self.assertRaisesRegex(v.ValidationFailure, 'pack binding'):
+                                  ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "pack binding" does not match "photo V16 immutable predecessor artifact drift"
+
+======================================================================
+FAIL: test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes (tests.test_photo_seduction_source_boundary_history.SeductionSourceBoundaryHistoryTests.test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes) (kind='negative')
+----------------------------------------------------------------------
+validate_illustration_assets.ValidationFailure: photo V16 immutable predecessor artifact drift
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 89, in test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes
+    with self.subTest(kind=kind), self.assertRaisesRegex(v.ValidationFailure, 'pack binding'):
+                                  ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "pack binding" does not match "photo V16 immutable predecessor artifact drift"
+
+======================================================================
+FAIL: test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes (tests.test_photo_seduction_source_boundary_history.SeductionSourceBoundaryHistoryTests.test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes) (kind='privacy')
+----------------------------------------------------------------------
+validate_illustration_assets.ValidationFailure: photo V16 immutable predecessor artifact drift
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 89, in test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes
+    with self.subTest(kind=kind), self.assertRaisesRegex(v.ValidationFailure, 'pack binding'):
+                                  ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "pack binding" does not match "photo V16 immutable predecessor artifact drift"
+
+======================================================================
+FAIL: test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes (tests.test_photo_seduction_source_boundary_history.SeductionSourceBoundaryHistoryTests.test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes) (kind='adoption')
+----------------------------------------------------------------------
+validate_illustration_assets.ValidationFailure: photo V16 immutable predecessor artifact drift
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 89, in test_coordinated_pack_and_manifest_rehash_cannot_accept_material_changes
+    with self.subTest(kind=kind), self.assertRaisesRegex(v.ValidationFailure, 'pack binding'):
+                                  ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "pack binding" does not match "photo V16 immutable predecessor artifact drift"
+
+======================================================================
+FAIL: test_original_v15_rejects_live_v16_source_inventory (tests.test_photo_seduction_source_boundary_history.SeductionSourceBoundaryHistoryTests.test_original_v15_rejects_live_v16_source_inventory)
+----------------------------------------------------------------------
+validate_illustration_assets.ValidationFailure: photo V15 immutable predecessor artifact drift
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 113, in test_original_v15_rejects_live_v16_source_inventory
+    with self.assertRaisesRegex(v.ValidationFailure, 'exact DATA inventory'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "exact DATA inventory" does not match "photo V15 immutable predecessor artifact drift"
+
+----------------------------------------------------------------------
+Ran 256 tests in 1173.605s
+
+FAILED (failures=9, errors=2)

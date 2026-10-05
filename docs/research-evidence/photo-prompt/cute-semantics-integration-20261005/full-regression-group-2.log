@@ -1,0 +1,108 @@
+E................................................................................................................................................E................................................EEEEEEE................................................
+======================================================================
+ERROR: test_aggregate_validator_does_not_hide_partial_pixel_qualification (tests.test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_subculture_illustration_contract_v1.py", line 504, in test_aggregate_validator_does_not_hide_partial_pixel_qualification
+    summary = validate_all(ASSET_ROOT)
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 11936, in validate_all
+    photo_regression = validate_photo_regression_baseline(root)
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6748, in validate_photo_regression_baseline
+    _require(
+    ~~~~~~~~^
+        successor.get("schema") == f"photo_regression_baseline/v{successor_version}"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        "current photo successor lineage mismatch",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: current photo successor lineage mismatch
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_motion_artifact_owner_data_cleanup.MotionArtifactOwnerDataCleanupTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_motion_artifact_owner_data_cleanup.py", line 28, in setUpClass
+    cls.data = generator.load_json(ASSETS / 'photo_prompt_tags.json')
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 1332, in load_json
+    data = merge_research_extension(data, extension)
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 794, in merge_research_extension
+    photo_candidate_semantics.extend_slot_contexts(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        slots, extension.get("existing_slot_context_extensions"))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_semantics.py", line 88, in extend_slot_contexts
+    raise ValueError(f"context extension references unknown entry {slot}.{entry_id}")
+ValueError: context extension references unknown entry composition.mg_rounded_corners
+
+======================================================================
+ERROR: test_changed_predecessor_manifest_or_archival_pack_is_rejected (tests.test_photo_nape_metadata_boundary_history.NapeMetadataBoundaryHistoryTests.test_changed_predecessor_manifest_or_archival_pack_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_nape_metadata_boundary_history.py", line 42, in setUp
+    self.historical_source_hashes = dict(self.baseline['metadata_only_transition']['source_files'])
+                                         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'metadata_only_transition'
+
+======================================================================
+ERROR: test_explicit_v9_is_still_strict_against_current_data (tests.test_photo_nape_metadata_boundary_history.NapeMetadataBoundaryHistoryTests.test_explicit_v9_is_still_strict_against_current_data)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_nape_metadata_boundary_history.py", line 42, in setUp
+    self.historical_source_hashes = dict(self.baseline['metadata_only_transition']['source_files'])
+                                         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'metadata_only_transition'
+
+======================================================================
+ERROR: test_extra_semantic_candidate_order_negative_and_privacy_changes_fail (tests.test_photo_nape_metadata_boundary_history.NapeMetadataBoundaryHistoryTests.test_extra_semantic_candidate_order_negative_and_privacy_changes_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_nape_metadata_boundary_history.py", line 42, in setUp
+    self.historical_source_hashes = dict(self.baseline['metadata_only_transition']['source_files'])
+                                         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'metadata_only_transition'
+
+======================================================================
+ERROR: test_metadata_delta_must_have_exactly_four_changed_fields (tests.test_photo_nape_metadata_boundary_history.NapeMetadataBoundaryHistoryTests.test_metadata_delta_must_have_exactly_four_changed_fields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_nape_metadata_boundary_history.py", line 42, in setUp
+    self.historical_source_hashes = dict(self.baseline['metadata_only_transition']['source_files'])
+                                         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'metadata_only_transition'
+
+======================================================================
+ERROR: test_recomputed_output_checksum_cannot_rebaseline_a_changed_candidate (tests.test_photo_nape_metadata_boundary_history.NapeMetadataBoundaryHistoryTests.test_recomputed_output_checksum_cannot_rebaseline_a_changed_candidate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_nape_metadata_boundary_history.py", line 42, in setUp
+    self.historical_source_hashes = dict(self.baseline['metadata_only_transition']['source_files'])
+                                         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'metadata_only_transition'
+
+======================================================================
+ERROR: test_registered_version_replay_and_all_legacy_artifacts_are_unchanged (tests.test_photo_nape_metadata_boundary_history.NapeMetadataBoundaryHistoryTests.test_registered_version_replay_and_all_legacy_artifacts_are_unchanged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_nape_metadata_boundary_history.py", line 42, in setUp
+    self.historical_source_hashes = dict(self.baseline['metadata_only_transition']['source_files'])
+                                         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'metadata_only_transition'
+
+======================================================================
+ERROR: test_wrong_data_commit_source_hash_or_comparison_provenance_is_rejected (tests.test_photo_nape_metadata_boundary_history.NapeMetadataBoundaryHistoryTests.test_wrong_data_commit_source_hash_or_comparison_provenance_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_nape_metadata_boundary_history.py", line 42, in setUp
+    self.historical_source_hashes = dict(self.baseline['metadata_only_transition']['source_files'])
+                                         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'metadata_only_transition'
+
+----------------------------------------------------------------------
+Ran 248 tests in 860.432s
+
+FAILED (errors=9)

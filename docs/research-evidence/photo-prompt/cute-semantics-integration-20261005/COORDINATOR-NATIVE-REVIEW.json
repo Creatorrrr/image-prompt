@@ -1,0 +1,120 @@
+{
+  "contract_version": "coordinator-native-review/v1",
+  "reviewed_at": "2026-10-05T01:59:38.937240+00:00",
+  "reviewer": "root coordinator",
+  "method": "Direct visual inspection of unmodified saved originals at original resolution, compared with each independently frozen testcase. Hidden details are unobservable and fail the required all-of gate.",
+  "data_freeze_sha256": "b72b757dfa8491fbb56c3cefb1368e463f8209c35b14aa5c5ce1c18aa54ab054",
+  "data_source_count": 148,
+  "data_drift": [],
+  "precore_integrity": [
+    {
+      "arm": "a",
+      "file_count": 10,
+      "mismatches": []
+    },
+    {
+      "arm": "b",
+      "file_count": 13,
+      "mismatches": []
+    },
+    {
+      "arm": "c",
+      "file_count": 12,
+      "mismatches": []
+    }
+  ],
+  "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+  "partial_is_fail": true,
+  "user_acceptance": "pending",
+  "arms": [
+    {
+      "arm": "a",
+      "verdict": "PASS",
+      "original_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-a/attempt-1-original.png",
+      "image_sha256": "ed5170155ee2be74c0b731e4dcaff4eaf8f6d453d3be84af66f3e3552b685971",
+      "size": [
+        1024,
+        1536
+      ],
+      "keyword_gates": {
+        "한쪽 뒤꿈치 들기": "PASS",
+        "보케": "PASS",
+        "꽃받침": "PASS",
+        "윙크": "PASS"
+      },
+      "criterion_ids_confirmed": [
+        "A01_reference_appearance",
+        "A02_flower_hands",
+        "A03_unilateral_wink",
+        "A04_raised_heel",
+        "A05_bokeh",
+        "A06_ceramic_context",
+        "A07_materials",
+        "A08_window_light",
+        "A09_single_frame_visibility"
+      ],
+      "criteria_passed": 9,
+      "criteria_total": 9,
+      "pack_gates_passed": 5,
+      "pack_gates_total": 5,
+      "coordinator_observation": "Visible chin/palm bases and two continuous wrist chains form the bilateral flower. Screen-right eyelid is shut while screen-left eye is open; one rear sole is raised with forefoot contact and the other foot flat. Soft background light discs remain distinct from the sharper face. Ceramic sheen and clay traces support the depicted work context; no actual prior history or physical wetness is claimed."
+    },
+    {
+      "arm": "b",
+      "verdict": "BLOCKED_UNSCORED",
+      "generation_attempts": 2,
+      "original_images": [],
+      "native_pixels_available": false,
+      "keyword_gates": {
+        "보케": "BLOCKED_UNSCORED",
+        "고양이 앞발": "BLOCKED_UNSCORED",
+        "윙크": "BLOCKED_UNSCORED",
+        "눈물 고임과 미소": "BLOCKED_UNSCORED",
+        "모에소데": "BLOCKED_UNSCORED"
+      },
+      "coordinator_observation": "Two builtin-tool responses returned no image. Tool moderation labels are not a visual inspection of an unseen output. Frozen criteria remain unscored."
+    },
+    {
+      "arm": "c",
+      "verdict": "FAIL",
+      "original_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/cute-semantics-integration-20261005/qualification/arm-c/attempt2_original.png",
+      "image_sha256": "6709941a78ec97a50000a63ef1693047b4889867dfb2f276b91c76ccef9d0174",
+      "size": [
+        1237,
+        1272
+      ],
+      "keyword_gates": {
+        "고개 갸웃": "FAIL",
+        "꽃받침": "FAIL",
+        "하이키": "PASS",
+        "복슬복슬": "PASS",
+        "캐치라이트": "PASS"
+      },
+      "criteria_passed": 6,
+      "criteria_total": 8,
+      "pack_gates_passed": 4,
+      "pack_gates_total": 5,
+      "initial_attempt_verdict": "FAIL",
+      "initial_failed_criteria": [
+        "T01_head_tilt",
+        "T02_flower_cup"
+      ],
+      "coordinator_observation": "The second original tips toward screen right, but the observed eye-line roll is about 27 degrees and exceeds the frozen 10–20-degree range. Lower palms contact the jaw; the screen-right fingers and inward thumbs overlap so ten separately traceable digits cannot be confirmed. Bright pale tones, shaggy cream fibers and highlights in both pupils are visible. General recognition of a tilted head or flower pose does not override the finer frozen conditions."
+    }
+  ],
+  "totals": {
+    "concepts": 3,
+    "builtin_imagegen_calls": 5,
+    "delivered_original_images": 3,
+    "concepts_with_delivered_images": 2,
+    "whole_pass": 1,
+    "whole_fail": 1,
+    "whole_blocked_unscored": 1,
+    "keyword_probes": 14,
+    "keyword_probes_evaluable": 9,
+    "keyword_probes_passed": 7,
+    "keyword_probes_failed": 2,
+    "keyword_probes_blocked_unscored": 5
+  },
+  "causal_claim": "No A/B comparison was performed. Passing pixels do not prove the new DATA caused an improvement; exposure and selection are reported separately."
+}

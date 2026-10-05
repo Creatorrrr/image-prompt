@@ -1,0 +1,181 @@
+{
+  "contract_version": "agent-effective-render-obligation-capture/v1",
+  "created_at": "2026-10-05T01:39:57.694193+00:00",
+  "pack_id": "71b9f180a332682f",
+  "source_authorial_core_sha256": "57846eb1d4a96ee9aa2f071f3d32b809845c1460f90182cb1b1ddb034d15f807",
+  "source_intent_lock_sha256": "075307a9ce77ec9745637f3aa90aa7d4342826dc3326f196d71b1410087a8831",
+  "actual_pack_hard_gates": [
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ],
+  "embodiment_derivation_errors": [],
+  "effective_visual_contract": null,
+  "visual_derivation_errors": [],
+  "character_response_derivation_errors": [],
+  "selected_opt_in_visual_profiles": [],
+  "selected_bundle_contract": {
+    "id": "bundle:cv_bundle_flower_chin",
+    "source_sha256": "64ecd88af4a59024672d0efab8bc72259dd181d5b736cdf87865b685765ae401",
+    "associated_profile_ids": [
+      "cv_profile_flower_chin"
+    ],
+    "components": [
+      {
+        "id": "component_1",
+        "concept_units": [
+          "two hands open or cup beside the underside of the chin"
+        ],
+        "minimum_realizations": 1
+      },
+      {
+        "id": "component_2",
+        "concept_units": [
+          "wrists and elbows belong to separate arms"
+        ],
+        "minimum_realizations": 1
+      },
+      {
+        "id": "component_3",
+        "concept_units": [
+          "palms and fingers form the selected bilateral frame"
+        ],
+        "minimum_realizations": 1
+      }
+    ],
+    "member_candidates": [
+      {
+        "id": "slot:hand_pose:pv_flower_chin",
+        "slot": "hand_pose",
+        "entry_id": "pv_flower_chin",
+        "concept_units": [
+          "two hands open or cup beside the underside of the chin",
+          "wrists and elbows belong to separate arms",
+          "palms and fingers form the selected bilateral frame"
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          }
+        ]
+      }
+    ],
+    "confusion_boundaries": [
+      "a different owner, opening, support or contact than the stated configuration"
+    ],
+    "relations": [
+      {
+        "id": "owner_scope",
+        "type": "declared_owner_scope",
+        "subject": "main_subject",
+        "object": "the declared actor and stated local configuration"
+      }
+    ],
+    "adoption": "optional",
+    "profile_activation": "independent_request_evidence_only",
+    "source_contract_sha256": "f8c06d4851fd7908e880f141a6b9292bcd108e80c6a2b90b54b24289b6e34e21",
+    "content_form": "unordered_inspiration_terms",
+    "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+    "concept_units": [
+      "two hands open or cup beside the underside of the chin",
+      "wrists and elbows belong to separate arms",
+      "palms and fingers form the selected bilateral frame"
+    ],
+    "concept_terms": [
+      "two hands open or cup beside the underside of the chin",
+      "wrists and elbows belong to separate arms",
+      "palms and fingers form the selected bilateral frame"
+    ],
+    "affected_dimensions": [
+      "pose"
+    ],
+    "conflicts_with": [],
+    "applicability": {
+      "status": "eligible",
+      "source": "all_members_eligible_and_dimensions_open"
+    },
+    "selection_contract": {
+      "component_evidence": "every_component_id_to_literal_final_prompt_phrase",
+      "relation_evidence": "every_relation_id_to_literal_final_prompt_phrase",
+      "scope": "one_coherent_realization",
+      "associated_profiles_are_not_promoted": true
+    }
+  },
+  "additional_required_frozen_assertions": {
+    "contract_version": "photo-semantic-assertion-obligations/v1",
+    "enabled": true,
+    "source": "authorial_core_semantic_assertions",
+    "source_authorial_core_sha256": "57846eb1d4a96ee9aa2f071f3d32b809845c1460f90182cb1b1ddb034d15f807",
+    "source_intent_lock_sha256": "075307a9ce77ec9745637f3aa90aa7d4342826dc3326f196d71b1410087a8831",
+    "composed_field": "semantic_assertion_evidence",
+    "obligations": [
+      {
+        "assertion_id": "primary_human",
+        "dimension": "subject",
+        "affected_dimensions": [
+          "subject"
+        ],
+        "source_span_ids": [
+          "scope_2"
+        ],
+        "semantic_axes": {
+          "subject_category": "human"
+        },
+        "frozen_evidence": {
+          "subject_phrase": "a human portrait subject"
+        },
+        "prompt_binding": {
+          "required_evidence_fields": [
+            "subject_phrase"
+          ],
+          "all_required_phrases_must_be_literal_in_final_prompt": true,
+          "evidence_must_remain_byte_identical": true,
+          "new_hard_evidence_from_retrieval_forbidden": true
+        }
+      }
+    ],
+    "canonical_sha256": "3ff05a29bde323bd320aabc3f8dcbb3a309adcbeae352b821eb2633e3a39cbd8"
+  },
+  "requester_anchor_ids": [
+    "core_concept",
+    "core_subject",
+    "core_event",
+    "core_reference_use"
+  ],
+  "agent_testcase_sha256": "0cbe34235bc8139f3318fbf13682af3d995b0a80796c7ea09bc8951472f4193d",
+  "agent_criteria": [
+    "A01_reference_appearance",
+    "A02_flower_hands",
+    "A03_unilateral_wink",
+    "A04_raised_heel",
+    "A05_bokeh",
+    "A06_ceramic_context",
+    "A07_materials",
+    "A08_window_light",
+    "A09_single_frame_visibility"
+  ],
+  "all_obligations_must_be_tested_in_one_saved_image": true,
+  "user_acceptance": "pending",
+  "preparation_note": "The initial obligation-capture helper named a non-existent API; it was corrected to the actual derive_effective_visual_obligation_contract before any image call."
+}

@@ -1,0 +1,59 @@
+{
+  "contract_version": "photo-intent-lock/v2",
+  "priority": "requesting_user",
+  "semantic_anchors": [
+    {
+      "anchor_id": "core_concept",
+      "source_text": "랜덤한 복잡한 컨셉을 정하여",
+      "dimension": "concept",
+      "prompt_evidence": "A complex staged portrait"
+    },
+    {
+      "anchor_id": "core_subject",
+      "source_text": "첨부한 이미지를 활용하여",
+      "dimension": "subject",
+      "prompt_evidence": "a human portrait subject"
+    },
+    {
+      "anchor_id": "core_event",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+      "dimension": "event",
+      "prompt_evidence": "a visible playful pose"
+    },
+    {
+      "anchor_id": "core_reference_use",
+      "source_text": "첨부한 이미지를 활용하여",
+      "dimension": "reference_use",
+      "prompt_evidence": "uses the supplied photograph as a visual reference"
+    }
+  ],
+  "locked_dimensions": [
+    "concept",
+    "subject",
+    "event",
+    "reference_use"
+  ],
+  "open_dimensions": [
+    "age",
+    "appearance",
+    "pose",
+    "body_geometry",
+    "expression",
+    "action",
+    "setting",
+    "style",
+    "framing",
+    "composition",
+    "lighting",
+    "camera",
+    "color",
+    "material",
+    "atmosphere",
+    "timing"
+  ],
+  "augmentation_policy": "open_dimensions_only_and_subordinate",
+  "material_change_policy": "rebuild_core_after_requester_input",
+  "candidate_revision_policy": "forbidden",
+  "canonical_sha256": "075307a9ce77ec9745637f3aa90aa7d4342826dc3326f196d71b1410087a8831",
+  "lock_id": "075307a9ce77ec97"
+}

@@ -1,0 +1,23 @@
+........................................................................................................................................................................E...............................................................................
+======================================================================
+ERROR: setUpClass (tests.test_photo_capture_owner_data_cleanup.CaptureOwnerDataCleanupTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_capture_owner_data_cleanup.py", line 28, in setUpClass
+    cls.data = generator.load_json(ASSETS / 'photo_prompt_tags.json')
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 1332, in load_json
+    data = merge_research_extension(data, extension)
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 794, in merge_research_extension
+    photo_candidate_semantics.extend_slot_contexts(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        slots, extension.get("existing_slot_context_extensions"))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_semantics.py", line 88, in extend_slot_contexts
+    raise ValueError(f"context extension references unknown entry {slot}.{entry_id}")
+ValueError: context extension references unknown entry composition.mg_rounded_corners
+
+----------------------------------------------------------------------
+Ran 247 tests in 1058.982s
+
+FAILED (errors=1)
