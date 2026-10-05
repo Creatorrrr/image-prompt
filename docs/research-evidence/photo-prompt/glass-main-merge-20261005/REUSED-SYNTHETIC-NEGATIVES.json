@@ -1,0 +1,84 @@
+{
+  "schema": "photo-glass-reused-synthetic-negative-receipt/v1",
+  "evidence_reused": true,
+  "fresh_execution_for_v18": false,
+  "source_result_sha256": "17243f9195c1709670eecc478d5cbe7c5fd375a24482a0557b6b9339eb081aa8",
+  "source_independent_review_sha256": "2ba1c89ca004c317c68ff4a9a9c7b59aad2d4569ca41eb07a0459f0375615a62",
+  "source_final_freeze_sha256": "7bba7a25bb453581e4283b281e8f6a94fdec77c00e3ce0f06308271fa3d9695e",
+  "scope": "Unchanged assembly helper rejection logic on synthetic data; separate current source checks establish preservation of all 10015 historical real entries.",
+  "synthetic_only": true,
+  "real_vector_artifacts_used": false,
+  "cases": [
+    {
+      "case": "missing_new",
+      "rejected": true,
+      "reason": "checkpoint must contain exactly the new key"
+    },
+    {
+      "case": "missing_old",
+      "rejected": true,
+      "reason": "old cache missing, extra, or reordered key"
+    },
+    {
+      "case": "old_text_mismatch",
+      "rejected": true,
+      "reason": "old text mismatch: slot:texture:test_old"
+    },
+    {
+      "case": "new_text_mismatch",
+      "rejected": true,
+      "reason": "checkpoint new text mismatch"
+    },
+    {
+      "case": "extra_checkpoint",
+      "rejected": true,
+      "reason": "checkpoint must contain exactly the new key"
+    },
+    {
+      "case": "wrong_model",
+      "rejected": true,
+      "reason": "old cache vector space mismatch"
+    },
+    {
+      "case": "wrong_dimensions",
+      "rejected": true,
+      "reason": "old cache vector space mismatch"
+    },
+    {
+      "case": "wrong_provider",
+      "rejected": true,
+      "reason": "checkpoint vector space mismatch"
+    },
+    {
+      "case": "nonfinite_old",
+      "rejected": true,
+      "reason": "nonfinite or nonnumeric vector"
+    },
+    {
+      "case": "nonfinite_new",
+      "rejected": true,
+      "reason": "nonfinite or nonnumeric vector"
+    },
+    {
+      "case": "boolean_vector",
+      "rejected": true,
+      "reason": "nonfinite or nonnumeric vector"
+    },
+    {
+      "case": "changed_old_source",
+      "rejected": true,
+      "reason": "old source or semantic text changed: slot:texture:test_old"
+    },
+    {
+      "case": "duplicate_after_key",
+      "rejected": true,
+      "reason": "after source count or duplicate keys"
+    },
+    {
+      "case": "provider_attempt",
+      "rejected": true,
+      "count": 1
+    }
+  ],
+  "provider_calls_for_v18": 0
+}
