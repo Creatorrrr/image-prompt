@@ -9,12 +9,12 @@ import sys
 import tempfile
 import unittest
 from unittest import mock
+import photo_prompt_fixtures as fixtures
 
 ROOT = Path(__file__).resolve().parents[1]
 ILLUSTRATION = ROOT / 'skills/subculture-illustration-image-generator'
 EVIDENCE = Path('docs/research-evidence/photo-prompt/glass-main-merge-20261005')
 sys.path.insert(0, str(ILLUSTRATION / 'scripts'))
-import validate_illustration_assets as v
 
 
 def digest(raw):
@@ -24,6 +24,14 @@ def digest(raw):
 class GlassInventoryBoundaryHistoryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        global ROOT, ILLUSTRATION, v
+        cls.live_root = ROOT
+        temp = tempfile.TemporaryDirectory(prefix='immutable-v18-parent-')
+        cls.addClassCleanup(temp.cleanup)
+        ROOT = Path(temp.name)
+        with mock.patch('subprocess.Popen', side_effect=AssertionError('Historical fixture invoked a subprocess')):
+            v = fixtures.archived_v18_validator(ROOT, source_root=cls.live_root)
+        ILLUSTRATION = ROOT / 'skills/subculture-illustration-image-generator'
         cls.proof = json.loads((ROOT / EVIDENCE / 'V18-GLASS-DATA-PROOF.json').read_bytes())
         cls.manifest = json.loads((ROOT / cls.proof['source_parent_manifest']).read_bytes())
         cls.members = {row['path']: row for row in cls.manifest['members']}
@@ -101,6 +109,68 @@ class GlassInventoryBoundaryHistoryTests(unittest.TestCase):
     def test_unregistered_future_version_is_rejected(self):
         with self.assertRaisesRegex(v.ValidationFailure, 'unsupported photo baseline version'):
             v.validate_photo_regression_baseline(self.assets, baseline_version=19)
+
+    def test_frozen_v18_rejects_current_source_binding_successor(self):
+        with self.assertRaisesRegex(v.ValidationFailure, 'V18 (exact DATA inventory|DATA or runtime source binding)'):
+            v._validate_v18_glass_data_successor(
+                self.assets, self.live_root, self.baseline, self.pack, self.raw)
+
+    def test_fixture_preserves_all_e68_source_and_support_bytes_without_git(self):
+        manifest = fixtures._v18_parent_manifest(self.live_root)
+        self.assertEqual((149, 193), (len(manifest['members']), len(manifest['dependencies'])))
+        for row in manifest['members'] + manifest['dependencies']:
+            raw = (ROOT / row['path']).read_bytes()
+            self.assertEqual(digest(raw), row['sha256'], row['path'])
+            self.assertEqual(len(raw), row['bytes'], row['path'])
+        for row in fixtures._v17_support_manifest(self.live_root)['members']:
+            self.assertEqual(digest((ROOT / row['path']).read_bytes()), row['sha256'])
+
+    def test_fixture_manifest_cannot_rehash_relabel_or_redirect_source_members(self):
+        original = (self.live_root / fixtures.V18_PARENT_MANIFEST).read_bytes()
+        source = self.repo / 'bad-fixture-input'
+        target = source / fixtures.V18_PARENT_MANIFEST
+        target.parent.mkdir(parents=True)
+        for kind in ('absolute', 'traversal', 'duplicate', 'missing', 'source_pin', 'live_source', 'coordinated_rehash'):
+            manifest = json.loads(original)
+            if kind == 'absolute': manifest['members'][0]['path'] = '/tmp/escaped-v18-fixture'
+            elif kind == 'traversal': manifest['members'][0]['source_path'] = '../escaped-v18-fixture'
+            elif kind == 'duplicate': manifest['members'][1] = manifest['members'][0]
+            elif kind == 'missing': manifest['members'].pop()
+            elif kind == 'source_pin': manifest['source_pin'] = '0' * 40
+            elif kind == 'live_source': manifest['members'][0]['source_path'] = manifest['members'][0]['path']
+            else:
+                row = manifest['members'][0]
+                raw = (self.live_root / row['source_path']).read_bytes() + b'\n'
+                payload = source / row['source_path']
+                payload.parent.mkdir(parents=True, exist_ok=True)
+                payload.write_bytes(raw)
+                manifest['total_member_bytes'] += 1
+                row.update(sha256=digest(raw), bytes=len(raw),
+                           git_blob=hashlib.sha1(f'blob {len(raw)}\0'.encode() + raw).hexdigest())
+            target.write_text(json.dumps(manifest))
+            output = self.repo / 'invalid-fixture-output'
+            with self.subTest(kind=kind), self.assertRaisesRegex(AssertionError, 'V18 parent source manifest drift'):
+                fixtures.materialize_v18_parent_source(output, source_root=source)
+            self.assertFalse(output.exists())
+
+    def test_fixture_payload_snapshots_and_retained_shard_reject_missing_tampered_or_symlink_bytes(self):
+        manifest = fixtures._v18_parent_manifest(self.live_root)
+        rows = [row for row in manifest['members'] if row['kind'] == 'new_immutable_snapshot_same_git_blob']
+        rows += [next(row for row in manifest['members'] if '/7ff3e10cc7163368/' in row['path'])]
+        source = self.repo / 'payload-input'
+        for row in rows:
+            target = source / row['source_path']
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with self.subTest(path=row['path'], change='missing'), self.assertRaisesRegex(AssertionError, 'Missing .*historical source payload'):
+                fixtures._v17_verified_payload(source, row)
+            target.write_bytes((self.live_root / row['source_path']).read_bytes() + b'\n')
+            with self.subTest(path=row['path'], change='tampered'), self.assertRaisesRegex(AssertionError, 'payload drift'):
+                fixtures._v17_verified_payload(source, row)
+            target.unlink()
+            target.symlink_to(self.live_root / row['source_path'])
+            with self.subTest(path=row['path'], change='symlink'), self.assertRaisesRegex(AssertionError, 'historical source symlink'):
+                fixtures._v17_verified_payload(source, row)
+            target.unlink()
 
     def test_exact_one_row_and_old_semantic_objects_vectors_text_and_order(self):
         source = Path(self.baseline['command'][1]).parent.parent / 'assets'

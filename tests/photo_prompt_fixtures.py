@@ -27,6 +27,11 @@ V17_PARENT_COMMIT = '977a5d8680eabf24c6e19993340b4a72f884b24a'
 V17_PARENT_VALIDATOR = 'skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py'
 V17_SUPPORT_MANIFEST = V17_PARENT_MANIFEST.with_name('V17-VALIDATOR-SUPPORT.json')
 V17_SUPPORT_MANIFEST_SHA256 = '005642904a7a21891696fd21e93d6bde445a6747c903515f48ad762d9c0efb40'
+V18_PARENT_MANIFEST = Path(
+    'docs/research-evidence/photo-prompt/cf40-history-repair-20261005/V18-PARENT-SOURCE.json'
+)
+V18_PARENT_MANIFEST_SHA256 = '20c5964ab21353c99ad1b747ac9abe0f9e99ff0efc32b68a3ace3409954d6d51'
+V18_PARENT_COMMIT = 'e68da84497b2c0f9d67dae33199a51f4aa163898'
 
 
 def _v17_safe_path(value: str) -> Path:
@@ -164,6 +169,11 @@ def pinned_v17_validator(directory: Path, *, source_root: Path = ROOT):
     manifest = _v17_parent_manifest(source_root)
     row = next(row for row in manifest['members'] if row['path'] == V17_PARENT_VALIDATOR)
     raw = _v17_verified_payload(source_root, row)
+    return _isolated_parent_validator(directory, raw, source_root, version=17)
+
+
+def _isolated_parent_validator(directory: Path, raw: bytes, source_root: Path, *, version: int):
+    """The V17/V18 validators share the same three immutable support modules."""
     support = _v17_support_manifest(source_root)
     payloads = [(row, _v17_verified_payload(source_root, row)) for row in support['members']]
     for row, payload in payloads:
@@ -174,7 +184,7 @@ def pinned_v17_validator(directory: Path, *, source_root: Path = ROOT):
     path = directory / V17_PARENT_VALIDATOR
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(raw)
-    prefix = '_archived_photo_v17_' + hashlib.sha256(str(directory).encode()).hexdigest()[:16]
+    prefix = f'_archived_photo_v{version}_' + hashlib.sha256(str(directory).encode()).hexdigest()[:16]
     modules, specs = {}, {}
     for name in [row['module'] for row in support['members']] + ['validate_illustration_assets']:
         spec = importlib.util.spec_from_file_location(prefix + '_' + name, path.with_name(name + '.py'))
@@ -208,6 +218,87 @@ def pinned_v17_validator(directory: Path, *, source_root: Path = ROOT):
 def archived_v17_validator(directory: Path, *, source_root: Path = ROOT):
     materialize_v17_parent_source(directory, source_root=source_root)
     return pinned_v17_validator(directory, source_root=source_root)
+
+
+def _v18_parent_manifest(source_root: Path = ROOT) -> dict:
+    raw = _v17_regular_path(source_root, V18_PARENT_MANIFEST.as_posix()).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != V18_PARENT_MANIFEST_SHA256:
+        raise AssertionError('Frozen V18 parent source manifest drift')
+    manifest = json.loads(raw)
+    counts = {'reuse_v17_parent_source': 129, 'reuse_retained_v18_data': 18,
+              'new_immutable_snapshot_same_git_blob': 2}
+    if (manifest['schema'] != 'photo-v18-parent-source-manifest/v1'
+            or manifest['source_pin'] != V18_PARENT_COMMIT
+            or manifest['member_count'] != 149 or len(manifest['members']) != 149
+            or len(manifest['dependencies']) != 193 or manifest['counts'] != counts
+            or manifest['validator_support_manifest'] != V17_SUPPORT_MANIFEST.as_posix()
+            or manifest['validator_support_manifest_sha256'] != V17_SUPPORT_MANIFEST_SHA256):
+        raise AssertionError('Frozen V18 parent source manifest shape drift')
+    previous = {row['path']: row for row in _v17_parent_manifest(source_root)['members']}
+    members = manifest['members']
+    paths = set()
+    for row in members + manifest['dependencies']:
+        path = _v17_safe_path(row['path']).as_posix()
+        _v17_safe_path(row['source_path'])
+        if path in paths:
+            raise AssertionError('Duplicate V18 historical source path')
+        paths.add(path)
+        if (row['git_commit'] != V18_PARENT_COMMIT or row['git_path'] != path
+                or row['mode'] not in ('100644', '100755') or type(row['bytes']) is not int
+                or row['bytes'] < 0 or len(row['sha256']) != 64 or len(row['git_blob']) != 40
+                or any(c not in '0123456789abcdef' for c in row['sha256'] + row['git_blob'])):
+            raise AssertionError('Frozen V18 historical source provenance drift')
+    if (len({row['source_path'] for row in members}) != 149
+            or {kind: sum(row['kind'] == kind for row in members) for kind in counts} != counts
+            or sum(row['bytes'] for row in members) != manifest['total_member_bytes']):
+        raise AssertionError('Frozen V18 historical source inventory drift')
+    assets = 'skills/photo-prompt-image-generator/assets/'
+    retained = {assets + 'photo_prompt_tags.json', assets + 'photo_prompt_semantic_index.json'}
+    retained.update(assets + f'photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-{index:03d}.json'
+                    for index in range(16))
+    if {row['path'] for row in members if row['kind'] == 'reuse_retained_v18_data'} != retained:
+        raise AssertionError('Frozen V18 retained DATA generation drift')
+    for row in members:
+        if row['kind'] == 'reuse_v17_parent_source':
+            old = previous.get(row['path'], {})
+            allowed = all(row[key] == old.get(key) for key in ('source_path', 'git_blob', 'mode', 'bytes', 'sha256'))
+        elif row['kind'] == 'reuse_retained_v18_data':
+            allowed = row['source_path'] == row['path']
+        else:
+            allowed = row['path'] in (V17_PARENT_VALIDATOR,
+                'skills/subculture-illustration-image-generator/assets/universal_scene_baseline_v2.json')
+            allowed = allowed and row['source_path'] == (V18_PARENT_MANIFEST.parent /
+                'v18-parent-source-files' / row['path']).as_posix()
+        if not allowed:
+            raise AssertionError('Unregistered V18 historical source backing path')
+    if any(row['source_path'] != row['path'] for row in manifest['dependencies']):
+        raise AssertionError('Unregistered V18 historical dependency backing path')
+    return manifest
+
+
+def materialize_v18_parent_source(directory: Path, *, source_root: Path = ROOT) -> dict:
+    """Copy only the fixed e68 source and enumerated pre-existing dependencies."""
+    manifest = _v18_parent_manifest(source_root)
+    records = manifest['members'] + manifest['dependencies']
+    if directory.is_symlink() or (directory.exists() and any(directory.iterdir())):
+        raise AssertionError('V18 historical destination must be an empty directory')
+    for row in records:
+        _v17_verified_payload(source_root, row)
+    directory.mkdir(parents=True, exist_ok=True)
+    for row in records:
+        raw = _v17_verified_payload(source_root, row)
+        target = directory / _v17_safe_path(row['path'])
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(raw)
+        target.chmod(int(row['mode'][-3:], 8))
+    return manifest
+
+
+def archived_v18_validator(directory: Path, *, source_root: Path = ROOT):
+    manifest = materialize_v18_parent_source(directory, source_root=source_root)
+    row = next(row for row in manifest['members'] if row['path'] == V17_PARENT_VALIDATOR)
+    raw = _v17_verified_payload(source_root, row)
+    return _isolated_parent_validator(directory, raw, directory, version=18)
 
 
 def archived_v16_validator(directory: Path):
