@@ -6692,6 +6692,96 @@ def _validate_v17_cute_data_successor(
              "photo V17 universal descriptor changed beyond validator hash")
 
 
+
+# V18 is an explicit additive DATA registration, not a metadata-only exception.
+PHOTO_V18_GLASS_PROOF_SHA256 = "37c5408b60989bec4e023e5752c3c927b870aa03930e928a01d3598d800100c2"
+
+
+def _validate_v18_glass_data_successor(
+    asset_dir: Path, repo_root: Path, baseline: dict[str, Any],
+    pack: dict[str, Any], raw: bytes,
+) -> None:
+    """Bind one reviewed row/index addition and exactly four frozen-pack leaves."""
+    evidence_dir = repo_root / "docs/research-evidence/photo-prompt/glass-main-merge-20261005"
+    evidence_path = evidence_dir / "V18-GLASS-DATA-PROOF.json"
+    _require(_sha256(evidence_path) == PHOTO_V18_GLASS_PROOF_SHA256,
+             "photo V18 immutable glass DATA proof drift")
+    proof = _load_json(evidence_path)
+    _require(proof.get("schema") == "photo-glass-interface-inventory-transition/v18"
+             and proof.get("data_commit") == "ee23d4b837998e6682b41c13f0f1e52b1fbd5a8d"
+             and proof.get("data_parent_commit") == "977a5d8680eabf24c6e19993340b4a72f884b24a",
+             "photo V18 DATA commit binding drift")
+    _require(baseline.get("glass_interface_inventory_transition") == {
+        "data_commit": proof["data_commit"], "data_parent_commit": proof["data_parent_commit"],
+        "evidence_sha256": PHOTO_V18_GLASS_PROOF_SHA256, "source_files": proof["source_files"],
+    }, "photo V18 source provenance drift")
+    _require(not any(key in baseline for key in (
+        "metadata_only_transition", "zero_pack_delta_transition", "optional_inventory_transition",
+        "authored_metadata_ownership_transition", "cute_equivalent_language_inventory_transition")),
+        "photo V18 cannot relabel the additive DATA inventory transition")
+    _require(all(_sha256(repo_root / name) == digest
+                 for name, digest in proof["immutable_history"].items()),
+             "photo V18 immutable predecessor artifact drift")
+    _require(all(_sha256(repo_root / name) == digest
+                 for name, digest in proof["historical_dependencies"].items()),
+             "photo V18 historical dependency drift")
+    _require(_sha256(repo_root / proof["source_parent_manifest"])
+             == proof["source_parent_manifest_sha256"]
+             and all(_sha256(repo_root / name) == digest
+                     for name, digest in proof["source_parent_files"].items()),
+             "photo V18 historical source manifest or bytes drift")
+    _require(_sha256(repo_root / proof["qualification_path"]) == proof["qualification_sha256"],
+             "photo V18 qualification evidence drift")
+    previous_manifest = asset_dir / "photo_regression_baseline_v17.json"
+    previous_pack = asset_dir / "photo_regression_baseline_v17_pack.json"
+    current_pack = asset_dir / "photo_regression_baseline_v18_pack.json"
+    _require(_sha256(previous_manifest) == proof["previous_manifest_sha256"]
+             and _sha256(previous_pack) == proof["previous_pack_sha256"]
+             and _sha256(current_pack) == proof["current_pack_sha256"] == baseline.get("sha256")
+             and raw == current_pack.read_bytes(), "photo V18 immutable pack binding drift")
+    _require(pack == _load_json(current_pack)[0]
+             and pack.get("pack_id") == proof["current_pack_id"] == _canonical_photo_pack_id(pack),
+             "photo V18 current pack equality drift")
+    _require(_public_photo_candidate_count(pack) == proof["public_candidate_count"] == 64,
+             "photo V18 public candidate count drift")
+    old, current = copy.deepcopy(_load_json(previous_pack)[0]), copy.deepcopy(pack)
+    deltas = []
+    for path in (("core_retrieval", "canonical_sha256"), ("core_retrieval", "slot_corpus_sha256"),
+                 ("pack_id",), ("provenance", "tags_hash")):
+        left, right = old, current
+        for key in path[:-1]:
+            left, right = left[key], right[key]
+        key = path[-1]
+        _require(left[key] != right[key], "photo V18 must change all four reviewed bindings")
+        deltas.append({"path": "/" + "/".join(path), "previous": left[key], "current": right[key]})
+        del left[key], right[key]
+    _require(deltas == proof["reviewed_binding_deltas"] and old == current
+             and proof["candidate_objects_order_and_all_other_pack_fields_equal"] is True,
+             "photo V18 changed candidates/order or scene/owner/controls/negative/privacy semantics")
+    # Sibling location comes only from the already frozen generation command.
+    # Source files are opaque bytes: never import the sibling runtime here.
+    source_assets = repo_root / Path(baseline["command"][1]).parent.parent / "assets"
+    _require({path.name: _sha256(path) for path in source_assets.glob("*.json")}
+             == proof["source_inventory_after"], "photo V18 exact DATA inventory drift")
+    _require(all(_sha256(repo_root / name) == digest for name, digest in proof["source_files"].items()),
+             "photo V18 DATA or runtime source binding drift")
+    shard_root = source_assets / "photo_prompt_semantic_index_shards/7ff3e10cc7163368"
+    expected_paths = {str((shard_root / f"shard-{index:03d}.json").relative_to(repo_root))
+                      for index in range(16)}
+    actual = {str(path.relative_to(repo_root)): _sha256(path) for path in shard_root.glob("*.json")}
+    _require(set(proof["active_semantic_shards"]) == expected_paths
+             and actual == proof["active_semantic_shards"], "photo V18 active semantic shard bytes drift")
+    descriptor = repo_root / proof["universal_v2_before_path"]
+    _require(_sha256(descriptor) == proof["universal_v2_before_sha256"],
+             "photo V18 universal descriptor archive drift")
+    old_descriptor = descriptor.read_bytes()
+    old_sha = proof["previous_validator_sha256"].encode("ascii")
+    _require(old_descriptor.count(old_sha) == 1
+             and (asset_dir / "universal_scene_baseline_v2.json").read_bytes()
+             == old_descriptor.replace(old_sha, _sha256(Path(__file__)).encode("ascii"), 1),
+             "photo V18 universal descriptor changed beyond validator hash")
+
+
 def validate_photo_regression_baseline(
     asset_dir: Path, *, baseline_version: int | None = None
 ) -> dict[str, Any]:
@@ -6704,10 +6794,10 @@ def validate_photo_regression_baseline(
     previous_path = asset_dir / "photo_regression_baseline_v5.json"
     if baseline_version is None:
         baseline_version = next(
-            version for version in (17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
+            version for version in (18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
             if (asset_dir / f"photo_regression_baseline_v{version}.json").exists()
         )
-    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17}, "unsupported photo baseline version")
+    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18}, "unsupported photo baseline version")
     lineage_version = min(baseline_version, 7)
     baseline_path = asset_dir / f"photo_regression_baseline_v{lineage_version}.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
@@ -6952,6 +7042,8 @@ def validate_photo_regression_baseline(
         _validate_v16_seduction_source_successor(asset_dir, repo_root, baseline, pack, raw)
     if baseline_version == 17:
         _validate_v17_cute_data_successor(asset_dir, repo_root, baseline, pack, raw)
+    if baseline_version == 18:
+        _validate_v18_glass_data_successor(asset_dir, repo_root, baseline, pack, raw)
     return {
         "status": "pass",
         "schema": baseline["schema"],

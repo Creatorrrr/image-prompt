@@ -16,13 +16,13 @@ ROOT = Path(__file__).resolve().parents[1]
 ILLUSTRATION = ROOT / 'skills/subculture-illustration-image-generator'
 EVIDENCE = Path('docs/research-evidence/photo-prompt/motion-graphics-main-merge-20261004')
 sys.path.insert(0, str(ILLUSTRATION / 'scripts'))
-import validate_illustration_assets as v
+from photo_prompt_fixtures import pinned_v17_validator
 
 
 class MotionOptionalInventoryBoundaryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        global ROOT, ILLUSTRATION
+        global ROOT, ILLUSTRATION, v
         live_root = ROOT
         cls.source_temp = tempfile.TemporaryDirectory(prefix='immutable-v15-parent-')
         cls.addClassCleanup(cls.source_temp.cleanup)
@@ -35,7 +35,7 @@ class MotionOptionalInventoryBoundaryTests(unittest.TestCase):
                 raise AssertionError('Unsafe historical source path')
             saved.extractall(source_root)
         validator_path = source_root / 'skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py'
-        validator_path.write_bytes(Path(v.__file__).read_bytes())
+        v = pinned_v17_validator(source_root)
         descriptor = source_root / 'skills/subculture-illustration-image-generator/assets/universal_scene_baseline_v2.json'
         raw = descriptor.read_bytes()
         old_sha = json.loads(raw)['validator_contract']['sha256'].encode()
