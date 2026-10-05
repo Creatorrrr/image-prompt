@@ -1,0 +1,56 @@
+{
+  "contract_version": "agent-photographic-test-gates/v1",
+  "baseline_prompt_sha256": "287c794a8315cbe047da27627771056dfc2ca776f433721a9ff3fe25bf0628e7",
+  "gate_policy": "partial_is_fail; do not infer hidden body parts, reciprocal gaze or contact",
+  "gates": [
+    {
+      "gate_id": "B01",
+      "criterion": "The primary subject is visibly a photographic adult portrayal with the portrait-visible face and short dark bob/fringe carried through. Adult authorship is stated in the prompt; age is not inferred from the reference.",
+      "type": "reference_scope_and_subject",
+      "origin": "prepack_authorial_test"
+    },
+    {
+      "gate_id": "B02",
+      "criterion": "One identifiable adult companion shares the foreground interaction; the woman's attention can be traced to that same companion.",
+      "type": "target_continuity",
+      "origin": "prepack_authorial_test"
+    },
+    {
+      "gate_id": "B03",
+      "criterion": "Their faces are within approximately one hand breadth with the gap clearly visible; bodies are oriented toward each other.",
+      "type": "proximity_form",
+      "origin": "prepack_authorial_test"
+    },
+    {
+      "gate_id": "B04",
+      "criterion": "Both faces visibly direct their gaze toward each other rather than the capture camera or an unrelated object.",
+      "type": "reciprocal_attention",
+      "origin": "prepack_authorial_test"
+    },
+    {
+      "gate_id": "B05",
+      "criterion": "Her right fingertips visibly touch the exposed inner surface of his left wrist above the cuff; the touched wrist belongs to the companion and both forearm chains are legible. Partial or occluded contact fails.",
+      "type": "contact_and_ownership",
+      "origin": "prepack_authorial_test"
+    },
+    {
+      "gate_id": "B06",
+      "criterion": "The companion has already turned his face and upper chest toward her and shows a small answering facial response; a future or inferred response fails.",
+      "type": "visible_response",
+      "origin": "prepack_authorial_test"
+    },
+    {
+      "gate_id": "B07",
+      "criterion": "The woman shows a poised small half-smile with subtly parted lips or comparable suspended facial affect; the image reads as a held interpersonal pause rather than a neutral activity.",
+      "type": "affect_and_event_phase",
+      "origin": "prepack_authorial_test"
+    },
+    {
+      "gate_id": "B08",
+      "criterion": "The theater balcony / evening threshold remains readable but subordinate; waist-up composition shows both faces and contact together with coherent hands and material behavior.",
+      "type": "scene_and_visual_hierarchy",
+      "origin": "prepack_authorial_test"
+    }
+  ],
+  "qualitative_separate_assessment": "Describe the whole-image impression before checking sensual labels, then judge whether the interpersonal pause is perceived as seductive. Gaze, contact and smiles do not prove actual desire, consent or the real reference subject's intent. These are authorial qualification gates, not requester locks."
+}

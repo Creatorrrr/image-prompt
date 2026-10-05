@@ -1,0 +1,105 @@
+{
+  "schema": "agent-owned-frozen-pixel-criteria/v1",
+  "frozen_at_utc": "2026-10-03T23:08:37.707614+00:00",
+  "ownership": "All keyword criteria are agent-owned test observations from this independently frozen arm. They are separate from requester definitions and pack-derived strict gates.",
+  "pack_id": "2c14ee94c00abae4",
+  "baseline_prompt_sha256": "0190fbc8f1b2d6ba90b44811f2a1f69243135b92b02f7f8b77c56a456f5a423a",
+  "final_prompt_sha256": "dd1bef01b6b42492820e73f05d44beb78a93044b0a5e18cf77a971ae724adde1",
+  "candidate_pack_sha256": "32ca40c976b05fb611b9c63f8c294341d8b2f92bb45e37efabdb0fac7ca5d701",
+  "all_of_policy": {
+    "same_image_required": true,
+    "partial_is_fail": true,
+    "required_relation_occlusion": "UNOBSERVABLE/non-PASS",
+    "safety_block": "unscored",
+    "prompt_or_metadata_is_not_pixel_evidence": true,
+    "user_acceptance": "pending"
+  },
+  "keyword_gates": [
+    {
+      "id": "kw_face_guidance",
+      "scale": "native",
+      "all_of": [
+        "One unobstructed human face is visible.",
+        "Visible face shape and eye/nose/mouth relations are recognizably consistent with the supplied reference guidance; this is visual resemblance, not identity proof."
+      ],
+      "source_phrase": "Use the supplied image as visible facial appearance guidance"
+    },
+    {
+      "id": "kw_shoulder_wrap",
+      "scale": "both",
+      "all_of": [
+        "A pale ivory cloth is visibly wrapped across both shoulders.",
+        "The wrap has separate textile edges and folds over the navy dress."
+      ],
+      "source_phrase": "A pale ivory gauze scarf wraps across both shoulders"
+    },
+    {
+      "id": "kw_clasp_attachment",
+      "scale": "native",
+      "all_of": [
+        "Two overlapping cloth edges meet at the upper chest.",
+        "One small round silver clasp visibly fastens those same fabric edges, rather than attaching to bare skin or unrelated necklace."
+      ],
+      "source_phrase": "two overlapped fabric edges meet under a small round silver clasp at her upper chest"
+    },
+    {
+      "id": "kw_belt_closure",
+      "scale": "native",
+      "all_of": [
+        "A rectangular brass buckle is on one black leather waist belt.",
+        "A buckle prong is visibly seated through a punched belt hole.",
+        "The same leather tail passes through a keeper loop."
+      ],
+      "source_phrase": "The belt has a rectangular brass buckle, with its prong seated through a punched hole and its leather tail passing through a keeper loop"
+    },
+    {
+      "id": "kw_rigid_arm_cuff",
+      "scale": "both",
+      "all_of": [
+        "One rigid geometric brass cuff encircles the subject left upper arm.",
+        "Faceted hard edges and a separate inner rim or contact shadow distinguish the cuff from skin and cloth.",
+        "It belongs to the upper arm, rather than wrist or nonhuman anatomy."
+      ],
+      "source_phrase": "A rigid geometric brass cuff encircles her left upper arm over the visible bare arm"
+    },
+    {
+      "id": "kw_hand_belt_relation",
+      "scale": "native",
+      "all_of": [
+        "The subject right elbow/wrist/hand form a connected chain.",
+        "Her right thumb and forefinger touch the loose belt tail beside the closed buckle.",
+        "The left arm remains sufficiently away from torso to assess its cuff and enclosing relation."
+      ],
+      "source_phrase": "her right thumb and forefinger rest on the loose belt tail beside the closed buckle"
+    }
+  ],
+  "strict_pack_gates": [
+    {
+      "id": "embodiment_body_ownership",
+      "scale": "native",
+      "criterion": "Important body parts visibly belong to the intended adult human actor; jewelry, fabric and belt remain separate carriers."
+    },
+    {
+      "id": "embodiment_joint_chain_and_reach",
+      "scale": "native",
+      "criterion": "Both connected arms articulate plausibly; right hand reaches belt tail and left elbow/wrist continue the visible corridor."
+    },
+    {
+      "id": "embodiment_support_and_balance",
+      "scale": "native",
+      "criterion": "Visible standing torso and hips agree with ordinary support below the frame; no contradictory load or suspension."
+    },
+    {
+      "id": "embodiment_contact_and_space",
+      "scale": "native",
+      "criterion": "Right fingertip-to-belt-tail contact, cloth overlap at chest clasp and cuff-to-upper-arm boundaries survive coherently."
+    },
+    {
+      "id": "embodiment_visibility_and_projection",
+      "scale": "native",
+      "criterion": "Face, wrap closure, belt buckle/tail, cuff and both hands remain assessable from the selected frame."
+    }
+  ],
+  "selected_visual_concepts": [],
+  "integrated_data_qualification": "No 49-new/61-enriched visual profile was exposed or selected; authorial keyword survival cannot count as proof of these integrated profiles."
+}

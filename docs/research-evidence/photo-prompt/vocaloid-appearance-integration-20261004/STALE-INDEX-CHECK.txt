@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py", line 196, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py", line 117, in main
+    payload = load_visual_profile_index(
+        output_path,
+    ...<3 lines>...
+        dimensions=args.dimensions,
+    )
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 1679, in load_visual_profile_index
+    validate_visual_profile_index_metadata(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        payload,
+        ^^^^^^^^
+    ...<3 lines>...
+        dimensions=dimensions,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 1591, in validate_visual_profile_index_metadata
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: visual profile index registry_sha256 does not match the visual registry; regenerate it with build_visual_profile_index.py

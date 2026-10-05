@@ -1,0 +1,114 @@
+{
+  "source_path": "docs/research-evidence/photo-prompt/seduction-context-qualification-20261005/runtime/skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_portrait_fashion_exposure.json",
+  "source_file_sha256": "013e2e7cdffcb1320951f92bfb52aecaf96022403da0e3b04663e6a7b9831a75",
+  "source_pointer": "/profiles/13",
+  "profile": {
+    "id": "pfe_face_garment",
+    "category": "portrait_garment_owner_relation",
+    "activation": {
+      "exact_terms": [
+        "the adult subject's visible face and selected garment feature occupy the same coherent frame; focus light and scale keep both the facial expression and garment feature readable; supporting hands hair and foreground leave those two declared regions distinguishable"
+      ],
+      "requires_adult_character": true,
+      "semantic_discovery_requires_component_evidence": false
+    },
+    "semantics": {
+      "definition": "the adult subject's visible face and selected garment feature occupy the same coherent frame; focus light and scale keep both the facial expression and garment feature readable; supporting hands hair and foreground leave those two declared regions distinguishable",
+      "paraphrase_examples": [
+        "얼굴과 선택한 의복 디테일의 동시 가독성",
+        "인물 중심 패션 사진",
+        "face and garment detail readable",
+        "face-focused fashion portrait"
+      ],
+      "contrast_examples": [
+        "a face crop that removes the requested garment feature",
+        "a body-only crop",
+        "an unreadably small face",
+        "a bright garment patch substituted for expression"
+      ],
+      "claim_limits": [
+        "동시 가독성은 직접 관찰 조건이다. 얼굴이 항상 가장 밝아야 한다거나 가까운 사진만 매력적이라는 규칙은 만들지 않는다.",
+        "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+      ]
+    },
+    "concept_candidate": {
+      "concept_terms": [
+        "얼굴과 선택한 의복 디테일의 동시 가독성",
+        "인물 중심 패션 사진",
+        "face and garment detail readable",
+        "face-focused fashion portrait",
+        "the adult subject's visible face and selected garment feature occupy the same coherent frame",
+        "focus light and scale keep both the facial expression and garment feature readable",
+        "supporting hands hair and foreground leave those two declared regions distinguishable"
+      ]
+    },
+    "runtime_expression": {
+      "default_mode": "definition_with_optional_label",
+      "prompt_label_terms": [],
+      "forbidden_prompt_terms": [],
+      "runtime_forbidden_labels": []
+    },
+    "reject_substitutes": [
+      "a face crop that removes the requested garment feature",
+      "a body-only crop",
+      "an unreadably small face",
+      "a bright garment patch substituted for expression"
+    ],
+    "authored_components": {
+      "contract_version": "photo-authored-visual-components/v1",
+      "components": [
+        {
+          "id": "component_1",
+          "match_terms": [
+            "the adult subject's visible face and selected garment feature occupy the same coherent frame"
+          ],
+          "evidence_field": "component_1_phrase",
+          "evidence_terms": [
+            "the adult subject's visible face and selected garment feature occupy the same coherent frame"
+          ],
+          "min_content_words": 3,
+          "instruction": "Preserve the declared owner and make this selected relation visible: the adult subject's visible face and selected garment feature occupy the same coherent frame",
+          "render_gate": {
+            "id": "vo_pfe_face_garment_1",
+            "review_scale": "both",
+            "description": "the adult subject's visible face and selected garment feature occupy the same coherent frame. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+          }
+        },
+        {
+          "id": "component_2",
+          "match_terms": [
+            "focus light and scale keep both the facial expression and garment feature readable"
+          ],
+          "evidence_field": "component_2_phrase",
+          "evidence_terms": [
+            "focus light and scale keep both the facial expression and garment feature readable"
+          ],
+          "min_content_words": 3,
+          "instruction": "Preserve the declared owner and make this selected relation visible: focus light and scale keep both the facial expression and garment feature readable",
+          "render_gate": {
+            "id": "vo_pfe_face_garment_2",
+            "review_scale": "both",
+            "description": "focus light and scale keep both the facial expression and garment feature readable. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+          }
+        },
+        {
+          "id": "component_3",
+          "match_terms": [
+            "supporting hands hair and foreground leave those two declared regions distinguishable"
+          ],
+          "evidence_field": "component_3_phrase",
+          "evidence_terms": [
+            "supporting hands hair and foreground leave those two declared regions distinguishable"
+          ],
+          "min_content_words": 3,
+          "instruction": "Preserve the declared owner and make this selected relation visible: supporting hands hair and foreground leave those two declared regions distinguishable",
+          "render_gate": {
+            "id": "vo_pfe_face_garment_3",
+            "review_scale": "native",
+            "description": "supporting hands hair and foreground leave those two declared regions distinguishable. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails."
+          }
+        }
+      ]
+    }
+  }
+}

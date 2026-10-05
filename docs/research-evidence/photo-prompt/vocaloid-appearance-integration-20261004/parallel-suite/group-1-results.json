@@ -1,0 +1,1804 @@
+{
+  "schema_version": "photo-unittest-completion-group/v1",
+  "group": 1,
+  "expected_count": 294,
+  "tests_run": 294,
+  "elapsed_seconds": 408.409,
+  "coverage_complete": false,
+  "missing_ids": [
+    "test_photo_initial_creative_controls.CreativeControlResolverTests.test_cli_rejects_post_core_control_flags_before_loading_candidates",
+    "test_photo_initial_creative_controls.CreativeControlResolverTests.test_creativity_levels_preserve_values_and_selected_meanings",
+    "test_photo_initial_creative_controls.CreativeControlResolverTests.test_defaults_meanings_and_sources_are_available_before_candidates",
+    "test_photo_initial_creative_controls.CreativeControlResolverTests.test_emphasis_resolution_is_hash_bound_and_recomputed",
+    "test_photo_initial_creative_controls.CreativeControlResolverTests.test_emphasis_stores_selected_and_effective_choices_without_changing_intensities",
+    "test_photo_initial_creative_controls.CreativeControlResolverTests.test_invalid_values_and_emphasis_fail",
+    "test_photo_initial_creative_controls.CreativeControlResolverTests.test_level_and_choice_definitions_must_be_complete",
+    "test_photo_initial_creative_controls.CreativeControlResolverTests.test_no_people_and_nonsexual_meaning_keep_requested_values_but_disable_additions",
+    "test_photo_initial_creative_controls.CreativeControlResolverTests.test_override_zero_is_an_addition_control_not_a_request_rewrite",
+    "test_photo_initial_creative_controls.CreativeControlResolverTests.test_resolver_cli_saves_the_same_complete_brief_it_returns",
+    "test_photo_initial_creative_controls.CreativeControlResolverTests.test_saved_brief_cannot_be_changed_even_with_a_recomputed_hash",
+    "test_photo_initial_creative_controls.CreativeControlResolverTests.test_surreal_is_frozen_and_validation_uses_embedded_definitions",
+    "test_photo_initial_creative_controls.CreativeControlResolverTests.test_surreal_levels_are_not_probabilistic_or_adult_eligibility_controls",
+    "test_photo_initial_creative_controls.CreativeControlResolverTests.test_surreal_rejects_removed_inputs_and_invalid_levels",
+    "test_photo_initial_creative_controls.InitialDirectionIntegrationTests.test_authored_refinement_must_declare_unlocked_property_effects",
+    "test_photo_initial_creative_controls.InitialDirectionIntegrationTests.test_baseline_realization_needs_no_extra_axis_detail",
+    "test_photo_initial_creative_controls.InitialDirectionIntegrationTests.test_changed_snapshot_or_missing_binding_fails",
+    "test_photo_initial_creative_controls.InitialDirectionIntegrationTests.test_creativity_and_emphasis_reach_public_pack_with_their_initial_brief",
+    "test_photo_initial_creative_controls.InitialDirectionIntegrationTests.test_frozen_controls_survive_generator_and_public_composer_pack",
+    "test_photo_initial_creative_controls.InitialDirectionIntegrationTests.test_historical_axis_scope_is_rejected",
+    "test_photo_initial_creative_controls.InitialDirectionIntegrationTests.test_ordinary_candidate_cannot_bypass_the_same_property_boundary",
+    "test_photo_initial_creative_controls.InitialDirectionIntegrationTests.test_property_lock_preserves_color_and_type_but_allows_neckline",
+    "test_photo_initial_creative_controls.InitialDirectionIntegrationTests.test_sensual_wardrobe_candidates_exist_when_garment_is_open",
+    "test_photo_initial_creative_controls.InitialDirectionIntegrationTests.test_surreal_level_and_saved_brief_survive_retrieval_and_public_pack",
+    "test_photo_initial_creative_controls.InitialDirectionIntegrationTests.test_whole_garment_candidates_do_not_bypass_partial_property_locks",
+    "test_photo_jurisdiction_record_unit_data_cleanup.JurisdictionRecordUnitDataCleanupTests.test_all_nine_keeps_and_every_existing_target_field_are_exact",
+    "test_photo_jurisdiction_record_unit_data_cleanup.JurisdictionRecordUnitDataCleanupTests.test_coexisting_display_is_not_a_low_rank_or_global_exclusion",
+    "test_photo_jurisdiction_record_unit_data_cleanup.JurisdictionRecordUnitDataCleanupTests.test_current_public_projection_and_detail_restore_the_full_contrast",
+    "test_photo_jurisdiction_record_unit_data_cleanup.JurisdictionRecordUnitDataCleanupTests.test_frozen_inventory_queries_and_attempt_cap",
+    "test_photo_jurisdiction_record_unit_data_cleanup.JurisdictionRecordUnitDataCleanupTests.test_long_original_sentence_is_intact_not_reworded_or_split",
+    "test_photo_jurisdiction_record_unit_data_cleanup.JurisdictionRecordUnitDataCleanupTests.test_punk_long_labels_keep_existing_authored_keyword_units_and_bundles",
+    "test_photo_jurisdiction_record_unit_data_cleanup.JurisdictionRecordUnitDataCleanupTests.test_raw_extension_changes_only_one_new_verbatim_unit",
+    "test_photo_neutral_expression_alternatives.PhotoNeutralExpressionAlternativesTests.test_bm25f_paraphrases_remain_advisory",
+    "test_photo_neutral_expression_alternatives.PhotoNeutralExpressionAlternativesTests.test_broad_labels_and_material_polysemy_are_not_promoted_to_exact",
+    "test_photo_neutral_expression_alternatives.PhotoNeutralExpressionAlternativesTests.test_complete_region_and_owner_proof_cannot_be_replaced_by_one_component",
+    "test_photo_neutral_expression_alternatives.PhotoNeutralExpressionAlternativesTests.test_component_alternatives_keep_anatomical_boundaries_and_common_owner",
+    "test_photo_neutral_expression_alternatives.PhotoNeutralExpressionAlternativesTests.test_equivalent_extension_preserves_existing_labels_effects_and_guards",
+    "test_photo_neutral_expression_alternatives.PhotoNeutralExpressionAlternativesTests.test_exact_negation_and_advisory_source_do_not_create_requester_duties",
+    "test_photo_neutral_expression_alternatives.PhotoNeutralExpressionAlternativesTests.test_interpretation_limits_do_not_pollute_positive_retrieval",
+    "test_photo_neutral_expression_alternatives.PhotoNeutralExpressionAlternativesTests.test_moral_corruption_does_not_request_bodily_transformation_through_full_core",
+    "test_photo_neutral_expression_alternatives.PhotoNeutralExpressionAlternativesTests.test_narrow_current_expression_needs_a_face_and_is_not_static_lip_volume",
+    "test_photo_neutral_expression_alternatives.PhotoNeutralExpressionAlternativesTests.test_regional_candidates_cannot_evade_partial_body_property_locks",
+    "test_photo_neutral_expression_alternatives.PhotoNeutralExpressionAlternativesTests.test_regional_volume_does_not_force_a_whole_body_build_or_curve",
+    "test_photo_neutral_expression_alternatives.PhotoNeutralExpressionAlternativesTests.test_structure_and_action_have_independent_carriers",
+    "test_photo_prepack_isolation.PhotoPrepackIsolationTests.test_authorial_fields_may_disambiguate_but_cannot_hard_activate_profiles",
+    "test_photo_prepack_isolation.PhotoPrepackIsolationTests.test_core_requires_a_resolved_ambiguity_boundary_and_auditable_web_basis",
+    "test_photo_prepack_isolation.PhotoPrepackIsolationTests.test_frozen_core_revision_decisions_are_rejected",
+    "test_photo_prepack_isolation.PhotoPrepackIsolationTests.test_public_current_flow_resolves_profile_only_after_receiving_a_frozen_core",
+    "test_photo_prepack_isolation.PhotoPrepackIsolationTests.test_skill_procedure_contains_no_registry_keyword_knowledge",
+    "test_photo_prepack_isolation.PhotoPrepackIsolationTests.test_visual_intent_profile_resolution_occurs_without_a_precore_profile_id",
+    "test_photo_protostar_korean_alias_data_cleanup.ProtostarKoreanAliasDataCleanupTests.test_acceptance_binds_name_gain_score_costs_and_target_absence",
+    "test_photo_protostar_korean_alias_data_cleanup.ProtostarKoreanAliasDataCleanupTests.test_complete_raw_space_extension_has_only_one_qualified_alias_append",
+    "test_photo_protostar_korean_alias_data_cleanup.ProtostarKoreanAliasDataCleanupTests.test_existing_name_and_disk_outflow_specialization_are_unchanged",
+    "test_photo_protostar_korean_alias_data_cleanup.ProtostarKoreanAliasDataCleanupTests.test_frozen_inventory_probes_and_bounded_cost",
+    "test_photo_protostar_korean_alias_data_cleanup.ProtostarKoreanAliasDataCleanupTests.test_historical_merged_state_and_current_nineteen_keeps_are_exact",
+    "test_photo_protostar_korean_alias_data_cleanup.ProtostarKoreanAliasDataCleanupTests.test_historical_other_merged_rows_and_current_natural_rows_are_exact",
+    "test_photo_protostar_korean_alias_data_cleanup.ProtostarKoreanAliasDataCleanupTests.test_historical_v6_full_pack_detail_and_overview_preserve_genuine_subject_context",
+    "test_photo_protostar_korean_alias_data_cleanup.ProtostarKoreanAliasDataCleanupTests.test_independent_probes_names_and_controls_are_existing_subjects",
+    "test_photo_religion_iconography_alternatives.ReligionIconographyAlternativesTests.test_all_components_required_including_owned_junction_and_count",
+    "test_photo_religion_iconography_alternatives.ReligionIconographyAlternativesTests.test_bare_names_and_polysemy_do_not_fix_a_variant",
+    "test_photo_religion_iconography_alternatives.ReligionIconographyAlternativesTests.test_complete_form_requires_request_evidence_and_respects_negation",
+    "test_photo_religion_iconography_alternatives.ReligionIconographyAlternativesTests.test_existing_candidate_context_preserves_all_prior_owned_fields",
+    "test_photo_religion_iconography_alternatives.ReligionIconographyAlternativesTests.test_existing_heart_owner_remains_feather_specific",
+    "test_photo_religion_iconography_alternatives.ReligionIconographyAlternativesTests.test_frozen_ordinary_portrait_cannot_admit_unrequested_iconography",
+    "test_photo_religion_iconography_alternatives.ReligionIconographyAlternativesTests.test_layout_candidates_cannot_declare_anatomy_identity_or_prop_effects",
+    "test_photo_religion_iconography_alternatives.ReligionIconographyAlternativesTests.test_muqarnas_and_griffin_keep_existing_owners",
+    "test_photo_religion_iconography_alternatives.ReligionIconographyAlternativesTests.test_new_korean_component_alternatives_preserve_the_complete_form",
+    "test_photo_religion_iconography_alternatives.ReligionIconographyAlternativesTests.test_owned_junction_paraphrases_are_discovered_from_runtime_baseline",
+    "test_photo_religion_iconography_alternatives.ReligionIconographyAlternativesTests.test_pending_variants_have_no_hard_profile_link",
+    "test_photo_religion_iconography_alternatives.ReligionIconographyAlternativesTests.test_scoped_alternatives_are_optional_discovery_in_an_agent_core",
+    "test_photo_religion_iconography_alternatives.ReligionIconographyAlternativesTests.test_semantic_only_paraphrase_does_not_harden_a_profile",
+    "test_photo_religion_iconography_alternatives.ReligionIconographyAlternativesTests.test_unrelated_even_embedding_close_context_cannot_expose_new_profiles",
+    "test_photo_render_repair.PhotoRenderRepairTests.test_composed_audit_recomputes_contract_and_rejects_evasive_prompt",
+    "test_photo_render_repair.PhotoRenderRepairTests.test_legacy_lineage_shape_remains_unchanged",
+    "test_photo_render_repair.PhotoRenderRepairTests.test_lineage_requires_locked_action_and_one_assertion_owning_both_phrases",
+    "test_photo_render_repair.PhotoRenderRepairTests.test_modern_independent_manifest_preserves_repair_provenance",
+    "test_photo_render_repair.PhotoRenderRepairTests.test_object_agnostic_contract_handles_multiple_interaction_families",
+    "test_photo_render_repair.PhotoRenderRepairTests.test_render_review_requires_exact_major_gate_set_and_image_hash",
+    "test_photo_render_repair.PhotoRenderRepairTests.test_requester_corrected_relation_is_frozen_after_parent_change",
+    "test_photo_render_repair.PhotoRenderRepairTests.test_runtime_request_requires_exact_repair_contract_hash",
+    "test_photo_render_repair.PhotoRenderRepairTests.test_v2_lineage_compiles_generic_prompt_and_pixel_contract",
+    "test_photo_render_repair.PhotoRenderRepairTests.test_v6_candidate_pack_exposes_recomputed_repair_contract",
+    "test_photo_research_integration.ResearchIntegrationTests.test_context_extension_cannot_replace_meaning_scope_or_guards",
+    "test_photo_research_integration.ResearchIntegrationTests.test_every_returned_record_has_one_explicit_integration_decision",
+    "test_photo_research_integration.ResearchIntegrationTests.test_nonvisual_records_and_locked_face_scope_are_not_smuggled_into_adult_route",
+    "test_photo_research_integration.ResearchIntegrationTests.test_original_artifact_bytes_remain_hash_bound",
+    "test_photo_research_integration.ResearchIntegrationTests.test_partial_neighbors_do_not_become_false_synonyms",
+    "test_photo_research_integration.ResearchIntegrationTests.test_positive_equivalents_are_searchable_but_context_and_limits_are_not",
+    "test_photo_research_integration.ResearchIntegrationTests.test_reviewed_paraphrases_preserve_candidate_scope_and_are_searchable",
+    "test_photo_research_integration.ResearchIntegrationTests.test_source_ids_are_resolved_within_each_reports_namespace",
+    "test_photo_research_integration.ResearchIntegrationTests.test_wearing_change_obeys_property_and_action_locks_without_axis_tags"
+  ],
+  "unexpected_ids": [
+    "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+    "unittest.loader._FailedTest.test_photo_jurisdiction_record_unit_data_cleanup",
+    "unittest.loader._FailedTest.test_photo_neutral_expression_alternatives",
+    "unittest.loader._FailedTest.test_photo_prepack_isolation",
+    "unittest.loader._FailedTest.test_photo_protostar_korean_alias_data_cleanup",
+    "unittest.loader._FailedTest.test_photo_religion_iconography_alternatives",
+    "unittest.loader._FailedTest.test_photo_render_repair",
+    "unittest.loader._FailedTest.test_photo_research_integration"
+  ],
+  "loader_errors": [
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_protostar_korean_alias_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py\", line 10, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_protostar_korean_alias_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py\", line 10, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_protostar_korean_alias_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py\", line 10, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_protostar_korean_alias_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py\", line 10, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_protostar_korean_alias_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py\", line 10, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_protostar_korean_alias_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py\", line 10, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_protostar_korean_alias_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py\", line 10, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_protostar_korean_alias_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py\", line 10, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_jurisdiction_record_unit_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_jurisdiction_record_unit_data_cleanup.py\", line 8, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_jurisdiction_record_unit_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_jurisdiction_record_unit_data_cleanup.py\", line 8, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_jurisdiction_record_unit_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_jurisdiction_record_unit_data_cleanup.py\", line 8, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_jurisdiction_record_unit_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_jurisdiction_record_unit_data_cleanup.py\", line 8, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_jurisdiction_record_unit_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_jurisdiction_record_unit_data_cleanup.py\", line 8, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_jurisdiction_record_unit_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_jurisdiction_record_unit_data_cleanup.py\", line 8, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_jurisdiction_record_unit_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_jurisdiction_record_unit_data_cleanup.py\", line 8, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_prepack_isolation\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_prepack_isolation.py\", line 24, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_prepack_isolation\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_prepack_isolation.py\", line 24, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_prepack_isolation\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_prepack_isolation.py\", line 24, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_prepack_isolation\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_prepack_isolation.py\", line 24, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_prepack_isolation\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_prepack_isolation.py\", line 24, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n",
+    "Failed to import test module: test_photo_prepack_isolation\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_prepack_isolation.py\", line 24, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n"
+  ],
+  "test_files_unchanged": true,
+  "test_file_sha256": {
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_imaginal_visual_semantics.py": "98f0ea9b1827f0d2a84847f8be961e3f5cb667c9c387b41d8daf471331382b2c",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py": "40ea8006c672fa32189395ff89a26300de1a9f2ee08ae1a8d0d98f818d10232b",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_instrument_semantics.py": "2048a4f443630ecd8071a9d4a96e2a71d57968002b7fdba7141d228e4227accb",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_jurisdiction_record_unit_data_cleanup.py": "9b3099ecf4fb17681f64a2f723ad5ea5ef723ffab64bb212c21dba65b887b9c0",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_leading_line_gate_alternatives.py": "0142d9aefd8b72cacf9a91d83bb4b73202f66d129007d0666121549208739001",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_legend_visual_semantics.py": "a24be74ba36ad20ff05042a844c94fda507b24db633d9a76d83b3cc7d166d2d0",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_liminal_maintained_alternative.py": "fc393ce4084f066ceadeb6cb5fc7f948c0b06e9a81ed5d28ae3c575507a1cf8b",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_model_editorial_semantics.py": "3ab6c7827d42f2b04080bed2e3fbf3d573fe511a951c3e70ce5237b972e43d88",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_natural_environment_semantics.py": "d00a248909a8017fc52bf6afd3cff824c73c23ce369b2e6921738cf1834847b1",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py": "40afb9759e66e4e5676999259aa9047150f2ddaee941c2c130956bddd7baa361",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_next_slot_data_cleanup.py": "9bff0a6ed61aed59b6a377e0be5ccca057080b9bd198dd04a7cbcc3b84a219a6",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_oneiric_anchor_alternative.py": "c9a4bbbae77243549a6042c5547db2d8d1db8a89c762e77a9b6e127e9f8d7e68",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_panning_direction_scope.py": "f97ff2e06aeb9d6d13332f2ca17de56018bc2106ec1d4f5bae83eb7a2261674d",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_portrait_fashion_exposure.py": "cdc2711fb4f90d50f8e42b87fbb3192993dc779f1765052693a3377216bd2c08",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_positive_retrieval.py": "2479114149a6138fd047855046713f41ee86d26185a2f30afb2232e928bd7c2d",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_prepack_isolation.py": "cb8039764dcc0b03581c7062ab6be030a370f8f2c0013d731a3614dac7f73870",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py": "4905be895555e7b91ceac4d6d3420d55cb4ded0e629d2fbb44d7d86edf4eeb26",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py": "fb276ebf264d906ce5b862cc3b247399eefd79306911c26561b389c6011ff52a",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_boundary_history.py": "888e55f80b66de5dd3507e00fb957db9d86a0ef6f2d43afd130b6d96525bcf4c",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_remaining_boundary_data.py": "5585e5e86485c95ad749dc60a9faa5dad9d1b7425b9b9bbdfadf3a52cbe949b5",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py": "d346b5c27c29f1033cd7ec0c3aae5ee578b96a50343ed1ffa53858d1bfda21c8",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py": "3d1b9db4822b91c93329b838cd7751ed72c8d103708c2606cd6ba6c23e78e2b2",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_role_garment_candidate_expansion.py": "94d00d83bb1f8c0b793aef097e3285c998a5e5a98fc611a7795b99d5ea72ece9",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_scene_data_cleanup.py": "5758ed60634616adf5e9c5fb991f972838951cbb471e5baf5a2d099c2e255671",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_slide_thickness_alternative.py": "f718a1f35c97145d21b664c6b23e1fac7c6d21f04475e9c1fae43f47f5c15bd2",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_suggestive_editorial_visual_semantics.py": "1b6eef5e7430cbd9ed12575c12504ba0bd5bd80d919abb47e0744f9c98cf0aa1",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_tactile_reality_semantics.py": "fd6e7173ce783ae6da4bb597440c3dfd5662fca9a5ebdc9694672edbdf2ec065",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_texture_data_cleanup.py": "848323d953116441376be1450a81a2fbdb25cb0fac7dc027ddd29deee35a146c",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_traditional_clothing_semantics.py": "3a57ec624bf2dcb4aa85dad5e1acabc9e6d3e60b33cc7447a91524c0b9154b7e",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_womens_professional_uniform_visual_semantics.py": "89770d6e48afc7bb606edfc382841eb5299a775f146672ab6b8a3eb9fe826346",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_wrap_skirt_side_alternative.py": "5ed3195da40f779f56a3846dd691ebf911f791f8c278bbfd297b6034258d0241",
+    "/Users/chasoik/Projects/image-prompt/tests/test_photo_wuxia_visual_semantics.py": "d60b7546a9c49c50273fc4ccef70d397b7357e2581f8adece1c2de70a0f553a5",
+    "/Users/chasoik/Projects/image-prompt/tests/test_subculture_illustration_moe_elements.py": "f9bc6792322a712db892cebdd0b5142954230625959fa1492153ac2a8205b49f"
+  },
+  "status": "fail",
+  "events": [
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeElementTests.test_all_29_direct_selections_compile_and_audit",
+      "outcome": "pass",
+      "elapsed_seconds": 0.007
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeElementTests.test_inventory_is_exact_34_origin_articles_to_29_elements",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV2Tests.test_all_29_neutral_requests_choose_canonical_research_candidates",
+      "outcome": "pass",
+      "elapsed_seconds": 0.432
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV2Tests.test_all_29_preferences_select_the_expected_material_variant",
+      "outcome": "pass",
+      "elapsed_seconds": 0.664
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV2Tests.test_compiled_grammar_is_reproducible_and_research_rich",
+      "outcome": "pass",
+      "elapsed_seconds": 0.042
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV2Tests.test_complete_reviewed_aliases_are_explicit_inputs_not_concept_scans",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV2Tests.test_conflicts_and_representation_limits_fail_closed",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV2Tests.test_creative_cue_changes_development_not_stored_creativity",
+      "outcome": "pass",
+      "elapsed_seconds": 0.014
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV2Tests.test_existing_safety_retry_and_photo_baseline_assets_are_byte_stable",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV2Tests.test_prompt_and_plan_mutations_are_rejected",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV2Tests.test_six_cross_element_cases_use_one_global_primary_and_two_supports",
+      "outcome": "pass",
+      "elapsed_seconds": 0.119
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV2Tests.test_six_representative_combinations",
+      "outcome": "pass",
+      "elapsed_seconds": 0.004
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV2Tests.test_twelve_prompt_evidence_comparisons_are_bound_to_current_grammar",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV2Tests.test_unrequested_elements_and_sparse_evidence_mutations_fail_closed",
+      "outcome": "pass",
+      "elapsed_seconds": 0.022
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV3Tests.test_all_neutral_and_preference_requests_bind_and_audit_meaning",
+      "outcome": "pass",
+      "elapsed_seconds": 1.035
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV3Tests.test_safe_analogue_and_medium_capability_cannot_be_overclaimed",
+      "outcome": "pass",
+      "elapsed_seconds": 0.056
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV3Tests.test_sensitive_label_component_and_contract_mutations_fail_closed",
+      "outcome": "pass",
+      "elapsed_seconds": 0.032
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV3Tests.test_v3_compile_is_reproducible_and_all_meanings_are_normalized",
+      "outcome": "pass",
+      "elapsed_seconds": 0.063
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV3Tests.test_v3_qualification_is_bound_to_current_assets",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV4Tests.test_alias_relations_activate_or_reject_without_silent_substitution",
+      "outcome": "pass",
+      "elapsed_seconds": 2.504
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV4Tests.test_all_29_canonical_elements_emit_and_audit_visual_evidence",
+      "outcome": "pass",
+      "elapsed_seconds": 0.471
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV4Tests.test_negative_confound_is_pixel_review_not_a_lexical_ban",
+      "outcome": "pass",
+      "elapsed_seconds": 0.013
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV4Tests.test_sensitive_label_is_omitted_while_visual_geometry_stays_exact",
+      "outcome": "pass",
+      "elapsed_seconds": 0.014
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV4Tests.test_six_multi_element_cases_share_visual_mode_and_sparse_budget",
+      "outcome": "pass",
+      "elapsed_seconds": 0.104
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV4Tests.test_v4_qualification_covers_all_canonical_and_alias_contracts",
+      "outcome": "pass",
+      "elapsed_seconds": 2.602
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV4Tests.test_variant_alias_forces_one_lineage_without_cross_variant_mixing",
+      "outcome": "pass",
+      "elapsed_seconds": 0.013
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV4Tests.test_visual_assets_and_v4_grammar_are_reproducible_and_complete",
+      "outcome": "pass",
+      "elapsed_seconds": 0.12
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV4Tests.test_visual_phrase_contract_and_medium_mutations_fail_closed",
+      "outcome": "pass",
+      "elapsed_seconds": 0.039
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV5Tests.test_added_keyword_variants_remain_semantically_separate",
+      "outcome": "pass",
+      "elapsed_seconds": 0.165
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV5Tests.test_added_related_terms_fail_closed",
+      "outcome": "pass",
+      "elapsed_seconds": 0.113
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV5Tests.test_additions_manifest_and_qualification_are_reproducible",
+      "outcome": "pass",
+      "elapsed_seconds": 4.933
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV5Tests.test_all_seven_requested_keywords_bind_and_audit",
+      "outcome": "pass",
+      "elapsed_seconds": 0.109
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV5Tests.test_ambiguous_cat_pose_and_related_terms_fail_closed",
+      "outcome": "pass",
+      "elapsed_seconds": 0.058
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV5Tests.test_non_equivalent_archetypes_do_not_silently_activate_each_other",
+      "outcome": "pass",
+      "elapsed_seconds": 0.075
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV5Tests.test_ntr_variants_separate_viewpoint_and_prior_relationship",
+      "outcome": "pass",
+      "elapsed_seconds": 0.057
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV5Tests.test_sensitive_runtime_labels_are_omitted_but_geometry_remains",
+      "outcome": "pass",
+      "elapsed_seconds": 0.066
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV5Tests.test_ten_added_visual_keywords_bind_and_audit",
+      "outcome": "pass",
+      "elapsed_seconds": 0.132
+    },
+    {
+      "id": "test_subculture_illustration_moe_elements.SubcultureIllustrationMoeGrammarV5Tests.test_visual_addition_hash_mutation_fails_even_after_pack_rehash",
+      "outcome": "pass",
+      "elapsed_seconds": 0.016
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_initial_creative_controls",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_initial_creative_controls\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_initial_creative_controls.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "test_photo_scene_data_cleanup.SceneContextCleanupTests.test_after_sunset_blue_hour_is_dusk_not_dawn",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_scene_data_cleanup.SceneContextCleanupTests.test_depth_and_occlusion_relations_remain",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_scene_data_cleanup.SceneContextCleanupTests.test_empty_surroundings_do_not_require_or_forbid_a_primary_person",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_scene_data_cleanup.SceneContextCleanupTests.test_event_phase_does_not_fabricate_clock_time",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_scene_data_cleanup.SceneContextCleanupTests.test_storm_caption_retains_weather_and_existing_context_guard",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_scene_data_cleanup.SceneLocationCleanupTests.test_floral_room_indexes_positive_room_evidence",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_scene_data_cleanup.SceneLocationCleanupTests.test_physical_location_captions_keep_authored_specialized_associations",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_scene_data_cleanup.SceneLocationCleanupTests.test_switchboard_keeps_real_connections_and_half_plugged_state",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_scene_data_cleanup.SceneLocationCleanupTests.test_welding_korean_fields_preserve_sparks_without_human_guard",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_scene_data_cleanup.ScenePreservationTests.test_frozen_inventory_and_queries_remain_bound",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_photo_scene_data_cleanup.ScenePreservationTests.test_prior_twenty_three_edited_rows_are_byte_semantically_preserved",
+      "outcome": "pass",
+      "elapsed_seconds": 0.444
+    },
+    {
+      "id": "test_photo_scene_data_cleanup.ScenePropCleanupTests.test_cafe_and_laundry_owner_state_relations_remain",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_scene_data_cleanup.ScenePropCleanupTests.test_coffee_gesture_is_preserved_in_both_languages",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_scene_data_cleanup.ScenePropCleanupTests.test_diary_preserves_blank_or_marked_alternatives",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_scene_data_cleanup.ScenePropCleanupTests.test_genealogy_records_content_not_proof_of_subject_identity",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_scene_data_cleanup.ScenePropCleanupTests.test_shared_umbrella_keeps_two_people_and_transparency",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_religion_iconography_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_religion_iconography_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_religion_iconography_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_religion_iconography_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_religion_iconography_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_religion_iconography_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_religion_iconography_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_religion_iconography_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_religion_iconography_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_religion_iconography_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_religion_iconography_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_religion_iconography_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_religion_iconography_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_religion_iconography_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_religion_iconography_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_religion_iconography_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_neutral_expression_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_neutral_expression_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_neutral_expression_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_neutral_expression_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_neutral_expression_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_neutral_expression_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_neutral_expression_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_neutral_expression_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_neutral_expression_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_neutral_expression_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_neutral_expression_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_neutral_expression_alternatives",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_neutral_expression_alternatives\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_neutral_expression_alternatives.py\", line 15, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_added_projection_preserves_initial_profiles_candidates_and_source_links",
+      "outcome": "pass",
+      "elapsed_seconds": 0.006
+    },
+    {
+      "id": "test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_appended_labels_do_not_imply_exposure_fit_anatomy_or_viewpoint",
+      "outcome": "pass",
+      "elapsed_seconds": 0.075
+    },
+    {
+      "id": "test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_broad_labels_and_adjacent_substitutes_do_not_create_hard_geometry",
+      "outcome": "pass",
+      "elapsed_seconds": 0.08
+    },
+    {
+      "id": "test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_bundles_are_joint_optional_and_respect_all_locked_dimensions",
+      "outcome": "pass",
+      "elapsed_seconds": 0.002
+    },
+    {
+      "id": "test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_candidate_eligibility_requires_an_adult_human_context",
+      "outcome": "pass",
+      "elapsed_seconds": 0.003
+    },
+    {
+      "id": "test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_complete_relation_has_authority_but_fragments_negation_and_nonadult_do_not",
+      "outcome": "pass",
+      "elapsed_seconds": 0.518
+    },
+    {
+      "id": "test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_each_selected_profile_retains_every_component_and_gate",
+      "outcome": "pass",
+      "elapsed_seconds": 0.005
+    },
+    {
+      "id": "test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_embedding_discovery_is_advisory_even_for_a_required_query",
+      "outcome": "pass",
+      "elapsed_seconds": 0.048
+    },
+    {
+      "id": "test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_real_generated_indexes_bind_sources_and_every_candidate",
+      "outcome": "pass",
+      "elapsed_seconds": 4.615
+    },
+    {
+      "id": "test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_research_sources_and_proposals_do_not_leak_into_runtime",
+      "outcome": "pass",
+      "elapsed_seconds": 0.003
+    },
+    {
+      "id": "test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_thigh_skin_band_does_not_change_the_existing_negative_space_profile",
+      "outcome": "pass",
+      "elapsed_seconds": 0.495
+    },
+    {
+      "id": "test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_unrelated_homonyms_are_filtered_even_with_an_adult_context",
+      "outcome": "pass",
+      "elapsed_seconds": 0.06
+    },
+    {
+      "id": "test_photo_suggestive_editorial_visual_semantics.PhotoSuggestiveEditorialVisualSemanticsTests.test_broad_slanga_genres_and_single_cues_remain_nonhard",
+      "outcome": "pass",
+      "elapsed_seconds": 27.767
+    },
+    {
+      "id": "test_photo_suggestive_editorial_visual_semantics.PhotoSuggestiveEditorialVisualSemanticsTests.test_candidate_atoms_are_reachable",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_suggestive_editorial_visual_semantics.PhotoSuggestiveEditorialVisualSemanticsTests.test_controlled_reveal_requires_target_causality_salience_and_necessity",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_suggestive_editorial_visual_semantics.PhotoSuggestiveEditorialVisualSemanticsTests.test_figure_coverage_requires_primary_nonredundant_carrier",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_suggestive_editorial_visual_semantics.PhotoSuggestiveEditorialVisualSemanticsTests.test_generated_indexes_include_new_profiles_and_candidates",
+      "outcome": "pass",
+      "elapsed_seconds": 3.423
+    },
+    {
+      "id": "test_photo_suggestive_editorial_visual_semantics.PhotoSuggestiveEditorialVisualSemanticsTests.test_historical_evidence_is_approved_and_remaining_candidates_are_bound",
+      "outcome": "pass",
+      "elapsed_seconds": 0.005
+    },
+    {
+      "id": "test_photo_suggestive_editorial_visual_semantics.PhotoSuggestiveEditorialVisualSemanticsTests.test_narrow_exact_terms_route_to_one_expected_profile",
+      "outcome": "pass",
+      "elapsed_seconds": 10.328
+    },
+    {
+      "id": "test_photo_suggestive_editorial_visual_semantics.PhotoSuggestiveEditorialVisualSemanticsTests.test_profiles_are_complete_definition_only_pixel_contracts",
+      "outcome": "pass",
+      "elapsed_seconds": 0.334
+    },
+    {
+      "id": "test_photo_suggestive_editorial_visual_semantics.PhotoSuggestiveEditorialVisualSemanticsTests.test_research_note_records_reference_and_evidence_boundaries",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_photo_suggestive_editorial_visual_semantics.PhotoSuggestiveEditorialVisualSemanticsTests.test_skill_fail_closes_uncovered_focal_meaning",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_photo_suggestive_editorial_visual_semantics.PhotoSuggestiveEditorialVisualSemanticsTests.test_three_arm_fixture_is_hash_bound_when_present",
+      "outcome": "pass",
+      "elapsed_seconds": 0.014
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_render_repair",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_render_repair",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_render_repair",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_render_repair",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_render_repair",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_render_repair",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_render_repair",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_render_repair",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_render_repair",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_render_repair",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_render_repair\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_render_repair.py\", line 3, in <module>\n    from tests import photo_prompt_fixtures as current_fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "test_photo_tactile_reality_semantics.PhotoTactileRealitySemanticsTests.test_existing_layer_preconditions_survive_normal_semantic_projection",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_tactile_reality_semantics.PhotoTactileRealitySemanticsTests.test_independent_and_adjacent_negatives_cannot_activate_even_with_perfect_vector",
+      "outcome": "pass",
+      "elapsed_seconds": 0.036
+    },
+    {
+      "id": "test_photo_tactile_reality_semantics.PhotoTactileRealitySemanticsTests.test_independent_positive_components_admit_only_optional_discovery",
+      "outcome": "pass",
+      "elapsed_seconds": 0.018
+    },
+    {
+      "id": "test_photo_tactile_reality_semantics.PhotoTactileRealitySemanticsTests.test_operation_bundles_do_not_bypass_locked_action_or_material",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_photo_tactile_reality_semantics.PhotoTactileRealitySemanticsTests.test_precise_exact_labels_are_hard_but_broad_operation_labels_are_not",
+      "outcome": "pass",
+      "elapsed_seconds": 0.015
+    },
+    {
+      "id": "test_photo_tactile_reality_semantics.PhotoTactileRealitySemanticsTests.test_provenance_is_separate_hash_bound_and_sources_resolve",
+      "outcome": "pass",
+      "elapsed_seconds": 0.002
+    },
+    {
+      "id": "test_photo_tactile_reality_semantics.PhotoTactileRealitySemanticsTests.test_real_indexes_include_changed_text_in_the_right_vector_space",
+      "outcome": "pass",
+      "elapsed_seconds": 2.087
+    },
+    {
+      "id": "test_photo_tactile_reality_semantics.PhotoTactileRealitySemanticsTests.test_registered_ten_candidates_and_four_distinct_optional_bundles",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_tactile_reality_semantics.PhotoTactileRealitySemanticsTests.test_reviewer_authored_multilingual_component_checks",
+      "outcome": "pass",
+      "elapsed_seconds": 0.014
+    },
+    {
+      "id": "test_photo_tactile_reality_semantics.PhotoTactileRealitySemanticsTests.test_unrelated_ordinary_objects_do_not_suppress_a_real_environment_target",
+      "outcome": "pass",
+      "elapsed_seconds": 0.003
+    },
+    {
+      "id": "test_photo_imaginal_visual_semantics.PhotoImaginalVisualSemanticsTests.test_broad_advisory_and_neighbor_terms_do_not_force_new_profiles",
+      "outcome": "pass",
+      "elapsed_seconds": 0.103
+    },
+    {
+      "id": "test_photo_imaginal_visual_semantics.PhotoImaginalVisualSemanticsTests.test_close_visual_substitutes_do_not_activate_new_profiles",
+      "outcome": "pass",
+      "elapsed_seconds": 0.049
+    },
+    {
+      "id": "test_photo_imaginal_visual_semantics.PhotoImaginalVisualSemanticsTests.test_direct_terms_route_to_only_the_intended_new_profile",
+      "outcome": "pass",
+      "elapsed_seconds": 0.027
+    },
+    {
+      "id": "test_photo_imaginal_visual_semantics.PhotoImaginalVisualSemanticsTests.test_embedding_only_paraphrase_remains_optional",
+      "outcome": "pass",
+      "elapsed_seconds": 0.964
+    },
+    {
+      "id": "test_photo_imaginal_visual_semantics.PhotoImaginalVisualSemanticsTests.test_extension_has_fifty_seven_complete_candidates_and_is_loaded",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_imaginal_visual_semantics.PhotoImaginalVisualSemanticsTests.test_generated_index_is_bound_to_every_imaginal_profile",
+      "outcome": "pass",
+      "elapsed_seconds": 0.002
+    },
+    {
+      "id": "test_photo_imaginal_visual_semantics.PhotoImaginalVisualSemanticsTests.test_nine_profiles_have_five_component_groups_and_pixel_gates",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_imaginal_visual_semantics.PhotoImaginalVisualSemanticsTests.test_registry_schema_accepts_imaginal_profiles",
+      "outcome": "pass",
+      "elapsed_seconds": 0.307
+    },
+    {
+      "id": "test_photo_imaginal_visual_semantics.PhotoImaginalVisualSemanticsTests.test_research_evidence_is_approved_bound_and_limited",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_broad_legend_terms_remain_advisory",
+      "outcome": "pass",
+      "elapsed_seconds": 0.054
+    },
+    {
+      "id": "test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_cluster_manifest_binds_profiles_candidates_and_advisory_row",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_extension_has_eight_complete_six_slot_clusters",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_narrow_exact_terms_route_to_exactly_one_new_profile",
+      "outcome": "pass",
+      "elapsed_seconds": 0.013
+    },
+    {
+      "id": "test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_nearest_substitutes_do_not_activate_new_profiles",
+      "outcome": "pass",
+      "elapsed_seconds": 0.031
+    },
+    {
+      "id": "test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_real_generated_index_contains_new_profiles_and_vectors",
+      "outcome": "pass",
+      "elapsed_seconds": 0.928
+    },
+    {
+      "id": "test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_registry_schema_accepts_legend_profiles",
+      "outcome": "pass",
+      "elapsed_seconds": 0.29
+    },
+    {
+      "id": "test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_research_evidence_is_approved_and_contract_bound",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_six_new_profiles_have_five_components_fields_and_pixel_gates",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_model_editorial_semantics.ModelEditorialTests.test_broad_career_genre_and_nearby_visual_substitutes_do_not_harden",
+      "outcome": "pass",
+      "elapsed_seconds": 0.046
+    },
+    {
+      "id": "test_photo_model_editorial_semantics.ModelEditorialTests.test_broad_catalog_is_not_a_paraphrase_of_garment_side_depth",
+      "outcome": "pass",
+      "elapsed_seconds": 0.003
+    },
+    {
+      "id": "test_photo_model_editorial_semantics.ModelEditorialTests.test_bts_context_guards_do_not_leak_into_finished_portraits",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_model_editorial_semantics.ModelEditorialTests.test_bundles_reject_missing_or_locked_members_and_never_promote_associated_profiles",
+      "outcome": "pass",
+      "elapsed_seconds": 0.002
+    },
+    {
+      "id": "test_photo_model_editorial_semantics.ModelEditorialTests.test_full_owner_relation_only_and_negation",
+      "outcome": "pass",
+      "elapsed_seconds": 0.199
+    },
+    {
+      "id": "test_photo_model_editorial_semantics.ModelEditorialTests.test_guarded_nonadult_context_does_not_gain_hard_human_profile",
+      "outcome": "pass",
+      "elapsed_seconds": 0.018
+    },
+    {
+      "id": "test_photo_model_editorial_semantics.ModelEditorialTests.test_real_indexes_cover_the_new_source",
+      "outcome": "pass",
+      "elapsed_seconds": 4.554
+    },
+    {
+      "id": "test_photo_model_editorial_semantics.ModelEditorialTests.test_selected_contract_keeps_every_owner_component_and_rejects_duplicate_evidence",
+      "outcome": "pass",
+      "elapsed_seconds": 0.005
+    },
+    {
+      "id": "test_photo_model_editorial_semantics.ModelEditorialTests.test_series_layout_and_provenance_stay_outside_single_image_runtime",
+      "outcome": "pass",
+      "elapsed_seconds": 0.002
+    },
+    {
+      "id": "test_photo_next_slot_data_cleanup.NextSlotDataCleanupTests.test_body_proportion_component_does_not_repeat_crop_alias",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_next_slot_data_cleanup.NextSlotDataCleanupTests.test_contact_and_noncontact_owners_stay_distinct",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_next_slot_data_cleanup.NextSlotDataCleanupTests.test_coordinated_gaze_search_keeps_target_not_inferences",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_next_slot_data_cleanup.NextSlotDataCleanupTests.test_explicit_covered_pose_variants_remain_covered",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_next_slot_data_cleanup.NextSlotDataCleanupTests.test_expression_aliases_name_complete_expressions",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_next_slot_data_cleanup.NextSlotDataCleanupTests.test_material_alias_and_construction_search_avoid_substitutes",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_next_slot_data_cleanup.NextSlotDataCleanupTests.test_neutral_pose_search_matches_its_authored_label",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_next_slot_data_cleanup.NextSlotDataCleanupTests.test_optical_variants_keep_effects_without_false_aliases",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_next_slot_data_cleanup.NextSlotDataCleanupTests.test_pose_counterexamples_are_not_positive_search_terms",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_research_integration",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_research_integration",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_research_integration",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_research_integration",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_research_integration",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_research_integration",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_research_integration",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_research_integration",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_research_integration",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_research_integration\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_research_integration.py\", line 14, in <module>\n    from tests.test_photo_contextual_appeal import fixture\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "test_photo_wuxia_visual_semantics.PhotoWuxiaVisualSemanticsTests.test_candidate_pack_contains_neutral_event_components",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_wuxia_visual_semantics.PhotoWuxiaVisualSemanticsTests.test_generated_semantic_index_contains_every_new_candidate",
+      "outcome": "pass",
+      "elapsed_seconds": 0.019
+    },
+    {
+      "id": "test_photo_wuxia_visual_semantics.PhotoWuxiaVisualSemanticsTests.test_genre_social_and_adjacent_terms_do_not_force_scene_profiles",
+      "outcome": "pass",
+      "elapsed_seconds": 87.011
+    },
+    {
+      "id": "test_photo_wuxia_visual_semantics.PhotoWuxiaVisualSemanticsTests.test_narrow_scene_terms_route_to_only_the_intended_profile",
+      "outcome": "pass",
+      "elapsed_seconds": 18.875
+    },
+    {
+      "id": "test_photo_wuxia_visual_semantics.PhotoWuxiaVisualSemanticsTests.test_registry_schema_is_valid_after_wuxia_profiles",
+      "outcome": "pass",
+      "elapsed_seconds": 0.311
+    },
+    {
+      "id": "test_photo_wuxia_visual_semantics.PhotoWuxiaVisualSemanticsTests.test_research_evidence_is_approved_source_bound_and_limited",
+      "outcome": "pass",
+      "elapsed_seconds": 0.006
+    },
+    {
+      "id": "test_photo_wuxia_visual_semantics.PhotoWuxiaVisualSemanticsTests.test_six_profiles_have_complete_component_evidence_and_pixel_gates",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_wuxia_visual_semantics.PhotoWuxiaVisualSemanticsTests.test_wuxia_and_xianxia_legacy_candidates_are_not_synonyms",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_wuxia_visual_semantics.PhotoWuxiaVisualSemanticsTests.test_xia_relation_is_not_inferred_from_appearance_or_identity",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_photo_natural_environment_semantics.PhotoNaturalEnvironmentSemanticsTests.test_broad_nature_terms_do_not_activate_new_routes",
+      "outcome": "pass",
+      "elapsed_seconds": 50.102
+    },
+    {
+      "id": "test_photo_natural_environment_semantics.PhotoNaturalEnvironmentSemanticsTests.test_candidate_only_terms_do_not_force_hard_pixel_contracts",
+      "outcome": "pass",
+      "elapsed_seconds": 12.824
+    },
+    {
+      "id": "test_photo_natural_environment_semantics.PhotoNaturalEnvironmentSemanticsTests.test_eight_hard_profiles_are_complete_fail_closed_contracts",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_natural_environment_semantics.PhotoNaturalEnvironmentSemanticsTests.test_environment_candidates_do_not_own_human_body_or_identity_slots",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_natural_environment_semantics.PhotoNaturalEnvironmentSemanticsTests.test_exact_hard_routes_and_paired_confusion_negatives",
+      "outcome": "pass",
+      "elapsed_seconds": 51.12
+    },
+    {
+      "id": "test_photo_natural_environment_semantics.PhotoNaturalEnvironmentSemanticsTests.test_extension_has_75_decomposed_candidates_and_is_runtime_loaded",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_photo_natural_environment_semantics.PhotoNaturalEnvironmentSemanticsTests.test_registry_schema_is_valid_before_derived_index_check",
+      "outcome": "pass",
+      "elapsed_seconds": 0.312
+    },
+    {
+      "id": "test_photo_natural_environment_semantics.PhotoNaturalEnvironmentSemanticsTests.test_research_evidence_is_approved_and_bound_to_current_data",
+      "outcome": "pass",
+      "elapsed_seconds": 0.007
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_protostar_korean_alias_data_cleanup",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_protostar_korean_alias_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py\", line 10, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_protostar_korean_alias_data_cleanup",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_protostar_korean_alias_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py\", line 10, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_protostar_korean_alias_data_cleanup",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_protostar_korean_alias_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py\", line 10, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_protostar_korean_alias_data_cleanup",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_protostar_korean_alias_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py\", line 10, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_protostar_korean_alias_data_cleanup",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_protostar_korean_alias_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py\", line 10, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_protostar_korean_alias_data_cleanup",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_protostar_korean_alias_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py\", line 10, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_protostar_korean_alias_data_cleanup",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_protostar_korean_alias_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py\", line 10, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_protostar_korean_alias_data_cleanup",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_protostar_korean_alias_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py\", line 10, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_candidate_pack_contains_bounded_garment_and_textile_clusters",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_component_complete_paraphrases_are_bm25f_optional_never_hard",
+      "outcome": "pass",
+      "elapsed_seconds": 1.972
+    },
+    {
+      "id": "test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture",
+      "outcome": "pass",
+      "elapsed_seconds": 0.256
+    },
+    {
+      "id": "test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_five_render_profiles_have_connected_component_and_gate_contracts",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_generic_labels_never_hard_activate_a_named_profile",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_new_candidates_do_not_infer_wearer_identity_from_clothing",
+      "outcome": "pass",
+      "elapsed_seconds": 0.002
+    },
+    {
+      "id": "test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_registry_schema_is_valid_apart_from_generated_index_refresh",
+      "outcome": "pass",
+      "elapsed_seconds": 0.301
+    },
+    {
+      "id": "test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_research_evidence_maps_only_to_existing_candidates_and_profiles",
+      "outcome": "pass",
+      "elapsed_seconds": 0.003
+    },
+    {
+      "id": "test_photo_instrument_semantics.PhotoInstrumentSemanticsTests.test_broad_or_ambiguous_terms_do_not_force_an_instrument_profile",
+      "outcome": "pass",
+      "elapsed_seconds": 41.936
+    },
+    {
+      "id": "test_photo_instrument_semantics.PhotoInstrumentSemanticsTests.test_each_profile_has_prop_action_contact_and_pose_candidates",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_instrument_semantics.PhotoInstrumentSemanticsTests.test_exact_terms_route_only_the_intended_profile",
+      "outcome": "pass",
+      "elapsed_seconds": 59.274
+    },
+    {
+      "id": "test_photo_instrument_semantics.PhotoInstrumentSemanticsTests.test_instrument_candidates_exist_with_searchable_fields_and_no_rank",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_instrument_semantics.PhotoInstrumentSemanticsTests.test_registry_schema_is_valid_after_instrument_profiles",
+      "outcome": "pass",
+      "elapsed_seconds": 0.289
+    },
+    {
+      "id": "test_photo_instrument_semantics.PhotoInstrumentSemanticsTests.test_research_evidence_is_approved_and_bound_to_existing_data",
+      "outcome": "pass",
+      "elapsed_seconds": 0.005
+    },
+    {
+      "id": "test_photo_instrument_semantics.PhotoInstrumentSemanticsTests.test_ten_profiles_have_five_component_groups_and_unique_pixel_gates",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_jurisdiction_record_unit_data_cleanup",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_jurisdiction_record_unit_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_jurisdiction_record_unit_data_cleanup.py\", line 8, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_jurisdiction_record_unit_data_cleanup",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_jurisdiction_record_unit_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_jurisdiction_record_unit_data_cleanup.py\", line 8, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_jurisdiction_record_unit_data_cleanup",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_jurisdiction_record_unit_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_jurisdiction_record_unit_data_cleanup.py\", line 8, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_jurisdiction_record_unit_data_cleanup",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_jurisdiction_record_unit_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_jurisdiction_record_unit_data_cleanup.py\", line 8, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_jurisdiction_record_unit_data_cleanup",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_jurisdiction_record_unit_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_jurisdiction_record_unit_data_cleanup.py\", line 8, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_jurisdiction_record_unit_data_cleanup",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_jurisdiction_record_unit_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_jurisdiction_record_unit_data_cleanup.py\", line 8, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_jurisdiction_record_unit_data_cleanup",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_jurisdiction_record_unit_data_cleanup\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_jurisdiction_record_unit_data_cleanup.py\", line 8, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "test_photo_texture_data_cleanup.TextureDataCleanupTests.test_all_thirty_five_keep_rows_are_preserved",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_photo_texture_data_cleanup.TextureDataCleanupTests.test_broad_keywords_and_specialized_horror_meanings_remain",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_texture_data_cleanup.TextureDataCleanupTests.test_compound_aliases_retain_legitimate_standalone_moire",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_texture_data_cleanup.TextureDataCleanupTests.test_frozen_inventory_queries_and_call_bound_are_unchanged",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_texture_data_cleanup.TextureDataCleanupTests.test_frozen_proposal_changes_only_nine_baseline_rows",
+      "outcome": "pass",
+      "elapsed_seconds": 0.171
+    },
+    {
+      "id": "test_photo_texture_data_cleanup.TextureDataCleanupTests.test_glitter_restores_existing_lens_location_only",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_texture_data_cleanup.TextureDataCleanupTests.test_only_eight_alias_arrays_and_one_translation_are_changed",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_prepack_isolation",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_prepack_isolation\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_prepack_isolation.py\", line 24, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_prepack_isolation",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_prepack_isolation\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_prepack_isolation.py\", line 24, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_prepack_isolation",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_prepack_isolation\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_prepack_isolation.py\", line 24, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_prepack_isolation",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_prepack_isolation\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_prepack_isolation.py\", line 24, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_prepack_isolation",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_prepack_isolation\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_prepack_isolation.py\", line 24, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_prepack_isolation",
+      "outcome": "error",
+      "elapsed_seconds": 0.0,
+      "detail": "ImportError: Failed to import test module: test_photo_prepack_isolation\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_prepack_isolation.py\", line 24, in <module>\n    from tests import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'tests'\n\n"
+    },
+    {
+      "id": "test_photo_womens_professional_uniform_visual_semantics.WomensProfessionalUniformVisualSemanticsTests.test_candidate_pack_has_complete_role_task_tool_location_clusters",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_womens_professional_uniform_visual_semantics.WomensProfessionalUniformVisualSemanticsTests.test_eight_hard_profiles_have_component_contracts_and_five_pixel_gates",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_womens_professional_uniform_visual_semantics.WomensProfessionalUniformVisualSemanticsTests.test_generic_gendered_uniform_and_costume_terms_do_not_force_profiles",
+      "outcome": "pass",
+      "elapsed_seconds": 0.095
+    },
+    {
+      "id": "test_photo_womens_professional_uniform_visual_semantics.WomensProfessionalUniformVisualSemanticsTests.test_professional_names_are_advisory_and_requested_procedures_are_hard",
+      "outcome": "pass",
+      "elapsed_seconds": 0.168
+    },
+    {
+      "id": "test_photo_womens_professional_uniform_visual_semantics.WomensProfessionalUniformVisualSemanticsTests.test_registry_schema_accepts_professional_uniform_profiles",
+      "outcome": "pass",
+      "elapsed_seconds": 0.299
+    },
+    {
+      "id": "test_photo_womens_professional_uniform_visual_semantics.WomensProfessionalUniformVisualSemanticsTests.test_research_rows_are_approved_source_bound_and_candidate_complete",
+      "outcome": "pass",
+      "elapsed_seconds": 0.004
+    },
+    {
+      "id": "test_photo_positive_retrieval.PositiveVisualRetrievalTests.test_candidate_relation_direction_is_visible_to_both_search_lanes",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_positive_retrieval.PositiveVisualRetrievalTests.test_control_and_boundary_mutations_cannot_change_positive_documents",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_positive_retrieval.PositiveVisualRetrievalTests.test_exact_names_keep_their_separate_authority_lane",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_positive_retrieval.PositiveVisualRetrievalTests.test_negative_form_meaning_and_multilingual_relations_are_retained",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_positive_retrieval.PositiveVisualRetrievalTests.test_positive_meaning_mutation_changes_both_retrieval_lanes",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_liminal_maintained_alternative.LiminalMaintainedAlternativeTests.test_existing_component_alternative_is_accepted_without_rewording",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_photo_liminal_maintained_alternative.LiminalMaintainedAlternativeTests.test_five_required_groups_and_render_gates_are_preserved",
+      "outcome": "pass",
+      "elapsed_seconds": 0.006
+    },
+    {
+      "id": "test_photo_liminal_maintained_alternative.LiminalMaintainedAlternativeTests.test_old_all_cue_conjunction_remains_accepted",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_liminal_maintained_alternative.LiminalMaintainedAlternativeTests.test_unsupported_maintained_evidence_and_explicit_exclusions_remain_rejected",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_oneiric_anchor_alternative.OneiricAnchorAlternativeTests.test_all_five_groups_remain_required",
+      "outcome": "pass",
+      "elapsed_seconds": 0.006
+    },
+    {
+      "id": "test_photo_oneiric_anchor_alternative.OneiricAnchorAlternativeTests.test_five_gates_and_nine_word_minimum_remain",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_oneiric_anchor_alternative.OneiricAnchorAlternativeTests.test_legacy_and_authored_alternative_bind",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_oneiric_anchor_alternative.OneiricAnchorAlternativeTests.test_unrelated_pattern_not_comparison_evidence",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_remaining_boundary_data.RemainingBoundaryDataTests.test_all_authored_english_component_bundles_avoid_self_exclusion",
+      "outcome": "pass",
+      "elapsed_seconds": 0.044
+    },
+    {
+      "id": "test_photo_remaining_boundary_data.RemainingBoundaryDataTests.test_declared_exclusions_still_reject_complete_contexts",
+      "outcome": "pass",
+      "elapsed_seconds": 0.022
+    },
+    {
+      "id": "test_photo_remaining_boundary_data.RemainingBoundaryDataTests.test_mirror_occlusion_and_head_turn_remain_alternatives",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_remaining_boundary_data.RemainingBoundaryDataTests.test_repaired_full_bundles_preserve_available_languages",
+      "outcome": "pass",
+      "elapsed_seconds": 0.05
+    },
+    {
+      "id": "test_photo_slide_thickness_alternative.SlideThicknessAlternativeTests.test_all_five_film_relations_remain_required",
+      "outcome": "pass",
+      "elapsed_seconds": 0.007
+    },
+    {
+      "id": "test_photo_slide_thickness_alternative.SlideThicknessAlternativeTests.test_legacy_disjunction_and_density_bindings_remain",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_slide_thickness_alternative.SlideThicknessAlternativeTests.test_mount_or_screen_thickness_does_not_supply_film_evidence",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_slide_thickness_alternative.SlideThicknessAlternativeTests.test_thickness_branch_has_canonical_binding",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_leading_line_gate_alternatives.LeadingLineGateAlternativesTests.test_existing_complete_components_and_missing_groups",
+      "outcome": "pass",
+      "elapsed_seconds": 0.01
+    },
+    {
+      "id": "test_photo_leading_line_gate_alternatives.LeadingLineGateAlternativesTests.test_render_gate_keeps_existing_origin_alternative",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_leading_line_gate_alternatives.LeadingLineGateAlternativesTests.test_render_gate_keeps_existing_rhythmic_alternative",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_panning_direction_scope.PanningDirectionScopeDataTests.test_default_instructions_and_evidence_do_not_force_lateral_motion",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_panning_direction_scope.PanningDirectionScopeDataTests.test_neutral_and_legacy_lateral_components_remain_compatible",
+      "outcome": "pass",
+      "elapsed_seconds": 0.011
+    },
+    {
+      "id": "test_photo_panning_direction_scope.PanningDirectionScopeDataTests.test_no_broad_panning_alias_or_gate_relaxation",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_religion_iconography_boundary_history.ReligionIconographyBoundaryHistoryTests.test_current_lineage_mutation_fails_before_any_replay",
+      "outcome": "pass",
+      "elapsed_seconds": 0.021
+    },
+    {
+      "id": "test_photo_religion_iconography_boundary_history.ReligionIconographyBoundaryHistoryTests.test_parallel_local_observation_tampering_is_rejected_before_replay",
+      "outcome": "pass",
+      "elapsed_seconds": 0.008
+    },
+    {
+      "id": "test_photo_religion_iconography_boundary_history.ReligionIconographyBoundaryHistoryTests.test_prior_photo_observations_are_byte_immutable",
+      "outcome": "pass",
+      "elapsed_seconds": 0.001
+    },
+    {
+      "id": "test_photo_wrap_skirt_side_alternative.WrapSkirtSideAlternativeTests.test_evidence_keeps_front_and_adds_side_at_same_floor",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_wrap_skirt_side_alternative.WrapSkirtSideAlternativeTests.test_front_neutral_korean_and_explicit_side_variants",
+      "outcome": "pass",
+      "elapsed_seconds": 0.017
+    },
+    {
+      "id": "test_photo_wrap_skirt_side_alternative.WrapSkirtSideAlternativeTests.test_side_does_not_relax_declared_confounds",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_role_garment_candidate_expansion.PhotoRoleGarmentCandidateExpansionTests.test_candidate_ids_form_closed_slot_references",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    },
+    {
+      "id": "test_photo_role_garment_candidate_expansion.PhotoRoleGarmentCandidateExpansionTests.test_research_rows_cover_sources_candidates_contracts_and_limitations",
+      "outcome": "pass",
+      "elapsed_seconds": 0.0
+    }
+  ]
+}

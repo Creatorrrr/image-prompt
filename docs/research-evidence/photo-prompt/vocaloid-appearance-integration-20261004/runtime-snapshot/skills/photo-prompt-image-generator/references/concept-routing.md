@@ -1,0 +1,91 @@
+# Concept and Selection Routing
+
+Post-core only. Do not read this reference until the request envelope, `photo-authorial-core/v3`, the versioned `photo-intent-lock`, typed semantic assertions, and standalone baseline prompt have been frozen.
+
+## Frozen inputs
+
+Generation accepts only the frozen request envelope, authorial core, creative controls and embodiment review, with optional post-core visual intent. Meaning, roles, scene, style and requester requirements belong in these authored records. Dictionaries provide optional post-core material and do not supply the initial baseline.
+
+For the normal skill path, the byte-exact request envelope and `photo-authorial-core/v3` already exist before this reference becomes available. Exact active requester spans remain authoritative, while semantic retrieval uses their true-exclusion-redacted text together with the independently authored contextual interpretation, standalone baseline prompt, request-scoped definitions, recorded interpretation resolutions, visible priorities, and runtime-only labels. A profile or candidate may not backfill or revise that initial core. Routing and augmentation are subordinate to locked dimensions.
+
+`user_definitions` has request-local precedence over registry aliases. `user_exclusions` is a negative filter and never a positive query field. When it explicitly excludes people, v6 reuses the existing no-people guard; this can suppress the configured eligible-human adult-fashion default but does not create a new adult/safety policy.
+
+## Route Explicit Creative Intent
+
+Resolve explicit requests for a creative, original, ingenious, inventive, surprising, or authorially distinctive result as `creativity=3` before baseline authoring, unless the requester selected a different level. Interpret intent by meaning rather than an exact keyword. This activates the generic `creative_direction` composition contract after the core is frozen. Post-core routing reads that frozen value and must not raise it retroactively or add topic-specific candidates.
+
+Requests for several safe variations or wider candidate exploration without an explicit originality/authorial goal may use a lower creativity value and remain outside creative direction. Ordinary prompt and image requests keep the default path.
+
+## Route Explicit Viewer Outcomes
+
+At the agent layer, resolve `viewer_experience` in the pre-core controls when the user explicitly asks for an audience reaction, emotion, empathy, immersion, attachment, reinspection, sharing or purchase behavior, a commercial communication objective, or a subculture character relationship. Korean cues include `독자`, `관객`, `감동`, `공감`, `몰입`, `애착`, `다시 보고 싶은`, `기억에 남는`, and `광고`; use semantic intent rather than keyword matching. Do not raise the frozen creativity setting unless the request also asks for creative or authorial work.
+
+Every high creative-direction run receives the viewer contract automatically. A generic product record, ordinary cute portrait, factual documentary, or subculture taxonomy request without an explicit viewer-response goal keeps the ordinary path. The control exposes a composition procedure, not a candidate or audience stereotype, or predicted performance score.
+
+## Route Typed Character Responses
+
+In v6, natural multilingual text is interpreted before retrieval and frozen as a generic `character_response` semantic assertion. The generator never invokes the raw moe router, never selects a fixed archetype route, and never turns a lexical or BM25F hit into behavior meaning. It compiles the assertion's actor/baseline/trigger/target/action/leak/response/consequence/continuity evidence into `photo-character-response/v1`; its optional behavior nodes are retrieved only after that contract exists.
+
+`photo-character-mechanism-graph/v2` is the single authored source for post-core character-response concept profiles. A profile declares multilingual aliases and paraphrases, abstract axis requirements and exclusions, generic semantic relations, evidence roles, confounders, and optional runtime-node IDs. It must not declare a camera, pose, facial geometry, fixed gaze direction, prop, role, or relationship register. The same generated semantic index contains the concept, its contrast documents, and only its linked mechanism nodes; no separate keyword-meaning database is consulted.
+
+Concept resolution is contrastive BM25F, not substring classification. Rank a profile together with its own authored confounders and retain it only when the concept document ranks above every matching confounder. This handles inflections and Japanese compounds through the shared tokenizer while allowing negative examples to win on pure hostility, generic kindness, role-only service, open affection, generic shyness, or possessive control. Add another concept by adding a schema-valid profile and its contrast data; do not add a concept-specific branch or regular expression to the generator.
+
+After a profile is retained, compare the already-frozen typed axes and generic relations with the profile. Publish only `consistent`, `incomplete`, `conflicting`, or `superseded_by_requester_definition` state and score-free unordered candidates. A conflicting or requester-superseded profile is `diagnostic_only`: it links no behavior-support node and cannot fall back through a legacy behavior route. Missing or conflicting profile evidence never causes runtime repair, and a consistent profile never creates a required phrase, relation, render gate, or change to the core.
+
+Keep routing scoped at the authorial-core layer. A generic aesthetic, animal photo, dictionary discussion, negated request, unrelated word fragment, or generic occupation gets no required character-response assertion. Pre-core lexical interpretation and the generated BM25F tokenizer use whole-token boundaries and conservative inflection handling; an embedded substring such as `모에` inside `외모에` is not a match.
+
+Treat adult age and sexual tone independently. When material, freeze sexual tone as its own assertion/locked dimension; an explicit `nonsexual` typed value suppresses configured sensual/fetish defaults. Sexual appeal may support an adult character request, but it never substitutes for or rewrites requester-defined character, expression, event, relationship, or tone.
+
+Preserve explicit request-derived adult character-design conditions, presentation choice, relationship semantics, and causal response evidence. Retrieved candidates remain advisory around the standalone baseline.
+
+Preserve requested roles and species layers exactly as expressed by the user and resolved in the frozen core. Do not broaden a narrow species feature into a full species-family contract, and do not let natural descriptive text become a named-person likeness reference.
+
+## Route Request-Scoped Visual Obligations
+
+The single authored source is `assets/photo_prompt_visual_obligations.json`. Its `activation.exact_terms` and profile-local project glossary aliases form the exact lane. Its semantic definition, paraphrase examples, component groups, contrast examples, and unordered concept terms form the BM25F fields and embedding prototype. `scripts/build_visual_profile_index.py` derives one registry-hash-bound sidecar containing exact lookup, BM25F data, and profile vectors; the index is not a second manually maintained glossary.
+
+Use `photo-visual-obligations/v1` for exact meanings whose success depends on pixels rather than a label: pose geometry, support/contact mechanics, multiple facial components that must coexist, intentional body-region salience, a transformation embodied on the character, or an archetype proven by behavior. Automatic hard activation uses only boundary-aware, non-negated exact terms or profile-local project glossary aliases from positive request sources, after the existing context and adult eligibility checks. A glossary alias activates only its owning profile and is expanded into that profile's composition instruction, evidence fields, substitute rejections, runtime-expression mode, and pixel gates. A direct `photo-visual-intent/v1` row may bind a requesting-user definition that exact registry aliases cannot safely infer. An omitted hard profile ID is resolved by exact lookup only, never by vector similarity.
+
+Use `photo-visual-concepts/v1` for indirect recognition. After the core is frozen, the resolver ranks fielded BM25F documents and, when available, compares the core retrieval vector with profile vectors. Incomparable lanes combine only by reciprocal-rank fusion. A BM25F-only, embedding-only, or fused hit may expose one optional candidate, but it is structurally ineligible for automatic hard activation. Candidate order and `concept_terms` are non-preferential; the pack omits matched terms, match basis, score, vector, rank, and recommendation. The composer must explicitly provide `chosen_visual_concept_ids`, including `[]`. Selecting a candidate promotes its pre-baked opt-in obligation; leaving it unselected has no effect.
+
+For a context-sensitive profile, request exclusions and negative disambiguation phrases apply to both lanes. The ambiguous exact lane still requires its declared positive context terms. In the embedding lane, an above-threshold profile score supplies positive sense evidence, so a semantically aligned paraphrase is not required to repeat one maintained context phrase verbatim.
+
+The resolver runs once and its typed result is projected into `visual_obligations`, `visual_concept_candidates`, and `semantic_clarification`. Exact hits remain authoritative over semantic similarity; an exact, negated, context-mismatched, or requester-defined term cannot be resurrected through the embedding lane. Requester definitions suppress a conflicting automatic registry interpretation and remain the governing clarification unless an explicit request-scoped visual intent binds the matching profile. Retrieval is deterministic and does not accept creativity or seed as input.
+
+Keep the negative boundary stronger than resemblance. Adjacent homonyms, incidental visibility, generic styling, ordinary objects, and reference-image appearance do not prove intent. Reference images provide identity and age-control evidence only, never personality activation. Do not copy an active profile to a later unrelated request. The V6 path uses exact + BM25F + optional embedding from one generated sidecar.
+
+Profiles expose composition fields and pixel gates, not a sampled answer or finished scene. The agent still authors the scene, but every active or selected duty and listed substitute rejection remains hard. `definition_only` profiles suppress sensitive shorthand and require component prose; `label_plus_definition` profiles require a safe English label plus full geometry; `definition_with_optional_label` profiles accept the component definition alone. Add or broaden a direct alias, component group, or soft cue only with development positives, adjacent hard negatives, and the separately frozen routing holdout.
+
+## Route Hybrid Detail and Adult Fashion Appeal
+
+The V6 workflow uses `creative_augmentation`. Creativity permits near, adjacent, then lateral relevance bands; seed samples within the permitted range after the hard-eligible pool is fixed for that core and generation seed. Treat every sampled row as optional material, transform no more than three, and reject any item that weakens the frozen core.
+
+Eligible human creative-control snapshots normally resolve sensual to `1` and fetish to `0`, with sensual-led emphasis. The axes remain independent; choose sensual `0` before core freeze to disable that configured addition. Suppress the configured defaults for explicit nonsexual moe, no-people, and non-human requests. Do not map either axis from inferred gender, body, ethnicity, occupation, market, or predicted popularity.
+
+Adult-appeal controls come from the frozen creative-controls snapshot. Current contextual retrieval proposes compatible corpus candidates for the requested direction using scope and contextual compatibility. Interpret candidates in the authored scene, preserve requester anchors and use the declared unlocked dimensions. See `contextual-appeal.md` for review and comparison fields.
+
+## Preserve Negative Intent
+
+Korean and English absence phrases are constraints, not positive nouns. `사람 없는`, `인물 없이`, `no people`, and `without people` must exclude human subject candidates and the `person_presence` quality axis. Preserve the full request in the mixed/excluded `intent_contract` row, but do not copy the absence phrase into positive `mandatory_intents`.
+
+Named-person references are provenance for likeness handling, not visual content to force into the prompt. Public/idol routes use an original fictional adult with original-character reference scope.
+
+## Typed Request Routing
+
+Subject intent is resolved to `human`, `animal`, `food`, `object`, `plant`, or `environment`; domain intent is resolved independently. Keep aliases in `photo_prompt_quality_layers.json` so Korean and English routes share one data contract. Negated aliases such as `not a portrait` must not activate the human category.
+
+Curated literal subject aliases and subject categories read only the frozen subject field. Domain aliases read frozen typed semantics. These constraints affect candidate eligibility; they cannot select a scene, impose a role recipe, or revise the core. Supporting motifs require primary-context evidence from the core. Keep multilingual aliases and domain vocabulary in the authored quality data.
+
+## Slot Mapping
+
+- Subject identity: `subject`, `appearance_type`, `person_origin` only when requested.
+- Clothes: `wardrobe_style`, `costume_style`, `footwear`, `silhouette_proportion`, `garment_detail`.
+- Makeup: `skin_finish`, `brow_style`, `lip_finish`, `eye_makeup_line`, `eye_detail`; use `makeup_style` for full-look shorthand.
+- Hair: `hair_style`, `hair_color`; preserve unsupported length, part, texture, finish, and cultural grammar as explicit requirements.
+- Pose: `body_pose`, `hand_pose`, `gaze_engagement`, `shot_scale`, `camera_direction`, `composition`, `platform_framing`.
+- Scene: `location`, `space_condition`, `crowd_density`, `situation_context`, `occasion_context`.
+- Still life: `prop`, `surface_material`, `texture`, `light_shape`, `composition`, `aesthetic_trend`.
+
+Do not force posters, UI, typography, webtoons, stickers, covers, card art, key visuals, or other non-photographic output through this skill. Route subculture illustration and artwork requests to `$subculture-illustration-image-generator` before adding photographic defaults.
+
+Frozen semantic observations may prioritize source-declared, property-compatible options within the shared inventory cap. The observation supplies search meaning; the candidate never becomes a required realization through retrieval alone. Whole-scene and slot-focus queries still apply ordinary subject, context, facet and exclusion guards.

@@ -1,0 +1,147 @@
+{
+  "contract_version": "independent-native-pixel-review/v1",
+  "arm_id": "arm-1",
+  "reviewer": "appearance_retest_1",
+  "reviewed_at": "2026-10-03T23:16:14.510996+00:00",
+  "image_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/character-appearance-100-20261004/qualification-20261004/arm-1/native_result.png",
+  "image_sha256": "5cd0e2fb1689cf889d2018e469adf28ccee918fed6b4eec998a5a9d7cb5e0db4",
+  "native_dimensions": [
+    1237,
+    1272
+  ],
+  "criteria_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/character-appearance-100-20261004/qualification-20261004/arm-1/frozen_pixel_criteria.json",
+  "criteria_sha256": "b7f510697429417d542e17748226efd29b0ded3cdd132e53346d033c6ca06c64",
+  "review_method": "Inspect native image returned by the built-in generator and the byte-identical saved original via view_image; no crop, composite, repair, editing, or other arm output was used.",
+  "strict_partial_is_fail": true,
+  "keyword_results": [
+    {
+      "keyword_id": "K01_compact_blunt_bob",
+      "status": "FAIL",
+      "parts_and_relations": {
+        "compact_dark_mass_near_chin": "PASS",
+        "short_face_framing_perimeter": "PASS",
+        "keyword_blunt_bob_edge": "FAIL"
+      },
+      "evidence": "The dark hair forms a short bob around the face, but the lower ends are tapered and wispy, with loose fine lengths reaching toward the collar. The explicit chin-length blunt-bob testcase is only partially realized; its blunt cut is not visible. A generic compact bob source relation can be observed, but that cannot promote the more specific keyword to PASS.",
+      "native_regions": [
+        "hair mass from x330 to x850, y95 to y590",
+        "feathered lower tips around x350 to x460, y490 to y580"
+      ]
+    },
+    {
+      "keyword_id": "K02_blunt_brow_fringe",
+      "status": "FAIL",
+      "parts_and_relations": {
+        "front_hair_over_forehead": "PASS",
+        "shared_blunt_transverse_brow_edge": "FAIL"
+      },
+      "evidence": "Front hair lies over the forehead, but it separates into curved see-through wisps with unequal endpoints. It does not terminate along the requested shared straight brow-level edge.",
+      "native_regions": [
+        "fringe x432 to x647, y155 to y320"
+      ]
+    },
+    {
+      "keyword_id": "K03_round_wire_spectacles",
+      "status": "PASS",
+      "parts_and_relations": {
+        "left_and_right_round_gold_rims": "PASS",
+        "nose_bridge_joins_same_rims": "PASS",
+        "eyes_visible_inside_lenses": "PASS",
+        "coherent_frame_on_face": "PASS"
+      },
+      "evidence": "Two thin approximately round gold rims enclose the eye-region lenses. The small curved metal nose bridge connects them across the nose, and both eyes remain resolved behind the lenses.",
+      "native_regions": [
+        "eyewear x420 to x720, y258 to y408"
+      ]
+    },
+    {
+      "keyword_id": "K04_burgundy_beret",
+      "status": "PASS",
+      "parts_and_relations": {
+        "burgundy_soft_flattened_crown": "PASS",
+        "fitted_lower_boundary_band": "PASS",
+        "above_fringe_same_head": "PASS",
+        "actor_left_tilt": "PASS",
+        "complete_crown_in_frame": "PASS"
+      },
+      "evidence": "A complete soft burgundy beret has a flattened rounded crown and fitted dark lower boundary against the hair. The crown falls toward screen right, the subject left, above the fringe.",
+      "native_regions": [
+        "beret x350 to x858, y0 to y283"
+      ]
+    },
+    {
+      "keyword_id": "K05_right_ear_tuck",
+      "status": "FAIL",
+      "parts_and_relations": {
+        "hair_behind_actor_right_ear": "FAIL",
+        "actor_right_helix_and_lobe_exposed": "FAIL",
+        "same_right_ear_carries_both_ornaments": "FAIL"
+      },
+      "evidence": "The exposed tucked ear is on screen right, which is the subject left in this near-frontal portrait. The subject right ear on screen left is covered by the bob. The requested actor-relative right-side arrangement is reversed.",
+      "native_regions": [
+        "exposed subject left ear x748 to x789, y240 to y354",
+        "subject right ear region around x420 to x466, y300 to y430 covered by hair"
+      ]
+    },
+    {
+      "keyword_id": "K06_upper_ear_cuff",
+      "status": "FAIL",
+      "parts_and_relations": {
+        "silver_upper_ear_ornament_present": "PASS",
+        "upper_cartilage_cuff_relation": "PASS",
+        "required_actor_right_ear": "FAIL",
+        "separate_from_lobe_drop": "PASS"
+      },
+      "evidence": "A small silver cuff-like ornament crosses the upper rim of the exposed ear, separate from the lobe drop. Its carrier is the subject left ear, so the complete required right-ear relation fails despite visible accessory geometry.",
+      "native_regions": [
+        "upper ear metal x769 to x789, y284 to y296"
+      ]
+    },
+    {
+      "keyword_id": "K07_same_ear_teardrop",
+      "status": "FAIL",
+      "parts_and_relations": {
+        "teardrop_hanging_ornament": "PASS",
+        "lobe_attachment": "PASS",
+        "separate_from_upper_cuff": "PASS",
+        "required_same_actor_right_ear": "FAIL"
+      },
+      "evidence": "A silver-bordered teardrop hangs from a small attachment at the exposed earlobe and is distinct from the upper cuff. Both ornaments are on the subject left ear, not the required right. The connector resembles a small ring; a stud-specific enriched relation was never selected or prescribed.",
+      "native_regions": [
+        "earlobe attachment and drop x746 to x770, y345 to y408"
+      ]
+    }
+  ],
+  "keyword_counts": {
+    "PASS": 2,
+    "FAIL": 5,
+    "UNOBSERVABLE": 0
+  },
+  "overall_keyword_status": "FAIL",
+  "source_profile_boundary": "Source mappings were post-core audit associations. Generic compact bob and spectacle geometry visible in pixels do not prove retrieval or an integrated-profile contribution. No targeted profile was exposed or selected; no targeted source gate is an effective pack gate.",
+  "supplemental_reference_review": {
+    "status": "visible_guidance_retained",
+    "evidence": "Eye-region proportions, nose bridge contour and lip silhouette retain strong visible similarity to the supplied face portrait. This is a visual guidance judgment and proves no actual identity, age or personality.",
+    "scope": "face only"
+  },
+  "supplemental_artistic_review": {
+    "impression_before_intensity_labels": "A warm, relaxed working portrait in which the direct face and glowing brass sphere lead, followed by burgundy headwear and dense timber workshop detail. The cool harbour window makes the warm room believable.",
+    "strengths": [
+      "Both hands have plausible instrument and bench contacts; star-shaped projected light ties the lamp to the wall.",
+      "The face retains the supplied visible guidance; clear spectacle geometry and the complete beret remain readable."
+    ],
+    "weaknesses": [
+      "Wispy reference-like bangs replace the blunt fringe test.",
+      "The ear arrangement reverses actor-relative side; intended right-side attachment evidence is unavailable.",
+      "Invented background placards and book text add more information than the baseline requested."
+    ],
+    "control_comparison": {
+      "sensual_effective_intensity": 1,
+      "observed": "Direct relaxed gaze and warm open-collar light give a subtle intimate supporting quality, consistent with the intended direction.",
+      "fetish_effective_intensity": 0,
+      "observed_fetish": "No distinct added fetish treatment is claimed.",
+      "boundary": "Agent impression is separate from mechanical control binding and user preference."
+    }
+  },
+  "user_acceptance": "pending"
+}

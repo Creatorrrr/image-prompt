@@ -1,0 +1,263 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "profiles": [
+    {
+      "id": "handled_environment_surface_layer",
+      "category": "contact_driven_environmental_layer",
+      "activation": {
+        "exact_terms": [
+          "hand-manipulated environmental sheet",
+          "tactile environmental surface manipulation",
+          "환경 표면을 손으로 잡아 변형하기",
+          "環境表面を手でつかんで変形"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An ordinarily intangible field or a monolithic environmental surface itself becomes a handleable layer in the depicted world, rather than a separate covering, printed representation or ordinary flexible object. One acting hand or held tool contacts that same layer; its continuous local deformation leads to a readable still-attached boundary. An exposed reverse, substrate or recessed interior plus material-specific folds, sag, thickness, occlusion or contact shadow makes the handling visible in an otherwise coherent scene. Peeling, creasing, gathering, rolling and unzipping are distinct alternatives. No second creature, repeated cross-surface world rule or non-Euclidean doorway is required.",
+        "paraphrase_examples": [
+          "An adult pinches a patch of the dusk sky and lifts it like a sheet; cloud texture crosses the curled flap, its dark reverse is exposed, and the still-attached edge casts a narrow shadow.",
+          "A worker gathers the sea surface into folds between both palms; the water pattern stays on the continuous sheet, the troughs sag, and the underside occludes the harbor below.",
+          "한 사람이 바닥의 그림자 가장자리를 잡아 들어 올리자 붙은 부분과 들린 부분이 이어지고 뒷면과 접촉 그림자가 보인다.",
+          "建物の表面を薄い層としてつかむ手から折れ目が続き、持ち上がった裏面と接続境界が見える。"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "environmental_surface_identity",
+            "acting_contact",
+            "continuous_local_deformation",
+            "attached_boundary_continuity",
+            "material_light_depth_response"
+          ],
+          "groups": [
+            {
+              "id": "environmental_surface_identity",
+              "any_terms": [
+                "sky itself",
+                "water itself",
+                "sea itself",
+                "ocean itself",
+                "shadow itself",
+                "wall surface itself",
+                "sky into",
+                "sea into",
+                "ocean into",
+                "shadow into",
+                "road surface into",
+                "wall surface into",
+                "facade into",
+                "peels the sky",
+                "peels back the sky",
+                "folds the sky",
+                "folds the sea",
+                "rolls the road",
+                "unbuttons the night sky",
+                "하늘 자체",
+                "바다 자체",
+                "수면 자체",
+                "그림자 자체",
+                "벽 자체",
+                "하늘을 접는",
+                "하늘을 벗기는",
+                "바다를 접는",
+                "그림자를 접는",
+                "空そのもの",
+                "海面そのもの",
+                "影そのもの",
+                "壁面そのもの"
+              ]
+            },
+            {
+              "id": "acting_contact",
+              "any_terms": [
+                "hand",
+                "hands",
+                "fingers",
+                "palms",
+                "grips",
+                "pinches",
+                "held tool",
+                "손",
+                "손끝",
+                "손바닥",
+                "手",
+                "指"
+              ]
+            },
+            {
+              "id": "continuous_local_deformation",
+              "any_terms": [
+                "sheet",
+                "layer",
+                "flap",
+                "folds",
+                "curl",
+                "roll",
+                "pleats",
+                "wrinkles",
+                "bends",
+                "gathers",
+                "seam",
+                "천처럼",
+                "종이처럼",
+                "표면층",
+                "접힘",
+                "주름",
+                "얇은 층",
+                "シート",
+                "折り目"
+              ]
+            },
+            {
+              "id": "attached_boundary_continuity",
+              "any_terms": [
+                "attached",
+                "attachment",
+                "joined",
+                "connected",
+                "unbroken",
+                "continuous",
+                "remaining surface",
+                "seam tracks",
+                "붙은",
+                "이어진",
+                "연결",
+                "경계",
+                "つながる",
+                "接続"
+              ]
+            },
+            {
+              "id": "material_light_depth_response",
+              "any_terms": [
+                "underside",
+                "reverse",
+                "beneath",
+                "substrate",
+                "interior",
+                "recess",
+                "occlusion",
+                "thickness",
+                "contact shadow",
+                "뒷면",
+                "아래 바탕",
+                "두께",
+                "가림",
+                "裏面",
+                "厚さ"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "ordinary wallpaper removal from a wall",
+          "folding an ordinary paper map or blanket",
+          "a rigid concrete panel breaking into fragments",
+          "a floating fabric cloud with no acting contact",
+          "a projected shadow remaining flat on its receiver",
+          "a glowing portal without a handled surface edge",
+          "non-Euclidean stairs without material deformation",
+          "a body turning continuously into a bird",
+          "an image-plane collage or cut-and-paste tear overlay"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "environmental surface as the same handled layer",
+          "acting contact linked to local deformation",
+          "continuous retained surface texture",
+          "readable attachment boundary and underside",
+          "material-specific folds thickness occlusion and contact shadow"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "hand-manipulated environmental sheet"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the established environmental layer, acting contact, continuous deformation and still-attached boundary readable in one frame, together with an exposed reverse, revealed substrate or recessed interior as appropriate to the chosen operation. Peeling, folding, gathering, rolling and opening an existing mechanical seam are alternatives, not simultaneous requirements. Preserve surrounding depth and illumination; an ordinary covering or printed representation cannot substitute for the environmental surface itself.",
+      "required_evidence_fields": [
+        "environment_layer_phrase",
+        "acting_contact_phrase",
+        "continuous_deformation_phrase",
+        "boundary_reverse_phrase",
+        "material_response_phrase"
+      ],
+      "evidence_requirements": {
+        "environment_layer_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the environmental surface itself becomes the same handleable layer rather than a separate covering"
+          ]
+        },
+        "acting_contact_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the acting hand or held tool visibly contacts that same layer"
+          ]
+        },
+        "continuous_deformation_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "one continuous deformation connects the contact to the surrounding surface"
+          ]
+        },
+        "boundary_reverse_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "a still-attached boundary connects the deformed surface to an exposed reverse revealed substrate or recessed interior"
+          ]
+        },
+        "material_response_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "folds thickness occlusion or contact shadows establish the local material depth"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_tactile_environment_layer",
+          "review_scale": "thumbnail",
+          "description": "The ordinarily intangible field or monolithic environmental surface itself is manipulated; a separate covering, backdrop or printed representation is not a substitute."
+        },
+        {
+          "id": "vo_tactile_acting_contact",
+          "review_scale": "both",
+          "description": "The acting hand or held tool visibly contacts that same layer."
+        },
+        {
+          "id": "vo_tactile_continuous_deformation",
+          "review_scale": "both",
+          "description": "One continuous deformation connects the contact to the surrounding surface."
+        },
+        {
+          "id": "vo_tactile_boundary_reverse",
+          "review_scale": "native",
+          "description": "A traceable still-attached boundary and an exposed reverse, revealed substrate or recessed interior establish the same local operation; no particular flap shape is mandatory."
+        },
+        {
+          "id": "vo_tactile_material_response",
+          "review_scale": "native",
+          "description": "Folds thickness occlusion or contact shadows establish the local material depth."
+        }
+      ],
+      "reject_substitutes": [
+        "ordinary_sheet_handling",
+        "uncontacted_floating_fabric",
+        "rigid_panel_fragments",
+        "projected_shadow_only",
+        "glowing_portal",
+        "non_euclidean_space_only",
+        "creature_metamorphosis",
+        "flat_image_collage"
+      ]
+    }
+  ]
+}

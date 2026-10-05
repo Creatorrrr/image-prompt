@@ -1,0 +1,185 @@
+[
+  {
+    "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+    "source_sha256": "2822a3677bb0225b7391029a2a96e17da9c6f66fa46ebf8c0fb21f335c22f214",
+    "json_pointer": "/slots/body_orientation/11",
+    "source_entry": {
+      "id": "pv_head_turn",
+      "ko": "몸통과 독립된 머리 회전",
+      "en": "face yaw differs from thorax direction; neck joins the turned head to the torso; eye direction is not inferred from nose direction alone",
+      "weight": 0.5,
+      "tags": [
+        "human",
+        "pose_vocabulary",
+        "body_orientation"
+      ],
+      "for_any": [
+        "human"
+      ],
+      "aliases": [
+        "몸통과 독립된 머리 회전",
+        "Head turn",
+        "고개 돌리기"
+      ],
+      "keywords": [
+        "몸통과 독립된 머리 회전",
+        "Head turn",
+        "고개 돌리기"
+      ],
+      "embedding_text": "몸통과 독립된 머리 회전; Head turn; 고개 돌리기; face yaw differs from thorax direction; neck joins the turned head to the torso; eye direction is not inferred from nose direction alone",
+      "concept_units": [
+        "face yaw differs from thorax direction",
+        "neck joins the turned head to the torso",
+        "eye direction is not inferred from nose direction alone"
+      ],
+      "relations": [
+        {
+          "id": "owner_scope",
+          "type": "declared_owner_scope",
+          "subject": "main_subject",
+          "object": "the body parts, support surfaces and contact targets stated in this configuration"
+        }
+      ],
+      "affected_dimensions": [
+        "pose"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "pose",
+          "target": "main_subject",
+          "property": "body.segment_orientation"
+        }
+      ],
+      "core_assertion_discovery": true
+    }
+  },
+  {
+    "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+    "source_sha256": "2822a3677bb0225b7391029a2a96e17da9c6f66fa46ebf8c0fb21f335c22f214",
+    "json_pointer": "/slots/expression/8",
+    "source_entry": {
+      "id": "pv_wink",
+      "ko": "한쪽 눈만 닫힌 윙크",
+      "en": "one eyelid opening closes; the other remains visibly open; closed side is recorded in actor coordinates",
+      "weight": 0.5,
+      "tags": [
+        "human",
+        "pose_vocabulary",
+        "expression"
+      ],
+      "for_any": [
+        "human"
+      ],
+      "aliases": [
+        "한쪽 눈만 닫힌 윙크",
+        "Wink"
+      ],
+      "keywords": [
+        "한쪽 눈만 닫힌 윙크",
+        "Wink"
+      ],
+      "embedding_text": "한쪽 눈만 닫힌 윙크; Wink; one eyelid opening closes; the other remains visibly open; closed side is recorded in actor coordinates",
+      "concept_units": [
+        "one eyelid opening closes",
+        "the other remains visibly open",
+        "closed side is recorded in actor coordinates"
+      ],
+      "relations": [
+        {
+          "id": "owner_scope",
+          "type": "declared_owner_scope",
+          "subject": "main_subject",
+          "object": "the body parts, support surfaces and contact targets stated in this configuration"
+        }
+      ],
+      "affected_dimensions": [
+        "expression"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "expression",
+          "target": "main_subject",
+          "property": "face.expression"
+        }
+      ],
+      "core_assertion_discovery": true
+    }
+  },
+  {
+    "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json",
+    "source_sha256": "bc8b8773081fc586d988588c239ee3b35b50821b3732b628dfd8c778ddbe8906",
+    "json_pointer": "/slots/expression/23",
+    "source_entry": {
+      "id": "ae_coquettish_variant",
+      "ko": "장난스러운 성인 교류의 윙크 선택형",
+      "en": "one eye is closed and the other stays open; a small smile remains visible",
+      "weight": 0.5,
+      "tags": [
+        "human",
+        "acting_expression",
+        "expression"
+      ],
+      "for_any": [
+        "human"
+      ],
+      "aliases": [
+        "장난스러운 성인 교류의 윙크 선택형",
+        "a wink and small smile in explicitly requested adult playful flirtation"
+      ],
+      "keywords": [
+        "장난스러운 성인 교류의 윙크 선택형",
+        "a wink and small smile in explicitly requested adult playful flirtation"
+      ],
+      "embedding_text": "장난스러운 성인 교류의 윙크 선택형; one eye is closed and the other stays open; a small smile remains visible; 장난스러운 성인 교류의 윙크 선택형; a wink and small smile in explicitly requested adult playful flirtation",
+      "concept_units": [
+        "one eye is closed and the other stays open",
+        "a small smile remains visible"
+      ],
+      "relations": [
+        {
+          "id": "actor_owner",
+          "type": "declared_owner_scope",
+          "subject": "main_subject",
+          "object": "the declared actor's stated local face and eye configuration"
+        }
+      ],
+      "affected_dimensions": [
+        "expression"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "expression",
+          "target": "main_subject",
+          "property": "face.expression"
+        }
+      ],
+      "core_assertion_discovery": true,
+      "requires_primary_any_tags": [
+        "flirting",
+        "flirtatious",
+        "flirtation",
+        "coquettish",
+        "플러팅",
+        "교태"
+      ],
+      "contextual_usage": {
+        "contexts": [
+          {
+            "id": "ae_coquettish_variant_portrayal_context",
+            "application_conditions": [
+              "Explicit adult flirtation context is required; no added partner, contact, wardrobe or body shape."
+            ],
+            "limits": [
+              "nonsexual wink given erotic tone",
+              "partner response or consent inferred"
+            ],
+            "status": "optional_contextual_portrayal_not_hidden_state_inference"
+          }
+        ]
+      },
+      "requires_all_tags": [
+        "adult"
+      ]
+    }
+  }
+]

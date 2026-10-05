@@ -1,0 +1,912 @@
+{
+  "contract_version": "photo-slot-application-trace/v1",
+  "pack_id": "e0729411be9d359f",
+  "core_retrieval_sha256": "5827c7f57c53d23c1a377535770b7fb41afe81cbdb61e9f2c7a10fb6fc921a78",
+  "selection_mode": "core_bm25f",
+  "ordinary_slot_exposure_count": 64,
+  "adopted_slot_count": 2,
+  "adopted_slots": [
+    {
+      "candidate_id": "slot:expression:ae_coquettish_variant",
+      "exposure": "ordinary_slot",
+      "selected": true,
+      "source": {
+        "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json",
+        "source_sha256": "bc8b8773081fc586d988588c239ee3b35b50821b3732b628dfd8c778ddbe8906",
+        "json_pointer": "/slots/expression/23",
+        "source_entry": {
+          "id": "ae_coquettish_variant",
+          "ko": "장난스러운 성인 교류의 윙크 선택형",
+          "en": "one eye is closed and the other stays open; a small smile remains visible",
+          "weight": 0.5,
+          "tags": [
+            "human",
+            "acting_expression",
+            "expression"
+          ],
+          "for_any": [
+            "human"
+          ],
+          "aliases": [
+            "장난스러운 성인 교류의 윙크 선택형",
+            "a wink and small smile in explicitly requested adult playful flirtation"
+          ],
+          "keywords": [
+            "장난스러운 성인 교류의 윙크 선택형",
+            "a wink and small smile in explicitly requested adult playful flirtation"
+          ],
+          "embedding_text": "장난스러운 성인 교류의 윙크 선택형; one eye is closed and the other stays open; a small smile remains visible; 장난스러운 성인 교류의 윙크 선택형; a wink and small smile in explicitly requested adult playful flirtation",
+          "concept_units": [
+            "one eye is closed and the other stays open",
+            "a small smile remains visible"
+          ],
+          "relations": [
+            {
+              "id": "actor_owner",
+              "type": "declared_owner_scope",
+              "subject": "main_subject",
+              "object": "the declared actor's stated local face and eye configuration"
+            }
+          ],
+          "affected_dimensions": [
+            "expression"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "expression",
+              "target": "main_subject",
+              "property": "face.expression"
+            }
+          ],
+          "core_assertion_discovery": true,
+          "requires_primary_any_tags": [
+            "flirting",
+            "flirtatious",
+            "flirtation",
+            "coquettish",
+            "플러팅",
+            "교태"
+          ],
+          "contextual_usage": {
+            "contexts": [
+              {
+                "id": "ae_coquettish_variant_portrayal_context",
+                "application_conditions": [
+                  "Explicit adult flirtation context is required; no added partner, contact, wardrobe or body shape."
+                ],
+                "limits": [
+                  "nonsexual wink given erotic tone",
+                  "partner response or consent inferred"
+                ],
+                "status": "optional_contextual_portrayal_not_hidden_state_inference"
+              }
+            ]
+          },
+          "requires_all_tags": [
+            "adult"
+          ]
+        }
+      },
+      "full_candidate_detail_file": "considered_scene_details.json",
+      "literal_final_prompt_evidence": "She closes her right eye in a deliberate wink; her open left eye meets the camera. A knowing smile lifts one corner of her lips.",
+      "relation_evidence": {
+        "actor_owner": "She closes her right eye in a deliberate wink; her open left eye meets the camera. A knowing smile lifts one corner of her lips."
+      },
+      "baseline_contains_full_evidence": true,
+      "final_contains_full_evidence": true,
+      "realization": "baseline",
+      "affected_dimensions": [
+        "expression"
+      ],
+      "effect": "Retain the independently authored actor-right wink, actor-left camera eye and knowing lifted mouth corner as one invitation beat. No partner, contact, wardrobe or body-shape inference is added.",
+      "causal_boundary": "The baseline already contains the wink-plus-small-smile and torso/head turn. Selection confirms compatibility; the added neck/iris phrase is written actuation clarification, not proof that data caused new seductive geometry or improved perceived attraction."
+    },
+    {
+      "candidate_id": "slot:body_orientation:pv_head_turn",
+      "exposure": "ordinary_slot",
+      "selected": true,
+      "source": {
+        "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "source_sha256": "2822a3677bb0225b7391029a2a96e17da9c6f66fa46ebf8c0fb21f335c22f214",
+        "json_pointer": "/slots/body_orientation/11",
+        "source_entry": {
+          "id": "pv_head_turn",
+          "ko": "몸통과 독립된 머리 회전",
+          "en": "face yaw differs from thorax direction; neck joins the turned head to the torso; eye direction is not inferred from nose direction alone",
+          "weight": 0.5,
+          "tags": [
+            "human",
+            "pose_vocabulary",
+            "body_orientation"
+          ],
+          "for_any": [
+            "human"
+          ],
+          "aliases": [
+            "몸통과 독립된 머리 회전",
+            "Head turn",
+            "고개 돌리기"
+          ],
+          "keywords": [
+            "몸통과 독립된 머리 회전",
+            "Head turn",
+            "고개 돌리기"
+          ],
+          "embedding_text": "몸통과 독립된 머리 회전; Head turn; 고개 돌리기; face yaw differs from thorax direction; neck joins the turned head to the torso; eye direction is not inferred from nose direction alone",
+          "concept_units": [
+            "face yaw differs from thorax direction",
+            "neck joins the turned head to the torso",
+            "eye direction is not inferred from nose direction alone"
+          ],
+          "relations": [
+            {
+              "id": "owner_scope",
+              "type": "declared_owner_scope",
+              "subject": "main_subject",
+              "object": "the body parts, support surfaces and contact targets stated in this configuration"
+            }
+          ],
+          "affected_dimensions": [
+            "pose"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "pose",
+              "target": "main_subject",
+              "property": "body.segment_orientation"
+            }
+          ],
+          "core_assertion_discovery": true
+        }
+      },
+      "full_candidate_detail_file": "considered_scene_details.json",
+      "literal_final_prompt_evidence": "Her neck joins the returning head smoothly to the inward-turned shoulders, while the open left iris remains aimed at the viewer.",
+      "relation_evidence": {
+        "owner_scope": "Her neck joins the returning head smoothly to the inward-turned shoulders, while the open left iris remains aimed at the viewer."
+      },
+      "baseline_contains_full_evidence": false,
+      "final_contains_full_evidence": true,
+      "realization": "refined",
+      "affected_dimensions": [
+        "pose"
+      ],
+      "effect": "Add a continuous neck-to-shoulder connection and separately aimed iris to clarify the already-authored opposing directions. The turn itself existed in the baseline; only its written actuation is enriched by the source.",
+      "causal_boundary": "The baseline already contains the wink-plus-small-smile and torso/head turn. Selection confirms compatibility; the added neck/iris phrase is written actuation clarification, not proof that data caused new seductive geometry or improved perceived attraction."
+    }
+  ],
+  "ordinary_slot_exposure": [
+    {
+      "candidate_id": "slot:expression:pv_wink",
+      "slot": "expression",
+      "entry_id": "pv_wink",
+      "component_prose": [
+        "one eyelid opening closes",
+        "the other remains visibly open",
+        "closed side is recorded in actor coordinates"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:expression:ae_coquettish_variant",
+      "slot": "expression",
+      "entry_id": "ae_coquettish_variant",
+      "component_prose": [
+        "one eye is closed and the other stays open",
+        "a small smile remains visible"
+      ],
+      "adopted": true
+    },
+    {
+      "candidate_id": "slot:hand_pose:pv_stacked_hands",
+      "slot": "hand_pose",
+      "entry_id": "pv_stacked_hands",
+      "component_prose": [
+        "one hand lies over the other",
+        "wrists continue to distinct arms",
+        "fingers are not necessarily interlaced"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:hand_pose:se_one_hand_behind_head",
+      "slot": "hand_pose",
+      "entry_id": "se_one_hand_behind_head",
+      "component_prose": [
+        "the specified single hand lies at the same actor posterior head",
+        "its elbow forearm and wrist form one continuous arm chain",
+        "the other hand retains its existing posture"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:garment_detail:clt_ct154_v2",
+      "slot": "garment_detail",
+      "entry_id": "clt_ct154_v2",
+      "component_prose": [
+        "one front panel tucked in while the other hangs outside"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:action:private_advisor_curating_small_selection",
+      "slot": "action",
+      "entry_id": "private_advisor_curating_small_selection",
+      "component_prose": [
+        "a private advisor curating and sequentially presenting a small selection in response to one client's attention"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:anatomical_connection:bust_to_ribcage_projection_relation",
+      "slot": "anatomical_connection",
+      "entry_id": "bust_to_ribcage_projection_relation",
+      "component_prose": [
+        "local chest wall plane",
+        "anterior breast contour",
+        "projection extent"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:appearance_type:adult_glamour_influencer",
+      "slot": "appearance_type",
+      "entry_id": "adult_glamour_influencer",
+      "component_prose": [
+        "adult glamour-influencer styling"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:body_evidence_region:bm_nail_shape",
+      "slot": "body_evidence_region",
+      "entry_id": "bm_nail_shape",
+      "component_prose": [
+        "nail bed ownership",
+        "plate perimeter",
+        "free-edge length"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:body_pose:ctx_c017",
+      "slot": "body_pose",
+      "entry_id": "ctx_c017",
+      "component_prose": [
+        "adult partner's hand lightly resting on the lower back over clothing while guiding a turn"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:camera_direction:overhead_social_snapshot_relation",
+      "slot": "camera_direction",
+      "entry_id": "overhead_social_snapshot_relation",
+      "component_prose": [
+        "close overhead social snapshot with a readable ground plane and subject response toward the elevated camera"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:composition:intentional_face_occluded_mood_portrait",
+      "slot": "composition",
+      "entry_id": "intentional_face_occluded_mood_portrait",
+      "component_prose": [
+        "intentional face-occluded mood portrait preserving adult subject, purposeful occluder, action, and setting"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:concept_tension:playful_vs_eerie_tension",
+      "slot": "concept_tension",
+      "entry_id": "playful_vs_eerie_tension",
+      "component_prose": [
+        "playful versus eerie concept tension"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:costume_style:longyi_waist_wrap_tube_system",
+      "slot": "costume_style",
+      "entry_id": "longyi_waist_wrap_tube_system",
+      "component_prose": [
+        "a longyi lower garment with a tube-like cloth body secured by a visible waist fold or knot"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:footwear:y2kr_kitten",
+      "slot": "footwear",
+      "entry_id": "y2kr_kitten",
+      "component_prose": [
+        "a short slender heel lifts the back of the shoe only modestly above its forefoot"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:light_shape:lifted_glyph_self_glow",
+      "slot": "light_shape",
+      "entry_id": "lifted_glyph_self_glow",
+      "component_prose": [
+        "self-lit textless glyphs lifting above the role tool near the hand"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:light_type:phone_screen_face_glow",
+      "slot": "light_type",
+      "entry_id": "phone_screen_face_glow",
+      "component_prose": [
+        "phone-screen glow cast close across the face"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:lighting:jianghu_inn_threshold_faction_light",
+      "slot": "lighting",
+      "entry_id": "jianghu_inn_threshold_faction_light",
+      "component_prose": [
+        "jianghu inn threshold light separating doorway, table factions, and stair watchers"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:location:grand_gilded_mirror_salon",
+      "slot": "location",
+      "entry_id": "grand_gilded_mirror_salon",
+      "component_prose": [
+        "a grand opulent salon integrating marble, gilt bronze, mirrors, velvet, and layered illumination"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:mood:playful",
+      "slot": "mood",
+      "entry_id": "playful",
+      "component_prose": [
+        "playful and lively"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:platform_framing:pr_casual_crop_subject_legibility_candidate",
+      "slot": "platform_framing",
+      "entry_id": "pr_casual_crop_subject_legibility_candidate",
+      "component_prose": [
+        "스냅의 불완전한 프레임과 주피사체 보존",
+        "casual phone framing",
+        "peripheral frame crop",
+        "readable action despite crop",
+        "one peripheral part meets or exits a plausible frame edge",
+        "the adult and task-bearing action remain legible",
+        "camera height and tilt match the observer's position",
+        "the cropped part continues in a physically possible direction"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:prop:two_coffee_cups_prop",
+      "slot": "prop",
+      "entry_id": "two_coffee_cups_prop",
+      "component_prose": [
+        "two coffee cups, one offered to the viewer"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:shot_scale:pr_camera_distance_subject_scale_candidate",
+      "slot": "shot_scale",
+      "entry_id": "pr_camera_distance_subject_scale_candidate",
+      "component_prose": [
+        "카메라 거리와 인물·환경 비율",
+        "medium camera distance",
+        "natural subject scale",
+        "environmental margin",
+        "the requested body coverage is visible",
+        "head and body scale follow one perspective",
+        "nearby structures scale coherently with camera distance",
+        "the requested environmental margin remains around the subject"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:silhouette_proportion:ne_regional_contour_transition",
+      "slot": "silhouette_proportion",
+      "entry_id": "ne_regional_contour_transition",
+      "component_prose": [
+        "the named torso segment belongs to the same adult subject",
+        "an inward contour and an outward contour are both visible within that segment",
+        "the two curves join continuously along the same regional outline"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:subject:adult_woman_lifestyle_subject",
+      "slot": "subject",
+      "entry_id": "adult_woman_lifestyle_subject",
+      "component_prose": [
+        "an adult woman in a lifestyle portrait"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:subject_framing:pfe_back_face_candidate",
+      "slot": "subject_framing",
+      "entry_id": "pfe_back_face_candidate",
+      "component_prose": [
+        "the open back is bounded by visible garment edges on the same adult torso",
+        "the returned face remains readable beside the exposed back in the same frame",
+        "the head neck shoulders and torso connect continuously through the turn"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:wardrobe_style:tailored_full_length_jumpsuit",
+      "slot": "wardrobe_style",
+      "entry_id": "tailored_full_length_jumpsuit",
+      "component_prose": [
+        "a tailored full-length jumpsuit with continuous bodice-to-leg construction"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:aesthetic_trend:couture_atelier_craft_aesthetic",
+      "slot": "aesthetic_trend",
+      "entry_id": "couture_atelier_craft_aesthetic",
+      "component_prose": [
+        "couture atelier craft with individual fitting, toile, draping, internal support, and handwork visible"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:body_framing:collarbone_lips_focus",
+      "slot": "body_framing",
+      "entry_id": "collarbone_lips_focus",
+      "component_prose": [
+        "close-up linking philtral upper-lip topography with clavicle and supraclavicular surface relief"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:body_marking:vr_facial_surface_dot_scatter",
+      "slot": "body_marking",
+      "entry_id": "vr_facial_surface_dot_scatter",
+      "component_prose": [
+        "small dots scatter over declared nose and cheek regions",
+        "the dots vary in size or spacing while remaining on the same facial skin surface"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:body_orientation:pv_head_turn",
+      "slot": "body_orientation",
+      "entry_id": "pv_head_turn",
+      "component_prose": [
+        "face yaw differs from thorax direction",
+        "neck joins the turned head to the torso",
+        "eye direction is not inferred from nose direction alone"
+      ],
+      "adopted": true
+    },
+    {
+      "candidate_id": "slot:brow_style:ctx_c149",
+      "slot": "brow_style",
+      "entry_id": "ctx_c149",
+      "component_prose": [
+        "adult woman with naturally thick eyebrows retained"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:camera_height:pc_pc01_component_2",
+      "slot": "camera_height",
+      "entry_id": "pc_pc01_component_2",
+      "component_prose": [
+        "the viewpoint meets the subject near the visible eye line"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:camera_type:plate_camera_process_metadata",
+      "slot": "camera_type",
+      "entry_id": "plate_camera_process_metadata",
+      "component_prose": [
+        "plate-camera process metadata"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:caption_context:fit_check_body_goals_caption",
+      "slot": "caption_context",
+      "entry_id": "fit_check_body_goals_caption",
+      "component_prose": [
+        "fit-check and body-goals caption framing that invites appearance evaluation"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:cheek_makeup:cheekbone_to_temple_blush_drape",
+      "slot": "cheek_makeup",
+      "entry_id": "cheekbone_to_temple_blush_drape",
+      "component_prose": [
+        "blush draped from the high cheekbones toward the temples"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:color:y2kr_warm_denim_palette",
+      "slot": "color",
+      "entry_id": "y2kr_warm_denim_palette",
+      "component_prose": [
+        "faded blue is owned by the denim",
+        "a light neutral belongs to the top and warm brown to a separate accessory"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:color_grading:pe_red_object_splash",
+      "slot": "color_grading",
+      "entry_id": "pe_red_object_splash",
+      "component_prose": [
+        "one declared red object retains its red color",
+        "the rest of the picture is achromatic"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:complexion_coverage:sheer_complexion_texture_preservation",
+      "slot": "complexion_coverage",
+      "entry_id": "sheer_complexion_texture_preservation",
+      "component_prose": [
+        "sheer complexion correction preserving pores, fine texture, and local natural color variation"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:contact_point:rb_support_compression_candidate",
+      "slot": "contact_point",
+      "entry_id": "rb_support_compression_candidate",
+      "component_prose": [
+        "앉거나 기대는 지지 관계",
+        "soft cushion",
+        "seated contact",
+        "localized depression",
+        "the seated body meets a coherent support area on the soft cushion",
+        "a small cushion depression is localized beneath the load",
+        "the clothing folds follow the seated contact without penetrating the seat"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:distance_narrative:threshold_one_inside",
+      "slot": "distance_narrative",
+      "entry_id": "threshold_one_inside",
+      "component_prose": [
+        "one person inside, one held at the threshold"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:eye_detail:sv_pupil_heart_motif",
+      "slot": "eye_detail",
+      "entry_id": "sv_pupil_heart_motif",
+      "component_prose": [
+        "the chosen heart motif remains within the specified pupil region",
+        "the visible eye contours continue around the pupil motif",
+        "the motif carrier is explicitly selected for the same actor eyes"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:eye_makeup_line:sff_pro_m02",
+      "slot": "eye_makeup_line",
+      "entry_id": "sff_pro_m02",
+      "component_prose": [
+        "colored wing liner",
+        "속눈썹선과 이어지는 색 선",
+        "끝의 방향"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:eyeshadow_style:cut_crease_lid_separation",
+      "slot": "eyeshadow_style",
+      "entry_id": "cut_crease_lid_separation",
+      "component_prose": [
+        "cut-crease eyeshadow with a clean boundary separating the mobile lid from deeper color above the crease"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:face_sculpting:balanced_contour_highlight_dimension",
+      "slot": "face_sculpting",
+      "entry_id": "balanced_contour_highlight_dimension",
+      "component_prose": [
+        "balanced cosmetic contour and highlight placed on opposing facial planes"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:face_shape_relation:cjk_seed_face_relation",
+      "slot": "face_shape_relation",
+      "entry_id": "cjk_seed_face_relation",
+      "component_prose": [
+        "culture-scoped seed-shaped face with an oval upper-mid contour and stronger lower-face taper"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:facial_hair:clean_shaven",
+      "slot": "facial_hair",
+      "entry_id": "clean_shaven",
+      "component_prose": [
+        "clean-shaven face"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:film_emulation:pe_edge_light_leak",
+      "slot": "film_emulation",
+      "entry_id": "pe_edge_light_leak",
+      "component_prose": [
+        "an irregular warm patch enters the picture edge",
+        "the patch overlays scene detail without requiring a scene lamp at its origin"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:focus:pc_pc22_component_4",
+      "slot": "focus",
+      "entry_id": "pc_pc22_component_4",
+      "component_prose": [
+        "the reflected eye or expression region remains resolved within the visible mirror boundary"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:format:pr_jpeg_edge_blocking_candidate",
+      "slot": "format",
+      "entry_id": "pr_jpeg_edge_blocking_candidate",
+      "component_prose": [
+        "재압축의 고대비 경계 흔적",
+        "reposted compressed image",
+        "mild high-contrast edge blocking",
+        "a file screen or repost context is explicit",
+        "slight ringing or blocking sits near high-contrast edges",
+        "flat tone areas remain distinct from edge damage",
+        "compression does not conceal the main gesture"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:frame_anchor_medium:foreground_object_overlap_anchor",
+      "slot": "frame_anchor_medium",
+      "entry_id": "foreground_object_overlap_anchor",
+      "component_prose": [
+        "foreground object overlap anchoring depth"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:gaze_engagement:pv_gaze_down",
+      "slot": "gaze_engagement",
+      "entry_id": "pv_gaze_down",
+      "component_prose": [
+        "eye axes point below the face's forward direction",
+        "face pitch and target are independently stated",
+        "pupils remain sufficiently visible"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:gaze_target:head_eye_counterorientation_relation",
+      "slot": "gaze_target",
+      "entry_id": "head_eye_counterorientation_relation",
+      "component_prose": [
+        "the head turns toward one stated direction",
+        "the irises point toward a second specified target",
+        "both directions belong to the same connected head and eyes"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:genre:wuxia_portrait",
+      "slot": "genre",
+      "entry_id": "wuxia_portrait",
+      "component_prose": [
+        "wuxia character photography grounded in a visible jianghu event"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:grain_profile:pr_shadows_local_digital_noise_candidate",
+      "slot": "grain_profile",
+      "entry_id": "pr_shadows_local_digital_noise_candidate",
+      "component_prose": [
+        "디지털 저조도 노이즈의 공간 소유",
+        "fine noise in dim shadows",
+        "shadow-local digital noise",
+        "bright and shadowed image regions differ in visible noise",
+        "fine luminance or chroma noise concentrates in darker regions",
+        "critical subject edges and face remain readable",
+        "the noise resembles digital processing rather than scratches or print dust"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:hair_color:y2kr_money_piece",
+      "slot": "hair_color",
+      "entry_id": "y2kr_money_piece",
+      "component_prose": [
+        "a distinctly lighter hair section appears at each front side of the face against darker hair behind"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:hair_style:ca_compact_bob",
+      "slot": "hair_style",
+      "entry_id": "ca_compact_bob",
+      "component_prose": [
+        "a compact hair mass ends near the chin or jaw",
+        "the lower hair edge forms one readable short perimeter around the face"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:lash_style:soft_volumized_fanned_lashes",
+      "slot": "lash_style",
+      "entry_id": "soft_volumized_fanned_lashes",
+      "component_prose": [
+        "softly volumized lashes fanning outward from the lash roots"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:lens:phone_0_5x_ultrawide",
+      "slot": "lens",
+      "entry_id": "phone_0_5x_ultrawide",
+      "component_prose": [
+        "a smartphone 0.5x ultra-wide lens"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:lens_artifact:pe_point_starburst",
+      "slot": "lens_artifact",
+      "entry_id": "pe_point_starburst",
+      "component_prose": [
+        "multiple thin rays meet at the bright point light",
+        "rays remain image-plane optical marks"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:light_direction:pe_side_modeling",
+      "slot": "light_direction",
+      "entry_id": "pe_side_modeling",
+      "component_prose": [
+        "one side of the subject receives stronger illumination",
+        "the opposite side carries coherent shadow"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:light_intensity:rb_exposure_priority_candidate",
+      "slot": "light_intensity",
+      "entry_id": "rb_exposure_priority_candidate",
+      "component_prose": [
+        "장면 내 밝기 우선순위",
+        "readable midtones",
+        "bright window",
+        "interior exposure",
+        "the specified subject detail retains readable midtones",
+        "the window or local light source remains brighter than the interior",
+        "the darker interior zones retain a distinct lower tonal level"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:lip_color_placement:vr_local_dark_lip_contrast",
+      "slot": "lip_color_placement",
+      "entry_id": "vr_local_dark_lip_contrast",
+      "component_prose": [
+        "the selected lip region is darker than the adjacent facial skin",
+        "the darker color remains within the lip boundary"
+      ],
+      "adopted": false
+    },
+    {
+      "candidate_id": "slot:lip_finish:stained_soft_matte_lip_finish",
+      "slot": "lip_finish",
+      "entry_id": "stained_soft_matte_lip_finish",
+      "component_prose": [
+        "thin stained soft-matte lip finish with natural surface texture"
+      ],
+      "adopted": false
+    }
+  ],
+  "considered_but_unselected": [
+    {
+      "candidate_id": "slot:expression:pv_wink",
+      "source": {
+        "source_path": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "source_sha256": "2822a3677bb0225b7391029a2a96e17da9c6f66fa46ebf8c0fb21f335c22f214",
+        "json_pointer": "/slots/expression/8",
+        "source_entry": {
+          "id": "pv_wink",
+          "ko": "한쪽 눈만 닫힌 윙크",
+          "en": "one eyelid opening closes; the other remains visibly open; closed side is recorded in actor coordinates",
+          "weight": 0.5,
+          "tags": [
+            "human",
+            "pose_vocabulary",
+            "expression"
+          ],
+          "for_any": [
+            "human"
+          ],
+          "aliases": [
+            "한쪽 눈만 닫힌 윙크",
+            "Wink"
+          ],
+          "keywords": [
+            "한쪽 눈만 닫힌 윙크",
+            "Wink"
+          ],
+          "embedding_text": "한쪽 눈만 닫힌 윙크; Wink; one eyelid opening closes; the other remains visibly open; closed side is recorded in actor coordinates",
+          "concept_units": [
+            "one eyelid opening closes",
+            "the other remains visibly open",
+            "closed side is recorded in actor coordinates"
+          ],
+          "relations": [
+            {
+              "id": "owner_scope",
+              "type": "declared_owner_scope",
+              "subject": "main_subject",
+              "object": "the body parts, support surfaces and contact targets stated in this configuration"
+            }
+          ],
+          "affected_dimensions": [
+            "expression"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "expression",
+              "target": "main_subject",
+              "property": "face.expression"
+            }
+          ],
+          "core_assertion_discovery": true
+        }
+      },
+      "reason": "The actor-relative eye side was already authored; ae_coquettish_variant preserves the complete wink-plus-small-smile combination and a second wink selection would be redundant."
+    }
+  ],
+  "baseline_vs_final": {
+    "baseline_prompt_sha256": "40e3d41bea600edf815b229f9c7369ab26e11ec63925847e45a49c8af40fa020",
+    "final_prompt_sha256": "273306efb95308a1dc1a58b80ceb935cf41cb660ec671383bf2ed35c19f34c96",
+    "added_phrase": "Her neck joins the returning head smoothly to the inward-turned shoulders, while the open left iris remains aimed at the viewer.",
+    "removed_phrases": [],
+    "new_geometry": false,
+    "new_written_connection_clarification": true
+  },
+  "adult_context_check": {
+    "ae_coquettish_variant": {
+      "requires_all_tags": [
+        "adult"
+      ],
+      "requires_primary_any_tags": [
+        "flirting",
+        "flirtatious",
+        "flirtation",
+        "coquettish",
+        "플러팅",
+        "교태"
+      ],
+      "adult_phrase": "an adult woman in her late twenties",
+      "primary_context_evidence": "a playful seductive bid for the viewer's attention",
+      "hidden_state_or_partner_response_inferred": false
+    }
+  },
+  "adult_axis_candidate_adoption_count": 0,
+  "pixel_status": "not_generated"
+}

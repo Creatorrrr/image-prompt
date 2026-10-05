@@ -1,0 +1,105 @@
+{
+  "contract_version": "photo-pixel-review-unavailable/v1",
+  "arm_id": "arm-a",
+  "result": "blocked_unscored",
+  "image_path": null,
+  "image_sha256": null,
+  "image_call_count": 2,
+  "reason": "Both native calls returned structured output-stage moderation_blocked errors and no saved result image.",
+  "observable_test_gates": [
+    {
+      "gate_id": "A1_reference_adult_portrayal",
+      "criterion": "The image portrays one clearly adult woman whose visible face proportions, dark bob and wispy bangs remain consistent with the reference. The adult age is authored, not inferred from the source portrait.",
+      "status": "UNOBSERVABLE",
+      "score": null,
+      "reason": "No original pixels returned: this exact native attempt was blocked by output-stage moderation."
+    },
+    {
+      "gate_id": "A2_wink_and_targeted_eye",
+      "criterion": "One eye is visibly closed in a wink and the other is visibly open with its gaze directed toward the capture/viewer position. A blink, two closed eyes or an off-target gaze fails.",
+      "status": "UNOBSERVABLE",
+      "score": null,
+      "reason": "No original pixels returned: this exact native attempt was blocked by output-stage moderation."
+    },
+    {
+      "gate_id": "A3_knowing_asymmetric_smile",
+      "criterion": "One mouth corner visibly lifts into a restrained knowing smile that is compatible with the wink; a neutral, distressed or broad generic laugh fails this intended form.",
+      "status": "UNOBSERVABLE",
+      "score": null,
+      "reason": "No original pixels returned: this exact native attempt was blocked by output-stage moderation."
+    },
+    {
+      "gate_id": "A4_viewer_beckoning_hand",
+      "criterion": "The free hand is visible in front at chest height, palm up, with the index curling toward the woman in a readable come-closer gesture addressed to the viewer; a wave or hidden finger fails.",
+      "status": "UNOBSERVABLE",
+      "score": null,
+      "reason": "No original pixels returned: this exact native attempt was blocked by output-stage moderation."
+    },
+    {
+      "gate_id": "A5_curtain_contact_and_opening",
+      "criterion": "The other hand visibly gathers a plum velvet curtain at roughly shoulder height, with physical finger-fabric contact and a clear doorway beside her. No detached hand, floating fabric or fabric hiding the interaction.",
+      "status": "UNOBSERVABLE",
+      "score": null,
+      "reason": "No original pixels returned: this exact native attempt was blocked by output-stage moderation."
+    },
+    {
+      "gate_id": "A6_interrupted_turn_joint_visibility",
+      "criterion": "The shoulders and body are partly turned into the doorway while her face returns toward the viewer; both acting hands and the above-knee-to-head subject are visible in one plausible frame.",
+      "status": "UNOBSERVABLE",
+      "score": null,
+      "reason": "No original pixels returned: this exact native attempt was blocked by output-stage moderation."
+    },
+    {
+      "gate_id": "A7_supporting_nightlife_forms",
+      "criterion": "A deep-red silk halter mini dress with draped neckline and exposed shoulders is visible, and the velvet threshold contrasts amber interior light with cool blue balcony light. These forms support rather than visually obscure the face-and-hand event.",
+      "status": "UNOBSERVABLE",
+      "score": null,
+      "reason": "No original pixels returned: this exact native attempt was blocked by output-stage moderation."
+    }
+  ],
+  "effective_embodiment_hard_gates": [
+    {
+      "gate_id": "embodiment_body_ownership",
+      "status": "UNOBSERVABLE",
+      "score": null,
+      "reason": "No original pixels returned: this exact native attempt was blocked by output-stage moderation."
+    },
+    {
+      "gate_id": "embodiment_joint_chain_and_reach",
+      "status": "UNOBSERVABLE",
+      "score": null,
+      "reason": "No original pixels returned: this exact native attempt was blocked by output-stage moderation."
+    },
+    {
+      "gate_id": "embodiment_support_and_balance",
+      "status": "UNOBSERVABLE",
+      "score": null,
+      "reason": "No original pixels returned: this exact native attempt was blocked by output-stage moderation."
+    },
+    {
+      "gate_id": "embodiment_contact_and_space",
+      "status": "UNOBSERVABLE",
+      "score": null,
+      "reason": "No original pixels returned: this exact native attempt was blocked by output-stage moderation."
+    },
+    {
+      "gate_id": "embodiment_visibility_and_projection",
+      "status": "UNOBSERVABLE",
+      "score": null,
+      "reason": "No original pixels returned: this exact native attempt was blocked by output-stage moderation."
+    }
+  ],
+  "required_visual_profile_gates": [],
+  "strict_qualification": false,
+  "strict_policy": "partial_is_fail; an unavailable or ambiguous required cue cannot be promoted",
+  "strict_render_review_audit": {
+    "status": "not_run",
+    "reason": "No exact result image path or SHA-256 exists to submit; an image-grounded review cannot be fabricated."
+  },
+  "main_impression_before_intensity_labels": "UNAVAILABLE",
+  "holistic_perceived_seductiveness": "UNAVAILABLE",
+  "user_judgment": {
+    "source": "not_yet_received",
+    "result": "pending"
+  }
+}

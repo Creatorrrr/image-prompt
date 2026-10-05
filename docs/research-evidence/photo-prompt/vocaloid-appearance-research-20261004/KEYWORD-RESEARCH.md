@@ -1677,3 +1677,4 @@
 **일차 자료/예시:** [C085](https://images.goodsmile.info/cgm/images/product/20150420/4962/33127/large/dd4876272f5acf4de089a6201495818c.jpg).
 
 **추가 일차 정의 자료:** [Official figure description identifies the accessory as a parasol.](https://www.goodsmile.com/en/product/2739/Nendoroid%2BRacing%2BMiku%2B2015%2BVer.).
+

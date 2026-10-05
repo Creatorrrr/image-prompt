@@ -1,0 +1,705 @@
+{
+  "source_registry_canonical_sha256": "1be30e70412ed1741d1d6339d21fddae7facf8b11cd9210ef99858351c36187d",
+  "profiles": [
+    {
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "visible_relation",
+            "match_terms": [
+              "a suspended drop linked beneath an ear stud",
+              "귀 스터드 아래 연결되어 매달린 드롭",
+              "a hanging ornament continues below its own ear-stud connector",
+              "늘어진 장식이 자기 귀 고정부의 연결점 아래로 이어진다"
+            ],
+            "evidence_field": "visible_relation_phrase",
+            "evidence_terms": [
+              "a suspended drop linked beneath an ear stud",
+              "a hanging ornament continues below its own ear-stud connector",
+              "늘어진 장식이 자기 귀 고정부의 연결점 아래로 이어진다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction on its stated owner: a suspended drop linked beneath an ear stud",
+            "render_gate": {
+              "id": "vo_clt_ct108_v2_visible_relation",
+              "review_scale": "native",
+              "description": "a suspended drop linked beneath an ear stud; inspect the stated owner, boundary and connection at native resolution. Occlusion or a nearby substitute fails this visible relation."
+            }
+          }
+        ]
+      },
+      "id": "clothing_ct108_v2",
+      "category": "clothing_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a suspended drop linked beneath an ear stud",
+          "귀 스터드 아래 연결되어 매달린 드롭"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "selected_visible_variant",
+              "any_terms": [
+                "a suspended drop linked beneath an ear stud",
+                "귀 스터드 아래 연결되어 매달린 드롭"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "a suspended drop linked beneath an ear stud",
+        "paraphrase_examples": [
+          "observable ear jewelry detail showing suspended drop linked beneath an ear stud",
+          "a hanging ornament continues below its own ear-stud connector",
+          "늘어진 장식이 자기 귀 고정부의 연결점 아래로 이어진다"
+        ],
+        "contrast_examples": [
+          "귀에 붙은 귀걸이와 공중 장식·헤어 핀을 구분한다. 실제 피어싱을 외관만으로 확정하지 않는다"
+        ],
+        "claim_limits": [
+          "This is one explicitly selected visible variant, not the universal definition of every related research term.",
+          "Visible geometry does not establish hidden construction, fiber content, gemstone identity, physical function or wearer identity.",
+          "Related variants are alternatives; their component pools are not an all-of requirement.",
+          "A required connection must be visible at native resolution; a prompt label or printed imitation is insufficient."
+        ],
+        "visual_components": [
+          "a suspended drop linked beneath an ear stud"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 1,
+          "required_group_ids": [
+            "visible_relation"
+          ],
+          "groups": [
+            {
+              "id": "visible_relation",
+              "any_terms": [
+                "a suspended drop linked beneath an ear stud",
+                "귀 스터드 아래 연결되어 매달린 드롭",
+                "a hanging ornament continues below its own ear-stud connector",
+                "늘어진 장식이 자기 귀 고정부의 연결점 아래로 이어진다"
+              ]
+            }
+          ]
+        }
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "귀 스터드 아래 연결되어 매달린 드롭",
+          "a suspended drop linked beneath an ear stud",
+          "a hanging ornament continues below its own ear-stud connector",
+          "늘어진 장식이 자기 귀 고정부의 연결점 아래로 이어진다"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.accessories.earring_attachment"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "귀에 붙은 귀걸이와 공중 장식·헤어 핀을 구분한다. 실제 피어싱을 외관만으로 확정하지 않는다"
+      ],
+      "required_evidence_fields": [
+        "visible_relation_phrase"
+      ],
+      "evidence_requirements": {
+        "visible_relation_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "a suspended drop linked beneath an ear stud",
+            "a hanging ornament continues below its own ear-stud connector",
+            "늘어진 장식이 자기 귀 고정부의 연결점 아래로 이어진다"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_clt_ct108_v2_visible_relation",
+          "review_scale": "native",
+          "description": "a suspended drop linked beneath an ear stud; inspect the stated owner, boundary and connection at native resolution. Occlusion or a nearby substitute fails this visible relation."
+        }
+      ],
+      "composition_instruction": "Realize this selected visible construction on its stated owner: a suspended drop linked beneath an ear stud"
+    },
+    {
+      "id": "ca_compact_bob",
+      "category": "selected_character_appearance_relation",
+      "activation": {
+        "exact_terms": [
+          "compact bob with a chin-level perimeter",
+          "턱 부근 끝선의 작은 단발"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "declared_carrier",
+              "any_terms": [
+                "hair",
+                "hairstyle",
+                "wig",
+                "모발",
+                "머리",
+                "헤어",
+                "가발"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "a compact hair mass ends near the chin or jaw; the lower hair edge forms one readable short perimeter around the face",
+        "paraphrase_examples": [
+          "a compact hair mass ends near the chin or jaw; the lower hair edge forms one readable short perimeter around the face",
+          "a short bob surrounds the face at jaw level; its lower tips make a continuous compact face-framing outline",
+          "작은 모발 덩어리가 턱이나 아래턱 부근에서 끝난다; 아래 모발 끝들이 얼굴 둘레의 짧고 읽히는 외곽선을 이룬다"
+        ],
+        "visual_components": [
+          "a compact hair mass ends near the chin or jaw",
+          "the lower hair edge forms one readable short perimeter around the face"
+        ],
+        "contrast_examples": [
+          "long face-side locks over a retained long rear length",
+          "cropped framing hides the actual lower hair edge"
+        ],
+        "claim_limits": [
+          "Preserve the declared subject, owner, medium, age, count and all dimension and property locks.",
+          "Character names are research provenance and do not activate this relation.",
+          "This profile describes a selected visible relation; color, material, function and narrative cause require independent selection.",
+          "Every component is required on the same declared carrier; missing parts fail and hidden parts are unobservable."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "component_1",
+            "component_2"
+          ],
+          "groups": [
+            {
+              "id": "component_1",
+              "any_terms": [
+                "a compact hair mass ends near the chin or jaw",
+                "a short bob surrounds the face at jaw level",
+                "작은 모발 덩어리가 턱이나 아래턱 부근에서 끝난다"
+              ]
+            },
+            {
+              "id": "component_2",
+              "any_terms": [
+                "the lower hair edge forms one readable short perimeter around the face",
+                "its lower tips make a continuous compact face-framing outline",
+                "아래 모발 끝들이 얼굴 둘레의 짧고 읽히는 외곽선을 이룬다"
+              ]
+            }
+          ]
+        }
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "compact bob with a chin-level perimeter",
+          "턱 부근 끝선의 작은 단발",
+          "a compact hair mass ends near the chin or jaw; the lower hair edge forms one readable short perimeter around the face",
+          "a short bob surrounds the face at jaw level; its lower tips make a continuous compact face-framing outline",
+          "작은 모발 덩어리가 턱이나 아래턱 부근에서 끝난다; 아래 모발 끝들이 얼굴 둘레의 짧고 읽히는 외곽선을 이룬다"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "hair.style.bob.perimeter_length"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a compact hair mass ends near the chin or jaw",
+              "a short bob surrounds the face at jaw level",
+              "작은 모발 덩어리가 턱이나 아래턱 부근에서 끝난다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a compact hair mass ends near the chin or jaw",
+              "a short bob surrounds the face at jaw level",
+              "작은 모발 덩어리가 턱이나 아래턱 부근에서 끝난다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected carrier and owner explicit: a compact hair mass ends near the chin or jaw.",
+            "render_gate": {
+              "id": "vo_ca_compact_bob_1",
+              "review_scale": "native",
+              "description": "a compact hair mass ends near the chin or jaw. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the lower hair edge forms one readable short perimeter around the face",
+              "its lower tips make a continuous compact face-framing outline",
+              "아래 모발 끝들이 얼굴 둘레의 짧고 읽히는 외곽선을 이룬다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the lower hair edge forms one readable short perimeter around the face",
+              "its lower tips make a continuous compact face-framing outline",
+              "아래 모발 끝들이 얼굴 둘레의 짧고 읽히는 외곽선을 이룬다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected carrier and owner explicit: the lower hair edge forms one readable short perimeter around the face.",
+            "render_gate": {
+              "id": "vo_ca_compact_bob_2",
+              "review_scale": "native",
+              "description": "the lower hair edge forms one readable short perimeter around the face. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "long face-side locks over a retained long rear length",
+        "cropped framing hides the actual lower hair edge"
+      ],
+      "required_evidence_fields": [
+        "component_1_phrase",
+        "component_2_phrase"
+      ],
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "a compact hair mass ends near the chin or jaw",
+            "a short bob surrounds the face at jaw level",
+            "작은 모발 덩어리가 턱이나 아래턱 부근에서 끝난다"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "the lower hair edge forms one readable short perimeter around the face",
+            "its lower tips make a continuous compact face-framing outline",
+            "아래 모발 끝들이 얼굴 둘레의 짧고 읽히는 외곽선을 이룬다"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_ca_compact_bob_1",
+          "review_scale": "native",
+          "description": "a compact hair mass ends near the chin or jaw. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable."
+        },
+        {
+          "id": "vo_ca_compact_bob_2",
+          "review_scale": "native",
+          "description": "the lower hair edge forms one readable short perimeter around the face. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable."
+        }
+      ],
+      "composition_instruction": "Keep the selected carrier and owner explicit: a compact hair mass ends near the chin or jaw. Keep the selected carrier and owner explicit: the lower hair edge forms one readable short perimeter around the face."
+    },
+    {
+      "id": "ca_blunt_fringe",
+      "category": "selected_character_appearance_relation",
+      "activation": {
+        "exact_terms": [
+          "blunt fringe with a transverse end line",
+          "이마를 가로지르는 일자 앞머리 끝선"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "declared_carrier",
+              "any_terms": [
+                "hair",
+                "hairstyle",
+                "wig",
+                "모발",
+                "머리",
+                "헤어",
+                "가발"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "front hair descends over the forehead; the ends of that front section align along a blunt transverse edge",
+        "paraphrase_examples": [
+          "front hair descends over the forehead; the ends of that front section align along a blunt transverse edge",
+          "a front fringe falls across the forehead; the fringe tips terminate at a shared straight-cut boundary",
+          "앞 모발이 이마 위로 내려온다; 그 앞머리의 끝들이 이마를 가로지르는 둔한 일자 경계에 맞춰 끝난다"
+        ],
+        "visual_components": [
+          "front hair descends over the forehead",
+          "the ends of that front section align along a blunt transverse edge"
+        ],
+        "contrast_examples": [
+          "a diagonal swept fringe",
+          "a cloth band across the forehead"
+        ],
+        "claim_limits": [
+          "Preserve the declared subject, owner, medium, age, count and all dimension and property locks.",
+          "Character names are research provenance and do not activate this relation.",
+          "This profile describes a selected visible relation; color, material, function and narrative cause require independent selection.",
+          "Every component is required on the same declared carrier; missing parts fail and hidden parts are unobservable."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "component_1",
+            "component_2"
+          ],
+          "groups": [
+            {
+              "id": "component_1",
+              "any_terms": [
+                "front hair descends over the forehead",
+                "a front fringe falls across the forehead",
+                "앞 모발이 이마 위로 내려온다"
+              ]
+            },
+            {
+              "id": "component_2",
+              "any_terms": [
+                "the ends of that front section align along a blunt transverse edge",
+                "the fringe tips terminate at a shared straight-cut boundary",
+                "그 앞머리의 끝들이 이마를 가로지르는 둔한 일자 경계에 맞춰 끝난다"
+              ]
+            }
+          ]
+        }
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "blunt fringe with a transverse end line",
+          "이마를 가로지르는 일자 앞머리 끝선",
+          "front hair descends over the forehead; the ends of that front section align along a blunt transverse edge",
+          "a front fringe falls across the forehead; the fringe tips terminate at a shared straight-cut boundary",
+          "앞 모발이 이마 위로 내려온다; 그 앞머리의 끝들이 이마를 가로지르는 둔한 일자 경계에 맞춰 끝난다"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "hair.style.fringe.blunt_edge"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "front hair descends over the forehead",
+              "a front fringe falls across the forehead",
+              "앞 모발이 이마 위로 내려온다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "front hair descends over the forehead",
+              "a front fringe falls across the forehead",
+              "앞 모발이 이마 위로 내려온다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected carrier and owner explicit: front hair descends over the forehead.",
+            "render_gate": {
+              "id": "vo_ca_blunt_fringe_1",
+              "review_scale": "native",
+              "description": "front hair descends over the forehead. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the ends of that front section align along a blunt transverse edge",
+              "the fringe tips terminate at a shared straight-cut boundary",
+              "그 앞머리의 끝들이 이마를 가로지르는 둔한 일자 경계에 맞춰 끝난다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the ends of that front section align along a blunt transverse edge",
+              "the fringe tips terminate at a shared straight-cut boundary",
+              "그 앞머리의 끝들이 이마를 가로지르는 둔한 일자 경계에 맞춰 끝난다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected carrier and owner explicit: the ends of that front section align along a blunt transverse edge.",
+            "render_gate": {
+              "id": "vo_ca_blunt_fringe_2",
+              "review_scale": "native",
+              "description": "the ends of that front section align along a blunt transverse edge. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "a diagonal swept fringe",
+        "a cloth band across the forehead"
+      ],
+      "required_evidence_fields": [
+        "component_1_phrase",
+        "component_2_phrase"
+      ],
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "front hair descends over the forehead",
+            "a front fringe falls across the forehead",
+            "앞 모발이 이마 위로 내려온다"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "the ends of that front section align along a blunt transverse edge",
+            "the fringe tips terminate at a shared straight-cut boundary",
+            "그 앞머리의 끝들이 이마를 가로지르는 둔한 일자 경계에 맞춰 끝난다"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_ca_blunt_fringe_1",
+          "review_scale": "native",
+          "description": "front hair descends over the forehead. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable."
+        },
+        {
+          "id": "vo_ca_blunt_fringe_2",
+          "review_scale": "native",
+          "description": "the ends of that front section align along a blunt transverse edge. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable."
+        }
+      ],
+      "composition_instruction": "Keep the selected carrier and owner explicit: front hair descends over the forehead. Keep the selected carrier and owner explicit: the ends of that front section align along a blunt transverse edge."
+    },
+    {
+      "id": "ca_spectacle_frame",
+      "category": "selected_character_appearance_relation",
+      "activation": {
+        "exact_terms": [
+          "two spectacle rims joined by a nose bridge",
+          "코 다리로 이어진 두 안경 테"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "declared_carrier",
+              "any_terms": [
+                "glasses",
+                "spectacles",
+                "eyewear",
+                "안경",
+                "아이웨어"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "two separate lens rims surround the left and right eye regions; a bridge joins those same rims across the nose",
+        "paraphrase_examples": [
+          "two separate lens rims surround the left and right eye regions; a bridge joins those same rims across the nose",
+          "one frame border encloses each eye-region lens; the two lens borders connect through a central nose bridge",
+          "좌우 눈 위치의 렌즈를 서로 다른 테두리가 둘러싼다; 그 두 렌즈 테두리가 콧등의 연결 다리로 이어진다"
+        ],
+        "visual_components": [
+          "two separate lens rims surround the left and right eye regions",
+          "a bridge joins those same rims across the nose"
+        ],
+        "contrast_examples": [
+          "two independent eye patches",
+          "iris rings belonging to the eyes"
+        ],
+        "claim_limits": [
+          "Preserve the declared subject, owner, medium, age, count and all dimension and property locks.",
+          "Character names are research provenance and do not activate this relation.",
+          "This profile describes a selected visible relation; color, material, function and narrative cause require independent selection.",
+          "Every component is required on the same declared carrier; missing parts fail and hidden parts are unobservable."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "component_1",
+            "component_2"
+          ],
+          "groups": [
+            {
+              "id": "component_1",
+              "any_terms": [
+                "two separate lens rims surround the left and right eye regions",
+                "one frame border encloses each eye-region lens",
+                "좌우 눈 위치의 렌즈를 서로 다른 테두리가 둘러싼다"
+              ]
+            },
+            {
+              "id": "component_2",
+              "any_terms": [
+                "a bridge joins those same rims across the nose",
+                "the two lens borders connect through a central nose bridge",
+                "그 두 렌즈 테두리가 콧등의 연결 다리로 이어진다"
+              ]
+            }
+          ]
+        }
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "two spectacle rims joined by a nose bridge",
+          "코 다리로 이어진 두 안경 테",
+          "two separate lens rims surround the left and right eye regions; a bridge joins those same rims across the nose",
+          "one frame border encloses each eye-region lens; the two lens borders connect through a central nose bridge",
+          "좌우 눈 위치의 렌즈를 서로 다른 테두리가 둘러싼다; 그 두 렌즈 테두리가 콧등의 연결 다리로 이어진다"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.details.eyewear.rim_bridge_topology"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "two separate lens rims surround the left and right eye regions",
+              "one frame border encloses each eye-region lens",
+              "좌우 눈 위치의 렌즈를 서로 다른 테두리가 둘러싼다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "two separate lens rims surround the left and right eye regions",
+              "one frame border encloses each eye-region lens",
+              "좌우 눈 위치의 렌즈를 서로 다른 테두리가 둘러싼다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected carrier and owner explicit: two separate lens rims surround the left and right eye regions.",
+            "render_gate": {
+              "id": "vo_ca_spectacle_frame_1",
+              "review_scale": "native",
+              "description": "two separate lens rims surround the left and right eye regions. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a bridge joins those same rims across the nose",
+              "the two lens borders connect through a central nose bridge",
+              "그 두 렌즈 테두리가 콧등의 연결 다리로 이어진다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a bridge joins those same rims across the nose",
+              "the two lens borders connect through a central nose bridge",
+              "그 두 렌즈 테두리가 콧등의 연결 다리로 이어진다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected carrier and owner explicit: a bridge joins those same rims across the nose.",
+            "render_gate": {
+              "id": "vo_ca_spectacle_frame_2",
+              "review_scale": "native",
+              "description": "a bridge joins those same rims across the nose. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable."
+            }
+          }
+        ]
+      },
+      "reject_substitutes": [
+        "two independent eye patches",
+        "iris rings belonging to the eyes"
+      ],
+      "required_evidence_fields": [
+        "component_1_phrase",
+        "component_2_phrase"
+      ],
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "two separate lens rims surround the left and right eye regions",
+            "one frame border encloses each eye-region lens",
+            "좌우 눈 위치의 렌즈를 서로 다른 테두리가 둘러싼다"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "a bridge joins those same rims across the nose",
+            "the two lens borders connect through a central nose bridge",
+            "그 두 렌즈 테두리가 콧등의 연결 다리로 이어진다"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_ca_spectacle_frame_1",
+          "review_scale": "native",
+          "description": "two separate lens rims surround the left and right eye regions. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable."
+        },
+        {
+          "id": "vo_ca_spectacle_frame_2",
+          "review_scale": "native",
+          "description": "a bridge joins those same rims across the nose. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable."
+        }
+      ],
+      "composition_instruction": "Keep the selected carrier and owner explicit: two separate lens rims surround the left and right eye regions. Keep the selected carrier and owner explicit: a bridge joins those same rims across the nose."
+    }
+  ],
+  "purpose": "Post-core exposure and criteria audit only; no profile was used to rewrite requester text, baseline, core or chosen styling."
+}

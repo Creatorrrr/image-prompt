@@ -1,0 +1,240 @@
+{
+  "contract_version": "agent-native-qualification-criteria/v1",
+  "provenance": "agent_pre_generation",
+  "frozen_utc": "2026-10-03T23:08:52.569906+00:00",
+  "pack_id": "63a9d4641f2296c3",
+  "composed_prompt_sha256": "499a21ecddc0fd71e7a0563a02245b8135df9828838bef75685a8768f66ae679",
+  "request_envelope_file_sha256": "bc4ab0d20b7ea0c69f573500e6925d2e7d62c47e72b713bdc0e8c554afc66b43",
+  "experiment_focus": "garment surface patterns, layered trim and textile/accessory relations; coordinator-owned creative focus",
+  "reference_scope": "Visible face guidance only for a fictional adult subject. No actual identity, age, body, personality, health or history claim.",
+  "grading_policy": {
+    "same_saved_native_image_required": true,
+    "all_required_components_and_relations_required": true,
+    "partial_is_fail": true,
+    "occluded_required_features": "UNOBSERVABLE/non-PASS",
+    "blocked_render": "UNSCORED",
+    "user_judgment": "pending",
+    "metadata_is_not_pixel_proof": true
+  },
+  "keyword_tests": [
+    {
+      "id": "K01_houndstooth_jacket",
+      "keyword": "houndstooth jacket",
+      "owner": "main_subject.jacket.fabric_surface",
+      "required_components": [
+        "graphite-and-ivory small repeated jagged broken-check forms",
+        "pattern stays on the visible woven jacket surface"
+      ],
+      "required_relation": "The broken checks occupy the same cropped jacket panels worn by the subject.",
+      "confusion_boundary": [
+        "regular square gingham",
+        "crossing straight tartan grid",
+        "random speckles",
+        "checks present only on scarf"
+      ],
+      "prompt_evidence": "a cropped graphite-and-ivory houndstooth jacket, its woven surface covered in small jagged broken checks"
+    },
+    {
+      "id": "K02_raised_ruffle_collar",
+      "keyword": "gathered ruffled blouse collar",
+      "owner": "main_subject.blouse.neckline",
+      "required_components": [
+        "gathered folds",
+        "raised collar around the neck"
+      ],
+      "required_relation": "The ruffle belongs to the blouse above the jacket neckline and is separate from the scarf.",
+      "confusion_boundary": [
+        "flat lace only",
+        "ordinary turned jacket lapels",
+        "scarf mistaken for ruffle"
+      ],
+      "prompt_evidence": "a softly gathered ruffled collar standing around her neck"
+    },
+    {
+      "id": "K03_scalloped_lace_tier",
+      "keyword": "scalloped openwork lace collar layer",
+      "owner": "main_subject.blouse.collar.lower_trim_tier",
+      "required_components": [
+        "small openwork holes",
+        "distinct rounded outer scallops",
+        "separate lower tier below raised ruffle"
+      ],
+      "required_relation": "The lace tier fans outward over the jacket neckline beneath the raised ruffle on the same blouse.",
+      "confusion_boundary": [
+        "solid printed scallops",
+        "ragged fur tips",
+        "holes only in background",
+        "single collapsed collar layer"
+      ],
+      "prompt_evidence": "a separate lower tier of scalloped lace fanning outward over the jacket neckline. The lace has small openwork holes and distinct rounded scallops along its outer edge"
+    },
+    {
+      "id": "K04_striped_silk_scarf",
+      "keyword": "striped silk neck scarf",
+      "owner": "main_subject.neck_scarf.fabric_surface",
+      "required_components": [
+        "multiple parallel alternating stripe lines",
+        "smooth light-catching silk-like cloth surface"
+      ],
+      "required_relation": "The stripes stay on the scarf cloth including its exposed tails; they do not transfer to hair or collar.",
+      "confusion_boundary": [
+        "jacket checks",
+        "uniform solid neck band",
+        "separate floating cords",
+        "stripes read only in background"
+      ],
+      "prompt_evidence": "A narrow striped silk neck scarf"
+    },
+    {
+      "id": "K05_scarf_knot_and_tails",
+      "keyword": "side neck knot and two scarf tails",
+      "owner": "main_subject.neck_scarf",
+      "required_components": [
+        "small knot to one side",
+        "two independently bounded short tails",
+        "knot sits below the raised ruffle"
+      ],
+      "required_relation": "Both tails continue from the same knotted scarf and lie over one jacket lapel while the ruffle and lace remain assessable.",
+      "confusion_boundary": [
+        "one lone tail",
+        "separate decorative strips without scarf connection",
+        "knot covering all lower lace evidence"
+      ],
+      "prompt_evidence": "sits beneath the raised ruffle and is tied in a small knot to one side; two short striped tails lie over that jacket lapel, leaving the layered collar readable"
+    },
+    {
+      "id": "K06_visible_garment_layers",
+      "keyword": "separate blouse and open jacket edges",
+      "owner": "main_subject.wardrobe",
+      "required_components": [
+        "open jacket front edges",
+        "blouse visible between jacket fronts",
+        "distinct raised ruffle and lower lace boundaries"
+      ],
+      "required_relation": "The jacket overlays the blouse while the blouse collar trim is exposed outside the jacket neckline.",
+      "confusion_boundary": [
+        "single printed composite garment",
+        "lace fused into jacket lapel",
+        "scarf is the only visible second layer"
+      ],
+      "prompt_evidence": "open over an ivory blouse"
+    },
+    {
+      "id": "K07_compact_bob",
+      "keyword": "chin-length compact bob",
+      "owner": "main_subject.hair",
+      "required_components": [
+        "compact hair mass ending near chin or jaw",
+        "readable short lower face-framing perimeter"
+      ],
+      "required_relation": "The endpoints belong to the subject hair, with no retained long rear hair contradicting the compact bob.",
+      "confusion_boundary": [
+        "short front locks with long rear length",
+        "lower hair edge hidden by crop"
+      ],
+      "prompt_evidence": "A dark chin-length bob with wispy strands frames her face"
+    },
+    {
+      "id": "S01_book_contact",
+      "keyword": "held book at anatomical right hip",
+      "owner": "main_subject.right_hand and paper-wrapped book",
+      "required_components": [
+        "one slim wrapped upright book",
+        "right-hand ownership",
+        "book at right hip",
+        "thumb on front cover and fingers behind supporting book"
+      ],
+      "required_relation": "The hand connects continuously to the right arm and supports the same book at the adjacent right hip.",
+      "confusion_boundary": [
+        "left-hand substitution",
+        "floating book",
+        "thumb and fingers pierce cover",
+        "book held at chest"
+      ],
+      "prompt_evidence": "her right hand holding a slim paper-wrapped book upright against her right hip, thumb resting on its front cover and fingers supporting its back"
+    },
+    {
+      "id": "S02_frame_observability",
+      "keyword": "head-to-upper-thigh portrait with hands",
+      "owner": "photographic frame",
+      "required_components": [
+        "head and jacket hem included",
+        "both hands visible",
+        "upper thighs included enough to read hip book relation"
+      ],
+      "required_relation": "The frame preserves the neck layers, both hand mechanisms and adjacent hip in one saved original image.",
+      "confusion_boundary": [
+        "hand crop",
+        "book cropped",
+        "bust-only image"
+      ],
+      "prompt_evidence": "a vertical head-to-upper-thigh frame, including both hands and the jacket hem"
+    },
+    {
+      "id": "S03_bookshop_context",
+      "keyword": "old station book kiosk",
+      "owner": "scene background",
+      "required_components": [
+        "book spines",
+        "worn wooden counter",
+        "old concourse spatial context",
+        "cool window light and warm kiosk light"
+      ],
+      "required_relation": "The subject occupies one believable station book kiosk.",
+      "confusion_boundary": [
+        "plain studio",
+        "conflicting collage of environments"
+      ],
+      "prompt_evidence": "inside a used-book kiosk in an old railway concourse at dawn"
+    },
+    {
+      "id": "S04_warm_smile",
+      "keyword": "small warm closed-mouth smile",
+      "owner": "main_subject.face",
+      "required_components": [
+        "subtle mouth-corner lift",
+        "lips remain together",
+        "face turned toward camera"
+      ],
+      "required_relation": "The gentle camera acknowledgment belongs to the same subject with reference-guided facial proportions.",
+      "confusion_boundary": [
+        "broad toothy laugh",
+        "strict neutral or frown",
+        "actual personality or identity inference"
+      ],
+      "prompt_evidence": "a small, warm, closed-mouth smile"
+    }
+  ],
+  "main_keyword_test_ids": [
+    "K01_houndstooth_jacket",
+    "K02_raised_ruffle_collar",
+    "K03_scalloped_lace_tier",
+    "K04_striped_silk_scarf",
+    "K05_scarf_knot_and_tails",
+    "K06_visible_garment_layers",
+    "K07_compact_bob"
+  ],
+  "whole_scene_test_ids": [
+    "K01_houndstooth_jacket",
+    "K02_raised_ruffle_collar",
+    "K03_scalloped_lace_tier",
+    "K04_striped_silk_scarf",
+    "K05_scarf_knot_and_tails",
+    "K06_visible_garment_layers",
+    "K07_compact_bob",
+    "S01_book_contact",
+    "S02_frame_observability",
+    "S03_bookshop_context",
+    "S04_warm_smile"
+  ],
+  "generic_pack_gate_ids": [
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ],
+  "selected_visual_concept_ids": [],
+  "profile_gates_activated": [],
+  "integrated_profile_exposure_required_for_pipeline_qualification": true
+}

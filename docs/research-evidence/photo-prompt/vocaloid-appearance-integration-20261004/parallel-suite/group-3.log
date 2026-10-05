@@ -1,0 +1,85 @@
+.......................................................................F..............................EEE
+======================================================================
+ERROR: setUpClass (test_subculture_illustration_universal_scene_v3.UniversalSceneDataContractTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_subculture_illustration_universal_scene_v3.py", line 634, in setUpClass
+    cls.holdouts = validate_universal_scene_holdouts(ASSET_ROOT, cls.research)
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6244, in validate_universal_scene_holdouts
+    current_oracle_v2 = validate_universal_scene_current_oracle_v2(asset_dir)
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 4489, in validate_universal_scene_current_oracle_v2
+    _require(
+    ~~~~~~~~^
+        baseline.get("validator_contract")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        "universal v2 baseline validator binding drift",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: universal v2 baseline validator binding drift
+
+======================================================================
+ERROR: setUpClass (test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_subculture_illustration_universal_scene_v3.py", line 3367, in setUpClass
+    cls.holdouts = validate_universal_scene_holdouts(ASSET_ROOT, cls.research)
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6244, in validate_universal_scene_holdouts
+    current_oracle_v2 = validate_universal_scene_current_oracle_v2(asset_dir)
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 4489, in validate_universal_scene_current_oracle_v2
+    _require(
+    ~~~~~~~~^
+        baseline.get("validator_contract")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        "universal v2 baseline validator binding drift",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: universal v2 baseline validator binding drift
+
+======================================================================
+ERROR: test_aggregate_validator_does_not_hide_partial_pixel_qualification (test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_subculture_illustration_contract_v1.py", line 504, in test_aggregate_validator_does_not_hide_partial_pixel_qualification
+    summary = validate_all(ASSET_ROOT)
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 11581, in validate_all
+    universal_holdouts = validate_universal_scene_holdouts(root, universal_research)
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6244, in validate_universal_scene_holdouts
+    current_oracle_v2 = validate_universal_scene_current_oracle_v2(asset_dir)
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 4489, in validate_universal_scene_current_oracle_v2
+    _require(
+    ~~~~~~~~^
+        baseline.get("validator_contract")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        "universal v2 baseline validator binding drift",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: universal v2 baseline validator binding drift
+
+======================================================================
+FAIL: test_complete_merged_state_and_twenty_one_keeps_remain_exact (test_photo_liminal_active_use_korean_data_cleanup.LiminalActiveUseKoreanDataCleanupTests.test_complete_merged_state_and_twenty_one_keeps_remain_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_liminal_active_use_korean_data_cleanup.py", line 153, in test_complete_merged_state_and_twenty_one_keeps_remain_exact
+    self.assertEqual(historical_current['slots'], self.states['proposal']['slots'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'med[321640 chars]ocks', 'Hair on each side converges into its o[4784193 chars]']}]} != {'med[321640 chars]ocks'], 'embedding_text': 'a bilateral twin-ta[4746602 chars]']}]}
+Diff is 11335264 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 103 tests in 432.960s
+
+FAILED (failures=1, errors=3)
