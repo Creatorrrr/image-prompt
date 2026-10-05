@@ -49,7 +49,17 @@ The composed object binds its source, decisions and typed evidence:
 
 ## Model-guided candidate review
 
-Read the bound requester spans, definitions/exclusions, locks, baseline, controls and full candidate detail together before adoption. A slot name, rank or eligibility flag is not semantic compatibility. Use these reasoning outcomes with existing fields, not new schema values:
+Read the bound requester spans, definitions/exclusions, locks, baseline, controls and full candidate detail together before adoption. A slot name, rank or eligibility flag is not semantic compatibility.
+
+Apply this review to every considered candidate using the whole request, regardless of topic, language, wording, or whether a named concept was retrieved. Separate three judgments:
+
+- **Meaning:** compare the complete definition, visible components, participants, properties and directed relations with requester meaning and frozen evidence. A shared word or broad impression is insufficient; an unfamiliar expression is not evidence of contradiction.
+- **Applicability:** assess the actual prerequisites and joint effects against the final scene, open dimensions and property locks. A prerequisite may be supplied through an authorized open choice or an admitted joint bundle when the declared contract permits it. An unselected candidate, imagined context, or generic atmosphere cannot supply it. Preserve the candidate's full effects, including effects outside its slot.
+- **Preference:** compare compatible, realizable options with the baseline by their contribution to the intended photograph. Keeping the baseline can be preferable even when another option is valid. A different agent-chosen action is not automatically a requester prohibition; determine ownership from the locks and evidence.
+
+State material reasons in existing supported decision fields or concise run notes. Distinguish actual meaning conflict, unmet prerequisites or scope, unresolved recognition, and compatible options that were not preferred. Do not add new decision enums or interpretation rows for rejected ordinary candidates. If an eligibility explanation appears inconsistent with the evidence, consult the [retrieval diagnostic guidance](retrieval-contract.md#interpreting-applicability-diagnostics); keep the source pack and gates intact.
+
+Use the resulting judgment with these reasoning outcomes and existing fields, not new schema values:
 
 - **Adopt the complete meaning:** use existing selection/interpretation fields and satisfy all concept, relation, component, conditional and opt-in evidence. New prose is allowed; check joint effects with other selections.
 - **Use independently justified generic attributes:** decline the contractual candidate and record a material refinement in `authorial_decisions` within open scope. Do not retain its distinctive compound meaning, omit its prerequisites, or relabel it as authorial to evade its contract.
@@ -129,7 +139,7 @@ A frozen `viewer_experience` control adds the separate topic-neutral `photo-view
 
 `intent_contract` and `coverage.intent_constraints` describe typed source, polarity, subject category, domain and negative-presence constraints. Excluded and advisory rows never become positive mandatory prose. Required typed assertions and request-scoped visual obligations preserve their independent authority.
 
-Every composed object must bind `core_retrieval.canonical_sha256` as `core_retrieval_sha256`, in addition to `pack_id` and the frozen intent-lock binding. Audits recompute the ordinary candidate inventory from its authored source. Candidate adoption is optional, including for a singleton inventory. Use the independently written baseline when all retrieved material is unsuitable.
+Every composed object must bind `core_retrieval.canonical_sha256` as `core_retrieval_sha256`, in addition to `pack_id` and the frozen intent-lock binding. Audits recompute the ordinary candidate inventory from its authored source. Candidate adoption is optional, including for a singleton inventory. Retain the independently written baseline when it best serves the request, whether optional material is incompatible, unrealizable within scope, or valid but less useful.
 
 ## Moe Response and Event Timing
 
