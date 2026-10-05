@@ -9,6 +9,7 @@ import sys
 import tempfile
 import unittest
 from unittest import mock
+import photo_prompt_fixtures as fixtures
 
 ROOT = Path(__file__).resolve().parents[1]
 ILLUSTRATION = ROOT / 'skills/subculture-illustration-image-generator'
@@ -24,6 +25,14 @@ def digest(raw):
 class OrnamentBoundaryHistoryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        global ROOT, ILLUSTRATION, v
+        cls.live_root = ROOT
+        temp = tempfile.TemporaryDirectory(prefix='immutable-v22-parent-')
+        cls.addClassCleanup(temp.cleanup)
+        ROOT = Path(temp.name)
+        with mock.patch('subprocess.Popen', side_effect=AssertionError('Historical fixture invoked a subprocess')):
+            v = fixtures.archived_v22_validator(ROOT, source_root=cls.live_root)
+        ILLUSTRATION = ROOT / 'skills/subculture-illustration-image-generator'
         cls.proof = json.loads((ROOT / EVIDENCE / 'V22-ORNAMENT-BINDING-PROOF.json').read_bytes())
 
     def setUp(self):
