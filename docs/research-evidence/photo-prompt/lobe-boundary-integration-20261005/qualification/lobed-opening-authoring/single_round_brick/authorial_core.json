@@ -1,0 +1,158 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "Photograph a single round opening in the brick wall of a quiet boathouse. The opening is a simple circle with smooth edges, and the river can be seen through it.",
+  "creative_controls_sha256": "7b6b77bf488b05db411e0b538ae597d6397e42f23870d9a15c48008cbdba7597",
+  "interpreted_intent": "The request describes one ordinary circular opening through a brick wall, with a smooth circular edge and a view of the river. No additional lobes or decorative perimeter are implied. Agent-owned direction: Use the smooth circular void as a calm frame for a horizontal band of river against rough brick. A strongly angled wall view exaggerates depth but deforms the circle. A nearly square view keeps the simple shape legible while a shallow reveal records the wall thickness.",
+  "subject": "A single round opening in a brick wall",
+  "setting": "A quiet boathouse beside a river",
+  "event": "The river is visible through a simple circular opening",
+  "visual_priorities": [
+    "A simple circular outline remains complete and clearly smooth-edged",
+    "The river can be seen through the wall thickness",
+    "The circular rim contrasts with the rectangular brick pattern"
+  ],
+  "baseline_prompt_en": "A quiet architectural photograph of a single round opening in a brick wall at a boathouse. The opening forms a simple circle with smooth edges, and the river is visible through it. A shallow inner reveal gives the wall thickness, while the water beyond carries a low horizontal reflection of the opposite bank. Rough brick faces and pale mortar joints surround the even circular rim. Muted daylight from a cloudy sky balances the cool river view with the warm clay wall. Place the complete circle a little left of centre, viewed nearly square to the wall, with enough masonry around it to show its modest scale. The contrast between the curved boundary, horizontal water and rectangular brickwork supplies the photograph's calm rhythm.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "the requested decorative subject and its surface or opening",
+      "source_text": "Photograph a single round opening in the brick wall of a quiet boathouse. The opening is a simple circle with smooth edges, and the river can be seen through it.",
+      "basis": "request_context",
+      "resolution": "The request describes one ordinary circular opening through a brick wall, with a smooth circular edge and a view of the river. No additional lobes or decorative perimeter are implied.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "a simple circle with smooth edges",
+        "dimension": "concept",
+        "prompt_evidence": "The opening forms a simple circle with smooth edges"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "a single round opening",
+        "dimension": "subject",
+        "prompt_evidence": "round opening in a brick wall"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "the river can be seen through it",
+        "dimension": "event",
+        "prompt_evidence": "the river is visible through it"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "in the brick wall of a quiet boathouse",
+        "dimension": "setting",
+        "prompt_evidence": "a brick wall at a boathouse"
+      },
+      {
+        "anchor_id": "core_count",
+        "source_text": "a single round opening",
+        "dimension": "count",
+        "prompt_evidence": "a single round opening"
+      },
+      {
+        "anchor_id": "quiet_atmosphere",
+        "source_text": "a quiet boathouse",
+        "dimension": "atmosphere",
+        "prompt_evidence": "A quiet architectural photograph",
+        "target": "scene",
+        "property": "mood.quietness"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "count"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "material",
+      "color",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "timing",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "round opening in a brick wall"
+      }
+    },
+    {
+      "assertion_id": "requested_shape_and_surface",
+      "dimension": "concept",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "concept"
+      ],
+      "axes": {
+        "outline": "simple circle with smooth edges",
+        "surface_state": "opening through a wall"
+      },
+      "evidence": {
+        "outline_phrase": "The opening forms a simple circle with smooth edges",
+        "through_phrase": "the river is visible through it"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "architectural detail photography",
+    "family": "restrained natural observation",
+    "evidence": [
+      "ordinary daylight",
+      "a complete subject outline in its material setting"
+    ]
+  },
+  "variation_key": "single_round_brick"
+}

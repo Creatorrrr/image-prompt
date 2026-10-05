@@ -48,6 +48,11 @@ V21_PARENT_MANIFEST = Path(
 )
 V21_PARENT_MANIFEST_SHA256 = 'ceea06a904b6605e5ee359eefb1f2b9e031d7a385ca17beeca89d4bb8c289088'
 V21_PARENT_COMMIT = '726c51b015294930f0ad98ca126cde11e6caead2'
+V22_PARENT_MANIFEST = Path(
+    'docs/research-evidence/photo-prompt/lobe-boundary-integration-20261005/V22-PARENT-SOURCE.json'
+)
+V22_PARENT_MANIFEST_SHA256 = 'dd9e41534d3587a87c762725887f330e72b751cc0b9a34192a8dd5469cab9bb7'
+V22_PARENT_COMMIT = '900bf2efdd17fbc6a6ef3aa340f3526b1e01f223'
 
 
 def _v17_safe_path(value: str) -> Path:
@@ -557,6 +562,84 @@ def archived_validator_with_v21_source(directory: Path, *, version: int, source_
         frozen = Path(saved)
         materialize_v21_parent_source(frozen, source_root=source_root)
         return helpers[version](directory, source_root=frozen)
+
+
+def _v22_parent_manifest(source_root: Path = ROOT) -> dict:
+    """Authenticate V22 independently of the current lobe wording and validator."""
+    raw = _v17_regular_path(source_root, V22_PARENT_MANIFEST.as_posix()).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != V22_PARENT_MANIFEST_SHA256:
+        raise AssertionError('Frozen V22 parent source manifest drift')
+    manifest = json.loads(raw)
+    counts = {'reuse_v21_parent_source': 129, 'reuse_retained_vector_shard': 31,
+              'new_immutable_snapshot_same_git_blob': 8}
+    if (manifest['schema'] != 'photo-v22-parent-source-manifest/v1'
+            or manifest['source_pin'] != V22_PARENT_COMMIT
+            or manifest['member_count'] != 168 or len(manifest['members']) != 168
+            or manifest['dependency_count'] != 261 or len(manifest['dependencies']) != 261
+            or manifest['counts'] != counts
+            or manifest['previous_manifest_path'] != V21_PARENT_MANIFEST.as_posix()
+            or manifest['previous_manifest_sha256'] != V21_PARENT_MANIFEST_SHA256):
+        raise AssertionError('Frozen V22 parent source manifest shape drift')
+    previous = {row['path']: row for row in _v21_parent_manifest(source_root)['members']}
+    paths = set()
+    for row in manifest['members'] + manifest['dependencies']:
+        path = _v17_safe_path(row['path']).as_posix()
+        _v17_safe_path(row['source_path'])
+        if path in paths:
+            raise AssertionError('Duplicate V22 historical source path')
+        paths.add(path)
+        if (row['git_commit'] != V22_PARENT_COMMIT or row['git_path'] != path
+                or row['mode'] not in ('100644', '100755') or type(row['bytes']) is not int
+                or row['bytes'] < 0 or len(row['sha256']) != 64 or len(row['git_blob']) != 40
+                or any(c not in '0123456789abcdef' for c in row['sha256'] + row['git_blob'])):
+            raise AssertionError('Frozen V22 historical source provenance drift')
+    for row in manifest['members']:
+        if row['kind'] == 'reuse_v21_parent_source':
+            old = previous.get(row['path'], {})
+            allowed = all(row[key] == old.get(key) for key in ('source_path', 'git_blob', 'mode', 'bytes', 'sha256'))
+        elif row['kind'] == 'reuse_retained_vector_shard':
+            allowed = (row['source_path'] == row['path']
+                       and row['path'].startswith('skills/photo-prompt-image-generator/assets/')
+                       and '_index_shards/' in row['path'])
+        elif row['kind'] == 'new_immutable_snapshot_same_git_blob':
+            allowed = row['source_path'] == (
+                V22_PARENT_MANIFEST.parent / 'v22-parent-source-files' / row['path']).as_posix()
+        else:
+            allowed = False
+        if not allowed:
+            raise AssertionError('Unregistered V22 historical source backing path')
+    if (len({row['source_path'] for row in manifest['members']}) != 168
+            or {kind: sum(row['kind'] == kind for row in manifest['members']) for kind in counts} != counts
+            or sum(row['bytes'] for row in manifest['members']) != manifest['total_member_bytes']
+            or any(row['source_path'] != row['path'] or row['kind'] != 'retained_dependency'
+                   for row in manifest['dependencies'])):
+        raise AssertionError('Frozen V22 historical source inventory drift')
+    return manifest
+
+
+def materialize_v22_parent_source(directory: Path, *, source_root: Path = ROOT) -> dict:
+    """Restore the exact V22 source without Git, symlinks, or live-source fallback."""
+    manifest = _v22_parent_manifest(source_root)
+    records = manifest['members'] + manifest['dependencies']
+    if directory.is_symlink() or (directory.exists() and any(directory.iterdir())):
+        raise AssertionError('V22 historical destination must be an empty directory')
+    for row in records:
+        _v17_verified_payload(source_root, row)
+    directory.mkdir(parents=True, exist_ok=True)
+    for row in records:
+        raw = _v17_verified_payload(source_root, row)
+        target = directory / _v17_safe_path(row['path'])
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(raw)
+        target.chmod(int(row['mode'][-3:], 8))
+    return manifest
+
+
+def archived_v22_validator(directory: Path, *, source_root: Path = ROOT):
+    manifest = materialize_v22_parent_source(directory, source_root=source_root)
+    row = next(row for row in manifest['members'] if row['path'] == V17_PARENT_VALIDATOR)
+    raw = _v17_verified_payload(source_root, row)
+    return _isolated_parent_validator(directory, raw, directory, version=22)
 
 
 def archived_v16_validator(directory: Path):

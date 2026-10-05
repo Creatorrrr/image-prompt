@@ -1,0 +1,143 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "A natural photograph of a small ornamental opening in the stone wall of an old courtyard stairway. The opening has three rounded lobes joined into one continuous outline, with the garden visible through it.",
+  "creative_controls_sha256": "9d8fe83a952079fdf8ed61dd9b4114ae01ea786a20cb3a9f8e855840b025c923",
+  "interpreted_intent": "The requester describes an actual opening with three rounded lobes in one perimeter, not three separate holes. The garden is seen through this opening in the courtyard stairway wall. Agent-owned direction: The light garden seen through a worn stone silhouette will carry a small moment of discovery along the stairs. A wide stairway view gives architectural context; a closer wall fragment gives the three connected curves clearer presence. Choose the latter with one stair edge retained.",
+  "subject": "A small ornamental opening in a stone wall",
+  "setting": "An old courtyard stairway beside a garden",
+  "event": "The garden is visible through a continuous opening with three rounded lobes",
+  "visual_priorities": [
+    "The three rounded lobes join into a single opening with an uninterrupted silhouette",
+    "Garden depth remains visible beyond the stone thickness",
+    "The worn stair tread and weathered stone locate the ornament in daily architecture"
+  ],
+  "baseline_prompt_en": "An intimate architectural photograph of a small ornamental opening in a stone wall at an old courtyard stairway. Three rounded lobes meet as one continuous open outline; the garden is visible through the opening. The upper curve rises over two lower curves, each edge of the stone reveal catching a soft strip of daylight. Pale leaves and a narrow earth path sit beyond the wall, giving the dark recess a clear depth. A worn stair tread enters the lower corner. Fine pits, softened corners and a little mineral staining give the stone a tactile surface. Cool open-sky light keeps the garden greens quiet and the outline distinct. Frame the wall fragment closely, with the complete opening slightly above centre and a modest margin of stone around it.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "the requested decorative subject and its surface or opening",
+      "source_text": "A natural photograph of a small ornamental opening in the stone wall of an old courtyard stairway. The opening has three rounded lobes joined into one continuous outline, with the garden visible through it.",
+      "basis": "request_context",
+      "resolution": "The requester describes an actual opening with three rounded lobes in one perimeter, not three separate holes. The garden is seen through this opening in the courtyard stairway wall.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "The opening has three rounded lobes joined into one continuous outline",
+        "dimension": "concept",
+        "prompt_evidence": "Three rounded lobes meet as one continuous open outline"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "a small ornamental opening",
+        "dimension": "subject",
+        "prompt_evidence": "a small ornamental opening"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "with the garden visible through it",
+        "dimension": "event",
+        "prompt_evidence": "the garden is visible through the opening"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "in the stone wall of an old courtyard stairway",
+        "dimension": "setting",
+        "prompt_evidence": "a stone wall at an old courtyard stairway"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "material",
+      "color",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "timing",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "a small ornamental opening"
+      }
+    },
+    {
+      "assertion_id": "requested_shape_and_surface",
+      "dimension": "concept",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "concept"
+      ],
+      "axes": {
+        "outline": "three rounded lobes joined into one continuous outline",
+        "surface_state": "opening through a wall"
+      },
+      "evidence": {
+        "outline_phrase": "Three rounded lobes meet as one continuous open outline",
+        "through_phrase": "the garden is visible through the opening"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "architectural detail photography",
+    "family": "restrained natural observation",
+    "evidence": [
+      "ordinary daylight",
+      "a complete subject outline in its material setting"
+    ]
+  },
+  "variation_key": "three_lobed_stone"
+}
