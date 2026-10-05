@@ -1,0 +1,3554 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "profiles": [
+    {
+      "id": "cv_profile_single_cheek_puff",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "한쪽 볼 부풀리기",
+          "single-cheek puff"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the specified cheek bulges outward; the opposite cheek retains its unpuffed contour; both cheek states belong to the same face",
+        "paraphrase_examples": [
+          "지정한 한쪽 볼만 부풀린 표정",
+          "the specified cheek bulges outward; the opposite cheek retains its unpuffed contour; both cheek states belong to the same face"
+        ],
+        "visual_components": [
+          "the specified cheek bulges outward",
+          "the opposite cheek retains its unpuffed contour",
+          "both cheek states belong to the same face"
+        ],
+        "contrast_examples": [
+          "both cheeks puffed",
+          "permanent facial asymmetry"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "한쪽 볼 부풀리기",
+          "single-cheek puff",
+          "지정한 한쪽 볼만 부풀린 표정",
+          "the specified cheek bulges outward; the opposite cheek retains its unpuffed contour; both cheek states belong to the same face",
+          "the specified cheek bulges outward",
+          "the opposite cheek retains its unpuffed contour",
+          "both cheek states belong to the same face"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression.cheek_inflation"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "both cheeks puffed",
+        "permanent facial asymmetry"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the specified cheek bulges outward"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the specified cheek bulges outward"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the specified cheek bulges outward.",
+            "render_gate": {
+              "id": "vo_cv_profile_single_cheek_puff_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the specified cheek bulges outward. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the opposite cheek retains its unpuffed contour"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the opposite cheek retains its unpuffed contour"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the opposite cheek retains its unpuffed contour.",
+            "render_gate": {
+              "id": "vo_cv_profile_single_cheek_puff_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the opposite cheek retains its unpuffed contour. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "both cheek states belong to the same face"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "both cheek states belong to the same face"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: both cheek states belong to the same face.",
+            "render_gate": {
+              "id": "vo_cv_profile_single_cheek_puff_3",
+              "review_scale": "native",
+              "description": "Inspect original pixels for both cheek states belong to the same face. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_small_o_mouth",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "작은 O자 입",
+          "small O-shaped mouth"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the lips surround a small rounded opening; the opening has a continuous curved lip boundary; the jaw stays close enough to retain a small mouth aperture",
+        "paraphrase_examples": [
+          "작은 둥근 O형 입 틈",
+          "the lips surround a small rounded opening; the opening has a continuous curved lip boundary; the jaw stays close enough to retain a small mouth aperture"
+        ],
+        "visual_components": [
+          "the lips surround a small rounded opening",
+          "the opening has a continuous curved lip boundary",
+          "the jaw stays close enough to retain a small mouth aperture"
+        ],
+        "contrast_examples": [
+          "a thin horizontal lip gap",
+          "a widely dropped jaw"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "작은 O자 입",
+          "small O-shaped mouth",
+          "작은 둥근 O형 입 틈",
+          "the lips surround a small rounded opening; the opening has a continuous curved lip boundary; the jaw stays close enough to retain a small mouth aperture",
+          "the lips surround a small rounded opening",
+          "the opening has a continuous curved lip boundary",
+          "the jaw stays close enough to retain a small mouth aperture"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression.mouth_aperture"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a thin horizontal lip gap",
+        "a widely dropped jaw"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the lips surround a small rounded opening"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the lips surround a small rounded opening"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the lips surround a small rounded opening.",
+            "render_gate": {
+              "id": "vo_cv_profile_small_o_mouth_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the lips surround a small rounded opening. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the opening has a continuous curved lip boundary"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the opening has a continuous curved lip boundary"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the opening has a continuous curved lip boundary.",
+            "render_gate": {
+              "id": "vo_cv_profile_small_o_mouth_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the opening has a continuous curved lip boundary. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the jaw stays close enough to retain a small mouth aperture"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the jaw stays close enough to retain a small mouth aperture"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the jaw stays close enough to retain a small mouth aperture.",
+            "render_gate": {
+              "id": "vo_cv_profile_small_o_mouth_3",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the jaw stays close enough to retain a small mouth aperture. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_wide_eye_apertures",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "동그랗게 뜬 눈",
+          "wide-open eye apertures"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "both upper lids lift to expose larger eye apertures; the visible irises remain seated within their own eye contours",
+        "paraphrase_examples": [
+          "크게 열린 두 눈의 개안부",
+          "both upper lids lift to expose larger eye apertures; the visible irises remain seated within their own eye contours"
+        ],
+        "visual_components": [
+          "both upper lids lift to expose larger eye apertures",
+          "the visible irises remain seated within their own eye contours"
+        ],
+        "contrast_examples": [
+          "permanently enlarged eyeballs",
+          "a pupil size change alone"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "동그랗게 뜬 눈",
+          "wide-open eye apertures",
+          "크게 열린 두 눈의 개안부",
+          "both upper lids lift to expose larger eye apertures; the visible irises remain seated within their own eye contours",
+          "both upper lids lift to expose larger eye apertures",
+          "the visible irises remain seated within their own eye contours"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression.eyelid_openness"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "permanently enlarged eyeballs",
+        "a pupil size change alone"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "both upper lids lift to expose larger eye apertures"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "both upper lids lift to expose larger eye apertures"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: both upper lids lift to expose larger eye apertures.",
+            "render_gate": {
+              "id": "vo_cv_profile_wide_eye_apertures_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for both upper lids lift to expose larger eye apertures. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the visible irises remain seated within their own eye contours"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the visible irises remain seated within their own eye contours"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the visible irises remain seated within their own eye contours.",
+            "render_gate": {
+              "id": "vo_cv_profile_wide_eye_apertures_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the visible irises remain seated within their own eye contours. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_thumb_index_cross",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "엄지검지 교차 손동작",
+          "crossed thumb-index hand gesture"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the thumb and index finger of one hand overlap in a small cross; the remaining fingers curl toward that same palm; the crossing belongs to one continuously connected hand",
+        "paraphrase_examples": [
+          "한 손의 엄지와 검지가 교차한 작은 손 모양",
+          "the thumb and index finger of one hand overlap in a small cross; the remaining fingers curl toward that same palm; the crossing belongs to one continuously connected hand"
+        ],
+        "visual_components": [
+          "the thumb and index finger of one hand overlap in a small cross",
+          "the remaining fingers curl toward that same palm",
+          "the crossing belongs to one continuously connected hand"
+        ],
+        "contrast_examples": [
+          "a heart formed by two hands",
+          "interlaced fingers from two hands"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "엄지검지 교차 손동작",
+          "crossed thumb-index hand gesture",
+          "한 손의 엄지와 검지가 교차한 작은 손 모양",
+          "the thumb and index finger of one hand overlap in a small cross; the remaining fingers curl toward that same palm; the crossing belongs to one continuously connected hand",
+          "the thumb and index finger of one hand overlap in a small cross",
+          "the remaining fingers curl toward that same palm",
+          "the crossing belongs to one continuously connected hand"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a heart formed by two hands",
+        "interlaced fingers from two hands"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the thumb and index finger of one hand overlap in a small cross"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the thumb and index finger of one hand overlap in a small cross"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the thumb and index finger of one hand overlap in a small cross.",
+            "render_gate": {
+              "id": "vo_cv_profile_thumb_index_cross_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the thumb and index finger of one hand overlap in a small cross. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the remaining fingers curl toward that same palm"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the remaining fingers curl toward that same palm"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the remaining fingers curl toward that same palm.",
+            "render_gate": {
+              "id": "vo_cv_profile_thumb_index_cross_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the remaining fingers curl toward that same palm. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the crossing belongs to one continuously connected hand"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the crossing belongs to one continuously connected hand"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the crossing belongs to one continuously connected hand.",
+            "render_gate": {
+              "id": "vo_cv_profile_thumb_index_cross_3",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the crossing belongs to one continuously connected hand. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_hand_heart_tips",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "검지·엄지 접점형 양손 하트",
+          "index-and-thumb fingertip hand heart"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the two index fingertips meet at the upper inward notch; the two thumb tips meet at the lower point; the opposed curved hands enclose one heart-shaped opening",
+        "paraphrase_examples": [
+          "검지 끝과 엄지 끝을 각각 맞댄 양손 하트",
+          "the two index fingertips meet at the upper inward notch; the two thumb tips meet at the lower point; the opposed curved hands enclose one heart-shaped opening"
+        ],
+        "visual_components": [
+          "the two index fingertips meet at the upper inward notch",
+          "the two thumb tips meet at the lower point",
+          "the opposed curved hands enclose one heart-shaped opening"
+        ],
+        "contrast_examples": [
+          "an overhead arm heart",
+          "two unconnected half hearts"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "검지·엄지 접점형 양손 하트",
+          "index-and-thumb fingertip hand heart",
+          "검지 끝과 엄지 끝을 각각 맞댄 양손 하트",
+          "the two index fingertips meet at the upper inward notch; the two thumb tips meet at the lower point; the opposed curved hands enclose one heart-shaped opening",
+          "the two index fingertips meet at the upper inward notch",
+          "the two thumb tips meet at the lower point",
+          "the opposed curved hands enclose one heart-shaped opening"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "an overhead arm heart",
+        "two unconnected half hearts"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the two index fingertips meet at the upper inward notch"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the two index fingertips meet at the upper inward notch"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the two index fingertips meet at the upper inward notch.",
+            "render_gate": {
+              "id": "vo_cv_profile_hand_heart_tips_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the two index fingertips meet at the upper inward notch. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the two thumb tips meet at the lower point"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the two thumb tips meet at the lower point"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the two thumb tips meet at the lower point.",
+            "render_gate": {
+              "id": "vo_cv_profile_hand_heart_tips_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the two thumb tips meet at the lower point. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the opposed curved hands enclose one heart-shaped opening"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the opposed curved hands enclose one heart-shaped opening"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the opposed curved hands enclose one heart-shaped opening.",
+            "render_gate": {
+              "id": "vo_cv_profile_hand_heart_tips_3",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the opposed curved hands enclose one heart-shaped opening. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_cheek_poke",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "자기 볼 콕",
+          "own-cheek fingertip poke"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "one index fingertip directly touches the actor's own cheek; the fingertip continues into that actor's hand and wrist; the cheek surface and fingertip share one visible contact point",
+        "paraphrase_examples": [
+          "자기 검지 끝과 자기 볼의 접점",
+          "one index fingertip directly touches the actor's own cheek; the fingertip continues into that actor's hand and wrist; the cheek surface and fingertip share one visible contact point"
+        ],
+        "visual_components": [
+          "one index fingertip directly touches the actor's own cheek",
+          "the fingertip continues into that actor's hand and wrist",
+          "the cheek surface and fingertip share one visible contact point"
+        ],
+        "contrast_examples": [
+          "a fingertip hovering beside the face",
+          "another actor's hand touching the cheek"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "자기 볼 콕",
+          "own-cheek fingertip poke",
+          "자기 검지 끝과 자기 볼의 접점",
+          "one index fingertip directly touches the actor's own cheek; the fingertip continues into that actor's hand and wrist; the cheek surface and fingertip share one visible contact point",
+          "one index fingertip directly touches the actor's own cheek",
+          "the fingertip continues into that actor's hand and wrist",
+          "the cheek surface and fingertip share one visible contact point"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a fingertip hovering beside the face",
+        "another actor's hand touching the cheek"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "one index fingertip directly touches the actor's own cheek"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "one index fingertip directly touches the actor's own cheek"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: one index fingertip directly touches the actor's own cheek.",
+            "render_gate": {
+              "id": "vo_cv_profile_cheek_poke_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for one index fingertip directly touches the actor's own cheek. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the fingertip continues into that actor's hand and wrist"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the fingertip continues into that actor's hand and wrist"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the fingertip continues into that actor's hand and wrist.",
+            "render_gate": {
+              "id": "vo_cv_profile_cheek_poke_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the fingertip continues into that actor's hand and wrist. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the cheek surface and fingertip share one visible contact point"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the cheek surface and fingertip share one visible contact point"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the cheek surface and fingertip share one visible contact point.",
+            "render_gate": {
+              "id": "vo_cv_profile_cheek_poke_3",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the cheek surface and fingertip share one visible contact point. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_cheek_palm",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "자기 볼 손바닥 접촉",
+          "own-cheek palm contact"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the actor's own palm rests against the side of their cheek; the palm belongs to the same actor through a visible wrist connection",
+        "paraphrase_examples": [
+          "자기 볼 옆에 닿은 자기 손바닥",
+          "the actor's own palm rests against the side of their cheek; the palm belongs to the same actor through a visible wrist connection"
+        ],
+        "visual_components": [
+          "the actor's own palm rests against the side of their cheek",
+          "the palm belongs to the same actor through a visible wrist connection"
+        ],
+        "contrast_examples": [
+          "chin support",
+          "a hand held away from the cheek"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "자기 볼 손바닥 접촉",
+          "own-cheek palm contact",
+          "자기 볼 옆에 닿은 자기 손바닥",
+          "the actor's own palm rests against the side of their cheek; the palm belongs to the same actor through a visible wrist connection",
+          "the actor's own palm rests against the side of their cheek",
+          "the palm belongs to the same actor through a visible wrist connection"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "chin support",
+        "a hand held away from the cheek"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the actor's own palm rests against the side of their cheek"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the actor's own palm rests against the side of their cheek"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the actor's own palm rests against the side of their cheek.",
+            "render_gate": {
+              "id": "vo_cv_profile_cheek_palm_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the actor's own palm rests against the side of their cheek. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the palm belongs to the same actor through a visible wrist connection"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the palm belongs to the same actor through a visible wrist connection"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the palm belongs to the same actor through a visible wrist connection.",
+            "render_gate": {
+              "id": "vo_cv_profile_cheek_palm_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the palm belongs to the same actor through a visible wrist connection. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_two_cheek_press",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "양손으로 자기 양볼 누르기",
+          "bilateral own-cheek compression"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "each palm contacts its corresponding cheek on the same actor; both cheek contours indent inward at the palm contacts; each hand connects to its own wrist and arm",
+        "paraphrase_examples": [
+          "자기 양손으로 양볼을 안쪽으로 누른 접촉",
+          "each palm contacts its corresponding cheek on the same actor; both cheek contours indent inward at the palm contacts; each hand connects to its own wrist and arm"
+        ],
+        "visual_components": [
+          "each palm contacts its corresponding cheek on the same actor",
+          "both cheek contours indent inward at the palm contacts",
+          "each hand connects to its own wrist and arm"
+        ],
+        "contrast_examples": [
+          "both palms hovering",
+          "air-inflated cheeks without palm contact"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "양손으로 자기 양볼 누르기",
+          "bilateral own-cheek compression",
+          "자기 양손으로 양볼을 안쪽으로 누른 접촉",
+          "each palm contacts its corresponding cheek on the same actor; both cheek contours indent inward at the palm contacts; each hand connects to its own wrist and arm",
+          "each palm contacts its corresponding cheek on the same actor",
+          "both cheek contours indent inward at the palm contacts",
+          "each hand connects to its own wrist and arm"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose",
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression.cheek_compression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "both palms hovering",
+        "air-inflated cheeks without palm contact"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "each palm contacts its corresponding cheek on the same actor"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "each palm contacts its corresponding cheek on the same actor"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: each palm contacts its corresponding cheek on the same actor.",
+            "render_gate": {
+              "id": "vo_cv_profile_two_cheek_press_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for each palm contacts its corresponding cheek on the same actor. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "both cheek contours indent inward at the palm contacts"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "both cheek contours indent inward at the palm contacts"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: both cheek contours indent inward at the palm contacts.",
+            "render_gate": {
+              "id": "vo_cv_profile_two_cheek_press_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for both cheek contours indent inward at the palm contacts. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "each hand connects to its own wrist and arm"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "each hand connects to its own wrist and arm"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: each hand connects to its own wrist and arm.",
+            "render_gate": {
+              "id": "vo_cv_profile_two_cheek_press_3",
+              "review_scale": "native",
+              "description": "Inspect original pixels for each hand connects to its own wrist and arm. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_index_tip_meet",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "자기 양손 검지 끝 맞대기",
+          "own index fingertips touching"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "one extended index finger from each of the actor's two hands points inward; the two index fingertips touch each other; the remaining fingers stay folded into their respective palms",
+        "paraphrase_examples": [
+          "자기 양손 검지 끝만 맞댄 손동작",
+          "one extended index finger from each of the actor's two hands points inward; the two index fingertips touch each other; the remaining fingers stay folded into their respective palms"
+        ],
+        "visual_components": [
+          "one extended index finger from each of the actor's two hands points inward",
+          "the two index fingertips touch each other",
+          "the remaining fingers stay folded into their respective palms"
+        ],
+        "contrast_examples": [
+          "interlaced hands",
+          "tips separated by a gap"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "자기 양손 검지 끝 맞대기",
+          "own index fingertips touching",
+          "자기 양손 검지 끝만 맞댄 손동작",
+          "one extended index finger from each of the actor's two hands points inward; the two index fingertips touch each other; the remaining fingers stay folded into their respective palms",
+          "one extended index finger from each of the actor's two hands points inward",
+          "the two index fingertips touch each other",
+          "the remaining fingers stay folded into their respective palms"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "interlaced hands",
+        "tips separated by a gap"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "one extended index finger from each of the actor's two hands points inward"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "one extended index finger from each of the actor's two hands points inward"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: one extended index finger from each of the actor's two hands points inward.",
+            "render_gate": {
+              "id": "vo_cv_profile_index_tip_meet_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for one extended index finger from each of the actor's two hands points inward. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the two index fingertips touch each other"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the two index fingertips touch each other"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the two index fingertips touch each other.",
+            "render_gate": {
+              "id": "vo_cv_profile_index_tip_meet_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the two index fingertips touch each other. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the remaining fingers stay folded into their respective palms"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the remaining fingers stay folded into their respective palms"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the remaining fingers stay folded into their respective palms.",
+            "render_gate": {
+              "id": "vo_cv_profile_index_tip_meet_3",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the remaining fingers stay folded into their respective palms. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_eye_between_fingers",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "자기 손가락 틈으로 눈 보기",
+          "eye peeking through own fingers"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the actor's own hand lies in front of their face; a gap between connected fingers exposes one stated eye; the visible eye remains behind that finger gap",
+        "paraphrase_examples": [
+          "자기 손가락 틈으로 보이는 자기 눈",
+          "the actor's own hand lies in front of their face; a gap between connected fingers exposes one stated eye; the visible eye remains behind that finger gap"
+        ],
+        "visual_components": [
+          "the actor's own hand lies in front of their face",
+          "a gap between connected fingers exposes one stated eye",
+          "the visible eye remains behind that finger gap"
+        ],
+        "contrast_examples": [
+          "a hand beside the face",
+          "an eye painted onto a palm"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "자기 손가락 틈으로 눈 보기",
+          "eye peeking through own fingers",
+          "자기 손가락 틈으로 보이는 자기 눈",
+          "the actor's own hand lies in front of their face; a gap between connected fingers exposes one stated eye; the visible eye remains behind that finger gap",
+          "the actor's own hand lies in front of their face",
+          "a gap between connected fingers exposes one stated eye",
+          "the visible eye remains behind that finger gap"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose",
+          "relationship"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "relationship",
+            "target": "main_subject",
+            "property": "hand_face.occlusion"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a hand beside the face",
+        "an eye painted onto a palm"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the actor's own hand lies in front of their face"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the actor's own hand lies in front of their face"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the actor's own hand lies in front of their face.",
+            "render_gate": {
+              "id": "vo_cv_profile_eye_between_fingers_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the actor's own hand lies in front of their face. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a gap between connected fingers exposes one stated eye"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a gap between connected fingers exposes one stated eye"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: a gap between connected fingers exposes one stated eye.",
+            "render_gate": {
+              "id": "vo_cv_profile_eye_between_fingers_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for a gap between connected fingers exposes one stated eye. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the visible eye remains behind that finger gap"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the visible eye remains behind that finger gap"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the visible eye remains behind that finger gap.",
+            "render_gate": {
+              "id": "vo_cv_profile_eye_between_fingers_3",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the visible eye remains behind that finger gap. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_single_heel_lift",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "한쪽 뒤꿈치 들기",
+          "one-heel-raised stance"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "one heel is lifted above the support surface while its forefoot stays in contact; the opposite foot remains planted as the support foot; the legs and pelvis stay continuously connected above that base",
+        "paraphrase_examples": [
+          "한쪽 뒤꿈치만 들고 반대 발로 지지한 서기",
+          "one heel is lifted above the support surface while its forefoot stays in contact; the opposite foot remains planted as the support foot; the legs and pelvis stay continuously connected above that base"
+        ],
+        "visual_components": [
+          "one heel is lifted above the support surface while its forefoot stays in contact",
+          "the opposite foot remains planted as the support foot",
+          "the legs and pelvis stay continuously connected above that base"
+        ],
+        "contrast_examples": [
+          "both heels raised",
+          "both feet airborne"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "한쪽 뒤꿈치 들기",
+          "one-heel-raised stance",
+          "한쪽 뒤꿈치만 들고 반대 발로 지지한 서기",
+          "one heel is lifted above the support surface while its forefoot stays in contact; the opposite foot remains planted as the support foot; the legs and pelvis stay continuously connected above that base",
+          "one heel is lifted above the support surface while its forefoot stays in contact",
+          "the opposite foot remains planted as the support foot",
+          "the legs and pelvis stay continuously connected above that base"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.support_and_configuration"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "both heels raised",
+        "both feet airborne"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "one heel is lifted above the support surface while its forefoot stays in contact"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "one heel is lifted above the support surface while its forefoot stays in contact"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: one heel is lifted above the support surface while its forefoot stays in contact.",
+            "render_gate": {
+              "id": "vo_cv_profile_single_heel_lift_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for one heel is lifted above the support surface while its forefoot stays in contact. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the opposite foot remains planted as the support foot"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the opposite foot remains planted as the support foot"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the opposite foot remains planted as the support foot.",
+            "render_gate": {
+              "id": "vo_cv_profile_single_heel_lift_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the opposite foot remains planted as the support foot. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the legs and pelvis stay continuously connected above that base"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the legs and pelvis stay continuously connected above that base"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the legs and pelvis stay continuously connected above that base.",
+            "render_gate": {
+              "id": "vo_cv_profile_single_heel_lift_3",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the legs and pelvis stay continuously connected above that base. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_two_hand_cup",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "컵 몸체를 두 손으로 감싸기",
+          "two-hand cup cradle"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "both of the actor's hands curve around the same cup body; fingers from each hand visibly contact that cup surface; both wrists connect the cradling hands to the same actor",
+        "paraphrase_examples": [
+          "두 손이 같은 컵 몸체를 감싼 접촉",
+          "both of the actor's hands curve around the same cup body; fingers from each hand visibly contact that cup surface; both wrists connect the cradling hands to the same actor"
+        ],
+        "visual_components": [
+          "both of the actor's hands curve around the same cup body",
+          "fingers from each hand visibly contact that cup surface",
+          "both wrists connect the cradling hands to the same actor"
+        ],
+        "contrast_examples": [
+          "one hand on a handle alone",
+          "hands hovering near different cups"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "컵 몸체를 두 손으로 감싸기",
+          "two-hand cup cradle",
+          "두 손이 같은 컵 몸체를 감싼 접촉",
+          "both of the actor's hands curve around the same cup body; fingers from each hand visibly contact that cup surface; both wrists connect the cradling hands to the same actor",
+          "both of the actor's hands curve around the same cup body",
+          "fingers from each hand visibly contact that cup surface",
+          "both wrists connect the cradling hands to the same actor"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose",
+          "relationship"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "relationship",
+            "target": "main_subject",
+            "property": "hand_object.contact"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "one hand on a handle alone",
+        "hands hovering near different cups"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "both of the actor's hands curve around the same cup body"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "both of the actor's hands curve around the same cup body"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: both of the actor's hands curve around the same cup body.",
+            "render_gate": {
+              "id": "vo_cv_profile_two_hand_cup_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for both of the actor's hands curve around the same cup body. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "fingers from each hand visibly contact that cup surface"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "fingers from each hand visibly contact that cup surface"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: fingers from each hand visibly contact that cup surface.",
+            "render_gate": {
+              "id": "vo_cv_profile_two_hand_cup_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for fingers from each hand visibly contact that cup surface. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "both wrists connect the cradling hands to the same actor"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "both wrists connect the cradling hands to the same actor"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: both wrists connect the cradling hands to the same actor.",
+            "render_gate": {
+              "id": "vo_cv_profile_two_hand_cup_3",
+              "review_scale": "native",
+              "description": "Inspect original pixels for both wrists connect the cradling hands to the same actor. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_plush_hug",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "봉제인형을 두 팔로 안기",
+          "two-arm plush embrace"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "both arms curve around the same declared plush toy; the toy contacts the actor's front torso inside that arm enclosure; the toy boundary remains distinguishable from the hands and garment",
+        "paraphrase_examples": [
+          "같은 봉제인형을 두 팔로 몸 앞에 감싼 관계",
+          "both arms curve around the same declared plush toy; the toy contacts the actor's front torso inside that arm enclosure; the toy boundary remains distinguishable from the hands and garment"
+        ],
+        "visual_components": [
+          "both arms curve around the same declared plush toy",
+          "the toy contacts the actor's front torso inside that arm enclosure",
+          "the toy boundary remains distinguishable from the hands and garment"
+        ],
+        "contrast_examples": [
+          "a toy floating behind the actor",
+          "two different toys under separate arms"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "봉제인형을 두 팔로 안기",
+          "two-arm plush embrace",
+          "같은 봉제인형을 두 팔로 몸 앞에 감싼 관계",
+          "both arms curve around the same declared plush toy; the toy contacts the actor's front torso inside that arm enclosure; the toy boundary remains distinguishable from the hands and garment",
+          "both arms curve around the same declared plush toy",
+          "the toy contacts the actor's front torso inside that arm enclosure",
+          "the toy boundary remains distinguishable from the hands and garment"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose",
+          "relationship"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          },
+          {
+            "dimension": "relationship",
+            "target": "main_subject",
+            "property": "body_object.contact"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a toy floating behind the actor",
+        "two different toys under separate arms"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "both arms curve around the same declared plush toy"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "both arms curve around the same declared plush toy"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: both arms curve around the same declared plush toy.",
+            "render_gate": {
+              "id": "vo_cv_profile_plush_hug_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for both arms curve around the same declared plush toy. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the toy contacts the actor's front torso inside that arm enclosure"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the toy contacts the actor's front torso inside that arm enclosure"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the toy contacts the actor's front torso inside that arm enclosure.",
+            "render_gate": {
+              "id": "vo_cv_profile_plush_hug_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the toy contacts the actor's front torso inside that arm enclosure. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the toy boundary remains distinguishable from the hands and garment"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the toy boundary remains distinguishable from the hands and garment"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the toy boundary remains distinguishable from the hands and garment.",
+            "render_gate": {
+              "id": "vo_cv_profile_plush_hug_3",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the toy boundary remains distinguishable from the hands and garment. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_partner_sleeve_pinch",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "상대 소매 끝 집기",
+          "partner sleeve-edge pinch"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the actor's fingertips pinch the other declared actor's sleeve edge; that sleeve remains continuously attached to the other actor's garment; the pinching hand stays attached to the initiating actor",
+        "paraphrase_examples": [
+          "상대의 소매 끝을 자기 손가락으로 집은 접촉",
+          "the actor's fingertips pinch the other declared actor's sleeve edge; that sleeve remains continuously attached to the other actor's garment; the pinching hand stays attached to the initiating actor"
+        ],
+        "visual_components": [
+          "the actor's fingertips pinch the other declared actor's sleeve edge",
+          "that sleeve remains continuously attached to the other actor's garment",
+          "the pinching hand stays attached to the initiating actor"
+        ],
+        "contrast_examples": [
+          "pinching one's own hem",
+          "floating cloth unrelated to the partner"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "상대 소매 끝 집기",
+          "partner sleeve-edge pinch",
+          "상대의 소매 끝을 자기 손가락으로 집은 접촉",
+          "the actor's fingertips pinch the other declared actor's sleeve edge; that sleeve remains continuously attached to the other actor's garment; the pinching hand stays attached to the initiating actor",
+          "the actor's fingertips pinch the other declared actor's sleeve edge",
+          "that sleeve remains continuously attached to the other actor's garment",
+          "the pinching hand stays attached to the initiating actor"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose",
+          "relationship"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact_configuration"
+          },
+          {
+            "dimension": "relationship",
+            "target": "main_subject",
+            "property": "partner_sleeve.contact"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "pinching one's own hem",
+        "floating cloth unrelated to the partner"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the actor's fingertips pinch the other declared actor's sleeve edge"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the actor's fingertips pinch the other declared actor's sleeve edge"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the actor's fingertips pinch the other declared actor's sleeve edge.",
+            "render_gate": {
+              "id": "vo_cv_profile_partner_sleeve_pinch_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the actor's fingertips pinch the other declared actor's sleeve edge. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "that sleeve remains continuously attached to the other actor's garment"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "that sleeve remains continuously attached to the other actor's garment"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: that sleeve remains continuously attached to the other actor's garment.",
+            "render_gate": {
+              "id": "vo_cv_profile_partner_sleeve_pinch_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for that sleeve remains continuously attached to the other actor's garment. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the pinching hand stays attached to the initiating actor"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the pinching hand stays attached to the initiating actor"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the pinching hand stays attached to the initiating actor.",
+            "render_gate": {
+              "id": "vo_cv_profile_partner_sleeve_pinch_3",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the pinching hand stays attached to the initiating actor. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_general_catchlight",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "눈 표면의 캐치라이트",
+          "corneal catchlight reflection"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "a compact reflected light patch lies within the visible eye surface; the reflection follows the surface of the same eye rather than becoming a separate floating symbol",
+        "paraphrase_examples": [
+          "눈 표면의 일반 광원 반사",
+          "a compact reflected light patch lies within the visible eye surface; the reflection follows the surface of the same eye rather than becoming a separate floating symbol"
+        ],
+        "visual_components": [
+          "a compact reflected light patch lies within the visible eye surface",
+          "the reflection follows the surface of the same eye rather than becoming a separate floating symbol"
+        ],
+        "contrast_examples": [
+          "a drawn star floating beside an eye",
+          "a prescribed pair of vertically aligned lights"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "눈 표면의 캐치라이트",
+          "corneal catchlight reflection",
+          "눈 표면의 일반 광원 반사",
+          "a compact reflected light patch lies within the visible eye surface; the reflection follows the surface of the same eye rather than becoming a separate floating symbol",
+          "a compact reflected light patch lies within the visible eye surface",
+          "the reflection follows the surface of the same eye rather than becoming a separate floating symbol"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "main_subject",
+            "property": "eye_surface.reflected_light"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a drawn star floating beside an eye",
+        "a prescribed pair of vertically aligned lights"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a compact reflected light patch lies within the visible eye surface"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a compact reflected light patch lies within the visible eye surface"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: a compact reflected light patch lies within the visible eye surface.",
+            "render_gate": {
+              "id": "vo_cv_profile_general_catchlight_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for a compact reflected light patch lies within the visible eye surface. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the reflection follows the surface of the same eye rather than becoming a separate floating symbol"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the reflection follows the surface of the same eye rather than becoming a separate floating symbol"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the reflection follows the surface of the same eye rather than becoming a separate floating symbol.",
+            "render_gate": {
+              "id": "vo_cv_profile_general_catchlight_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the reflection follows the surface of the same eye rather than becoming a separate floating symbol. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_flower_chin",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "턱 아래 두 손 꽃받침",
+          "bilateral hands-under-chin flower pose"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "two hands open or cup beside the underside of the chin; wrists and elbows belong to separate arms; palms and fingers form the selected bilateral frame",
+        "paraphrase_examples": [
+          "양손을 펼쳐 턱 아래 양옆에 꽃잎처럼 받친다",
+          "Both open hands frame the underside of the chin, each joined to its own wrist and forearm."
+        ],
+        "visual_components": [
+          "two hands open or cup beside the underside of the chin",
+          "wrists and elbows belong to separate arms",
+          "palms and fingers form the selected bilateral frame"
+        ],
+        "contrast_examples": [
+          "a different owner, opening, support or contact than the stated configuration"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "턱 아래 두 손 꽃받침",
+          "bilateral hands-under-chin flower pose",
+          "양손을 펼쳐 턱 아래 양옆에 꽃잎처럼 받친다",
+          "Both open hands frame the underside of the chin, each joined to its own wrist and forearm.",
+          "two hands open or cup beside the underside of the chin",
+          "wrists and elbows belong to separate arms",
+          "palms and fingers form the selected bilateral frame"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a different owner, opening, support or contact than the stated configuration"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "two hands open or cup beside the underside of the chin"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "two hands open or cup beside the underside of the chin"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: two hands open or cup beside the underside of the chin.",
+            "render_gate": {
+              "id": "vo_cv_profile_flower_chin_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for two hands open or cup beside the underside of the chin. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "wrists and elbows belong to separate arms"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "wrists and elbows belong to separate arms"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: wrists and elbows belong to separate arms.",
+            "render_gate": {
+              "id": "vo_cv_profile_flower_chin_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for wrists and elbows belong to separate arms. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "palms and fingers form the selected bilateral frame"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "palms and fingers form the selected bilateral frame"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: palms and fingers form the selected bilateral frame.",
+            "render_gate": {
+              "id": "vo_cv_profile_flower_chin_3",
+              "review_scale": "native",
+              "description": "Inspect original pixels for palms and fingers form the selected bilateral frame. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_arm_heart",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "머리 위 팔 하트",
+          "overhead arm-heart pose"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "both arms rise above head level; elbows and wrists create opposing curved halves; hands meet or nearly meet at the requested apex",
+        "paraphrase_examples": [
+          "양팔을 머리 위로 굽혀 마주 보는 두 곡선과 하트 꼭짓점을 만든다",
+          "Raised arms curve into two opposing heart halves with the hands meeting near the apex."
+        ],
+        "visual_components": [
+          "both arms rise above head level",
+          "elbows and wrists create opposing curved halves",
+          "hands meet or nearly meet at the requested apex"
+        ],
+        "contrast_examples": [
+          "a different owner, opening, support or contact than the stated configuration"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "머리 위 팔 하트",
+          "overhead arm-heart pose",
+          "양팔을 머리 위로 굽혀 마주 보는 두 곡선과 하트 꼭짓점을 만든다",
+          "Raised arms curve into two opposing heart halves with the hands meeting near the apex.",
+          "both arms rise above head level",
+          "elbows and wrists create opposing curved halves",
+          "hands meet or nearly meet at the requested apex"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a different owner, opening, support or contact than the stated configuration"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "both arms rise above head level"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "both arms rise above head level"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: both arms rise above head level.",
+            "render_gate": {
+              "id": "vo_cv_profile_arm_heart_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for both arms rise above head level. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "elbows and wrists create opposing curved halves"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "elbows and wrists create opposing curved halves"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: elbows and wrists create opposing curved halves.",
+            "render_gate": {
+              "id": "vo_cv_profile_arm_heart_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for elbows and wrists create opposing curved halves. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "hands meet or nearly meet at the requested apex"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "hands meet or nearly meet at the requested apex"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: hands meet or nearly meet at the requested apex.",
+            "render_gate": {
+              "id": "vo_cv_profile_arm_heart_3",
+              "review_scale": "native",
+              "description": "Inspect original pixels for hands meet or nearly meet at the requested apex. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_cat_paw",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "고양이 앞발 손동작",
+          "curled cat-paw hand gesture"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "wrists flex in the selected paw-like arrangement; fingers curl loosely without forming a rigid fist",
+        "paraphrase_examples": [
+          "손목을 살짝 굽히고 손가락을 느슨하게 접어 앞발 모양을 만든다",
+          "Loosely curled fingers and bent wrists form the chosen paw-like hand gesture."
+        ],
+        "visual_components": [
+          "wrists flex in the selected paw-like arrangement",
+          "fingers curl loosely without forming a rigid fist"
+        ],
+        "contrast_examples": [
+          "a different owner, opening, support or contact than the stated configuration"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable.",
+          "Declared hand placement or camera knowledge is prompt context, not an independently visible anatomical component."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "고양이 앞발 손동작",
+          "curled cat-paw hand gesture",
+          "손목을 살짝 굽히고 손가락을 느슨하게 접어 앞발 모양을 만든다",
+          "Loosely curled fingers and bent wrists form the chosen paw-like hand gesture.",
+          "wrists flex in the selected paw-like arrangement",
+          "fingers curl loosely without forming a rigid fist"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a different owner, opening, support or contact than the stated configuration"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "wrists flex in the selected paw-like arrangement"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "wrists flex in the selected paw-like arrangement"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: wrists flex in the selected paw-like arrangement.",
+            "render_gate": {
+              "id": "vo_cv_profile_cat_paw_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for wrists flex in the selected paw-like arrangement. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "fingers curl loosely without forming a rigid fist"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "fingers curl loosely without forming a rigid fist"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: fingers curl loosely without forming a rigid fist.",
+            "render_gate": {
+              "id": "vo_cv_profile_cat_paw_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for fingers curl loosely without forming a rigid fist. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_wink",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "한쪽 눈만 감는 윙크",
+          "one-eye wink"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "one eyelid opening closes; the other remains visibly open",
+        "paraphrase_examples": [
+          "같은 얼굴에서 한쪽 눈만 닫히고 반대쪽 눈은 열린다",
+          "One eye shuts while the opposite eye on the same face stays open."
+        ],
+        "visual_components": [
+          "one eyelid opening closes",
+          "the other remains visibly open"
+        ],
+        "contrast_examples": [
+          "a different owner, opening, support or contact than the stated configuration"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "한쪽 눈만 감는 윙크",
+          "one-eye wink",
+          "같은 얼굴에서 한쪽 눈만 닫히고 반대쪽 눈은 열린다",
+          "One eye shuts while the opposite eye on the same face stays open.",
+          "one eyelid opening closes",
+          "the other remains visibly open"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a different owner, opening, support or contact than the stated configuration"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "one eyelid opening closes"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "one eyelid opening closes"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: one eyelid opening closes.",
+            "render_gate": {
+              "id": "vo_cv_profile_wink_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for one eyelid opening closes. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the other remains visibly open"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the other remains visibly open"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the other remains visibly open.",
+            "render_gate": {
+              "id": "vo_cv_profile_wink_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the other remains visibly open. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_closed_smile",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "입 다문 미소",
+          "closed-mouth smile"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "mouth corners rise visibly; lips remain closed without visible teeth",
+        "paraphrase_examples": [
+          "치아가 보이지 않는 닫힌 입술 선 위로 양 입꼬리가 올라간다",
+          "Upturned mouth corners accompany a closed lip seam with the teeth concealed."
+        ],
+        "visual_components": [
+          "mouth corners rise visibly",
+          "lips remain closed without visible teeth"
+        ],
+        "contrast_examples": [
+          "a different owner, opening, support or contact than the stated configuration"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "입 다문 미소",
+          "closed-mouth smile",
+          "치아가 보이지 않는 닫힌 입술 선 위로 양 입꼬리가 올라간다",
+          "Upturned mouth corners accompany a closed lip seam with the teeth concealed.",
+          "mouth corners rise visibly",
+          "lips remain closed without visible teeth"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a different owner, opening, support or contact than the stated configuration"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "mouth corners rise visibly"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "mouth corners rise visibly"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: mouth corners rise visibly.",
+            "render_gate": {
+              "id": "vo_cv_profile_closed_smile_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for mouth corners rise visibly. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "lips remain closed without visible teeth"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "lips remain closed without visible teeth"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: lips remain closed without visible teeth.",
+            "render_gate": {
+              "id": "vo_cv_profile_closed_smile_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for lips remain closed without visible teeth. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_toothy_smile",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "치아가 드러난 미소",
+          "tooth-bearing smile"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "mouth corners rise; lips separate to reveal teeth",
+        "paraphrase_examples": [
+          "올라간 입꼬리 사이로 치아가 드러나는 미소",
+          "The mouth corners lift around a smile with visible teeth."
+        ],
+        "visual_components": [
+          "mouth corners rise",
+          "lips separate to reveal teeth"
+        ],
+        "contrast_examples": [
+          "a different owner, opening, support or contact than the stated configuration"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "치아가 드러난 미소",
+          "tooth-bearing smile",
+          "올라간 입꼬리 사이로 치아가 드러나는 미소",
+          "The mouth corners lift around a smile with visible teeth.",
+          "mouth corners rise",
+          "lips separate to reveal teeth"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a different owner, opening, support or contact than the stated configuration"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "mouth corners rise"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "mouth corners rise"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: mouth corners rise.",
+            "render_gate": {
+              "id": "vo_cv_profile_toothy_smile_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for mouth corners rise. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "lips separate to reveal teeth"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "lips separate to reveal teeth"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: lips separate to reveal teeth.",
+            "render_gate": {
+              "id": "vo_cv_profile_toothy_smile_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for lips separate to reveal teeth. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_puffed_cheeks",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "양볼 부풀리기",
+          "bilaterally puffed cheeks"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "both cheeks visibly bulge outward in the selected expression",
+        "paraphrase_examples": [
+          "표정으로 양 볼이 바깥쪽으로 부풀어 둥글어진다",
+          "Both cheeks bulge outward in the selected facial expression."
+        ],
+        "visual_components": [
+          "both cheeks visibly bulge outward in the selected expression"
+        ],
+        "contrast_examples": [
+          "a different owner, opening, support or contact than the stated configuration"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "양볼 부풀리기",
+          "bilaterally puffed cheeks",
+          "표정으로 양 볼이 바깥쪽으로 부풀어 둥글어진다",
+          "Both cheeks bulge outward in the selected facial expression.",
+          "both cheeks visibly bulge outward in the selected expression"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a different owner, opening, support or contact than the stated configuration"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "both cheeks visibly bulge outward in the selected expression"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "both cheeks visibly bulge outward in the selected expression"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: both cheeks visibly bulge outward in the selected expression.",
+            "render_gate": {
+              "id": "vo_cv_profile_puffed_cheeks_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for both cheeks visibly bulge outward in the selected expression. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_head_tilt",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "머리의 좌우 갸웃",
+          "lateral head tilt"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "head roll differs from thorax roll; neck continuity is visible",
+        "paraphrase_examples": [
+          "목에 연결된 머리 축이 좌우 한쪽으로 기울어진다",
+          "The head inclines laterally over its connected neck."
+        ],
+        "visual_components": [
+          "head roll differs from thorax roll",
+          "neck continuity is visible"
+        ],
+        "contrast_examples": [
+          "a different owner, opening, support or contact than the stated configuration"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable.",
+          "Declared hand placement or camera knowledge is prompt context, not an independently visible anatomical component."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "머리의 좌우 갸웃",
+          "lateral head tilt",
+          "목에 연결된 머리 축이 좌우 한쪽으로 기울어진다",
+          "The head inclines laterally over its connected neck.",
+          "head roll differs from thorax roll",
+          "neck continuity is visible"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.segment_orientation"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a different owner, opening, support or contact than the stated configuration"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "head roll differs from thorax roll"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "head roll differs from thorax roll"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: head roll differs from thorax roll.",
+            "render_gate": {
+              "id": "vo_cv_profile_head_tilt_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for head roll differs from thorax roll. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "neck continuity is visible"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "neck continuity is visible"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: neck continuity is visible.",
+            "render_gate": {
+              "id": "vo_cv_profile_head_tilt_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for neck continuity is visible. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_pucker",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "앞으로 내민 오므린 입술",
+          "protruding lip pucker"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the lips form a forward-projecting rounded contour; the mouth corners gather toward the center",
+        "paraphrase_examples": [
+          "오므린 입술이 얼굴 앞쪽으로 돌출된다",
+          "The gathered lips project forward from the face in the chosen pucker."
+        ],
+        "visual_components": [
+          "the lips form a forward-projecting rounded contour",
+          "the mouth corners gather toward the center"
+        ],
+        "contrast_examples": [
+          "a different owner, opening, support or contact than the stated configuration"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "앞으로 내민 오므린 입술",
+          "protruding lip pucker",
+          "오므린 입술이 얼굴 앞쪽으로 돌출된다",
+          "The gathered lips project forward from the face in the chosen pucker.",
+          "the lips form a forward-projecting rounded contour",
+          "the mouth corners gather toward the center"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a different owner, opening, support or contact than the stated configuration"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the lips form a forward-projecting rounded contour"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the lips form a forward-projecting rounded contour"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the lips form a forward-projecting rounded contour.",
+            "render_gate": {
+              "id": "vo_cv_profile_pucker_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the lips form a forward-projecting rounded contour. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the mouth corners gather toward the center"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the mouth corners gather toward the center"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the mouth corners gather toward the center.",
+            "render_gate": {
+              "id": "vo_cv_profile_pucker_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the mouth corners gather toward the center. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_lip_roll",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "입술 안으로 말아 넣기",
+          "inward lip roll"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "visible lip surfaces are tucked inward; the mouth seam remains closed",
+        "paraphrase_examples": [
+          "입 선이 닫힌 채 입술 가장자리를 안으로 말아 붉은 입술 면을 줄인다",
+          "The lip margins roll inward while the mouth seam stays closed, reducing the exposed lip surface."
+        ],
+        "visual_components": [
+          "visible lip surfaces are tucked inward",
+          "the mouth seam remains closed"
+        ],
+        "contrast_examples": [
+          "a different owner, opening, support or contact than the stated configuration"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "입술 안으로 말아 넣기",
+          "inward lip roll",
+          "visible lip surfaces are tucked inward",
+          "the mouth seam remains closed",
+          "입 선이 닫힌 채 입술 가장자리를 안으로 말아 붉은 입술 면을 줄인다",
+          "The lip margins roll inward while the mouth seam stays closed, reducing the exposed lip surface."
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a different owner, opening, support or contact than the stated configuration"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "visible lip surfaces are tucked inward"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "visible lip surfaces are tucked inward"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: visible lip surfaces are tucked inward.",
+            "render_gate": {
+              "id": "vo_cv_profile_lip_roll_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for visible lip surfaces are tucked inward. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the mouth seam remains closed"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the mouth seam remains closed"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: the mouth seam remains closed.",
+            "render_gate": {
+              "id": "vo_cv_profile_lip_roll_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for the mouth seam remains closed. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "cv_profile_smile_tears",
+      "category": "observable_local_configuration",
+      "activation": {
+        "exact_terms": [
+          "눈물 고임과 작은 미소",
+          "tear-filled eyes with a small smile"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "human_owner_context",
+              "any_terms": [
+                "human",
+                "person",
+                "woman",
+                "man",
+                "actor",
+                "portrait",
+                "face",
+                "hand",
+                "인물",
+                "사람",
+                "얼굴",
+                "손",
+                "배우"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "tear fluid is pooled at the eyelid margins; mouth corners form a small smile",
+        "paraphrase_examples": [
+          "눈에 눈물이 고인 상태와 작은 올라간 입꼬리가 같은 얼굴에 공존한다",
+          "Tear-filled eyes and a small upturned smile coexist on the same face."
+        ],
+        "visual_components": [
+          "tear fluid is pooled at the eyelid margins",
+          "mouth corners form a small smile"
+        ],
+        "contrast_examples": [
+          "a different owner, opening, support or contact than the stated configuration"
+        ],
+        "claim_limits": [
+          "Bind every stated body part, contact and prop to its declared owner.",
+          "This visible configuration establishes no age, personality, emotion, desire, health, wardrobe or actor count.",
+          "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+          "Every required component must pass; partial evidence fails and occlusion is unobservable."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "눈물 고임과 작은 미소",
+          "tear-filled eyes with a small smile",
+          "눈에 눈물이 고인 상태와 작은 올라간 입꼬리가 같은 얼굴에 공존한다",
+          "Tear-filled eyes and a small upturned smile coexist on the same face.",
+          "tear fluid is pooled at the eyelid margins",
+          "mouth corners form a small smile"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a different owner, opening, support or contact than the stated configuration"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "tear fluid is pooled at the eyelid margins"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "tear fluid is pooled at the eyelid margins"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: tear fluid is pooled at the eyelid margins.",
+            "render_gate": {
+              "id": "vo_cv_profile_smile_tears_1",
+              "review_scale": "native",
+              "description": "Inspect original pixels for tear fluid is pooled at the eyelid margins. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "mouth corners form a small smile"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "mouth corners form a small smile"
+            ],
+            "min_content_words": 3,
+            "instruction": "Bind the complete visible relation to the declared owner: mouth corners form a small smile.",
+            "render_gate": {
+              "id": "vo_cv_profile_smile_tears_2",
+              "review_scale": "native",
+              "description": "Inspect original pixels for mouth corners form a small smile. Every component is required; partial evidence fails and occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
