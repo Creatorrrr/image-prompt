@@ -6873,96 +6873,6 @@ def _validate_v19_authoring_source_successor(
              "photo V19 universal descriptor changed beyond validator hash")
 
 
-# V20 preserves the V19 pack while binding changed authoring guidance/source records.
-PHOTO_V20_SOURCE_PROOF_SHA256 = "9e3fb2a0e36c24ada350d9d2882a1b60b4e8718e4cd20f8311966cdb215a30c6"
-PHOTO_V20_SOURCE_COMMIT = "b5f2e8924be1daa02a99f9661b99796129400e23"
-
-
-def _validate_v20_authoring_source_successor(
-    asset_dir: Path, repo_root: Path, baseline: dict[str, Any],
-    pack: dict[str, Any], raw: bytes,
-) -> None:
-    """Permit no pack delta and exactly three reviewed source-byte changes."""
-    evidence_dir = repo_root / "docs/research-evidence/photo-prompt/b5-guidance-integration-20261005"
-    evidence_path = evidence_dir / "V20-SOURCE-BINDING-PROOF.json"
-    _require(_sha256(evidence_path) == PHOTO_V20_SOURCE_PROOF_SHA256,
-             "photo V20 immutable source proof drift")
-    proof = _load_json(evidence_path)
-    _require(re.fullmatch(r"[0-9a-f]{40}", PHOTO_V20_SOURCE_COMMIT) is not None
-             and proof.get("schema") == "photo-authoring-source-zero-pack-delta-transition/v20"
-             and proof.get("source_commit") == PHOTO_V20_SOURCE_COMMIT
-             and proof.get("source_tree") == "2862e8d0dd250bf72dc43ca4f5584bfe2fc452d4"
-             and proof.get("source_parents") == ["9105a63d9b261f91219875e15f346d6d52e477bc"]
-             and proof.get("previous_qualified_commit") == "9105a63d9b261f91219875e15f346d6d52e477bc",
-             "photo V20 integration source commit is unresolved or changed")
-    _require(baseline.get("authoring_source_transition") == {
-        "source_commit": proof["source_commit"], "source_tree": proof["source_tree"],
-        "previous_qualified_commit": proof["previous_qualified_commit"],
-        "evidence_sha256": PHOTO_V20_SOURCE_PROOF_SHA256, "source_files": proof["source_files"],
-    }, "photo V20 source provenance drift")
-    _require(not any(key in baseline for key in (
-        "metadata_only_transition", "zero_pack_delta_transition", "optional_inventory_transition",
-        "authored_metadata_ownership_transition", "cute_equivalent_language_inventory_transition",
-        "glass_interface_inventory_transition")), "photo V20 cannot relabel the authoring source transition")
-    _require(all(_sha256(repo_root / name) == digest
-                 for name, digest in proof["immutable_history"].items()),
-             "photo V20 immutable predecessor artifact drift")
-    _require(all(_sha256(repo_root / name) == digest
-                 for name, digest in proof["historical_dependencies"].items()),
-             "photo V20 historical dependency drift")
-    _require(_sha256(repo_root / proof["source_parent_manifest"])
-             == proof["source_parent_manifest_sha256"]
-             and len(proof["source_parent_files"]) == 149
-             and all(_sha256(repo_root / name) == digest
-                     for name, digest in proof["source_parent_files"].items()),
-             "photo V20 historical source manifest or bytes drift")
-    _require(_sha256(repo_root / proof["qualification_path"]) == proof["qualification_sha256"],
-             "photo V20 qualification evidence drift")
-    previous_manifest = asset_dir / "photo_regression_baseline_v19.json"
-    previous_pack = asset_dir / "photo_regression_baseline_v19_pack.json"
-    current_pack = asset_dir / "photo_regression_baseline_v20_pack.json"
-    _require(_sha256(previous_manifest) == proof["previous_manifest_sha256"]
-             and _sha256(previous_pack) == _sha256(current_pack)
-             == proof["unchanged_pack_sha256"] == baseline.get("sha256")
-             and raw == previous_pack.read_bytes() == current_pack.read_bytes(),
-             "photo V20 zero pack delta binding drift")
-    _require(pack == _load_json(previous_pack)[0]
-             and pack.get("pack_id") == proof["unchanged_pack_id"] == _canonical_photo_pack_id(pack)
-             and _public_photo_candidate_count(pack) == proof["public_candidate_count"] == 64
-             and proof["changed_pack_leaves"] == [], "photo V20 frozen pack changed")
-    previous_proof = _load_json(repo_root / proof["previous_proof_path"])
-    old_sources, current_sources = previous_proof["source_files"], proof["source_files"]
-    source_skill = Path(baseline["command"][1]).parent.parent
-    source_assets = repo_root / source_skill / "assets"
-    expected_changes = {str(source_skill / "SKILL.md"),
-        str(source_skill / "references/composition-contract.md"),
-        str(source_skill / "references/retrieval-contract.md")}
-    _require(set(old_sources) == set(current_sources), "photo V20 source inventory membership drift")
-    deltas = [{"path": name, "previous": old_sources[name], "current": current_sources[name]}
-              for name in sorted(old_sources) if old_sources[name] != current_sources[name]]
-    _require({row["path"] for row in deltas} == expected_changes
-             and deltas == proof["reviewed_source_deltas"], "photo V20 exact three source changes drift")
-    _require({path.name: _sha256(path) for path in source_assets.glob("*.json")}
-             == proof["source_inventory_after"], "photo V20 exact DATA inventory drift")
-    _require(all(_sha256(repo_root / name) == digest for name, digest in current_sources.items()),
-             "photo V20 DATA, guidance or runtime source binding drift")
-    shard_root = source_assets / "photo_prompt_semantic_index_shards/7ff3e10cc7163368"
-    expected_paths = {str((shard_root / f"shard-{index:03d}.json").relative_to(repo_root))
-                      for index in range(16)}
-    actual = {str(path.relative_to(repo_root)): _sha256(path) for path in shard_root.glob("*.json")}
-    _require(set(proof["active_semantic_shards"]) == expected_paths
-             and actual == proof["active_semantic_shards"] == previous_proof["active_semantic_shards"],
-             "photo V20 unchanged active semantic shards drift")
-    descriptor = repo_root / proof["universal_v2_before_path"]
-    _require(_sha256(descriptor) == proof["universal_v2_before_sha256"],
-             "photo V20 universal descriptor archive drift")
-    old_descriptor, old_sha = descriptor.read_bytes(), proof["previous_validator_sha256"].encode("ascii")
-    _require(old_descriptor.count(old_sha) == 1
-             and (asset_dir / "universal_scene_baseline_v2.json").read_bytes()
-             == old_descriptor.replace(old_sha, _sha256(Path(__file__)).encode("ascii"), 1),
-             "photo V20 universal descriptor changed beyond validator hash")
-
-
 def validate_photo_regression_baseline(
     asset_dir: Path, *, baseline_version: int | None = None
 ) -> dict[str, Any]:
@@ -6975,10 +6885,10 @@ def validate_photo_regression_baseline(
     previous_path = asset_dir / "photo_regression_baseline_v5.json"
     if baseline_version is None:
         baseline_version = next(
-            version for version in (20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
+            version for version in (19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
             if (asset_dir / f"photo_regression_baseline_v{version}.json").exists()
         )
-    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}, "unsupported photo baseline version")
+    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}, "unsupported photo baseline version")
     lineage_version = min(baseline_version, 7)
     baseline_path = asset_dir / f"photo_regression_baseline_v{lineage_version}.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
@@ -7227,8 +7137,6 @@ def validate_photo_regression_baseline(
         _validate_v18_glass_data_successor(asset_dir, repo_root, baseline, pack, raw)
     if baseline_version == 19:
         _validate_v19_authoring_source_successor(asset_dir, repo_root, baseline, pack, raw)
-    if baseline_version == 20:
-        _validate_v20_authoring_source_successor(asset_dir, repo_root, baseline, pack, raw)
     return {
         "status": "pass",
         "schema": baseline["schema"],
