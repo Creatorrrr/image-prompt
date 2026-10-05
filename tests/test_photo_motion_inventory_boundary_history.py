@@ -76,10 +76,10 @@ class MotionOptionalInventoryBoundaryTests(unittest.TestCase):
 
     def test_registered_current_default_and_unregistered_future(self):
         self.assertEqual(self.validate()['schema'], 'photo_regression_baseline/v15')
-        (self.assets / 'photo_regression_baseline_v17.json').write_text(json.dumps({'schema':'photo_regression_baseline/v17','status':'current'}))
+        (self.assets / 'photo_regression_baseline_v18.json').write_text(json.dumps({'schema':'photo_regression_baseline/v18','status':'current'}))
         self.assertEqual(self.validate()['schema'], 'photo_regression_baseline/v15')
         with self.assertRaisesRegex(v.ValidationFailure,'unsupported'):
-            self.validate(17)
+            self.validate(18)
 
     def test_actual_optional_delta_does_not_claim_unchanged_candidate_inventory(self):
         old = json.loads((self.assets / 'photo_regression_baseline_v14_pack.json').read_bytes())[0]

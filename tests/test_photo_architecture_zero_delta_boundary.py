@@ -97,7 +97,7 @@ class ArchitectureZeroDeltaBoundaryTests(unittest.TestCase):
         (self.assets / 'photo_regression_baseline_v17.json').write_text(json.dumps({'schema':'photo_regression_baseline/v17','status':'current'}))
         self.assertEqual(self.validate()['schema'], 'photo_regression_baseline/v14')
         with self.assertRaisesRegex(v.ValidationFailure, 'unsupported'):
-            self.validate(17)
+            self.validate(18)
 
     def test_live_v13_rejects_after_source_even_when_its_pack_is_identical(self):
         with self.assertRaisesRegex(v.ValidationFailure, 'DATA source bytes drift'):

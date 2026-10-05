@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 import hashlib
+import importlib.util
+import shutil
 import sys
+import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -12,6 +15,29 @@ if str(SCRIPT_DIR) not in sys.path:
 import prompt_generator
 import audit_composed_prompt
 import audit_image_render_request
+
+
+def archived_v16_validator(directory: Path):
+    """Replay V16 with its immutable runtime and DATA, not today's registry."""
+    archive = ROOT / 'docs/research-evidence/photo-prompt/cute-semantics-main-merge-20261005/V16-PARENT-SOURCE.zip'
+    assert hashlib.sha256(archive.read_bytes()).hexdigest() == '921d8d9c43cc1e56abc068b3f76435fd93fb9a84d9727606e65b0511ba4220a4'
+    with zipfile.ZipFile(archive) as saved:
+        for name in saved.namelist():
+            path = Path(name)
+            assert not path.is_absolute() and '..' not in path.parts
+        saved.extractall(directory)
+    assets = directory / 'skills/subculture-illustration-image-generator/assets'
+    current = ROOT / 'skills/subculture-illustration-image-generator/assets'
+    for path in current.iterdir():
+        if path.is_file() and not (assets / path.name).exists():
+            shutil.copyfile(path, assets / path.name)
+    (directory / 'docs').symlink_to(ROOT / 'docs', target_is_directory=True)
+    (directory / 'tests').symlink_to(ROOT / 'tests', target_is_directory=True)
+    path = directory / 'skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py'
+    spec = importlib.util.spec_from_file_location('archived_photo_v16_validator', path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 _TEST_PROMPT_BUDGET_EXTENSION = (
     "Fine-grained surface cues, coherent near-to-far depth, controlled highlights, legible "
