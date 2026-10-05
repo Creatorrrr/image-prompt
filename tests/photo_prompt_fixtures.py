@@ -1,12 +1,14 @@
 """Authored, candidate-free inputs shared by current photo contract tests."""
 
 from __future__ import annotations
+import builtins
 import hashlib
 import importlib.util
+import json
 import shutil
 import sys
 import zipfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = ROOT / "skills/photo-prompt-image-generator/scripts"
@@ -15,6 +17,197 @@ if str(SCRIPT_DIR) not in sys.path:
 import prompt_generator
 import audit_composed_prompt
 import audit_image_render_request
+
+
+V17_PARENT_MANIFEST = Path(
+    'docs/research-evidence/photo-prompt/glass-main-merge-20261005/V17-PARENT-SOURCE.json'
+)
+V17_PARENT_MANIFEST_SHA256 = '2ba4ade97e8bb150a91b708c090cdce57d5180789504c54c4c0272dafdf1548e'
+V17_PARENT_COMMIT = '977a5d8680eabf24c6e19993340b4a72f884b24a'
+V17_PARENT_VALIDATOR = 'skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py'
+V17_SUPPORT_MANIFEST = V17_PARENT_MANIFEST.with_name('V17-VALIDATOR-SUPPORT.json')
+V17_SUPPORT_MANIFEST_SHA256 = '005642904a7a21891696fd21e93d6bde445a6747c903515f48ad762d9c0efb40'
+
+
+def _v17_safe_path(value: str) -> Path:
+    if (not isinstance(value, str) or not value or '\\' in value or ':' in value
+            or '\x00' in value or value.startswith('/')
+            or any(part in ('', '.', '..') for part in value.split('/'))
+            or str(PurePosixPath(value)) != value):
+        raise AssertionError('Unsafe V17 historical source path')
+    return Path(value)
+
+
+def _v17_regular_path(root: Path, value: str) -> Path:
+    relative = _v17_safe_path(value)
+    current = root
+    for part in relative.parts:
+        current = current / part
+        if current.is_symlink():
+            raise AssertionError('Unsafe V17 historical source symlink')
+    if not current.is_file():
+        raise AssertionError(f'Missing V17 historical source payload: {value}')
+    return current
+
+
+def _v17_parent_manifest(source_root: Path = ROOT) -> dict:
+    """The fixed digest authenticates the complete mapping, not a self-reported seal."""
+    raw = _v17_regular_path(source_root, V17_PARENT_MANIFEST.as_posix()).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != V17_PARENT_MANIFEST_SHA256:
+        raise AssertionError('Frozen V17 parent source manifest drift')
+    manifest = json.loads(raw)
+    if (manifest.get('schema') != 'photo-v17-parent-source-manifest/v1'
+            or manifest.get('source_pin') != V17_PARENT_COMMIT
+            or manifest.get('member_count') != 149
+            or len(manifest.get('members', [])) != 149
+            or len(manifest.get('dependencies', [])) != 31):
+        raise AssertionError('Frozen V17 parent source manifest shape drift')
+    members = manifest['members']
+    records = members + manifest['dependencies']
+    paths, sources = set(), set()
+    for row in records:
+        path = _v17_safe_path(row['path']).as_posix()
+        source = _v17_safe_path(row['source_path']).as_posix()
+        _v17_safe_path(row['git_path'])
+        if path in paths or source in sources:
+            raise AssertionError('Duplicate V17 historical source path')
+        paths.add(path)
+        sources.add(source)
+        if (row['git_commit'] != V17_PARENT_COMMIT or row['git_path'] != path
+                or row['mode'] not in ('100644', '100755') or type(row['bytes']) is not int
+                or row['bytes'] < 0
+                or len(row['sha256']) != 64 or len(row['git_blob']) != 40
+                or any(c not in '0123456789abcdef' for c in row['sha256'] + row['git_blob'])):
+            raise AssertionError('Frozen V17 historical source provenance drift')
+    expected_counts = {'reuse_committed_evidence': 109,
+                       'reuse_retained_semantic_generation': 16,
+                       'new_immutable_snapshot_same_git_blob': 24}
+    if (manifest['counts'] != expected_counts
+            or {kind: sum(row['kind'] == kind for row in members)
+                for kind in expected_counts} != expected_counts
+            or sum(row['bytes'] for row in members) != manifest['total_member_bytes']):
+        raise AssertionError('Frozen V17 historical source inventory drift')
+    shard_prefix = 'skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/'
+    shards = {row['path'] for row in members
+              if row['kind'] == 'reuse_retained_semantic_generation'}
+    if shards != {f'{shard_prefix}shard-{index:03d}.json' for index in range(16)}:
+        raise AssertionError('Frozen V17 retained semantic generation drift')
+    for row in members:
+        if row['kind'] == 'reuse_retained_semantic_generation':
+            allowed = row['source_path'] == row['path']
+        elif row['kind'] == 'new_immutable_snapshot_same_git_blob':
+            allowed = row['source_path'] == (V17_PARENT_MANIFEST.parent /
+                'v17-parent-source-files' / row['path']).as_posix()
+        else:
+            allowed = row['source_path'].startswith('docs/research-evidence/photo-prompt/')
+        if not allowed:
+            raise AssertionError('Unregistered V17 historical source backing path')
+    return manifest
+
+
+def _v17_verified_payload(source_root: Path, row: dict) -> bytes:
+    raw = _v17_regular_path(source_root, row['source_path']).read_bytes()
+    blob = hashlib.sha1(f'blob {len(raw)}\0'.encode('ascii') + raw).hexdigest()
+    if (len(raw) != row['bytes'] or hashlib.sha256(raw).hexdigest() != row['sha256']
+            or blob != row['git_blob']):
+        raise AssertionError(f'Frozen V17 historical source payload drift: {row["path"]}')
+    return raw
+
+
+def materialize_v17_parent_source(directory: Path, *, source_root: Path = ROOT) -> dict:
+    """Reconstruct the 149 exact source files and 31 sealed dependencies without Git.
+
+    Reused old shards are mandatory historical inputs, even after a new generation
+    becomes active. There is no fallback to live DATA or recursive docs copying.
+    """
+    manifest = _v17_parent_manifest(source_root)
+    records = manifest['members'] + manifest['dependencies']
+    if directory.is_symlink() or (directory.exists() and any(directory.iterdir())):
+        raise AssertionError('V17 historical destination must be an empty directory')
+    # Validate every payload before creating any historical member. Check again
+    # while copying so the written bytes are the bytes whose seals were verified.
+    for row in records:
+        _v17_verified_payload(source_root, row)
+    directory.mkdir(parents=True, exist_ok=True)
+    for row in records:
+        raw = _v17_verified_payload(source_root, row)
+        target = directory / _v17_safe_path(row['path'])
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(raw)
+        target.chmod(int(row['mode'][-3:], 8))
+    return manifest
+
+
+def _v17_support_manifest(source_root: Path = ROOT) -> dict:
+    raw = _v17_regular_path(source_root, V17_SUPPORT_MANIFEST.as_posix()).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != V17_SUPPORT_MANIFEST_SHA256:
+        raise AssertionError('Frozen V17 validator support manifest drift')
+    manifest = json.loads(raw)
+    names = {'illustration_runtime', 'illustration_audit', 'universal_scene_runtime'}
+    if (manifest['schema'] != 'photo-v17-validator-support/v1'
+            or manifest['source_pin'] != V17_PARENT_COMMIT
+            or len(manifest['members']) != 3
+            or {row['module'] for row in manifest['members']} != names):
+        raise AssertionError('Frozen V17 validator support inventory drift')
+    for row in manifest['members']:
+        expected = str(Path(V17_PARENT_VALIDATOR).with_name(row['module'] + '.py'))
+        if (row['path'] != expected or row['git_path'] != expected
+                or row['git_commit'] != V17_PARENT_COMMIT or row['mode'] not in ('100644', '100755')
+                or row['source_path'] != (V17_PARENT_MANIFEST.parent /
+                    'v17-validator-support' / expected).as_posix()):
+            raise AssertionError('Frozen V17 validator support provenance drift')
+    return manifest
+
+
+def pinned_v17_validator(directory: Path, *, source_root: Path = ROOT):
+    """Load the original validator and its three sealed local imports in isolation."""
+    manifest = _v17_parent_manifest(source_root)
+    row = next(row for row in manifest['members'] if row['path'] == V17_PARENT_VALIDATOR)
+    raw = _v17_verified_payload(source_root, row)
+    support = _v17_support_manifest(source_root)
+    payloads = [(row, _v17_verified_payload(source_root, row)) for row in support['members']]
+    for row, payload in payloads:
+        target = directory / _v17_safe_path(row['path'])
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(payload)
+        target.chmod(int(row['mode'][-3:], 8))
+    path = directory / V17_PARENT_VALIDATOR
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(raw)
+    prefix = '_archived_photo_v17_' + hashlib.sha256(str(directory).encode()).hexdigest()[:16]
+    modules, specs = {}, {}
+    for name in [row['module'] for row in support['members']] + ['validate_illustration_assets']:
+        spec = importlib.util.spec_from_file_location(prefix + '_' + name, path.with_name(name + '.py'))
+        modules[name] = importlib.util.module_from_spec(spec)
+        specs[name] = spec
+
+    def historical_import(name, globals=None, locals=None, fromlist=(), level=0):
+        # These exact local names include lazy universal-scene imports. Never
+        # accept a same-named live/cached module; stdlib imports remain ordinary.
+        if level == 0 and name in modules:
+            return modules[name]
+        return builtins.__import__(name, globals, locals, fromlist, level)
+
+    previous = {module.__name__: sys.modules.get(module.__name__) for module in modules.values()}
+    try:
+        for module in modules.values():
+            module.__dict__['__builtins__'] = dict(vars(builtins), __import__=historical_import)
+            # Dataclass annotation processing needs a module entry during load.
+            sys.modules[module.__name__] = module
+        for name, module in modules.items():
+            specs[name].loader.exec_module(module)
+    finally:
+        for name, original in previous.items():
+            if original is None:
+                sys.modules.pop(name, None)
+            else:
+                sys.modules[name] = original
+    return modules['validate_illustration_assets']
+
+
+def archived_v17_validator(directory: Path, *, source_root: Path = ROOT):
+    materialize_v17_parent_source(directory, source_root=source_root)
+    return pinned_v17_validator(directory, source_root=source_root)
 
 
 def archived_v16_validator(directory: Path):

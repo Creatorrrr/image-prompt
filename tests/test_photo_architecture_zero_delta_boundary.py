@@ -20,13 +20,13 @@ ROOT = Path(__file__).resolve().parents[1]
 ILLUSTRATION = ROOT / 'skills/subculture-illustration-image-generator'
 EVIDENCE = Path('docs/research-evidence/photo-prompt/architecture-zero-delta-v14-20261004')
 sys.path.insert(0, str(ILLUSTRATION / 'scripts'))
-import validate_illustration_assets as v
+from photo_prompt_fixtures import pinned_v17_validator
 
 
 class ArchitectureZeroDeltaBoundaryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        global ROOT, ILLUSTRATION
+        global ROOT, ILLUSTRATION, v
         live_root = ROOT
         cls.source_temp = tempfile.TemporaryDirectory(prefix="immutable-v14-parent-")
         cls.addClassCleanup(cls.source_temp.cleanup)
@@ -40,7 +40,7 @@ class ArchitectureZeroDeltaBoundaryTests(unittest.TestCase):
             saved.extractall(source_root)
         validator_path = source_root / "skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py"
         validator_path.parent.mkdir(parents=True, exist_ok=True)
-        validator_path.write_bytes(Path(v.__file__).read_bytes())
+        v = pinned_v17_validator(source_root)
         descriptor = source_root / "skills/subculture-illustration-image-generator/assets/universal_scene_baseline_v2.json"
         raw = descriptor.read_bytes()
         old_sha = json.loads(raw)["validator_contract"]["sha256"].encode()
