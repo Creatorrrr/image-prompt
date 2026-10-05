@@ -106,7 +106,7 @@ class ModelEditorialTests(unittest.TestCase):
   expected={f"slot:{slot}:{e['id']}" for slot,entries in self.ext["slots"].items() for e in entries}
   self.assertTrue(expected <= set(si["entries"]))
   registry=pg.load_visual_obligation_registry(SKILL/"assets/photo_prompt_visual_obligations.json")
-  vi=json.loads((SKILL/"assets/photo_prompt_visual_profile_index.json").read_text())
+  vi=pg.load_visual_profile_index_payload(SKILL/"assets/photo_prompt_visual_profile_index.json")
   pg.validate_visual_profile_index_metadata(vi,registry)
 if __name__=="__main__":unittest.main()
 

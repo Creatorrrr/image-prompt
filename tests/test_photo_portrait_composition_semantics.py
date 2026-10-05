@@ -145,7 +145,7 @@ class PortraitCompositionTests(unittest.TestCase):
         pg.validate_semantic_index_metadata(semantic, self.data)
         expected = {f"slot:{slot}:{e['id']}" for slot, rows in self.ext['slots'].items() for e in rows}
         self.assertTrue(expected <= set(semantic['entries']))
-        visual = json.loads((SKILL / 'assets/photo_prompt_visual_profile_index.json').read_text())
+        visual = pg.load_visual_profile_index_payload(SKILL / 'assets/photo_prompt_visual_profile_index.json')
         pg.validate_visual_profile_index_metadata(visual, self.raw)
 
 

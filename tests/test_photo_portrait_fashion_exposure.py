@@ -139,7 +139,7 @@ class PortraitFashionExposureTests(unittest.TestCase):
         pg.validate_semantic_index_metadata(si, self.data)
         expected = {f"slot:{slot}:{e['id']}" for slot, rows in self.ext["slots"].items() for e in rows}
         self.assertTrue(expected <= set(si["entries"]))
-        vi = json.loads((SKILL / "assets/photo_prompt_visual_profile_index.json").read_text())
+        vi = pg.load_visual_profile_index_payload(SKILL / "assets/photo_prompt_visual_profile_index.json")
         pg.validate_visual_profile_index_metadata(vi, self.all_registry)
         self.assertTrue(set(self.profiles) <= set(vi["entries"]))
         self.assertTrue(all(len(vi["entries"][ident]["vector"]) == 768 for ident in self.profiles))
@@ -155,7 +155,7 @@ class PortraitFashionExposureTests(unittest.TestCase):
     def test_thigh_skin_band_does_not_change_the_existing_negative_space_profile(self):
         old = next(p for p in self.all_registry["profiles"] if p["id"] == "inner_thigh_negative_space")
         original = json.loads((EVIDENCE / "revisions/initial/photo_prompt_visual_profile_index.json").read_text())
-        current = json.loads((SKILL / "assets/photo_prompt_visual_profile_index.json").read_text())
+        current = pg.load_visual_profile_index_payload(SKILL / "assets/photo_prompt_visual_profile_index.json")
         # Reconstruct only the explicitly recorded later alternatives. The
         # frozen initial text stays exact; a new text needs a new vector.
         receipt = json.loads((ROOT / "docs/research-evidence/photo-prompt/neutral-expression-integration-20261003/DATA-CHANGE-RECEIPT.json").read_text())

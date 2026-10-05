@@ -127,7 +127,7 @@ class EverydaySceneSemanticsTests(unittest.TestCase):
         for slot, rows in self.extension["slots"].items():
             for row in rows:
                 self.assertIn(f"slot:{slot}:{row['id']}", semantic["entries"])
-        visual = json.loads((ASSETS / "photo_prompt_visual_profile_index.json").read_text())
+        visual = pg.load_visual_profile_index_payload(ASSETS / "photo_prompt_visual_profile_index.json")
         pg.validate_visual_profile_index_metadata(visual, self.registry)
         self.assertTrue(set(self.profiles) <= set(visual["entries"]))
 
