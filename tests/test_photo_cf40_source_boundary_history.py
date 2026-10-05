@@ -9,12 +9,12 @@ import sys
 import tempfile
 import unittest
 from unittest import mock
+import photo_prompt_fixtures as fixtures
 
 ROOT = Path(__file__).resolve().parents[1]
 ILLUSTRATION = ROOT / 'skills/subculture-illustration-image-generator'
 EVIDENCE = Path('docs/research-evidence/photo-prompt/cf40-history-repair-20261005')
 sys.path.insert(0, str(ILLUSTRATION / 'scripts'))
-import validate_illustration_assets as v
 
 
 def digest(raw):
@@ -24,6 +24,14 @@ def digest(raw):
 class AuthoringSourceBoundaryHistoryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        global ROOT, ILLUSTRATION, v
+        cls.live_root = ROOT
+        temp = tempfile.TemporaryDirectory(prefix='immutable-v19-parent-')
+        cls.addClassCleanup(temp.cleanup)
+        ROOT = Path(temp.name)
+        with mock.patch('subprocess.Popen', side_effect=AssertionError('Historical fixture invoked a subprocess')):
+            v = fixtures.archived_v19_validator(ROOT, source_root=cls.live_root)
+        ILLUSTRATION = ROOT / 'skills/subculture-illustration-image-generator'
         cls.proof = json.loads((ROOT / EVIDENCE / 'V19-SOURCE-BINDING-PROOF.json').read_bytes())
         cls.parent = json.loads((ROOT / cls.proof['source_parent_manifest']).read_bytes())
 
