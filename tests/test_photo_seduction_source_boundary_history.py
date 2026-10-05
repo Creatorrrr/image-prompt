@@ -16,9 +16,18 @@ ILLUSTRATION = ROOT / 'skills/subculture-illustration-image-generator'
 EVIDENCE = Path('docs/research-evidence/photo-prompt/seduction-expression-main-merge-20261005')
 sys.path.insert(0, str(ILLUSTRATION / 'scripts'))
 import validate_illustration_assets as v
+from tests.photo_prompt_fixtures import archived_v16_validator
 
 
 class SeductionSourceBoundaryHistoryTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        temporary = tempfile.TemporaryDirectory()
+        cls.addClassCleanup(temporary.cleanup)
+        cls.historical_repo = Path(temporary.name)
+        cls.validator = archived_v16_validator(cls.historical_repo)
+        cls.validator.ValidationFailure = v.ValidationFailure
+
     def setUp(self):
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)
@@ -28,7 +37,8 @@ class SeductionSourceBoundaryHistoryTests(unittest.TestCase):
         for path in (ILLUSTRATION / 'assets').glob('photo_regression_baseline_v*.json'):
             shutil.copyfile(path, self.assets / path.name)
         for name in ('universal_scene_baseline_v1.json', 'universal_scene_baseline_v2.json'):
-            shutil.copyfile(ILLUSTRATION / 'assets' / name, self.assets / name)
+            shutil.copyfile(self.historical_repo / 'skills/subculture-illustration-image-generator/assets' / name,
+                            self.assets / name)
         self.path = self.assets / 'photo_regression_baseline_v16.json'
         self.baseline = json.loads(self.path.read_bytes())
         self.output = (self.assets / 'photo_regression_baseline_v16_pack.json').read_bytes()
@@ -39,12 +49,12 @@ class SeductionSourceBoundaryHistoryTests(unittest.TestCase):
         def replay(command, **kwargs):
             Path(command[command.index('--output-file') + 1]).write_bytes(self.output)
             return SimpleNamespace(returncode=0, stderr='', stdout='')
-        with mock.patch.object(v.subprocess, 'run', side_effect=replay):
-            return v.validate_photo_regression_baseline(self.assets, baseline_version=version)
+        with mock.patch.object(self.validator.subprocess, 'run', side_effect=replay):
+            return self.validator.validate_photo_regression_baseline(self.assets, baseline_version=version)
 
-    def direct(self, *, repo=ROOT, pack=None, raw=None):
-        return v._validate_v16_seduction_source_successor(
-            self.assets, repo, self.baseline,
+    def direct(self, *, repo=None, pack=None, raw=None):
+        return self.validator._validate_v16_seduction_source_successor(
+            self.assets, self.historical_repo if repo is None else repo, self.baseline,
             self.pack if pack is None else pack, self.output if raw is None else raw)
 
     def test_registered_default_and_unregistered_future(self):
@@ -111,8 +121,8 @@ class SeductionSourceBoundaryHistoryTests(unittest.TestCase):
         old_baseline = json.loads((self.assets / 'photo_regression_baseline_v15.json').read_bytes())
         old_output = (self.assets / 'photo_regression_baseline_v15_pack.json').read_bytes()
         with self.assertRaisesRegex(v.ValidationFailure, 'exact DATA inventory'):
-            v._validate_v15_motion_inventory_successor(
-                self.assets, ROOT, old_baseline, json.loads(old_output)[0], old_output)
+            self.validator._validate_v15_motion_inventory_successor(
+                self.assets, self.historical_repo, old_baseline, json.loads(old_output)[0], old_output)
 
 
 if __name__ == '__main__':

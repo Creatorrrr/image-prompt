@@ -1,0 +1,58 @@
+E...E.........................
+======================================================================
+ERROR: test_all_candidate_order_scene_and_privacy_fields_survive (tests.test_photo_seduction_source_boundary_history.SeductionSourceBoundaryHistoryTests.test_all_candidate_order_scene_and_privacy_fields_survive)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/cute-semantics-main-integration/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 78, in test_all_candidate_order_scene_and_privacy_fields_survive
+    self.direct()
+    ~~~~~~~~~~~^^
+  File "/Users/chasoik/.codex/worktrees/cute-semantics-main-integration/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 55, in direct
+    return self.validator._validate_v16_seduction_source_successor(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.assets, self.historical_repo if repo is None else repo, self.baseline,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.pack if pack is None else pack, self.output if raw is None else raw)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/tmp3fi2ckwf/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6616, in _validate_v16_seduction_source_successor
+    _require(old_descriptor.count(old_sha) == 1
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+             and (asset_dir / "universal_scene_baseline_v2.json").read_bytes()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+             == old_descriptor.replace(old_sha, _sha256(Path(__file__)).encode("ascii"), 1),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+             "photo V16 universal descriptor changed beyond validator hash")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/tmp3fi2ckwf/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: photo V16 universal descriptor changed beyond validator hash
+
+======================================================================
+ERROR: test_registered_default_and_unregistered_future (tests.test_photo_seduction_source_boundary_history.SeductionSourceBoundaryHistoryTests.test_registered_default_and_unregistered_future)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/cute-semantics-main-integration/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 60, in test_registered_default_and_unregistered_future
+    self.assertEqual(self.validate()['schema'], 'photo_regression_baseline/v16')
+                     ~~~~~~~~~~~~~^^
+  File "/Users/chasoik/.codex/worktrees/cute-semantics-main-integration/image-prompt/tests/test_photo_seduction_source_boundary_history.py", line 52, in validate
+    return self.validator.validate_photo_regression_baseline(self.assets, baseline_version=version)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/tmp3fi2ckwf/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6879, in validate_photo_regression_baseline
+    _validate_v16_seduction_source_successor(asset_dir, repo_root, baseline, pack, raw)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/tmp3fi2ckwf/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6616, in _validate_v16_seduction_source_successor
+    _require(old_descriptor.count(old_sha) == 1
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+             and (asset_dir / "universal_scene_baseline_v2.json").read_bytes()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+             == old_descriptor.replace(old_sha, _sha256(Path(__file__)).encode("ascii"), 1),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+             "photo V16 universal descriptor changed beyond validator hash")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/tmp3fi2ckwf/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: photo V16 universal descriptor changed beyond validator hash
+
+----------------------------------------------------------------------
+Ran 30 tests in 13.375s
+
+FAILED (errors=2)
