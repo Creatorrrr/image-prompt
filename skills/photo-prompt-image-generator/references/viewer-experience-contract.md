@@ -65,7 +65,7 @@ Preserve an aesthetic entry condition only when the frozen core or an active pac
 - A face, gaze, or expression may support affect but cannot replace action, target, and consequence.
 - Preserve the frozen relationship target, directed action, affect, and consequence, including declared same-target or contrast relations. A character label never adds a fixed eye line, facial landmark, head direction, pose, or relationship register.
 - For a moe-response pack, a settled endpoint is insufficient even when the action and consequence are recognizable. Preserve the unfinished `event_phase` so the involuntary leak or attempted recovery remains visible.
-- Do not use baby face, childlike proportions, oversized eyes, or other youth morphology as attachment evidence. Adult character routes retain explicit-adult and non-inference guards.
+- Do not use baby face, childlike proportions, oversized eyes, or other youth morphology as attachment evidence. Preserve requester-owned age and applicable non-inference guards; character-response authoring adds no adulthood requirement by itself.
 - Do not use `cute`, `moe`, `anime`, `cinematic`, `emotional`, or similar labels alone as evidence. Show what the character or object does.
 - Do not write `the viewer feels`, `evokes empathy`, `creates attachment`, `memorable image`, or other response declarations as evidence.
 - Keep one primary need. Do not stack care, awe, nostalgia, arousal, romance, and surprise to simulate depth.
