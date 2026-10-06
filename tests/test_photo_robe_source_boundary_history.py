@@ -27,6 +27,18 @@ PHOTO = Path('skills/photo-prompt-image-generator/assets')
 sys.path.insert(0, str(ROOT / ILLUSTRATION / 'scripts'))
 import validate_illustration_assets as validator
 
+# Current DATA is V33; these unchanged V32 assertions use exact original bytes.
+if (ROOT / ILLUSTRATION / 'assets/photo_regression_baseline_v33.json').is_file():
+    import atexit
+    _live_root = ROOT
+    _v32_temporary = tempfile.TemporaryDirectory(prefix='.palette-v32-robe-tests-', dir=ROOT)
+    _v32_root = Path(_v32_temporary.name) / 'tree'
+    _v32_support = fixtures._v33_palette_support(ROOT)
+    _v32_support.materialize_v32_parent_source(_v32_root, source_root=ROOT, link_verified=True)
+    validator = _v32_support.pinned_v32_validator(_v32_root, source_root=ROOT)
+    ROOT = _v32_root
+    atexit.register(_v32_temporary.cleanup)
+
 ROBE_DATA = {
     (PHOTO / 'photo_prompt_religion_iconography_extension.json').as_posix(),
     (PHOTO / 'photo_prompt_visual_obligations_religion_iconography.json').as_posix(),
@@ -121,7 +133,10 @@ class _RobeSandbox(unittest.TestCase):
 
 class RobeSourceBoundaryHistoryTests(_RobeSandbox):
     def test_current_default_real_cli_and_receipt_qualify_v32(self):
-        result = validator.validate_photo_regression_baseline(ROOT / ILLUSTRATION / 'assets')
+        if '_v32_support' in globals():
+            result = _v32_support.replay_v32(ROOT, source_root=_live_root)
+        else:
+            result = validator.validate_photo_regression_baseline(ROOT / ILLUSTRATION / 'assets')
         self.assertEqual('photo_regression_baseline/v32', result['schema'])
         self.assertEqual(self.proof['current_pack_sha256'], result['sha256'])
 

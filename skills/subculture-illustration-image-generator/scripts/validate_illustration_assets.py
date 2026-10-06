@@ -8435,6 +8435,21 @@ def _validate_v32_robe_source_successor(asset_dir, repo_root, baseline, pack, ra
         RuntimeSnapshotProvider().from_receipt(pack, receipt)
 
 
+
+
+PHOTO_PALETTE_HISTORY_SUPPORT_SHA256 = "4224c36f792006aaf680309791f6f43026e0a427b5b7374b83411c1b6bc4d88b"
+
+
+def _palette_history_support(repo_root):
+    path = _photo_v28_regular_path(repo_root, "tests/photo_palette_history.py")
+    _require(_sha256(path) == PHOTO_PALETTE_HISTORY_SUPPORT_SHA256,
+             "photo V33 palette support code drift")
+    from tests import photo_palette_history
+    _require(_sha256(Path(photo_palette_history.__file__)) == PHOTO_PALETTE_HISTORY_SUPPORT_SHA256,
+             "photo V33 loaded palette support code drift")
+    return photo_palette_history
+
+
 def validate_photo_regression_baseline(
     asset_dir: Path, *, baseline_version: int | None = None
 ) -> dict[str, Any]:
@@ -8447,11 +8462,20 @@ def validate_photo_regression_baseline(
     previous_path = asset_dir / "photo_regression_baseline_v5.json"
     if baseline_version is None:
         baseline_version = next(
-            version for version in (32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
+            version for version in (33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
             if (asset_dir / f"photo_regression_baseline_v{version}.json").exists()
         )
-    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32}, "unsupported photo baseline version")
+    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33}, "unsupported photo baseline version")
     repo_root = Path(__file__).resolve().parents[3]
+    if baseline_version == 32 and (asset_dir / "photo_regression_baseline_v33.json").is_file():
+        support = _palette_history_support(repo_root)
+        with tempfile.TemporaryDirectory(prefix="photo-v32-original-") as temporary:
+            tree = Path(temporary).resolve() / "tree"
+            support.materialize_v32_parent_source(tree, source_root=repo_root)
+            try:
+                return support.replay_v32(tree, source_root=repo_root)
+            except (AssertionError, OSError, ValueError) as exc:
+                _require(False, str(exc))
     if baseline_version == 31 and (asset_dir / "photo_regression_baseline_v32.json").is_file():
         from tests import photo_prompt_fixtures
         with tempfile.TemporaryDirectory(prefix="photo-v31-original-") as temporary:
@@ -8720,7 +8744,7 @@ def validate_photo_regression_baseline(
         raw = temporary_output.read_bytes()
         payload = json.loads(raw)
         receipt = None
-        if baseline_version in (29, 30, 32):
+        if baseline_version in (29, 30, 32, 33):
             receipt_path = Path(str(temporary_output) + ".runtime-receipt.json")
             _require(receipt_path.is_file(), "photo V29 current command omitted its runtime receipt")
             receipt = _load_json(receipt_path)
@@ -8819,6 +8843,9 @@ def validate_photo_regression_baseline(
         _validate_v31_horror_main_successor(asset_dir, repo_root, baseline, pack, raw, receipt)
     if baseline_version == 32:
         _validate_v32_robe_source_successor(asset_dir, repo_root, baseline, pack, raw, receipt)
+    if baseline_version == 33:
+        _palette_history_support(repo_root).qualify_current(
+            sys.modules[__name__], asset_dir, repo_root, baseline, pack, raw, receipt)
     return {
         "status": "pass",
         "schema": baseline["schema"],
