@@ -1,0 +1,169 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "Make a simple catalogue photo of a broom and dustpan hanging on hooks against a pale utility-room wall. No people or loose debris, and do not show the tools being used.",
+  "creative_controls_sha256": "d7203845efa33b807ee5de465274226fa7ef89b44157492e62c625fb5d8074f9",
+  "interpreted_intent": "Requester meaning: A static product arrangement of stored tools, explicitly excluding users, debris and active use. Author-created realization: Treat the hanging tools as ready, stationary household objects with clear silhouettes and truthful materials. Light wood broom handle, dark molded dustpan, gentle side light and soft wall shadows. This staging is an editable authorial choice within the requested facts.",
+  "subject": "A broom and dustpan",
+  "setting": "A pale utility-room wall",
+  "event": "The tools hang unused from hooks",
+  "visual_priorities": [
+    "Both complete tool silhouettes are clearly recognizable.",
+    "Hooks visibly support the stored tools.",
+    "The pale wall and simple light retain a quiet catalogue treatment."
+  ],
+  "baseline_prompt_en": "A simple catalogue photograph presents a broom and dustpan hanging on hooks against a pale utility-room wall. The tools hang motionless in storage, each supported by a wall hook through its hanging loop. A light wooden broom handle and orderly bristles sit beside the dark molded dustpan, whose empty interior is visible. Their complete silhouettes are separated by a small area of bare wall. The clean wall and clear floor below form a quiet product setting. Gentle side light gives the handles, bristle edge, and dustpan rim soft dimensional shadows. A straightforward front view keeps the tools recognizable and their surfaces legible, with restrained neutral color and a simple, evenly balanced arrangement.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete photographic request",
+      "source_text": "Make a simple catalogue photo of a broom and dustpan hanging on hooks against a pale utility-room wall. No people or loose debris, and do not show the tools being used.",
+      "basis": "request_context",
+      "resolution": "A static product arrangement of stored tools, explicitly excluding users, debris and active use.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [
+    "people or loose debris",
+    "tools being used"
+  ],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "simple catalogue photo",
+        "dimension": "concept",
+        "prompt_evidence": "simple catalogue photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "a broom and dustpan",
+        "dimension": "subject",
+        "prompt_evidence": "a broom and dustpan"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "hanging on hooks",
+        "dimension": "event",
+        "prompt_evidence": "hanging on hooks against a pale utility-room wall"
+      },
+      {
+        "anchor_id": "stored_state",
+        "source_text": "do not show the tools being used",
+        "dimension": "action",
+        "prompt_evidence": "The tools hang motionless in storage"
+      },
+      {
+        "anchor_id": "wall_setting",
+        "source_text": "utility-room wall",
+        "dimension": "setting",
+        "prompt_evidence": "utility-room wall",
+        "target": "scene",
+        "property": "location"
+      },
+      {
+        "anchor_id": "pale_wall",
+        "source_text": "pale utility-room wall",
+        "dimension": "color",
+        "prompt_evidence": "pale utility-room wall",
+        "target": "wall",
+        "property": "color"
+      },
+      {
+        "anchor_id": "simple_catalogue",
+        "source_text": "simple catalogue photo",
+        "dimension": "style",
+        "prompt_evidence": "simple catalogue photograph",
+        "target": "image",
+        "property": "register"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "action"
+    ],
+    "open_dimensions": [
+      "setting",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere",
+      "appearance"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "a broom and dustpan"
+      }
+    },
+    {
+      "assertion_id": "stored_tools",
+      "dimension": "action",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "action"
+      ],
+      "axes": {
+        "state": "hanging_unused"
+      },
+      "evidence": {
+        "state_phrase": "The tools hang motionless in storage"
+      }
+    },
+    {
+      "assertion_id": "capture_camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "product photography",
+    "family": "restrained household-tool catalogue",
+    "evidence": [
+      "Both complete tool silhouettes are clearly recognizable.",
+      "Hooks visibly support the stored tools."
+    ]
+  },
+  "variation_key": "dry-cleaning-natural-c07"
+}

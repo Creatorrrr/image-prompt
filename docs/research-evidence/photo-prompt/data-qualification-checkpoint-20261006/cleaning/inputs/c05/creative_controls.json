@@ -1,0 +1,177 @@
+{
+  "contract_version": "photo-creative-controls/v4",
+  "provenance": "resolved_precore",
+  "source_request_sha256": "bbcf5fcc89a6991320f3fc89c6203c7a83602e4d4dc239fe245420abc57d9fe8",
+  "definitions": {
+    "contract_version": "photo-creative-control-definitions/v4",
+    "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content or artistic judgment. Expression levels describe prominence in the whole image; creativity levels describe interpretive freedom. Neither measures exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Creativity leaves style, extra props and surreal treatment open to the request and artistic judgment. Emphasis directs only active sensual and fetish axes without changing their intensities. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. Sensual and fetish may share the same expressive choice.",
+    "controls": {
+      "sensual": {
+        "type": "integer",
+        "range": [
+          0,
+          3
+        ],
+        "default": 1,
+        "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+        "levels": {
+          "0": "No added sensual treatment; preserve explicitly requested content.",
+          "1": "This expression is a subtle supporting quality.",
+          "2": "This expression is clearly readable in the image.",
+          "3": "This expression leads the image's appeal and direction."
+        }
+      },
+      "fetish": {
+        "type": "integer",
+        "range": [
+          0,
+          3
+        ],
+        "default": 0,
+        "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+        "levels": {
+          "0": "No added fetish treatment; preserve explicitly requested content.",
+          "1": "This focus is a subtle supporting quality.",
+          "2": "This focus is clearly readable in the image.",
+          "3": "This focus leads the image's appeal and direction."
+        }
+      },
+      "adult_appeal_emphasis": {
+        "type": "enum",
+        "choices": [
+          "auto",
+          "sensual_led",
+          "balanced",
+          "fetish_led"
+        ],
+        "default": "auto",
+        "definition": "Relative leadership of the active sensual and fetish axes within one coherent expression.",
+        "choice_descriptions": {
+          "auto": "Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.",
+          "sensual_led": "Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.",
+          "balanced": "Give both active axes comparable influence within one coherent expression; separate styling details are not required.",
+          "fetish_led": "Let the distinctive focus of attraction or fascination lead, with any active sensual expression supporting it."
+        }
+      },
+      "creativity": {
+        "type": "integer",
+        "range": [
+          0,
+          3
+        ],
+        "default": 1,
+        "definition": "Freedom to interpret unspecified choices and explore relationships within the request.",
+        "levels": {
+          "0": "Realize the request directly, filling only what is needed for a coherent image.",
+          "1": "Introduce restrained variations close to the requested direction.",
+          "2": "Actively reinterpret open choices into a coherent authorial direction.",
+          "3": "Boldly explore unexpected relationships and interpretations while preserving the request's core meaning."
+        }
+      },
+      "viewer_experience": {
+        "type": "boolean",
+        "default": false,
+        "definition": "Expose the detailed viewer-experience review when enabled. Always consider the intended impression in interpreted_intent, even when this additional review is off."
+      },
+      "reference_edit_mode": {
+        "type": "enum",
+        "choices": [
+          "off",
+          "identity",
+          "younger_self",
+          "brand_board"
+        ],
+        "default": "off",
+        "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
+      },
+      "surreal": {
+        "type": "integer",
+        "range": [
+          0,
+          3
+        ],
+        "default": 0,
+        "definition": "Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.",
+        "levels": {
+          "0": "No added surreal treatment; preserve explicitly requested fantasy and impossible elements.",
+          "1": "Surreal qualities are a subtle supporting presence.",
+          "2": "Surreal qualities are clearly readable in the image.",
+          "3": "Surreal qualities lead the image's main impression and direction; a single coherent relationship may carry this prominence."
+        }
+      },
+      "trend_layer": {
+        "type": "enum",
+        "choices": [
+          "off",
+          "scrapbook_collage",
+          "action_figure_packaging",
+          "retro_flash",
+          "clean_brand_portrait"
+        ],
+        "default": "off",
+        "definition": "Consider the chosen treatment from the initial composition. Refine it later without adding it twice. Off does not remove a treatment explicitly present in the request."
+      }
+    }
+  },
+  "definitions_sha256": "d044ade0f6af62c35b81d4b035b130a8819c4a15ca47a1409a59860a1928a3fa",
+  "overrides": {},
+  "context": {
+    "subject_category": "human",
+    "no_people": false,
+    "explicit_nonsexual": false
+  },
+  "seed": 3761469284069373742,
+  "controls": {
+    "sensual": {
+      "value": 1,
+      "source": "saved_setting"
+    },
+    "fetish": {
+      "value": 0,
+      "source": "saved_setting"
+    },
+    "adult_appeal_emphasis": {
+      "value": "auto",
+      "source": "saved_setting"
+    },
+    "creativity": {
+      "value": 1,
+      "source": "saved_setting"
+    },
+    "viewer_experience": {
+      "value": false,
+      "source": "saved_setting"
+    },
+    "reference_edit_mode": {
+      "value": "off",
+      "source": "saved_setting"
+    },
+    "surreal": {
+      "value": 0,
+      "source": "saved_setting"
+    },
+    "trend_layer": {
+      "value": "off",
+      "source": "saved_setting"
+    }
+  },
+  "adult_appeal": {
+    "sensual": {
+      "requested_intensity": 1,
+      "effective_intensity": 1,
+      "reason": "eligible"
+    },
+    "fetish": {
+      "requested_intensity": 0,
+      "effective_intensity": 0,
+      "reason": "eligible"
+    }
+  },
+  "resolved_emphasis": "sensual_led",
+  "emphasis_resolution": {
+    "active": true,
+    "reason": "Effective sensual=1, fetish=0; the higher intensity leads."
+  },
+  "authoring_brief": "sensual: 1 (range: 0–3)\nMeaning: Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.\nLevel: This expression is a subtle supporting quality.\n\nfetish: 0 (range: 0–3)\nMeaning: Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.\nLevel: No added fetish treatment; preserve explicitly requested content.\n\nsurreal: 0 (range: 0–3)\nMeaning: Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.\nLevel: No added surreal treatment; preserve explicitly requested fantasy and impossible elements.\n\ncreativity: 1 (range: 0–3)\nMeaning: Freedom to interpret unspecified choices and explore relationships within the request.\nLevel: Introduce restrained variations close to the requested direction.\n\nadult_appeal_emphasis: auto (choices: auto, sensual_led, balanced, fetish_led)\nMeaning: Relative leadership of the active sensual and fetish axes within one coherent expression.\nSelected: Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.\nEffective: sensual_led\nResolution: Effective sensual=1, fetish=0; the higher intensity leads.\nEffective meaning: Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.\n\nChoose a coherent expression suited to this particular scene.\nSensual and fetish may share the same expressive choice.\nExpression levels describe prominence; creativity describes interpretive freedom. Neither requires a garment or detail count.\n\nOther resolved controls:\nviewer_experience: false\nreference_edit_mode: \"off\"\ntrend_layer: \"off\"",
+  "canonical_sha256": "116f281ec3718be28d625243c0e6fd9726b85551270cbf97f39027bbb87c92b6"
+}

@@ -1,0 +1,207 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "A documentary photo for a restaurant story: an adult server wiping spilled water from a stainless-steel counter with a cloth at the end of a shift. Show the counter while it is still wet.",
+  "creative_controls_sha256": "116f281ec3718be28d625243c0e6fd9726b85551270cbf97f39027bbb87c92b6",
+  "interpreted_intent": "Requester meaning: A wet wiping task using a cloth on steel, with visible remaining water; it does not depict dry sweeping. Author-created realization: The wet reflection and cloth path show a small closing-time chore still in progress. A folded cloth, a bead of water at the wiping edge, stacked glasses beyond, soft overhead restaurant light, relaxed concentration. This staging is an editable authorial choice within the requested facts.",
+  "subject": "An adult restaurant server",
+  "setting": "A restaurant stainless-steel counter at shift end",
+  "event": "Wiping spilled water with a cloth while water remains visible",
+  "visual_priorities": [
+    "The cloth moves through visible water on steel.",
+    "Remaining wetness and the wiping trail describe a task still in progress.",
+    "The server and practical restaurant surroundings retain an ordinary end-of-shift context."
+  ],
+  "baseline_prompt_en": "A documentary photograph for a restaurant story shows an adult server wiping spilled water from a stainless-steel counter with a cloth at the end of a shift. The counter is still wet, reflecting soft overhead restaurant lights. The server stands close to the counter with a settled stance, pressing a folded cloth through a shallow patch of water with the palm while the elbow remains comfortably bent. A bead of water gathers at the cloth's leading edge and the wiped area behind it has a thinner sheen. Stacked glasses further along the counter suggest closing work. The server's relaxed concentration and the light along the cheek give the small routine a subtle personal warmth. A compact three-quarter view includes the working arm, cloth, remaining water, and steel surface, with the restaurant receding softly behind.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete photographic request",
+      "source_text": "A documentary photo for a restaurant story: an adult server wiping spilled water from a stainless-steel counter with a cloth at the end of a shift. Show the counter while it is still wet.",
+      "basis": "request_context",
+      "resolution": "A wet wiping task using a cloth on steel, with visible remaining water; it does not depict dry sweeping.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "A documentary photo for a restaurant story",
+        "dimension": "concept",
+        "prompt_evidence": "documentary photograph for a restaurant story"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "an adult server",
+        "dimension": "subject",
+        "prompt_evidence": "an adult server"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "wiping spilled water from a stainless-steel counter with a cloth",
+        "dimension": "event",
+        "prompt_evidence": "wiping spilled water from a stainless-steel counter with a cloth"
+      },
+      {
+        "anchor_id": "requested_action",
+        "source_text": "wiping spilled water",
+        "dimension": "action",
+        "prompt_evidence": "wiping spilled water from a stainless-steel counter"
+      },
+      {
+        "anchor_id": "adult_age",
+        "source_text": "adult server",
+        "dimension": "age",
+        "prompt_evidence": "adult server"
+      },
+      {
+        "anchor_id": "steel_counter",
+        "source_text": "stainless-steel counter",
+        "dimension": "material",
+        "prompt_evidence": "stainless-steel counter",
+        "target": "counter",
+        "property": "material"
+      },
+      {
+        "anchor_id": "counter_location",
+        "source_text": "restaurant story",
+        "dimension": "setting",
+        "prompt_evidence": "restaurant receding softly behind",
+        "target": "scene",
+        "property": "location"
+      },
+      {
+        "anchor_id": "water_remains",
+        "source_text": "still wet",
+        "dimension": "material",
+        "prompt_evidence": "The counter is still wet",
+        "target": "counter",
+        "property": "surface.moisture"
+      },
+      {
+        "anchor_id": "cloth_tool",
+        "source_text": "with a cloth",
+        "dimension": "appearance",
+        "prompt_evidence": "counter with a cloth",
+        "target": "cleanup_tool",
+        "property": "tool_type"
+      },
+      {
+        "anchor_id": "shift_end",
+        "source_text": "at the end of a shift",
+        "dimension": "timing",
+        "prompt_evidence": "at the end of a shift",
+        "target": "scene",
+        "property": "event_phase"
+      },
+      {
+        "anchor_id": "documentary_style",
+        "source_text": "documentary photo",
+        "dimension": "style",
+        "prompt_evidence": "documentary photograph",
+        "target": "image",
+        "property": "register"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "action",
+      "age"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "setting",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "an adult server"
+      }
+    },
+    {
+      "assertion_id": "requested_task",
+      "dimension": "action",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "action"
+      ],
+      "axes": {
+        "task": "wet_wiping",
+        "actor": "server",
+        "tool": "cloth",
+        "surface": "stainless_steel_counter",
+        "material": "spilled_water",
+        "current_state": "still_wet"
+      },
+      "evidence": {
+        "actor_phrase": "an adult server",
+        "action_phrase": "wiping spilled water from a stainless-steel counter with a cloth",
+        "current_state_phrase": "The counter is still wet"
+      }
+    },
+    {
+      "assertion_id": "capture_camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "documentary",
+    "family": "closing-time restaurant reportage",
+    "evidence": [
+      "The cloth moves through visible water on steel.",
+      "Remaining wetness and the wiping trail describe a task still in progress."
+    ]
+  },
+  "variation_key": "dry-cleaning-natural-c05"
+}

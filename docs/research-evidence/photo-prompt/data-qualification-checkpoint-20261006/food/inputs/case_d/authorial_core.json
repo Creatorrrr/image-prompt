@@ -1,0 +1,126 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "자르지 않은 둥근 빵을 포장하기 전에 남기는 기록 사진을 원해. 깨끗한 나무 탁자에 놓인 온전한 겉모습을 보여 주고, 빵과 탁자만 나오게 해 줘.\n",
+  "creative_controls_sha256": "913fdc562b0ddb48efabd802b181019fb79f179d89a5f9ccfd0a06d96f3f5320",
+  "interpreted_intent": "Requester-owned: Round loaf remains uncut; Intact exterior visible; Clean wooden table; Record before packing; Only bread and table visible. Authorial choices within open dimensions: Bakery worktable interpretation; Tabletop extends behind loaf; Daylight; Slightly elevated view. A styled bread advertisement and an uncomplicated packing record were considered; the plain record follows the request's practical purpose.",
+  "subject": "whole uncut round loaf on wooden table",
+  "setting": "clean wooden bakery worktable before packing",
+  "event": "round loaf remains uncut before being packed",
+  "visual_priorities": [
+    "uncut loaf retains whole rounded outline",
+    "clean wooden table is the only setting shown",
+    "plain record before packing"
+  ],
+  "baseline_prompt_en": "A whole round loaf sits on a clean wooden table, still uncut and ready to be packed. The photograph records its intact exterior before packing, with the complete rounded outline easy to see. Bread and table occupy the frame. The tabletop extends behind the loaf as a plain working surface. Gentle daylight makes the bread's browned surface readable while keeping the scene matter of fact. The view is slightly above table height, giving a clear account of the loaf's top and sides.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "whole uncut round loaf on wooden table",
+      "source_text": "자르지 않은 둥근 빵을 포장하기 전에 남기는 기록 사진을 원해. 깨끗한 나무 탁자에 놓인 온전한 겉모습을 보여 주고, 빵과 탁자만 나오게 해 줘.",
+      "basis": "request_context",
+      "resolution": "Round loaf remains uncut; Intact exterior visible; Clean wooden table; Record before packing; Only bread and table visible",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "requested_concept",
+        "source_text": "자르지 않은 둥근 빵을 포장하기 전에 남기는 기록 사진을 원해. 깨끗한 나무 탁자에 놓인 온전한 겉모습을 보여 주고, 빵과 탁자만 나오게 해 줘.",
+        "dimension": "concept",
+        "prompt_evidence": "records its intact exterior before packing"
+      },
+      {
+        "anchor_id": "requested_subject",
+        "source_text": "자르지 않은 둥근 빵을 포장하기 전에 남기는 기록 사진을 원해. 깨끗한 나무 탁자에 놓인 온전한 겉모습을 보여 주고, 빵과 탁자만 나오게 해 줘.",
+        "dimension": "subject",
+        "prompt_evidence": "A whole round loaf"
+      },
+      {
+        "anchor_id": "requested_event",
+        "source_text": "자르지 않은 둥근 빵을 포장하기 전에 남기는 기록 사진을 원해. 깨끗한 나무 탁자에 놓인 온전한 겉모습을 보여 주고, 빵과 탁자만 나오게 해 줘.",
+        "dimension": "event",
+        "prompt_evidence": "still uncut and ready to be packed"
+      },
+      {
+        "anchor_id": "requested_property_0",
+        "source_text": "자르지 않은 둥근 빵을 포장하기 전에 남기는 기록 사진을 원해. 깨끗한 나무 탁자에 놓인 온전한 겉모습을 보여 주고, 빵과 탁자만 나오게 해 줘.",
+        "dimension": "setting",
+        "target": "main_subject",
+        "property": "support",
+        "prompt_evidence": "on a clean wooden table"
+      },
+      {
+        "anchor_id": "requested_property_1",
+        "source_text": "자르지 않은 둥근 빵을 포장하기 전에 남기는 기록 사진을 원해. 깨끗한 나무 탁자에 놓인 온전한 겉모습을 보여 주고, 빵과 탁자만 나오게 해 줘.",
+        "dimension": "composition",
+        "target": "scene",
+        "property": "contents",
+        "prompt_evidence": "Bread and table occupy the frame"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "setting",
+      "appearance",
+      "material",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject_type",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "food"
+      },
+      "evidence": {
+        "subject_phrase": "A whole round loaf"
+      }
+    },
+    {
+      "assertion_id": "capture_axes",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": null,
+  "variation_key": "case_d"
+}
