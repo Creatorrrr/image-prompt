@@ -1,7 +1,7 @@
 [
   {
     "contract_version": "photo-candidate-pack/v6",
-    "pack_id": "ff1e66602ac627ad",
+    "pack_id": "9b3bfdf5e9fca8bf",
     "intent_contract": [
       {
         "id": "intent:5826c031a05b",
@@ -668,7 +668,7 @@
             "semantic_surface_version": "photo-candidate-semantic-surface/v1"
           }
         ],
-        "candidate_count": 152,
+        "candidate_count": 157,
         "candidate_limit": 4,
         "candidate_order": "seed_shuffled_non_preferential"
       },
@@ -1492,7 +1492,7 @@
             "semantic_surface_version": "photo-candidate-semantic-surface/v1"
           }
         ],
-        "candidate_count": 147,
+        "candidate_count": 158,
         "candidate_limit": 2,
         "candidate_order": "seed_shuffled_non_preferential"
       },
@@ -1533,13 +1533,12 @@
             "semantic_surface_version": "photo-candidate-semantic-surface/v1"
           },
           {
-            "id": "slot:color_grading:palette_role_hierarchy_relation",
+            "id": "slot:color_grading:pal_app_green_dark_global_tint",
             "slot": "color_grading",
-            "entry_id": "palette_role_hierarchy_relation",
+            "entry_id": "pal_app_green_dark_global_tint",
             "tags": [
-              "color",
-              "palette_relation",
-              "reactorprompt_relation"
+              "palette_application",
+              "color_grading"
             ],
             "kind": [],
             "facets": {},
@@ -1550,21 +1549,35 @@
             },
             "conflicts_with": [],
             "concept_terms": [
-              "palette hierarchy with primary, supporting, and accent colors owned by distinct regions"
+              "a restrained green bias recurs across the declared dark, middle and light tonal scope while relative shading and material distinctions remain readable"
             ],
             "content_form": "unordered_inspiration_terms",
             "concept_units": [
-              "palette hierarchy with primary, supporting, and accent colors owned by distinct regions"
+              "a restrained green bias recurs across the declared dark, middle and light tonal scope while relative shading and material distinctions remain readable"
             ],
-            "relations": [],
+            "relations": [
+              {
+                "id": "declared_palette_owners",
+                "type": "retains_bounded_colors_on",
+                "subject": "the declared existing color carriers",
+                "object": "their separately declared surface or light regions"
+              }
+            ],
             "affected_dimensions": [
               "color"
             ],
             "adoption": "optional",
+            "affected_properties": [
+              {
+                "dimension": "color",
+                "target": "*",
+                "property": "image.color_grading"
+              }
+            ],
             "semantic_surface_version": "photo-candidate-semantic-surface/v1"
           }
         ],
-        "candidate_count": 57,
+        "candidate_count": 59,
         "candidate_limit": 2,
         "candidate_order": "seed_shuffled_non_preferential"
       },
@@ -2385,7 +2398,7 @@
             "semantic_surface_version": "photo-candidate-semantic-surface/v1"
           }
         ],
-        "candidate_count": 33,
+        "candidate_count": 34,
         "candidate_limit": 2,
         "candidate_order": "seed_shuffled_non_preferential"
       },
@@ -2668,13 +2681,12 @@
         "role": "support",
         "candidates": [
           {
-            "id": "slot:texture:porcelain_hairline_crack",
+            "id": "slot:texture:pal_app_primary_color_orthogonal_grid",
             "slot": "texture",
-            "entry_id": "porcelain_hairline_crack",
+            "entry_id": "pal_app_primary_color_orthogonal_grid",
             "tags": [
-              "texture",
-              "doll",
-              "porcelain"
+              "palette_application",
+              "texture"
             ],
             "kind": [],
             "facets": {},
@@ -2685,21 +2697,56 @@
             },
             "conflicts_with": [],
             "concept_terms": [
-              "porcelain hairline crack texture"
+              "black orthogonal lines separate unequal red, blue and yellow rectangular regions on the same light carrier"
             ],
             "content_form": "unordered_inspiration_terms",
             "concept_units": [
-              "porcelain hairline crack texture"
+              "black orthogonal lines separate unequal red, blue and yellow rectangular regions on the same light carrier"
             ],
-            "relations": [],
+            "relations": [
+              {
+                "id": "declared_palette_owners",
+                "type": "retains_bounded_colors_on",
+                "subject": "the declared existing color carriers",
+                "object": "their separately declared surface or light regions"
+              }
+            ],
             "affected_dimensions": [
-              "material"
+              "color",
+              "appearance"
             ],
             "adoption": "optional",
+            "affected_properties": [
+              {
+                "dimension": "color",
+                "target": "*",
+                "property": "surface.local_color"
+              },
+              {
+                "dimension": "color",
+                "target": "*",
+                "property": "wardrobe.color"
+              },
+              {
+                "dimension": "color",
+                "target": "*",
+                "property": "background.local_color"
+              },
+              {
+                "dimension": "appearance",
+                "target": "*",
+                "property": "wardrobe.pattern"
+              },
+              {
+                "dimension": "appearance",
+                "target": "*",
+                "property": "surface.pattern"
+              }
+            ],
             "semantic_surface_version": "photo-candidate-semantic-surface/v1"
           }
         ],
-        "candidate_count": 117,
+        "candidate_count": 121,
         "candidate_limit": 2,
         "candidate_order": "seed_shuffled_non_preferential"
       },
@@ -3748,7 +3795,7 @@
       "batch_index": 0,
       "selection_mode": "core_bm25f",
       "requested_selection_mode": null,
-      "tags_hash": "1cb8ccb71a88e470ed63e37fc93a03b9d0f14aa5da2c39a71ed0fc0b9d8bfaaf",
+      "tags_hash": "617cecfeb8a094ab06b2333ed88a53e195caafee6c64c41f6c31d8ffeed0c018",
       "concept_lock": [
         "Photorealistic blue porcelain teacup still life in a quiet rainlit kitchen without people"
       ],
@@ -4157,140 +4204,6 @@
       },
       "candidates": [
         {
-          "id": "visual-concept:mg_grid_repeat_relation",
-          "content_form": "unordered_inspiration_terms",
-          "concept_terms": [
-            "matching ornament prototypes repeat across multiple rows and columns",
-            "Identical small motifs line up in evenly spaced rows and columns on the panel.",
-            "grid repetition of ornaments on a displayed artwork",
-            "ornament centers maintain a consistent row and column spacing",
-            "패널의 같은 작은 무늬가 일정한 간격의 행과 열로 줄지어 있다.",
-            "the repetitions remain artwork ornaments while photographed people remain singular",
-            "작품 장식의 행과 열 반복"
-          ],
-          "affected_dimensions": [
-            "composition"
-          ],
-          "affected_properties": [
-            {
-              "dimension": "composition",
-              "target": "image_plane",
-              "property": "layout"
-            }
-          ],
-          "applicability": {
-            "status": "eligible",
-            "source": "hybrid_visual_profile_resolution"
-          },
-          "opt_in_contract": {
-            "effect": "promote_to_hard_visual_obligation",
-            "visual_obligations_contract_version": "photo-visual-obligations/v1",
-            "obligation": {
-              "id": "mg_grid_repeat_relation",
-              "category": "scoped_static_graphic_relation",
-              "activation": {
-                "source": "composer_opt_in",
-                "scope": "request_only",
-                "source_intent_ids": []
-              },
-              "composition_instruction": "On the declared visible owner, realize this full component: matching ornament prototypes repeat across multiple rows and columns On the declared visible owner, realize this full component: ornament centers maintain a consistent row and column spacing On the declared visible owner, realize this full component: the repetitions remain artwork ornaments while photographed people remain singular",
-              "component_semantics": {
-                "minimum_component_groups": 3,
-                "required_group_ids": [
-                  "component_1",
-                  "component_2",
-                  "component_3"
-                ],
-                "groups": [
-                  {
-                    "id": "component_1",
-                    "any_terms": [
-                      "matching ornament prototypes repeat across multiple rows and columns"
-                    ]
-                  },
-                  {
-                    "id": "component_2",
-                    "any_terms": [
-                      "ornament centers maintain a consistent row and column spacing"
-                    ]
-                  },
-                  {
-                    "id": "component_3",
-                    "any_terms": [
-                      "the repetitions remain artwork ornaments while photographed people remain singular"
-                    ]
-                  }
-                ]
-              },
-              "prompt_binding": {
-                "composed_field": "visual_obligation_evidence",
-                "required_evidence_fields": [
-                  "component_1_phrase",
-                  "component_2_phrase",
-                  "component_3_phrase"
-                ],
-                "minimum_distinct_evidence_phrases": 3,
-                "prompt_evidence_must_be_literal": true,
-                "maximum_pairwise_content_token_overlap_ratio": 0.82,
-                "forbidden_filler_phrases": [
-                  "visible evidence",
-                  "visual evidence",
-                  "required cue",
-                  "prompt phrase"
-                ]
-              },
-              "evidence_requirements": {
-                "component_1_phrase": {
-                  "min_content_words": 3,
-                  "must_mention_any": [
-                    "matching ornament prototypes repeat across multiple rows and columns"
-                  ]
-                },
-                "component_2_phrase": {
-                  "min_content_words": 3,
-                  "must_mention_any": [
-                    "ornament centers maintain a consistent row and column spacing"
-                  ]
-                },
-                "component_3_phrase": {
-                  "min_content_words": 3,
-                  "must_mention_any": [
-                    "the repetitions remain artwork ornaments while photographed people remain singular"
-                  ]
-                }
-              },
-              "runtime_expression": {
-                "default_mode": "definition_with_optional_label",
-                "prompt_label_terms": [],
-                "forbidden_prompt_terms": [],
-                "runtime_forbidden_labels": []
-              },
-              "render_gates": [
-                {
-                  "id": "vo_mg_grid_repeat_1",
-                  "review_scale": "native",
-                  "description": "matching ornament prototypes repeat across multiple rows and columns. Inspect the declared owner in native pixels; partial or unobservable evidence fails."
-                },
-                {
-                  "id": "vo_mg_grid_repeat_2",
-                  "review_scale": "native",
-                  "description": "ornament centers maintain a consistent row and column spacing. Inspect the declared owner in native pixels; partial or unobservable evidence fails."
-                },
-                {
-                  "id": "vo_mg_grid_repeat_3",
-                  "review_scale": "native",
-                  "description": "the repetitions remain artwork ornaments while photographed people remain singular. Inspect the declared owner in native pixels; partial or unobservable evidence fails."
-                }
-              ],
-              "reject_substitutes": [
-                "복제를 사람 수나 팔·손가락 수 증가로 해석하지 않는다",
-                "불규칙 scatter나 수명 있는 particle emission과 구분한다",
-                "A broad label, a different owner, a temporal claim or only part of the components cannot substitute for this relation."
-              ]
-            }
-          }
-        },
-        {
           "id": "visual-concept:y2kr_cyber_palette",
           "content_form": "unordered_inspiration_terms",
           "concept_terms": [
@@ -4472,6 +4385,287 @@
           }
         },
         {
+          "id": "visual-concept:pa_blue_motif_white_ceramic",
+          "content_form": "unordered_inspiration_terms",
+          "concept_terms": [
+            "bounded cobalt-blue motifs remain on the same white glazed ceramic body",
+            "청화백자 블루·화이트",
+            "continuous ceramic shading connects the white body across the blue motif boundaries"
+          ],
+          "affected_dimensions": [
+            "color",
+            "material"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "color",
+              "target": "*",
+              "property": "surface.local_color"
+            },
+            {
+              "dimension": "color",
+              "target": "*",
+              "property": "wardrobe.color"
+            },
+            {
+              "dimension": "color",
+              "target": "*",
+              "property": "background.local_color"
+            },
+            {
+              "dimension": "material",
+              "target": "*",
+              "property": "surface.material"
+            },
+            {
+              "dimension": "material",
+              "target": "*",
+              "property": "wardrobe.material"
+            },
+            {
+              "dimension": "material",
+              "target": "*",
+              "property": "surface.reflectance"
+            },
+            {
+              "dimension": "material",
+              "target": "*",
+              "property": "surface.transmission"
+            }
+          ],
+          "applicability": {
+            "status": "eligible",
+            "source": "hybrid_visual_profile_resolution"
+          },
+          "opt_in_contract": {
+            "effect": "promote_to_hard_visual_obligation",
+            "visual_obligations_contract_version": "photo-visual-obligations/v1",
+            "obligation": {
+              "id": "pa_blue_motif_white_ceramic",
+              "category": "owner_bound_palette_application",
+              "activation": {
+                "source": "composer_opt_in",
+                "scope": "request_only",
+                "source_intent_ids": []
+              },
+              "composition_instruction": "Make this selected owner relation visible: bounded cobalt-blue motifs remain on the same white glazed ceramic body Make this selected owner relation visible: continuous ceramic shading connects the white body across the blue motif boundaries",
+              "component_semantics": {
+                "minimum_component_groups": 2,
+                "required_group_ids": [
+                  "component_1",
+                  "component_2"
+                ],
+                "groups": [
+                  {
+                    "id": "component_1",
+                    "any_terms": [
+                      "bounded cobalt-blue motifs remain on the same white glazed ceramic body"
+                    ]
+                  },
+                  {
+                    "id": "component_2",
+                    "any_terms": [
+                      "continuous ceramic shading connects the white body across the blue motif boundaries"
+                    ]
+                  }
+                ]
+              },
+              "prompt_binding": {
+                "composed_field": "visual_obligation_evidence",
+                "required_evidence_fields": [
+                  "component_1_phrase",
+                  "component_2_phrase"
+                ],
+                "minimum_distinct_evidence_phrases": 2,
+                "prompt_evidence_must_be_literal": true,
+                "maximum_pairwise_content_token_overlap_ratio": 0.82,
+                "forbidden_filler_phrases": [
+                  "visible evidence",
+                  "visual evidence",
+                  "required cue",
+                  "prompt phrase"
+                ]
+              },
+              "evidence_requirements": {
+                "component_1_phrase": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "bounded cobalt-blue motifs remain on the same white glazed ceramic body"
+                  ]
+                },
+                "component_2_phrase": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "continuous ceramic shading connects the white body across the blue motif boundaries"
+                  ]
+                }
+              },
+              "runtime_expression": {
+                "default_mode": "definition_with_optional_label",
+                "prompt_label_terms": [],
+                "forbidden_prompt_terms": [],
+                "runtime_forbidden_labels": []
+              },
+              "render_gates": [
+                {
+                  "id": "vo_pa_blue_motif_white_ceramic_1",
+                  "review_scale": "both",
+                  "description": "bounded cobalt-blue motifs remain on the same white glazed ceramic body. Inspect the assigned owners in saved native pixels and the whole frame; an absent, occluded, merged, reversed or unclear component fails."
+                },
+                {
+                  "id": "vo_pa_blue_motif_white_ceramic_2",
+                  "review_scale": "both",
+                  "description": "continuous ceramic shading connects the white body across the blue motif boundaries. Inspect the assigned owners in saved native pixels and the whole frame; an absent, occluded, merged, reversed or unclear component fails."
+                }
+              ],
+              "reject_substitutes": [
+                "a separate blue object beside a white vessel",
+                "a blue-lit white vessel substitutes for bounded blue motifs"
+              ]
+            }
+          }
+        },
+        {
+          "id": "visual-concept:pa_food_container_color_owners",
+          "content_form": "unordered_inspiration_terms",
+          "concept_terms": [
+            "에스프레소·코발트·크림",
+            "the beverage or food regions retain their separate ingredient colors inside that container",
+            "the declared container surface retains its own bounded local color",
+            "the container color does not spread across the ingredient boundaries"
+          ],
+          "affected_dimensions": [
+            "color"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "color",
+              "target": "*",
+              "property": "surface.local_color"
+            },
+            {
+              "dimension": "color",
+              "target": "*",
+              "property": "container.surface.local_color"
+            },
+            {
+              "dimension": "color",
+              "target": "*",
+              "property": "ingredients.local_color"
+            }
+          ],
+          "applicability": {
+            "status": "eligible",
+            "source": "hybrid_visual_profile_resolution"
+          },
+          "opt_in_contract": {
+            "effect": "promote_to_hard_visual_obligation",
+            "visual_obligations_contract_version": "photo-visual-obligations/v1",
+            "obligation": {
+              "id": "pa_food_container_color_owners",
+              "category": "owner_bound_palette_application",
+              "activation": {
+                "source": "composer_opt_in",
+                "scope": "request_only",
+                "source_intent_ids": []
+              },
+              "composition_instruction": "Make this selected owner relation visible: the declared container surface retains its own bounded local color Make this selected owner relation visible: the beverage or food regions retain their separate ingredient colors inside that container Make this selected owner relation visible: the container color does not spread across the ingredient boundaries",
+              "component_semantics": {
+                "minimum_component_groups": 3,
+                "required_group_ids": [
+                  "component_1",
+                  "component_2",
+                  "component_3"
+                ],
+                "groups": [
+                  {
+                    "id": "component_1",
+                    "any_terms": [
+                      "the declared container surface retains its own bounded local color"
+                    ]
+                  },
+                  {
+                    "id": "component_2",
+                    "any_terms": [
+                      "the beverage or food regions retain their separate ingredient colors inside that container"
+                    ]
+                  },
+                  {
+                    "id": "component_3",
+                    "any_terms": [
+                      "the container color does not spread across the ingredient boundaries"
+                    ]
+                  }
+                ]
+              },
+              "prompt_binding": {
+                "composed_field": "visual_obligation_evidence",
+                "required_evidence_fields": [
+                  "component_1_phrase",
+                  "component_2_phrase",
+                  "component_3_phrase"
+                ],
+                "minimum_distinct_evidence_phrases": 3,
+                "prompt_evidence_must_be_literal": true,
+                "maximum_pairwise_content_token_overlap_ratio": 0.82,
+                "forbidden_filler_phrases": [
+                  "visible evidence",
+                  "visual evidence",
+                  "required cue",
+                  "prompt phrase"
+                ]
+              },
+              "evidence_requirements": {
+                "component_1_phrase": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "the declared container surface retains its own bounded local color"
+                  ]
+                },
+                "component_2_phrase": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "the beverage or food regions retain their separate ingredient colors inside that container"
+                  ]
+                },
+                "component_3_phrase": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "the container color does not spread across the ingredient boundaries"
+                  ]
+                }
+              },
+              "runtime_expression": {
+                "default_mode": "definition_with_optional_label",
+                "prompt_label_terms": [],
+                "forbidden_prompt_terms": [],
+                "runtime_forbidden_labels": []
+              },
+              "render_gates": [
+                {
+                  "id": "vo_pa_food_container_color_owners_1",
+                  "review_scale": "both",
+                  "description": "the declared container surface retains its own bounded local color. Inspect the assigned owners in saved native pixels and the whole frame; an absent, occluded, merged, reversed or unclear component fails."
+                },
+                {
+                  "id": "vo_pa_food_container_color_owners_2",
+                  "review_scale": "both",
+                  "description": "the beverage or food regions retain their separate ingredient colors inside that container. Inspect the assigned owners in saved native pixels and the whole frame; an absent, occluded, merged, reversed or unclear component fails."
+                },
+                {
+                  "id": "vo_pa_food_container_color_owners_3",
+                  "review_scale": "both",
+                  "description": "the container color does not spread across the ingredient boundaries. Inspect the assigned owners in saved native pixels and the whole frame; an absent, occluded, merged, reversed or unclear component fails."
+                }
+              ],
+              "reject_substitutes": [
+                "blue liquid substitutes for a blue cup",
+                "a uniformly recolored food surface replaces distinct ingredients"
+              ]
+            }
+          }
+        },
+        {
           "id": "visual-concept:y2kr_icy_blue",
           "content_form": "unordered_inspiration_terms",
           "concept_terms": [
@@ -4646,18 +4840,14 @@
           "creative_sampling": false
         },
         {
-          "id": "clarification:visual-profile:mg_grid_repeat_relation",
+          "id": "clarification:visual-profile:pa_blue_motif_white_ceramic",
           "source": "visual_meaning_registry",
-          "profile_id": "mg_grid_repeat_relation",
-          "interpreted_meaning": "matching ornament prototypes repeat across multiple rows and columns; ornament centers maintain a consistent row and column spacing; the repetitions remain artwork ornaments while photographed people remain singular",
+          "profile_id": "pa_blue_motif_white_ceramic",
+          "interpreted_meaning": "bounded cobalt-blue motifs remain on the same white glazed ceramic body; continuous ceramic shading connects the white body across the blue motif boundaries",
           "meaning_components": [
-            "grid repetition of ornaments on a displayed artwork",
-            "작품 장식의 행과 열 반복",
-            "Identical small motifs line up in evenly spaced rows and columns on the panel.",
-            "패널의 같은 작은 무늬가 일정한 간격의 행과 열로 줄지어 있다.",
-            "matching ornament prototypes repeat across multiple rows and columns",
-            "ornament centers maintain a consistent row and column spacing",
-            "the repetitions remain artwork ornaments while photographed people remain singular"
+            "bounded cobalt-blue motifs remain on the same white glazed ceramic body",
+            "continuous ceramic shading connects the white body across the blue motif boundaries",
+            "청화백자 블루·화이트"
           ],
           "runtime_expression_mode": "definition_with_optional_label",
           "forbidden_runtime_labels": [],
@@ -4670,44 +4860,35 @@
           "creative_sampling": false
         },
         {
-          "id": "clarification:visual-profile:pe_rgb_split_picture_plane_relation",
+          "id": "clarification:visual-profile:pa_food_container_color_owners",
           "source": "visual_meaning_registry",
-          "profile_id": "pe_rgb_split_picture_plane_relation",
-          "interpreted_meaning": "high-contrast picture contours split into offset color channels; the offsets remain image marks rather than extra scene objects",
+          "profile_id": "pa_food_container_color_owners",
+          "interpreted_meaning": "the declared container surface retains its own bounded local color; the beverage or food regions retain their separate ingredient colors inside that container; the container color does not spread across the ingredient boundaries",
           "meaning_components": [
-            "picture-plane offset RGB channel contours",
-            "영상면 RGB 채널 경계 어긋남",
-            "high-contrast picture contours split into offset color channels",
-            "the offsets remain image marks rather than extra scene objects",
-            "Red green and blue copies of the same high contrast outline are slightly displaced.",
-            "같은 대비 윤곽의 빨강·초록·파랑 색층이 조금 어긋나 보인다."
+            "the declared container surface retains its own bounded local color",
+            "the beverage or food regions retain their separate ingredient colors inside that container",
+            "the container color does not spread across the ingredient boundaries",
+            "에스프레소·코발트·크림"
           ],
           "runtime_expression_mode": "definition_with_optional_label",
           "forbidden_runtime_labels": [],
           "applicability": {
-            "status": "requires_existing_adult_context",
-            "reason": "meaning_is_exposed_but_the_existing_adult_context_gate_did_not_activate"
+            "status": "eligible",
+            "reason": "contextual_visual_concept_candidate"
           },
           "required_in_final_prompt": false,
           "revisable": false,
           "creative_sampling": false
         },
         {
-          "id": "clarification:visual-profile:pr_scene_owned_exposure_tradeoff",
+          "id": "clarification:visual-profile:pa_primary_rectangles_orthogonal",
           "source": "visual_meaning_registry",
-          "profile_id": "pr_scene_owned_exposure_tradeoff",
-          "interpreted_meaning": "the indoor subject retains needed readable detail; window and room brightness differ consistently across space; only a small high-luminance window region loses detail; the interior retains tonal depth rather than uniform HDR brightness",
+          "profile_id": "pa_primary_rectangles_orthogonal",
+          "interpreted_meaning": "black orthogonal lines divide unequal red blue and yellow rectangles on one light carrier; all three primary-color regions and their shared line topology remain visible on that same carrier",
           "meaning_components": [
-            "실내·창밖 노출 선택의 소유자",
-            "scene owned exposure tradeoff relation",
-            "bright window",
-            "dim deeper room",
-            "window-room exposure contrast",
-            "limited highlight flare",
-            "the indoor subject retains needed readable detail",
-            "window and room brightness differ consistently across space",
-            "only a small high-luminance window region loses detail",
-            "the interior retains tonal depth rather than uniform HDR brightness"
+            "black orthogonal lines divide unequal red blue and yellow rectangles on one light carrier",
+            "all three primary-color regions and their shared line topology remain visible on that same carrier",
+            "삼원색·흑백 — De Stijl"
           ],
           "runtime_expression_mode": "definition_with_optional_label",
           "forbidden_runtime_labels": [],
@@ -5021,8 +5202,8 @@
     "core_retrieval": {
       "contract_version": "photo-core-retrieval/v1",
       "source_authorial_core_sha256": "de17435042cd3421ee43c60436968353a01c3e7c658872802ab5970f7cfe60e4",
-      "slot_corpus_sha256": "17122ab185b6edf242b3e5f63964dd2c944255764c5fd3383ee9caae88130f58",
-      "slot_ownership_sha256": "275331fa244ec54afafdfabf303de5b415f19411d4dea3462957821cf75dc9ca",
+      "slot_corpus_sha256": "e04a96380f99f89f8ff2ae6b0038f27cb90ab21edc64677234ab6876584ba7e7",
+      "slot_ownership_sha256": "b5a94fbbc5d41c08223243a4d605e14630f3ca005a08133df1884ec132f729b6",
       "slot_applicability_sha256": "9a26b47405845ed50ad1187f6b7a41f972c34d1d04e14aad54b62741321254f5",
       "whole_scene_query_sha256": "2a3433200946d87e5b44b27ed2adb2702c6c655f215e4b156b55ac6d13b04791",
       "active_slots": {
@@ -5323,7 +5504,7 @@
       "candidate_allocation": "one_supported_hit_per_slot_per_round",
       "observation_priority": "bounded_frozen_evidence_before_slot_rounds",
       "candidate_adoption": "optional",
-      "canonical_sha256": "909aa4ae5ad6e994d19bcf37bd16d98d98f6b0d26ea77616d4da974ac8da9cfe"
+      "canonical_sha256": "9e119af1b2a12d878a226cb47405603a1cbd22b800fec9c659babc5b965e5fc3"
     },
     "candidate_bundles": {
       "contract_version": "photo-candidate-bundles/v1",
@@ -5640,7 +5821,7 @@
         "hard_guards_relaxed_by_creativity": false,
         "relevance_basis": "authorial_core_query_with_semantic_score_when_available"
       },
-      "hard_eligible_pool_sha256": "2a02be126ee6668fbdba24c02b21d1c7434e7cb81fec0c82e8c9d29f3ad33459",
+      "hard_eligible_pool_sha256": "44638957411bcc24f5de8625cb578fa97823a7fe34a13331319850a732484e03",
       "hard_eligible_candidate_count": 62,
       "guard_invariant_sha256": "279ce0c50805960dcf624b48b8949263fb4314aa313f42c766022b262ce18d38",
       "user_exclusion_filter": {
@@ -5650,114 +5831,6 @@
       },
       "candidate_order": "seed_shuffled_non_preferential",
       "candidates": [
-        {
-          "id": "slot:surreal_physics_detail:matching_reflections_and_depth",
-          "slot": "surreal_physics_detail",
-          "axis": null,
-          "source_kind": "slot",
-          "concept_terms": [
-            "matching reflections and depth of field within the same lens capture"
-          ],
-          "applicability": {
-            "status": "eligible",
-            "source": "frozen_core_slot_contract",
-            "reason": null
-          },
-          "entry_id": "matching_reflections_and_depth",
-          "conflicts_with": [],
-          "semantic_band": "near",
-          "content_form": "unordered_inspiration_terms",
-          "concept_units": [
-            "matching reflections and depth of field within the same lens capture"
-          ],
-          "relations": [],
-          "affected_dimensions": [
-            "concept"
-          ],
-          "adoption": "optional",
-          "semantic_surface_version": "photo-candidate-semantic-surface/v1"
-        },
-        {
-          "id": "slot:frame_anchor_medium:photographic_grain_present",
-          "slot": "frame_anchor_medium",
-          "axis": null,
-          "source_kind": "slot",
-          "concept_terms": [
-            "photographic film or sensor grain present"
-          ],
-          "applicability": {
-            "status": "eligible",
-            "source": "frozen_core_slot_contract",
-            "reason": null
-          },
-          "entry_id": "photographic_grain_present",
-          "conflicts_with": [],
-          "semantic_band": "near",
-          "content_form": "unordered_inspiration_terms",
-          "concept_units": [
-            "photographic film or sensor grain present"
-          ],
-          "relations": [],
-          "affected_dimensions": [
-            "composition"
-          ],
-          "adoption": "optional",
-          "semantic_surface_version": "photo-candidate-semantic-surface/v1"
-        },
-        {
-          "id": "slot:location:grandmother_kitchen_window",
-          "slot": "location",
-          "axis": null,
-          "source_kind": "slot",
-          "concept_terms": [
-            "a grandmother kitchen window"
-          ],
-          "applicability": {
-            "status": "eligible",
-            "source": "frozen_core_slot_contract",
-            "reason": null
-          },
-          "entry_id": "grandmother_kitchen_window",
-          "conflicts_with": [],
-          "semantic_band": "near",
-          "content_form": "unordered_inspiration_terms",
-          "concept_units": [
-            "a grandmother kitchen window"
-          ],
-          "relations": [],
-          "affected_dimensions": [
-            "setting"
-          ],
-          "adoption": "optional",
-          "semantic_surface_version": "photo-candidate-semantic-surface/v1"
-        },
-        {
-          "id": "slot:medium:salted_paper_print_object",
-          "slot": "medium",
-          "axis": null,
-          "source_kind": "slot",
-          "concept_terms": [
-            "a salted-paper photographic print object"
-          ],
-          "applicability": {
-            "status": "eligible",
-            "source": "frozen_core_slot_contract",
-            "reason": null
-          },
-          "entry_id": "salted_paper_print_object",
-          "conflicts_with": [],
-          "semantic_band": "near",
-          "content_form": "unordered_inspiration_terms",
-          "concept_units": [
-            "a salted-paper photographic print object"
-          ],
-          "relations": [],
-          "affected_dimensions": [
-            "style"
-          ],
-          "adoption": "optional",
-          "semantic_surface_version": "photo-candidate-semantic-surface/v1"
-        },
         {
           "id": "slot:reflection_logic:rb_glass_reflection_transmission_candidate",
           "slot": "reflection_logic",
@@ -5803,6 +5876,153 @@
           "affected_dimensions": [
             "material",
             "composition"
+          ],
+          "adoption": "optional",
+          "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+        },
+        {
+          "id": "slot:focus:pe_deep_readability",
+          "slot": "focus",
+          "axis": null,
+          "source_kind": "slot",
+          "concept_terms": [
+            "near subject details remain legible",
+            "far scene details remain legible"
+          ],
+          "applicability": {
+            "status": "eligible",
+            "source": "frozen_core_slot_contract",
+            "reason": null
+          },
+          "entry_id": "pe_deep_readability",
+          "conflicts_with": [],
+          "semantic_band": "near",
+          "content_form": "unordered_inspiration_terms",
+          "concept_units": [
+            "near subject details remain legible",
+            "far scene details remain legible"
+          ],
+          "relations": [
+            {
+              "id": "effect_owner",
+              "type": "applies_to",
+              "subject": "readable near-to-far scene detail",
+              "object": "scene_distance_to_focus_plane"
+            }
+          ],
+          "affected_dimensions": [
+            "camera"
+          ],
+          "adoption": "optional",
+          "affected_properties": [
+            {
+              "dimension": "camera",
+              "target": "image_plane",
+              "property": "optical.focus"
+            }
+          ],
+          "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+        },
+        {
+          "id": "slot:location:grandmother_kitchen_window",
+          "slot": "location",
+          "axis": null,
+          "source_kind": "slot",
+          "concept_terms": [
+            "a grandmother kitchen window"
+          ],
+          "applicability": {
+            "status": "eligible",
+            "source": "frozen_core_slot_contract",
+            "reason": null
+          },
+          "entry_id": "grandmother_kitchen_window",
+          "conflicts_with": [],
+          "semantic_band": "near",
+          "content_form": "unordered_inspiration_terms",
+          "concept_units": [
+            "a grandmother kitchen window"
+          ],
+          "relations": [],
+          "affected_dimensions": [
+            "setting"
+          ],
+          "adoption": "optional",
+          "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+        },
+        {
+          "id": "slot:film_emulation:pr_film_grain_print_scan_scope_candidate",
+          "slot": "film_emulation",
+          "axis": null,
+          "source_kind": "slot",
+          "concept_terms": [
+            "필름 입자와 인화·스캔 층 분리",
+            "restrained film grain",
+            "grain inside the picture area",
+            "print scan specks",
+            "grain belongs to the photographic picture area",
+            "grain varies with tone without hiding face or material structure",
+            "any specks remain on the print or scan layer",
+            "the look does not imply an actual film capture history"
+          ],
+          "applicability": {
+            "status": "eligible",
+            "source": "frozen_core_slot_contract",
+            "reason": null
+          },
+          "entry_id": "pr_film_grain_print_scan_scope_candidate",
+          "conflicts_with": [],
+          "semantic_band": "near",
+          "content_form": "unordered_inspiration_terms",
+          "concept_units": [
+            "필름 입자와 인화·스캔 층 분리",
+            "restrained film grain",
+            "grain inside the picture area",
+            "print scan specks",
+            "grain belongs to the photographic picture area",
+            "grain varies with tone without hiding face or material structure",
+            "any specks remain on the print or scan layer",
+            "the look does not imply an actual film capture history"
+          ],
+          "relations": [
+            {
+              "id": "pr_film_grain_print_scan_scope_owner_relation",
+              "type": "scene_bound_owner_relation",
+              "subject": "사진 이미지층과 그 출력 물체",
+              "object": "the selected visible subject and its directly related scene surfaces"
+            }
+          ],
+          "affected_dimensions": [
+            "style"
+          ],
+          "adoption": "optional",
+          "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+        },
+        {
+          "id": "slot:color:cr_candidate_high_value_contrast",
+          "slot": "color",
+          "axis": null,
+          "source_kind": "slot",
+          "concept_terms": [
+            "the named regions have a large visible lightness difference",
+            "material detail remains readable within both the light and dark regions"
+          ],
+          "applicability": {
+            "status": "eligible",
+            "source": "frozen_core_slot_contract",
+            "reason": null
+          },
+          "entry_id": "cr_candidate_high_value_contrast",
+          "conflicts_with": [],
+          "semantic_band": "near",
+          "content_form": "unordered_inspiration_terms",
+          "concept_units": [
+            "the named regions have a large visible lightness difference",
+            "material detail remains readable within both the light and dark regions"
+          ],
+          "relations": [],
+          "affected_dimensions": [
+            "color"
           ],
           "adoption": "optional",
           "semantic_surface_version": "photo-candidate-semantic-surface/v1"

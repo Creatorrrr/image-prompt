@@ -1,9 +1,11 @@
 """Image-layer ownership with intact conditions and versioned source binding."""
 from pathlib import Path
+import copy
 import hashlib
 import json
 import sys
 import unittest
+from tests import photo_prompt_fixtures as fixtures
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'skills/photo-prompt-image-generator/assets'
@@ -48,8 +50,11 @@ class PhotorealismOwnerDataCleanupTests(unittest.TestCase):
     def test_eighteen_keeps_and_all_non_owner_fields_are_exact(self):
         kept = [r for r in self.frozen['inventory'] if r['decision'] == 'keep' or r['id'] in self.acceptance['reverted_to_baseline']]
         self.assertEqual(len(kept), 18)
+        previous_crop=self._authenticated_v34_crop_scope()
         for row in self.frozen['inventory']:
             current = self.rows[row['slot'], row['id']]
+            if row['id']=='pr_casual_crop_subject_legibility_candidate' and previous_crop is not None:
+                current=previous_crop
             expected = row['proposed_after'] if row['id'] in self.acceptance['accepted_ids'] else row['before']
             self.assertEqual(current, expected)
             self.assertEqual({k: v for k, v in current.items() if k != 'relations'}, {k: v for k, v in row['before'].items() if k != 'relations'})
@@ -57,6 +62,40 @@ class PhotorealismOwnerDataCleanupTests(unittest.TestCase):
                 self.assertEqual(current, row['before'])
             else:
                 self.assertEqual({k: v for k, v in current['relations'][0].items() if k != 'object'}, {k: v for k, v in row['before']['relations'][0].items() if k != 'object'})
+
+    def _authenticated_v34_crop_scope(self):
+        if not fixtures._v34_scope_context(ROOT):
+            return None
+        support=fixtures._v34_scope_support(ROOT)
+        name=SOURCE.relative_to(ROOT).as_posix()
+        # Authenticate the complete current source and fixed transition before
+        # normalizing only the two explicitly approved historical additions.
+        previous=json.loads(support.previous_payload(ROOT,name,SOURCE.read_bytes()))
+        original=next(row for row in previous['slots']['platform_framing']
+                      if row['id']=='pr_casual_crop_subject_legibility_candidate')
+        proof,_=support.transition(ROOT)
+        additions=[row for row in proof['source_leaf_delta'][name] if row['operation']=='add']
+        self.assertEqual([row['pointer'] for row in additions],[
+            '/slots/platform_framing/0/for_any','/slots/platform_framing/0/kind'])
+        current=copy.deepcopy(self.rows['platform_framing','pr_casual_crop_subject_legibility_candidate'])
+        for addition in additions:
+            key=addition['pointer'].rsplit('/',1)[1]
+            self.assertNotIn(key,original)
+            self.assertEqual(['human'],addition['after'])
+            self.assertEqual(addition['after'],current.pop(key))
+        self.assertEqual(original,current)
+        return current
+
+    def test_current_casual_crop_matches_authenticated_v34_human_scope(self):
+        previous=self._authenticated_v34_crop_scope()
+        frozen=next(row['before'] for row in self.frozen['inventory']
+                    if row['id']=='pr_casual_crop_subject_legibility_candidate')
+        current=self.rows['platform_framing','pr_casual_crop_subject_legibility_candidate']
+        if previous is None:
+            self.assertEqual(frozen,current)
+        else:
+            self.assertEqual(frozen,previous)
+            self.assertEqual(dict(previous,kind=['human'],for_any=['human']),current)
 
     def test_deferred_noise_owner_keeps_original_conditions(self):
         row = self.rows['grain_profile', 'pr_shadows_local_digital_noise_candidate']
