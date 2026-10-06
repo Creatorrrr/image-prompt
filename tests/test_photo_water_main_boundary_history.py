@@ -20,6 +20,10 @@ class WaterMainBoundaryHistoryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.proof,cls.parent=fixtures._v30_transition(ROOT)
+        original=tempfile.TemporaryDirectory(prefix='v30-original-source-')
+        cls.addClassCleanup(original.cleanup)
+        cls.original_root=Path(original.name).resolve()/'tree'
+        cls.original_validator=fixtures.archived_v30_validator(cls.original_root)
         cls.baseline=json.loads((ILL/'assets/photo_regression_baseline_v30.json').read_bytes())
         cls.raw=(ILL/'assets/photo_regression_baseline_v30_pack.json').read_bytes()
         cls.pack=json.loads(cls.raw)[0]
@@ -32,15 +36,18 @@ class WaterMainBoundaryHistoryTests(unittest.TestCase):
         paths=set(self.proof['source_files_after'])|set(self.proof['active_shards_after'])
         paths.update(row['source_path'] for row in self.parent['members'])
         paths.update([str(fixtures.V30_WATER_PROOF),str(fixtures.V29_PARENT_SOURCE),str(fixtures.V29_RUNTIME_PROOF)])
-        paths.update(str(p.relative_to(ROOT)) for p in (ILL/'assets').glob('photo_regression_baseline_v*.json'))
+        paths.update(str(p.relative_to(self.original_root)) for p in (self.original_root/ILL.relative_to(ROOT)/'assets').glob('photo_regression_baseline_v*.json'))
         paths.add(str((ILL/'assets/universal_scene_baseline_v2.json').relative_to(ROOT)))
         for name in paths:
             path=self.repo/name;path.parent.mkdir(parents=True,exist_ok=True)
-            path.symlink_to(ROOT/name)
+            path.symlink_to(self.original_root/name)
 
     def validate(self,pack=None,raw=None):
-        validator._validate_v30_water_main_successor(self.assets,self.repo,self.baseline,
-            self.pack if pack is None else pack,self.raw if raw is None else raw)
+        try:
+            self.original_validator._validate_v30_water_main_successor(self.assets,self.repo,self.baseline,
+                self.pack if pack is None else pack,self.raw if raw is None else raw)
+        except self.original_validator.ValidationFailure as exc:
+            raise validator.ValidationFailure(str(exc)) from exc
 
     @contextlib.contextmanager
     def changed(self,name,raw,mode=None):
@@ -52,8 +59,8 @@ class WaterMainBoundaryHistoryTests(unittest.TestCase):
         finally:
             path.unlink(missing_ok=True);path.symlink_to(original)
 
-    def test_current_cli_receipt_and_reviewed_delta_are_qualified(self):
-        result=validator.validate_photo_regression_baseline(ILL/'assets')
+    def test_original_cli_receipt_and_reviewed_delta_are_qualified(self):
+        result=validator.validate_photo_regression_baseline(ILL/'assets',baseline_version=30)
         self.assertEqual(result['schema'],'photo_regression_baseline/v30')
         self.assertEqual(result['sha256'],self.proof['current_pack_sha256'])
         self.assertEqual(64,validator._public_photo_candidate_count(self.pack))
