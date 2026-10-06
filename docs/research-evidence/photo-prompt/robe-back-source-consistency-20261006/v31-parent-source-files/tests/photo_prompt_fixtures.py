@@ -834,14 +834,10 @@ def _v24_verified_payload(source_root: Path, row: dict) -> bytes:
     if path.stat().st_mode & 0o7777 != int(row['mode'][-3:], 8):
         raise AssertionError(f'Frozen V24 historical source mode drift: {row["path"]}')
     raw = path.read_bytes()
-    if row['source_path'] == row['path']:
-        _v32_require_after_payload(source_root, row['path'], raw)
     blob = hashlib.sha1(f'blob {len(raw)}\0'.encode('ascii') + raw).hexdigest()
     if (len(raw) != row['bytes'] or hashlib.sha256(raw).hexdigest() != row['sha256']
             or blob != row['git_blob']):
-        preserved = _v32_preserved_retained_payload(source_root, row, raw)
-        if preserved is None:
-            preserved = _v31_preserved_retained_payload(source_root, row, raw)
+        preserved = _v31_preserved_retained_payload(source_root, row, raw)
         if preserved is None:
             preserved = _v30_preserved_retained_payload(source_root, row, raw)
         if preserved is None:
@@ -1754,29 +1750,14 @@ def materialize_v29_parent_source(directory: Path, *, source_root: Path = ROOT) 
 
 def v29_source_path(name: str, *, source_root: Path = ROOT) -> Path:
     """Authenticate the original V29 source for a historical DATA test."""
-    current = _v24_regular_path(source_root, name)
-    _v32_require_after_payload(source_root, name, current.read_bytes())
+    current = source_root / _v17_safe_path(name)
     proof, parent = _v30_transition(source_root)
     before = next((row for row in parent['members'] if row['path'] == name), None)
-    if before is None:
-        raise AssertionError('Unregistered V29 historical source path')
-    if before['source_path'] == name:
-        preserved = _v24_verified_payload(source_root, before)
-        if preserved == current.read_bytes():
-            return current
-        # Religion DATA was retained by V30 but overwritten by the sealed V32
-        # edit. Its 6b backing must have the exact requested V29 identity.
-        if _v32_preserved_retained_payload(source_root, before, current.read_bytes()) is None:
-            raise AssertionError('Unqualified retained V29 historical source drift')
-        _, original = _v32_transition(source_root)
-        backing = next(row for row in original['members'] if row['path'] == name)
-        if any(backing[field] != before[field] for field in ('sha256', 'git_blob', 'bytes', 'mode')):
-            raise AssertionError('Frozen retained V29 historical source identity drift')
-        return _v24_regular_path(source_root, backing['source_path'])
+    if before is None or before['source_path'] == name:
+        return current
     if name in proof['source_files_after'] and hashlib.sha256(current.read_bytes()).hexdigest() != proof['source_files_after'][name]:
         requested = dict(before, source_path=name)
-        if (_v32_preserved_retained_payload(source_root, requested, current.read_bytes()) is None
-                and _v31_preserved_retained_payload(source_root, requested, current.read_bytes()) is None):
+        if _v31_preserved_retained_payload(source_root, requested, current.read_bytes()) is None:
             raise AssertionError('Unqualified live source drift outside V30 water transition')
     _v24_verified_payload(source_root, before)
     return source_root / before['source_path']
@@ -1878,30 +1859,13 @@ def materialize_v30_parent_source(directory: Path, *, source_root: Path = ROOT) 
 
 def v30_source_path(name: str, *, source_root: Path = ROOT) -> Path:
     """Authenticate the original V30 source for a historical DATA test."""
-    current = _v24_regular_path(source_root, name)
-    _v32_require_after_payload(source_root, name, current.read_bytes())
+    current = source_root / _v17_safe_path(name)
     proof, parent = _v31_transition(source_root)
     before = next((row for row in parent['members'] if row['path'] == name), None)
-    if before is None:
-        raise AssertionError('Unregistered V30 historical source path')
-    if before['source_path'] == name:
-        preserved = _v24_verified_payload(source_root, before)
-        if preserved == current.read_bytes():
-            return current
-        # Religion DATA was retained by V30 but overwritten by the sealed V32
-        # edit. Its 6b backing must have the exact requested V30 identity.
-        if _v32_preserved_retained_payload(source_root, before, current.read_bytes()) is None:
-            raise AssertionError('Unqualified retained V30 historical source drift')
-        _, original = _v32_transition(source_root)
-        backing = next(row for row in original['members'] if row['path'] == name)
-        if any(backing[field] != before[field] for field in ('sha256', 'git_blob', 'bytes', 'mode')):
-            raise AssertionError('Frozen retained V30 historical source identity drift')
-        return _v24_regular_path(source_root, backing['source_path'])
+    if before is None or before['source_path'] == name:
+        return current
     if name in proof['source_files_after'] and hashlib.sha256(current.read_bytes()).hexdigest() != proof['source_files_after'][name]:
-        requested = dict(before, source_path=name)
-        if (_v32_preserved_retained_payload(source_root, requested, current.read_bytes()) is None
-                and _v31_preserved_retained_payload(source_root, requested, current.read_bytes()) is None):
-            raise AssertionError('Unqualified live source drift outside V31 horror transition')
+        raise AssertionError('Unqualified live source drift outside V31 horror transition')
     _v24_verified_payload(source_root, before)
     return source_root / before['source_path']
 
@@ -1976,29 +1940,15 @@ def _v29_preserved_retained_payload(source_root: Path, row: dict, current: bytes
 
 def v28_source_path(name: str, *, source_root: Path = ROOT) -> Path:
     """Select authenticated V28 bytes for a historical test, never arbitrary drift."""
-    current = _v24_regular_path(source_root, name)
-    _v32_require_after_payload(source_root, name, current.read_bytes())
+    current = source_root / _v17_safe_path(name)
     proof, parent = _v29_transition(source_root)
     before = next((row for row in parent['members'] if row['path'] == name), None)
-    if before is None:
-        raise AssertionError('Unregistered V28 historical source path')
-    if before['source_path'] == name:
-        preserved = _v24_verified_payload(source_root, before)
-        if preserved == current.read_bytes():
-            return current
-        backing = v29_source_path(name, source_root=source_root)
-        if backing.read_bytes() != preserved:
-            raise AssertionError('Frozen retained V28 historical source identity drift')
-        return backing
+    if before is None or before['source_path'] == name:
+        return current
     if name in proof['source_files_after'] and hashlib.sha256(current.read_bytes()).hexdigest() != proof['source_files_after'][name]:
         requested = dict(before, source_path=name)
-        raw = current.read_bytes()
-        preserved = _v32_preserved_retained_payload(source_root, requested, raw)
-        if preserved is None:
-            preserved = _v31_preserved_retained_payload(source_root, requested, raw)
-        if preserved is None:
-            preserved = _v30_preserved_retained_payload(source_root, requested, raw)
-        if preserved is None:
+        if (_v31_preserved_retained_payload(source_root, requested, current.read_bytes()) is None
+                and _v30_preserved_retained_payload(source_root, requested, current.read_bytes()) is None):
             raise AssertionError('Unqualified live source drift outside V29 runtime transition')
     _v24_verified_payload(source_root, before)
     return source_root / before['source_path']
@@ -2048,179 +1998,4 @@ def archived_v28_validator(directory: Path, *, source_root: Path = ROOT):
         for name, original in previous.items():
             if original is None: sys.modules.pop(name, None)
             else: sys.modules[name] = original
-    return modules['validate_illustration_assets']
-
-
-# V32 preserves the original 6b V31 source without revising its qualification.
-V32_ROBE_PROOF = Path('docs/research-evidence/photo-prompt/robe-back-source-consistency-20261006/V32-ROBE-SOURCE-PROOF.json')
-V32_ROBE_PROOF_SHA256 = '5142254443a263dae0d6f90c11fa8d97184f68b3b7cd31c441cd94a00f6b3c8b'
-V31_PARENT_SOURCE = V32_ROBE_PROOF.parent / 'V31-PARENT-SOURCE.json'
-V31_PARENT_SOURCE_SHA256 = '16766165b960a59c706482ebfa7406531276fddbc74bc708fc06058f04b8ba56'
-V31_PARENT_COMMIT = '6b0338ebe6ad3a9a5ee3c603fc742311ad921054'
-V31_PARENT_TREE = 'd7b3e9100a66c8b0e770ab37d8eb50bbd67ddb3b'
-V32_ROBE_SOURCE_PATHS = frozenset(
-    'skills/photo-prompt-image-generator/assets/' + name for name in (
-        'photo_prompt_religion_iconography_extension.json',
-        'photo_prompt_visual_obligations_religion_iconography.json',
-        'photo_prompt_semantic_index.json',
-        'photo_prompt_visual_profile_index.json',
-    )
-)
-
-
-def _v32_transition(source_root: Path = ROOT) -> tuple[dict, dict]:
-    """Authenticate the robe-only transition and every original 6b mapping."""
-    raw = _v24_regular_path(source_root, V32_ROBE_PROOF.as_posix()).read_bytes()
-    parent_raw = _v24_regular_path(source_root, V31_PARENT_SOURCE.as_posix()).read_bytes()
-    if (hashlib.sha256(raw).hexdigest() != V32_ROBE_PROOF_SHA256
-            or hashlib.sha256(parent_raw).hexdigest() != V31_PARENT_SOURCE_SHA256):
-        raise AssertionError('Frozen V32 robe proof or V31 source manifest drift')
-    proof, parent = json.loads(raw), json.loads(parent_raw)
-    rows = parent.get('members') or []
-    preserved = proof.get('preserved_source_paths') or []
-    after = proof.get('source_files_after')
-    if (proof.get('schema') != 'photo-robe-source-consistency-transition/v32'
-            or proof.get('parent_manifest') != V31_PARENT_SOURCE.as_posix()
-            or proof.get('parent_manifest_sha256') != V31_PARENT_SOURCE_SHA256
-            or proof.get('parent_member_count') != 1354
-            or proof.get('previous_qualified_tree') != V31_PARENT_TREE
-            or parent.get('schema') != 'photo-v31-parent-source-manifest/v1'
-            or parent.get('source_pin') != V31_PARENT_COMMIT
-            or parent.get('source_tree') != V31_PARENT_TREE
-            or parent.get('member_count') != 1354 or len(rows) != 1354
-            or parent.get('total_member_bytes') != 2590824970
-            or len(preserved) != 4 or set(preserved) != V32_ROBE_SOURCE_PATHS
-            or not isinstance(after, dict) or len(after) != 148):
-        raise AssertionError('Frozen V31 source inventory drift')
-    paths, backings = set(), {}
-    for row in rows:
-        path = _v17_safe_path(row['path']).as_posix()
-        source = _v17_safe_path(row['source_path']).as_posix()
-        if path in paths:
-            raise AssertionError('Duplicate V31 historical source path')
-        paths.add(path)
-        if (row['mode'] not in ('100644', '100755') or type(row['bytes']) is not int
-                or row['bytes'] < 0 or not isinstance(row['sha256'], str)
-                or not isinstance(row['git_blob'], str)
-                or len(row['sha256']) != 64 or len(row['git_blob']) != 40
-                or any(c not in '0123456789abcdef' for c in row['sha256'] + row['git_blob'])
-                or row.get('git_commit') != V31_PARENT_COMMIT
-                or row.get('git_path') != path):
-            raise AssertionError('Frozen V31 historical source provenance drift')
-        identity = tuple(row[key] for key in ('git_blob', 'mode', 'bytes', 'sha256'))
-        if source in backings and backings[source] != identity:
-            raise AssertionError('Conflicting V31 historical source backing')
-        backings[source] = identity
-    if (any(parent_path.as_posix() in paths for path in paths for parent_path in Path(path).parents)
-            or any(parent_path.as_posix() in backings for path in backings for parent_path in Path(path).parents)
-            or type(parent.get('total_member_bytes')) is not int
-            or sum(row['bytes'] for row in rows) != parent['total_member_bytes']
-            or not set(after).issubset(paths)):
-        raise AssertionError('Frozen V31 historical source inventory drift')
-    for path, digest in after.items():
-        _v17_safe_path(path)
-        if (not isinstance(digest, str) or len(digest) != 64
-                or any(c not in '0123456789abcdef' for c in digest)):
-            raise AssertionError('Frozen V32 source identity drift')
-    originals = {row['path']: row for row in rows}
-    if any(path not in after or originals[path]['source_path'] == path
-           or originals[path]['sha256'] == after[path] for path in preserved):
-        raise AssertionError('Frozen V32 preserved source mapping drift')
-    return proof, parent
-
-
-def _v32_recovery_context(source_root: Path) -> bool:
-    """A missing proof cannot erase the successor while another marker remains."""
-    return any((source_root / name).exists() or (source_root / name).is_symlink()
-               for name in (V32_ROBE_PROOF, V31_PARENT_SOURCE,
-                            Path('skills/subculture-illustration-image-generator/assets/photo_regression_baseline_v32.json')))
-
-
-def _v32_require_after_payload(source_root: Path, name: str, current: bytes) -> None:
-    if name not in V32_ROBE_SOURCE_PATHS or not _v32_recovery_context(source_root):
-        return
-    proof, parent = _v32_transition(source_root)
-    if proof['source_files_after'][name] != hashlib.sha256(current).hexdigest():
-        raise AssertionError(f'Frozen V32 retained live source payload drift: {name}')
-    before = next(item for item in parent['members'] if item['path'] == name)
-    if _v24_regular_path(source_root, name).stat().st_mode & 0o7777 != int(before['mode'][-3:], 8):
-        raise AssertionError(f'Frozen V32 retained live source mode drift: {name}')
-
-
-def _v32_preserved_retained_payload(source_root: Path, row: dict, current: bytes) -> bytes | None:
-    """Recover four sealed robe/index edits, then follow the authenticated history."""
-    if (row['source_path'] != row['path'] or row['path'] not in V32_ROBE_SOURCE_PATHS
-            or not _v32_recovery_context(source_root)):
-        return None
-    proof, parent = _v32_transition(source_root)
-    if proof['source_files_after'][row['path']] != hashlib.sha256(current).hexdigest():
-        raise AssertionError(f'Frozen V32 retained live source payload drift: {row["path"]}')
-    before = next(item for item in parent['members'] if item['path'] == row['path'])
-    path = _v24_regular_path(source_root, row['path'])
-    if path.stat().st_mode & 0o7777 != int(before['mode'][-3:], 8):
-        raise AssertionError(f'Frozen V32 retained live source mode drift: {row["path"]}')
-    preserved = _v24_verified_payload(source_root, before)
-    if all(before[field] == row[field] for field in ('sha256', 'git_blob', 'bytes', 'mode')):
-        return preserved
-    for restore in (_v31_preserved_retained_payload, _v30_preserved_retained_payload, _v29_preserved_retained_payload,
-                    _v28_preserved_retained_payload, _v27_preserved_retained_payload):
-        original = restore(source_root, row, preserved)
-        if original is not None:
-            return original
-    return None
-
-
-def materialize_v31_parent_source(directory: Path, *, source_root: Path = ROOT) -> dict:
-    """Stage all original V31 bytes and modes atomically, without Git or network."""
-    _v24_empty_destination(directory)
-    _, manifest = _v32_transition(source_root)
-    for row in manifest['members']:
-        _v24_verified_payload(source_root, row)
-    directory.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix='.sealed-v31-', dir=directory.parent) as temporary:
-        staged = Path(temporary) / 'tree'
-        staged.mkdir()
-        for row in manifest['members']:
-            target = staged / _v17_safe_path(row['path'])
-            target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_bytes(_v24_verified_payload(source_root, row))
-            target.chmod(int(row['mode'][-3:], 8))
-        _v24_empty_destination(directory)
-        staged.replace(directory)
-    return manifest
-
-
-def archived_v31_validator(directory: Path, *, source_root: Path = ROOT):
-    """Load the exact 6b validator and its sealed support modules in isolation."""
-    manifest = materialize_v31_parent_source(directory, source_root=source_root)
-    records = {row['path']: row for row in manifest['members']}
-    scripts = directory / Path(V17_PARENT_VALIDATOR).parent
-    prefix = '_archived_photo_v31_' + hashlib.sha256(str(directory).encode()).hexdigest()[:16]
-    modules, payloads = {}, {}
-    for name in ('illustration_runtime', 'illustration_audit', 'universal_scene_runtime',
-                 'validate_illustration_assets'):
-        path = scripts / (name + '.py')
-        row = records[path.relative_to(directory).as_posix()]
-        payloads[name] = _v24_verified_payload(directory, dict(row, source_path=row['path']))
-        spec = importlib.util.spec_from_file_location(prefix + '_' + name, path)
-        modules[name] = importlib.util.module_from_spec(spec)
-
-    def historical_import(name, globals=None, locals=None, fromlist=(), level=0):
-        if level == 0 and name in modules:
-            return modules[name]
-        return builtins.__import__(name, globals, locals, fromlist, level)
-
-    previous = {module.__name__: sys.modules.get(module.__name__) for module in modules.values()}
-    try:
-        for module in modules.values():
-            module.__dict__['__builtins__'] = dict(vars(builtins), __import__=historical_import)
-            sys.modules[module.__name__] = module
-        for name, module in modules.items():
-            exec(compile(payloads[name], module.__file__, 'exec'), module.__dict__)
-    finally:
-        for name, original in previous.items():
-            if original is None:
-                sys.modules.pop(name, None)
-            else:
-                sys.modules[name] = original
     return modules['validate_illustration_assets']

@@ -1,0 +1,198 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "비가 그친 늦은 오후, 큰 창이 있는 목조 작업실에서 가상의 성인 모델이 도교 의례복 스타일의 장식된 긴 로브를 입고 서 있는 자연스러운 사진. 카메라에 등을 보인 자세로 로브의 장식된 뒷면이 분명하게 보이고, 옷자락까지 담긴다. 창에서 들어오는 부드러운 빛과 차분한 실내 분위기.\n",
+  "creative_controls_sha256": "c37eeeac81cb0b42c0ef3088049224f3abb8dbd33e1f2055d0c39ab33ad75da1",
+  "interpreted_intent": "The synthetic requester specifies a fictional adult in a decorated long Daoist ceremonial-style robe, a clearly visible rear garment view through the hem, a windowed wood studio, late afternoon after rain, and quiet soft light. The intended experience is a calm encounter with the garment surface and the wearer's settled presence. The author chose a restrained contrast between rain beads and weighted cloth, instead of a theatrical reveal; that contrast, the exact decoration, sleeve arrangement, focus and other unprescribed details remain agent-owned and replaceable. Clothing style supplies no claim about the fictional model's religious beliefs, ethnicity or real identity. Saved controls remain unchanged; subtle attraction comes from relaxed presence.",
+  "subject": "A fictional adult model wearing a decorated long Daoist ceremonial-style robe",
+  "setting": "A wood-lined studio with a large window after rain in late afternoon",
+  "event": "The model stands with the decorated back of the robe visible to the camera",
+  "visual_priorities": [
+    "The decorated robe back is clearly presented through its full lower edge.",
+    "Soft window light reveals the garment surface against the quiet wood interior.",
+    "The model's settled presence and the window's rain traces hold a calm after-rain moment."
+  ],
+  "baseline_prompt_en": "A natural photograph of a fictional adult model wearing a decorated long Daoist ceremonial-style robe in a wood-lined studio with a large window, late in the afternoon just after rain. The model stands quietly in the room with their back toward the camera. The capture camera looks directly toward the model's back, presenting the decorated back of the robe clearly from the shoulders down to the hem. A full-length frame includes the robe's complete lower edge and the floor beneath it. Soft window light settles across the garment, bringing out its surface decoration and the natural weight of its folds. The sleeves hang comfortably beside the body, leaving the broad back readable. Small rain beads on the window catch a little of the fading daylight, while the timber walls hold a quiet indoor atmosphere. The model's relaxed shoulders and settled stance give the portrait an understated, self-possessed appeal. Keep the cloth and its decoration crisp enough to read, with the window and timber gently receding in attention.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete photographic scene",
+      "source_text": "비가 그친 늦은 오후, 큰 창이 있는 목조 작업실에서 가상의 성인 모델이 도교 의례복 스타일의 장식된 긴 로브를 입고 서 있는 자연스러운 사진. 카메라에 등을 보인 자세로 로브의 장식된 뒷면이 분명하게 보이고, 옷자락까지 담긴다. 창에서 들어오는 부드러운 빛과 차분한 실내 분위기.",
+      "basis": "request_context",
+      "resolution": "A fictional adult model wearing a decorated long Daoist ceremonial-style robe. A wood-lined studio with a large window after rain in late afternoon. The model stands with the decorated back of the robe visible to the camera. Preserve the stated photographic treatment, framing, light, garment category and all stated visible relations.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "자연스러운 사진",
+        "dimension": "concept",
+        "prompt_evidence": "A natural photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "가상의 성인 모델",
+        "dimension": "subject",
+        "prompt_evidence": "a fictional adult model"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "서 있는",
+        "dimension": "event",
+        "prompt_evidence": "stands quietly in the room"
+      },
+      {
+        "anchor_id": "robe_type",
+        "source_text": "도교 의례복 스타일의 장식된 긴 로브",
+        "dimension": "appearance",
+        "prompt_evidence": "a decorated long Daoist ceremonial-style robe",
+        "target": "main_subject",
+        "property": "wardrobe.garment_type"
+      },
+      {
+        "anchor_id": "back_decoration",
+        "source_text": "로브의 장식된 뒷면이 분명하게 보이고",
+        "dimension": "appearance",
+        "prompt_evidence": "the decorated back of the robe clearly",
+        "target": "main_subject",
+        "property": "wardrobe.back.decoration_presence"
+      },
+      {
+        "anchor_id": "rear_pose",
+        "source_text": "카메라에 등을 보인 자세",
+        "dimension": "pose",
+        "prompt_evidence": "with their back toward the camera",
+        "target": "main_subject",
+        "property": "orientation"
+      },
+      {
+        "anchor_id": "rear_camera",
+        "source_text": "카메라에 등을 보인 자세",
+        "dimension": "camera",
+        "prompt_evidence": "The capture camera looks directly toward the model's back",
+        "target": "camera",
+        "property": "viewpoint.direction"
+      },
+      {
+        "anchor_id": "studio",
+        "source_text": "큰 창이 있는 목조 작업실",
+        "dimension": "setting",
+        "prompt_evidence": "a wood-lined studio with a large window",
+        "target": "scene",
+        "property": "location"
+      },
+      {
+        "anchor_id": "after_rain",
+        "source_text": "비가 그친 늦은 오후",
+        "dimension": "timing",
+        "prompt_evidence": "late in the afternoon just after rain",
+        "target": "scene",
+        "property": "time_and_weather"
+      },
+      {
+        "anchor_id": "hem_frame",
+        "source_text": "옷자락까지 담긴다",
+        "dimension": "framing",
+        "prompt_evidence": "includes the robe's complete lower edge",
+        "target": "frame",
+        "property": "coverage"
+      },
+      {
+        "anchor_id": "window_light",
+        "source_text": "창에서 들어오는 부드러운 빛",
+        "dimension": "lighting",
+        "prompt_evidence": "Soft window light",
+        "target": "scene",
+        "property": "light.source_and_quality"
+      },
+      {
+        "anchor_id": "calm_room",
+        "source_text": "차분한 실내 분위기",
+        "dimension": "atmosphere",
+        "prompt_evidence": "a quiet indoor atmosphere",
+        "target": "scene",
+        "property": "mood"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "scene"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a fictional adult model"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "scene"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "camera",
+        "direction_requirement": "requested",
+        "height_requirement": "open"
+      },
+      "evidence": {
+        "owner_phrase": "The capture camera",
+        "direction_phrase": "The capture camera looks directly toward the model's back"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "quiet natural garment portrait",
+    "evidence": [
+      "soft window light",
+      "natural cloth weight",
+      "rain trace against timber"
+    ]
+  },
+  "variation_key": "a_decorated_robe_back_ko"
+}

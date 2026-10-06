@@ -1,0 +1,179 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "A natural street photograph of a fictional adult model in a modern cropped denim jacket and straight-leg trousers, standing beside a bicycle outside a neighborhood café on an overcast morning. Show the outfit in a relaxed three-quarter-length portrait, with one hand resting on the handlebar and the jacket clearly readable.\n",
+  "creative_controls_sha256": "171ef8502dbb50b6c7da23c4768580511507f8db912efabc43c047ba41d382a5",
+  "interpreted_intent": "The synthetic requester specifies a fictional adult in a modern cropped denim jacket and straight-leg trousers, beside a bicycle outside a neighborhood café in overcast morning light, with a readable jacket, three-quarter-length portrait and one hand resting on the handlebar. Modern everyday clothing remains its own category. The author chose an ordinary arrival pause, using a supported bicycle, a glance to the entrance and a small ground trace to connect wearer and place. Those optional details, expression, color, surface decoration and unprescribed camera direction remain open. The portrait does not refer to a real person or infer ethnicity or religion. Saved controls use restrained creativity and subtle everyday attraction without extra fetish or surreal treatment.",
+  "subject": "A fictional adult model in a modern cropped denim jacket and straight-leg trousers",
+  "setting": "Outside a neighborhood café on an overcast morning beside a bicycle",
+  "event": "The model stands beside the bicycle with one hand resting on its handlebar",
+  "visual_priorities": [
+    "The modern cropped denim jacket reads clearly above the straight-leg trousers.",
+    "The hand-to-handlebar contact and bicycle establish the brief's ordinary street pause.",
+    "Diffuse morning light joins the wearer, bicycle and café into one natural setting."
+  ],
+  "baseline_prompt_en": "A natural street photograph of a fictional adult model wearing a modern cropped denim jacket and straight-leg trousers, standing beside a bicycle outside a neighborhood café on an overcast morning. Use a relaxed three-quarter-length portrait with the jacket clearly readable. One hand rests on the bicycle handlebar; the elbow bends comfortably, and the bicycle stands alongside the model on its kickstand. The jacket's cropped hem and everyday denim construction remain visible above the trouser waist. The model pauses with a slight easy smile, their free arm hanging loosely as they glance toward the café entrance. Diffuse morning light picks up the jacket's fabric grain and the smooth worn handlebar grip. A softly reflected café window and a small damp patch below the bicycle wheel give the setting the feel of an ordinary arrival. The visible hand, handlebar and jacket form a connected foreground, while the café recedes gently. Natural skin and fabric texture, an informal posture and the quiet street light make the person's everyday ease the photograph's subtle appeal.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete photographic scene",
+      "source_text": "A natural street photograph of a fictional adult model in a modern cropped denim jacket and straight-leg trousers, standing beside a bicycle outside a neighborhood café on an overcast morning. Show the outfit in a relaxed three-quarter-length portrait, with one hand resting on the handlebar and the jacket clearly readable.",
+      "basis": "request_context",
+      "resolution": "A fictional adult model in a modern cropped denim jacket and straight-leg trousers. Outside a neighborhood café on an overcast morning beside a bicycle. The model stands beside the bicycle with one hand resting on its handlebar. Preserve the stated photographic treatment, framing, light, garment category and all stated visible relations.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "A natural street photograph",
+        "dimension": "concept",
+        "prompt_evidence": "A natural street photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "a fictional adult model",
+        "dimension": "subject",
+        "prompt_evidence": "a fictional adult model"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "standing beside a bicycle",
+        "dimension": "event",
+        "prompt_evidence": "standing beside a bicycle"
+      },
+      {
+        "anchor_id": "jacket_type",
+        "source_text": "a modern cropped denim jacket",
+        "dimension": "appearance",
+        "prompt_evidence": "a modern cropped denim jacket",
+        "target": "main_subject",
+        "property": "wardrobe.garment_type"
+      },
+      {
+        "anchor_id": "trousers",
+        "source_text": "straight-leg trousers",
+        "dimension": "appearance",
+        "prompt_evidence": "straight-leg trousers",
+        "target": "main_subject",
+        "property": "wardrobe.trousers.garment_type"
+      },
+      {
+        "anchor_id": "cafe",
+        "source_text": "outside a neighborhood café",
+        "dimension": "setting",
+        "prompt_evidence": "outside a neighborhood café",
+        "target": "scene",
+        "property": "location"
+      },
+      {
+        "anchor_id": "weather_time",
+        "source_text": "on an overcast morning",
+        "dimension": "timing",
+        "prompt_evidence": "on an overcast morning",
+        "target": "scene",
+        "property": "time_and_weather"
+      },
+      {
+        "anchor_id": "three_quarter_crop",
+        "source_text": "a relaxed three-quarter-length portrait",
+        "dimension": "framing",
+        "prompt_evidence": "a relaxed three-quarter-length portrait",
+        "target": "frame",
+        "property": "coverage"
+      },
+      {
+        "anchor_id": "hand_contact",
+        "source_text": "one hand resting on the handlebar",
+        "dimension": "action",
+        "prompt_evidence": "One hand rests on the bicycle handlebar",
+        "target": "main_subject",
+        "property": "hand.handlebar_contact"
+      },
+      {
+        "anchor_id": "jacket_legibility",
+        "source_text": "the jacket clearly readable",
+        "dimension": "appearance",
+        "prompt_evidence": "the jacket clearly readable",
+        "target": "main_subject",
+        "property": "wardrobe.visibility"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "scene"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a fictional adult model"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "scene"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "everyday street portrait",
+    "evidence": [
+      "diffuse overcast daylight",
+      "readable denim grain",
+      "informal street pause"
+    ]
+  },
+  "variation_key": "c_modern_denim_jacket_en"
+}

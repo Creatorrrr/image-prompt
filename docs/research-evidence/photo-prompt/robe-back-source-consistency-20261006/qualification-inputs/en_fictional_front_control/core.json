@@ -1,0 +1,226 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "Create a photo-like museum display of a fictional decorative robe, shown only from its front. Hold it open on a discreet support with no person present, and place the camera squarely in front so the front opening is clearly visible. Use deep blue cloth, a single row of small brass-colored buttons beside the opening, and two separate cream-colored curling leaf vines running down the left and right front panels. Leave the lower hem plain blue. Show the whole garment against a pale neutral wall with soft gallery lighting, visible cloth weave, and realistic raised embroidery. This is an invented design, not a reconstruction of any museum object.\n",
+  "creative_controls_sha256": "9bfed9a3f3e1608c05be8e0614e3aa26e6088cf81c600763978f2cdd2dbb6ab2",
+  "interpreted_intent": "Make an explicitly front-facing museum-style photograph of the independently invented blue robe. Preserve the open front, buttons, separate leaf vines, and plain hem. This negative control has its own fictional decoration and makes no claim about the historical museum object. A slight supporting shadow is an agent choice for convincing physical placement.",
+  "subject": "a fictional decorative robe",
+  "setting": "a museum textile display",
+  "event": "Its deep blue cloth is held open on a discreet support",
+  "visual_priorities": [
+    "Keep the front opening and the whole outline readable.",
+    "Show separate leaf vines on the two front panels with the buttons beside the opening.",
+    "Leave the lower hem visibly plain blue.",
+    "Make the invented garment feel physically present through cloth texture and soft gallery light."
+  ],
+  "baseline_prompt_en": "A museum display photograph presents the front of a fictional decorative robe. Its deep blue cloth is held open on a discreet support in a garment-only display, making the front opening clearly visible. The capture camera gives a straight-on front view of the robe. A single row of small brass-colored buttons sits beside the opening. Two separate cream-colored curling leaf vines run down the left and right front panels, and the lower hem remains plain blue. The whole garment fits within the frame against a pale neutral wall. Soft gallery lighting brings out the visible cloth weave and realistic raised embroidery, with a gentle shadow behind the support giving the textile a believable place in the room. The photograph presents an invented garment design.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete display request",
+      "source_text": "Create a photo-like museum display of a fictional decorative robe, shown only from its front. Hold it open on a discreet support with no person present, and place the camera squarely in front so the front opening is clearly visible. Use deep blue cloth, a single row of small brass-colored buttons beside the opening, and two separate cream-colored curling leaf vines running down the left and right front panels. Leave the lower hem plain blue. Show the whole garment against a pale neutral wall with soft gallery lighting, visible cloth weave, and realistic raised embroidery. This is an invented design, not a reconstruction of any museum object.",
+      "basis": "request_context",
+      "resolution": "Make an explicitly front-facing museum-style photograph of the independently invented blue robe. Preserve the open front, buttons, separate leaf vines, and plain hem. This negative control has its own fictional decoration and makes no claim about the historical museum object. A slight supporting shadow is an agent choice for convincing physical placement.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [
+    "no person present",
+    "not a reconstruction of any museum object"
+  ],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "a photo-like museum display",
+        "dimension": "concept",
+        "prompt_evidence": "A museum display photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "a fictional decorative robe",
+        "dimension": "subject",
+        "prompt_evidence": "a fictional decorative robe"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "Hold it open on a discreet support",
+        "dimension": "event",
+        "prompt_evidence": "held open on a discreet support"
+      },
+      {
+        "anchor_id": "camera_surface",
+        "source_text": "place the camera squarely in front",
+        "dimension": "camera",
+        "prompt_evidence": "a straight-on front view of the robe",
+        "target": "camera",
+        "property": "viewpoint.direction"
+      },
+      {
+        "anchor_id": "front_selected",
+        "source_text": "shown only from its front",
+        "dimension": "appearance",
+        "prompt_evidence": "the front of a fictional decorative robe",
+        "target": "robe",
+        "property": "selected_surface"
+      },
+      {
+        "anchor_id": "display_people",
+        "source_text": "with no person present",
+        "dimension": "composition",
+        "prompt_evidence": "a garment-only display",
+        "target": "display",
+        "property": "human_presence"
+      },
+      {
+        "anchor_id": "front_opening",
+        "source_text": "so the front opening is clearly visible",
+        "dimension": "appearance",
+        "prompt_evidence": "the front opening clearly visible",
+        "target": "robe",
+        "property": "opening.visibility"
+      },
+      {
+        "anchor_id": "blue_cloth",
+        "source_text": "deep blue cloth",
+        "dimension": "appearance",
+        "prompt_evidence": "deep blue cloth",
+        "target": "robe",
+        "property": "ground.color"
+      },
+      {
+        "anchor_id": "buttons",
+        "source_text": "a single row of small brass-colored buttons beside the opening",
+        "dimension": "appearance",
+        "prompt_evidence": "A single row of small brass-colored buttons sits beside the opening",
+        "target": "robe",
+        "property": "decoration.buttons"
+      },
+      {
+        "anchor_id": "leaf_vines",
+        "source_text": "two separate cream-colored curling leaf vines running down the left and right front panels",
+        "dimension": "appearance",
+        "prompt_evidence": "Two separate cream-colored curling leaf vines run down the left and right front panels",
+        "target": "robe",
+        "property": "decoration.front_panels"
+      },
+      {
+        "anchor_id": "plain_hem",
+        "source_text": "Leave the lower hem plain blue",
+        "dimension": "appearance",
+        "prompt_evidence": "the lower hem remains plain blue",
+        "target": "robe",
+        "property": "decoration.lower_hem"
+      },
+      {
+        "anchor_id": "whole_outline",
+        "source_text": "Show the whole garment",
+        "dimension": "framing",
+        "prompt_evidence": "The whole garment fits within the frame",
+        "target": "frame",
+        "property": "coverage"
+      },
+      {
+        "anchor_id": "pale_wall",
+        "source_text": "against a pale neutral wall",
+        "dimension": "setting",
+        "prompt_evidence": "against a pale neutral wall",
+        "target": "display",
+        "property": "background"
+      },
+      {
+        "anchor_id": "soft_light",
+        "source_text": "soft gallery lighting",
+        "dimension": "lighting",
+        "prompt_evidence": "Soft gallery lighting",
+        "target": "display",
+        "property": "light.quality"
+      },
+      {
+        "anchor_id": "textile_surface",
+        "source_text": "visible cloth weave, and realistic raised embroidery",
+        "dimension": "material",
+        "prompt_evidence": "the visible cloth weave and realistic raised embroidery",
+        "target": "robe",
+        "property": "surface.texture"
+      },
+      {
+        "anchor_id": "fictional_identity",
+        "source_text": "This is an invented design, not a reconstruction of any museum object",
+        "dimension": "identity",
+        "prompt_evidence": "an invented garment design",
+        "target": "robe",
+        "property": "design.origin"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "composition",
+      "framing",
+      "lighting",
+      "material",
+      "setting",
+      "camera",
+      "identity"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_object",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "a fictional decorative robe"
+      }
+    },
+    {
+      "assertion_id": "capture_camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "camera",
+        "direction_requirement": "requested",
+        "height_requirement": "open"
+      },
+      "evidence": {
+        "owner_phrase": "The capture camera",
+        "direction_phrase": "a straight-on front view of the robe"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "museum object photograph",
+    "evidence": [
+      "museum display",
+      "soft gallery light"
+    ]
+  },
+  "variation_key": "en_fictional_front_control"
+}

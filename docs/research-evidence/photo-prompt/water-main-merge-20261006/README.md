@@ -19,7 +19,7 @@
 
 V1–V29의 원본과 후보팩을 수정하지 않고 V30을 추가했다. 원격 V29의 원래 소스·의존성 1,253개는 Git blob, SHA-256, 크기와 모드로 고정했다. 변한 파일은 별도 원본 보존 경로에서 복원한다. V29 receipt는 원래 구현을 사용하는 새 Python 프로세스에서 검증한다. 현재 코드에 과거 코드를 혼합해 읽거나 임의의 최신 데이터로 재해석하지 않는다. [V29 원본 목록](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/water-main-merge-20261006/V29-PARENT-SOURCE.json), [V30 증거](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/water-main-merge-20261006/V30-WATER-MAIN-PROOF.json), [후보팩 차이 22개](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/water-main-merge-20261006/PACK-DELTA.json)를 고정했다.
 
-V30의 고정 장면·제어·신체 사전검토·프롬프트 예산·부정문은 유지된다. 후보 64개 중 선택적 질감 후보 한 개가 수증기 안개에서 연결된 표면 거품으로 바뀌었고, 나머지 후보 객체와 순서는 그대로다. 나머지 차이는 새 원본에 따른 검색·후보 수·해시와 로컬 제어 정책의 선언된 두 불리언이다. 이 차이 외의 후보 의미·순서·소유 대상·본문·예산·부정문 변경은 새 변조 검사에서 거부한다.
+V30의 고정 장면·제어·신체 사전검토·프롬프트 예산·부정문은 유지된다. 후보 64개 중 선택적 질감 후보 한 개가 수증기 안개에서 충돌 중심 주위의 원형 액체 테두리·짧은 돌기·분리된 물방울을 묘사하는 크라운 스플래시로 바뀌었고, 나머지 후보 객체와 순서는 그대로다. 나머지 차이는 새 원본에 따른 검색·후보 수·해시와 로컬 제어 정책의 선언된 두 불리언이다. 이 차이 외의 후보 의미·순서·소유 대상·본문·예산·부정문 변경은 새 변조 검사에서 거부한다.
 
 앞선 물 이미지 세 사례는 [원래 렌더 보고서](/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/water-integration-20261006/REPORT.md)의 데이터 세대에 계속 연결된다. 이번 병합에서 이미지 생성은 추가로 호출하지 않았다. 물 프로필 원본을 그대로 보존했다는 확인과 이번 main의 코드·데이터·runtime 검증을 기록했고, 이를 병합 후 새 이미지 검증이나 요청자 수용으로 확대하지 않았다.
 

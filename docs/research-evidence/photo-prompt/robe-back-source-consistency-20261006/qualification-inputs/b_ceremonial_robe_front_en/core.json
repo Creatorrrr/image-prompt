@@ -1,0 +1,190 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "A natural photographic portrait of a fictional adult model wearing a Daoist ceremonial-style robe in a quiet stone entrance hall. The model faces the camera so the front of the robe is clearly visible, framed from head to below the knees. Gentle morning light enters through an open doorway; the pose feels relaxed and unforced.\n",
+  "creative_controls_sha256": "edabd6e0c2e54f86b4261a55c1d40053ffcb9a7fe018636fc643120f52edfb81",
+  "interpreted_intent": "The synthetic requester asks for a natural portrait of a fictional adult wearing a Daoist ceremonial-style robe, front presented to the capture camera, head-to-below-knee framing, a quiet stone entrance hall, gentle morning doorway light and an unforced pose. The author chose an approachable pause held by the doorway and the robe's drape, rather than a formal ceremonial gesture. Eye contact, exact arm placement, palette, decoration and cloth details are optional authored realizations; the garment category and front visibility remain protected. The style of clothing makes no assertion about the model's actual religion, ethnicity or identity. Saved subtle sensuality is expressed through ease and personal presence with no control boosts.",
+  "subject": "A fictional adult model wearing a Daoist ceremonial-style robe",
+  "setting": "A quiet stone entrance hall in gentle morning light from an open doorway",
+  "event": "The model holds a relaxed portrait pose facing the camera with the robe front visible",
+  "visual_priorities": [
+    "The front of the Daoist ceremonial-style robe stays clear in the specified portrait crop.",
+    "The relaxed adult presence connects with the camera through a calm held moment.",
+    "Soft doorway light models the garment against the still stone hall."
+  ],
+  "baseline_prompt_en": "A natural photographic portrait of a fictional adult model wearing a Daoist ceremonial-style robe in a quiet stone entrance hall. The model faces the camera, with the front of the robe clearly visible. The capture camera views the model from the front, and the portrait is framed from head to below the knees. Gentle morning light enters through an open doorway and spreads softly across the robe's front surface. The model stands with an easy, balanced posture; their arms rest beside the body and the long sleeves fall into soft folds. Their relaxed expression and warm direct attention give the encounter a quiet personal appeal. The doorway light, the drape of the cloth and the pale stone behind the model form the portrait's simple rhythm. Keep the robe's visible front and the person's presence equally clear, with natural fabric texture and a gentle transition into the dimmer hall. The pose feels relaxed and unforced, as though the camera has caught an ordinary pause in this still room.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete photographic scene",
+      "source_text": "A natural photographic portrait of a fictional adult model wearing a Daoist ceremonial-style robe in a quiet stone entrance hall. The model faces the camera so the front of the robe is clearly visible, framed from head to below the knees. Gentle morning light enters through an open doorway; the pose feels relaxed and unforced.",
+      "basis": "request_context",
+      "resolution": "A fictional adult model wearing a Daoist ceremonial-style robe. A quiet stone entrance hall in gentle morning light from an open doorway. The model holds a relaxed portrait pose facing the camera with the robe front visible. Preserve the stated photographic treatment, framing, light, garment category and all stated visible relations.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "A natural photographic portrait",
+        "dimension": "concept",
+        "prompt_evidence": "A natural photographic portrait"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "a fictional adult model",
+        "dimension": "subject",
+        "prompt_evidence": "a fictional adult model"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "The model faces the camera",
+        "dimension": "event",
+        "prompt_evidence": "The model faces the camera"
+      },
+      {
+        "anchor_id": "robe_type",
+        "source_text": "wearing a Daoist ceremonial-style robe",
+        "dimension": "appearance",
+        "prompt_evidence": "wearing a Daoist ceremonial-style robe",
+        "target": "main_subject",
+        "property": "wardrobe.garment_type"
+      },
+      {
+        "anchor_id": "front_visibility",
+        "source_text": "the front of the robe is clearly visible",
+        "dimension": "appearance",
+        "prompt_evidence": "the front of the robe clearly visible",
+        "target": "main_subject",
+        "property": "wardrobe.front.visibility"
+      },
+      {
+        "anchor_id": "front_camera",
+        "source_text": "The model faces the camera so the front of the robe is clearly visible",
+        "dimension": "camera",
+        "prompt_evidence": "The capture camera views the model from the front",
+        "target": "camera",
+        "property": "viewpoint.direction"
+      },
+      {
+        "anchor_id": "hall",
+        "source_text": "in a quiet stone entrance hall",
+        "dimension": "setting",
+        "prompt_evidence": "in a quiet stone entrance hall",
+        "target": "scene",
+        "property": "location"
+      },
+      {
+        "anchor_id": "knee_crop",
+        "source_text": "framed from head to below the knees",
+        "dimension": "framing",
+        "prompt_evidence": "framed from head to below the knees",
+        "target": "frame",
+        "property": "coverage"
+      },
+      {
+        "anchor_id": "doorway_light",
+        "source_text": "Gentle morning light enters through an open doorway",
+        "dimension": "lighting",
+        "prompt_evidence": "Gentle morning light enters through an open doorway",
+        "target": "scene",
+        "property": "light.source_and_quality"
+      },
+      {
+        "anchor_id": "morning",
+        "source_text": "morning",
+        "dimension": "timing",
+        "prompt_evidence": "morning light",
+        "target": "scene",
+        "property": "time_of_day"
+      },
+      {
+        "anchor_id": "relaxed_pose",
+        "source_text": "the pose feels relaxed and unforced",
+        "dimension": "pose",
+        "prompt_evidence": "The pose feels relaxed and unforced",
+        "target": "main_subject",
+        "property": "bearing"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "scene"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a fictional adult model"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "scene"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "camera",
+        "direction_requirement": "requested",
+        "height_requirement": "open"
+      },
+      "evidence": {
+        "owner_phrase": "The capture camera",
+        "direction_phrase": "The capture camera views the model from the front"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "relaxed natural interior portrait",
+    "evidence": [
+      "gentle morning doorway light",
+      "soft cloth drape",
+      "quiet stone interior"
+    ]
+  },
+  "variation_key": "b_ceremonial_robe_front_en"
+}

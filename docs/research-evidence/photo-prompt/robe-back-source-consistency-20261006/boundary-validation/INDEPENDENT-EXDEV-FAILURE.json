@@ -1,0 +1,29 @@
+{
+  "schema": "independent-review-test-invocation/v1",
+  "observed_utc": "2026-10-06T13:10:18Z",
+  "cwd": "/workspace/scratch/ce8f20680f5a/image-prompt-robe-back-after-6b0338",
+  "environment_changes": {"PYTHONDONTWRITEBYTECODE": "1"},
+  "tmpdir_override": null,
+  "command": [".venv/bin/python", "-m", "unittest", "-v", "tests.test_photo_robe_source_boundary_history.RobeHistoricalFixtureTests.test_missing_v32_proof_rejects_exact_rollbacks_with_parent_or_baseline_marker", "tests.test_photo_robe_source_boundary_history.RobeHistoricalFixtureTests.test_dangling_v32_proof_alone_rejects_exact_original_rollbacks", "tests.test_photo_robe_source_boundary_history.RobeHistoricalFixtureTests.test_marker_free_original_sources_accept_exact_historical_identities"],
+  "fixture_sha256": "ce0bf99f24e13212fdf6826151535e82dc8c7685c0d8ee70e2b37064dee28953",
+  "test_sha256": "6cc2f089404603ec3c44907ad5bfc18db107c651b3df32d22222a64b45afcae9",
+  "exit_code": 1,
+  "test_runner_summary": "Ran 3 tests in 0.174s\nFAILED (errors=3)",
+  "failure_stage": "setUp, line 97: os.link(ROOT / name, target)",
+  "errors": [
+    {
+      "test": "test_missing_v32_proof_rejects_exact_rollbacks_with_parent_or_baseline_marker",
+      "error": "OSError: [Errno 18] Invalid cross-device link: '/workspace/scratch/ce8f20680f5a/image-prompt-robe-back-after-6b0338/docs/research-evidence/photo-prompt/angle-motion-20260927/dynamic_composition/source_snapshot/scripts/audit_image_render_review.py' -> '/tmp/robe-v32-boundary-mibhlzzq/docs/research-evidence/photo-prompt/angle-motion-20260927/dynamic_composition/source_snapshot/scripts/audit_image_render_review.py'"
+    },
+    {
+      "test": "test_dangling_v32_proof_alone_rejects_exact_original_rollbacks",
+      "error": "OSError: [Errno 18] Invalid cross-device link: '/workspace/scratch/ce8f20680f5a/image-prompt-robe-back-after-6b0338/docs/research-evidence/photo-prompt/angle-motion-20260927/dynamic_composition/source_snapshot/scripts/audit_image_render_review.py' -> '/tmp/robe-v32-boundary-wjk7it72/docs/research-evidence/photo-prompt/angle-motion-20260927/dynamic_composition/source_snapshot/scripts/audit_image_render_review.py'"
+    },
+    {
+      "test": "test_marker_free_original_sources_accept_exact_historical_identities",
+      "error": "OSError: [Errno 18] Invalid cross-device link: '/workspace/scratch/ce8f20680f5a/image-prompt-robe-back-after-6b0338/docs/research-evidence/photo-prompt/angle-motion-20260927/dynamic_composition/source_snapshot/scripts/audit_image_render_review.py' -> '/tmp/robe-v32-boundary-xwpf7gmn/docs/research-evidence/photo-prompt/angle-motion-20260927/dynamic_composition/source_snapshot/scripts/audit_image_render_review.py'"
+    }
+  ],
+  "interpretation": "All three failed before test bodies. Default /tmp is a different filesystem from the checkout. The prior same-filesystem TMPDIR success does not establish default-environment portability.",
+  "source_edits_by_reviewer": false
+}
