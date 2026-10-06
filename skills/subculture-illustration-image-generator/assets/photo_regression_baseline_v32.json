@@ -1,0 +1,59 @@
+{
+  "schema": "photo_regression_baseline/v32",
+  "created_at": "2026-10-06",
+  "status": "current",
+  "historical_baseline": {
+    "path": "photo_regression_baseline_v31.json",
+    "schema": "photo_regression_baseline/v31",
+    "sha256": "0071aadce4d8783489d2f3ea76e7a363123c984ee67cd63c0ec8b011fc2a1244"
+  },
+  "change_scope": "Qualify the selected-museum robe back source correction and its two reviewed index entries; preserve V1–V31 unchanged.",
+  "command": [
+    ".venv/bin/python",
+    "skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py",
+    "--seed",
+    "910000",
+    "--authorial-core-json",
+    "tests/fixtures/photo_prompt/current_boundary/core.json",
+    "--request-envelope-json",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json",
+    "--creative-controls-json",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json",
+    "--embodiment-review-json",
+    "tests/fixtures/photo_prompt/current_boundary/review.json",
+    "--output-file",
+    "/tmp/subculture-illustration-photo-baseline-v32.json"
+  ],
+  "sha256": "24984e004605a5ba2ad816aafe84868c6fb11b9639728a36de512f7b7e0176ea",
+  "pack_id": "e5568389c4329fa8",
+  "contract_version": "photo-candidate-pack/v6",
+  "public_candidate_count": 64,
+  "private_fields_absent": [
+    "argv",
+    "sample_prompt_id",
+    "concept_gate_results",
+    "concept_scene_variants",
+    "character_response",
+    "adult_appeal"
+  ],
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "purpose": "Bounded selected-museum-back source consistency. Exactly four frozen-pack binding leaves change; all candidate objects and ordering remain exact. Not a lossless or net-quality improvement: case A foreground utility uncertainty, case B front contraction, and B chibi-model optional utility uncertainty remain. Umbrella is excluded and HOLD. No new render or image-quality gain is claimed.",
+  "preserved_contract_sha256": "acc9fedeae95ae67b4214e1bedd622f12e0a9f0d24639fd2193ca5f368ba4e5f",
+  "frozen_inputs": {
+    "tests/fixtures/photo_prompt/current_boundary/core.json": "7be72244a8aa95c92a0bfc041f16bf544d376a9664366ad92c92cc728ebf6316",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json": "170ca49644a3ae0703d5d98875007bbaa74a0794202089ded9f617d532443524",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json": "0958274c1f1d5ec8b2faef5f3f7409d15f0256505411613cc33ad05f3a124896",
+    "tests/fixtures/photo_prompt/current_boundary/review.json": "0039a9afdb6b7fa6d3989dc0187297eba8e3de436c012ce13d20f570bb55f7fd"
+  },
+  "parallel_local_baseline": {
+    "path": "docs/research-evidence/photo-prompt/seduction-expression-main-merge-20261005/parallel-local-seduction-v13.json",
+    "sha256": "11ac31b9ab126b2a0711724cf625644772592adc2c688a760d9a6c6b37894850",
+    "purpose": "Preserved original pre-main seduction observation; independent of main V13 uniform history."
+  },
+  "robe_source_transition": {
+    "evidence_path": "docs/research-evidence/photo-prompt/robe-back-source-consistency-20261006/V32-ROBE-SOURCE-PROOF.json",
+    "evidence_sha256": "5142254443a263dae0d6f90c11fa8d97184f68b3b7cd31c441cd94a00f6b3c8b",
+    "previous_qualified_commit": "6b0338ebe6ad3a9a5ee3c603fc742311ad921054",
+    "parent_manifest_sha256": "16766165b960a59c706482ebfa7406531276fddbc74bc708fc06058f04b8ba56"
+  }
+}
