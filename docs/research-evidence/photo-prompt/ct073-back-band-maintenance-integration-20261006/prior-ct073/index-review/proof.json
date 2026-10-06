@@ -1,0 +1,158 @@
+{
+  "schema": "ct073-independent-current-baa-index-review/v1",
+  "result": "PASS_WITH_DISCLOSED_EVIDENCE_LIMITS",
+  "reviewed_utc": "2026-10-06T00:18:42.814428+00:00",
+  "source_commit": "baa876d8299930b8897a282f65779d4412d056b5",
+  "hashes": {
+    "dictionary_before": "df51b0c2691ddd2fb5811fa8e6adedbb45b35dcb25d8c0b509c98d15daaa12e3",
+    "dictionary_after": "0707c32d3c184f155f65c48e7200f1d459b612a0734678e0cbedb4c1a2989786",
+    "registry_before": "cc6404baab81277b07aeda4438512b15bc0ed4b3e5f834e76836391db02eba1a",
+    "registry_after": "5bbda952d2cec22ea555d7123aace4f76a72b21b09a81eec73ad43dd75ef05ee"
+  },
+  "counts": {
+    "ordinary": {
+      "entries": 10082,
+      "unchanged_vectors": 10081,
+      "fresh_vectors": 1
+    },
+    "visual_profile": {
+      "entries": 1879,
+      "unchanged_vectors": 1878,
+      "fresh_vectors": 1
+    }
+  },
+  "entry_texts_compared": 11961,
+  "unchanged_vectors_verified": 11959,
+  "fresh_receipt_vectors_verified": 2,
+  "pending_vectors": 0,
+  "checks_passed": 189364,
+  "vector_space": {
+    "provider": "gemini",
+    "embedding_model": "gemini-embedding-2",
+    "embedding_dimensions": 768
+  },
+  "task_type": "SEMANTIC_SIMILARITY",
+  "bindings": [
+    {
+      "corpus": "ordinary",
+      "key": "slot:garment_detail:clt_ct073_v2",
+      "receipt_source_commit": "c907513925cea26e263173247c7e0c8d837c1fbe",
+      "integration_source_commit": "baa876d8299930b8897a282f65779d4412d056b5",
+      "input_utf8_bytes": 859,
+      "input_sha256": "5aa2d9dfabe4574fae3aebe6c97acc4f0fd6f017ea31e6a5f9ca37e5819f333c",
+      "receipt_sha256": "12b18e61a2bcfbca1a47c9b08a6951a36c2dad53c3c849dbd1226192f1988815",
+      "vector_sha256": "7d862753fe50fbfc4458854cbfe2fcca0c3beee82c35d35fa6fca11666eb87a3",
+      "all_768_rounding_coordinates_equal": true,
+      "original_http_hash_independently_recomputed": false
+    },
+    {
+      "corpus": "visual_profile",
+      "key": "clothing_ct073_v2",
+      "receipt_source_commit": "c907513925cea26e263173247c7e0c8d837c1fbe",
+      "integration_source_commit": "baa876d8299930b8897a282f65779d4412d056b5",
+      "input_utf8_bytes": 207,
+      "input_sha256": "906211c2c67770cc7d680c9f538c96dcdb6e36fbf052a9913949b1a4abdaad3e",
+      "receipt_sha256": "df29fd43d76d83452e7171dd7a8d3d7b012965a43f76f1e3c44e43cb7a46aff4",
+      "vector_sha256": "d0dde0a4726ccc814f52d2de234fa5e5c702dcc01cfa45c519add0acc7ef458a",
+      "all_768_rounding_coordinates_equal": true,
+      "original_http_hash_independently_recomputed": false
+    }
+  ],
+  "bm25f": {
+    "ordinary_documents": 10082,
+    "visual_documents": 1879,
+    "all_documents_and_statistics_recomputed": true
+  },
+  "exact_lookup_rows": 4351,
+  "all_exact_lookup_unchanged": true,
+  "stale_source_rejections": [
+    {
+      "case": "ordinary_old_on_new",
+      "reason": "Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py."
+    },
+    {
+      "case": "ordinary_new_on_old",
+      "reason": "Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py."
+    },
+    {
+      "case": "visual_old_on_new",
+      "reason": "visual profile index registry_sha256 does not match the visual registry; regenerate it with build_visual_profile_index.py"
+    },
+    {
+      "case": "visual_new_on_old",
+      "reason": "visual profile index registry_sha256 does not match the visual registry; regenerate it with build_visual_profile_index.py"
+    }
+  ],
+  "git_preservation": {
+    "before": {
+      "ordinary": 320,
+      "visual_profile": 31
+    },
+    "proposed_union": {
+      "ordinary": 336,
+      "visual_profile": 32
+    },
+    "materialized_old_shards_verified": 32,
+    "sparse_historical_shards_retained": 319,
+    "deleted_paths": [],
+    "all_old_git_path_blob_bindings_preserved": 351,
+    "unmaterialized_unique_historical_blob_contents_not_rehashed": 143
+  },
+  "source_scope": {
+    "data_leaf_changes": 8,
+    "maintenance_reference_leaf_changes": 2,
+    "new_historical_preparation_records": 1,
+    "only_compiled_rows_changed": {
+      "ordinary": "slot:garment_detail:clt_ct073_v2",
+      "visual_profile": "clothing_ct073_v2"
+    },
+    "v1_activation_aliases_components_gates_and_runtime_unchanged": true
+  },
+  "maintenance_record": {
+    "historical_preparation_record_byte_preserved": true,
+    "pending_statuses_preserved": true,
+    "later_completion_recorded_here": true,
+    "later_completion_scope": "Two independently reviewed genuine c907 receipt vectors are bound to identical current-baa text and both complete indexes, BM25F, exact lookup and source-staleness checks pass this independent offline review. Cohort, native pixels, and user acceptance are not established by this review."
+  },
+  "limitations": [
+    "Original HTTP byte hashes are recorded and completion-consistent, but cannot be independently recomputed from retained numeric subsets.",
+    "The cause of subset-only retention is not inferred.",
+    "Provider, model, task and input are locally fixed request bindings; provider does not echo all of them.",
+    "One attempt per input is supported by the namespace and reviewed no-retry runner, not external provider billing logs.",
+    "The partial clone has 143 historical shard blob contents unavailable locally. All 351 historical path/blob-ID bindings are preserved in both HEAD and the Git index; every materialized old shard is byte-hash verified. Unmaterialized historical bytes were not fetched or independently rehashed. All current before/after index shards and every current entry were fully read and checked."
+  ],
+  "review_actions": {
+    "provider_requests": 0,
+    "credential_reads": 0,
+    "sender_executions": 0,
+    "vectors_generated_or_synthesized": 0,
+    "repository_writes": 0,
+    "commit_or_publication_actions": 0
+  },
+  "guards": {
+    "sanitized_environment": true,
+    "no_site": true,
+    "no_bytecode": true,
+    "read_only_repositories": true,
+    "provider_client_env_loader_functions_immediately_fail": [
+      "visual_profile_index_storage.write_sharded_visual_profile_index",
+      "prompt_generator.get_gemini_api_key",
+      "prompt_generator.cached_gemini_client",
+      "prompt_generator.embed_texts_with_gemini",
+      "prompt_generator.embed_single_semantic_text",
+      "build_semantic_index.embed_texts_with_gemini",
+      "build_semantic_index.load_project_env",
+      "build_semantic_index.prune_stale_shard_generations",
+      "build_semantic_index.write_sharded_payload",
+      "build_semantic_index.main",
+      "build_visual_profile_index.write_sharded_visual_profile_index",
+      "build_visual_profile_index.embed_texts_with_gemini",
+      "build_visual_profile_index.load_project_env",
+      "build_visual_profile_index.main"
+    ],
+    "unexpected_blocked_operations": 0
+  },
+  "builder_proof_sha256": "140340280c797360b644d9c4d327770c8d6953410341e72da66d7b7c99ab157e",
+  "receipt_review_proof_sha256": "09ac5e29429e83ee20f767abe04d5f42494239c8cc59d429496a7e1234411021",
+  "git_preservation_proof_sha256": "cd58a46577413a5b2ca185442d5f546c0d65296d7e49781e048d3985dc86ee6b"
+}

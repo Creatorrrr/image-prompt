@@ -1,0 +1,154 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "I'd like a product photograph of a bra with its hook-and-eye back closure done up. Make that fastening easy to see.",
+  "creative_controls_sha256": "48c2e2987208d0ed2002104ea18700fc7b92c469acc5c57b246c3a18d4357c76",
+  "interpreted_intent": "The synthetic requester requires a bra with a hook-and-eye back closure done up and easy to see. I choose an ordinary product arrangement that lets the joined working parts carry the image; pale plum fabric, a shallow oval and oblique inspection are optional author choices. The intended experience is quiet, close attention to an everyday mechanical junction. Saved creative controls govern those choices without overrides.",
+  "subject": "A bra, presented as an adult-size product rather than on a wearer.",
+  "setting": "An ivory worktable beside a window, with a plain cream background.",
+  "event": "The rear hook-and-eye closure is already fastened and its engaged parts are readable.",
+  "visual_priorities": [
+    "The hooks seated in their matching eye loops make the fastened state readable.",
+    "The back band remains connected to the rest of the bra.",
+    "The cloth curve leads attention toward the small metal junction."
+  ],
+  "baseline_prompt_en": "A product photograph studies the joined rear fastening of a bra. The adult-size garment rests in a shallow oval on an ivory worktable, its back band nearest the lens and its cups farther behind. Its rear hook-and-eye closure is fastened, with the hooks seated in the matching eye loops. A low oblique camera position looks along the inner edge of the overlapped tabs, making their engagement legible while the band retains its closed loop. Pale plum fabric forms quiet curves around the small metal junction. The closure and adjacent stitching are crisp; the cups soften gently into a plain cream background. Window light from the left gives the fabric a soft sheen and places a fine shadow beneath the raised band. The picture feels like a careful inspection of a well-made everyday object.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete photographic request",
+      "source_text": "I'd like a product photograph of a bra with its hook-and-eye back closure done up. Make that fastening easy to see.",
+      "basis": "request_context",
+      "resolution": "The rear hook-and-eye closure is already fastened and its engaged parts are readable. No user-supplied special definition is present.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "product photograph",
+        "dimension": "concept",
+        "prompt_evidence": "product photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "a bra",
+        "dimension": "subject",
+        "prompt_evidence": "fastening of a bra"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "its hook-and-eye back closure done up",
+        "dimension": "event",
+        "prompt_evidence": "rear hook-and-eye closure is fastened"
+      },
+      {
+        "anchor_id": "garment_property_1",
+        "source_text": "hook-and-eye back closure",
+        "dimension": "appearance",
+        "target": "garment",
+        "property": "rear_closure.kind",
+        "prompt_evidence": "rear hook-and-eye closure"
+      },
+      {
+        "anchor_id": "garment_property_2",
+        "source_text": "done up",
+        "dimension": "appearance",
+        "target": "garment",
+        "property": "rear_closure.engagement",
+        "prompt_evidence": "hooks seated in the matching eye loops"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "color",
+      "material",
+      "setting",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "style",
+      "format",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_object_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "rear fastening of a bra"
+      }
+    },
+    {
+      "assertion_id": "requested_visible_state",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "event"
+      ],
+      "axes": {
+        "garment_region": "back",
+        "connection": "hooks_in_matching_eyes",
+        "visible_state": "fastened"
+      },
+      "evidence": {
+        "component_phrase": "rear hook-and-eye closure",
+        "connection_phrase": "hooks seated in the matching eye loops"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_declaration",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "product photography",
+    "family": "quiet material study",
+    "evidence": [
+      "on an ivory worktable",
+      "Window light from the left"
+    ]
+  },
+  "variation_key": "new-synthetic-fastening-a"
+}

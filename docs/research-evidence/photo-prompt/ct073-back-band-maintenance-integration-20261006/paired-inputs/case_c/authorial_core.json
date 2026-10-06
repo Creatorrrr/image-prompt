@@ -1,0 +1,158 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "Please make a bra detail photo showing the ring and slider on a shoulder strap, so the strap adjustment is easy to understand.",
+  "creative_controls_sha256": "709fe8d28b23d5aa85d00cabc16387fe6d355053b9d51c4f72c0d7f0d320aa1b",
+  "interpreted_intent": "The synthetic requester requires a bra strap detail showing ring and slider so adjustment is understandable. I choose a resting garment and a visible return path between the two hardware pieces; this establishes a mechanism without inventing a hand operating it. Green cloth, counter setting and diagonal arrangement are editable author choices. Hardware legibility and a coherent fabric path are the intended experience under the saved controls.",
+  "subject": "A bra, with one shoulder strap and its adjustment hardware emphasized.",
+  "setting": "A warm white dressing-room counter beside a window and off-white wall.",
+  "event": "The ring and slider are threaded into a shoulder strap and the returning fabric path is visible.",
+  "visual_priorities": [
+    "Ring and slider read as different pieces on one shoulder strap.",
+    "The returning fabric path explains the adjustment mechanism.",
+    "The band and cup edge keep the isolated detail connected to the bra."
+  ],
+  "baseline_prompt_en": "A detail photograph follows the adjustment hardware on a bra laid across a warm white dressing-room counter. A ring and slider sit on one shoulder strap. The narrow strap passes through the ring and returns to the slider, where its folded path around the center bar is visible. A short length of the band and the edge of a cup remain in view, connecting this detail to the garment. Moss-green fabric gives the bright metal edges a quiet contrast. The strap makes a loose diagonal across the counter; the ring and slider occupy separate, equally sharp positions along it. Daylight from a nearby window grazes the woven fibers. A softly receding off-white wall keeps the background simple, allowing the returning fabric path to explain how the adjustment works.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete photographic request",
+      "source_text": "Please make a bra detail photo showing the ring and slider on a shoulder strap, so the strap adjustment is easy to understand.",
+      "basis": "request_context",
+      "resolution": "The ring and slider are threaded into a shoulder strap and the returning fabric path is visible. No user-supplied special definition is present.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "detail photo",
+        "dimension": "concept",
+        "prompt_evidence": "detail photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "a bra",
+        "dimension": "subject",
+        "prompt_evidence": "hardware on a bra"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "the ring and slider on a shoulder strap",
+        "dimension": "event",
+        "prompt_evidence": "A ring and slider sit on one shoulder strap"
+      },
+      {
+        "anchor_id": "garment_property_1",
+        "source_text": "ring and slider on a shoulder strap",
+        "dimension": "appearance",
+        "target": "garment",
+        "property": "shoulder_strap.hardware",
+        "prompt_evidence": "ring and slider sit on one shoulder strap"
+      },
+      {
+        "anchor_id": "garment_property_2",
+        "source_text": "detail photo",
+        "dimension": "framing",
+        "target": "garment",
+        "property": "detail_visibility",
+        "prompt_evidence": "detail photograph"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "color",
+      "material",
+      "setting",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "style",
+      "format",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_object_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "adjustment hardware on a bra"
+      }
+    },
+    {
+      "assertion_id": "requested_visible_state",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "event"
+      ],
+      "axes": {
+        "garment_region": "shoulder_strap",
+        "components": [
+          "ring",
+          "slider"
+        ],
+        "visible_relation": "strap_return_path"
+      },
+      "evidence": {
+        "component_phrase": "ring and slider sit on one shoulder strap",
+        "threading_phrase": "The narrow strap passes through the ring and returns to the slider",
+        "function_phrase": "its folded path around the center bar is visible"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_declaration",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "product photography",
+    "family": "quiet material study",
+    "evidence": [
+      "on a bra laid across a warm white dressing-room counter",
+      "Daylight from a nearby window grazes the woven fibers"
+    ]
+  },
+  "variation_key": "new-synthetic-fastening-c"
+}

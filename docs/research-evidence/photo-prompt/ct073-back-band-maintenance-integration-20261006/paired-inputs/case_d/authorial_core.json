@@ -1,0 +1,171 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "Photograph a pull-on bralette with a continuous back band and no back fastening. I want the unbroken stretch of fabric across the back to be clear.",
+  "creative_controls_sha256": "3333d781997e430d4f21f0dc2393d1cd8c5f4500292d53deea7cb1bd5573e2a9",
+  "interpreted_intent": "The synthetic requester asks for a pull-on bralette, an unbroken back band, and explicitly excludes a back fastening. The positive realization is the full continuous span of fabric. I choose a back-up tabletop arrangement that makes its edges and continuation visible; ribbing, oatmeal color, the table and light remain author-owned. The image should make structural continuity immediately readable at the saved controls.",
+  "subject": "An adult-size pull-on bralette with an uninterrupted back band.",
+  "setting": "An ash-wood table against a softly lit plaster wall.",
+  "event": "The entire continuous back band is displayed from side seam to side seam.",
+  "visual_priorities": [
+    "The complete band span demonstrates continuity across the back.",
+    "Parallel fabric edges and the side turn make the band a coherent garment part.",
+    "Shallow light across the ribbing supports the large uninterrupted shape."
+  ],
+  "baseline_prompt_en": "A garment study of a pull-on bralette emphasizes its continuous back. The adult-size bralette lies back-up on a smooth ash-wood table. One uninterrupted fabric band runs across the whole back from side seam to side seam. Its upper and lower edges form long parallel curves, while the straps rest above them and the soft cups sit beneath the garment. A gentle turn at one side shows the band continuing around the body opening. The oatmeal ribbed knit carries a fine rhythm of vertical lines across this wide horizontal shape. A softly lit plaster wall rises behind the table. Diffused window light gives the ribbing shallow relief, and the full band span stays sharply readable within a spacious horizontal frame.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete photographic request",
+      "source_text": "Photograph a pull-on bralette with a continuous back band and no back fastening. I want the unbroken stretch of fabric across the back to be clear.",
+      "basis": "request_context",
+      "resolution": "The entire continuous back band is displayed from side seam to side seam. The back fastening is explicitly excluded.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [
+    "back fastening"
+  ],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "Photograph",
+        "dimension": "concept",
+        "prompt_evidence": "garment study"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "a pull-on bralette",
+        "dimension": "subject",
+        "prompt_evidence": "a pull-on bralette"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "the unbroken stretch of fabric across the back",
+        "dimension": "event",
+        "prompt_evidence": "One uninterrupted fabric band runs across the whole back"
+      },
+      {
+        "anchor_id": "garment_property_1",
+        "source_text": "continuous back band",
+        "dimension": "appearance",
+        "target": "garment",
+        "property": "back_band.continuity",
+        "prompt_evidence": "One uninterrupted fabric band runs across the whole back"
+      },
+      {
+        "anchor_id": "garment_property_2",
+        "source_text": "pull-on bralette",
+        "dimension": "appearance",
+        "target": "garment",
+        "property": "garment.construction",
+        "prompt_evidence": "a pull-on bralette"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "color",
+      "material",
+      "setting",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "style",
+      "format",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_object_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "a pull-on bralette"
+      }
+    },
+    {
+      "assertion_id": "requested_visible_state",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "event"
+      ],
+      "axes": {
+        "garment_region": "back_band",
+        "visible_state": "continuous_fabric_span",
+        "construction": "pull_on"
+      },
+      "evidence": {
+        "continuity_phrase": "One uninterrupted fabric band runs across the whole back from side seam to side seam",
+        "construction_phrase": "a pull-on bralette"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_declaration",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    },
+    {
+      "assertion_id": "excluded_back_fastening",
+      "dimension": "appearance",
+      "polarity": "excluded",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "excluded_component": "back_fastening"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "product photography",
+    "family": "quiet material study",
+    "evidence": [
+      "on a smooth ash-wood table",
+      "Diffused window light gives the ribbing shallow relief"
+    ]
+  },
+  "variation_key": "new-synthetic-fastening-d"
+}

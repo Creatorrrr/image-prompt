@@ -59,6 +59,12 @@ V23_PARENT_MANIFEST = Path(
 )
 V23_PARENT_MANIFEST_SHA256 = '971f33aae01e0c79559f99a894800dba488917694bbaaff87148593ea516d76a'
 V23_PARENT_COMMIT = 'baa876d8299930b8897a282f65779d4412d056b5'
+V24_PARENT_MANIFEST = Path(
+    'docs/research-evidence/photo-prompt/ct073-back-band-maintenance-integration-20261006/V24-PARENT-SOURCE.json'
+)
+V24_PARENT_MANIFEST_SHA256 = '017f6b1cd2fe3de88f0db345326f41940684da57f987d747006863a27c6f18d6'
+V24_PARENT_COMMIT = '3b481ca94fdbbeeb453e1d3ec657db0f5baf6a80'
+V24_PARENT_TREE = '5332eb72dcf23d5b517961313490f990cc18d56f'
 
 
 def _v17_safe_path(value: str) -> Path:
@@ -741,6 +747,177 @@ def archived_v23_validator(directory: Path, *, source_root: Path = ROOT):
             else:
                 sys.modules[name] = original
     return modules['validate_illustration_assets']
+
+
+def _v24_no_symlink_ancestors(path: Path) -> None:
+    for current in (path.absolute(), *path.absolute().parents):
+        if current.is_symlink():
+            raise AssertionError('Unsafe V24 historical source or destination symlink')
+
+
+def _v24_regular_path(root: Path, value: str) -> Path:
+    path = root / _v17_safe_path(value)
+    _v24_no_symlink_ancestors(path)
+    if not root.is_dir() or not path.is_file():
+        raise AssertionError(f'Missing V24 historical source payload: {value}')
+    return path
+
+
+def _v24_parent_manifest(source_root: Path = ROOT) -> dict:
+    """Authenticate official V24 and its unchanged official V23 backing chain."""
+    raw = _v24_regular_path(source_root, V24_PARENT_MANIFEST.as_posix()).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != V24_PARENT_MANIFEST_SHA256:
+        raise AssertionError('Frozen V24 parent source manifest drift')
+    manifest = json.loads(raw)
+    counts = {'reuse_official_v23_parent_source': 153,
+              'new_immutable_snapshot_same_git_blob': 17}
+    if (manifest['schema'] != 'photo-v24-parent-source-manifest/v1'
+            or manifest['source_pin'] != V24_PARENT_COMMIT
+            or manifest['source_tree'] != V24_PARENT_TREE
+            or manifest['member_count'] != 170 or len(manifest['members']) != 170
+            or manifest['dependency_count'] != 426 or len(manifest['dependencies']) != 426
+            or manifest['counts'] != counts
+            or manifest['previous_manifest_path'] != V23_PARENT_MANIFEST.as_posix()
+            or manifest['previous_manifest_sha256'] != V23_PARENT_MANIFEST_SHA256
+            or manifest['total_member_bytes'] != 141245012
+            or manifest['total_dependency_bytes'] != 446260501
+            or manifest['new_snapshot_bytes'] != 13149751
+            or manifest['new_git_blob_payload_bytes'] != 0
+            or manifest['new_archive_count'] != 0):
+        raise AssertionError('Frozen V24 parent source manifest shape drift')
+    previous = {row['path']: row for row in _v23_parent_manifest(source_root)['members']}
+    paths, backings = set(), {}
+    for row in manifest['members'] + manifest['dependencies']:
+        path = _v17_safe_path(row['path']).as_posix()
+        source = _v17_safe_path(row['source_path']).as_posix()
+        _v17_safe_path(row['git_path'])
+        if path in paths:
+            raise AssertionError('Duplicate V24 historical source path')
+        paths.add(path)
+        if (row['git_commit'] != V24_PARENT_COMMIT or row['git_path'] != path
+                or row['mode'] not in ('100644', '100755') or type(row['bytes']) is not int
+                or row['bytes'] < 0 or len(row['sha256']) != 64 or len(row['git_blob']) != 40
+                or any(c not in '0123456789abcdef' for c in row['sha256'] + row['git_blob'])):
+            raise AssertionError('Frozen V24 historical source provenance drift')
+        identity = tuple(row[key] for key in ('git_blob', 'mode', 'bytes', 'sha256'))
+        if source in backings and backings[source] != identity:
+            raise AssertionError('Conflicting V24 historical source backing')
+        backings[source] = identity
+    if any(parent.as_posix() in paths for path in paths for parent in Path(path).parents):
+        raise AssertionError('Overlapping V24 historical source paths')
+    for row in manifest['members']:
+        if row['kind'] == 'reuse_official_v23_parent_source':
+            old = previous.get(row['path'], {})
+            allowed = all(row[key] == old.get(key)
+                          for key in ('source_path', 'git_blob', 'mode', 'bytes', 'sha256'))
+        elif row['kind'] == 'new_immutable_snapshot_same_git_blob':
+            allowed = row['source_path'] == (
+                V24_PARENT_MANIFEST.parent / 'v24-parent-source-files' / row['path']).as_posix()
+        else:
+            allowed = False
+        if not allowed:
+            raise AssertionError('Unregistered V24 historical source backing path')
+    if (len({row['source_path'] for row in manifest['members']}) != 170
+            or {kind: sum(row['kind'] == kind for row in manifest['members']) for kind in counts} != counts
+            or sum(row['bytes'] for row in manifest['members']) != manifest['total_member_bytes']
+            or sum(row['bytes'] for row in manifest['dependencies']) != manifest['total_dependency_bytes']
+            or sum(row['bytes'] for row in manifest['members']
+                   if row['kind'] == 'new_immutable_snapshot_same_git_blob') != manifest['new_snapshot_bytes']
+            or any(row['source_path'] != row['path'] or row['kind'] != 'retained_dependency'
+                   for row in manifest['dependencies'])):
+        raise AssertionError('Frozen V24 historical source inventory drift')
+    return manifest
+
+
+def _v24_verified_payload(source_root: Path, row: dict) -> bytes:
+    path = _v24_regular_path(source_root, row['source_path'])
+    if path.stat().st_mode & 0o7777 != int(row['mode'][-3:], 8):
+        raise AssertionError(f'Frozen V24 historical source mode drift: {row["path"]}')
+    raw = path.read_bytes()
+    blob = hashlib.sha1(f'blob {len(raw)}\0'.encode('ascii') + raw).hexdigest()
+    if (len(raw) != row['bytes'] or hashlib.sha256(raw).hexdigest() != row['sha256']
+            or blob != row['git_blob']):
+        raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+    return raw
+
+
+def _v24_empty_destination(directory: Path) -> None:
+    _v24_no_symlink_ancestors(directory)
+    if directory.exists() and (not directory.is_dir() or any(directory.iterdir())):
+        raise AssertionError('V24 historical destination must be an empty directory')
+
+
+def materialize_v24_parent_source(directory: Path, *, source_root: Path = ROOT) -> dict:
+    """Replay only authenticated retained bytes, atomically and without Git/fallback."""
+    _v24_empty_destination(directory)
+    manifest = _v24_parent_manifest(source_root)
+    records = manifest['members'] + manifest['dependencies']
+    for row in records:
+        _v24_verified_payload(source_root, row)
+    # A second verification protects against source changes during copying. Stage
+    # beside the destination so even a late failure leaves it absent or empty.
+    directory.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='.sealed-v24-', dir=directory.parent) as temporary:
+        staged = Path(temporary) / 'tree'
+        staged.mkdir()
+        for row in records:
+            raw = _v24_verified_payload(source_root, row)
+            target = staged / _v17_safe_path(row['path'])
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(raw)
+            target.chmod(int(row['mode'][-3:], 8))
+        _v24_empty_destination(directory)
+        staged.replace(directory)
+    return manifest
+
+
+def archived_v24_validator(directory: Path, *, source_root: Path = ROOT):
+    """Load the four original V24 modules from sealed bytes in import isolation."""
+    manifest = materialize_v24_parent_source(directory, source_root=source_root)
+    records = {row['path']: row for row in manifest['members'] + manifest['dependencies']}
+    scripts = directory / Path(V17_PARENT_VALIDATOR).parent
+    prefix = '_archived_photo_v24_' + hashlib.sha256(str(directory).encode()).hexdigest()[:16]
+    modules, payloads = {}, {}
+    for name in ('illustration_runtime', 'illustration_audit', 'universal_scene_runtime',
+                 'validate_illustration_assets'):
+        path = scripts / (name + '.py')
+        row = records[path.relative_to(directory).as_posix()]
+        payloads[name] = _v24_verified_payload(directory, dict(row, source_path=row['path']))
+        spec = importlib.util.spec_from_file_location(prefix + '_' + name, path)
+        modules[name] = importlib.util.module_from_spec(spec)
+
+    def historical_import(name, globals=None, locals=None, fromlist=(), level=0):
+        if level == 0 and name in modules:
+            return modules[name]
+        return builtins.__import__(name, globals, locals, fromlist, level)
+
+    previous = {module.__name__: sys.modules.get(module.__name__) for module in modules.values()}
+    try:
+        for module in modules.values():
+            module.__dict__['__builtins__'] = dict(vars(builtins), __import__=historical_import)
+            sys.modules[module.__name__] = module
+        for name, module in modules.items():
+            exec(compile(payloads[name], module.__file__, 'exec'), module.__dict__)
+    finally:
+        for name, original in previous.items():
+            if original is None:
+                sys.modules.pop(name, None)
+            else:
+                sys.modules[name] = original
+    return modules['validate_illustration_assets']
+
+
+def archived_validator_with_v24_source(directory: Path, *, version: int, source_root: Path = ROOT):
+    """Supply old fixture dependencies from V24 before the textile reference repair."""
+    helpers = {21: archived_v21_validator, 22: archived_v22_validator}
+    if version not in (18, 19, 20, 21, 22):
+        raise AssertionError('Unsupported validator version for sealed V24 source')
+    with tempfile.TemporaryDirectory(prefix='sealed-v24-dependencies-') as temporary:
+        frozen = Path(temporary)
+        materialize_v24_parent_source(frozen, source_root=source_root)
+        if version in (18, 19, 20):
+            return archived_validator_with_v21_source(directory, version=version, source_root=frozen)
+        return helpers[version](directory, source_root=frozen)
 
 
 def load_v23_candidate_fixture(path: Path, extension_files: tuple[str, ...]) -> dict:

@@ -1,0 +1,42 @@
+{
+  "selected": [
+    "tests.test_photo_clothing_terminology_semantics.ClothingTerminologySemanticsTests.test_authored_sources_and_generated_indexes_bind_every_registered_variant"
+  ],
+  "tests_run": 1,
+  "passed": 0,
+  "failures": [
+    {
+      "test": "test_authored_sources_and_generated_indexes_bind_every_registered_variant (tests.test_photo_clothing_terminology_semantics.ClothingTerminologySemanticsTests.test_authored_sources_and_generated_indexes_bind_every_registered_variant)",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/scratch/ce8f20680f5a/image-prompt-ct073-after-3b481ca/tests/test_photo_clothing_terminology_semantics.py\", line 107, in test_authored_sources_and_generated_indexes_bind_every_registered_variant\n    self.assertEqual(record[\"authored_source_sha256\"], semantics.digest(ext))\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'c0c3770545678d76fc35567cea7f81c1713b2045ffac365e599a8420205682bc' != '8d279023481b6569dc35437889fe744efee574e2fe3d37e7574236a148147b54'\n- c0c3770545678d76fc35567cea7f81c1713b2045ffac365e599a8420205682bc\n+ 8d279023481b6569dc35437889fe744efee574e2fe3d37e7574236a148147b54\n\n"
+    }
+  ],
+  "errors": [],
+  "skipped": [],
+  "guards": {
+    "sanitized_environment": true,
+    "no_site": true,
+    "no_bytecode": true,
+    "network_denied": true,
+    "provider_client_denied": true,
+    "credential_reads": 0,
+    "dummy_dotenv_reads": [],
+    "guarded_python_children": [],
+    "blocked": [
+      {
+        "event": "socket.__new__",
+        "reason": "network/native process execution is forbidden",
+        "self_test": true
+      },
+      {
+        "event": "open",
+        "reason": "dotenv is allowed only in this test run temporary fixtures",
+        "self_test": true
+      },
+      {
+        "event": "subprocess.Popen",
+        "reason": "only authored Python tests re-entering the offline guard may execute",
+        "self_test": true
+      }
+    ]
+  }
+}

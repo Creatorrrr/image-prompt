@@ -31,7 +31,7 @@ class OrnamentBoundaryHistoryTests(unittest.TestCase):
         cls.addClassCleanup(temp.cleanup)
         ROOT = Path(temp.name)
         with mock.patch('subprocess.Popen', side_effect=AssertionError('Historical fixture invoked a subprocess')):
-            v = fixtures.archived_v22_validator(ROOT, source_root=cls.live_root)
+            v = fixtures.archived_validator_with_v24_source(ROOT, version=22, source_root=cls.live_root)
         ILLUSTRATION = ROOT / 'skills/subculture-illustration-image-generator'
         cls.proof = json.loads((ROOT / EVIDENCE / 'V22-ORNAMENT-BINDING-PROOF.json').read_bytes())
 

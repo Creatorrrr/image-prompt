@@ -96,6 +96,14 @@ class V23StructureParentFixtureTests(unittest.TestCase):
 class StructureBoundaryHistoryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        original = {name: globals()[name] for name in ('ROOT', 'ILLUSTRATION', 'validator')}
+        frozen = tempfile.TemporaryDirectory(prefix="sealed-v24-structure-")
+        cls.addClassCleanup(frozen.cleanup)
+        root = Path(frozen.name)
+        archived = fixtures.archived_v24_validator(root, source_root=ROOT)
+        cls.addClassCleanup(lambda: globals().update(original))
+        globals().update(ROOT=root, ILLUSTRATION=root / "skills/subculture-illustration-image-generator",
+                         validator=archived)
         cls.proof = json.loads((ROOT / PROOF).read_bytes())
         cls.parent = json.loads((ROOT / cls.proof["parent_source_manifest"]).read_bytes())
 
