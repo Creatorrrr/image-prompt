@@ -105,7 +105,12 @@ class PhotoSourceManifestTests(unittest.TestCase):
         path.write_text(json.dumps({"contract_version": sources.CONTRACT_VERSION, "sources": rows}))
 
     def test_registration_preserves_both_load_orders_and_required_policy(self):
-        original = BASELINE["extension_order"]
+        # The sealed baseline order stays exact. This additive appearance
+        # domain owns only the two declared trailing registrations.
+        original = copy.deepcopy(BASELINE["extension_order"])
+        original["candidate"].append("photo_prompt_character_appearance_extension.json")
+        original["visual_profile"].append("photo_prompt_visual_obligations_appearance_relations.json")
+        original["required_candidates"].append("photo_prompt_character_appearance_extension.json")
         self.assertEqual(list(sources.extension_files("candidate")), original["candidate"])
         self.assertEqual(list(sources.extension_files("visual_profile")), original["visual_profile"])
         self.assertEqual(sources.required_files("candidate"), original["required_candidates"])

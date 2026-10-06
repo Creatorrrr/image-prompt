@@ -24,6 +24,18 @@ def encoded(value):
 
 
 class SceneBudgetBoundaryHistoryTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        original = {name: globals()[name] for name in ('ROOT', 'ILLUSTRATION', 'validator')}
+        frozen = tempfile.TemporaryDirectory(prefix='sealed-v26-scene-parent-')
+        cls.addClassCleanup(frozen.cleanup)
+        root = Path(frozen.name)
+        archived = fixtures.archived_v26_validator(root, source_root=ROOT)
+        (root / '.venv').symlink_to((ROOT / '.venv').resolve(), target_is_directory=True)
+        cls.addClassCleanup(lambda: globals().update(original))
+        globals().update(ROOT=root, ILLUSTRATION=root / 'skills/subculture-illustration-image-generator',
+                         validator=archived)
+
     def setUp(self):
         temporary = tempfile.TemporaryDirectory(prefix='v26-boundary-')
         self.addCleanup(temporary.cleanup)
