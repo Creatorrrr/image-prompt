@@ -7498,6 +7498,211 @@ def _validate_v24_structure_source_successor(
              "photo V24 universal descriptor changed beyond validator hash")
 
 
+PHOTO_V25_CT073_PROOF_SHA256 = "9148072cddd4b7dd83ff834841d8ba839a829ded582b3bfd7b3768b45f7c7417"
+PHOTO_V25_CT073_SOURCE_COMMIT = "dc77d63ce26b9a39037b44e86554b76fe7eacf4c"
+PHOTO_V25_CT073_PARENT_COMMIT = "3b481ca94fdbbeeb453e1d3ec657db0f5baf6a80"
+
+
+def _validate_v25_ct073_back_band_successor(
+    asset_dir: Path, repo_root: Path, baseline: dict[str, Any],
+    pack: dict[str, Any], raw: bytes,
+) -> None:
+    """Seal the owner-consistency DATA correction and four observed pack bindings."""
+    evidence = repo_root / "docs/research-evidence/photo-prompt/ct073-back-band-maintenance-integration-20261006/V25-CT073-BINDING-PROOF.json"
+    _require(_sha256(evidence) == PHOTO_V25_CT073_PROOF_SHA256,
+             "photo V25 immutable CT073 proof drift")
+    proof = _load_json(evidence)
+    _require(proof.get("schema") == "photo-ct073-back-band-four-binding-transition/v25"
+             and proof.get("source_commit") == PHOTO_V25_CT073_SOURCE_COMMIT
+             and proof.get("source_tree") == "9d30471ee0b6717732a711402347b8d1e309bf7e"
+             and proof.get("source_parents") == [PHOTO_V25_CT073_PARENT_COMMIT]
+             and proof.get("previous_qualified_commit") == PHOTO_V25_CT073_PARENT_COMMIT
+             and proof.get("qualified_parent_tree") == "5332eb72dcf23d5b517961313490f990cc18d56f"
+             and proof.get("qualified_parent_parents") == ["baa876d8299930b8897a282f65779d4412d056b5"],
+             "photo V25 source commit, tree or parent drift")
+    _require(baseline.get("ct073_back_band_transition") == {
+        "source_commit": proof["source_commit"], "source_tree": proof["source_tree"],
+        "previous_qualified_commit": proof["previous_qualified_commit"],
+        "evidence_sha256": PHOTO_V25_CT073_PROOF_SHA256,
+        "source_files": proof["source_files"], "reviewed_pack_delta": proof["reviewed_pack_delta"],
+    }, "photo V25 CT073 provenance drift")
+    _require(not any(key in baseline for key in (
+        "metadata_only_transition", "zero_pack_delta_transition", "optional_inventory_transition",
+        "authored_metadata_ownership_transition", "cute_equivalent_language_inventory_transition",
+        "glass_interface_inventory_transition", "authoring_source_transition", "visual_index_storage_transition",
+        "ornament_data_transition", "lobe_boundary_transition", "structure_source_transition")),
+        "photo V25 cannot relabel the CT073 DATA transition")
+    previous_path = asset_dir / "photo_regression_baseline_v24_pack.json"
+    current_path = asset_dir / "photo_regression_baseline_v25_pack.json"
+    _require(_sha256(asset_dir / "photo_regression_baseline_v24.json") == proof["previous_manifest_sha256"]
+             and _sha256(previous_path) == proof["previous_pack_sha256"]
+             and _sha256(current_path) == hashlib.sha256(raw).hexdigest()
+             == proof["current_pack_sha256"] == baseline.get("sha256")
+             and current_path.read_bytes() == raw,
+             "photo V25 exact reviewed pack bytes drift")
+    previous = _load_json(previous_path)[0]
+    _require(pack == _load_json(current_path)[0]
+             and pack.get("pack_id") == proof["current_pack_id"] == _canonical_photo_pack_id(pack)
+             and previous.get("pack_id") == proof["previous_pack_id"] == _canonical_photo_pack_id(previous)
+             and _public_photo_candidate_count(pack) == proof["public_candidate_count"] == 64,
+             "photo V25 reviewed pack identity drift")
+
+    def delta(before: Any, after: Any, pointer: str = "") -> list[dict[str, Any]]:
+        if type(before) is type(after):
+            if isinstance(before, dict) and before.keys() == after.keys():
+                return [row for key in sorted(before)
+                        for row in delta(before[key], after[key], pointer + "/" + key)]
+            if isinstance(before, list) and len(before) == len(after):
+                return [row for index, (a, b) in enumerate(zip(before, after))
+                        for row in delta(a, b, pointer + "/" + str(index))]
+        return [] if before == after else [{"pointer": pointer, "before": before, "after": after}]
+
+    pack_delta = delta(previous, pack)
+    reviewed = {"bindings": [{"path": row["pointer"][1:], "previous": row["before"], "current": row["after"]}
+                            for row in pack_delta], "optional_blocks": [],
+                "all_other_pack_fields_exactly_equal": True, "slot_candidates_and_order_unchanged": True}
+    _require(len(pack_delta) == 4 and {row["pointer"] for row in pack_delta} == {
+        "/core_retrieval/canonical_sha256", "/core_retrieval/slot_corpus_sha256",
+        "/pack_id", "/provenance/tags_hash"}
+        and reviewed == proof["reviewed_pack_delta"] and previous["slots"] == pack["slots"],
+        "photo V25 changed an unreviewed pack field, candidate contract or order")
+    for field in ("immutable_history", "historical_dependencies", "source_parent_files"):
+        _require(all(_sha256(repo_root / name) == sha for name, sha in proof[field].items()),
+                 f"photo V25 {field} bytes drift")
+    _require(_sha256(repo_root / proof["source_parent_manifest"]) == proof["source_parent_manifest_sha256"]
+             and len(proof["source_parent_files"]) == 170,
+             "photo V25 historical source manifest drift")
+    _require(_sha256(repo_root / proof["previous_proof_path"]) == proof["previous_proof_sha256"]
+             and _sha256(repo_root / proof["maintenance_path"]) == proof["maintenance_sha256"],
+             "photo V25 source evidence or maintenance drift")
+    _require(_sha256(repo_root / proof["qualification_path"]) == proof["qualification_sha256"],
+             "photo V25 qualification evidence drift")
+    qualification = _load_json(repo_root / proof["qualification_path"])
+    _require(qualification.get("source_commit") == proof["source_commit"]
+             and all(_sha256(repo_root / name) == sha for name, sha in qualification["files"].items()),
+             "photo V25 qualification artifact binding drift")
+    old_proof = _load_json(repo_root / proof["previous_proof_path"])
+    old_sources, new_sources = old_proof["source_files_after"], proof["source_files"]
+    source_skill = Path(baseline["command"][1]).parent.parent
+    source_assets = repo_root / source_skill / "assets"
+    expected = {str(source_skill / "assets" / name) for name in (
+        "photo_prompt_clothing_structure_extension.json", "photo_prompt_visual_obligations_clothing_structure.json",
+        "photo_prompt_textile_surface_extension.json",
+        "photo_prompt_semantic_index.json", "photo_prompt_visual_profile_index.json")}
+    source_deltas = [{"path": name, "previous": old_sources[name], "current": new_sources[name]}
+                     for name in sorted(old_sources) if old_sources[name] != new_sources[name]]
+    _require(set(old_sources) == set(new_sources) and len(new_sources) == 136
+             and {row["path"] for row in source_deltas} == expected
+             and source_deltas == proof["reviewed_source_deltas"], "photo V25 exact five source changes drift")
+    _require({p.name: _sha256(p) for p in source_assets.glob("*.json")} == proof["source_inventory_after"],
+             "photo V25 exact DATA inventory drift")
+    _require(all(_sha256(repo_root / name) == sha for name, sha in new_sources.items()),
+             "photo V25 DATA or runtime source binding drift")
+    parent_manifest = _load_json(repo_root / proof["source_parent_manifest"])
+    parent_sources = {row["path"]: repo_root / row["source_path"] for row in parent_manifest["members"]}
+    leaf_deltas = []
+    for name in sorted(expected):
+        if name.endswith(("photo_prompt_semantic_index.json", "photo_prompt_visual_profile_index.json")):
+            continue
+        leaf_deltas.extend(dict(file=name, **row) for row in delta(_load_json(parent_sources[name]), _load_json(repo_root / name)))
+    _require(len(leaf_deltas) == 12 and leaf_deltas == proof["reviewed_source_leaf_deltas"],
+             "photo V25 eight authored strings or four maintenance references drift")
+    clothing = _load_json(source_assets / "photo_prompt_clothing_structure_extension.json")
+    profiles = _load_json(source_assets / "photo_prompt_visual_obligations_clothing_structure.json")
+    _require(clothing["slots"]["garment_detail"][89]["id"] == "clt_ct073_v2"
+             and profiles["profiles"][144]["id"] == "clothing_ct073_v2",
+             "photo V25 reviewed CT073 identity or position drift")
+    maintenance = _load_json(repo_root / proof["maintenance_path"])
+    canonical_digest = lambda value: hashlib.sha256(json.dumps(
+        value, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")).hexdigest()
+    _require(clothing["maintenance_ref"]["record_id"] == maintenance["record_id"]
+             and clothing["maintenance_ref"]["sha256"] == canonical_digest(maintenance)
+             and maintenance["authored_source_sha256"] == canonical_digest({
+                 key: value for key, value in clothing.items() if key != "maintenance_ref"})
+             and maintenance["prior_maintenance_ref"] == _load_json(parent_sources[str(
+                 source_skill / "assets/photo_prompt_clothing_structure_extension.json")])["maintenance_ref"],
+             "photo V25 maintenance lineage or canonical source binding drift")
+    textile_name = str(source_skill / "assets/photo_prompt_textile_surface_extension.json")
+    textile = _load_json(repo_root / textile_name)
+    old_textile = _load_json(parent_sources[textile_name])
+    textile_record = _load_json(repo_root / proof["textile_maintenance_path"])
+    _require(_sha256(repo_root / proof["textile_maintenance_path"]) == proof["textile_maintenance_sha256"]
+             == "7d8933f1db6a61eaea1aa79bc01f8063ef2c64b6c4b7bd496bb71552fb9d465a"
+             and textile["maintenance_ref"] == {
+                 "contract_version": "photo-extension-maintenance-ref/v1",
+                 "record_id": "photo_prompt_textile_surface_extension-vocaloid-main-merge-20261004",
+                 "sha256": "2c0e49831e8287fc8aa5290c455e6be3195deb4dcdd67c9fd3295dfeac5eeb65"}
+             and textile["maintenance_ref"]["record_id"] == textile_record["record_id"]
+             and textile["maintenance_ref"]["sha256"] == canonical_digest(textile_record)
+             and textile_record["authored_source_sha256"] == canonical_digest({
+                 key: value for key, value in textile.items() if key != "maintenance_ref"})
+             == "8d279023481b6569dc35437889fe744efee574e2fe3d37e7574236a148147b54"
+             and {key: value for key, value in old_textile.items() if key != "maintenance_ref"}
+             == {key: value for key, value in textile.items() if key != "maintenance_ref"}
+             and _sha256(repo_root / textile_name)
+             == "7047c44cb9013a58102835f529f44a570b61bd7d4f4851b89e86d3d48005ef5a",
+             "photo V25 textile reference-only maintenance binding drift")
+    semantic = _load_json(source_assets / "photo_prompt_semantic_index.json")
+    visual = _load_json(source_assets / "photo_prompt_visual_profile_index.json")
+    for index, field in ((semantic, "active_semantic_shards"), (visual, "active_visual_shards")):
+        active = {str((source_assets / row["path"]).relative_to(repo_root)): row["sha256"] for row in index["shards"]}
+        _require(len(active) == 16 and active == proof[field]
+                 and all(_sha256(repo_root / name) == sha for name, sha in active.items()),
+                 f"photo V25 {field} inventory drift")
+    _require(proof["retained_semantic_shards"] == old_proof["active_semantic_shards"]
+             and proof["retained_visual_shards"] == old_proof["retained_visual_shards"] | old_proof["active_visual_shards"],
+             "photo V25 predecessor shard retention drift")
+    for field in ("active_semantic_shards", "retained_semantic_shards"):
+        shard_root = (repo_root / next(iter(proof[field]))).parent
+        _require({str(p.relative_to(repo_root)): _sha256(p) for p in shard_root.glob("*.json")} == proof[field],
+                 f"photo V25 extra or changed {field}")
+    visual_root = source_assets / "photo_prompt_visual_profile_index_shards"
+    _require({str(p.relative_to(repo_root)): _sha256(p) for p in visual_root.glob("*.json")}
+             == proof["retained_visual_shards"] | proof["active_visual_shards"]
+             and len(proof["retained_visual_shards"] | proof["active_visual_shards"]) == 32
+             and visual.get("storage") == {"format": "visual-profile-sharded-json-v1", "hash_algorithm": "sha256", "shard_count": 16}
+             and visual.get("entry_count") == proof["visual_entry_count"] == 1879
+             and semantic.get("entry_count") == proof["semantic_entry_count"] == 10082
+             and visual.get("registry_sha256") == "0c2c57b6512564761cc159267dee7a76423785a7cb71c9edc4321d6f313ef208"
+             and pack["provenance"]["tags_hash"] == semantic["dictionary_hash"]
+             == "0707c32d3c184f155f65c48e7200f1d459b612a0734678e0cbedb4c1a2989786",
+             "photo V25 retained shard, entry or dictionary binding drift")
+    added_visual = set(proof["active_visual_shards"]) - set(proof["retained_visual_shards"])
+    _require(len(added_visual) == 1 and len(proof["exact_data_paths"]) == 23
+             and set(proof["exact_data_paths"]) == expected | set(proof["active_semantic_shards"])
+             | added_visual | {proof["maintenance_path"]}
+             and set(proof["exact_data_files"]) == set(proof["exact_data_paths"])
+             and all(_sha256(repo_root / name) == sha for name, sha in proof["exact_data_files"].items()),
+             "photo V25 exact twenty-three DATA paths drift")
+    # The published tree binds older sparse generations without claiming absent bytes
+    # were freshly verified. Materialized retained payloads are still authenticated.
+    retained_blobs = proof["retained_shard_git_bindings"]
+    _require(len(retained_blobs) == 351
+             and all(_sha256(repo_root / name) == sha
+                     for name, sha in proof["retained_shard_files"].items()),
+             "photo V25 bound historical shard bytes drift")
+    allowed_shards = set(retained_blobs) | set(proof["active_semantic_shards"]) | set(proof["active_visual_shards"])
+    _require(len(allowed_shards) == 368, "photo V25 retained shard Git inventory drift")
+    for directory in ("photo_prompt_semantic_index_shards", "photo_prompt_visual_profile_index_shards"):
+        for path in (source_assets / directory).rglob("*.json"):
+            name = str(path.relative_to(repo_root))
+            _require(name in allowed_shards, "photo V25 unregistered retained shard")
+            if name in retained_blobs:
+                content = path.read_bytes()
+                blob = hashlib.sha1(b"blob " + str(len(content)).encode("ascii") + b"\0" + content).hexdigest()
+                _require(blob == retained_blobs[name], "photo V25 historical shard Git blob drift")
+    before_descriptor = repo_root / proof["universal_v2_before_path"]
+    _require(_sha256(before_descriptor) == proof["universal_v2_before_sha256"]
+             and proof["previous_validator_sha256"] == "1a1406782b9b765eb438d140ef07bff12d70490cafc014712b7a0828911a7f11",
+             "photo V25 universal descriptor archive drift")
+    old_descriptor, old_sha = before_descriptor.read_bytes(), proof["previous_validator_sha256"].encode("ascii")
+    _require(old_descriptor.count(old_sha) == 1
+             and (asset_dir / "universal_scene_baseline_v2.json").read_bytes()
+             == old_descriptor.replace(old_sha, _sha256(Path(__file__)).encode("ascii"), 1),
+             "photo V25 universal descriptor changed beyond validator hash")
+
+
 def validate_photo_regression_baseline(
     asset_dir: Path, *, baseline_version: int | None = None
 ) -> dict[str, Any]:
@@ -7510,10 +7715,10 @@ def validate_photo_regression_baseline(
     previous_path = asset_dir / "photo_regression_baseline_v5.json"
     if baseline_version is None:
         baseline_version = next(
-            version for version in (24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
+            version for version in (25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
             if (asset_dir / f"photo_regression_baseline_v{version}.json").exists()
         )
-    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24}, "unsupported photo baseline version")
+    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25}, "unsupported photo baseline version")
     lineage_version = min(baseline_version, 7)
     baseline_path = asset_dir / f"photo_regression_baseline_v{lineage_version}.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
@@ -7772,6 +7977,8 @@ def validate_photo_regression_baseline(
         _validate_v23_lobe_boundary_successor(asset_dir, repo_root, baseline, pack, raw)
     if baseline_version == 24:
         _validate_v24_structure_source_successor(asset_dir, repo_root, baseline, pack, raw)
+    if baseline_version == 25:
+        _validate_v25_ct073_back_band_successor(asset_dir, repo_root, baseline, pack, raw)
     return {
         "status": "pass",
         "schema": baseline["schema"],
