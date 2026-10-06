@@ -1,0 +1,206 @@
+{
+  "contract_version": "independent-photo-data-qa/v1",
+  "case_id": "case-01",
+  "round": 2,
+  "evaluated_at_utc": "2026-10-06T17:21:11.492162+00:00",
+  "state": "local verification complete",
+  "overall_status": "PASS",
+  "overall_scope": "requested local prompt/contract, authored graph, freshness and rejection checks; artistic image quality remains unevaluated",
+  "request_origin": "coordinator-generated independent synthetic topic, not a direct human photograph request",
+  "request_text": "야외 공연을 앞두고 바닷바람 속에서 활을 확인하는 성인 첼리스트의 사진.",
+  "assessments": {
+    "technical_audit": {
+      "status": "PASS",
+      "reason_ko": "같은 frozen 입력으로 실제 lexical pack·receipt를 생성하고 공식 composed audit가 status:pass, failures:[]로 통과했다. precore validator도 경고 없이 통과했다. 후보 채택 대신 자유 서술/assertion으로 여섯 요청 anchor를 보존했다는 비차단 경고는 공개한다.",
+      "precore_validator": "PASS",
+      "composed_audit": "pass",
+      "failure_count": 0,
+      "warning_count": 6,
+      "warnings": [
+        {
+          "check": "uncovered_intent",
+          "intent": "photograph of an adult cellist",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+        },
+        {
+          "check": "uncovered_intent",
+          "intent": "an adult cellist",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+        },
+        {
+          "check": "uncovered_intent",
+          "intent": "checking a cello bow",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+        },
+        {
+          "check": "uncovered_intent",
+          "intent": "before an outdoor performance",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+        },
+        {
+          "check": "uncovered_intent",
+          "intent": "outdoor performance",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+        },
+        {
+          "check": "uncovered_intent",
+          "intent": "The sea breeze",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+        }
+      ],
+      "quality_status": "warn",
+      "evidence": [
+        "precore_validation.json",
+        "runtime-receipt.json",
+        "composed-audit.json",
+        "composed_prompt.json"
+      ]
+    },
+    "graph_accuracy": {
+      "status": "PASS",
+      "reason_ko": "관리 보고서를 receipt의 실제 generation_id로 CLI build했다. 원본 JSON 참조 13,931개와 번들 964개에서 독립적으로 재구성한 edge 2,971개가 관리 그래프와 정확히 일치했다. 노출 후보 64개와 관련 프로필 36개 query를 실제 재실행하고 경로 인스턴스 189개 및 역방향 경로 32개를 원본 참조와 대조했다.",
+      "raw_reference_count": 13931,
+      "edge_count": 2971,
+      "candidate_queries": 64,
+      "profile_queries": 36,
+      "query_success_count": 100,
+      "unlinked_exposed_candidates": 50,
+      "path_instances_verified": 189,
+      "reverse_path_matches": 32,
+      "evidence": [
+        "GRAPH-RAW-VERIFICATION.json",
+        "QUERY-INDEPENDENT-VERIFICATION.json",
+        "QUERY-SUMMARY.json",
+        "queries/"
+      ]
+    },
+    "freshness": {
+      "status": "PASS",
+      "reason_ko": "새 root/runtime에서 --require-current query가 current_verified로 성공했다. scratch report 복사본의 links.json 손상은 checksum mismatch로, 잘못된 root는 authority/root differs로 실제 exit 1 거부됐다. 원본 report와 전달된 runtime member 해시는 유지됐다.",
+      "positive_current": "current_verified",
+      "source_fingerprint": "6f42582a01533dedf985a68e65391e058bdd1c387954907c421c09143f10e351",
+      "corruption_rejected": true,
+      "wrong_root_rejected": true,
+      "evidence": [
+        "query-current-cello-pose.json",
+        "NEGATIVE-CHECKS.json",
+        "ISOLATION-VERIFICATION.json",
+        "CLI-EXECUTIONS.json"
+      ]
+    },
+    "request_meaning_fidelity": {
+      "status": "PASS",
+      "reason_ko": "성인 첼리스트·공연 전·바닷바람·활 점검 의미와 227단어 영어 baseline을 byte-identical로 보존했다. 새 pack에는 mandatory visual obligations가 없고 cello_endpin_seated_bowed는 context_mismatch/required_in_final_prompt:false다. 실제 연주 자세 후보가 계속 advisory로 노출되는 것은 확인했지만 활 점검과 다른 행위이므로 거절했다. 악기 정체를 바꾸거나 요청 없는 현 연주·운지를 추가하지 않았다.",
+      "baseline_sha256": "7b229000def8cc48d821e21cfdbcaa83830dec576a1291c93145528fa80f3541",
+      "final_prompt_sha256": "7b229000def8cc48d821e21cfdbcaa83830dec576a1291c93145528fa80f3541",
+      "baseline_core_meaning_changed": false,
+      "cello_playing_profile": {
+        "status": "context_mismatch",
+        "reason": "the_authorial_core_resolved_the_term_to_a_different_contextual_sense"
+      },
+      "hard_profile_active": false,
+      "schema_corrections": [],
+      "evidence": [
+        "PROFILE-ACTIVATION-RECHECK.json",
+        "authorial_core.json",
+        "final_prompt_en.txt",
+        "composed_prompt.json"
+      ]
+    },
+    "artistic_quality_judgement": {
+      "status": "PARTIAL",
+      "reason_ko": "문장 수준에서는 활과 양손·시선의 구체적 접점, 바람에 움직이는 머리·천과 안정된 활의 대비, 대기 중인 악보대가 공연 직전의 목적을 연결한다. 차분한 존재감과 절제된 배경은 이 요청에 적절하다고 독립적으로 판단한다. 다만 악기 전체 지지와 미세한 활털·손끝을 동시에 읽히게 하는 프레이밍 및 실제 인물 매력은 이미지에서 검증되지 않았다.",
+      "text_scene_judgement": "coherent and suitable",
+      "candidate_adoption_count": 0,
+      "zero_adoption_reason": "관련성이 있는 후보도 baseline보다 목적을 더 명확히 하지 않아 채택하지 않았다. MIDI·현 연주·턱 아래 양손 포즈처럼 행위를 바꾸는 후보는 의미 충돌로 거절했고, 의상 대안은 동일 sensual 1 수준에서 비교했다.",
+      "native_pixels_verified": false,
+      "image_quality_verified": false,
+      "user_acceptance_verified": false,
+      "evidence": [
+        "candidate-details.json",
+        "composed_prompt.json",
+        "final_prompt_en.txt"
+      ]
+    }
+  },
+  "final_prompt_en": "A photograph of an adult cellist checking a cello bow before an outdoor performance on a small wooden stage beside the sea. The cellist is seated on a plain chair, with both feet set apart on the deck. The cello rests upright between their knees, its endpin planted in a rubber stop. They hold the bow horizontally at waist height in front of the cello. Their right thumb and forefinger pause at the frog's adjustment screw while the left hand supports the wooden stick near its balance point; their gaze follows the narrow, evenly stretched ribbon of hair beneath the stick. The sea breeze lifts loose hair at their temple and pulls a dark shirt cuff away from the wrist, while their shoulders stay settled and their mouth is softly set in concentration. Two waiting chairs and a music stand with clipped sheet music sit farther along the stage, making this small preparation feel close to the first note. Soft coastal daylight grazes the cheek and open collar, with a gentle glint along the bow hair and warm amber reflections in the cello. Compose a quiet environmental portrait that keeps the seated figure, both hands, the entire bow, and the instrument's point of support readable, with the pale water receding behind them. The fine, steady line of the bow carries attention against the moving hair and cloth.",
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "pack_id": "59035d64155e621b",
+  "generation_id": "db193081d04dba97d754e8809cebfb67a97133c7162a5429da965d53e9c88462",
+  "management_report_id": "704f9019c7041e57e0307f7cda01895970b4c6b36c747b39ae4508268d713d10",
+  "management_validation_status": "generation_validated",
+  "management_findings_count": {
+    "error": 0,
+    "info": 0,
+    "review": 46
+  },
+  "prior_failure_preserved": {
+    "initial_pack_id": "8881de196d3625e9",
+    "initial_generation_id": "2135faf8f2451eac73b90c447edbd496545d20d974c158f44ec67d98e9107f2a",
+    "initial_composed_audit_status": "fail",
+    "artifact_hash_verification": "PASS",
+    "record": "INITIAL-EVIDENCE-PRESERVATION.json"
+  },
+  "binding_preservation": {
+    "input_files_unchanged": true,
+    "frozen_baseline_core_controls_feature_embodiment_unchanged": true,
+    "baseline_byte_identical_to_final": true,
+    "runtime_owned_member_hashes_unchanged": true,
+    "input_schema_corrections": [],
+    "catalog_snapshot_copy": "Restored from permitted current catalog after matching the initial frozen SHA-256."
+  },
+  "bundle_authority_judgement": {
+    "status": "PASS",
+    "reason_ko": "모든 query의 meaning_support:not_inferred와 profile_activation:independent_request_evidence_only를 확인했다. 부드러운 광원 후보가 공원·진료 공간 번들로 이어져도 그 후보만으로 해당 공간의 모든 의미를 충족하거나 프로필을 필수화하지 않는다. 그래프 연관, 요청/장면 적용성, 후보 채택, 실제 이미지 품질을 분리했다."
+  },
+  "boundaries": {
+    "network_or_api_calls": false,
+    "image_calls": false,
+    "native_pixels_reviewed": false,
+    "actual_image_quality_verified": false,
+    "user_acceptance_verified": false,
+    "authored_source_members_modified_by_qa_agent": false,
+    "intentional_mutations_only_in": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-01/round-2/scratch",
+    "other_cases_or_memory_read": false,
+    "lexical_lane_modes": {
+      "sensual": {
+        "lanes": {
+          "coherence": "keyword",
+          "alternatives": "keyword",
+          "relation_event": "keyword",
+          "relation_setting": "keyword"
+        },
+        "semantic_candidate_coverage": {
+          "coherence": 0,
+          "alternatives": 0,
+          "relation_event": 0,
+          "relation_setting": 0
+        },
+        "eligible_corpus_count": 5846,
+        "retrieved_count": 368,
+        "returned_count": 12,
+        "ranking": "reciprocal_rank_fusion_with_soft_visual_diversity",
+        "classification": "not_performed",
+        "membership_tags_required": false,
+        "intensity_admission_thresholds": false,
+        "scene_reranking": "bounded_request_overlap_preference;_not_applicability_proof"
+      }
+    }
+  },
+  "artifact_hashes": {
+    "PRECORE-FROZEN.json": "33031b1b433e4e1926cf00ee6d6584d50e2f4a69779cc3ec5a714be96b020df6",
+    "ISOLATION-VERIFICATION.json": "b4b0005f1b96ed30c7e669f13bab01031b9291607a200211641f81245f2d3ad9",
+    "candidate_pack.json": "26d619c2a96c48c6c8b469d91ac17f6b4b2632664030d4387296625381a3daf8",
+    "runtime-receipt.json": "0227271af8b085ae2196c17ed689eb2ccdb9522f5aacd03258f63ad4cd3afede",
+    "composed_prompt.json": "1828e2dfe6262bb9db1b008b2cf5b7bcdc45e18c386a9354969d674422ef287b",
+    "composed-audit.json": "2344d26dcbaddda1549fef960feb9d8c88c1f0a8faacf5b6ff488fd262e9de84",
+    "final_prompt_en.txt": "7b229000def8cc48d821e21cfdbcaa83830dec576a1291c93145528fa80f3541",
+    "precore_validation.json": "833ad79b6d568da9186d5d4d532d3ee98dd398fe225cad58968c8ef7d8ab4bb9",
+    "PROFILE-ACTIVATION-RECHECK.json": "2ddda4ca8cd3009d16d11fe1b9d5e56b06bc9b7ecd410d6ceecee268affc27fa",
+    "GRAPH-RAW-VERIFICATION.json": "1a233c9cae1e8fedf4b0abd0985288b4bbda4304c8eb4019e6c1001ceaf57d47",
+    "QUERY-INDEPENDENT-VERIFICATION.json": "4e5d7d61d085b59f523eac7e5bbdfc93642480e699b497caaebdb002ce4ff5ba",
+    "NEGATIVE-CHECKS.json": "aa20e8d8c7dc188b62f6196424361971541545fb6841528f07f64199b0d86dd4",
+    "INITIAL-EVIDENCE-PRESERVATION.json": "097fda74587ae2660ad45ae6e881b08b8ce4975c1adaeb01805735bad8b3a263",
+    "management-report/manifest.json": "437071fd57e6a221d373f8e94bc9937dc73ec7090c4802dc39a54d012a293569"
+  }
+}

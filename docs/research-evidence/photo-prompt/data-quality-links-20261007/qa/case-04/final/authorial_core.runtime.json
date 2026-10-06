@@ -1,0 +1,163 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "겨울 저녁 작은 기차역 플랫폼의 지붕과 빗물 자국을 찍은 사진. 사람은 없음.",
+  "creative_controls_sha256": "99520649027929ce95ba06ed674c19949ccaa76aa63f988038256c82b5d394f9",
+  "interpreted_intent": "The request calls for a photograph of a small railway platform roof and its rainwater traces on a winter evening, with people explicitly excluded. The roof is understood contextually as the platform shelter canopy, and the traces as visible runoff staining rather than a request for active rainfall. My restrained authorial direction contrasts the shelter's straight structure with irregular accumulated water marks; a little platform and rail context keeps the object readable as part of a modest station. I prefer this to an isolated close study of stains because the surrounding platform makes their place and purpose legible. Warm practical light against cold dusk and faint wet paving are optional authorial circumstances, not requester definitions. The intended experience is quiet attention to weather recorded on ordinary infrastructure. The camera direction and height are unprescribed. Saved creativity 1 informs these close, restrained choices; effective sensual and fetish treatments are zero because no people is explicit, and surreal treatment is zero.",
+  "subject": "The roof canopy of a small railway station platform, with visible rainwater stains.",
+  "setting": "A small railway station platform on a winter evening.",
+  "event": "Rainwater stains remain visible on the platform roof while the platform is empty.",
+  "visual_priorities": [
+    "The canopy and its rainwater stains carry the principal subject and surface detail.",
+    "Irregular runoff streaks and tide lines contrast with the roof's straight edges and seams.",
+    "A subordinate strip of platform and parallel rails makes the shelter's railway setting legible.",
+    "Warm platform light reveals the stains against cold winter dusk while the platform remains empty."
+  ],
+  "baseline_prompt_en": "An architectural photograph of the roof canopy of a small railway station platform on a winter evening. The roof and its rainwater stains are the main subject: dark, uneven runoff streaks descend along the fascia and spread beneath the roof seams, with pale dried tide lines edging the dampened patches. The canopy occupies most of the frame, while a narrow strip of platform paving, one supporting post, and the parallel rails establish its modest station setting. A single warm platform lamp draws out the overlapping stain edges and the slight roughness of the roof surface against the cold blue-gray dusk. The platform is empty, its paving carrying a subdued wet glimmer. Preserve the quiet difference between a working shelter's straight structure and the irregular water traces that have accumulated on it. Natural tonal transitions and legible surface texture make the photograph feel observed and still, with the surrounding station kept subordinate to the stained roof.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "겨울 저녁 작은 기차역 플랫폼의 지붕과 빗물 자국",
+      "source_text": "겨울 저녁 작은 기차역 플랫폼의 지붕과 빗물 자국을 찍은 사진. 사람은 없음.",
+      "basis": "request_context",
+      "resolution": "A winter-evening photograph centered on a small railway station platform's shelter roof and the visible marks left by rainwater. The explicit absence of people applies to the image; an active downpour, snow, an era, and camera position are not prescribed.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [
+    "사람"
+  ],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "requested_photo",
+        "source_text": "지붕과 빗물 자국을 찍은 사진",
+        "dimension": "concept",
+        "prompt_evidence": "photograph of the roof canopy"
+      },
+      {
+        "anchor_id": "platform_roof",
+        "source_text": "플랫폼의 지붕",
+        "dimension": "subject",
+        "prompt_evidence": "roof canopy"
+      },
+      {
+        "anchor_id": "rainwater_trace",
+        "source_text": "빗물 자국",
+        "dimension": "event",
+        "prompt_evidence": "rainwater stains"
+      },
+      {
+        "anchor_id": "station_location",
+        "source_text": "작은 기차역 플랫폼",
+        "dimension": "setting",
+        "target": "scene",
+        "property": "location",
+        "prompt_evidence": "small railway station platform"
+      },
+      {
+        "anchor_id": "winter_evening",
+        "source_text": "겨울 저녁",
+        "dimension": "timing",
+        "target": "scene",
+        "property": "season_and_time_of_day",
+        "prompt_evidence": "winter evening"
+      },
+      {
+        "anchor_id": "empty_platform",
+        "source_text": "사람은 없음.",
+        "dimension": "count",
+        "target": "people",
+        "property": "presence",
+        "prompt_evidence": "The platform is empty"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "setting",
+      "timing",
+      "count",
+      "appearance",
+      "material",
+      "color",
+      "atmosphere",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_roof_object",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "roof canopy"
+      }
+    },
+    {
+      "assertion_id": "visible_rainwater_trace",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "event"
+      ],
+      "axes": {
+        "visible_surface_state": "rainwater_stains"
+      },
+      "evidence": {
+        "trace_phrase": "rainwater stains"
+      }
+    },
+    {
+      "assertion_id": "capture_camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "architecture",
+    "family": "restrained documentary",
+    "evidence": [
+      "Natural tonal transitions",
+      "legible surface texture"
+    ]
+  },
+  "variation_key": "random-qa-20261007-04-winter-station-roof"
+}

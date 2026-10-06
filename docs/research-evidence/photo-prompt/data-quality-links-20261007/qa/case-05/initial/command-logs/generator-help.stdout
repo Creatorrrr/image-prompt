@@ -1,0 +1,45 @@
+usage: generate_photo_prompt.py [-h]
+                                --request-envelope-json REQUEST_ENVELOPE_JSON
+                                --authorial-core-json AUTHORIAL_CORE_JSON
+                                --creative-controls-json CREATIVE_CONTROLS_JSON
+                                --embodiment-review-json EMBODIMENT_REVIEW_JSON
+                                [--visual-intent-json VISUAL_INTENT_JSON]
+                                [--require-camera-evidence {direction,height}]
+                                [--new-author-camera-evidence] [--seed SEED]
+                                [--output-file OUTPUT_FILE]
+                                [--runtime-store RUNTIME_STORE]
+                                [--source-root SOURCE_ROOT]
+                                [--source-mode {local_current,remote_before_retrieval}]
+                                [--source-remote SOURCE_REMOTE]
+                                [--source-ref SOURCE_REF]
+                                [--runtime-receipt RUNTIME_RECEIPT]
+
+Retrieve optional photographic candidates from an independently frozen core.
+
+options:
+  -h, --help            show this help message and exit
+  --request-envelope-json REQUEST_ENVELOPE_JSON
+  --authorial-core-json AUTHORIAL_CORE_JSON
+  --creative-controls-json CREATIVE_CONTROLS_JSON
+  --embodiment-review-json EMBODIMENT_REVIEW_JSON
+  --visual-intent-json VISUAL_INTENT_JSON
+  --require-camera-evidence {direction,height}
+                        New authoring: verify each requester-owned camera axis
+                        has explicit frozen evidence.
+  --new-author-camera-evidence
+                        Require owner and separate direction/height
+                        declarations when camera is an open or locked
+                        dimension.
+  --seed SEED
+  --output-file OUTPUT_FILE
+  --runtime-store RUNTIME_STORE
+                        Runtime-owned generation/cache directory.
+  --source-root SOURCE_ROOT
+                        Photo skill root; default is this installed skill.
+  --source-mode {local_current,remote_before_retrieval}
+  --source-remote SOURCE_REMOTE
+                        Explicit Git remote URL for remote_before_retrieval.
+  --source-ref SOURCE_REF
+  --runtime-receipt RUNTIME_RECEIPT
+                        Save the private generation/pack binding separately
+                        from the public pack.

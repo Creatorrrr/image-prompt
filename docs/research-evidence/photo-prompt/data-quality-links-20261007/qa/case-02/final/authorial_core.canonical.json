@@ -1,0 +1,198 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "오래된 구리 주전자와 접힌 리넨을 이른 아침 자연광으로 찍은 사진. 사람은 없음.",
+  "creative_controls_sha256": "5a7c1d15935fcf6e5712f3571569611617e64de02e389d86feff027e7128196a",
+  "interpreted_intent": "The request specifies an old copper kettle and folded linen photographed in early-morning natural light, with people excluded. I choose a quiet windowsill arrangement where visible use traces give the kettle a particular history and the cloth's folded layers offer a contrasting material rhythm. A centered specimen arrangement and this more intimate arrangement were considered at the saved creativity level 1; the windowsill version lets a shared reflection connect the two surfaces with restrained context. The pale support, exact spacing, worn patches, background tone and color treatment are authorial decisions, rather than requester prescriptions. The intended experience is close attention to durable objects at the start of the day; the static scene needs no invented human actor, action or biography.",
+  "subject": "An old copper kettle and folded linen.",
+  "setting": "A pale stone windowsill at the edge of a quiet interior.",
+  "event": "The kettle rests beside linen held in a folded state under early-morning natural light.",
+  "visual_priorities": [
+    "The kettle's worn curved copper surface leads, with the linen's flat folded layers giving it a material counterpart.",
+    "Early-morning natural light reveals the copper reflection and the dry linen weave in one connected passage.",
+    "A small interval of pale stone separates the two subjects while a plain interior background sustains the quiet arrangement."
+  ],
+  "baseline_prompt_en": "An object-only still-life photograph of an old copper kettle beside a length of linen that lies folded, lit by natural light in the early morning. Both rest on a pale stone windowsill. The kettle's curved flank carries small rubbed patches and darkened seams; the linen's stacked folds reveal a coarse, dry weave. A soft window reflection runs along the copper curve and falls across the upper fold, making the metal's rounded volume answer the fabric's flat layers. The kettle holds the visual center, with a small interval of stone separating it from the linen. Cool, quiet shadows remain readable against a plain, dim interior background, while the warm copper and off-white cloth retain their natural colors.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "still-life photograph",
+      "source_text": "오래된 구리 주전자와 접힌 리넨을 이른 아침 자연광으로 찍은 사진.",
+      "basis": "request_context",
+      "resolution": "A photographic image led by the specified two inanimate objects; the request describes a static material study and prescribes no capture-camera direction or height.",
+      "sources": []
+    },
+    {
+      "term": "old copper kettle",
+      "source_text": "오래된 구리 주전자",
+      "basis": "agent_general_knowledge",
+      "resolution": "A kettle made of copper with an aged rather than new condition. Specific surface wear, form and degree of patina remain authorial realizations.",
+      "sources": []
+    },
+    {
+      "term": "folded linen",
+      "source_text": "접힌 리넨",
+      "basis": "request_context",
+      "resolution": "Linen fabric present in a folded state, treated as a material subject rather than a garment on a person. Its color, weave scale and exact fold arrangement are unspecified.",
+      "sources": []
+    },
+    {
+      "term": "early-morning natural light",
+      "source_text": "이른 아침 자연광",
+      "basis": "request_context",
+      "resolution": "The photographic moment is early morning and the light source is natural. Window placement, diffusion, direction, weather and photographic viewpoint are not prescribed.",
+      "sources": []
+    },
+    {
+      "term": "no people",
+      "source_text": "사람은 없음.",
+      "basis": "request_context",
+      "resolution": "People are explicitly excluded from the pictured scene. The primary subject remains nonhuman objects and no human portrayal is introduced.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [
+    "사람"
+  ],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "오래된 구리 주전자와 접힌 리넨을 이른 아침 자연광으로 찍은 사진.",
+        "dimension": "concept",
+        "prompt_evidence": "still-life photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "오래된 구리 주전자와 접힌 리넨",
+        "dimension": "subject",
+        "prompt_evidence": "an old copper kettle beside a length of linen"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "접힌 리넨",
+        "dimension": "event",
+        "prompt_evidence": "linen that lies folded"
+      },
+      {
+        "anchor_id": "kettle_age",
+        "source_text": "오래된 구리 주전자",
+        "dimension": "appearance",
+        "target": "kettle",
+        "property": "condition.age",
+        "prompt_evidence": "an old copper kettle"
+      },
+      {
+        "anchor_id": "copper_material",
+        "source_text": "구리 주전자",
+        "dimension": "material",
+        "target": "kettle",
+        "property": "material.substance",
+        "prompt_evidence": "copper kettle"
+      },
+      {
+        "anchor_id": "linen_material",
+        "source_text": "리넨",
+        "dimension": "material",
+        "target": "linen",
+        "property": "material.fiber",
+        "prompt_evidence": "a length of linen"
+      },
+      {
+        "anchor_id": "natural_light",
+        "source_text": "자연광",
+        "dimension": "lighting",
+        "target": "scene",
+        "property": "light.source",
+        "prompt_evidence": "natural light"
+      },
+      {
+        "anchor_id": "early_morning",
+        "source_text": "이른 아침",
+        "dimension": "timing",
+        "target": "scene",
+        "property": "time_of_day",
+        "prompt_evidence": "the early morning"
+      },
+      {
+        "anchor_id": "no_people",
+        "source_text": "사람은 없음.",
+        "dimension": "count",
+        "target": "scene",
+        "property": "people.count",
+        "prompt_evidence": "An object-only still-life photograph"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "count",
+      "setting",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_object_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "an old copper kettle beside a length of linen"
+      }
+    },
+    {
+      "assertion_id": "capture_camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "still-life photography",
+    "family": "quiet material study",
+    "evidence": [
+      "small rubbed patches and darkened seams",
+      "a coarse, dry weave",
+      "a plain, dim interior background"
+    ]
+  },
+  "variation_key": "qa-case-02-independent-precore"
+}

@@ -1,0 +1,695 @@
+{
+  "schema": "photo-independent-qa-result/v1",
+  "case": "case-05",
+  "round": 1,
+  "completed_at_utc": "2026-10-06T17:13:33.405884+00:00",
+  "request_text": "마른 솔방울의 비늘 틈과 거친 표면을 낮은 옆빛으로 찍은 접사 사진. 사람은 없음.",
+  "request_origin": "coordinator-generated synthetic test case under requester-authorized random topic validation",
+  "generation_id": "2135faf8f2451eac73b90c447edbd496545d20d974c158f44ec67d98e9107f2a",
+  "source_fingerprint": "98f7d0ffafa290a2f63583ce8ff41d1c38208bdacc12e1e279458bea81e9d24a",
+  "pack_id": "8ac5d3aa53ac7f37",
+  "final_prompt_en": "A macro photograph of a pine cone centers on the gaps between its scales and their rough woody surfaces. The scales are dry, with fibrous ridges and slightly chipped edges interrupting their repeated pattern. Low side light grazes across the scale relief, bringing raised ridges into brightness while the crevices hold narrow shadows. A close crop lets the overlapping scales form an irregular layered rhythm. The central cluster is crisply resolved; neighboring layers soften gently enough to retain their shapes. The cone rests against a plain charcoal-brown background. Muted russet and umber tones keep attention on the transition from illuminated surface to shaded gap.",
+  "final_prompt_sha256": "eb5be68b8b3cd912f4dde6ae1bae7b7552aef9450900c25d1fa5ac5742aa380e",
+  "baseline_byte_exact_preserved": true,
+  "judgments": {
+    "technical_audit": {
+      "status": "PASS",
+      "official_composed_status": "pass",
+      "failures": [],
+      "warning_count": 6,
+      "warning_meaning_ko": "후보 자체가 의도를 대신하지 않았고 독립 영어 서술/증거로 요청을 보존했다는 경고 6건."
+    },
+    "link_accuracy": {
+      "status": "PASS",
+      "forward_queries": 64,
+      "reverse_queries": 49,
+      "unique_paths": 126,
+      "source_refs": 169,
+      "source_nodes": 167,
+      "unlinked_exposed_count": 51,
+      "meaning_support": "not_inferred",
+      "auto_hard_promotion_observed": false,
+      "scope_ko": "원본 JSON 선언·compiled record·참조 경로의 정확성만 검증; 번들 연관을 의미 전체 충족으로 판정하지 않음."
+    },
+    "freshness": {
+      "status": "PASS",
+      "require_current_command": "query-relief-current",
+      "positive_returncode": 0,
+      "damaged_report_returncode": 1,
+      "damaged_report_error": "Error: report_invalid: report member checksum mismatch: links.json",
+      "wrong_root_returncode": 1,
+      "wrong_root_error": "Error: report_not_current: report authority/root differs from requested source",
+      "original_skill_and_report_preserved": true
+    },
+    "request_meaning_preservation": {
+      "status": "PASS",
+      "source_request_sha256": "08af8c4297ab213019d27f97eab1d5a16a634dba90c1f5751a683ea2eebaf53a",
+      "baseline_prompt_sha256": "eb5be68b8b3cd912f4dde6ae1bae7b7552aef9450900c25d1fa5ac5742aa380e",
+      "no_people": true,
+      "explicit_nonsexual": false,
+      "effective_sensual": 0,
+      "effective_fetish": 0,
+      "camera_review": {
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open",
+        "evidence": {}
+      },
+      "chosen_candidate_ids": [],
+      "chosen_visual_concept_ids": [],
+      "focal_effect_coverage": "required pre-DATA scale_surface_relief assertion and property anchors"
+    },
+    "artistic_judgment": {
+      "status": "PARTIAL",
+      "evaluation_ko": "거친 목질 표면과 비늘 틈이 낮은 측광의 밝은 융기/좁은 그림자 관계로 연결되고, 중앙 초점과 차분한 배경이 접사의 질감 목적을 뒷받침한다. 요청과 일관된 프롬프트 설계지만 실제 픽셀의 명료성·미적 완성도는 검증하지 않았다."
+    },
+    "optional_candidate_semantic_scope": {
+      "status": "PARTIAL",
+      "confirmed_explicit_adult_eligible_ids": [
+        "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+        "slot:caption_context:hr_mockumentary_evidence_display"
+      ],
+      "contextual_review_ids": [
+        "slot:location:formal_biwu_courtyard_platform"
+      ],
+      "scope_ko": "추가 노출 16행은 graph 오류와 분리한 의미 review이며 전체 DATA 또는 모든 eligible 후보의 의미 호환을 보장하지 않음."
+    }
+  },
+  "pixel_verification": "NOT_VERIFIED",
+  "user_acceptance": "NOT_VERIFIED",
+  "api_image_network_calls": false,
+  "schema_corrections": [
+    {
+      "time_utc": "2026-10-06T16:47:55.607823+00:00",
+      "source_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/feature_selection.json",
+      "source_sha256": "93781075eb0d4b4dd65ec5eefbb209751b7a932875f0286054fe8c2a3cc6d2de",
+      "corrected_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/feature_selection.schema-corrected.json",
+      "corrected_sha256": "45ee0645130665f2166b2417e831984950fd33003541ea2cfcd914d6075715e4",
+      "field": "catalog_path",
+      "before": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/skill/precore/visual_feature_catalog.json",
+      "after": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+      "reason": "The official validator requires the canonical symbolic precore catalog path; replacing the isolation-specific absolute path is a schema correction only.",
+      "semantic_change": false,
+      "baseline_changed": false,
+      "candidate_or_profile_data_read_before_correction": false
+    },
+    {
+      "time_utc": "2026-10-06T16:49:48.223633+00:00",
+      "source_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/authorial_core.json",
+      "source_sha256": "334570c86040dd0e775abbbfddbe12a982419b37feb46ceeae3f702c862d4678",
+      "corrected_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/authorial_core.schema-corrected.json",
+      "corrected_sha256": "58199a63533a5cbd1e33ff8ca8fa33076b620f7a5e6a260c9cced547486944db",
+      "field": "user_exclusions",
+      "before": [
+        "people"
+      ],
+      "after": [
+        "사람은 없음."
+      ],
+      "reason": "The public core validator requires each exclusion to be a literal active-request substring. The Korean requester exclusion is the exact source-grounded form of the previously recorded English people exclusion. The no-people context, request meaning and all baseline bytes stay unchanged.",
+      "semantic_change": false,
+      "baseline_changed": false,
+      "candidate_or_profile_data_read_before_correction": false,
+      "data_load_order_evidence": "generate_photo_prompt.py validates load_authorial_core_arg before RuntimeSnapshotProvider.acquire; first generation attempt returned before acquisition."
+    }
+  ],
+  "independent_checker_diagnostics": [
+    {
+      "original_check": "independent-source-check",
+      "reason": "The first independent helper hashed the record alone. The declared complete-compiled-record/v1 recipe hashes [kind, slot, record], as confirmed in corpus.py line 171. The helper was corrected; source data and tool code were not changed.",
+      "before_script": "run/independent_source_check.record_only_hash.py",
+      "before_sha256": "c47c4da57aaf93bc2f62fec37d7fc1b29ebeeb386008bb54a73c867b272623ae",
+      "after_script": "run/independent_source_check.py",
+      "after_sha256": "9bf9507c35f6d4fd9e924294fe8efc46adc6e4b9b53b0c33e226f947f78e9713",
+      "data_or_tool_mutation": false
+    },
+    {
+      "original_check": "independent-source-check-entity-recipe",
+      "reason": "Two candidate records include explicitly referenced existing_slot_context_extensions. Equality must compare the complete primary record plus the declared paraphrases/contexts from those extension references. The corrected independent helper merges only those source-authored fields and fails on unknown fields.",
+      "before_script": "run/independent_source_check.single_source_equality.py",
+      "before_sha256": "9bf9507c35f6d4fd9e924294fe8efc46adc6e4b9b53b0c33e226f947f78e9713",
+      "after_script": "run/independent_source_check.py",
+      "after_sha256": "3cfc5986767eccbd71f91ff1995739d60af5ae07ee7979caeed74775a7515b00",
+      "data_or_tool_mutation": false
+    }
+  ],
+  "command_evidence": [
+    {
+      "label": "feature-before-data",
+      "started_at_utc": "2026-10-06T16:47:35.047510+00:00",
+      "ended_at_utc": "2026-10-06T16:47:35.126029+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "skill/scripts/validate_precore_feature_selection.py",
+        "--catalog",
+        "skill/precore/visual_feature_catalog.json",
+        "--request-envelope",
+        "run/request_envelope.json",
+        "--authorial-core",
+        "run/authorial_core.json",
+        "--embodiment-review",
+        "run/embodiment_review.json",
+        "--selection",
+        "run/feature_selection.json"
+      ],
+      "returncode": 2,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/feature-before-data.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/feature-before-data.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "2b2a45530e48bb40c7c292e34f748ee8b01395ed46b17b875379ba3303c1b2c3"
+    },
+    {
+      "label": "feature-corrected-before-data",
+      "started_at_utc": "2026-10-06T16:47:55.691161+00:00",
+      "ended_at_utc": "2026-10-06T16:47:55.788804+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "skill/scripts/validate_precore_feature_selection.py",
+        "--catalog",
+        "skill/precore/visual_feature_catalog.json",
+        "--request-envelope",
+        "run/request_envelope.json",
+        "--authorial-core",
+        "run/authorial_core.json",
+        "--embodiment-review",
+        "run/embodiment_review.json",
+        "--selection",
+        "run/feature_selection.schema-corrected.json"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/feature-corrected-before-data.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/feature-corrected-before-data.stderr",
+      "stdout_sha256": "80b54ff2a631b3eecf35a9a28fc22322c1576195422700252adeffa70defc9f3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "maintenance-help",
+      "started_at_utc": "2026-10-06T16:48:11.128389+00:00",
+      "ended_at_utc": "2026-10-06T16:48:11.380705+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "tools/photo_data_maintenance/cli.py",
+        "--help"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/maintenance-help.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/maintenance-help.stderr",
+      "stdout_sha256": "fef5158c32f46e9a855cd29ad3e33707a56d60769d136df29c269703fb2d8cc1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "generator-help",
+      "started_at_utc": "2026-10-06T16:48:11.090505+00:00",
+      "ended_at_utc": "2026-10-06T16:48:11.540997+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "skill/scripts/generate_photo_prompt.py",
+        "--help"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/generator-help.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/generator-help.stderr",
+      "stdout_sha256": "048f04cece2732638dff38397698c102a80ee655fbc60f6dde17fec29f7ca192",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "maintenance-build-help",
+      "started_at_utc": "2026-10-06T16:48:22.569348+00:00",
+      "ended_at_utc": "2026-10-06T16:48:22.647211+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "tools/photo_data_maintenance/cli.py",
+        "build",
+        "--help"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/maintenance-build-help.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/maintenance-build-help.stderr",
+      "stdout_sha256": "f06739952282ffc91d1044c13f8ddeace77304896f20564ea8a31a3b88789d78",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "maintenance-query-help",
+      "started_at_utc": "2026-10-06T16:48:22.708356+00:00",
+      "ended_at_utc": "2026-10-06T16:48:22.807473+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "tools/photo_data_maintenance/cli.py",
+        "query",
+        "--help"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/maintenance-query-help.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/maintenance-query-help.stderr",
+      "stdout_sha256": "d3669b0570d3bc39de85c5d6ce65d6f1039b4513924b0b5da292521949f33028",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "generate-pack-local-lexical",
+      "started_at_utc": "2026-10-06T16:49:04.942421+00:00",
+      "ended_at_utc": "2026-10-06T16:49:05.199139+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "skill/scripts/generate_photo_prompt.py",
+        "--request-envelope-json",
+        "run/request_envelope.json",
+        "--authorial-core-json",
+        "run/authorial_core.json",
+        "--creative-controls-json",
+        "run/creative_controls.json",
+        "--embodiment-review-json",
+        "run/embodiment_review.json",
+        "--new-author-camera-evidence",
+        "--seed",
+        "705",
+        "--source-root",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/skill",
+        "--source-mode",
+        "local_current",
+        "--runtime-store",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/runtime",
+        "--runtime-receipt",
+        "run/candidate_pack.runtime-receipt.json",
+        "--output-file",
+        "run/candidate_pack.json"
+      ],
+      "returncode": 1,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/generate-pack-local-lexical.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/generate-pack-local-lexical.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "12d3df487f80a208656c85145aa3373c4ff87043366a66ff66884d2171e37b97"
+    },
+    {
+      "label": "feature-core-corrected-before-data",
+      "started_at_utc": "2026-10-06T16:49:48.281196+00:00",
+      "ended_at_utc": "2026-10-06T16:49:48.377342+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "skill/scripts/validate_precore_feature_selection.py",
+        "--catalog",
+        "skill/precore/visual_feature_catalog.json",
+        "--request-envelope",
+        "run/request_envelope.json",
+        "--authorial-core",
+        "run/authorial_core.schema-corrected.json",
+        "--embodiment-review",
+        "run/embodiment_review.json",
+        "--selection",
+        "run/feature_selection.schema-corrected.json"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/feature-core-corrected-before-data.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/feature-core-corrected-before-data.stderr",
+      "stdout_sha256": "80b54ff2a631b3eecf35a9a28fc22322c1576195422700252adeffa70defc9f3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "generate-pack-schema-corrected-local-lexical",
+      "started_at_utc": "2026-10-06T16:49:56.523711+00:00",
+      "ended_at_utc": "2026-10-06T16:50:32.765662+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "skill/scripts/generate_photo_prompt.py",
+        "--request-envelope-json",
+        "run/request_envelope.json",
+        "--authorial-core-json",
+        "run/authorial_core.schema-corrected.json",
+        "--creative-controls-json",
+        "run/creative_controls.json",
+        "--embodiment-review-json",
+        "run/embodiment_review.json",
+        "--new-author-camera-evidence",
+        "--seed",
+        "705",
+        "--source-root",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/skill",
+        "--source-mode",
+        "local_current",
+        "--runtime-store",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/runtime",
+        "--runtime-receipt",
+        "run/candidate_pack.runtime-receipt.json",
+        "--output-file",
+        "run/candidate_pack.json"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/generate-pack-schema-corrected-local-lexical.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/generate-pack-schema-corrected-local-lexical.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "composer-view-help",
+      "started_at_utc": "2026-10-06T16:50:42.831222+00:00",
+      "ended_at_utc": "2026-10-06T16:50:42.987560+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "skill/scripts/compose_pack_view.py",
+        "--help"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/composer-view-help.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/composer-view-help.stderr",
+      "stdout_sha256": "71ecf953f4dfc7ac227166e5b417f74339cafda4fb0568b02709a1acec7ab7e3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "composed-audit-help",
+      "started_at_utc": "2026-10-06T16:50:42.776779+00:00",
+      "ended_at_utc": "2026-10-06T16:50:43.018112+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "skill/scripts/audit_composed_prompt.py",
+        "--help"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/composed-audit-help.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/composed-audit-help.stderr",
+      "stdout_sha256": "1426e18aa0174b457e7b39186ece9d21358f1e84fc119866a713779cbf1fd8f8",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "composer-view",
+      "started_at_utc": "2026-10-06T16:51:07.171771+00:00",
+      "ended_at_utc": "2026-10-06T16:51:07.329033+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "skill/scripts/compose_pack_view.py",
+        "--pack",
+        "run/candidate_pack.json",
+        "--output",
+        "run/composer_view.json"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/composer-view.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/composer-view.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "build-maintenance-report",
+      "started_at_utc": "2026-10-06T16:51:43.738800+00:00",
+      "ended_at_utc": "2026-10-06T16:51:58.397277+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "tools/photo_data_maintenance/cli.py",
+        "build",
+        "--source-root",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/skill",
+        "--runtime-store",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/runtime",
+        "--generation",
+        "2135faf8f2451eac73b90c447edbd496545d20d974c158f44ec67d98e9107f2a",
+        "--output",
+        "run/maintenance-report"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/build-maintenance-report.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/build-maintenance-report.stderr",
+      "stdout_sha256": "f7a58c5322c4106e7aef610bc98721e670449bbee2baa203a0c79625cdd2a1ab",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "composer-candidate-details",
+      "started_at_utc": "2026-10-06T16:52:24.557291+00:00",
+      "ended_at_utc": "2026-10-06T16:52:24.646869+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "skill/scripts/compose_pack_view.py",
+        "--pack",
+        "run/candidate_pack.json",
+        "--candidate-id",
+        "slot:atmosphere:hr_ground_fog_low_band",
+        "--candidate-id",
+        "slot:scale_relation:shadow_larger_than_source",
+        "--candidate-id",
+        "slot:film_emulation:pr_film_grain_print_scan_scope_candidate",
+        "--candidate-id",
+        "slot:reflection_logic:water_w047",
+        "--candidate-id",
+        "slot:prop:orn_gd62",
+        "--candidate-id",
+        "bundle:orn_gd65_bundle",
+        "--candidate-id",
+        "slot:lighting:orn_gd65",
+        "--candidate-id",
+        "slot:focus:rb_depth_focus_continuity_candidate",
+        "--candidate-id",
+        "slot:action:hand_finishing_mechanical_watch_bridges",
+        "--output",
+        "run/composer_selected_details.json"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/composer-candidate-details.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/composer-candidate-details.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "query-relief-current",
+      "started_at_utc": "2026-10-06T16:53:18.529265+00:00",
+      "ended_at_utc": "2026-10-06T16:53:40.793646+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "tools/photo_data_maintenance/cli.py",
+        "query",
+        "--report",
+        "run/maintenance-report",
+        "--candidate",
+        "slot:lighting:orn_gd65",
+        "--require-current",
+        "--source-root",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/skill",
+        "--runtime-store",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/runtime"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/query-relief-current.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/query-relief-current.stderr",
+      "stdout_sha256": "66d4fa42466367bb287abe66ad510b277b5be17cd99305449d6a57c3be15837d",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "composed-audit",
+      "started_at_utc": "2026-10-06T16:54:45.660998+00:00",
+      "ended_at_utc": "2026-10-06T16:55:09.385537+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "skill/scripts/audit_composed_prompt.py",
+        "--pack",
+        "run/candidate_pack.json",
+        "--composed",
+        "run/composed_prompt.json",
+        "--runtime-store",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/runtime",
+        "--runtime-receipt",
+        "run/candidate_pack.runtime-receipt.json"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/composed-audit.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/composed-audit.stderr",
+      "stdout_sha256": "b082b3100a107fac24eef0a0735fb8f8b4afdc3e287a56d7dce4fd27d25a01ce",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "query-all-exposed-bidirectional",
+      "started_at_utc": "2026-10-06T16:55:46.471656+00:00",
+      "ended_at_utc": "2026-10-06T16:55:47.442909+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "run/query_exposed_nodes.py"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/query-all-exposed-bidirectional.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/query-all-exposed-bidirectional.stderr",
+      "stdout_sha256": "97f2db290c676eb9b317a0024a63da31eb136c1dfb8d0160d365edce6c4bce52",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "query-relief-bundle",
+      "started_at_utc": "2026-10-06T16:56:48.290990+00:00",
+      "ended_at_utc": "2026-10-06T16:56:49.031257+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "tools/photo_data_maintenance/cli.py",
+        "query",
+        "--report",
+        "run/maintenance-report",
+        "--bundle",
+        "orn_gd65_bundle"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/query-relief-bundle.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/query-relief-bundle.stderr",
+      "stdout_sha256": "d3b5098300faac855c6083a5b6250737afe22d19953477136b2fe4698f558c5c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "query-macro-lens-unlinked",
+      "started_at_utc": "2026-10-06T16:56:48.289897+00:00",
+      "ended_at_utc": "2026-10-06T16:56:49.049302+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "tools/photo_data_maintenance/cli.py",
+        "query",
+        "--report",
+        "run/maintenance-report",
+        "--candidate",
+        "slot:lens:probe_lens_macro"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/query-macro-lens-unlinked.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/query-macro-lens-unlinked.stderr",
+      "stdout_sha256": "dc85f6ef69b6e952026077604acffa5646145eaaec2f55bb2104ac0a18753aa0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "query-relief-profile-reverse",
+      "started_at_utc": "2026-10-06T16:56:48.290072+00:00",
+      "ended_at_utc": "2026-10-06T16:56:49.064678+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "tools/photo_data_maintenance/cli.py",
+        "query",
+        "--report",
+        "run/maintenance-report",
+        "--profile",
+        "orn_profile_gd65"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/query-relief-profile-reverse.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/query-relief-profile-reverse.stderr",
+      "stdout_sha256": "6bbccad5095827742b3048d184aa29fd5deb569ff6d4c31831ca45fe1012d7ca",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "reject-damaged-report",
+      "started_at_utc": "2026-10-06T16:57:03.467878+00:00",
+      "ended_at_utc": "2026-10-06T16:57:03.636149+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "tools/photo_data_maintenance/cli.py",
+        "query",
+        "--report",
+        "run/scratch/damaged-report",
+        "--candidate",
+        "slot:lighting:orn_gd65",
+        "--require-current",
+        "--source-root",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/skill",
+        "--runtime-store",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/runtime"
+      ],
+      "returncode": 1,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/reject-damaged-report.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/reject-damaged-report.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "533c6a5d4fa0a95a3b280fd7023e5a4734e917ea82e0f7ba068d7f70e44204a8"
+    },
+    {
+      "label": "reject-wrong-source-root",
+      "started_at_utc": "2026-10-06T16:57:03.468106+00:00",
+      "ended_at_utc": "2026-10-06T16:57:04.130694+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "tools/photo_data_maintenance/cli.py",
+        "query",
+        "--report",
+        "run/maintenance-report",
+        "--candidate",
+        "slot:lighting:orn_gd65",
+        "--require-current",
+        "--source-root",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/scratch/wrong-source-root",
+        "--runtime-store",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/runtime"
+      ],
+      "returncode": 1,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/reject-wrong-source-root.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/reject-wrong-source-root.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "45065d74ddbead74349b5023a99e8d9baf326b1e95fb0fe6bb087edd045f74e7"
+    },
+    {
+      "label": "independent-source-check",
+      "started_at_utc": "2026-10-06T17:00:46.662387+00:00",
+      "ended_at_utc": "2026-10-06T17:00:47.359726+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "run/independent_source_check.py"
+      ],
+      "returncode": 1,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/independent-source-check.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/independent-source-check.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "a78147c18ceeb7b66b0e7dd93791aa53d4d6b8cb7a53e2d9b741e509ec0fa98e"
+    },
+    {
+      "label": "independent-source-check-entity-recipe",
+      "started_at_utc": "2026-10-06T17:01:39.545005+00:00",
+      "ended_at_utc": "2026-10-06T17:01:40.320707+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "run/independent_source_check.py"
+      ],
+      "returncode": 1,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/independent-source-check-entity-recipe.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/independent-source-check-entity-recipe.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "d1a516c54ab2a9c6b9b1ca221f72edc72b52975c03d4f18de6dc4629fab73b28"
+    },
+    {
+      "label": "independent-source-check-complete-record",
+      "started_at_utc": "2026-10-06T17:04:46.924255+00:00",
+      "ended_at_utc": "2026-10-06T17:04:47.723595+00:00",
+      "cwd": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05",
+      "argv": [
+        "venv/bin/python",
+        "run/independent_source_check.py"
+      ],
+      "returncode": 0,
+      "stdout_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/independent-source-check-complete-record.stdout",
+      "stderr_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-logs/independent-source-check-complete-record.stderr",
+      "stdout_sha256": "90fea7a7a1a064d1586e18abf0fa3a929ae58d64944229d9eefcc5fa6b5c9bd3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "artifact_paths": {
+    "PRECORE-FROZEN.json": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/PRECORE-FROZEN.json",
+    "candidate_pack.json": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/candidate_pack.json",
+    "candidate_pack.runtime-receipt.json": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/candidate_pack.runtime-receipt.json",
+    "composed_prompt.json": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/composed_prompt.json",
+    "final_prompt_en.txt": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/final_prompt_en.txt",
+    "maintenance-report": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/maintenance-report",
+    "exposed-query-evidence.json": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/exposed-query-evidence.json",
+    "independent-source-link-check.json": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/independent-source-link-check.json",
+    "human-receiver-observations.json": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/human-receiver-observations.json",
+    "command-evidence.ndjson": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/command-evidence.ndjson",
+    "preservation-verification.json": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/preservation-verification.json"
+  },
+  "round_2_state": "initial run preserved; comparison pending in separate round-2 root"
+}

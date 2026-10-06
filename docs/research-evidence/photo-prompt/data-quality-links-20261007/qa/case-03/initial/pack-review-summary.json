@@ -1,0 +1,1416 @@
+{
+  "coverage": {
+    "mandatory_intent_count": 6,
+    "covered_mandatory_intent_count": 0,
+    "uncovered_intent_count": 6,
+    "intent_constraints": {
+      "no_people": true,
+      "subject_categories": [
+        "environment"
+      ],
+      "domains": [],
+      "matched": [],
+      "source_text_count": 15,
+      "routing_input": "authorial_core_typed_semantics"
+    },
+    "axis_coverage": {},
+    "contract": {
+      "must_cover_axes": [],
+      "covered_axes": [],
+      "coverage_gaps": []
+    },
+    "candidate_limits": {
+      "core_slot_top": 4,
+      "support_slot_top": 2,
+      "total": 64
+    }
+  },
+  "conflicts": [],
+  "negative_intent_guard": {
+    "contract_version": "photo-negative-intent-guard/v1",
+    "source_authorial_core_sha256": "652414da7f72bc2d23c2d41decc001982c40abb09a05a85e8edd4d0a4dbd51e0",
+    "source_intent_lock_sha256": "b51411c0a3c3fe30bfbde5eacd14a3fd3b033c0988e55ef31e6480f7c75c9313",
+    "positive_prompt_policy": "positive_description_only_no_blanket_negative_directives",
+    "automatic_negative_policy": "intent_neutral_photographic_defects_only",
+    "requester_exclusion_policy": "exact_active_request_scope_only",
+    "platform_safety_policy": "enforce_outside_prompt_unless_requester_explicit",
+    "local_boundary_policy": "positive_geometry_or_visible_state",
+    "identity_preservation_enabled": false,
+    "explicit_user_exclusions": [
+      "사람"
+    ],
+    "emitted_terms": [
+      "3d render look",
+      "awkward animal anatomy",
+      "body distortion",
+      "broken facial features",
+      "broken window geometry",
+      "cartoon style",
+      "cgi look",
+      "digital illustration",
+      "distorted fingers",
+      "excessive hdr",
+      "fake-looking background",
+      "flat collage look",
+      "illustration look",
+      "impossible perspective",
+      "inaccurate reflections",
+      "inconsistent shadows",
+      "low resolution",
+      "obvious cutout edges",
+      "over-processed retouching",
+      "overly smooth fur",
+      "plastic-looking food texture",
+      "plastic-looking skin",
+      "unmatched lighting",
+      "unrealistic hands",
+      "unrealistic steam",
+      "warped product geometry",
+      "warped walls"
+    ],
+    "canonical_sha256": "c01a67d18457348f527c20432947988e647437cb60912980c80d2d6408e06b95",
+    "guard_id": "c01a67d18457348f"
+  },
+  "core_retrieval": {
+    "contract_version": "photo-core-retrieval/v1",
+    "source_authorial_core_sha256": "652414da7f72bc2d23c2d41decc001982c40abb09a05a85e8edd4d0a4dbd51e0",
+    "slot_corpus_sha256": "bfc76b8597f53fc15217c92cdb69486d21df4113430df68953af1f0dff50bee1",
+    "slot_ownership_sha256": "275331fa244ec54afafdfabf303de5b415f19411d4dea3462957821cf75dc9ca",
+    "slot_applicability_sha256": "9a26b47405845ed50ad1187f6b7a41f972c34d1d04e14aad54b62741321254f5",
+    "whole_scene_query_sha256": "c7cba54e86f1bb7abdd66fc792a8c2a7b090e8d0d76b3068147313d7d57dad7f",
+    "active_slots": {
+      "ambient_particle": {
+        "source_fields": [
+          "setting",
+          "semantic_assertions",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "d8f6f1a27d3ab10214fb8066e1e47237fcc536984bf7fc73c3f593db6b3dd746"
+      },
+      "location": {
+        "source_fields": [
+          "setting",
+          "semantic_assertions",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "d8f6f1a27d3ab10214fb8066e1e47237fcc536984bf7fc73c3f593db6b3dd746"
+      },
+      "reflection_logic": {
+        "source_fields": [
+          "style",
+          "visual_priorities",
+          "semantic_assertions"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "action": {
+        "source_fields": [
+          "event"
+        ],
+        "focus_query_sha256": "523852f4ea93a3d9159519d0f19aa2ae58ab3f33fd736832352ee4432ba50757"
+      },
+      "composition": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "light_shape": {
+        "source_fields": [
+          "setting",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "1ffba0c19923662caabf0803e2878aea25e9dbde7ccde7f875040f56ad6b9366"
+      },
+      "light_type": {
+        "source_fields": [
+          "setting",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "1ffba0c19923662caabf0803e2878aea25e9dbde7ccde7f875040f56ad6b9366"
+      },
+      "lighting": {
+        "source_fields": [
+          "setting",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "1ffba0c19923662caabf0803e2878aea25e9dbde7ccde7f875040f56ad6b9366"
+      },
+      "mood": {
+        "source_fields": [
+          "event",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "110d75b93904e472e1ff88c51e52985295ddd6387528099d8ff2a2e12b331b9c"
+      },
+      "narrative_core": {
+        "source_fields": [
+          "intent_lock.semantic_anchors"
+        ],
+        "focus_query_sha256": "f6d0657f5b74e3ec308e141eca026de49a2253de15d5a221e53b56edcef399f8"
+      },
+      "platform_framing": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "prop": {
+        "source_fields": [
+          "intent_lock.semantic_anchors"
+        ],
+        "focus_query_sha256": "f6d0657f5b74e3ec308e141eca026de49a2253de15d5a221e53b56edcef399f8"
+      },
+      "shot_scale": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "situation_context": {
+        "source_fields": [
+          "setting",
+          "event"
+        ],
+        "focus_query_sha256": "216030e59897bf4ce671806e456c3bdf95b7ad9ddfb9e3cd8eaf8bf375fe6619"
+      },
+      "space_condition": {
+        "source_fields": [
+          "setting"
+        ],
+        "focus_query_sha256": "d8f6f1a27d3ab10214fb8066e1e47237fcc536984bf7fc73c3f593db6b3dd746"
+      },
+      "subject": {
+        "source_fields": [
+          "intent_lock.semantic_anchors",
+          "semantic_assertions"
+        ],
+        "focus_query_sha256": "2118281a89d9da80caceb4cf844c8fbf9d99ff146cfebd0753b735c187df2dde"
+      },
+      "aesthetic_trend": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "atmosphere": {
+        "source_fields": [
+          "setting",
+          "visual_priorities",
+          "style"
+        ],
+        "focus_query_sha256": "ddbcbc30e3e16952221f6957dc29319ee65c8e20cd0f62177ab30382bd95b2a2"
+      },
+      "camera_height": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "caption_context": {
+        "source_fields": [
+          "event",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "110d75b93904e472e1ff88c51e52985295ddd6387528099d8ff2a2e12b331b9c"
+      },
+      "color": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "color_grading": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "film_emulation": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "focus": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "format": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "frame_anchor_medium": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "genre": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "grain_profile": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "lens": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "lens_artifact": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "light_direction": {
+        "source_fields": [
+          "intent_lock.semantic_anchors"
+        ],
+        "focus_query_sha256": "e6c9611605eacf79ed2039f067887b35106b4e77fa35d7e87a82458cc8f0f3b8"
+      },
+      "light_intensity": {
+        "source_fields": [
+          "setting",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "1ffba0c19923662caabf0803e2878aea25e9dbde7ccde7f875040f56ad6b9366"
+      },
+      "medium": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "motion": {
+        "source_fields": [
+          "event",
+          "setting",
+          "subject",
+          "visual_priorities",
+          "style"
+        ],
+        "focus_query_sha256": "08dfae613589b6df424fadab85f6cd36746e084cf449c9a3fe9619d246978f61"
+      },
+      "quality": {
+        "source_fields": [
+          "style",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "2347876180db2c7c4b8ad949ac006228c0401935dc563e82febb0615767d85e3"
+      },
+      "scale_relation": {
+        "source_fields": [
+          "subject",
+          "event"
+        ],
+        "focus_query_sha256": "4047e8877281d200994746488bd57b015af336a5da651f3ef86287f883752941"
+      },
+      "sensory_focus": {
+        "source_fields": [
+          "event",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "110d75b93904e472e1ff88c51e52985295ddd6387528099d8ff2a2e12b331b9c"
+      },
+      "texture": {
+        "source_fields": [
+          "subject",
+          "setting",
+          "visual_priorities"
+        ],
+        "focus_query_sha256": "f1c23583b857d0b357fc1a8f90daca0bb8dfae8d8ac7418b38e3c83bac2c0d8c"
+      },
+      "time_of_day": {
+        "source_fields": [
+          "intent_lock.semantic_anchors"
+        ],
+        "focus_query_sha256": "52eb24786202984af7b94777fe861fa91735394c1033413d9984a08162a7dad1"
+      },
+      "wearable_accessory": {
+        "source_fields": [
+          "subject",
+          "style"
+        ],
+        "focus_query_sha256": "14d22228f620f8c0eab74523df62e4adda0952e8b3de6dfb3cce3719e454610c"
+      }
+    },
+    "retrieval": "same_slot_core_focus_and_frozen_observation_bm25f_rrf",
+    "candidate_allocation": "one_supported_hit_per_slot_per_round",
+    "observation_priority": "bounded_frozen_evidence_before_slot_rounds",
+    "candidate_adoption": "optional",
+    "canonical_sha256": "e396ff7b90f477dce8818c1856717757bd88c5715a332bbc79d5c26b3efde34b"
+  },
+  "semantic_clarification_summary": [
+    {
+      "id": "clarification:authorial-core:interpreted-intent",
+      "profile_id": null,
+      "interpreted_meaning": "Preserve the requester-owned meaning expressed by the frozen anchors and required assertions.",
+      "applicability": {
+        "status": "required",
+        "reason": "requester_owned_meaning_is_fixed_while_unbound_authorial_choices_remain_editable"
+      },
+      "meaning_components": [
+        "A photograph of the spray",
+        "the spray at a forest waterfall",
+        "morning sunlight shining from behind the spray",
+        "at a forest waterfall",
+        "morning sunlight",
+        "shining from behind the spray",
+        "Light catches the airborne droplets"
+      ]
+    },
+    {
+      "id": "clarification:visual-profile:diegetic_reality_invariant_failure",
+      "profile_id": "diegetic_reality_invariant_failure",
+      "interpreted_meaning": "An optically clean camera records an otherwise ordinary world in which exactly one spatial, temporal, causal, optical, or topological invariant fails. The same measurable failure propagates consistently across several affected surfaces, each affected region remains internally coherent and preserves its native material identity under that rule, and unaffected regions remain physically coherent.",
+      "applicability": {
+        "status": "eligible",
+        "reason": "contextual_visual_concept_candidate"
+      },
+      "meaning_components": [
+        "clean photographic capture of an ordinary world",
+        "one broken world invariant",
+        "invisible spatial coordinate discontinuity",
+        "temporal phase lag",
+        "causal orphan",
+        "observer-dependent rendering",
+        "topological recursion",
+        "semantic binding swap",
+        "same measurable consequence across several surfaces",
+        "invisible three-dimensional field revealed only through material consequences",
+        "native material identity preserved under one shared transform",
+        "surface-following refraction parallax and micro-occlusion",
+        "depth-aware irregular feathered boundary",
+        "material-specific phase sampling across separated depths",
+        "coherent unaffected regions",
+        "quiet second-look contradiction",
+        "immediate authored contradiction"
+      ]
+    },
+    {
+      "id": "clarification:visual-profile:ed_rain_threshold",
+      "profile_id": "ed_rain_threshold",
+      "interpreted_meaning": "a doorway visibly separates the sheltered interior from the wet exterior; the person's hand folds a damp umbrella just inside the doorway; water stays on the weather exposed umbrella and exterior route; a nearby floor mat or stable surface receives the folded umbrella",
+      "applicability": {
+        "status": "requires_existing_adult_context",
+        "reason": "meaning_is_exposed_but_the_existing_adult_context_gate_did_not_activate"
+      },
+      "meaning_components": [
+        "비 온 뒤 실내 진입과 우산 접기",
+        "folding a wet umbrella just inside a doorway",
+        "a doorway visibly separates the sheltered interior from the wet exterior",
+        "the person's hand folds a damp umbrella just inside the doorway",
+        "water stays on the weather exposed umbrella and exterior route",
+        "a nearby floor mat or stable surface receives the folded umbrella"
+      ]
+    },
+    {
+      "id": "clarification:visual-profile:hogarth_serpentine_line_of_grace",
+      "profile_id": "hogarth_serpentine_line_of_grace",
+      "interpreted_meaning": "A three-dimensional compositional path that winds and twists through depth, evidenced by changing contour orientation, occlusion and reappearance, and coherent shifts of light or material around the form.",
+      "applicability": {
+        "status": "eligible",
+        "reason": "contextual_visual_concept_candidate"
+      },
+      "meaning_components": [
+        "three-dimensional winding path",
+        "changing contour orientation",
+        "occlusion and reappearance",
+        "rotating drape light and shadow",
+        "single coherent depth route",
+        "distinct from planar S curve"
+      ]
+    },
+    {
+      "id": "clarification:visual-profile:pr_object_contact_shadow_support",
+      "profile_id": "pr_object_contact_shadow_support",
+      "interpreted_meaning": "the object and its supporting surface are both visible; local darkening or compression touches the load-bearing point; shadow direction and softness agree with the scene light; object shape and support contact align without a gap",
+      "applicability": {
+        "status": "eligible",
+        "reason": "contextual_visual_concept_candidate"
+      },
+      "meaning_components": [
+        "물체 지지·접점 그림자",
+        "object contact shadow support relation",
+        "faint shadow under the object",
+        "object fully supported on its surface",
+        "local contact shadow",
+        "the object and its supporting surface are both visible",
+        "local darkening or compression touches the load-bearing point",
+        "shadow direction and softness agree with the scene light",
+        "object shape and support contact align without a gap"
+      ]
+    },
+    {
+      "id": "clarification:visual-profile:rb_practical_pool",
+      "profile_id": "rb_practical_pool",
+      "interpreted_meaning": "the acting wall lamp is visible; the lamp produces a localized light pool on the adjacent surface; the pool fades into the surrounding room illumination",
+      "applicability": {
+        "status": "eligible",
+        "reason": "contextual_visual_concept_candidate"
+      },
+      "meaning_components": [
+        "보이는 조명과 조명 영역의 대응",
+        "practical pool relation",
+        "wall lamp",
+        "local light",
+        "light pool",
+        "the acting wall lamp is visible",
+        "the lamp produces a localized light pool on the adjacent surface",
+        "the pool fades into the surrounding room illumination"
+      ]
+    },
+    {
+      "id": "clarification:visual-profile:rb_water_path_stain",
+      "profile_id": "rb_water_path_stain",
+      "interpreted_meaning": "a drainage outlet is visible above the selected wall; a narrow runoff mark begins immediately below that outlet; the surrounding wall remains distinct from the localized water trace",
+      "applicability": {
+        "status": "eligible",
+        "reason": "contextual_visual_concept_candidate"
+      },
+      "meaning_components": [
+        "물 경로에 연결된 변색",
+        "water path stain relation",
+        "drainage outlet",
+        "runoff mark",
+        "localized water trace",
+        "a drainage outlet is visible above the selected wall",
+        "a narrow runoff mark begins immediately below that outlet",
+        "the surrounding wall remains distinct from the localized water trace"
+      ]
+    },
+    {
+      "id": "clarification:visual-profile:rb_window_room_gradient",
+      "profile_id": "rb_window_room_gradient",
+      "interpreted_meaning": "the window-facing tabletop receives brighter daylight; the deeper room surfaces remain at a lower light level; the subject and nearby objects share the window's light direction",
+      "applicability": {
+        "status": "eligible",
+        "reason": "contextual_visual_concept_candidate"
+      },
+      "meaning_components": [
+        "창에서 실내로 이어지는 밝기 차이",
+        "window room gradient relation",
+        "window light",
+        "window daylight",
+        "deeper room",
+        "daylight gradient",
+        "the window-facing tabletop receives brighter daylight",
+        "the deeper room surfaces remain at a lower light level",
+        "the subject and nearby objects share the window's light direction"
+      ]
+    },
+    {
+      "id": "clarification:visual-profile:sheer_garment_optical_layering",
+      "profile_id": "sheer_garment_optical_layering",
+      "interpreted_meaning": "A garment textile remains visibly present through fibers or open-cell structure, seams, edges, folds and surface diffusion while light and the requested underlying surface are partly transmitted through the same cloth; folds, stretch, viewing angle and illumination change transmission coherently.",
+      "applicability": {
+        "status": "eligible",
+        "reason": "contextual_visual_concept_candidate"
+      },
+      "meaning_components": [
+        "translucent organza chiffon tulle mesh or lace",
+        "visible textile weave seam edge and fold",
+        "opaque underlayer or background transmission",
+        "backlight and layer-density relationship",
+        "sheer sleeves yoke panel or overlay",
+        "material study rather than automatic nudity",
+        "garment fiber layer",
+        "underlying body layer",
+        "overlap transmission",
+        "the selected organza or chiffon has a visible textile weave; light is transmitted through the selected fabric layer; a seam boundary and fold identify the same garment layer; backlighting visibly strengthens transmission through that layer",
+        "선택한 오간자 또는 시폰에 직물 결이 보인다; 빛이 선택한 원단 층을 통과한다; 이음선 경계와 접힌 주름이 같은 의복 층을 식별한다; 역광에서 같은 원단 층의 빛 투과가 더 뚜렷해진다"
+      ]
+    },
+    {
+      "id": "clarification:visual-profile:water_rel_w024",
+      "profile_id": "water_rel_w024",
+      "interpreted_meaning": "airborne droplets near a visible collision zone; a coherent spray fan; the same wave or outlet continuing into that zone",
+      "applicability": {
+        "status": "eligible",
+        "reason": "contextual_visual_concept_candidate"
+      },
+      "meaning_components": [
+        "충돌에서 생긴 비말·물보라",
+        "airborne droplets near a visible collision zone",
+        "a coherent spray fan",
+        "the same wave or outlet continuing into that zone"
+      ]
+    }
+  ],
+  "candidate_inventory_summary": [
+    {
+      "id": "slot:ambient_particle:water_w024",
+      "units": [
+        "airborne droplets near a visible collision zone",
+        "a coherent spray fan",
+        "the same wave or outlet continuing into that zone"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "atmosphere"
+      ]
+    },
+    {
+      "id": "slot:location:water_w061",
+      "units": [
+        "a bounded spring pool or outlet",
+        "visible condensed mist near the water",
+        "mineral or wet rock edges when specified"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "setting"
+      ]
+    },
+    {
+      "id": "slot:location:water_w067",
+      "units": [
+        "a water sheet crossing a visible drop edge",
+        "continuous falling water",
+        "a receiving plunge pool and contact spray"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "setting"
+      ]
+    },
+    {
+      "id": "slot:reflection_logic:hr_pool_submerged_presence",
+      "units": [
+        "a clearly bounded pool edge shows no standing figure",
+        "one distinct submerged humanlike shape occupies the corresponding visible water region"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "composition",
+        "pose"
+      ]
+    },
+    {
+      "id": "slot:reflection_logic:water_w047",
+      "units": [
+        "one visible reflected object",
+        "its inverted or rippled surface image",
+        "geometric continuity between object and water plane"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "composition"
+      ]
+    },
+    {
+      "id": "slot:action:intertidal_tide_exposure_cycle",
+      "units": [
+        "showing a low-tide exposure gradient from dry spray band through pools to submerged low zone"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "action"
+      ]
+    },
+    {
+      "id": "slot:composition:channel_to_upland_cross_section_frame",
+      "units": [
+        "cross-channel frame from active water through bank and floodplain to drier upland"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "composition"
+      ]
+    },
+    {
+      "id": "slot:composition:mangrove_water_root_canopy_depth_frame",
+      "units": [
+        "low wide frame separating tidal water, prop-root network, trunks and canopy depth"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "composition"
+      ]
+    },
+    {
+      "id": "slot:light_shape:water_w046",
+      "units": [
+        "small specular glints on wave facets",
+        "a coherent sun or moon lighting direction",
+        "glitter distributed across the water surface"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "lighting"
+      ]
+    },
+    {
+      "id": "slot:light_shape:sparkling_water_reflection_highlights",
+      "units": [
+        "sparkling water-reflection highlights"
+      ],
+      "status": "ineligible",
+      "reason": "effect overlaps a protected requester property",
+      "dimensions": [
+        "lighting"
+      ]
+    },
+    {
+      "id": "slot:light_type:direct_sun",
+      "units": [
+        "direct sunlight"
+      ],
+      "status": "ineligible",
+      "reason": "effect overlaps a protected requester property",
+      "dimensions": [
+        "lighting"
+      ]
+    },
+    {
+      "id": "slot:lighting:rb_hard_source_environment_candidate",
+      "units": [
+        "작은 광원의 선명한 그림자",
+        "direct sunlight",
+        "crisp shadow",
+        "receiving pavement",
+        "direct sunlight creates a crisp eave shadow",
+        "the shadow follows the wall and pavement geometry",
+        "the same light direction shapes the subject"
+      ],
+      "status": "ineligible",
+      "reason": "effect overlaps a protected requester property",
+      "dimensions": [
+        "lighting"
+      ]
+    },
+    {
+      "id": "slot:lighting:water_w051",
+      "units": [
+        "a coherent light entry direction",
+        "illuminated suspended particles along a shaft",
+        "a gradual contrast loss with water path"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "lighting"
+      ]
+    },
+    {
+      "id": "slot:mood:lonely_euphoria",
+      "units": [
+        "lonely euphoria"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "atmosphere"
+      ]
+    },
+    {
+      "id": "slot:mood:ordinary_magic_mood",
+      "units": [
+        "ordinary magic mood"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "atmosphere"
+      ]
+    },
+    {
+      "id": "slot:narrative_core:analog_diary_memory_core",
+      "units": [
+        "analog diary memory archive narrative core with unreadable pages"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "concept"
+      ]
+    },
+    {
+      "id": "slot:platform_framing:pr_casual_crop_subject_legibility_candidate",
+      "units": [
+        "스냅의 불완전한 프레임과 주피사체 보존",
+        "casual phone framing",
+        "peripheral frame crop",
+        "readable action despite crop",
+        "one peripheral part meets or exits a plausible frame edge",
+        "the adult and task-bearing action remain legible",
+        "camera height and tilt match the observer's position",
+        "the cropped part continues in a physically possible direction"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "framing"
+      ]
+    },
+    {
+      "id": "slot:prop:mg_collage_edges",
+      "units": [
+        "the depicted collage contains separately bounded printed fragments",
+        "fragment overlaps preserve recognizable cut or torn edges",
+        "the fragments remain physical artwork pieces within the surrounding photograph"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "material"
+      ]
+    },
+    {
+      "id": "slot:shot_scale:pr_camera_distance_subject_scale_candidate",
+      "units": [
+        "카메라 거리와 인물·환경 비율",
+        "medium camera distance",
+        "natural subject scale",
+        "environmental margin",
+        "the requested body coverage is visible",
+        "head and body scale follow one perspective",
+        "nearby structures scale coherently with camera distance",
+        "the requested environmental margin remains around the subject"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "framing"
+      ]
+    },
+    {
+      "id": "slot:shot_scale:medium_waist_up_shot",
+      "units": [
+        "medium waist-up shot scale"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "framing"
+      ]
+    },
+    {
+      "id": "slot:situation_context:behind_the_scenes_setup",
+      "units": [
+        "behind-the-scenes setup focused on real process and equipment"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": []
+    },
+    {
+      "id": "slot:space_condition:rb_use_trace_affordance_candidate",
+      "units": [
+        "사용 목적에 맞는 생활 흔적",
+        "used cup",
+        "working surface",
+        "clear passage",
+        "a recently used object rests on a stable working surface",
+        "the object is placed within the user's reach",
+        "the adjacent walking route remains clear"
+      ],
+      "status": "ineligible",
+      "reason": "effect overlaps a protected requester property",
+      "dimensions": [
+        "setting"
+      ]
+    },
+    {
+      "id": "slot:subject:alpine_treeline_ecotone_subject",
+      "units": [
+        "an alpine treeline ecotone from subalpine forest through krummholz to treeless tundra"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "subject"
+      ]
+    },
+    {
+      "id": "slot:subject:mangrove_intertidal_root_subject",
+      "units": [
+        "a mangrove forest rooted across tidal channels with a dense prop-root network"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "subject"
+      ]
+    },
+    {
+      "id": "slot:aesthetic_trend:karst_drainage_landform_aesthetic",
+      "units": [
+        "karst drainage landform linking soluble rock, closed depressions, losing water, conduits and springs"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "style"
+      ]
+    },
+    {
+      "id": "slot:aesthetic_trend:intertidal_zonation_aesthetic",
+      "units": [
+        "intertidal zonation showing changing exposure, wetness and attached life from spray zone to low tide"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "style"
+      ]
+    },
+    {
+      "id": "slot:atmosphere:hr_ground_fog_low_band",
+      "units": [
+        "a fog band occupies the floor region",
+        "upper bodies remain clearer than lower legs"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "atmosphere",
+        "camera"
+      ]
+    },
+    {
+      "id": "slot:camera_height:pr_fixed_surveillance_observation_candidate",
+      "units": [
+        "고정 감시 시점의 관찰 구조",
+        "fixed high viewpoint",
+        "wide monitored passage",
+        "small passing subject",
+        "a high fixed installation viewpoint is spatially readable",
+        "the monitored entrance or passage occupies a broad view",
+        "the moving subject occupies a limited portion of the frame",
+        "image limitations remain consistent with the scene without exaggerated damage"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "camera"
+      ]
+    },
+    {
+      "id": "slot:caption_context:hr_mockumentary_evidence_display",
+      "units": [
+        "an interview-like frame places an adult beside displayed fictional evidence",
+        "evidence remains distinct from the interview subject"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "text",
+        "composition"
+      ]
+    },
+    {
+      "id": "slot:color:cr_candidate_light_on_light",
+      "units": [
+        "a light subject is layered against a light surrounding field",
+        "small local lightness differences preserve the subject contour and surface detail"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "color"
+      ]
+    },
+    {
+      "id": "slot:color:cr_candidate_accent_cluster",
+      "units": [
+        "multiple accent elements gather into one compact spatial group",
+        "a quieter surrounding interval separates that group from the rest of the composition"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "color",
+        "composition"
+      ]
+    },
+    {
+      "id": "slot:color_grading:rb_highlight_shoulder_candidate",
+      "units": [
+        "밝은 면에서 흰색까지의 이행",
+        "highlight rolloff",
+        "bright surface",
+        "retained texture",
+        "bright surface tones approach white through a gradual transition",
+        "texture remains visible around the brightest area",
+        "the small brightest core remains distinct from the wider bright surface"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "color"
+      ]
+    },
+    {
+      "id": "slot:color_grading:pe_bright_blue_family",
+      "units": [
+        "blue object regions appear relatively luminous",
+        "the blue family remains visibly distinct from neutral regions"
+      ],
+      "status": "ineligible",
+      "reason": "effect overlaps a protected requester property",
+      "dimensions": [
+        "color"
+      ]
+    },
+    {
+      "id": "slot:film_emulation:pe_edge_light_leak",
+      "units": [
+        "an irregular warm patch enters the picture edge",
+        "the patch overlays scene detail without requiring a scene lamp at its origin"
+      ],
+      "status": "ineligible",
+      "reason": "effect overlaps a protected requester property",
+      "dimensions": [
+        "style",
+        "color"
+      ]
+    },
+    {
+      "id": "slot:film_emulation:rb_film_grain_choice_candidate",
+      "units": [
+        "선택한 필름 계열의 입자 느낌",
+        "film grain",
+        "irregular grain",
+        "readable materials",
+        "restrained irregular film-like grain remains visible",
+        "scene edges and material differences stay readable",
+        "the grain stays distinct from digital colored noise and film scratches"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "camera",
+        "style"
+      ]
+    },
+    {
+      "id": "slot:focus:rb_readable_environment_focus_candidate",
+      "units": [
+        "인물 분리와 환경 가독성",
+        "environmental detail",
+        "middle distance",
+        "background detail",
+        "environmental portrait",
+        "spacious architectural view",
+        "the selected subject plane remains crisp",
+        "the middle-distance environmental forms remain recognizable",
+        "the farther background loses fine detail consistently with its depth"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "camera"
+      ]
+    },
+    {
+      "id": "slot:focus:pr_focus_plane_subject_falloff_candidate",
+      "units": [
+        "초점면의 대상·깊이 이행",
+        "natural depth of field",
+        "readable working hands",
+        "near and far focus",
+        "the specified subject detail is the clearest plane",
+        "near and far objects soften according to their distances",
+        "subject edges transition naturally into the background",
+        "the important action target remains readable"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "camera"
+      ]
+    },
+    {
+      "id": "slot:format:four_cut_grid",
+      "units": [
+        "four-cut photo booth grid layout"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "format"
+      ]
+    },
+    {
+      "id": "slot:frame_anchor_medium:full_body_boundary_preserved",
+      "units": [
+        "full body boundary preserved from head to feet"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "composition"
+      ]
+    },
+    {
+      "id": "slot:frame_anchor_medium:hr_recording_local_discrepancy",
+      "units": [
+        "one physical room remains beside its recording display",
+        "a distinct extra presence occupies only the display"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "composition",
+        "setting",
+        "count"
+      ]
+    },
+    {
+      "id": "slot:genre:new_vision_modernist_photography",
+      "units": [
+        "New Vision modernist photography with unconventional viewpoints"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "style"
+      ]
+    },
+    {
+      "id": "slot:genre:landscape",
+      "units": [
+        "landscape photography"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "style"
+      ]
+    },
+    {
+      "id": "slot:grain_profile:pr_shadows_local_digital_noise_candidate",
+      "units": [
+        "디지털 저조도 노이즈의 공간 소유",
+        "fine noise in dim shadows",
+        "shadow-local digital noise",
+        "bright and shadowed image regions differ in visible noise",
+        "fine luminance or chroma noise concentrates in darker regions",
+        "critical subject edges and face remain readable",
+        "the noise resembles digital processing rather than scratches or print dust"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "style"
+      ]
+    },
+    {
+      "id": "slot:grain_profile:pe_coarse_film_grain",
+      "units": [
+        "coarse irregular grain overlays the picture area",
+        "the grain does not become physical object damage"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "style"
+      ]
+    },
+    {
+      "id": "slot:lens:smartphone",
+      "units": [
+        "a natural smartphone camera snapshot look"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "camera"
+      ]
+    },
+    {
+      "id": "slot:lens:pe_barrel_projection",
+      "units": [
+        "off-center straight scene lines bow outward",
+        "central scene contours remain comparatively straight"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "camera"
+      ]
+    },
+    {
+      "id": "slot:lens_artifact:rb_optional_lens_falloff_candidate",
+      "units": [
+        "선택적인 렌즈 주변 광량 감소",
+        "image periphery",
+        "gradual darkening",
+        "optical falloff",
+        "the outer image field darkens gradually from the center",
+        "the scene's own local illumination pattern remains readable",
+        "the falloff stays mild without becoming a solid border"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "camera"
+      ]
+    },
+    {
+      "id": "slot:lens_artifact:pe_veiling_flare",
+      "units": [
+        "a luminous veil reduces contrast toward the declared light source",
+        "the veil has no required discrete polygonal ghost"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "camera"
+      ]
+    },
+    {
+      "id": "slot:light_direction:backlight",
+      "units": [
+        "backlight from behind the subject"
+      ],
+      "status": "ineligible",
+      "reason": "effect overlaps a protected requester property",
+      "dimensions": [
+        "lighting"
+      ]
+    },
+    {
+      "id": "slot:light_intensity:mild_overexposure_clipped_highlights",
+      "units": [
+        "mild overexposure with clipped highlights"
+      ],
+      "status": "ineligible",
+      "reason": "effect overlaps a protected requester property",
+      "dimensions": [
+        "lighting"
+      ]
+    },
+    {
+      "id": "slot:light_intensity:rb_exposure_priority_candidate",
+      "units": [
+        "장면 내 밝기 우선순위",
+        "readable midtones",
+        "bright window",
+        "interior exposure",
+        "the specified subject detail retains readable midtones",
+        "the window or local light source remains brighter than the interior",
+        "the darker interior zones retain a distinct lower tonal level"
+      ],
+      "status": "ineligible",
+      "reason": "effect overlaps a protected requester property",
+      "dimensions": [
+        "lighting"
+      ]
+    },
+    {
+      "id": "slot:medium:mounted_albumen_card_print",
+      "units": [
+        "a card-mounted albumen photographic print"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "style"
+      ]
+    },
+    {
+      "id": "slot:medium:pr_camcorder_still_temporal_container_candidate",
+      "units": [
+        "홈비디오 정지 프레임의 시간 단서",
+        "single camcorder still",
+        "one video action phase",
+        "local motion trace",
+        "a single video-frame container or cue is visible",
+        "the actor or moving object is caught in one action phase",
+        "motion trace is local to moving parts",
+        "frame format tone and resolution form a coherent video image"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "style"
+      ]
+    },
+    {
+      "id": "slot:motion:rb_local_motion_blur_candidate",
+      "units": [
+        "움직인 부위에 제한된 번짐",
+        "moving hand",
+        "directional blur",
+        "stationary torso",
+        "the moving hand carries a short directional blur",
+        "the stationary doorframe and torso remain comparatively clear",
+        "the moving hand remains connected to its arm"
+      ],
+      "status": "ineligible",
+      "reason": "effect overlaps a protected requester property",
+      "dimensions": [
+        "camera",
+        "timing"
+      ]
+    },
+    {
+      "id": "slot:motion:rb_shared_wind_response_candidate",
+      "units": [
+        "동일 바람과 양립하는 반응",
+        "loose hair",
+        "jacket hem",
+        "exposed leaves",
+        "gentle breeze",
+        "loose hair bends while remaining attached at the scalp",
+        "the free jacket hem responds while the jacket's supported parts stay stable",
+        "exposed leaves respond compatibly while retaining their own stems and stiffness"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "atmosphere"
+      ]
+    },
+    {
+      "id": "slot:quality:pe_halftone_picture_plane",
+      "units": [
+        "regular dots form the picture tones",
+        "dot density or size varies with the depicted brightness"
+      ],
+      "status": "ineligible",
+      "reason": "effect overlaps a protected requester property",
+      "dimensions": [
+        "style",
+        "color"
+      ]
+    },
+    {
+      "id": "slot:quality:pe_fabric_detail",
+      "units": [
+        "fine woven or knitted fabric details are legible",
+        "fabric contours and folds remain continuous"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "style"
+      ]
+    },
+    {
+      "id": "slot:scale_relation:storm_inside_teacup",
+      "units": [
+        "a true storm at teacup scale, spray and all"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "body_geometry"
+      ]
+    },
+    {
+      "id": "slot:sensory_focus:cold_breath_fog",
+      "units": [
+        "visible cold breath fog"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "viewer_outcome"
+      ]
+    },
+    {
+      "id": "slot:sensory_focus:scent_steam_visible",
+      "units": [
+        "visible aromatic steam"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "viewer_outcome"
+      ]
+    },
+    {
+      "id": "slot:texture:water_w026",
+      "units": [
+        "a circular rising liquid rim around an impact center",
+        "short spikes on that rim",
+        "detached droplets aligned around the rim"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "material",
+        "action"
+      ]
+    },
+    {
+      "id": "slot:texture:rb_water_path_stain_candidate",
+      "units": [
+        "물 경로에 연결된 변색",
+        "drainage outlet",
+        "runoff mark",
+        "localized water trace",
+        "a drainage outlet is visible above the selected wall",
+        "a narrow runoff mark begins immediately below that outlet",
+        "the surrounding wall remains distinct from the localized water trace"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "material"
+      ]
+    },
+    {
+      "id": "slot:time_of_day:early_morning_commute",
+      "units": [
+        "early morning commute light"
+      ],
+      "status": "ineligible",
+      "reason": "effect overlaps a protected requester property",
+      "dimensions": [
+        "timing"
+      ]
+    },
+    {
+      "id": "slot:wearable_accessory:y2kr_tinted",
+      "units": [
+        "a selected colored tint appears within the bounded lenses with facial detail partly visible through them"
+      ],
+      "status": "eligible",
+      "reason": null,
+      "dimensions": [
+        "appearance"
+      ]
+    }
+  ]
+}

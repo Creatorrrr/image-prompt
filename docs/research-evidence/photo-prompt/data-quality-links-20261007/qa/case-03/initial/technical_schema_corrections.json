@@ -1,0 +1,38 @@
+[
+  {
+    "time_utc": "2026-10-06T16:48:56.148147+00:00",
+    "event": "technical_schema_correction_before_candidate_data",
+    "reason": "Formal validator requires catalog_path to be the canonical logical catalog path, not the absolute executable location. Only catalog_path changed; baseline, core, source envelope and selected features remain exact.",
+    "original_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-03/run/precore_feature_selection.json",
+    "original_sha256": "8c59a0375d8ea65777773d8b6875d82a22295218f17d9f9c7cd820dd4c2f236e",
+    "corrected_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-03/run/precore_feature_selection.runtime.json",
+    "corrected_sha256": "32f0d08e4a9a7923ec428db95c575fec6d6174c4cf7e88120437473c49424deb",
+    "changed_fields": [
+      "catalog_path"
+    ],
+    "candidate_data_access_yet": false,
+    "initial_validator_exit_code": 2,
+    "initial_validator_stderr": "invalid pre-core feature selection: selection catalog_path is not the permitted pre-core catalog\n"
+  },
+  {
+    "time_utc": "2026-10-06T16:50:09.664913+00:00",
+    "event": "technical_source_binding_correction_before_candidate_data",
+    "reason": "The formal core normalizer requires user_exclusions to be literal active-span substrings. Replace the English translation people with the source noun 사람; the excluded meaning remains people. No request, baseline, anchor or assertion changes.",
+    "original_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-03/run/authorial_core.json",
+    "original_sha256": "29b8d6ec6eb9bb28da2678a7295d40c438b28e757480f3b52d879a26fd779fbc",
+    "corrected_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-03/run/authorial_core.runtime.json",
+    "corrected_sha256": "c01f09f88f32699c20b0f5d1a89790d0a05a15af63ad61f06ab3a85b2cfe721d",
+    "changed_fields": [
+      "user_exclusions"
+    ],
+    "before": [
+      "people"
+    ],
+    "after": [
+      "사람"
+    ],
+    "candidate_data_access_yet": false,
+    "preceding_generator_validation_exit_code": 1,
+    "preceding_generator_stderr": "Error: photo-authorial-core/v3 user_exclusions must be grounded in active requesting-user spans: people\n"
+  }
+]

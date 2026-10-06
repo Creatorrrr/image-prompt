@@ -1,0 +1,153 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "야외 공연을 앞두고 바닷바람 속에서 활을 확인하는 성인 첼리스트의 사진.",
+  "creative_controls_sha256": "bfdeca0cd78adcbd0ae378926220b5bc089cae6b274068818b02ac1229bed470",
+  "interpreted_intent": "The requester specifies an adult cellist inspecting a cello bow in a sea breeze before an outdoor performance. I compared a broad concert-and-coast vista with a closer preparation scene; the closer scene makes the fine inspection legible while retaining the wind and the next performance. The authored moment is a seated performer checking the even hair after a small adjustment, with a waiting music stand and chairs giving the action an immediate purpose. The stage, clothes, precise hand arrangement, and quiet concentration are authorial choices, not requester requirements. The viewer should feel the performer's composed readiness within unsettled air. At the resolved sensual 1, attraction supports the photograph through absorbed presence, soft light at the open collar, and unhurried hands; fetish 0 and surreal 0 add no treatment, and creativity 1 keeps the variation close to the request.",
+  "subject": "An adult cellist with a cello and its bow.",
+  "setting": "A small outdoor wooden performance stage beside the sea, exposed to a sea breeze.",
+  "event": "The cellist inspects the cello bow before the outdoor performance, following its hair while holding the stick and adjustment screw.",
+  "visual_priorities": [
+    "The cellist's eyes, two supporting hands, and evenly stretched bow hair form the central inspection relationship.",
+    "The steady bow and settled shoulders contrast with hair and cloth moved by the sea breeze.",
+    "The grounded cello and waiting sheet-music station make preparation for the upcoming performance visible.",
+    "Soft light joins the absorbed face and the fine bow hair while the sea remains a subordinate sense of place."
+  ],
+  "baseline_prompt_en": "A photograph of an adult cellist checking a cello bow before an outdoor performance on a small wooden stage beside the sea. The cellist is seated on a plain chair, with both feet set apart on the deck. The cello rests upright between their knees, its endpin planted in a rubber stop. They hold the bow horizontally at waist height in front of the cello. Their right thumb and forefinger pause at the frog's adjustment screw while the left hand supports the wooden stick near its balance point; their gaze follows the narrow, evenly stretched ribbon of hair beneath the stick. The sea breeze lifts loose hair at their temple and pulls a dark shirt cuff away from the wrist, while their shoulders stay settled and their mouth is softly set in concentration. Two waiting chairs and a music stand with clipped sheet music sit farther along the stage, making this small preparation feel close to the first note. Soft coastal daylight grazes the cheek and open collar, with a gentle glint along the bow hair and warm amber reflections in the cello. Compose a quiet environmental portrait that keeps the seated figure, both hands, the entire bow, and the instrument's point of support readable, with the pale water receding behind them. The fine, steady line of the bow carries attention against the moving hair and cloth.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "야외 공연을 앞두고 바닷바람 속에서 활을 확인하는 성인 첼리스트의 사진.",
+      "source_text": "야외 공연을 앞두고 바닷바람 속에서 활을 확인하는 성인 첼리스트의 사진.",
+      "basis": "request_context",
+      "resolution": "A photograph centered on an explicitly adult cello performer checking their instrument bow in sea wind before an outdoor performance.",
+      "sources": []
+    },
+    {
+      "term": "활",
+      "source_text": "활을 확인하는",
+      "basis": "agent_general_knowledge",
+      "resolution": "In the cello-player context, this is the musical bow used to sound cello strings; checking it can be visibly realized by inspecting the tension and alignment of its hair.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "성인 첼리스트의 사진",
+        "dimension": "concept",
+        "prompt_evidence": "photograph of an adult cellist"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "성인 첼리스트",
+        "dimension": "subject",
+        "prompt_evidence": "an adult cellist"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "활을 확인하는",
+        "dimension": "event",
+        "prompt_evidence": "checking a cello bow"
+      },
+      {
+        "anchor_id": "before_performance",
+        "source_text": "야외 공연을 앞두고",
+        "dimension": "timing",
+        "prompt_evidence": "before an outdoor performance"
+      },
+      {
+        "anchor_id": "outdoor_performance",
+        "source_text": "야외 공연",
+        "dimension": "setting",
+        "target": "performance",
+        "property": "location.exposure",
+        "prompt_evidence": "outdoor performance"
+      },
+      {
+        "anchor_id": "sea_wind",
+        "source_text": "바닷바람 속에서",
+        "dimension": "atmosphere",
+        "target": "scene",
+        "property": "weather.wind",
+        "prompt_evidence": "The sea breeze"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "timing"
+    ],
+    "open_dimensions": [
+      "count",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "setting",
+      "atmosphere",
+      "sexual_tone",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_human_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "an adult cellist"
+      }
+    },
+    {
+      "assertion_id": "author_camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "quiet environmental portrait",
+    "evidence": [
+      "the performer's engaged attention to bow hair",
+      "soft coastal daylight with visible wind movement"
+    ]
+  },
+  "variation_key": "independent-case-01"
+}
