@@ -224,7 +224,8 @@ class PhotoDataSemanticCorrectionsTests(unittest.TestCase):
 
     def test_authored_components_derive_every_evidence_gate_and_group(self):
         raw = json.loads((ASSETS / "photo_prompt_visual_obligations.json").read_text())
-        rows = [p for p in raw["profiles"] if "authored_components" in p]
+        rows = [p for p in raw["profiles"] if
+                (p.get("authored_components") or {}).get("contract_version") == "photo-authored-visual-components/v1"]
         self.assertEqual(len(rows), 3)
         for profile in rows:
             with self.subTest(profile=profile["id"]):

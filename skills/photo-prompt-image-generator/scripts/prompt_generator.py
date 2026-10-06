@@ -31,6 +31,8 @@ if _SCRIPTS_IMPORT_DIR_ADDED:
 try:
     from visual_profile_index_storage import load_visual_profile_index_payload
     import photo_camera_evidence
+    import photo_source_manifest
+    import photo_runtime_sources
     import photo_candidate_semantics
     import photo_contextual_appeal
     import photo_embodiment
@@ -114,101 +116,13 @@ GENERATOR_VERSION = "2026.10.1"
 QUALITY_LAYERS_FILENAME = "photo_prompt_quality_layers.json"
 VISUAL_OBLIGATION_REGISTRY_FILENAME = "photo_prompt_visual_obligations.json"
 VISUAL_PROFILE_INDEX_FILENAME = "photo_prompt_visual_profile_index.json"
-VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
-    "photo_prompt_visual_obligations_tactile_reality.json",
-    "photo_prompt_visual_obligations_reactorprompt.json",
-    "photo_prompt_visual_obligations_photo_era.json",
-    "photo_prompt_visual_obligations_poverty.json",
-    "photo_prompt_visual_obligations_opening_era.json",
-    "photo_prompt_visual_obligations_historical_womenswear.json",
-    "photo_prompt_visual_obligations_costume_cosplay.json",
-    "photo_prompt_visual_obligations_palace_fortification.json",
-    "photo_prompt_visual_obligations_swimwear.json",
-    "photo_prompt_visual_obligations_color_relations.json",
-    "photo_prompt_visual_obligations_model_editorial.json",
-    "photo_prompt_visual_obligations_realistic_background.json",
-    "photo_prompt_visual_obligations_photorealism_elements.json",
-    "photo_prompt_visual_obligations_everyday_scene.json",
-    "photo_prompt_visual_obligations_y2k.json",
-    "photo_prompt_visual_obligations_portrait_composition.json",
-    "photo_prompt_visual_obligations_portrait_fashion_exposure.json",
-    "photo_prompt_visual_obligations_editing_effects.json",
-    "photo_prompt_visual_obligations_clothing_structure.json",
-    "photo_prompt_visual_obligations_textile_surface.json",
-    "photo_prompt_visual_obligations_accessory_structure.json",
-    "photo_prompt_visual_obligations_traditional_clothing_detail.json",
-    "photo_prompt_visual_obligations_pose_vocabulary.json",
-    "photo_prompt_visual_obligations_body_morphology.json",
-    "photo_prompt_visual_obligations_acting_expression.json",
-    "photo_prompt_visual_obligations_neutral_expression.json",
-    "photo_prompt_visual_obligations_slang_visual.json",
-    "photo_prompt_visual_obligations_religion_iconography.json",
-    "photo_prompt_visual_obligations_subculture_appearance.json",
-    "photo_prompt_visual_obligations_character_appearance.json",
-    "photo_prompt_visual_obligations_motion_graphics.json",
-    "photo_prompt_visual_obligations_seduction_expression.json",
-    "photo_prompt_visual_obligations_cute_visual_forms.json",
-    "photo_prompt_visual_obligations_ornament_structure.json",
-)
+VISUAL_OBLIGATION_EXTENSION_FILENAMES = photo_source_manifest.SourceFiles("visual_profile")
 VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
     "photo-visual-obligation-registry-extension/v1"
 )
 VISUAL_RELATION_CONTRACT_VERSION = "photo-visual-relation/v1"
 RESEARCH_EXTENSION_FILENAME = "photo_prompt_research_extension.json"
-RESEARCH_EXTENSION_FILENAMES = (
-    "photo_prompt_clothing_structure_extension.json",
-    "photo_prompt_textile_surface_extension.json",
-    "photo_prompt_accessory_structure_extension.json",
-    "photo_prompt_traditional_clothing_detail_extension.json",
-    "photo_prompt_tactile_reality_extension.json",
-    RESEARCH_EXTENSION_FILENAME,
-    "photo_prompt_reactorprompt_visual_relations_extension.json",
-    "photo_prompt_natural_environment_extension.json",
-    "photo_prompt_imaginal_extension.json",
-    "photo_prompt_mythology_extension.json",
-    "photo_prompt_legend_extension.json",
-    "photo_prompt_space_extension.json",
-    "photo_prompt_boundary_transition_extension.json",
-    "photo_prompt_desire_extension.json",
-    "photo_prompt_harem_extension.json",
-    "photo_prompt_emotional_place_extension.json",
-    "photo_prompt_poverty_extension.json",
-    "photo_prompt_opening_era_extension.json",
-    "photo_prompt_historical_womenswear_extension.json",
-    "photo_prompt_costume_cosplay_extension.json",
-    "photo_prompt_palace_fortification_extension.json",
-    "photo_prompt_swimwear_extension.json",
-    "photo_prompt_color_relations_extension.json",
-    "photo_prompt_model_editorial_extension.json",
-    "photo_prompt_realistic_background_extension.json",
-    "photo_prompt_photorealism_elements_extension.json",
-    "photo_prompt_everyday_scene_extension.json",
-    "photo_prompt_lighting_extension.json",
-    "photo_prompt_photo_era_extension.json",
-    "photo_prompt_violence_crime_extension.json",
-    "photo_prompt_subculture_extension.json",
-    "photo_prompt_worldbuilding_extension.json",
-    "photo_prompt_punk_aesthetics_extension.json",
-    "photo_prompt_cjk_worldbuilding_extension.json",
-    "photo_prompt_character_moe_extension.json",
-    "photo_prompt_y2k_extension.json",
-    "photo_prompt_portrait_composition_extension.json",
-    "photo_prompt_portrait_fashion_exposure_extension.json",
-    "photo_prompt_sensual_fetish_fashion_extension.json",
-    "photo_prompt_contextual_appeal_extension.json",
-    "photo_prompt_editing_effects_extension.json",
-    "photo_prompt_pose_vocabulary_extension.json",
-    "photo_prompt_body_morphology_extension.json",
-    "photo_prompt_acting_expression_extension.json",
-    "photo_prompt_neutral_expression_extension.json",
-    "photo_prompt_slang_visual_extension.json",
-    "photo_prompt_religion_iconography_extension.json",
-    "photo_prompt_subculture_appearance_extension.json",
-    "photo_prompt_motion_graphics_extension.json",
-    "photo_prompt_seduction_expression_extension.json",
-    "photo_prompt_cute_visual_forms_extension.json",
-    "photo_prompt_ornament_structure_extension.json",
-)
+RESEARCH_EXTENSION_FILENAMES = photo_source_manifest.SourceFiles("candidate")
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v2"
 CHARACTER_RESPONSE_RELATION_FIELDS = {
@@ -1303,7 +1217,7 @@ def validate_character_mechanism_graph(data: JsonDict) -> None:
             raise ValueError(f"character policy {policy_id} requires a definition")
 
 
-def load_json(path: str | Path) -> JsonDict:
+def load_json(path: str | Path, *, inventory: Optional[photo_source_manifest.SourceInventory] = None) -> JsonDict:
     p = Path(path)
     if not p.exists():
         raise FileNotFoundError(f"Tag JSON not found: {p}")
@@ -1321,12 +1235,24 @@ def load_json(path: str | Path) -> JsonDict:
         if not isinstance(coherence, dict) or set(coherence) - {"slot_conflicts", "slot_context_rules"}:
             raise ValueError("unsupported coherence rules")
         candidate_policy = data.get("candidate_semantic_policy") or {}
+        if candidate_policy:
+            if not isinstance(candidate_policy, dict):
+                raise ValueError("candidate_semantic_policy must be an object")
+            if "required_extensions" in candidate_policy:
+                raise ValueError("required_extensions is generated from photo_prompt_source_manifest.json")
+            if inventory is None and not p.with_name("photo_prompt_source_manifest.json").is_file():
+                raise ValueError("required candidate extensions are missing: source manifest not found")
+            inventory = inventory or photo_source_manifest.SourceInventory.load(p.parent)
+            inventory.check_root(p)
+            candidate_policy["required_extensions"] = inventory.required("candidate")
         photo_candidate_semantics.validate_semantic_policy(candidate_policy, AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS)
         required_extensions = candidate_policy.get("required_extensions") or []
         missing_extensions = [name for name in required_extensions if not p.with_name(name).is_file()]
         if missing_extensions:
             raise ValueError(f"required candidate extensions are missing: {missing_extensions}")
-        for extension_filename in RESEARCH_EXTENSION_FILENAMES:
+        inventory = inventory or photo_source_manifest.SourceInventory.load(p.parent)
+        inventory.check_root(p)
+        for extension_filename in inventory.files("candidate"):
             extension_path = p.with_name(extension_filename)
             if not extension_path.exists():
                 continue
@@ -1336,7 +1262,7 @@ def load_json(path: str | Path) -> JsonDict:
         validate_character_mechanism_graph(data)
         photo_candidate_semantics.validate_candidate_entries(data, AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS)
         if data.get("candidate_bundles"):
-            registry = load_visual_obligation_registry(default_visual_obligation_registry_path(p))
+            registry = load_visual_obligation_registry(p.parent / VISUAL_OBLIGATION_REGISTRY_FILENAME, inventory=inventory)
             photo_candidate_semantics.validate_bundle_references(data, registry.get("profiles") or [])
     return data
 
@@ -1353,7 +1279,7 @@ def default_visual_obligation_registry_path(tags_path: str | Path) -> Path:
     return Path(__file__).resolve().parents[1] / "assets" / VISUAL_OBLIGATION_REGISTRY_FILENAME
 
 
-def load_visual_obligation_registry(path: str | Path) -> JsonDict:
+def load_visual_obligation_registry(path: str | Path, *, inventory: Optional[photo_source_manifest.SourceInventory] = None) -> JsonDict:
     registry_path = Path(path)
     payload = load_json(registry_path)
     if payload.get("schema_version") != VISUAL_OBLIGATION_REGISTRY_SCHEMA_VERSION:
@@ -1379,12 +1305,18 @@ def load_visual_obligation_registry(path: str | Path) -> JsonDict:
     profiles = payload.get("profiles")
     if not isinstance(profiles, list) or not profiles:
         raise ValueError("visual obligation registry requires a non-empty profiles list")
+    inventory = inventory or photo_source_manifest.SourceInventory.load(registry_path.parent)
+    inventory.check_root(registry_path)
+    missing_extensions = [name for name in inventory.required("visual_profile")
+                          if not registry_path.with_name(name).is_file()]
+    if missing_extensions:
+        raise ValueError(f"required visual-profile extensions are missing: {missing_extensions}")
     existing_ids = {
         str(profile.get("id") or "")
         for profile in profiles
         if isinstance(profile, dict)
     }
-    for extension_filename in VISUAL_OBLIGATION_EXTENSION_FILENAMES:
+    for extension_filename in inventory.files("visual_profile"):
         extension_path = registry_path.with_name(extension_filename)
         if not extension_path.exists():
             continue
@@ -3910,6 +3842,7 @@ def authorial_prompt_budget_contract() -> JsonDict:
             "absolute_bounds_are_blocking": True,
             "required_evidence_expands_advisory_ceiling": True,
             "requester_meaning_outranks_concision": True,
+            "scene_coherence_outranks_concision": True,
         },
     }
 
@@ -4962,7 +4895,9 @@ def normalize_authorial_core(
     )
     if not AUTHORIAL_PROMPT_MIN_WORDS <= len(baseline_words) <= AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS:
         raise ValueError(
-            "authorial core baseline_prompt_en must contain 48 to 640 English words; 360 is the recommended maximum"
+            f"authorial core baseline_prompt_en must contain {AUTHORIAL_PROMPT_MIN_WORDS} "
+            f"to {AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS} English words; "
+            f"{AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS} is the recommended maximum"
         )
     blanket_negative_directives = find_blanket_negative_directives(normalized["baseline_prompt_en"])
     if blanket_negative_directives:
@@ -11476,9 +11411,8 @@ def core_slot_entry_eligible(data: dict, core: dict, contract: dict, picked: dic
     return not any(intent_alias_matches(blob, exclusion)
                    for exclusion in core.get("user_exclusions") or [])
 
-@functools.lru_cache(maxsize=2)
-def _core_slot_index(corpus_json: str) -> dict:
-    """Reuse derived statistics only for byte-identical authored slot data."""
+def build_core_slot_index(corpus_json: str, *, policy: Optional[dict] = None) -> dict:
+    """Pure slot-only derivation; global graph documents never contribute."""
     corpus = json.loads(corpus_json)
     documents = {
         f"slot:{slot}:{entry['id']}": semantic_bm25f_fields_for_entry(entry, slot, kind="slot")
@@ -11486,9 +11420,24 @@ def _core_slot_index(corpus_json: str) -> dict:
     }
     # Only the authored slot corpus contributes lexical retrieval statistics.
     return build_bm25f_index(
-        documents, policy=SEMANTIC_BM25F_POLICY,
+        documents, policy=SEMANTIC_BM25F_POLICY if policy is None else policy,
         lexicon=_bm25f_lexicon_from_documents(documents, ("aliases", "labels", "paraphrases")),
     )
+
+
+@functools.lru_cache(maxsize=2)
+def _policy_core_slot_index(corpus_json: str, policy_json: str, algorithm_key: str) -> dict:
+    return build_core_slot_index(corpus_json, policy=json.loads(policy_json))
+
+
+def _core_slot_index(corpus_json: str) -> dict:
+    """Compatibility entrypoint with policy-aware memory reuse."""
+    return _policy_core_slot_index(corpus_json, json.dumps(SEMANTIC_BM25F_POLICY, sort_keys=True, separators=(",", ":")),
+                                   photo_runtime_sources.algorithm_hash(globals()))
+
+
+_core_slot_index.cache_clear = _policy_core_slot_index.cache_clear
+_core_slot_index.cache_info = _policy_core_slot_index.cache_info
 
 
 def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, dict, dict]:
@@ -11496,7 +11445,9 @@ def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, d
     contract, picked = frozen_core_context(data, core, controls)
     global_query, _ = authorial_core_retrieval_text(core)
     corpus_json = json.dumps(data["slots"], ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-    bm25f = _core_slot_index(corpus_json)
+    # Runtime-bound data carries a private verified derivation. Ordinary dicts
+    # (including explicit synthetic corpora) retain independent calculation.
+    bm25f = data.slot_index(corpus_json) if isinstance(data, photo_runtime_sources.BoundRuntimeData) else _core_slot_index(corpus_json)
     eligible = {
         slot: {entry["id"]: entry for entry in entries
                if core_slot_entry_eligible(data, core, contract, picked, slot, entry)}
@@ -11648,13 +11599,17 @@ def generate_candidate_pack(data: JsonDict, core: JsonDict, controls: JsonDict,
     return build_candidate_pack(result, data)
 
 
-def load_runtime_data(tags_path: Optional[str | Path] = None) -> JsonDict:
+def load_runtime_data(tags_path: Optional[str | Path] = None, *,
+                      inventory: Optional[photo_source_manifest.SourceInventory] = None) -> JsonDict:
     """Load and validate the authored corpus and its generated indexes."""
     path = Path(tags_path) if tags_path is not None else Path(__file__).resolve().parents[1] / "assets/photo_prompt_tags.json"
     assets = path.parent
-    data = load_json(path)
+    inventory = inventory or photo_source_manifest.SourceInventory.load(assets)
+    inventory.check_root(path)
+    inventory.validate()
+    data = load_json(path, inventory=inventory)
     data[QUALITY_LAYERS_DATA_KEY] = load_quality_layers(assets / QUALITY_LAYERS_FILENAME)
-    registry = load_visual_obligation_registry(assets / VISUAL_OBLIGATION_REGISTRY_FILENAME)
+    registry = load_visual_obligation_registry(assets / VISUAL_OBLIGATION_REGISTRY_FILENAME, inventory=inventory)
     data[VISUAL_OBLIGATIONS_DATA_KEY] = registry
     data[VISUAL_PROFILE_INDEX_DATA_KEY] = load_visual_profile_index(assets / VISUAL_PROFILE_INDEX_FILENAME, registry)
     data[SEMANTIC_INDEX_DATA_KEY] = load_semantic_index_payload(assets / "photo_prompt_semantic_index.json")

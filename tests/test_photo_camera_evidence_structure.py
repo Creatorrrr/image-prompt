@@ -122,9 +122,11 @@ class CameraAuthoringStructureTests(unittest.TestCase):
                 for key, payload in inputs.items():
                     path = Path(folder) / (key + '.json'); path.write_text(json.dumps(payload))
                     args += ['--' + key + '-json', str(path)]
-                with mock.patch.object(pg, 'load_runtime_data', return_value={
-                        pg.VISUAL_OBLIGATIONS_DATA_KEY: {}, pg.VISUAL_PROFILE_INDEX_DATA_KEY: {}}), \
+                with mock.patch('photo_runtime_sources.RuntimeSnapshotProvider') as provider, \
                      mock.patch.object(pg, 'generate_candidate_pack', return_value={}) as generate:
+                    provider.return_value.acquire.return_value.data = {
+                        pg.VISUAL_OBLIGATIONS_DATA_KEY: {}, pg.VISUAL_PROFILE_INDEX_DATA_KEY: {}}
+                    provider.return_value.receipt.return_value = {}
                     cli.main(args + ['--new-author-camera-evidence', '--output-file', str(Path(folder) / 'pack.json')])
                 self.assertEqual(generate.call_args.args[1], expected)
                 self.assertEqual(raw['intent_lock']['open_dimensions'], dimensions)
@@ -146,9 +148,11 @@ class CameraAuthoringStructureTests(unittest.TestCase):
             for key, payload in inputs.items():
                 path = Path(folder) / (key + '.json'); path.write_text(json.dumps(payload))
                 args += ['--' + key + '-json', str(path)]
-            with mock.patch.object(pg, 'load_runtime_data', return_value={
-                    pg.VISUAL_OBLIGATIONS_DATA_KEY: {}, pg.VISUAL_PROFILE_INDEX_DATA_KEY: {}}), \
+            with mock.patch('photo_runtime_sources.RuntimeSnapshotProvider') as provider, \
                  mock.patch.object(pg, 'generate_candidate_pack', return_value={}) as generate:
+                provider.return_value.acquire.return_value.data = {
+                    pg.VISUAL_OBLIGATIONS_DATA_KEY: {}, pg.VISUAL_PROFILE_INDEX_DATA_KEY: {}}
+                provider.return_value.receipt.return_value = {}
                 cli.main(args + ['--new-author-camera-evidence', '--require-camera-evidence', 'direction',
                                  '--require-camera-evidence', 'height', '--output-file', str(Path(folder) / 'pack.json')])
             self.assertEqual(generate.call_args.args[1], expected)

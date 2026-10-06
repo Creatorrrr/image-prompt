@@ -1,0 +1,59 @@
+{
+  "schema": "photo_regression_baseline/v27",
+  "created_at": "2026-10-06",
+  "status": "current",
+  "historical_baseline": {
+    "path": "photo_regression_baseline_v26.json",
+    "schema": "photo_regression_baseline/v26",
+    "sha256": "d784fccfc7f9d497182d30a7f98f78c8c9d58f5bc950fd04c1c3ec9d84f185e3"
+  },
+  "change_scope": "Add reviewed appearance relation paraphrases and optional candidates while preserving all main runtime, owner corrections, frozen scene and prompt-budget v3.",
+  "command": [
+    ".venv/bin/python",
+    "skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py",
+    "--seed",
+    "910000",
+    "--authorial-core-json",
+    "tests/fixtures/photo_prompt/current_boundary/core.json",
+    "--request-envelope-json",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json",
+    "--creative-controls-json",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json",
+    "--embodiment-review-json",
+    "tests/fixtures/photo_prompt/current_boundary/review.json",
+    "--output-file",
+    "/tmp/subculture-illustration-photo-baseline-v27.json"
+  ],
+  "sha256": "d5038036a74f6f4747f499e28e45d7e42613df1587a72b8b3e1e6999fa88430b",
+  "pack_id": "3204e9a1e13569f9",
+  "contract_version": "photo-candidate-pack/v6",
+  "public_candidate_count": 64,
+  "private_fields_absent": [
+    "argv",
+    "sample_prompt_id",
+    "concept_gate_results",
+    "concept_scene_variants",
+    "character_response",
+    "adult_appeal"
+  ],
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "purpose": "Preserve all prior source, candidate, scene, privacy and native failure evidence; qualify the additive appearance DATA successor separately.",
+  "preserved_contract_sha256": "acc9fedeae95ae67b4214e1bedd622f12e0a9f0d24639fd2193ca5f368ba4e5f",
+  "frozen_inputs": {
+    "tests/fixtures/photo_prompt/current_boundary/core.json": "7be72244a8aa95c92a0bfc041f16bf544d376a9664366ad92c92cc728ebf6316",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json": "170ca49644a3ae0703d5d98875007bbaa74a0794202089ded9f617d532443524",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json": "0958274c1f1d5ec8b2faef5f3f7409d15f0256505411613cc33ad05f3a124896",
+    "tests/fixtures/photo_prompt/current_boundary/review.json": "0039a9afdb6b7fa6d3989dc0187297eba8e3de436c012ce13d20f570bb55f7fd"
+  },
+  "parallel_local_baseline": {
+    "path": "docs/research-evidence/photo-prompt/seduction-expression-main-merge-20261005/parallel-local-seduction-v13.json",
+    "sha256": "11ac31b9ab126b2a0711724cf625644772592adc2c688a760d9a6c6b37894850",
+    "purpose": "Preserved original pre-main seduction observation; independent of main V13 uniform history."
+  },
+  "appearance_data_transition": {
+    "evidence_path": "docs/research-evidence/photo-prompt/harry-potter-integration-20261006/main-merge/V27-APPEARANCE-DATA-PROOF.json",
+    "evidence_sha256": "35f7c202cffb3829fe124676d9324a659e87baa2cce34ed336129ac8b223c688",
+    "previous_qualified_commit": "eabc47b44445a718e5e0f35af376f967b1fca20a",
+    "parent_manifest_sha256": "d1e7261c1f991d181bad2835ba16e58d5753a88f1635c3d6966609bc597adbb8"
+  }
+}

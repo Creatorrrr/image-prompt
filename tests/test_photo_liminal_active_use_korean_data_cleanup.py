@@ -92,9 +92,10 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
                                           'photo_prompt_motion_graphics_extension.json',
                                           'photo_prompt_seduction_expression_extension.json',
                                           'photo_prompt_cute_visual_forms_extension.json',
-                                          'photo_prompt_ornament_structure_extension.json'})
-        with patch.object(common.g, 'RESEARCH_EXTENSION_FILENAMES', filenames):
-            historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
+                                          'photo_prompt_ornament_structure_extension.json',
+                                          'photo_prompt_character_appearance_extension.json'})
+        inventory = common.g.photo_source_manifest.SourceInventory.for_test(ASSETS, candidate_files=filenames)
+        historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json', inventory=inventory)
         historical_current = fixtures.seduction_historical_source_scope(historical_current)
         # Undo only the independently sealed uniform overlay before the
         # older Vocaloid/body projections. The historical oracle stays exact.
@@ -132,8 +133,8 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
         ledger = json.loads((vocaloid / 'INTEGRATION-LEDGER.json').read_text())
         declared = {(item['slot'], item['id']): item for item in ledger['candidate_changes']
                     if item['file'] == 'photo_prompt_tags.json' or item['file'] in filenames}
-        with patch.object(common.g, 'RESEARCH_EXTENSION_FILENAMES', filenames):
-            before_vocaloid = common.g.load_json(vocaloid / 'baseline/photo_prompt_tags.json')
+        before_vocaloid = fixtures.load_v23_candidate_fixture(
+            vocaloid / 'baseline/photo_prompt_tags.json', filenames)
         original_rows = {(slot, row['id']): row for slot, rows in before_vocaloid['slots'].items() for row in rows}
         current_keys = {(slot, row['id']) for slot, rows in historical_current['slots'].items() for row in rows}
         new_keys = {key for key, item in declared.items() if item['new']}

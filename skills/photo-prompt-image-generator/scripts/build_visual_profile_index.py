@@ -101,11 +101,15 @@ def main() -> int:
     parser.add_argument("--batch-size", type=int, default=1)
     parser.add_argument("--request-interval", type=float, default=0.0)
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--synthetic-sources", action="store_true", help="Explicit empty source inventory for a synthetic fixture; cannot publish live runtime.")
+    parser.add_argument("--no-runtime-publication", action="store_true")
     args = parser.parse_args()
 
     registry_path = Path(args.registry)
     output_path = Path(args.output)
-    registry = load_visual_obligation_registry(registry_path)
+    from photo_source_manifest import SourceInventory
+    inventory = SourceInventory.for_test(registry_path.parent) if args.synthetic_sources else SourceInventory.load(registry_path.parent)
+    registry = load_visual_obligation_registry(registry_path, inventory=inventory)
     if args.check:
         payload = load_visual_profile_index(
             output_path,
@@ -119,6 +123,9 @@ def main() -> int:
             f"{len(payload.get('entries') or {})} profiles, "
             f"{len(payload.get('exact_lookup') or [])} exact terms"
         )
+        if not args.synthetic_sources and not args.no_runtime_publication and registry_path.name == VISUAL_OBLIGATION_REGISTRY_FILENAME:
+            from photo_runtime_sources import publish_if_ready
+            publish_if_ready(registry_path.parent.parent)
         return 0
 
     if args.provider != SEMANTIC_PROVIDER:
@@ -170,7 +177,15 @@ def main() -> int:
         model=args.model,
         dimensions=args.dimensions,
     )
-    write_payload(output_path, payload)
+    if not args.synthetic_sources and output_path == registry_path.with_name(VISUAL_PROFILE_INDEX_FILENAME):
+        from photo_runtime_sources import source_update
+        with source_update(registry_path.parent.parent):
+            write_payload(output_path, payload)
+    else:
+        write_payload(output_path, payload)
+    if not args.synthetic_sources and not args.no_runtime_publication and output_path == registry_path.with_name(VISUAL_PROFILE_INDEX_FILENAME):
+        from photo_runtime_sources import publish_if_ready
+        publish_if_ready(registry_path.parent.parent)
     load_visual_profile_index(
         output_path,
         registry,

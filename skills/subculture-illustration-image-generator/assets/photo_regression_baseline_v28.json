@@ -1,0 +1,59 @@
+{
+  "schema": "photo_regression_baseline/v28",
+  "created_at": "2026-10-06",
+  "status": "current",
+  "historical_baseline": {
+    "path": "photo_regression_baseline_v27.json",
+    "schema": "photo_regression_baseline/v27",
+    "sha256": "dcdf96b64fb7a06294ab3dc49365adae56dec3181e556fcaad90827dd842a1bb"
+  },
+  "change_scope": "Correct exactly three muted-on-vivid negative examples and their source bookkeeping; preserve positive source, vectors, candidates, frozen scene and prompt budget.",
+  "command": [
+    ".venv/bin/python",
+    "skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py",
+    "--seed",
+    "910000",
+    "--authorial-core-json",
+    "tests/fixtures/photo_prompt/current_boundary/core.json",
+    "--request-envelope-json",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json",
+    "--creative-controls-json",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json",
+    "--embodiment-review-json",
+    "tests/fixtures/photo_prompt/current_boundary/review.json",
+    "--output-file",
+    "/tmp/subculture-illustration-photo-baseline-v28.json"
+  ],
+  "sha256": "726eadbb4eef70349d31af1f8ae2ab318e58ea049d6a7d04d41c42dac836ba5c",
+  "pack_id": "86418117c79c90b5",
+  "contract_version": "photo-candidate-pack/v6",
+  "public_candidate_count": 64,
+  "private_fields_absent": [
+    "argv",
+    "sample_prompt_id",
+    "concept_gate_results",
+    "concept_scene_variants",
+    "character_response",
+    "adult_appeal"
+  ],
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "purpose": "Preserve V1–V27 unchanged and qualify source guidance consistency only; no retrieval, adoption or image improvement claim.",
+  "preserved_contract_sha256": "acc9fedeae95ae67b4214e1bedd622f12e0a9f0d24639fd2193ca5f368ba4e5f",
+  "frozen_inputs": {
+    "tests/fixtures/photo_prompt/current_boundary/core.json": "7be72244a8aa95c92a0bfc041f16bf544d376a9664366ad92c92cc728ebf6316",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json": "170ca49644a3ae0703d5d98875007bbaa74a0794202089ded9f617d532443524",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json": "0958274c1f1d5ec8b2faef5f3f7409d15f0256505411613cc33ad05f3a124896",
+    "tests/fixtures/photo_prompt/current_boundary/review.json": "0039a9afdb6b7fa6d3989dc0187297eba8e3de436c012ce13d20f570bb55f7fd"
+  },
+  "parallel_local_baseline": {
+    "path": "docs/research-evidence/photo-prompt/seduction-expression-main-merge-20261005/parallel-local-seduction-v13.json",
+    "sha256": "11ac31b9ab126b2a0711724cf625644772592adc2c688a760d9a6c6b37894850",
+    "purpose": "Preserved original pre-main seduction observation; independent of main V13 uniform history."
+  },
+  "muted_color_transition": {
+    "evidence_path": "docs/research-evidence/photo-prompt/muted-color-contrast-20261006/V28-MUTED-COLOR-PROOF.json",
+    "evidence_sha256": "66415e7e2915aba5e1b91490beed9343769f01fb5e0a97021a2f7da97b6eb7ae",
+    "previous_qualified_commit": "cb496c1db984f9fe5d632fa764aae4d3f6aedf63",
+    "parent_manifest_sha256": "a4328b7c683d307e46c00ec00c02aa19ae679770784049ed86fa293b5625ae59"
+  }
+}
