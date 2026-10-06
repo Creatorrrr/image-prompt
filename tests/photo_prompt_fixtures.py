@@ -837,7 +837,10 @@ def _v24_verified_payload(source_root: Path, row: dict) -> bytes:
     blob = hashlib.sha1(f'blob {len(raw)}\0'.encode('ascii') + raw).hexdigest()
     if (len(raw) != row['bytes'] or hashlib.sha256(raw).hexdigest() != row['sha256']
             or blob != row['git_blob']):
-        raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+        preserved = _v27_preserved_retained_payload(source_root, row, raw)
+        if preserved is None:
+            raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+        return preserved
     return raw
 
 
@@ -1409,6 +1412,104 @@ def archived_v25_validator(directory: Path, *, source_root: Path = ROOT):
     records = {row['path']: row for row in manifest['members']}
     scripts = directory / Path(V17_PARENT_VALIDATOR).parent
     prefix = '_archived_photo_v25_' + hashlib.sha256(str(directory).encode()).hexdigest()[:16]
+    modules, payloads = {}, {}
+    for name in ('illustration_runtime', 'illustration_audit', 'universal_scene_runtime',
+                 'validate_illustration_assets'):
+        path = scripts / (name + '.py')
+        row = records[path.relative_to(directory).as_posix()]
+        payloads[name] = _v24_verified_payload(directory, dict(row, source_path=row['path']))
+        spec = importlib.util.spec_from_file_location(prefix + '_' + name, path)
+        modules[name] = importlib.util.module_from_spec(spec)
+
+    def historical_import(name, globals=None, locals=None, fromlist=(), level=0):
+        if level == 0 and name in modules:
+            return modules[name]
+        return builtins.__import__(name, globals, locals, fromlist, level)
+
+    previous = {module.__name__: sys.modules.get(module.__name__) for module in modules.values()}
+    try:
+        for module in modules.values():
+            module.__dict__['__builtins__'] = dict(vars(builtins), __import__=historical_import)
+            sys.modules[module.__name__] = module
+        for name, module in modules.items():
+            exec(compile(payloads[name], module.__file__, 'exec'), module.__dict__)
+    finally:
+        for name, original in previous.items():
+            if original is None:
+                sys.modules.pop(name, None)
+            else:
+                sys.modules[name] = original
+    return modules['validate_illustration_assets']
+
+
+V26_PARENT_MANIFEST = Path('docs/research-evidence/photo-prompt/harry-potter-integration-20261006/main-merge/V26-PARENT-SOURCE.json')
+V26_PARENT_MANIFEST_SHA256 = 'd1e7261c1f991d181bad2835ba16e58d5753a88f1635c3d6966609bc597adbb8'
+V27_APPEARANCE_PROOF = V26_PARENT_MANIFEST.parent / 'V27-APPEARANCE-DATA-PROOF.json'
+V27_APPEARANCE_PROOF_SHA256 = '35f7c202cffb3829fe124676d9324a659e87baa2cce34ed336129ac8b223c688'
+
+
+def _v26_parent_manifest(source_root: Path = ROOT) -> dict:
+    raw = _v24_regular_path(source_root, V26_PARENT_MANIFEST.as_posix()).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != V26_PARENT_MANIFEST_SHA256:
+        raise AssertionError('Frozen V26 parent source manifest drift')
+    manifest = json.loads(raw)
+    rows = manifest.get('members') or []
+    if (manifest.get('schema') != 'photo-v26-parent-source-manifest/v1'
+            or manifest.get('source_pin') != 'eabc47b44445a718e5e0f35af376f967b1fca20a'
+            or manifest.get('source_tree') != '0299b7e9b0456fd2a607f59f9fbaa05d8edb858d'
+            or manifest.get('member_count') != len(rows) or len(rows) != 987
+            or len({row['path'] for row in rows}) != 987
+            or sum(row['bytes'] for row in rows) != 2183962400):
+        raise AssertionError('Frozen V26 historical source inventory drift')
+    for row in rows:
+        _v17_safe_path(row['path'])
+        _v17_safe_path(row['source_path'])
+    return manifest
+
+
+def _v27_preserved_retained_payload(source_root: Path, row: dict, current: bytes) -> bytes | None:
+    """Resolve only the sealed additive transition, rejecting arbitrary live drift."""
+    if row['source_path'] != row['path'] or not (source_root / V26_PARENT_MANIFEST).is_file():
+        return None
+    proof_raw = _v24_regular_path(source_root, V27_APPEARANCE_PROOF.as_posix()).read_bytes()
+    if hashlib.sha256(proof_raw).hexdigest() != V27_APPEARANCE_PROOF_SHA256:
+        raise AssertionError('Frozen V27 appearance transition proof drift')
+    proof = json.loads(proof_raw)
+    if proof['source_files_after'].get(row['path']) != hashlib.sha256(current).hexdigest():
+        return None
+    before = next((item for item in _v26_parent_manifest(source_root)['members']
+                   if item['path'] == row['path']), None)
+    if before is None or any(before[field] != row[field] for field in ('sha256', 'git_blob', 'bytes', 'mode')):
+        return None
+    return _v24_verified_payload(source_root, before)
+
+
+def materialize_v26_parent_source(directory: Path, *, source_root: Path = ROOT) -> dict:
+    """Materialize verified regular files from the original qualified main tree."""
+    _v24_empty_destination(directory)
+    manifest = _v26_parent_manifest(source_root)
+    for row in manifest['members']:
+        _v24_verified_payload(source_root, row)
+    directory.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='.sealed-v26-', dir=directory.parent) as temporary:
+        staged = Path(temporary) / 'tree'
+        staged.mkdir()
+        for row in manifest['members']:
+            target = staged / _v17_safe_path(row['path'])
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(_v24_verified_payload(source_root, row))
+            target.chmod(int(row['mode'][-3:], 8))
+        _v24_empty_destination(directory)
+        staged.replace(directory)
+    return manifest
+
+
+def archived_v26_validator(directory: Path, *, source_root: Path = ROOT):
+    """Import original V26 modules with their authenticated source and support."""
+    manifest = materialize_v26_parent_source(directory, source_root=source_root)
+    records = {row['path']: row for row in manifest['members']}
+    scripts = directory / Path(V17_PARENT_VALIDATOR).parent
+    prefix = '_archived_photo_v26_' + hashlib.sha256(str(directory).encode()).hexdigest()[:16]
     modules, payloads = {}, {}
     for name in ('illustration_runtime', 'illustration_audit', 'universal_scene_runtime',
                  'validate_illustration_assets'):

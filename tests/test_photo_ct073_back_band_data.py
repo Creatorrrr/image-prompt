@@ -145,6 +145,19 @@ class CT073BackBandDataTests(unittest.TestCase):
         cls.parent_assets = cls.parent / SKILL / "assets"
         cls.original = {name: read(cls.parent_assets / name) for name in SOURCE_HASHES}
         cls.current = {name: read(ASSETS / name) for name in SOURCE_HASHES}
+        # Exercise the current compiler against the authenticated predecessor
+        # registration. Current additive sources are outside this sealed tree.
+        manifest = ASSETS / "photo_prompt_source_manifest.json"
+        registered_candidates = pg.photo_source_manifest.extension_files("candidate", manifest)
+        registered_profiles = pg.photo_source_manifest.extension_files("visual_profile", manifest)
+        required = pg.photo_source_manifest.required_files
+        for registration_patch in (
+                mock.patch.object(pg, "RESEARCH_EXTENSION_FILENAMES", registered_candidates),
+                mock.patch.object(pg, "VISUAL_OBLIGATION_EXTENSION_FILENAMES", registered_profiles),
+                mock.patch.object(pg.photo_source_manifest, "required_files",
+                                  side_effect=lambda kind: required(kind, manifest))):
+            registration_patch.start()
+            cls.addClassCleanup(registration_patch.stop)
         cls.data = pg.load_json(ASSETS / "photo_prompt_tags.json")
         cls.old_data = pg.load_json(cls.parent_assets / "photo_prompt_tags.json")
         cls.registry = pg.load_visual_obligation_registry(ASSETS / "photo_prompt_visual_obligations.json")

@@ -1,0 +1,67 @@
+{
+  "partial_is_fail": true,
+  "unobservable_is_not_pass": true,
+  "blocked_unscored": true,
+  "authorship": "Specific gates are independently authored experiment design; not requester definitions and not retrieval-derived.",
+  "gates": [
+    {
+      "gate_id": "B_house_clothing",
+      "topic": "wizarding house ceremonial clothing",
+      "ownership": "agent_test_design",
+      "all_of": [
+        "open-front black robe",
+        "visible crisp white shirt beneath robe",
+        "deep-red tie with gold diagonal stripes",
+        "knitted scarf around shoulders with broad alternating deep-red and gold bands"
+      ],
+      "fail_if": "Any component absent or differently related; a robe alone is partial and FAIL."
+    },
+    {
+      "gate_id": "B_fabric_faced_hat",
+      "topic": "aged sorting-hat appearance",
+      "ownership": "agent_test_design",
+      "all_of": [
+        "aged brown fabric with visible seams or patches",
+        "broad floppy brim plus crooked tapering crown",
+        "two eye hollows and mouth crease physically formed by folds on the hat itself",
+        "hat rests fully visible on adjacent pedestal"
+      ],
+      "fail_if": "Face painted or external, ordinary smooth wizard hat, or partial bundle."
+    },
+    {
+      "gate_id": "B_hovering_candle_sky",
+      "topic": "enchanted banquet-hall appearance",
+      "ownership": "agent_test_design",
+      "all_of": [
+        "several lit slim wax candles",
+        "candles occupy free air at different heights with clear gaps beneath and no visible load-bearing support",
+        "visible star-filled indoor vault above heavy stone arches"
+      ],
+      "fail_if": "Candles stand on surfaces or stars only in an ordinary window; partial relationship is FAIL."
+    },
+    {
+      "gate_id": "B_wand_tip_origin",
+      "topic": "wand casting appearance",
+      "ownership": "agent_test_design",
+      "all_of": [
+        "slender tapered wooden wand in her left-hand grip beside shoulder",
+        "light begins visibly at wand tip",
+        "light continues into sparse constellation above that same shoulder",
+        "illumination touches the fingers nearest tip"
+      ],
+      "fail_if": "Disconnected nearby glow, wand hidden, or constellation without origin/contact relation."
+    },
+    {
+      "gate_id": "B_reference_face_hair",
+      "topic": "reference-guided appearance",
+      "ownership": "request_derived_scope_with_agent_observation_criteria",
+      "all_of": [
+        "short dark bob and airy separated bangs",
+        "similar dark almond eye shape and gently arched brows",
+        "similar small soft-rounded nose and full lips",
+        "reference cheek mark remains discernible"
+      ],
+      "fail_if": "Observable features replaced by a generic unrelated face; required feature occlusion is UNOBSERVABLE_NOT_PASS."
+    }
+  ]
+}

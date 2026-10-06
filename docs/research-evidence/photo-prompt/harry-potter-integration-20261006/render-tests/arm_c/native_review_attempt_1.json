@@ -1,0 +1,62 @@
+{
+  "contract_version": "independent-arm-native-test-review/v1",
+  "attempt": 1,
+  "reviewer": "independent C agent",
+  "source_test_design": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/harry-potter-integration-20261006/render-tests/arm_c/native_test_design.json",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/harry-potter-integration-20261006/render-tests/arm_c/generated_images/cold-light-cauldron-attempt-1.png",
+  "result_sha256": "e85afc84c951efd462c307dbb429126f3bfaffb9fc12931d3a42477ffb90373e",
+  "native_dimensions": [
+    1237,
+    1272
+  ],
+  "reviewed_original_pixels": true,
+  "native_crop": {
+    "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/harry-potter-integration-20261006/render-tests/arm_c/pixel_review_crops/pendant-attempt-1-native.png",
+    "source_bbox_xywh": [
+      560,
+      520,
+      280,
+      280
+    ],
+    "source_scale": "one source pixel per crop pixel"
+  },
+  "diagnostic_magnification_only": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/harry-potter-integration-20261006/render-tests/arm_c/pixel_review_crops/pendant-attempt-1-diagnostic-3x.png",
+  "gates": {
+    "c_wand_function": {
+      "status": "PASS",
+      "evidence": "At original resolution the screen-left working hand grips one tapered wooden wand. Its blue tip is just over the same pot and aligns with a small glowing central liquid point plus concentric ripples."
+    },
+    "c_potion_cauldron": {
+      "status": "PASS",
+      "evidence": "The foreground vessel is an open dark cast-iron round-bellied pot with a rolled lip, two opposing side loops, visible short feet and blue liquid beneath a rising thin steam plume."
+    },
+    "c_house_robe": {
+      "status": "PASS",
+      "evidence": "Black long sleeves frame the two arms. Emerald-green inner front facings are distinct from black cloth and narrow silver embroidered braid follows their front edges."
+    },
+    "c_ring_hourglass": {
+      "status": "FAIL",
+      "failed_components": [
+        "three distinguishable nested rings"
+      ],
+      "evidence": "The native 280x280 chest crop shows a central narrow-waisted transparent upright hourglass with white sand in the lower bulb and a fine chain attached at the upper bail. Only two surrounding circular ring structures are separately distinguishable; two edges of one band do not establish a third ring. The pendant is unobscured, so this is a count failure rather than hidden evidence."
+    },
+    "c_reference_appearance": {
+      "status": "PASS",
+      "evidence": "Observed face proportions, brown eyes, straight narrow nose, natural pink lips, viewer-right cheek mark, short black bob and fine fringe maintain recognizable visual continuity with the supplied photograph. Lowered gaze and lighting differ authorially; no identity claim is made."
+    },
+    "c_embodiment": {
+      "status": "PASS",
+      "evidence": "The working hand belongs to the screen-left forearm and holds the wand with coherent fingers; the other visible hand lies on the separate bench region, connected to its own robe sleeve. The forward lean and short tool reach are plausible."
+    },
+    "c_photograph_whole": {
+      "status": "PASS",
+      "evidence": "Photographic skin and stone/metal/fabric textures support a face-led working portrait in an occupied stone laboratory. The local tip/light/ripple line clearly carries potion calibration."
+    }
+  },
+  "overall": "FAIL",
+  "partial_is_fail": true,
+  "unobservable_not_pass": true,
+  "supplemental_artist_observations": "Warm window light and the attentive face make a convincing quiet work portrait. The blue liquid and tip share a precise local action cue. The freely generated brass background objects and reagent labels support atmosphere, but are not topic gates. Gold hourglass topology reads well except the stricter frozen three-ring count.",
+  "user_acceptance": "NOT_YET_RECEIVED"
+}

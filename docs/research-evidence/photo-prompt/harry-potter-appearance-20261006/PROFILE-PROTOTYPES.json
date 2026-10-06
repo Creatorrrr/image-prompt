@@ -1,0 +1,371 @@
+{
+  "schema_version": "harry-potter-profile-prototypes/v1",
+  "status": "RESEARCH_DRAFT_NOT_RUNTIME_SCHEMA",
+  "prototypes": [
+    {
+      "semantic_id": "H002",
+      "status": "RESEARCH_PROTOTYPE_NOT_ADOPTED",
+      "source_refs": [
+        "S04",
+        "S06",
+        "S24",
+        "S25"
+      ],
+      "qualification_scope": "Only authored-component compiler projection will be checked; registry activation, owner binding, pack exposure, selected effects, pixels and canon case completeness remain unqualified.",
+      "profile": {
+        "id": "wf_same_wearer_uniform_layers",
+        "category": "garment",
+        "activation": {
+          "exact_terms": [
+            "same wearer shirt tie knit and robe layering",
+            "같은 착용자의 셔츠 넥타이 니트 로브 겹침"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "declared_carrier",
+                "any_terms": [
+                  "robe",
+                  "로브"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "a collared shirt is the inner layer; a tie crosses that shirt beneath a separate knit neckline; an outer robe frames those inner layers on the same wearer.",
+          "paraphrase_examples": [
+            "같은 착용자의 칼라 셔츠 위에 넥타이와 별도 니트가 있고 긴 로브가 그 바깥을 감싼다."
+          ],
+          "claim_limits": [
+            "Exact requester context and selected carrier are required; a name, BM25F hit or embedding hit is advisory.",
+            "Do not infer another book/film/fan version or personality from visible form."
+          ]
+        },
+        "reject_substitutes": [
+          "A coat printed with shirt/tie graphics does not establish four separate layers; components on different people do not complete the relation."
+        ],
+        "concept_candidate": {
+          "concept_terms": [
+            "a collared shirt is the inner layer",
+            "a tie crosses that shirt beneath a separate knit neckline",
+            "an outer robe frames those inner layers on the same wearer",
+            "같은 착용자의 칼라 셔츠 위에 넥타이와 별도 니트가 있고 긴 로브가 그 바깥을 감싼다."
+          ],
+          "core_assertion_discovery": true,
+          "affected_dimensions": [
+            "appearance"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "appearance",
+              "target": "main_subject",
+              "property": "wardrobe.layering"
+            }
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "part_1",
+              "match_terms": [
+                "a collared shirt is the inner layer"
+              ],
+              "evidence_field": "part_1_phrase",
+              "evidence_terms": [
+                "a collared shirt is the inner layer"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this selected same-owner morphology: a collared shirt is the inner layer.",
+              "render_gate": {
+                "id": "vo_wf_same_wearer_uniform_layers_1",
+                "review_scale": "native",
+                "description": "Inspect this selected owner relation: a collared shirt is the inner layer. Use partial_is_fail; required occluded components are unobservable and never pass."
+              }
+            },
+            {
+              "id": "part_2",
+              "match_terms": [
+                "a tie crosses that shirt beneath a separate knit neckline"
+              ],
+              "evidence_field": "part_2_phrase",
+              "evidence_terms": [
+                "a tie crosses that shirt beneath a separate knit neckline"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this selected same-owner morphology: a tie crosses that shirt beneath a separate knit neckline.",
+              "render_gate": {
+                "id": "vo_wf_same_wearer_uniform_layers_2",
+                "review_scale": "native",
+                "description": "Inspect this selected owner relation: a tie crosses that shirt beneath a separate knit neckline. Use partial_is_fail; required occluded components are unobservable and never pass."
+              }
+            },
+            {
+              "id": "part_3",
+              "match_terms": [
+                "an outer robe frames those inner layers on the same wearer"
+              ],
+              "evidence_field": "part_3_phrase",
+              "evidence_terms": [
+                "an outer robe frames those inner layers on the same wearer"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this selected same-owner morphology: an outer robe frames those inner layers on the same wearer.",
+              "render_gate": {
+                "id": "vo_wf_same_wearer_uniform_layers_3",
+                "review_scale": "native",
+                "description": "Inspect this selected owner relation: an outer robe frames those inner layers on the same wearer. Use partial_is_fail; required occluded components are unobservable and never pass."
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "semantic_id": "H058",
+      "status": "RESEARCH_PROTOTYPE_NOT_ADOPTED",
+      "source_refs": [
+        "S03"
+      ],
+      "qualification_scope": "Only authored-component compiler projection will be checked; registry activation, owner binding, pack exposure, selected effects, pixels and canon case completeness remain unqualified.",
+      "profile": {
+        "id": "skin_forehead_connected_angular_scar",
+        "category": "skin",
+        "activation": {
+          "exact_terms": [
+            "connected angular lightning shaped scar on the forehead",
+            "이마의 연결된 각진 번개형 흉터"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "declared_carrier",
+                "any_terms": [
+                  "scar",
+                  "흉터"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "a narrow line remains on a selected forehead skin region; several angular bends form one connected short path; skin relief or colour differs locally along that path.",
+          "paraphrase_examples": [
+            "이마의 지정한 피부에 짧은 선이 여러 번 각지게 꺾이고 그 선 주변만 색·높이가 달라진다."
+          ],
+          "claim_limits": [
+            "Exact requester context and selected carrier are required; a name, BM25F hit or embedding hit is advisory.",
+            "Do not infer another book/film/fan version or personality from visible form."
+          ]
+        },
+        "reject_substitutes": [
+          "A smooth scratch, rune, hair strand or crossing scar network isn't the same path; book centre/side position cannot be invented."
+        ],
+        "concept_candidate": {
+          "concept_terms": [
+            "a narrow line remains on a selected forehead skin region",
+            "several angular bends form one connected short path",
+            "skin relief or colour differs locally along that path",
+            "이마의 지정한 피부에 짧은 선이 여러 번 각지게 꺾이고 그 선 주변만 색·높이가 달라진다."
+          ],
+          "core_assertion_discovery": true,
+          "affected_dimensions": [
+            "appearance"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "appearance",
+              "target": "main_subject",
+              "property": "body.skin.forehead.angular_scar_path"
+            }
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "part_1",
+              "match_terms": [
+                "a narrow line remains on a selected forehead skin region"
+              ],
+              "evidence_field": "part_1_phrase",
+              "evidence_terms": [
+                "a narrow line remains on a selected forehead skin region"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this selected same-owner morphology: a narrow line remains on a selected forehead skin region.",
+              "render_gate": {
+                "id": "vo_skin_forehead_connected_angular_scar_1",
+                "review_scale": "native",
+                "description": "Inspect this selected owner relation: a narrow line remains on a selected forehead skin region. Use partial_is_fail; required occluded components are unobservable and never pass."
+              }
+            },
+            {
+              "id": "part_2",
+              "match_terms": [
+                "several angular bends form one connected short path"
+              ],
+              "evidence_field": "part_2_phrase",
+              "evidence_terms": [
+                "several angular bends form one connected short path"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this selected same-owner morphology: several angular bends form one connected short path.",
+              "render_gate": {
+                "id": "vo_skin_forehead_connected_angular_scar_2",
+                "review_scale": "native",
+                "description": "Inspect this selected owner relation: several angular bends form one connected short path. Use partial_is_fail; required occluded components are unobservable and never pass."
+              }
+            },
+            {
+              "id": "part_3",
+              "match_terms": [
+                "skin relief or colour differs locally along that path"
+              ],
+              "evidence_field": "part_3_phrase",
+              "evidence_terms": [
+                "skin relief or colour differs locally along that path"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this selected same-owner morphology: skin relief or colour differs locally along that path.",
+              "render_gate": {
+                "id": "vo_skin_forehead_connected_angular_scar_3",
+                "review_scale": "native",
+                "description": "Inspect this selected owner relation: skin relief or colour differs locally along that path. Use partial_is_fail; required occluded components are unobservable and never pass."
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "semantic_id": "H077",
+      "status": "RESEARCH_PROTOTYPE_NOT_ADOPTED",
+      "source_refs": [
+        "S13",
+        "S14"
+      ],
+      "qualification_scope": "Only authored-component compiler projection will be checked; registry activation, owner binding, pack exposure, selected effects, pixels and canon case completeness remain unqualified.",
+      "profile": {
+        "id": "jewellery_hourglass_ring_necklace",
+        "category": "prop",
+        "activation": {
+          "exact_terms": [
+            "necklace hourglass pendant with encircling rings",
+            "둘레 고리가 있는 목걸이 모래시계 펜던트"
+          ],
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true,
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "id": "declared_carrier",
+                "any_terms": [
+                  "necklace",
+                  "목걸이"
+                ]
+              }
+            ]
+          }
+        },
+        "semantics": {
+          "definition": "a small hourglass remains at the centre of a pendant; separate ring structures encircle that hourglass; a chain attaches to the same pendant above the chest.",
+          "paraphrase_examples": [
+            "작은 모래시계가 장식 중앙에 있고 별도 고리가 이를 둘러싸며 같은 장식에 목걸이 줄이 연결된다."
+          ],
+          "claim_limits": [
+            "Exact requester context and selected carrier are required; a name, BM25F hit or embedding hit is advisory.",
+            "Do not infer another book/film/fan version or personality from visible form."
+          ]
+        },
+        "reject_substitutes": [
+          "Clock dial, ordinary ring necklace or background hourglass doesn't satisfy the central pendant structure."
+        ],
+        "concept_candidate": {
+          "concept_terms": [
+            "a small hourglass remains at the centre of a pendant",
+            "separate ring structures encircle that hourglass",
+            "a chain attaches to the same pendant above the chest",
+            "작은 모래시계가 장식 중앙에 있고 별도 고리가 이를 둘러싸며 같은 장식에 목걸이 줄이 연결된다."
+          ],
+          "core_assertion_discovery": true,
+          "affected_dimensions": [
+            "appearance"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "appearance",
+              "target": "main_subject",
+              "property": "wardrobe.details.hourglass_ring_pendant"
+            }
+          ]
+        },
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v1",
+          "components": [
+            {
+              "id": "part_1",
+              "match_terms": [
+                "a small hourglass remains at the centre of a pendant"
+              ],
+              "evidence_field": "part_1_phrase",
+              "evidence_terms": [
+                "a small hourglass remains at the centre of a pendant"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this selected same-owner morphology: a small hourglass remains at the centre of a pendant.",
+              "render_gate": {
+                "id": "vo_jewellery_hourglass_ring_necklace_1",
+                "review_scale": "native",
+                "description": "Inspect this selected owner relation: a small hourglass remains at the centre of a pendant. Use partial_is_fail; required occluded components are unobservable and never pass."
+              }
+            },
+            {
+              "id": "part_2",
+              "match_terms": [
+                "separate ring structures encircle that hourglass"
+              ],
+              "evidence_field": "part_2_phrase",
+              "evidence_terms": [
+                "separate ring structures encircle that hourglass"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this selected same-owner morphology: separate ring structures encircle that hourglass.",
+              "render_gate": {
+                "id": "vo_jewellery_hourglass_ring_necklace_2",
+                "review_scale": "native",
+                "description": "Inspect this selected owner relation: separate ring structures encircle that hourglass. Use partial_is_fail; required occluded components are unobservable and never pass."
+              }
+            },
+            {
+              "id": "part_3",
+              "match_terms": [
+                "a chain attaches to the same pendant above the chest"
+              ],
+              "evidence_field": "part_3_phrase",
+              "evidence_terms": [
+                "a chain attaches to the same pendant above the chest"
+              ],
+              "min_content_words": 3,
+              "instruction": "Preserve this selected same-owner morphology: a chain attaches to the same pendant above the chest.",
+              "render_gate": {
+                "id": "vo_jewellery_hourglass_ring_necklace_3",
+                "review_scale": "native",
+                "description": "Inspect this selected owner relation: a chain attaches to the same pendant above the chest. Use partial_is_fail; required occluded components are unobservable and never pass."
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
+

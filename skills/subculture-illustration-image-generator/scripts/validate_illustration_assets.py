@@ -7805,6 +7805,95 @@ def _validate_v26_scene_budget_successor(
              "photo V26 universal descriptor changed beyond validator hash")
 
 
+PHOTO_V27_APPEARANCE_PROOF_SHA256 = "35f7c202cffb3829fe124676d9324a659e87baa2cce34ed336129ac8b223c688"
+PHOTO_V27_PARENT_MANIFEST_SHA256 = "d1e7261c1f991d181bad2835ba16e58d5753a88f1635c3d6966609bc597adbb8"
+
+
+def _validate_v27_appearance_data_successor(
+    asset_dir: Path, repo_root: Path, baseline: dict[str, Any],
+    pack: dict[str, Any], raw: bytes,
+) -> None:
+    """Bind additive appearance DATA while preserving the exact V26 scene."""
+    evidence = repo_root / "docs/research-evidence/photo-prompt/harry-potter-integration-20261006/main-merge/V27-APPEARANCE-DATA-PROOF.json"
+    _require(_sha256(evidence) == PHOTO_V27_APPEARANCE_PROOF_SHA256,
+             "photo V27 immutable appearance proof drift")
+    proof = _load_json(evidence)
+    _require(proof.get("schema") == "photo-appearance-paraphrase-data-transition/v27"
+             and proof.get("previous_qualified_commit") == "eabc47b44445a718e5e0f35af376f967b1fca20a"
+             and proof.get("previous_qualified_tree") == "0299b7e9b0456fd2a607f59f9fbaa05d8edb858d",
+             "photo V27 qualified main lineage drift")
+    _require(baseline.get("appearance_data_transition") == {
+        "evidence_path": str(evidence.relative_to(repo_root)),
+        "evidence_sha256": PHOTO_V27_APPEARANCE_PROOF_SHA256,
+        "previous_qualified_commit": proof["previous_qualified_commit"],
+        "parent_manifest_sha256": PHOTO_V27_PARENT_MANIFEST_SHA256,
+    } and "scene_budget_transition" not in baseline,
+        "photo V27 cannot relabel V26 scene-budget evidence")
+    previous_path = asset_dir / "photo_regression_baseline_v26_pack.json"
+    current_path = asset_dir / "photo_regression_baseline_v27_pack.json"
+    _require(_sha256(asset_dir / "photo_regression_baseline_v26.json") == proof["previous_manifest_sha256"]
+             and _sha256(previous_path) == proof["previous_pack_sha256"]
+             and current_path.read_bytes() == raw
+             and hashlib.sha256(raw).hexdigest() == proof["current_pack_sha256"] == baseline.get("sha256"),
+             "photo V27 exact predecessor or current pack bytes drift")
+    previous = _load_json(previous_path)[0]
+    expected = json.loads(json.dumps(previous))
+    allowed = {"/0/core_retrieval/canonical_sha256", "/0/core_retrieval/slot_corpus_sha256",
+               "/0/core_retrieval/slot_ownership_sha256", "/0/pack_id", "/0/provenance/tags_hash"}
+    delta = proof["reviewed_pack_delta"]
+    _require({row["pointer"] for row in delta} == allowed and len(delta) == 5
+             and proof["allowed_pack_delta_pointers"] == sorted(allowed),
+             "photo V27 unreviewed pack delta scope")
+    for row in delta:
+        target = expected
+        parts = row["pointer"].split("/")[2:]
+        for part in parts[:-1]:
+            target = target[part]
+        _require(target[parts[-1]] == row["before"], "photo V27 predecessor binding drift")
+        target[parts[-1]] = row["after"]
+    _require(pack == expected and previous["pack_id"] == proof["previous_pack_id"]
+             and pack["pack_id"] == proof["current_pack_id"] == _canonical_photo_pack_id(pack)
+             and _public_photo_candidate_count(pack) == 64
+             and pack["provenance"]["tags_hash"] == proof["current_dictionary_hash"]
+             and pack["authorial_composition"]["prompt_budget"]["contract_version"] == "photo-authorial-prompt-budget/v3"
+             and baseline["frozen_inputs"] == proof["frozen_inputs"],
+             "photo V27 changed candidate meaning, order, frozen scene or budget")
+    source_assets = repo_root / "skills/photo-prompt-image-generator/assets"
+    _require({path.name: _sha256(path) for path in source_assets.glob("*.json")}
+             == proof["source_inventory_after"], "photo V27 exact DATA inventory drift")
+    _require(all(_sha256(repo_root / name) == digest for name, digest in proof["source_files_after"].items()),
+             "photo V27 DATA or preserved main runtime source drift")
+    _require(all(_sha256(repo_root / name) == digest for name, digest in proof["active_shards_after"].items())
+             and len(proof["active_shards_after"]) == 32,
+             "photo V27 current index shard binding drift")
+    manifest_path = repo_root / proof["parent_manifest"]
+    _require(_sha256(manifest_path) == proof["parent_manifest_sha256"] == PHOTO_V27_PARENT_MANIFEST_SHA256,
+             "photo V27 immutable V26 source manifest drift")
+    manifest = _load_json(manifest_path)
+    rows = manifest["members"]
+    _require(manifest["source_pin"] == proof["previous_qualified_commit"]
+             and manifest["source_tree"] == proof["previous_qualified_tree"]
+             and manifest["member_count"] == len(rows) == 987
+             and len({row["path"] for row in rows}) == 987,
+             "photo V27 original V26 source inventory drift")
+    for row in rows:
+        name = Path(row["source_path"])
+        _require(not name.is_absolute() and ".." not in name.parts, "photo V27 unsafe historical source path")
+        payload = (repo_root / name).read_bytes()
+        blob = hashlib.sha1(b"blob " + str(len(payload)).encode("ascii") + b"\0" + payload).hexdigest()
+        _require(len(payload) == row["bytes"] and hashlib.sha256(payload).hexdigest() == row["sha256"]
+                 and blob == row["git_blob"], "photo V27 original V26 source or dependency bytes drift")
+    descriptor = "skills/subculture-illustration-image-generator/assets/universal_scene_baseline_v2.json"
+    original = next(row for row in rows if row["path"] == descriptor)
+    before = (repo_root / original["source_path"]).read_bytes()
+    validator_sha = proof["previous_validator_sha256"].encode("ascii")
+    _require(hashlib.sha256(before).hexdigest() == proof["previous_universal_descriptor_sha256"]
+             and before.count(validator_sha) == 1
+             and (asset_dir / "universal_scene_baseline_v2.json").read_bytes()
+             == before.replace(validator_sha, _sha256(Path(__file__)).encode("ascii"), 1),
+             "photo V27 universal descriptor changed beyond validator hash")
+
+
 def validate_photo_regression_baseline(
     asset_dir: Path, *, baseline_version: int | None = None
 ) -> dict[str, Any]:
@@ -7817,10 +7906,10 @@ def validate_photo_regression_baseline(
     previous_path = asset_dir / "photo_regression_baseline_v5.json"
     if baseline_version is None:
         baseline_version = next(
-            version for version in (26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
+            version for version in (27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
             if (asset_dir / f"photo_regression_baseline_v{version}.json").exists()
         )
-    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26}, "unsupported photo baseline version")
+    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27}, "unsupported photo baseline version")
     lineage_version = min(baseline_version, 7)
     baseline_path = asset_dir / f"photo_regression_baseline_v{lineage_version}.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
@@ -8083,6 +8172,8 @@ def validate_photo_regression_baseline(
         _validate_v25_ct073_back_band_successor(asset_dir, repo_root, baseline, pack, raw)
     if baseline_version == 26:
         _validate_v26_scene_budget_successor(asset_dir, repo_root, baseline, pack, raw)
+    if baseline_version == 27:
+        _validate_v27_appearance_data_successor(asset_dir, repo_root, baseline, pack, raw)
     return {
         "status": "pass",
         "schema": baseline["schema"],

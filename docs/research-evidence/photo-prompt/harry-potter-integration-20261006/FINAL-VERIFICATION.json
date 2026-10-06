@@ -1,0 +1,868 @@
+{
+  "status": "DATA_APPLIED_AND_VALIDATED_NATIVE_TESTS_NOT_ALL_PASS_FULL_SUITE_NOT_ALL_PASS",
+  "completed_at_utc": "2026-10-06T03:28:54.243190+00:00",
+  "authored_counts": {
+    "existing_profiles_extended": 45,
+    "existing_profile_component_rows_extended": 19,
+    "existing_candidates_extended": 14,
+    "new_profiles": 42,
+    "new_candidates": 42,
+    "optional_bundles": 6
+  },
+  "runtime_validation": {
+    "status": "PASS",
+    "actual_shards_loaded": true,
+    "semantic_bm25f_and_metadata_validated": true,
+    "visual_registry_binding_validated": true,
+    "profile_count": 1964,
+    "raw_slot_entry_count": 10131,
+    "semantic_index_entry_count": 10167,
+    "visual_index_entry_count": 1964,
+    "dictionary_hash": "8adcf8d0a61098164cc9768b143ee330d797f50809dcb065ac87118616cdfb61",
+    "index_manifest_sha256": {
+      "photo_prompt_semantic_index.json": "e2839fa9114b97d65e219034cd3f0b804bb8a692dc45df857c4e71186dc2cf8d",
+      "photo_prompt_visual_profile_index.json": "316d8dfc768a381f70190d519a6cca93b696a914e768a230740d00e12a471cf2"
+    },
+    "runtime_source_sha256": {
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py": "5c367801a3ad7b3cc9d609b4b55cd19a75378daa986f433facaec3457c28f09e",
+      "skills/photo-prompt-image-generator/scripts/photo_contracts.py": "61f51dd33f3ac98aa6a5ef5cbeaa6ba7a9281380c26cc0829e47aadb7b586e74",
+      "skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py": "1c133fbb64fda1252fe07fc526fa6513848025d91785a956c10ad6c94228ab67",
+      "skills/photo-prompt-image-generator/SKILL.md": "7be5994fbd8e8f55c427da5de70547d96e19afc6ea7565efdb4495a90be435eb"
+    },
+    "primary_current_runtime_verified": true,
+    "native_runs_remain_bound_to_original_isolated_runtime": true
+  },
+  "related_integration_tests": {
+    "count": 9,
+    "status": "PASS",
+    "log": "primary-scoped-tests-final.log"
+  },
+  "full_test_union": {
+    "unique_test_count": 1691,
+    "all_discovered_isolated_tests_covered": true,
+    "counts": {
+      "PASS": 1682,
+      "FAIL": 3,
+      "ERROR": 6
+    },
+    "remaining_checks": [
+      {
+        "test_id": "test_photo_character_appearance_100.CharacterAppearance100Tests.test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates",
+        "status": "FAIL",
+        "classification": "REPRODUCED_AT_START",
+        "reason": "Historical profile field equality already fails in 10 subcases at the original start state.",
+        "evidence": "BASELINE-FAILURE-COMPARISON.json",
+        "left_unmodified": true
+      },
+      {
+        "test_id": "test_photo_clothing_terminology_semantics.ClothingTerminologySemanticsTests.test_authored_sources_and_generated_indexes_bind_every_registered_variant",
+        "status": "FAIL",
+        "classification": "UNCHANGED_INPUT_PROVEN",
+        "reason": "Original textile candidate source already differs from its archived maintenance record hash.",
+        "evidence": "CLOTHING-BASELINE-DEPENDENCY-COMPARISON.json",
+        "left_unmodified": true
+      },
+      {
+        "test_id": "test_photo_ornament_boundary_history.OrnamentBoundaryHistoryTests.test_current_default_and_explicit_v22_are_registered",
+        "status": "ERROR",
+        "classification": "SAME_ASSERTION_INPUT_CONFLICT_PROVEN",
+        "reason": "The exact sealed V22 inventory already differs in 15 names/hashes at the start state.",
+        "evidence": "V22-START-INVENTORY-COMPARISON.json",
+        "left_unmodified": true
+      },
+      {
+        "test_id": "test_photo_ornament_boundary_history.OrnamentBoundaryHistoryTests.test_only_six_metadata_leaves_and_two_optional_lists_change",
+        "status": "ERROR",
+        "classification": "SAME_ASSERTION_INPUT_CONFLICT_PROVEN",
+        "reason": "The exact sealed V22 inventory already differs in 15 names/hashes at the start state.",
+        "evidence": "V22-START-INVENTORY-COMPARISON.json",
+        "left_unmodified": true
+      },
+      {
+        "test_id": "test_subculture_illustration_universal_scene_v3.UniversalSceneDataContractTests.test_existing_render_manifests_keep_historical_failure_labels",
+        "status": "ERROR",
+        "classification": "PREEXISTING_CONFLICT_INFERRED_NOT_REPLAYED",
+        "reason": "Live V22 pack byte mismatch is consistent with sealed source/index bindings that already differed at start; exact prior aggregate command not replayed.",
+        "evidence": "ILLUSTRATION-PREEXISTING-EVIDENCE.json",
+        "left_unmodified": true
+      },
+      {
+        "test_id": "test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests.test_v1_v2_exact_replay_and_photo_baseline_remain_immutable",
+        "status": "ERROR",
+        "classification": "PREEXISTING_CONFLICT_INFERRED_NOT_REPLAYED",
+        "reason": "Live V22 pack byte mismatch is consistent with sealed source/index bindings that already differed at start; exact prior aggregate command not replayed.",
+        "evidence": "ILLUSTRATION-PREEXISTING-EVIDENCE.json",
+        "left_unmodified": true
+      },
+      {
+        "test_id": "test_photo_liminal_active_use_korean_data_cleanup.LiminalActiveUseKoreanDataCleanupTests.test_complete_merged_state_and_twenty_one_keeps_remain_exact",
+        "status": "ERROR",
+        "classification": "REPRODUCED_AT_START",
+        "reason": "Historical replay excludes pose owner but leaves an older dependent intellectual context overlay.",
+        "evidence": "LIMINAL-BASELINE-COMPARISON.json",
+        "left_unmodified": true
+      },
+      {
+        "test_id": "test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification",
+        "status": "ERROR",
+        "classification": "PREEXISTING_CONFLICT_INFERRED_NOT_REPLAYED",
+        "reason": "Live V22 pack byte mismatch is consistent with sealed source/index bindings that already differed at start; exact prior aggregate command not replayed.",
+        "evidence": "ILLUSTRATION-PREEXISTING-EVIDENCE.json",
+        "left_unmodified": true
+      },
+      {
+        "test_id": "test_subculture_illustration_photo_boundary.SubcultureIllustrationPhotoBoundaryTests.test_illustration_modules_do_not_import_photo_runtime",
+        "status": "FAIL",
+        "classification": "UNCHANGED_HEAD_SOURCE_PROVEN",
+        "reason": "The unchanged HEAD validator already imports importlib.util, contrary to this AST assertion.",
+        "evidence": "ILLUSTRATION-PREEXISTING-EVIDENCE.json",
+        "left_unmodified": true
+      }
+    ],
+    "all_pass": false,
+    "remaining_confirmed_start_or_unchanged_input_cases": 6,
+    "remaining_preexisting_conflict_inferred_cases": 3,
+    "exact_prior_aggregate_replay_not_performed": true,
+    "details": "FINAL-TEST-COVERAGE.json"
+  },
+  "native_tests": {
+    "independent_agents": 3,
+    "image_calls": 5,
+    "original_outputs": 5,
+    "arm_a": "PASS",
+    "arm_b": "FAIL",
+    "arm_c": "FAIL",
+    "selected_candidate_topologies_observed": [
+      "appearance_h002",
+      "appearance_h077"
+    ],
+    "new_visual_profile_selection_effect": "UNPROVEN",
+    "causal_before_after_improvement": "NOT_TESTED",
+    "user_acceptance": "NOT_RECEIVED",
+    "root_review": "ROOT-NATIVE-PIXEL-REVIEW.json"
+  },
+  "final_qualified_file_hashes": {
+    "skills/photo-prompt-image-generator/assets/photo_prompt_character_appearance_extension.json": "a58116ee49a0f1c573a50a9b223b6d0883e06e8ab05f43f7ff07e241feee5d99",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_source_manifest.json": "bed031eaf66c26ab2e33e23b16d207686241d7896870b82b3aa0826cb30e8228",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json": "e5de9c15ea0c874616395a808ce90a252a6fee6177210828bfaa81db5e88a161",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_accessory_structure.json": "8b59befe77bbb7afc6600d9b379be81b48e708b3f45ec8f8beb339d12f1a2bee",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_appearance_relations.json": "e3819d4291893478545072dfa183cec3255b7e869da153b41d1065a369ae9fc4",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_body_morphology.json": "0301baf56dff3849b6045b59d665ead7016fd9fffe23d5f5828fec840aaf0037",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_character_appearance.json": "e0122232374f3e16ac8aefac4f623a36c0b1ee83d9f3f22e04c977921a0defe5",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_clothing_structure.json": "019ccbd139781c3554f725af2de75b31395e576a60c2960ef28fa5db21d6b0d6",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_costume_cosplay.json": "b7323bcad63db25df69689f712d2eaa847570e36e56684e0808c8a08ae81fb07",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_ornament_structure.json": "32fb5378267e34d98e4c3a477c212534ca71d37d5db9e3637d38f9adebf0f78c",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_subculture_appearance.json": "a69cff2c203c865e8c6974a47c98e12e98e865d7ccbd94b958fa5193521551aa",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_textile_surface.json": "5ca5549bae8582b6a218edab9cddcaa937eb2c8cf2b7df17c1e980dabcc480da",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_y2k.json": "b420ce4f4052d35a8835437b6f3ea308399cb73af2f975bf1e681da58f90aff7",
+    "tests/test_photo_harry_appearance_semantics.py": "65cce1661916478920aebd7a82ddeddb8736d934278b2d10585d990b7e157c2c",
+    "tests/test_photo_material_data_cleanup.py": "02646a2d4ed852c000ce7f5aa306e082c7e1e5aac13ffbda2800e7f849a9ab34",
+    "tests/test_photo_scene_data_cleanup.py": "5afcff15a6ad9df7c55dac7759148388817c4b80bef493bb83498297423c5f17",
+    "tests/test_photo_structure_maintenance.py": "33601106722f8bd86ccba3208d4b7778892b716990292119af62030541fb1f07",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json": "e2839fa9114b97d65e219034cd3f0b804bb8a692dc45df857c4e71186dc2cf8d",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json": "316d8dfc768a381f70190d519a6cca93b696a914e768a230740d00e12a471cf2"
+  },
+  "all_primary_files_match_qualified_checkout": true,
+  "existing_manifest_rows_preserved": true,
+  "profile_text_candidate_text_and_index_hashes_unchanged_by_registration_repair": true,
+  "unrelated_sources_preserved": [
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_accessory_structure_extension.json",
+      "original_start_sha256": "4a4512b89f84ed1b452cac3d77f8759871534b052ecc40b74a00befa0ad34830",
+      "current_primary_sha256": "4a4512b89f84ed1b452cac3d77f8759871534b052ecc40b74a00befa0ad34830",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json",
+      "original_start_sha256": "bc8b8773081fc586d988588c239ee3b35b50821b3732b628dfd8c778ddbe8906",
+      "current_primary_sha256": "bc8b8773081fc586d988588c239ee3b35b50821b3732b628dfd8c778ddbe8906",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_body_morphology_extension.json",
+      "original_start_sha256": "60c3f94a2a25128bb61c19f9b8a2eeef46362721fa8b283c15904b2e96eda621",
+      "current_primary_sha256": "60c3f94a2a25128bb61c19f9b8a2eeef46362721fa8b283c15904b2e96eda621",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_boundary_transition_extension.json",
+      "original_start_sha256": "032034a8e3c30fe10556e0e3102b49c27431b5c094bae8692b77b639b1f8b663",
+      "current_primary_sha256": "032034a8e3c30fe10556e0e3102b49c27431b5c094bae8692b77b639b1f8b663",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json",
+      "original_start_sha256": "e9583cde4ce74e46e6f28501c976f9fe8b1efd1691546416b751fe774c13bb42",
+      "current_primary_sha256": "e9583cde4ce74e46e6f28501c976f9fe8b1efd1691546416b751fe774c13bb42",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_cjk_worldbuilding_extension.json",
+      "original_start_sha256": "ed11f2bce9832ab4b3bfb1d4d61e51a240dcc9c8e065901fb34acf79f774a415",
+      "current_primary_sha256": "ed11f2bce9832ab4b3bfb1d4d61e51a240dcc9c8e065901fb34acf79f774a415",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_clothing_structure_extension.json",
+      "original_start_sha256": "7055f19fda53c93748c3085b61b344ca1918dcae6caf7afa99f073779b1ab367",
+      "current_primary_sha256": "7055f19fda53c93748c3085b61b344ca1918dcae6caf7afa99f073779b1ab367",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_color_relations_extension.json",
+      "original_start_sha256": "6717c6d39ed7c511bf1b39ce508e509ad9ab2378aecca2092b74e5bfd6333c48",
+      "current_primary_sha256": "6717c6d39ed7c511bf1b39ce508e509ad9ab2378aecca2092b74e5bfd6333c48",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_contextual_appeal_extension.json",
+      "original_start_sha256": "3073344cf0eadb2503c15d4210388d66c17f65bb5c6ac6332bf85843a869806c",
+      "current_primary_sha256": "3073344cf0eadb2503c15d4210388d66c17f65bb5c6ac6332bf85843a869806c",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_costume_cosplay_extension.json",
+      "original_start_sha256": "e0766d80ad8975f7b24e91856f0e0ef3e41c926726b8485c5b90c53202f1a932",
+      "current_primary_sha256": "e0766d80ad8975f7b24e91856f0e0ef3e41c926726b8485c5b90c53202f1a932",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_cute_visual_forms_extension.json",
+      "original_start_sha256": "d73d51c65563d0e4b592ad6fd07ca28ffd086dc53ecd276d9c91e4309e60933d",
+      "current_primary_sha256": "d73d51c65563d0e4b592ad6fd07ca28ffd086dc53ecd276d9c91e4309e60933d",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_desire_extension.json",
+      "original_start_sha256": "b6e1a6adcc710f44c29cc6932abe42e09df1c4be4993be000186f8e99da2b91a",
+      "current_primary_sha256": "b6e1a6adcc710f44c29cc6932abe42e09df1c4be4993be000186f8e99da2b91a",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_editing_effects_extension.json",
+      "original_start_sha256": "1c10d388df677990d9591d8ce33695fb9476ab71d35256367f91a6bec0deb2bf",
+      "current_primary_sha256": "1c10d388df677990d9591d8ce33695fb9476ab71d35256367f91a6bec0deb2bf",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_emotional_place_extension.json",
+      "original_start_sha256": "a42fdee55f06e514a6b96667ba97b1acc9095aed38bbdbaf6612dfb972449679",
+      "current_primary_sha256": "a42fdee55f06e514a6b96667ba97b1acc9095aed38bbdbaf6612dfb972449679",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_everyday_scene_extension.json",
+      "original_start_sha256": "dcf97a69c87af59e576bca07fa7b9fea9e9694c419bc3b6caf29711ed3c09fde",
+      "current_primary_sha256": "dcf97a69c87af59e576bca07fa7b9fea9e9694c419bc3b6caf29711ed3c09fde",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_harem_extension.json",
+      "original_start_sha256": "2808f98c9e1fd438ee2058d9df8e5e40a47a564cfdbfdf22e7a6917591f9a527",
+      "current_primary_sha256": "2808f98c9e1fd438ee2058d9df8e5e40a47a564cfdbfdf22e7a6917591f9a527",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_historical_womenswear_extension.json",
+      "original_start_sha256": "df59bac2ff68005a1161b3e7771b3fbba74d36d98ab16e8c71a9e6c5d0da9a60",
+      "current_primary_sha256": "df59bac2ff68005a1161b3e7771b3fbba74d36d98ab16e8c71a9e6c5d0da9a60",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_imaginal_extension.json",
+      "original_start_sha256": "0c09f9fd3f97c7c4d46a09cb828fbef0d8cef9883d08f0e042fc5b0383195fb7",
+      "current_primary_sha256": "0c09f9fd3f97c7c4d46a09cb828fbef0d8cef9883d08f0e042fc5b0383195fb7",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_intellectual_activity_extension.json",
+      "original_start_sha256": "b4f83bade2e413b72433dbd370d0f0becf9b3b39299f0aae0883865dc8825c01",
+      "current_primary_sha256": "b4f83bade2e413b72433dbd370d0f0becf9b3b39299f0aae0883865dc8825c01",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_legend_extension.json",
+      "original_start_sha256": "6aba5bb7903500fdd9e3bd4e89e52cf597777ede736ec1d5ea9d87aca320e50f",
+      "current_primary_sha256": "6aba5bb7903500fdd9e3bd4e89e52cf597777ede736ec1d5ea9d87aca320e50f",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_lighting_extension.json",
+      "original_start_sha256": "3d8580614b456ee66e0ddd7a82c1e55fdc5876ccf3f511541736513f6f8e7448",
+      "current_primary_sha256": "3d8580614b456ee66e0ddd7a82c1e55fdc5876ccf3f511541736513f6f8e7448",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_model_editorial_extension.json",
+      "original_start_sha256": "a63dc405e519d138810241ffbe438214f629caf0c651386d1a8edf96124fcae1",
+      "current_primary_sha256": "a63dc405e519d138810241ffbe438214f629caf0c651386d1a8edf96124fcae1",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_motion_graphics_extension.json",
+      "original_start_sha256": "689e1ec2a501255967d864c60b0da08b1b1edbcc78a796ade21a955e39b1253f",
+      "current_primary_sha256": "689e1ec2a501255967d864c60b0da08b1b1edbcc78a796ade21a955e39b1253f",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_mythology_extension.json",
+      "original_start_sha256": "1f7d36b0e75aaca14995b95832f7bd30dbc54b51c4b1b8b84a3fcd1249db4a0e",
+      "current_primary_sha256": "1f7d36b0e75aaca14995b95832f7bd30dbc54b51c4b1b8b84a3fcd1249db4a0e",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_natural_environment_extension.json",
+      "original_start_sha256": "06d0afe55504bfa6710739ece83eba75fb3cc41c147bb70f8c4f60538f77ba09",
+      "current_primary_sha256": "06d0afe55504bfa6710739ece83eba75fb3cc41c147bb70f8c4f60538f77ba09",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_neutral_expression_extension.json",
+      "original_start_sha256": "2119a01a3386b43bf35a51aa922249b18f61d47d2bfddf0fc318adba182d1935",
+      "current_primary_sha256": "2119a01a3386b43bf35a51aa922249b18f61d47d2bfddf0fc318adba182d1935",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_opening_era_extension.json",
+      "original_start_sha256": "1fe774064ca1deee2df63345b37ce8285c75b0af6b699e9251e2b51ea83c46d1",
+      "current_primary_sha256": "1fe774064ca1deee2df63345b37ce8285c75b0af6b699e9251e2b51ea83c46d1",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_ornament_structure_extension.json",
+      "original_start_sha256": "e622e1f231a1fbef3ce00bae93011304e2bdceb7a8d6dd5799e879a182caa51a",
+      "current_primary_sha256": "e622e1f231a1fbef3ce00bae93011304e2bdceb7a8d6dd5799e879a182caa51a",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_palace_fortification_extension.json",
+      "original_start_sha256": "7943be6a95f97da27e39876720c558459ea841c40bd6b53919c9c461b64217f1",
+      "current_primary_sha256": "7943be6a95f97da27e39876720c558459ea841c40bd6b53919c9c461b64217f1",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_photo_era_extension.json",
+      "original_start_sha256": "95cab642572ed6745dbb3da187af22d0b79b786786eb929200ff1c9f4f03c293",
+      "current_primary_sha256": "95cab642572ed6745dbb3da187af22d0b79b786786eb929200ff1c9f4f03c293",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_photorealism_elements_extension.json",
+      "original_start_sha256": "818cac4abebce43508c10090d67d816f20b1650875e91c5fd9752ab476b5a4f1",
+      "current_primary_sha256": "818cac4abebce43508c10090d67d816f20b1650875e91c5fd9752ab476b5a4f1",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_portrait_composition_extension.json",
+      "original_start_sha256": "558bd6c28e2cc9de5bb8cf5f0ae83f6a3f81bc3a47fc08d1ebded0d3d87535cb",
+      "current_primary_sha256": "558bd6c28e2cc9de5bb8cf5f0ae83f6a3f81bc3a47fc08d1ebded0d3d87535cb",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_portrait_fashion_exposure_extension.json",
+      "original_start_sha256": "076da7428d1137c112c78d73f593dd38dd82cb6c9661c34f8722ce43e4e95037",
+      "current_primary_sha256": "076da7428d1137c112c78d73f593dd38dd82cb6c9661c34f8722ce43e4e95037",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+      "original_start_sha256": "2822a3677bb0225b7391029a2a96e17da9c6f66fa46ebf8c0fb21f335c22f214",
+      "current_primary_sha256": "2822a3677bb0225b7391029a2a96e17da9c6f66fa46ebf8c0fb21f335c22f214",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_poverty_extension.json",
+      "original_start_sha256": "8dff5605ed7735554d7fb5a3058c7f007912d9bec0b2b4c4f2c3ec294bb8a968",
+      "current_primary_sha256": "8dff5605ed7735554d7fb5a3058c7f007912d9bec0b2b4c4f2c3ec294bb8a968",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_punk_aesthetics_extension.json",
+      "original_start_sha256": "c50f1c7e1471b2315f3b2e23b40592b11e2e82739641698ba4f0962ba16bf15a",
+      "current_primary_sha256": "c50f1c7e1471b2315f3b2e23b40592b11e2e82739641698ba4f0962ba16bf15a",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json",
+      "original_start_sha256": "8c348126f41f71e6a284b755a329d82781c25493d6a3a862fb7e618bd678d23c",
+      "current_primary_sha256": "8c348126f41f71e6a284b755a329d82781c25493d6a3a862fb7e618bd678d23c",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_reactorprompt_visual_relations_extension.json",
+      "original_start_sha256": "412b6f97e46904258bf1744734274682f77cc0f963522af5ecbb6d71fa719d09",
+      "current_primary_sha256": "412b6f97e46904258bf1744734274682f77cc0f963522af5ecbb6d71fa719d09",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_realistic_background_extension.json",
+      "original_start_sha256": "3fdec61f61cd251825fd8b945ea900ff56c0f5e260e0d351ca0a4668c2e1e532",
+      "current_primary_sha256": "3fdec61f61cd251825fd8b945ea900ff56c0f5e260e0d351ca0a4668c2e1e532",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_religion_iconography_extension.json",
+      "original_start_sha256": "022f5731a79919281c7a68fe428288280ae98f87db8b8c5f7e27aac63cd517fe",
+      "current_primary_sha256": "022f5731a79919281c7a68fe428288280ae98f87db8b8c5f7e27aac63cd517fe",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_research_extension.json",
+      "original_start_sha256": "4f6cf6b1e77634d21c132596ffdae3ace2da421c03b0b5f8030e5f10be9aaed9",
+      "current_primary_sha256": "4f6cf6b1e77634d21c132596ffdae3ace2da421c03b0b5f8030e5f10be9aaed9",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_seduction_expression_extension.json",
+      "original_start_sha256": "0d1ec05ddef50295c9f250974bc4944a0316e28fd46cf73e1b22f406d50c9d08",
+      "current_primary_sha256": "0d1ec05ddef50295c9f250974bc4944a0316e28fd46cf73e1b22f406d50c9d08",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_sensual_fetish_fashion_extension.json",
+      "original_start_sha256": "ba43beecd804ac6d07507234409530c4d92335e3285a2c847a5f4193d22bd504",
+      "current_primary_sha256": "ba43beecd804ac6d07507234409530c4d92335e3285a2c847a5f4193d22bd504",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_slang_visual_extension.json",
+      "original_start_sha256": "288e24a399eed5dd0368a1aabc8d749262a7a530dc7d7d725b4ce9e6bb56e733",
+      "current_primary_sha256": "288e24a399eed5dd0368a1aabc8d749262a7a530dc7d7d725b4ce9e6bb56e733",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_space_extension.json",
+      "original_start_sha256": "95c2b180ff99d377b82eaeb49655e001363157537852430f40d69365514f9e4a",
+      "current_primary_sha256": "95c2b180ff99d377b82eaeb49655e001363157537852430f40d69365514f9e4a",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_subculture_appearance_extension.json",
+      "original_start_sha256": "17d67d2e38cb223a03c7576fa36517c0705637ba8e5c0a4607c7c501844f020d",
+      "current_primary_sha256": "17d67d2e38cb223a03c7576fa36517c0705637ba8e5c0a4607c7c501844f020d",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_subculture_extension.json",
+      "original_start_sha256": "42bfa92466a7367c9890e26b16456a34394c4ea743ba91d801ffac0bc1ec69bb",
+      "current_primary_sha256": "42bfa92466a7367c9890e26b16456a34394c4ea743ba91d801ffac0bc1ec69bb",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_swimwear_extension.json",
+      "original_start_sha256": "1f0a364851f0bc9d35f869a63eca80a7198c7e90f915c361cdc312e0abb85ce3",
+      "current_primary_sha256": "1f0a364851f0bc9d35f869a63eca80a7198c7e90f915c361cdc312e0abb85ce3",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_tactile_reality_extension.json",
+      "original_start_sha256": "ad2769b5dde6d10ced88d42279f26e47e53f34d282d9822f9817fe0fb85683da",
+      "current_primary_sha256": "ad2769b5dde6d10ced88d42279f26e47e53f34d282d9822f9817fe0fb85683da",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "original_start_sha256": "7a3c5615395d51e2cb6525940c128c66f8c8dd32a7e499dd9e7d75ff4300b9a4",
+      "current_primary_sha256": "7a3c5615395d51e2cb6525940c128c66f8c8dd32a7e499dd9e7d75ff4300b9a4",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_textile_surface_extension.json",
+      "original_start_sha256": "5ab096f23d510c7c72163fa3862473c7e890224de45397500658d6380a7b5b57",
+      "current_primary_sha256": "5ab096f23d510c7c72163fa3862473c7e890224de45397500658d6380a7b5b57",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_traditional_clothing_detail_extension.json",
+      "original_start_sha256": "8f1eca762e36e71db1751925b8d1b14d499fa20dddccfdfd6cad834af1be4350",
+      "current_primary_sha256": "8f1eca762e36e71db1751925b8d1b14d499fa20dddccfdfd6cad834af1be4350",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_violence_crime_extension.json",
+      "original_start_sha256": "b97f5bb44f20ba0e707f007003c4f51da1c960db263eff1dedf3221b0f60f68a",
+      "current_primary_sha256": "b97f5bb44f20ba0e707f007003c4f51da1c960db263eff1dedf3221b0f60f68a",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_acting_expression.json",
+      "original_start_sha256": "617b2cb64b81f80aff8d64f710f6b53dabac4ed80fb9495f157f26ab5ef82d0a",
+      "current_primary_sha256": "617b2cb64b81f80aff8d64f710f6b53dabac4ed80fb9495f157f26ab5ef82d0a",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_color_relations.json",
+      "original_start_sha256": "c10bde9ed3f335a802cb2b776a953ebd6a2bb721329219d5c56327fb78d57669",
+      "current_primary_sha256": "c10bde9ed3f335a802cb2b776a953ebd6a2bb721329219d5c56327fb78d57669",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_cute_visual_forms.json",
+      "original_start_sha256": "4530b796f480f49285381746400aa0f1b55ac0ec2463cc32a84be488ae6a8210",
+      "current_primary_sha256": "4530b796f480f49285381746400aa0f1b55ac0ec2463cc32a84be488ae6a8210",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_editing_effects.json",
+      "original_start_sha256": "98840777b8f9ec20873c1f87aa95d3595362f6b1a1c8df9122254595e1993da3",
+      "current_primary_sha256": "98840777b8f9ec20873c1f87aa95d3595362f6b1a1c8df9122254595e1993da3",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_everyday_scene.json",
+      "original_start_sha256": "15694554a1fcecce1a1aa7d1e03f36dc21ff52f2a428d842d53342bb72b1a890",
+      "current_primary_sha256": "15694554a1fcecce1a1aa7d1e03f36dc21ff52f2a428d842d53342bb72b1a890",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_historical_womenswear.json",
+      "original_start_sha256": "963de6bbe33af36e3af9b78b5d492fd8c732778cdf5a1d2d835435e16987be1b",
+      "current_primary_sha256": "963de6bbe33af36e3af9b78b5d492fd8c732778cdf5a1d2d835435e16987be1b",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_intellectual_activity.json",
+      "original_start_sha256": "2043743a8bff80799c2858fe35218cb728a29abc2286fe4d113c339b2fde4da6",
+      "current_primary_sha256": "2043743a8bff80799c2858fe35218cb728a29abc2286fe4d113c339b2fde4da6",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_model_editorial.json",
+      "original_start_sha256": "e68bd757b0213c4049b19d781a87d00dd5969a148383e0bc175e9f7c103cfe1f",
+      "current_primary_sha256": "e68bd757b0213c4049b19d781a87d00dd5969a148383e0bc175e9f7c103cfe1f",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_motion_graphics.json",
+      "original_start_sha256": "067be0181f27773ffe6daa52e305f6bfa23a9c1e363d501e3317b04ab7a219ff",
+      "current_primary_sha256": "067be0181f27773ffe6daa52e305f6bfa23a9c1e363d501e3317b04ab7a219ff",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_neutral_expression.json",
+      "original_start_sha256": "acc21f38c62187861f109bd647a0787aaad347f8efeb14d2492d5627bbbe3f8a",
+      "current_primary_sha256": "acc21f38c62187861f109bd647a0787aaad347f8efeb14d2492d5627bbbe3f8a",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_opening_era.json",
+      "original_start_sha256": "179778f6835cf995ed206435e58f415e6f13ca6471c63c9e10a660d83df06881",
+      "current_primary_sha256": "179778f6835cf995ed206435e58f415e6f13ca6471c63c9e10a660d83df06881",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_palace_fortification.json",
+      "original_start_sha256": "73b31f77aabc17b4ce21f774a541a1ef119b8faa1dacd5658a6014e395a372f7",
+      "current_primary_sha256": "73b31f77aabc17b4ce21f774a541a1ef119b8faa1dacd5658a6014e395a372f7",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_photo_era.json",
+      "original_start_sha256": "252bfeae2cb2b3600a890120bd31e4297110be0b09221529231fe8d35f23f38c",
+      "current_primary_sha256": "252bfeae2cb2b3600a890120bd31e4297110be0b09221529231fe8d35f23f38c",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_photorealism_elements.json",
+      "original_start_sha256": "baa8c742cb4f5f41bf9b3da058314b5ef5ed8b8aa5d67200f1f9253c3940d48c",
+      "current_primary_sha256": "baa8c742cb4f5f41bf9b3da058314b5ef5ed8b8aa5d67200f1f9253c3940d48c",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_portrait_composition.json",
+      "original_start_sha256": "2845bf517ac4f4b6c9249089ae2c8cb45cb4afa33630ddf0c067617174018331",
+      "current_primary_sha256": "2845bf517ac4f4b6c9249089ae2c8cb45cb4afa33630ddf0c067617174018331",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_portrait_fashion_exposure.json",
+      "original_start_sha256": "013e2e7cdffcb1320951f92bfb52aecaf96022403da0e3b04663e6a7b9831a75",
+      "current_primary_sha256": "013e2e7cdffcb1320951f92bfb52aecaf96022403da0e3b04663e6a7b9831a75",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_pose_vocabulary.json",
+      "original_start_sha256": "6c73a4d38d6c95682d5c375429cc3ae015a9546ac2b0d605ca3b2c2a119ea9fc",
+      "current_primary_sha256": "6c73a4d38d6c95682d5c375429cc3ae015a9546ac2b0d605ca3b2c2a119ea9fc",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_poverty.json",
+      "original_start_sha256": "e2e9a415a340bd4959a19aee55a8d66496a2d8258e190e3f5a114e34e3bbbb30",
+      "current_primary_sha256": "e2e9a415a340bd4959a19aee55a8d66496a2d8258e190e3f5a114e34e3bbbb30",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_reactorprompt.json",
+      "original_start_sha256": "fa15219dc9818eec8e110d7681d7cddafb12293965dfe5dff89823db388f4950",
+      "current_primary_sha256": "fa15219dc9818eec8e110d7681d7cddafb12293965dfe5dff89823db388f4950",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_realistic_background.json",
+      "original_start_sha256": "d014e3b3b692cb312e978ba79c50b1258a257715fcb5ed115f20389d90689520",
+      "current_primary_sha256": "d014e3b3b692cb312e978ba79c50b1258a257715fcb5ed115f20389d90689520",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_religion_iconography.json",
+      "original_start_sha256": "cc14b99bf932d3f5c15154d31f493f04e793097c6548f16a3ba83bbd1ee34062",
+      "current_primary_sha256": "cc14b99bf932d3f5c15154d31f493f04e793097c6548f16a3ba83bbd1ee34062",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_seduction_expression.json",
+      "original_start_sha256": "5d40210a683c914bc9f6b189c5d2c76ccdfeed2eca139f516b887c45a46811ec",
+      "current_primary_sha256": "5d40210a683c914bc9f6b189c5d2c76ccdfeed2eca139f516b887c45a46811ec",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_slang_visual.json",
+      "original_start_sha256": "31b366a9361bae12549dd2537dab4e0296327e5a7f7bbd09604fd1d9f175f136",
+      "current_primary_sha256": "31b366a9361bae12549dd2537dab4e0296327e5a7f7bbd09604fd1d9f175f136",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_swimwear.json",
+      "original_start_sha256": "1cf52d74256a02cc42365c2557760736c3a1f6967758eb183ddf93eae1422276",
+      "current_primary_sha256": "1cf52d74256a02cc42365c2557760736c3a1f6967758eb183ddf93eae1422276",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_tactile_reality.json",
+      "original_start_sha256": "ada26e7ca50a68d3daac1d6fa7a3377cb8b772dd24fa86d0768ff99fe063cb3c",
+      "current_primary_sha256": "ada26e7ca50a68d3daac1d6fa7a3377cb8b772dd24fa86d0768ff99fe063cb3c",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_traditional_clothing_detail.json",
+      "original_start_sha256": "4cc0e73b70da5aa9012d7476f8a838b5cfa33de34cf92471250c00661028a2ae",
+      "current_primary_sha256": "4cc0e73b70da5aa9012d7476f8a838b5cfa33de34cf92471250c00661028a2ae",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_worldbuilding_extension.json",
+      "original_start_sha256": "7ec61a01a5262cbd7dd59f68f43b89471e91272d1b23666343f0578f531cb619",
+      "current_primary_sha256": "7ec61a01a5262cbd7dd59f68f43b89471e91272d1b23666343f0578f531cb619",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_y2k_extension.json",
+      "original_start_sha256": "f807360e372a81d95705269eec7786a246c7f1c0ab6d5b540fd5a5ad45ba2a16",
+      "current_primary_sha256": "f807360e372a81d95705269eec7786a246c7f1c0ab6d5b540fd5a5ad45ba2a16",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/run_ledger.schema.json",
+      "original_start_sha256": "13dafb03975191f9ce26f3b4dbca741537eb6e1b50897af9e197fe21d199e9fd",
+      "current_primary_sha256": "13dafb03975191f9ce26f3b4dbca741537eb6e1b50897af9e197fe21d199e9fd",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py",
+      "original_start_sha256": "093102f5f305f5348cf68f51b7974bab705c5895a74d2430b5ab5a06da6684a2",
+      "current_primary_sha256": "1c133fbb64fda1252fe07fc526fa6513848025d91785a956c10ad6c94228ab67",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/audit_image_render_request.py",
+      "original_start_sha256": "268a83751e5711af3db1c857b368df5e1985236f0a9c662caa7369e6ed5f42e2",
+      "current_primary_sha256": "268a83751e5711af3db1c857b368df5e1985236f0a9c662caa7369e6ed5f42e2",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/audit_image_render_review.py",
+      "original_start_sha256": "7bca0b39904b2662ce5c32512ce7d586a974409af8158c29191768a04bed5c65",
+      "current_primary_sha256": "7bca0b39904b2662ce5c32512ce7d586a974409af8158c29191768a04bed5c65",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/audit_moe_render_review.py",
+      "original_start_sha256": "9250806f376b4f6b9ba68dc9f5a5558a9bb32b2f3e7c1fe2e3dd98faa5cdbc18",
+      "current_primary_sha256": "9250806f376b4f6b9ba68dc9f5a5558a9bb32b2f3e7c1fe2e3dd98faa5cdbc18",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/bm25f_retrieval.py",
+      "original_start_sha256": "15568f2ea6a2e0d84e53165ff558f0e5521c604af5583af76fa8496c5e85f124",
+      "current_primary_sha256": "15568f2ea6a2e0d84e53165ff558f0e5521c604af5583af76fa8496c5e85f124",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/build_semantic_index.py",
+      "original_start_sha256": "c7d60b6771c0c947377a46640c8b975c20f2e4d5f13290253fd8eec4d0c14859",
+      "current_primary_sha256": "c7d60b6771c0c947377a46640c8b975c20f2e4d5f13290253fd8eec4d0c14859",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py",
+      "original_start_sha256": "185ac7391e8a97b719ea67eb25d77de9261802628a4dad83584c26270b468ac1",
+      "current_primary_sha256": "185ac7391e8a97b719ea67eb25d77de9261802628a4dad83584c26270b468ac1",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/compose_pack_view.py",
+      "original_start_sha256": "ec0a862c8759d6e88eb77109d0ce4ce5e264fee5f45994bc37f234dde7728a38",
+      "current_primary_sha256": "ec0a862c8759d6e88eb77109d0ce4ce5e264fee5f45994bc37f234dde7728a38",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/generate_images_via_api.py",
+      "original_start_sha256": "7c1e48d4d226fa845e36574760cf04af8f30bab9746dd69badcefd4fecdd6bd6",
+      "current_primary_sha256": "7c1e48d4d226fa845e36574760cf04af8f30bab9746dd69badcefd4fecdd6bd6",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py",
+      "original_start_sha256": "41271430b4c73e3a591393c34decf42faee01b6cc76f2bf18bdbaa49869faaca",
+      "current_primary_sha256": "41271430b4c73e3a591393c34decf42faee01b6cc76f2bf18bdbaa49869faaca",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/image_attempt_evidence.py",
+      "original_start_sha256": "44522e4bef979867840366c560c37960b856be1673f4126708152d706a681b87",
+      "current_primary_sha256": "44522e4bef979867840366c560c37960b856be1673f4126708152d706a681b87",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_camera_clauses.py",
+      "original_start_sha256": "d706c94cf7317981addc6d7e45fb6d3e3fdbe42cd1b9aab40030c85952c8b056",
+      "current_primary_sha256": "d706c94cf7317981addc6d7e45fb6d3e3fdbe42cd1b9aab40030c85952c8b056",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_camera_evidence.py",
+      "original_start_sha256": "1ed1499de6a8de269343d7cf48580a19a92a69325a2e55aa08157369da5a0340",
+      "current_primary_sha256": "1ed1499de6a8de269343d7cf48580a19a92a69325a2e55aa08157369da5a0340",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_candidate_context.py",
+      "original_start_sha256": "154913e1f901c66602ce69f25bcd7eb2fb63947536b2ebfd041bfd8500bc432c",
+      "current_primary_sha256": "154913e1f901c66602ce69f25bcd7eb2fb63947536b2ebfd041bfd8500bc432c",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_candidate_semantics.py",
+      "original_start_sha256": "b890f6531b3b136fc86252fca3749420612f6f9bb67ec22444674cbdd79c8a50",
+      "current_primary_sha256": "b890f6531b3b136fc86252fca3749420612f6f9bb67ec22444674cbdd79c8a50",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_contextual_appeal.py",
+      "original_start_sha256": "4efd3bd7884b6afddd3068a8e90a7cf3ec35c8f441dd905a73a17ebb8ad865cf",
+      "current_primary_sha256": "4efd3bd7884b6afddd3068a8e90a7cf3ec35c8f441dd905a73a17ebb8ad865cf",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_contracts.py",
+      "original_start_sha256": "c8135190c0b7d527b2b6e21be946ddab392ff43e7e6a9660b403ecc97dcee68d",
+      "current_primary_sha256": "61f51dd33f3ac98aa6a5ef5cbeaa6ba7a9281380c26cc0829e47aadb7b586e74",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_creative_controls.py",
+      "original_start_sha256": "d69d8a6c90de1d983749373f5e92afcb7e5854ce2d2a28009c94c1be533c2092",
+      "current_primary_sha256": "d69d8a6c90de1d983749373f5e92afcb7e5854ce2d2a28009c94c1be533c2092",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_embodiment.py",
+      "original_start_sha256": "e6a4c6f1480d35a0ebb3d5f0b612950f0a516342aa8a4521e30fb3af750f7373",
+      "current_primary_sha256": "e6a4c6f1480d35a0ebb3d5f0b612950f0a516342aa8a4521e30fb3af750f7373",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_source_manifest.py",
+      "original_start_sha256": "a0d69bcaaa70cc3aa0685711d0d1eee18aeb571ddeba6da5d7734b8e40b94f59",
+      "current_primary_sha256": "a0d69bcaaa70cc3aa0685711d0d1eee18aeb571ddeba6da5d7734b8e40b94f59",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_visual_retrieval.py",
+      "original_start_sha256": "2f6e36330eeb988e3b69742f9feb716c7395e46b45b93121a066c56194a61257",
+      "current_primary_sha256": "2f6e36330eeb988e3b69742f9feb716c7395e46b45b93121a066c56194a61257",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "original_start_sha256": "ebfa84acd978b2b19ced9bb0d5652de2ca20ed58267cb9df830a27f765e6e7d8",
+      "current_primary_sha256": "5c367801a3ad7b3cc9d609b4b55cd19a75378daa986f433facaec3457c28f09e",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/record_image_run.py",
+      "original_start_sha256": "105e0c84413cacc8e079141b8be0873ecf814d9a0956f0a0febe7f6aa21efe73",
+      "current_primary_sha256": "105e0c84413cacc8e079141b8be0873ecf814d9a0956f0a0febe7f6aa21efe73",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py",
+      "original_start_sha256": "f933e5cf7adf5397e805e6d4d1670c3da8adcadfeb28e8fbf23fb7f6f31b362a",
+      "current_primary_sha256": "f933e5cf7adf5397e805e6d4d1670c3da8adcadfeb28e8fbf23fb7f6f31b362a",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/validate_precore_feature_selection.py",
+      "original_start_sha256": "7879779a95fb6aae773d7c439e15b7d7d66513fdf8065d32d22b3e46ddc4ac13",
+      "current_primary_sha256": "7879779a95fb6aae773d7c439e15b7d7d66513fdf8065d32d22b3e46ddc4ac13",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/visual_profile_contracts.py",
+      "original_start_sha256": "48cf1b394b7dda1d97769d15c7d4ac1c5bcd80a6ac471f3f3863a6703b348d09",
+      "current_primary_sha256": "48cf1b394b7dda1d97769d15c7d4ac1c5bcd80a6ac471f3f3863a6703b348d09",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/visual_profile_index_storage.py",
+      "original_start_sha256": "0b3b833a289ce80cccfc0c07ffbf91c65487fb12e5ec317029dbe5a65ef8941d",
+      "current_primary_sha256": "0b3b833a289ce80cccfc0c07ffbf91c65487fb12e5ec317029dbe5a65ef8941d",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/references/maintenance.md",
+      "original_start_sha256": "e74b4d379574abfc713aef0f9c1ce07f636c4b53187389e07c3000b555e25c58",
+      "current_primary_sha256": "e74b4d379574abfc713aef0f9c1ce07f636c4b53187389e07c3000b555e25c58",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/SKILL.md",
+      "original_start_sha256": "c89845d64fd9deab856844287914b74f0e103eddca0d0882c5ff671a1e8549a7",
+      "current_primary_sha256": "7be5994fbd8e8f55c427da5de70547d96e19afc6ea7565efdb4495a90be435eb",
+      "never_replaced_by_this_task": true
+    }
+  ],
+  "concurrent_other_task_changes_preserved": [
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py",
+      "original_start_sha256": "093102f5f305f5348cf68f51b7974bab705c5895a74d2430b5ab5a06da6684a2",
+      "current_primary_sha256": "1c133fbb64fda1252fe07fc526fa6513848025d91785a956c10ad6c94228ab67",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_contracts.py",
+      "original_start_sha256": "c8135190c0b7d527b2b6e21be946ddab392ff43e7e6a9660b403ecc97dcee68d",
+      "current_primary_sha256": "61f51dd33f3ac98aa6a5ef5cbeaa6ba7a9281380c26cc0829e47aadb7b586e74",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "original_start_sha256": "ebfa84acd978b2b19ced9bb0d5652de2ca20ed58267cb9df830a27f765e6e7d8",
+      "current_primary_sha256": "5c367801a3ad7b3cc9d609b4b55cd19a75378daa986f433facaec3457c28f09e",
+      "never_replaced_by_this_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/SKILL.md",
+      "original_start_sha256": "c89845d64fd9deab856844287914b74f0e103eddca0d0882c5ff671a1e8549a7",
+      "current_primary_sha256": "7be5994fbd8e8f55c427da5de70547d96e19afc6ea7565efdb4495a90be435eb",
+      "never_replaced_by_this_task": true
+    }
+  ],
+  "runtime_code_changed_by_this_task": false,
+  "existing_compatibility_tests_updated": 3,
+  "frozen_oracle_and_acceptance_fixtures_modified": false,
+  "historical_index_shards_deleted": false,
+  "commit_push_pr_deploy_performed": false,
+  "isolated_worktree_retained_for_replay": "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt"
+}

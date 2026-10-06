@@ -1,0 +1,64 @@
+...................................................................................E.................................................................................................FFF.................................................................F.....................................................................................................................................
+======================================================================
+ERROR: test_complete_merged_state_and_twenty_one_keeps_remain_exact (test_photo_liminal_active_use_korean_data_cleanup.LiminalActiveUseKoreanDataCleanupTests.test_complete_merged_state_and_twenty_one_keeps_remain_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/tests/test_photo_liminal_active_use_korean_data_cleanup.py", line 97, in test_complete_merged_state_and_twenty_one_keeps_remain_exact
+    historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 1254, in load_json
+    data = merge_research_extension(data, extension)
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 710, in merge_research_extension
+    photo_candidate_semantics.extend_slot_contexts(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        slots, extension.get("existing_slot_context_extensions"))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_semantics.py", line 88, in extend_slot_contexts
+    raise ValueError(f"context extension references unknown entry {slot}.{entry_id}")
+ValueError: context extension references unknown entry hand_pose.pv_steepled_fingers
+
+======================================================================
+FAIL: test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed) (arm_id='arm-a-energy')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/tests/test_photo_poverty_visual_semantics.py", line 385, in test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed
+    self.assertTrue(result_path.is_file())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed) (arm_id='arm-b-working-income')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/tests/test_photo_poverty_visual_semantics.py", line 385, in test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed
+    self.assertTrue(result_path.is_file())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed) (arm_id='arm-c-transport')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/tests/test_photo_poverty_visual_semantics.py", line 385, in test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed
+    self.assertTrue(result_path.is_file())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_registration_preserves_both_load_orders_and_required_policy (test_photo_structure_maintenance.PhotoSourceManifestTests.test_registration_preserves_both_load_orders_and_required_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/tests/test_photo_structure_maintenance.py", line 109, in test_registration_preserves_both_load_orders_and_required_policy
+    self.assertEqual(list(sources.extension_files("candidate")), original["candidate"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['pho[2481 chars]sion.json', 'photo_prompt_character_appearance_extension.json'] != ['pho[2481 chars]sion.json']
+
+First list contains 1 additional elements.
+First extra element 53:
+'photo_prompt_character_appearance_extension.json'
+
+Diff is 2872 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 381 tests in 1696.601s
+
+FAILED (failures=4, errors=1)
