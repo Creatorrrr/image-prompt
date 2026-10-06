@@ -73,11 +73,18 @@ for name in overlap - derived:
 
 owned_local = set(git("diff", "--name-only", "-z", BASE, LOCAL, cwd=W).decode().split("\0")) - {""}
 collisions = sorted(untracked & incoming)
+local_notes = {}
 for name in collisions:
     path = P / name
     assert not path.is_symlink() and path.is_file(), ("Collision is not a regular file", name)
     raw = path.read_bytes()
     if raw != git("show", target + ":" + name):
+        if name == 'docs/research-evidence/photo-prompt/data-quality-links-20261007/history/README.md':
+            assert sha(path) == before['files'][name]['sha256'], 'Local qualification note changed since preflight'
+            prefix, remainder = raw.split(b'\n\n', 1)
+            assert remainder == git('show', target + ':' + name), 'Difference exceeds the existing local qualification note'
+            local_notes[name] = raw
+            continue
         assert name in owned_local and raw == git("show", LOCAL + ":" + name), ("Untracked file changed outside the reviewed task", name)
         adoptions.append(name)
 
@@ -131,6 +138,11 @@ with source_update(P / S, STORE):
             (P / name).unlink()
         git("merge", "--ff-only", "origin/main")
         merged = True
+        for name, raw in local_notes.items():
+            (P / name).write_bytes(raw)
+        for name, row in presync.items():
+            if name not in derived and sha(P / name) == row['sha256']:
+                (P / name).chmod(row['mode'])
     finally:
         if not merged:
             for name, row in backups.items():
@@ -187,6 +199,7 @@ assert not git("diff", "--cached", "--name-only").strip()
 report = {"schema": "photo-data-links-primary-sync/v1", "before_head": before["head"], "after_head": target,
     "presync_files": len(presync), "unrelated_files_preserved": len(set(presync) - incoming - derived),
     "unexpected_drift": unexpected, "owned_canonical_adoptions": adoptions,
+    "owned_local_qualification_notes_preserved": sorted(local_notes),
     "concurrent_unrelated_updates_during_sync": concurrent_during_sync,
     "working_semantic_entries": semantic_count, "working_visual_profiles": visual_count,
     "runtime_generation": pointer["generation_id"], "embedding_calls": 0, "old_shards_removed": 0,
