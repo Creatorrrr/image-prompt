@@ -393,7 +393,8 @@ skill, expected = pathlib.Path(sys.argv[1]), sys.argv[2]
 spec = importlib.util.spec_from_file_location("installed_generator", skill / "scripts" / "prompt_generator.py")
 generator = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(generator)
-registry = generator.load_visual_obligation_registry(skill / "assets" / "registry.json")
+inventory = generator.photo_source_manifest.SourceInventory.for_test(skill / "assets")
+registry = generator.load_visual_obligation_registry(skill / "assets" / "registry.json", inventory=inventory)
 payload = generator.load_visual_profile_index(skill / "assets" / "visual_index.json", registry, dimensions=2)
 raw = (json.dumps(payload, ensure_ascii=False, separators=(",", ":"), allow_nan=False) + "\n").encode()
 assert hashlib.sha256(raw).hexdigest() == expected
@@ -405,7 +406,7 @@ print("copied skill loaded and validated")
         result = subprocess.run([sys.executable, "-I", "-c", code, str(installed), expected], cwd=self.root, env={"PATH": os.environ.get("PATH", "")}, capture_output=True, text=True, check=False, timeout=30)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn("copied skill loaded and validated", result.stdout)
-        checked = subprocess.run([sys.executable, str(scripts / "build_visual_profile_index.py"), "--check", "--registry", str(registry_path), "--output", str(index_path), "--dimensions", "2"], cwd=self.root, env={"PATH": os.environ.get("PATH", "")}, capture_output=True, text=True, check=False, timeout=30)
+        checked = subprocess.run([sys.executable, str(scripts / "build_visual_profile_index.py"), "--check", "--synthetic-sources", "--registry", str(registry_path), "--output", str(index_path), "--dimensions", "2"], cwd=self.root, env={"PATH": os.environ.get("PATH", "")}, capture_output=True, text=True, check=False, timeout=30)
         self.assertEqual(checked.returncode, 0, checked.stdout + checked.stderr)
         self.assertIn("3 profiles", checked.stdout)
 

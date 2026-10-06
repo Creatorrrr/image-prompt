@@ -106,7 +106,7 @@ class PhotoSourceManifestTests(unittest.TestCase):
 
     def test_registration_preserves_both_load_orders_and_required_policy(self):
         # Preserve the sealed baseline and the appearance registrations.
-        # Water adds exactly one trailing source to each existing kind.
+        # Water and horror each add one trailing source to each existing kind.
         original = copy.deepcopy(BASELINE["extension_order"])
         original["candidate"].append("photo_prompt_character_appearance_extension.json")
         original["visual_profile"].append("photo_prompt_visual_obligations_appearance_relations.json")
@@ -114,6 +114,9 @@ class PhotoSourceManifestTests(unittest.TestCase):
         original["candidate"].append("photo_prompt_water_relations_extension.json")
         original["visual_profile"].append("photo_prompt_visual_obligations_water_relations.json")
         original["required_candidates"].append("photo_prompt_water_relations_extension.json")
+        original["candidate"].append("photo_prompt_horror_extension.json")
+        original["visual_profile"].append("photo_prompt_visual_obligations_horror.json")
+        original["required_candidates"].append("photo_prompt_horror_extension.json")
         self.assertEqual(list(sources.extension_files("candidate")), original["candidate"])
         self.assertEqual(list(sources.extension_files("visual_profile")), original["visual_profile"])
         self.assertEqual(sources.required_files("candidate"), original["required_candidates"])

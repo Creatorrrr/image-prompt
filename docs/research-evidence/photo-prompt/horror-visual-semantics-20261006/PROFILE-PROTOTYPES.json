@@ -1,0 +1,397 @@
+{
+  "schema_version": "horror-research-profile-prototypes/v1",
+  "prototypes": [
+    {
+      "semantic_id": "hvr_reflection_pose_disagreement",
+      "profile": {
+        "id": "hvr_profile_reflection_pose_disagreement",
+        "category": "relational_horror_proposal",
+        "activation": {
+          "exact_terms": [
+            "an adult and mirror share matching location and wardrobe; the actual mouth is neutral; only the reflected mouth smiles"
+          ],
+          "requires_adult_character": true,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "semantics": {
+          "definition": "실제 인물과 물리적으로 맞는 반사의 특정 자세가 어긋난다.",
+          "paraphrase_examples": [
+            "an adult and mirror share matching location and wardrobe; the actual mouth is neutral; only the reflected mouth smiles"
+          ],
+          "contrast_examples": [
+            "two different people",
+            "skewed mirror angle",
+            "whole-image corruption"
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "an adult and mirror share matching location and wardrobe",
+            "the actual mouth is neutral",
+            "only the reflected mouth smiles"
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_only",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "reject_substitutes": [
+          "two different people",
+          "skewed mirror angle",
+          "whole-image corruption"
+        ],
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v2",
+          "components": [
+            {
+              "id": "component_01",
+              "match_terms": [
+                "an adult and mirror share matching location and wardrobe"
+              ]
+            },
+            {
+              "id": "component_02",
+              "match_terms": [
+                "the actual mouth is neutral"
+              ]
+            },
+            {
+              "id": "component_03",
+              "match_terms": [
+                "only the reflected mouth smiles"
+              ]
+            }
+          ],
+          "discovery": {
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "component_01",
+              "component_02",
+              "component_03"
+            ]
+          },
+          "obligations": [
+            {
+              "component_ids": [
+                "component_01",
+                "component_02",
+                "component_03"
+              ],
+              "evidence": [
+                {
+                  "field": "component_01_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "an adult and mirror share matching location and wardrobe"
+                    ]
+                  }
+                },
+                {
+                  "field": "component_02_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "the actual mouth is neutral"
+                    ]
+                  }
+                },
+                {
+                  "field": "component_03_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "only the reflected mouth smiles"
+                    ]
+                  }
+                }
+              ],
+              "instruction": "Keep all compared owners jointly visible within the same coherent scene. an adult and mirror share matching location and wardrobe; the actual mouth is neutral; only the reflected mouth smiles.",
+              "render_gates": [
+                {
+                  "id": "vo_hvr_reflection_pose_disagreement_01",
+                  "review_scale": "native",
+                  "description": "The original saved image must visibly show an adult and mirror share matching location and wardrobe. A hidden owner or partial comparison fails."
+                },
+                {
+                  "id": "vo_hvr_reflection_pose_disagreement_02",
+                  "review_scale": "native",
+                  "description": "The original saved image must visibly show the actual mouth is neutral. A hidden owner or partial comparison fails."
+                },
+                {
+                  "id": "vo_hvr_reflection_pose_disagreement_03",
+                  "review_scale": "native",
+                  "description": "The original saved image must visibly show only the reflected mouth smiles. A hidden owner or partial comparison fails."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "status": "COMPILER_PROTOTYPE_NOT_REGISTRY_QUALIFIED",
+      "adoption_ready": false
+    },
+    {
+      "semantic_id": "hvr_shadow_independent_pose",
+      "profile": {
+        "id": "hvr_profile_shadow_independent_pose",
+        "category": "relational_horror_proposal",
+        "activation": {
+          "exact_terms": [
+            "one visible adult holds both hands down; the connected cast shadow raises one hand; one readable light source anchors the shadow direction"
+          ],
+          "requires_adult_character": true,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "semantics": {
+          "definition": "같은 몸과 연결된 그림자의 자세를 비교하되 광원 자체는 일관되게 둔다.",
+          "paraphrase_examples": [
+            "one visible adult holds both hands down; the connected cast shadow raises one hand; one readable light source anchors the shadow direction"
+          ],
+          "contrast_examples": [
+            "shadow from a second unseen person",
+            "multiple-light explanation"
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "one visible adult holds both hands down",
+            "the connected cast shadow raises one hand",
+            "one readable light source anchors the shadow direction"
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_only",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "reject_substitutes": [
+          "shadow from a second unseen person",
+          "multiple-light explanation"
+        ],
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v2",
+          "components": [
+            {
+              "id": "component_01",
+              "match_terms": [
+                "one visible adult holds both hands down"
+              ]
+            },
+            {
+              "id": "component_02",
+              "match_terms": [
+                "the connected cast shadow raises one hand"
+              ]
+            },
+            {
+              "id": "component_03",
+              "match_terms": [
+                "one readable light source anchors the shadow direction"
+              ]
+            }
+          ],
+          "discovery": {
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "component_01",
+              "component_02",
+              "component_03"
+            ]
+          },
+          "obligations": [
+            {
+              "component_ids": [
+                "component_01",
+                "component_02",
+                "component_03"
+              ],
+              "evidence": [
+                {
+                  "field": "component_01_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "one visible adult holds both hands down"
+                    ]
+                  }
+                },
+                {
+                  "field": "component_02_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "the connected cast shadow raises one hand"
+                    ]
+                  }
+                },
+                {
+                  "field": "component_03_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "one readable light source anchors the shadow direction"
+                    ]
+                  }
+                }
+              ],
+              "instruction": "Keep all compared owners jointly visible within the same coherent scene. one visible adult holds both hands down; the connected cast shadow raises one hand; one readable light source anchors the shadow direction.",
+              "render_gates": [
+                {
+                  "id": "vo_hvr_shadow_independent_pose_01",
+                  "review_scale": "native",
+                  "description": "The original saved image must visibly show one visible adult holds both hands down. A hidden owner or partial comparison fails."
+                },
+                {
+                  "id": "vo_hvr_shadow_independent_pose_02",
+                  "review_scale": "native",
+                  "description": "The original saved image must visibly show the connected cast shadow raises one hand. A hidden owner or partial comparison fails."
+                },
+                {
+                  "id": "vo_hvr_shadow_independent_pose_03",
+                  "review_scale": "native",
+                  "description": "The original saved image must visibly show one readable light source anchors the shadow direction. A hidden owner or partial comparison fails."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "status": "COMPILER_PROTOTYPE_NOT_REGISTRY_QUALIFIED",
+      "adoption_ready": false
+    },
+    {
+      "semantic_id": "hvr_folk_horror_collective_boundary",
+      "profile": {
+        "id": "hvr_profile_folk_horror_collective_boundary",
+        "category": "relational_horror_proposal",
+        "activation": {
+          "exact_terms": [
+            "adult residents form an inward-facing boundary; one adult visitor stands outside their shared arrangement; the landscape limits alternative routes"
+          ],
+          "requires_adult_character": true,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "semantics": {
+          "definition": "풍경의 고립과 공동체 질서가 방문자의 이동을 제한하는 구성이다.",
+          "paraphrase_examples": [
+            "adult residents form an inward-facing boundary; one adult visitor stands outside their shared arrangement; the landscape limits alternative routes"
+          ],
+          "contrast_examples": [
+            "countryside alone",
+            "all folk ritual is evil"
+          ]
+        },
+        "concept_candidate": {
+          "concept_terms": [
+            "adult residents form an inward-facing boundary",
+            "one adult visitor stands outside their shared arrangement",
+            "the landscape limits alternative routes"
+          ]
+        },
+        "runtime_expression": {
+          "default_mode": "definition_only",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "reject_substitutes": [
+          "countryside alone",
+          "all folk ritual is evil"
+        ],
+        "authored_components": {
+          "contract_version": "photo-authored-visual-components/v2",
+          "components": [
+            {
+              "id": "component_01",
+              "match_terms": [
+                "adult residents form an inward-facing boundary"
+              ]
+            },
+            {
+              "id": "component_02",
+              "match_terms": [
+                "one adult visitor stands outside their shared arrangement"
+              ]
+            },
+            {
+              "id": "component_03",
+              "match_terms": [
+                "the landscape limits alternative routes"
+              ]
+            }
+          ],
+          "discovery": {
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "component_01",
+              "component_02",
+              "component_03"
+            ]
+          },
+          "obligations": [
+            {
+              "component_ids": [
+                "component_01",
+                "component_02",
+                "component_03"
+              ],
+              "evidence": [
+                {
+                  "field": "component_01_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "adult residents form an inward-facing boundary"
+                    ]
+                  }
+                },
+                {
+                  "field": "component_02_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "one adult visitor stands outside their shared arrangement"
+                    ]
+                  }
+                },
+                {
+                  "field": "component_03_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "the landscape limits alternative routes"
+                    ]
+                  }
+                }
+              ],
+              "instruction": "Keep all compared owners jointly visible within the same coherent scene. adult residents form an inward-facing boundary; one adult visitor stands outside their shared arrangement; the landscape limits alternative routes.",
+              "render_gates": [
+                {
+                  "id": "vo_hvr_folk_horror_collective_boundary_01",
+                  "review_scale": "native",
+                  "description": "The original saved image must visibly show adult residents form an inward-facing boundary. A hidden owner or partial comparison fails."
+                },
+                {
+                  "id": "vo_hvr_folk_horror_collective_boundary_02",
+                  "review_scale": "native",
+                  "description": "The original saved image must visibly show one adult visitor stands outside their shared arrangement. A hidden owner or partial comparison fails."
+                },
+                {
+                  "id": "vo_hvr_folk_horror_collective_boundary_03",
+                  "review_scale": "native",
+                  "description": "The original saved image must visibly show the landscape limits alternative routes. A hidden owner or partial comparison fails."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "status": "COMPILER_PROTOTYPE_NOT_REGISTRY_QUALIFIED",
+      "adoption_ready": false
+    }
+  ]
+}

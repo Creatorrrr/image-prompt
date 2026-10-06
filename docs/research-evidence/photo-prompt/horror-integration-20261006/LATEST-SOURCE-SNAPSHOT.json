@@ -1,0 +1,3610 @@
+{
+  "source": "/Users/chasoik/Projects/image-prompt",
+  "worktree": "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt",
+  "source_head": "199670d3d85c006d5d534e44394926404045942c",
+  "source_status": " M skills/photo-prompt-image-generator/SKILL.md\n M skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_tags.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_accessory_structure.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_acting_expression.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_body_morphology.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_character_appearance.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_clothing_structure.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_costume_cosplay.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_neutral_expression.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_ornament_structure.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_photo_era.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_pose_vocabulary.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_reactorprompt.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_religion_iconography.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_subculture_appearance.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_tactile_reality.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_textile_surface.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_y2k.json\n M skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json\n M skills/photo-prompt-image-generator/references/composition-contract.md\n M skills/photo-prompt-image-generator/references/maintenance.md\n M skills/photo-prompt-image-generator/references/photographic-methodology.md\n M skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py\n M skills/photo-prompt-image-generator/scripts/build_semantic_index.py\n M skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py\n M skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py\n M skills/photo-prompt-image-generator/scripts/photo_contracts.py\n M skills/photo-prompt-image-generator/scripts/prompt_generator.py\n M skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py\n M skills/photo-prompt-image-generator/scripts/visual_profile_contracts.py\n M tests/test_photo_authorial_core_v6.py\n M tests/test_photo_body_morphology_semantics.py\n M tests/test_photo_camera_evidence_structure.py\n M tests/test_photo_candidate_semantics.py\n M tests/test_photo_capture_owner_data_cleanup.py\n M tests/test_photo_cute_visual_forms.py\n M tests/test_photo_data_semantic_corrections.py\n M tests/test_photo_liminal_active_use_korean_data_cleanup.py\n M tests/test_photo_material_data_cleanup.py\n M tests/test_photo_motion_artifact_owner_data_cleanup.py\n M tests/test_photo_ornament_structure.py\n M tests/test_photo_pose_vocabulary_semantics.py\n M tests/test_photo_religion_iconography_alternatives.py\n M tests/test_photo_scene_data_cleanup.py\n M tests/test_photo_seduction_expression_integration.py\n M tests/test_photo_semantic_index.py\n M tests/test_photo_visual_obligations.py\n M tests/test_photo_visual_profile_shards.py\n",
+  "as_of": "2026-10-06 KST",
+  "files": [
+    {
+      "path": "skills/photo-prompt-image-generator/SKILL.md",
+      "sha256": "7dc4220b1dd784abe8ed7c93b84612d0472591c7753f0dcfda0c88da229ac857"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/references/retrieval-contract.md",
+      "sha256": "979da0642b03980f675961961e5b64f39b99b7a1ce46313809e508eaa826ec56"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/references/viewer-experience-contract.md",
+      "sha256": "6043f244cf9ea47d00a07469e1e61e3f7ed34e2421c224383bbd8fac0b540d44"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/references/photographic-methodology.md",
+      "sha256": "dd1238921e7915aab70705d9152a89be062f868351eac6892b7b8c13c050756e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/references/embodiment-preflight.md",
+      "sha256": "0b7920336e87063c1436e3335dde288bb844672d78f630d0769dea17543f3745"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/references/image-runtime.md",
+      "sha256": "173b63e12045629bd519b946128ed6d12bf9adc7f5826bc6f51511f5750f4c90"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/references/hybrid-augmentation-contract.md",
+      "sha256": "d657f6dcbc813d7ed9356f59c1ae8a1aaf84e774acfe684d44f0f4fb2fab71d9"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/references/concept-routing.md",
+      "sha256": "52fd8c9d0f03cdfcd3c3fcc447d2ca9c09c3d4b74fcb3aac0c41b5a5e9c198ac"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/references/contextual-appeal.md",
+      "sha256": "1d879dd092512148940eed264f8303eee343415ecd5e99a00debd8e3d89a6b40"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/references/creative-direction-contract.md",
+      "sha256": "ddd270fea315034a87fbf1b8cfdc8adf5dcc828fed3256335910e67a1836b16f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/references/moe-response-contract.md",
+      "sha256": "51d87e2fc8efd185716d1d6f9669268e0ec620734f0bd4972766bcad50fe889c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/references/maintenance.md",
+      "sha256": "0ea80f1bf5e03b8f9e9afe1d72ba71b5c5ad0c33bd44849d5832f9e486aa0e7d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/references/composition-contract.md",
+      "sha256": "bcf7aefe7f6f268422644d055020b5039d9b406334e33fa579572205f0d92416"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+      "sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/precore/creative_controls.json",
+      "sha256": "4179be110cafee46792fb8ee8934e84979e4e007ab9558e2d8b1092ec96de9f9"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/precore/creative_controls.py",
+      "sha256": "a2207e0925f9257153af6f07f41c0efd1e5208644f1044bc06c77c5850b7877c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/agents/openai.yaml",
+      "sha256": "7d4477da6c6ad9d73969bb9fb1b65b79a676203b92dc100e12a56737fbf991ed"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_contracts.py",
+      "sha256": "61f51dd33f3ac98aa6a5ef5cbeaa6ba7a9281380c26cc0829e47aadb7b586e74"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/publish_photo_runtime_snapshot.py",
+      "sha256": "16abaa378cff56321231b7eab4506e504daff1b6f5c5caabd24e324531b06453"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py",
+      "sha256": "313c4c334e81771f024a83178a9bf86892a7e208d8365d01a67341f084f7aaa9"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_contextual_appeal.py",
+      "sha256": "4efd3bd7884b6afddd3068a8e90a7cf3ec35c8f441dd905a73a17ebb8ad865cf"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py",
+      "sha256": "603b59161246645aff4d57eefd31e2af94a413796fe268f27e4f561aa423b782"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_source_manifest.py",
+      "sha256": "45181867ce8f0e8e5702ac7b6a8968437b4bcb81d00cd7461ebdcfbc8cd46f8c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_candidate_context.py",
+      "sha256": "013e06f9e0270de70408a220fe0c063a173dd01f0e2989070c71e090ba72a768"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "sha256": "f3edb1b63592148981f417b95201a8c856b74b686c43068251649644d1e57c7c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/visual_profile_contracts.py",
+      "sha256": "48cf1b394b7dda1d97769d15c7d4ac1c5bcd80a6ac471f3f3863a6703b348d09"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/build_core_slot_index.py",
+      "sha256": "66385c0e8f415d1cf2e45c3d120109988d1e603394a5914dd7efd351d505a5aa"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_visual_retrieval.py",
+      "sha256": "2f6e36330eeb988e3b69742f9feb716c7395e46b45b93121a066c56194a61257"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_candidate_semantics.py",
+      "sha256": "b890f6531b3b136fc86252fca3749420612f6f9bb67ec22444674cbdd79c8a50"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/audit_image_render_request.py",
+      "sha256": "268a83751e5711af3db1c857b368df5e1985236f0a9c662caa7369e6ed5f42e2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/image_attempt_evidence.py",
+      "sha256": "44522e4bef979867840366c560c37960b856be1673f4126708152d706a681b87"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/compose_pack_view.py",
+      "sha256": "ec0a862c8759d6e88eb77109d0ce4ce5e264fee5f45994bc37f234dde7728a38"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/build_semantic_index.py",
+      "sha256": "6885e1a1060dd99707144d2ab1597ca0431ff3117d13603992abf4d8c80e001b"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/sync_photo_runtime_source.py",
+      "sha256": "4d9cf1c4539677075d7e34ff41de281e72849aa294f72420d45144dd24e5d9a0"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_embodiment.py",
+      "sha256": "e6a4c6f1480d35a0ebb3d5f0b612950f0a516342aa8a4521e30fb3af750f7373"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/record_image_run.py",
+      "sha256": "105e0c84413cacc8e079141b8be0873ecf814d9a0956f0a0febe7f6aa21efe73"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py",
+      "sha256": "f6a63f43f3bd6c3abd05fee97bf00439cde34bf39e579c0fc213c99141a4f0b2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/audit_image_render_review.py",
+      "sha256": "7bca0b39904b2662ce5c32512ce7d586a974409af8158c29191768a04bed5c65"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/bm25f_retrieval.py",
+      "sha256": "15568f2ea6a2e0d84e53165ff558f0e5521c604af5583af76fa8496c5e85f124"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/core_slot_index_storage.py",
+      "sha256": "0d0187a6b5d8526b114997912605b6bcf43333c9b052a2601f9dde50fda013b8"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_creative_controls.py",
+      "sha256": "d69d8a6c90de1d983749373f5e92afcb7e5854ce2d2a28009c94c1be533c2092"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/audit_moe_render_review.py",
+      "sha256": "9250806f376b4f6b9ba68dc9f5a5558a9bb32b2f3e7c1fe2e3dd98faa5cdbc18"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/capture_image_tool_error.js",
+      "sha256": "164ad84b498a0055513503cf77d5edd32f3fed7bd2314e56545dc44fcc34b724"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/generate_images_via_api.py",
+      "sha256": "7c1e48d4d226fa845e36574760cf04af8f30bab9746dd69badcefd4fecdd6bd6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/visual_profile_index_storage.py",
+      "sha256": "0b3b833a289ce80cccfc0c07ffbf91c65487fb12e5ec317029dbe5a65ef8941d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py",
+      "sha256": "8e2406af30658f69b250ce5b0a5aa1b5a5d2fb0a15c24499bae3c7fb535eedb6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_camera_clauses.py",
+      "sha256": "d706c94cf7317981addc6d7e45fb6d3e3fdbe42cd1b9aab40030c85952c8b056"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_runtime_sources.py",
+      "sha256": "8de8c256287add83fa8a8fc120e0e9d9d5929e8943dac5f51d4b894aec9e1d35"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/validate_precore_feature_selection.py",
+      "sha256": "7879779a95fb6aae773d7c439e15b7d7d66513fdf8065d32d22b3e46ddc4ac13"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/scripts/photo_camera_evidence.py",
+      "sha256": "1ed1499de6a8de269343d7cf48580a19a92a69325a2e55aa08157369da5a0340"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_legend_extension.json",
+      "sha256": "6aba5bb7903500fdd9e3bd4e89e52cf597777ede736ec1d5ea9d87aca320e50f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_worldbuilding_extension.json",
+      "sha256": "7ec61a01a5262cbd7dd59f68f43b89471e91272d1b23666343f0578f531cb619"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_costume_cosplay_extension.json",
+      "sha256": "e0766d80ad8975f7b24e91856f0e0ef3e41c926726b8485c5b90c53202f1a932"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_swimwear_extension.json",
+      "sha256": "1f0a364851f0bc9d35f869a63eca80a7198c7e90f915c361cdc312e0abb85ce3"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_space_extension.json",
+      "sha256": "95c2b180ff99d377b82eaeb49655e001363157537852430f40d69365514f9e4a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_everyday_scene.json",
+      "sha256": "15694554a1fcecce1a1aa7d1e03f36dc21ff52f2a428d842d53342bb72b1a890"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_everyday_scene_extension.json",
+      "sha256": "dcf97a69c87af59e576bca07fa7b9fea9e9694c419bc3b6caf29711ed3c09fde"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_motion_graphics.json",
+      "sha256": "067be0181f27773ffe6daa52e305f6bfa23a9c1e363d501e3317b04ab7a219ff"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_accessory_structure.json",
+      "sha256": "8b59befe77bbb7afc6600d9b379be81b48e708b3f45ec8f8beb339d12f1a2bee"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_intellectual_activity_extension.json",
+      "sha256": "b4f83bade2e413b72433dbd370d0f0becf9b3b39299f0aae0883865dc8825c01"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_water_relations.json",
+      "sha256": "f60c34fc959c0df9f8be8f4ee5ea5dd2d0a6799fd63e24c78d4c23e6131e80c6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "sha256": "7a3c5615395d51e2cb6525940c128c66f8c8dd32a7e499dd9e7d75ff4300b9a4"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_subculture_appearance_extension.json",
+      "sha256": "17d67d2e38cb223a03c7576fa36517c0705637ba8e5c0a4607c7c501844f020d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_opening_era_extension.json",
+      "sha256": "1fe774064ca1deee2df63345b37ce8285c75b0af6b699e9251e2b51ea83c46d1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_portrait_composition_extension.json",
+      "sha256": "558bd6c28e2cc9de5bb8cf5f0ae83f6a3f81bc3a47fc08d1ebded0d3d87535cb"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/run_ledger.schema.json",
+      "sha256": "13dafb03975191f9ce26f3b4dbca741537eb6e1b50897af9e197fe21d199e9fd"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_lighting_extension.json",
+      "sha256": "3d8580614b456ee66e0ddd7a82c1e55fdc5876ccf3f511541736513f6f8e7448"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "sha256": "3b7ee97405149135ea52f4da0f367703144b8ae1e6c76fb3a0486e19664dd2b3"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_poverty_extension.json",
+      "sha256": "8dff5605ed7735554d7fb5a3058c7f007912d9bec0b2b4c4f2c3ec294bb8a968"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_historical_womenswear.json",
+      "sha256": "963de6bbe33af36e3af9b78b5d492fd8c732778cdf5a1d2d835435e16987be1b"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_cjk_worldbuilding_extension.json",
+      "sha256": "ed11f2bce9832ab4b3bfb1d4d61e51a240dcc9c8e065901fb34acf79f774a415"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_textile_surface_extension.json",
+      "sha256": "5ab096f23d510c7c72163fa3862473c7e890224de45397500658d6380a7b5b57"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_portrait_fashion_exposure.json",
+      "sha256": "013e2e7cdffcb1320951f92bfb52aecaf96022403da0e3b04663e6a7b9831a75"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_model_editorial_extension.json",
+      "sha256": "a63dc405e519d138810241ffbe438214f629caf0c651386d1a8edf96124fcae1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_violence_crime_extension.json",
+      "sha256": "b97f5bb44f20ba0e707f007003c4f51da1c960db263eff1dedf3221b0f60f68a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_opening_era.json",
+      "sha256": "179778f6835cf995ed206435e58f415e6f13ca6471c63c9e10a660d83df06881"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_costume_cosplay.json",
+      "sha256": "b7323bcad63db25df69689f712d2eaa847570e36e56684e0808c8a08ae81fb07"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_desire_extension.json",
+      "sha256": "b6e1a6adcc710f44c29cc6932abe42e09df1c4be4993be000186f8e99da2b91a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_subculture_appearance.json",
+      "sha256": "a69cff2c203c865e8c6974a47c98e12e98e865d7ccbd94b958fa5193521551aa"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_clothing_structure_extension.json",
+      "sha256": "7055f19fda53c93748c3085b61b344ca1918dcae6caf7afa99f073779b1ab367"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "sha256": "e5de9c15ea0c874616395a808ce90a252a6fee6177210828bfaa81db5e88a161"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_religion_iconography_extension.json",
+      "sha256": "022f5731a79919281c7a68fe428288280ae98f87db8b8c5f7e27aac63cd517fe"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_water_relations_extension.json",
+      "sha256": "c4879bcc899e04ea8d4bfcfda6a3de8b0540fa2c20dc494fcc822b47113ebfe5"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_seduction_expression_extension.json",
+      "sha256": "0d1ec05ddef50295c9f250974bc4944a0316e28fd46cf73e1b22f406d50c9d08"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+      "sha256": "2822a3677bb0225b7391029a2a96e17da9c6f66fa46ebf8c0fb21f335c22f214"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_intellectual_activity.json",
+      "sha256": "2043743a8bff80799c2858fe35218cb728a29abc2286fe4d113c339b2fde4da6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_seduction_expression.json",
+      "sha256": "5d40210a683c914bc9f6b189c5d2c76ccdfeed2eca139f516b887c45a46811ec"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_traditional_clothing_detail_extension.json",
+      "sha256": "8f1eca762e36e71db1751925b8d1b14d499fa20dddccfdfd6cad834af1be4350"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_traditional_clothing_detail.json",
+      "sha256": "4cc0e73b70da5aa9012d7476f8a838b5cfa33de34cf92471250c00661028a2ae"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_neutral_expression_extension.json",
+      "sha256": "2119a01a3386b43bf35a51aa922249b18f61d47d2bfddf0fc318adba182d1935"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_research_extension.json",
+      "sha256": "4f6cf6b1e77634d21c132596ffdae3ace2da421c03b0b5f8030e5f10be9aaed9"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_portrait_composition.json",
+      "sha256": "2845bf517ac4f4b6c9249089ae2c8cb45cb4afa33630ddf0c067617174018331"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_reactorprompt.json",
+      "sha256": "fa15219dc9818eec8e110d7681d7cddafb12293965dfe5dff89823db388f4950"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_photo_era_extension.json",
+      "sha256": "95cab642572ed6745dbb3da187af22d0b79b786786eb929200ff1c9f4f03c293"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_photorealism_elements_extension.json",
+      "sha256": "818cac4abebce43508c10090d67d816f20b1650875e91c5fd9752ab476b5a4f1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_cute_visual_forms_extension.json",
+      "sha256": "d73d51c65563d0e4b592ad6fd07ca28ffd086dc53ecd276d9c91e4309e60933d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_ornament_structure_extension.json",
+      "sha256": "e622e1f231a1fbef3ce00bae93011304e2bdceb7a8d6dd5799e879a182caa51a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_swimwear.json",
+      "sha256": "1cf52d74256a02cc42365c2557760736c3a1f6967758eb183ddf93eae1422276"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_ornament_structure.json",
+      "sha256": "32fb5378267e34d98e4c3a477c212534ca71d37d5db9e3637d38f9adebf0f78c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_neutral_expression.json",
+      "sha256": "acc21f38c62187861f109bd647a0787aaad347f8efeb14d2492d5627bbbe3f8a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_appearance_relations.json",
+      "sha256": "e3819d4291893478545072dfa183cec3255b7e869da153b41d1065a369ae9fc4"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json",
+      "sha256": "8c348126f41f71e6a284b755a329d82781c25493d6a3a862fb7e618bd678d23c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_mythology_extension.json",
+      "sha256": "1f7d36b0e75aaca14995b95832f7bd30dbc54b51c4b1b8b84a3fcd1249db4a0e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_subculture_extension.json",
+      "sha256": "42bfa92466a7367c9890e26b16456a34394c4ea743ba91d801ffac0bc1ec69bb"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "sha256": "4f74ac7455d2caa81b859858750cc920f3e6b6bfa8277f9186c0321862556725"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_character_appearance.json",
+      "sha256": "e0122232374f3e16ac8aefac4f623a36c0b1ee83d9f3f22e04c977921a0defe5"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_tactile_reality_extension.json",
+      "sha256": "ad2769b5dde6d10ced88d42279f26e47e53f34d282d9822f9817fe0fb85683da"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_palace_fortification_extension.json",
+      "sha256": "7943be6a95f97da27e39876720c558459ea841c40bd6b53919c9c461b64217f1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_editing_effects.json",
+      "sha256": "98840777b8f9ec20873c1f87aa95d3595362f6b1a1c8df9122254595e1993da3"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_imaginal_extension.json",
+      "sha256": "0c09f9fd3f97c7c4d46a09cb828fbef0d8cef9883d08f0e042fc5b0383195fb7"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_contextual_appeal_extension.json",
+      "sha256": "3073344cf0eadb2503c15d4210388d66c17f65bb5c6ac6332bf85843a869806c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_character_appearance_extension.json",
+      "sha256": "a58116ee49a0f1c573a50a9b223b6d0883e06e8ab05f43f7ff07e241feee5d99"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json",
+      "sha256": "e9583cde4ce74e46e6f28501c976f9fe8b1efd1691546416b751fe774c13bb42"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_tactile_reality.json",
+      "sha256": "ada26e7ca50a68d3daac1d6fa7a3377cb8b772dd24fa86d0768ff99fe063cb3c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_body_morphology.json",
+      "sha256": "0301baf56dff3849b6045b59d665ead7016fd9fffe23d5f5828fec840aaf0037"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_color_relations.json",
+      "sha256": "c10bde9ed3f335a802cb2b776a953ebd6a2bb721329219d5c56327fb78d57669"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_cute_visual_forms.json",
+      "sha256": "4530b796f480f49285381746400aa0f1b55ac0ec2463cc32a84be488ae6a8210"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_motion_graphics_extension.json",
+      "sha256": "689e1ec2a501255967d864c60b0da08b1b1edbcc78a796ade21a955e39b1253f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_color_relations_extension.json",
+      "sha256": "6717c6d39ed7c511bf1b39ce508e509ad9ab2378aecca2092b74e5bfd6333c48"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_poverty.json",
+      "sha256": "e2e9a415a340bd4959a19aee55a8d66496a2d8258e190e3f5a114e34e3bbbb30"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_palace_fortification.json",
+      "sha256": "73b31f77aabc17b4ce21f774a541a1ef119b8faa1dacd5658a6014e395a372f7"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_natural_environment_extension.json",
+      "sha256": "06d0afe55504bfa6710739ece83eba75fb3cc41c147bb70f8c4f60538f77ba09"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_punk_aesthetics_extension.json",
+      "sha256": "c50f1c7e1471b2315f3b2e23b40592b11e2e82739641698ba4f0962ba16bf15a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_clothing_structure.json",
+      "sha256": "019ccbd139781c3554f725af2de75b31395e576a60c2960ef28fa5db21d6b0d6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_y2k.json",
+      "sha256": "b420ce4f4052d35a8835437b6f3ea308399cb73af2f975bf1e681da58f90aff7"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_photo_era.json",
+      "sha256": "252bfeae2cb2b3600a890120bd31e4297110be0b09221529231fe8d35f23f38c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_portrait_fashion_exposure_extension.json",
+      "sha256": "076da7428d1137c112c78d73f593dd38dd82cb6c9661c34f8722ce43e4e95037"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_realistic_background.json",
+      "sha256": "d014e3b3b692cb312e978ba79c50b1258a257715fcb5ed115f20389d90689520"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_harem_extension.json",
+      "sha256": "2808f98c9e1fd438ee2058d9df8e5e40a47a564cfdbfdf22e7a6917591f9a527"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_textile_surface.json",
+      "sha256": "5ca5549bae8582b6a218edab9cddcaa937eb2c8cf2b7df17c1e980dabcc480da"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_religion_iconography.json",
+      "sha256": "cc14b99bf932d3f5c15154d31f493f04e793097c6548f16a3ba83bbd1ee34062"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_photorealism_elements.json",
+      "sha256": "baa8c742cb4f5f41bf9b3da058314b5ef5ed8b8aa5d67200f1f9253c3940d48c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_reactorprompt_visual_relations_extension.json",
+      "sha256": "412b6f97e46904258bf1744734274682f77cc0f963522af5ecbb6d71fa719d09"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_acting_expression.json",
+      "sha256": "617b2cb64b81f80aff8d64f710f6b53dabac4ed80fb9495f157f26ab5ef82d0a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_sensual_fetish_fashion_extension.json",
+      "sha256": "ba43beecd804ac6d07507234409530c4d92335e3285a2c847a5f4193d22bd504"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_source_manifest.json",
+      "sha256": "c2568f8956f227ab80f6115f4a73a93ccb46b705522706fd696b7d5ba484db23"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json",
+      "sha256": "bc8b8773081fc586d988588c239ee3b35b50821b3732b628dfd8c778ddbe8906"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_boundary_transition_extension.json",
+      "sha256": "032034a8e3c30fe10556e0e3102b49c27431b5c094bae8692b77b639b1f8b663"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_body_morphology_extension.json",
+      "sha256": "60c3f94a2a25128bb61c19f9b8a2eeef46362721fa8b283c15904b2e96eda621"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_y2k_extension.json",
+      "sha256": "f807360e372a81d95705269eec7786a246c7f1c0ab6d5b540fd5a5ad45ba2a16"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_realistic_background_extension.json",
+      "sha256": "3fdec61f61cd251825fd8b945ea900ff56c0f5e260e0d351ca0a4668c2e1e532"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_pose_vocabulary.json",
+      "sha256": "6c73a4d38d6c95682d5c375429cc3ae015a9546ac2b0d605ca3b2c2a119ea9fc"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_slang_visual.json",
+      "sha256": "31b366a9361bae12549dd2537dab4e0296327e5a7f7bbd09604fd1d9f175f136"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_accessory_structure_extension.json",
+      "sha256": "4a4512b89f84ed1b452cac3d77f8759871534b052ecc40b74a00befa0ad34830"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_slang_visual_extension.json",
+      "sha256": "288e24a399eed5dd0368a1aabc8d749262a7a530dc7d7d725b4ce9e6bb56e733"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_model_editorial.json",
+      "sha256": "e68bd757b0213c4049b19d781a87d00dd5969a148383e0bc175e9f7c103cfe1f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_editing_effects_extension.json",
+      "sha256": "1c10d388df677990d9591d8ce33695fb9476ab71d35256367f91a6bec0deb2bf"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_historical_womenswear_extension.json",
+      "sha256": "df59bac2ff68005a1161b3e7771b3fbba74d36d98ab16e8c71a9e6c5d0da9a60"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_emotional_place_extension.json",
+      "sha256": "a42fdee55f06e514a6b96667ba97b1acc9095aed38bbdbaf6612dfb972449679"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-000-a3b30c666c6abe33d136564c0e4e22e3022734ffed6898bff989ba5f2b843d00.json",
+      "sha256": "a3b30c666c6abe33d136564c0e4e22e3022734ffed6898bff989ba5f2b843d00"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-003-bc3c28c6ce2877a524c61f6e729166633d5312d2519a607d36219a93302a6ace.json",
+      "sha256": "bc3c28c6ce2877a524c61f6e729166633d5312d2519a607d36219a93302a6ace"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-012-514b54c79f939a46cff44d1b887944d1a8c142c03c4f56480e13d5ec7278f165.json",
+      "sha256": "514b54c79f939a46cff44d1b887944d1a8c142c03c4f56480e13d5ec7278f165"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-008-27d69470ba1bcb85be9aab9af4f766a92c3f8013901af25c975a68c1ef88ecdf.json",
+      "sha256": "27d69470ba1bcb85be9aab9af4f766a92c3f8013901af25c975a68c1ef88ecdf"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-010-0cf03c9fc201ebe0fd9fad8228ae031c2391970d72c48b93296c722d174a2da3.json",
+      "sha256": "0cf03c9fc201ebe0fd9fad8228ae031c2391970d72c48b93296c722d174a2da3"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-014-4265f7462b798348a77369b1bde52b1b5066da4783c469fc21d7c7ea37f9c0d9.json",
+      "sha256": "4265f7462b798348a77369b1bde52b1b5066da4783c469fc21d7c7ea37f9c0d9"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-015-8fe37a4ab46bb06014de28935d5289314fe4b46378b605d6b347faa4056a4c4d.json",
+      "sha256": "8fe37a4ab46bb06014de28935d5289314fe4b46378b605d6b347faa4056a4c4d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-013-c321850f929756325335047a82da64e3551086eb2ba00d709a91d5b0d6159007.json",
+      "sha256": "c321850f929756325335047a82da64e3551086eb2ba00d709a91d5b0d6159007"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-005-6b5d7812f397d8258caa32274b27878e8f0805ce0dcd047757f4042200ff798e.json",
+      "sha256": "6b5d7812f397d8258caa32274b27878e8f0805ce0dcd047757f4042200ff798e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-005-e5cc6f4f01eaa2fb189e9f8fcec53914f1323203a4f3c7e850b819db7856dd52.json",
+      "sha256": "e5cc6f4f01eaa2fb189e9f8fcec53914f1323203a4f3c7e850b819db7856dd52"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-015-7b4512fc638e9185fafb61c7448cbc00aa8bf2e84a91ebfd6e449c2eb7fedcb8.json",
+      "sha256": "7b4512fc638e9185fafb61c7448cbc00aa8bf2e84a91ebfd6e449c2eb7fedcb8"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-000-8affa71452087d1556c8fe0344bb8b1973933c0d8481fd18744a799c54048957.json",
+      "sha256": "8affa71452087d1556c8fe0344bb8b1973933c0d8481fd18744a799c54048957"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-001-cd23cc6f2105626f809d7b8d8ceb54b59d92a2e98c4e53b007f3edf4195312ff.json",
+      "sha256": "cd23cc6f2105626f809d7b8d8ceb54b59d92a2e98c4e53b007f3edf4195312ff"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-011-f0801a99891b1e33e00bb2af1ff73139cc2324ba300b4c04a46da1bf6405cc3f.json",
+      "sha256": "f0801a99891b1e33e00bb2af1ff73139cc2324ba300b4c04a46da1bf6405cc3f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-001-ab2995e170664db01c9c44538cedd57cf07881a389e3f698692506795293b517.json",
+      "sha256": "ab2995e170664db01c9c44538cedd57cf07881a389e3f698692506795293b517"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-001-097ae8b8b8b1fce095fa3a933ec2a7f221e0ff8b295759e4bba9e3a7196fc80a.json",
+      "sha256": "097ae8b8b8b1fce095fa3a933ec2a7f221e0ff8b295759e4bba9e3a7196fc80a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-008-d97b80ff425ad5949ee75d34db14e46f886a25fed2af1f39762c7c710f4866f2.json",
+      "sha256": "d97b80ff425ad5949ee75d34db14e46f886a25fed2af1f39762c7c710f4866f2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-004-767fc94f000420decd19ec55412310b24d61fbe5e590b656aeec33e280060e63.json",
+      "sha256": "767fc94f000420decd19ec55412310b24d61fbe5e590b656aeec33e280060e63"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-009-91c86ded46fc7754fac41cfd38a1dbfc39e6c4c277432fdcf0c8262108a20746.json",
+      "sha256": "91c86ded46fc7754fac41cfd38a1dbfc39e6c4c277432fdcf0c8262108a20746"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-004-a6d53e2a8e357522dc6eb7a75bfe8851aa2dfda1fb618d0260cf3b5bec0e3cb3.json",
+      "sha256": "a6d53e2a8e357522dc6eb7a75bfe8851aa2dfda1fb618d0260cf3b5bec0e3cb3"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-015-70fe49ed1464a3dc251ce39be3078836c53b89f58dc1db7da50c3725d8359110.json",
+      "sha256": "70fe49ed1464a3dc251ce39be3078836c53b89f58dc1db7da50c3725d8359110"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-002-b838365d4994eaf371ae56e3f9c236de6fb9a6d1b2bb7e8c6c6fbecfc3f09336.json",
+      "sha256": "b838365d4994eaf371ae56e3f9c236de6fb9a6d1b2bb7e8c6c6fbecfc3f09336"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-012-db566d8aaaf5e85682974dbb346e04f9f4f11638e6f0cdca5992647b885b1374.json",
+      "sha256": "db566d8aaaf5e85682974dbb346e04f9f4f11638e6f0cdca5992647b885b1374"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-007-007cf66d756183f28608e353b1056c03027ef1127a2a641a023c49a670c1afa2.json",
+      "sha256": "007cf66d756183f28608e353b1056c03027ef1127a2a641a023c49a670c1afa2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-005-3438f81ba6a6e304a2b2bb26dd882a9d9d9618bdb68cb57963aab99b5cf84271.json",
+      "sha256": "3438f81ba6a6e304a2b2bb26dd882a9d9d9618bdb68cb57963aab99b5cf84271"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-014-c2a5bb7dbca8896d768a599a0d274b43c684de3d547889e8c7a80962e506c3a0.json",
+      "sha256": "c2a5bb7dbca8896d768a599a0d274b43c684de3d547889e8c7a80962e506c3a0"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-008-96505f1fa106d80577feefb4a533a34d00342c36781c827f70056fc0571f4bff.json",
+      "sha256": "96505f1fa106d80577feefb4a533a34d00342c36781c827f70056fc0571f4bff"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-007-8810cb0933d8f49ea5725eaba0aeb4a4dcdcfba8eb861636ae9ef80b667c2cec.json",
+      "sha256": "8810cb0933d8f49ea5725eaba0aeb4a4dcdcfba8eb861636ae9ef80b667c2cec"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-007-f3e8556491427c77dc362aaef2573d971835abd1783be36e9d2e1d4b4bec6ab9.json",
+      "sha256": "f3e8556491427c77dc362aaef2573d971835abd1783be36e9d2e1d4b4bec6ab9"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-010-f57e0676012a875ca31f3fbd7b761953b912d6c71064a8631f6b68b84b8e3428.json",
+      "sha256": "f57e0676012a875ca31f3fbd7b761953b912d6c71064a8631f6b68b84b8e3428"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-011-160bf54b7c52c3d5c1562f6284f3675e5d7bfcafcf42d1aa4b3304a48fc3f83e.json",
+      "sha256": "160bf54b7c52c3d5c1562f6284f3675e5d7bfcafcf42d1aa4b3304a48fc3f83e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-009-75f23f3420a5f1211543c9989c006a7366c575cbcf7d9ab7ad2fa451ec6aee91.json",
+      "sha256": "75f23f3420a5f1211543c9989c006a7366c575cbcf7d9ab7ad2fa451ec6aee91"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-006-0a910dd4301cca73142c29ba6ec8069723af17b2d48696660c49a94327d1ed09.json",
+      "sha256": "0a910dd4301cca73142c29ba6ec8069723af17b2d48696660c49a94327d1ed09"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-011-e525f7ff2a167ec90c412d7be0f24a810004a22a0ba9cc09e9efe2f82fad028a.json",
+      "sha256": "e525f7ff2a167ec90c412d7be0f24a810004a22a0ba9cc09e9efe2f82fad028a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-001-0fd3fb6076d39711cb371a246adf621cd6d94805c21882a88e6381734a19ec00.json",
+      "sha256": "0fd3fb6076d39711cb371a246adf621cd6d94805c21882a88e6381734a19ec00"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-003-69e6e4f88670bcbfedc5a5a6adfa313d28dc0c391e3ca6b1e888edf202ac480b.json",
+      "sha256": "69e6e4f88670bcbfedc5a5a6adfa313d28dc0c391e3ca6b1e888edf202ac480b"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-005-6776fb1e93ec681987641e43d2fc3ec24ea611074533557da3ff7c95d9ab8e97.json",
+      "sha256": "6776fb1e93ec681987641e43d2fc3ec24ea611074533557da3ff7c95d9ab8e97"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-003-f591822e33511b8a13b6ceb219a7c8bd4a1d01b9d70131c60b55e5097fc0aa40.json",
+      "sha256": "f591822e33511b8a13b6ceb219a7c8bd4a1d01b9d70131c60b55e5097fc0aa40"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-002-ff23819a5538985b93b189adb95f22e67042914e498a6f4d2931028169e41c17.json",
+      "sha256": "ff23819a5538985b93b189adb95f22e67042914e498a6f4d2931028169e41c17"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-012-4c0095736a47231db47414ed965fc47390f89a7ea59c96993c76e7ee5d1fa9eb.json",
+      "sha256": "4c0095736a47231db47414ed965fc47390f89a7ea59c96993c76e7ee5d1fa9eb"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-010-4e9f73b133286a0bf3f2c048308454bd6767af69d5eac54dac13a9e7efc6b891.json",
+      "sha256": "4e9f73b133286a0bf3f2c048308454bd6767af69d5eac54dac13a9e7efc6b891"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-004-296eea9734a38c1f4a3f1f78da2121f20c53352f8812004aac104202d29fff4e.json",
+      "sha256": "296eea9734a38c1f4a3f1f78da2121f20c53352f8812004aac104202d29fff4e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-003-b10290f2dc87aa72a754eb107783a7d988e24c078882b087e2453315f0c62555.json",
+      "sha256": "b10290f2dc87aa72a754eb107783a7d988e24c078882b087e2453315f0c62555"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-007-fcbb6e2dd95659bfb7f390888f7c32034269ec77deeae42be7d374ecbb53e3ba.json",
+      "sha256": "fcbb6e2dd95659bfb7f390888f7c32034269ec77deeae42be7d374ecbb53e3ba"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-012-eeded6310091625328226eebab40ae273eee6206707b2cc8f4bb630192cca0f6.json",
+      "sha256": "eeded6310091625328226eebab40ae273eee6206707b2cc8f4bb630192cca0f6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-010-802b286b39554acb28cccc0697fbe8851ba6e920833af0f2932a00b76c470b55.json",
+      "sha256": "802b286b39554acb28cccc0697fbe8851ba6e920833af0f2932a00b76c470b55"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-009-d5c316eceebd603a934223f6a75aace896c082edf55c924fdd41a8984bb0f57b.json",
+      "sha256": "d5c316eceebd603a934223f6a75aace896c082edf55c924fdd41a8984bb0f57b"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-007-e0dde767ef57bb5bdbc60947573baa3e561fa9f8660658c7361f10987abb33f8.json",
+      "sha256": "e0dde767ef57bb5bdbc60947573baa3e561fa9f8660658c7361f10987abb33f8"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-003-fa2fab96a98f1abb18ce36c844369c2f89ae7cc5c142ddf3aa069fd058e3223a.json",
+      "sha256": "fa2fab96a98f1abb18ce36c844369c2f89ae7cc5c142ddf3aa069fd058e3223a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-002-d03bd73b44c3229efb1808b896da37fd79edade62a03ee6003fc1c0ae470526e.json",
+      "sha256": "d03bd73b44c3229efb1808b896da37fd79edade62a03ee6003fc1c0ae470526e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-014-7b3d68e72a646017e045f307c4386fb6c0d8a0e151c5121089e60d4e57eae06a.json",
+      "sha256": "7b3d68e72a646017e045f307c4386fb6c0d8a0e151c5121089e60d4e57eae06a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-009-6c82ccf5c582a9d007f6435adeefd78bb7460f746bdded2798f3d56dd5310f39.json",
+      "sha256": "6c82ccf5c582a9d007f6435adeefd78bb7460f746bdded2798f3d56dd5310f39"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-002-57325e37bcd936dd72305a8b2335471bb3cb65aaa31821e6cd83d10e31279115.json",
+      "sha256": "57325e37bcd936dd72305a8b2335471bb3cb65aaa31821e6cd83d10e31279115"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-011-7e3a128884c7cbecf5b6504e9cee7e02ec547d3f9bdfd65455f65179158635bd.json",
+      "sha256": "7e3a128884c7cbecf5b6504e9cee7e02ec547d3f9bdfd65455f65179158635bd"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-009-a4a0357e894bd9c5be7bfbace7bd7618afbed36cd8f48c1e8b36dc54f1263e67.json",
+      "sha256": "a4a0357e894bd9c5be7bfbace7bd7618afbed36cd8f48c1e8b36dc54f1263e67"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-014-5ae967ea26c391d42cffb6b05dc96245bc367ae9038fb95963b3dc0c19d44e60.json",
+      "sha256": "5ae967ea26c391d42cffb6b05dc96245bc367ae9038fb95963b3dc0c19d44e60"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-008-188fc50c3cad617f62ac85dfb495b502ed41d4ab651f9810b64bf908e7a34210.json",
+      "sha256": "188fc50c3cad617f62ac85dfb495b502ed41d4ab651f9810b64bf908e7a34210"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-002-3c2818bf43a1c21e43c36cf013f50a608d3ec633798feededa9c96171b0bb28d.json",
+      "sha256": "3c2818bf43a1c21e43c36cf013f50a608d3ec633798feededa9c96171b0bb28d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-001-2f31560c13349c0e908cd7326effda80de7418ba0cbca8381d82605546822f37.json",
+      "sha256": "2f31560c13349c0e908cd7326effda80de7418ba0cbca8381d82605546822f37"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-013-17bb7e5b44d1cf6dae08558f67ac283688f23fd88b006ce971c1d6dc572b40fc.json",
+      "sha256": "17bb7e5b44d1cf6dae08558f67ac283688f23fd88b006ce971c1d6dc572b40fc"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-006-a978e092db0f47244775e5b4c3561b2bb13f7fae42c4e1d85de95fbfacd5a0e6.json",
+      "sha256": "a978e092db0f47244775e5b4c3561b2bb13f7fae42c4e1d85de95fbfacd5a0e6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-010-78b190b7f7e62da0bace05e7ec3ff31bcc05c106e5f427c5eddcea8a6608b071.json",
+      "sha256": "78b190b7f7e62da0bace05e7ec3ff31bcc05c106e5f427c5eddcea8a6608b071"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-010-f763da0cec1da95b307e25f7e7b5417d7ffad279337b48bbb3018dd8603f7ac0.json",
+      "sha256": "f763da0cec1da95b307e25f7e7b5417d7ffad279337b48bbb3018dd8603f7ac0"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-009-060092b6b3dedbe1e3f0d4802cc20795499e1bf921a58677e1a0158becc82b07.json",
+      "sha256": "060092b6b3dedbe1e3f0d4802cc20795499e1bf921a58677e1a0158becc82b07"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-004-75486433cc5665935d9a513dc6d7b37dce45542ae87a9ba34d6756e2a6887dc8.json",
+      "sha256": "75486433cc5665935d9a513dc6d7b37dce45542ae87a9ba34d6756e2a6887dc8"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-007-1478b645dd33b3f4efc9f15db4b9cf1d4ae453c8fc0c7605ce7aa4d5adf5e712.json",
+      "sha256": "1478b645dd33b3f4efc9f15db4b9cf1d4ae453c8fc0c7605ce7aa4d5adf5e712"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-002-7cb27c17f4902b3531afbcdd1accfe45ea780ac9b5d397d9aac25aa711ff8752.json",
+      "sha256": "7cb27c17f4902b3531afbcdd1accfe45ea780ac9b5d397d9aac25aa711ff8752"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-008-3425c2866fa845399780a1d59e33a47b59770cfa41558ce678b93aa246c7ee59.json",
+      "sha256": "3425c2866fa845399780a1d59e33a47b59770cfa41558ce678b93aa246c7ee59"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-015-b0733d610c7b265817ab63a619ce4bd0e61cc0508c292b0ff95e16c2cc28bf7e.json",
+      "sha256": "b0733d610c7b265817ab63a619ce4bd0e61cc0508c292b0ff95e16c2cc28bf7e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-004-b3a08c42f2047db834a1f0908050a20e3991b8be1f9851d1f4485e88fd46a966.json",
+      "sha256": "b3a08c42f2047db834a1f0908050a20e3991b8be1f9851d1f4485e88fd46a966"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-013-4d7ce57cf83dfa4bb1e44d53751c848abd4ac055a599ba8c22df618d55a8ddec.json",
+      "sha256": "4d7ce57cf83dfa4bb1e44d53751c848abd4ac055a599ba8c22df618d55a8ddec"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-003-37a42ce5af006500dab133cba140d60bb068dbc41c638536f6acf58764d16f3a.json",
+      "sha256": "37a42ce5af006500dab133cba140d60bb068dbc41c638536f6acf58764d16f3a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-014-f0ce3daef89b8c9dadf78726c38f4dadda5c47b3df4287a0d00eab29b2633684.json",
+      "sha256": "f0ce3daef89b8c9dadf78726c38f4dadda5c47b3df4287a0d00eab29b2633684"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-013-9e9f21a06900ee09d79e2810a31f38a17464f1094659f35604f9b2fb37232e04.json",
+      "sha256": "9e9f21a06900ee09d79e2810a31f38a17464f1094659f35604f9b2fb37232e04"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-011-4088b3f69f14780ce97e00640091c9d0e54082bab44ad6644e11c13b96bd5593.json",
+      "sha256": "4088b3f69f14780ce97e00640091c9d0e54082bab44ad6644e11c13b96bd5593"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-015-b79595c88711759809f749d5731a0d42fd143eb47f3d03febae6e107df979c2e.json",
+      "sha256": "b79595c88711759809f749d5731a0d42fd143eb47f3d03febae6e107df979c2e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-000-c1b94a8967a73d758fec9aa7a4beaa4ad7e2faa34bda03bd79662362ceaeb355.json",
+      "sha256": "c1b94a8967a73d758fec9aa7a4beaa4ad7e2faa34bda03bd79662362ceaeb355"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-006-16532852ee8735716c5d66fa99e7395cca6a07fc042ec3456c6e47b53928aff2.json",
+      "sha256": "16532852ee8735716c5d66fa99e7395cca6a07fc042ec3456c6e47b53928aff2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-006-bef96c2f63a8796ef7ec3f28cd9239488a870800a391d9d50dd98d5ef46611eb.json",
+      "sha256": "bef96c2f63a8796ef7ec3f28cd9239488a870800a391d9d50dd98d5ef46611eb"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-004-ecfd328c3666a5ed7bc76e85e3c66a7263b345d5670cb8dad820213758cffdf1.json",
+      "sha256": "ecfd328c3666a5ed7bc76e85e3c66a7263b345d5670cb8dad820213758cffdf1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-013-bdb11f47e6b0c25bf103fcea58b2d2336661cec95a3838ca7862d7c2e4dd4d22.json",
+      "sha256": "bdb11f47e6b0c25bf103fcea58b2d2336661cec95a3838ca7862d7c2e4dd4d22"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-008-0065f5d13c22c0d31f76dc638f5830afd05341263c341d12489d7b4afa76f754.json",
+      "sha256": "0065f5d13c22c0d31f76dc638f5830afd05341263c341d12489d7b4afa76f754"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-005-8c15ee7cf3a9d765253c61908a6ecbc6fafbe40768e31c6cc990a2282a4656b8.json",
+      "sha256": "8c15ee7cf3a9d765253c61908a6ecbc6fafbe40768e31c6cc990a2282a4656b8"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-012-3eab4458c85e29f6997950dc3d33267c62216fb51ada646d85ae99c77ff18e39.json",
+      "sha256": "3eab4458c85e29f6997950dc3d33267c62216fb51ada646d85ae99c77ff18e39"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-001-6dbac8fd3caedc4f47bb36a36c4b019d4d16277510b6ca16aa7e64b60fe296b1.json",
+      "sha256": "6dbac8fd3caedc4f47bb36a36c4b019d4d16277510b6ca16aa7e64b60fe296b1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-000-69eb854d42287a29bf46e739eaad9b60e8aee1191c85f8ad2c8f3804368d6596.json",
+      "sha256": "69eb854d42287a29bf46e739eaad9b60e8aee1191c85f8ad2c8f3804368d6596"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-000-7b52645bd2e91747e3500b9fe40ba48c16578216a3d8f14aca4f01d0cbb463fe.json",
+      "sha256": "7b52645bd2e91747e3500b9fe40ba48c16578216a3d8f14aca4f01d0cbb463fe"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-006-fbed7af89c339575fe33008987ba8d0ffb5d38b89921da6011403a3e95c328b1.json",
+      "sha256": "fbed7af89c339575fe33008987ba8d0ffb5d38b89921da6011403a3e95c328b1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-015-b46b323396a7549dc0b06fe2865fadc5add2bbb3b3ecd545f314c9ef34dda34c.json",
+      "sha256": "b46b323396a7549dc0b06fe2865fadc5add2bbb3b3ecd545f314c9ef34dda34c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-011-37e96e2fdf6cd1494ed30c398c8577f00c64bed18899b01b63682b59618290e1.json",
+      "sha256": "37e96e2fdf6cd1494ed30c398c8577f00c64bed18899b01b63682b59618290e1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-005-722028ea2ff085ade8797f068eff1c58f85429aeb4535e7da5809bea42e9d1b3.json",
+      "sha256": "722028ea2ff085ade8797f068eff1c58f85429aeb4535e7da5809bea42e9d1b3"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-013-bc9108359492502c919435b621502ae795b6b9840cedd6dd90fa12cb51171601.json",
+      "sha256": "bc9108359492502c919435b621502ae795b6b9840cedd6dd90fa12cb51171601"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-000-edd3bbe563f6ead52e04118f3819019ea157f5c3602cb29edcb06b9a13dd53d4.json",
+      "sha256": "edd3bbe563f6ead52e04118f3819019ea157f5c3602cb29edcb06b9a13dd53d4"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/28e52ed2b39394e7/shard-009.json",
+      "sha256": "2ec13af585eb98dbdedc814417f2603ccf1c1f25afcdabb3eb33d44c4902c433"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/28e52ed2b39394e7/shard-005.json",
+      "sha256": "2f7f3d55ee9609028ab2aa614ebe4a9261fd7e57da47c0f0bea0e1aa20070b29"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/28e52ed2b39394e7/shard-013.json",
+      "sha256": "706197719e09cd1a4b156d93c86f661f13677058d660651ae2f03768a7866008"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/28e52ed2b39394e7/shard-012.json",
+      "sha256": "02ecf84ad541d9e7c42823fd8bc3f4753c13bb53cff392380e30dd59c36dcc21"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/28e52ed2b39394e7/shard-004.json",
+      "sha256": "3d9b2a3ac4ae4c6a82e3d6ca6c399f2433bfee53b62c161460fd7354881a2a96"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/28e52ed2b39394e7/shard-008.json",
+      "sha256": "07401bf3911e4ea45d6a257313eb1711858b4ba1c0bfc28c2fa890fab40bb6ab"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/28e52ed2b39394e7/shard-003.json",
+      "sha256": "dd1082102599481f86070acd737e29ebb435e1e5c5d06de0f5c4f9bfa4245ea6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/28e52ed2b39394e7/shard-015.json",
+      "sha256": "bce32c123ea3737daf754e9e1ea6d786ee704fd7a3fbd719898018a3f486a661"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/28e52ed2b39394e7/shard-014.json",
+      "sha256": "a2303b6e83cee39c090a7d32003e364c2d4b878e20e04054a9890e5055799b80"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/28e52ed2b39394e7/shard-002.json",
+      "sha256": "8cbeaac96ac1bd3aff6bbb65269b638ec3ec1acabed0f83214b77b8ee9f8574e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/28e52ed2b39394e7/shard-001.json",
+      "sha256": "3f41cfb187bf446ab979a48a6ad1ab82149e98174774d91473f4d95ab5b1a70b"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/28e52ed2b39394e7/shard-000.json",
+      "sha256": "a066fa35d62f15dd8d4ac27b6952a25d8f10c0f6735a2d06a86543b48eb7f2f2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/28e52ed2b39394e7/shard-011.json",
+      "sha256": "7911ffef706e865e58dc56a4e9dd6e761efbfc895a930941959b83ea99148ae9"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/28e52ed2b39394e7/shard-007.json",
+      "sha256": "97476a989e81857c4efa3f86e3336e757410a7afe1d2ff560515deb5cad53dab"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/28e52ed2b39394e7/shard-006.json",
+      "sha256": "7cf711affa276acc2477b7cd217b65a974769329a1a246556fd7ed1fa5475c6f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/28e52ed2b39394e7/shard-010.json",
+      "sha256": "61d7042d84eac085a20a8f82fac8864dc221cedcd7bc6c953458df5e18ec14b2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/3c1d75bc29f7dab6/shard-009.json",
+      "sha256": "9fec19a353acd412b4cdd1fa7b11be8048eefb215ea7176949c36793dacbad67"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/3c1d75bc29f7dab6/shard-005.json",
+      "sha256": "7a5fbcd7051797b70766165f701ead1d9d5997a4d0b34420c858242a9a18ebbe"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/3c1d75bc29f7dab6/shard-013.json",
+      "sha256": "5cf0c87ad0430c5a89587f2337a917ea53ceeef744c6acf99cea561b3916fa4f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/3c1d75bc29f7dab6/shard-012.json",
+      "sha256": "cd36e08d80c2bea5f3da6f359d9b9f285f9b9ccd5b000e2f339cd12d445b6c14"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/3c1d75bc29f7dab6/shard-004.json",
+      "sha256": "6f4631c6699cdc131d5102cd528c92bf8369ee5722a0ab247568771b4d255c82"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/3c1d75bc29f7dab6/shard-008.json",
+      "sha256": "7274b92326fddf4bee85e63fce47af5784c3d8bceca1155927e45458dbc3a481"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/3c1d75bc29f7dab6/shard-003.json",
+      "sha256": "41dc1c67faae3af8edbaf92ee46334e120ec111b10398c00b6ec172e314bed61"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/3c1d75bc29f7dab6/shard-015.json",
+      "sha256": "77339957fd84db8e1ec5390e5628287e3e5ed2c8d792c348840175db59c14b04"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/3c1d75bc29f7dab6/shard-014.json",
+      "sha256": "3f7d14a8a5b51ce569422a19eb255d34cb6f452c65f7e4f32953e794dadb3421"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/3c1d75bc29f7dab6/shard-002.json",
+      "sha256": "2bbf7e5890870f12f7125bcc36240bc1e1a67289ad33544476f71aa01ff7b123"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/3c1d75bc29f7dab6/shard-001.json",
+      "sha256": "5bfd3386ab16c509a10f6a2192b7d120d848c6319af9c0d385a6231f8f66e7da"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/3c1d75bc29f7dab6/shard-000.json",
+      "sha256": "6b07c5a0203102ac2f9ec8c4e0829eff4c1f834a7dc47dd76d7acc970d164880"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/3c1d75bc29f7dab6/shard-011.json",
+      "sha256": "d6676d161fad09655981bb052b71a7839a7ee5c80a5f3a1ce341607da9dc05df"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/3c1d75bc29f7dab6/shard-007.json",
+      "sha256": "76541f88976df522cd4d43ca8359803d406cb8126d52b9f7330630eb15186906"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/3c1d75bc29f7dab6/shard-006.json",
+      "sha256": "eeb2ab7c893a6d7d52e58b37b52394961327676398a0c0bd97da049fe34ae939"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/3c1d75bc29f7dab6/shard-010.json",
+      "sha256": "9518e3111a2ee444ef1d3cfedf448a94cacfbd08ab0e788c8b22f23fe3987bd6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9e13f13b58e425d8/shard-009.json",
+      "sha256": "ef20675207c943050594e09bbc7175b5b785b2c2dd56806f0a6943830b9e490e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9e13f13b58e425d8/shard-005.json",
+      "sha256": "7aa9cc178bac4c2e189c2b0c362582e83c821c49752f14102abc3aebe751a1de"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9e13f13b58e425d8/shard-013.json",
+      "sha256": "abf3f81a531c96817d5777e6cea524037eb5f5b574b456d8e11bfe6e8c21d29f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9e13f13b58e425d8/shard-012.json",
+      "sha256": "7ecde3768a3e4e86e299bb93e4ec671f5b9014a3935f546e2617bd37f08bd609"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9e13f13b58e425d8/shard-004.json",
+      "sha256": "e6ca39412608af93c5c4670f50f4389c7a81bf189545a63043ac7d45b1a88ad0"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9e13f13b58e425d8/shard-008.json",
+      "sha256": "65dff65717bf468cd32c30fe49c76b904b51fc2cb2b21cf94691b022fcefbfca"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9e13f13b58e425d8/shard-003.json",
+      "sha256": "460cddb4dfb6c7da22a7219c5bfe27d78bab7b6ccbcedf309e09c75df7fc9aa0"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9e13f13b58e425d8/shard-015.json",
+      "sha256": "c0485c8d2839c4e4f690fc05aa894f0e3001a69b4d4145605fb0d76067c53a7a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9e13f13b58e425d8/shard-014.json",
+      "sha256": "3f7d14a8a5b51ce569422a19eb255d34cb6f452c65f7e4f32953e794dadb3421"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9e13f13b58e425d8/shard-002.json",
+      "sha256": "8aa4ae1672e105ef82b0bac1e355e444291232daf98f1e8a8991a0ea654d6536"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9e13f13b58e425d8/shard-001.json",
+      "sha256": "61f117cd1be971e8830f3e3c1d4b7585bae9498fac867ed9b213fe7527d9488f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9e13f13b58e425d8/shard-000.json",
+      "sha256": "efeffeb75a1ff1ec419f69807e8ba9b7a27b2db06b2b7d2db4cfd5ee097850e2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9e13f13b58e425d8/shard-011.json",
+      "sha256": "a2de46a6e87ff88a890df39b5757031c3d30bfd5bda178fa4d738cba59913cfe"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9e13f13b58e425d8/shard-007.json",
+      "sha256": "50de1abf3ab7e0f060777e8e5b0ad319f218d59eda3c90daa2669bff6cafc004"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9e13f13b58e425d8/shard-006.json",
+      "sha256": "26cf7f3ca76d59d8502c744d56559448a41f9df1dbbea95f8f8a6d475d93cb6d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9e13f13b58e425d8/shard-010.json",
+      "sha256": "abfb28c7ec8a03ddd025723f889dfd3ac70585bd199286a8dcb56ef819138a65"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9b89c3896911fe1d/shard-009.json",
+      "sha256": "2900d8799a04251b4ff696c7a33dab889a746c099a15b5efd66437d71f4e156c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9b89c3896911fe1d/shard-005.json",
+      "sha256": "72b09498413a9f3b771f989947946eb660bfe681e7f5c8ff4d14e8bf5eb1c657"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9b89c3896911fe1d/shard-013.json",
+      "sha256": "9fa0743cc7d9d326ed269a59ed9c84d69f035052cf8c7572a3c31fdbe1075493"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9b89c3896911fe1d/shard-012.json",
+      "sha256": "92dbf72db608b4b073d78afb19478017156d1d440140f7b269286f69e542d427"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9b89c3896911fe1d/shard-004.json",
+      "sha256": "ae7111966626de9b9e320736356ab3a330d38ea0de95e3c579fbd4de674d4c05"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9b89c3896911fe1d/shard-008.json",
+      "sha256": "c84a336aec5caea14190f680086607038590228a05e63e997c7475d18a1c3435"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9b89c3896911fe1d/shard-003.json",
+      "sha256": "eccb70bb25d303379b9061c9a02f6be8ce81fb7f0be83b5af0c8ae46a43d343d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9b89c3896911fe1d/shard-015.json",
+      "sha256": "dbcb90eda95390e8d8ac93193412d0d9d106cc68f0f6f6dc1e2171d2aba7f8a3"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9b89c3896911fe1d/shard-014.json",
+      "sha256": "dbca6dabc48d4bf6d29fa6e5ccba7bac470372a37f7bb8b6cf17f52338b1a293"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9b89c3896911fe1d/shard-002.json",
+      "sha256": "0cfe17384ed7e8a1da2d8795751a8dcc7ea4f6ea8436d2d34790a3936f706b4f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9b89c3896911fe1d/shard-001.json",
+      "sha256": "4acb801cfce052dad238cf314638b6644289256bc52bf66565d5491c88530965"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9b89c3896911fe1d/shard-000.json",
+      "sha256": "115ef0d8e5d1d44f62c2899765720c86feccc5a07f3e6646149b5d3569c2c033"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9b89c3896911fe1d/shard-011.json",
+      "sha256": "78a16b1d1bd5a70df29f4fb1f39910d5f910dd2ec89df51fd96f1ba8bffe9a48"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9b89c3896911fe1d/shard-007.json",
+      "sha256": "2cc0b4bf827b9999589b9ce96bf90f9a09d083812d77c86853be70df4db0e12a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9b89c3896911fe1d/shard-006.json",
+      "sha256": "aee218b4f3caa984091af7f9fc337b2d2ffbf41b06bc88d0225dd3b95004816f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9b89c3896911fe1d/shard-010.json",
+      "sha256": "0e52361fcae93a19678e8976050414b12513eac7a1b329cb935ba6613c35d047"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e8ad172cafc1f071/shard-009.json",
+      "sha256": "be48f3045dc27e574d21c3767f14e582beada89f44baa11face7f351a07a9ff3"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e8ad172cafc1f071/shard-005.json",
+      "sha256": "dc31c8b90a8f7b45e26b48f2486152e354181ce106e5378f8127bcb1f1921580"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e8ad172cafc1f071/shard-013.json",
+      "sha256": "760eb0d7c5f032e892b81b6f972ad170cde8b9fac6aa5944ee9468e8697548a0"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e8ad172cafc1f071/shard-012.json",
+      "sha256": "3451f54f12e7cf6f9c46b69425a1d4da6d1436c31ad4a2c1ce1c65832e33807d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e8ad172cafc1f071/shard-004.json",
+      "sha256": "6671b6919d081c65ba9da0f53ea3e403b9339d43c18c67adedff8a4d2a3cedf9"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e8ad172cafc1f071/shard-008.json",
+      "sha256": "7cfe5d32a3a20948abcea20f3801871538ff35b212d5ddc794705dd34642b3de"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e8ad172cafc1f071/shard-003.json",
+      "sha256": "f73ccbf968c3742bf54e9af82f9c69511ec4dd25e5ff719b1c53aab3a17103de"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e8ad172cafc1f071/shard-015.json",
+      "sha256": "2a84896a228689f7f3aa56027d5fc734028ae862f42b1c20e9af471e51cf7db8"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e8ad172cafc1f071/shard-014.json",
+      "sha256": "3f3039c8cb05352c200837f9bbf04d417582e0d808aa3d4f87b32bafb1b0467e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e8ad172cafc1f071/shard-002.json",
+      "sha256": "051376f3083576baac5a7fccdebe93aa92b00fe41ada14fdd64d4c6237e5c973"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e8ad172cafc1f071/shard-001.json",
+      "sha256": "f8cd2d515dbcf585eb7c685858e8c961d930b870733c70b1b5ead4365dd799e2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e8ad172cafc1f071/shard-000.json",
+      "sha256": "dbc7a20c24b1512dbda37c41ae1ecc98b1cecbc87b6cd457754209f839d28ec4"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e8ad172cafc1f071/shard-011.json",
+      "sha256": "5c8e0be0d47d40c480edc764cbee2a87ee3d797baefd34f3cb28e7a9fac4357a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e8ad172cafc1f071/shard-007.json",
+      "sha256": "339bb6237bf5e6cd1efcef3405153239683be070bf15de82518b939226313155"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e8ad172cafc1f071/shard-006.json",
+      "sha256": "15321df487cf979d21362d024435a90d5014d8369d6f574dbd35a71185207cf5"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e8ad172cafc1f071/shard-010.json",
+      "sha256": "e47eac20345f9b771777d4201c1baada6c99ec6f371f11e9fe158fa949334b70"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/6fa9b81d357c32b4/shard-009.json",
+      "sha256": "1167de4060b1797a693209f506f5e3005d6762f7d06812a1671cc4d8e5222367"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/6fa9b81d357c32b4/shard-005.json",
+      "sha256": "38086ce81cf041c79f6e292c9fc2dc0d183525839a4761d7162a5a0494949a49"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/6fa9b81d357c32b4/shard-013.json",
+      "sha256": "f286f0edc2f91d93fab9c2539097673c64eea011086b7d30f078f8ea23b03644"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/6fa9b81d357c32b4/shard-012.json",
+      "sha256": "3469732b7e705648802ce934fa30708647dd410418425dc86c29fdd5d34b6869"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/6fa9b81d357c32b4/shard-004.json",
+      "sha256": "cbe527f2df0901c90a15b7139bd5fa62890f9acb350202af63699e16ddcdcd52"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/6fa9b81d357c32b4/shard-008.json",
+      "sha256": "5700f8d21995775088ac52e64bf0a8c7ea481aded97c5d5fc18badab6c228c9e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/6fa9b81d357c32b4/shard-003.json",
+      "sha256": "3abbd460ba5176b3ca43482a179ecb7389d69b99ef99dcb927a9ca9d85600c4b"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/6fa9b81d357c32b4/shard-015.json",
+      "sha256": "d80133f2fd9e925eff57cd9ba59bdc0abf270be1e72b18bd8dea0e5a6d09b2ff"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/6fa9b81d357c32b4/shard-014.json",
+      "sha256": "ae48723ed2a5cc2bbf6b67ec570f53d88c88f8fac6f181e942b47521a62b0c0a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/6fa9b81d357c32b4/shard-002.json",
+      "sha256": "bab763dcd1fdf66843450b34c8d2bfd49789dc299d757a6065b7259949fad8b1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/6fa9b81d357c32b4/shard-001.json",
+      "sha256": "1981194e2f6a06deae16270f617126d9ccb9ee90b89490b1307cee9f76b096e8"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/6fa9b81d357c32b4/shard-000.json",
+      "sha256": "f66f44dd82e7b4788c4e3bcf7a9a787c203b92025d21408312dc41f04bbab526"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/6fa9b81d357c32b4/shard-011.json",
+      "sha256": "1c0f19b480caeb9c660c0f1aa8f3cf584c0e0ed0780291cd21a58fe2468744ee"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/6fa9b81d357c32b4/shard-007.json",
+      "sha256": "f39e9687e7cc2ce5f762adda957903e2af72933b07afda0f7472b90e7b88f593"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/6fa9b81d357c32b4/shard-006.json",
+      "sha256": "a9b93dd9a98a0b87d57edcff02d65d6d1ee12944a6846a8898bbb1492057a3c5"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/6fa9b81d357c32b4/shard-010.json",
+      "sha256": "0a21b0079b4291aa3b316d14c47c1036c8be5ea5d93b6f04ee88272b0ed70d1d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cc9bccbaa2a3dab9/shard-009.json",
+      "sha256": "6d2808ffbbe4dd388c9983b57b8ad43fde1a1059ec2148cc0ea06394e3a1cb41"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cc9bccbaa2a3dab9/shard-005.json",
+      "sha256": "ce4bfe71d4be97d622d610f3a974a2c9136ed7c7b6d4db821f666be7e5c19df5"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cc9bccbaa2a3dab9/shard-013.json",
+      "sha256": "af35c368b9aa44b0071ce3f1dd38c8968a4bba2bed48db812f7117f0cc082bc5"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cc9bccbaa2a3dab9/shard-012.json",
+      "sha256": "14725ff4ecff55a9a5729c97c9fd9c1dc68f1388f949868385782c4ec5d734b8"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cc9bccbaa2a3dab9/shard-004.json",
+      "sha256": "9f45601c75a5ccb6ba70610d7a96c5856fefb6c4dea0b2c78e3cddb23877043c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cc9bccbaa2a3dab9/shard-008.json",
+      "sha256": "94223e336b26d0978c89132f11f8fc90738c617d3def3a4beab48a3cc00f1939"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cc9bccbaa2a3dab9/shard-003.json",
+      "sha256": "cb51baf49167584186e85295042ea8cbd1a6200af9412f847c4c3b9b3f5dfa2e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cc9bccbaa2a3dab9/shard-015.json",
+      "sha256": "3f3d333b49cea958bf85242e3c3ea5c413cc862f37cf1dc301b0af42b9f49b49"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cc9bccbaa2a3dab9/shard-014.json",
+      "sha256": "3ed7f23a1840641c4a2fcf92e4319f5a426f299d5d7d6b426bec6194ef742ac8"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cc9bccbaa2a3dab9/shard-002.json",
+      "sha256": "bd9623b0e8159ac09e749073bdd33e343a2b01272252b2604381233fbad36e7d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cc9bccbaa2a3dab9/shard-001.json",
+      "sha256": "c76c2b5fcbe4fb89a57bc373bec2f69030c07188329df36be640e49afcb16fc4"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cc9bccbaa2a3dab9/shard-000.json",
+      "sha256": "ab1532cca20a9b9cdddedbe3f1c16e237599eaed0c0b568386b38fe68d5e5e50"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cc9bccbaa2a3dab9/shard-011.json",
+      "sha256": "24a3bb39a8f3a7ae21aa43bad9997f74826d6a131cda7764786a95e2f7bfd0e5"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cc9bccbaa2a3dab9/shard-007.json",
+      "sha256": "69945d51aef23bc285ddf0392211ce664d24ba1116d7d86d737e78dc3106d9c5"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cc9bccbaa2a3dab9/shard-006.json",
+      "sha256": "5549e29f786ae2fe56130aadb5c9f9ca9ae9e37e5148d156c8b47235d2104911"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cc9bccbaa2a3dab9/shard-010.json",
+      "sha256": "4b9b3450833592c48f387ce9a5f2ed51d67f4af94238c7db235a186c8070a8b9"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cf31db2078e76bed/shard-009.json",
+      "sha256": "d27ab8a170652f01c99882958a07bf5e4f2b776328973c41fac5a9aa483ab071"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cf31db2078e76bed/shard-005.json",
+      "sha256": "54cb15497ea6f1819b925e44e1d74d251d90704390f295bd8b3494135f76f3fb"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cf31db2078e76bed/shard-013.json",
+      "sha256": "b8e4001c3b1eb8f1db206ac9f2a09805a96636606f9a928336ecb1fbd9d7378d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cf31db2078e76bed/shard-012.json",
+      "sha256": "76aab0055a45b3b32de143e56c0d0ddbdbe72488122a1f414ef08fdacacef52f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cf31db2078e76bed/shard-004.json",
+      "sha256": "8f823583804ca8f15c6d82122c1cf2b6f44c5385af5a635abd446bb5e1d3d327"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cf31db2078e76bed/shard-008.json",
+      "sha256": "94d7569955792085c5d985c9f896ec51364d09aa02b64606c5f622146d19222a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cf31db2078e76bed/shard-003.json",
+      "sha256": "8cf18fa63564a13a3ade24146288e906e0e45113a0da93bad5e444ddb93cb31a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cf31db2078e76bed/shard-015.json",
+      "sha256": "3e4869078cd21fbf50c5f86ecbe1ccbf1895a6f961c655c727a766dc0ebae613"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cf31db2078e76bed/shard-014.json",
+      "sha256": "d14c74171d35dfa9d86bfe7b4e0687e4b61f43addaf8d970c882c1ae3597c4ff"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cf31db2078e76bed/shard-002.json",
+      "sha256": "dd4fb80ad5d679ed1b32c14fc4716124d679e8886b7a149a3b3420dbca0ef822"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cf31db2078e76bed/shard-001.json",
+      "sha256": "b72157cc83a00f9720ac0c0087cf9800bddeafc7062ed67b24da82c1ec704b7d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cf31db2078e76bed/shard-000.json",
+      "sha256": "8c599870011c450a518ef95592964912cb06a0d6c0d1711f2f934cd25c10a079"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cf31db2078e76bed/shard-011.json",
+      "sha256": "9c984ae0bed8d3a360a06979db3c875d6aa846d19c62d500c5c8cfe269a6fc55"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cf31db2078e76bed/shard-007.json",
+      "sha256": "a50ebbff58b183e387be8a2d3e8f5ba55ab54a2268dfcd48c41f711af3b18685"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cf31db2078e76bed/shard-006.json",
+      "sha256": "c8fc1e5d8b0947ee01937f6589c08c32ebd3ae1b01643727293174fdac13b838"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/cf31db2078e76bed/shard-010.json",
+      "sha256": "386afd5e4c43d8cdbdf0f3b2bc7ecff6c5c32cb58b821e8c4a01fd101473b826"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f7b8729f8011ce85/shard-009.json",
+      "sha256": "d27ab8a170652f01c99882958a07bf5e4f2b776328973c41fac5a9aa483ab071"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f7b8729f8011ce85/shard-005.json",
+      "sha256": "2294b11ce57fa3e93083ad70d177fb3bb506b89b836b04c81d889cb249896667"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f7b8729f8011ce85/shard-013.json",
+      "sha256": "2be7f04efa5fea2fa594326f4a02a985483b45cf673d877df43fe480a76e29df"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f7b8729f8011ce85/shard-012.json",
+      "sha256": "a24d9bd51dd06b6d4c0625d32ba6b5d83e3150c02473d3594626718b796771ca"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f7b8729f8011ce85/shard-004.json",
+      "sha256": "dbd36067b554ebf493dc390b5b80f94f5928693fd412e499028d9b25ce29edc8"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f7b8729f8011ce85/shard-008.json",
+      "sha256": "ebc2d151c678155cf8a850124b15b4df44ab8e437c25c4d579146e8e7234e1c5"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f7b8729f8011ce85/shard-003.json",
+      "sha256": "0a2cb7fce8c6accd251f4483a2b736943811218d461e88146ebbc98dd5d531b2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f7b8729f8011ce85/shard-015.json",
+      "sha256": "2c6ae76cc3fe2ea14f03cfbf75a13d64c495a57d3e3ec7832d0535915642e998"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f7b8729f8011ce85/shard-014.json",
+      "sha256": "dca516c542dc923fbafcd6ec78bcc122f0b03a9e7bb8bb1623b88a1f198fb5f9"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f7b8729f8011ce85/shard-002.json",
+      "sha256": "fb5d2c6daa824e8b46aa66b047b7036412c3e226d458721975cb7b161e86a663"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f7b8729f8011ce85/shard-001.json",
+      "sha256": "753ff98d54f9f4ec4e7d3acf90cf786a67f5fd2550fbfc84732a64fbdfc8de08"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f7b8729f8011ce85/shard-000.json",
+      "sha256": "4ebb535a5c0348b8f144cf0fb6161f4dcbed469a734817155c89875271b3127b"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f7b8729f8011ce85/shard-011.json",
+      "sha256": "08f8da38bf0ef37012b84ed222542516d41428f85e0338370233cc7f3ecb3d83"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f7b8729f8011ce85/shard-007.json",
+      "sha256": "2dd6718575c4e1103aab7f7bb9e6159d423edc7072f10dbad5ca701239f9b63b"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f7b8729f8011ce85/shard-006.json",
+      "sha256": "c8fc1e5d8b0947ee01937f6589c08c32ebd3ae1b01643727293174fdac13b838"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f7b8729f8011ce85/shard-010.json",
+      "sha256": "50ec2d606fda00ece0a0b68a5c238fb0f59e5cb255b84d6c9811348054cc651b"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/224a824d88daf096/shard-009.json",
+      "sha256": "8175938f9498a51feb86dba6a8c8e1cf1c55337b1cdc9bedc3cff01a44ebcaea"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/224a824d88daf096/shard-005.json",
+      "sha256": "bc637ae8fb677f7298d7d82ed601e6a9a47e97acd6ed89198c2df309c9494345"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/224a824d88daf096/shard-013.json",
+      "sha256": "6f865dd663223e9736cac1c5324dc88a4e88000c00b634c92ac4f05dfe56f5f3"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/224a824d88daf096/shard-012.json",
+      "sha256": "122ce21efd2694b7bbe5a5f67360a0f405e9b2ff2a4a239c679416e151909839"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/224a824d88daf096/shard-004.json",
+      "sha256": "7c3d06dd890aff93ae7a98ce617c651b8992148ace2fe3938805afc1a55578d1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/224a824d88daf096/shard-008.json",
+      "sha256": "56cec0091c134aa72049cae02716d03046cb44854309dfa476767f79ed931b1d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/224a824d88daf096/shard-003.json",
+      "sha256": "ab6cabb0923158938b02795608cc4ccd4f1afc2a0ee0255b592b6fbc50e67ae3"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/224a824d88daf096/shard-015.json",
+      "sha256": "14ad051602817cc96e9606eed6d53ed8af127f834f4e2814442dff6c2112cd9a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/224a824d88daf096/shard-014.json",
+      "sha256": "3f7d14a8a5b51ce569422a19eb255d34cb6f452c65f7e4f32953e794dadb3421"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/224a824d88daf096/shard-002.json",
+      "sha256": "01b2723b6827219a086fa930ca600d4e404719ad3dea6f9a8c952c9a516f441c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/224a824d88daf096/shard-001.json",
+      "sha256": "a328fafff2b9cf7984b07f0a3d31b304e810490e568a2def0d6720eddbcc6f45"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/224a824d88daf096/shard-000.json",
+      "sha256": "aeb69b130838bb514b235f07455f2e4275b49bfabbce0a245db06bcfa43bf599"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/224a824d88daf096/shard-011.json",
+      "sha256": "357ba77d5e31b6e38b06532fe308d98df4a8ae727934a601badc12c368130d17"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/224a824d88daf096/shard-007.json",
+      "sha256": "60dd934d492a6025a94606ee644043a9e684e6767f7934facf5b421f41b2c0ae"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/224a824d88daf096/shard-006.json",
+      "sha256": "becc02733680f43aa3fe938914a65ef378075569754b35fccb5b3bb943ca841b"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/224a824d88daf096/shard-010.json",
+      "sha256": "c6f10ac55855dd7c064db1f657b119caa5a0f3b7e689279e21543d1a0e5759e4"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8adcf8d0a6109816/shard-009.json",
+      "sha256": "2bede84d7aef1ecd39102ee5282a080493c262c2c761c2736360d46651afd404"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8adcf8d0a6109816/shard-005.json",
+      "sha256": "70eb78c80a8d93d63c8c0f25c1a1febbd3d13aeaa5e37faecfb6914dfb7dc99c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8adcf8d0a6109816/shard-013.json",
+      "sha256": "d6cf3e9ce5e68cd1e88f17a2c4a9cda6d57100b5ce0b8cd1bd4ccfb4a211206d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8adcf8d0a6109816/shard-012.json",
+      "sha256": "65de257bc7248f1018f10e34f6b0fd635756465eaab9358d8d0517e6e70c68e7"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8adcf8d0a6109816/shard-004.json",
+      "sha256": "f9b715a039e95448a2fa77df10f6342ed372394307a5d8872abc41d124dcf7c6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8adcf8d0a6109816/shard-008.json",
+      "sha256": "77628e6aef6a67d9a1ab1a5b9a48db914fee0d772f6fb7960c838ec12914ef3c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8adcf8d0a6109816/shard-003.json",
+      "sha256": "044d573b60d9cbb5435362fd8d82f9d649e55a25b01a65e5785de092915cbbea"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8adcf8d0a6109816/shard-015.json",
+      "sha256": "6197a338d56b879ffc100ac695d3bc4f68398e59b52f33f05a07f7a8c7b415ab"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8adcf8d0a6109816/shard-014.json",
+      "sha256": "d733c9d5d790f3f0eeb4babd205fde8594a10134109cdc242892a42e71c3b7ec"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8adcf8d0a6109816/shard-002.json",
+      "sha256": "1c7e9b299e82fcfe248f9a7e39c9f0ba19429d838e4990795c376c1177efc8ec"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8adcf8d0a6109816/shard-001.json",
+      "sha256": "a0b81e13f1563d64c8e10aabe1269ec517ffb3e738b0ba3faec5d9d35970d38d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8adcf8d0a6109816/shard-000.json",
+      "sha256": "fab205f6fccf5eff1b0fea0a3d2851946a5abe33d4b498a1c52d99a8ffa8c02a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8adcf8d0a6109816/shard-011.json",
+      "sha256": "c7690f2251dd707b8eb27d0edcdf7029d61693ce6c6831d58610e14725c6ed7b"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8adcf8d0a6109816/shard-007.json",
+      "sha256": "d48126f35670301fb7de7caac2110d0c7adacef89cc923e3f04a81f2b8bbe22c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8adcf8d0a6109816/shard-006.json",
+      "sha256": "1bdff627634c83dbfe0e6212ae8b6b14c1b930f80a0ae1e171c56d64dbaf5e40"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8adcf8d0a6109816/shard-010.json",
+      "sha256": "67ea5c6d5decf2858566f0735c97fb8b544f52a4431e9256f643f4b3e309ec16"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5353ed292753ee6d/shard-009.json",
+      "sha256": "99f4c67144ca0b75f03b79ed4ea6a0eaa293f5215e80ab71a902941955295fe2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5353ed292753ee6d/shard-005.json",
+      "sha256": "f9f68d9f61d40ce1c540a7f8557d456a279f3095bfbd4cb8811bb70d4c13e604"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5353ed292753ee6d/shard-013.json",
+      "sha256": "5cf0c87ad0430c5a89587f2337a917ea53ceeef744c6acf99cea561b3916fa4f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5353ed292753ee6d/shard-012.json",
+      "sha256": "cd36e08d80c2bea5f3da6f359d9b9f285f9b9ccd5b000e2f339cd12d445b6c14"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5353ed292753ee6d/shard-004.json",
+      "sha256": "6f4631c6699cdc131d5102cd528c92bf8369ee5722a0ab247568771b4d255c82"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5353ed292753ee6d/shard-008.json",
+      "sha256": "7274b92326fddf4bee85e63fce47af5784c3d8bceca1155927e45458dbc3a481"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5353ed292753ee6d/shard-003.json",
+      "sha256": "41dc1c67faae3af8edbaf92ee46334e120ec111b10398c00b6ec172e314bed61"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5353ed292753ee6d/shard-015.json",
+      "sha256": "77339957fd84db8e1ec5390e5628287e3e5ed2c8d792c348840175db59c14b04"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5353ed292753ee6d/shard-014.json",
+      "sha256": "3f7d14a8a5b51ce569422a19eb255d34cb6f452c65f7e4f32953e794dadb3421"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5353ed292753ee6d/shard-002.json",
+      "sha256": "2bbf7e5890870f12f7125bcc36240bc1e1a67289ad33544476f71aa01ff7b123"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5353ed292753ee6d/shard-001.json",
+      "sha256": "5bfd3386ab16c509a10f6a2192b7d120d848c6319af9c0d385a6231f8f66e7da"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5353ed292753ee6d/shard-000.json",
+      "sha256": "6b07c5a0203102ac2f9ec8c4e0829eff4c1f834a7dc47dd76d7acc970d164880"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5353ed292753ee6d/shard-011.json",
+      "sha256": "d6676d161fad09655981bb052b71a7839a7ee5c80a5f3a1ce341607da9dc05df"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5353ed292753ee6d/shard-007.json",
+      "sha256": "814b2c471d4b9e8149921e72494db9e4de37a5592c145c84ad1fdb45fdcc413d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5353ed292753ee6d/shard-006.json",
+      "sha256": "eeb2ab7c893a6d7d52e58b37b52394961327676398a0c0bd97da049fe34ae939"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5353ed292753ee6d/shard-010.json",
+      "sha256": "9518e3111a2ee444ef1d3cfedf448a94cacfbd08ab0e788c8b22f23fe3987bd6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/732bdacbb5a486a3/shard-009.json",
+      "sha256": "9fec19a353acd412b4cdd1fa7b11be8048eefb215ea7176949c36793dacbad67"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/732bdacbb5a486a3/shard-005.json",
+      "sha256": "7a5fbcd7051797b70766165f701ead1d9d5997a4d0b34420c858242a9a18ebbe"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/732bdacbb5a486a3/shard-013.json",
+      "sha256": "5cf0c87ad0430c5a89587f2337a917ea53ceeef744c6acf99cea561b3916fa4f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/732bdacbb5a486a3/shard-012.json",
+      "sha256": "cd36e08d80c2bea5f3da6f359d9b9f285f9b9ccd5b000e2f339cd12d445b6c14"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/732bdacbb5a486a3/shard-004.json",
+      "sha256": "6f4631c6699cdc131d5102cd528c92bf8369ee5722a0ab247568771b4d255c82"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/732bdacbb5a486a3/shard-008.json",
+      "sha256": "7274b92326fddf4bee85e63fce47af5784c3d8bceca1155927e45458dbc3a481"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/732bdacbb5a486a3/shard-003.json",
+      "sha256": "41dc1c67faae3af8edbaf92ee46334e120ec111b10398c00b6ec172e314bed61"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/732bdacbb5a486a3/shard-015.json",
+      "sha256": "77339957fd84db8e1ec5390e5628287e3e5ed2c8d792c348840175db59c14b04"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/732bdacbb5a486a3/shard-014.json",
+      "sha256": "3f7d14a8a5b51ce569422a19eb255d34cb6f452c65f7e4f32953e794dadb3421"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/732bdacbb5a486a3/shard-002.json",
+      "sha256": "2bbf7e5890870f12f7125bcc36240bc1e1a67289ad33544476f71aa01ff7b123"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/732bdacbb5a486a3/shard-001.json",
+      "sha256": "5bfd3386ab16c509a10f6a2192b7d120d848c6319af9c0d385a6231f8f66e7da"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/732bdacbb5a486a3/shard-000.json",
+      "sha256": "6b07c5a0203102ac2f9ec8c4e0829eff4c1f834a7dc47dd76d7acc970d164880"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/732bdacbb5a486a3/shard-011.json",
+      "sha256": "d6676d161fad09655981bb052b71a7839a7ee5c80a5f3a1ce341607da9dc05df"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/732bdacbb5a486a3/shard-007.json",
+      "sha256": "76541f88976df522cd4d43ca8359803d406cb8126d52b9f7330630eb15186906"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/732bdacbb5a486a3/shard-006.json",
+      "sha256": "eeb2ab7c893a6d7d52e58b37b52394961327676398a0c0bd97da049fe34ae939"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/732bdacbb5a486a3/shard-010.json",
+      "sha256": "9518e3111a2ee444ef1d3cfedf448a94cacfbd08ab0e788c8b22f23fe3987bd6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8ae1cb27efdaaaff/shard-009.json",
+      "sha256": "2ec13af585eb98dbdedc814417f2603ccf1c1f25afcdabb3eb33d44c4902c433"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8ae1cb27efdaaaff/shard-005.json",
+      "sha256": "2f7f3d55ee9609028ab2aa614ebe4a9261fd7e57da47c0f0bea0e1aa20070b29"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8ae1cb27efdaaaff/shard-013.json",
+      "sha256": "706197719e09cd1a4b156d93c86f661f13677058d660651ae2f03768a7866008"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8ae1cb27efdaaaff/shard-012.json",
+      "sha256": "02ecf84ad541d9e7c42823fd8bc3f4753c13bb53cff392380e30dd59c36dcc21"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8ae1cb27efdaaaff/shard-004.json",
+      "sha256": "3d9b2a3ac4ae4c6a82e3d6ca6c399f2433bfee53b62c161460fd7354881a2a96"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8ae1cb27efdaaaff/shard-008.json",
+      "sha256": "07401bf3911e4ea45d6a257313eb1711858b4ba1c0bfc28c2fa890fab40bb6ab"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8ae1cb27efdaaaff/shard-003.json",
+      "sha256": "dd1082102599481f86070acd737e29ebb435e1e5c5d06de0f5c4f9bfa4245ea6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8ae1cb27efdaaaff/shard-015.json",
+      "sha256": "bce32c123ea3737daf754e9e1ea6d786ee704fd7a3fbd719898018a3f486a661"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8ae1cb27efdaaaff/shard-014.json",
+      "sha256": "a2303b6e83cee39c090a7d32003e364c2d4b878e20e04054a9890e5055799b80"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8ae1cb27efdaaaff/shard-002.json",
+      "sha256": "8cbeaac96ac1bd3aff6bbb65269b638ec3ec1acabed0f83214b77b8ee9f8574e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8ae1cb27efdaaaff/shard-001.json",
+      "sha256": "3f41cfb187bf446ab979a48a6ad1ab82149e98174774d91473f4d95ab5b1a70b"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8ae1cb27efdaaaff/shard-000.json",
+      "sha256": "a066fa35d62f15dd8d4ac27b6952a25d8f10c0f6735a2d06a86543b48eb7f2f2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8ae1cb27efdaaaff/shard-011.json",
+      "sha256": "7911ffef706e865e58dc56a4e9dd6e761efbfc895a930941959b83ea99148ae9"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8ae1cb27efdaaaff/shard-007.json",
+      "sha256": "97476a989e81857c4efa3f86e3336e757410a7afe1d2ff560515deb5cad53dab"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8ae1cb27efdaaaff/shard-006.json",
+      "sha256": "7cf711affa276acc2477b7cd217b65a974769329a1a246556fd7ed1fa5475c6f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8ae1cb27efdaaaff/shard-010.json",
+      "sha256": "61d7042d84eac085a20a8f82fac8864dc221cedcd7bc6c953458df5e18ec14b2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9f8e1f7febf71c0f/shard-009.json",
+      "sha256": "a0a362ad2089e3a12228b0eeca42a4ada46af8da8eca76f396c19051ced7e888"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9f8e1f7febf71c0f/shard-005.json",
+      "sha256": "ba83e68ed90b6d6917fd6106b6c3a661e09a57224420248ef1db4eb11c09d901"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9f8e1f7febf71c0f/shard-013.json",
+      "sha256": "5447e637c3690755a7baac5789988945afd603059bf070fc5da1c7203fe8b33d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9f8e1f7febf71c0f/shard-012.json",
+      "sha256": "da82c34616667705d08653eaf44a851b66ddd967a1b29172e8a7c653578d5593"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9f8e1f7febf71c0f/shard-004.json",
+      "sha256": "1b9a7c18c63a0019854d8821cd5a2c366de08e0cca07fb9a1abe69a9bf0a56fc"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9f8e1f7febf71c0f/shard-008.json",
+      "sha256": "57b9876c589e71db1d78b9cf3ce707629f37bdc894e7c12344edce18e2ac2fdd"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9f8e1f7febf71c0f/shard-003.json",
+      "sha256": "411279426df93b00b2f6f0f91bbce33e6bf410a953156d0cac2cf1e9c8ca56af"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9f8e1f7febf71c0f/shard-015.json",
+      "sha256": "23e5bef7b5b51a5485cbc0714a0a642cf8877884c7076c0d41f293b080c649ff"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9f8e1f7febf71c0f/shard-014.json",
+      "sha256": "dee0bfd65feb6db133aace091cba0de25fab813d49153cc43063f1757ebb12b2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9f8e1f7febf71c0f/shard-002.json",
+      "sha256": "75b54a95f76838f81265064566bf2abdc8a90caaf08d87dae7e5c82219e95f64"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9f8e1f7febf71c0f/shard-001.json",
+      "sha256": "99e1bb8296f454f8fd754d81b4f9f9239eda3e55c335ca911cfca52bdd17d1fd"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9f8e1f7febf71c0f/shard-000.json",
+      "sha256": "03737a9a34cb84e142cc86fa0010a005fd1b164987c2edc0a4b9cfc1c56061ce"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9f8e1f7febf71c0f/shard-011.json",
+      "sha256": "e5ebd5094b7dcf47356fd58e7fdf1a1bad92d9d6b2151f5b8999024f901f3824"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9f8e1f7febf71c0f/shard-007.json",
+      "sha256": "35a0e50c2b3403991b46a826deeea3fbfff9b75e90824b252b7bcf56b484e1b8"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9f8e1f7febf71c0f/shard-006.json",
+      "sha256": "32b281d3adad2489fd7a8f11ec5cfd9f497118f46a9d3ac60e73cb25d38951c2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9f8e1f7febf71c0f/shard-010.json",
+      "sha256": "cef16f6375ec0652ed050505516418e7a4b68f1ce366abd48a69d0d80e2baf10"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8f2387d0500342b2/shard-009.json",
+      "sha256": "5f0a0d2682fe5dcfa31b660f1470b903bde1bd25bbf4911de9934173521fb928"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8f2387d0500342b2/shard-005.json",
+      "sha256": "7d3a514aa2ea89e9f9082a3bb2bbaf4bd97a4708543e826dc53df331babb3309"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8f2387d0500342b2/shard-013.json",
+      "sha256": "19c4b6c06d17bfa6825ab323acfe133ecad2bd7c7bf4069e9651f43f8ddc1ba0"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8f2387d0500342b2/shard-012.json",
+      "sha256": "958e428936059a1dd776228aecffd53cd43fdf2ebc5806d66a965b0a6df3ab23"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8f2387d0500342b2/shard-004.json",
+      "sha256": "9a875ef3040718189dafaa85f0ba4a67fafca62d7bb8cb2c6eb7c36db01566b8"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8f2387d0500342b2/shard-008.json",
+      "sha256": "3f0d414b7ba9580cf0ddca066e41d27a2f04816d9325234fdc22960c9887577c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8f2387d0500342b2/shard-003.json",
+      "sha256": "fa27ca890f40f368dc1ef15ed7cfd927779539618cb8f111db5077a47911097c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8f2387d0500342b2/shard-015.json",
+      "sha256": "443e0bf1dc346ca8e6dfeff57f930dc9060f4adcc74202d88bfa7db6fdb997a8"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8f2387d0500342b2/shard-014.json",
+      "sha256": "baf8e432cb19dded9ec6f31aded507343d87e96fe216fd6660bc86d9f17703d3"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8f2387d0500342b2/shard-002.json",
+      "sha256": "a3166fe3add59fc73ba7a88a17901797da33a9bd47aa64b4fc164c09865180f3"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8f2387d0500342b2/shard-001.json",
+      "sha256": "1ac54d970fe4bf20765016504a24e4074618f5186fa4e3c1b7527e2715dcd5a4"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8f2387d0500342b2/shard-000.json",
+      "sha256": "98b78c6c9163d923c90b38016c7fb72dbcf6f2b0d0867426d885373666026a83"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8f2387d0500342b2/shard-011.json",
+      "sha256": "1265fe5106142f75542c2d26afd1fc6ef8deddda57cd74b5b85fa7aff175b5b7"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8f2387d0500342b2/shard-007.json",
+      "sha256": "216389fda460edc4c2d64c490144e81a194561dfdb94200f692648f427dbef18"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8f2387d0500342b2/shard-006.json",
+      "sha256": "5dddb4d62ef32ce31abbb573900dee09bf3e89604a6f26b703d2801986fd11f3"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8f2387d0500342b2/shard-010.json",
+      "sha256": "43032330c3eb43ecca93a794a9c5c3d758ffef404fc52f998bc78ab48c64048f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/4b7b1224017f8b76/shard-009.json",
+      "sha256": "2900d8799a04251b4ff696c7a33dab889a746c099a15b5efd66437d71f4e156c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/4b7b1224017f8b76/shard-005.json",
+      "sha256": "72b09498413a9f3b771f989947946eb660bfe681e7f5c8ff4d14e8bf5eb1c657"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/4b7b1224017f8b76/shard-013.json",
+      "sha256": "9fa0743cc7d9d326ed269a59ed9c84d69f035052cf8c7572a3c31fdbe1075493"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/4b7b1224017f8b76/shard-012.json",
+      "sha256": "92dbf72db608b4b073d78afb19478017156d1d440140f7b269286f69e542d427"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/4b7b1224017f8b76/shard-004.json",
+      "sha256": "ae7111966626de9b9e320736356ab3a330d38ea0de95e3c579fbd4de674d4c05"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/4b7b1224017f8b76/shard-008.json",
+      "sha256": "c84a336aec5caea14190f680086607038590228a05e63e997c7475d18a1c3435"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/4b7b1224017f8b76/shard-003.json",
+      "sha256": "eccb70bb25d303379b9061c9a02f6be8ce81fb7f0be83b5af0c8ae46a43d343d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/4b7b1224017f8b76/shard-015.json",
+      "sha256": "dbcb90eda95390e8d8ac93193412d0d9d106cc68f0f6f6dc1e2171d2aba7f8a3"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/4b7b1224017f8b76/shard-014.json",
+      "sha256": "dbca6dabc48d4bf6d29fa6e5ccba7bac470372a37f7bb8b6cf17f52338b1a293"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/4b7b1224017f8b76/shard-002.json",
+      "sha256": "0cfe17384ed7e8a1da2d8795751a8dcc7ea4f6ea8436d2d34790a3936f706b4f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/4b7b1224017f8b76/shard-001.json",
+      "sha256": "4acb801cfce052dad238cf314638b6644289256bc52bf66565d5491c88530965"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/4b7b1224017f8b76/shard-000.json",
+      "sha256": "115ef0d8e5d1d44f62c2899765720c86feccc5a07f3e6646149b5d3569c2c033"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/4b7b1224017f8b76/shard-011.json",
+      "sha256": "78a16b1d1bd5a70df29f4fb1f39910d5f910dd2ec89df51fd96f1ba8bffe9a48"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/4b7b1224017f8b76/shard-007.json",
+      "sha256": "2cc0b4bf827b9999589b9ce96bf90f9a09d083812d77c86853be70df4db0e12a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/4b7b1224017f8b76/shard-006.json",
+      "sha256": "aee218b4f3caa984091af7f9fc337b2d2ffbf41b06bc88d0225dd3b95004816f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/4b7b1224017f8b76/shard-010.json",
+      "sha256": "0e52361fcae93a19678e8976050414b12513eac7a1b329cb935ba6613c35d047"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/63e74b1df66e1d94/shard-009.json",
+      "sha256": "b0f8c0f69d70d4f14c9961a5b9660117eeadc31088053ca8c3f969b09bf9f39e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/63e74b1df66e1d94/shard-005.json",
+      "sha256": "f98d2b0f7d0752e8365f438a2582c97721955bb04a9c67f2780a2a7ad0f4fcc2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/63e74b1df66e1d94/shard-013.json",
+      "sha256": "a4e5e8de50ec376bbc777526eaffc25544953714f4ddff33665edba6267f12da"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/63e74b1df66e1d94/shard-012.json",
+      "sha256": "ff3bd755f0ef5790da22717e6704f02a72680e1463de1253b9dea85e2a44a951"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/63e74b1df66e1d94/shard-004.json",
+      "sha256": "fcc0c5b316bddf1d733c0c1bb6455dee80bd0abdb378799599e0c24edbf52fba"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/63e74b1df66e1d94/shard-008.json",
+      "sha256": "d0121fbbad7c3d5a98459299038f37b8b5ad72c7591844d25471f93142940aa6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/63e74b1df66e1d94/shard-003.json",
+      "sha256": "9178cdf58b604b1a8e2459803229835615df0fb53a5522e9072cdb110c78b5af"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/63e74b1df66e1d94/shard-015.json",
+      "sha256": "66a40907ad211144f867f9bd7b25c0f3d2812321d2303d9732a5e162286054c0"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/63e74b1df66e1d94/shard-014.json",
+      "sha256": "e78aaf2b03a1bd7d3fbdfb8c5a665ac52ae329ee84f7c86964e47fcc0a4ea591"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/63e74b1df66e1d94/shard-002.json",
+      "sha256": "a3166fe3add59fc73ba7a88a17901797da33a9bd47aa64b4fc164c09865180f3"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/63e74b1df66e1d94/shard-001.json",
+      "sha256": "65dae415a52900bd38902d4708cd1d8387d315e75d31764701bb95090fd2538d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/63e74b1df66e1d94/shard-000.json",
+      "sha256": "bde6df78a5717e8c167bf4103a74023d8fb8db905038a670f1dca21eb591dc94"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/63e74b1df66e1d94/shard-011.json",
+      "sha256": "0791119a5f905e4014c049344e3033f73e50e826775a4f60cc9a66f9b9f84049"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/63e74b1df66e1d94/shard-007.json",
+      "sha256": "790a137695542d60db5fcd578bd50a612e81448ab12375356d442ebcf896385f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/63e74b1df66e1d94/shard-006.json",
+      "sha256": "c8fc1e5d8b0947ee01937f6589c08c32ebd3ae1b01643727293174fdac13b838"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/63e74b1df66e1d94/shard-010.json",
+      "sha256": "666660d1c3e7bb3fe4881a00ad35db2e6c6c00e28a5d797077ce70661ace73e9"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/shard-009.json",
+      "sha256": "9fec19a353acd412b4cdd1fa7b11be8048eefb215ea7176949c36793dacbad67"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/shard-005.json",
+      "sha256": "7a5fbcd7051797b70766165f701ead1d9d5997a4d0b34420c858242a9a18ebbe"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/shard-013.json",
+      "sha256": "5cf0c87ad0430c5a89587f2337a917ea53ceeef744c6acf99cea561b3916fa4f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/shard-012.json",
+      "sha256": "cd36e08d80c2bea5f3da6f359d9b9f285f9b9ccd5b000e2f339cd12d445b6c14"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/shard-004.json",
+      "sha256": "6f4631c6699cdc131d5102cd528c92bf8369ee5722a0ab247568771b4d255c82"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/shard-008.json",
+      "sha256": "7274b92326fddf4bee85e63fce47af5784c3d8bceca1155927e45458dbc3a481"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/shard-003.json",
+      "sha256": "41dc1c67faae3af8edbaf92ee46334e120ec111b10398c00b6ec172e314bed61"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/shard-015.json",
+      "sha256": "77339957fd84db8e1ec5390e5628287e3e5ed2c8d792c348840175db59c14b04"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/shard-014.json",
+      "sha256": "3f7d14a8a5b51ce569422a19eb255d34cb6f452c65f7e4f32953e794dadb3421"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/shard-002.json",
+      "sha256": "2bbf7e5890870f12f7125bcc36240bc1e1a67289ad33544476f71aa01ff7b123"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/shard-001.json",
+      "sha256": "5bfd3386ab16c509a10f6a2192b7d120d848c6319af9c0d385a6231f8f66e7da"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/shard-000.json",
+      "sha256": "6b07c5a0203102ac2f9ec8c4e0829eff4c1f834a7dc47dd76d7acc970d164880"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/shard-011.json",
+      "sha256": "d6676d161fad09655981bb052b71a7839a7ee5c80a5f3a1ce341607da9dc05df"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/shard-007.json",
+      "sha256": "76541f88976df522cd4d43ca8359803d406cb8126d52b9f7330630eb15186906"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/shard-006.json",
+      "sha256": "eeb2ab7c893a6d7d52e58b37b52394961327676398a0c0bd97da049fe34ae939"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ed22190c0382b63/shard-010.json",
+      "sha256": "9518e3111a2ee444ef1d3cfedf448a94cacfbd08ab0e788c8b22f23fe3987bd6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-009.json",
+      "sha256": "9fec19a353acd412b4cdd1fa7b11be8048eefb215ea7176949c36793dacbad67"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-005.json",
+      "sha256": "7a5fbcd7051797b70766165f701ead1d9d5997a4d0b34420c858242a9a18ebbe"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-013.json",
+      "sha256": "5cf0c87ad0430c5a89587f2337a917ea53ceeef744c6acf99cea561b3916fa4f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-012.json",
+      "sha256": "cd36e08d80c2bea5f3da6f359d9b9f285f9b9ccd5b000e2f339cd12d445b6c14"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-004.json",
+      "sha256": "6f4631c6699cdc131d5102cd528c92bf8369ee5722a0ab247568771b4d255c82"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-008.json",
+      "sha256": "3c18a57da73566a93ebf62b47e78372d5d7d252dba4ae773a0ae9242fa389bf3"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-003.json",
+      "sha256": "41dc1c67faae3af8edbaf92ee46334e120ec111b10398c00b6ec172e314bed61"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-015.json",
+      "sha256": "77339957fd84db8e1ec5390e5628287e3e5ed2c8d792c348840175db59c14b04"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-014.json",
+      "sha256": "3f7d14a8a5b51ce569422a19eb255d34cb6f452c65f7e4f32953e794dadb3421"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-002.json",
+      "sha256": "2bbf7e5890870f12f7125bcc36240bc1e1a67289ad33544476f71aa01ff7b123"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-001.json",
+      "sha256": "5bfd3386ab16c509a10f6a2192b7d120d848c6319af9c0d385a6231f8f66e7da"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-000.json",
+      "sha256": "6b07c5a0203102ac2f9ec8c4e0829eff4c1f834a7dc47dd76d7acc970d164880"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-011.json",
+      "sha256": "d6676d161fad09655981bb052b71a7839a7ee5c80a5f3a1ce341607da9dc05df"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-007.json",
+      "sha256": "76541f88976df522cd4d43ca8359803d406cb8126d52b9f7330630eb15186906"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-006.json",
+      "sha256": "eeb2ab7c893a6d7d52e58b37b52394961327676398a0c0bd97da049fe34ae939"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7ff3e10cc7163368/shard-010.json",
+      "sha256": "9518e3111a2ee444ef1d3cfedf448a94cacfbd08ab0e788c8b22f23fe3987bd6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/32f7adada688cfc6/shard-009.json",
+      "sha256": "2900d8799a04251b4ff696c7a33dab889a746c099a15b5efd66437d71f4e156c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/32f7adada688cfc6/shard-005.json",
+      "sha256": "b6b6b1b2ca6711b62407333ab50c4466f72cfd4f1ca8b043315392cd484797d4"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/32f7adada688cfc6/shard-013.json",
+      "sha256": "253c3e0844b1517cf078383b3a5a5cdcf56d1af2d1c9a145afafa91166eb0768"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/32f7adada688cfc6/shard-012.json",
+      "sha256": "27ed0bc95cc47c75804521b6625e5c2b23456c6e27610495a4edaf115afdbdd1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/32f7adada688cfc6/shard-004.json",
+      "sha256": "62be62a00b32eb18fd49545eca617b4f9f86c1473988bee12d423243c424e825"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/32f7adada688cfc6/shard-008.json",
+      "sha256": "7b6aa7b9a070c41a33045b41d8ba177036809e3ec01f09dda3a73a4af7fa0cf1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/32f7adada688cfc6/shard-003.json",
+      "sha256": "e6d91dbf57d8f6366aab1eedb2625eb9e95975e1041ce6336aac6daba848e400"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/32f7adada688cfc6/shard-015.json",
+      "sha256": "953097e2ef23f89022410dfb4d0602a954084dbd86bd0a744d0c6d6a76fd94a5"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/32f7adada688cfc6/shard-014.json",
+      "sha256": "7dc89819e00ced008d51322d6bc0c60c2841fde7b4ea8498e4991f658209bb2e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/32f7adada688cfc6/shard-002.json",
+      "sha256": "243a116635f14342a03754358ebfd370b7b2fe56cc0a3925a7cf4e8150194994"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/32f7adada688cfc6/shard-001.json",
+      "sha256": "2cdcca41ae3831f7267e2999aaf75781105cb4abd73801d1fd13f991c1c763c1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/32f7adada688cfc6/shard-000.json",
+      "sha256": "f755f5300c05034ffe8a962e9d2037dc2d3d06018f003bd9cfe26f20d9522048"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/32f7adada688cfc6/shard-011.json",
+      "sha256": "58b048c7ef5f1cb60491febbfd7e6a86ed41c847f6448a5373befe232745383e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/32f7adada688cfc6/shard-007.json",
+      "sha256": "864aea71217c5768de2cef4d3aa1757d140c79c3779cdf1ce7dfdeba259f5ea1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/32f7adada688cfc6/shard-006.json",
+      "sha256": "aee218b4f3caa984091af7f9fc337b2d2ffbf41b06bc88d0225dd3b95004816f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/32f7adada688cfc6/shard-010.json",
+      "sha256": "b11ecef55b42dc839a9adc76f905232761fd6d9b963d320e79f3cde92d704aae"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c876d215175e939b/shard-009.json",
+      "sha256": "4cfc2778f7913672abfac4a7b706ed067aa7254b148c278f5f8aa78bd598f1df"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c876d215175e939b/shard-005.json",
+      "sha256": "17c0e0512ef303561e01c0bd687008a8f103bc34b79398c3c90a0ce99fd3ef25"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c876d215175e939b/shard-013.json",
+      "sha256": "e9455dc81586005197b613e0773e9e6682db3a7487227ac349e9ce720a62c1e2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c876d215175e939b/shard-012.json",
+      "sha256": "0e7bfc00696ddcbcd481a4a31ffa78b369caf8cf20455adf29db9c485e8bd31e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c876d215175e939b/shard-004.json",
+      "sha256": "a0c1bf0b3b23ae6203719231d110bfdfd310085fda11f511ed5bfcd7a0224613"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c876d215175e939b/shard-008.json",
+      "sha256": "68673ba39ba9e77b7c00635ccd6b3ff612b41ca58b1cfdb489c6c028b0ad1b61"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c876d215175e939b/shard-003.json",
+      "sha256": "5e4e92f6f0aa60adb3833f37679fc08121814fb113a61731e111456312c078dd"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c876d215175e939b/shard-015.json",
+      "sha256": "6197a338d56b879ffc100ac695d3bc4f68398e59b52f33f05a07f7a8c7b415ab"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c876d215175e939b/shard-014.json",
+      "sha256": "3f3039c8cb05352c200837f9bbf04d417582e0d808aa3d4f87b32bafb1b0467e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c876d215175e939b/shard-002.json",
+      "sha256": "afa0acc1f7597a274f81503fd027aab218f129f93da9eec9863322a841cebd33"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c876d215175e939b/shard-001.json",
+      "sha256": "19cea7b1a22856d3d997a3021defd07d801db0dfc1f9eb1a32508aa17720346f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c876d215175e939b/shard-000.json",
+      "sha256": "52f4bea0fd2f725d79e6f6be4b1b99f5c5ffa2cb45905eeab8aaee7660d6981d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c876d215175e939b/shard-011.json",
+      "sha256": "23bbc0a3a738951c70061d4bc6b40cec1ee4f06713165a6002e43aa3ca7b7529"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c876d215175e939b/shard-007.json",
+      "sha256": "bd19491557af7824c1dfdf11833c303a2a3a01c7e9eeeb50640d3e3b88b67293"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c876d215175e939b/shard-006.json",
+      "sha256": "66b7e200a648c9f23233361284d5d13bfda91e13f642a4575d9bbbb4b7d97505"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c876d215175e939b/shard-010.json",
+      "sha256": "6ebb9193c695b9ba36cc802ff50ef06b57699571a5519ce7e26f7ebcd78068b0"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f8e589f947a2b590/shard-009.json",
+      "sha256": "2ec13af585eb98dbdedc814417f2603ccf1c1f25afcdabb3eb33d44c4902c433"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f8e589f947a2b590/shard-005.json",
+      "sha256": "2f7f3d55ee9609028ab2aa614ebe4a9261fd7e57da47c0f0bea0e1aa20070b29"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f8e589f947a2b590/shard-013.json",
+      "sha256": "706197719e09cd1a4b156d93c86f661f13677058d660651ae2f03768a7866008"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f8e589f947a2b590/shard-012.json",
+      "sha256": "02ecf84ad541d9e7c42823fd8bc3f4753c13bb53cff392380e30dd59c36dcc21"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f8e589f947a2b590/shard-004.json",
+      "sha256": "3d9b2a3ac4ae4c6a82e3d6ca6c399f2433bfee53b62c161460fd7354881a2a96"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f8e589f947a2b590/shard-008.json",
+      "sha256": "07401bf3911e4ea45d6a257313eb1711858b4ba1c0bfc28c2fa890fab40bb6ab"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f8e589f947a2b590/shard-003.json",
+      "sha256": "dd1082102599481f86070acd737e29ebb435e1e5c5d06de0f5c4f9bfa4245ea6"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f8e589f947a2b590/shard-015.json",
+      "sha256": "bce32c123ea3737daf754e9e1ea6d786ee704fd7a3fbd719898018a3f486a661"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f8e589f947a2b590/shard-014.json",
+      "sha256": "a2303b6e83cee39c090a7d32003e364c2d4b878e20e04054a9890e5055799b80"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f8e589f947a2b590/shard-002.json",
+      "sha256": "8cbeaac96ac1bd3aff6bbb65269b638ec3ec1acabed0f83214b77b8ee9f8574e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f8e589f947a2b590/shard-001.json",
+      "sha256": "3f41cfb187bf446ab979a48a6ad1ab82149e98174774d91473f4d95ab5b1a70b"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f8e589f947a2b590/shard-000.json",
+      "sha256": "a066fa35d62f15dd8d4ac27b6952a25d8f10c0f6735a2d06a86543b48eb7f2f2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f8e589f947a2b590/shard-011.json",
+      "sha256": "7911ffef706e865e58dc56a4e9dd6e761efbfc895a930941959b83ea99148ae9"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f8e589f947a2b590/shard-007.json",
+      "sha256": "97476a989e81857c4efa3f86e3336e757410a7afe1d2ff560515deb5cad53dab"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f8e589f947a2b590/shard-006.json",
+      "sha256": "7cf711affa276acc2477b7cd217b65a974769329a1a246556fd7ed1fa5475c6f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f8e589f947a2b590/shard-010.json",
+      "sha256": "61d7042d84eac085a20a8f82fac8864dc221cedcd7bc6c953458df5e18ec14b2"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7d11901891c685ed/shard-009.json",
+      "sha256": "1167de4060b1797a693209f506f5e3005d6762f7d06812a1671cc4d8e5222367"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7d11901891c685ed/shard-005.json",
+      "sha256": "38086ce81cf041c79f6e292c9fc2dc0d183525839a4761d7162a5a0494949a49"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7d11901891c685ed/shard-013.json",
+      "sha256": "f286f0edc2f91d93fab9c2539097673c64eea011086b7d30f078f8ea23b03644"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7d11901891c685ed/shard-012.json",
+      "sha256": "3469732b7e705648802ce934fa30708647dd410418425dc86c29fdd5d34b6869"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7d11901891c685ed/shard-004.json",
+      "sha256": "cbe527f2df0901c90a15b7139bd5fa62890f9acb350202af63699e16ddcdcd52"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7d11901891c685ed/shard-008.json",
+      "sha256": "5700f8d21995775088ac52e64bf0a8c7ea481aded97c5d5fc18badab6c228c9e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7d11901891c685ed/shard-003.json",
+      "sha256": "3abbd460ba5176b3ca43482a179ecb7389d69b99ef99dcb927a9ca9d85600c4b"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7d11901891c685ed/shard-015.json",
+      "sha256": "d80133f2fd9e925eff57cd9ba59bdc0abf270be1e72b18bd8dea0e5a6d09b2ff"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7d11901891c685ed/shard-014.json",
+      "sha256": "ae48723ed2a5cc2bbf6b67ec570f53d88c88f8fac6f181e942b47521a62b0c0a"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7d11901891c685ed/shard-002.json",
+      "sha256": "bab763dcd1fdf66843450b34c8d2bfd49789dc299d757a6065b7259949fad8b1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7d11901891c685ed/shard-001.json",
+      "sha256": "1981194e2f6a06deae16270f617126d9ccb9ee90b89490b1307cee9f76b096e8"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7d11901891c685ed/shard-000.json",
+      "sha256": "f66f44dd82e7b4788c4e3bcf7a9a787c203b92025d21408312dc41f04bbab526"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7d11901891c685ed/shard-011.json",
+      "sha256": "1c0f19b480caeb9c660c0f1aa8f3cf584c0e0ed0780291cd21a58fe2468744ee"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7d11901891c685ed/shard-007.json",
+      "sha256": "f39e9687e7cc2ce5f762adda957903e2af72933b07afda0f7472b90e7b88f593"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7d11901891c685ed/shard-006.json",
+      "sha256": "a9b93dd9a98a0b87d57edcff02d65d6d1ee12944a6846a8898bbb1492057a3c5"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7d11901891c685ed/shard-010.json",
+      "sha256": "0a21b0079b4291aa3b316d14c47c1036c8be5ea5d93b6f04ee88272b0ed70d1d"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d30f83105f111918/shard-009.json",
+      "sha256": "2900d8799a04251b4ff696c7a33dab889a746c099a15b5efd66437d71f4e156c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d30f83105f111918/shard-005.json",
+      "sha256": "b6b6b1b2ca6711b62407333ab50c4466f72cfd4f1ca8b043315392cd484797d4"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d30f83105f111918/shard-013.json",
+      "sha256": "6f6fc3c83cf15215934645e1cf2da4e83550864ed2b82110cb54471b6276f076"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d30f83105f111918/shard-012.json",
+      "sha256": "27ed0bc95cc47c75804521b6625e5c2b23456c6e27610495a4edaf115afdbdd1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d30f83105f111918/shard-004.json",
+      "sha256": "62be62a00b32eb18fd49545eca617b4f9f86c1473988bee12d423243c424e825"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d30f83105f111918/shard-008.json",
+      "sha256": "7b6aa7b9a070c41a33045b41d8ba177036809e3ec01f09dda3a73a4af7fa0cf1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d30f83105f111918/shard-003.json",
+      "sha256": "e93ab8f1049b2838f710ed79a3cf6b6df3f680ff65824588eed2ba9d7f99f204"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d30f83105f111918/shard-015.json",
+      "sha256": "953097e2ef23f89022410dfb4d0602a954084dbd86bd0a744d0c6d6a76fd94a5"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d30f83105f111918/shard-014.json",
+      "sha256": "7dc89819e00ced008d51322d6bc0c60c2841fde7b4ea8498e4991f658209bb2e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d30f83105f111918/shard-002.json",
+      "sha256": "243a116635f14342a03754358ebfd370b7b2fe56cc0a3925a7cf4e8150194994"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d30f83105f111918/shard-001.json",
+      "sha256": "2cdcca41ae3831f7267e2999aaf75781105cb4abd73801d1fd13f991c1c763c1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d30f83105f111918/shard-000.json",
+      "sha256": "f755f5300c05034ffe8a962e9d2037dc2d3d06018f003bd9cfe26f20d9522048"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d30f83105f111918/shard-011.json",
+      "sha256": "58b048c7ef5f1cb60491febbfd7e6a86ed41c847f6448a5373befe232745383e"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d30f83105f111918/shard-007.json",
+      "sha256": "864aea71217c5768de2cef4d3aa1757d140c79c3779cdf1ce7dfdeba259f5ea1"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d30f83105f111918/shard-006.json",
+      "sha256": "aee218b4f3caa984091af7f9fc337b2d2ffbf41b06bc88d0225dd3b95004816f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d30f83105f111918/shard-010.json",
+      "sha256": "b11ecef55b42dc839a9adc76f905232761fd6d9b963d320e79f3cde92d704aae"
+    },
+    {
+      "path": "tests/test_photo_research_integration.py",
+      "sha256": "3d1b9db4822b91c93329b838cd7751ed72c8d103708c2606cd6ba6c23e78e2b2"
+    },
+    {
+      "path": "tests/test_photo_slot_data_cleanup.py",
+      "sha256": "ab67e8f4cad3b731f00e7f575c158e1febc4dd80d842af105d97fa2df42f0e5e"
+    },
+    {
+      "path": "tests/test_photo_religion_iconography_alternatives.py",
+      "sha256": "5b19b7e1a260dcb5498343390a62278f2eed8f0b50ad1047ef5f48b5543760b2"
+    },
+    {
+      "path": "tests/test_photo_core_retrieval.py",
+      "sha256": "224fe01a3fbace9255a36c9c4d88c9f379718d3435253e50e75d20d1ca7ae3e1"
+    },
+    {
+      "path": "tests/test_photo_opening_era_semantics.py",
+      "sha256": "51401235e75f83a80cebbb1ccdaaa7a1745c87f82dd1a47e5dba814783842ade"
+    },
+    {
+      "path": "tests/test_photo_nape_effect_scope.py",
+      "sha256": "f52ab24c8ccc4f50dacd1c5f53a36b1c2695a3a4bce992b615e72cc7d8c7f7d1"
+    },
+    {
+      "path": "tests/test_photo_vocaloid_metadata_boundary_history.py",
+      "sha256": "7c94e4b8e3ddbc0726742e08a51fbe3efc3ad6f6701de19d221258c8ef58af9b"
+    },
+    {
+      "path": "tests/test_photo_positive_retrieval.py",
+      "sha256": "2479114149a6138fd047855046713f41ee86d26185a2f30afb2232e928bd7c2d"
+    },
+    {
+      "path": "tests/test_photo_weapon_visual_semantics.py",
+      "sha256": "ad108257e6bd8bb2df6b368e7c9f963b7093bdbe51eeef8ed9889c74a22b2033"
+    },
+    {
+      "path": "tests/test_photo_everyday_scene_semantics.py",
+      "sha256": "197e089344097de85fc4ba4145b00770d21143649948a8921b2c021ba60b9e76"
+    },
+    {
+      "path": "tests/test_photo_reactorprompt_visual_relations.py",
+      "sha256": "9180438f7234e3a5838aa6e517854b3a69da1de9aae4dd960880fee975b609c9"
+    },
+    {
+      "path": "tests/test_photo_semantic_index.py",
+      "sha256": "2ece26ab33ab433f82a0231981413e84c24eb939f997fe632429fc8cc6fc0e60"
+    },
+    {
+      "path": "tests/photo_prompt_fixtures.py",
+      "sha256": "0f90c79708b0dcf39fd0d64fafbd3f63df58a18ae43d9301cf7294cb551a3da7"
+    },
+    {
+      "path": "tests/test_photo_humanlike_semantics.py",
+      "sha256": "ece4f0bb95f0d8c37c3b0b078405e3819436f7ea0770f2cf12260e346e410966"
+    },
+    {
+      "path": "tests/test_photo_visual_storage_boundary_history.py",
+      "sha256": "6d257b0a015db70a06fee2c7b45a28c7ed90ce7684cec219cddfcd89472ef8af"
+    },
+    {
+      "path": "tests/test_photo_leading_line_gate_alternatives.py",
+      "sha256": "0142d9aefd8b72cacf9a91d83bb4b73202f66d129007d0666121549208739001"
+    },
+    {
+      "path": "tests/test_photo_prepack_isolation.py",
+      "sha256": "607604b01f70d845e110debba5c51fa76dfeb029663af4936e3830dde609f322"
+    },
+    {
+      "path": "tests/test_photo_hair_visual_semantics.py",
+      "sha256": "e9e553843889447454909b06ed993b235013813a636a916a4aba13bf2cd6afe5"
+    },
+    {
+      "path": "tests/test_photo_cute_inventory_boundary_history.py",
+      "sha256": "37193803f515763e1cc3916ba19bcc74898519414d66869c0d12f7c1f4cc4a0c"
+    },
+    {
+      "path": "tests/test_photo_space_visual_semantics.py",
+      "sha256": "e6f762db392ea175f3c430dd533f305f703c6eb425913ed3875acd81c56bfe2f"
+    },
+    {
+      "path": "tests/test_photo_slide_thickness_alternative.py",
+      "sha256": "f718a1f35c97145d21b664c6b23e1fac7c6d21f04475e9c1fae43f47f5c15bd2"
+    },
+    {
+      "path": "tests/test_universal_scene_directional_substitution.py",
+      "sha256": "88ada8a10e39ab04182ccbe331c6450692e4d4b9431d7e9d2720aa46b93eaa93"
+    },
+    {
+      "path": "tests/test_photo_wet_hair_weight_alternative.py",
+      "sha256": "a6561a293c46d1a3b9994131bfd41c0d919dcd40012c6ad8b13c4c106f7db681"
+    },
+    {
+      "path": "tests/test_photo_traditional_clothing_semantics.py",
+      "sha256": "3a57ec624bf2dcb4aa85dad5e1acabc9e6d3e60b33cc7447a91524c0b9154b7e"
+    },
+    {
+      "path": "tests/test_photo_nape_metadata_boundary_history.py",
+      "sha256": "ae61abd086aed6c72b264729923c4dd89b32bd2acd531614c32fe610c5b9b073"
+    },
+    {
+      "path": "tests/test_photo_body_shape_semantics.py",
+      "sha256": "73be690d91c6871af715c666f5b0dc24114ba12526688c8be393db5bfbcdd6e0"
+    },
+    {
+      "path": "tests/test_photo_loading.py",
+      "sha256": "9dc571f1fbc9cdb1062692a70eaa697253a81fd1dc30a66f46ee885f57a5a5be"
+    },
+    {
+      "path": "tests/test_photo_reef_explicit_unit_data_cleanup.py",
+      "sha256": "472aed527e10e45f15ec17ed3bb2076978382f80f2ff0e658461f690958ecb29"
+    },
+    {
+      "path": "tests/test_photo_portrait_fashion_exposure.py",
+      "sha256": "a367686018b83c721e80f084ef6fbe236fe765b9212ae182d4717e7cee620538"
+    },
+    {
+      "path": "tests/test_photo_subculture_appearance_alternatives.py",
+      "sha256": "b53ba8c08b93815a9ea5207c03b103cf6006a22b2a4c61cecc4e740aadcc1790"
+    },
+    {
+      "path": "tests/test_photo_water_relations.py",
+      "sha256": "53a0c1bf89e9bbb0df04dd1ea07a8c01fb1e5f8fe67a3877b47be70831c15b3e"
+    },
+    {
+      "path": "tests/test_photo_authorial_direction_scope.py",
+      "sha256": "c96541f7462111f8a41c5038057d2059f81672b335daa31a92cff5ccb2849cf3"
+    },
+    {
+      "path": "tests/test_photo_character_render_review.py",
+      "sha256": "e1cd4e284b59291c68e23fee0a58c1fa1129df7f6a04e608a60571668e5ce28f"
+    },
+    {
+      "path": "tests/test_photo_adult_appeal_scope.py",
+      "sha256": "29dcd3e42ad2de08ef7391cedbd103e4ddec1d030371c4fce0877ad77cf1114e"
+    },
+    {
+      "path": "tests/test_photo_subculture_appearance_boundary_history.py",
+      "sha256": "6d832afcf1dccd22ac4b94de4d02b1b5be8c66ae1884f9f10033080fe8d6b92e"
+    },
+    {
+      "path": "tests/test_photo_womens_activewear_visual_semantics.py",
+      "sha256": "268b8d958979e685cdc5ac62adccfda1529e47f3e5753d469df9542ef778e2d6"
+    },
+    {
+      "path": "tests/test_photo_aurora_anchor_alternative.py",
+      "sha256": "79248a02e35608854611a0038fc97c1918ef84cef1d495aba4f1db5b09a8ab55"
+    },
+    {
+      "path": "tests/test_photo_receiver_material_response.py",
+      "sha256": "dd0705b226b7db58418453f73b6895e1c0efb794626895f7e6af0aedc1b9e57c"
+    },
+    {
+      "path": "tests/test_photo_current_boundary_snapshot.py",
+      "sha256": "802bfd17e9a5a0538b4bd0fddeb4cab8fba3d667c8abb22a39e2e5c45364e00e"
+    },
+    {
+      "path": "tests/test_photo_authorship_policy.py",
+      "sha256": "3e6371ed55db19e29cfbb82c848c252de0c21f09e6852b90ed7a6303de573e4d"
+    },
+    {
+      "path": "tests/test_photo_data_semantic_corrections.py",
+      "sha256": "806d64ef84b1198eb7281c1e370b3d1ffee1ed52972690db86b0639bdafb4d64"
+    },
+    {
+      "path": "tests/test_photo_slang_visual_alternatives.py",
+      "sha256": "510f1379b89e505aaa4d9c694e9fc701af697cac507d0f850f4e948b9fa698aa"
+    },
+    {
+      "path": "tests/test_photo_liminal_maintained_alternative.py",
+      "sha256": "fc393ce4084f066ceadeb6cb5fc7f948c0b06e9a81ed5d28ae3c575507a1cf8b"
+    },
+    {
+      "path": "tests/test_makeup_layer_dictionary.py",
+      "sha256": "1118d5d6151048ccb0a894d360e7e585594a2438bc30474de8ed2cc633e28f9a"
+    },
+    {
+      "path": "tests/test_photo_religion_iconography_boundary_history.py",
+      "sha256": "888e55f80b66de5dd3507e00fb957db9d86a0ef6f2d43afd130b6d96525bcf4c"
+    },
+    {
+      "path": "tests/test_photo_portrait_composition_semantics.py",
+      "sha256": "00806c33a23b838065b0c5f2a5377eaf8e0b8eb0af40ba78d822bc835142d989"
+    },
+    {
+      "path": "tests/test_photo_seduction_expression_integration.py",
+      "sha256": "8de45536992fefaa2af88dc247f9255d7144d05521090993137419f8c7fbdceb"
+    },
+    {
+      "path": "tests/test_photo_action_context_effects_cleanup.py",
+      "sha256": "b65326db8ddaa3a5267aad49cbcc7ae3c498b7debbc6046561ce98aaa5c3af07"
+    },
+    {
+      "path": "tests/test_photo_panning_direction_scope.py",
+      "sha256": "f97ff2e06aeb9d6d13332f2ca17de56018bc2106ec1d4f5bae83eb7a2261674d"
+    },
+    {
+      "path": "tests/test_photo_womens_casualwear_visual_semantics.py",
+      "sha256": "75bc7acfd084e85a625c40a6f5c9c3af899468803209bd9907fad3193b50d55f"
+    },
+    {
+      "path": "tests/test_photo_character_appearance_100.py",
+      "sha256": "066b2cb96864dbeb63b5aff5a93b7447b7185f253cb5d5d2f87a2a4af51bdb14"
+    },
+    {
+      "path": "tests/test_photo_lighting_visual_semantics.py",
+      "sha256": "916dc33441aac6762affc14a321563e213ceaad23f0e4bd2e01cd0126e148cf8"
+    },
+    {
+      "path": "tests/test_photo_character_response_concepts.py",
+      "sha256": "c5e5b40b6dc72b3524b84f7cd6377a8e124bb9a32aebfff8238155a761dc59ca"
+    },
+    {
+      "path": "tests/test_photo_wuxia_visual_semantics.py",
+      "sha256": "d60b7546a9c49c50273fc4ccef70d397b7357e2581f8adece1c2de70a0f553a5"
+    },
+    {
+      "path": "tests/test_photo_jurisdiction_record_unit_data_cleanup.py",
+      "sha256": "9b3099ecf4fb17681f64a2f723ad5ea5ef723ffab64bb212c21dba65b887b9c0"
+    },
+    {
+      "path": "tests/test_photo_face_shape_semantics.py",
+      "sha256": "df19cee4a0af90b78aeb93f21e4d0f2a3ac4ce603564452e1da05ec6ace96243"
+    },
+    {
+      "path": "tests/test_photo_authorial_core_v6.py",
+      "sha256": "a6fae9d8df8e8d97e824b3b171cb8736867f919d87b580d6e7fbf6e73ed37ede"
+    },
+    {
+      "path": "tests/test_photo_capture_elements_visual_semantics.py",
+      "sha256": "6e71036928c0da70001aa556cf6e4312a696cc2b06f50e8887cdfcb2efc2a52e"
+    },
+    {
+      "path": "tests/test_photo_acetate_distortion_alternative.py",
+      "sha256": "c6addea68dc3a7e514d985ffb85075d44632ca828312845c2ce7b69d529743d9"
+    },
+    {
+      "path": "tests/test_photo_makeup_reference_balance.py",
+      "sha256": "36c8af3e155504e36c0e75312e2394aed3938c323f9c223f372b2c6248ea604d"
+    },
+    {
+      "path": "tests/test_photo_embodiment.py",
+      "sha256": "ce6822257e22bd2bd6c4587b3379c93419a0919d200d21be11d6f39d29151d17"
+    },
+    {
+      "path": "tests/test_photo_control_assignment_punctuation.py",
+      "sha256": "434c1bec193468d56cfb710e391b2128da9c88cef6122ba97cb5511fb07ff078"
+    },
+    {
+      "path": "tests/test_photo_ornament_structure.py",
+      "sha256": "6d69c5ca4c51839462cddf16f468c158f129b31a283861dfe7dc1dca73126e65"
+    },
+    {
+      "path": "tests/test_photo_tactile_reality_semantics.py",
+      "sha256": "fd6e7173ce783ae6da4bb597440c3dfd5662fca9a5ebdc9694672edbdf2ec065"
+    },
+    {
+      "path": "tests/test_photo_portcullis_korean_state.py",
+      "sha256": "4bc1ee20e401440dd3447d3950cd3d32438be83b481c3a01158ea894219b6577"
+    },
+    {
+      "path": "tests/test_photo_capture_boundary_data.py",
+      "sha256": "d9ddf22a0822944f8fa28904b9cb7f5002633c26d0494bba3d5e9842464c5c57"
+    },
+    {
+      "path": "tests/test_photo_role_garment_candidate_expansion.py",
+      "sha256": "94d00d83bb1f8c0b793aef097e3285c998a5e5a98fc611a7795b99d5ea72ece9"
+    },
+    {
+      "path": "tests/test_photo_v21_historical_fixture.py",
+      "sha256": "6eab142f474fff6d11181416b636de90bcce0dcaa365da5da6050d8f57ffcbf5"
+    },
+    {
+      "path": "tests/test_photo_y2k_visual_semantics.py",
+      "sha256": "c0a513cc52b8ba1ffbc772a8aafeb12141f436239835d0c877b7e1d0a6c12c37"
+    },
+    {
+      "path": "tests/test_photo_camera_evidence_structure.py",
+      "sha256": "3c69993d43741da45d5371c374172d4efd6ccf894acaee49b9217329e09d91b4"
+    },
+    {
+      "path": "tests/test_photo_palace_korean_relation_alignment.py",
+      "sha256": "35c8d7dd9c6aad6d3a1e67b013fb22300a844fd45d2d25274a45e5ecfb7db2ac"
+    },
+    {
+      "path": "tests/test_photo_affect_visual_semantics.py",
+      "sha256": "6083ccf626678dbc7a91d114d0c4c76446cf944ad34f7a445e4ab8c2be42b667"
+    },
+    {
+      "path": "tests/test_photo_contextual_appeal.py",
+      "sha256": "cb33a77fe227c6dc8cdf92ff91399d7ba258357ced1eefb77345c1b111c5b48b"
+    },
+    {
+      "path": "tests/__init__.py",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "tests/test_subculture_illustration_universal_scene_v3.py",
+      "sha256": "9ebc861d64066aaaebea34cca61e96d5afd552654b44b1d0dbad0d5469763613"
+    },
+    {
+      "path": "tests/test_photo_concept_candidate_expansion.py",
+      "sha256": "0d3fe5e184186c35dfc451653deaa27c8ea5ce7003346deb7919a45156a44e76"
+    },
+    {
+      "path": "tests/test_photo_slang_boundary_history.py",
+      "sha256": "8151986049a4788b7a8f735c8e7b147f5f7048d30707e0716b2a19e0a4b86383"
+    },
+    {
+      "path": "tests/test_photo_realistic_background_semantics.py",
+      "sha256": "1b8c4ccdd6091bbca35ea29d9ea0b7959971204f41136305b246ce6e278ff02d"
+    },
+    {
+      "path": "tests/test_photo_v19_historical_fixture.py",
+      "sha256": "c997ed76ca8a8b27d5c1badb213f29a3784f613e6f398278a319cd5b13ddec69"
+    },
+    {
+      "path": "tests/test_photo_slot_query_fusion.py",
+      "sha256": "ca1595aa4880f930f0aa72d073a13743636ec6bda512d742cc96eb89b30893e1"
+    },
+    {
+      "path": "tests/test_photo_krummholz_korean_alias_data_cleanup.py",
+      "sha256": "981f165afdbc6111cf3b01029288134f60871d2d45f7dc2126193bb6ac78e308"
+    },
+    {
+      "path": "tests/test_photo_glass_inventory_boundary_history.py",
+      "sha256": "2a8a43eff1ae4230d5fc90d6294a7cb3ce3ce6303308c1a6edee063d8238cf79"
+    },
+    {
+      "path": "tests/test_photo_ghost_ship_gate_alternative.py",
+      "sha256": "b5c9ee2eb945c0a90859f9dd4494dff4fca4cdbd95833ba4864151daebcba4ca"
+    },
+    {
+      "path": "tests/test_photo_photorealism_elements_semantics.py",
+      "sha256": "5504aded958508a46de9fa64463bc604f8bc039aea48a1e900a25512e786c921"
+    },
+    {
+      "path": "tests/test_photo_color_relations.py",
+      "sha256": "b300271499af3a785bad0b4bce690e452b904d2bcea912592a93c233588a733e"
+    },
+    {
+      "path": "tests/test_photo_convoy_route_alternative.py",
+      "sha256": "a9e92ad3c99e0c8f407880fb9a9a79e8fd5b13a64f74a9fa8c26393b1206d3c2"
+    },
+    {
+      "path": "tests/test_photo_composer_view.py",
+      "sha256": "7d4f6902851b0389e695f8f53201eaa8e4ec432c96ca1e3ab383ae1232a534a1"
+    },
+    {
+      "path": "tests/test_photo_image_attempt_evidence.py",
+      "sha256": "48919702005c98981b1d89f837752de7bc087493384189a16d30afc58bcab6f5"
+    },
+    {
+      "path": "tests/test_photo_mythology_visual_semantics.py",
+      "sha256": "4d64384cdfd1b21550620c982e02069362e7987aca97d4b6d075ee9eaba1e1d5"
+    },
+    {
+      "path": "tests/test_photo_run_manifest.py",
+      "sha256": "97b4d4d2741d81e358174bbbb1825fdc6589bccd99d5dae4d62523599577eed7"
+    },
+    {
+      "path": "tests/test_photo_body_morphology_semantics.py",
+      "sha256": "a3465a9efa3f506c3e21484a601bc7c07e32ff116ae1b817d5d4cae18ba7d193"
+    },
+    {
+      "path": "tests/test_photo_historical_womenswear_semantics.py",
+      "sha256": "441dd399f8ba1d13b0ddfdf7518e3291411ba5e0943ba07cfbf824f6b48bd8cd"
+    },
+    {
+      "path": "tests/test_photo_seduction_source_boundary_history.py",
+      "sha256": "052fa2f3d2cefb5d5e92dcf29a2e42eb3df11a5ee03ab5eaf8528f5dd956eb12"
+    },
+    {
+      "path": "tests/test_photo_lighting_composition_boundary_data.py",
+      "sha256": "30fb0eeffcb7b39345e96d2191f83c61a61b0477ad989c09407958ff98c460ea"
+    },
+    {
+      "path": "tests/test_photo_fantasy_visual_semantics.py",
+      "sha256": "786b0d028f123fe5994ee805f33bc69b31f0591661de2d9e3d4486a4223c3d10"
+    },
+    {
+      "path": "tests/test_photo_architecture_zero_delta_boundary.py",
+      "sha256": "cf1fb5c6c841fe21298d7160424be48984a93c741132ee84f7faa6b3938c82ea"
+    },
+    {
+      "path": "tests/test_photo_data_cleanup_public_surfaces.py",
+      "sha256": "2745eb916043e59c62dff1269620f0b9a0d15afaeb7f0dc6cad3883ac162dbfa"
+    },
+    {
+      "path": "tests/test_photo_death_afterlife_semantics.py",
+      "sha256": "d71d286eeee500a9693ff5be10be1a6ee745ca5af4f246a17dfc0a389a37af8a"
+    },
+    {
+      "path": "tests/test_photo_makeup_visual_semantics.py",
+      "sha256": "77b851b41d2b9e1c5e087a5c0d331f27069c7fbcd09abcac040c2b405d51c7c1"
+    },
+    {
+      "path": "tests/test_photo_camera_clause_polarity.py",
+      "sha256": "485c998a40d7a41e38977c5f3f4e457a88d33596f5b01504820113cb4c736ad6"
+    },
+    {
+      "path": "tests/test_photo_swimwear_semantics.py",
+      "sha256": "39a196629ee8a0c14050cae2d36714c5e9cb38f6454ed127ef9ac119df94f355"
+    },
+    {
+      "path": "tests/test_photo_texture_data_cleanup.py",
+      "sha256": "848323d953116441376be1450a81a2fbdb25cb0fac7dc027ddd29deee35a146c"
+    },
+    {
+      "path": "tests/test_photo_vocaloid_appearance_paraphrases.py",
+      "sha256": "bfd9664b7e052810da630cf5b84d0edb8bcba3371d4244bab70ab884c04dfa3c"
+    },
+    {
+      "path": "tests/test_photo_latest_metadata_boundary_history.py",
+      "sha256": "e2aa0781b8567825d79b5bb18f320b721590c652bd8d4fddd5ede5b595255d4c"
+    },
+    {
+      "path": "tests/test_photo_semantic_guidance_data.py",
+      "sha256": "39767c4ecc52c3774b5f82194f34cfb42122bffbc80be0024f13e5415e4f1e2c"
+    },
+    {
+      "path": "tests/test_photo_intellectual_equivalents.py",
+      "sha256": "9ccf2e2a333f9a93a1eab70c12d408011c5de59f61aaba93d2ebb17a9b462939"
+    },
+    {
+      "path": "tests/test_photo_model_editorial_semantics.py",
+      "sha256": "dfe888276f5a84affe54b2be716d81d860f886211b31d7406d0ac423aa0f7afd"
+    },
+    {
+      "path": "tests/test_photo_legend_visual_semantics.py",
+      "sha256": "a24be74ba36ad20ff05042a844c94fda507b24db633d9a76d83b3cc7d166d2d0"
+    },
+    {
+      "path": "tests/test_photo_poverty_visual_semantics.py",
+      "sha256": "852546fab72b08e1865cbc9e61765bcc60462e498ed9a52868e0de7d5ed600b6"
+    },
+    {
+      "path": "tests/test_photo_pose_vocabulary_semantics.py",
+      "sha256": "84d82748304e2b5ee1b9e1d68450db5d8aa2847ac7be9ae2a7ab717b1cc5f7fc"
+    },
+    {
+      "path": "tests/test_photo_single_allocator_recovery.py",
+      "sha256": "7d70bb5114114c39f7a0136349820699d8559de03caf207ccf9ba9cd320f0496"
+    },
+    {
+      "path": "tests/test_photo_authorial_core.py",
+      "sha256": "1f204fed52d17816a2bd4451868a245bf77c27c1ac4082e821ba17889b26cd5b"
+    },
+    {
+      "path": "tests/test_photo_initial_creative_controls.py",
+      "sha256": "cfa2dfff9a18f5d2038e46bdb519166ef3ea35ef9ee277d14af84df25d46884e"
+    },
+    {
+      "path": "tests/test_photo_imaginal_visual_semantics.py",
+      "sha256": "89f931895656b48a61b0c70dd9e44cd469f585775f6c23dd9ecdf5434dacd40f"
+    },
+    {
+      "path": "tests/test_photo_suggestive_editorial_visual_semantics.py",
+      "sha256": "1b6eef5e7430cbd9ed12575c12504ba0bd5bd80d919abb47e0744f9c98cf0aa1"
+    },
+    {
+      "path": "tests/test_photo_boundary_transition_visual_semantics.py",
+      "sha256": "f0a39906adaecd0b3b2556bcb8bedf3dd14e874833ccdb8330c921b55df8534c"
+    },
+    {
+      "path": "tests/test_photo_scene_data_cleanup.py",
+      "sha256": "92daae6940dae09c9d7bc51318e06921cd580a388b781be21161b57581ea4c44"
+    },
+    {
+      "path": "tests/test_photo_material_data_cleanup.py",
+      "sha256": "02646a2d4ed852c000ce7f5aa306e082c7e1e5aac13ffbda2800e7f849a9ab34"
+    },
+    {
+      "path": "tests/test_photo_bound_context_surfaces.py",
+      "sha256": "7aa83947ace72ebf4dffca974329b46287fb703ff386d0180eef65975ae14e70"
+    },
+    {
+      "path": "tests/test_photo_costume_cosplay_semantics.py",
+      "sha256": "614d80726eef04bd305febd7cba0dee6196684287c94553f55d4dea78ca6f5da"
+    },
+    {
+      "path": "tests/test_photo_era_visual_semantics.py",
+      "sha256": "39dc741eb3b22b3edb0e988d47127074ef13d53b1ef1523edf85b832bd23efdf"
+    },
+    {
+      "path": "tests/test_photo_motion_inventory_boundary_history.py",
+      "sha256": "3cf60678cbe75020deafaa390faa974406f4eedca0c06c3c98ece3e0f70742d9"
+    },
+    {
+      "path": "tests/test_photo_neutral_expression_alternatives.py",
+      "sha256": "40afb9759e66e4e5676999259aa9047150f2ddaee941c2c130956bddd7baa361"
+    },
+    {
+      "path": "tests/test_photo_violence_crime_visual_semantics.py",
+      "sha256": "101bb4c69f99c5ac6517ada1c2641bd3e10bd43d7c3db7995d4234b8280f3ead"
+    },
+    {
+      "path": "tests/test_photo_punk_aesthetic_semantics.py",
+      "sha256": "d743e6e0709bafbceccbb6cf38573d1ff75f1af5a670118d6b8e0fc4b32979d8"
+    },
+    {
+      "path": "tests/test_photo_cf40_source_boundary_history.py",
+      "sha256": "0dcfd2bda9af7e523bd293f08e1b7258705d05c26ee81c66de602ad1dcd3dc59"
+    },
+    {
+      "path": "tests/test_photo_overhead_hand_alternative.py",
+      "sha256": "770505cc6e465af58de691bcb44ae55c1b66140b0d923286ee7d1ef44ceeb8ad"
+    },
+    {
+      "path": "tests/test_photo_structure_maintenance.py",
+      "sha256": "33601106722f8bd86ccba3208d4b7778892b716990292119af62030541fb1f07"
+    },
+    {
+      "path": "tests/test_photo_womens_summer_trend_visual_semantics.py",
+      "sha256": "34d612145b8b1c4f54fe51c8522abee5a702ae2a1ba81ca12983560257736122"
+    },
+    {
+      "path": "tests/test_photo_v20_historical_fixture.py",
+      "sha256": "3a631db0f4f0c95866a7de8be9d1b41e2e66dab8be390d712268ebfd5a8abf2c"
+    },
+    {
+      "path": "tests/test_photo_clothing_terminology_semantics.py",
+      "sha256": "cf951265ec014300b46767bc317cd1b66724066690024a2d0b3858972e30f3ab"
+    },
+    {
+      "path": "tests/test_photo_environment_alternative_consistency.py",
+      "sha256": "b1fb4b95e160eac1bfeb397540547db4cbc38805499f4d82ef9d4fc31ff37e4a"
+    },
+    {
+      "path": "tests/test_photo_oneiric_anchor_alternative.py",
+      "sha256": "c9a4bbbae77243549a6042c5547db2d8d1db8a89c762e77a9b6e127e9f8d7e68"
+    },
+    {
+      "path": "tests/test_photo_dress_positive_paraphrase.py",
+      "sha256": "6feffe89e8557483bad93fab2d92911378a60fb75ecbf4df13c7edca6edaa7c2"
+    },
+    {
+      "path": "tests/test_photo_shelf_return_korean_state_data_cleanup.py",
+      "sha256": "0561a1754951cd1a45860a22b01cb0a63c607791a199ccfccd15a8df96b8dcc5"
+    },
+    {
+      "path": "tests/test_photo_lighting_color_owner_data_cleanup.py",
+      "sha256": "5562b8e8d51c3c5f5f4d6d157bb9d6ddb43ede5ed9a02db066da69624e361e89"
+    },
+    {
+      "path": "tests/test_photo_next_slot_data_cleanup.py",
+      "sha256": "9bff0a6ed61aed59b6a377e0be5ccca057080b9bd198dd04a7cbcc3b84a219a6"
+    },
+    {
+      "path": "tests/test_photo_render_repair.py",
+      "sha256": "d346b5c27c29f1033cd7ec0c3aae5ee578b96a50343ed1ffa53858d1bfda21c8"
+    },
+    {
+      "path": "tests/test_photo_remaining_boundary_data.py",
+      "sha256": "5585e5e86485c95ad749dc60a9faa5dad9d1b7425b9b9bbdfadf3a52cbe949b5"
+    },
+    {
+      "path": "tests/test_photo_womens_professional_uniform_visual_semantics.py",
+      "sha256": "89770d6e48afc7bb606edfc382841eb5299a775f146672ab6b8a3eb9fe826346"
+    },
+    {
+      "path": "tests/test_photo_glacier_surface_alternative.py",
+      "sha256": "0e0d68bc22e275b568fbb5dd25a41ff2e863394d741b2070dcf8547ac7270abd"
+    },
+    {
+      "path": "tests/test_photo_wrap_skirt_side_alternative.py",
+      "sha256": "5ed3195da40f779f56a3846dd691ebf911f791f8c278bbfd297b6034258d0241"
+    },
+    {
+      "path": "tests/test_photo_retrieval_runtime_improvement.py",
+      "sha256": "76f0560106c4693cab96ec5ad849ee15990cca20cad16025db2496e9b517d4aa"
+    },
+    {
+      "path": "tests/test_photo_protostar_korean_alias_data_cleanup.py",
+      "sha256": "223a5c55b4dc7aec62b40653760afee2077f1717df5b999b63b3283ec830c285"
+    },
+    {
+      "path": "tests/test_photo_luxury_semantics.py",
+      "sha256": "fbdddca63ec9575c50a58aa06a419749912565c5d84627aff45a17e465f580d4"
+    },
+    {
+      "path": "tests/test_photo_cute_visual_forms.py",
+      "sha256": "e0b389f61e0d561847ff4362027b80ea67e50bc50ba133dbc41f0c3a2fc6a549"
+    },
+    {
+      "path": "tests/test_photo_instrument_semantics.py",
+      "sha256": "2048a4f443630ecd8071a9d4a96e2a71d57968002b7fdba7141d228e4227accb"
+    },
+    {
+      "path": "tests/test_photo_ornament_boundary_history.py",
+      "sha256": "cddc703917cb4cdb37917dea4a18cc78e1576f381c1e476486e5d33b91310951"
+    },
+    {
+      "path": "tests/test_photo_harry_appearance_semantics.py",
+      "sha256": "65cce1661916478920aebd7a82ddeddb8736d934278b2d10585d990b7e157c2c"
+    },
+    {
+      "path": "tests/test_photo_runtime_freshness.py",
+      "sha256": "966379db41192bed2a325ebd1163b363d8d88c77b5e8ece8a2510d6e2481a4e0"
+    },
+    {
+      "path": "tests/test_photo_occupation_korean_label_data_cleanup.py",
+      "sha256": "e6148c35e1fae098bd3425f71fd30e034e856d7c118d3e0ce0390f1729a7be00"
+    },
+    {
+      "path": "tests/test_photo_control_span_ownership.py",
+      "sha256": "44e16c50ad8c4db13ed6056f4cf46aad3cd196bd5b03eddc2e9c450cb3389a77"
+    },
+    {
+      "path": "tests/test_photo_capture_physics_alternatives.py",
+      "sha256": "7c217b16f2ea52f93c8b42fa30939857a599bd127bd4455ad4099024715e26e4"
+    },
+    {
+      "path": "tests/test_subculture_illustration_contract_v1.py",
+      "sha256": "f2212621b8be1f6b11837363e3d958757438a78b0ea67164f0a2beb32386662d"
+    },
+    {
+      "path": "tests/test_photo_natural_environment_semantics.py",
+      "sha256": "d00a248909a8017fc52bf6afd3cff824c73c23ce369b2e6921738cf1834847b1"
+    },
+    {
+      "path": "tests/test_photo_lattice_shadow_alternative.py",
+      "sha256": "49dd64ee7eed9585fb93de20f359b03b3c2f6c271455abe81abcf26722dc18b6"
+    },
+    {
+      "path": "tests/test_photo_b5_guidance_boundary_history.py",
+      "sha256": "3a4f4b9448dbded77f3360555d487b762e0e0660c791a5364219b8495760af27"
+    },
+    {
+      "path": "tests/test_photo_uniform_costume_paraphrases.py",
+      "sha256": "66092efae9df71d95462a7dbabe85d0193f8530f0618f3e7dc31ac2f09680ea7"
+    },
+    {
+      "path": "tests/test_photo_desire_visual_semantics.py",
+      "sha256": "cdd52f9968ed60145b7072ed21d1de1ab51358ecd6023953faa6c28f93f05553"
+    },
+    {
+      "path": "tests/test_photo_camera_owned_clauses.py",
+      "sha256": "d6f5ef2fd38d5cf8f9fcb3c498ecac3be1afb01e5b655a94cf21239117a1dbb4"
+    },
+    {
+      "path": "tests/test_photo_visual_profile_shards.py",
+      "sha256": "ba13c12bafb04aeb431d69fc47fb8fb29a5130e640d2f09801e00791295c0a44"
+    },
+    {
+      "path": "tests/test_photo_narrative_unit_data_cleanup.py",
+      "sha256": "02593eeac39e053de47a3ef4acaf07be73394162cc0576e73b94763a1d416e25"
+    },
+    {
+      "path": "tests/test_photo_rare_photo_visual_semantics.py",
+      "sha256": "25dc7def39c139a56b3a77ad384e42bab5c842b89046ed96a14c87d22dff3b2e"
+    },
+    {
+      "path": "tests/test_photo_korean_emotional_visual_semantics.py",
+      "sha256": "6fe6d7ea61e8f471788ea28bfd8545e80553279c21d7c5c77a77d0ca137383af"
+    },
+    {
+      "path": "tests/test_photo_liminal_active_use_korean_data_cleanup.py",
+      "sha256": "a066a6429870cbae6ef8e2eb0613da046ed6134746db6f10ec5f0cd0b45c2fa0"
+    },
+    {
+      "path": "tests/test_subculture_illustration_moe_elements.py",
+      "sha256": "f9bc6792322a712db892cebdd0b5142954230625959fa1492153ac2a8205b49f"
+    },
+    {
+      "path": "tests/test_photo_textile_opacity_effect_scope.py",
+      "sha256": "6ead146d52c444f49f6e73573bf6e70c90b8aaeba394c35b59d3a57c21f9be93"
+    },
+    {
+      "path": "tests/test_photo_acting_expression_data.py",
+      "sha256": "a7c767f0339d6a9c86e22430a97c145e84a1e1272e3477d615c2501302eaa8c8"
+    },
+    {
+      "path": "tests/test_photo_editing_effects_semantics.py",
+      "sha256": "2b6f3713d986b6268a9d4aa3dafed4fdafc5e1036dc65c8c42009dfbffeaacd1"
+    },
+    {
+      "path": "tests/test_photo_capture_owner_data_cleanup.py",
+      "sha256": "e78cb6b801b793aac8d2b6e9ae16a3ad0b2dcfa9529f180b58dd4a3bc8ec144a"
+    },
+    {
+      "path": "tests/test_photo_nonhuman_source_alternatives.py",
+      "sha256": "fefdadb0508cde2f7b1d27cb3262c6518ba662e7920ffb7e76b44f3ddda22efe"
+    },
+    {
+      "path": "tests/test_photo_cumulonimbus_anvil_alternative.py",
+      "sha256": "be43d4b97adbe4af75c692ffbee03fbb73c592dc55221624551d931e8a4b855a"
+    },
+    {
+      "path": "tests/test_photo_candidate_semantics.py",
+      "sha256": "8cd4080346734153925c3f403b8201d58912944bdcb062f23053e2363dc5e6ff"
+    },
+    {
+      "path": "tests/test_photo_instrument_hand_roles.py",
+      "sha256": "be87ee8fd70ca7c8de7ead0f124f021fe140341dab28156db30b24aa00f1d8f4"
+    },
+    {
+      "path": "tests/test_photo_harem_visual_semantics.py",
+      "sha256": "e53bdcc673d173fdb6e4c91bf7e298664878b13d0e99de3f58ad8ce1cc379a15"
+    },
+    {
+      "path": "tests/test_photo_kebaya_material_alternative.py",
+      "sha256": "baa3afc79327149fd9977dbb4ac428c5a4951f83a2a5abd35c0b9d796e038f7e"
+    },
+    {
+      "path": "tests/test_photo_current_boundary.py",
+      "sha256": "cb94aa352c9130997a7dd33d6f89abfc4098ba9f8423a44b36b2a9016eb29ae3"
+    },
+    {
+      "path": "tests/test_photo_bm25f_retrieval.py",
+      "sha256": "36f63e0856ec53b48a28faccc4dd76576dc5b1dad093139f20bc5d44ff1d1747"
+    },
+    {
+      "path": "tests/test_photo_photorealism_owner_data_cleanup.py",
+      "sha256": "30b54bedb5a364b701c5dd7288c4f5b7efbe3c0f103ad8351a51faaf32b291a7"
+    },
+    {
+      "path": "tests/test_photo_adult_appeal_visual_semantics.py",
+      "sha256": "7d5a1362b9613325bd933af1e02f5802bf68043714325b5a4d46c6e216f0a4b8"
+    },
+    {
+      "path": "tests/test_photo_emotional_place_visual_semantics.py",
+      "sha256": "91173016c900a1b5bbded4a482e0ab8d03ce54c632db8ca7b93ded7e44238001"
+    },
+    {
+      "path": "tests/test_subculture_illustration_photo_boundary.py",
+      "sha256": "db2b4fed0a1fc92612f11ef51ba42ea3ab022aeba05cc59f73c52fee05a05fd7"
+    },
+    {
+      "path": "tests/test_photo_motion_graphics_semantics.py",
+      "sha256": "7e61cd7455ebe27e8d414cab83f23c1362a3dda6923ae20698e1404344d08433"
+    },
+    {
+      "path": "tests/test_photo_uniform_metadata_boundary_history.py",
+      "sha256": "ef4e106c6a97e986a0d892bf51657f483f6d14543db938441967bd7a44265b35"
+    },
+    {
+      "path": "tests/test_photo_prop_conditional_contact.py",
+      "sha256": "619bb50f283ef0bd5fae954c35fba8f14558f5b1605f8ec0979811ce23fa331f"
+    },
+    {
+      "path": "tests/test_photo_precore_feature_selection.py",
+      "sha256": "53f3a4c177759e97f94e6e9bec821aa259e917c70ba0f984156b987f2a49ddf9"
+    },
+    {
+      "path": "tests/test_photo_visual_profile_retrieval.py",
+      "sha256": "1879c90f1db9b6659d5769a91e797c6d5c0ad79bb8ffbf6d3a50848f2b80984f"
+    },
+    {
+      "path": "tests/test_photo_object_morphology_ownership.py",
+      "sha256": "0f70060e524fb7c0587f9b0235595427403089a8dcb8beccd6a43c8da1617075"
+    },
+    {
+      "path": "tests/test_photo_visual_obligations.py",
+      "sha256": "99a411ddc1aca8dd3a2235805813bc5bcec0766423844f6355a27ac954f67fa3"
+    },
+    {
+      "path": "tests/test_photo_palace_fortification_semantics.py",
+      "sha256": "7ea8acf47682cff8154028fcc1f5d08102bfd347c21dd43354fbe01bc3155c35"
+    },
+    {
+      "path": "tests/test_photo_pose_visual_semantics.py",
+      "sha256": "ab2b01b1b6ec6a36e2f664a60c4401a2a6d9f257878c4ecc059b8852a5f77c95"
+    },
+    {
+      "path": "tests/test_photo_residual_positive_guards.py",
+      "sha256": "7d108e31498cb53df1a0d96d03118271bf7921851111ea0250763c08985e42c9"
+    },
+    {
+      "path": "tests/test_photo_motion_artifact_owner_data_cleanup.py",
+      "sha256": "42c2914b7dd03547c47204903e277ee6e1a9e49d40d5bb14034a329ec2173756"
+    },
+    {
+      "path": "tests/test_photo_body_aesthetic_semantics.py",
+      "sha256": "ed420223229441680ee3e8b53cc2e087f69b4b5a21129937bb01b2104605507c"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/visual_obligation_routing_holdout_v1.jsonl",
+      "sha256": "32a08869dec3e5840c792f567a90cf26a43e071a01e7fa0d488621d3b025943c"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/rare_photo_three_arm_pixel_test_cases_v1.jsonl",
+      "sha256": "6319b594f7774ac30a71585bb5e953cb6ffa7ab89229ef7e342887a82dece94b"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/korean_emotional_photo_three_arm_pixel_cases_v1.jsonl",
+      "sha256": "29fe69a950fa2537c19df55c476a95341059016f602107350b5e4d88b9ee9b0e"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/fantasy_visual_semantics_five_arm_cases_v1.jsonl",
+      "sha256": "883f8237f5d94b6d584b59eb68a2f778c188e86e82fd836e7e112980101c9243"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/lighting_three_arm_pixel_test_cases_v1.jsonl",
+      "sha256": "57a4006ed9ba9c47efbe32f9424d97d14eeb306ac561a710c6e6852acc95422e"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/render_creative_direction_holdout_v1.jsonl",
+      "sha256": "8ebcc01080ef981f3c94ac873bfb537e02fbbf5cb4b5d988f318faabf1041283"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/humanlike_semantics_five_arm_cases_v1.jsonl",
+      "sha256": "3bbef5a903f46b9826c4418977f3963956d203d2d72a07aa801dcd2db769585e"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/body_semantics_pixel_test_cases_v1.jsonl",
+      "sha256": "39cd5333a787da1f869cab9a2ac03ce2c58e356b9f90a0df6f793337e85bac23"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/tactile_environment_open_v1.json",
+      "sha256": "e265cd5e58cd189ef012010ada400c29da1f9462b278064af8f348fce72cbee3"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/capture_elements_three_arm_pixel_test_cases_v1.jsonl",
+      "sha256": "457d1fa7d32497856e4ff21cd6813459b674d7482e33fd302a12e36bef87a6e5"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/runtime_freshness_v1.json",
+      "sha256": "524843bdfe9d1c5cc5c845d29b3ce3e1b152fb8745ad5b2b543cb9652a9e5787"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/affect_semantics_pixel_test_cases_v1.jsonl",
+      "sha256": "c9343994c35a7dad53fe41c606fa3f528a2cc32fc11fb97ff206b1ff6e61fafb"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/seduction_expression_scope_delta.json",
+      "sha256": "d8fba33b9a40ac6bf190fb785fb001ab70582a0112f67ca4394f7301f25250a4"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/face_shape_five_arm_cases_v1.jsonl",
+      "sha256": "8cf3373937120a841ebf639a80649c608f4c96b17bc2ba6e8d76b67f9007e490"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/suggestive_editorial_three_arm_pixel_cases_v1.jsonl",
+      "sha256": "d2405310e22dc3d178b6391362a93f14eb57d748a25aa1994b0d3843cff79b85"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/adult_appeal_semantics_five_arm_cases_v1.jsonl",
+      "sha256": "2eeec8b0946dbc817de5a1f277c2af92f9c19b59aeee572ae1bd85bf97d6fbdf"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/photo_era_three_arm_pixel_test_cases_v1.jsonl",
+      "sha256": "e2ec65d1b3bc524e25bad5c71571991de58b783fa6dea94f6cbfc8c842445620"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_owned_clause_independent_v2.json",
+      "sha256": "8ad46e1ac0448dddc3503299b4b5b24e786a04902c41143f455d9c960a5a9a07"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/makeup_reference_balance_cases_v1.jsonl",
+      "sha256": "8835fff9459a2339f4fe39653b91d72e18dd4756ffa163f3d8b9a3630ecac1cb"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/hair_semantics_pixel_test_cases_v1.jsonl",
+      "sha256": "6a64539b0e5209afb57bfd5b039df40edf943cd8978735ae4bc286a998281f8e"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/reactorprompt_visual_relations_three_arm_pixel_cases_v1.jsonl",
+      "sha256": "7ed77bbb49fa55a194634086a2c33aeeb33fac877e1440cf96dc184d7a24c986"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_owned_clause_holdout_v1.json",
+      "sha256": "49949e329be314f81c2f49205266a85967a4a01f4670076fd5c8b7f81c1b6f0a"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/poverty_visual_obligation_routing_v1.jsonl",
+      "sha256": "d5efa6c743eb0ae1d1a5ce1f6b29d8acfd9788e2b3a12b18af00f797ce1d1721"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/poverty_visual_semantics_three_arm_pixel_cases_v1.jsonl",
+      "sha256": "aaab68fcb76a12d4fd7c3756ce803925edb79e03b91b3e75eaeef2bce07f647d"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/render_creative_direction_visual_review_v1.json",
+      "sha256": "53776f9823174285b957587746ce2fc2a3371c99fc97d5e22174c4dfdfb33fbe"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_owned_clause_independent_v1.json",
+      "sha256": "8e2ea3d495cdfe69b0ea1f92ac7eb1dbb28fd703bba70c31eb6dc5b04aef0c0b"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/natural_moe_response_contract_v1.jsonl",
+      "sha256": "74d9c64c9f9cf48fce1d095b0575e3694635b6423fb00e0a54c2ceb2198a583c"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/render_viewer_experience_holdout_v1.jsonl",
+      "sha256": "3ab77a1676b422d98e9ea832c7b27e1693f505ac1638694091b624c8a6785e0e"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/retrieval_runtime_holdout_v1.json",
+      "sha256": "bde3f5e98974bf7fc7fd4ef995c928c2e7aceea8f20883c9c50b5795105abdf3"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/visual_obligation_routing_v1.jsonl",
+      "sha256": "dbef8fd33a0ec9d70c79f6800293a595dc65b8cad45ef50ed8a8f98b98de8ffc"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/emotional_place_three_arm_pixel_test_cases_v1.jsonl",
+      "sha256": "218e7fa8ab9c74fd15a2113bc0c1fa640dd39be60db231c679ffde64b928af85"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/womens_casualwear_pixel_test_cases_v1.jsonl",
+      "sha256": "d43998f6b5deeb81c08913dd5a6bc33e342e744e78d2a7d740422e796b9af56f"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/character_response_concepts_v1.jsonl",
+      "sha256": "13e9c8694bd10b190d2885ca931ef71d96a9488d0136b2c8cba1b8762c9b9e50"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/seduction_expression_integration_baseline.json",
+      "sha256": "c81d8c1ca1aabc8e38e661fcb9e720357a58a7b74dd566413e5c4f59d4e8899e"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/makeup_semantics_routing_cases_v1.jsonl",
+      "sha256": "633e8d0f6c0af5f27ee27b8ec3bcc3f5fe895bbe3dabe695ad1db0e4f0be747c"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/structure_maintenance_v1.json",
+      "sha256": "5f58f4efe83de6f7086e47d10dd69ec1c41c1a023096f629f39480f0b16185a0"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/womens_activewear_pixel_test_cases_v1.jsonl",
+      "sha256": "710eeee4582a98eedbb10eeab95f409a9de4e03089ef24ed3d6b0ff9a2231927"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/traditional_clothing_visual_routing_v1.jsonl",
+      "sha256": "878dab6febbdffe4a9503e42b5bdf6fbb6bdeb703f6fd27dfbb47330b97ef947"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/womens_summer_trend_pixel_test_cases_v1.jsonl",
+      "sha256": "7c5e6a4b8f67e115c29f4d96d7d29ebc6ce99725cb9e1f583b8a746b03fd7a6e"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/pose_semantics_five_arm_cases_v1.jsonl",
+      "sha256": "1276dda6169f61c66bbd4fdedf920ac057534b82ab3b90d2824f4c8185f68ec4"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/tactile_environment_independent_v1.json",
+      "sha256": "1fb3569a780024c45b1949bbb632340338bf0955da5f47f23e8b6c864743f5b5"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/current_boundary/controls.json",
+      "sha256": "0958274c1f1d5ec8b2faef5f3f7409d15f0256505411613cc33ad05f3a124896"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/current_boundary/core.json",
+      "sha256": "7be72244a8aa95c92a0bfc041f16bf544d376a9664366ad92c92cc728ebf6316"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/current_boundary/review.json",
+      "sha256": "0039a9afdb6b7fa6d3989dc0187297eba8e3de436c012ce13d20f570bb55f7fd"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/current_boundary/envelope.json",
+      "sha256": "170ca49644a3ae0703d5d98875007bbaa74a0794202089ded9f617d532443524"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/AUTHORSHIP.json",
+      "sha256": "0f1d6249ca425952ee04c872e4423de7b6a26fcec2b2d9b8d4540da22677ca90"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/en_open/embodiment-review.json",
+      "sha256": "57d0c23759c557da4f8e60f87d3e56de735c6876c1cd41e96075ab4b4831c678"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/en_open/request-envelope.json",
+      "sha256": "44f1ac1efb3b59f4b5d9e8a2208222d64bafc86552489a4c4fa4a3cd96709547"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/en_open/visual_feature_catalog.snapshot.json",
+      "sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/en_open/creative-controls.json",
+      "sha256": "c0e16d810c5204dfe7d058d888a2bcad4f01619a2f38b8411f9266eb2c014ae1"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/en_open/authorial-core.json",
+      "sha256": "e7344923283111281e380c0e10af64c571d5995f1b3a8a660a67839aab6022d2"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/en_open/precore_feature_selection.json",
+      "sha256": "ae19769a5e3ce083cb85e87aa291b3b3f9dda51aa2a98fda5fc942f624cb39ab"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/ko_down/embodiment-review.json",
+      "sha256": "c901964cc4b8cd1268c7eba740bb940a04c07b627e1e59e515a0e7917baf1d0a"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/ko_down/request-envelope.json",
+      "sha256": "b6022ba1f76e43861f5525ff26fb2b6ff1c9d016eab71e834e3de4cea03fea72"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/ko_down/visual_feature_catalog.snapshot.json",
+      "sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/ko_down/creative-controls.json",
+      "sha256": "ea0eeb2a6052047148423527a715ef14fad71b28e6d4ce8aaa2307af09391014"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/ko_down/authorial-core.json",
+      "sha256": "362e2e3f49bd2a8c3c04cbeaa51d1e8e3a261744af6acfa5636d4d3e16269dd7"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/ko_down/precore_feature_selection.json",
+      "sha256": "f524bc027dc04c54725cc66ce065459f3f704899f8d64ed99bc8b78d51542f8d"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/en_up/embodiment-review.json",
+      "sha256": "7c8c404ebc1cd23ded5a76b658c2a1d332234d2c26709bcb5db16543af9306d8"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/en_up/request-envelope.json",
+      "sha256": "eda60310cdba4bdd7e50ba835dd3a0e8108f37a1339ae15a2529e1a33fd8a149"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/en_up/visual_feature_catalog.snapshot.json",
+      "sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/en_up/creative-controls.json",
+      "sha256": "9eafcebe67a9ad67036f76f6a7ed9d0275ec5f80afd5b7f6b2328a254cac3014"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/en_up/authorial-core.json",
+      "sha256": "40f0aa09a14de5ecb38408339f29c6bef65c9b0fe6298b0c7ef643d3a005ffdc"
+    },
+    {
+      "path": "tests/fixtures/photo_prompt/camera_authoring_path_v1/en_up/precore_feature_selection.json",
+      "sha256": "20cff071e87b2a8883b253e36368630619da9eb4f463fa3bd51b09459d5f4ded"
+    }
+  ],
+  "scope": "Latest local working source copied into isolated worktree; no primary work reset, staged, committed, pushed or deleted."
+}

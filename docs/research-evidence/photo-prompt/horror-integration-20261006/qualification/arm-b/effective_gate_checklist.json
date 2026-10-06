@@ -1,0 +1,152 @@
+{
+  "effective_visual_contract": {
+    "enabled": true,
+    "contract_version": "photo-visual-obligations/v1",
+    "scope": "request_only",
+    "strict_gate_set": true,
+    "obligations": [
+      {
+        "id": "hvr_profile_folk_horror_collective_boundary",
+        "category": "observable_horror_relation",
+        "activation": {
+          "source": "composer_opt_in",
+          "scope": "request_only",
+          "source_intent_ids": []
+        },
+        "composition_instruction": "Retain all selected comparison owners and connected components together in one readable photograph: adult residents form an inward-facing boundary; one adult visitor stands outside their shared arrangement; the landscape limits alternative routes.",
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "component_01",
+            "component_02",
+            "component_03"
+          ],
+          "groups": [
+            {
+              "id": "component_01",
+              "any_terms": [
+                "adult residents form an inward-facing boundary",
+                "inward-facing community",
+                "community enclosure",
+                "human boundary",
+                "community closes",
+                "residents face inward",
+                "공동체 경계"
+              ]
+            },
+            {
+              "id": "component_02",
+              "any_terms": [
+                "one adult visitor stands outside their shared arrangement",
+                "visitor outside the gathering",
+                "excluded visitor",
+                "outside the circle",
+                "isolated visitor",
+                "traveler",
+                "방문자의 고립"
+              ]
+            },
+            {
+              "id": "component_03",
+              "any_terms": [
+                "the landscape limits alternative routes",
+                "landscape isolation",
+                "only open route",
+                "sole exit",
+                "alternative routes blocked",
+                "single escape route",
+                "대체 경로의 차단"
+              ]
+            }
+          ]
+        },
+        "prompt_binding": {
+          "composed_field": "visual_obligation_evidence",
+          "required_evidence_fields": [
+            "component_01_phrase",
+            "component_02_phrase",
+            "component_03_phrase"
+          ],
+          "minimum_distinct_evidence_phrases": 3,
+          "prompt_evidence_must_be_literal": true,
+          "maximum_pairwise_content_token_overlap_ratio": 0.82,
+          "forbidden_filler_phrases": [
+            "visible evidence",
+            "visual evidence",
+            "required cue",
+            "prompt phrase"
+          ]
+        },
+        "evidence_requirements": {
+          "component_01_phrase": {
+            "min_content_words": 2,
+            "must_mention_any": [
+              "adult residents form an inward-facing boundary"
+            ]
+          },
+          "component_02_phrase": {
+            "min_content_words": 2,
+            "must_mention_any": [
+              "one adult visitor stands outside their shared arrangement"
+            ]
+          },
+          "component_03_phrase": {
+            "min_content_words": 2,
+            "must_mention_any": [
+              "the landscape limits alternative routes"
+            ]
+          }
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "render_gates": [
+          {
+            "id": "vo_hvr_folk_horror_collective_boundary_01",
+            "review_scale": "native",
+            "description": "Inspect the original image for this component on its stated owner: adult residents form an inward-facing boundary. Hidden owners, incomplete comparison or a substitute fail this gate."
+          },
+          {
+            "id": "vo_hvr_folk_horror_collective_boundary_02",
+            "review_scale": "native",
+            "description": "Inspect the original image for this component on its stated owner: one adult visitor stands outside their shared arrangement. Hidden owners, incomplete comparison or a substitute fail this gate."
+          },
+          {
+            "id": "vo_hvr_folk_horror_collective_boundary_03",
+            "review_scale": "native",
+            "description": "Inspect the original image for this component on its stated owner: the landscape limits alternative routes. Hidden owners, incomplete comparison or a substitute fail this gate."
+          }
+        ],
+        "reject_substitutes": [
+          "countryside alone",
+          "all folk ritual is evil"
+        ]
+      }
+    ],
+    "required_hard_gates": [
+      "vo_hvr_folk_horror_collective_boundary_01",
+      "vo_hvr_folk_horror_collective_boundary_02",
+      "vo_hvr_folk_horror_collective_boundary_03"
+    ],
+    "selected_visual_concept_ids": [
+      "visual-concept:hvr_profile_folk_horror_collective_boundary"
+    ]
+  },
+  "effective_visual_contract_sha256": "9e9fd7c0d0da550445ab484ddd7773060a2fe2dc785a9aab903221c70188c249",
+  "hard_gate_ids": [
+    "vo_hvr_folk_horror_collective_boundary_01",
+    "vo_hvr_folk_horror_collective_boundary_02",
+    "vo_hvr_folk_horror_collective_boundary_03",
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ],
+  "strict_gate_set": true,
+  "partial_is_fail": true,
+  "native_original_required": true
+}

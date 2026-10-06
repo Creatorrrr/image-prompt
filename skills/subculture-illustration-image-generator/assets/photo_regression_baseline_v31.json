@@ -1,0 +1,59 @@
+{
+  "schema": "photo_regression_baseline/v31",
+  "created_at": "2026-10-06",
+  "status": "current",
+  "historical_baseline": {
+    "path": "photo_regression_baseline_v30.json",
+    "schema": "photo_regression_baseline/v30",
+    "sha256": "2ae353908fd77845f571e342dac24abe397ae4f2cc2d26c77b5ee7cc957f342f"
+  },
+  "change_scope": "Add horror DATA to current main, retain remote water/runtime changes and byte-exact V1-V30 history.",
+  "command": [
+    ".venv/bin/python",
+    "skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py",
+    "--seed",
+    "910000",
+    "--authorial-core-json",
+    "tests/fixtures/photo_prompt/current_boundary/core.json",
+    "--request-envelope-json",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json",
+    "--creative-controls-json",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json",
+    "--embodiment-review-json",
+    "tests/fixtures/photo_prompt/current_boundary/review.json",
+    "--output-file",
+    "/tmp/subculture-illustration-photo-baseline-v31.json"
+  ],
+  "sha256": "53e04ad5c47ede676397c430a19283a0b52b3c12d77e87afff80b7f945cbc1ea",
+  "pack_id": "b3a042642532dd65",
+  "contract_version": "photo-candidate-pack/v6",
+  "public_candidate_count": 64,
+  "private_fields_absent": [
+    "argv",
+    "sample_prompt_id",
+    "concept_gate_results",
+    "concept_scene_variants",
+    "character_response",
+    "adult_appeal"
+  ],
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "purpose": "Qualify the merged authored corpus and current boundary; preserve independent original pixel and user-decision records.",
+  "preserved_contract_sha256": "acc9fedeae95ae67b4214e1bedd622f12e0a9f0d24639fd2193ca5f368ba4e5f",
+  "frozen_inputs": {
+    "tests/fixtures/photo_prompt/current_boundary/core.json": "7be72244a8aa95c92a0bfc041f16bf544d376a9664366ad92c92cc728ebf6316",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json": "170ca49644a3ae0703d5d98875007bbaa74a0794202089ded9f617d532443524",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json": "0958274c1f1d5ec8b2faef5f3f7409d15f0256505411613cc33ad05f3a124896",
+    "tests/fixtures/photo_prompt/current_boundary/review.json": "0039a9afdb6b7fa6d3989dc0187297eba8e3de436c012ce13d20f570bb55f7fd"
+  },
+  "parallel_local_baseline": {
+    "path": "docs/research-evidence/photo-prompt/seduction-expression-main-merge-20261005/parallel-local-seduction-v13.json",
+    "sha256": "11ac31b9ab126b2a0711724cf625644772592adc2c688a760d9a6c6b37894850",
+    "purpose": "Preserved original pre-main seduction observation; independent of main V13 uniform history."
+  },
+  "horror_main_transition": {
+    "evidence_path": "docs/research-evidence/photo-prompt/horror-main-merge-20261006/V31-HORROR-MAIN-PROOF.json",
+    "evidence_sha256": "1e1ccbec0bb50d06ffb91db1a7b59e30c98e625a84acb0a2c4cd706d1f4b612f",
+    "previous_qualified_commit": "c72abf1d7f05895b7546b07bcab9f8f39dbd3173",
+    "parent_manifest_sha256": "39e28d41bb694e95dc54a8f51673b40786cb41512b4403d5dcf75f01bdb0c062"
+  }
+}

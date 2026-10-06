@@ -1,0 +1,16 @@
+Arm C produced one native image with a visibly continuous human-skin-to-bronze junction. The new shared-junction profile passes both native component gates. The full strict qualification fails: 6 of 7 hard gates pass, and `embodiment_support_and_balance` is `UNOBSERVABLE_NOT_PASS` because the reviewed hip-to-guardrail support cannot be verified. This is not a diagnosis of a malformed or floating body. User acceptance is `not_yet_received`.
+
+The first blind retrieval did not return the focal new mechanical-junction profile. Its pack, receipt, exposure and composed proposal remain in `initial-retrieval/`; it consumed no image call. Root corrected the authored carrier scope and general component discovery and published a genuinely different source/index generation. The authorized development replay kept the envelope, core, controls and baseline byte-identical and then exposed the new shared-junction candidate and profile. The replay is recorded separately and is not relabeled as the initial holdout.
+
+The final pack is `df7fed4e406c6e93`. It selects `slot:anatomical_connection:hr_bodily_fusion_shared_junction`, `slot:ambient_particle:hr_haze_light_volume`, and `visual-concept:hvr_profile_bodily_fusion_shared_junction`. The full selected source contracts, literal component evidence and directed relation evidence are in `revised-retrieval/candidate_details.json` and `revised-retrieval/new_data_exposure_and_selection.json`. No bundle is selected.
+
+Composed and exact native-runtime audits pass. The composed audit reports four nonblocking preservation notices. The actual portrait is attached by its inspected absolute local path and SHA-256. The native tool is `image_gen.imagegen`; its image-model identifier is unobserved. One actual image call returned a concrete accessible PNG path, and its arm copy is byte-identical. No fallback or correction call occurred.
+
+Original native: /Users/chasoik/.codex/generated_images/01a11095-689c-7213-ab72-36f4eb17e55d/exec-d74d0b84-ebcf-46c8-a100-eb3c2a77f98b.png
+Arm copy: /Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/docs/research-evidence/photo-prompt/horror-integration-20261006/qualification/arm-c/generated_images/archive-lift-tissue-metal-attempt-1/native_original.png
+Image SHA-256: 46d4f2c8d8c53595caac0effb0b933bbac9e9d49502ec3ed6a43f41a22769292
+Dimensions: 1024 x 1536
+
+The new haze relation also appears in the same image. The face and hair reference remains assessable, and the body connection reads as actual transformation. Supplementary strict authored tests fail the full load-to-tilted-lift/gate relation and brake-tooth/slip-trace conjunction: their partial evidence is not promoted. The rendering is artistically coherent as an intimate industrial body-horror portrait, but the complete rescue circumstance remains partly inferred.
+
+Use `qualification_summary.json` for the phase summary, `revised-retrieval/native_render_review.json` and its audit for the exact seven-gate result, `revised-retrieval/supplemental_native_review.json` for authored/artistic observations, and `run_manifest.json` plus `runs/image_runs.ndjson` for the successful native invocation record. Invocation success does not imply pixel qualification.

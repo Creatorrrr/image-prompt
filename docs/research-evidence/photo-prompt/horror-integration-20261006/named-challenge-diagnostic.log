@@ -1,0 +1,29 @@
+test_named_challenge_materializes_prompt_and_render_obligations (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_named_challenge_materializes_prompt_and_render_obligations) ... FAIL
+
+======================================================================
+FAIL: test_named_challenge_materializes_prompt_and_render_obligations (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_named_challenge_materializes_prompt_and_render_obligations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/tests/test_photo_visual_obligations.py", line 467, in test_named_challenge_materializes_prompt_and_render_obligations
+    pack = self.moe_pack(
+        "Photorealistic explicitly nonsexual behavior-led moe scene of an adult "
+        "woman, mid-twenties or older, doing a bubble tea challenge"
+    )
+  File "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/tests/test_photo_visual_obligations.py", line 97, in moe_pack
+    return fixtures.run_current(
+           ~~~~~~~~~~~~~~~~~~~~^
+        raw, seed=seed, creativity=0, extra_args=extra,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        envelope_input=fixtures.envelope(source, tuple([concept, *additional])),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/tests/photo_prompt_fixtures.py", line 839, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_invalid: snapshot validation failed: Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py.
+
+
+----------------------------------------------------------------------
+Ran 1 test in 5.609s
+
+FAILED (failures=1)

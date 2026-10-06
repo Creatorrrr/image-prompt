@@ -1,0 +1,296 @@
+{
+  "status": "completed_data_integration_and_three_arm_native_testing_with_one_strict_failure",
+  "data_counts": {
+    "slots": 112,
+    "candidates": 10403,
+    "profiles": 2236,
+    "bundles": 1007,
+    "semantic_entries": 10439,
+    "new_candidates": 155,
+    "new_profiles": 155,
+    "new_bundles": 11
+  },
+  "source_publication": {
+    "schema": "photo-runtime-current/v1",
+    "generation_id": "d947d6b68f2a19b4a65f2668c87dee3fd4fcebb69b68357bd2dc98ab8c13eb10",
+    "source_fingerprint": "a7e3b2b3e64013c4946266cc36d871b128bca2ced0160282664001854ff2463f",
+    "revision": 10,
+    "observation": {
+      "mode": "local_current",
+      "root": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator",
+      "observed_at": "2026-10-06T10:19:36.095271+00:00",
+      "local_epoch": 16
+    }
+  },
+  "cases": [
+    {
+      "arm": "A",
+      "topic": "거울 속 국소 손동작 불일치",
+      "scene": "침수된 창고에서 사진 상자를 구하는 인물",
+      "new_selected": [
+        "slot:reflection_logic:hr_uncanny_familiar_discrepancy"
+      ],
+      "new_registered_profile_exposed": false,
+      "selected_new_topic_predicates_passed": 3,
+      "selected_new_topic_predicates_total": 3,
+      "hard_passed": 10,
+      "hard_total": 10,
+      "technical_qualified": true,
+      "native_calls": 1,
+      "display_image": "images/A-mirror.png",
+      "prompt": "prompts/A.txt",
+      "report": "qualification/arm-a/qualification_report.md",
+      "proof_limits": [
+        "New candidate semantics were adopted and seen; the new hvr profile itself was not exposed or qualified.",
+        "An existing compatible uncanny profile supplies the formal visual gates.",
+        "Quiet to moderate horror; exact floor level and every incidental detail remain unproven."
+      ]
+    },
+    {
+      "arm": "B",
+      "topic": "밝은 과수원의 공동체·방문자·이동 경계",
+      "scene": "통행권을 돌려준 방문자 앞에서 공동체가 출구를 닫는 장면",
+      "new_selected": [
+        "visual-concept:hvr_profile_folk_horror_collective_boundary"
+      ],
+      "new_registered_profile_exposed": true,
+      "selected_new_topic_predicates_passed": 3,
+      "selected_new_topic_predicates_total": 3,
+      "hard_passed": 8,
+      "hard_total": 8,
+      "technical_qualified": true,
+      "native_calls": 1,
+      "display_image": "images/B-orchard.png",
+      "prompt": "prompts/B.txt",
+      "report": "qualification/arm-b/qualification_report.md",
+      "proof_limits": [
+        "Initial blind retrieval missed the focal meaning; repaired development replay exposed it with identical frozen inputs.",
+        "Exact crescent, bowl material, gaze and all authorial details are not fully realized.",
+        "Moderate restrained unease; pixels do not prove every off-frame route impassable."
+      ]
+    },
+    {
+      "arm": "C",
+      "topic": "유기 조직에서 금속으로 이어지는 접합",
+      "scene": "기록 보관소 승강기 권양 장치와 연결된 전완",
+      "new_selected": [
+        "slot:anatomical_connection:hr_bodily_fusion_shared_junction",
+        "slot:ambient_particle:hr_haze_light_volume",
+        "visual-concept:hvr_profile_bodily_fusion_shared_junction"
+      ],
+      "new_registered_profile_exposed": true,
+      "selected_new_topic_predicates_passed": 2,
+      "selected_new_topic_predicates_total": 2,
+      "hard_passed": 6,
+      "hard_total": 7,
+      "technical_qualified": false,
+      "native_calls": 2,
+      "display_image": "images/C-junction-corrected.png",
+      "first_image": "images/C-junction-initial.png",
+      "prompt": "prompts/C-corrected.txt",
+      "report": "qualification/arm-c/qualification_summary.json",
+      "failed_gate": "embodiment_support_and_balance",
+      "failure_classification": "UNOBSERVABLE_NOT_PASS",
+      "proof_limits": [
+        "Initial blind retrieval missed the focal meaning; repaired development replay exposed it.",
+        "Both attempts preserve the new junction predicates; hip-to-rail compression/counterforce remains concealed or inferred.",
+        "First and corrected images both fail overall strict qualification. No gate was removed and no further generation was made."
+      ]
+    }
+  ],
+  "actual_native_calls": 4,
+  "baseline_only_native_calls": 0,
+  "fallback_calls": 0,
+  "code_validation": {
+    "focused_scope_tests": 75,
+    "full_run_passed": 74,
+    "full_run_setup_errors": 1,
+    "missing_reference_record": "Existing external maintenance records were not copied into the isolated test worktree.",
+    "reference_recheck_passed": 1,
+    "aggregate_scope_result": "75 tests passed across full run and narrow reference recheck; no test weakening or source/code change.",
+    "new_horror_guard_tests": 10,
+    "source_validator": "pass",
+    "current_primary_horror_guard_recheck": {
+      "tests": 10,
+      "passed": 10,
+      "log": "primary-live-horror-recheck.log",
+      "counts_as_additional_unique_tests": false
+    },
+    "current_primary_source_validator": "pass"
+  },
+  "frozen_inputs": {
+    "after_source_repair": [
+      {
+        "arm": "a",
+        "files": [
+          {
+            "path": "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/docs/research-evidence/photo-prompt/horror-integration-20261006/qualification/arm-a/request_envelope.json",
+            "expected_sha256": "6432bc46b7d7d21384764260d21714e0eed5a63395a940b1b8c5823c6f30383f",
+            "actual_sha256": "6432bc46b7d7d21384764260d21714e0eed5a63395a940b1b8c5823c6f30383f",
+            "unchanged": true
+          },
+          {
+            "path": "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/docs/research-evidence/photo-prompt/horror-integration-20261006/qualification/arm-a/authorial_core.json",
+            "expected_sha256": "8f79025194fddb6bf532e0000d90fd280ff2efdc6e93865c9c0690cfa951b44d",
+            "actual_sha256": "8f79025194fddb6bf532e0000d90fd280ff2efdc6e93865c9c0690cfa951b44d",
+            "unchanged": true
+          },
+          {
+            "path": "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/docs/research-evidence/photo-prompt/horror-integration-20261006/qualification/arm-a/creative_controls.json",
+            "expected_sha256": "a3f88edd1a6a8abb761d2d18ab88c06ec946aaa2e665414058f08381f72ba0a3",
+            "actual_sha256": "a3f88edd1a6a8abb761d2d18ab88c06ec946aaa2e665414058f08381f72ba0a3",
+            "unchanged": true
+          },
+          {
+            "path": "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/docs/research-evidence/photo-prompt/horror-integration-20261006/qualification/arm-a/embodiment_review.json",
+            "expected_sha256": "9e2c78371621c2646c6cd0568ccf6c46c3017d02efdeb6df18d5e7a1b9ae6d1d",
+            "actual_sha256": "9e2c78371621c2646c6cd0568ccf6c46c3017d02efdeb6df18d5e7a1b9ae6d1d",
+            "unchanged": true
+          },
+          {
+            "path": "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/docs/research-evidence/photo-prompt/horror-integration-20261006/qualification/arm-a/precore_feature_selection.json",
+            "expected_sha256": "16b74fc2f75b8c6efce7483c3df519126192b5af4c3dde54f74a866cde053af8",
+            "actual_sha256": "16b74fc2f75b8c6efce7483c3df519126192b5af4c3dde54f74a866cde053af8",
+            "unchanged": true
+          }
+        ],
+        "all_unchanged": true
+      },
+      {
+        "arm": "b",
+        "files": [
+          {
+            "path": "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/docs/research-evidence/photo-prompt/horror-integration-20261006/qualification/arm-b/request_envelope.json",
+            "expected_sha256": "bf678266a5abda05b251239e301d7688efa15cb201f67438bd4e7abd2e4bc77b",
+            "actual_sha256": "bf678266a5abda05b251239e301d7688efa15cb201f67438bd4e7abd2e4bc77b",
+            "unchanged": true
+          },
+          {
+            "path": "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/docs/research-evidence/photo-prompt/horror-integration-20261006/qualification/arm-b/authorial_core.json",
+            "expected_sha256": "41a02eacf827cb2caf8f7d2b0d47f06452c52bd9900ca596d5db4a9d0966a713",
+            "actual_sha256": "41a02eacf827cb2caf8f7d2b0d47f06452c52bd9900ca596d5db4a9d0966a713",
+            "unchanged": true
+          },
+          {
+            "path": "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/docs/research-evidence/photo-prompt/horror-integration-20261006/qualification/arm-b/creative_controls.json",
+            "expected_sha256": "9798c26419908e9c9d5d3cf1cfa484620868bc0c0b7d65ba91f46ad8265e3b63",
+            "actual_sha256": "9798c26419908e9c9d5d3cf1cfa484620868bc0c0b7d65ba91f46ad8265e3b63",
+            "unchanged": true
+          },
+          {
+            "path": "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/docs/research-evidence/photo-prompt/horror-integration-20261006/qualification/arm-b/embodiment_review.json",
+            "expected_sha256": "13a90b9f9504c0ed8b7d62ba1c89d1e0b9ce4988cb20bff59a13660347300d14",
+            "actual_sha256": "13a90b9f9504c0ed8b7d62ba1c89d1e0b9ce4988cb20bff59a13660347300d14",
+            "unchanged": true
+          },
+          {
+            "path": "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/docs/research-evidence/photo-prompt/horror-integration-20261006/qualification/arm-b/precore_feature_selection.json",
+            "expected_sha256": "7033df6c0cb84f1340decf86c18598e9af0f86726a6bc6ca3947233297f6d64a",
+            "actual_sha256": "7033df6c0cb84f1340decf86c18598e9af0f86726a6bc6ca3947233297f6d64a",
+            "unchanged": true
+          }
+        ],
+        "all_unchanged": true
+      },
+      {
+        "arm": "c",
+        "files": [
+          {
+            "path": "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/docs/research-evidence/photo-prompt/horror-integration-20261006/qualification/arm-c/request_envelope.json",
+            "expected_sha256": "21ecc45be839b0b3b53abc796f6543f95cfc82c367b2a5e59f39f9b55f49d9f0",
+            "actual_sha256": "21ecc45be839b0b3b53abc796f6543f95cfc82c367b2a5e59f39f9b55f49d9f0",
+            "unchanged": true
+          },
+          {
+            "path": "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/docs/research-evidence/photo-prompt/horror-integration-20261006/qualification/arm-c/authorial_core.json",
+            "expected_sha256": "fa0b67371128a825f63941e819da2303064497077cbf7265ad8ef5f6a23ee485",
+            "actual_sha256": "fa0b67371128a825f63941e819da2303064497077cbf7265ad8ef5f6a23ee485",
+            "unchanged": true
+          },
+          {
+            "path": "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/docs/research-evidence/photo-prompt/horror-integration-20261006/qualification/arm-c/creative_controls.json",
+            "expected_sha256": "b5cc7d192d931e77f5f0a59b1bcc42306d49cb3155d3084f2d213c89ddd69016",
+            "actual_sha256": "b5cc7d192d931e77f5f0a59b1bcc42306d49cb3155d3084f2d213c89ddd69016",
+            "unchanged": true
+          },
+          {
+            "path": "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/docs/research-evidence/photo-prompt/horror-integration-20261006/qualification/arm-c/embodiment_review.json",
+            "expected_sha256": "6d021358957de66bd8be4ea6845053fe216857786f12582239f0ca028c8bbb4d",
+            "actual_sha256": "6d021358957de66bd8be4ea6845053fe216857786f12582239f0ca028c8bbb4d",
+            "unchanged": true
+          },
+          {
+            "path": "/Users/chasoik/.codex/worktrees/horror-data-qualification/image-prompt/docs/research-evidence/photo-prompt/horror-integration-20261006/qualification/arm-c/precore_feature_selection.json",
+            "expected_sha256": "e97dee88e42709f7f982ff6afb46cd7171b3b46ac94d7dc65b3deb2a70e0019e",
+            "actual_sha256": "e97dee88e42709f7f982ff6afb46cd7171b3b46ac94d7dc65b3deb2a70e0019e",
+            "unchanged": true
+          }
+        ],
+        "all_unchanged": true
+      }
+    ],
+    "all_unchanged": true
+  },
+  "user_judgment": "not_yet_received",
+  "generalization_boundary": "Three initial independently authored scenes found retrieval gaps. The replay after source repair is development verification, not a fresh blind holdout. These cases do not establish native qualification for every one of the 155 authored profiles.",
+  "process_deviation": {
+    "created_by": "coordinator",
+    "created_after_agent_spawn": true,
+    "supplied_before_baseline_or_core_authorship": true,
+    "agent_reconstruction_from_task_brief": false,
+    "ordering_deviation": "The skill prefers a coordinator-created envelope before delegation. Here the envelope was supplied after spawn but all agents waited before drafting; actual requester provenance and data independence were preserved."
+  },
+  "publication_scope": "source_publication records the actual qualification snapshot; current_primary_state records the newer validated live publication after unrelated concurrent edits.",
+  "current_primary_state": {
+    "qualification_generation": "d947d6b68f2a19b4a65f2668c87dee3fd4fcebb69b68357bd2dc98ab8c13eb10",
+    "current_primary_pointer": {
+      "generation_id": "11a2c533b3a77de25a66c76a32abeb8229ff1e2fbf181a709c5906c0ef783588",
+      "observation": {
+        "local_epoch": 17,
+        "mode": "local_current",
+        "observed_at": "2026-10-06T10:38:29.481319+00:00",
+        "root": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator"
+      },
+      "revision": 11,
+      "schema": "photo-runtime-current/v1",
+      "source_fingerprint": "78613069b98ae850fc03d8650a55de53a4a6160ab316410d5701b712ebc13131"
+    },
+    "live_fingerprint": "78613069b98ae850fc03d8650a55de53a4a6160ab316410d5701b712ebc13131",
+    "current_runtime_fresh": true,
+    "horror_sources_and_skill_unchanged": {
+      "SKILL.md": true,
+      "photo_prompt_horror_extension.json": true,
+      "photo_prompt_visual_obligations_horror.json": true
+    },
+    "concurrent_files_changed_after_installation": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_textile_surface_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_clothing_structure_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_ornament_structure_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_color_relations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_color_relations_extension.json",
+      "tests/photo_prompt_fixtures.py",
+      "tests/test_photo_visual_storage_boundary_history.py",
+      "tests/test_photo_v21_historical_fixture.py",
+      "tests/test_photo_v19_historical_fixture.py",
+      "tests/test_photo_glass_inventory_boundary_history.py",
+      "tests/test_photo_cf40_source_boundary_history.py",
+      "tests/test_photo_v20_historical_fixture.py",
+      "tests/test_photo_ornament_boundary_history.py",
+      "tests/test_photo_b5_guidance_boundary_history.py",
+      "tests/test_subculture_illustration_photo_boundary.py"
+    ],
+    "handling": "Preserved concurrent edits. Their newer validated publication includes byte-identical horror sources. Qualification records remain pinned to the actual d947 snapshot, not reinterpreted against the newer snapshot.",
+    "all_four_media_copies_match": true,
+    "current_live_counts": {
+      "candidates": 10403,
+      "profiles": 2236,
+      "bundles": 1007
+    },
+    "current_source_validator_passed": true,
+    "current_horror_guard_tests": {
+      "tests": 10,
+      "passed": 10,
+      "log": "primary-live-horror-recheck.log"
+    }
+  }
+}
