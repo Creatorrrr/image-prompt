@@ -837,7 +837,9 @@ def _v24_verified_payload(source_root: Path, row: dict) -> bytes:
     blob = hashlib.sha1(f'blob {len(raw)}\0'.encode('ascii') + raw).hexdigest()
     if (len(raw) != row['bytes'] or hashlib.sha256(raw).hexdigest() != row['sha256']
             or blob != row['git_blob']):
-        preserved = _v28_preserved_retained_payload(source_root, row, raw)
+        preserved = _v29_preserved_retained_payload(source_root, row, raw)
+        if preserved is None:
+            preserved = _v28_preserved_retained_payload(source_root, row, raw)
         if preserved is None:
             preserved = _v27_preserved_retained_payload(source_root, row, raw)
         if preserved is None:
@@ -1541,38 +1543,171 @@ def archived_v26_validator(directory: Path, *, source_root: Path = ROOT):
                 sys.modules[name] = original
     return modules['validate_illustration_assets']
 
-# Additive runtime qualification. Original V1-V27 evidence remains byte-exact.
-V28_RUNTIME_PROOF = Path('docs/research-evidence/photo-prompt/retrieval-runtime-freshness-20261006/V28-RUNTIME-PROOF.json')
-V28_RUNTIME_PROOF_SHA256 = 'dd0112613d89016afd9ae8c7d821f4023448263af98ee934f731d90fe99d0429'
-V27_PARENT_SOURCE = V28_RUNTIME_PROOF.parent / 'V27-PARENT-SOURCE.json'
-V27_PARENT_SOURCE_SHA256 = 'b85d96721b73760c5bc07e42cf4a40a61ed3208607ca38cbce58b4dce4bf2af7'
+
+V27_PARENT_MANIFEST = Path(
+    'docs/research-evidence/photo-prompt/muted-color-contrast-20261006/V27-PARENT-SOURCE.json'
+)
+V27_PARENT_MANIFEST_SHA256 = 'a4328b7c683d307e46c00ec00c02aa19ae679770784049ed86fa293b5625ae59'
+V27_PARENT_COMMIT = 'cb496c1db984f9fe5d632fa764aae4d3f6aedf63'
+V27_PARENT_TREE = '805043fc6538967e5fef600e042ac7cdf3f81ffe'
+V28_MUTED_COLOR_PROOF = V27_PARENT_MANIFEST.parent / 'V28-MUTED-COLOR-PROOF.json'
+V28_MUTED_COLOR_PROOF_SHA256 = '66415e7e2915aba5e1b91490beed9343769f01fb5e0a97021a2f7da97b6eb7ae'
+V28_MUTED_COLOR_SOURCE_PATHS = frozenset(
+    'skills/photo-prompt-image-generator/assets/' + name for name in (
+        'photo_prompt_color_relations_extension.json',
+        'photo_prompt_visual_obligations_color_relations.json',
+        'photo_prompt_semantic_index.json',
+        'photo_prompt_visual_profile_index.json',
+    )
+)
 
 
-def _v28_transition(source_root: Path = ROOT) -> tuple[dict, dict]:
-    raw = _v24_regular_path(source_root, V28_RUNTIME_PROOF.as_posix()).read_bytes()
-    parent_raw = _v24_regular_path(source_root, V27_PARENT_SOURCE.as_posix()).read_bytes()
-    if (hashlib.sha256(raw).hexdigest() != V28_RUNTIME_PROOF_SHA256
-            or hashlib.sha256(parent_raw).hexdigest() != V27_PARENT_SOURCE_SHA256):
-        raise AssertionError('Frozen V28 runtime proof or V27 source manifest drift')
+def _v27_parent_manifest(source_root: Path = ROOT) -> dict:
+    """Authenticate cb496 source bytes independently of V28's maintenance edit."""
+    raw = _v24_regular_path(source_root, V27_PARENT_MANIFEST.as_posix()).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != V27_PARENT_MANIFEST_SHA256:
+        raise AssertionError('Frozen V27 parent source manifest drift')
+    manifest = json.loads(raw)
+    rows = manifest.get('members') or []
+    archived = V28_MUTED_COLOR_SOURCE_PATHS | {
+        V17_PARENT_VALIDATOR,
+        'skills/subculture-illustration-image-generator/assets/universal_scene_baseline_v2.json',
+    }
+    if (manifest.get('schema') != 'photo-v27-parent-source-manifest/v1'
+            or manifest.get('source_pin') != V27_PARENT_COMMIT
+            or manifest.get('source_tree') != V27_PARENT_TREE
+            or manifest.get('member_count') != 1040 or len(rows) != 1040
+            or len({row['path'] for row in rows}) != 1040
+            or len({row['source_path'] for row in rows}) != 1040
+            or manifest.get('total_member_bytes') != 2311411429
+            or sum(row['bytes'] for row in rows) != 2311411429
+            or manifest.get('archived_member_count') != 6
+            or manifest.get('new_git_blob_payload_bytes') != 0
+            or manifest.get('new_archive_count') != 0
+            or {row['path'] for row in rows if row['kind'] == 'archived_parent_source'} != archived):
+        raise AssertionError('Frozen V27 historical source inventory drift')
+    for row in rows:
+        _v17_safe_path(row['path'])
+        _v17_safe_path(row['source_path'])
+        expected = (V27_PARENT_MANIFEST.parent / 'v27-parent-source-files' / row['path']).as_posix()
+        if (row['mode'] not in ('100644', '100755') or type(row['bytes']) is not int
+                or row['bytes'] < 0 or len(row['sha256']) != 64 or len(row['git_blob']) != 40
+                or any(c not in '0123456789abcdef' for c in row['sha256'] + row['git_blob'])
+                or not ((row['kind'] == 'retained_parent_source' and row['source_path'] == row['path'])
+                        or (row['kind'] == 'archived_parent_source' and row['source_path'] == expected))):
+            raise AssertionError('Unregistered V27 historical source backing path')
+    return manifest
+
+
+def _v28_preserved_retained_payload(source_root: Path, row: dict, current: bytes) -> bytes | None:
+    """Recover only four sealed V28 DATA changes, then preserve the V27 chain."""
+    if (row['source_path'] != row['path'] or row['path'] not in V28_MUTED_COLOR_SOURCE_PATHS
+            or not (source_root / V27_PARENT_MANIFEST).is_file()):
+        return None
+    proof_raw = _v24_regular_path(source_root, V28_MUTED_COLOR_PROOF.as_posix()).read_bytes()
+    if hashlib.sha256(proof_raw).hexdigest() != V28_MUTED_COLOR_PROOF_SHA256:
+        raise AssertionError('Frozen V28 muted-color transition proof drift')
+    proof = json.loads(proof_raw)
+    if (proof.get('schema') != 'photo-muted-color-negative-example-transition/v28'
+            or proof['source_files_after'].get(row['path']) != hashlib.sha256(current).hexdigest()):
+        raise AssertionError(f'Frozen V28 retained live source payload drift: {row["path"]}')
+    before = next((item for item in _v27_parent_manifest(source_root)['members']
+                   if item['path'] == row['path']), None)
+    if before is None:
+        return None
+    preserved = _v24_verified_payload(source_root, before)
+    if all(before[field] == row[field] for field in ('sha256', 'git_blob', 'bytes', 'mode')):
+        return preserved
+    return _v27_preserved_retained_payload(source_root, row, preserved)
+
+
+def materialize_v27_parent_source(directory: Path, *, source_root: Path = ROOT) -> dict:
+    """Replay exact V27 and its predecessor evidence without Git or network."""
+    _v24_empty_destination(directory)
+    manifest = _v27_parent_manifest(source_root)
+    for row in manifest['members']:
+        _v24_verified_payload(source_root, row)
+    directory.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='.sealed-v27-', dir=directory.parent) as temporary:
+        staged = Path(temporary) / 'tree'
+        staged.mkdir()
+        for row in manifest['members']:
+            target = staged / _v17_safe_path(row['path'])
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(_v24_verified_payload(source_root, row))
+            target.chmod(int(row['mode'][-3:], 8))
+        _v24_empty_destination(directory)
+        staged.replace(directory)
+    return manifest
+
+
+def archived_v27_validator(directory: Path, *, source_root: Path = ROOT):
+    """Import the original V27 validator and all support from authenticated bytes."""
+    manifest = materialize_v27_parent_source(directory, source_root=source_root)
+    records = {row['path']: row for row in manifest['members']}
+    scripts = directory / Path(V17_PARENT_VALIDATOR).parent
+    prefix = '_archived_photo_v27_' + hashlib.sha256(str(directory).encode()).hexdigest()[:16]
+    modules, payloads = {}, {}
+    for name in ('illustration_runtime', 'illustration_audit', 'universal_scene_runtime',
+                 'validate_illustration_assets'):
+        path = scripts / (name + '.py')
+        row = records[path.relative_to(directory).as_posix()]
+        payloads[name] = _v24_verified_payload(directory, dict(row, source_path=row['path']))
+        spec = importlib.util.spec_from_file_location(prefix + '_' + name, path)
+        modules[name] = importlib.util.module_from_spec(spec)
+
+    def historical_import(name, globals=None, locals=None, fromlist=(), level=0):
+        if level == 0 and name in modules:
+            return modules[name]
+        return builtins.__import__(name, globals, locals, fromlist, level)
+
+    previous = {module.__name__: sys.modules.get(module.__name__) for module in modules.values()}
+    try:
+        for module in modules.values():
+            module.__dict__['__builtins__'] = dict(vars(builtins), __import__=historical_import)
+            sys.modules[module.__name__] = module
+        for name, module in modules.items():
+            exec(compile(payloads[name], module.__file__, 'exec'), module.__dict__)
+    finally:
+        for name, original in previous.items():
+            if original is None:
+                sys.modules.pop(name, None)
+            else:
+                sys.modules[name] = original
+    return modules['validate_illustration_assets']
+
+# Additive runtime qualification. Original V1-V28 evidence remains byte-exact.
+V29_RUNTIME_PROOF = Path('docs/research-evidence/photo-prompt/retrieval-runtime-freshness-20261006/V29-RUNTIME-PROOF.json')
+V29_RUNTIME_PROOF_SHA256 = 'd6e71088c31e5d4b1072c828336296c8c9151e25e619e4aba0ef2b817f1c001c'
+V28_PARENT_SOURCE = V29_RUNTIME_PROOF.parent / 'V28-PARENT-SOURCE.json'
+V28_PARENT_SOURCE_SHA256 = '70b29b1b4b63861a150c9b01802571f965bafa68c7ed28c598a0f574dc0e688b'
+
+
+def _v29_transition(source_root: Path = ROOT) -> tuple[dict, dict]:
+    raw = _v24_regular_path(source_root, V29_RUNTIME_PROOF.as_posix()).read_bytes()
+    parent_raw = _v24_regular_path(source_root, V28_PARENT_SOURCE.as_posix()).read_bytes()
+    if (hashlib.sha256(raw).hexdigest() != V29_RUNTIME_PROOF_SHA256
+            or hashlib.sha256(parent_raw).hexdigest() != V28_PARENT_SOURCE_SHA256):
+        raise AssertionError('Frozen V29 runtime proof or V28 source manifest drift')
     proof, parent = json.loads(raw), json.loads(parent_raw)
     rows = parent.get('members') or []
-    if (proof.get('schema') != 'photo-runtime-freshness-transition/v28'
-            or parent.get('schema') != 'photo-v27-parent-source-manifest/v1'
-            or parent.get('source_pin') != 'cb496c1db984f9fe5d632fa764aae4d3f6aedf63'
+    if (proof.get('schema') != 'photo-runtime-freshness-transition/v29'
+            or parent.get('schema') != 'photo-v28-parent-source-manifest/v1'
+            or parent.get('source_pin') != '8f9c56b1ddca2cb14bb6362da024e9c122b5cf67'
             or parent.get('source_tree') != proof['previous_qualified_tree']
-            or parent.get('member_count') != len(rows) or len(rows) != 1198
+            or parent.get('member_count') != len(rows) or len(rows) != 1219
             or len({row['path'] for row in rows}) != len(rows)
             or sum(row['bytes'] for row in rows) != parent['total_member_bytes']):
-        raise AssertionError('Frozen V27 source inventory drift')
+        raise AssertionError('Frozen V28 source inventory drift')
     for row in rows:
         _v17_safe_path(row['path']); _v17_safe_path(row['source_path'])
     return proof, parent
 
 
-def _v28_preserved_retained_payload(source_root: Path, row: dict, current: bytes) -> bytes | None:
-    if row['source_path'] != row['path'] or not (source_root / V28_RUNTIME_PROOF).is_file():
+def _v29_preserved_retained_payload(source_root: Path, row: dict, current: bytes) -> bytes | None:
+    if row['source_path'] != row['path'] or not (source_root / V29_RUNTIME_PROOF).is_file():
         return None
-    proof, parent = _v28_transition(source_root)
+    proof, parent = _v29_transition(source_root)
     if proof['source_files_after'].get(row['path']) != hashlib.sha256(current).hexdigest():
         return None
     before = next((item for item in parent['members'] if item['path'] == row['path']), None)
@@ -1582,26 +1717,26 @@ def _v28_preserved_retained_payload(source_root: Path, row: dict, current: bytes
     return _v24_verified_payload(source_root, before)
 
 
-def v27_source_path(name: str, *, source_root: Path = ROOT) -> Path:
-    """Select authenticated V27 bytes for a historical test, never arbitrary drift."""
+def v28_source_path(name: str, *, source_root: Path = ROOT) -> Path:
+    """Select authenticated V28 bytes for a historical test, never arbitrary drift."""
     current = source_root / _v17_safe_path(name)
-    proof, parent = _v28_transition(source_root)
+    proof, parent = _v29_transition(source_root)
     before = next((row for row in parent['members'] if row['path'] == name), None)
     if before is None or before['source_path'] == name:
         return current
     if name in proof['source_files_after'] and hashlib.sha256(current.read_bytes()).hexdigest() != proof['source_files_after'][name]:
-        raise AssertionError('Unqualified live source drift outside V28 runtime transition')
+        raise AssertionError('Unqualified live source drift outside V29 runtime transition')
     _v24_verified_payload(source_root, before)
     return source_root / before['source_path']
 
 
-def materialize_v27_parent_source(directory: Path, *, source_root: Path = ROOT) -> dict:
+def materialize_v28_parent_source(directory: Path, *, source_root: Path = ROOT) -> dict:
     _v24_empty_destination(directory)
-    _, manifest = _v28_transition(source_root)
+    _, manifest = _v29_transition(source_root)
     for row in manifest['members']:
         _v24_verified_payload(source_root, row)
     directory.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix='.sealed-v27-', dir=directory.parent) as temporary:
+    with tempfile.TemporaryDirectory(prefix='.sealed-v28-', dir=directory.parent) as temporary:
         staged = Path(temporary) / 'tree'; staged.mkdir()
         for row in manifest['members']:
             target = staged / _v17_safe_path(row['path'])
@@ -1612,11 +1747,11 @@ def materialize_v27_parent_source(directory: Path, *, source_root: Path = ROOT) 
     return manifest
 
 
-def archived_v27_validator(directory: Path, *, source_root: Path = ROOT):
-    manifest = materialize_v27_parent_source(directory, source_root=source_root)
+def archived_v28_validator(directory: Path, *, source_root: Path = ROOT):
+    manifest = materialize_v28_parent_source(directory, source_root=source_root)
     records = {row['path']: row for row in manifest['members']}
     scripts = directory / Path(V17_PARENT_VALIDATOR).parent
-    prefix = '_archived_photo_v27_' + hashlib.sha256(str(directory).encode()).hexdigest()[:16]
+    prefix = '_archived_photo_v28_' + hashlib.sha256(str(directory).encode()).hexdigest()[:16]
     modules, payloads = {}, {}
     for name in ('illustration_runtime', 'illustration_audit', 'universal_scene_runtime', 'validate_illustration_assets'):
         path = scripts / (name + '.py')
