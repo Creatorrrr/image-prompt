@@ -1,0 +1,99 @@
+{
+  "contract_version": "agent-synthetic-photo-test/v1",
+  "provenance": "agent_authored_synthetic_test",
+  "requester_acceptance": false,
+  "frozen_before_retrieval": true,
+  "seed": 3753980640,
+  "arm": "arm3",
+  "focus": "pattern and local color exception on a single carrier",
+  "baseline_prompt_sha256": "149bbca37af053f58c40bd55a0ba37ef454ac44cef0d4acee3daedadad14b631",
+  "expectation_ownership": "All detailed color, pattern, geometry, scene and area expectations are synthetic agent-owned test gates. They are not requester definitions, locks, or acceptance.",
+  "gate_policy": "all_hard_gates_required; partial_is_fail",
+  "hard_gates": [
+    {
+      "id": "reference_face_hair",
+      "expected_pixels": "Face supports visible reference cues: dark brown eyes, softly oval face, short chin-length dark bob and fine fringe. The reference-use request is respected; exact personal identity is not asserted.",
+      "confusion_alternatives": [
+        "generic replacement face",
+        "long hairstyle",
+        "unrelated reference appearance"
+      ]
+    },
+    {
+      "id": "same_carrier_pattern",
+      "expected_pixels": "Indigo vertical and horizontal line sets visibly share the same pale-yellow linen curtain surface across multiple cells.",
+      "confusion_alternatives": [
+        "lines on different objects",
+        "colored window shadows on plain cloth",
+        "separate stripe garments"
+      ]
+    },
+    {
+      "id": "line_crossing_geometry",
+      "expected_pixels": "Thin close vertical blue lines cross thin much more widely spaced horizontal blue rulings at approximately right angles, creating tall rectangular cells over a flat central region.",
+      "confusion_alternatives": [
+        "parallel-only stripes",
+        "equally spaced square grid",
+        "large blue blocks",
+        "geometry unreadable from moire or blur"
+      ]
+    },
+    {
+      "id": "area_roles",
+      "expected_pixels": "Yellow remains the broad ground; blue lines remain a minor linear area; red remains a tiny local exception. Approximate qualitative target: yellow >70% of visible carrier and red 0.5–4%. This is a visual assessment, not calibrated segmentation.",
+      "confusion_alternatives": [
+        "red becomes dominant panel",
+        "blue becomes broad ground",
+        "equal-size color bands"
+      ]
+    },
+    {
+      "id": "local_exception",
+      "expected_pixels": "One plain solid scarlet replacement tab occupies a bounded lower near corner of that same curtain, its red ending at a stitched perimeter and its face unpatterned.",
+      "confusion_alternatives": [
+        "red grid line repeated throughout curtain",
+        "whole edge red binding",
+        "red lamp glow",
+        "tab on apron instead of curtain",
+        "pattern printed inside red tab"
+      ]
+    },
+    {
+      "id": "material",
+      "expected_pixels": "Foreground curtain and tab read as matte woven linen with shallow drape; pigment boundaries remain distinguishable from thread texture and shadow.",
+      "confusion_alternatives": [
+        "glossy plastic carrier",
+        "blue line is only weave shadow",
+        "red is specular highlight"
+      ]
+    },
+    {
+      "id": "surface_light_grade",
+      "expected_pixels": "Neutral soft foreground light preserves distinct yellow/indigo/scarlet and natural skin; weak greenish fluorescent illumination remains in background depth; print-like contrast does not repaint the material.",
+      "confusion_alternatives": [
+        "global green carrier tint",
+        "all colors determined by colored light",
+        "grade destroys color separation"
+      ]
+    },
+    {
+      "id": "scene_readability",
+      "expected_pixels": "Maker, palm contact, visible repaired tab and bench traces connect into checking a completed textile repair; face, both working hands and carrier remain readable together.",
+      "confusion_alternatives": [
+        "floating hand",
+        "hidden patch",
+        "disconnected decorative grid",
+        "story exists only in prompt"
+      ]
+    }
+  ],
+  "supplemental_review": [
+    "line width and spacing can be judged only where the carrier is sufficiently large and flat",
+    "assess artistic impression before consulting intensity labels",
+    "evaluate entire image and distinguish visible repair story from imagined context",
+    "no unrendered baseline-improvement claim"
+  ],
+  "user_judgment": {
+    "source": "not_yet_received"
+  }
+}

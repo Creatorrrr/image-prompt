@@ -1,0 +1,265 @@
+{
+  "schema_version": "color-data-adoption-trace/v1",
+  "arm": "arm1",
+  "pack_id": "f71cc9d980db2629",
+  "runtime_generation_id": "9dbbf3161bcaac585c32a5f3e7d77890eb6cbdb4a917b863470577518c4d1e14",
+  "source_detail_path": "/Users/chasoik/.codex/worktrees/color-palette-integration/image-prompt/docs/research-evidence/photo-prompt/color-palette-integration-20261006/independent-runs/arm1/corrected-run/new_data_source_details.json",
+  "exposure_status": "pass_new_data_exposed",
+  "selection_status": "pass_compatible_new_visual_profile_opt_in",
+  "selected_new_candidate_ids": [],
+  "selected_new_profile_ids": [
+    "pa_bounded_metal_trim"
+  ],
+  "chosen_visual_concept_ids": [
+    "visual-concept:pa_bounded_metal_trim"
+  ],
+  "new_data_pixel_status": "pass_2_of_2_opt_in_gates",
+  "core_locks_modified_to_force_selection": false,
+  "palette_owner": "agent_visual_choice",
+  "adopted_effect": {
+    "target": "boat_model.gunwale_trim_and_rail_posts",
+    "color": "warm-gold metallic reflection",
+    "material": "metal with narrow specular glints",
+    "affected_dimensions": [
+      "color",
+      "material"
+    ],
+    "purpose": "Make the crafted model perimeter and distinct surface response legible during careful transfer.",
+    "neighboring_matte_owner": "main_subject.work_apron",
+    "neighboring_matte_property": "violet linen local pigment and diffuse folds",
+    "literal_prompt_evidence": {
+      "component_1_phrase": "Along the boat's gunwale, the declared metallic trim has bounded colored reflections separate from the larger local-color field of the violet hull and linen apron.",
+      "component_2_phrase": "On the slender gold rail posts, highlight variation follows the trim surface while neighboring matte regions retain their own color: narrow specular glints follow the metal curvature, while the adjacent violet linen holds soft diffuse folds."
+    }
+  },
+  "opt_in_gate_set": [
+    {
+      "id": "vo_pa_bounded_metal_trim_1",
+      "review_scale": "both",
+      "description": "the declared metallic trim has bounded colored reflections separate from the larger local-color field. Inspect the assigned owners in saved native pixels and the whole frame; an absent, occluded, merged, reversed or unclear component fails."
+    },
+    {
+      "id": "vo_pa_bounded_metal_trim_2",
+      "review_scale": "both",
+      "description": "highlight variation follows the trim surface while neighboring matte regions retain their own color. Inspect the assigned owners in saved native pixels and the whole frame; an absent, occluded, merged, reversed or unclear component fails."
+    }
+  ],
+  "complete_opt_in_contract": {
+    "effect": "promote_to_hard_visual_obligation",
+    "visual_obligations_contract_version": "photo-visual-obligations/v1",
+    "obligation": {
+      "id": "pa_bounded_metal_trim",
+      "category": "owner_bound_palette_application",
+      "activation": {
+        "source": "composer_opt_in",
+        "scope": "request_only",
+        "source_intent_ids": []
+      },
+      "composition_instruction": "Make this selected owner relation visible: the declared metallic trim has bounded colored reflections separate from the larger local-color field Make this selected owner relation visible: highlight variation follows the trim surface while neighboring matte regions retain their own color",
+      "component_semantics": {
+        "minimum_component_groups": 2,
+        "required_group_ids": [
+          "component_1",
+          "component_2"
+        ],
+        "groups": [
+          {
+            "id": "component_1",
+            "any_terms": [
+              "the declared metallic trim has bounded colored reflections separate from the larger local-color field"
+            ]
+          },
+          {
+            "id": "component_2",
+            "any_terms": [
+              "highlight variation follows the trim surface while neighboring matte regions retain their own color"
+            ]
+          }
+        ]
+      },
+      "prompt_binding": {
+        "composed_field": "visual_obligation_evidence",
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase"
+        ],
+        "minimum_distinct_evidence_phrases": 2,
+        "prompt_evidence_must_be_literal": true,
+        "maximum_pairwise_content_token_overlap_ratio": 0.82,
+        "forbidden_filler_phrases": [
+          "visible evidence",
+          "visual evidence",
+          "required cue",
+          "prompt phrase"
+        ]
+      },
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "the declared metallic trim has bounded colored reflections separate from the larger local-color field"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "highlight variation follows the trim surface while neighboring matte regions retain their own color"
+          ]
+        }
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "render_gates": [
+        {
+          "id": "vo_pa_bounded_metal_trim_1",
+          "review_scale": "both",
+          "description": "the declared metallic trim has bounded colored reflections separate from the larger local-color field. Inspect the assigned owners in saved native pixels and the whole frame; an absent, occluded, merged, reversed or unclear component fails."
+        },
+        {
+          "id": "vo_pa_bounded_metal_trim_2",
+          "review_scale": "both",
+          "description": "highlight variation follows the trim surface while neighboring matte regions retain their own color. Inspect the assigned owners in saved native pixels and the whole frame; an absent, occluded, merged, reversed or unclear component fails."
+        }
+      ],
+      "reject_substitutes": [
+        "flat yellow paint substituted for reflective trim",
+        "colored light used as proof of metallic composition"
+      ]
+    }
+  },
+  "profile_source_requires_adult_character": false,
+  "reference_property_preservation": "All reference anchors remain literal. The chosen profile changes local surface color/material properties and does not change appearance.face_hair.",
+  "declined_new_candidates": [
+    {
+      "id": "visual-concept:pa_local_color_under_separate_lights",
+      "applicability": "eligible",
+      "reason": "Two colored light footprints would compete with the repeated local pigment comparison; neutral daylight better serves this scene."
+    },
+    {
+      "id": "slot:lighting:pal_app_red_navy_violet_noir_light",
+      "applicability": "eligible",
+      "reason": "Red versus navy/violet illumination is a different expressive relation and would reduce this arm material-owner comparison."
+    },
+    {
+      "id": "slot:color_grading:pal_app_green_dark_global_tint",
+      "applicability": "eligible",
+      "reason": "A global green bias does not deepen the violet/ochre pigment and reflective-trim hierarchy."
+    }
+  ],
+  "focal_coverage": {
+    "source": "frozen_required_assertion_and_legitimate_postcore_opt_in",
+    "status": "pass_preflight",
+    "assertion_id": "visible_surface_ownership",
+    "does_not_lock_agent_palette": true
+  },
+  "original_control": "../initial-run",
+  "other_arm_inputs_used": false,
+  "user_judgment": {
+    "source": "not_yet_received"
+  },
+  "result_image": "/Users/chasoik/.codex/worktrees/color-palette-integration/image-prompt/docs/research-evidence/photo-prompt/color-palette-integration-20261006/independent-runs/arm1/generated_images/boat-material-ownership-attempt2/native.png",
+  "result_sha256": "48d724b9ba5fac5fa28ed0ea2d92ad899f15790dec5146ffe7904fc4a841376e",
+  "opt_in_pixel_results": {
+    "vo_pa_bounded_metal_trim_1": {
+      "status": "pass",
+      "evidence": "Native and 512px whole-frame views show a narrow warm-gold gunwale and railing perimeter on the boat, separate from the much larger violet hull and matte violet apron. Gold remains a bounded trim owner rather than a flat gold body field or frame-wide illumination.",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "scale_evidence": {
+        "thumbnail": "The fine gold upper outline remains distinct from the broad violet hull and apron at 512px.",
+        "native": "Gunwale segments, upright posts and rail bends show small local gold reflections and darker intervening metal segments."
+      }
+    },
+    "vo_pa_bounded_metal_trim_2": {
+      "status": "pass",
+      "evidence": "At native scale the brighter glints follow individual metal rail and post directions; darker segments stay within the same narrow trim. At thumbnail scale the bounded warm perimeter remains reflective and separate while the neighboring apron is diffusely shaded violet, with no gold wash across it.",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "scale_evidence": {
+        "thumbnail": "Bright warm rail segments trace the boat edge while the broad adjacent apron remains matte purple.",
+        "native": "Narrow rail/post highlights vary along the curved perimeter, and apron fibers/folds retain soft diffuse purple shading."
+      }
+    }
+  },
+  "attribution_limit": "Traceability from source, selection, literal prompt and exact audited runtime to a satisfying image is verified. The initial image already had incidental gold trim, so isolated causal improvement is not established.",
+  "actual_new_data_exposure_catalog": [
+    {
+      "id": "visual-concept:pa_local_color_under_separate_lights",
+      "source_pointer": "/visual_concept_candidates/candidates/2",
+      "applicability": {
+        "status": "eligible",
+        "source": "hybrid_visual_profile_resolution"
+      },
+      "reading_level": "full_detail",
+      "selected": false
+    },
+    {
+      "id": "visual-concept:pa_bounded_metal_trim",
+      "source_pointer": "/visual_concept_candidates/candidates/7",
+      "applicability": {
+        "status": "eligible",
+        "source": "hybrid_visual_profile_resolution"
+      },
+      "reading_level": "full_detail",
+      "selected": true
+    },
+    {
+      "id": "bundle:palette_relation_pal_app_red_navy_violet_noir_light",
+      "source_pointer": "/candidate_bundles/candidates/4",
+      "applicability": {
+        "status": "eligible",
+        "source": "all_members_eligible_and_dimensions_open"
+      },
+      "reading_level": "overview_only",
+      "selected": false
+    },
+    {
+      "id": "slot:lighting:pal_app_red_navy_violet_noir_light",
+      "source_pointer": "/slots/lighting/candidates/0",
+      "applicability": {
+        "status": "eligible",
+        "source": "frozen_core_slot_contract",
+        "reason": null
+      },
+      "reading_level": "full_detail",
+      "selected": false
+    },
+    {
+      "id": "slot:color_grading:pal_app_green_dark_global_tint",
+      "source_pointer": "/slots/color_grading/candidates/0",
+      "applicability": {
+        "status": "eligible",
+        "source": "frozen_core_slot_contract",
+        "reason": null
+      },
+      "reading_level": "full_detail",
+      "selected": false
+    }
+  ],
+  "exposure_by_layer": {
+    "visual_concept_candidates": [
+      "visual-concept:pa_local_color_under_separate_lights",
+      "visual-concept:pa_bounded_metal_trim"
+    ],
+    "ordinary_slots": [
+      "slot:lighting:pal_app_red_navy_violet_noir_light",
+      "slot:color_grading:pal_app_green_dark_global_tint"
+    ],
+    "candidate_bundles": [
+      "bundle:palette_relation_pal_app_red_navy_violet_noir_light"
+    ],
+    "semantic_clarification": [
+      "clarification:visual-profile:pa_bounded_metal_trim",
+      "clarification:visual-profile:pa_local_color_under_separate_lights"
+    ]
+  },
+  "unselected_bundle_boundary": "The red/navy/violet light bundle was exposed in the overview but not considered for adoption or read as a full selection contract. It adds no hard gates or prompt duty."
+}

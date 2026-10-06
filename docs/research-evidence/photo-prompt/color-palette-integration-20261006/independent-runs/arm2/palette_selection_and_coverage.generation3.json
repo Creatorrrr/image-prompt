@@ -1,0 +1,121 @@
+{
+  "schema_version": "photo-independent-palette-selection/v1",
+  "pack_id": "64baa858267e0048",
+  "runtime_generation_id": "9dbbf3161bcaac585c32a5f3e7d77890eb6cbdb4a917b863470577518c4d1e14",
+  "source_core_unchanged": true,
+  "new_semantic_data": {
+    "status": "selected",
+    "exposed_ids": [
+      "visual-concept:pa_local_color_under_separate_lights"
+    ],
+    "selected_ids": [
+      "visual-concept:pa_local_color_under_separate_lights"
+    ],
+    "full_source_detail": "palette_candidate_details.generation3.json",
+    "candidate_applicability": {
+      "status": "eligible",
+      "source": "hybrid_visual_profile_resolution"
+    },
+    "candidate_effects": {
+      "affected_dimensions": [
+        "lighting",
+        "color"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "lighting",
+          "target": "*",
+          "property": "lighting.color"
+        },
+        {
+          "dimension": "lighting",
+          "target": "*",
+          "property": "lighting.direction"
+        },
+        {
+          "dimension": "lighting",
+          "target": "*",
+          "property": "surface.illumination"
+        },
+        {
+          "dimension": "color",
+          "target": "*",
+          "property": "lighting.color"
+        },
+        {
+          "dimension": "color",
+          "target": "*",
+          "property": "surface.illumination.color"
+        }
+      ]
+    },
+    "all_opt_in_render_gates": [
+      {
+        "id": "vo_pa_local_color_under_separate_lights_1",
+        "review_scale": "both",
+        "description": "two differently colored directional light contributions form separate receiving footprints on the declared surfaces. Inspect the assigned owners in saved native pixels and the whole frame; an absent, occluded, merged, reversed or unclear component fails."
+      },
+      {
+        "id": "vo_pa_local_color_under_separate_lights_2",
+        "review_scale": "both",
+        "description": "each light footprint follows surface orientation and occlusion while bounded base material regions remain distinguishable. Inspect the assigned owners in saved native pixels and the whole frame; an absent, occluded, merged, reversed or unclear component fails."
+      },
+      {
+        "id": "vo_pa_local_color_under_separate_lights_3",
+        "review_scale": "both",
+        "description": "the colored illumination stays attributable to those footprints rather than a uniform image tint. Inspect the assigned owners in saved native pixels and the whole frame; an absent, occluded, merged, reversed or unclear component fails."
+      }
+    ],
+    "all_required_literal_evidence": {
+      "pa_local_color_under_separate_lights": {
+        "component_1_phrase": "two differently colored directional light contributions form separate receiving footprints on the declared surfaces",
+        "component_2_phrase": "each light footprint follows surface orientation and occlusion while bounded base material regions remain distinguishable",
+        "component_3_phrase": "the colored illumination stays attributable to those footprints rather than a uniform image tint"
+      }
+    }
+  },
+  "new_ordinary_candidate_data": {
+    "status": "fail",
+    "failure_stage": "retrieval_exposure",
+    "exposed_ids": [],
+    "selected_ids": [],
+    "reason": "No pal_app_ slot/ordinary candidate occurs in the actual generation-3 catalogue; the new semantic profile is separately exposed and selected."
+  },
+  "actual_owner_effect_evidence": [
+    {
+      "actual_owner": "observatory.threshold.limestone_floor",
+      "property": "surface.illumination.color",
+      "adopted_effect": "warm near pool and blue far band on one continuous intrinsically neutral-gray limestone surface",
+      "literal_evidence": "The lamp forms a warm near-side pool while the storm-porch window forms a blue far-side band",
+      "base_local_color_evidence": "The same continuous neutral limestone crosses the threshold"
+    },
+    {
+      "actual_owner": "observatory.threshold.gray_jamb",
+      "property": "surface.illumination_and_occlusion",
+      "adopted_effect": "an inner-facing return shields part of the floor from the blue directional source",
+      "literal_evidence": "The inner-facing jamb return shields part of the floor from the blue source",
+      "base_local_color_evidence": "neutral plaster doorway"
+    },
+    {
+      "actual_owner": "main_subject.ivory_charcoal_knit_sleeves",
+      "property": "surface.illumination.color_with_intrinsic_pattern_preserved",
+      "adopted_effect": "source-dependent casts follow the sleeve while charcoal woven bands retain their fabric ownership",
+      "literal_evidence": "the knit's thin charcoal bands remain intrinsic woven stripes across both receiving zones",
+      "base_local_color_evidence": "an ivory rib-knit long-sleeved top with fine charcoal horizontal stripes"
+    },
+    {
+      "actual_owner": "main_subject.apron_tab_and_brick_red_toolbox",
+      "property": "intrinsic_surface_regions_distinguishable_through_illumination",
+      "adopted_effect": "existing compact red object boundaries stay identified within the two-source photograph",
+      "literal_evidence": "the gray stone's mottle and the brick-red object edges preserved through the source transition",
+      "base_local_color_evidence": "one small muted brick-red woven tab on the apron repeats the hue of a compact brick-red painted-steel toolbox beside the pad"
+    }
+  ],
+  "scope_review": "The source changes lighting/color properties only; all are open. Reference face/hair, study/subject/event anchors and required subject evidence stay literal. No palette hue list or alias is made a requester definition.",
+  "focal_coverage_check": "The user-owned study/reference event is covered by the same frozen anchors/assertion; the adopted new two-light meaning is now a complete hard opt-in obligation. Agent-created test_case predicates remain separate.",
+  "semantic_self_review": "One bounded review compared full final prose with the user spans, all frozen evidence and three opt-in components. The new clauses strengthen the existing same-floor two-source mechanism, maintain task/ref appearance and contain no source contradiction.",
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}

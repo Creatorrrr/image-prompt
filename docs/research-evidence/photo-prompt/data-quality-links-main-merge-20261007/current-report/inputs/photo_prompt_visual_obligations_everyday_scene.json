@@ -1,0 +1,920 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "description": "Narrow everyday event relations; broad everyday labels stay advisory.",
+  "profiles": [
+    {
+      "id": "ed_clean_room_reset",
+      "category": "everyday_event_relation",
+      "activation": {
+        "exact_terms": [
+          "a person returns one used item to its place in a clean room; one recently cleared work surface remains visible; one small remaining task stays active beside the cleared area; an open walking path connects the active area to the room"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a person returns one used item to its place in a clean room; one recently cleared work surface remains visible; one small remaining task stays active beside the cleared area; an open walking path connects the active area to the room",
+        "paraphrase_examples": [
+          "정돈 중인 깨끗한 방",
+          "tidying a clean actively used room",
+          "A person puts the last folded cloth away in a clean, actively used room; the nearby work surface is cleared and the path remains open."
+        ],
+        "visual_components": [
+          "정돈 중인 깨끗한 방",
+          "tidying a clean actively used room",
+          "a person returns one used item to its place in a clean room",
+          "one recently cleared work surface remains visible",
+          "one small remaining task stays active beside the cleared area",
+          "an open walking path connects the active area to the room"
+        ],
+        "contrast_examples": [
+          "abandoned room",
+          "blank showroom with no current task",
+          "poverty or dirt as a realism shortcut"
+        ],
+        "claim_limits": [
+          "Every component must refer to the same visible people, objects and scene.",
+          "A still image cannot establish an unshown motive, prior event or capture authenticity.",
+          "A broad everyday or candid label does not activate this narrow relation."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "정돈 중인 깨끗한 방",
+          "tidying a clean actively used room",
+          "a person returns one used item to its place in a clean room",
+          "one recently cleared work surface remains visible",
+          "one small remaining task stays active beside the cleared area",
+          "an open walking path connects the active area to the room"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "abandoned room",
+        "blank showroom with no current task",
+        "poverty or dirt as a realism shortcut"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a person returns one used item to its place in a clean room"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a person returns one used item to its place in a clean room"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: a person returns one used item to its place in a clean room",
+            "render_gate": {
+              "id": "vo_ed_clean_room_reset_1",
+              "review_scale": "both",
+              "description": "a person returns one used item to its place in a clean room. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "one recently cleared work surface remains visible"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "one recently cleared work surface remains visible"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: one recently cleared work surface remains visible",
+            "render_gate": {
+              "id": "vo_ed_clean_room_reset_2",
+              "review_scale": "both",
+              "description": "one recently cleared work surface remains visible. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "one small remaining task stays active beside the cleared area"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "one small remaining task stays active beside the cleared area"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: one small remaining task stays active beside the cleared area",
+            "render_gate": {
+              "id": "vo_ed_clean_room_reset_3",
+              "review_scale": "both",
+              "description": "one small remaining task stays active beside the cleared area. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "an open walking path connects the active area to the room"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "an open walking path connects the active area to the room"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: an open walking path connects the active area to the room",
+            "render_gate": {
+              "id": "vo_ed_clean_room_reset_4",
+              "review_scale": "both",
+              "description": "an open walking path connects the active area to the room. Missing, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ed_cafe_pickup_wait",
+      "category": "everyday_event_relation",
+      "activation": {
+        "exact_terms": [
+          "a customer waits facing the cafe pickup point; a prepared drink remains on the service side of the counter; an open handoff gap connects the service side and customer side; the prepared drink remains separate from the customer's hands"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a customer waits facing the cafe pickup point; a prepared drink remains on the service side of the counter; an open handoff gap connects the service side and customer side; the prepared drink remains separate from the customer's hands",
+        "paraphrase_examples": [
+          "카페 픽업 대기",
+          "waiting at a cafe pickup counter",
+          "At a small cafe pickup counter, a customer waits beside an open handoff space while a prepared cup remains behind the counter."
+        ],
+        "visual_components": [
+          "카페 픽업 대기",
+          "waiting at a cafe pickup counter",
+          "a customer waits facing the cafe pickup point",
+          "a prepared drink remains on the service side of the counter",
+          "an open handoff gap connects the service side and customer side",
+          "the prepared drink remains separate from the customer's hands"
+        ],
+        "contrast_examples": [
+          "person drinking a full cup while described as waiting",
+          "generic cafe background without service geometry"
+        ],
+        "claim_limits": [
+          "Every component must refer to the same visible people, objects and scene.",
+          "A still image cannot establish an unshown motive, prior event or capture authenticity.",
+          "A broad everyday or candid label does not activate this narrow relation."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "카페 픽업 대기",
+          "waiting at a cafe pickup counter",
+          "a customer waits facing the cafe pickup point",
+          "a prepared drink remains on the service side of the counter",
+          "an open handoff gap connects the service side and customer side",
+          "the prepared drink remains separate from the customer's hands"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "person drinking a full cup while described as waiting",
+        "generic cafe background without service geometry"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a customer waits facing the cafe pickup point"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a customer waits facing the cafe pickup point"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: a customer waits facing the cafe pickup point",
+            "render_gate": {
+              "id": "vo_ed_cafe_pickup_wait_1",
+              "review_scale": "both",
+              "description": "a customer waits facing the cafe pickup point. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a prepared drink remains on the service side of the counter"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a prepared drink remains on the service side of the counter"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: a prepared drink remains on the service side of the counter",
+            "render_gate": {
+              "id": "vo_ed_cafe_pickup_wait_2",
+              "review_scale": "both",
+              "description": "a prepared drink remains on the service side of the counter. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "an open handoff gap connects the service side and customer side"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "an open handoff gap connects the service side and customer side"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: an open handoff gap connects the service side and customer side",
+            "render_gate": {
+              "id": "vo_ed_cafe_pickup_wait_3",
+              "review_scale": "both",
+              "description": "an open handoff gap connects the service side and customer side. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the prepared drink remains separate from the customer's hands"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the prepared drink remains separate from the customer's hands"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: the prepared drink remains separate from the customer's hands",
+            "render_gate": {
+              "id": "vo_ed_cafe_pickup_wait_4",
+              "review_scale": "both",
+              "description": "the prepared drink remains separate from the customer's hands. Missing, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ed_market_compare",
+      "category": "everyday_event_relation",
+      "activation": {
+        "exact_terms": [
+          "two comparable products are simultaneously visible at one shopping area; the shopper holds one product beside the second alternative; the shopper's hand or gaze connects both products as one choice; the compared products have visible support from hands, basket, or shelf"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "two comparable products are simultaneously visible at one shopping area; the shopper holds one product beside the second alternative; the shopper's hand or gaze connects both products as one choice; the compared products have visible support from hands, basket, or shelf",
+        "paraphrase_examples": [
+          "매장 두 상품 비교",
+          "comparing two items at a market shelf",
+          "At a market shelf, a shopper holds one item near a second comparable choice and looks between them before placing either in the basket."
+        ],
+        "visual_components": [
+          "매장 두 상품 비교",
+          "comparing two items at a market shelf",
+          "two comparable products are simultaneously visible at one shopping area",
+          "the shopper holds one product beside the second alternative",
+          "the shopper's hand or gaze connects both products as one choice",
+          "the compared products have visible support from hands, basket, or shelf"
+        ],
+        "contrast_examples": [
+          "one item held without an alternative",
+          "readable price arithmetic demanded at thumbnail size"
+        ],
+        "claim_limits": [
+          "Every component must refer to the same visible people, objects and scene.",
+          "A still image cannot establish an unshown motive, prior event or capture authenticity.",
+          "A broad everyday or candid label does not activate this narrow relation."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "매장 두 상품 비교",
+          "comparing two items at a market shelf",
+          "two comparable products are simultaneously visible at one shopping area",
+          "the shopper holds one product beside the second alternative",
+          "the shopper's hand or gaze connects both products as one choice",
+          "the compared products have visible support from hands, basket, or shelf"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "one item held without an alternative",
+        "readable price arithmetic demanded at thumbnail size"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "two comparable products are simultaneously visible at one shopping area"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "two comparable products are simultaneously visible at one shopping area"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: two comparable products are simultaneously visible at one shopping area",
+            "render_gate": {
+              "id": "vo_ed_market_compare_1",
+              "review_scale": "both",
+              "description": "two comparable products are simultaneously visible at one shopping area. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the shopper holds one product beside the second alternative"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the shopper holds one product beside the second alternative"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: the shopper holds one product beside the second alternative",
+            "render_gate": {
+              "id": "vo_ed_market_compare_2",
+              "review_scale": "both",
+              "description": "the shopper holds one product beside the second alternative. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the shopper's hand or gaze connects both products as one choice"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the shopper's hand or gaze connects both products as one choice"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: the shopper's hand or gaze connects both products as one choice",
+            "render_gate": {
+              "id": "vo_ed_market_compare_3",
+              "review_scale": "both",
+              "description": "the shopper's hand or gaze connects both products as one choice. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the compared products have visible support from hands, basket, or shelf"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the compared products have visible support from hands, basket, or shelf"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: the compared products have visible support from hands, basket, or shelf",
+            "render_gate": {
+              "id": "vo_ed_market_compare_4",
+              "review_scale": "both",
+              "description": "the compared products have visible support from hands, basket, or shelf. Missing, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ed_subway_exit",
+      "category": "everyday_event_relation",
+      "activation": {
+        "exact_terms": [
+          "an open train door separates the carriage from the platform; the passenger crosses the doorway toward the platform; the passenger's step has a plausible floor and threshold support; the exit path remains navigable for the passenger"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "an open train door separates the carriage from the platform; the passenger crosses the doorway toward the platform; the passenger's step has a plausible floor and threshold support; the exit path remains navigable for the passenger",
+        "paraphrase_examples": [
+          "열차 문턱에서 하차",
+          "stepping out through an open train door",
+          "A passenger steps across an open train doorway onto the platform while waiting riders leave a clear path."
+        ],
+        "visual_components": [
+          "열차 문턱에서 하차",
+          "stepping out through an open train door",
+          "an open train door separates the carriage from the platform",
+          "the passenger crosses the doorway toward the platform",
+          "the passenger's step has a plausible floor and threshold support",
+          "the exit path remains navigable for the passenger"
+        ],
+        "contrast_examples": [
+          "person merely standing on platform",
+          "closed train door",
+          "commuter flow through a wall"
+        ],
+        "claim_limits": [
+          "Every component must refer to the same visible people, objects and scene.",
+          "A still image cannot establish an unshown motive, prior event or capture authenticity.",
+          "A broad everyday or candid label does not activate this narrow relation."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "열차 문턱에서 하차",
+          "stepping out through an open train door",
+          "an open train door separates the carriage from the platform",
+          "the passenger crosses the doorway toward the platform",
+          "the passenger's step has a plausible floor and threshold support",
+          "the exit path remains navigable for the passenger"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "person merely standing on platform",
+        "closed train door",
+        "commuter flow through a wall"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "an open train door separates the carriage from the platform"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "an open train door separates the carriage from the platform"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: an open train door separates the carriage from the platform",
+            "render_gate": {
+              "id": "vo_ed_subway_exit_1",
+              "review_scale": "both",
+              "description": "an open train door separates the carriage from the platform. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the passenger crosses the doorway toward the platform"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the passenger crosses the doorway toward the platform"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: the passenger crosses the doorway toward the platform",
+            "render_gate": {
+              "id": "vo_ed_subway_exit_2",
+              "review_scale": "both",
+              "description": "the passenger crosses the doorway toward the platform. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the passenger's step has a plausible floor and threshold support"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the passenger's step has a plausible floor and threshold support"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: the passenger's step has a plausible floor and threshold support",
+            "render_gate": {
+              "id": "vo_ed_subway_exit_3",
+              "review_scale": "both",
+              "description": "the passenger's step has a plausible floor and threshold support. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the exit path remains navigable for the passenger"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the exit path remains navigable for the passenger"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: the exit path remains navigable for the passenger",
+            "render_gate": {
+              "id": "vo_ed_subway_exit_4",
+              "review_scale": "both",
+              "description": "the exit path remains navigable for the passenger. Missing, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ed_rain_threshold",
+      "category": "everyday_event_relation",
+      "activation": {
+        "exact_terms": [
+          "a doorway visibly separates the sheltered interior from the wet exterior; the person's hand folds a damp umbrella just inside the doorway; water stays on the weather exposed umbrella and exterior route; a nearby floor mat or stable surface receives the folded umbrella"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a doorway visibly separates the sheltered interior from the wet exterior; the person's hand folds a damp umbrella just inside the doorway; water stays on the weather exposed umbrella and exterior route; a nearby floor mat or stable surface receives the folded umbrella",
+        "paraphrase_examples": [
+          "비 온 뒤 실내 진입과 우산 접기",
+          "folding a wet umbrella just inside a doorway",
+          "Just inside the doorway, a person folds a rain-wet umbrella; the wet pavement stays visible outside and a floor mat receives the drips."
+        ],
+        "visual_components": [
+          "비 온 뒤 실내 진입과 우산 접기",
+          "folding a wet umbrella just inside a doorway",
+          "a doorway visibly separates the sheltered interior from the wet exterior",
+          "the person's hand folds a damp umbrella just inside the doorway",
+          "water stays on the weather exposed umbrella and exterior route",
+          "a nearby floor mat or stable surface receives the folded umbrella"
+        ],
+        "contrast_examples": [
+          "dry open umbrella used indoors",
+          "every indoor surface soaked",
+          "rain in a scene requested as dry"
+        ],
+        "claim_limits": [
+          "Every component must refer to the same visible people, objects and scene.",
+          "A still image cannot establish an unshown motive, prior event or capture authenticity.",
+          "A broad everyday or candid label does not activate this narrow relation."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "비 온 뒤 실내 진입과 우산 접기",
+          "folding a wet umbrella just inside a doorway",
+          "a doorway visibly separates the sheltered interior from the wet exterior",
+          "the person's hand folds a damp umbrella just inside the doorway",
+          "water stays on the weather exposed umbrella and exterior route",
+          "a nearby floor mat or stable surface receives the folded umbrella"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "dry open umbrella used indoors",
+        "every indoor surface soaked",
+        "rain in a scene requested as dry"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a doorway visibly separates the sheltered interior from the wet exterior"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a doorway visibly separates the sheltered interior from the wet exterior"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: a doorway visibly separates the sheltered interior from the wet exterior",
+            "render_gate": {
+              "id": "vo_ed_rain_threshold_1",
+              "review_scale": "both",
+              "description": "a doorway visibly separates the sheltered interior from the wet exterior. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the person's hand folds a damp umbrella just inside the doorway"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the person's hand folds a damp umbrella just inside the doorway"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: the person's hand folds a damp umbrella just inside the doorway",
+            "render_gate": {
+              "id": "vo_ed_rain_threshold_2",
+              "review_scale": "both",
+              "description": "the person's hand folds a damp umbrella just inside the doorway. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "water stays on the weather exposed umbrella and exterior route"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "water stays on the weather exposed umbrella and exterior route"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: water stays on the weather exposed umbrella and exterior route",
+            "render_gate": {
+              "id": "vo_ed_rain_threshold_3",
+              "review_scale": "both",
+              "description": "water stays on the weather exposed umbrella and exterior route. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "a nearby floor mat or stable surface receives the folded umbrella"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "a nearby floor mat or stable surface receives the folded umbrella"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: a nearby floor mat or stable surface receives the folded umbrella",
+            "render_gate": {
+              "id": "vo_ed_rain_threshold_4",
+              "review_scale": "both",
+              "description": "a nearby floor mat or stable surface receives the folded umbrella. Missing, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ed_shared_phone",
+      "category": "everyday_event_relation",
+      "activation": {
+        "exact_terms": [
+          "one phone screen lies between two reachable people; the presenting hand angles that same screen toward the recipient; both people's gaze directions converge on the shared screen; the recipient shows a small visible response to the shared view"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "one phone screen lies between two reachable people; the presenting hand angles that same screen toward the recipient; both people's gaze directions converge on the shared screen; the recipient shows a small visible response to the shared view",
+        "paraphrase_examples": [
+          "한 휴대폰 화면을 함께 보며 반응",
+          "sharing one phone screen and reacting",
+          "Two friends look toward the same phone as one tilts it toward the other and the listener begins to smile."
+        ],
+        "visual_components": [
+          "한 휴대폰 화면을 함께 보며 반응",
+          "sharing one phone screen and reacting",
+          "one phone screen lies between two reachable people",
+          "the presenting hand angles that same screen toward the recipient",
+          "both people's gaze directions converge on the shared screen",
+          "the recipient shows a small visible response to the shared view"
+        ],
+        "contrast_examples": [
+          "each person looks at a separate phone",
+          "screen faces camera but not recipient",
+          "claim about exact content without visible evidence"
+        ],
+        "claim_limits": [
+          "Every component must refer to the same visible people, objects and scene.",
+          "A still image cannot establish an unshown motive, prior event or capture authenticity.",
+          "A broad everyday or candid label does not activate this narrow relation."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "한 휴대폰 화면을 함께 보며 반응",
+          "sharing one phone screen and reacting",
+          "one phone screen lies between two reachable people",
+          "the presenting hand angles that same screen toward the recipient",
+          "both people's gaze directions converge on the shared screen",
+          "the recipient shows a small visible response to the shared view"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "each person looks at a separate phone",
+        "screen faces camera but not recipient",
+        "claim about exact content without visible evidence"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "one phone screen lies between two reachable people"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "one phone screen lies between two reachable people"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: one phone screen lies between two reachable people",
+            "render_gate": {
+              "id": "vo_ed_shared_phone_1",
+              "review_scale": "both",
+              "description": "one phone screen lies between two reachable people. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the presenting hand angles that same screen toward the recipient"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the presenting hand angles that same screen toward the recipient"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: the presenting hand angles that same screen toward the recipient",
+            "render_gate": {
+              "id": "vo_ed_shared_phone_2",
+              "review_scale": "both",
+              "description": "the presenting hand angles that same screen toward the recipient. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "both people's gaze directions converge on the shared screen"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "both people's gaze directions converge on the shared screen"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: both people's gaze directions converge on the shared screen",
+            "render_gate": {
+              "id": "vo_ed_shared_phone_3",
+              "review_scale": "both",
+              "description": "both people's gaze directions converge on the shared screen. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the recipient shows a small visible response to the shared view"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the recipient shows a small visible response to the shared view"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: the recipient shows a small visible response to the shared view",
+            "render_gate": {
+              "id": "vo_ed_shared_phone_4",
+              "review_scale": "both",
+              "description": "the recipient shows a small visible response to the shared view. Missing, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ed_independent_bystander",
+      "category": "everyday_event_relation",
+      "activation": {
+        "exact_terms": [
+          "the focal person performs a legible foreground task; a background person performs a different legible task; the two tasks have separate targets or walking routes; the requested foreground hand action remains visible"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the focal person performs a legible foreground task; a background person performs a different legible task; the two tasks have separate targets or walking routes; the requested foreground hand action remains visible",
+        "paraphrase_examples": [
+          "주변인의 독립적인 과업",
+          "a bystander doing a different task",
+          "The focal person finishes a purchase while, farther back, another customer independently browses a shelf along a separate aisle."
+        ],
+        "visual_components": [
+          "주변인의 독립적인 과업",
+          "a bystander doing a different task",
+          "the focal person performs a legible foreground task",
+          "a background person performs a different legible task",
+          "the two tasks have separate targets or walking routes",
+          "the requested foreground hand action remains visible"
+        ],
+        "contrast_examples": [
+          "duplicated anonymous crowd",
+          "second person copied into a solo/private request",
+          "foreground occlusion erasing the task"
+        ],
+        "claim_limits": [
+          "Every component must refer to the same visible people, objects and scene.",
+          "A still image cannot establish an unshown motive, prior event or capture authenticity.",
+          "A broad everyday or candid label does not activate this narrow relation."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "주변인의 독립적인 과업",
+          "a bystander doing a different task",
+          "the focal person performs a legible foreground task",
+          "a background person performs a different legible task",
+          "the two tasks have separate targets or walking routes",
+          "the requested foreground hand action remains visible"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "duplicated anonymous crowd",
+        "second person copied into a solo/private request",
+        "foreground occlusion erasing the task"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the focal person performs a legible foreground task"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the focal person performs a legible foreground task"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: the focal person performs a legible foreground task",
+            "render_gate": {
+              "id": "vo_ed_independent_bystander_1",
+              "review_scale": "both",
+              "description": "the focal person performs a legible foreground task. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a background person performs a different legible task"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a background person performs a different legible task"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: a background person performs a different legible task",
+            "render_gate": {
+              "id": "vo_ed_independent_bystander_2",
+              "review_scale": "both",
+              "description": "a background person performs a different legible task. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the two tasks have separate targets or walking routes"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the two tasks have separate targets or walking routes"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: the two tasks have separate targets or walking routes",
+            "render_gate": {
+              "id": "vo_ed_independent_bystander_3",
+              "review_scale": "both",
+              "description": "the two tasks have separate targets or walking routes. Missing, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the requested foreground hand action remains visible"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the requested foreground hand action remains visible"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its named owner: the requested foreground hand action remains visible",
+            "render_gate": {
+              "id": "vo_ed_independent_bystander_4",
+              "review_scale": "both",
+              "description": "the requested foreground hand action remains visible. Missing, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

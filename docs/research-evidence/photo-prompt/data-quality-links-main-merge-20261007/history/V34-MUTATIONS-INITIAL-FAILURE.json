@@ -1,0 +1,17 @@
+{
+  "schema": "photo-v34-authoring-failure/v1",
+  "evidence_type": "summary of observed command result",
+  "tests_run": 14,
+  "failures": 0,
+  "errors": 1,
+  "elapsed_seconds": 111.423,
+  "test": "test_six_added_source_leaves_are_the_entire_authored_delta",
+  "error": "KeyError: 'skills/photo-prompt-image-generator/assets/photo_prompt_color_palette_extension.json'",
+  "cause": "The test process imported a draft with guessed palette file names before the actual upstream file names were corrected.",
+  "correction": [
+    "photo_prompt_palette_applications_extension.json",
+    "photo_prompt_visual_obligations_palette_applications.json"
+  ],
+  "assertion_boundary": "The same exact original-versus-current byte equality assertions are retained. No fixture, historical expectation, source, proof or validator was revised by this correction.",
+  "final_result": "Recorded separately in V34-MUTATIONS.log and V34-MUTATIONS.json."
+}

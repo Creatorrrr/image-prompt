@@ -1,0 +1,113 @@
+{
+  "contract_version": "agent-palette-integration-trace/v1",
+  "arm": "arm3",
+  "source_request_unchanged": true,
+  "frozen_scene_owner": "props.curtain",
+  "frozen_scene_properties": [
+    "surface.local_color.ground=butter_yellow",
+    "surface.pattern.lines=indigo_crossing_rulings",
+    "surface.pattern.vertical_spacing=close",
+    "surface.pattern.horizontal_spacing=wide",
+    "surface.pattern.line_widths=similar",
+    "surface.local_color.exception=single_small_scarlet_tab",
+    "material=matte_woven_linen"
+  ],
+  "pack_id": "4a3cfda574e6483b",
+  "runtime_generation_id": "2651e1ae38d44f12aba853406c2693722ee8003c47838188a156b3160e24e927",
+  "selection_status": "FAIL_coverage_gap",
+  "search_exposure_status": "PASS_new_profile_and_candidate_exposed",
+  "chosen_new_visual_concept_ids": [],
+  "chosen_new_candidate_ids": [],
+  "new_data_review": [
+    {
+      "id": "visual-concept:pa_bands_same_carrier",
+      "exposed": true,
+      "decision": "rejected",
+      "actual_owner": "same fabric or ribbon carrier",
+      "affected_dimensions": [
+        "color",
+        "appearance",
+        "material"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "color",
+          "target": "*",
+          "property": "*"
+        },
+        {
+          "dimension": "appearance",
+          "target": "*",
+          "property": "*"
+        },
+        {
+          "dimension": "material",
+          "target": "*",
+          "property": "*"
+        }
+      ],
+      "literal_baseline_evidence": [
+        "The curtain carries the color and pattern study on one continuous, visibly woven surface.",
+        "Fine indigo-blue vertical lines run at close, even intervals, crossed at right angles by much more widely spaced indigo horizontal rulings."
+      ],
+      "reason": "The frozen test uses intersecting indigo line families over yellow ground and one local red tab; adopting separate band assignments would not preserve the selected grid-plus-exception meaning. This is an optional compatible-scope but mismatched realization, not a requester prohibition.",
+      "opt_in_gate_ids": [
+        "vo_pa_bands_same_carrier_1",
+        "vo_pa_bands_same_carrier_2"
+      ],
+      "gates_active": false
+    },
+    {
+      "id": "slot:color_grading:pal_app_green_dark_global_tint",
+      "exposed": true,
+      "decision": "rejected",
+      "actual_owner": "declared existing color carriers under global tonal green bias",
+      "affected_dimensions": [
+        "color"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "color",
+          "target": "*",
+          "property": "*"
+        }
+      ],
+      "literal_baseline_evidence": [
+        "Overcast doorway light spreads a soft neutral illumination across her face and the curtain",
+        "its faint colored reflection stays in that depth"
+      ],
+      "reason": "A recurring green bias across dark/middle/light scope would weaken the frozen distinction between neutral foreground surface colors and weak green background light. The synthetic choices remain open legally, but this change is artistically unsuitable for the actual test.",
+      "gates_active": false
+    },
+    {
+      "id": "pa_crossing_lines_same_carrier",
+      "exposed": false,
+      "decision": "not_selectable_and_not_full_match",
+      "reason": "The closest source profile requires distinct colored line families and unequal widths as well as spacing. The independently drawn test uses one indigo color and similarly narrow widths; recoloring or changing widths solely to expose data would corrupt independence.",
+      "source_details": "closest_unexposed_source_details.json"
+    },
+    {
+      "id": "pal_app_beige_grid_red_line",
+      "exposed": false,
+      "decision": "not_selectable_and_not_match",
+      "reason": "Its black/white/red line families on beige carrier would replace the independently drawn yellow/indigo pattern and solid red local tab."
+    }
+  ],
+  "all_opt_in_gates_respected": true,
+  "pixel_status": "pending_native_render",
+  "claim_boundary": "No newly authored palette relation has been selected; a successful baseline pixel test cannot demonstrate end-to-end survival of an adopted new-data contract.",
+  "focal_coverage": {
+    "actual_request": "complex independent visual topic test with supplied reference",
+    "governing_anchors": [
+      "core_concept",
+      "core_subject",
+      "core_event",
+      "reference_scope"
+    ],
+    "synthetic_expected_effects_in_test_case": true,
+    "new_hard_assertions_from_candidate_data": false
+  },
+  "user_judgment": {
+    "source": "not_yet_received"
+  }
+}

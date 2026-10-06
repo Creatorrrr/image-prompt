@@ -1,0 +1,112 @@
+{
+  "contract_version": "agent-synthetic-photo-test-review/v1",
+  "provenance": "root_peer_review_rechecked_by_arm3_saved_native_pixels",
+  "arm": "arm3",
+  "pack_id": "271cfd9adebd0a2f",
+  "result_image": "/Users/chasoik/.codex/worktrees/color-palette-integration/image-prompt/docs/research-evidence/photo-prompt/color-palette-integration-20261006/independent-runs/arm3/generated_images/greenhouse-grid-tab-native-1/arm3.png",
+  "result_sha256": "6ba85c9e3e273596601021a72a032c41cfb240847dc6615039aa24bd104a90fa",
+  "image_dimensions": {
+    "width": 1237,
+    "height": 1272
+  },
+  "test_case_sha256": "3bb16afdd32a3480178fd88f0f252ec35099d439e21472b143431136ea1faefb",
+  "baseline_prompt_sha256": "149bbca37af053f58c40bd55a0ba37ef454ac44cef0d4acee3daedadad14b631",
+  "gate_policy": "all_hard_gates_required; partial_is_fail",
+  "hard_gates": {
+    "reference_face_hair": {
+      "status": "pass",
+      "evidence": "The face retains dark brown eyes, softly oval cheek/jaw contour, chin-length dark bob and loose fine fringe seen in the supplied reference. This is visual resemblance, not proof of personal identity."
+    },
+    "same_carrier_pattern": {
+      "status": "pass",
+      "evidence": "Both blue line sets visibly cross over the same yellow hanging linen face; continuous weave and folds connect the patterned regions between many cells."
+    },
+    "line_crossing_geometry": {
+      "status": "pass",
+      "evidence": "Fine close vertical blue lines meet thin widely spaced horizontal blue rulings near right angles; multiple tall rectangular cells are readable over the broad flat middle. Both sets remain narrow rather than broad color blocks, although horizontals are wider."
+    },
+    "area_roles": {
+      "status": "pass",
+      "evidence": "The yellow ground occupies the clear majority of the curtain, the blue is a minor linear area, and the one red tab is visually around one percent of the visible carrier. The predeclared qualitative yellow-majority/red-small range is supported; no calibrated segmentation was performed."
+    },
+    "local_exception": {
+      "status": "fail",
+      "evidence": "Inside the scarlet tab perimeter, two pale diagonal stitch lines visibly cross in a white X across the red face. The original hard gate required a plain solid scarlet tab with its face unpatterned; an interior X stitch motif is a partial realization and fails the strict gate."
+    },
+    "material": {
+      "status": "pass",
+      "evidence": "The curtain and red tab show matte woven fibers and fine surface texture, with a shallow drape; blue pigment edges remain different from weave texture and the soft fold shadows."
+    },
+    "surface_light_grade": {
+      "status": "pass",
+      "evidence": "Yellow, blue, red and skin remain locally distinct in soft foreground daylight; a mint-green fluorescent tube is separately visible in the distant greenhouse with a weak localized tint in that depth. No whole-frame green repainting is apparent."
+    },
+    "scene_readability": {
+      "status": "pass",
+      "evidence": "The maker's upper palm rests on the curtain while her lower hand supports the new tab; closed scissors and clipped red thread sit on the bench. These visible relations plausibly read as checking a completed repair."
+    }
+  },
+  "synthetic_hard_gate_status": "fail",
+  "independent_pattern_evaluation": {
+    "same_carrier": {
+      "status": "pass",
+      "evidence": "Both blue line sets visibly cross over the same yellow hanging linen face; continuous weave and folds connect the patterned regions between many cells."
+    },
+    "crossing": {
+      "status": "pass",
+      "evidence": "Multiple orthogonal crossings survive on the same hanging textile."
+    },
+    "width": {
+      "status": "fail",
+      "evidence": "The baseline specified similarly narrow line widths; rendered horizontal strokes are visibly broader than vertical strokes. Both remain narrow enough for the predeclared thin-line geometry hard gate, but the same-width baseline realization is not fully faithful."
+    },
+    "spacing": {
+      "status": "pass",
+      "evidence": "Vertical intervals are much closer than horizontal intervals, creating tall rather than square cells."
+    },
+    "local_exception_scope": {
+      "status": "pass",
+      "evidence": "A single scarlet tab is sewn into the lower near corner beside the supporting fingers. Red stops at its rectangular stitched perimeter; white reinforcement stitches are construction, while the red face has no printed grid pattern."
+    },
+    "whole_scene_readability": {
+      "status": "pass",
+      "evidence": "The maker's upper palm rests on the curtain while her lower hand supports the new tab; closed scissors and clipped red thread sit on the bench. These visible relations plausibly read as checking a completed repair."
+    }
+  },
+  "additional_baseline_fidelity_defects": [
+    {
+      "dimension": "appearance",
+      "property": "curtain.pattern.relative_line_width",
+      "severity": "minor",
+      "evidence": "Horizontal blue lines are stronger/wider than the vertical rulings."
+    },
+    {
+      "dimension": "framing",
+      "property": "curtain_and_rail.complete_visibility",
+      "severity": "minor_for_test",
+      "evidence": "Upper and right curtain/rail edges extend outside the crop while all tested owner/contact regions remain assessable."
+    },
+    {
+      "dimension": "composition",
+      "property": "supporting_patterned_carrier_count",
+      "severity": "minor",
+      "evidence": "A second matching patterned linen piece appears at lower right on the bench."
+    }
+  ],
+  "topic_pixels_status": "supported_with_baseline_fidelity_defects",
+  "new_data_end_to_end_status": "FAIL_coverage_gap_no_new_contract_selected",
+  "repair_decision": {
+    "additional_native_call": true,
+    "maximum_cumulative_native_calls": 2,
+    "scope": "only local_exception tab face and perimeter stitching; preserve face/body/grid/small-red-tab meaning, all requester anchors, negative/reference and original frozen input/pack",
+    "requester_definition": false,
+    "coordinator_message_used_as_user_text": false
+  },
+  "user_judgment": {
+    "source": "not_yet_received"
+  },
+  "reviewer": "root peer review with direct arm3 reinspection",
+  "passed_hard_gate_count": 7,
+  "required_hard_gate_count": 8,
+  "peer_review_reason": "Preserve the prior agent record but add a stricter full-conjunction local_exception FAIL. Structural stitching is still visible pattern inside the tab face."
+}
