@@ -1347,3 +1347,93 @@ def project_slot_candidate(data: dict, slot: str, entry: dict) -> tuple[dict, di
     detail = views.build_view(projected, [candidate["id"]])
     views.verify_view(projected, detail)
     return candidate, detail
+
+
+V25_PARENT_MANIFEST = Path(
+    'docs/research-evidence/photo-prompt/scene-authorship-main-merge-20261006/V25-PARENT-SOURCE.json'
+)
+V25_PARENT_MANIFEST_SHA256 = '510fe2f0b881bc3d0b75a8e361879e34960beef78ca2d8dc7364933eeb5b8c02'
+V25_PARENT_COMMIT = '8e5dba87d659a512bf3ce405b08520c98b4e6ef2'
+V25_PARENT_TREE = 'aa342d782be0056148350023e7151fb9634d0f39'
+
+
+def _v25_parent_manifest(source_root: Path = ROOT) -> dict:
+    raw = _v24_regular_path(source_root, V25_PARENT_MANIFEST.as_posix()).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != V25_PARENT_MANIFEST_SHA256:
+        raise AssertionError('Frozen V25 parent source manifest drift')
+    manifest = json.loads(raw)
+    rows = manifest.get('members') or []
+    if (manifest.get('schema') != 'photo-v25-parent-source-manifest/v1'
+            or manifest.get('source_pin') != V25_PARENT_COMMIT
+            or manifest.get('source_tree') != V25_PARENT_TREE
+            or manifest.get('member_count') != 974 or len(rows) != 974
+            or len({row['path'] for row in rows}) != 974
+            or len({row['source_path'] for row in rows}) != 974
+            or manifest.get('archived_member_count') != 9
+            or sum(row['kind'] == 'archived_parent_source' for row in rows) != 9
+            or sum(row['bytes'] for row in rows) != manifest.get('total_member_bytes')):
+        raise AssertionError('Frozen V25 historical source inventory drift')
+    for row in rows:
+        _v17_safe_path(row['path'])
+        _v17_safe_path(row['source_path'])
+        expected = (V25_PARENT_MANIFEST.parent / 'v25-parent-source-files' / row['path']).as_posix()
+        if not ((row['kind'] == 'retained_parent_source' and row['source_path'] == row['path'])
+                or (row['kind'] == 'archived_parent_source' and row['source_path'] == expected)):
+            raise AssertionError('Unregistered V25 historical source backing path')
+    return manifest
+
+
+def materialize_v25_parent_source(directory: Path, *, source_root: Path = ROOT) -> dict:
+    """Replay the exact qualified V25 bytes; never substitute current changed code."""
+    _v24_empty_destination(directory)
+    manifest = _v25_parent_manifest(source_root)
+    for row in manifest['members']:
+        _v24_verified_payload(source_root, row)
+    directory.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='.sealed-v25-', dir=directory.parent) as temporary:
+        staged = Path(temporary) / 'tree'
+        staged.mkdir()
+        for row in manifest['members']:
+            target = staged / _v17_safe_path(row['path'])
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(_v24_verified_payload(source_root, row))
+            target.chmod(int(row['mode'][-3:], 8))
+        _v24_empty_destination(directory)
+        staged.replace(directory)
+    return manifest
+
+
+def archived_v25_validator(directory: Path, *, source_root: Path = ROOT):
+    """Import original V25 modules with their authenticated source and support."""
+    manifest = materialize_v25_parent_source(directory, source_root=source_root)
+    records = {row['path']: row for row in manifest['members']}
+    scripts = directory / Path(V17_PARENT_VALIDATOR).parent
+    prefix = '_archived_photo_v25_' + hashlib.sha256(str(directory).encode()).hexdigest()[:16]
+    modules, payloads = {}, {}
+    for name in ('illustration_runtime', 'illustration_audit', 'universal_scene_runtime',
+                 'validate_illustration_assets'):
+        path = scripts / (name + '.py')
+        row = records[path.relative_to(directory).as_posix()]
+        payloads[name] = _v24_verified_payload(directory, dict(row, source_path=row['path']))
+        spec = importlib.util.spec_from_file_location(prefix + '_' + name, path)
+        modules[name] = importlib.util.module_from_spec(spec)
+
+    def historical_import(name, globals=None, locals=None, fromlist=(), level=0):
+        if level == 0 and name in modules:
+            return modules[name]
+        return builtins.__import__(name, globals, locals, fromlist, level)
+
+    previous = {module.__name__: sys.modules.get(module.__name__) for module in modules.values()}
+    try:
+        for module in modules.values():
+            module.__dict__['__builtins__'] = dict(vars(builtins), __import__=historical_import)
+            sys.modules[module.__name__] = module
+        for name, module in modules.items():
+            exec(compile(payloads[name], module.__file__, 'exec'), module.__dict__)
+    finally:
+        for name, original in previous.items():
+            if original is None:
+                sys.modules.pop(name, None)
+            else:
+                sys.modules[name] = original
+    return modules['validate_illustration_assets']

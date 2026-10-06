@@ -11,6 +11,8 @@ import tempfile
 import unittest
 from unittest import mock
 
+from tests import photo_prompt_fixtures as fixtures
+
 ROOT = Path(__file__).resolve().parents[1]
 ILLUSTRATION = ROOT / 'skills/subculture-illustration-image-generator'
 EVIDENCE = Path('docs/research-evidence/photo-prompt/ct073-back-band-maintenance-integration-20261006')
@@ -30,6 +32,14 @@ def encoded(value):
 class CT073BoundaryHistoryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        original = {name: globals()[name] for name in ('ROOT', 'ILLUSTRATION', 'v')}
+        frozen = tempfile.TemporaryDirectory(prefix='sealed-v25-ct073-')
+        cls.addClassCleanup(frozen.cleanup)
+        root = Path(frozen.name)
+        archived = fixtures.archived_v25_validator(root, source_root=ROOT)
+        cls.addClassCleanup(lambda: globals().update(original))
+        globals().update(ROOT=root, ILLUSTRATION=root / 'skills/subculture-illustration-image-generator',
+                         v=archived)
         cls.proof = json.loads((ROOT / PROOF).read_bytes())
         cls.qualification = json.loads((ROOT / cls.proof['qualification_path']).read_bytes())
 
@@ -117,7 +127,7 @@ class CT073BoundaryHistoryTests(unittest.TestCase):
                          | {self.proof['maintenance_path']})
         self.assertEqual(5, len(self.proof['reviewed_source_deltas']))
 
-    def test_current_default_and_explicit_v25_are_registered(self):
+    def test_original_default_and_explicit_v25_are_registered(self):
         def frozen_command(command, **kwargs):
             Path(command[command.index('--output-file') + 1]).write_bytes(self.raw)
             return subprocess.CompletedProcess(command, 0, '', '')
