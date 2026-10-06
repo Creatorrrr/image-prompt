@@ -2137,6 +2137,8 @@ def _v32_recovery_context(source_root: Path) -> bool:
 
 
 def _v32_require_after_payload(source_root: Path, name: str, current: bytes) -> None:
+    if _v33_palette_context(source_root):
+        current = _v33_palette_support(source_root).previous_payload(source_root, name, current)
     if name not in V32_ROBE_SOURCE_PATHS or not _v32_recovery_context(source_root):
         return
     proof, parent = _v32_transition(source_root)
@@ -2149,6 +2151,12 @@ def _v32_require_after_payload(source_root: Path, name: str, current: bytes) -> 
 
 def _v32_preserved_retained_payload(source_root: Path, row: dict, current: bytes) -> bytes | None:
     """Recover four sealed robe/index edits, then follow the authenticated history."""
+    if row['source_path'] == row['path'] and _v33_palette_context(source_root):
+        support = _v33_palette_support(source_root)
+        preserved = support.preserved_payload(source_root, row, current)
+        if preserved is not None:
+            return preserved
+        current = support.previous_payload(source_root, row["path"], current)
     if (row['source_path'] != row['path'] or row['path'] not in V32_ROBE_SOURCE_PATHS
             or not _v32_recovery_context(source_root)):
         return None
@@ -2224,3 +2232,24 @@ def archived_v31_validator(directory: Path, *, source_root: Path = ROOT):
             else:
                 sys.modules[name] = original
     return modules['validate_illustration_assets']
+
+
+# V33 authenticates a bounded optional palette addition while retaining V32.
+PALETTE_HISTORY_SUPPORT_SHA256 = "4224c36f792006aaf680309791f6f43026e0a427b5b7374b83411c1b6bc4d88b"
+
+
+def _v33_palette_context(source_root):
+    base = Path("docs/research-evidence/photo-prompt/color-palette-main-merge-20261007")
+    return any((source_root / name).exists() or (source_root / name).is_symlink()
+               for name in (base / "V33-PALETTE-DATA-PROOF.json", base / "V32-PARENT-SOURCE.json",
+                            Path("skills/subculture-illustration-image-generator/assets/photo_regression_baseline_v33.json")))
+
+
+def _v33_palette_support(source_root):
+    path = _v24_regular_path(source_root, "tests/photo_palette_history.py")
+    if hashlib.sha256(path.read_bytes()).hexdigest() != PALETTE_HISTORY_SUPPORT_SHA256:
+        raise AssertionError("Frozen V33 palette support code drift")
+    from tests import photo_palette_history
+    if hashlib.sha256(Path(photo_palette_history.__file__).read_bytes()).hexdigest() != PALETTE_HISTORY_SUPPORT_SHA256:
+        raise AssertionError("Frozen V33 loaded support code drift")
+    return photo_palette_history

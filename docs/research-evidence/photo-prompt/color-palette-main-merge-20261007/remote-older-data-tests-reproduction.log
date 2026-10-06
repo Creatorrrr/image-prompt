@@ -1,0 +1,50 @@
+setUpClass (tests.test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests) ... ERROR
+test_complete_merged_state_and_twenty_one_keeps_remain_exact (tests.test_photo_liminal_active_use_korean_data_cleanup.LiminalActiveUseKoreanDataCleanupTests.test_complete_merged_state_and_twenty_one_keeps_remain_exact) ... ERROR
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/color-palette-main-merge-20261007/remote-baseline-inputs/tests/test_photo_krummholz_korean_alias_data_cleanup.py", line 37, in setUpClass
+    cls.runtime = v6_fixtures.PhotoAuthorialCoreV6Tests().runtime_data()
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/private/tmp/color-palette-main-merge-20261007/remote-baseline-inputs/tests/test_photo_authorial_core_v6.py", line 547, in runtime_data
+    prompt_generator.load_visual_profile_index(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        assets / "photo_prompt_visual_profile_index.json",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        registry,
+        ^^^^^^^^^
+    )
+    ^
+  File "/private/tmp/color-palette-main-merge-20261007/remote-baseline-inputs/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 1619, in load_visual_profile_index
+    payload = load_visual_profile_index_payload(index_path)
+  File "/private/tmp/color-palette-main-merge-20261007/remote-baseline-inputs/skills/photo-prompt-image-generator/scripts/visual_profile_index_storage.py", line 75, in load_visual_profile_index_payload
+    raw = shard_path.read_bytes()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/color-palette-main-merge-20261007/remote-baseline-inputs/skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index_shards/shard-000-0c1733457ecc0f3ef4031142cd584cf20f1db2f72da63a1710ed9583539526a3.json'
+
+======================================================================
+ERROR: test_complete_merged_state_and_twenty_one_keeps_remain_exact (tests.test_photo_liminal_active_use_korean_data_cleanup.LiminalActiveUseKoreanDataCleanupTests.test_complete_merged_state_and_twenty_one_keeps_remain_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/color-palette-main-merge-20261007/remote-baseline-inputs/tests/test_photo_liminal_active_use_korean_data_cleanup.py", line 104, in test_complete_merged_state_and_twenty_one_keeps_remain_exact
+    self.assertEqual(common.sha(delta_path.read_bytes()),
+                                ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/color-palette-main-merge-20261007/remote-baseline-inputs/docs/research-evidence/photo-prompt/uniform-costume-integration-20261004/authored-candidate-delta.json'
+
+----------------------------------------------------------------------
+Ran 1 test in 3.744s
+
+FAILED (errors=2)

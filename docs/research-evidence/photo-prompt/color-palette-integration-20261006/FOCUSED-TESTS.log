@@ -1,0 +1,63 @@
+F.EE.........E.............F
+======================================================================
+ERROR: test_current_real_indexes_bind_all_added_sources (tests.test_photo_palette_applications.PaletteApplicationTests.test_current_real_indexes_bind_all_added_sources)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/color-palette-integration/image-prompt/tests/test_photo_palette_applications.py", line 121, in test_current_real_indexes_bind_all_added_sources
+    pg.validate_semantic_index_metadata(index,self.data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/color-palette-integration/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 10896, in validate_semantic_index_metadata
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py.
+
+======================================================================
+ERROR: test_embedding_only_discovery_remains_advisory (tests.test_photo_palette_applications.PaletteApplicationTests.test_embedding_only_discovery_remains_advisory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/color-palette-integration/image-prompt/tests/test_photo_palette_applications.py", line 60, in test_embedding_only_discovery_remains_advisory
+    hit=next(r for r in result['hits'] if r['profile_id']==target)
+StopIteration
+
+======================================================================
+ERROR: test_real_indexes_cover_authored_data_and_are_current (tests.test_photo_color_relations.ColorRelationsTests.test_real_indexes_cover_authored_data_and_are_current)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/color-palette-integration/image-prompt/tests/test_photo_color_relations.py", line 120, in test_real_indexes_cover_authored_data_and_are_current
+    pg.validate_semantic_index_metadata(index,self.data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/color-palette-integration/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 10896, in validate_semantic_index_metadata
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py.
+
+======================================================================
+FAIL: test_broad_effects_cannot_fabricate_partial_owner_compatibility (tests.test_photo_palette_applications.PaletteApplicationTests.test_broad_effects_cannot_fabricate_partial_owner_compatibility)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/color-palette-integration/image-prompt/tests/test_photo_palette_applications.py", line 79, in test_broad_effects_cannot_fabricate_partial_owner_compatibility
+    self.assertFalse(property_effects_allowed(lock,dims,effects))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_registration_preserves_both_load_orders_and_required_policy (tests.test_photo_structure_maintenance.PhotoSourceManifestTests.test_registration_preserves_both_load_orders_and_required_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/color-palette-integration/image-prompt/tests/test_photo_structure_maintenance.py", line 120, in test_registration_preserves_both_load_orders_and_required_policy
+    self.assertEqual(list(sources.extension_files("candidate")), original["candidate"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['pho[2618 chars]sion.json', 'photo_prompt_palette_applications_extension.json'] != ['pho[2618 chars]sion.json']
+
+First list contains 1 additional elements.
+First extra element 56:
+'photo_prompt_palette_applications_extension.json'
+
+Diff is 2982 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 28 tests in 8.524s
+
+FAILED (failures=2, errors=3)

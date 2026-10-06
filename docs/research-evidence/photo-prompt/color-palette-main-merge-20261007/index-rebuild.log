@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/palette-main-merge/image-prompt/docs/research-evidence/photo-prompt/color-palette-main-merge-20261007/rebuild_merged_indexes.py", line 40, in <module>
+    combined=semantic.build_resumable_index_payload(data,output=sem,checkpoint=Path(temporary)/'merged.partial.json',provider=provider,model=model,dimensions=dimensions,batch_size=1,request_interval=0,retry_attempts=1,retry_initial_delay=0,cache_indexes=[sem,Q/S/'assets'/sem.name])
+  File "/Users/chasoik/.codex/worktrees/palette-main-merge/image-prompt/skills/photo-prompt-image-generator/scripts/build_semantic_index.py", line 255, in build_resumable_index_payload
+    vectors = embed_texts_with_gemini(
+        [row[4] for row in chunk],
+    ...<3 lines>...
+        retry_initial_delay=retry_initial_delay,
+    )
+  File "/Users/chasoik/.codex/worktrees/palette-main-merge/image-prompt/docs/research-evidence/photo-prompt/color-palette-main-merge-20261007/rebuild_merged_indexes.py", line 23, in cache_miss
+    def cache_miss(*a,**kw):raise AssertionError('Merged input is missing an exact compatible cached embedding')
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Merged input is missing an exact compatible cached embedding

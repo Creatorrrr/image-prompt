@@ -1,0 +1,141 @@
+{
+  "contract_version": "agent-synthetic-photo-test-review/v1",
+  "provenance": "independent_agent_pixel_review",
+  "arm": "arm3",
+  "attempt": 2,
+  "retry_of": "d521cfbc521e6dda",
+  "pack_id": "271cfd9adebd0a2f",
+  "result_image": "/Users/chasoik/.codex/worktrees/color-palette-integration/image-prompt/docs/research-evidence/photo-prompt/color-palette-integration-20261006/independent-runs/arm3/generated_images/greenhouse-grid-tab-native-2/arm3.png",
+  "result_sha256": "2239a1e0fe8a4c6326602044690c355708eb61e0935822194ab420b779b5dc58",
+  "image_dimensions": {
+    "width": 1237,
+    "height": 1272
+  },
+  "test_case_sha256": "3bb16afdd32a3480178fd88f0f252ec35099d439e21472b143431136ea1faefb",
+  "baseline_prompt_sha256": "149bbca37af053f58c40bd55a0ba37ef454ac44cef0d4acee3daedadad14b631",
+  "repair_prompt_sha256": "4a51ebe0a123ce8315aaeb44600a6e15953b9c584dbf1461401062884a28bf38",
+  "gate_policy": "all_hard_gates_required; partial_is_fail",
+  "hard_gates": {
+    "reference_face_hair": {
+      "status": "pass",
+      "evidence": "Dark eyes, a softly oval face, short dark bob and fine fringe remain recognizable from the supplied visible appearance reference; actual personal identity is not established."
+    },
+    "same_carrier_pattern": {
+      "status": "pass",
+      "evidence": "Both blue line directions share the same yellow hanging linen surface, with continuous weave across multiple crossings and folds."
+    },
+    "line_crossing_geometry": {
+      "status": "pass",
+      "evidence": "Close thin vertical blue lines cross much more widely spaced thin horizontal rulings near right angles, producing tall rectangular cells on the same surface. Both remain lines rather than broad color blocks."
+    },
+    "area_roles": {
+      "status": "pass",
+      "evidence": "Yellow is the dominant curtain field, blue occupies a minor linear area, and the single red rectangle remains small, visually within the predeclared 0.5–4 percent curtain-area range. This is qualitative, not calibrated segmentation."
+    },
+    "local_exception": {
+      "status": "fail",
+      "evidence": "The red interior is plain and solid, and stitching stays at its perimeter. However, the rectangle is sewn onto the lower front face, visibly above the bottom hem and separated from the known near lower-left corner. It reads as a surface patch rather than a replacement tab at the lower near corner; the complete predeclared conjunction is only partial and fails."
+    },
+    "material": {
+      "status": "pass",
+      "evidence": "Matte fiber weave is visible on the curtain and red patch; shallow folds, pigment boundaries and thread texture remain distinguishable."
+    },
+    "surface_light_grade": {
+      "status": "pass",
+      "evidence": "Yellow, blue, scarlet and skin retain distinct foreground local colors in soft daylight. The greenish tube stays a separate background source and does not repaint the whole scene."
+    },
+    "scene_readability": {
+      "status": "pass",
+      "evidence": "The palm-to-cloth contact, second edge grip, small sewn red rectangle, scissors and clipped thread make textile repair/checking plausible, with both working hands and face readable together."
+    }
+  },
+  "synthetic_hard_gate_status": "fail",
+  "passed_hard_gate_count": 7,
+  "required_hard_gate_count": 8,
+  "local_exception_components": {
+    "plain_solid_face": {
+      "status": "pass",
+      "evidence": "The central red field contains visible weave and shading but no interior X/line motif."
+    },
+    "perimeter_stitching": {
+      "status": "pass",
+      "evidence": "Stitch points remain along the rectangular margins."
+    },
+    "small_bounded_red_on_same_curtain": {
+      "status": "pass",
+      "evidence": "One small red owner sits on the same curtain face."
+    },
+    "lower_near_corner_replacement_tab": {
+      "status": "fail",
+      "evidence": "The red owner is offset inward from the visible near curtain corner and above the hem; the corner attachment/state is not realized."
+    }
+  },
+  "targeted_repair_result": {
+    "interior_white_x_removed": true,
+    "original_local_exception_gate_fully_satisfied": false,
+    "strict_result": "fail"
+  },
+  "independent_pattern_evaluation": {
+    "same_carrier": {
+      "status": "pass",
+      "evidence": "Both blue line directions share the same yellow hanging linen surface, with continuous weave across multiple crossings and folds."
+    },
+    "crossing": {
+      "status": "pass",
+      "evidence": "Close thin vertical blue lines cross much more widely spaced thin horizontal rulings near right angles, producing tall rectangular cells on the same surface. Both remain lines rather than broad color blocks."
+    },
+    "width": {
+      "status": "fail",
+      "evidence": "Horizontal strokes remain visibly stronger/wider than the fine vertical lines, deviating from the baseline's similar narrow widths; both are still thin for the predeclared hard gate."
+    },
+    "spacing": {
+      "status": "pass",
+      "evidence": "The vertical spacing remains much closer than horizontal spacing."
+    },
+    "local_exception_scope": {
+      "status": "fail",
+      "evidence": "The red interior is plain and solid, and stitching stays at its perimeter. However, the rectangle is sewn onto the lower front face, visibly above the bottom hem and separated from the known near lower-left corner. It reads as a surface patch rather than a replacement tab at the lower near corner; the complete predeclared conjunction is only partial and fails."
+    },
+    "whole_scene_readability": {
+      "status": "pass",
+      "evidence": "The palm-to-cloth contact, second edge grip, small sewn red rectangle, scissors and clipped thread make textile repair/checking plausible, with both working hands and face readable together."
+    }
+  },
+  "additional_baseline_fidelity_defects": [
+    {
+      "dimension": "appearance",
+      "property": "curtain.pattern.relative_line_width",
+      "evidence": "Horizontal line widths remain greater than vertical ones."
+    },
+    {
+      "dimension": "framing",
+      "property": "curtain_and_rail.complete_visibility",
+      "evidence": "Curtain/rail continue beyond the crop."
+    },
+    {
+      "dimension": "composition",
+      "property": "supporting_patterned_carrier_count",
+      "evidence": "Stacked matching cloth is visible on the bench."
+    },
+    {
+      "dimension": "text",
+      "property": "unrequested_background_board",
+      "evidence": "A chalkboard adds unrequested readable greenhouse text."
+    },
+    {
+      "dimension": "color",
+      "property": "tab.edge.thread.local_color",
+      "evidence": "Edge stitch points look pale rather than clearly scarlet, while the central red field remains plain."
+    }
+  ],
+  "new_data_end_to_end_status": "FAIL_coverage_gap_no_new_contract_selected",
+  "native_attempt_count": 2,
+  "further_generation_authorized": false,
+  "repair_decision": {
+    "additional_native_call": false,
+    "reason": "The single authorized follow-up is exhausted. Preserve the remaining local_exception failure and report it."
+  },
+  "user_judgment": {
+    "source": "not_yet_received"
+  }
+}

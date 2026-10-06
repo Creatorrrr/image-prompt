@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>100개 배색 · 시각 의미 리서치</title>
+<style>
+:root{color-scheme:light dark;--bg:#f6f6f4;--fg:#202321;--muted:#5a625e;--line:#d1d7d2;--surface:#fff;--active:#e9eee9}
+@media(prefers-color-scheme:dark){:root{--bg:#151916;--fg:#f0f3ed;--muted:#b0bab2;--line:#3a443c;--surface:#202721;--active:#303b31}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.65 system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif}main{max-width:1180px;margin:auto;padding:40px 28px 64px}h1{font-size:clamp(24px,4vw,36px);letter-spacing:-.05em;margin:0}h2{font-size:22px;margin:24px 0 8px}h3{font-size:16px;margin:0 0 10px}p{margin:6px 0 16px}.muted{color:var(--muted)}.kicker{font-size:12px;letter-spacing:.08em}.controls{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0 12px}.controls label{display:flex;flex-direction:column;gap:4px;flex:1;min-width:160px}input,select,button{font:inherit;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:9px 12px}button{cursor:pointer}button[aria-pressed=true]{background:var(--active);outline:2px solid var(--fg);outline-offset:-2px}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--fg);outline-offset:3px}a{color:var(--fg);text-decoration:underline;text-underline-offset:3px}.status{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:4px 0 16px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:22px}.palette{border-bottom:1px solid var(--line);padding-bottom:16px;min-width:0}.palette button{width:100%;text-align:left}.swatches{display:flex;height:48px;gap:3px;margin:10px 0}.swatch{flex:1;min-width:0;background:var(--chip)}.chip-labels{display:flex;gap:3px;font-size:11px;line-height:1.3;color:var(--muted)}.chip-labels span{flex:1;overflow-wrap:anywhere}.meta{font-size:12px;color:var(--muted);margin-top:6px}.compare{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;margin:20px 0}.detail{border-top:1px solid var(--line);padding-top:14px;min-width:0}.detail ul{padding-left:18px}.detail li{margin-bottom:8px}.dot{display:inline-block;width:14px;height:14px;margin-right:7px;vertical-align:middle;background:var(--chip);border:1px solid var(--line)}.metrics{overflow-x:auto}table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13px}th,td{text-align:left;border-bottom:1px solid var(--line);padding:8px 6px}small{color:var(--muted)}summary{cursor:pointer;padding:6px 0}.empty{padding:20px 0;color:var(--muted)}footer{margin-top:32px;border-top:1px solid var(--line);padding-top:18px;font-size:12px;color:var(--muted)}@media(max-width:500px){main{padding:24px 16px}.controls{gap:8px}.grid{grid-template-columns:1fr}.compare{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main id="palette-research">
+<div class="kicker muted">2026.10.06 · RESEARCH</div>
+<h1>100개 배색의 색과 시각적 역할</h1>
+<p class="muted">13개 계열 · 313개 제안 색칩 · 최대 4개 비교</p>
+<p>색칩은 원래 대화의 sRGB 근사값입니다. 아래 owner·재질·배치는 선택 가능한 설계 예시이며 조합 이름의 필수 의미가 아닙니다.</p>
+<nav><a href="RESEARCH.md">리서치</a> · <a href="IMPLEMENTATION-PLAN.md">반영 계획</a> · <a href="SOURCES.md">출처와 확인 범위</a></nav>
+<div class="controls">
+<label>키워드·색 코드<input id="search" type="search" placeholder="코발트, 골드, 도자기, #28558B"></label>
+<label>계열<select id="group"><option value="">전체 계열</option></select></label>
+<label>반영 우선순위<select id="priority"><option value="">전체</option><option value="P0">P0 · 우선 검토</option><option value="P1">P1 · 일반 응용</option><option value="P2">P2 · 문맥 확인</option></select></label>
+</div>
+<div class="status"><span id="count" aria-live="polite"></span><span id="selection-status" aria-live="polite"></span><button id="clear" type="button">비교 초기화</button></div>
+<section aria-label="선택한 조합의 비교"><div id="compare" class="compare"></div></section>
+<section aria-label="배색 목록"><div id="grid" class="grid"></div></section>
+<footer>계산값은 평면 색칩의 Oklab 좌표이며 원본 작품·재료·생성 이미지의 측정값이 아닙니다. 일부 출처는 공식 검색 텍스트만 확인되었고 직접 열기에 제한이 있었습니다. 검색·선택·프롬프트·원본 픽셀·사용자 판단은 후속 검증입니다.</footer>
+</main>
+<script id="research-data" type="application/json">__PALETTE_DATA__</script>
+<script>
+(() => {
+const root=document.getElementById("palette-research");
+const payload=JSON.parse(document.getElementById("research-data").textContent);
+const cards=payload.cards;
+const byId=new Map(cards.map(c=>[c.seed_id,c]));
+const sources=new Map(payload.sources.map(s=>[s.source_id,s]));
+const selected=new Set([8,9]);
+const search=root.querySelector("#search"),group=root.querySelector("#group"),priority=root.querySelector("#priority");
+const grid=root.querySelector("#grid"),compare=root.querySelector("#compare"),count=root.querySelector("#count"),selectionStatus=root.querySelector("#selection-status");
+const esc=x=>String(x).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const chips=c=>'<div class="swatches" aria-label="'+esc(c.colors.map(x=>x.hex).join(", "))+'">'+c.colors.map(x=>'<span class="swatch" style="--chip:'+x.hex+'"></span>').join("")+'</div><div class="chip-labels">'+c.colors.map(x=>'<span>'+x.hex+'</span>').join("")+'</div>';
+const groups=new Map(cards.map(c=>[c.group_id,c.group_label_ko]));
+for(const [id,label]of groups){const o=document.createElement("option");o.value=id;o.textContent=label.split(":")[0];group.append(o);}
+function detail(c){
+ const list=c.owners.map(o=>'<li><span class="dot" style="--chip:'+o.hex_reference+'"></span><strong>'+esc(o.role_ko)+'</strong><br>'+esc(o.owner_phrase_en)+'</li>').join("");
+ const stats=c.colors.map(x=>'<tr><td>'+x.hex+'</td><td>'+x.oklch.L.toFixed(3)+'</td><td>'+x.oklch.C.toFixed(3)+'</td></tr>').join("");
+ const links=c.source_refs.map(id=>{const s=sources.get(id);return '<li><a href="'+esc(s.url)+'" target="_blank" rel="noreferrer">'+esc(s.source_id+" "+s.title)+'</a><br><small>'+esc(s.limit_ko)+'</small></li>'}).join("");
+ return '<article class="detail"><h3>'+esc(c.semantic_id+" · "+c.label_ko)+'</h3>'+chips(c)+'<p>'+esc(c.meaning_ko)+'</p><ul>'+list+'</ul><p><strong>관찰할 관계</strong><br>'+esc(c.relation_en)+'</p><p><strong>오인 경계</strong><br>'+esc(c.failure_ko)+'</p><details><summary>계산값과 출처</summary><div class="metrics"><table><thead><tr><th>색 코드</th><th>Oklab L</th><th>Oklch C</th></tr></thead><tbody>'+stats+'</tbody></table></div><ul>'+links+'</ul></details></article>';
+}
+function render(){
+ const q=search.value.trim().toLocaleLowerCase();
+ const filtered=cards.filter(c=>(!group.value||c.group_id===Number(group.value))&&(!priority.value||c.priority===priority.value)&&(!q||c.search_text.includes(q)));
+ count.textContent=filtered.length+" / 100개 조합";
+ selectionStatus.textContent="비교 "+selected.size+" / 4";
+ grid.innerHTML=filtered.length?filtered.map(c=>'<article class="palette"><button type="button" data-id="'+c.seed_id+'" aria-pressed="'+selected.has(c.seed_id)+'">'+esc(c.semantic_id+" · "+c.label_ko)+'</button>'+chips(c)+'<div class="meta">'+esc(c.priority+" · "+c.group_label_ko.split(":")[0])+'</div></article>').join(""):'<p class="empty">일치하는 조합이 없습니다.</p>';
+ compare.innerHTML=[...selected].map(id=>detail(byId.get(id))).join("");
+}
+grid.addEventListener("click",event=>{
+ const b=event.target.closest("button[data-id]");if(!b)return;
+ const id=Number(b.dataset.id);
+ if(selected.has(id))selected.delete(id);
+ else if(selected.size<4)selected.add(id);
+ else{selectionStatus.textContent="최대 4개입니다. 선택한 조합 하나를 먼저 해제하세요.";return;}
+ render();
+});
+for(const el of [search,group,priority])el.addEventListener("input",render);
+root.querySelector("#clear").addEventListener("click",()=>{selected.clear();render()});
+render();
+})();
+</script>
+</body>
+</html>
