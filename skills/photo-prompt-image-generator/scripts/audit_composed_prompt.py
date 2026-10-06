@@ -4778,13 +4778,23 @@ def audit_adult_appeal(
     ))
     adult_phrase = str(brief.get("adult_subject_phrase") or "")
     agency_phrase = str(brief.get("agency_phrase") or "")
-    if not re.search(r"\badult\b", adult_phrase, flags=re.IGNORECASE) or not text_contains_term(
-        prompt_en, adult_phrase
+    expected_axes = contract.get("axes") if isinstance(contract.get("axes"), dict) else {}
+    sensual_intensity = int((expected_axes.get("sensual") or {}).get("intensity", 0) or 0)
+    if sensual_intensity >= 2 and (
+        not re.search(r"\badult\b", adult_phrase, flags=re.IGNORECASE)
+        or not text_contains_term(prompt_en, adult_phrase)
     ):
         failures.append(
             {
                 "check": "adult_appeal_adult_subject",
-                "reason": "adult_subject_phrase must be literal and explicitly adult",
+                "reason": "sensual intensity 2 or 3 requires a literal adult_subject_phrase containing adult",
+            }
+        )
+    elif adult_phrase and not text_contains_term(prompt_en, adult_phrase):
+        failures.append(
+            {
+                "check": "adult_appeal_adult_subject",
+                "reason": "adult_subject_phrase must be literal when supplied",
             }
         )
     if not agency_phrase or not text_contains_term(prompt_en, agency_phrase):
@@ -4794,7 +4804,6 @@ def audit_adult_appeal(
                 "reason": "agency_phrase must be literal in prompt_en",
             }
         )
-    expected_axes = contract.get("axes") if isinstance(contract.get("axes"), dict) else {}
     actual_axes = brief.get("axes") if isinstance(brief.get("axes"), dict) else {}
     for axis_id, axis in expected_axes.items():
         if not isinstance(axis, dict):

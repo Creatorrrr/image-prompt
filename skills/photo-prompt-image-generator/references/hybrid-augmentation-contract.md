@@ -32,7 +32,7 @@ Every sampled row requires a decision under `creative_augmentation_brief.decisio
 
 Rejecting all sampled rows is valid. Transform at most three; include transformed IDs in `chosen_candidate_ids`, keep rejected IDs out, and do not duplicate transformed rows in `candidate_interpretations`. Candidate `concept_terms` are unordered material. Evidence needs at least four content words and two newly authored words beyond those terms.
 
-V6 keeps an active adult-fashion contract at top-level `adult_appeal` rather than inside a hybrid route. Record its composed interpretation in `adult_appeal_brief`. Candidate adoption is optional, but exact axis intensities, blend, explicit adult subject, agency, and the existing combination audit remain mandatory. The controls snapshot and contextual appeal contract govern each axis.
+V6 keeps an active adult-fashion contract at top-level `adult_appeal` rather than inside a hybrid route. Record its composed interpretation in `adult_appeal_brief`. Candidate adoption is optional, but exact axis intensities, blend, agency, and the existing combination audit remain mandatory. A literal `adult` subject phrase is required only when the effective `sensual` intensity is 2 or 3; `fetish` intensity alone does not trigger it. The controls snapshot and contextual appeal contract govern each axis.
 
 
 ## Contextual adult appeal
@@ -80,7 +80,7 @@ Copy actual values from the pack rather than treating the example as defaults. `
 
 Keep requested intensity and constraint reasons visible; explain a limited realization in the existing interpretation instead of declaring aesthetic success. The agent must judge coherence and perceptual strength. Mechanical audit checks integrity, scope and literal evidence, not whether a sentence is sufficiently sensual or stylish. Only an axis with no remaining dimensions is disabled by dimension scope; the configured request remains recorded.
 
-The existing subject eligibility, explicit opt-outs, nonsexual requester meaning and combination checks remain applicable. Initial eligibility comes from the declared requester context, never inferred attractiveness or a reference person's presumed traits. Keep the subject unambiguously adult and original. Do not infer adulthood from face, body, clothing, ethnicity, or market origin.
+The existing subject eligibility, explicit opt-outs, nonsexual requester meaning and combination checks remain applicable. Initial eligibility comes from the declared requester context, never inferred attractiveness or a reference person's presumed traits. Keep the subject original and preserve requester-owned age and applicable character-response meaning. At effective `sensual` 2 or 3, keep the subject unambiguously adult and bind a phrase containing the literal word `adult` in both `adult_subject_phrase` and `prompt_en`. At `sensual` 0 or 1, `adult_subject_phrase` may be omitted; any supplied phrase must remain literal. Do not infer adulthood from face, body, clothing, ethnicity, or market origin. A candidate's own adult prerequisite still needs grounded evidence when that candidate is adopted.
 
 ## Combination Audit and Review Boundary
 

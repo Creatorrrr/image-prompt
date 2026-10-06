@@ -3603,6 +3603,7 @@ def candidate_pack_adult_appeal_metadata(
     if dimension_scope is not None:
         enabled = any(axis["active"] for axis in axes.values())
 
+    adult_subject_phrase_required = enabled and axes["sensual"]["intensity"] >= 2
     configured_defaults = {
         axis: int(definitions["controls"][axis]["default"])
         for axis in CANDIDATE_PACK_ADULT_APPEAL_AXES
@@ -3632,8 +3633,8 @@ def candidate_pack_adult_appeal_metadata(
             },
         },
         "composition_requirements": {
-            "explicit_adult_original_subject": True,
-            "adult_subject_phrase_required": True,
+            "explicit_adult_original_subject": adult_subject_phrase_required,
+            "adult_subject_phrase_required": adult_subject_phrase_required,
             "agency_phrase_required": True,
             "intensity_is_ordinal_not_exposure_or_detail_count": True,
             "baseline_expression_may_be_retained": True,

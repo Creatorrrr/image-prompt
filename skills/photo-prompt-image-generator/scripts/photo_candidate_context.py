@@ -166,13 +166,13 @@ def audit_context(candidate: dict, review: dict, *, prompt_en: str, core: dict,
     present: dict[str, set[str]] = {}
     absent: dict[str, set[str]] = {}
     unresolved: dict[str, set[str]] = {}
-    # These facts come from declared requester context and the already-audited
-    # literal adult-subject brief, never from a candidate's own tags.
+    # Human scope comes from declared requester context; adulthood additionally
+    # needs a literal adult-subject brief, never a candidate's own tags.
     adult_phrase = str(brief.get("adult_subject_phrase") or "")
-    known = set()
+    known = {"human", "subject:human"} if subject_category == "human" else set()
     if subject_category == "human" and _contains(prompt_en, adult_phrase) and re.search(
             r"\badult\b", adult_phrase, flags=re.IGNORECASE):
-        known = {"human", "adult", "subject:human", "subject:adult"}
+        known.update({"adult", "subject:adult"})
     baseline = str(core.get("baseline_prompt_en") or "")
     lock = core.get("intent_lock") or {}
     seen = set()
