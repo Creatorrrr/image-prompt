@@ -26,3 +26,9 @@
 이전 3개 독립 에이전트의 이미지 생성 5회와 평가를 그대로 보관했다. 그 결과의 전체 조건 충족은 1/3 컨셉이었고, 일반 후보 노출 0/3의 공백도 남아 있다. 이번 Git 통합에서 이미지를 새로 생성하지 않았으며, 이전 이미지를 통합 후 새로 검증된 렌더나 사용자 승인으로 간주하지 않는다. 원래 절대 경로와 해시도 유지했다.
 
 [MERGE-ADOPTION.json](MERGE-ADOPTION.json), [INDEX-REBUILD.json](INDEX-REBUILD.json), [V33-PALETTE-DATA-PROOF.json](V33-PALETTE-DATA-PROOF.json), [V32-PARENT-SOURCE.json](V32-PARENT-SOURCE.json)이 통합·보존 범위의 근거다.
+
+## 게시 및 로컬 동기화
+
+데이터 커밋 `1aede9bfb6c482d5fec70ed2c12ca7d9c51b0b13`를 원격 main에 일반 push했다. 원래 로컬 main과 원격·추적 main의 해시 일치를 확인했다. 동기화 직전 관찰한 기존 비파생 파일 1,590개를 보존했고, 동시에 바뀐 별도 분석 문서 2개도 최신 내용으로 유지했다. 로컬에 남은 별도 미커밋 데이터를 포함한 작업 색인은 의미 항목 10,476개/시각 프로필 2,249개다. 양쪽 런타임에서 실제 snapshot 획득도 통과했다. 이 게시·동기화 기록은 후속 문서 커밋으로 함께 보관한다.
+
+[PUBLISH-RECEIPT.json](PUBLISH-RECEIPT.json), [PRIMARY-SYNC.json](PRIMARY-SYNC.json), [PRIMARY-PRESYNC.json](PRIMARY-PRESYNC.json), [PRIMARY-AFTER.json](PRIMARY-AFTER.json)에서 시점별 보존 범위와 해시를 확인할 수 있다.
