@@ -7895,66 +7895,221 @@ def _validate_v27_appearance_data_successor(
              "photo V27 universal descriptor changed beyond validator hash")
 
 
-PHOTO_V28_RUNTIME_PROOF_SHA256 = "dd0112613d89016afd9ae8c7d821f4023448263af98ee934f731d90fe99d0429"
-PHOTO_V28_PARENT_MANIFEST_SHA256 = "b85d96721b73760c5bc07e42cf4a40a61ed3208607ca38cbce58b4dce4bf2af7"
+PHOTO_V28_MUTED_COLOR_PROOF_SHA256 = "66415e7e2915aba5e1b91490beed9343769f01fb5e0a97021a2f7da97b6eb7ae"
+PHOTO_V28_PARENT_MANIFEST_SHA256 = "a4328b7c683d307e46c00ec00c02aa19ae679770784049ed86fa293b5625ae59"
 
 
-def _validate_v28_runtime_successor(asset_dir, repo_root, baseline, pack, raw, receipt=None):
-    """Qualify runtime preparation without changing any V27 public pack byte."""
-    evidence = repo_root / "docs/research-evidence/photo-prompt/retrieval-runtime-freshness-20261006/V28-RUNTIME-PROOF.json"
-    _require(_sha256(evidence) == PHOTO_V28_RUNTIME_PROOF_SHA256, "photo V28 immutable runtime proof drift")
+def _photo_v28_regular_path(repo_root: Path, value: str) -> Path:
+    """Resolve a relative regular source file without following archive aliases."""
+    name = Path(value)
+    _require(not name.is_absolute() and ".." not in name.parts
+             and name.as_posix() == value, "photo V28 unsafe historical source path")
+    path = repo_root / name
+    _require(not any(parent.is_symlink() for parent in (path, *path.absolute().parents))
+             and path.is_file(), "photo V28 missing or unsafe historical source")
+    return path
+
+
+def _photo_v28_archived_payload(repo_root: Path, row: dict[str, Any]) -> bytes:
+    """Authenticate original file bytes and modes from the sealed source manifest."""
+    path = _photo_v28_regular_path(repo_root, row["source_path"])
+    payload = path.read_bytes()
+    blob = hashlib.sha1(b"blob " + str(len(payload)).encode("ascii") + b"\0" + payload).hexdigest()
+    _require(row["mode"] in {"100644", "100755"}
+             and path.stat().st_mode & 0o7777 == int(row["mode"][-3:], 8)
+             and len(payload) == row["bytes"] and hashlib.sha256(payload).hexdigest() == row["sha256"]
+             and blob == row["git_blob"], "photo V28 original V27 source or dependency bytes drift")
+    return payload
+
+
+def _validate_v28_muted_color_successor(
+    asset_dir: Path, repo_root: Path, baseline: dict[str, Any],
+    pack: dict[str, Any], raw: bytes,
+) -> None:
+    """Seal three negative examples, preserving every positive field and frozen scene."""
+    evidence = _photo_v28_regular_path(repo_root,
+        "docs/research-evidence/photo-prompt/muted-color-contrast-20261006/V28-MUTED-COLOR-PROOF.json")
+    _require(_sha256(evidence) == PHOTO_V28_MUTED_COLOR_PROOF_SHA256,
+             "photo V28 immutable muted-color proof drift")
     proof = _load_json(evidence)
-    _require(proof.get("schema") == "photo-runtime-freshness-transition/v28"
+    _require(proof.get("schema") == "photo-muted-color-negative-example-transition/v28"
              and proof.get("previous_qualified_commit") == "cb496c1db984f9fe5d632fa764aae4d3f6aedf63"
+             and proof.get("previous_qualified_tree") == "805043fc6538967e5fef600e042ac7cdf3f81ffe"
+             and proof.get("local_data_commit") == "873525b100749b68015c1dc0eff5b00cd4fbfa2d"
+             and proof.get("local_data_tree") == "175a360b3a46eaa6f774fb0ba5518916bce58972",
+             "photo V28 qualified V27 or local DATA provenance drift")
+    _require(_sha256(_photo_v28_regular_path(repo_root, proof["source_quality_evidence"]))
+             == proof["source_quality_evidence_sha256"], "photo V28 source-quality evidence drift")
+    _require(baseline.get("muted_color_transition") == {
+        "evidence_path": str(evidence.relative_to(repo_root)),
+        "evidence_sha256": PHOTO_V28_MUTED_COLOR_PROOF_SHA256,
+        "previous_qualified_commit": proof["previous_qualified_commit"],
+        "parent_manifest_sha256": PHOTO_V28_PARENT_MANIFEST_SHA256,
+    } and "appearance_data_transition" not in baseline,
+        "photo V28 cannot relabel V27 appearance evidence")
+    previous_path = asset_dir / "photo_regression_baseline_v27_pack.json"
+    current_path = asset_dir / "photo_regression_baseline_v28_pack.json"
+    _require(_sha256(asset_dir / "photo_regression_baseline_v27.json") == proof["previous_manifest_sha256"]
+             and _sha256(previous_path) == proof["previous_pack_sha256"]
+             and current_path.read_bytes() == raw
+             and hashlib.sha256(raw).hexdigest() == proof["current_pack_sha256"] == baseline.get("sha256"),
+             "photo V28 exact predecessor or current pack bytes drift")
+    previous = _load_json(previous_path)[0]
+    expected = json.loads(json.dumps(previous))
+    allowed = {"/0/pack_id", "/0/provenance/tags_hash"}
+    delta = proof["reviewed_pack_delta"]
+    _require({row["pointer"] for row in delta} == allowed and len(delta) == 2
+             and proof["allowed_pack_delta_pointers"] == sorted(allowed),
+             "photo V28 unreviewed pack delta scope")
+    for row in delta:
+        target = expected
+        parts = row["pointer"].split("/")[2:]
+        for part in parts[:-1]:
+            target = target[part]
+        _require(target[parts[-1]] == row["before"], "photo V28 predecessor binding drift")
+        target[parts[-1]] = row["after"]
+    _require(pack == expected and previous["pack_id"] == proof["previous_pack_id"]
+             == _canonical_photo_pack_id(previous)
+             and pack["pack_id"] == proof["current_pack_id"] == _canonical_photo_pack_id(pack)
+             and _public_photo_candidate_count(pack) == 64
+             and pack["provenance"]["tags_hash"] == proof["current_dictionary_hash"]
+             and baseline["frozen_inputs"] == proof["frozen_inputs"],
+             "photo V28 changed candidate meaning, order, frozen scene, controls, negative or budget")
+    old_proof_path = repo_root / proof["previous_proof_path"]
+    _require(_sha256(old_proof_path) == PHOTO_V27_APPEARANCE_PROOF_SHA256,
+             "photo V28 immutable V27 evidence drift")
+    old_proof = _load_json(old_proof_path)
+    before, after = proof["source_files_before"], proof["source_files_after"]
+    _require(before == old_proof["source_files_after"]
+             and all(_sha256(repo_root / name) == digest for name, digest in after.items()),
+             "photo V28 exact DATA, maintenance or preserved runtime source drift")
+    _require(_sha256(repo_root / proof["previous_maintenance_record"])
+             == proof["previous_maintenance_record_sha256"], "photo V28 original maintenance record drift")
+    source_assets = repo_root / "skills/photo-prompt-image-generator/assets"
+    _require({path.name: _sha256(path) for path in source_assets.glob("*.json")}
+             == proof["source_inventory_after"], "photo V28 exact DATA inventory drift")
+    _require(proof["active_shards_after"] == old_proof["active_shards_after"]
+             and len(proof["active_shards_after"]) == 32
+             and all(_sha256(repo_root / name) == digest for name, digest in proof["active_shards_after"].items()),
+             "photo V28 unchanged index vectors or shard references drift")
+    manifest_path = _photo_v28_regular_path(repo_root, proof["parent_manifest"])
+    _require(_sha256(manifest_path) == proof["parent_manifest_sha256"] == PHOTO_V28_PARENT_MANIFEST_SHA256,
+             "photo V28 immutable V27 source manifest drift")
+    manifest = _load_json(manifest_path)
+    rows = manifest["members"]
+    _require(manifest["schema"] == "photo-v27-parent-source-manifest/v1"
+             and manifest["source_pin"] == proof["previous_qualified_commit"]
+             and manifest["source_tree"] == proof["previous_qualified_tree"]
+             and manifest["member_count"] == len(rows) == proof["parent_member_count"]
+             and len({row["path"] for row in rows}) == len(rows),
+             "photo V28 original V27 source inventory drift")
+    archived = {}
+    retained = set(proof["reviewed_source_deltas"]) | {
+        "skills/subculture-illustration-image-generator/assets/universal_scene_baseline_v2.json"}
+    for row in rows:
+        payload = _photo_v28_archived_payload(repo_root, row)
+        if row["path"] in retained:
+            archived[row["path"]] = payload
+    source_prefix = "skills/photo-prompt-image-generator/assets/"
+    expected_scope = {
+        source_prefix + "photo_prompt_color_relations_extension.json": {
+            "/visual_semantics/16/confusion_boundaries/1", "/maintenance_ref/record_id", "/maintenance_ref/sha256"},
+        source_prefix + "photo_prompt_visual_obligations_color_relations.json": {
+            "/profiles/16/semantics/contrast_examples/1", "/profiles/16/reject_substitutes/1"},
+        source_prefix + "photo_prompt_semantic_index.json": {"/dictionary_hash"},
+        source_prefix + "photo_prompt_visual_profile_index.json": {"/registry_sha256"},
+    }
+    _require(set(proof["reviewed_source_deltas"]) == set(expected_scope)
+             and {name for name in before if before[name] != after.get(name)} == set(expected_scope)
+             and set(after) - set(before) == {proof["successor_maintenance_record"]},
+             "photo V28 unreviewed source delta scope")
+    for name, changes in proof["reviewed_source_deltas"].items():
+        _require({row["pointer"] for row in changes} == expected_scope[name]
+                 and len(changes) == len(expected_scope[name]), "photo V28 negative or bookkeeping delta drift")
+        expected_source = json.loads(archived[name])
+        for row in changes:
+            target = expected_source
+            parts = row["pointer"].split("/")[1:]
+            for part in parts[:-1]:
+                target = target[int(part)] if isinstance(target, list) else target[part]
+            key = int(parts[-1]) if isinstance(target, list) else parts[-1]
+            _require(target[key] == row["before"], "photo V28 original negative source binding drift")
+            target[key] = row["after"]
+        _require(_load_json(repo_root / name) == expected_source,
+                 "photo V28 altered positive fields or unreviewed negative fields")
+        if name.endswith(("photo_prompt_semantic_index.json", "photo_prompt_visual_profile_index.json")):
+            old_hash, new_hash = changes[0]["before"].encode(), changes[0]["after"].encode()
+            _require(archived[name].count(old_hash) == 1
+                     and (repo_root / name).read_bytes() == archived[name].replace(old_hash, new_hash, 1),
+                     "photo V28 index changed beyond its single source header hash")
+    descriptor = "skills/subculture-illustration-image-generator/assets/universal_scene_baseline_v2.json"
+    old_descriptor = archived[descriptor]
+    old_sha = proof["previous_validator_sha256"].encode("ascii")
+    _require(hashlib.sha256(old_descriptor).hexdigest() == proof["previous_universal_descriptor_sha256"]
+             and old_descriptor.count(old_sha) == 1
+             and (asset_dir / "universal_scene_baseline_v2.json").read_bytes()
+             == old_descriptor.replace(old_sha, _sha256(Path(__file__)).encode("ascii"), 1),
+             "photo V28 universal descriptor changed beyond validator hash")
+PHOTO_V29_RUNTIME_PROOF_SHA256 = "d6e71088c31e5d4b1072c828336296c8c9151e25e619e4aba0ef2b817f1c001c"
+PHOTO_V29_PARENT_MANIFEST_SHA256 = "70b29b1b4b63861a150c9b01802571f965bafa68c7ed28c598a0f574dc0e688b"
+
+
+def _validate_v29_runtime_successor(asset_dir, repo_root, baseline, pack, raw, receipt=None):
+    """Qualify runtime preparation without changing any V28 public pack byte."""
+    evidence = repo_root / "docs/research-evidence/photo-prompt/retrieval-runtime-freshness-20261006/V29-RUNTIME-PROOF.json"
+    _require(_sha256(evidence) == PHOTO_V29_RUNTIME_PROOF_SHA256, "photo V29 immutable runtime proof drift")
+    proof = _load_json(evidence)
+    _require(proof.get("schema") == "photo-runtime-freshness-transition/v29"
+             and proof.get("previous_qualified_commit") == "8f9c56b1ddca2cb14bb6362da024e9c122b5cf67"
              and baseline.get("runtime_freshness_transition") == {
                  "evidence_path": str(evidence.relative_to(repo_root)),
-                 "evidence_sha256": PHOTO_V28_RUNTIME_PROOF_SHA256,
+                 "evidence_sha256": PHOTO_V29_RUNTIME_PROOF_SHA256,
                  "previous_qualified_commit": proof["previous_qualified_commit"],
-                 "parent_manifest_sha256": PHOTO_V28_PARENT_MANIFEST_SHA256,
+                 "parent_manifest_sha256": PHOTO_V29_PARENT_MANIFEST_SHA256,
              } and "appearance_data_transition" not in baseline,
-             "photo V28 runtime transition lineage drift")
-    _require(_sha256(asset_dir / "photo_regression_baseline_v27.json") == proof["previous_manifest_sha256"]
-             and (asset_dir / "photo_regression_baseline_v27_pack.json").read_bytes() == raw
-             == (asset_dir / "photo_regression_baseline_v28_pack.json").read_bytes()
+             "photo V29 runtime transition lineage drift")
+    _require(_sha256(asset_dir / "photo_regression_baseline_v28.json") == proof["previous_manifest_sha256"]
+             and (asset_dir / "photo_regression_baseline_v28_pack.json").read_bytes() == raw
+             == (asset_dir / "photo_regression_baseline_v29_pack.json").read_bytes()
              and hashlib.sha256(raw).hexdigest() == proof["previous_pack_sha256"]
              == proof["current_pack_sha256"] == baseline["sha256"]
              and pack["pack_id"] == proof["previous_pack_id"] == proof["current_pack_id"]
              and proof["reviewed_pack_delta"] == [] and proof["all_public_pack_bytes_exactly_equal"] is True
              and baseline["frozen_inputs"] == proof["frozen_inputs"],
-             "photo V28 changed V27 public pack bytes or frozen inputs")
-    old = _load_json(repo_root / "docs/research-evidence/photo-prompt/harry-potter-integration-20261006/main-merge/V27-APPEARANCE-DATA-PROOF.json")
+             "photo V29 changed V28 public pack bytes or frozen inputs")
+    old = _load_json(repo_root / "docs/research-evidence/photo-prompt/muted-color-contrast-20261006/V28-MUTED-COLOR-PROOF.json")
     _require(all(proof["source_files_before"].get(name) == sha for name, sha in old["source_files_after"].items())
              and proof["source_inventory_after"] == old["source_inventory_after"]
              and proof["active_shards_after"] == old["active_shards_after"],
-             "photo V28 relabeled predecessor DATA or source inventory")
+             "photo V29 relabeled predecessor DATA or source inventory")
     _require(all(_sha256(repo_root / name) == sha for name, sha in proof["source_files_after"].items())
              and {path.name: _sha256(path) for path in (repo_root / "skills/photo-prompt-image-generator/assets").glob("*.json")}
              == proof["source_inventory_after"]
              and all(_sha256(repo_root / name) == sha for name, sha in proof["active_shards_after"].items()),
-             "photo V28 unqualified runtime, DATA or shard drift")
+             "photo V29 unqualified runtime, DATA or shard drift")
     parent_path = repo_root / proof["parent_manifest"]
-    _require(_sha256(parent_path) == proof["parent_manifest_sha256"] == PHOTO_V28_PARENT_MANIFEST_SHA256,
-             "photo V28 immutable V27 parent manifest drift")
+    _require(_sha256(parent_path) == proof["parent_manifest_sha256"] == PHOTO_V29_PARENT_MANIFEST_SHA256,
+             "photo V29 immutable V28 parent manifest drift")
     parent = _load_json(parent_path)
     _require(parent["source_pin"] == proof["previous_qualified_commit"]
              and parent["source_tree"] == proof["previous_qualified_tree"]
              and parent["member_count"] == len(parent["members"]) == proof["parent_member_count"]
              and len({row["path"] for row in parent["members"]}) == len(parent["members"]),
-             "photo V28 V27 historical source inventory drift")
+             "photo V29 V28 historical source inventory drift")
     for row in parent["members"]:
         name = Path(row["source_path"])
-        _require(not name.is_absolute() and ".." not in name.parts, "photo V28 unsafe parent source path")
+        _require(not name.is_absolute() and ".." not in name.parts, "photo V29 unsafe parent source path")
         payload = (repo_root / name).read_bytes()
         blob = hashlib.sha1(b"blob " + str(len(payload)).encode("ascii") + b"\0" + payload).hexdigest()
         _require(len(payload) == row["bytes"] and hashlib.sha256(payload).hexdigest() == row["sha256"]
-                 and blob == row["git_blob"], "photo V28 original V27 source or dependency bytes drift")
+                 and blob == row["git_blob"], "photo V29 original V28 source or dependency bytes drift")
     descriptor = "skills/subculture-illustration-image-generator/assets/universal_scene_baseline_v2.json"
     before = (repo_root / next(row["source_path"] for row in parent["members"] if row["path"] == descriptor)).read_bytes()
     old_sha = proof["previous_validator_sha256"].encode("ascii")
     _require(hashlib.sha256(before).hexdigest() == proof["previous_universal_descriptor_sha256"]
              and before.count(old_sha) == 1 and (asset_dir / "universal_scene_baseline_v2.json").read_bytes()
              == before.replace(old_sha, _sha256(Path(__file__)).encode("ascii"), 1),
-             "photo V28 universal descriptor changed beyond validator hash")
+             "photo V29 universal descriptor changed beyond validator hash")
     if receipt is not None:
         scripts = str(repo_root / "skills/photo-prompt-image-generator/scripts")
         if scripts not in sys.path:
@@ -7975,20 +8130,21 @@ def validate_photo_regression_baseline(
     previous_path = asset_dir / "photo_regression_baseline_v5.json"
     if baseline_version is None:
         baseline_version = next(
-            version for version in (28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
+            version for version in (29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
             if (asset_dir / f"photo_regression_baseline_v{version}.json").exists()
         )
-    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28}, "unsupported photo baseline version")
+    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29}, "unsupported photo baseline version")
     repo_root = Path(__file__).resolve().parents[3]
-    if baseline_version == 27 and (repo_root / "docs/research-evidence/photo-prompt/retrieval-runtime-freshness-20261006/V28-RUNTIME-PROOF.json").is_file():
-        # Preserve the original V27 implementation and checks in its own tree.
+    if baseline_version in (27, 28) and (repo_root / "docs/research-evidence/photo-prompt/retrieval-runtime-freshness-20261006/V29-RUNTIME-PROOF.json").is_file():
         from tests import photo_prompt_fixtures
-        with tempfile.TemporaryDirectory(prefix="photo-v27-original-") as temporary:
+        with tempfile.TemporaryDirectory(prefix=f"photo-v{baseline_version}-original-") as temporary:
             tree = Path(temporary).resolve() / "tree"
-            archived = photo_prompt_fixtures.archived_v27_validator(tree, source_root=repo_root)
+            restore = (photo_prompt_fixtures.archived_v28_validator if baseline_version == 28
+                       else photo_prompt_fixtures.archived_v27_validator)
+            archived = restore(tree, source_root=repo_root)
             (tree / ".venv").symlink_to(Path(sys.executable).parent.parent, target_is_directory=True)
             try:
-                return archived.validate_photo_regression_baseline(tree / "skills/subculture-illustration-image-generator/assets", baseline_version=27)
+                return archived.validate_photo_regression_baseline(tree / "skills/subculture-illustration-image-generator/assets", baseline_version=baseline_version)
             except archived.ValidationFailure as exc:
                 raise ValidationFailure(str(exc)) from exc
     lineage_version = min(baseline_version, 7)
@@ -8171,9 +8327,9 @@ def validate_photo_regression_baseline(
         raw = temporary_output.read_bytes()
         payload = json.loads(raw)
         receipt = None
-        if baseline_version == 28:
+        if baseline_version == 29:
             receipt_path = Path(str(temporary_output) + ".runtime-receipt.json")
-            _require(receipt_path.is_file(), "photo V28 current command omitted its runtime receipt")
+            _require(receipt_path.is_file(), "photo V29 current command omitted its runtime receipt")
             receipt = _load_json(receipt_path)
     _require(
         isinstance(payload, list)
@@ -8261,7 +8417,9 @@ def validate_photo_regression_baseline(
     if baseline_version == 27:
         _validate_v27_appearance_data_successor(asset_dir, repo_root, baseline, pack, raw)
     if baseline_version == 28:
-        _validate_v28_runtime_successor(asset_dir, repo_root, baseline, pack, raw, receipt)
+        _validate_v28_muted_color_successor(asset_dir, repo_root, baseline, pack, raw)
+    if baseline_version == 29:
+        _validate_v29_runtime_successor(asset_dir, repo_root, baseline, pack, raw, receipt)
     return {
         "status": "pass",
         "schema": baseline["schema"],
