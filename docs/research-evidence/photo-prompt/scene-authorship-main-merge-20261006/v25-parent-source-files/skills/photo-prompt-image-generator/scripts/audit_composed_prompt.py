@@ -481,7 +481,6 @@ def expected_authorial_prompt_budget_contract() -> dict[str, Any]:
             "absolute_bounds_are_blocking": True,
             "required_evidence_expands_advisory_ceiling": True,
             "requester_meaning_outranks_concision": True,
-            "scene_coherence_outranks_concision": True,
         },
     }
 
@@ -3962,7 +3961,7 @@ def audit_authorial_core(
         warnings.append(
             {
                 "check": "authorial_prompt_recommended_budget",
-                "reason": "prompt_en exceeds the recommended length; this is advisory because requester meaning, coherent scene context, and literal hard evidence take priority",
+                "reason": "prompt_en exceeds the default concise target; this is advisory because requester meaning and literal hard evidence take priority",
                 "recommended_maximum_words": recommended_maximum_words,
                 "absolute_maximum_words": absolute_maximum_words,
                 **prompt_metrics,
@@ -3972,7 +3971,7 @@ def audit_authorial_core(
             warnings.append(
                 {
                     "check": "authorial_prompt_optional_prose_budget",
-                    "reason": "prompt_en exceeds the evidence-adjusted advisory ceiling; review redundant technique, candidate detail, and repeated explanation while preserving requester evidence and context needed to read the scene",
+                    "reason": "prompt_en exceeds the evidence-adjusted advisory ceiling; trim optional candidate, styling, camera, or explanatory prose before hard evidence",
                     "required_evidence_headroom_words": required_evidence_headroom_words,
                     "absolute_maximum_words": absolute_maximum_words,
                     **prompt_metrics,
@@ -3998,7 +3997,7 @@ def audit_authorial_core(
         warnings.append(
             {
                 "check": "authorial_core_baseline_recommended_budget",
-                "reason": "baseline_prompt_en exceeds the recommended length but remains within the absolute bound; preserve coherent scene context while reviewing redundancy",
+                "reason": "baseline_prompt_en exceeds the default concise target but remains within the absolute bound",
                 "recommended_maximum_words": recommended_maximum_words,
                 "absolute_maximum_words": absolute_maximum_words,
                 **baseline_metrics,

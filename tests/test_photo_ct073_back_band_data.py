@@ -127,6 +127,17 @@ def leaf_delta(before, after, pointer=""):
 class CT073BackBandDataTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        # Keep the five-file CT073 transition bound to its original V25 tree.
+        # The current compiler also verifies compatibility with these frozen DATA.
+        original_globals = {name: globals()[name] for name in ('ROOT', 'ASSETS', 'EVIDENCE', 'PRIOR_EVIDENCE')}
+        frozen = tempfile.TemporaryDirectory(prefix='sealed-v25-ct073-data-')
+        cls.addClassCleanup(frozen.cleanup)
+        root = Path(frozen.name)
+        fixtures.materialize_v25_parent_source(root, source_root=ROOT)
+        evidence = root / 'docs/research-evidence/photo-prompt/ct073-back-band-maintenance-integration-20261006'
+        cls.addClassCleanup(lambda: globals().update(original_globals))
+        globals().update(ROOT=root, ASSETS=root / SKILL / 'assets', EVIDENCE=evidence,
+                         PRIOR_EVIDENCE=evidence / 'prior-ct073')
         cls.directory = tempfile.TemporaryDirectory()
         cls.addClassCleanup(cls.directory.cleanup)
         cls.parent = Path(cls.directory.name) / "v24"

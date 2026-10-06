@@ -3832,7 +3832,6 @@ def authorial_prompt_budget_contract() -> JsonDict:
             "absolute_bounds_are_blocking": True,
             "required_evidence_expands_advisory_ceiling": True,
             "requester_meaning_outranks_concision": True,
-            "scene_coherence_outranks_concision": True,
         },
     }
 
@@ -4885,9 +4884,7 @@ def normalize_authorial_core(
     )
     if not AUTHORIAL_PROMPT_MIN_WORDS <= len(baseline_words) <= AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS:
         raise ValueError(
-            f"authorial core baseline_prompt_en must contain {AUTHORIAL_PROMPT_MIN_WORDS} "
-            f"to {AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS} English words; "
-            f"{AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS} is the recommended maximum"
+            "authorial core baseline_prompt_en must contain 48 to 640 English words; 360 is the recommended maximum"
         )
     blanket_negative_directives = find_blanket_negative_directives(normalized["baseline_prompt_en"])
     if blanket_negative_directives:

@@ -6,7 +6,7 @@ This skill owns the integrated photographic method below together with final com
 
 ## Applicability
 
-Use for an explicitly requested methodology review or a scene whose causal or emotional context, relationship, individuality, moment, or framing needs attention. A strong baseline may be retained unchanged. For a meaning-led detail frame, examine what the detail communicates and which adjacent cues make the situation and its significance readable.
+Use for an explicitly requested methodology review or a person-centered photograph whose relationship, individuality, moment, or framing needs attention. A strong baseline may be retained unchanged. For a meaning-led detail frame, examine what the detail communicates and which adjacent cues make it readable.
 
 Apply the advice in the requested photographic register. A static portrait, deliberately posed fashion image, or clear commercial presentation may already have a complete proposition. Preserve the requested staging and all resolved creative-control strengths. For faithful reference reconstruction, review only choices the requester leaves open. For products, food, architecture, or other non-person subjects, use relevant visual hierarchy, material, placement, and context without inventing a human relationship or personal story.
 
@@ -16,7 +16,7 @@ Read only the sections that address the actual weakness:
 
 | Review need | Internal section |
 |---|---|
-| Situation, emotional credibility, theme, SIR, or particular presence | [Theme and SIR](#theme-and-sir) |
+| Theme, SIR, photographic interest, or particular presence | [Theme and SIR](#theme-and-sir) |
 | Viewer position, psychological distance, or presentation | [Relationship and self-presentation](#relationship-and-self-presentation) |
 | Action phase, meaningful detail, crop, or information density | [Moment and meaning-led framing](#moment-and-meaning-led-framing) |
 | Perspective, retained context, light, or process texture | [Camera, light, and texture](#camera-light-and-texture) |
@@ -26,9 +26,7 @@ These are working adaptations of photographic philosophy. Use judgment appropria
 
 ## Theme and SIR
 
-Review the frame with the attention of a novelist developing a particular scene: these subjects have reached this place and moment for reasons that shape what they do and how they respond. Connect the subject, place, viewpoint, and visible state to the frozen intended experience. Examine the circumstances, immediate purposes, constraints, relationship, and consequences that were authored in Phase 1; strengthen their visible connections within open scope. A place can contribute through action, role, atmosphere, or visual structure; it need not carry an invented memory. In a sparse brief, develop coherent authorial circumstances only within the existing open scope while preserving concrete requester wording and the initial meaning.
-
-Judge emotional credibility by whether the response belongs to these circumstances and this relationship. An anger, tenderness, loneliness, or tension label alone gives the viewer little reason to invest. Show what an action costs, offers, interrupts, protects, or leaves unresolved where relevant, through particular behavior and the arrangement of people, objects, and place. A quiet routine can carry this meaning as fully as a confrontation. Fictional staging must remain separate from claims about a reference person's actual motives or history. Apply applicable material, use, and temporal context to non-person subjects without manufacturing a personal story.
+Review the frame as one proposition: see this particular subject in this place, from this viewer position, at this meaningful moment. Connect the subject, place, viewpoint, and visible state to the frozen intended experience. A place can contribute through action, role, atmosphere, or visual structure; it need not carry an invented memory. In a sparse brief, compare coherent realizations only within the existing open scope, preserving concrete requester wording and preferring fewer unsupported assumptions.
 
 Consider three complementary kinds of evidence:
 
@@ -57,11 +55,11 @@ Honor requester-supplied presentation preferences together with the photographic
 
 ## Moment and meaning-led framing
 
-When a transition serves the request, develop the condition just before, what brought about the visible change at the shutter, the response or consequence already present, and the action still possible afterward. Think through the scene beyond the shutter so its current state has continuity; express the relevant phases through physically compatible evidence in one instant. Directed attention, an interrupted task, an object still in use, a material trace, or another subject's changed response can make those connections readable. Keep them subordinate to the requested event. A completed pose or still state may already be the intended moment.
+When a transition serves the request, consider the condition just before, the visible change at the shutter, and the action still possible afterward. A body part, directed attention, object state, fabric response, or other visible trace can connect those phases in one instant. Keep the phases physically compatible and subordinate to the requested event. A completed pose or still state may already be the intended moment.
 
-Choose the action, expression, interaction, or detail that carries the frame, then develop the context that explains its purpose and makes its response understandable. Gesture, expression, clothing, objects in use, material traces, nearby place structure, and wider environment can support each other instead of acting as separate signs. Include enough connected context for the scene to feel particular and inhabited, judging each addition by its contribution and distraction. This is an information-budget judgment, not a prop quota or a requirement to start with a close crop.
+Choose the action, expression, interaction, or detail that carries the frame, then test contextual additions in order: adjacent gesture or expression, clothing or an object in use, a personal trace, nearby place structure, and wider environment. Include an addition while its contribution to meaning exceeds its distraction. This is an information-budget judgment, not a prop quota or a requirement to start with a close crop.
 
-For a detail frame, identify what the part communicates about action, role, time, presence, or relationship. Retain enough adjacent context to make both the situation and the detail's significance readable. An object-body or clothing-action junction may carry more information than an isolated fragment. Include or omit the face according to the request and the frame's purpose. Preserve enough body, object, and space to assess required contact and support.
+For a detail frame, identify what the part communicates about action, role, time, presence, or relationship. Retain the smallest adjacent cue that makes the meaning readable. An object-body or clothing-action junction may carry more information than an isolated fragment. Include or omit the face according to the request and the frame's purpose. Preserve enough body, object, and space to assess required contact and support.
 
 Remove redundant agent-authored decoration when it weakens the hierarchy. Retain required people, objects, contact, and setting evidence. Leave a supported question about motive, a prior exchange, or an emerging next action when useful; ambiguity should emerge from a coherent scene while its governing action and visible consequence remain clear.
 
@@ -77,15 +75,13 @@ Use grain, color drift, motion residue, or optical imperfection when it supports
 
 ## Prompt writing and review
 
-Write the chosen frame as a developed scene in connected photographic prose, using concrete nouns, verbs, spatial relations, and consequential sensory detail. Connect the subject and setting to the visible state, then integrate viewpoint, crop, motivated light, and material behavior as they serve that scene. Give causes and responses enough context to be understood; brief causal orientation may help the image model relate the visible cues. Carry preceding events and possible next actions through present traces and arrangements, with compatible states in one frame. Literary depth should arise from the fit among details and the significance of the moment; longer prose, lyrical praise, or an invisible biography alone cannot supply it. Keep the wider fictional synopsis in the existing intent and internal scores or interpretation debates in reasoning evidence. The current shared prompt budget permits up to 1,280 English words, with 720 as an advisory recommendation; use the space the scene needs while preserving its hierarchy.
+Express the chosen frame with concrete nouns, verbs, and spatial relations. Connect the subject and setting to the visible state, then integrate viewpoint, meaningful cues, crop, motivated light, and material behavior as needed. Before-and-after context belongs in the prose only insofar as it makes the current instant readable. Keep internal scores, interpretation debates, and unsupported biography in reasoning evidence rather than runtime prose.
 
 Diagnose the actual weakness and make a proportionate change within open scope:
 
 | Observed weakness | Useful refinement |
 |---|---|
 | Interchangeable portrayal | Develop an existing expression, behavior, presentation, or material relation that gives this subject particular presence. |
-| The action is identifiable but its situation is unclear | Develop the preceding condition, present purpose or constraint, and visible response through connected staging within open scope. |
-| The viewer can identify the emotion but has little reason to care | Make the action's cost, offer, interruption, or consequence particular to the relationship and surroundings; retain useful uncertainty about outcome. |
 | Place contributes only decoration | Connect its visible structure or use to the action, atmosphere, or requested role; retain only useful context. |
 | Viewpoint and intimacy disagree | Align open distance, orientation, gaze, and framing with the intended viewer position. |
 | A transition reads as an unrelated pose | Clarify the visible trigger or action residue while preserving the governing event; retain stillness when requested. |
@@ -93,7 +89,7 @@ Diagnose the actual weakness and make a proportionate change within open scope:
 | Camera treatment erases the proposition | Reconsider which information lens, crop, light, depth of field, and texture retain. |
 | The frame explains too much | Keep one meaning core and remove redundant authorial cues, preserving all required evidence. |
 
-Review the whole photograph after any local repair, reading it without its source keywords or explanatory synopsis. Check whether a viewer could understand the situation and find a concrete basis for emotional involvement in what is visible. Preserve the connective details that give the moment its significance. A stronger relationship or clearer hierarchy may come from subtraction; a working baseline needs no added gesture or object.
+Review the whole photograph after any local repair. A stronger relationship or clearer hierarchy may come from subtraction; a working baseline needs no added gesture or object.
 
 ## Apply through existing contracts
 
@@ -103,13 +99,13 @@ Change only unbound staging on `intent_lock.open_dimensions`, preserving whole-d
 
 An event, relationship, or setting suggestion that changes bound meaning requires the existing envelope/core/pack rebuild path. Clear requester intent permits a faithful rebuild; unresolved requester meaning still needs clarification. A photographic preference alone cannot authorize changing the requested event or relocating, hiding, transferring, or removing a meaningful interactive object.
 
-Record material scene development, refinement, or subtraction in the existing `authorial_core_binding.authorial_decisions`, using the actual open dimension and a concise rationale. A candidate-informed change should explain which existing circumstance, cause, relationship, or consequence it strengthens; it must still preserve the candidate's complete adopted meaning. When no change is useful, leave that list empty. Keep the rationale in run evidence and the final prompt as a coherent photograph. Preserve required anchor, assertion, selected-obligation, and repair evidence. Recheck the complete final body mechanism and refresh the postcomposition embodiment-review hash whenever the prompt changes.
+Record material refinement or subtraction in the existing `authorial_core_binding.authorial_decisions`, using the actual open dimension and a concise rationale. When no change is useful, leave that list empty. Keep the rationale in run evidence and the final prompt as a coherent photograph. Preserve required anchor, assertion, selected-obligation, and repair evidence. Recheck the complete final body mechanism and refresh the postcomposition embodiment-review hash whenever the prompt changes.
 
 Keep `negative_en` byte-identical to the guard-approved pack. Translate a useful concern into positive staging within open scope or reject the suggestion. Broad aesthetic negatives can suppress requested people, poses, relationships, clothing, or genre. Scene exclusions require actual requester instructions grounded through the existing contract. Runtime handoff follows this skill's image-runtime and audit requirements.
 
 ## Review evidence and series boundary
 
-Prompt review establishes that the written scene carries the intended decisions. Rubric scores are diagnostic aids, not proof of an artistic improvement or a new passing threshold. When rendering is requested, inspect the saved pixels for the main impression, subject presence, relationship, moment, focal detail, and necessary context alongside the existing hard gates. Read the depicted situation without consulting its keyword explanation, and distinguish visible causal or emotional connections from backstory supplied only by the author. Keep technical binding, perceived expression, comparative preference, and user acceptance separate.
+Prompt review establishes that the written scene carries the intended decisions. Rubric scores are diagnostic aids, not proof of an artistic improvement or a new passing threshold. When rendering is requested, inspect the saved pixels for the main impression, subject presence, relationship, moment, focal detail, and necessary context alongside the existing hard gates. Keep technical binding, perceived expression, comparative preference, and user acceptance separate.
 
 This integration covers single-frame authoring and revision. For separately requested series planning, form one thesis and preserve recurring identity, presentation, objects, place geography, viewer position, light progression, and photographic language. Give each frame a role in changing what the viewer knows, such as establishing the place, revealing presentation or relationship, compressing meaning in a detail, restoring distance, or leaving a supported next action open. Select and arrange frames for complementary roles rather than repeating the most attractive crop.
 
