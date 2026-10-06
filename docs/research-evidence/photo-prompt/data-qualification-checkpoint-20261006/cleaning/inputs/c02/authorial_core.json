@@ -1,0 +1,218 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "목공 수업 안내 글에 넣을 사진이 필요해요. 성인 수강생이 나무 작업대에 남은 마른 대팻밥을 작은 손솔로 치우는 모습을 위에서 내려다보게 찍어 주세요. 작업 중이던 나무 상자도 같은 작업대에 남겨 주세요.",
+  "creative_controls_sha256": "206b2d99b30c4a6c86ce5d1e591008fcc63a01f30ae6bb9a055f27b707cb43ed",
+  "interpreted_intent": "Requester meaning: The Korean request asks for actual brush cleanup of dry planing shavings on a wood workbench, with an elevated downward capture direction and the project box still present. Author-created realization: A practical overhead view makes the relationship between making and tidying visible: the box occupies its working space while the shavings are drawn away. An open unfinished box, a short clearing stroke beside it, diffuse workshop window light, modestly warm wood tones, patient tactile hand gesture. This staging is an editable authorial choice within the requested facts.",
+  "subject": "An adult woodworking student",
+  "setting": "A wooden workbench in a woodworking class",
+  "event": "Brushing dry wood shavings from the work surface while the project box remains there",
+  "visual_priorities": [
+    "The small brush and dry curled shavings clearly express tidying the work surface.",
+    "The unfinished box stays on the same wooden bench as the cleanup.",
+    "The requested elevated downward viewpoint makes the working area understandable."
+  ],
+  "baseline_prompt_en": "A practical woodworking-class photograph. An adult woodworking student stands at a wooden workbench, brushing dry wood shavings aside with a small hand brush. An unfinished wooden box remains on the same workbench. The camera is above the workbench, looking down onto its surface, with the student's head and shoulders entering along the near edge. The working hand grips the short brush handle; its forearm reaches forward from a relaxed elbow while the other hand rests on a clear part of the bench. A short stroke gathers curled shavings away from the box, exposing a strip of wood grain beside it. The student's patient concentration and poised movement give the working gesture a subtle human warmth. Diffuse workshop window light separates the pale curls, brushed area, and box joints. The frame explains both the class project and the small act of caring for its working space.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete photographic request",
+      "source_text": "목공 수업 안내 글에 넣을 사진이 필요해요. 성인 수강생이 나무 작업대에 남은 마른 대팻밥을 작은 손솔로 치우는 모습을 위에서 내려다보게 찍어 주세요. 작업 중이던 나무 상자도 같은 작업대에 남겨 주세요.",
+      "basis": "request_context",
+      "resolution": "The Korean request asks for actual brush cleanup of dry planing shavings on a wood workbench, with an elevated downward capture direction and the project box still present.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "목공 수업 안내 글에 넣을 사진",
+        "dimension": "concept",
+        "prompt_evidence": "practical woodworking-class photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "성인 수강생",
+        "dimension": "subject",
+        "prompt_evidence": "An adult woodworking student"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "나무 작업대에 남은 마른 대팻밥을 작은 손솔로 치우는 모습",
+        "dimension": "event",
+        "prompt_evidence": "brushing dry wood shavings aside with a small hand brush"
+      },
+      {
+        "anchor_id": "requested_action",
+        "source_text": "작은 손솔로 치우는 모습",
+        "dimension": "action",
+        "prompt_evidence": "brushing dry wood shavings aside"
+      },
+      {
+        "anchor_id": "adult_age",
+        "source_text": "성인 수강생",
+        "dimension": "age",
+        "prompt_evidence": "adult woodworking student"
+      },
+      {
+        "anchor_id": "wooden_bench",
+        "source_text": "나무 작업대",
+        "dimension": "material",
+        "prompt_evidence": "wooden workbench",
+        "target": "workbench",
+        "property": "material"
+      },
+      {
+        "anchor_id": "bench_setting",
+        "source_text": "나무 작업대",
+        "dimension": "setting",
+        "prompt_evidence": "at a wooden workbench",
+        "target": "scene",
+        "property": "work_surface"
+      },
+      {
+        "anchor_id": "dry_shavings",
+        "source_text": "마른 대팻밥",
+        "dimension": "material",
+        "prompt_evidence": "dry wood shavings",
+        "target": "shavings",
+        "property": "material_state"
+      },
+      {
+        "anchor_id": "small_brush",
+        "source_text": "작은 손솔",
+        "dimension": "appearance",
+        "prompt_evidence": "small hand brush",
+        "target": "cleanup_brush",
+        "property": "tool_type"
+      },
+      {
+        "anchor_id": "box_remains",
+        "source_text": "작업 중이던 나무 상자도 같은 작업대에 남겨 주세요.",
+        "dimension": "composition",
+        "prompt_evidence": "An unfinished wooden box remains on the same workbench",
+        "target": "project_box",
+        "property": "placement"
+      },
+      {
+        "anchor_id": "view_height",
+        "source_text": "위에서",
+        "dimension": "camera",
+        "prompt_evidence": "above the workbench",
+        "target": "camera",
+        "property": "viewpoint.height"
+      },
+      {
+        "anchor_id": "view_direction",
+        "source_text": "내려다보게",
+        "dimension": "camera",
+        "prompt_evidence": "looking down onto its surface",
+        "target": "camera",
+        "property": "viewpoint.direction"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "action",
+      "age"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "setting",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "An adult woodworking student"
+      }
+    },
+    {
+      "assertion_id": "requested_task",
+      "dimension": "action",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "action"
+      ],
+      "axes": {
+        "task": "brush_cleanup",
+        "actor": "woodworking_student",
+        "tool": "small_hand_brush",
+        "surface": "wooden_workbench",
+        "material": "dry_wood_shavings"
+      },
+      "evidence": {
+        "actor_phrase": "An adult woodworking student",
+        "action_phrase": "brushing dry wood shavings aside with a small hand brush",
+        "surface_phrase": "wooden workbench"
+      }
+    },
+    {
+      "assertion_id": "capture_camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "camera",
+        "direction_requirement": "requested",
+        "height_requirement": "requested"
+      },
+      "evidence": {
+        "owner_phrase": "The camera is above the workbench",
+        "direction_phrase": "looking down onto its surface",
+        "height_phrase": "above the workbench"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "instructional photography",
+    "family": "observational overhead craft photograph",
+    "evidence": [
+      "The small brush and dry curled shavings clearly express tidying the work surface.",
+      "The unfinished box stays on the same wooden bench as the cleanup."
+    ]
+  },
+  "variation_key": "dry-cleaning-natural-c02"
+}

@@ -1,0 +1,128 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "I need a simple bakery menu photo of an intact pain au chocolat on a plain plate. Show its outside as it comes from the oven, without breaking it open, and leave some room around it.\n",
+  "creative_controls_sha256": "7bf17f8f788dd9cec559aa2006ccf12bed71a6f77ca34cd563d75bbef5bc9474",
+  "interpreted_intent": "Requester-owned: Intact pain au chocolat; Plain plate; Outside as it comes from oven; Unbroken pastry; Simple menu use and surrounding room. Authorial choices within open dimensions: Cream plate color; Clean bakery counter; Modest elevated view; Daylight. A dramatic oven-side scene and a calm menu arrangement were considered; the calm plate arrangement serves the explicit menu purpose and leaves the exterior intact.",
+  "subject": "intact pain au chocolat on plain plate",
+  "setting": "plain cream plate on a clean bakery counter",
+  "event": "pastry rests intact with freshly baked exterior visible",
+  "visual_priorities": [
+    "whole pastry exterior recognizable",
+    "plain plate with surrounding space",
+    "simple menu presentation"
+  ],
+  "baseline_prompt_en": "An intact pain au chocolat rests on a plain plate on a clean bakery counter. Its freshly baked exterior remains whole and clearly visible, with the pastry's outer shape easy to recognize. Open space surrounds the plate for a simple bakery menu photograph. The plate is cream colored, and the counter stays quiet so the food carries the image. A modest view from above the counter includes the pastry's top and side. Natural daylight gives the baked surface an ordinary, appetizing presence.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "intact pain au chocolat on plain plate",
+      "source_text": "I need a simple bakery menu photo of an intact pain au chocolat on a plain plate. Show its outside as it comes from the oven, without breaking it open, and leave some room around it.",
+      "basis": "request_context",
+      "resolution": "Intact pain au chocolat; Plain plate; Outside as it comes from oven; Unbroken pastry; Simple menu use and surrounding room",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [
+    "without breaking it open"
+  ],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "requested_concept",
+        "source_text": "I need a simple bakery menu photo of an intact pain au chocolat on a plain plate. Show its outside as it comes from the oven, without breaking it open, and leave some room around it.",
+        "dimension": "concept",
+        "prompt_evidence": "a simple bakery menu photograph"
+      },
+      {
+        "anchor_id": "requested_subject",
+        "source_text": "I need a simple bakery menu photo of an intact pain au chocolat on a plain plate. Show its outside as it comes from the oven, without breaking it open, and leave some room around it.",
+        "dimension": "subject",
+        "prompt_evidence": "An intact pain au chocolat"
+      },
+      {
+        "anchor_id": "requested_event",
+        "source_text": "I need a simple bakery menu photo of an intact pain au chocolat on a plain plate. Show its outside as it comes from the oven, without breaking it open, and leave some room around it.",
+        "dimension": "event",
+        "prompt_evidence": "Its freshly baked exterior remains whole and clearly visible"
+      },
+      {
+        "anchor_id": "requested_property_0",
+        "source_text": "I need a simple bakery menu photo of an intact pain au chocolat on a plain plate. Show its outside as it comes from the oven, without breaking it open, and leave some room around it.",
+        "dimension": "setting",
+        "target": "main_subject",
+        "property": "support",
+        "prompt_evidence": "rests on a plain plate"
+      },
+      {
+        "anchor_id": "requested_property_1",
+        "source_text": "I need a simple bakery menu photo of an intact pain au chocolat on a plain plate. Show its outside as it comes from the oven, without breaking it open, and leave some room around it.",
+        "dimension": "framing",
+        "target": "main_subject",
+        "property": "surrounding_space",
+        "prompt_evidence": "Open space surrounds the plate"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "setting",
+      "appearance",
+      "material",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject_type",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "food"
+      },
+      "evidence": {
+        "subject_phrase": "An intact pain au chocolat"
+      }
+    },
+    {
+      "assertion_id": "capture_axes",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": null,
+  "variation_key": "case_c"
+}

@@ -1,0 +1,221 @@
+{
+  "contract": "dry-cleaning-pre-retrieval-semantic-review/v1",
+  "classification_policy": {
+    "compatible_optional": "The complete scene meaning supports the source's prerequisites and an optional distribution without adding an operation, participant, contact, phase, viewpoint or material constituent. This semantic label alone does not grant effect scope.",
+    "contradictory": "The candidate's full meaning conflicts with an established request/core fact, an exclusion, or the frozen scope required for whole-row adoption.",
+    "unresolved": "A prerequisite is not independently established; the candidate cannot supply it. No affirmative opposite fact is needed to withhold adoption.",
+    "whole_row_rule": "Whole-row compatible_optional also requires all three declared dimensions explicitly open and all effects compatible. An omitted dimension is not open, even if it is not explicitly requester-locked.",
+    "inference_rule": "Ordinary action meanings may establish their normal working contact without verbatim source wording. Inferred contact is identified below; it cannot justify changing the frozen hand, tool, approach or view.",
+    "independence": "Reviewer classifications are not consumer instructions, ranking labels, predicted wins or permission to modify either source or case inputs. No retrieval outputs were read."
+  },
+  "source_units": {
+    "swath": {
+      "P1": "Existing operator and same cleaning broom/hand brush, ongoing dry sweep, existing loose debris and supporting surface",
+      "P2": "Existing tool-to-surface working contact, sweep direction, operator configuration and active phase retained",
+      "P3": "Existing view already shows that working contact and adjacent surface",
+      "O4": "Same dry debris can form the optional modest ridge and relatively cleared swath on that same surface",
+      "O5": "Adjacency aligns with that same contact/direction without new geometry, material, phase or framing"
+    },
+    "pan": {
+      "P1": "Existing operator and same broom/hand brush collecting existing loose dry debris from the same surface into the same pan",
+      "P2": "Already seated lip against source surface; source, lip and pan interior already visible together",
+      "P3": "Active collection already has debris on the source and inside pan; configuration, approach, contacts, receiver position and phase retained",
+      "O4": "Sparse source remainder, a few grains at lip and modest interior deposit remain the same existing debris, with no new fine constituent or conversion",
+      "O5": "All three regions belong to the established source-to-pan collection and supporting contact"
+    }
+  },
+  "cases": [
+    {
+      "case_id": "c01",
+      "raw_request_facts": ["Adult cafe owner", "Sweeping a dry floor after closing", "Candid small-business photograph with lived-in routine"],
+      "author_created_open_facts": ["Broom and bristles against tile", "Short stroke draws crumbs and fine grit out beside a chair", "Clearer strip behind and small gathered strip", "Spaced two-hand grip, forward lean, floor-supported feet", "Medium-wide view connects owner, broom head and gathered strip"],
+      "provenance_caution": "The raw request supplies neither a particular broom nor crumbs/fine grit nor a cleared strip. Those are independent author-created baseline facts; the required assertion's dry_debris_present axis must not convert their specific realization into a requester instruction.",
+      "rows": {
+        "swath": {
+          "scene_classification": "compatible_optional",
+          "P1": "Established: requested sweep, author-created broom, crumbs/fine grit and tile surface",
+          "P2": "Explicit bristles against tiles, short stroke out from chair, unchanged standing grip and ongoing phase",
+          "P3": "Explicit medium-wide view includes broom head and gathered strip; contact is already stated",
+          "O4": "Cleared and gathered strips already exist; a modest adjoining ridge can refine their distribution without adding debris type",
+          "O5": "Can retain existing out-from-chair direction and connect those same regions; this is a possible refinement, not demonstrated added value"
+        },
+        "pan": {
+          "scene_classification": "unresolved",
+          "P1": "No pan or collection into a pan is established",
+          "P2": "No seated receiving lip or pan interior/view is established",
+          "P3": "No existing source-to-pan path or debris already inside a pan is established",
+          "O4": "Existing fine grit is grain-compatible, but it cannot supply an absent receiver or interior deposit",
+          "O5": "Would require creating the source-to-pan operation, not merely distributing existing residue"
+        }
+      }
+    },
+    {
+      "case_id": "c02",
+      "raw_request_facts": ["Adult woodworking student", "Small hand brush clearing dry planing shavings on a wooden workbench", "Elevated downward camera", "Project wooden box remains on the same bench"],
+      "author_created_open_facts": ["Curled shavings gathered away from the box by a short stroke", "Exposed strip of wood grain", "Student's head and shoulders at near edge", "Working hand grips brush, relaxed elbow, other hand on clear bench", "Diffuse light separates curls, cleared area and box joints"],
+      "provenance_caution": "Curled shape and exposed strip are independently authored realizations. The requested material is planing shavings, not sawdust or grit; no fine-grain constituent may be presumed.",
+      "rows": {
+        "swath": {
+          "scene_classification": "compatible_optional",
+          "P1": "Established hand-brush dry cleanup of the same wood shavings on the requested bench",
+          "P2": "The described short clearing stroke and exposed grain semantically establish working surface contact; direction is away from the box. Bristle-to-wood contact is not stated as a separate literal sentence",
+          "P3": "Downward working-area view and connected working hand/brush are already present; no crop or viewpoint change is needed",
+          "O4": "A modest adjoining bank/ridge can consist of the same curled shavings; no grains are required by this row",
+          "O5": "Must retain box placement, curls, away-from-box stroke and elevated downward view. Distribution is optional and already partly expressed by baseline"
+        },
+        "pan": {
+          "scene_classification": "contradictory",
+          "P1": "No dustpan or source-to-pan collection is established; the action brushes shavings aside",
+          "P2": "No receiving lip, contact or pan interior is present",
+          "P3": "No partial pan collection is present",
+          "O4": "The full row's few grains cannot be supplied by replacing curled planing shavings with sawdust/grit or adding an unestablished fine constituent",
+          "O5": "Adding a receiver and grain-bearing transfer would change the full frozen realization, not merely the residue distribution"
+        }
+      }
+    },
+    {
+      "case_id": "c03",
+      "raw_request_facts": ["Adult gathers dry crumbs already piled under a kitchen table into a dustpan", "Wooden floor and table legs remain visible"],
+      "author_created_open_facts": ["Small brush in other hand", "Some crumbs already collected inside pan while pile remains outside", "Pan lip resting on floor beside pile", "Kneeling adult stabilizes pan by handle", "Brush guides remaining crumbs across lip", "Close side view retains hands, pile, pan opening and floor"],
+      "provenance_caution": "The raw request asks for collection into a pan but does not itself specify partial transfer, seated lip, kneeling, hand brush, or view. Those are independent baseline facts. The required requested_task assertion repeats the author-created interior-crumb result; this does not make partial-transfer staging requester-owned.",
+      "rows": {
+        "swath": {
+          "scene_classification": "compatible_optional",
+          "P1": "Same adult and hand brush move loose dry crumbs from the existing floor pile toward pan; this is an active dry brushing operation",
+          "P2": "Floor/lip collection path and kneeling configuration are established. Brush contact with the source-side crumbs/floor is semantically entailed by guiding them across the floor-seated lip, rather than a separate literal bristles-on-floor statement",
+          "P3": "Close side view already retains hands, crumb pile and adjacent floor",
+          "O4": "A locally cleared source strip can adjoin a low ridge of the remaining already-piled crumbs; retain the existing pile instead of inventing a newly scattered starting field",
+          "O5": "Any refinement must remain on the source side of the existing collection path, preserve partial transfer and avoid a new sweep direction or second pile. This is not an endorsement of practical benefit"
+        },
+        "pan": {
+          "scene_classification": "compatible_optional",
+          "P1": "Operator, hand brush, source crumbs, wooden floor and receiving pan are all independently present",
+          "P2": "Lip explicitly rests on floor; visible interior is supported by some crumbs collected inside and the close view of pan opening/pile/floor",
+          "P3": "Some crumbs remain outside and some are already inside during active brush guidance; approach, pan handle hold, kneeling and lip contact can remain unchanged",
+          "O4": "A few small crumb particles at the lip can be the same dry crumb material; do not reinterpret grains as sand, wood dust or another new constituent, and do not shrink a specifically fixed crumb size. No numeric size is specified here",
+          "O5": "Source/lip/interior alignment can refine an already established partial collection. Baseline already communicates much of this relationship, so incremental usefulness is unresolved"
+        }
+      }
+    },
+    {
+      "case_id": "c04",
+      "raw_request_facts": ["Adult park caretaker", "Hand brush clears dry fallen leaves from bench", "Ordinary autumn neighborhood-newsletter moment"],
+      "author_created_open_facts": ["Weathered slatted seat", "Leaves moving over outer seat edge", "Newly cleared slats beside remaining leaves", "Caretaker standing on path, reaching near seat with other hand on back", "Medium view includes caretaker and seat", "Leaf litter below bench"],
+      "provenance_caution": "Seat slats, precise off-edge path, newly cleared section and ground litter are independent author choices. The raw and baseline material remains recognizable dry leaves; fine debris is not established.",
+      "rows": {
+        "swath": {
+          "scene_classification": "compatible_optional",
+          "P1": "Same caretaker and hand brush clear existing dry leaves from the same supporting bench seat",
+          "P2": "Working contact is semantically supported by brushing the near seat clear; off-edge direction, standing reach and ongoing phase are already present. Literal bristles touching slats is not separately asserted",
+          "P3": "Existing medium view connects caretaker and seat and describes both cleared and remaining regions",
+          "O4": "A modest shallow ridge can be made of the same whole leaves still on the seat beside the cleared section; no granular residue is necessary",
+          "O5": "Must retain leaves moving over the existing edge, not replace them with a stationary completed pile, reverse direction, move the action to the ground, or convert leaves into grit"
+        },
+        "pan": {
+          "scene_classification": "contradictory",
+          "P1": "The established destination is over the seat edge, with ground litter; no receiving pan is established",
+          "P2": "No pan, seated lip or pan interior/view exists",
+          "P3": "No existing partial pan collection exists",
+          "O4": "A few grains would introduce fine material or break down the recognizable crisp leaves; neither is established",
+          "O5": "Redirecting off-edge leaf clearing into a dustpan would add a receiver and alter the existing action path"
+        }
+      }
+    },
+    {
+      "case_id": "c05",
+      "raw_request_facts": ["Adult server wipes spilled water with a cloth on stainless steel", "Counter remains visibly wet", "Documentary restaurant story at shift end"],
+      "author_created_open_facts": ["Folded cloth under palm pressure", "Water bead at leading edge and thinner sheen behind", "Bent elbow and settled standing stance", "Compact three-quarter view of arm, cloth and wet counter"],
+      "provenance_caution": "Water bead and wiped area resemble generic result/trace structure but do not establish dry debris or a brush operation.",
+      "rows": {
+        "swath": {
+          "scene_classification": "contradictory",
+          "P1": "Established operation uses a cloth and water, not broom/hand brush and dry loose debris",
+          "P2": "Cloth pressure and wet wiping contact cannot be relabeled as the same dry-sweep contact/phase",
+          "P3": "The necessary wet task regions are visible, but the different dry-sweep regions do not exist",
+          "O4": "Water bead and reduced sheen cannot stand for a dry-debris ridge and cleared swath",
+          "O5": "Would substitute material and tool/action meaning despite superficial trace adjacency"
+        },
+        "pan": {
+          "scene_classification": "contradictory",
+          "P1": "Wet cloth wiping contradicts dry brush collection and has no pan",
+          "P2": "No receiving lip or pan contact/interior exists",
+          "P3": "No partial dry transfer; the counter must remain wet",
+          "O4": "Dry grains/deposit would add a different material and operation",
+          "O5": "Cannot reinterpret water collected by a cloth as source-to-dustpan transfer"
+        }
+      }
+    },
+    {
+      "case_id": "c06",
+      "raw_request_facts": ["Ceramic coffee cup on station windowsill", "Departing train beyond glass", "Quiet travel photograph in soft morning light"],
+      "author_created_open_facts": ["Shallow coffee inside cup", "Worn stone sill", "Foreground cup and softly moving train in background", "Faint glass reflections"],
+      "provenance_caution": "Coffee remainder is a liquid inside a cup, not loose dry cleanup residue. The raw request does not explicitly ban people, but neither the request nor the frozen scene establishes any cleaning operator.",
+      "rows": {
+        "swath": {
+          "scene_classification": "unresolved",
+          "P1": "No cleaning operator, broom/hand brush, dry debris or ongoing sweep is established",
+          "P2": "No relevant working contact, stroke direction, operator configuration or cleaning phase exists",
+          "P3": "Sill visibility alone is insufficient for an already visible cleaning contact",
+          "O4": "A residue swath/ridge would require adding debris and a source operation",
+          "O5": "No same-sweep relationship can be inherited from the train/cup event"
+        },
+        "pan": {
+          "scene_classification": "unresolved",
+          "P1": "No operator, brush, dry source debris or dustpan collection exists",
+          "P2": "No seated lip or source/pan shared view exists",
+          "P3": "No partial transfer exists; coffee inside a cup is not evidence of it",
+          "O4": "Grains and pan deposit would be newly introduced material/objects",
+          "O5": "No existing collection path or support relationship is available"
+        }
+      }
+    },
+    {
+      "case_id": "c07",
+      "raw_request_facts": ["Broom and dustpan hang on hooks at pale utility-room wall", "No people or loose debris", "Tools must not be in use", "Simple catalogue photograph"],
+      "author_created_open_facts": ["Motionless tools supported through hanging loops", "Empty pan interior visible", "Bare wall separates silhouettes", "Clean floor below", "Straightforward front view"],
+      "provenance_caution": "Tool-name matches and a visible pan interior do not override explicit unused/no-debris meaning.",
+      "rows": {
+        "swath": {
+          "scene_classification": "contradictory",
+          "P1": "People/debris/use are excluded; broom is stored rather than operated",
+          "P2": "Hanging support is not working floor contact or an active sweep",
+          "P3": "Visible stored silhouettes do not establish working-contact visibility",
+          "O4": "Any dry-debris ridge/swath conflicts with no loose debris",
+          "O5": "Would change the stored event into active cleanup"
+        },
+        "pan": {
+          "scene_classification": "contradictory",
+          "P1": "No operator or active collection is permitted",
+          "P2": "Pan hangs from a hook; its lip is not seated against a source floor",
+          "P3": "Interior is empty and tools unused, contradicting already partial collection",
+          "O4": "Grains/deposit conflict with no loose debris",
+          "O5": "Would require moving/using the stored tools and creating a forbidden operation"
+        }
+      }
+    },
+    {
+      "case_id": "c08",
+      "raw_request_facts": ["Rental-property entrance after cleaning finished", "Tile floor already clean", "Broom and dustpan rest beside wall", "No people or cleaning actions"],
+      "author_created_open_facts": ["Tools parked at edge leaving walking space", "Daylight across neutral tiles", "Threshold view into room", "Settled empty room ready to use"],
+      "provenance_caution": "Presence of cleanup tools and a completed chore does not license a residue trace requiring an active operator.",
+      "rows": {
+        "swath": {
+          "scene_classification": "contradictory",
+          "P1": "Completed cleaning, clean floor and no people/actions contradict an ongoing dry sweep",
+          "P2": "Parked tools have no active working contact or stroke; restarting cleanup changes the requested phase",
+          "P3": "Room/floor visibility does not establish a visible active contact",
+          "O4": "A gathered debris ridge would undermine the already-clean state",
+          "O5": "Cannot turn a finished empty entrance into a same-sweep residue event"
+        },
+        "pan": {
+          "scene_classification": "contradictory",
+          "P1": "No active collection or operator is permitted",
+          "P2": "Resting beside the wall does not establish a pan lip seated for source collection or a visible interior",
+          "P3": "Finished phase contradicts existing partial transfer",
+          "O4": "Source/lip/interior residue would add unestablished debris and undermine clean-floor meaning",
+          "O5": "Would have to restart and stage a forbidden cleaning action"
+        }
+      }
+    }
+  ]
+}

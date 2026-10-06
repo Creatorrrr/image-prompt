@@ -1,0 +1,190 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "Make a clear home-care photo of an adult gathering the dry crumbs already piled under a kitchen table into a dustpan. Keep the wooden floor and the table legs visible so the location makes sense.",
+  "creative_controls_sha256": "054d86937b6be83f5f23443a015a719284c67ec8ab9c17f1aa482b5eeee43db2",
+  "interpreted_intent": "Requester meaning: Collection of a pre-existing dry crumb pile, not the creation of new scattered debris; the table and wooden floor remain recognizable. Author-created realization: Make the final collection step easy to understand through the existing pile and the loaded edge of a dustpan in the same view. A hand brush, a kneeling adult with both tools within reach, side-window light, a compact portion of kitchen floor, calm poised movement. This staging is an editable authorial choice within the requested facts.",
+  "subject": "An adult collecting dry crumbs",
+  "setting": "Beneath a kitchen table on a wooden floor",
+  "event": "Collecting an already gathered crumb pile into a dustpan",
+  "visual_priorities": [
+    "The pre-existing pile, dustpan lip, and collected crumbs explain the collection step.",
+    "Hands and tools remain readable within the space between table legs.",
+    "Wood flooring and the table establish the requested household location."
+  ],
+  "baseline_prompt_en": "A clear home-care photograph of an adult gathering dry crumbs into a dustpan beneath a kitchen table. An already gathered pile of dry crumbs sits in front of the dustpan, with some crumbs collected inside it. The wooden floor and table legs remain visible around the action. The adult kneels in the open space beside the table and holds the dustpan steady by its handle, its front lip resting on the floor next to the pile. The other hand uses a small brush to guide the remaining crumbs across that lip. Elbows and hands fit comfortably between the table legs, and the person's calm concentration lends the useful domestic gesture an easy warmth. A close side view keeps the hands, crumb pile, dustpan opening, and floor location readable together. Soft side-window light picks out the crumbs against the wood grain.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete photographic request",
+      "source_text": "Make a clear home-care photo of an adult gathering the dry crumbs already piled under a kitchen table into a dustpan. Keep the wooden floor and the table legs visible so the location makes sense.",
+      "basis": "request_context",
+      "resolution": "Collection of a pre-existing dry crumb pile, not the creation of new scattered debris; the table and wooden floor remain recognizable.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "clear home-care photo",
+        "dimension": "concept",
+        "prompt_evidence": "clear home-care photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "an adult",
+        "dimension": "subject",
+        "prompt_evidence": "an adult gathering dry crumbs"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "dry crumbs already piled under a kitchen table into a dustpan",
+        "dimension": "event",
+        "prompt_evidence": "An already gathered pile of dry crumbs sits in front of the dustpan"
+      },
+      {
+        "anchor_id": "requested_action",
+        "source_text": "gathering the dry crumbs already piled under a kitchen table into a dustpan",
+        "dimension": "action",
+        "prompt_evidence": "gathering dry crumbs into a dustpan"
+      },
+      {
+        "anchor_id": "adult_age",
+        "source_text": "an adult",
+        "dimension": "age",
+        "prompt_evidence": "adult gathering dry crumbs"
+      },
+      {
+        "anchor_id": "under_table",
+        "source_text": "under a kitchen table",
+        "dimension": "setting",
+        "prompt_evidence": "beneath a kitchen table",
+        "target": "scene",
+        "property": "location"
+      },
+      {
+        "anchor_id": "floor_material",
+        "source_text": "wooden floor",
+        "dimension": "material",
+        "prompt_evidence": "wooden floor",
+        "target": "floor",
+        "property": "material"
+      },
+      {
+        "anchor_id": "crumb_condition",
+        "source_text": "dry crumbs already piled",
+        "dimension": "material",
+        "prompt_evidence": "already gathered pile of dry crumbs",
+        "target": "crumbs",
+        "property": "initial_state"
+      },
+      {
+        "anchor_id": "visible_floor_legs",
+        "source_text": "wooden floor and the table legs visible",
+        "dimension": "framing",
+        "prompt_evidence": "The wooden floor and table legs remain visible around the action",
+        "target": "image",
+        "property": "included_context"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "action",
+      "age"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "setting",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "an adult gathering dry crumbs"
+      }
+    },
+    {
+      "assertion_id": "requested_task",
+      "dimension": "action",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "action"
+      ],
+      "axes": {
+        "task": "dry_crumb_collection",
+        "actor": "adult",
+        "tool": "dustpan",
+        "starting_state": "already_piled",
+        "destination": "dustpan_interior"
+      },
+      "evidence": {
+        "action_phrase": "gathering dry crumbs into a dustpan",
+        "starting_state_phrase": "An already gathered pile of dry crumbs sits in front of the dustpan",
+        "result_phrase": "some crumbs collected inside it"
+      }
+    },
+    {
+      "assertion_id": "capture_camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "instructional photography",
+    "family": "clear domestic task photograph",
+    "evidence": [
+      "The pre-existing pile, dustpan lip, and collected crumbs explain the collection step.",
+      "Hands and tools remain readable within the space between table legs."
+    ]
+  },
+  "variation_key": "dry-cleaning-natural-c03"
+}

@@ -1,0 +1,168 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "A quiet travel photograph of a ceramic coffee cup on a railway station windowsill, with a departing train beyond the glass in soft morning light.",
+  "creative_controls_sha256": "4cd130bda91cda2e134c127b74363000d09548082a0516f7b90a17e678bec707",
+  "interpreted_intent": "Requester meaning: A cup-at-station still life in morning light, with a train visibly leaving outside the window. Author-created realization: The still cup anchors a quiet pause while the departing train gives the view a gentle sense of passage. Pale glazed cup, shallow remaining coffee, worn stone sill, slight motion softness beyond the glass, muted color. This staging is an editable authorial choice within the requested facts.",
+  "subject": "A ceramic coffee cup",
+  "setting": "A railway station windowsill",
+  "event": "The cup rests inside while a train departs beyond the glass",
+  "visual_priorities": [
+    "The ceramic cup anchors the still near space.",
+    "The departing train stays beyond the window glass.",
+    "Gentle morning illumination holds the requested quiet travel mood."
+  ],
+  "baseline_prompt_en": "A quiet travel photograph centers a ceramic coffee cup on a railway station windowsill. A departing train passes beyond the glass in soft morning light. The pale glazed cup holds a shallow remainder of coffee, its rim and small handle clearly described against the worn stone sill. Slight motion softness carries along the train windows outside while the cup and the nearby window frame stay crisp. Faint reflections in the glass join the warm interior edge to the cooler platform beyond. The still cup occupies the foreground, and the train remains recognizable in the softer background. Restrained color and gentle shadows leave the image feeling like a paused moment during a journey.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete photographic request",
+      "source_text": "A quiet travel photograph of a ceramic coffee cup on a railway station windowsill, with a departing train beyond the glass in soft morning light.",
+      "basis": "request_context",
+      "resolution": "A cup-at-station still life in morning light, with a train visibly leaving outside the window.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "quiet travel photograph",
+        "dimension": "concept",
+        "prompt_evidence": "quiet travel photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "ceramic coffee cup",
+        "dimension": "subject",
+        "prompt_evidence": "a ceramic coffee cup"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "a departing train beyond the glass",
+        "dimension": "event",
+        "prompt_evidence": "A departing train passes beyond the glass"
+      },
+      {
+        "anchor_id": "cup_location",
+        "source_text": "on a railway station windowsill",
+        "dimension": "setting",
+        "prompt_evidence": "on a railway station windowsill",
+        "target": "coffee_cup",
+        "property": "placement"
+      },
+      {
+        "anchor_id": "ceramic_material",
+        "source_text": "ceramic coffee cup",
+        "dimension": "material",
+        "prompt_evidence": "ceramic coffee cup",
+        "target": "coffee_cup",
+        "property": "material"
+      },
+      {
+        "anchor_id": "soft_morning",
+        "source_text": "soft morning light",
+        "dimension": "lighting",
+        "prompt_evidence": "soft morning light",
+        "target": "scene",
+        "property": "illumination"
+      },
+      {
+        "anchor_id": "quiet_mood",
+        "source_text": "quiet travel photograph",
+        "dimension": "atmosphere",
+        "prompt_evidence": "quiet travel photograph",
+        "target": "image",
+        "property": "emotional_tone"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "setting",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere",
+      "appearance"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "a ceramic coffee cup"
+      }
+    },
+    {
+      "assertion_id": "train_departure",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "event"
+      ],
+      "axes": {
+        "state": "departing",
+        "location": "beyond_window_glass"
+      },
+      "evidence": {
+        "event_phrase": "A departing train passes beyond the glass"
+      }
+    },
+    {
+      "assertion_id": "capture_camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "travel photography",
+    "family": "quiet window still life",
+    "evidence": [
+      "The ceramic cup anchors the still near space.",
+      "The departing train stays beyond the window glass."
+    ]
+  },
+  "variation_key": "dry-cleaning-natural-c06"
+}

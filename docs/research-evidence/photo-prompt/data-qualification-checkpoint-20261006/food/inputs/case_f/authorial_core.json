@@ -1,0 +1,128 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "Make a product photo of an empty ceramic serving bowl for a little pottery shop. Let me see the shape and the inside clearly on a quiet tabletop, with no food or people.\n",
+  "creative_controls_sha256": "a328e486b34a14ff092f941253170f511b42cae5406a8bc21801d6f457e38efb",
+  "interpreted_intent": "Requester-owned: Empty ceramic serving bowl; Product photograph for pottery shop; Shape and inside clearly visible; Quiet tabletop; No food or people. Authorial choices within open dimensions: Muted blue glaze; Plain gray tabletop; Pottery studio window; Slightly elevated viewpoint; Daylight. A low silhouette view and a slightly elevated product view were considered; the elevated view preserves the explicit need to inspect the empty inside as well as the shape.",
+  "subject": "empty ceramic serving bowl for pottery shop",
+  "setting": "plain gray tabletop beside a pottery studio window",
+  "event": "empty serving bowl rests with its inside visible",
+  "visual_priorities": [
+    "empty bowl interior visible",
+    "vessel shape legible around its rim and outer wall",
+    "quiet pottery shop product presentation"
+  ],
+  "baseline_prompt_en": "An empty ceramic serving bowl rests on a quiet tabletop in a product photograph for a pottery shop. Its open inside is clearly visible. The bowl's shape is easy to read, with its rim and outer wall shown together. The bowl has a muted blue glaze, set against a plain gray tabletop that lets the vessel stand out. A view from slightly above brings the empty interior and exterior together. Window daylight keeps the ceramic easy to read. The surrounding table remains bare, giving the object room to hold attention.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "empty ceramic serving bowl for pottery shop",
+      "source_text": "Make a product photo of an empty ceramic serving bowl for a little pottery shop. Let me see the shape and the inside clearly on a quiet tabletop, with no food or people.",
+      "basis": "request_context",
+      "resolution": "Empty ceramic serving bowl; Product photograph for pottery shop; Shape and inside clearly visible; Quiet tabletop; No food or people",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [
+    "no food or people"
+  ],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "requested_concept",
+        "source_text": "Make a product photo of an empty ceramic serving bowl for a little pottery shop. Let me see the shape and the inside clearly on a quiet tabletop, with no food or people.",
+        "dimension": "concept",
+        "prompt_evidence": "a product photograph for a pottery shop"
+      },
+      {
+        "anchor_id": "requested_subject",
+        "source_text": "Make a product photo of an empty ceramic serving bowl for a little pottery shop. Let me see the shape and the inside clearly on a quiet tabletop, with no food or people.",
+        "dimension": "subject",
+        "prompt_evidence": "An empty ceramic serving bowl"
+      },
+      {
+        "anchor_id": "requested_event",
+        "source_text": "Make a product photo of an empty ceramic serving bowl for a little pottery shop. Let me see the shape and the inside clearly on a quiet tabletop, with no food or people.",
+        "dimension": "event",
+        "prompt_evidence": "Its open inside is clearly visible"
+      },
+      {
+        "anchor_id": "requested_property_0",
+        "source_text": "Make a product photo of an empty ceramic serving bowl for a little pottery shop. Let me see the shape and the inside clearly on a quiet tabletop, with no food or people.",
+        "dimension": "setting",
+        "target": "main_subject",
+        "property": "support",
+        "prompt_evidence": "rests on a quiet tabletop"
+      },
+      {
+        "anchor_id": "requested_property_1",
+        "source_text": "Make a product photo of an empty ceramic serving bowl for a little pottery shop. Let me see the shape and the inside clearly on a quiet tabletop, with no food or people.",
+        "dimension": "framing",
+        "target": "main_subject",
+        "property": "shape_visibility",
+        "prompt_evidence": "The bowl's shape is easy to read"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "setting",
+      "appearance",
+      "material",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject_type",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "An empty ceramic serving bowl"
+      }
+    },
+    {
+      "assertion_id": "capture_axes",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": null,
+  "variation_key": "case_f"
+}

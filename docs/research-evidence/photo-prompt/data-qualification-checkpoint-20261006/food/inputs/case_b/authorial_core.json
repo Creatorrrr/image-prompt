@@ -1,0 +1,118 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "Photograph a sliced country loaf on a kitchen board for a small bakery’s weekend post, with the freshly cut face easy to see. Keep the scene about the bread and the kitchen objects.\n",
+  "creative_controls_sha256": "a3fc5a11d21b8e5ca22532d71a69844af6f2de6efa7c73db481c871aa5fef439",
+  "interpreted_intent": "Requester-owned: Sliced country loaf; Kitchen board; Freshly cut face visible; Small bakery weekend-post purpose; Bread and kitchen objects remain the focus. Authorial choices within open dimensions: Wooden material of board; Pale counter; Loose placement of slices; Window illumination; View showing exterior and cut face together. A very close cut-face study and a small kitchen preparation scene were considered; the preparation scene better supports the bakery's welcoming weekend use while retaining the requested cut face.",
+  "subject": "sliced country loaf on kitchen board",
+  "setting": "wooden kitchen board on a pale kitchen counter",
+  "event": "sliced loaf rests with freshly cut face visible",
+  "visual_priorities": [
+    "freshly cut bread face easy to see",
+    "loaf and slices remain visually related",
+    "familiar kitchen preparation for a bakery post"
+  ],
+  "baseline_prompt_en": "A sliced country loaf rests on a kitchen board, its freshly cut face clearly visible beside the remaining bread. The slices sit loosely together as if cutting has just finished. The wooden board lies on a pale kitchen counter, with the bread taking most of the attention. This is a friendly bakery photograph for a weekend post, grounded in the everyday work of preparing bread to share. A nearby window lights the loaf, and the camera sees both the cut face and the loaf's outer shape.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "sliced country loaf on kitchen board",
+      "source_text": "Photograph a sliced country loaf on a kitchen board for a small bakery’s weekend post, with the freshly cut face easy to see. Keep the scene about the bread and the kitchen objects.",
+      "basis": "request_context",
+      "resolution": "Sliced country loaf; Kitchen board; Freshly cut face visible; Small bakery weekend-post purpose; Bread and kitchen objects remain the focus",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "requested_concept",
+        "source_text": "Photograph a sliced country loaf on a kitchen board for a small bakery’s weekend post, with the freshly cut face easy to see. Keep the scene about the bread and the kitchen objects.",
+        "dimension": "concept",
+        "prompt_evidence": "bakery photograph for a weekend post"
+      },
+      {
+        "anchor_id": "requested_subject",
+        "source_text": "Photograph a sliced country loaf on a kitchen board for a small bakery’s weekend post, with the freshly cut face easy to see. Keep the scene about the bread and the kitchen objects.",
+        "dimension": "subject",
+        "prompt_evidence": "A sliced country loaf"
+      },
+      {
+        "anchor_id": "requested_event",
+        "source_text": "Photograph a sliced country loaf on a kitchen board for a small bakery’s weekend post, with the freshly cut face easy to see. Keep the scene about the bread and the kitchen objects.",
+        "dimension": "event",
+        "prompt_evidence": "its freshly cut face clearly visible"
+      },
+      {
+        "anchor_id": "requested_property_0",
+        "source_text": "Photograph a sliced country loaf on a kitchen board for a small bakery’s weekend post, with the freshly cut face easy to see. Keep the scene about the bread and the kitchen objects.",
+        "dimension": "setting",
+        "target": "main_subject",
+        "property": "support",
+        "prompt_evidence": "on a kitchen board"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "setting",
+      "appearance",
+      "material",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject_type",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "food"
+      },
+      "evidence": {
+        "subject_phrase": "A sliced country loaf"
+      }
+    },
+    {
+      "assertion_id": "capture_axes",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": null,
+  "variation_key": "case_b"
+}

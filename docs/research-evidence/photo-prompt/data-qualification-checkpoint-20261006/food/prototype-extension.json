@@ -1,0 +1,123 @@
+{
+  "schema_version": "photo-prompt-research-extension/v1",
+  "slots": {
+    "texture": [
+      {
+        "id": "food_bread_crumb_crust_boundary",
+        "ko": "노출된 빵 속살과 같은 조각의 겉껍질 경계",
+        "en": "The already exposed bread face has a porous crumb interior meeting its attached crust rim; that rim continues into the uncut outer surface of the same piece.",
+        "weight": 0.45,
+        "tags": [
+          "food",
+          "bread",
+          "cut_surface"
+        ],
+        "for_any": [
+          "food"
+        ],
+        "aliases": [],
+        "keywords": [
+          "exposed bread crumb",
+          "attached crust rim",
+          "same bread piece"
+        ],
+        "concept_units": [
+          "the already exposed cut or broken face of the established main baked non-laminated bread piece contains the porous crumb interior",
+          "that interior meets its neighboring attached crust rim continuing into the same piece's existing uncut outer surface"
+        ],
+        "relations": [
+          {
+            "id": "bread_face_owner",
+            "type": "part_of",
+            "subject": "the exposed crumb face and attached crust rim",
+            "object": "the same established main baked non-laminated bread piece with an already exposed cut or broken face and neighboring outer crust"
+          },
+          {
+            "id": "bread_crust_continuity",
+            "type": "continues_into",
+            "subject": "the crust rim at the exposed face",
+            "object": "that same piece's uncut outer crust"
+          }
+        ],
+        "affected_dimensions": [
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "surface_structure"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            "A baked non-laminated bread piece is the frozen main_subject, with a cut or broken face and neighboring outer crust already exposed. This design does not establish a supporting-owner binding.",
+            "Only the material structure at that already established face/crust junction; the original cut-versus-tear character remains unchanged.",
+            "Preserve: exact owner; bread identity; piece count; existing openings; whole-versus-cut state; crumb size and density if specified; crust thickness if specified; color; shape; action; setting; camera; framing; lighting.",
+            "Not applicable: laminated pastry; raw proofing dough; intact loaf with no exposed inside; removed-crust bread; crumb-only fragment with no neighboring crust; bread-shaped nonfood or printed representation; unresolved secondary food owner.",
+            "No inference of freshness, safety, doneness, fermentation quality, ingredients, hydration, taste, temperature, age, or chemical cause. Large holes, white crumb, dark crust, scattered crumbs, flour, steam, hands, knife, plate and filling are not required. A fine crumb may satisfy the relation."
+          ]
+        }
+      },
+      {
+        "id": "food_pastry_cut_layers_outer_edge",
+        "ko": "페이스트리 단면의 얇은 겹과 같은 조각의 바깥 박편 경계",
+        "en": "The already exposed laminated-pastry face shows thin curved baked layers separated by irregular gaps; its adjoining outer surface has overlapping flakes that remain attached to the same piece.",
+        "weight": 0.45,
+        "tags": [
+          "food",
+          "laminated_pastry",
+          "cut_surface"
+        ],
+        "for_any": [
+          "food"
+        ],
+        "aliases": [],
+        "keywords": [
+          "exposed laminated pastry face",
+          "curved baked layers",
+          "attached outer flakes"
+        ],
+        "concept_units": [
+          "the already exposed cut or broken face of the established main baked laminated pastry piece has thin curved layers separated by irregular gaps",
+          "the adjoining existing outer surface of that same piece carries attached overlapping flakes"
+        ],
+        "relations": [
+          {
+            "id": "pastry_face_owner",
+            "type": "part_of",
+            "subject": "the exposed baked layers and the adjoining flaking exterior",
+            "object": "the same established main baked laminated pastry piece with an already exposed cut or broken face adjoining visible exterior"
+          },
+          {
+            "id": "pastry_flake_attachment",
+            "type": "attached_to",
+            "subject": "the overlapping outer flakes",
+            "object": "the exterior adjoining that pastry face"
+          }
+        ],
+        "affected_dimensions": [
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "surface_structure"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            "A baked laminated pastry piece is the frozen main_subject with a cut or broken face adjoining visible exterior. The selected variant allows curved exposed laminae and attached exterior flakes. This does not turn every pastry into a croissant or establish a supporting-owner binding.",
+            "Only exposed material structure and its attached exterior flakes on the already established piece. It must not create the opening, change cutting into tearing, or require an active peeling action.",
+            "Preserve: exact owner; pastry type; piece count; existing openings; whole-versus-cut state; filling or no filling; layer spacing if specified; crumb density if specified; color; shape; action; setting; camera; framing; lighting.",
+            "Not applicable: raw laminated dough; intact pastry with no exposed inside; non-laminated bread crumb; cream-and-cake stacked layers; powder alone; liquid foam; perfect regular honeycomb cells; paper or fabric layers; smooth exterior locked against flakes; unresolved secondary food owner.",
+            "No fixed layer count, perfect honeycomb, fold count, baking history, butter composition, safety, freshness, doneness or quality diagnosis. A tight or more open layered interior can qualify if compatible with the frozen request; scattered debris, glaze, sugar, steam, tools, hands and vessel are not part of the concept."
+          ]
+        }
+      }
+    ]
+  }
+}
