@@ -289,7 +289,7 @@ class PhotoVisualProfileShardIntegrationTests(unittest.TestCase):
     def run_builder(self, *extra_args):
         registry = self.root / "registry.json"
         registry.write_bytes(encoded(self.registry))
-        args = ["build_visual_profile_index.py", "--registry", str(registry), "--output", str(self.path), "--dimensions", "2", *map(str, extra_args)]
+        args = ["build_visual_profile_index.py", "--registry", str(registry), "--output", str(self.path), "--dimensions", "2", "--synthetic-sources", *map(str, extra_args)]
         with mock.patch.object(sys, "argv", args), mock.patch.object(sys, "stdout", new_callable=io.StringIO):
             return builder.main()
 

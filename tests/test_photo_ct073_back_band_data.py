@@ -132,7 +132,7 @@ class CT073BackBandDataTests(unittest.TestCase):
         original_globals = {name: globals()[name] for name in ('ROOT', 'ASSETS', 'EVIDENCE', 'PRIOR_EVIDENCE')}
         frozen = tempfile.TemporaryDirectory(prefix='sealed-v25-ct073-data-')
         cls.addClassCleanup(frozen.cleanup)
-        root = Path(frozen.name)
+        root = Path(frozen.name).resolve()
         fixtures.materialize_v25_parent_source(root, source_root=ROOT)
         evidence = root / 'docs/research-evidence/photo-prompt/ct073-back-band-maintenance-integration-20261006'
         cls.addClassCleanup(lambda: globals().update(original_globals))
@@ -140,7 +140,7 @@ class CT073BackBandDataTests(unittest.TestCase):
                          PRIOR_EVIDENCE=evidence / 'prior-ct073')
         cls.directory = tempfile.TemporaryDirectory()
         cls.addClassCleanup(cls.directory.cleanup)
-        cls.parent = Path(cls.directory.name) / "v24"
+        cls.parent = Path(cls.directory.name).resolve() / "v24"
         fixtures.materialize_v24_parent_source(cls.parent)
         cls.parent_assets = cls.parent / SKILL / "assets"
         cls.original = {name: read(cls.parent_assets / name) for name in SOURCE_HASHES}

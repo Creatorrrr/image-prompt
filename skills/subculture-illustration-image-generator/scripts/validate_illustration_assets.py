@@ -12,6 +12,7 @@ import os
 from pathlib import Path
 import re
 import subprocess
+import sys
 import tempfile
 import unicodedata
 from typing import Any, Iterable, Mapping, Sequence
@@ -7894,6 +7895,74 @@ def _validate_v27_appearance_data_successor(
              "photo V27 universal descriptor changed beyond validator hash")
 
 
+PHOTO_V28_RUNTIME_PROOF_SHA256 = "dd0112613d89016afd9ae8c7d821f4023448263af98ee934f731d90fe99d0429"
+PHOTO_V28_PARENT_MANIFEST_SHA256 = "b85d96721b73760c5bc07e42cf4a40a61ed3208607ca38cbce58b4dce4bf2af7"
+
+
+def _validate_v28_runtime_successor(asset_dir, repo_root, baseline, pack, raw, receipt=None):
+    """Qualify runtime preparation without changing any V27 public pack byte."""
+    evidence = repo_root / "docs/research-evidence/photo-prompt/retrieval-runtime-freshness-20261006/V28-RUNTIME-PROOF.json"
+    _require(_sha256(evidence) == PHOTO_V28_RUNTIME_PROOF_SHA256, "photo V28 immutable runtime proof drift")
+    proof = _load_json(evidence)
+    _require(proof.get("schema") == "photo-runtime-freshness-transition/v28"
+             and proof.get("previous_qualified_commit") == "cb496c1db984f9fe5d632fa764aae4d3f6aedf63"
+             and baseline.get("runtime_freshness_transition") == {
+                 "evidence_path": str(evidence.relative_to(repo_root)),
+                 "evidence_sha256": PHOTO_V28_RUNTIME_PROOF_SHA256,
+                 "previous_qualified_commit": proof["previous_qualified_commit"],
+                 "parent_manifest_sha256": PHOTO_V28_PARENT_MANIFEST_SHA256,
+             } and "appearance_data_transition" not in baseline,
+             "photo V28 runtime transition lineage drift")
+    _require(_sha256(asset_dir / "photo_regression_baseline_v27.json") == proof["previous_manifest_sha256"]
+             and (asset_dir / "photo_regression_baseline_v27_pack.json").read_bytes() == raw
+             == (asset_dir / "photo_regression_baseline_v28_pack.json").read_bytes()
+             and hashlib.sha256(raw).hexdigest() == proof["previous_pack_sha256"]
+             == proof["current_pack_sha256"] == baseline["sha256"]
+             and pack["pack_id"] == proof["previous_pack_id"] == proof["current_pack_id"]
+             and proof["reviewed_pack_delta"] == [] and proof["all_public_pack_bytes_exactly_equal"] is True
+             and baseline["frozen_inputs"] == proof["frozen_inputs"],
+             "photo V28 changed V27 public pack bytes or frozen inputs")
+    old = _load_json(repo_root / "docs/research-evidence/photo-prompt/harry-potter-integration-20261006/main-merge/V27-APPEARANCE-DATA-PROOF.json")
+    _require(all(proof["source_files_before"].get(name) == sha for name, sha in old["source_files_after"].items())
+             and proof["source_inventory_after"] == old["source_inventory_after"]
+             and proof["active_shards_after"] == old["active_shards_after"],
+             "photo V28 relabeled predecessor DATA or source inventory")
+    _require(all(_sha256(repo_root / name) == sha for name, sha in proof["source_files_after"].items())
+             and {path.name: _sha256(path) for path in (repo_root / "skills/photo-prompt-image-generator/assets").glob("*.json")}
+             == proof["source_inventory_after"]
+             and all(_sha256(repo_root / name) == sha for name, sha in proof["active_shards_after"].items()),
+             "photo V28 unqualified runtime, DATA or shard drift")
+    parent_path = repo_root / proof["parent_manifest"]
+    _require(_sha256(parent_path) == proof["parent_manifest_sha256"] == PHOTO_V28_PARENT_MANIFEST_SHA256,
+             "photo V28 immutable V27 parent manifest drift")
+    parent = _load_json(parent_path)
+    _require(parent["source_pin"] == proof["previous_qualified_commit"]
+             and parent["source_tree"] == proof["previous_qualified_tree"]
+             and parent["member_count"] == len(parent["members"]) == proof["parent_member_count"]
+             and len({row["path"] for row in parent["members"]}) == len(parent["members"]),
+             "photo V28 V27 historical source inventory drift")
+    for row in parent["members"]:
+        name = Path(row["source_path"])
+        _require(not name.is_absolute() and ".." not in name.parts, "photo V28 unsafe parent source path")
+        payload = (repo_root / name).read_bytes()
+        blob = hashlib.sha1(b"blob " + str(len(payload)).encode("ascii") + b"\0" + payload).hexdigest()
+        _require(len(payload) == row["bytes"] and hashlib.sha256(payload).hexdigest() == row["sha256"]
+                 and blob == row["git_blob"], "photo V28 original V27 source or dependency bytes drift")
+    descriptor = "skills/subculture-illustration-image-generator/assets/universal_scene_baseline_v2.json"
+    before = (repo_root / next(row["source_path"] for row in parent["members"] if row["path"] == descriptor)).read_bytes()
+    old_sha = proof["previous_validator_sha256"].encode("ascii")
+    _require(hashlib.sha256(before).hexdigest() == proof["previous_universal_descriptor_sha256"]
+             and before.count(old_sha) == 1 and (asset_dir / "universal_scene_baseline_v2.json").read_bytes()
+             == before.replace(old_sha, _sha256(Path(__file__)).encode("ascii"), 1),
+             "photo V28 universal descriptor changed beyond validator hash")
+    if receipt is not None:
+        scripts = str(repo_root / "skills/photo-prompt-image-generator/scripts")
+        if scripts not in sys.path:
+            sys.path.insert(0, scripts)
+        from photo_runtime_sources import RuntimeSnapshotProvider
+        RuntimeSnapshotProvider().from_receipt(pack, receipt)
+
+
 def validate_photo_regression_baseline(
     asset_dir: Path, *, baseline_version: int | None = None
 ) -> dict[str, Any]:
@@ -7906,10 +7975,22 @@ def validate_photo_regression_baseline(
     previous_path = asset_dir / "photo_regression_baseline_v5.json"
     if baseline_version is None:
         baseline_version = next(
-            version for version in (27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
+            version for version in (28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
             if (asset_dir / f"photo_regression_baseline_v{version}.json").exists()
         )
-    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27}, "unsupported photo baseline version")
+    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28}, "unsupported photo baseline version")
+    repo_root = Path(__file__).resolve().parents[3]
+    if baseline_version == 27 and (repo_root / "docs/research-evidence/photo-prompt/retrieval-runtime-freshness-20261006/V28-RUNTIME-PROOF.json").is_file():
+        # Preserve the original V27 implementation and checks in its own tree.
+        from tests import photo_prompt_fixtures
+        with tempfile.TemporaryDirectory(prefix="photo-v27-original-") as temporary:
+            tree = Path(temporary).resolve() / "tree"
+            archived = photo_prompt_fixtures.archived_v27_validator(tree, source_root=repo_root)
+            (tree / ".venv").symlink_to(Path(sys.executable).parent.parent, target_is_directory=True)
+            try:
+                return archived.validate_photo_regression_baseline(tree / "skills/subculture-illustration-image-generator/assets", baseline_version=27)
+            except archived.ValidationFailure as exc:
+                raise ValidationFailure(str(exc)) from exc
     lineage_version = min(baseline_version, 7)
     baseline_path = asset_dir / f"photo_regression_baseline_v{lineage_version}.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
@@ -8089,6 +8170,11 @@ def validate_photo_regression_baseline(
         )
         raw = temporary_output.read_bytes()
         payload = json.loads(raw)
+        receipt = None
+        if baseline_version == 28:
+            receipt_path = Path(str(temporary_output) + ".runtime-receipt.json")
+            _require(receipt_path.is_file(), "photo V28 current command omitted its runtime receipt")
+            receipt = _load_json(receipt_path)
     _require(
         isinstance(payload, list)
         and len(payload) == 1
@@ -8174,6 +8260,8 @@ def validate_photo_regression_baseline(
         _validate_v26_scene_budget_successor(asset_dir, repo_root, baseline, pack, raw)
     if baseline_version == 27:
         _validate_v27_appearance_data_successor(asset_dir, repo_root, baseline, pack, raw)
+    if baseline_version == 28:
+        _validate_v28_runtime_successor(asset_dir, repo_root, baseline, pack, raw, receipt)
     return {
         "status": "pass",
         "schema": baseline["schema"],

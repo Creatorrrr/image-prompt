@@ -23,6 +23,12 @@ def main(argv: list[str] | None = None) -> int:
                         help="Require owner and separate direction/height declarations when camera is an open or locked dimension.")
     parser.add_argument("--seed", type=int)
     parser.add_argument("--output-file")
+    parser.add_argument("--runtime-store", help="Runtime-owned generation/cache directory.")
+    parser.add_argument("--source-root", help="Photo skill root; default is this installed skill.")
+    parser.add_argument("--source-mode", choices=("local_current", "remote_before_retrieval"), default="local_current")
+    parser.add_argument("--source-remote", help="Explicit Git remote URL for remote_before_retrieval.")
+    parser.add_argument("--source-ref", default="main")
+    parser.add_argument("--runtime-receipt", help="Save the private generation/pack binding separately from the public pack.")
     args = parser.parse_args(argv)
     envelope = generator.load_request_envelope_arg(args.request_envelope_json)
     controls = json.loads(Path(args.creative_controls_json).read_text(encoding="utf-8"))
@@ -38,7 +44,12 @@ def main(argv: list[str] | None = None) -> int:
     embodiment = json.loads(Path(args.embodiment_review_json).read_text(encoding="utf-8"))
     # No candidate data is loaded until all authored inputs are validated.
     generator.photo_embodiment.build_policy(core, embodiment)
-    data = generator.load_runtime_data()
+    from photo_runtime_sources import RuntimeSnapshotProvider, SKILL_ROOT
+    provider = RuntimeSnapshotProvider(Path(args.source_root) if args.source_root else SKILL_ROOT,
+        Path(args.runtime_store) if args.runtime_store else None,
+        mode=args.source_mode, remote=args.source_remote or "", ref=args.source_ref)
+    snapshot = provider.acquire()
+    data = snapshot.data
     visual_intent = generator.load_visual_intent_arg(
         args.visual_intent_json, data[generator.VISUAL_OBLIGATIONS_DATA_KEY],
         data[generator.VISUAL_PROFILE_INDEX_DATA_KEY])
@@ -46,6 +57,10 @@ def main(argv: list[str] | None = None) -> int:
         data, core, controls, embodiment,
         seed=args.seed if args.seed is not None else secrets.randbits(63),
         visual_intent=visual_intent)
+    receipt = provider.receipt(snapshot, pack)
+    receipt_path = args.runtime_receipt or (str(args.output_file) + ".runtime-receipt.json" if args.output_file else None)
+    if receipt_path:
+        Path(receipt_path).write_text(json.dumps(receipt, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     output = json.dumps([pack], ensure_ascii=False, indent=2) + "\n"
     if args.output_file:
         Path(args.output_file).write_text(output, encoding="utf-8")

@@ -29,7 +29,7 @@ class SceneBudgetBoundaryHistoryTests(unittest.TestCase):
         original = {name: globals()[name] for name in ('ROOT', 'ILLUSTRATION', 'validator')}
         frozen = tempfile.TemporaryDirectory(prefix='sealed-v26-scene-parent-')
         cls.addClassCleanup(frozen.cleanup)
-        root = Path(frozen.name)
+        root = Path(frozen.name).resolve()
         archived = fixtures.archived_v26_validator(root, source_root=ROOT)
         (root / '.venv').symlink_to((ROOT / '.venv').resolve(), target_is_directory=True)
         cls.addClassCleanup(lambda: globals().update(original))
@@ -155,7 +155,7 @@ class V25ArchivedSceneParentTests(unittest.TestCase):
     def setUpClass(cls):
         temporary = tempfile.TemporaryDirectory(prefix='sealed-v25-scene-parent-')
         cls.addClassCleanup(temporary.cleanup)
-        cls.root = Path(temporary.name)
+        cls.root = Path(temporary.name).resolve()
         with mock.patch('subprocess.Popen', side_effect=AssertionError('Offline materialization invoked a subprocess')):
             cls.validator = fixtures.archived_v25_validator(cls.root, source_root=ROOT)
         (cls.root / '.venv').symlink_to((ROOT / '.venv').resolve(), target_is_directory=True)

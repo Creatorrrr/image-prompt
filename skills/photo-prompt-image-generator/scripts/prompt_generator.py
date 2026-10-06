@@ -32,6 +32,7 @@ try:
     from visual_profile_index_storage import load_visual_profile_index_payload
     import photo_camera_evidence
     import photo_source_manifest
+    import photo_runtime_sources
     import photo_candidate_semantics
     import photo_contextual_appeal
     import photo_embodiment
@@ -1216,7 +1217,7 @@ def validate_character_mechanism_graph(data: JsonDict) -> None:
             raise ValueError(f"character policy {policy_id} requires a definition")
 
 
-def load_json(path: str | Path) -> JsonDict:
+def load_json(path: str | Path, *, inventory: Optional[photo_source_manifest.SourceInventory] = None) -> JsonDict:
     p = Path(path)
     if not p.exists():
         raise FileNotFoundError(f"Tag JSON not found: {p}")
@@ -1239,13 +1240,19 @@ def load_json(path: str | Path) -> JsonDict:
                 raise ValueError("candidate_semantic_policy must be an object")
             if "required_extensions" in candidate_policy:
                 raise ValueError("required_extensions is generated from photo_prompt_source_manifest.json")
-            candidate_policy["required_extensions"] = photo_source_manifest.required_files("candidate")
+            if inventory is None and not p.with_name("photo_prompt_source_manifest.json").is_file():
+                raise ValueError("required candidate extensions are missing: source manifest not found")
+            inventory = inventory or photo_source_manifest.SourceInventory.load(p.parent)
+            inventory.check_root(p)
+            candidate_policy["required_extensions"] = inventory.required("candidate")
         photo_candidate_semantics.validate_semantic_policy(candidate_policy, AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS)
         required_extensions = candidate_policy.get("required_extensions") or []
         missing_extensions = [name for name in required_extensions if not p.with_name(name).is_file()]
         if missing_extensions:
             raise ValueError(f"required candidate extensions are missing: {missing_extensions}")
-        for extension_filename in RESEARCH_EXTENSION_FILENAMES:
+        inventory = inventory or photo_source_manifest.SourceInventory.load(p.parent)
+        inventory.check_root(p)
+        for extension_filename in inventory.files("candidate"):
             extension_path = p.with_name(extension_filename)
             if not extension_path.exists():
                 continue
@@ -1255,7 +1262,7 @@ def load_json(path: str | Path) -> JsonDict:
         validate_character_mechanism_graph(data)
         photo_candidate_semantics.validate_candidate_entries(data, AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS)
         if data.get("candidate_bundles"):
-            registry = load_visual_obligation_registry(default_visual_obligation_registry_path(p))
+            registry = load_visual_obligation_registry(p.parent / VISUAL_OBLIGATION_REGISTRY_FILENAME, inventory=inventory)
             photo_candidate_semantics.validate_bundle_references(data, registry.get("profiles") or [])
     return data
 
@@ -1272,7 +1279,7 @@ def default_visual_obligation_registry_path(tags_path: str | Path) -> Path:
     return Path(__file__).resolve().parents[1] / "assets" / VISUAL_OBLIGATION_REGISTRY_FILENAME
 
 
-def load_visual_obligation_registry(path: str | Path) -> JsonDict:
+def load_visual_obligation_registry(path: str | Path, *, inventory: Optional[photo_source_manifest.SourceInventory] = None) -> JsonDict:
     registry_path = Path(path)
     payload = load_json(registry_path)
     if payload.get("schema_version") != VISUAL_OBLIGATION_REGISTRY_SCHEMA_VERSION:
@@ -1298,7 +1305,9 @@ def load_visual_obligation_registry(path: str | Path) -> JsonDict:
     profiles = payload.get("profiles")
     if not isinstance(profiles, list) or not profiles:
         raise ValueError("visual obligation registry requires a non-empty profiles list")
-    missing_extensions = [name for name in photo_source_manifest.required_files("visual_profile")
+    inventory = inventory or photo_source_manifest.SourceInventory.load(registry_path.parent)
+    inventory.check_root(registry_path)
+    missing_extensions = [name for name in inventory.required("visual_profile")
                           if not registry_path.with_name(name).is_file()]
     if missing_extensions:
         raise ValueError(f"required visual-profile extensions are missing: {missing_extensions}")
@@ -1307,7 +1316,7 @@ def load_visual_obligation_registry(path: str | Path) -> JsonDict:
         for profile in profiles
         if isinstance(profile, dict)
     }
-    for extension_filename in VISUAL_OBLIGATION_EXTENSION_FILENAMES:
+    for extension_filename in inventory.files("visual_profile"):
         extension_path = registry_path.with_name(extension_filename)
         if not extension_path.exists():
             continue
@@ -11401,9 +11410,8 @@ def core_slot_entry_eligible(data: dict, core: dict, contract: dict, picked: dic
     return not any(intent_alias_matches(blob, exclusion)
                    for exclusion in core.get("user_exclusions") or [])
 
-@functools.lru_cache(maxsize=2)
-def _core_slot_index(corpus_json: str) -> dict:
-    """Reuse derived statistics only for byte-identical authored slot data."""
+def build_core_slot_index(corpus_json: str, *, policy: Optional[dict] = None) -> dict:
+    """Pure slot-only derivation; global graph documents never contribute."""
     corpus = json.loads(corpus_json)
     documents = {
         f"slot:{slot}:{entry['id']}": semantic_bm25f_fields_for_entry(entry, slot, kind="slot")
@@ -11411,9 +11419,24 @@ def _core_slot_index(corpus_json: str) -> dict:
     }
     # Only the authored slot corpus contributes lexical retrieval statistics.
     return build_bm25f_index(
-        documents, policy=SEMANTIC_BM25F_POLICY,
+        documents, policy=SEMANTIC_BM25F_POLICY if policy is None else policy,
         lexicon=_bm25f_lexicon_from_documents(documents, ("aliases", "labels", "paraphrases")),
     )
+
+
+@functools.lru_cache(maxsize=2)
+def _policy_core_slot_index(corpus_json: str, policy_json: str, algorithm_key: str) -> dict:
+    return build_core_slot_index(corpus_json, policy=json.loads(policy_json))
+
+
+def _core_slot_index(corpus_json: str) -> dict:
+    """Compatibility entrypoint with policy-aware memory reuse."""
+    return _policy_core_slot_index(corpus_json, json.dumps(SEMANTIC_BM25F_POLICY, sort_keys=True, separators=(",", ":")),
+                                   photo_runtime_sources.algorithm_hash(globals()))
+
+
+_core_slot_index.cache_clear = _policy_core_slot_index.cache_clear
+_core_slot_index.cache_info = _policy_core_slot_index.cache_info
 
 
 def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, dict, dict]:
@@ -11421,7 +11444,9 @@ def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, d
     contract, picked = frozen_core_context(data, core, controls)
     global_query, _ = authorial_core_retrieval_text(core)
     corpus_json = json.dumps(data["slots"], ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-    bm25f = _core_slot_index(corpus_json)
+    # Runtime-bound data carries a private verified derivation. Ordinary dicts
+    # (including explicit synthetic corpora) retain independent calculation.
+    bm25f = data.slot_index(corpus_json) if isinstance(data, photo_runtime_sources.BoundRuntimeData) else _core_slot_index(corpus_json)
     eligible = {
         slot: {entry["id"]: entry for entry in entries
                if core_slot_entry_eligible(data, core, contract, picked, slot, entry)}
@@ -11573,13 +11598,17 @@ def generate_candidate_pack(data: JsonDict, core: JsonDict, controls: JsonDict,
     return build_candidate_pack(result, data)
 
 
-def load_runtime_data(tags_path: Optional[str | Path] = None) -> JsonDict:
+def load_runtime_data(tags_path: Optional[str | Path] = None, *,
+                      inventory: Optional[photo_source_manifest.SourceInventory] = None) -> JsonDict:
     """Load and validate the authored corpus and its generated indexes."""
     path = Path(tags_path) if tags_path is not None else Path(__file__).resolve().parents[1] / "assets/photo_prompt_tags.json"
     assets = path.parent
-    data = load_json(path)
+    inventory = inventory or photo_source_manifest.SourceInventory.load(assets)
+    inventory.check_root(path)
+    inventory.validate()
+    data = load_json(path, inventory=inventory)
     data[QUALITY_LAYERS_DATA_KEY] = load_quality_layers(assets / QUALITY_LAYERS_FILENAME)
-    registry = load_visual_obligation_registry(assets / VISUAL_OBLIGATION_REGISTRY_FILENAME)
+    registry = load_visual_obligation_registry(assets / VISUAL_OBLIGATION_REGISTRY_FILENAME, inventory=inventory)
     data[VISUAL_OBLIGATIONS_DATA_KEY] = registry
     data[VISUAL_PROFILE_INDEX_DATA_KEY] = load_visual_profile_index(assets / VISUAL_PROFILE_INDEX_FILENAME, registry)
     data[SEMANTIC_INDEX_DATA_KEY] = load_semantic_index_payload(assets / "photo_prompt_semantic_index.json")
