@@ -545,6 +545,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
             validate_photo_prompt_dictionary.validate_visual_obligation_registry(
                 registry_path,
                 errors,
+                inventory=prompt_generator.photo_source_manifest.SourceInventory.for_test(registry_path.parent),
             )
         self.assertTrue(
             any("already owned by inner_thigh_negative_space" in error for error in errors),
@@ -569,6 +570,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
             validate_photo_prompt_dictionary.validate_visual_obligation_registry(
                 registry_path,
                 errors,
+                inventory=prompt_generator.photo_source_manifest.SourceInventory.for_test(registry_path.parent),
             )
         self.assertTrue(
             any(
@@ -598,6 +600,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
             validate_photo_prompt_dictionary.validate_visual_obligation_registry(
                 registry_path,
                 errors,
+                inventory=prompt_generator.photo_source_manifest.SourceInventory.for_test(registry_path.parent),
             )
         self.assertTrue(
             any(

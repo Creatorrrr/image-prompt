@@ -36,7 +36,7 @@ class V24HistoricalFixtureTests(unittest.TestCase):
     def setUpClass(cls):
         temporary = tempfile.TemporaryDirectory(prefix='verified-v24-fixture-')
         cls.addClassCleanup(temporary.cleanup)
-        cls.root = Path(temporary.name)
+        cls.root = Path(temporary.name).resolve()
         with offline():
             cls.validator = fixtures.archived_v24_validator(cls.root, source_root=ROOT)
             cls.manifest = fixtures._v24_parent_manifest(ROOT)
@@ -44,7 +44,7 @@ class V24HistoricalFixtureTests(unittest.TestCase):
     def setUp(self):
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)
-        self.temp = Path(temporary.name)
+        self.temp = Path(temporary.name).resolve()
 
     def manifest_only_source(self):
         source = self.temp / 'input'

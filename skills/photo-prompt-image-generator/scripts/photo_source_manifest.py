@@ -8,12 +8,73 @@ from __future__ import annotations
 import json
 import re
 from collections.abc import Iterator, Sequence
+from dataclasses import dataclass
 from pathlib import Path
 
 
 CONTRACT_VERSION = "photo-source-manifest/v1"
 DEFAULT_MANIFEST = Path(__file__).resolve().parents[1] / "assets/photo_prompt_source_manifest.json"
 KINDS = {"candidate", "visual_profile"}
+
+
+@dataclass(frozen=True)
+class SourceInventory:
+    """One registration snapshot, explicitly bound to one assets directory."""
+    assets: Path
+    rows: tuple[tuple[str, str, bool, int], ...]
+    synthetic: bool = False
+    test_candidate_files: tuple[str, ...] | None = None
+
+    @classmethod
+    def load(cls, assets: Path) -> SourceInventory:
+        assets = Path(assets).resolve()
+        payload = load_source_manifest(assets / DEFAULT_MANIFEST.name)
+        return cls(assets, tuple((row["file"], row["kind"], row["required"], row["load_order"])
+                                 for row in payload["sources"]))
+
+    @classmethod
+    def for_test(cls, assets: Path, *, candidate_files=None) -> SourceInventory:
+        """Explicit synthetic/historical scope, never a publication inventory.
+
+        A historical overlay test can select candidates from its own manifest
+        while preserving that manifest's required-source policy projection.
+        """
+        assets = Path(assets).resolve()
+        if candidate_files is None:
+            return cls(assets, (), synthetic=True)
+        inventory = cls.load(assets)
+        selected = tuple(candidate_files)
+        registered = inventory.files("candidate")
+        if (len(set(selected)) != len(selected) or set(selected) - set(registered)
+                or selected != tuple(name for name in registered if name in selected)):
+            raise ValueError("test candidate selection must preserve its own manifest order")
+        return cls(assets, inventory.rows, synthetic=True, test_candidate_files=selected)
+
+    def files(self, kind: str) -> tuple[str, ...]:
+        if kind not in KINDS:
+            raise ValueError(f"unknown source kind: {kind}")
+        if kind == "candidate" and self.synthetic and self.test_candidate_files is not None:
+            return self.test_candidate_files
+        return tuple(row[0] for row in sorted(self.rows, key=lambda row: row[3]) if row[1] == kind)
+
+    def required(self, kind: str) -> list[str]:
+        if kind not in KINDS:
+            raise ValueError(f"unknown source kind: {kind}")
+        return [row[0] for row in self.rows if row[1] == kind and row[2]]
+
+    def check_root(self, path: Path) -> None:
+        if Path(path).parent.resolve() != self.assets:
+            raise ValueError("source inventory belongs to a different assets directory")
+
+    def validate(self) -> None:
+        registered = {row[0] for row in self.rows}
+        missing = [row[0] for row in self.rows if row[2] and not (self.assets / row[0]).is_file()]
+        discovered = {p.name for pattern in ("photo_prompt_*_extension.json", "photo_prompt_visual_obligations_*.json")
+                      for p in self.assets.glob(pattern) if p.is_file()}
+        if missing:
+            raise ValueError(f"required photo sources are missing: {missing}")
+        if discovered - registered:
+            raise ValueError(f"unregistered photo sources: {sorted(discovered - registered)}")
 
 
 def load_source_manifest(path: Path = DEFAULT_MANIFEST) -> dict:
@@ -85,10 +146,10 @@ class SourceFiles(Sequence[str]):
         return extension_files(self.kind)[index]
 
 
-def validate_source_files(assets: Path, errors: list[str], path: Path = DEFAULT_MANIFEST) -> None:
+def validate_source_files(assets: Path, errors: list[str], path: Path | None = None) -> None:
     """Report missing registrations and required files without adopting new data."""
     try:
-        manifest = load_source_manifest(path)
+        manifest = load_source_manifest(path or Path(assets) / DEFAULT_MANIFEST.name)
     except (OSError, ValueError) as exc:
         errors.append(f"source manifest: {exc}")
         return

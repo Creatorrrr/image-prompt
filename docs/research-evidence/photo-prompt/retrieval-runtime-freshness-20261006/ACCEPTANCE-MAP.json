@@ -1,0 +1,143 @@
+{
+  "schema": "photo-runtime-freshness-acceptance-map/v1",
+  "source_design_status": "The earlier design document is unchanged. This file maps implementation tests to it.",
+  "scenarios": [
+    {
+      "id": "unchanged_source",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_unchanged_source_exact_index_retrieval_and_full_pack"
+    },
+    {
+      "id": "same_id_content_change",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_same_id_source_change_and_algorithm_change_reject_old_cache"
+    },
+    {
+      "id": "preserved_mtime_edit",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_preserved_mtime_and_size_edit_is_detected"
+    },
+    {
+      "id": "optional_file_presence_change",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_optional_presence_registration_and_missing_required_are_checked"
+    },
+    {
+      "id": "unregistered_extension",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_optional_presence_registration_and_missing_required_are_checked"
+    },
+    {
+      "id": "alternate_root_inventory",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_alternate_source_roots_use_one_explicit_inventory"
+    },
+    {
+      "id": "synthetic_corpus",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_synthetic_corpus_bypasses_live_artifact"
+    },
+    {
+      "id": "policy_and_environment_change",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_imported_old_code_and_changed_policy_require_new_worker"
+    },
+    {
+      "id": "old_lru_policy_collision",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_old_memory_key_cannot_hide_policy_change"
+    },
+    {
+      "id": "visual_only_change",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_visual_only_generation_reuses_slot_payload"
+    },
+    {
+      "id": "stale_required_indexes",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_changed_source_with_stale_required_index_never_uses_old_snapshot"
+    },
+    {
+      "id": "optional_slot_cache_corruption",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_optional_cache_corruption_uses_same_validated_generation"
+    },
+    {
+      "id": "rehashed_wrong_statistics",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_wrong_statistics_with_rewritten_self_metadata_cannot_replace_expectations"
+    },
+    {
+      "id": "source_change_during_capture",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_partial_publication_and_source_race_do_not_switch_current"
+    },
+    {
+      "id": "partial_publication_failure",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_partial_publication_and_source_race_do_not_switch_current"
+    },
+    {
+      "id": "late_old_publisher",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_late_old_publisher_two_processes_cannot_overwrite_new_current"
+    },
+    {
+      "id": "generation_changes_during_request",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_data_reload_and_inflight_pack_audit_stay_pinned"
+    },
+    {
+      "id": "new_generation_load_failure",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_new_generation_member_failure_does_not_assign_old_handle"
+    },
+    {
+      "id": "imported_old_code",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_imported_old_code_and_changed_policy_require_new_worker"
+    },
+    {
+      "id": "snapshot_object_mutation",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_snapshot_mutation_fails_and_explicit_copies_remain_isolated"
+    },
+    {
+      "id": "old_pack_audit",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_data_reload_and_inflight_pack_audit_stay_pinned"
+    },
+    {
+      "id": "receipt_pack_mismatch",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_receipt_pack_mismatch_and_missing_receipt_fail"
+    },
+    {
+      "id": "remote_tip_changes",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_actual_fetch_commit_dirty_primary_and_network_failure"
+    },
+    {
+      "id": "remote_network_failure",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_actual_fetch_commit_dirty_primary_and_network_failure"
+    },
+    {
+      "id": "dirty_primary_checkout",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_actual_fetch_commit_dirty_primary_and_network_failure"
+    },
+    {
+      "id": "precore_isolation",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_invalid_authored_inputs_never_load_sources_or_fetch"
+    },
+    {
+      "id": "cache_recovery_api_boundary",
+      "test_file": "tests/test_photo_runtime_freshness.py",
+      "test": "test_missing_truncated_and_rehashed_wrong_statistics_fall_back_cpu_only"
+    }
+  ],
+  "additional_binding_guard": "test_current_cannot_relabel_an_old_generation_as_the_new_source",
+  "remote_proof_boundary": "A real temporary Git remote verifies fresh fetch/commit observation, isolated checkout, preserved dirty primary and fresh-fetch failure. Full corpus publication/loading is tested separately. No claim of a production-network remote request or automatic worker replacement."
+}

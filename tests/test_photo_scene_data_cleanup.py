@@ -126,8 +126,9 @@ class ScenePreservationTests(DataCase):
                                         'photo_prompt_seduction_expression_extension.json',
                                         'photo_prompt_cute_visual_forms_extension.json',
                                         'photo_prompt_character_appearance_extension.json'})
-        with patch.object(generator,'RESEARCH_EXTENSION_FILENAMES',filenames):
-            source=generator.load_json(ROOT/'skills/photo-prompt-image-generator/assets/photo_prompt_tags.json')
+        assets=ROOT/'skills/photo-prompt-image-generator/assets'
+        inventory=generator.photo_source_manifest.SourceInventory.for_test(assets,candidate_files=filenames)
+        source=generator.load_json(assets/'photo_prompt_tags.json',inventory=inventory)
         for record in evidence['prior_23_rows']:
             row=next(item for item in source['slots'][record['slot']] if item['id']==record['id'])
             actual=hashlib.sha256(json.dumps(row,sort_keys=True,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()

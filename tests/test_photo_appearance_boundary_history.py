@@ -18,6 +18,10 @@ class AppearanceBoundaryHistoryTests(unittest.TestCase):
         cls.baseline=json.loads((ILLUSTRATION/'assets/photo_regression_baseline_v27.json').read_bytes())
         cls.raw=(ILLUSTRATION/'assets/photo_regression_baseline_v27_pack.json').read_bytes()
         cls.pack=json.loads(cls.raw)[0]
+        cls.historical_directory=tempfile.TemporaryDirectory(prefix='original-v27-validator-')
+        cls.addClassCleanup(cls.historical_directory.cleanup)
+        cls.historical_root=Path(cls.historical_directory.name).resolve()/'tree'
+        cls.historical_validator=fixtures.archived_v27_validator(cls.historical_root)
 
     def setUp(self):
         temporary=tempfile.TemporaryDirectory(prefix='v27-appearance-boundary-');self.addCleanup(temporary.cleanup)
@@ -28,11 +32,15 @@ class AppearanceBoundaryHistoryTests(unittest.TestCase):
         paths.update(str(p.relative_to(ROOT)) for p in (ILLUSTRATION/'assets').glob('photo_regression_baseline_v*.json'))
         paths.add(str((ILLUSTRATION/'assets/universal_scene_baseline_v2.json').relative_to(ROOT)))
         for name in paths:
-            p=self.repo/name;p.parent.mkdir(parents=True,exist_ok=True);p.symlink_to(ROOT/name)
+            original=self.historical_root/name
+            p=self.repo/name;p.parent.mkdir(parents=True,exist_ok=True);p.symlink_to(original if original.is_file() else ROOT/name)
 
     def validate(self,pack=None,raw=None):
-        validator._validate_v27_appearance_data_successor(self.assets,self.repo,self.baseline,
-            self.pack if pack is None else pack,self.raw if raw is None else raw)
+        try:
+            self.historical_validator._validate_v27_appearance_data_successor(self.assets,self.repo,self.baseline,
+                self.pack if pack is None else pack,self.raw if raw is None else raw)
+        except self.historical_validator.ValidationFailure as exc:
+            raise validator.ValidationFailure(str(exc)) from exc
 
     @contextmanager
     def changed(self,name,raw):
@@ -41,8 +49,8 @@ class AppearanceBoundaryHistoryTests(unittest.TestCase):
         try:yield
         finally:p.unlink(missing_ok=True);p.symlink_to(original)
 
-    def test_current_real_command_reproduces_v27_and_v26_scene_remains_exact(self):
-        result=validator.validate_photo_regression_baseline(ILLUSTRATION/'assets')
+    def test_original_real_command_reproduces_v27_and_v26_scene_remains_exact(self):
+        result=validator.validate_photo_regression_baseline(ILLUSTRATION/'assets',baseline_version=27)
         self.assertEqual(result['schema'],'photo_regression_baseline/v27')
         self.assertEqual(result['sha256'],self.proof['current_pack_sha256'])
         previous=json.loads((ILLUSTRATION/'assets/photo_regression_baseline_v26_pack.json').read_bytes())[0]
@@ -51,16 +59,16 @@ class AppearanceBoundaryHistoryTests(unittest.TestCase):
         self.assertEqual(64,validator._public_photo_candidate_count(self.pack))
         self.assertEqual(5,len(self.proof['reviewed_pack_delta']))
 
-    def test_default_and_explicit_current_boundary_are_registered(self):
+    def test_explicit_original_boundary_is_registered(self):
         def frozen(command,**kwargs):
             Path(command[command.index('--output-file')+1]).write_bytes(self.raw)
             return subprocess.CompletedProcess(command,0,'','')
         with mock.patch.object(validator.subprocess,'run',side_effect=frozen):
-            for version in (None,27):
+            for version in (27,):
                 result=validator.validate_photo_regression_baseline(ILLUSTRATION/'assets',baseline_version=version)
                 self.assertEqual(result['schema'],'photo_regression_baseline/v27')
         with self.assertRaisesRegex(validator.ValidationFailure,'unsupported photo baseline version'):
-            validator.validate_photo_regression_baseline(self.assets,baseline_version=28)
+            validator.validate_photo_regression_baseline(self.assets,baseline_version=29)
 
     def test_rehashed_candidate_order_meaning_controls_negative_and_budget_are_rejected(self):
         for key in ('candidate','order','core','controls','negative','budget'):

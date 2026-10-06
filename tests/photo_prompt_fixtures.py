@@ -837,7 +837,9 @@ def _v24_verified_payload(source_root: Path, row: dict) -> bytes:
     blob = hashlib.sha1(f'blob {len(raw)}\0'.encode('ascii') + raw).hexdigest()
     if (len(raw) != row['bytes'] or hashlib.sha256(raw).hexdigest() != row['sha256']
             or blob != row['git_blob']):
-        preserved = _v27_preserved_retained_payload(source_root, row, raw)
+        preserved = _v28_preserved_retained_payload(source_root, row, raw)
+        if preserved is None:
+            preserved = _v27_preserved_retained_payload(source_root, row, raw)
         if preserved is None:
             raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
         return preserved
@@ -916,7 +918,7 @@ def archived_validator_with_v24_source(directory: Path, *, version: int, source_
     if version not in (18, 19, 20, 21, 22):
         raise AssertionError('Unsupported validator version for sealed V24 source')
     with tempfile.TemporaryDirectory(prefix='sealed-v24-dependencies-') as temporary:
-        frozen = Path(temporary)
+        frozen = Path(temporary).resolve()
         materialize_v24_parent_source(frozen, source_root=source_root)
         if version in (18, 19, 20):
             return archived_validator_with_v21_source(directory, version=version, source_root=frozen)
@@ -1537,4 +1539,104 @@ def archived_v26_validator(directory: Path, *, source_root: Path = ROOT):
                 sys.modules.pop(name, None)
             else:
                 sys.modules[name] = original
+    return modules['validate_illustration_assets']
+
+# Additive runtime qualification. Original V1-V27 evidence remains byte-exact.
+V28_RUNTIME_PROOF = Path('docs/research-evidence/photo-prompt/retrieval-runtime-freshness-20261006/V28-RUNTIME-PROOF.json')
+V28_RUNTIME_PROOF_SHA256 = 'dd0112613d89016afd9ae8c7d821f4023448263af98ee934f731d90fe99d0429'
+V27_PARENT_SOURCE = V28_RUNTIME_PROOF.parent / 'V27-PARENT-SOURCE.json'
+V27_PARENT_SOURCE_SHA256 = 'b85d96721b73760c5bc07e42cf4a40a61ed3208607ca38cbce58b4dce4bf2af7'
+
+
+def _v28_transition(source_root: Path = ROOT) -> tuple[dict, dict]:
+    raw = _v24_regular_path(source_root, V28_RUNTIME_PROOF.as_posix()).read_bytes()
+    parent_raw = _v24_regular_path(source_root, V27_PARENT_SOURCE.as_posix()).read_bytes()
+    if (hashlib.sha256(raw).hexdigest() != V28_RUNTIME_PROOF_SHA256
+            or hashlib.sha256(parent_raw).hexdigest() != V27_PARENT_SOURCE_SHA256):
+        raise AssertionError('Frozen V28 runtime proof or V27 source manifest drift')
+    proof, parent = json.loads(raw), json.loads(parent_raw)
+    rows = parent.get('members') or []
+    if (proof.get('schema') != 'photo-runtime-freshness-transition/v28'
+            or parent.get('schema') != 'photo-v27-parent-source-manifest/v1'
+            or parent.get('source_pin') != 'cb496c1db984f9fe5d632fa764aae4d3f6aedf63'
+            or parent.get('source_tree') != proof['previous_qualified_tree']
+            or parent.get('member_count') != len(rows) or len(rows) != 1198
+            or len({row['path'] for row in rows}) != len(rows)
+            or sum(row['bytes'] for row in rows) != parent['total_member_bytes']):
+        raise AssertionError('Frozen V27 source inventory drift')
+    for row in rows:
+        _v17_safe_path(row['path']); _v17_safe_path(row['source_path'])
+    return proof, parent
+
+
+def _v28_preserved_retained_payload(source_root: Path, row: dict, current: bytes) -> bytes | None:
+    if row['source_path'] != row['path'] or not (source_root / V28_RUNTIME_PROOF).is_file():
+        return None
+    proof, parent = _v28_transition(source_root)
+    if proof['source_files_after'].get(row['path']) != hashlib.sha256(current).hexdigest():
+        return None
+    before = next((item for item in parent['members'] if item['path'] == row['path']), None)
+    if (before is None or before['source_path'] == row['path']
+            or any(before[key] != row[key] for key in ('sha256', 'git_blob', 'bytes', 'mode'))):
+        return None
+    return _v24_verified_payload(source_root, before)
+
+
+def v27_source_path(name: str, *, source_root: Path = ROOT) -> Path:
+    """Select authenticated V27 bytes for a historical test, never arbitrary drift."""
+    current = source_root / _v17_safe_path(name)
+    proof, parent = _v28_transition(source_root)
+    before = next((row for row in parent['members'] if row['path'] == name), None)
+    if before is None or before['source_path'] == name:
+        return current
+    if name in proof['source_files_after'] and hashlib.sha256(current.read_bytes()).hexdigest() != proof['source_files_after'][name]:
+        raise AssertionError('Unqualified live source drift outside V28 runtime transition')
+    _v24_verified_payload(source_root, before)
+    return source_root / before['source_path']
+
+
+def materialize_v27_parent_source(directory: Path, *, source_root: Path = ROOT) -> dict:
+    _v24_empty_destination(directory)
+    _, manifest = _v28_transition(source_root)
+    for row in manifest['members']:
+        _v24_verified_payload(source_root, row)
+    directory.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='.sealed-v27-', dir=directory.parent) as temporary:
+        staged = Path(temporary) / 'tree'; staged.mkdir()
+        for row in manifest['members']:
+            target = staged / _v17_safe_path(row['path'])
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(_v24_verified_payload(source_root, row))
+            target.chmod(int(row['mode'][-3:], 8))
+        _v24_empty_destination(directory); staged.replace(directory)
+    return manifest
+
+
+def archived_v27_validator(directory: Path, *, source_root: Path = ROOT):
+    manifest = materialize_v27_parent_source(directory, source_root=source_root)
+    records = {row['path']: row for row in manifest['members']}
+    scripts = directory / Path(V17_PARENT_VALIDATOR).parent
+    prefix = '_archived_photo_v27_' + hashlib.sha256(str(directory).encode()).hexdigest()[:16]
+    modules, payloads = {}, {}
+    for name in ('illustration_runtime', 'illustration_audit', 'universal_scene_runtime', 'validate_illustration_assets'):
+        path = scripts / (name + '.py')
+        row = records[path.relative_to(directory).as_posix()]
+        payloads[name] = _v24_verified_payload(directory, dict(row, source_path=row['path']))
+        spec = importlib.util.spec_from_file_location(prefix + '_' + name, path)
+        modules[name] = importlib.util.module_from_spec(spec)
+    def historical_import(name, globals=None, locals=None, fromlist=(), level=0):
+        if level == 0 and name in modules:
+            return modules[name]
+        return builtins.__import__(name, globals, locals, fromlist, level)
+    previous = {module.__name__: sys.modules.get(module.__name__) for module in modules.values()}
+    try:
+        for module in modules.values():
+            module.__dict__['__builtins__'] = dict(vars(builtins), __import__=historical_import)
+            sys.modules[module.__name__] = module
+        for name, module in modules.items():
+            exec(compile(payloads[name], module.__file__, 'exec'), module.__dict__)
+    finally:
+        for name, original in previous.items():
+            if original is None: sys.modules.pop(name, None)
+            else: sys.modules[name] = original
     return modules['validate_illustration_assets']

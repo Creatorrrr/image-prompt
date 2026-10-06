@@ -30,8 +30,8 @@ class CuteVisualFormsTests(unittest.TestCase):
         return set(g.candidate_pack_auto_visual_obligation_matches(self.registry,[dict(source='concept_lock',text=text,polarity='required',priority='critical',mandatory=True)]))
 
     def test_equivalent_overlay_preserves_all_existing_meaning_effects_and_guards(self):
-        with mock.patch.object(g,'RESEARCH_EXTENSION_FILENAMES',tuple(n for n in g.RESEARCH_EXTENSION_FILENAMES if n!=EXT)):
-            before=g.load_json(ASSETS/'photo_prompt_tags.json')
+        inventory=g.photo_source_manifest.SourceInventory.for_test(ASSETS,candidate_files=tuple(n for n in g.RESEARCH_EXTENSION_FILENAMES if n!=EXT))
+        before=g.load_json(ASSETS/'photo_prompt_tags.json',inventory=inventory)
         for slot,updates in self.extension['existing_slot_context_extensions'].items():
             old={e['id']:e for e in before['slots'][slot]};new={e['id']:e for e in self.data['slots'][slot]}
             for eid,addition in updates.items():

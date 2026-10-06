@@ -94,8 +94,8 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
                                           'photo_prompt_cute_visual_forms_extension.json',
                                           'photo_prompt_ornament_structure_extension.json',
                                           'photo_prompt_character_appearance_extension.json'})
-        with patch.object(common.g, 'RESEARCH_EXTENSION_FILENAMES', filenames):
-            historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
+        inventory = common.g.photo_source_manifest.SourceInventory.for_test(ASSETS, candidate_files=filenames)
+        historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json', inventory=inventory)
         historical_current = fixtures.seduction_historical_source_scope(historical_current)
         # Undo only the independently sealed uniform overlay before the
         # older Vocaloid/body projections. The historical oracle stays exact.

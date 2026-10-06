@@ -35,7 +35,7 @@ class V23StructureParentFixtureTests(unittest.TestCase):
     def setUpClass(cls):
         frozen = tempfile.TemporaryDirectory(prefix="sealed-v23-parent-")
         cls.addClassCleanup(frozen.cleanup)
-        cls.root = Path(frozen.name)
+        cls.root = Path(frozen.name).resolve()
         with mock.patch("subprocess.Popen", side_effect=AssertionError("Offline fixture invoked a subprocess")):
             cls.validator = fixtures.archived_v23_validator(cls.root, source_root=ROOT)
         cls.manifest = fixtures._v23_parent_manifest(ROOT)
@@ -99,7 +99,7 @@ class StructureBoundaryHistoryTests(unittest.TestCase):
         original = {name: globals()[name] for name in ('ROOT', 'ILLUSTRATION', 'validator')}
         frozen = tempfile.TemporaryDirectory(prefix="sealed-v24-structure-")
         cls.addClassCleanup(frozen.cleanup)
-        root = Path(frozen.name)
+        root = Path(frozen.name).resolve()
         archived = fixtures.archived_v24_validator(root, source_root=ROOT)
         cls.addClassCleanup(lambda: globals().update(original))
         globals().update(ROOT=root, ILLUSTRATION=root / "skills/subculture-illustration-image-generator",

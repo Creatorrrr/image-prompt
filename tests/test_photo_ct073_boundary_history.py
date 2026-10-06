@@ -35,7 +35,7 @@ class CT073BoundaryHistoryTests(unittest.TestCase):
         original = {name: globals()[name] for name in ('ROOT', 'ILLUSTRATION', 'v')}
         frozen = tempfile.TemporaryDirectory(prefix='sealed-v25-ct073-')
         cls.addClassCleanup(frozen.cleanup)
-        root = Path(frozen.name)
+        root = Path(frozen.name).resolve()
         archived = fixtures.archived_v25_validator(root, source_root=ROOT)
         cls.addClassCleanup(lambda: globals().update(original))
         globals().update(ROOT=root, ILLUSTRATION=root / 'skills/subculture-illustration-image-generator',
