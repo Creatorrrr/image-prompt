@@ -10,7 +10,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from visual_profile_contracts import compile_visual_profile, validate_hard_activation
+from visual_profile_contracts import compile_visual_profile, validate_hard_activation, validate_visual_profile_source
+import photo_source_manifest
 from photo_contracts import AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
 import photo_creative_controls as creative_controls
 
@@ -2046,6 +2047,18 @@ def main() -> int:
     errors: list[str] = []
 
     tags_path = Path(args.tags)
+    photo_source_manifest.validate_source_files(tags_path.parent, errors)
+    profile_path = Path(args.visual_obligations)
+    for source_path in [profile_path, *[profile_path.with_name(name)
+                                      for name in photo_source_manifest.extension_files("visual_profile")]]:
+        if not source_path.is_file():
+            continue
+        try:
+            raw = json.loads(source_path.read_text(encoding="utf-8"))
+            for profile in raw.get("profiles") or []:
+                validate_visual_profile_source(profile)
+        except (OSError, ValueError, TypeError) as exc:
+            errors.append(f"{source_path.name}: invalid authored profile source: {exc}")
     runtime_asset_paths = [tags_path] + [
         tags_path.with_name(filename) for filename in TAXONOMY_EXTENSION_FILENAMES
     ]

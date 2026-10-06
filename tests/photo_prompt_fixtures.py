@@ -6,6 +6,7 @@ import hashlib
 import importlib.util
 import json
 import shutil
+import subprocess
 import sys
 import tempfile
 import zipfile
@@ -53,6 +54,11 @@ V22_PARENT_MANIFEST = Path(
 )
 V22_PARENT_MANIFEST_SHA256 = 'dd9e41534d3587a87c762725887f330e72b751cc0b9a34192a8dd5469cab9bb7'
 V22_PARENT_COMMIT = '900bf2efdd17fbc6a6ef3aa340f3526b1e01f223'
+V23_PARENT_MANIFEST = Path(
+    'docs/research-evidence/photo-prompt/structure-maintenance-20261006/main-integration/V23-PARENT-SOURCE.json'
+)
+V23_PARENT_MANIFEST_SHA256 = '971f33aae01e0c79559f99a894800dba488917694bbaaff87148593ea516d76a'
+V23_PARENT_COMMIT = 'baa876d8299930b8897a282f65779d4412d056b5'
 
 
 def _v17_safe_path(value: str) -> Path:
@@ -640,6 +646,130 @@ def archived_v22_validator(directory: Path, *, source_root: Path = ROOT):
     row = next(row for row in manifest['members'] if row['path'] == V17_PARENT_VALIDATOR)
     raw = _v17_verified_payload(source_root, row)
     return _isolated_parent_validator(directory, raw, directory, version=22)
+
+
+def _v23_parent_manifest(source_root: Path = ROOT) -> dict:
+    """Authenticate the complete V23 input tree before the structural migration."""
+    raw = _v17_regular_path(source_root, V23_PARENT_MANIFEST.as_posix()).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != V23_PARENT_MANIFEST_SHA256:
+        raise AssertionError('Frozen V23 parent source manifest drift')
+    manifest = json.loads(raw)
+    counts = {'new_immutable_snapshot_same_git_blob': 16,
+              'reuse_immutable_history': 430, 'reuse_sealed_v22_backing': 128}
+    if (manifest['schema'] != 'photo-v23-parent-source-manifest/v1'
+            or manifest['source_pin'] != V23_PARENT_COMMIT
+            or manifest['source_tree'] != 'a727c9dd6f4894b10f17cd8c94245c2d39418f7f'
+            or manifest['member_count'] != 574 or len(manifest['members']) != 574
+            or manifest['counts'] != counts
+            or manifest['previous_manifest_path'] != V22_PARENT_MANIFEST.as_posix()
+            or manifest['previous_manifest_sha256'] != V22_PARENT_MANIFEST_SHA256):
+        raise AssertionError('Frozen V23 parent source manifest shape drift')
+    previous = _v22_parent_manifest(source_root)
+    old = {row['path']: row for row in previous['members'] + previous['dependencies']}
+    paths = set()
+    for row in manifest['members']:
+        path = _v17_safe_path(row['path']).as_posix()
+        _v17_safe_path(row['source_path'])
+        if (path in paths or row['git_commit'] != V23_PARENT_COMMIT or row['git_path'] != path
+                or row['mode'] not in ('100644', '100755') or type(row['bytes']) is not int
+                or row['bytes'] < 0 or len(row['sha256']) != 64 or len(row['git_blob']) != 40
+                or any(c not in '0123456789abcdef' for c in row['sha256'] + row['git_blob'])):
+            raise AssertionError('Frozen V23 historical source provenance drift')
+        paths.add(path)
+        if row['kind'] == 'reuse_sealed_v22_backing':
+            allowed = all(row[key] == old.get(path, {}).get(key)
+                          for key in ('source_path', 'git_blob', 'mode', 'bytes', 'sha256'))
+        elif row['kind'] == 'reuse_immutable_history':
+            allowed = row['source_path'] == path
+        elif row['kind'] == 'new_immutable_snapshot_same_git_blob':
+            allowed = row['source_path'] == (
+                V23_PARENT_MANIFEST.parent / 'v23-parent-source-files' / path).as_posix()
+        else:
+            allowed = False
+        if not allowed:
+            raise AssertionError('Unregistered V23 historical backing path')
+    if ({kind: sum(row['kind'] == kind for row in manifest['members']) for kind in counts} != counts
+            or sum(row['bytes'] for row in manifest['members']) != manifest['total_member_bytes']):
+        raise AssertionError('Frozen V23 historical source inventory drift')
+    return manifest
+
+
+def materialize_v23_parent_source(directory: Path, *, source_root: Path = ROOT) -> dict:
+    """Restore original V23 source and dependencies without Git or live fallback."""
+    manifest = _v23_parent_manifest(source_root)
+    if directory.is_symlink() or (directory.exists() and any(directory.iterdir())):
+        raise AssertionError('V23 historical destination must be an empty directory')
+    for row in manifest['members']:
+        _v17_verified_payload(source_root, row)
+    directory.mkdir(parents=True, exist_ok=True)
+    for row in manifest['members']:
+        target = directory / _v17_safe_path(row['path'])
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(_v17_verified_payload(source_root, row))
+        target.chmod(int(row['mode'][-3:], 8))
+    return manifest
+
+
+def archived_v23_validator(directory: Path, *, source_root: Path = ROOT):
+    """Load V23 with its exact sealed support modules, isolated from live imports."""
+    materialize_v23_parent_source(directory, source_root=source_root)
+    scripts = directory / Path(V17_PARENT_VALIDATOR).parent
+    prefix = '_archived_photo_v23_' + hashlib.sha256(str(directory).encode()).hexdigest()[:16]
+    modules, specs = {}, {}
+    for name in ('illustration_runtime', 'illustration_audit', 'universal_scene_runtime',
+                 'validate_illustration_assets'):
+        spec = importlib.util.spec_from_file_location(prefix + '_' + name, scripts / (name + '.py'))
+        modules[name] = importlib.util.module_from_spec(spec)
+        specs[name] = spec
+
+    def historical_import(name, globals=None, locals=None, fromlist=(), level=0):
+        if level == 0 and name in modules:
+            return modules[name]
+        return builtins.__import__(name, globals, locals, fromlist, level)
+
+    previous = {module.__name__: sys.modules.get(module.__name__) for module in modules.values()}
+    try:
+        for module in modules.values():
+            module.__dict__['__builtins__'] = dict(vars(builtins), __import__=historical_import)
+            sys.modules[module.__name__] = module
+        for name, module in modules.items():
+            specs[name].loader.exec_module(module)
+    finally:
+        for name, original in previous.items():
+            if original is None:
+                sys.modules.pop(name, None)
+            else:
+                sys.modules[name] = original
+    return modules['validate_illustration_assets']
+
+
+def load_v23_candidate_fixture(path: Path, extension_files: tuple[str, ...]) -> dict:
+    """Read a legacy candidate snapshot with sealed V23 code in a fresh process."""
+    manifest = _v23_parent_manifest()
+    prefix = 'skills/photo-prompt-image-generator/'
+    with tempfile.TemporaryDirectory(prefix='v23-candidate-runtime-') as saved:
+        directory = Path(saved)
+        for row in manifest['members']:
+            if row['path'].startswith((prefix + 'scripts/', prefix + 'precore/')):
+                target = directory / _v17_safe_path(row['path'])
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(_v17_verified_payload(ROOT, row))
+        names = directory / 'extensions.json'
+        names.write_text(json.dumps(extension_files))
+        output = directory / 'loaded.json'
+        script = (
+            'import json,sys; from pathlib import Path; '
+            'sys.path.insert(0,sys.argv[1]); import prompt_generator as generator; '
+            'generator.RESEARCH_EXTENSION_FILENAMES=tuple(json.loads(Path(sys.argv[3]).read_text())); '
+            'Path(sys.argv[4]).write_text(json.dumps(generator.load_json(sys.argv[2]),ensure_ascii=False))'
+        )
+        result = subprocess.run(
+            [sys.executable, '-c', script, str(directory / prefix / 'scripts'),
+             str(path), str(names), str(output)], capture_output=True, text=True, timeout=60,
+        )
+        if result.returncode:
+            raise AssertionError('Historical V23 candidate load failed: ' + result.stderr)
+        return json.loads(output.read_text())
 
 
 def archived_v16_validator(directory: Path):

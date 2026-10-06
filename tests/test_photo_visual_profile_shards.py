@@ -380,6 +380,8 @@ class PhotoVisualProfileShardIntegrationTests(unittest.TestCase):
         shutil.copytree(SKILL_DIR / "precore", installed / "precore", ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
         assets = installed / "assets"
         assets.mkdir()
+        shutil.copyfile(SKILL_DIR / "assets/photo_prompt_source_manifest.json",
+                        assets / "photo_prompt_source_manifest.json")
         index_path = assets / "visual_index.json"
         registry_path = assets / "registry.json"
         registry_path.write_bytes(encoded(self.registry))

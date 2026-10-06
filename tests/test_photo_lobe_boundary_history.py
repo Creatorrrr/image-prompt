@@ -15,7 +15,7 @@ ILLUSTRATION = ROOT / 'skills/subculture-illustration-image-generator'
 EVIDENCE = Path('docs/research-evidence/photo-prompt/lobe-boundary-integration-20261005')
 PROOF = EVIDENCE / 'V23-LOBE-BINDING-PROOF.json'
 sys.path.insert(0, str(ILLUSTRATION / 'scripts'))
-import validate_illustration_assets as v
+from tests import photo_prompt_fixtures as fixtures
 
 
 def digest(raw):
@@ -29,8 +29,12 @@ def encoded(value):
 class LobeBoundaryHistoryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.proof = json.loads((ROOT / PROOF).read_bytes())
-        cls.qualification = json.loads((ROOT / cls.proof['qualification_path']).read_bytes())
+        frozen = tempfile.TemporaryDirectory(prefix='sealed-v23-source-')
+        cls.addClassCleanup(frozen.cleanup)
+        cls.source_root = Path(frozen.name)
+        cls.validator = fixtures.archived_v23_validator(cls.source_root, source_root=ROOT)
+        cls.proof = json.loads((cls.source_root / PROOF).read_bytes())
+        cls.qualification = json.loads((cls.source_root / cls.proof['qualification_path']).read_bytes())
 
     def setUp(self):
         temp = tempfile.TemporaryDirectory()
@@ -52,7 +56,7 @@ class LobeBoundaryHistoryTests(unittest.TestCase):
         for name in paths:
             target = self.repo / name
             target.parent.mkdir(parents=True, exist_ok=True)
-            target.symlink_to(ROOT / name)
+            target.symlink_to(self.source_root / name)
         self.baseline = json.loads((self.assets / 'photo_regression_baseline_v23.json').read_bytes())
         self.original_baseline = copy.deepcopy(self.baseline)
         self.raw = (self.assets / 'photo_regression_baseline_v23_pack.json').read_bytes()
@@ -78,7 +82,7 @@ class LobeBoundaryHistoryTests(unittest.TestCase):
                 path.write_bytes(original)
 
     def validate(self, pack=None, raw=None):
-        return v._validate_v23_lobe_boundary_successor(
+        return self.validator._validate_v23_lobe_boundary_successor(
             self.assets, self.repo, self.baseline,
             self.pack if pack is None else pack, self.raw if raw is None else raw)
 
@@ -92,7 +96,7 @@ class LobeBoundaryHistoryTests(unittest.TestCase):
         self.assertEqual([], reviewed['optional_blocks'])
         self.assertIs(True, reviewed['all_other_pack_fields_exactly_equal'])
         self.assertIs(True, reviewed['slot_candidates_and_order_unchanged'])
-        self.assertEqual(64, v._public_photo_candidate_count(self.pack))
+        self.assertEqual(64, self.validator._public_photo_candidate_count(self.pack))
         self.assertEqual(previous['slots'], self.pack['slots'])
         for name in ('authorial_core', 'creative_controls', 'authorial_composition',
                      'negative_en', 'core_retrieval', 'semantic_clarification',
@@ -110,20 +114,20 @@ class LobeBoundaryHistoryTests(unittest.TestCase):
                          | set(self.proof['active_semantic_shards']))
         self.assertEqual(4, len(self.proof['reviewed_source_deltas']))
 
-    def test_current_default_and_explicit_v23_are_registered(self):
+    def test_historical_default_and_explicit_v23_are_registered(self):
         def frozen_command(command, **kwargs):
             Path(command[command.index('--output-file') + 1]).write_bytes(self.raw)
             return subprocess.CompletedProcess(command, 0, '', '')
 
-        with mock.patch.object(v.subprocess, 'run', side_effect=frozen_command):
+        with mock.patch.object(self.validator.subprocess, 'run', side_effect=frozen_command):
             for version in (None, 23):
                 with self.subTest(version=version):
-                    result = v.validate_photo_regression_baseline(
-                        ILLUSTRATION / 'assets', baseline_version=version)
+                    result = self.validator.validate_photo_regression_baseline(
+                        self.source_root / ILLUSTRATION.relative_to(ROOT) / 'assets', baseline_version=version)
                     self.assertEqual('photo_regression_baseline/v23', result['schema'])
                     self.assertEqual(self.proof['current_pack_sha256'], result['sha256'])
-        with self.assertRaisesRegex(v.ValidationFailure, 'unsupported photo baseline version'):
-            v.validate_photo_regression_baseline(self.assets, baseline_version=24)
+        with self.assertRaisesRegex(self.validator.ValidationFailure, 'unsupported photo baseline version'):
+            self.validator.validate_photo_regression_baseline(self.assets, baseline_version=24)
 
     def test_rehashed_candidate_order_core_owner_control_negative_and_privacy_changes_rejected(self):
         name = str((ILLUSTRATION / 'assets/photo_regression_baseline_v23_pack.json').relative_to(ROOT))
@@ -154,10 +158,10 @@ class LobeBoundaryHistoryTests(unittest.TestCase):
                 changed['provenance']['argv'] = ['private-routing-value']
             else:
                 changed['provenance']['tags_hash'] = '0' * 64
-            changed['pack_id'] = v._canonical_photo_pack_id(changed)
+            changed['pack_id'] = self.validator._canonical_photo_pack_id(changed)
             raw = encoded([changed])
             self.baseline.update(sha256=digest(raw), pack_id=changed['pack_id'])
-            with self.subTest(kind=kind), self.changed(name, raw), self.assertRaises(v.ValidationFailure):
+            with self.subTest(kind=kind), self.changed(name, raw), self.assertRaises(self.validator.ValidationFailure):
                 self.validate(changed, raw)
 
     def test_rehashed_optional_contract_content_inventory_and_order_changes_rejected(self):
@@ -180,19 +184,19 @@ class LobeBoundaryHistoryTests(unittest.TestCase):
                     rows.append(dict(rows[0], id=rows[0]['id'] + '-added'))
                 else:
                     rows.pop()
-                changed['pack_id'] = v._canonical_photo_pack_id(changed)
+                changed['pack_id'] = self.validator._canonical_photo_pack_id(changed)
                 raw = encoded([changed])
                 self.baseline.update(sha256=digest(raw), pack_id=changed['pack_id'])
-                with self.subTest(block=block, kind=kind), self.changed(name, raw), self.assertRaises(v.ValidationFailure):
+                with self.subTest(block=block, kind=kind), self.changed(name, raw), self.assertRaises(self.validator.ValidationFailure):
                     self.validate(changed, raw)
 
     def test_supplied_pack_and_raw_must_match_the_sealed_file(self):
         changed = copy.deepcopy(self.pack)
         changed['provenance']['private_routing_exposed'] = True
-        changed['pack_id'] = v._canonical_photo_pack_id(changed)
-        with self.assertRaises(v.ValidationFailure):
+        changed['pack_id'] = self.validator._canonical_photo_pack_id(changed)
+        with self.assertRaises(self.validator.ValidationFailure):
             self.validate(pack=changed)
-        with self.assertRaises(v.ValidationFailure):
+        with self.assertRaises(self.validator.ValidationFailure):
             self.validate(raw=self.raw + b'\n')
 
     def test_fixed_proof_rejects_coordinated_rehash(self):
@@ -216,7 +220,7 @@ class LobeBoundaryHistoryTests(unittest.TestCase):
             self.baseline['lobe_boundary_transition']['evidence_sha256'] = digest(raw)
             if field in self.baseline['lobe_boundary_transition']:
                 self.baseline['lobe_boundary_transition'][field] = value
-            with self.subTest(field=field), self.changed(PROOF, raw), self.assertRaises(v.ValidationFailure):
+            with self.subTest(field=field), self.changed(PROOF, raw), self.assertRaises(self.validator.ValidationFailure):
                 self.validate()
 
     def test_reviewed_data_and_runtime_bytes_and_unregistered_data_rejected(self):
@@ -225,14 +229,14 @@ class LobeBoundaryHistoryTests(unittest.TestCase):
             'skills/photo-prompt-image-generator/scripts/visual_profile_index_storage.py',
         ]
         for name in names:
-            with self.subTest(path=name), self.changed(name, (ROOT / name).read_bytes() + b'\n'), self.assertRaises(v.ValidationFailure):
+            with self.subTest(path=name), self.changed(name, (self.source_root / name).read_bytes() + b'\n'), self.assertRaises(self.validator.ValidationFailure):
                 self.validate()
-        with self.changed('skills/photo-prompt-image-generator/assets/unexpected.json', b'{}'), self.assertRaises(v.ValidationFailure):
+        with self.changed('skills/photo-prompt-image-generator/assets/unexpected.json', b'{}'), self.assertRaises(self.validator.ValidationFailure):
             self.validate()
 
     def test_source_and_proof_cannot_be_rebaselined_together(self):
         name = self.proof['reviewed_source_deltas'][0]['path']
-        source_raw = (ROOT / name).read_bytes() + b'\n'
+        source_raw = (self.source_root / name).read_bytes() + b'\n'
         changed = copy.deepcopy(self.proof)
         changed['source_files'][name] = digest(source_raw)
         changed['source_inventory_after'][Path(name).name] = digest(source_raw)
@@ -242,7 +246,7 @@ class LobeBoundaryHistoryTests(unittest.TestCase):
         proof_raw = encoded(changed)
         self.baseline['lobe_boundary_transition']['source_files'] = changed['source_files']
         self.baseline['lobe_boundary_transition']['evidence_sha256'] = digest(proof_raw)
-        with self.changed(name, source_raw), self.changed(PROOF, proof_raw), self.assertRaises(v.ValidationFailure):
+        with self.changed(name, source_raw), self.changed(PROOF, proof_raw), self.assertRaises(self.validator.ValidationFailure):
             self.validate()
 
     def test_active_and_retained_shard_mutation_removal_and_addition_rejected(self):
@@ -250,11 +254,11 @@ class LobeBoundaryHistoryTests(unittest.TestCase):
                       'retained_semantic_shards', 'retained_visual_shards'):
             name = next(iter(self.proof[field]))
             for kind, path, raw in (
-                ('mutated', name, (ROOT / name).read_bytes() + b' '),
+                ('mutated', name, (self.source_root / name).read_bytes() + b' '),
                 ('missing', name, None),
                 ('extra', str(Path(name).parent / 'shard-999.json'), b'{}'),
             ):
-                failure = (FileNotFoundError, v.ValidationFailure) if kind == 'missing' else v.ValidationFailure
+                failure = (FileNotFoundError, self.validator.ValidationFailure) if kind == 'missing' else self.validator.ValidationFailure
                 with self.subTest(field=field, kind=kind), self.changed(path, raw), self.assertRaises(failure):
                     self.validate()
 
@@ -267,40 +271,40 @@ class LobeBoundaryHistoryTests(unittest.TestCase):
                  'skills/subculture-illustration-image-generator/assets/photo_regression_baseline_v22.json',
                  'skills/subculture-illustration-image-generator/assets/photo_regression_baseline_v22_pack.json')
         for name in names:
-            with self.subTest(path=name), self.changed(name, (ROOT / name).read_bytes() + b'\n'), self.assertRaises(v.ValidationFailure):
+            with self.subTest(path=name), self.changed(name, (self.source_root / name).read_bytes() + b'\n'), self.assertRaises(self.validator.ValidationFailure):
                 self.validate()
 
     def test_transition_provenance_and_predecessor_relabeling_rejected(self):
         for field in ('source_commit', 'evidence_sha256'):
             self.baseline = copy.deepcopy(self.original_baseline)
             self.baseline['lobe_boundary_transition'][field] = 'PENDING'
-            with self.subTest(field=field), self.assertRaises(v.ValidationFailure):
+            with self.subTest(field=field), self.assertRaises(self.validator.ValidationFailure):
                 self.validate()
         for field in ('ornament_data_transition', 'visual_index_storage_transition',
                       'zero_pack_delta_transition', 'metadata_only_transition'):
             self.baseline = copy.deepcopy(self.original_baseline)
             self.baseline[field] = {}
-            with self.subTest(field=field), self.assertRaises(v.ValidationFailure):
+            with self.subTest(field=field), self.assertRaises(self.validator.ValidationFailure):
                 self.validate()
 
     def test_universal_descriptor_changes_only_the_validator_hash(self):
         name = str((ILLUSTRATION / 'assets/universal_scene_baseline_v2.json').relative_to(ROOT))
-        before = (ROOT / self.proof['universal_v2_before_path']).read_bytes()
+        before = (self.source_root / self.proof['universal_v2_before_path']).read_bytes()
         previous_sha = self.proof['previous_validator_sha256'].encode('ascii')
-        current_sha = digest(Path(v.__file__).read_bytes()).encode('ascii')
+        current_sha = digest(Path(self.validator.__file__).read_bytes()).encode('ascii')
         self.assertEqual(1, before.count(previous_sha))
-        self.assertEqual(before.replace(previous_sha, current_sha, 1), (ROOT / name).read_bytes())
+        self.assertEqual(before.replace(previous_sha, current_sha, 1), (self.source_root / name).read_bytes())
         for kind, raw in (('old_validator', before),
-                          ('other_bytes', (ROOT / name).read_bytes() + b'\n')):
-            with self.subTest(kind=kind), self.changed(name, raw), self.assertRaises(v.ValidationFailure):
+                          ('other_bytes', (self.source_root / name).read_bytes() + b'\n')):
+            with self.subTest(kind=kind), self.changed(name, raw), self.assertRaises(self.validator.ValidationFailure):
                 self.validate()
 
     def test_v22_still_rejects_current_lobe_data(self):
         baseline = json.loads((self.assets / 'photo_regression_baseline_v22.json').read_bytes())
         raw = (self.assets / 'photo_regression_baseline_v22_pack.json').read_bytes()
-        with self.assertRaises(v.ValidationFailure):
-            v._validate_v22_ornament_data_successor(
-                self.assets, ROOT, baseline, json.loads(raw)[0], raw)
+        with self.assertRaises(self.validator.ValidationFailure):
+            self.validator._validate_v22_ornament_data_successor(
+                self.assets, self.source_root, baseline, json.loads(raw)[0], raw)
 
 
 if __name__ == '__main__':
