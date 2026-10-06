@@ -79,8 +79,11 @@ primary context. Their absence from the starting draft is not an immutable lock.
 An authored witness may introduce or recompose agent-owned context within the
 current scope. Its complete effects must be covered by the axis brief and must
 respect dimension and property locks. A `retained` witness must occur literally
-in both baseline and final prompt and declare no new effects. Known human/adult
-subject facts use the bound requester context and literal adult-subject brief.
+in both baseline and final prompt and declare no new effects. Known human
+subject facts use the bound requester context; adult facts additionally need
+a literal adult-subject brief. That brief is mandatory only at effective
+`sensual` intensity 2 or 3, while an adopted candidate's own adult prerequisite
+still needs grounded evidence at any intensity.
 Other conditions need concrete phrase-and-reason witnesses; a candidate's own
 tags or a bare condition label cannot certify them.
 

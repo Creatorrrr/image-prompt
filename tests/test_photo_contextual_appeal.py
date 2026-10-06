@@ -203,6 +203,90 @@ class ContextualAppealTests(unittest.TestCase):
         self.assertIn("not_applicability_proof", trace["scene_reranking"])
 
 
+class AdultSubjectPhraseThresholdTests(unittest.TestCase):
+    def scenario(self, *, sensual=None, fetish=0, context=None):
+        data, core, result = fixture()
+        source = core["source_request"].replace("An adult woman", "A woman")
+        snapshot = controls.resolve(source, context=context or {"subject_category": "human"},
+                                    overrides=None if sensual is None else {"sensual": sensual, "fetish": fetish}, seed=7)
+        core.update(source_request=source, creative_controls_sha256=snapshot["canonical_sha256"],
+                    baseline_prompt_en=core["baseline_prompt_en"].replace("An adult woman", "A woman"))
+        core["request_binding"]["active_spans"] = [{"text": source}]
+        result["provenance"]["creative_controls"] = snapshot
+        adult = generator.candidate_pack_contextual_adult_appeal(data, result, {}, authorial_core=core)
+        brief = {
+            "agency_phrase": "offers a handwritten letter",
+            "axes": {axis: {"intensity": adult["axes"][axis]["intensity"], "realization": "baseline",
+                            "affected_dimensions": [], "artistic_interpretation": "Retain the dress and letter gesture.",
+                            "prompt_evidence": "white corset dress"} for axis in contextual.AXES},
+            "blend": adult["blend"],
+            "contextual_review": [{"candidate_id": cid, "reading": "irrelevant", "reason": "Preserve the letter gesture."}
+                                  for cid in adult["contextual_retrieval"]["review_candidate_ids"]],
+            "contextual_comparison": "At the same strengths, retain the dress and letter gesture rather than competing details.",
+        }
+        pack = {"contract_version": "photo-candidate-pack/v6", "authorial_core": core,
+                "creative_controls": snapshot, "adult_appeal": adult}
+        composed = {"prompt_en": core["baseline_prompt_en"], "adult_appeal_brief": brief}
+        return pack, composed
+
+    def audit(self, pack, composed):
+        failures, _ = auditor.audit_adult_appeal(pack, composed, composed["prompt_en"], set(), {})
+        return failures
+
+    def test_default_human_prompt_needs_no_adult_word(self):
+        pack, composed = self.scenario()
+        self.assertEqual(pack["adult_appeal"]["axes"]["sensual"]["intensity"], 1)
+        self.assertNotIn("adult", composed["prompt_en"])
+        self.assertEqual(self.audit(pack, composed), [])
+        composed["adult_appeal_brief"].pop("agency_phrase")
+        self.assertEqual({row["check"] for row in self.audit(pack, composed)}, {"adult_appeal_agency"})
+
+    def test_only_sensual_two_and_three_require_the_adult_word(self):
+        for sensual in range(4):
+            for fetish in range(4):
+                with self.subTest(sensual=sensual, fetish=fetish):
+                    pack, composed = self.scenario(sensual=sensual, fetish=fetish)
+                    requirements = pack["adult_appeal"]["composition_requirements"]
+                    self.assertEqual(requirements["adult_subject_phrase_required"], sensual >= 2)
+                    self.assertEqual(requirements["explicit_adult_original_subject"], sensual >= 2)
+                    self.assertEqual({row["check"] for row in self.audit(pack, composed)},
+                                     {"adult_appeal_adult_subject"} if sensual >= 2 else set())
+
+    def test_high_sensual_checks_the_word_and_its_literal_binding(self):
+        for sensual in (2, 3):
+            with self.subTest(sensual=sensual):
+                pack, composed = self.scenario(sensual=sensual)
+                pack["adult_appeal"]["composition_requirements"]["adult_subject_phrase_required"] = False
+                pack["adult_appeal"]["composition_requirements"]["explicit_adult_original_subject"] = False
+                composed["prompt_en"] += " The woman is thirty years old."
+                brief = composed["adult_appeal_brief"]
+                for phrase in ("", "The woman is thirty years old.", "The woman is an ADULT."):
+                    brief["adult_subject_phrase"] = phrase
+                    self.assertEqual({row["check"] for row in self.audit(pack, composed)}, {"adult_appeal_adult_subject"})
+                composed["prompt_en"] += " The woman is an ADULT."
+                self.assertEqual(self.audit(pack, composed), [])
+
+    def test_optional_subject_evidence_still_needs_literal_binding(self):
+        for sensual in (0, 1):
+            with self.subTest(sensual=sensual):
+                pack, composed = self.scenario(sensual=sensual, fetish=3)
+                brief = composed["adult_appeal_brief"]
+                brief["adult_subject_phrase"] = "A woman"
+                self.assertEqual(self.audit(pack, composed), [])
+                brief["adult_subject_phrase"] = "An adult woman"
+                self.assertEqual({row["check"] for row in self.audit(pack, composed)}, {"adult_appeal_adult_subject"})
+                brief.pop("adult_subject_phrase")
+                self.assertEqual(self.audit(pack, composed), [])
+
+    def test_nonsexual_context_uses_effective_sensual_intensity(self):
+        pack, composed = self.scenario(sensual=3, fetish=3,
+                                       context={"subject_category": "human", "explicit_nonsexual": True})
+        self.assertEqual(pack["creative_controls"]["controls"]["sensual"]["value"], 3)
+        self.assertEqual(pack["adult_appeal"]["axes"]["sensual"]["intensity"], 0)
+        self.assertFalse(pack["adult_appeal"]["composition_requirements"]["adult_subject_phrase_required"])
+        self.assertEqual(self.audit(pack, composed), [])
+
+
 class FinalCandidateContextTests(unittest.TestCase):
     """Use an ordinary authored lighting candidate, not an appeal membership flag."""
 
@@ -241,6 +325,17 @@ class FinalCandidateContextTests(unittest.TestCase):
     def audit(self, adult, core, candidate, brief, prompt):
         return contextual.audit_review(adult, brief, {candidate["id"]}, prompt_en=prompt,
                                        core=core, subject_category="human")
+
+    def test_human_prerequisite_does_not_require_an_adult_phrase(self):
+        for fact, supported in (("human", True), ("subject:human", True), ("adult", False), ("subject:adult", False)):
+            with self.subTest(fact=fact):
+                source_id = "slot:garment_detail:human_scope"
+                candidate = {"id": "human_scope", "source_candidate_id": source_id,
+                             **candidate_context.compile_context({"for_any": [fact]}, source_id)}
+                failures = candidate_context.audit_context(
+                    candidate, {"requirement_evidence": []}, prompt_en="A woman offers a letter.",
+                    core={}, brief={}, subject_category="human", allowed=set())
+                self.assertEqual(bool(failures), not supported)
 
     def test_search_scope_and_final_conditions_are_distinct(self):
         _, core, adult, candidate, brief, _ = self.scenario()

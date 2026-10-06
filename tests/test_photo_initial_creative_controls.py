@@ -305,6 +305,32 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
         report = auditor.audit_composed_prompt(self.pack, composed)
         self.assertEqual(report["status"], "pass", report["failures"])
 
+    def test_default_human_generation_and_composition_pass_without_adult_boilerplate(self):
+        raw = json.loads(json.dumps(self.raw).replace("An adult woman", "A solitary woman")
+                         .replace("one adult woman", "one woman").replace("adult portrait", "portrait"))
+        snapshot = controls.resolve(raw["source_request"], context={"subject_category": "human"}, seed=73)
+        raw["creative_controls_sha256"] = snapshot["canonical_sha256"]
+        envelope = generator.normalize_request_envelope(fixtures.envelope(raw["source_request"]))
+        core = generator.normalize_authorial_core(raw, request_envelope=envelope, creative_control_snapshot=snapshot)
+        result = current_fixtures.candidate_source(self.data, core, seed=73, controls=snapshot)
+        pack = generator.build_candidate_pack(result, self.data, "v6")
+        composed = composition_fixtures.PhotoAuthorshipPolicyTests.composed(pack)
+        composed["adult_appeal_brief"] = {
+            "agency_phrase": "stands confidently",
+            "axes": {axis: {"intensity": pack["adult_appeal"]["axes"][axis]["intensity"], "realization": "baseline",
+                            "affected_dimensions": [], "artistic_interpretation": "Retain the initial portrait direction.",
+                            "prompt_evidence": "a softly draped neckline" if axis == "sensual" else "textured clothing"}
+                     for axis in controls.AXES},
+            "blend": {"emphasis": pack["adult_appeal"]["blend"]["emphasis"]},
+            "contextual_review": [{"candidate_id": cid, "reading": "irrelevant", "reason": "Retain the window portrait."}
+                                  for cid in pack["adult_appeal"]["contextual_retrieval"]["review_candidate_ids"]],
+            "contextual_comparison": "At the same strengths, retain the neckline and window gesture rather than competing details.",
+        }
+        self.assertNotIn("adult", composed["prompt_en"])
+        self.assertFalse(pack["adult_appeal"]["composition_requirements"]["adult_subject_phrase_required"])
+        report = auditor.audit_composed_prompt(pack, composed)
+        self.assertEqual(report["status"], "pass", report["failures"])
+
     def test_authored_refinement_must_declare_unlocked_property_effects(self):
         composed = self.composed()
         evidence = "The existing neckline drapes softly toward her relaxed shoulder"
