@@ -4,6 +4,14 @@ Body-action plausibility review is agent-owned and separate from semantic meanin
 
 Maintenance-only. Never read this file while resolving a live request or writing its basic prompt. Maintained keyword meanings belong in structured runtime data and their tests; they must not be copied into `SKILL.md` or used as pre-core agent knowledge.
 
+## Authored sources and generated component fields
+
+Register candidate and visual-profile extensions only in `assets/photo_prompt_source_manifest.json`. Each row declares the JSON basename, source kind, required-file flag and load order within its kind. Manifest row order also preserves the generated required-file policy order. Loaders and the dictionary validator share this registration; filename views are lazy so importing a generator never reads candidate assets before core validation. Missing required files, duplicate registrations or load positions, and unregistered extension files fail maintenance validation. Do not add another filename list or author `candidate_semantic_policy.required_extensions`: the loader derives that existing runtime field from the manifest.
+
+Every live visual-profile source uses `authored_components`. Omit the generated `component_semantics`, `required_evidence_fields`, `evidence_requirements`, `render_gates` and `composition_instruction` from source profiles. The compiler still verifies matching fields in compiled views, and those views retain the existing runtime contracts.
+
+Use `photo-authored-visual-components/v1` for components with one evidence field, instruction and gate each; its existing conditional-visibility behavior is unchanged. Use `photo-authored-visual-components/v2` for collective or many-to-many duties: `components` declare IDs and match terms, `discovery` declares the existing minimum and required group IDs, and `obligations` bind component IDs to ordered evidence rows (`field`, `requirement`), an instruction and ordered render gates. Every component belongs to an obligation. Discovery thresholds never remove activated evidence or pixel duties. Preserve original group, evidence and gate ordering, exclusions inside evidence requirements, complete instruction bytes and exact/approximate activation behavior. Do not guess a one-to-one correspondence when a duty belongs to the whole arrangement.
+
 ## Initial creative controls
 
 Keep `sensual`, `fetish`, `surreal`, `creativity`, and `adult_appeal_emphasis` definitions concise and focused on their concepts and scope. Put ordinal meanings in `levels`, enum meanings in `choice_descriptions`, and shared application rules in `principle`. The writer reads the saved brief and principle before drafting. Avoid repeating those descriptions in the skill procedure or turning them into fixed visual recipes.

@@ -102,7 +102,9 @@ class PhotoCandidateSemanticsTests(unittest.TestCase):
     def test_required_extension_loss_fails_before_dictionary_use(self):
         with tempfile.TemporaryDirectory() as temp:
             path = Path(temp) / "photo_prompt_tags.json"
-            path.write_text(json.dumps({"candidate_semantic_policy": self.data["candidate_semantic_policy"]}))
+            policy = copy.deepcopy(self.data["candidate_semantic_policy"])
+            policy.pop("required_extensions")  # Generated registration is not an authored input.
+            path.write_text(json.dumps({"candidate_semantic_policy": policy}))
             with self.assertRaisesRegex(ValueError, "required candidate extensions are missing"):
                 generator.load_json(path)
 

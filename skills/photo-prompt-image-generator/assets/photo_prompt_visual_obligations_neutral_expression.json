@@ -327,27 +327,6 @@
           "the upper and lower lips of the same declared face project forward in a rounded contour",
           "the mouth corners of that same face gather toward the center"
         ],
-        "component_semantics": {
-          "minimum_component_groups": 2,
-          "required_group_ids": [
-            "component_1",
-            "component_2"
-          ],
-          "groups": [
-            {
-              "id": "component_1",
-              "any_terms": [
-                "the upper and lower lips of the same declared face project forward in a rounded contour"
-              ]
-            },
-            {
-              "id": "component_2",
-              "any_terms": [
-                "the mouth corners of that same face gather toward the center"
-              ]
-            }
-          ]
-        },
         "contrast_examples": [
           "full lips without current forward motion",
           "lip pressing alone",
@@ -425,37 +404,6 @@
           }
         ]
       },
-      "required_evidence_fields": [
-        "component_1_phrase",
-        "component_2_phrase"
-      ],
-      "evidence_requirements": {
-        "component_1_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": [
-            "the upper and lower lips of the same declared face project forward in a rounded contour"
-          ]
-        },
-        "component_2_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": [
-            "the mouth corners of that same face gather toward the center"
-          ]
-        }
-      },
-      "render_gates": [
-        {
-          "id": "vo_ne_current_lip_protrusion_1",
-          "review_scale": "native",
-          "description": "Inspect the declared owner at native resolution: the upper and lower lips of the same declared face project forward in a rounded contour. Every component is required; partial evidence fails and an occluded component is unobservable."
-        },
-        {
-          "id": "vo_ne_current_lip_protrusion_2",
-          "review_scale": "native",
-          "description": "Inspect the declared owner at native resolution: the mouth corners of that same face gather toward the center. Every component is required; partial evidence fails and an occluded component is unobservable."
-        }
-      ],
-      "composition_instruction": "Preserve the declared owner and show this complete current relation: the upper and lower lips of the same declared face project forward in a rounded contour. Preserve the declared owner and show this complete current relation: the mouth corners of that same face gather toward the center.",
       "reject_substitutes": [
         "wrong_owner_or_named_region",
         "occluded_required_component",

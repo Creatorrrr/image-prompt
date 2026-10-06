@@ -31,6 +31,7 @@ if _SCRIPTS_IMPORT_DIR_ADDED:
 try:
     from visual_profile_index_storage import load_visual_profile_index_payload
     import photo_camera_evidence
+    import photo_source_manifest
     import photo_candidate_semantics
     import photo_contextual_appeal
     import photo_embodiment
@@ -114,101 +115,13 @@ GENERATOR_VERSION = "2026.10.1"
 QUALITY_LAYERS_FILENAME = "photo_prompt_quality_layers.json"
 VISUAL_OBLIGATION_REGISTRY_FILENAME = "photo_prompt_visual_obligations.json"
 VISUAL_PROFILE_INDEX_FILENAME = "photo_prompt_visual_profile_index.json"
-VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
-    "photo_prompt_visual_obligations_tactile_reality.json",
-    "photo_prompt_visual_obligations_reactorprompt.json",
-    "photo_prompt_visual_obligations_photo_era.json",
-    "photo_prompt_visual_obligations_poverty.json",
-    "photo_prompt_visual_obligations_opening_era.json",
-    "photo_prompt_visual_obligations_historical_womenswear.json",
-    "photo_prompt_visual_obligations_costume_cosplay.json",
-    "photo_prompt_visual_obligations_palace_fortification.json",
-    "photo_prompt_visual_obligations_swimwear.json",
-    "photo_prompt_visual_obligations_color_relations.json",
-    "photo_prompt_visual_obligations_model_editorial.json",
-    "photo_prompt_visual_obligations_realistic_background.json",
-    "photo_prompt_visual_obligations_photorealism_elements.json",
-    "photo_prompt_visual_obligations_everyday_scene.json",
-    "photo_prompt_visual_obligations_y2k.json",
-    "photo_prompt_visual_obligations_portrait_composition.json",
-    "photo_prompt_visual_obligations_portrait_fashion_exposure.json",
-    "photo_prompt_visual_obligations_editing_effects.json",
-    "photo_prompt_visual_obligations_clothing_structure.json",
-    "photo_prompt_visual_obligations_textile_surface.json",
-    "photo_prompt_visual_obligations_accessory_structure.json",
-    "photo_prompt_visual_obligations_traditional_clothing_detail.json",
-    "photo_prompt_visual_obligations_pose_vocabulary.json",
-    "photo_prompt_visual_obligations_body_morphology.json",
-    "photo_prompt_visual_obligations_acting_expression.json",
-    "photo_prompt_visual_obligations_neutral_expression.json",
-    "photo_prompt_visual_obligations_slang_visual.json",
-    "photo_prompt_visual_obligations_religion_iconography.json",
-    "photo_prompt_visual_obligations_subculture_appearance.json",
-    "photo_prompt_visual_obligations_character_appearance.json",
-    "photo_prompt_visual_obligations_motion_graphics.json",
-    "photo_prompt_visual_obligations_seduction_expression.json",
-    "photo_prompt_visual_obligations_cute_visual_forms.json",
-    "photo_prompt_visual_obligations_ornament_structure.json",
-)
+VISUAL_OBLIGATION_EXTENSION_FILENAMES = photo_source_manifest.SourceFiles("visual_profile")
 VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
     "photo-visual-obligation-registry-extension/v1"
 )
 VISUAL_RELATION_CONTRACT_VERSION = "photo-visual-relation/v1"
 RESEARCH_EXTENSION_FILENAME = "photo_prompt_research_extension.json"
-RESEARCH_EXTENSION_FILENAMES = (
-    "photo_prompt_clothing_structure_extension.json",
-    "photo_prompt_textile_surface_extension.json",
-    "photo_prompt_accessory_structure_extension.json",
-    "photo_prompt_traditional_clothing_detail_extension.json",
-    "photo_prompt_tactile_reality_extension.json",
-    RESEARCH_EXTENSION_FILENAME,
-    "photo_prompt_reactorprompt_visual_relations_extension.json",
-    "photo_prompt_natural_environment_extension.json",
-    "photo_prompt_imaginal_extension.json",
-    "photo_prompt_mythology_extension.json",
-    "photo_prompt_legend_extension.json",
-    "photo_prompt_space_extension.json",
-    "photo_prompt_boundary_transition_extension.json",
-    "photo_prompt_desire_extension.json",
-    "photo_prompt_harem_extension.json",
-    "photo_prompt_emotional_place_extension.json",
-    "photo_prompt_poverty_extension.json",
-    "photo_prompt_opening_era_extension.json",
-    "photo_prompt_historical_womenswear_extension.json",
-    "photo_prompt_costume_cosplay_extension.json",
-    "photo_prompt_palace_fortification_extension.json",
-    "photo_prompt_swimwear_extension.json",
-    "photo_prompt_color_relations_extension.json",
-    "photo_prompt_model_editorial_extension.json",
-    "photo_prompt_realistic_background_extension.json",
-    "photo_prompt_photorealism_elements_extension.json",
-    "photo_prompt_everyday_scene_extension.json",
-    "photo_prompt_lighting_extension.json",
-    "photo_prompt_photo_era_extension.json",
-    "photo_prompt_violence_crime_extension.json",
-    "photo_prompt_subculture_extension.json",
-    "photo_prompt_worldbuilding_extension.json",
-    "photo_prompt_punk_aesthetics_extension.json",
-    "photo_prompt_cjk_worldbuilding_extension.json",
-    "photo_prompt_character_moe_extension.json",
-    "photo_prompt_y2k_extension.json",
-    "photo_prompt_portrait_composition_extension.json",
-    "photo_prompt_portrait_fashion_exposure_extension.json",
-    "photo_prompt_sensual_fetish_fashion_extension.json",
-    "photo_prompt_contextual_appeal_extension.json",
-    "photo_prompt_editing_effects_extension.json",
-    "photo_prompt_pose_vocabulary_extension.json",
-    "photo_prompt_body_morphology_extension.json",
-    "photo_prompt_acting_expression_extension.json",
-    "photo_prompt_neutral_expression_extension.json",
-    "photo_prompt_slang_visual_extension.json",
-    "photo_prompt_religion_iconography_extension.json",
-    "photo_prompt_subculture_appearance_extension.json",
-    "photo_prompt_motion_graphics_extension.json",
-    "photo_prompt_seduction_expression_extension.json",
-    "photo_prompt_cute_visual_forms_extension.json",
-    "photo_prompt_ornament_structure_extension.json",
-)
+RESEARCH_EXTENSION_FILENAMES = photo_source_manifest.SourceFiles("candidate")
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v2"
 CHARACTER_RESPONSE_RELATION_FIELDS = {
@@ -1321,6 +1234,12 @@ def load_json(path: str | Path) -> JsonDict:
         if not isinstance(coherence, dict) or set(coherence) - {"slot_conflicts", "slot_context_rules"}:
             raise ValueError("unsupported coherence rules")
         candidate_policy = data.get("candidate_semantic_policy") or {}
+        if candidate_policy:
+            if not isinstance(candidate_policy, dict):
+                raise ValueError("candidate_semantic_policy must be an object")
+            if "required_extensions" in candidate_policy:
+                raise ValueError("required_extensions is generated from photo_prompt_source_manifest.json")
+            candidate_policy["required_extensions"] = photo_source_manifest.required_files("candidate")
         photo_candidate_semantics.validate_semantic_policy(candidate_policy, AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS)
         required_extensions = candidate_policy.get("required_extensions") or []
         missing_extensions = [name for name in required_extensions if not p.with_name(name).is_file()]
@@ -1379,6 +1298,10 @@ def load_visual_obligation_registry(path: str | Path) -> JsonDict:
     profiles = payload.get("profiles")
     if not isinstance(profiles, list) or not profiles:
         raise ValueError("visual obligation registry requires a non-empty profiles list")
+    missing_extensions = [name for name in photo_source_manifest.required_files("visual_profile")
+                          if not registry_path.with_name(name).is_file()]
+    if missing_extensions:
+        raise ValueError(f"required visual-profile extensions are missing: {missing_extensions}")
     existing_ids = {
         str(profile.get("id") or "")
         for profile in profiles

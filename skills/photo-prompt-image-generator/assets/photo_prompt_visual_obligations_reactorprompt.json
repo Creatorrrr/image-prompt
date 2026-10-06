@@ -24,55 +24,6 @@
           "하나의 슬랫 차폐 패턴이 인접한 두 면의 깊이와 굴곡을 따라 변형됨",
           "the same cast geometry changes scale and edge shape as it crosses joined surfaces"
         ],
-        "component_semantics": {
-          "minimum_component_groups": 5,
-          "required_group_ids": [
-            "pattern_source_direction",
-            "pattern_occluder_grammar",
-            "pattern_bright_dark_structure",
-            "pattern_surface_deformation",
-            "pattern_connected_receivers"
-          ],
-          "groups": [
-            {
-              "id": "pattern_source_direction",
-              "any_terms": [
-                "one coherent directional source defines the shadow direction",
-                "하나의 일관된 방향성 광원이 그림자 방향을 정함"
-              ]
-            },
-            {
-              "id": "pattern_occluder_grammar",
-              "any_terms": [
-                "an identifiable leaf or slat occluder grammar shapes the cast pattern",
-                "식별 가능한 잎 또는 슬랫 차폐 문법이 투사 패턴을 만듦",
-                "an identifiable lattice occluder grammar shapes the cast pattern",
-                "식별 가능한 격자 차폐 문법이 투사 패턴을 만듦"
-              ]
-            },
-            {
-              "id": "pattern_bright_dark_structure",
-              "any_terms": [
-                "alternating bright and dark cast bands remain distinct",
-                "밝고 어두운 투사 띠가 교대로 분리되어 남음"
-              ]
-            },
-            {
-              "id": "pattern_surface_deformation",
-              "any_terms": [
-                "the pattern bends with surface curvature and depth",
-                "패턴이 수신면의 곡률과 깊이에 따라 휘어짐"
-              ]
-            },
-            {
-              "id": "pattern_connected_receivers",
-              "any_terms": [
-                "the same cast pattern continues across two connected receiver regions",
-                "같은 투사 패턴이 연결된 두 수신 영역을 가로질러 이어짐"
-              ]
-            }
-          ]
-        },
         "contrast_examples": [
           "a leaf print on clothing with no source-owned shadow geometry",
           "random stripes on one cheek that do not continue onto another surface",
@@ -100,74 +51,6 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Keep one coherent source direction, one identifiable leaf, slat, or lattice occluder grammar, alternating bright and dark cast structure, curvature-aware deformation, and the same pattern continuing across at least two connected receiver regions in one frame.",
-      "required_evidence_fields": [
-        "pattern_source_phrase",
-        "pattern_occluder_phrase",
-        "pattern_structure_phrase",
-        "pattern_deformation_phrase",
-        "pattern_receivers_phrase"
-      ],
-      "evidence_requirements": {
-        "pattern_source_phrase": {
-          "min_content_words": 8,
-          "must_mention_any": [
-            "one coherent directional source defines the shadow direction"
-          ]
-        },
-        "pattern_occluder_phrase": {
-          "min_content_words": 10,
-          "must_mention_any": [
-            "an identifiable leaf or slat occluder grammar shapes the cast pattern",
-            "an identifiable lattice occluder grammar shapes the cast pattern"
-          ]
-        },
-        "pattern_structure_phrase": {
-          "min_content_words": 8,
-          "must_mention_any": [
-            "alternating bright and dark cast bands remain distinct"
-          ]
-        },
-        "pattern_deformation_phrase": {
-          "min_content_words": 8,
-          "must_mention_any": [
-            "the pattern bends with surface curvature and depth"
-          ]
-        },
-        "pattern_receivers_phrase": {
-          "min_content_words": 10,
-          "must_mention_any": [
-            "the same cast pattern continues across two connected receiver regions"
-          ]
-        }
-      },
-      "render_gates": [
-        {
-          "id": "vo_pattern_shadow_source_direction",
-          "review_scale": "both",
-          "description": "One readable illumination direction owns the complete cast-shadow field rather than a global grade or unrelated patches."
-        },
-        {
-          "id": "vo_pattern_shadow_occluder_grammar",
-          "review_scale": "thumbnail",
-          "description": "The repeating cast pattern reads as one leaf, slat, or lattice occluder grammar alongside the main subject."
-        },
-        {
-          "id": "vo_pattern_shadow_bright_dark_structure",
-          "review_scale": "both",
-          "description": "Alternating bright and shadow regions remain separated with direction-owned edges instead of printed surface decoration."
-        },
-        {
-          "id": "vo_pattern_shadow_surface_deformation",
-          "review_scale": "native",
-          "description": "Pattern edges, spacing, and scale deform coherently with visible receiver curvature, folds, and depth changes."
-        },
-        {
-          "id": "vo_pattern_shadow_connected_receivers",
-          "review_scale": "both",
-          "description": "The same cast grammar continues across at least two connected visible receiver regions in one saved image."
-        }
-      ],
       "reject_substitutes": [
         "printed_leaf_or_stripe_pattern",
         "flat_projection_overlay_without_shadow_geometry",
@@ -247,6 +130,145 @@
           "subject_identity",
           "camera_height"
         ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v2",
+        "components": [
+          {
+            "id": "pattern_source_direction",
+            "match_terms": [
+              "one coherent directional source defines the shadow direction",
+              "하나의 일관된 방향성 광원이 그림자 방향을 정함"
+            ]
+          },
+          {
+            "id": "pattern_occluder_grammar",
+            "match_terms": [
+              "an identifiable leaf or slat occluder grammar shapes the cast pattern",
+              "식별 가능한 잎 또는 슬랫 차폐 문법이 투사 패턴을 만듦",
+              "an identifiable lattice occluder grammar shapes the cast pattern",
+              "식별 가능한 격자 차폐 문법이 투사 패턴을 만듦"
+            ]
+          },
+          {
+            "id": "pattern_bright_dark_structure",
+            "match_terms": [
+              "alternating bright and dark cast bands remain distinct",
+              "밝고 어두운 투사 띠가 교대로 분리되어 남음"
+            ]
+          },
+          {
+            "id": "pattern_surface_deformation",
+            "match_terms": [
+              "the pattern bends with surface curvature and depth",
+              "패턴이 수신면의 곡률과 깊이에 따라 휘어짐"
+            ]
+          },
+          {
+            "id": "pattern_connected_receivers",
+            "match_terms": [
+              "the same cast pattern continues across two connected receiver regions",
+              "같은 투사 패턴이 연결된 두 수신 영역을 가로질러 이어짐"
+            ]
+          }
+        ],
+        "discovery": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "pattern_source_direction",
+            "pattern_occluder_grammar",
+            "pattern_bright_dark_structure",
+            "pattern_surface_deformation",
+            "pattern_connected_receivers"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "pattern_source_direction",
+              "pattern_occluder_grammar",
+              "pattern_bright_dark_structure",
+              "pattern_surface_deformation",
+              "pattern_connected_receivers"
+            ],
+            "evidence": [
+              {
+                "field": "pattern_source_phrase",
+                "requirement": {
+                  "min_content_words": 8,
+                  "must_mention_any": [
+                    "one coherent directional source defines the shadow direction"
+                  ]
+                }
+              },
+              {
+                "field": "pattern_occluder_phrase",
+                "requirement": {
+                  "min_content_words": 10,
+                  "must_mention_any": [
+                    "an identifiable leaf or slat occluder grammar shapes the cast pattern",
+                    "an identifiable lattice occluder grammar shapes the cast pattern"
+                  ]
+                }
+              },
+              {
+                "field": "pattern_structure_phrase",
+                "requirement": {
+                  "min_content_words": 8,
+                  "must_mention_any": [
+                    "alternating bright and dark cast bands remain distinct"
+                  ]
+                }
+              },
+              {
+                "field": "pattern_deformation_phrase",
+                "requirement": {
+                  "min_content_words": 8,
+                  "must_mention_any": [
+                    "the pattern bends with surface curvature and depth"
+                  ]
+                }
+              },
+              {
+                "field": "pattern_receivers_phrase",
+                "requirement": {
+                  "min_content_words": 10,
+                  "must_mention_any": [
+                    "the same cast pattern continues across two connected receiver regions"
+                  ]
+                }
+              }
+            ],
+            "instruction": "Keep one coherent source direction, one identifiable leaf, slat, or lattice occluder grammar, alternating bright and dark cast structure, curvature-aware deformation, and the same pattern continuing across at least two connected receiver regions in one frame.",
+            "render_gates": [
+              {
+                "id": "vo_pattern_shadow_source_direction",
+                "review_scale": "both",
+                "description": "One readable illumination direction owns the complete cast-shadow field rather than a global grade or unrelated patches."
+              },
+              {
+                "id": "vo_pattern_shadow_occluder_grammar",
+                "review_scale": "thumbnail",
+                "description": "The repeating cast pattern reads as one leaf, slat, or lattice occluder grammar alongside the main subject."
+              },
+              {
+                "id": "vo_pattern_shadow_bright_dark_structure",
+                "review_scale": "both",
+                "description": "Alternating bright and shadow regions remain separated with direction-owned edges instead of printed surface decoration."
+              },
+              {
+                "id": "vo_pattern_shadow_surface_deformation",
+                "review_scale": "native",
+                "description": "Pattern edges, spacing, and scale deform coherently with visible receiver curvature, folds, and depth changes."
+              },
+              {
+                "id": "vo_pattern_shadow_connected_receivers",
+                "review_scale": "both",
+                "description": "The same cast grammar continues across at least two connected visible receiver regions in one saved image."
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -270,53 +292,6 @@
           "두 성인의 손과 시선이 프레임 중앙의 같은 물체에 모이며 인계 단계가 읽힘",
           "a giver and receiver remain distinct while one object bridges their compatible actions"
         ],
-        "component_semantics": {
-          "minimum_component_groups": 5,
-          "required_group_ids": [
-            "handoff_two_adults",
-            "handoff_one_object",
-            "handoff_giver_action",
-            "handoff_receiver_alignment",
-            "handoff_hand_ownership"
-          ],
-          "groups": [
-            {
-              "id": "handoff_two_adults",
-              "any_terms": [
-                "two unmistakably adult actors remain separately legible",
-                "명백한 성인 두 명이 서로 분리되어 읽힘"
-              ]
-            },
-            {
-              "id": "handoff_one_object",
-              "any_terms": [
-                "one visible handoff object stays between them",
-                "하나의 보이는 인계 물체가 두 사람 사이에 남음"
-              ]
-            },
-            {
-              "id": "handoff_giver_action",
-              "any_terms": [
-                "the giver's hand actively releases the same object",
-                "주는 사람의 손이 같은 물체를 능동적으로 놓아줌"
-              ]
-            },
-            {
-              "id": "handoff_receiver_alignment",
-              "any_terms": [
-                "the receiver's hand aligns to accept it with a visible response",
-                "받는 사람의 손과 보이는 반응이 그 물체를 받아들이도록 정렬됨"
-              ]
-            },
-            {
-              "id": "handoff_hand_ownership",
-              "any_terms": [
-                "each hand remains anatomically owned and non-conflicting",
-                "각 손의 해부학적 소유가 분명하고 서로 충돌하지 않음"
-              ]
-            }
-          ]
-        },
         "contrast_examples": [
           "two adults each holding a different object",
           "two static hands near an object with no transfer phase",
@@ -343,73 +318,6 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Show two unmistakably adult actors and exactly one visible object in one scene, with the giver actively releasing that object, the receiver's hand and visible response aligned to accept it, and every hand connected to one clear anatomical owner.",
-      "required_evidence_fields": [
-        "handoff_adults_phrase",
-        "handoff_object_phrase",
-        "handoff_giver_phrase",
-        "handoff_receiver_phrase",
-        "handoff_ownership_phrase"
-      ],
-      "evidence_requirements": {
-        "handoff_adults_phrase": {
-          "min_content_words": 7,
-          "must_mention_any": [
-            "two unmistakably adult actors remain separately legible"
-          ]
-        },
-        "handoff_object_phrase": {
-          "min_content_words": 7,
-          "must_mention_any": [
-            "one visible handoff object stays between them"
-          ]
-        },
-        "handoff_giver_phrase": {
-          "min_content_words": 8,
-          "must_mention_any": [
-            "the giver's hand actively releases the same object"
-          ]
-        },
-        "handoff_receiver_phrase": {
-          "min_content_words": 10,
-          "must_mention_any": [
-            "the receiver's hand aligns to accept it with a visible response"
-          ]
-        },
-        "handoff_ownership_phrase": {
-          "min_content_words": 8,
-          "must_mention_any": [
-            "each hand remains anatomically owned and non-conflicting"
-          ]
-        }
-      },
-      "render_gates": [
-        {
-          "id": "vo_handoff_two_adults_separate",
-          "review_scale": "thumbnail",
-          "description": "Two unmistakably adult actors remain separately legible as giver and receiver in one continuous scene."
-        },
-        {
-          "id": "vo_handoff_one_shared_object",
-          "review_scale": "both",
-          "description": "Exactly one visible handoff object bridges the two actors instead of separate or hidden objects."
-        },
-        {
-          "id": "vo_handoff_giver_release",
-          "review_scale": "native",
-          "description": "The giver's hand visibly presents or releases the same object during an unfinished transfer phase."
-        },
-        {
-          "id": "vo_handoff_receiver_alignment",
-          "review_scale": "both",
-          "description": "The receiver's hand and readable attention or response align toward that same object to accept it."
-        },
-        {
-          "id": "vo_handoff_hand_ownership",
-          "review_scale": "native",
-          "description": "All visible hands have coherent anatomical owners with no floating, fused, duplicated, or conflicting contact."
-        }
-      ],
       "reject_substitutes": [
         "different_object_per_actor",
         "static_hands_without_transfer_phase",
@@ -493,6 +401,142 @@
           "setting",
           "camera_side"
         ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v2",
+        "components": [
+          {
+            "id": "handoff_two_adults",
+            "match_terms": [
+              "two unmistakably adult actors remain separately legible",
+              "명백한 성인 두 명이 서로 분리되어 읽힘"
+            ]
+          },
+          {
+            "id": "handoff_one_object",
+            "match_terms": [
+              "one visible handoff object stays between them",
+              "하나의 보이는 인계 물체가 두 사람 사이에 남음"
+            ]
+          },
+          {
+            "id": "handoff_giver_action",
+            "match_terms": [
+              "the giver's hand actively releases the same object",
+              "주는 사람의 손이 같은 물체를 능동적으로 놓아줌"
+            ]
+          },
+          {
+            "id": "handoff_receiver_alignment",
+            "match_terms": [
+              "the receiver's hand aligns to accept it with a visible response",
+              "받는 사람의 손과 보이는 반응이 그 물체를 받아들이도록 정렬됨"
+            ]
+          },
+          {
+            "id": "handoff_hand_ownership",
+            "match_terms": [
+              "each hand remains anatomically owned and non-conflicting",
+              "각 손의 해부학적 소유가 분명하고 서로 충돌하지 않음"
+            ]
+          }
+        ],
+        "discovery": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "handoff_two_adults",
+            "handoff_one_object",
+            "handoff_giver_action",
+            "handoff_receiver_alignment",
+            "handoff_hand_ownership"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "handoff_two_adults",
+              "handoff_one_object",
+              "handoff_giver_action",
+              "handoff_receiver_alignment",
+              "handoff_hand_ownership"
+            ],
+            "evidence": [
+              {
+                "field": "handoff_adults_phrase",
+                "requirement": {
+                  "min_content_words": 7,
+                  "must_mention_any": [
+                    "two unmistakably adult actors remain separately legible"
+                  ]
+                }
+              },
+              {
+                "field": "handoff_object_phrase",
+                "requirement": {
+                  "min_content_words": 7,
+                  "must_mention_any": [
+                    "one visible handoff object stays between them"
+                  ]
+                }
+              },
+              {
+                "field": "handoff_giver_phrase",
+                "requirement": {
+                  "min_content_words": 8,
+                  "must_mention_any": [
+                    "the giver's hand actively releases the same object"
+                  ]
+                }
+              },
+              {
+                "field": "handoff_receiver_phrase",
+                "requirement": {
+                  "min_content_words": 10,
+                  "must_mention_any": [
+                    "the receiver's hand aligns to accept it with a visible response"
+                  ]
+                }
+              },
+              {
+                "field": "handoff_ownership_phrase",
+                "requirement": {
+                  "min_content_words": 8,
+                  "must_mention_any": [
+                    "each hand remains anatomically owned and non-conflicting"
+                  ]
+                }
+              }
+            ],
+            "instruction": "Show two unmistakably adult actors and exactly one visible object in one scene, with the giver actively releasing that object, the receiver's hand and visible response aligned to accept it, and every hand connected to one clear anatomical owner.",
+            "render_gates": [
+              {
+                "id": "vo_handoff_two_adults_separate",
+                "review_scale": "thumbnail",
+                "description": "Two unmistakably adult actors remain separately legible as giver and receiver in one continuous scene."
+              },
+              {
+                "id": "vo_handoff_one_shared_object",
+                "review_scale": "both",
+                "description": "Exactly one visible handoff object bridges the two actors instead of separate or hidden objects."
+              },
+              {
+                "id": "vo_handoff_giver_release",
+                "review_scale": "native",
+                "description": "The giver's hand visibly presents or releases the same object during an unfinished transfer phase."
+              },
+              {
+                "id": "vo_handoff_receiver_alignment",
+                "review_scale": "both",
+                "description": "The receiver's hand and readable attention or response align toward that same object to accept it."
+              },
+              {
+                "id": "vo_handoff_hand_ownership",
+                "review_scale": "native",
+                "description": "All visible hands have coherent anatomical owners with no floating, fused, duplicated, or conflicting contact."
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -516,53 +560,6 @@
           "매끄러운 의복 광택이 주름 능선의 방향을 따라 이동하고 어두운 면에서도 표면이 이어짐",
           "seams and garment edges keep the luminous drape attached to one coherent clothing surface"
         ],
-        "component_semantics": {
-          "minimum_component_groups": 5,
-          "required_group_ids": [
-            "satin_continuous_garment",
-            "satin_fold_direction",
-            "satin_highlight_following_folds",
-            "satin_dark_plane_continuity",
-            "satin_edge_seam_ownership"
-          ],
-          "groups": [
-            {
-              "id": "satin_continuous_garment",
-              "any_terms": [
-                "one continuous satin-like garment surface remains traceable",
-                "하나의 연속된 새틴 계열 의복 표면이 추적 가능함"
-              ]
-            },
-            {
-              "id": "satin_fold_direction",
-              "any_terms": [
-                "fold ridges and curvature define a coherent drape direction",
-                "주름 능선과 곡률이 일관된 드레이프 방향을 정함"
-              ]
-            },
-            {
-              "id": "satin_highlight_following_folds",
-              "any_terms": [
-                "a broad smooth highlight follows those folds",
-                "넓고 매끄러운 하이라이트가 그 주름을 따라감"
-              ]
-            },
-            {
-              "id": "satin_dark_plane_continuity",
-              "any_terms": [
-                "material detail remains visible through the darker planes",
-                "어두운 면에서도 재료 디테일이 남음"
-              ]
-            },
-            {
-              "id": "satin_edge_seam_ownership",
-              "any_terms": [
-                "seams and garment edges preserve surface ownership",
-                "솔기와 의복 가장자리가 표면 소유를 보존함"
-              ]
-            }
-          ]
-        },
         "contrast_examples": [
           "global bloom or overexposure with no fold-following highlight",
           "metallic or vinyl reflections on a rigid surface",
@@ -589,73 +586,6 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Show one continuous satin-like garment surface whose fold ridges and curvature establish a coherent drape direction, with a broad smooth highlight following those folds, darker planes retaining material detail, and visible seams and edges keeping the effect on that garment.",
-      "required_evidence_fields": [
-        "satin_surface_phrase",
-        "satin_fold_phrase",
-        "satin_highlight_phrase",
-        "satin_dark_plane_phrase",
-        "satin_ownership_phrase"
-      ],
-      "evidence_requirements": {
-        "satin_surface_phrase": {
-          "min_content_words": 8,
-          "must_mention_any": [
-            "one continuous satin-like garment surface remains traceable"
-          ]
-        },
-        "satin_fold_phrase": {
-          "min_content_words": 9,
-          "must_mention_any": [
-            "fold ridges and curvature define a coherent drape direction"
-          ]
-        },
-        "satin_highlight_phrase": {
-          "min_content_words": 7,
-          "must_mention_any": [
-            "a broad smooth highlight follows those folds"
-          ]
-        },
-        "satin_dark_plane_phrase": {
-          "min_content_words": 8,
-          "must_mention_any": [
-            "material detail remains visible through the darker planes"
-          ]
-        },
-        "satin_ownership_phrase": {
-          "min_content_words": 7,
-          "must_mention_any": [
-            "seams and garment edges preserve surface ownership"
-          ]
-        }
-      },
-      "render_gates": [
-        {
-          "id": "vo_satin_continuous_garment_surface",
-          "review_scale": "thumbnail",
-          "description": "A smooth luminous draped mass reads as one continuous garment rather than a background sheet or detached patch."
-        },
-        {
-          "id": "vo_satin_coherent_fold_direction",
-          "review_scale": "both",
-          "description": "Fold ridges and curved planes share a coherent gravity or support-driven drape direction across the garment."
-        },
-        {
-          "id": "vo_satin_highlight_follows_folds",
-          "review_scale": "native",
-          "description": "Broad smooth highlights move with fold curvature instead of appearing as random white streaks or global bloom."
-        },
-        {
-          "id": "vo_satin_dark_plane_continuity",
-          "review_scale": "native",
-          "description": "Shadowed garment planes retain material continuity and fold detail without crushing into featureless black."
-        },
-        {
-          "id": "vo_satin_edge_seam_ownership",
-          "review_scale": "both",
-          "description": "Visible seams and garment edges keep the directional luster owned by the same clothing surface."
-        }
-      ],
       "reject_substitutes": [
         "global_bloom_or_overexposure",
         "metallic_or_vinyl_surface",
@@ -740,6 +670,142 @@
           "garment_color",
           "light_direction",
           "pose"
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v2",
+        "components": [
+          {
+            "id": "satin_continuous_garment",
+            "match_terms": [
+              "one continuous satin-like garment surface remains traceable",
+              "하나의 연속된 새틴 계열 의복 표면이 추적 가능함"
+            ]
+          },
+          {
+            "id": "satin_fold_direction",
+            "match_terms": [
+              "fold ridges and curvature define a coherent drape direction",
+              "주름 능선과 곡률이 일관된 드레이프 방향을 정함"
+            ]
+          },
+          {
+            "id": "satin_highlight_following_folds",
+            "match_terms": [
+              "a broad smooth highlight follows those folds",
+              "넓고 매끄러운 하이라이트가 그 주름을 따라감"
+            ]
+          },
+          {
+            "id": "satin_dark_plane_continuity",
+            "match_terms": [
+              "material detail remains visible through the darker planes",
+              "어두운 면에서도 재료 디테일이 남음"
+            ]
+          },
+          {
+            "id": "satin_edge_seam_ownership",
+            "match_terms": [
+              "seams and garment edges preserve surface ownership",
+              "솔기와 의복 가장자리가 표면 소유를 보존함"
+            ]
+          }
+        ],
+        "discovery": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "satin_continuous_garment",
+            "satin_fold_direction",
+            "satin_highlight_following_folds",
+            "satin_dark_plane_continuity",
+            "satin_edge_seam_ownership"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "satin_continuous_garment",
+              "satin_fold_direction",
+              "satin_highlight_following_folds",
+              "satin_dark_plane_continuity",
+              "satin_edge_seam_ownership"
+            ],
+            "evidence": [
+              {
+                "field": "satin_surface_phrase",
+                "requirement": {
+                  "min_content_words": 8,
+                  "must_mention_any": [
+                    "one continuous satin-like garment surface remains traceable"
+                  ]
+                }
+              },
+              {
+                "field": "satin_fold_phrase",
+                "requirement": {
+                  "min_content_words": 9,
+                  "must_mention_any": [
+                    "fold ridges and curvature define a coherent drape direction"
+                  ]
+                }
+              },
+              {
+                "field": "satin_highlight_phrase",
+                "requirement": {
+                  "min_content_words": 7,
+                  "must_mention_any": [
+                    "a broad smooth highlight follows those folds"
+                  ]
+                }
+              },
+              {
+                "field": "satin_dark_plane_phrase",
+                "requirement": {
+                  "min_content_words": 8,
+                  "must_mention_any": [
+                    "material detail remains visible through the darker planes"
+                  ]
+                }
+              },
+              {
+                "field": "satin_ownership_phrase",
+                "requirement": {
+                  "min_content_words": 7,
+                  "must_mention_any": [
+                    "seams and garment edges preserve surface ownership"
+                  ]
+                }
+              }
+            ],
+            "instruction": "Show one continuous satin-like garment surface whose fold ridges and curvature establish a coherent drape direction, with a broad smooth highlight following those folds, darker planes retaining material detail, and visible seams and edges keeping the effect on that garment.",
+            "render_gates": [
+              {
+                "id": "vo_satin_continuous_garment_surface",
+                "review_scale": "thumbnail",
+                "description": "A smooth luminous draped mass reads as one continuous garment rather than a background sheet or detached patch."
+              },
+              {
+                "id": "vo_satin_coherent_fold_direction",
+                "review_scale": "both",
+                "description": "Fold ridges and curved planes share a coherent gravity or support-driven drape direction across the garment."
+              },
+              {
+                "id": "vo_satin_highlight_follows_folds",
+                "review_scale": "native",
+                "description": "Broad smooth highlights move with fold curvature instead of appearing as random white streaks or global bloom."
+              },
+              {
+                "id": "vo_satin_dark_plane_continuity",
+                "review_scale": "native",
+                "description": "Shadowed garment planes retain material continuity and fold detail without crushing into featureless black."
+              },
+              {
+                "id": "vo_satin_edge_seam_ownership",
+                "review_scale": "both",
+                "description": "Visible seams and garment edges keep the directional luster owned by the same clothing surface."
+              }
+            ]
+          }
         ]
       }
     }

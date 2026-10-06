@@ -15,6 +15,119 @@ from typing import Any
 
 HARD_ACTIVATION_VERSION = "photo-visual-hard-activation/v1"
 AUTHORED_COMPONENT_VERSION = "photo-authored-visual-components/v1"
+GROUPED_COMPONENT_VERSION = "photo-authored-visual-components/v2"
+
+
+def _verify_projection(profile: Mapping[str, Any], result: dict[str, Any]) -> None:
+    for field in ("required_evidence_fields", "evidence_requirements", "render_gates", "composition_instruction"):
+        if field in profile and profile[field] != result[field]:
+            raise ValueError(f"{field} conflicts with its authored component source")
+    groups = (profile.get("semantics") or {}).get("component_semantics")
+    if groups is not None and groups != result["semantics"]["component_semantics"]:
+        raise ValueError("component_semantics conflicts with its authored component source")
+
+
+def _compile_grouped_components(profile: Mapping[str, Any], source: dict[str, Any]) -> dict[str, Any]:
+    """Preserve many-to-many and collective duties without inventing a 1:1 map.
+
+    Discovery thresholds govern approximate component support, not the evidence
+    or pixel duties of an activated profile. Every declared obligation is emitted.
+    """
+    if set(source) != {"contract_version", "components", "discovery", "obligations"}:
+        raise ValueError("grouped authored components require components, discovery and obligations")
+    components = source["components"]
+    if not isinstance(components, list) or not components:
+        raise ValueError("grouped authored components require non-empty components")
+    ids: set[str] = set()
+    groups = []
+    for component in components:
+        if not isinstance(component, dict) or set(component) != {"id", "match_terms"}:
+            raise ValueError("grouped components require id and match_terms")
+        component_id = component["id"]
+        if (not isinstance(component_id, str) or not re.fullmatch(r"[a-z][a-z0-9_]+", component_id)
+                or component_id in ids):
+            raise ValueError("invalid or duplicate grouped component id")
+        ids.add(component_id)
+        groups.append({"id": component_id, "any_terms": copy.deepcopy(_terms(component["match_terms"], "component.match_terms"))})
+    discovery = source["discovery"]
+    if not isinstance(discovery, dict) or set(discovery) != {"minimum_component_groups", "required_group_ids"}:
+        raise ValueError("component discovery requires a minimum and required group IDs")
+    minimum, required = discovery["minimum_component_groups"], discovery["required_group_ids"]
+    if (type(minimum) is not int or not 1 <= minimum <= len(components)
+            or not isinstance(required, list) or any(not isinstance(value, str) for value in required)
+            or len(required) != len(set(required)) or not set(required) <= ids):
+        raise ValueError("invalid component discovery threshold or group references")
+    obligations = source["obligations"]
+    if not isinstance(obligations, list) or not obligations:
+        raise ValueError("grouped components require non-empty obligations")
+    evidence_fields, requirements, gates, instructions = [], {}, [], []
+    gate_ids: set[str] = set()
+    referenced_components: set[str] = set()
+    for obligation in obligations:
+        if (not isinstance(obligation, dict)
+                or set(obligation) != {"component_ids", "evidence", "instruction", "render_gates"}):
+            raise ValueError("component obligation requires references, evidence, instruction and render gates")
+        refs = _terms(obligation["component_ids"], "obligation.component_ids")
+        if not set(refs) <= ids:
+            raise ValueError("component obligation references unknown components")
+        referenced_components.update(refs)
+        instruction = obligation["instruction"]
+        if not isinstance(instruction, str) or len(instruction.split()) < 6:
+            raise ValueError("component obligation instruction must describe a concrete relation")
+        instructions.append(instruction)
+        evidence = obligation["evidence"]
+        if not isinstance(evidence, list) or not evidence:
+            raise ValueError("component obligation requires evidence")
+        for row in evidence:
+            if not isinstance(row, dict) or set(row) != {"field", "requirement"}:
+                raise ValueError("component evidence requires field and requirement")
+            field, requirement = row["field"], row["requirement"]
+            if (not isinstance(field, str) or not re.fullmatch(r"[a-z][a-z0-9_]+_phrase", field)
+                    or field in requirements):
+                raise ValueError("invalid or duplicate component evidence field")
+            if (not isinstance(requirement, dict)
+                    or not {"min_content_words", "must_mention_any"} <= set(requirement)
+                    or set(requirement) - {"min_content_words", "must_mention_any", "must_not_contain"}
+                    or type(requirement["min_content_words"]) is not int or requirement["min_content_words"] < 2):
+                raise ValueError("invalid component evidence requirement")
+            _terms(requirement["must_mention_any"], "evidence.must_mention_any")
+            if "must_not_contain" in requirement:
+                _terms(requirement["must_not_contain"], "evidence.must_not_contain")
+            evidence_fields.append(field)
+            requirements[field] = copy.deepcopy(requirement)
+        render_gates = obligation["render_gates"]
+        if not isinstance(render_gates, list) or not render_gates:
+            raise ValueError("component obligation requires render gates")
+        for gate in render_gates:
+            if not isinstance(gate, dict) or set(gate) != {"id", "review_scale", "description"}:
+                raise ValueError("invalid component render gate")
+            gate_id = gate["id"]
+            if (not isinstance(gate_id, str) or not re.fullmatch(r"vo_[a-z0-9_]+", gate_id)
+                    or gate_id in gate_ids or gate["review_scale"] not in {"thumbnail", "native", "both"}
+                    or len(str(gate["description"]).split()) < 6):
+                raise ValueError("invalid or duplicate component render gate")
+            gate_ids.add(gate_id)
+            gates.append(copy.deepcopy(gate))
+    if referenced_components != ids:
+        raise ValueError("every grouped component must belong to an obligation")
+    result = copy.deepcopy(dict(profile))
+    result.setdefault("semantics", {})["component_semantics"] = {
+        **copy.deepcopy(discovery), "groups": groups,
+    }
+    result.update(required_evidence_fields=evidence_fields, evidence_requirements=requirements,
+                  render_gates=gates, composition_instruction=" ".join(instructions))
+    _verify_projection(profile, result)
+    return result
+
+
+def validate_visual_profile_source(profile: Mapping[str, Any]) -> None:
+    """Require one authored source in live assets, leaving compiled views intact."""
+    if "authored_components" not in profile:
+        raise ValueError("visual profile source requires authored_components")
+    derived = {"required_evidence_fields", "evidence_requirements", "render_gates", "composition_instruction"}
+    if derived & set(profile) or "component_semantics" in (profile.get("semantics") or {}):
+        raise ValueError("visual profile source must not duplicate generated component fields")
+    compile_visual_profile(profile)
 
 
 def _terms(value: Any, label: str) -> list[str]:
@@ -87,6 +200,8 @@ def compile_visual_profile(
         return result
     if (context_text or request_text) and matches is None:
         raise ValueError("context specialization requires a negation-aware request matcher")
+    if isinstance(source, dict) and source.get("contract_version") == GROUPED_COMPONENT_VERSION:
+        return _compile_grouped_components(profile, source)
     if context_text or request_text:
         # A loaded profile may carry compiled compatibility surfaces. Verify
         # their default source projection before applying request conditions.
@@ -154,10 +269,5 @@ def compile_visual_profile(
     result["render_gates"] = [copy.deepcopy(item["render_gate"]) for item in active]
     result["composition_instruction"] = " ".join(item["instruction"] for item in active)
     if not context_text and not request_text:
-        for field in ("required_evidence_fields", "evidence_requirements", "render_gates", "composition_instruction"):
-            if field in profile and profile[field] != result[field]:
-                raise ValueError(f"{field} conflicts with its authored component source")
-        existing_groups = (profile.get("semantics") or {}).get("component_semantics")
-        if existing_groups is not None and existing_groups != result["semantics"]["component_semantics"]:
-            raise ValueError("component_semantics conflicts with its authored component source")
+        _verify_projection(profile, result)
     return result
