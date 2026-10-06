@@ -1,0 +1,31 @@
+............E........................................................................................................................................................................................................................................E..........................................................................................................................................................................................................................................................................................................................................................
+======================================================================
+ERROR: test_current_real_command_reproduces_v27_and_v26_scene_remains_exact (test_photo_appearance_boundary_history.AppearanceBoundaryHistoryTests.test_current_real_command_reproduces_v27_and_v26_scene_remains_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-main-merge/image-prompt/tests/test_photo_appearance_boundary_history.py", line 50, in test_current_real_command_reproduces_v27_and_v26_scene_remains_exact
+    self.assertEqual(previous[name],self.pack[name],name)
+                     ~~~~~~~~^^^^^^
+KeyError: 'embodiment_review'
+
+======================================================================
+ERROR: test_complete_merged_state_and_twenty_one_keeps_remain_exact (test_photo_liminal_active_use_korean_data_cleanup.LiminalActiveUseKoreanDataCleanupTests.test_complete_merged_state_and_twenty_one_keeps_remain_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-main-merge/image-prompt/tests/test_photo_liminal_active_use_korean_data_cleanup.py", line 97, in test_complete_merged_state_and_twenty_one_keeps_remain_exact
+    historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-main-merge/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 1254, in load_json
+    data = merge_research_extension(data, extension)
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-main-merge/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 710, in merge_research_extension
+    photo_candidate_semantics.extend_slot_contexts(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        slots, extension.get("existing_slot_context_extensions"))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-main-merge/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_semantics.py", line 88, in extend_slot_contexts
+    raise ValueError(f"context extension references unknown entry {slot}.{entry_id}")
+ValueError: context extension references unknown entry wearable_accessory.ca_cap_projections
+
+----------------------------------------------------------------------
+Ran 592 tests in 2521.767s
+
+FAILED (errors=2)

@@ -1,0 +1,53 @@
+{
+  "schema": "subculture_illustration_universal_scene_baseline/v1",
+  "frozen_at": "2026-08-10T11:22:03+09:00",
+  "baseline_ref": "main@3185403d9e40",
+  "purpose": "Freeze the pre-universal-layer illustration and photo contracts so candidate-pack v3 cannot rewrite historical v1/v2 evidence.",
+  "legacy_contracts": {
+    "candidate_pack_versions": [
+      "subculture-illustration-candidate-pack/v1",
+      "subculture-illustration-candidate-pack/v2"
+    ],
+    "current_runtime_sha256": "b51034902366418f9a406523d258fd97f6c98f24e79c61b9691c6cced5194a79",
+    "current_audit_sha256": "e69b5ddda10e5f647ec5ea7de6c6dc8b71a294f93f11b0a2dd1f9118af6485b6",
+    "generator_cli_sha256": "48d58077379964fdcf2b018a4c6b8914b1eeca3f9984489bee0e5bd9e2cab5c5",
+    "audit_cli_sha256": "a5b1a6a3658ed6e28fe1b2a47ec0a793ec3833962dbc6ae0091c2a5d6e27cb97"
+  },
+  "authorial_assets": {
+    "illustration_topic_crosswalk_v1.json": "aa60abf1a71be14666a4ca745bb8dfb538769e3d651211095b50893b458cd2ba",
+    "illustration_format_profiles_v1.json": "70ba97f6c043199eba8b694d5336052e7d6d8daa08f44b62684c0a24c96e7f10",
+    "illustration_mechanism_graph_v1.json": "83f73d28e53a12c6e8d015643fea44c3029fed6f299fd177a46efbaf6a76cb0d",
+    "illustration_prompt_holdout_v1.jsonl": "82aa37b8dd46502d38f5b7aab4476e4aaffd1b7cb0b194333fd63b6db317a3b3",
+    "render_illustration_quality_holdout_v1.jsonl": "6815445544ecebd9b8962b79b1e72a05a0f61fb14fff67f61ec968ae7d955e7a"
+  },
+  "qualification_manifests": {
+    "prompt_qualification_v1/manifest.json": "ef6cf9676b46db42623250b7dd4250661364d2690f0bf7706a919e9a254e5537",
+    "prompt_qualification_v2/manifest.json": "e6fa9ce907becaff744904797a4568715832e2c96933b7de818925a3272d05bd"
+  },
+  "photo_boundary": {
+    "baseline_asset": "photo_regression_baseline_v1.json",
+    "baseline_asset_sha256": "3db499287144390ea4724a916069ef1a01b7b6d86064cebee56dd4a496d252c8",
+    "expected_candidate_pack_sha256": "8b3bc3c436b2ef883db7fd35ff426211f86fc7eda1a5685d677f7d6f8c8c216c",
+    "expected_pack_id": "5e64d0990c415a3b"
+  },
+  "new_frozen_holdouts": {
+    "universal_scene_prompt_holdout_v1.jsonl": {
+      "record_count": 24,
+      "sha256": "109b4fab562e75d20d5a79daf0d2027890bc44366e380e21f2aa6ce9b356aaee"
+    },
+    "universal_scene_contract_holdout_v1.jsonl": {
+      "record_count": 24,
+      "sha256": "c5f1a4fabfb029cfe8b5eb0c21d1208f2ab617cfdfd0e9034373196c4bc6d341"
+    },
+    "render_universal_scene_quality_holdout_v1.jsonl": {
+      "record_count": 6,
+      "sha256": "ff78de78a59f843c1dc345039aa9fc917882532cc0767863ab7ab2419562bb68"
+    }
+  },
+  "invariants": [
+    "Explicit legacy v1 and v2 generation must reproduce their historical canonical candidate-pack bytes.",
+    "The photo candidate-pack baseline must remain byte-identical.",
+    "Historical prompt qualifications and render artifacts are immutable evidence and must not be relabeled as v3.",
+    "The universal layer is additive and must not rewrite authorial route ownership, format profiles, negative prompt bytes, safety behavior, or image retry policy."
+  ]
+}

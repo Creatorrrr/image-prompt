@@ -1,0 +1,37 @@
+{
+  "selected": [
+    "tests.test_photo_clothing_terminology_semantics"
+  ],
+  "tests_run": 7,
+  "passed": 7,
+  "failures": [],
+  "errors": [],
+  "skipped": [],
+  "guards": {
+    "sanitized_environment": true,
+    "no_site": true,
+    "no_bytecode": true,
+    "network_denied": true,
+    "provider_client_denied": true,
+    "credential_reads": 0,
+    "dummy_dotenv_reads": [],
+    "guarded_python_children": [],
+    "blocked": [
+      {
+        "event": "socket.__new__",
+        "reason": "network/native process execution is forbidden",
+        "self_test": true
+      },
+      {
+        "event": "open",
+        "reason": "dotenv is allowed only in this test run temporary fixtures",
+        "self_test": true
+      },
+      {
+        "event": "subprocess.Popen",
+        "reason": "only authored Python tests re-entering the offline guard may execute",
+        "self_test": true
+      }
+    ]
+  }
+}

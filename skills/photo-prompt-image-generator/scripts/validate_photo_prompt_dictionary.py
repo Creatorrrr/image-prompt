@@ -10,7 +10,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from visual_profile_contracts import compile_visual_profile, validate_hard_activation
+from visual_profile_contracts import compile_visual_profile, validate_hard_activation, validate_visual_profile_source
+import photo_source_manifest
 from photo_contracts import AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
 import photo_creative_controls as creative_controls
 
@@ -1417,12 +1418,12 @@ def validate_visual_relation_contract(
         errors.append(f"{label}.activation: every guard must be true")
 
 
-def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
+def validate_visual_obligation_registry(path: Path, errors: list[str], *, inventory=None) -> None:
     if not path.exists():
         errors.append(f"visual obligation registry missing: {path}")
         return
     try:
-        payload = load_visual_obligation_registry(path)
+        payload = load_visual_obligation_registry(path, inventory=inventory)
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         errors.append(f"visual obligation registry is not valid JSON: {exc}")
         return
@@ -2035,25 +2036,80 @@ def validate_visual_profile_index_file(
         errors.append(f"visual profile index: {exc}")
 
 
+def validate_source_corpus(root: Path, data: dict, inventory=None) -> list[str]:
+    """Authored/cross-source checks; callers also deep-validate both indexes."""
+    assets = Path(root) / "assets"
+    inventory = inventory or photo_source_manifest.SourceInventory.load(assets)
+    errors = []
+    try:
+        inventory.validate()
+    except ValueError as exc:
+        errors.append(str(exc))
+    for name in ["photo_prompt_visual_obligations.json", *inventory.files("visual_profile")]:
+        path = assets / name
+        if not path.is_file():
+            continue
+        try:
+            for profile in json.loads(path.read_text(encoding="utf-8")).get("profiles") or []:
+                validate_visual_profile_source(profile)
+        except (OSError, ValueError, TypeError) as exc:
+            errors.append(f"{name}: invalid authored profile source: {exc}")
+    paths = [assets / "photo_prompt_tags.json", *[assets / name for name in inventory.files("candidate")]]
+    validate_runtime_process_metadata(paths, errors)
+    validate_retired_runtime_metadata(paths, errors)
+    validate_selection_contracts(data, errors)
+    validate_no_text_required_entries(data, errors)
+    validate_coherence_rules(data, errors)
+    validate_slot_applicability(data, errors)
+    validate_quality_layers(assets / "photo_prompt_quality_layers.json", data, errors)
+    validate_visual_obligation_registry(assets / "photo_prompt_visual_obligations.json", errors, inventory=inventory)
+    vocab = merged_facet_vocab(data)
+    for label, entry in all_entries(data):
+        validate_facets(label, entry, vocab, errors)
+        validate_hard_guards(label, entry, vocab, errors)
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate photo prompt dictionary semantic metadata.")
     parser.add_argument("--tags", default=Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_tags.json")
-    parser.add_argument("--quality-layers", default=DEFAULT_QUALITY_LAYERS)
-    parser.add_argument("--visual-obligations", default=DEFAULT_VISUAL_OBLIGATIONS)
-    parser.add_argument("--visual-profile-index", default=DEFAULT_VISUAL_PROFILE_INDEX)
+    parser.add_argument("--quality-layers")
+    parser.add_argument("--visual-obligations")
+    parser.add_argument("--visual-profile-index")
+    parser.add_argument("--no-runtime-publication", action="store_true")
     args = parser.parse_args()
 
     errors: list[str] = []
 
     tags_path = Path(args.tags)
+    args.quality_layers = args.quality_layers or tags_path.with_name(DEFAULT_QUALITY_LAYERS.name)
+    args.visual_obligations = args.visual_obligations or tags_path.with_name(DEFAULT_VISUAL_OBLIGATIONS.name)
+    args.visual_profile_index = args.visual_profile_index or tags_path.with_name(DEFAULT_VISUAL_PROFILE_INDEX.name)
+    photo_source_manifest.validate_source_files(tags_path.parent, errors, tags_path.with_name("photo_prompt_source_manifest.json"))
+    try:
+        inventory = photo_source_manifest.SourceInventory.load(tags_path.parent)
+    except (OSError, ValueError) as exc:
+        print(f"source manifest: {exc}", file=sys.stderr)
+        return 1
+    profile_path = Path(args.visual_obligations)
+    for source_path in [profile_path, *[profile_path.with_name(name)
+                                      for name in inventory.files("visual_profile")]]:
+        if not source_path.is_file():
+            continue
+        try:
+            raw = json.loads(source_path.read_text(encoding="utf-8"))
+            for profile in raw.get("profiles") or []:
+                validate_visual_profile_source(profile)
+        except (OSError, ValueError, TypeError) as exc:
+            errors.append(f"{source_path.name}: invalid authored profile source: {exc}")
     runtime_asset_paths = [tags_path] + [
-        tags_path.with_name(filename) for filename in TAXONOMY_EXTENSION_FILENAMES
+        tags_path.with_name(filename) for filename in inventory.files("candidate")
     ]
     validate_runtime_process_metadata(runtime_asset_paths, errors)
     validate_retired_runtime_metadata(runtime_asset_paths, errors)
 
     try:
-        data = load_json(args.tags)
+        data = load_json(args.tags, inventory=inventory)
     except (OSError, ValueError) as exc:
         errors.append(f"{tags_path.name}: cannot load dictionary: {exc}")
         for error in errors:
@@ -2066,7 +2122,7 @@ def main() -> int:
     validate_coherence_rules(data, errors)
     validate_slot_applicability(data, errors)
     validate_quality_layers(Path(args.quality_layers), data, errors)
-    validate_visual_obligation_registry(Path(args.visual_obligations), errors)
+    validate_visual_obligation_registry(Path(args.visual_obligations), errors, inventory=inventory)
     validate_visual_profile_index_file(
         Path(args.visual_obligations),
         Path(args.visual_profile_index),
@@ -2082,6 +2138,9 @@ def main() -> int:
         return 1
 
     print("photo prompt dictionary metadata is valid")
+    if not args.no_runtime_publication:
+        from photo_runtime_sources import publish_if_ready
+        publish_if_ready(tags_path.parent.parent)
     return 0
 
 

@@ -1,0 +1,144 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "I'd like a product photo that clearly shows the fastening at the front of a bra.",
+  "creative_controls_sha256": "dd87ad0e51552a0a37d3eec29539e24b99ab827505dc5dd29334d7cfb5bceec0",
+  "interpreted_intent": "The synthetic requester specifies a bra front fastening and its clear visibility, without specifying its mechanism or engagement state. I choose a compact joined clasp and face-up product arrangement, treating clasp type, closed state, charcoal fabric and framing as editable author choices. The intended image makes the front connection spatially obvious without extending the requester contract to a particular mechanism.",
+  "subject": "A bra arranged as an adult-size product with its front fastening visible.",
+  "setting": "A pale stone counter and warm gray wall near a high window.",
+  "event": "The front fastening is displayed in its garment context.",
+  "visual_priorities": [
+    "The fastening is visibly located on the garment front.",
+    "The front panels and cups establish its relation to the bra.",
+    "A restrained metal glint sets the connection apart from matte cloth."
+  ],
+  "baseline_prompt_en": "A product photograph presents a bra with its front fastening clearly visible. The adult-size garment lies face-up on a pale stone counter, with both cups and the short fabric sections leading into the front connection in view. A compact clasp joins the two front panels. One side of the charcoal fabric rests in a slight fold, giving the arrangement the relaxed precision of a real garment set down for inspection. The clasp catches a restrained glint against the matte cloth. A warm gray wall falls softly out of focus behind the counter. High window light describes the seam edges and the small junction, while a close three-quarter view keeps the fastening's position on the garment immediately clear.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete photographic request",
+      "source_text": "I'd like a product photo that clearly shows the fastening at the front of a bra.",
+      "basis": "request_context",
+      "resolution": "The front fastening is displayed in its garment context. No user-supplied special definition is present.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "product photo",
+        "dimension": "concept",
+        "prompt_evidence": "product photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "a bra",
+        "dimension": "subject",
+        "prompt_evidence": "presents a bra"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "clearly shows the fastening at the front of a bra",
+        "dimension": "event",
+        "prompt_evidence": "its front fastening clearly visible"
+      },
+      {
+        "anchor_id": "garment_property_1",
+        "source_text": "fastening at the front",
+        "dimension": "appearance",
+        "target": "garment",
+        "property": "fastening.location",
+        "prompt_evidence": "front fastening clearly visible"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "color",
+      "material",
+      "setting",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "style",
+      "format",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_object_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "a bra with its front fastening clearly visible"
+      }
+    },
+    {
+      "assertion_id": "requested_visible_state",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "event"
+      ],
+      "axes": {
+        "garment_region": "front",
+        "visible_state": "fastening_displayed"
+      },
+      "evidence": {
+        "location_phrase": "its front fastening clearly visible"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_declaration",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "product photography",
+    "family": "quiet material study",
+    "evidence": [
+      "on a pale stone counter",
+      "High window light describes the seam edges"
+    ]
+  },
+  "variation_key": "new-synthetic-fastening-e"
+}

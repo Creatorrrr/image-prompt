@@ -1,0 +1,166 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "Photograph a weathered timber gate at a riverside garden, focusing on a single decorative opening formed by four rounded lobes around the centre. Show daylight and greenery through the opening.",
+  "creative_controls_sha256": "7fe13c3a4e27c10e6660dc07db79a1d92033562aaa3db6b0ca917f6b9a7e4b7b",
+  "interpreted_intent": "The request specifies one decorative opening, whose four rounded lobes form a connected boundary through the timber gate. Light and greenery are visible beyond it. Agent-owned direction: Let the living green beyond the gate contrast with its weathered wooden surface and clearly connected four-part opening. A broad gate portrait can turn the opening into a minor detail; a medium detail with a few complete boards better balances craft and setting.",
+  "subject": "A decorative opening in a weathered timber gate",
+  "setting": "A riverside garden",
+  "event": "Daylight and greenery show through one opening with four rounded lobes",
+  "visual_priorities": [
+    "One continuous opening has four rounded lobes around its centre",
+    "Gate thickness and background greenery establish the void through the timber",
+    "The weathered boards remain recognisable around the ornament"
+  ],
+  "baseline_prompt_en": "A natural architectural detail photograph of a weathered timber gate at a riverside garden. A single decorative opening cuts through the boards, its continuous edge forming four rounded lobes around the centre. Daylight and greenery show through the opening. The rounded parts face up, down, left and right, with the thickness of the timber visible along the inner edge. The gate's grey grain and small splits sit against the softer green foliage beyond; a sliver of river glints at the far side. Diffuse morning daylight holds detail in the recess and the worn surface. Compose a medium close view with the complete opening dominant and several board seams still visible, letting the gate remain a recognisable working object.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "the requested decorative subject and its surface or opening",
+      "source_text": "Photograph a weathered timber gate at a riverside garden, focusing on a single decorative opening formed by four rounded lobes around the centre. Show daylight and greenery through the opening.",
+      "basis": "request_context",
+      "resolution": "The request specifies one decorative opening, whose four rounded lobes form a connected boundary through the timber gate. Light and greenery are visible beyond it.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "formed by four rounded lobes around the centre",
+        "dimension": "concept",
+        "prompt_evidence": "its continuous edge forming four rounded lobes around the centre"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "a single decorative opening",
+        "dimension": "subject",
+        "prompt_evidence": "decorative opening cuts through the boards"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "Show daylight and greenery through the opening",
+        "dimension": "event",
+        "prompt_evidence": "Daylight and greenery show through the opening"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "at a riverside garden",
+        "dimension": "setting",
+        "prompt_evidence": "at a riverside garden"
+      },
+      {
+        "anchor_id": "core_count",
+        "source_text": "a single decorative opening",
+        "dimension": "count",
+        "prompt_evidence": "A single decorative opening"
+      },
+      {
+        "anchor_id": "gate_surface",
+        "source_text": "a weathered timber gate",
+        "dimension": "appearance",
+        "prompt_evidence": "a weathered timber gate",
+        "target": "gate",
+        "property": "surface.condition"
+      },
+      {
+        "anchor_id": "gate_material",
+        "source_text": "timber gate",
+        "dimension": "material",
+        "prompt_evidence": "timber gate",
+        "target": "gate",
+        "property": "structure.material"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "count"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "material",
+      "color",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "timing",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "decorative opening cuts through the boards"
+      }
+    },
+    {
+      "assertion_id": "requested_shape_and_surface",
+      "dimension": "concept",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "concept"
+      ],
+      "axes": {
+        "outline": "four rounded lobes around the centre",
+        "surface_state": "opening through timber"
+      },
+      "evidence": {
+        "outline_phrase": "its continuous edge forming four rounded lobes around the centre",
+        "through_phrase": "Daylight and greenery show through the opening"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "architectural detail photography",
+    "family": "restrained natural observation",
+    "evidence": [
+      "ordinary daylight",
+      "a complete subject outline in its material setting"
+    ]
+  },
+  "variation_key": "four_lobed_timber"
+}

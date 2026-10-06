@@ -1,0 +1,25 @@
+setUpClass (tests.test_photo_v24_historical_fixture.V24HistoricalFixtureTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_v24_historical_fixture.V24HistoricalFixtureTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/photo-structure-main-sync/image-prompt/tests/test_photo_v24_historical_fixture.py", line 41, in setUpClass
+    cls.validator = fixtures.archived_v24_validator(cls.root, source_root=ROOT)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-structure-main-sync/image-prompt/tests/photo_prompt_fixtures.py", line 881, in archived_v24_validator
+    manifest = materialize_v24_parent_source(directory, source_root=source_root)
+  File "/Users/chasoik/.codex/worktrees/photo-structure-main-sync/image-prompt/tests/photo_prompt_fixtures.py", line 857, in materialize_v24_parent_source
+    _v24_empty_destination(directory)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-structure-main-sync/image-prompt/tests/photo_prompt_fixtures.py", line 850, in _v24_empty_destination
+    _v24_no_symlink_ancestors(directory)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-structure-main-sync/image-prompt/tests/photo_prompt_fixtures.py", line 755, in _v24_no_symlink_ancestors
+    raise AssertionError('Unsafe V24 historical source or destination symlink')
+AssertionError: Unsafe V24 historical source or destination symlink
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.046s
+
+FAILED (errors=1)

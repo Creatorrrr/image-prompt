@@ -1,0 +1,161 @@
+{
+  "schema": "photo-lobe-v23-integration-validation/v1",
+  "source_commit": "9654fc13070baa1c8d4c3b31fbf80972234f85b9",
+  "parent_commit": "900bf2efdd17fbc6a6ef3aa340f3526b1e01f223",
+  "status": "scoped_checks_pass_with_preserved_upstream_sibling_failure",
+  "validator_sha256": "7cbed927146b2a0f4456d8faa1671bce95d07e2a6950c795ff87fd8decf9f1d3",
+  "proof_sha256": "f202dcc8f6ae5ecb410073c1c903535e1e5a98aaa6558a41bf844802bbd77f46",
+  "qualification_sha256": "d499e510710063c73c30be021acc504ce28c3225668a1ecb75c7841f86fca128",
+  "new_tests": {
+    "unique_tests": 21,
+    "passed": 21,
+    "file_sha256": {
+      "tests/test_photo_lobe_boundary_history.py": "9eb26fe42ba40d71473a31ee6d7ecea89edb93f2c4d6b463556d622f1f08df4b",
+      "tests/test_photo_v22_historical_fixture.py": "9533b2ada0f68da4b75fc251f38721d4cebb78f3c157d071eea152bf5cf304ad",
+      "skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py": "7cbed927146b2a0f4456d8faa1671bce95d07e2a6950c795ff87fd8decf9f1d3"
+    },
+    "runs": [
+      {
+        "suite": "test_photo_v22_historical_fixture",
+        "test_count": 8,
+        "elapsed_seconds": 5.242,
+        "exit_code": 0,
+        "command": "PYTHONPATH=tests GIT_NO_LAZY_FETCH=1 python -m unittest -v test_photo_v22_historical_fixture",
+        "guards": [
+          "GIT_NO_LAZY_FETCH=1 in command environment",
+          "Suite patches subprocess.Popen while materializing archived_v22_validator, replaying the original V22 boundary, and testing missing-payload failure",
+          "This run did not clear the whole process environment or install a global socket guard"
+        ]
+      },
+      {
+        "suite": "test_photo_lobe_boundary_history",
+        "test_count": 13,
+        "elapsed_seconds": 62.289,
+        "exit_code": 0,
+        "command": "GIT_NO_LAZY_FETCH=1 python - <<'PY'\nimport os\nimport socket\nimport sys\nimport unittest\nfrom unittest import mock\n\nos.environ.clear()\nos.environ['GIT_NO_LAZY_FETCH'] = '1'\nsys.path.insert(0, 'tests')\nwith mock.patch('subprocess.Popen', side_effect=AssertionError('Offline tests attempted a subprocess')), \\\n     mock.patch.object(socket.socket, 'connect', side_effect=AssertionError('Offline tests attempted network access')), \\\n     mock.patch('socket.create_connection', side_effect=AssertionError('Offline tests attempted network access')):\n    suite = unittest.defaultTestLoader.loadTestsFromName('test_photo_lobe_boundary_history')\n    result = unittest.TextTestRunner(verbosity=2).run(suite)\nraise SystemExit(not result.wasSuccessful())\nPY",
+        "guards": [
+          "os.environ.clear() before suite import; restored only GIT_NO_LAZY_FETCH=1",
+          "subprocess.Popen patched to raise AssertionError during suite import and execution",
+          "socket.socket.connect and socket.create_connection patched to raise AssertionError during suite import and execution"
+        ]
+      }
+    ],
+    "registration_test_scope": "The default/explicit V23 registration test mocked validator.subprocess.run and wrote the existing sealed pack to the requested output path. It did not run the actual generator CLI.",
+    "raw_log_status": "Original new-test stdout was not persisted; counts and times below are the observed runner results."
+  },
+  "unchanged_history_and_contract_tests": {
+    "command": "python -m unittest tests.test_photo_ornament_boundary_history tests.test_photo_visual_storage_boundary_history tests.test_photo_v21_historical_fixture tests.test_photo_v20_historical_fixture tests.test_photo_b5_guidance_boundary_history tests.test_photo_cf40_source_boundary_history tests.test_photo_current_boundary tests.test_photo_current_boundary_snapshot tests.test_photo_ornament_structure tests.test_photo_visual_profile_shards",
+    "unique_tests": 104,
+    "initial_result": {
+      "passed": 98,
+      "errors": 6,
+      "cause": "One sparse historical fixture was absent; no assertion failed."
+    },
+    "exact_materialized_fixture": "docs/research-evidence/photo-prompt/retrieval-runtime-improvement-20261003/photo-boundary-after-pack.json",
+    "rerun_command": "python -m unittest tests.test_photo_current_boundary_snapshot",
+    "rerun_result": {
+      "tests": 6,
+      "passed": 6
+    },
+    "latest_unique_result": {
+      "passed": 104
+    }
+  },
+  "semantic_index_tests": {
+    "command": "python -m unittest tests.test_photo_semantic_index",
+    "unique_tests": 8,
+    "initial_result": {
+      "passed": 7,
+      "failures": 1,
+      "cause": "Diagnostic guard intercepted provider entry before the intended empty-environment missing-key failure."
+    },
+    "rerun_command": "python -m unittest tests.test_photo_semantic_index.PhotoSemanticIndexTests.test_semantic_index_builder_requires_api_key_for_real_build",
+    "rerun_result": {
+      "tests": 1,
+      "passed": 1
+    },
+    "latest_unique_result": {
+      "passed": 8
+    },
+    "synthetic_env_guard": "Only the two exact dummy payloads authored by the unchanged tests inside a runner-owned temporary directory were readable. Repository/other env files, provider SDK imports, client creation and network remained blocked. The targeted missing-key rerun allowed only the verified empty-environment pre-client failure."
+  },
+  "sibling_boundary": {
+    "command": "python -m unittest tests.test_subculture_illustration_photo_boundary",
+    "before_and_after": {
+      "tests": 3,
+      "passed": 1,
+      "failures": 1,
+      "skipped": 1
+    },
+    "unchanged_failure": "test_illustration_modules_do_not_import_photo_runtime rejects existing importlib in validate_illustration_assets.py",
+    "unchanged_skip": "Historical introduction Git commit unavailable with lazy fetching disabled.",
+    "assertions_modified": false
+  },
+  "latest_unique_test_totals": {
+    "tests": 136,
+    "passed": 134,
+    "known_failures": 1,
+    "skipped": 1,
+    "full_repository_suite_claimed": false
+  },
+  "actual_current_validator": {
+    "status": "pass",
+    "schema": "photo_regression_baseline/v23",
+    "historical_sha256": "3db499287144390ea4724a916069ef1a01b7b6d86064cebee56dd4a496d252c8",
+    "sha256": "c01e698c9d356073dc53031bebc440194b6537edcce88c01b7aaf6bda4d95037",
+    "pack_id": "2ba30a67e2796bf4"
+  },
+  "actual_validator_execution": "Called validate_photo_regression_baseline on current assets without mocking generation. A temporary .venv/bin/python link selected the existing interpreter for the frozen command; it was removed afterward. Environment was cleared, credential variables empty, and network/credential-file reads denied.",
+  "immutable_checks": {
+    "V1_through_V22_manifest_pack_files_byte_identical": 37,
+    "preexisting_validator_helpers_byte_identical": 75,
+    "only_changed_existing_validator_function": "validate_photo_regression_baseline version registration",
+    "V22_test_bodies_byte_identical": 8,
+    "source_snapshot_paths": 8,
+    "snapshot_worktree_bytes": 12803632,
+    "source_snapshot_new_git_blob_payload_bytes": 0,
+    "generic_matching_edits": false,
+    "known_upstream_failures_weakened": false
+  },
+  "guard_events": {
+    "network": 0,
+    "credential_file_reads": 0,
+    "initial_semantic_provider_entry_interception": 1
+  },
+  "limitations": [
+    "Synthetic mechanism-informed cohort; no domain-blind or real-user claim.",
+    "Exact natural candidate-order invariance fails in three cases; disclosed and reproduced in independent review.",
+    "No adoption, final-prompt, image or pixel improvement claim.",
+    "This is scoped verification; existing upstream failure families remain unchanged."
+  ],
+  "logs": {
+    "docs/research-evidence/photo-prompt/lobe-boundary-integration-20261005/validation/history-initial.log": "d3394cf6c1bfef60f8ffe666fe0b0e6a0b1b4f9eaf401187b478c9a47949a83a",
+    "docs/research-evidence/photo-prompt/lobe-boundary-integration-20261005/validation/snapshot-rerun.log": "fb526d31566ebddce2817c65d6141b21b917818c314ade6c7bae1ee5fdd84c32",
+    "docs/research-evidence/photo-prompt/lobe-boundary-integration-20261005/validation/semantic-initial.log": "ae28601817bf1482a3e58c821f5c75d7772991769d8b6c15756f9a57e748613b",
+    "docs/research-evidence/photo-prompt/lobe-boundary-integration-20261005/validation/semantic-missing-key-rerun.log": "bf447829dce4144d2ce6098866a12a501eae28552c310d684a588fdfd773bfc4",
+    "docs/research-evidence/photo-prompt/lobe-boundary-integration-20261005/validation/sibling-before.log": "0dc8b51432e61bdab25353492b3526a09a9eaa89ed96d4e8440253ca5363f0fe",
+    "docs/research-evidence/photo-prompt/lobe-boundary-integration-20261005/validation/sibling-after.log": "54f3bd42335748bb3b011356b2254c93321beaf1e536ca9aa57ba53c438b3ad5",
+    "docs/research-evidence/photo-prompt/lobe-boundary-integration-20261005/validation/actual-v23-validator.log": "f997efadf02280bacbdce75b20e448c41eb34d63a6ca979cb767a2ff8cc3d836"
+  },
+  "scoped_tests_excluding_sibling": {
+    "unique_tests": 133,
+    "latest_passed": 133
+  },
+  "qualification_storage": {
+    "qualification_referenced_files": 173,
+    "qualification_referenced_bytes": 216454538,
+    "qualification_new_files": 114,
+    "qualification_new_bytes": 3531444,
+    "qualification_reused_existing_files": 59,
+    "snapshot_reused_git_blobs_verified": 8,
+    "snapshot_bytes": 12803632,
+    "necessity": {
+      "four_full_natural_before_after_pairs": "Recompute complete positional and ID-aligned deltas without selected-output bias.",
+      "complete_frozen_authoring_and_setting_adapter_bundles": "Verify original manifest seals, request/core/lock/control identity, original admission failure and the separately frozen single setting change.",
+      "independent_before_after_review_files": "Retain independent adjudication, original seals, exact rejected order-invariance hypothesis and reproducible order mechanism.",
+      "candidate_seal_and_index_evidence": "Bind exactly twenty DATA paths and unchanged shard content to the reviewed candidate.",
+      "actual_frozen_receipts_and_existing_assets": "Establish real before/after command output and the two-leaf successor without duplicating the V22 pack.",
+      "existing_source_shards_and_current_inputs": "References reuse committed paths rather than adding archive copies; they make the relocated verifier self-contained."
+    }
+  }
+}

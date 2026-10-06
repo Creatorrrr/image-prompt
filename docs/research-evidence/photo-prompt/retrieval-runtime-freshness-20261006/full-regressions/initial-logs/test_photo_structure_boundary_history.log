@@ -1,0 +1,27 @@
+setUpClass (tests.test_photo_structure_boundary_history.StructureBoundaryHistoryTests) ... ERROR
+test_archived_imports_use_the_sealed_support_modules (tests.test_photo_structure_boundary_history.V23StructureParentFixtureTests.test_archived_imports_use_the_sealed_support_modules) ... ok
+test_manifest_mapping_and_coordinated_rehash_cannot_replace_the_parent (tests.test_photo_structure_boundary_history.V23StructureParentFixtureTests.test_manifest_mapping_and_coordinated_rehash_cannot_replace_the_parent) ... ok
+test_original_v23_passes_with_the_original_runtime_and_data (tests.test_photo_structure_boundary_history.V23StructureParentFixtureTests.test_original_v23_passes_with_the_original_runtime_and_data) ... ok
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_structure_boundary_history.StructureBoundaryHistoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/photo-structure-main-sync/image-prompt/tests/test_photo_structure_boundary_history.py", line 103, in setUpClass
+    archived = fixtures.archived_v24_validator(root, source_root=ROOT)
+  File "/Users/chasoik/.codex/worktrees/photo-structure-main-sync/image-prompt/tests/photo_prompt_fixtures.py", line 881, in archived_v24_validator
+    manifest = materialize_v24_parent_source(directory, source_root=source_root)
+  File "/Users/chasoik/.codex/worktrees/photo-structure-main-sync/image-prompt/tests/photo_prompt_fixtures.py", line 857, in materialize_v24_parent_source
+    _v24_empty_destination(directory)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-structure-main-sync/image-prompt/tests/photo_prompt_fixtures.py", line 850, in _v24_empty_destination
+    _v24_no_symlink_ancestors(directory)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-structure-main-sync/image-prompt/tests/photo_prompt_fixtures.py", line 755, in _v24_no_symlink_ancestors
+    raise AssertionError('Unsafe V24 historical source or destination symlink')
+AssertionError: Unsafe V24 historical source or destination symlink
+
+----------------------------------------------------------------------
+Ran 3 tests in 10.444s
+
+FAILED (errors=1)

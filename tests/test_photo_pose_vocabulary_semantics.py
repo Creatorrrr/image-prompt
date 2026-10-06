@@ -78,8 +78,8 @@ class PhotoPoseVocabularySemanticsTests(unittest.TestCase):
                                           "photo_prompt_slang_visual_extension.json",
                                           "photo_prompt_seduction_expression_extension.json",
                                           "photo_prompt_cute_visual_forms_extension.json"})
-        with mock.patch.object(generator, "RESEARCH_EXTENSION_FILENAMES", filenames):
-            before = generator.load_json(ASSETS / "photo_prompt_tags.json")
+        inventory = generator.photo_source_manifest.SourceInventory.for_test(ASSETS, candidate_files=filenames)
+        before = generator.load_json(ASSETS / "photo_prompt_tags.json", inventory=inventory)
         for slot, additions in self.extension["existing_slot_context_extensions"].items():
             original = {entry["id"]: entry for entry in before["slots"][slot]}
             current = {entry["id"]: entry for entry in self.data["slots"][slot]}

@@ -1,0 +1,67 @@
+{
+  "chosen_candidate_count": 3,
+  "chosen_visual_concept_ids": [
+    "visual-concept:water_rel_w025",
+    "visual-concept:water_rel_w036",
+    "visual-concept:water_rel_w047"
+  ],
+  "effective_visual_contract_sha256": "2742a9b1bb0205655400a61a2b2fbb19c86dedbe278c3062202685dd9522ffac",
+  "failures": [
+    {
+      "candidate_id": "slot:action:water_w025",
+      "check": "candidate_semantic_contract",
+      "reason": "relation_evidence must cover the entire selected contract with literal final-prompt phrases"
+    },
+    {
+      "candidate_id": "slot:light_shape:water_w046",
+      "check": "candidate_semantic_contract",
+      "reason": "relation_evidence must cover the entire selected contract with literal final-prompt phrases"
+    },
+    {
+      "candidate_id": "slot:aftermath_trace:water_w119",
+      "check": "candidate_semantic_contract",
+      "reason": "relation_evidence must cover the entire selected contract with literal final-prompt phrases"
+    },
+    {
+      "check": "candidate_interpretations",
+      "missing": [
+        "slot:action:water_w025",
+        "slot:aftermath_trace:water_w119",
+        "slot:light_shape:water_w046"
+      ],
+      "reason": "candidate_interpretations must cover every non-augmentation chosen candidate exactly once and no others",
+      "unexpected": []
+    }
+  ],
+  "pack_id": "f1a12cbde8c68889",
+  "quality_status": "warn",
+  "render_repair_contract_sha256": null,
+  "status": "fail",
+  "warnings": [
+    {
+      "check": "uncovered_intent",
+      "intent": "water photograph",
+      "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+    },
+    {
+      "check": "uncovered_intent",
+      "intent": "water is visibly present",
+      "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+    },
+    {
+      "check": "uncovered_intent",
+      "intent": "A complex water photograph",
+      "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+    },
+    {
+      "check": "uncovered_intent",
+      "intent": "centered on a person",
+      "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+    },
+    {
+      "check": "uncovered_intent",
+      "intent": "whose face and short hair follow the attached reference",
+      "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+    }
+  ]
+}

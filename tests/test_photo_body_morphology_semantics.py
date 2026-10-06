@@ -124,7 +124,8 @@ class PhotoBodyMorphologySemanticsTests(unittest.TestCase):
 
     def test_render_gate_ownership_is_not_replaced_by_neighboring_surface(self):
         extension = json.loads((SKILL / "assets" / "photo_prompt_visual_obligations_body_morphology.json").read_text())
-        for profile in extension["profiles"]:
+        for source in extension["profiles"]:
+            profile = self.profiles[source["id"]]  # Evidence and gates are generated from this source.
             with self.subTest(profile=profile["id"]):
                 self.assertIn("owner_state_phrase", profile["required_evidence_fields"])
                 self.assertIn("wrong_owner_or_body_region", profile["reject_substitutes"])

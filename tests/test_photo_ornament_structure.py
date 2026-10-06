@@ -96,8 +96,8 @@ class OrnamentStructureTests(unittest.TestCase):
             self.assertNotEqual(jewelry['relations'],obj['relations'])
 
     def test_reused_candidates_preserve_every_existing_field_except_added_context(self):
-        with mock.patch.object(g,'RESEARCH_EXTENSION_FILENAMES',tuple(x for x in g.RESEARCH_EXTENSION_FILENAMES if x!=EXT)):
-            old=g.load_json(ASSETS/'photo_prompt_tags.json')
+        inventory=g.photo_source_manifest.SourceInventory.for_test(ASSETS,candidate_files=tuple(x for x in g.RESEARCH_EXTENSION_FILENAMES if x!=EXT))
+        old=g.load_json(ASSETS/'photo_prompt_tags.json',inventory=inventory)
         for slot,updates in self.ext['existing_slot_context_extensions'].items():
             before={e['id']:e for e in old['slots'][slot]};after={e['id']:e for e in self.data['slots'][slot]}
             for eid,addition in updates.items():

@@ -1,0 +1,29 @@
+======================================================================
+ERROR: setUpClass (tests.test_photo_ct073_back_band_data.CT073BackBandDataTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-main-merge/image-prompt/tests/test_photo_ct073_back_band_data.py", line 136, in setUpClass
+    fixtures.materialize_v25_parent_source(root, source_root=ROOT)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-main-merge/image-prompt/tests/photo_prompt_fixtures.py", line 1391, in materialize_v25_parent_source
+    _v24_verified_payload(source_root, row)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-main-merge/image-prompt/tests/photo_prompt_fixtures.py", line 840, in _v24_verified_payload
+    raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json
+
+----------------------------------------------------------------------
+Ran 74 tests in 18.209s
+
+FAILED (errors=1)
+{
+  "provider": "gemini",
+  "semantic_text_recipe": "semantic-text-v5",
+  "bm25f_policy_version": "photo-semantic-bm25f-policy/v3",
+  "embedding_model": "gemini-embedding-2",
+  "embedding_dimensions": 768,
+  "entries": 10124,
+  "storage_format": "sharded-json-v1",
+  "shard_count": 16,
+  "output": "/Users/chasoik/.codex/worktrees/harry-appearance-main-merge/image-prompt/skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json"
+}

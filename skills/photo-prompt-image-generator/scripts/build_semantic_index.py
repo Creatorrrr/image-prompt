@@ -317,6 +317,7 @@ def main() -> int:
     parser.add_argument("--no-cache", action="store_true", help="Do not reuse compatible vectors from an existing output index.")
     parser.add_argument("--progress", action="store_true", help="Print embedding progress without vector values.")
     parser.add_argument("--dry-run", action="store_true", help="Print planned index metadata without calling the Gemini API or writing output.")
+    parser.add_argument("--no-runtime-publication", action="store_true")
     args = parser.parse_args()
 
     data = load_json(args.tags)
@@ -370,8 +371,17 @@ def main() -> int:
     payload["created_at"] = datetime.now(timezone.utc).isoformat()
 
     out = Path(args.output)
-    write_sharded_payload(out, payload, shard_count=args.shard_count,
-                          keep_stale_generations=args.keep_stale_generations)
+    if out == Path(args.tags).with_name("photo_prompt_semantic_index.json"):
+        from photo_runtime_sources import source_update
+        with source_update(Path(args.tags).parent.parent):
+            write_sharded_payload(out, payload, shard_count=args.shard_count,
+                                  keep_stale_generations=True)
+        if not args.no_runtime_publication:
+            from photo_runtime_sources import publish_if_ready
+            publish_if_ready(Path(args.tags).parent.parent)
+    else:
+        write_sharded_payload(out, payload, shard_count=args.shard_count,
+                              keep_stale_generations=args.keep_stale_generations)
     storage_description = f"{args.shard_count} JSON shards"
     checkpoint = checkpoint_path_for(out, args.checkpoint)
     if checkpoint.exists() and not args.keep_checkpoint:

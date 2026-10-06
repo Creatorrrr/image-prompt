@@ -289,7 +289,7 @@ class PhotoVisualProfileShardIntegrationTests(unittest.TestCase):
     def run_builder(self, *extra_args):
         registry = self.root / "registry.json"
         registry.write_bytes(encoded(self.registry))
-        args = ["build_visual_profile_index.py", "--registry", str(registry), "--output", str(self.path), "--dimensions", "2", *map(str, extra_args)]
+        args = ["build_visual_profile_index.py", "--registry", str(registry), "--output", str(self.path), "--dimensions", "2", "--synthetic-sources", *map(str, extra_args)]
         with mock.patch.object(sys, "argv", args), mock.patch.object(sys, "stdout", new_callable=io.StringIO):
             return builder.main()
 
@@ -380,6 +380,8 @@ class PhotoVisualProfileShardIntegrationTests(unittest.TestCase):
         shutil.copytree(SKILL_DIR / "precore", installed / "precore", ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
         assets = installed / "assets"
         assets.mkdir()
+        shutil.copyfile(SKILL_DIR / "assets/photo_prompt_source_manifest.json",
+                        assets / "photo_prompt_source_manifest.json")
         index_path = assets / "visual_index.json"
         registry_path = assets / "registry.json"
         registry_path.write_bytes(encoded(self.registry))

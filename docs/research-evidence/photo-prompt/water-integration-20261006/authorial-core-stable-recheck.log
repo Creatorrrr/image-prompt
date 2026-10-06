@@ -1,0 +1,90 @@
+test_authorial_core_text_is_the_actual_retrieval_query_and_changes_candidates (tests.test_photo_authorial_core.PhotoAuthorialCoreTests.test_authorial_core_text_is_the_actual_retrieval_query_and_changes_candidates) ... ok
+test_clarification_is_stable_while_creativity_widens_seeded_augmentation (tests.test_photo_authorial_core.PhotoAuthorialCoreTests.test_clarification_is_stable_while_creativity_widens_seeded_augmentation) ... FAIL
+test_contextual_term_meanings_materialize_without_one_fixed_story (tests.test_photo_authorial_core.PhotoAuthorialCoreTests.test_contextual_term_meanings_materialize_without_one_fixed_story) ... FAIL
+test_current_composition_audit_binds_core_and_rejects_copying (tests.test_photo_authorial_core.PhotoAuthorialCoreTests.test_current_composition_audit_binds_core_and_rejects_copying) ... FAIL
+test_general_core_is_prepack_hash_bound_and_unbound_generation_is_rejected (tests.test_photo_authorial_core.PhotoAuthorialCoreTests.test_general_core_is_prepack_hash_bound_and_unbound_generation_is_rejected) ... FAIL
+test_request_envelope_and_intent_lock_fail_closed_for_arbitrary_topics (tests.test_photo_authorial_core.PhotoAuthorialCoreTests.test_request_envelope_and_intent_lock_fail_closed_for_arbitrary_topics) ... ok
+test_sensitive_label_leak_fails_semantic_clarification_audit (tests.test_photo_authorial_core.PhotoAuthorialCoreTests.test_sensitive_label_leak_fails_semantic_clarification_audit) ... FAIL
+
+======================================================================
+FAIL: test_clarification_is_stable_while_creativity_widens_seeded_augmentation (tests.test_photo_authorial_core.PhotoAuthorialCoreTests.test_clarification_is_stable_while_creativity_widens_seeded_augmentation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_authorial_core.py", line 304, in test_clarification_is_stable_while_creativity_widens_seeded_augmentation
+    low = self.run_current(core, seed=401, creativity=0)
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_authorial_core.py", line 55, in run_current
+    return fixtures.run_current(core, seed=seed, creativity=creativity)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/tests/photo_prompt_fixtures.py", line 839, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_revision_pending: current source has no completed validated publication; finish maintenance and publish
+
+
+======================================================================
+FAIL: test_contextual_term_meanings_materialize_without_one_fixed_story (tests.test_photo_authorial_core.PhotoAuthorialCoreTests.test_contextual_term_meanings_materialize_without_one_fixed_story)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_authorial_core.py", line 361, in test_contextual_term_meanings_materialize_without_one_fixed_story
+    absolute = self.run_current(
+        self.core(
+    ...<39 lines>...
+        creativity=0,
+    )
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_authorial_core.py", line 55, in run_current
+    return fixtures.run_current(core, seed=seed, creativity=creativity)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/tests/photo_prompt_fixtures.py", line 839, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_revision_pending: current source has no completed validated publication; finish maintenance and publish
+
+
+======================================================================
+FAIL: test_current_composition_audit_binds_core_and_rejects_copying (tests.test_photo_authorial_core.PhotoAuthorialCoreTests.test_current_composition_audit_binds_core_and_rejects_copying)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_authorial_core.py", line 655, in test_current_composition_audit_binds_core_and_rejects_copying
+    pack = self.run_current(
+        self.core(source, exclusions=("people", "bright sunlight")),
+        seed=91,
+        creativity=2,
+    )
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_authorial_core.py", line 55, in run_current
+    return fixtures.run_current(core, seed=seed, creativity=creativity)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/tests/photo_prompt_fixtures.py", line 839, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_revision_pending: current source has no completed validated publication; finish maintenance and publish
+
+
+======================================================================
+FAIL: test_general_core_is_prepack_hash_bound_and_unbound_generation_is_rejected (tests.test_photo_authorial_core.PhotoAuthorialCoreTests.test_general_core_is_prepack_hash_bound_and_unbound_generation_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_authorial_core.py", line 93, in test_general_core_is_prepack_hash_bound_and_unbound_generation_is_rejected
+    pack = self.run_current(raw_core)
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_authorial_core.py", line 55, in run_current
+    return fixtures.run_current(core, seed=seed, creativity=creativity)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/tests/photo_prompt_fixtures.py", line 839, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_revision_pending: current source has no completed validated publication; finish maintenance and publish
+
+
+======================================================================
+FAIL: test_sensitive_label_leak_fails_semantic_clarification_audit (tests.test_photo_authorial_core.PhotoAuthorialCoreTests.test_sensitive_label_leak_fails_semantic_clarification_audit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_authorial_core.py", line 911, in test_sensitive_label_leak_fails_semantic_clarification_audit
+    pack = self.run_current(core, creativity=0)
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_authorial_core.py", line 55, in run_current
+    return fixtures.run_current(core, seed=seed, creativity=creativity)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/tests/photo_prompt_fixtures.py", line 839, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_revision_pending: current source has no completed validated publication; finish maintenance and publish
+
+
+----------------------------------------------------------------------
+Ran 7 tests in 2.084s
+
+FAILED (failures=5)

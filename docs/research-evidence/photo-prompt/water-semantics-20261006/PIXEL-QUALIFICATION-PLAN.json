@@ -1,0 +1,640 @@
+{
+  "schema": "water-pixel-qualification-plan/v1",
+  "groups": [
+    {
+      "id": "water_pixel_w006",
+      "unit_id": "W006",
+      "scenario": "종이 모서리만 물에 닿아 그 안쪽으로 젖은 경계가 번진다.",
+      "confound": "종이 위에 물결 무늬만 인쇄되어 있다.",
+      "all_of_components": [
+        "a connected damp front within the paper or cloth",
+        "visible fibers continuing across wet and dry regions",
+        "a darker wetted region linked to the liquid contact"
+      ],
+      "all_of_relations": [
+        {
+          "id": "w006_relation_1",
+          "type": "feeds",
+          "subject": "liquid_contact",
+          "object": "damp_front",
+          "owner_binding": {
+            "scene": "W006",
+            "subject_ref": "W006:liquid_contact",
+            "object_ref": "W006:damp_front",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        },
+        {
+          "id": "w006_relation_2",
+          "type": "occupies",
+          "subject": "damp_front",
+          "object": "porous_material",
+          "owner_binding": {
+            "scene": "W006",
+            "subject_ref": "W006:damp_front",
+            "object_ref": "W006:porous_material",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        }
+      ],
+      "visibility": "Each required carrier and both relation endpoints must be assessable at original resolution. Preserve requester framing.",
+      "verdicts": [
+        "PASS_ALL_REQUIRED",
+        "FAIL_PARTIAL_IS_FAIL",
+        "UNOBSERVABLE_NOT_PASS",
+        "BLOCKED_UNSCORED"
+      ],
+      "qualification": "PROPOSED_NOT_RUN"
+    },
+    {
+      "id": "water_pixel_w007",
+      "unit_id": "W007",
+      "scenario": "유리 컵 안 물이 벽과 만나는 가장자리에서 살짝 올라간다.",
+      "confound": "컵 밖에 맺힌 물방울을 보여준다.",
+      "all_of_components": [
+        "a curved liquid edge at the inner vessel wall",
+        "a continuous central liquid level",
+        "the same vessel wall meeting that curved edge"
+      ],
+      "all_of_relations": [
+        {
+          "id": "w007_relation_1",
+          "type": "meets",
+          "subject": "liquid_surface",
+          "object": "inner_vessel_wall",
+          "owner_binding": {
+            "scene": "W007",
+            "subject_ref": "W007:liquid_surface",
+            "object_ref": "W007:inner_vessel_wall",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        }
+      ],
+      "visibility": "Each required carrier and both relation endpoints must be assessable at original resolution. Preserve requester framing.",
+      "verdicts": [
+        "PASS_ALL_REQUIRED",
+        "FAIL_PARTIAL_IS_FAIL",
+        "UNOBSERVABLE_NOT_PASS",
+        "BLOCKED_UNSCORED"
+      ],
+      "qualification": "PROPOSED_NOT_RUN"
+    },
+    {
+      "id": "water_pixel_w026",
+      "unit_id": "W026",
+      "scenario": "방울이 수면에 닿은 중심 주위로 얇은 테두리가 왕관처럼 솟았다.",
+      "confound": "물 옆에 왕관 장식이 놓여 있다.",
+      "all_of_components": [
+        "a circular rising liquid rim around an impact center",
+        "short spikes on that rim",
+        "detached droplets aligned around the rim"
+      ],
+      "all_of_relations": [
+        {
+          "id": "w026_relation_1",
+          "type": "surrounded_by",
+          "subject": "impact_center",
+          "object": "raised_liquid_rim",
+          "owner_binding": {
+            "scene": "W026",
+            "subject_ref": "W026:impact_center",
+            "object_ref": "W026:raised_liquid_rim",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        }
+      ],
+      "visibility": "Each required carrier and both relation endpoints must be assessable at original resolution. Preserve requester framing.",
+      "verdicts": [
+        "PASS_ALL_REQUIRED",
+        "FAIL_PARTIAL_IS_FAIL",
+        "UNOBSERVABLE_NOT_PASS",
+        "BLOCKED_UNSCORED"
+      ],
+      "qualification": "PROPOSED_NOT_RUN"
+    },
+    {
+      "id": "water_pixel_w049",
+      "unit_id": "W049",
+      "scenario": "얕은 물 바닥의 돌 위로 빛이 가는 그물무늬를 만든다.",
+      "confound": "수면의 반짝임만 보고 바닥은 전혀 보이지 않는다.",
+      "all_of_components": [
+        "a rippled transparent water surface",
+        "concentrated bright curves on a submerged receiver",
+        "receiver texture visible between the light curves"
+      ],
+      "all_of_relations": [
+        {
+          "id": "w049_relation_1",
+          "type": "passes_through",
+          "subject": "light_source",
+          "object": "water_surface",
+          "owner_binding": {
+            "scene": "W049",
+            "subject_ref": "W049:light_source",
+            "object_ref": "W049:water_surface",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        },
+        {
+          "id": "w049_relation_2",
+          "type": "concentrates_on",
+          "subject": "water_surface",
+          "object": "submerged_receiver",
+          "owner_binding": {
+            "scene": "W049",
+            "subject_ref": "W049:water_surface",
+            "object_ref": "W049:submerged_receiver",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        }
+      ],
+      "visibility": "Each required carrier and both relation endpoints must be assessable at original resolution. Preserve requester framing.",
+      "verdicts": [
+        "PASS_ALL_REQUIRED",
+        "FAIL_PARTIAL_IS_FAIL",
+        "UNOBSERVABLE_NOT_PASS",
+        "BLOCKED_UNSCORED"
+      ],
+      "qualification": "PROPOSED_NOT_RUN"
+    },
+    {
+      "id": "water_pixel_w050",
+      "unit_id": "W050",
+      "scenario": "물속에서 위를 바라본 밝은 바깥 풍경의 창과 주변의 수중 반사가 함께 보인다.",
+      "confound": "잠수정의 둥근 창으로 물 밖을 본다.",
+      "all_of_components": [
+        "an underwater upward viewpoint",
+        "a bounded view of the above-water scene",
+        "surrounding surface regions reflecting the underwater scene"
+      ],
+      "all_of_relations": [
+        {
+          "id": "w050_relation_1",
+          "type": "transmits",
+          "subject": "water_surface",
+          "object": "above_water_scene",
+          "owner_binding": {
+            "scene": "W050",
+            "subject_ref": "W050:water_surface",
+            "object_ref": "W050:above_water_scene",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        },
+        {
+          "id": "w050_relation_2",
+          "type": "reflects",
+          "subject": "outer_surface_region",
+          "object": "underwater_scene",
+          "owner_binding": {
+            "scene": "W050",
+            "subject_ref": "W050:outer_surface_region",
+            "object_ref": "W050:underwater_scene",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        }
+      ],
+      "visibility": "Each required carrier and both relation endpoints must be assessable at original resolution. Preserve requester framing.",
+      "verdicts": [
+        "PASS_ALL_REQUIRED",
+        "FAIL_PARTIAL_IS_FAIL",
+        "UNOBSERVABLE_NOT_PASS",
+        "BLOCKED_UNSCORED"
+      ],
+      "qualification": "PROPOSED_NOT_RUN"
+    },
+    {
+      "id": "water_pixel_w070",
+      "unit_id": "W070",
+      "scenario": "자갈톱을 사이에 둔 물길들이 갈라졌다가 아래쪽에서 다시 만난다.",
+      "confound": "여러 물길이 바다로만 갈라져 나간다.",
+      "all_of_components": [
+        "multiple shallow channel branches",
+        "sediment bars between branches",
+        "visible downstream reconnections"
+      ],
+      "all_of_relations": [
+        {
+          "id": "w070_relation_1",
+          "type": "split_and_rejoin",
+          "subject": "channel_branches",
+          "object": "around_sediment_bars",
+          "owner_binding": {
+            "scene": "W070",
+            "subject_ref": "W070:channel_branches",
+            "object_ref": "W070:around_sediment_bars",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        }
+      ],
+      "visibility": "Each required carrier and both relation endpoints must be assessable at original resolution. Preserve requester framing.",
+      "verdicts": [
+        "PASS_ALL_REQUIRED",
+        "FAIL_PARTIAL_IS_FAIL",
+        "UNOBSERVABLE_NOT_PASS",
+        "BLOCKED_UNSCORED"
+      ],
+      "qualification": "PROPOSED_NOT_RUN"
+    },
+    {
+      "id": "water_pixel_w092",
+      "unit_id": "W092",
+      "scenario": "바위 고정 부위에서 줄기가 올라가 넓은 엽체로 이어지는 수중 켈프.",
+      "confound": "해저에 뿌리내린 가는 잘피 잎.",
+      "all_of_components": [
+        "a substrate attachment",
+        "continuous stipes leading to broad blades",
+        "coherent underwater blade orientations"
+      ],
+      "all_of_relations": [
+        {
+          "id": "w092_relation_1",
+          "type": "anchors",
+          "subject": "holdfast",
+          "object": "stipes",
+          "owner_binding": {
+            "scene": "W092",
+            "subject_ref": "W092:holdfast",
+            "object_ref": "W092:stipes",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        },
+        {
+          "id": "w092_relation_2",
+          "type": "connect_to",
+          "subject": "stipes",
+          "object": "blades",
+          "owner_binding": {
+            "scene": "W092",
+            "subject_ref": "W092:stipes",
+            "object_ref": "W092:blades",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        }
+      ],
+      "visibility": "Each required carrier and both relation endpoints must be assessable at original resolution. Preserve requester framing.",
+      "verdicts": [
+        "PASS_ALL_REQUIRED",
+        "FAIL_PARTIAL_IS_FAIL",
+        "UNOBSERVABLE_NOT_PASS",
+        "BLOCKED_UNSCORED"
+      ],
+      "qualification": "PROPOSED_NOT_RUN"
+    },
+    {
+      "id": "water_pixel_w101",
+      "unit_id": "W101",
+      "scenario": "젤리 같은 몸을 따라 길게 난 빗살판 줄에서 무지갯빛이 반사된다.",
+      "confound": "촉수 끝마다 파란 LED처럼 빛나는 해파리.",
+      "all_of_components": [
+        "a gelatinous body",
+        "longitudinal comb rows on that same body",
+        "localized rainbow highlights along those rows"
+      ],
+      "all_of_relations": [
+        {
+          "id": "w101_relation_1",
+          "type": "follow",
+          "subject": "comb_rows",
+          "object": "same_gelatinous_body",
+          "owner_binding": {
+            "scene": "W101",
+            "subject_ref": "W101:comb_rows",
+            "object_ref": "W101:same_gelatinous_body",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        }
+      ],
+      "visibility": "Each required carrier and both relation endpoints must be assessable at original resolution. Preserve requester framing.",
+      "verdicts": [
+        "PASS_ALL_REQUIRED",
+        "FAIL_PARTIAL_IS_FAIL",
+        "UNOBSERVABLE_NOT_PASS",
+        "BLOCKED_UNSCORED"
+      ],
+      "qualification": "PROPOSED_NOT_RUN"
+    },
+    {
+      "id": "water_pixel_w144",
+      "unit_id": "W144",
+      "scenario": "수면에 엎드린 인물의 입에 연결된 스노클 끝이 물 위로 나와 있다.",
+      "confound": "물속 인물의 입에는 탱크 호스가 연결되어 있다.",
+      "all_of_components": [
+        "a mask on the specified face",
+        "a snorkel joined near the mouth",
+        "its upper opening above the surface in the surface breathing variant"
+      ],
+      "all_of_relations": [
+        {
+          "id": "w144_relation_1",
+          "type": "connects_to",
+          "subject": "snorkel",
+          "object": "mouth",
+          "owner_binding": {
+            "scene": "W144",
+            "subject_ref": "W144:snorkel",
+            "object_ref": "W144:mouth",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        },
+        {
+          "id": "w144_relation_2",
+          "type": "above",
+          "subject": "snorkel_opening",
+          "object": "waterline",
+          "owner_binding": {
+            "scene": "W144",
+            "subject_ref": "W144:snorkel_opening",
+            "object_ref": "W144:waterline",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        }
+      ],
+      "visibility": "Each required carrier and both relation endpoints must be assessable at original resolution. Preserve requester framing.",
+      "verdicts": [
+        "PASS_ALL_REQUIRED",
+        "FAIL_PARTIAL_IS_FAIL",
+        "UNOBSERVABLE_NOT_PASS",
+        "BLOCKED_UNSCORED"
+      ],
+      "qualification": "PROPOSED_NOT_RUN"
+    },
+    {
+      "id": "water_pixel_w151",
+      "unit_id": "W151",
+      "scenario": "수면 부유체에 채집 그물주머니가 매달리고 잠수 작업자가 같은 부유체를 짚는다.",
+      "confound": "끈 없이 떨어진 부표와 일반 스쿠버 배낭.",
+      "all_of_components": [
+        "a floating tewak body at the surface",
+        "a net collection bag attached to that body",
+        "the specified diver contacting or working beside it"
+      ],
+      "all_of_relations": [
+        {
+          "id": "w151_relation_1",
+          "type": "attached_to",
+          "subject": "net_bag",
+          "object": "tewak_float",
+          "owner_binding": {
+            "scene": "W151",
+            "subject_ref": "W151:net_bag",
+            "object_ref": "W151:tewak_float",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        },
+        {
+          "id": "w151_relation_2",
+          "type": "contacts",
+          "subject": "diver",
+          "object": "tewak_float",
+          "owner_binding": {
+            "scene": "W151",
+            "subject_ref": "W151:diver",
+            "object_ref": "W151:tewak_float",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        }
+      ],
+      "visibility": "Each required carrier and both relation endpoints must be assessable at original resolution. Preserve requester framing.",
+      "verdicts": [
+        "PASS_ALL_REQUIRED",
+        "FAIL_PARTIAL_IS_FAIL",
+        "UNOBSERVABLE_NOT_PASS",
+        "BLOCKED_UNSCORED"
+      ],
+      "qualification": "PROPOSED_NOT_RUN"
+    },
+    {
+      "id": "water_pixel_w156",
+      "unit_id": "W156",
+      "scenario": "물 밖 젖은 머리가 여러 무거운 다발로 뭉쳐 목에 일부 붙어 있다.",
+      "confound": "물속에서 뿌리에 이어진 머리카락이 넓게 떠 있다.",
+      "all_of_components": [
+        "reduced airy volume",
+        "several visible damp strand bundles",
+        "local contact with the face neck or garment"
+      ],
+      "all_of_relations": [
+        {
+          "id": "w156_relation_1",
+          "type": "belong_to",
+          "subject": "damp_bundles",
+          "object": "subject_hair",
+          "owner_binding": {
+            "scene": "W156",
+            "subject_ref": "W156:damp_bundles",
+            "object_ref": "W156:subject_hair",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        },
+        {
+          "id": "w156_relation_2",
+          "type": "adhere_to",
+          "subject": "damp_bundles",
+          "object": "nearby_surface",
+          "owner_binding": {
+            "scene": "W156",
+            "subject_ref": "W156:damp_bundles",
+            "object_ref": "W156:nearby_surface",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        }
+      ],
+      "visibility": "Each required carrier and both relation endpoints must be assessable at original resolution. Preserve requester framing.",
+      "verdicts": [
+        "PASS_ALL_REQUIRED",
+        "FAIL_PARTIAL_IS_FAIL",
+        "UNOBSERVABLE_NOT_PASS",
+        "BLOCKED_UNSCORED"
+      ],
+      "qualification": "PROPOSED_NOT_RUN"
+    },
+    {
+      "id": "water_pixel_w162",
+      "unit_id": "W162",
+      "scenario": "지정한 얇은 천의 섬유와 솔기는 남으면서 그 뒤의 요청된 표면이 일부 비친다.",
+      "confound": "불투명한 젖은 옷의 재질만 표현한다.",
+      "all_of_components": [
+        "readable fibers seams and folds",
+        "partial transmission through the selected cloth patch",
+        "underlying requested surface aligned behind that patch"
+      ],
+      "all_of_relations": [
+        {
+          "id": "w162_relation_1",
+          "type": "transmits",
+          "subject": "cloth_patch",
+          "object": "requested_underlying_surface",
+          "owner_binding": {
+            "scene": "W162",
+            "subject_ref": "W162:cloth_patch",
+            "object_ref": "W162:requested_underlying_surface",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        }
+      ],
+      "visibility": "Each required carrier and both relation endpoints must be assessable at original resolution. Preserve requester framing.",
+      "verdicts": [
+        "PASS_ALL_REQUIRED",
+        "FAIL_PARTIAL_IS_FAIL",
+        "UNOBSERVABLE_NOT_PASS",
+        "BLOCKED_UNSCORED"
+      ],
+      "qualification": "PROPOSED_NOT_RUN"
+    },
+    {
+      "id": "water_pixel_w169",
+      "unit_id": "W169",
+      "scenario": "쇄파 구간 사이에서 좁은 거품 띠가 해안 바깥으로 이어진다.",
+      "confound": "배수구 중심으로 내려가는 깔때기 소용돌이.",
+      "all_of_components": [
+        "a narrow seaward flow corridor",
+        "adjacent breaking wave regions",
+        "surface foam or sediment aligned along that corridor"
+      ],
+      "all_of_relations": [
+        {
+          "id": "w169_relation_1",
+          "type": "follow",
+          "subject": "surface_tracers",
+          "object": "seaward_corridor",
+          "owner_binding": {
+            "scene": "W169",
+            "subject_ref": "W169:surface_tracers",
+            "object_ref": "W169:seaward_corridor",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        }
+      ],
+      "visibility": "Each required carrier and both relation endpoints must be assessable at original resolution. Preserve requester framing.",
+      "verdicts": [
+        "PASS_ALL_REQUIRED",
+        "FAIL_PARTIAL_IS_FAIL",
+        "UNOBSERVABLE_NOT_PASS",
+        "BLOCKED_UNSCORED"
+      ],
+      "qualification": "PROPOSED_NOT_RUN"
+    },
+    {
+      "id": "water_pixel_w175",
+      "unit_id": "W175",
+      "scenario": "물에 잠긴 방의 문틀과 바닥 연결이 수면 아래까지 이어진다.",
+      "confound": "물이 없는 어두운 폐건물.",
+      "all_of_components": [
+        "recognizable connected room or structural elements",
+        "water crossing or surrounding them",
+        "a coherent floor wall or doorway system"
+      ],
+      "all_of_relations": [
+        {
+          "id": "w175_relation_1",
+          "type": "occupies",
+          "subject": "water_body",
+          "object": "connected_built_space",
+          "owner_binding": {
+            "scene": "W175",
+            "subject_ref": "W175:water_body",
+            "object_ref": "W175:connected_built_space",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        }
+      ],
+      "visibility": "Each required carrier and both relation endpoints must be assessable at original resolution. Preserve requester framing.",
+      "verdicts": [
+        "PASS_ALL_REQUIRED",
+        "FAIL_PARTIAL_IS_FAIL",
+        "UNOBSERVABLE_NOT_PASS",
+        "BLOCKED_UNSCORED"
+      ],
+      "qualification": "PROPOSED_NOT_RUN"
+    },
+    {
+      "id": "water_pixel_w182",
+      "unit_id": "W182",
+      "scenario": "인간 상체와 물고기 하체가 같은 몸으로 이어지는 인어.",
+      "confound": "여성 얼굴에 새 몸이 이어지는 초기 세이렌.",
+      "all_of_components": [
+        "a specified human upper torso",
+        "a continuous transition into a fish like lower body",
+        "coherent lower body fins in the chosen design"
+      ],
+      "all_of_relations": [
+        {
+          "id": "w182_relation_1",
+          "type": "joins",
+          "subject": "upper_torso",
+          "object": "fish_like_lower_body",
+          "owner_binding": {
+            "scene": "W182",
+            "subject_ref": "W182:upper_torso",
+            "object_ref": "W182:fish_like_lower_body",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        }
+      ],
+      "visibility": "Each required carrier and both relation endpoints must be assessable at original resolution. Preserve requester framing.",
+      "verdicts": [
+        "PASS_ALL_REQUIRED",
+        "FAIL_PARTIAL_IS_FAIL",
+        "UNOBSERVABLE_NOT_PASS",
+        "BLOCKED_UNSCORED"
+      ],
+      "qualification": "PROPOSED_NOT_RUN"
+    },
+    {
+      "id": "water_pixel_w190",
+      "unit_id": "W190",
+      "scenario": "한 사진의 수면 위 갈대 줄기가 수면 아래 뿌리와 이어진다.",
+      "confound": "두 장의 독립 사진을 위아래 붙인 콜라주.",
+      "all_of_components": [
+        "an air scene and underwater scene in one frame",
+        "one coherent waterline dividing them",
+        "continuous shared objects where they cross that line"
+      ],
+      "all_of_relations": [
+        {
+          "id": "w190_relation_1",
+          "type": "separates",
+          "subject": "waterline",
+          "object": "air_and_water_views",
+          "owner_binding": {
+            "scene": "W190",
+            "subject_ref": "W190:waterline",
+            "object_ref": "W190:air_and_water_views",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        },
+        {
+          "id": "w190_relation_2",
+          "type": "continues_across",
+          "subject": "shared_object",
+          "object": "waterline",
+          "owner_binding": {
+            "scene": "W190",
+            "subject_ref": "W190:shared_object",
+            "object_ref": "W190:waterline",
+            "continuity": "same named entities within this unit; actual scene owners must be resolved during adoption"
+          }
+        }
+      ],
+      "visibility": "Each required carrier and both relation endpoints must be assessable at original resolution. Preserve requester framing.",
+      "verdicts": [
+        "PASS_ALL_REQUIRED",
+        "FAIL_PARTIAL_IS_FAIL",
+        "UNOBSERVABLE_NOT_PASS",
+        "BLOCKED_UNSCORED"
+      ],
+      "qualification": "PROPOSED_NOT_RUN"
+    }
+  ],
+  "comparison": "Freeze independent requests and cores before inspecting candidate data. A uses baseline authored sources; B uses adopted sources with the same preserved requester meaning, model and exposed settings. Log available randomness; do not claim unavailable seed control. Multiple generated attempts are needed before attributing improvement.",
+  "evidence_layers": [
+    "retrieval",
+    "candidate_exposure",
+    "selected_effects",
+    "literal_prompt_binding",
+    "runtime_preflight",
+    "native_pixels",
+    "user_acceptance"
+  ],
+  "qualification": "PROPOSED_NOT_RUN"
+}

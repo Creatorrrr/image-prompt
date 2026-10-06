@@ -1,0 +1,46 @@
+.E.E....
+======================================================================
+ERROR: test_current_default_and_explicit_v22_are_registered (test_photo_ornament_boundary_history.OrnamentBoundaryHistoryTests.test_current_default_and_explicit_v22_are_registered)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_ornament_boundary_history.py", line 87, in test_current_default_and_explicit_v22_are_registered
+    result = v.validate_photo_regression_baseline(ILLUSTRATION / 'assets', baseline_version=version)
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 7503, in validate_photo_regression_baseline
+    _validate_v22_ornament_data_successor(asset_dir, repo_root, baseline, pack, raw)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 7201, in _validate_v22_ornament_data_successor
+    _require({p.name: _sha256(p) for p in source_assets.glob("*.json")} == proof["source_inventory_after"],
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+             "photo V22 exact DATA inventory drift")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: photo V22 exact DATA inventory drift
+
+======================================================================
+ERROR: test_only_six_metadata_leaves_and_two_optional_lists_change (test_photo_ornament_boundary_history.OrnamentBoundaryHistoryTests.test_only_six_metadata_leaves_and_two_optional_lists_change)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_ornament_boundary_history.py", line 71, in test_only_six_metadata_leaves_and_two_optional_lists_change
+    self.validate()
+    ~~~~~~~~~~~~~^^
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_ornament_boundary_history.py", line 66, in validate
+    return v._validate_v22_ornament_data_successor(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.assets, self.repo, self.baseline,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.pack if pack is None else pack, self.raw if raw is None else raw)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 7201, in _validate_v22_ornament_data_successor
+    _require({p.name: _sha256(p) for p in source_assets.glob("*.json")} == proof["source_inventory_after"],
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+             "photo V22 exact DATA inventory drift")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: photo V22 exact DATA inventory drift
+
+----------------------------------------------------------------------
+Ran 8 tests in 11.367s
+
+FAILED (errors=2)

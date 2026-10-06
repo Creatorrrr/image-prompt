@@ -1,0 +1,144 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "Make a product photograph of a cobalt-blue bra, with the garment's color as the main point of the picture.",
+  "creative_controls_sha256": "dbe3e2ee83b45173e74954596e833ecfc53385245b105448a21da03f1ae0d54f",
+  "interpreted_intent": "The synthetic requester specifies a cobalt-blue bra and a photograph led by its garment color. No fastening mechanism, fastening state, or fastening exclusion is requested. I choose a relaxed crescent, broad cup surfaces and warm neutral surroundings to give the blue a clear field. Product arrangement, fabric texture, capture viewpoint and lighting remain author choices under the saved controls.",
+  "subject": "An adult-size cobalt-blue bra presented as a product.",
+  "setting": "A warm sand-colored display shelf against an ivory wall.",
+  "event": "The cobalt-blue garment color is the photograph’s visual focus.",
+  "visual_priorities": [
+    "Cobalt-blue fabric is the main visual focus.",
+    "Broad cloth surfaces keep the requested garment color coherent.",
+    "A warm neutral surrounding makes the blue easy to judge."
+  ],
+  "baseline_prompt_en": "A product photograph of a bra makes the cobalt-blue garment color the visual focus. The adult-size garment is arranged in a relaxed crescent on a warm sand-colored display shelf. Its broad cup surfaces hold the blue as a clear continuous field, with the band curving loosely beside them. Fine tricot texture catches a soft silver-blue highlight along one fold, while the body of the fabric retains its rich midtone color. An ivory wall leaves a quiet margin around the garment. Broad neutral daylight and a gentle shadow separate the blue from the warm shelf. A slightly elevated camera view balances the garment's shape within the frame, making the color feel vivid, tangible and consistent across the fabric.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete photographic request",
+      "source_text": "Make a product photograph of a cobalt-blue bra, with the garment's color as the main point of the picture.",
+      "basis": "request_context",
+      "resolution": "The cobalt-blue garment color is the photograph’s visual focus. No user-supplied special definition is present.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "product photograph",
+        "dimension": "concept",
+        "prompt_evidence": "product photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "bra",
+        "dimension": "subject",
+        "prompt_evidence": "photograph of a bra"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "the garment's color as the main point of the picture",
+        "dimension": "event",
+        "prompt_evidence": "makes the cobalt-blue garment color the visual focus"
+      },
+      {
+        "anchor_id": "garment_property_1",
+        "source_text": "cobalt-blue bra",
+        "dimension": "appearance",
+        "target": "garment",
+        "property": "garment.color",
+        "prompt_evidence": "cobalt-blue garment color"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "color",
+      "material",
+      "setting",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "style",
+      "format",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_object_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "cobalt-blue garment color"
+      }
+    },
+    {
+      "assertion_id": "requested_visible_state",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "event"
+      ],
+      "axes": {
+        "focal_attribute": "garment_color",
+        "requested_color": "cobalt_blue"
+      },
+      "evidence": {
+        "color_focus_phrase": "makes the cobalt-blue garment color the visual focus"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_declaration",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "product photography",
+    "family": "quiet material study",
+    "evidence": [
+      "on a warm sand-colored display shelf",
+      "Broad neutral daylight"
+    ]
+  },
+  "variation_key": "new-synthetic-fastening-f"
+}

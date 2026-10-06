@@ -1,0 +1,251 @@
+{
+  "enabled": true,
+  "contract_version": "photo-visual-obligations/v1",
+  "scope": "request_only",
+  "strict_gate_set": true,
+  "obligations": [
+    {
+      "id": "water_rel_w021",
+      "category": "aquatic_component_relation",
+      "activation": {
+        "source": "composer_opt_in",
+        "scope": "request_only",
+        "source_intent_ids": []
+      },
+      "composition_instruction": "Preserve the selected physical component with its own carrier and connection: a continuous liquid column. Preserve the selected physical component with its own carrier and connection: a visible source opening. Preserve the selected physical component with its own carrier and connection: a coherent landing or receiving region.",
+      "component_semantics": {
+        "minimum_component_groups": 3,
+        "required_group_ids": [
+          "component_1",
+          "component_2",
+          "component_3"
+        ],
+        "groups": [
+          {
+            "id": "component_1",
+            "any_terms": [
+              "a continuous liquid column",
+              "water stream",
+              "water jet",
+              "discharge stream",
+              "outward fan",
+              "물줄기"
+            ]
+          },
+          {
+            "id": "component_2",
+            "any_terms": [
+              "a visible source opening",
+              "outlet hose",
+              "nozzle",
+              "spout",
+              "source opening",
+              "분사구"
+            ]
+          },
+          {
+            "id": "component_3",
+            "any_terms": [
+              "a coherent landing or receiving region",
+              "puddle",
+              "receiving basin",
+              "furrow",
+              "ground pool",
+              "받는 물"
+            ]
+          }
+        ]
+      },
+      "prompt_binding": {
+        "composed_field": "visual_obligation_evidence",
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase",
+          "component_3_phrase"
+        ],
+        "minimum_distinct_evidence_phrases": 3,
+        "prompt_evidence_must_be_literal": true,
+        "maximum_pairwise_content_token_overlap_ratio": 0.82,
+        "forbidden_filler_phrases": [
+          "visible evidence",
+          "visual evidence",
+          "required cue",
+          "prompt phrase"
+        ]
+      },
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "a continuous liquid column"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "a visible source opening"
+          ]
+        },
+        "component_3_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "a coherent landing or receiving region"
+          ]
+        }
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "render_gates": [
+        {
+          "id": "vo_water_w021_1",
+          "review_scale": "native",
+          "description": "Inspect the original image for this complete component and correct physical owner: a continuous liquid column. Hidden or partial realization fails this gate."
+        },
+        {
+          "id": "vo_water_w021_2",
+          "review_scale": "native",
+          "description": "Inspect the original image for this complete component and correct physical owner: a visible source opening. Hidden or partial realization fails this gate."
+        },
+        {
+          "id": "vo_water_w021_3",
+          "review_scale": "native",
+          "description": "Inspect the original image for this complete component and correct physical owner: a coherent landing or receiving region. Hidden or partial realization fails this gate."
+        }
+      ],
+      "reject_substitutes": [
+        "물줄기의 출구·접촉점을 연결한다. 분리된 방울만으로 연속 분사를 대신하지 않는다."
+      ]
+    },
+    {
+      "id": "water_rel_w004",
+      "category": "aquatic_component_relation",
+      "activation": {
+        "source": "composer_opt_in",
+        "scope": "request_only",
+        "source_intent_ids": []
+      },
+      "composition_instruction": "Preserve the selected physical component with its own carrier and connection: separate rounded liquid caps on the selected surface. Preserve the selected physical component with its own carrier and connection: curved contact boundaries. Preserve the selected physical component with its own carrier and connection: surface texture visible between droplets.",
+      "component_semantics": {
+        "minimum_component_groups": 3,
+        "required_group_ids": [
+          "component_1",
+          "component_2",
+          "component_3"
+        ],
+        "groups": [
+          {
+            "id": "component_1",
+            "any_terms": [
+              "separate rounded liquid caps on the selected surface",
+              "rounded droplets",
+              "small beads",
+              "water beads",
+              "둥근 물방울"
+            ]
+          },
+          {
+            "id": "component_2",
+            "any_terms": [
+              "curved contact boundaries",
+              "curved contact",
+              "rounded beads",
+              "domed drops",
+              "beads",
+              "곡면 경계"
+            ]
+          },
+          {
+            "id": "component_3",
+            "any_terms": [
+              "surface texture visible between droplets",
+              "surface texture",
+              "wood grain",
+              "varnished rim",
+              "leaf veins",
+              "표면 질감"
+            ]
+          }
+        ]
+      },
+      "prompt_binding": {
+        "composed_field": "visual_obligation_evidence",
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase",
+          "component_3_phrase"
+        ],
+        "minimum_distinct_evidence_phrases": 3,
+        "prompt_evidence_must_be_literal": true,
+        "maximum_pairwise_content_token_overlap_ratio": 0.82,
+        "forbidden_filler_phrases": [
+          "visible evidence",
+          "visual evidence",
+          "required cue",
+          "prompt phrase"
+        ]
+      },
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "separate rounded liquid caps on the selected surface"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "curved contact boundaries"
+          ]
+        },
+        "component_3_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "surface texture visible between droplets"
+          ]
+        }
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "render_gates": [
+        {
+          "id": "vo_water_w004_1",
+          "review_scale": "native",
+          "description": "Inspect the original image for this complete component and correct physical owner: separate rounded liquid caps on the selected surface. Hidden or partial realization fails this gate."
+        },
+        {
+          "id": "vo_water_w004_2",
+          "review_scale": "native",
+          "description": "Inspect the original image for this complete component and correct physical owner: curved contact boundaries. Hidden or partial realization fails this gate."
+        },
+        {
+          "id": "vo_water_w004_3",
+          "review_scale": "native",
+          "description": "Inspect the original image for this complete component and correct physical owner: surface texture visible between droplets. Hidden or partial realization fails this gate."
+        }
+      ],
+      "reject_substitutes": [
+        "둥근 방울 외관은 소수성의 정량 판정이 아니다. 기포·보석·땀의 발생 원인을 자동 치환하지 않는다."
+      ]
+    }
+  ],
+  "required_hard_gates": [
+    "vo_water_w021_1",
+    "vo_water_w021_2",
+    "vo_water_w021_3",
+    "vo_water_w004_1",
+    "vo_water_w004_2",
+    "vo_water_w004_3"
+  ],
+  "selected_visual_concept_ids": [
+    "visual-concept:water_rel_w021",
+    "visual-concept:water_rel_w004"
+  ]
+}

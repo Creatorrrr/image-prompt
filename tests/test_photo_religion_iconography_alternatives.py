@@ -144,8 +144,8 @@ class ReligionIconographyAlternativesTests(unittest.TestCase):
     def test_existing_candidate_context_preserves_all_prior_owned_fields(self):
         filenames = tuple(name for name in pg.RESEARCH_EXTENSION_FILENAMES
             if name != 'photo_prompt_religion_iconography_extension.json')
-        with patch.object(pg, 'RESEARCH_EXTENSION_FILENAMES', filenames):
-            before = pg.load_json(SKILL / 'assets/photo_prompt_tags.json')
+        inventory = pg.photo_source_manifest.SourceInventory.for_test(SKILL / 'assets', candidate_files=filenames)
+        before = pg.load_json(SKILL / 'assets/photo_prompt_tags.json', inventory=inventory)
         for slot, updates in self.extension['existing_slot_context_extensions'].items():
             prior = {row['id']: row for row in before['slots'][slot]}
             current = {row['id']: row for row in self.data['slots'][slot]}

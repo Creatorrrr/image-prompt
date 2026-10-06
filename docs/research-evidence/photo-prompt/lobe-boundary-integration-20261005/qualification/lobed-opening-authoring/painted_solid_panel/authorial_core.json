@@ -1,0 +1,169 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "A natural photo of a cupboard in a ceramics workshop, focused on a cream motif with four rounded lobes painted on its solid blue wooden door. The motif is painted decoration, not an opening.",
+  "creative_controls_sha256": "a5d8a8f768eb75aa1d312d3aaca9203f2efb1c466f639d83979b61a7c74f885c",
+  "interpreted_intent": "The requester explicitly distinguishes a painted decorative motif from an opening. Its rounded lobes belong to the outline of cream paint on a solid blue wooden cupboard door. Agent-owned direction: Make the opaque painted surface, brushwork and cupboard function visibly coexist in a quiet workshop detail. An isolated ornament close-up loses the cupboard context; a door detail with its edge, hinge and a little shelving makes the same pattern readable as decoration.",
+  "subject": "A cream painted motif with four rounded lobes on a cupboard door",
+  "setting": "A cupboard in a ceramics workshop",
+  "event": "Cream paint forms the motif on a continuous solid wooden door surface",
+  "visual_priorities": [
+    "The four rounded lobes are carried by cream paint across a solid door surface",
+    "The uninterrupted grain beneath the brushwork makes the opaque panel legible",
+    "Blue paint, a hinge and the door edge maintain the cupboard context"
+  ],
+  "baseline_prompt_en": "A natural detail photograph of a cupboard in a ceramics workshop. A cream motif with four rounded lobes is painted on its solid blue wooden door. The continuous wood surface supports the cream paint across the entire motif, with shallow grain ridges still visible beneath the brushwork. Its four connected curves stand crisply against the blue. A hinge and the edge of the closed door establish the cupboard, while a small section of shelving with matte clay bowls falls softly away beside it. Side light from a high workshop window brings out the layered paint surface and fine brush marks. Frame the door at a comfortable viewing distance with the complete painted shape and a narrow border of blue surrounding it; keep the cream shape the first thing the eye finds.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "the requested decorative subject and its surface or opening",
+      "source_text": "A natural photo of a cupboard in a ceramics workshop, focused on a cream motif with four rounded lobes painted on its solid blue wooden door. The motif is painted decoration, not an opening.",
+      "basis": "request_context",
+      "resolution": "The requester explicitly distinguishes a painted decorative motif from an opening. Its rounded lobes belong to the outline of cream paint on a solid blue wooden cupboard door.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [
+    "an opening"
+  ],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "The motif is painted decoration, not an opening",
+        "dimension": "concept",
+        "prompt_evidence": "The continuous wood surface supports the cream paint across the entire motif"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "a cream motif with four rounded lobes",
+        "dimension": "subject",
+        "prompt_evidence": "A cream motif with four rounded lobes"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "painted on its solid blue wooden door",
+        "dimension": "event",
+        "prompt_evidence": "is painted on its solid blue wooden door"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "a cupboard in a ceramics workshop",
+        "dimension": "setting",
+        "prompt_evidence": "a cupboard in a ceramics workshop"
+      },
+      {
+        "anchor_id": "motif_color",
+        "source_text": "a cream motif",
+        "dimension": "color",
+        "prompt_evidence": "A cream motif",
+        "target": "motif",
+        "property": "paint.color"
+      },
+      {
+        "anchor_id": "door_color",
+        "source_text": "blue wooden door",
+        "dimension": "color",
+        "prompt_evidence": "blue wooden door",
+        "target": "cupboard_door",
+        "property": "paint.color"
+      },
+      {
+        "anchor_id": "door_material",
+        "source_text": "solid blue wooden door",
+        "dimension": "material",
+        "prompt_evidence": "solid blue wooden door",
+        "target": "cupboard_door",
+        "property": "panel.material"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "material",
+      "color",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "timing",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "A cream motif with four rounded lobes"
+      }
+    },
+    {
+      "assertion_id": "requested_shape_and_surface",
+      "dimension": "concept",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "concept"
+      ],
+      "axes": {
+        "outline": "four rounded lobes",
+        "surface_state": "paint on a solid wooden panel"
+      },
+      "evidence": {
+        "outline_phrase": "A cream motif with four rounded lobes",
+        "solid_surface_phrase": "The continuous wood surface supports the cream paint across the entire motif"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "architectural detail photography",
+    "family": "restrained natural observation",
+    "evidence": [
+      "ordinary daylight",
+      "a complete subject outline in its material setting"
+    ]
+  },
+  "variation_key": "painted_solid_panel"
+}

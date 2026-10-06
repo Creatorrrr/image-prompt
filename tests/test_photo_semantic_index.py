@@ -323,6 +323,9 @@ class PhotoSemanticIndexTests(unittest.TestCase):
                 BM25F_RETRIEVAL_PATH.read_text(encoding="utf-8"),
                 encoding="utf-8",
             )
+            (scripts.parent / "assets/photo_prompt_source_manifest.json").write_bytes(
+                (SKILL_DIR / "assets/photo_prompt_source_manifest.json").read_bytes()
+            )
             for dependency in GENERATOR_PATH.parent.glob("*.py"):
                 (scripts / dependency.name).write_bytes(dependency.read_bytes())
             precore = target / "precore"
@@ -367,4 +370,3 @@ class PhotoSemanticIndexTests(unittest.TestCase):
             payload = json.loads(out_path.read_text(encoding="utf-8"))
             self.assertEqual(payload["entry_count"], 0)
             self.assertEqual(payload["storage"]["format"], "sharded-json-v1")
-

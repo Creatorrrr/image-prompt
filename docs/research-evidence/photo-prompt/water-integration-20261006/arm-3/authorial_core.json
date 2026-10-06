@@ -1,0 +1,193 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "a7b819e87dc2c0fc993bc7cbaa1c3c3c49d9b319ffd7176cba90d3783f7205fb",
+  "interpreted_intent": "Requester asks for an independently randomized complex photographic test of the newly integrated water topic, using the attached portrait. Water meaning is resolved from the prior conversation title and context as visible water forms and physical connections. The chosen orchard restart, caretaker role, sunrise, valve staging, ice and drainage are my test and artistic choices. I compared an action-centered restart with quiet thaw observation and chose the restart because the source, hand action and visible destination give the viewer an understandable cause and result. The intended experience is calm competence and subtle human warmth amid the fragile morning thaw. Reference use is limited to the visible facial appearance and short hairstyle; it does not establish body, personality, biography, age or identity. Open staging stays editable after retrieval.",
+  "subject": "A fictional human orchard caretaker using only the supplied portrait facial appearance and short hairstyle.",
+  "setting": "A frost-covered orchard at first sunrise with a waist-high irrigation valve, nearby low sprinkler and shallow drainage furrow.",
+  "event": "The caretaker restarts irrigation beside an ice-coated branch as spray resumes and meltwater drops reach the furrow.",
+  "visual_priorities": [
+    "The hand at the valve and the visible sprinkler nozzle connect the caretaker action to resumed water flow.",
+    "Backlit spray, transparent branch ice, falling meltwater and receiving rings provide distinct linked water states.",
+    "The reference-informed face and short hair remain readable as she follows the working water system.",
+    "The branch sits above its receiving furrow so the foreground water relation remains spatially understandable."
+  ],
+  "baseline_prompt_en": "A complex photographic scene involving water records a visible water-related event around a person using the supplied portrait for facial appearance and short hairstyle. At sunrise in a frost-covered orchard, the fictional caretaker has just restored a stopped irrigation line. Her right hand closes around the small brass wheel of a waist-high irrigation valve while her left palm braces the fixed pipe beside it. Both feet are planted on the firm edge of a muddy path; the valve stays within comfortable arm reach. A low sprinkler two meters behind the valve sends an outward fan of fine water droplets through the first sunlight. The fan begins at the visible nozzle and spreads toward the fruit-tree row, while the distant spray softens into a pale haze. A low branch beside her holds a transparent ice sheath and narrow icicles left from the cold night. Rounded meltwater drops gather on the icicle tips, and a detached drop is caught falling toward the shallow drainage furrow directly below. Small circular ripples spread from fresh impacts on the furrow surface; its dark water carries a wavering reflection of the iced branch. Her face turns between the working sprinkler and the nearest glistening branch, with focused eyes and a small relieved smile. The short dark bob and wispy fringe retain the portrait's visible appearance, with loose strands touched by the morning light. A faded rust work shirt, loosely rolled sleeves, dark quilted vest, and mud-marked rubber boots give her a practical presence in the orchard. Frame the attentive face, valve hands, nozzle, iced branch, and receiving furrow in one connected full-length environmental portrait. Use a natural three-quarter view from several paces away, moderate depth of field and crisp near-water detail. Low side light separates spray, clear ice and liquid drops from the subdued tree row, while soft sky light preserves the facial features. The moment feels quietly inhabited: restored flow, the remaining cold on the branch and water returning to the soil read together.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제",
+      "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지",
+      "basis": "request_context",
+      "resolution": "The prior request and referenced conversation 물 관련 용어 조사 establish the topic as water-related visible meanings; no local profile or candidate vocabulary was consulted.",
+      "sources": []
+    },
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "Choose one independently randomized scene that connects multiple water forms in one coherent photograph. The orchard specifics remain agent-owned choices.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지 활용",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the attached portrait for the visible face and short hair appearance without treating it as evidence for body, age, identity, biography or personality.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "A complex photographic scene involving water"
+      },
+      {
+        "anchor_id": "water_topic",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지",
+        "dimension": "concept",
+        "prompt_evidence": "water-related event"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a person using the supplied portrait"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지",
+        "dimension": "event",
+        "prompt_evidence": "a visible water-related event"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "using the supplied portrait for facial appearance and short hairstyle"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "count",
+      "age",
+      "role",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "focal_water",
+      "dimension": "concept",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic",
+        "random_concept"
+      ],
+      "affected_dimensions": [
+        "concept"
+      ],
+      "axes": {
+        "visual_subject": "water_related_scene"
+      },
+      "evidence": {
+        "baseline_phrase": "A complex photographic scene involving water"
+      }
+    },
+    {
+      "assertion_id": "reference_scope",
+      "dimension": "reference_use",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference_use"
+      ],
+      "affected_dimensions": [
+        "reference_use"
+      ],
+      "axes": {
+        "scope": "visible_face_and_short_hair"
+      },
+      "evidence": {
+        "baseline_phrase": "using the supplied portrait for facial appearance and short hairstyle"
+      }
+    },
+    {
+      "assertion_id": "human_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference_use"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "baseline_phrase": "a person using the supplied portrait"
+      }
+    },
+    {
+      "assertion_id": "capture_axis",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "random_concept"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "quiet environmental documentary portrait",
+    "evidence": [
+      "the caretaker handles a working valve in a lived-in orchard",
+      "natural side light reveals the physical water behavior"
+    ]
+  },
+  "variation_key": "water-arm-3-orchard-frost"
+}

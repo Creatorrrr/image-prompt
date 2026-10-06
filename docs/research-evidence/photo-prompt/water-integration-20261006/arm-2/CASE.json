@@ -1,0 +1,72 @@
+{
+  "contract_version": "water-integration-test-case/v1",
+  "arm_id": "arm-2",
+  "provenance": "agent_test_setting",
+  "random_method": "secrets.token_bytes(32) -> local random.Random(int(seed,16)); uniform index from an agent-authored general-knowledge list; no project-local candidates used",
+  "seed_hex": "4ee0173e6d8dc91803aa3071a34ba7703f7107614f651dc814494fe0898dd026",
+  "selected_domain": "river ferry wake crossing reeds",
+  "concept_name": "The Ferry Wake at the Reeds",
+  "concept": "A passing river ferry sends a wake into a reed-fringed stone landing. The reference-guided person steadies a tethered skiff with its bow line as the wake lifts the bow and runs over the lowest step. The action, moving water and draining aftermath must belong to one credible photographic instant.",
+  "authorial_status": "All named setting, role, object, timing, clothing and geometry are agent-owned test choices within the user's open scene request. These are supplemental expectations, not requester definitions or hard gates unless an opted-in pack contract later promotes them.",
+  "causal_chain": {
+    "preceding_condition": "A ferry has just passed the landing; its stern and spreading wake are visible farther out.",
+    "action_at_shutter": "The person on the upper dry landing takes up sudden slack in the bow line as the wake raises the skiff, keeping it within reach.",
+    "visible_result": "A crest slaps the lower step; separated droplets rise; a thin film drains through stone joints; moving crests interrupt the reflected reeds.",
+    "remaining_possibility": "The boat can settle back below the landing as the disturbance passes."
+  },
+  "pre_registered_expected_observations": [
+    {
+      "id": "wake_source",
+      "expectation": "The distant ferry and a coherent trail or spreading crests connect to the approaching landing disturbance.",
+      "failure_condition": "A boat merely decorates unrelated waves or the crests have contradictory propagation."
+    },
+    {
+      "id": "wave_water_body",
+      "expectation": "Visible successive wake crests cross the calmer river and enter or bend around the reed stems.",
+      "failure_condition": "The water is a flat texture or the reeds and wave geometry cannot coexist."
+    },
+    {
+      "id": "liquid_sheet",
+      "expectation": "A shallow translucent water sheet or film climbs or covers the lowest stone step at the point of impact.",
+      "failure_condition": "Only dry stone or an opaque painted patch is visible."
+    },
+    {
+      "id": "separate_droplets",
+      "expectation": "Discrete airborne water drops or a brief spray appear at the impact edge, physically connected to the wave.",
+      "failure_condition": "There is no differentiated spray, or suspended unrelated glitter substitutes for water."
+    },
+    {
+      "id": "runoff_continuity",
+      "expectation": "Small rivulets or wet channels on the just-covered lower stone drain back to the river through joints.",
+      "failure_condition": "Water drains uphill, channels are disconnected, or the aftermath is entirely absent."
+    },
+    {
+      "id": "reflection_disturbance",
+      "expectation": "The person holds the taut bow line visibly connected to the lifted skiff; the stable upper dry landing supports her feet as she keeps the boat within reach.",
+      "failure_condition": "Reflection remains geometrically fixed through crests or reflection duplicates objects implausibly."
+    },
+    {
+      "id": "person_action",
+      "expectation": "The person holds the taut mooring rope connected to the lifted skiff; the stable upper landing provides support.",
+      "failure_condition": "The rope is unowned, disconnected, carried by the wrong body part, or the person and boat interaction is unreadable."
+    },
+    {
+      "id": "reference_use",
+      "expectation": "The visible face and short dark bob with wispy fringe remain recognizably guided by the attached photograph.",
+      "failure_condition": "A different face or long hairstyle replaces the visible reference cues."
+    }
+  ],
+  "whole_image_success": "The viewer can infer that a passing ferry has disturbed the landing and the person is steadying the skiff. At least three visibly distinct water forms are connected to that cause and action; the figure and water retain a clear focal hierarchy.",
+  "failure_policy": "Report source/pack, prompt, runtime, hard-gate pixels and supplemental observations separately. A supplemental miss is not rewritten as a requester failure. One smallest allowed repair is authorized only for a substantive failed output; no unchanged moderation retry or arbitrary fallback.",
+  "user_acceptance": "not_yet_received",
+  "precore_inputs": [
+    "current requester envelope",
+    "coordinator clarification of prior water topic",
+    "reference photo pixels",
+    "general knowledge",
+    "frozen SKILL.md",
+    "precore creative definitions and resolver",
+    "precore neutral catalog after scene direction"
+  ],
+  "case_registered_utc": "2026-10-06T08:37:38.325442+00:00"
+}

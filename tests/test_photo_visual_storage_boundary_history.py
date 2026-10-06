@@ -31,7 +31,7 @@ class VisualStorageBoundaryHistoryTests(unittest.TestCase):
         cls.addClassCleanup(temp.cleanup)
         ROOT = Path(temp.name)
         with mock.patch('subprocess.Popen', side_effect=AssertionError('Historical fixture invoked a subprocess')):
-            v = fixtures.archived_v21_validator(ROOT, source_root=cls.live_root)
+            v = fixtures.archived_validator_with_v24_source(ROOT, version=21, source_root=cls.live_root)
         ILLUSTRATION = ROOT / 'skills/subculture-illustration-image-generator'
         cls.proof = json.loads((ROOT / EVIDENCE / 'V21-STORAGE-BINDING-PROOF.json').read_bytes())
         cls.parent = json.loads((ROOT / cls.proof['source_parent_manifest']).read_bytes())

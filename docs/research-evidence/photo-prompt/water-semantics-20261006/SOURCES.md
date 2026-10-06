@@ -1,0 +1,49 @@
+# 공개 출처와 근거 범위
+
+본문 열람·검색 excerpt·논문 abstract·제목 용례를 구분한다. 모든 사진 배치·관계·효과·검증 명세는 연구자 제안이다.
+
+- **glossary** — [USGS Water Science Glossary](https://www.usgs.gov/water-science-school/science/water-science-glossary) · `PAGE_TEXT_READ`. 수질·수문 용어의 정의. 탁도와 용존 성분을 구분한다.
+- **tension** — [USGS Surface Tension and Water](https://www.usgs.gov/water-science-school/science/surface-tension-and-water) · `PAGE_TEXT_READ`. 작은 방울의 형상과 표면장력의 관계. 모든 액체의 외관이나 물 종류 식별법은 아니다.
+- **cohesion** — [USGS Adhesion and Cohesion of Water](https://www.usgs.gov/water-science-school/science/adhesion-and-cohesion-water) · `PAGE_TEXT_READ`. 물–물 응집과 물–다른 재료 부착을 구분한다.
+- **hardness** — [USGS Hardness of Water](https://www.usgs.gov/water-science-school/science/hardness-water) · `PAGE_TEXT_READ`. 칼슘·마그네슘과 경도·침전물. 광택만으로 수치를 판별하지 않는다.
+- **tides** — [NOAA What are tides](https://oceanservice.noaa.gov/facts/tides.html) · `PAGE_TEXT_READ`. 조석의 해수면 높이 변화. 한 프레임은 주기나 극점을 증명하지 않는다.
+- **waves** — [NOAA Waves Currents Tutorial](https://oceanservice.noaa.gov/education/tutorial_currents/03coastal1.html) · `SEARCH_EXCERPT_READ`. 파고·바람·쇄파 관계. 기존 facts/waves.html은 404였고 이 URL로 대체했다.
+- **foam** — [NOAA What is sea foam](https://oceanservice.noaa.gov/facts/seafoam.html) · `PAGE_TEXT_READ`. 교란된 물과 유기물의 거품. 포말 자체는 오염 판정이 아니다.
+- **seaice** — [NSIDC Science of Sea Ice](https://nsidc.org/learn/parts-cryosphere/sea-ice/science-sea-ice) · `PAGE_TEXT_READ`. 해빙·육지 기원 얼음 및 팬케이크 아이스의 융기된 테두리.
+- **optics** — [OpenStax Total Internal Reflection](https://openstax.org/books/university-physics-volume-3/pages/1-4-total-internal-reflection) · `PAGE_TEXT_READ`. 스넬 법칙과 전반사. 스넬의 창의 사진 명세는 이를 바탕으로 한 연구자 투영이다.
+- **pbrt** — [PBRT Specular Reflection and Transmission](https://pbr-book.org/3ed-2018/Reflection_Models/Specular_Reflection_and_Transmission) · `PAGE_TEXT_READ`. 굴절률·반사·투과 모델. 카우스틱 패턴 구성은 연구자 제안이다.
+- **image_model** — [Akkaynak and Treibitz A Revised Underwater Image Formation Model CVPR 2018](https://csms.haifa.ac.il/profiles/tTreibitz/webfiles/revised-underwater-image.pdf) · `INDEXED_ABSTRACT_READ_FULL_PDF_UNAVAILABLE`. 감쇠와 후방산란의 계수가 다르며 파장·거리의 영향을 분리한다. CVF 직접 열기 403, 저자 PDF 열기도 실패했으므로 전문 검토로 보고하지 않는다.
+- **biolum** — [NOAA What is bioluminescence](https://oceanservice.noaa.gov/facts/biolum.html) · `PAGE_TEXT_READ`. 생물이 생성하는 빛과 외부 빛을 변환하는 생물형광의 차이.
+- **yoonseul** — [국립국어원 윤슬 답변](https://www.korean.go.kr/front/onlineQna/onlineQnaView.do?mn_id=216&pageIndex=1&qna_seq=320787&searchCondition=&searchKeyword=) · `PAGE_TEXT_READ`. 햇빛이나 달빛에 비치어 반짝이는 잔물결. 어원은 별도로 확정하지 않는다.
+- **fluvial** — [NPS River Systems and Fluvial Landforms](https://www.nps.gov/subjects/geology/fluvial-landforms.htm) · `PAGE_TEXT_READ`. 유역·범람원·곡류·망상하천과 침식·운반·퇴적을 구분한다.
+- **coast** — [NPS High Relief Shorelines](https://www.nps.gov/articles/high-relief-erosional-shorelines.htm) · `PAGE_TEXT_READ`. 파랑 침식의 절벽·동굴·관통 아치 관계. 사취 등 다른 지형은 원 대화의 정의를 유지하고 추가 형태 명세로 분리한다.
+- **estuary** — [NOAA What is an estuary](https://oceanservice.noaa.gov/facts/estuary.html) · `PAGE_TEXT_READ`. 전형적 기수 하구와 담수 하구의 예외. 색 경계만으로 염분을 증명하지 않는다.
+- **vents** — [NOAA What is a hydrothermal vent](https://oceanservice.noaa.gov/facts/vents.html) · `PAGE_TEXT_READ`. 입자를 포함한 열수와 굴뚝. 검은 분출을 불의 연기로 치환하지 않는다.
+- **snow** — [NOAA What is marine snow](https://oceanservice.noaa.gov/facts/marinesnow.html) · `PAGE_TEXT_READ`. 침강하는 유기·무기 입자. 얼음 눈으로 치환하지 않는다.
+- **brine** — [NOAA Brine Pool expedition observation](https://oceanexplorer.noaa.gov/multimedia/daily-image-media-20200917/) · `PAGE_TEXT_READ`. 고밀도 염수가 해저 낮은 곳에 모인 관측 사례. 그 사진의 생물 배치를 보편 조건으로 쓰지 않는다.
+- **coral** — [NOAA Are corals animals or plants](https://oceanservice.noaa.gov/facts/coral.html) · `PAGE_TEXT_READ`. 산호는 동물이며 백화가 곧 사망은 아니다.
+- **kelp** — [NOAA What is a kelp forest](https://oceanservice.noaa.gov/facts/kelp.html) · `PAGE_TEXT_READ`. 큰 갈조류가 만드는 수중 숲. 육상 나무·잘피와 구분한다.
+- **seagrass** — [Smithsonian Seagrass and Seagrass Beds](https://ocean.si.edu/ocean-life/plants-algae/seagrass-and-seagrass-beds) · `PAGE_TEXT_READ`. 뿌리·줄기·잎·꽃·씨앗을 갖는 식물과 해조류의 holdfast를 구분한다.
+- **mangroves** — [NOAA What is a mangrove forest](https://oceanservice.noaa.gov/facts/mangroves.html) · `SEARCH_EXCERPT_READ`. 조간대 수목·뿌리 네트워크. 특정 종의 뿌리형을 모든 맹그로브에 강제하지 않는다.
+- **jellies** — [Smithsonian Jellyfish and Comb Jellies](https://ocean.si.edu/ocean-life/invertebrates/jellyfish-and-comb-jellies) · `PAGE_TEXT_READ`. 해파리와 빗해파리의 몸 구조. 빗살판의 무지갯빛을 생물발광과 구분한다.
+- **rays** — [Smithsonian Shark Cousins Skates and Rays](https://ocean.si.edu/ocean-life/sharks-rays/shark-cousins-skates-and-rays) · `SEARCH_EXCERPT_READ`. 가오리류의 외형 비교를 위한 자료. 종·독성·유영 행동은 외관만으로 확정하지 않는다.
+- **pearl** — [GIA Pearl Description](https://www.gia.edu/pearl-description) · `PAGE_TEXT_READ`. 진주의 색·광택·다양한 형상. 구형·백색만으로 제한하지 않는다.
+- **fao** — [FAO A Guide to the Seaweed Industry](https://www.fao.org/4/Y4765E/y4765e00.htm) · `SEARCH_EXCERPT_READ`. 한천·카라기난·알긴산은 다른 해조 유래 재료다. 투명한 겔의 사진만으로 구별하지 않는다.
+- **diving** — [PADI Scuba Certification FAQ](https://www.padi.com/help/scuba-certification-faq) · `SEARCH_EXCERPT_READ`. 스쿠버의 실린더·레귤레이터·BCD 등 장비 구분. 여기서는 장비 외형 연구만 수행한다.
+- **drysuit** — [PADI Dry Suits](https://www.padi.com/gear/dry-suits) · `SEARCH_EXCERPT_READ`. 목·손목의 씰과 물 유입을 막는 구조. 실제 보온·성능은 사진 검증 범위 밖이다.
+- **tools** — [국립해양박물관 테왁망사리](https://www.mmk.or.kr/?folder=collection&idx=53&page=view) · `PAGE_TEXT_READ`. 박 또는 후대 재료의 부유체와 연결된 그물주머니. 원 소장품 이미지를 복제·배포하지 않는다.
+- **haenyeo** — [UNESCO Culture of Jeju Haenyeo](https://ich.unesco.org/en/RL/culture-of-jeju-haenyeo-women-divers-01068) · `SEARCH_EXCERPT_READ`. 숨참기 채취 작업과 전승 맥락. 나이·잠수 깊이·능력을 모든 인물에 고정하지 않는다.
+- **drapery** — [Met Classical Art and Modern Dress](https://www.metmuseum.org/essays/classical-art-and-modern-dress) · `PAGE_TEXT_READ`. 몸 윤곽을 드러내는 밀착 주름의 미술사 용어. 실제 물이 있어야만 성립하는 용어가 아니다.
+- **aquaphilia** — [Hat Rock Contemporary Aquaphilia exhibition](https://hatrockcontemporary.com.au/exhibitions/18-aquaphilia/works/) · `TITLE_USAGE_ONLY`. 비성적 미술 전시 제목의 용례만 확인했다. 성적 의미의 보편 정의·진단·빈도를 증명하지 않는다.
+- **wam** — [UMD Site Theme](https://umd.net/termsofservice) · `PAGE_TEXT_READ`. 해당 커뮤니티는 물만 있는 wetlook과 다른 물질의 messy를 구분한다. 이 당사자 용례를 보편 규칙으로 강제하지 않는다.
+- **rip** — [NOAA What is a rip current](https://oceanservice.noaa.gov/facts/ripcurrent.html) · `PAGE_TEXT_READ`. 해안 밖으로 빠져나가는 좁은 수평 흐름. 사진 연구이며 구조·구조법 안내가 아니다.
+- **hab** — [NOAA What is a red tide](https://oceanservice.noaa.gov/facts/redtide.html) · `PAGE_TEXT_READ`. HAB와 색 변화·피해를 구분한다. 독성·종·농도는 영상만으로 단정하지 않는다.
+- **plastic** — [NOAA What are microplastics](https://oceanservice.noaa.gov/facts/microplastics.html) · `PAGE_TEXT_READ`. 5 mm 미만의 작은 플라스틱. 크기 기준·재질 식별 증거가 필요하다.
+- **drowning** — [WHO Drowning](https://www.who.int/news-room/fact-sheets/detail/drowning) · `PAGE_TEXT_READ`. 액체에 잠김으로 인한 호흡장애 과정과 사망 결과를 구분한다. 정지 자세는 진단이 아니다.
+- **torture** — [OHCHR Istanbul Protocol 2022](https://www.ohchr.org/sites/default/files/documents/publications/2022-06-29/Istanbul-Protocol_Rev2_EN.pdf) · `INDEXED_EXCERPT_READ`. 물 이용 가혹행위라는 의미와 기록 맥락. 실행 방법·통제 조건은 연구 후보로 작성하지 않는다.
+- **folklore** — [한국민족문화대백과사전 용신신앙](https://encykorea.aks.ac.kr/Article/E0039556) · `PAGE_TEXT_READ`. 수신·용신 신앙의 맥락. 용궁·물귀신의 고정 외형이나 지역 의례의 상세를 자동 생성하지 않는다.
+- **siren** — [Royal Museums Greenwich What is a Mermaid](https://www.rmg.co.uk/stories/art-culture/what-mermaid) · `SEARCH_EXCERPT_READ`. 초기 그리스의 여성–새 세이렌과 인어의 형상을 구분한다.
+- **overunder** — [DivePhotoGuide Over-Unders in Temperate Waters](https://www.divephotoguide.com/underwater-photography-techniques/article/over-unders-temperate-waters/) · `PAGE_TEXT_READ`. 한 프레임에 수상·수중을 함께 담는 실무 관측과 수면 경계. 특정 장비나 카메라 설정을 강제하지 않는다.
+- **wethair** — [Bico et al Elastocapillary Coalescence in Wet Hair Nature 2004](https://www.nature.com/articles/432690a) · `INDEXED_ABSTRACT_READ`. 젖은 섬유가 모여 뭉치는 현상의 연구. 수중 부유 헤어의 정확한 자세는 별도 연구자 명세다.
+- **cephalopods** — [Smithsonian Cephalopods Octopus Squid Cuttlefish and Nautilus](https://ocean.si.edu/ocean-life/invertebrates/octopuses-squids-and-relatives) · `SEARCH_EXCERPT_READ`. 두족류의 서로 다른 몸·팔·촉완·외부 껍데기. 종별 미세 구조는 실제 자료를 추가 대조한다.
+- **coast_deposit** — [NPS Sandy Coast Landforms](https://home.nps.gov/articles/sandy-coast-landforms.htm) · `SEARCH_EXCERPT_READ`. 사취·장벽섬·석호·육계사주의 연결 차이. 형성 연대는 개별 자료가 필요하다.

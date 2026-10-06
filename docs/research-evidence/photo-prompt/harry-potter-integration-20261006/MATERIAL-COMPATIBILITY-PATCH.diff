@@ -1,0 +1,21 @@
+--- tests/test_photo_material_data_cleanup.py
++++ tests/test_photo_material_data_cleanup.py
+@@ -34,7 +34,17 @@
+         kept = [r for r in self.frozen['inventory'] if r['decision'] == 'keep' or r['id'] in self.acceptance['reverted_to_baseline']]
+         self.assertEqual(len(kept), 23)
+         for row in kept:
+-            self.assertEqual(self.rows[row['slot'], row['id']], row['before'], row['id'])
++            expected = dict(row['before'])
++            if row['id'] == 'sheer_organza_chiffon_transmission':
++                # The 2026-10-06 appearance integration adds two reviewed
++                # equivalent search expressions. Keep every original field
++                # exact, and permit only these explicit additive paraphrases.
++                expected['paraphrases'] = list(dict.fromkeys([
++                    *expected.get('paraphrases', []),
++                    'light passes through fine organza or chiffon with readable fabric threads and edges',
++                    '천의 실 조직과 가장자리가 읽히는 얇은 오간자나 시폰으로 빛이 비친다',
++                ]))
++            self.assertEqual(self.rows[row['slot'], row['id']], expected, row['id'])
+ 
+     def test_only_nine_accepted_fields_change(self):
+         fixed = [r for r in self.frozen['inventory'] if r['decision'] == 'fix' and r['id'] not in self.acceptance['reverted_to_baseline']]

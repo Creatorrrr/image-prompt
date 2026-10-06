@@ -102,7 +102,9 @@ class PhotoCandidateSemanticsTests(unittest.TestCase):
     def test_required_extension_loss_fails_before_dictionary_use(self):
         with tempfile.TemporaryDirectory() as temp:
             path = Path(temp) / "photo_prompt_tags.json"
-            path.write_text(json.dumps({"candidate_semantic_policy": self.data["candidate_semantic_policy"]}))
+            policy = copy.deepcopy(self.data["candidate_semantic_policy"])
+            policy.pop("required_extensions")  # Generated registration is not an authored input.
+            path.write_text(json.dumps({"candidate_semantic_policy": policy}))
             with self.assertRaisesRegex(ValueError, "required candidate extensions are missing"):
                 generator.load_json(path)
 
@@ -119,6 +121,19 @@ class PhotoCandidateSemanticsTests(unittest.TestCase):
             self.assertEqual(reference["sha256"], semantics.digest(record))
             self.assertNotIn("semantic_policy", extension)
             self.assertNotIn("representation_modes", extension)
+            # A later DATA correction keeps the prior maintenance contract
+            # hash-bound instead of copying its metadata flags into a new
+            # record. Authenticate that chain and retain the original duty.
+            ancestry = set()
+            while "maintenance_only" not in record:
+                self.assertEqual(record["schema_version"], "photo-extension-maintenance/v1")
+                self.assertEqual(record["source_filename"], filename)
+                prior = record["prior_maintenance_ref"]
+                self.assertNotIn(prior["record_id"], ancestry)
+                ancestry.add(prior["record_id"])
+                self.assertEqual(prior["contract_version"], "photo-extension-maintenance-ref/v1")
+                record = json.loads((ROOT / "docs/research-evidence/photo-prompt/extension-maintenance" / (prior["record_id"] + ".json")).read_text())
+                self.assertEqual(prior["sha256"], semantics.digest(record))
             self.assertTrue(record["maintenance_only"])
         registered_count = sum(
             bool(json.loads((ASSETS / name).read_text()).get("maintenance_ref"))

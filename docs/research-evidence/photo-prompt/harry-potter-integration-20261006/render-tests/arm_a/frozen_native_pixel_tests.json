@@ -1,0 +1,67 @@
+{
+  "schema": "independent-native-pixel-tests/v1",
+  "provenance": "arm_a_agent_owned_precore_tests",
+  "request_sha256": "0e74642f3fde0f94300e3971d84a84074a27a4557904d9e3323b4d0324bbd03f",
+  "baseline_prompt_sha256": "69bcd857446d3b2e5348908e4acbeadb3ab30e1f5b2bccdb2a10e2b53c963a63",
+  "concept": "Rain-cleared stone bridge departure",
+  "meaning_source": "General knowledge and independent visual reasoning before project-local candidate access; no direct-user definition claim.",
+  "partial_is_fail": true,
+  "status_rules": {
+    "PASS": "Every all_of clause is observed in original generated pixels.",
+    "FAIL": "A required visible clause is absent, wrong, or only partly satisfied.",
+    "UNOBSERVABLE_NOT_PASS": "A required feature is occluded or lacks enough original-pixel detail.",
+    "BLOCKED_UNSCORED": "No image output is available, including moderation/tool blocks."
+  },
+  "gates": [
+    {
+      "gate_id": "reference_face_hair",
+      "topic": "supplied appearance reference",
+      "all_of": [
+        "chin-length dark brown bob and separated wispy fringe",
+        "large brown eyes and softly tapered jaw",
+        "naturally full lips with comparable facial proportions"
+      ],
+      "required": true
+    },
+    {
+      "gate_id": "school_robe_layers",
+      "topic": "wizard-school/Gryffindor-style layers",
+      "all_of": [
+        "open-front black robe with wide hanging sleeves",
+        "white pointed shirt collar above gray V-neck sweater",
+        "red-and-gold diagonally striped tie connected at the collar"
+      ],
+      "required": true
+    },
+    {
+      "gate_id": "broom_structure_contact",
+      "topic": "travel broom structure",
+      "all_of": [
+        "one separate wooden shaft",
+        "bound dry twig bundle terminating the shaft",
+        "traveler right hand visibly wraps the shaft beside the body"
+      ],
+      "required": true
+    },
+    {
+      "gate_id": "snowy_owl_mail",
+      "topic": "snowy owl courier appearance",
+      "all_of": [
+        "rounded white head with yellow eyes",
+        "white feather surface with scattered black flecks",
+        "owl feet grip a pale envelope on the stone parapet"
+      ],
+      "required": true
+    },
+    {
+      "gate_id": "castle_lake_silhouette",
+      "topic": "film-influenced towered school-castle appearance",
+      "all_of": [
+        "large weathered stone castle on steep rocky ridge across a lake",
+        "unequal round towers with pointed conical roofs",
+        "taller spires and clustered steep gables remain distinguishable"
+      ],
+      "required": true
+    }
+  ]
+}

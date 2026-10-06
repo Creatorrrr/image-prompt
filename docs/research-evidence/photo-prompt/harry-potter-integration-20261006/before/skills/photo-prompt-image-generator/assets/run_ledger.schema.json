@@ -1,0 +1,257 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PhotoPromptImageRun",
+  "type": "object",
+  "required": [
+    "ts",
+    "run_id",
+    "prompt_id",
+    "prompt_en",
+    "attempt",
+    "status"
+  ],
+  "additionalProperties": false,
+  "dependencies": {
+    "attempt_evidence_path": ["attempt_evidence_sha256", "error_capture_fidelity", "error_details", "generation_environment"],
+    "attempt_evidence_sha256": ["attempt_evidence_path"],
+    "error_capture_fidelity": ["attempt_evidence_path"],
+    "error_details": ["attempt_evidence_path"]
+  },
+  "properties": {
+    "ts": {
+      "type": "string",
+      "description": "ISO8601 timestamp supplied by the caller"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{16}$"
+    },
+    "concept": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "prompt_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{16}$"
+    },
+    "negative_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9a-f]{16}$"
+    },
+    "prompt_en": {
+      "type": "string"
+    },
+    "negative_en": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "argv": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "seed": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "retry_of": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "success",
+        "safety_block",
+        "error"
+      ]
+    },
+    "failure_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "image_paths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tool": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "generation_environment": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Observed execution surface; requesting-user external image provenance remains separate from a native attempt"
+    },
+    "attempt_evidence_path": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Versioned raw error evidence file bound to the exact attempt, tool, prompt, negative and outcome"
+    },
+    "attempt_evidence_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "error_capture_fidelity": {
+      "enum": ["exact_string", "exact_bytes", "typed_capture", "limited_capture", "unavailable"]
+    },
+    "error_details": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["http_status", "error_code", "error_type", "request_id", "request_id_source", "moderation_stage", "categories", "classification_source"],
+      "properties": {
+        "http_status": {"type": ["integer", "null"], "minimum": 100, "maximum": 599},
+        "error_code": {"type": ["string", "null"]},
+        "error_type": {"type": ["string", "null"]},
+        "request_id": {"type": ["string", "null"]},
+        "request_id_source": {"type": ["string", "null"]},
+        "moderation_stage": {"type": ["string", "null"]},
+        "categories": {"type": "array", "items": {"type": "string"}},
+        "classification_source": {"enum": ["structured_error_code", "unclassified"]}
+      }
+    },
+    "pack_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{16}$"
+    },
+    "chosen_candidate_ids": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "chosen_visual_concept_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^visual-concept:[a-z][a-z0-9_]+$"
+      },
+      "uniqueItems": true,
+      "description": "Exact composed optional visual-concept selection; an empty array records explicit rejection"
+    },
+    "effective_visual_contract_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Canonical pack-plus-composed visual obligation contract used for runtime and pixel gates"
+    },
+    "composer": {
+      "enum": [
+        "agent",
+        "auto"
+      ]
+    },
+    "audit_status": {
+      "enum": [
+        "pass",
+        "warn",
+        "fail",
+        "not_run"
+      ]
+    },
+    "augmentation_brief": {
+      "type": "object",
+      "description": "Audited hybrid candidate-route decisions and optional adult-appeal axis record"
+    },
+    "arm_id": {
+      "type": "string"
+    },
+    "worktree_id": {
+      "type": "string"
+    },
+    "skill_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_ref": {
+      "type": "string"
+    },
+    "candidate_pack_version": {
+      "enum": [
+        "v2",
+        "v3",
+        "v4",
+        "v5",
+        "v6"
+      ]
+    },
+    "authorial_request_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "authorial_core_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "intent_lock_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "render_repair_contract_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "failed_repair_gate_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "reference_sha256": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "image_call_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "cross_arm_inputs_used": {
+      "type": "boolean"
+    }
+  }
+}

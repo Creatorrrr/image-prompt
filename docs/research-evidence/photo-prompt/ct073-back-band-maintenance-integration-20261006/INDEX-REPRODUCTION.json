@@ -1,0 +1,61 @@
+{
+  "schema": "photo-v25-offline-index-reproduction/v1",
+  "source_commit": "dc77d63ce26b9a39037b44e86554b76fe7eacf4c",
+  "previous_qualified_commit": "3b481ca94fdbbeeb453e1d3ec657db0f5baf6a80",
+  "parent_source_manifest": "docs/research-evidence/photo-prompt/ct073-back-band-maintenance-integration-20261006/V24-PARENT-SOURCE.json",
+  "parent_source_manifest_sha256": "017f6b1cd2fe3de88f0db345326f41940684da57f987d747006863a27c6f18d6",
+  "omitted_historical_bulk_artifacts": [
+    {
+      "omitted_final_path": "docs/research-evidence/photo-prompt/ct073-back-band-maintenance-integration-20261006/prior-ct073/index-review/exact-embedding-texts.json",
+      "sha256": "55fb40454307e1ea3f5f9103620455e870366f7edf61055b7e91dff953c02b59",
+      "bytes": 7929109,
+      "kind": "preserved_prior_artifact",
+      "source_commit": "b6a3669c161b42ffc07def02cd2330c1666add79",
+      "source_path": "docs/research-evidence/photo-prompt/ct073-back-band-integration-20261006/index-review/exact-embedding-texts.json",
+      "relabelled_as_current_execution": false,
+      "preservation": "Original source artifact and initial local V24 Git history remain unchanged; generated final-copy bytes also preserved outside repository.",
+      "reason": "Redundant bulk dump; complete source/index bindings and existing DATA verifier supply current independent reproduction."
+    },
+    {
+      "omitted_final_path": "docs/research-evidence/photo-prompt/ct073-back-band-maintenance-integration-20261006/prior-ct073/index-review/all-entry-provenance.json",
+      "sha256": "59b3273c8e1d41a9930b4dfdb686ff4b881faad1e9472bd76a51ffb9f17c3c01",
+      "bytes": 3592507,
+      "kind": "preserved_prior_artifact",
+      "source_commit": "b6a3669c161b42ffc07def02cd2330c1666add79",
+      "source_path": "docs/research-evidence/photo-prompt/ct073-back-band-integration-20261006/index-review/all-entry-provenance.json",
+      "relabelled_as_current_execution": false,
+      "preservation": "Original source artifact and initial local V24 Git history remain unchanged; generated final-copy bytes also preserved outside repository.",
+      "reason": "Redundant bulk dump; complete source/index bindings and existing DATA verifier supply current independent reproduction."
+    }
+  ],
+  "current_index_manifests": {
+    "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json": "30561d14ed591dd256b1fb687173201171d55ca88dd7ecd8c76ffc94f953b810",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json": "6bc972e5e617de6c4025653c662b3ab142f41714249268fe0a6661b86220f9f4"
+  },
+  "complete_entry_counts": {
+    "ordinary": 10082,
+    "visual": 1879,
+    "total": 11961,
+    "unchanged_against_official_v24": 11959,
+    "receipt_matched_replacements": 2
+  },
+  "current_entry_bindings_path": "docs/research-evidence/photo-prompt/ct073-back-band-maintenance-integration-20261006/latest-compatibility/CURRENT-ENTRY-BINDINGS.json",
+  "current_entry_bindings_sha256": "4878b463b78071a00dd6c5dccb8e1dd66f6d3e2de37bfa3637c619d6cea5389d",
+  "reproduction": {
+    "verifier": "tests/test_photo_ct073_back_band_data.py",
+    "verifier_sha256": "e766bb1a7663e308f46605ed71b30f5e4a08a89554388990f8e3bb821ad1479a",
+    "command": [
+      "python",
+      "-m",
+      "unittest",
+      "tests.test_photo_ct073_back_band_data",
+      "-v"
+    ],
+    "complete_text_and_identity_method": "CT073BackBandDataTests.test_complete_current_indexes_bind_every_source_text_identity_and_vector_space",
+    "complete_vector_and_receipt_method": "CT073BackBandDataTests.test_all_11959_cached_vectors_are_exact_and_two_replacements_match_genuine_receipts",
+    "bm25f_and_exact_lookup_method": "CT073BackBandDataTests.test_complete_bm25f_documents_statistics_policies_and_exact_lookup",
+    "operation": "Read the authenticated V24 fixture, current immutable index manifests/shards and original retained numeric receipts; recompute all current source texts, entry/identity/space bindings, prior/current vector equality and lexical/exact-lookup contracts offline.",
+    "network_or_provider_calls_required": false,
+    "scope_note": "Reproduces the current complete qualification; historical raw dump hashes above identify their unchanged original serialized artifacts and are not claimed to be newly recreated by this command."
+  }
+}

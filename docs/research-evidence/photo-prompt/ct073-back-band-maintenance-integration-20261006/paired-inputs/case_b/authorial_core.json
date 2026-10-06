@@ -1,0 +1,167 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "Can you photograph a bra's back fastening undone, with the little hooks and the matching eyelets both visible?",
+  "creative_controls_sha256": "544a2dec7493f7c92dc72cd352c895e397ae5164493a76ee8a0504a2e51c35f0",
+  "interpreted_intent": "The synthetic requester asks for an undone bra back fastening with hooks and matching eyelets both visible. I choose a static product arrangement with the two working faces turned toward the lens, connected by the visible garment. Their clear separation explains the state. Rust color, linen and balanced spacing are optional author choices at the saved controls.",
+  "subject": "A bra laid out to show both complementary rear-closure components.",
+  "setting": "A linen-covered cutting table against a pale wall in daylight.",
+  "event": "The back fastening is undone and its hook-bearing end and eyelet tape are both visible.",
+  "visual_priorities": [
+    "Separated hooks and eyelets establish the undone state.",
+    "Both working faces are visible in one frame.",
+    "The visible band and cup connect the two ends to the same bra."
+  ],
+  "baseline_prompt_en": "A close product photograph presents the opened rear closure of a bra on a gray linen-covered cutting table. The back fastening is undone: the hook-bearing end and its matching eyelet tape sit apart, with both sides visible. The soft band ends are turned so their working faces angle toward the camera, while each remains visibly connected to the same garment. Muted rust fabric and small nickel-colored hooks stand out against the linen. The two ends occupy the lower half of the frame, balanced by the gentle curve of a cup farther back. A pale wall fills the distance. Broad daylight reveals the hook tips, the eye loops and the stitches securing each tape. Focus holds both working faces together, letting the weave of the distant cloth fade gradually.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete photographic request",
+      "source_text": "Can you photograph a bra's back fastening undone, with the little hooks and the matching eyelets both visible?",
+      "basis": "request_context",
+      "resolution": "The back fastening is undone and its hook-bearing end and eyelet tape are both visible. No user-supplied special definition is present.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "photograph",
+        "dimension": "concept",
+        "prompt_evidence": "close product photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "a bra",
+        "dimension": "subject",
+        "prompt_evidence": "closure of a bra"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "back fastening undone",
+        "dimension": "event",
+        "prompt_evidence": "The back fastening is undone"
+      },
+      {
+        "anchor_id": "garment_property_1",
+        "source_text": "the little hooks and the matching eyelets",
+        "dimension": "appearance",
+        "target": "garment",
+        "property": "rear_closure.kind",
+        "prompt_evidence": "the hook-bearing end and its matching eyelet tape"
+      },
+      {
+        "anchor_id": "garment_property_2",
+        "source_text": "back fastening undone",
+        "dimension": "appearance",
+        "target": "garment",
+        "property": "rear_closure.engagement",
+        "prompt_evidence": "The back fastening is undone"
+      },
+      {
+        "anchor_id": "garment_property_3",
+        "source_text": "both visible",
+        "dimension": "framing",
+        "target": "garment",
+        "property": "component_visibility",
+        "prompt_evidence": "with both sides visible"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "color",
+      "material",
+      "setting",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "style",
+      "format",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_object_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "opened rear closure of a bra"
+      }
+    },
+    {
+      "assertion_id": "requested_visible_state",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "event"
+      ],
+      "axes": {
+        "garment_region": "back",
+        "components": [
+          "hooks",
+          "matching_eyelets"
+        ],
+        "visible_state": "undone",
+        "component_visibility": "both_sides"
+      },
+      "evidence": {
+        "state_phrase": "The back fastening is undone",
+        "component_phrase": "the hook-bearing end and its matching eyelet tape sit apart",
+        "visibility_phrase": "with both sides visible"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_declaration",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "product photography",
+    "family": "quiet material study",
+    "evidence": [
+      "on a gray linen-covered cutting table",
+      "Broad daylight reveals the hook tips"
+    ]
+  },
+  "variation_key": "new-synthetic-fastening-b"
+}

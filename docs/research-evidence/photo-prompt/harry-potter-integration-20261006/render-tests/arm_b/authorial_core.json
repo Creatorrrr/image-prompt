@@ -1,0 +1,146 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 시각 의미 데이터의 대체 표현을 추가/보강하는 작업을 중심으로 진행하고 후보 데이터에도 잘 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "6f00dad02746fba9490c99981748cf9ac6331b7a2bb7a9c7d302d9c60c2924b2",
+  "interpreted_intent": "The requester asks for independent random complex concepts to test the newly integrated Harry Potter appearance topic, using the supplied image. My agent-owned random choice is an astronomical house-scarf investiture fashion portrait: a reference-guided adult fictional woman occupies a warm intimate foreground while physically specific ceremonial clothing, a fabric-faced hat, hovering candles under a starry indoor vault and a wand-tip constellation make magical institutional culture observable. These staging and test details are my design, not requester definitions; restrained sensual presence remains supporting.",
+  "subject": "A reference-guided adult fictional woman; appearance use is limited to observable face and hair cues from the attachment.",
+  "setting": "Agent-authored ancient stone banquet hall at a ceremonial scarf investiture.",
+  "event": "Agent-authored pause after receiving a house scarf; a staged portrait with one raised wooden wand.",
+  "visual_priorities": [
+    "Reference-guided face and composed presence lead the foreground.",
+    "Tailored black robe and red-gold house scarf communicate ceremonial wizarding clothing.",
+    "An aged crooked fabric hat carries a face shaped by its material folds.",
+    "A wooden wand emits light from its tip while hovering candles and the starry indoor vault establish magical depth."
+  ],
+  "baseline_prompt_en": "A photographic fashion portrait of a reference-guided fictional woman, explicitly an adult, at a wizarding-school-inspired magical ceremony. The supplied photograph guides her face and hair only: a short dark bob, airy separated bangs, dark almond-shaped eyes, gently arched brows, a small softly rounded nose, full softly parted lips, and the small cheek mark visible in the reference. She has just received a house scarf and pauses within a visibly staged magical event in an ancient stone banquet hall. Her tailored black open-front robe reveals a crisp white shirt and a narrow deep-red tie with gold diagonal stripes; a knitted deep-red and gold broad-striped scarf rests around her shoulders. Her right hand lightly gathers the scarf at her collarbone; her left elbow bends comfortably, and her left hand grips one slender tapered wooden wand beside her shoulder, its tip directed upward and away from her face. A small white-gold light begins exactly at the wand tip and curves into a sparse constellation above that shoulder, illuminating the fingers nearest the tip. On a waist-high stone pedestal next to her, an aged brown fabric hat has a broad floppy brim, a crooked tapering crown, visible seams and worn patches. Its deep fabric folds form two eye hollows and a horizontal mouth crease, physically shaping a face in the hat. Several slim wax candles burn while hovering at different heights with clear air beneath them. Beyond the candles, the indoor vault appears as a deep star-filled night sky above heavy stone arches. She looks toward the camera with a quiet, slightly parted-lip poise; soft warm light brushes her cheek and the scarf yarn. A frontal eye-level three-quarter-length portrait keeps both hands, the wand tip, the complete hat and the starry ceiling visible. Face and tactile ceremonial clothing lead the image; the hat and luminous magical depth support it.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제",
+      "source_text": "각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "The preceding requester context names Harry Potter appearance elements as the integrated topic. The requester delegates independent random concept and test design; my ceremonial realization is agent-authored rather than a supplied definition.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied portrait as face-and-hair appearance guidance for an explicitly adult fictional photographed subject. Actual identity, age, nationality and personality are not inferred. Clothing and scene are agent-owned.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "topic_world",
+        "source_text": "이번에 반영한 주제",
+        "dimension": "concept",
+        "prompt_evidence": "wizarding-school-inspired magical ceremony"
+      },
+      {
+        "anchor_id": "reference_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "reference-guided fictional woman"
+      },
+      {
+        "anchor_id": "complex_event",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "visibly staged magical event"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "target": "main_subject",
+        "property": "reference_scope.face_and_hair",
+        "prompt_evidence": "The supplied photograph guides her face and hair only"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "identity",
+      "count",
+      "age",
+      "role",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "reference_use",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere",
+      "format"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_human_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference_use"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "reference-guided fictional woman"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "concept_scope"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "fashion portrait photography",
+    "family": "cinematic institutional ceremony",
+    "evidence": [
+      "tailored black open-front robe",
+      "soft warm light brushes her cheek"
+    ]
+  },
+  "variation_key": "arm_b_astronomical_investiture_20261006"
+}

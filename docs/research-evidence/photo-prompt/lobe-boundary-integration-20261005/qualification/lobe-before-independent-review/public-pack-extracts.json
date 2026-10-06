@@ -1,0 +1,2281 @@
+{
+  "three_lobed_stone": {
+    "selection_policy": {
+      "all_candidates_optional": true,
+      "selection_list_required_even_when_empty": true,
+      "unselected_candidates_add_no_prompt_or_review_duty": true,
+      "selected_candidates_promote_opt_in_contract_to_hard_obligation": true,
+      "matched_terms_scores_and_routing_reasons_not_exposed": true
+    },
+    "semantic_assertion_obligations": {
+      "contract_version": "photo-semantic-assertion-obligations/v1",
+      "enabled": true,
+      "source": "authorial_core_semantic_assertions",
+      "source_authorial_core_sha256": "ffae413043251ba16c169e476cdeb6c1f9997364b309367d604f4e3f77eaf648",
+      "source_intent_lock_sha256": "dfd622753a2c22e40a2865943efc77b6cc23f79771071c73fa0e071dab7668e6",
+      "composed_field": "semantic_assertion_evidence",
+      "obligations": [
+        {
+          "assertion_id": "primary_subject_category",
+          "dimension": "subject",
+          "affected_dimensions": [
+            "subject"
+          ],
+          "source_span_ids": [
+            "topic"
+          ],
+          "semantic_axes": {
+            "subject_category": "object"
+          },
+          "frozen_evidence": {
+            "subject_phrase": "a small ornamental opening"
+          },
+          "prompt_binding": {
+            "required_evidence_fields": [
+              "subject_phrase"
+            ],
+            "all_required_phrases_must_be_literal_in_final_prompt": true,
+            "evidence_must_remain_byte_identical": true,
+            "new_hard_evidence_from_retrieval_forbidden": true
+          }
+        },
+        {
+          "assertion_id": "requested_shape_and_surface",
+          "dimension": "concept",
+          "affected_dimensions": [
+            "concept"
+          ],
+          "source_span_ids": [
+            "topic"
+          ],
+          "semantic_axes": {
+            "outline": "three rounded lobes joined into one continuous outline",
+            "surface_state": "opening through a wall"
+          },
+          "frozen_evidence": {
+            "outline_phrase": "Three rounded lobes meet as one continuous open outline",
+            "through_phrase": "the garden is visible through the opening"
+          },
+          "prompt_binding": {
+            "required_evidence_fields": [
+              "outline_phrase",
+              "through_phrase"
+            ],
+            "all_required_phrases_must_be_literal_in_final_prompt": true,
+            "evidence_must_remain_byte_identical": true,
+            "new_hard_evidence_from_retrieval_forbidden": true
+          }
+        }
+      ],
+      "canonical_sha256": "6269a2d40c0a47970ac3bb1bf9c9e0cfe2623e93ff78b0d82f72931b271b0410"
+    },
+    "semantic_clarification_composition_contract": {
+      "composed_field": "semantic_clarification_decisions",
+      "every_candidate_requires_a_typed_decision": true,
+      "required_candidates_cannot_be_rejected": true,
+      "governing_meaning_change_requires_new_core": true,
+      "applied_evidence_must_be_literal": true,
+      "forbidden_runtime_labels_must_remain_absent": true
+    },
+    "intent_preservation": {
+      "contract_version": "photo-intent-preservation/v1",
+      "source_authorial_core_sha256": "ffae413043251ba16c169e476cdeb6c1f9997364b309367d604f4e3f77eaf648",
+      "source_intent_lock_sha256": "dfd622753a2c22e40a2865943efc77b6cc23f79771071c73fa0e071dab7668e6",
+      "priority_order": [
+        "requesting_user_definition",
+        "requesting_user_semantic_anchor",
+        "requesting_user_modifier_or_exclusion",
+        "agent_prepack_interpretation",
+        "creative_augmentation"
+      ],
+      "required_anchor_ids": [
+        "core_concept",
+        "core_subject",
+        "core_event",
+        "core_setting"
+      ],
+      "locked_dimensions": [
+        "concept",
+        "subject",
+        "event",
+        "setting"
+      ],
+      "open_dimensions": [
+        "appearance",
+        "material",
+        "color",
+        "framing",
+        "composition",
+        "lighting",
+        "camera",
+        "timing",
+        "atmosphere",
+        "style"
+      ],
+      "material_change_action": "stop_and_rebuild_core_after_requester_input",
+      "creative_change_boundary": "open_dimensions_only_and_subordinate"
+    },
+    "candidates": [
+      {
+        "count": "three",
+        "surfaces": {
+          "identity": [
+            {
+              "json_pointer": "/0/slots/prop/candidates/1",
+              "record": {
+                "id": "slot:prop:orn_gd46_three",
+                "slot": "prop",
+                "entry_id": "orn_gd46_three",
+                "tags": [
+                  "ornament_structure"
+                ],
+                "kind": [],
+                "facets": {},
+                "applicability": {
+                  "status": "eligible",
+                  "source": "frozen_core_slot_contract",
+                  "reason": null
+                },
+                "conflicts_with": [],
+                "concept_terms": [
+                  "exactly three rounded lobes bound one ornamental opening",
+                  "the three lobes belong to one continuous opening contour"
+                ],
+                "content_form": "unordered_inspiration_terms",
+                "concept_units": [
+                  "exactly three rounded lobes bound one ornamental opening",
+                  "the three lobes belong to one continuous opening contour"
+                ],
+                "relations": [
+                  {
+                    "id": "declared_owner_structure",
+                    "type": "has_visible_structure",
+                    "subject": "artifact",
+                    "object": "the existing declared owner carrying three-lobed ornamental opening"
+                  }
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "adoption": "optional",
+                "affected_properties": [
+                  {
+                    "dimension": "appearance",
+                    "target": "depicted_artifact",
+                    "property": "surface.motif_geometry"
+                  },
+                  {
+                    "dimension": "material",
+                    "target": "depicted_artifact",
+                    "property": "surface.opening_boundary"
+                  }
+                ],
+                "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+              }
+            }
+          ],
+          "visual_profile": [
+            {
+              "json_pointer": "/0/visual_concept_candidates/candidates/0",
+              "record": {
+                "id": "visual-concept:orn_profile_gd46_three",
+                "content_form": "unordered_inspiration_terms",
+                "concept_terms": [
+                  "세 로브 개구부",
+                  "the three lobes belong to one continuous opening contour",
+                  "three-lobed ornamental opening",
+                  "exactly three rounded lobes bound one ornamental opening"
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "affected_properties": [
+                  {
+                    "dimension": "appearance",
+                    "target": "depicted_artifact",
+                    "property": "surface.motif_geometry"
+                  },
+                  {
+                    "dimension": "material",
+                    "target": "depicted_artifact",
+                    "property": "surface.opening_boundary"
+                  }
+                ],
+                "applicability": {
+                  "status": "eligible",
+                  "source": "hybrid_visual_profile_resolution"
+                },
+                "opt_in_contract": {
+                  "effect": "promote_to_hard_visual_obligation",
+                  "visual_obligations_contract_version": "photo-visual-obligations/v1",
+                  "obligation": {
+                    "id": "orn_profile_gd46_three",
+                    "category": "owner_bound_ornament_structure",
+                    "activation": {
+                      "source": "composer_opt_in",
+                      "scope": "request_only",
+                      "source_intent_ids": []
+                    },
+                    "composition_instruction": "Bind this visible relation to the declared existing owner: exactly three rounded lobes bound one ornamental opening. Bind this visible relation to the declared existing owner: the three lobes belong to one continuous opening contour.",
+                    "component_semantics": {
+                      "minimum_component_groups": 2,
+                      "required_group_ids": [
+                        "component_1",
+                        "component_2"
+                      ],
+                      "groups": [
+                        {
+                          "id": "component_1",
+                          "any_terms": [
+                            "exactly three rounded lobes bound one ornamental opening"
+                          ]
+                        },
+                        {
+                          "id": "component_2",
+                          "any_terms": [
+                            "the three lobes belong to one continuous opening contour"
+                          ]
+                        }
+                      ]
+                    },
+                    "prompt_binding": {
+                      "composed_field": "visual_obligation_evidence",
+                      "required_evidence_fields": [
+                        "component_1_phrase",
+                        "component_2_phrase"
+                      ],
+                      "minimum_distinct_evidence_phrases": 2,
+                      "prompt_evidence_must_be_literal": true,
+                      "maximum_pairwise_content_token_overlap_ratio": 0.82,
+                      "forbidden_filler_phrases": [
+                        "visible evidence",
+                        "visual evidence",
+                        "required cue",
+                        "prompt phrase"
+                      ]
+                    },
+                    "evidence_requirements": {
+                      "component_1_phrase": {
+                        "min_content_words": 3,
+                        "must_mention_any": [
+                          "exactly three rounded lobes bound one ornamental opening"
+                        ]
+                      },
+                      "component_2_phrase": {
+                        "min_content_words": 3,
+                        "must_mention_any": [
+                          "the three lobes belong to one continuous opening contour"
+                        ]
+                      }
+                    },
+                    "runtime_expression": {
+                      "default_mode": "definition_with_optional_label",
+                      "prompt_label_terms": [],
+                      "forbidden_prompt_terms": [],
+                      "runtime_forbidden_labels": []
+                    },
+                    "render_gates": [
+                      {
+                        "id": "vo_orn_profile_gd46_three_1",
+                        "review_scale": "native",
+                        "description": "Original pixels must show exactly three rounded lobes bound one ornamental opening. Every component is required; partial evidence fails and occlusion is unobservable."
+                      },
+                      {
+                        "id": "vo_orn_profile_gd46_three_2",
+                        "review_scale": "native",
+                        "description": "Original pixels must show the three lobes belong to one continuous opening contour. Every component is required; partial evidence fails and occlusion is unobservable."
+                      }
+                    ],
+                    "reject_substitutes": [
+                      "쿼트러포일·실제 클로버 잎·대칭 장식 일반과 구별",
+                      "세잎·꽃잎 수가 다른 로제트와 구별"
+                    ]
+                  }
+                }
+              }
+            }
+          ],
+          "clarification": [
+            {
+              "json_pointer": "/0/semantic_clarification/candidates/9",
+              "record": {
+                "id": "clarification:visual-profile:orn_profile_gd46_three",
+                "source": "visual_meaning_registry",
+                "profile_id": "orn_profile_gd46_three",
+                "interpreted_meaning": "exactly three rounded lobes bound one ornamental opening; the three lobes belong to one continuous opening contour",
+                "meaning_components": [
+                  "세 로브 개구부",
+                  "three-lobed ornamental opening",
+                  "exactly three rounded lobes bound one ornamental opening",
+                  "the three lobes belong to one continuous opening contour"
+                ],
+                "runtime_expression_mode": "definition_with_optional_label",
+                "forbidden_runtime_labels": [],
+                "applicability": {
+                  "status": "eligible",
+                  "reason": "contextual_visual_concept_candidate"
+                },
+                "required_in_final_prompt": false,
+                "revisable": false,
+                "creative_sampling": false
+              }
+            }
+          ],
+          "bundle": [
+            {
+              "json_pointer": "/0/candidate_bundles/candidates/7",
+              "record": {
+                "id": "bundle:orn_gd46_three_bundle",
+                "source_sha256": "697a8967885675a3277464997a3df932ff488dc59700f8ce66fe8aa26f6926d3",
+                "associated_profile_ids": [
+                  "orn_profile_gd46_three"
+                ],
+                "components": [
+                  {
+                    "id": "component_1",
+                    "concept_units": [
+                      "exactly three rounded lobes bound one ornamental opening"
+                    ],
+                    "minimum_realizations": 1
+                  },
+                  {
+                    "id": "component_2",
+                    "concept_units": [
+                      "the three lobes belong to one continuous opening contour"
+                    ],
+                    "minimum_realizations": 1
+                  }
+                ],
+                "member_candidates": [
+                  {
+                    "id": "slot:prop:orn_gd46_three",
+                    "slot": "prop",
+                    "entry_id": "orn_gd46_three",
+                    "concept_units": [
+                      "exactly three rounded lobes bound one ornamental opening",
+                      "the three lobes belong to one continuous opening contour"
+                    ],
+                    "relations": [
+                      {
+                        "id": "declared_owner_structure",
+                        "type": "has_visible_structure",
+                        "subject": "artifact",
+                        "object": "the existing declared owner carrying three-lobed ornamental opening"
+                      }
+                    ],
+                    "affected_dimensions": [
+                      "appearance",
+                      "material"
+                    ],
+                    "adoption": "optional",
+                    "affected_properties": [
+                      {
+                        "dimension": "appearance",
+                        "target": "depicted_artifact",
+                        "property": "surface.motif_geometry"
+                      },
+                      {
+                        "dimension": "material",
+                        "target": "depicted_artifact",
+                        "property": "surface.opening_boundary"
+                      }
+                    ]
+                  }
+                ],
+                "confusion_boundaries": [
+                  "쿼트러포일·실제 클로버 잎·대칭 장식 일반과 구별",
+                  "세잎·꽃잎 수가 다른 로제트와 구별"
+                ],
+                "relations": [
+                  {
+                    "id": "declared_owner_structure",
+                    "type": "has_visible_structure",
+                    "subject": "artifact",
+                    "object": "the existing declared owner carrying three-lobed ornamental opening"
+                  }
+                ],
+                "adoption": "optional",
+                "profile_activation": "independent_request_evidence_only",
+                "source_contract_sha256": "0525156826d562d66aae05ce7edf8429cf7757efbf1ebb541546705ff7886b9b",
+                "content_form": "unordered_inspiration_terms",
+                "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+                "concept_units": [
+                  "exactly three rounded lobes bound one ornamental opening",
+                  "the three lobes belong to one continuous opening contour"
+                ],
+                "concept_terms": [
+                  "exactly three rounded lobes bound one ornamental opening",
+                  "the three lobes belong to one continuous opening contour"
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "conflicts_with": [],
+                "applicability": {
+                  "status": "eligible",
+                  "source": "all_members_eligible_and_dimensions_open"
+                },
+                "selection_contract": {
+                  "component_evidence": "every_component_id_to_literal_final_prompt_phrase",
+                  "relation_evidence": "every_relation_id_to_literal_final_prompt_phrase",
+                  "scope": "one_coherent_realization",
+                  "associated_profiles_are_not_promoted": true
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "count": "four",
+        "surfaces": {
+          "identity": [
+            {
+              "json_pointer": "/0/slots/prop/candidates/2",
+              "record": {
+                "id": "slot:prop:orn_gd46_four",
+                "slot": "prop",
+                "entry_id": "orn_gd46_four",
+                "tags": [
+                  "ornament_structure"
+                ],
+                "kind": [],
+                "facets": {},
+                "applicability": {
+                  "status": "eligible",
+                  "source": "frozen_core_slot_contract",
+                  "reason": null
+                },
+                "conflicts_with": [],
+                "concept_terms": [
+                  "exactly four rounded lobes bound one ornamental opening",
+                  "the four lobes belong to one continuous opening contour"
+                ],
+                "content_form": "unordered_inspiration_terms",
+                "concept_units": [
+                  "exactly four rounded lobes bound one ornamental opening",
+                  "the four lobes belong to one continuous opening contour"
+                ],
+                "relations": [
+                  {
+                    "id": "declared_owner_structure",
+                    "type": "has_visible_structure",
+                    "subject": "artifact",
+                    "object": "the existing declared owner carrying four-lobed ornamental opening"
+                  }
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "adoption": "optional",
+                "affected_properties": [
+                  {
+                    "dimension": "appearance",
+                    "target": "depicted_artifact",
+                    "property": "surface.motif_geometry"
+                  },
+                  {
+                    "dimension": "material",
+                    "target": "depicted_artifact",
+                    "property": "surface.opening_boundary"
+                  }
+                ],
+                "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+              }
+            }
+          ],
+          "visual_profile": [
+            {
+              "json_pointer": "/0/visual_concept_candidates/candidates/7",
+              "record": {
+                "id": "visual-concept:orn_profile_gd46_four",
+                "content_form": "unordered_inspiration_terms",
+                "concept_terms": [
+                  "the four lobes belong to one continuous opening contour",
+                  "four-lobed ornamental opening",
+                  "네 로브 개구부",
+                  "exactly four rounded lobes bound one ornamental opening"
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "affected_properties": [
+                  {
+                    "dimension": "appearance",
+                    "target": "depicted_artifact",
+                    "property": "surface.motif_geometry"
+                  },
+                  {
+                    "dimension": "material",
+                    "target": "depicted_artifact",
+                    "property": "surface.opening_boundary"
+                  }
+                ],
+                "applicability": {
+                  "status": "eligible",
+                  "source": "hybrid_visual_profile_resolution"
+                },
+                "opt_in_contract": {
+                  "effect": "promote_to_hard_visual_obligation",
+                  "visual_obligations_contract_version": "photo-visual-obligations/v1",
+                  "obligation": {
+                    "id": "orn_profile_gd46_four",
+                    "category": "owner_bound_ornament_structure",
+                    "activation": {
+                      "source": "composer_opt_in",
+                      "scope": "request_only",
+                      "source_intent_ids": []
+                    },
+                    "composition_instruction": "Bind this visible relation to the declared existing owner: exactly four rounded lobes bound one ornamental opening. Bind this visible relation to the declared existing owner: the four lobes belong to one continuous opening contour.",
+                    "component_semantics": {
+                      "minimum_component_groups": 2,
+                      "required_group_ids": [
+                        "component_1",
+                        "component_2"
+                      ],
+                      "groups": [
+                        {
+                          "id": "component_1",
+                          "any_terms": [
+                            "exactly four rounded lobes bound one ornamental opening"
+                          ]
+                        },
+                        {
+                          "id": "component_2",
+                          "any_terms": [
+                            "the four lobes belong to one continuous opening contour"
+                          ]
+                        }
+                      ]
+                    },
+                    "prompt_binding": {
+                      "composed_field": "visual_obligation_evidence",
+                      "required_evidence_fields": [
+                        "component_1_phrase",
+                        "component_2_phrase"
+                      ],
+                      "minimum_distinct_evidence_phrases": 2,
+                      "prompt_evidence_must_be_literal": true,
+                      "maximum_pairwise_content_token_overlap_ratio": 0.82,
+                      "forbidden_filler_phrases": [
+                        "visible evidence",
+                        "visual evidence",
+                        "required cue",
+                        "prompt phrase"
+                      ]
+                    },
+                    "evidence_requirements": {
+                      "component_1_phrase": {
+                        "min_content_words": 3,
+                        "must_mention_any": [
+                          "exactly four rounded lobes bound one ornamental opening"
+                        ]
+                      },
+                      "component_2_phrase": {
+                        "min_content_words": 3,
+                        "must_mention_any": [
+                          "the four lobes belong to one continuous opening contour"
+                        ]
+                      }
+                    },
+                    "runtime_expression": {
+                      "default_mode": "definition_with_optional_label",
+                      "prompt_label_terms": [],
+                      "forbidden_prompt_terms": [],
+                      "runtime_forbidden_labels": []
+                    },
+                    "render_gates": [
+                      {
+                        "id": "vo_orn_profile_gd46_four_1",
+                        "review_scale": "native",
+                        "description": "Original pixels must show exactly four rounded lobes bound one ornamental opening. Every component is required; partial evidence fails and occlusion is unobservable."
+                      },
+                      {
+                        "id": "vo_orn_profile_gd46_four_2",
+                        "review_scale": "native",
+                        "description": "Original pixels must show the four lobes belong to one continuous opening contour. Every component is required; partial evidence fails and occlusion is unobservable."
+                      }
+                    ],
+                    "reject_substitutes": [
+                      "쿼트러포일·실제 클로버 잎·대칭 장식 일반과 구별",
+                      "세잎·꽃잎 수가 다른 로제트와 구별"
+                    ]
+                  }
+                }
+              }
+            }
+          ],
+          "clarification": [
+            {
+              "json_pointer": "/0/semantic_clarification/candidates/8",
+              "record": {
+                "id": "clarification:visual-profile:orn_profile_gd46_four",
+                "source": "visual_meaning_registry",
+                "profile_id": "orn_profile_gd46_four",
+                "interpreted_meaning": "exactly four rounded lobes bound one ornamental opening; the four lobes belong to one continuous opening contour",
+                "meaning_components": [
+                  "네 로브 개구부",
+                  "four-lobed ornamental opening",
+                  "exactly four rounded lobes bound one ornamental opening",
+                  "the four lobes belong to one continuous opening contour"
+                ],
+                "runtime_expression_mode": "definition_with_optional_label",
+                "forbidden_runtime_labels": [],
+                "applicability": {
+                  "status": "eligible",
+                  "reason": "contextual_visual_concept_candidate"
+                },
+                "required_in_final_prompt": false,
+                "revisable": false,
+                "creative_sampling": false
+              }
+            }
+          ],
+          "bundle": [
+            {
+              "json_pointer": "/0/candidate_bundles/candidates/3",
+              "record": {
+                "id": "bundle:orn_gd46_four_bundle",
+                "source_sha256": "a784f5d63a7217ae2203eb4413a318cc0485f1416b7c8fbdcbd91a824ac21af9",
+                "associated_profile_ids": [
+                  "orn_profile_gd46_four"
+                ],
+                "components": [
+                  {
+                    "id": "component_1",
+                    "concept_units": [
+                      "exactly four rounded lobes bound one ornamental opening"
+                    ],
+                    "minimum_realizations": 1
+                  },
+                  {
+                    "id": "component_2",
+                    "concept_units": [
+                      "the four lobes belong to one continuous opening contour"
+                    ],
+                    "minimum_realizations": 1
+                  }
+                ],
+                "member_candidates": [
+                  {
+                    "id": "slot:prop:orn_gd46_four",
+                    "slot": "prop",
+                    "entry_id": "orn_gd46_four",
+                    "concept_units": [
+                      "exactly four rounded lobes bound one ornamental opening",
+                      "the four lobes belong to one continuous opening contour"
+                    ],
+                    "relations": [
+                      {
+                        "id": "declared_owner_structure",
+                        "type": "has_visible_structure",
+                        "subject": "artifact",
+                        "object": "the existing declared owner carrying four-lobed ornamental opening"
+                      }
+                    ],
+                    "affected_dimensions": [
+                      "appearance",
+                      "material"
+                    ],
+                    "adoption": "optional",
+                    "affected_properties": [
+                      {
+                        "dimension": "appearance",
+                        "target": "depicted_artifact",
+                        "property": "surface.motif_geometry"
+                      },
+                      {
+                        "dimension": "material",
+                        "target": "depicted_artifact",
+                        "property": "surface.opening_boundary"
+                      }
+                    ]
+                  }
+                ],
+                "confusion_boundaries": [
+                  "쿼트러포일·실제 클로버 잎·대칭 장식 일반과 구별",
+                  "세잎·꽃잎 수가 다른 로제트와 구별"
+                ],
+                "relations": [
+                  {
+                    "id": "declared_owner_structure",
+                    "type": "has_visible_structure",
+                    "subject": "artifact",
+                    "object": "the existing declared owner carrying four-lobed ornamental opening"
+                  }
+                ],
+                "adoption": "optional",
+                "profile_activation": "independent_request_evidence_only",
+                "source_contract_sha256": "bdf56c3da9a24aefff6947fe1174718f9f02676167bc6ab9b3879fe7a7d4978d",
+                "content_form": "unordered_inspiration_terms",
+                "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+                "concept_units": [
+                  "exactly four rounded lobes bound one ornamental opening",
+                  "the four lobes belong to one continuous opening contour"
+                ],
+                "concept_terms": [
+                  "exactly four rounded lobes bound one ornamental opening",
+                  "the four lobes belong to one continuous opening contour"
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "conflicts_with": [],
+                "applicability": {
+                  "status": "eligible",
+                  "source": "all_members_eligible_and_dimensions_open"
+                },
+                "selection_contract": {
+                  "component_evidence": "every_component_id_to_literal_final_prompt_phrase",
+                  "relation_evidence": "every_relation_id_to_literal_final_prompt_phrase",
+                  "scope": "one_coherent_realization",
+                  "associated_profiles_are_not_promoted": true
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "four_lobed_timber": {
+    "selection_policy": {
+      "all_candidates_optional": true,
+      "selection_list_required_even_when_empty": true,
+      "unselected_candidates_add_no_prompt_or_review_duty": true,
+      "selected_candidates_promote_opt_in_contract_to_hard_obligation": true,
+      "matched_terms_scores_and_routing_reasons_not_exposed": true
+    },
+    "semantic_assertion_obligations": {
+      "contract_version": "photo-semantic-assertion-obligations/v1",
+      "enabled": true,
+      "source": "authorial_core_semantic_assertions",
+      "source_authorial_core_sha256": "13099ea6649806a69b6ced7f8a2c6b7e0820bffda12b5e0a37caa64db8fc33f6",
+      "source_intent_lock_sha256": "02d0bcb16a21f4bea503faf33a8246058eacde3531e2c5903a78a4c189bf8181",
+      "composed_field": "semantic_assertion_evidence",
+      "obligations": [
+        {
+          "assertion_id": "primary_subject_category",
+          "dimension": "subject",
+          "affected_dimensions": [
+            "subject"
+          ],
+          "source_span_ids": [
+            "topic"
+          ],
+          "semantic_axes": {
+            "subject_category": "object"
+          },
+          "frozen_evidence": {
+            "subject_phrase": "decorative opening cuts through the boards"
+          },
+          "prompt_binding": {
+            "required_evidence_fields": [
+              "subject_phrase"
+            ],
+            "all_required_phrases_must_be_literal_in_final_prompt": true,
+            "evidence_must_remain_byte_identical": true,
+            "new_hard_evidence_from_retrieval_forbidden": true
+          }
+        },
+        {
+          "assertion_id": "requested_shape_and_surface",
+          "dimension": "concept",
+          "affected_dimensions": [
+            "concept"
+          ],
+          "source_span_ids": [
+            "topic"
+          ],
+          "semantic_axes": {
+            "outline": "four rounded lobes around the centre",
+            "surface_state": "opening through timber"
+          },
+          "frozen_evidence": {
+            "outline_phrase": "its continuous edge forming four rounded lobes around the centre",
+            "through_phrase": "Daylight and greenery show through the opening"
+          },
+          "prompt_binding": {
+            "required_evidence_fields": [
+              "outline_phrase",
+              "through_phrase"
+            ],
+            "all_required_phrases_must_be_literal_in_final_prompt": true,
+            "evidence_must_remain_byte_identical": true,
+            "new_hard_evidence_from_retrieval_forbidden": true
+          }
+        }
+      ],
+      "canonical_sha256": "94471a7bff8a1e0fc536303a2ff432b1a603b08f771e83bcbadc55c619e9b821"
+    },
+    "semantic_clarification_composition_contract": {
+      "composed_field": "semantic_clarification_decisions",
+      "every_candidate_requires_a_typed_decision": true,
+      "required_candidates_cannot_be_rejected": true,
+      "governing_meaning_change_requires_new_core": true,
+      "applied_evidence_must_be_literal": true,
+      "forbidden_runtime_labels_must_remain_absent": true
+    },
+    "intent_preservation": {
+      "contract_version": "photo-intent-preservation/v1",
+      "source_authorial_core_sha256": "13099ea6649806a69b6ced7f8a2c6b7e0820bffda12b5e0a37caa64db8fc33f6",
+      "source_intent_lock_sha256": "02d0bcb16a21f4bea503faf33a8246058eacde3531e2c5903a78a4c189bf8181",
+      "priority_order": [
+        "requesting_user_definition",
+        "requesting_user_semantic_anchor",
+        "requesting_user_modifier_or_exclusion",
+        "agent_prepack_interpretation",
+        "creative_augmentation"
+      ],
+      "required_anchor_ids": [
+        "core_concept",
+        "core_subject",
+        "core_event",
+        "core_setting",
+        "core_count",
+        "gate_surface",
+        "gate_material"
+      ],
+      "locked_dimensions": [
+        "concept",
+        "subject",
+        "event",
+        "setting",
+        "count"
+      ],
+      "open_dimensions": [
+        "appearance",
+        "material",
+        "color",
+        "framing",
+        "composition",
+        "lighting",
+        "camera",
+        "timing",
+        "atmosphere",
+        "style"
+      ],
+      "material_change_action": "stop_and_rebuild_core_after_requester_input",
+      "creative_change_boundary": "open_dimensions_only_and_subordinate"
+    },
+    "candidates": [
+      {
+        "count": "three",
+        "surfaces": {
+          "identity": [
+            {
+              "json_pointer": "/0/slots/prop/candidates/0",
+              "record": {
+                "id": "slot:prop:orn_gd46_three",
+                "slot": "prop",
+                "entry_id": "orn_gd46_three",
+                "tags": [
+                  "ornament_structure"
+                ],
+                "kind": [],
+                "facets": {},
+                "applicability": {
+                  "status": "eligible",
+                  "source": "frozen_core_slot_contract",
+                  "reason": null
+                },
+                "conflicts_with": [],
+                "concept_terms": [
+                  "exactly three rounded lobes bound one ornamental opening",
+                  "the three lobes belong to one continuous opening contour"
+                ],
+                "content_form": "unordered_inspiration_terms",
+                "concept_units": [
+                  "exactly three rounded lobes bound one ornamental opening",
+                  "the three lobes belong to one continuous opening contour"
+                ],
+                "relations": [
+                  {
+                    "id": "declared_owner_structure",
+                    "type": "has_visible_structure",
+                    "subject": "artifact",
+                    "object": "the existing declared owner carrying three-lobed ornamental opening"
+                  }
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "adoption": "optional",
+                "affected_properties": [
+                  {
+                    "dimension": "appearance",
+                    "target": "depicted_artifact",
+                    "property": "surface.motif_geometry"
+                  },
+                  {
+                    "dimension": "material",
+                    "target": "depicted_artifact",
+                    "property": "surface.opening_boundary"
+                  }
+                ],
+                "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+              }
+            }
+          ],
+          "visual_profile": [
+            {
+              "json_pointer": "/0/visual_concept_candidates/candidates/0",
+              "record": {
+                "id": "visual-concept:orn_profile_gd46_three",
+                "content_form": "unordered_inspiration_terms",
+                "concept_terms": [
+                  "세 로브 개구부",
+                  "the three lobes belong to one continuous opening contour",
+                  "three-lobed ornamental opening",
+                  "exactly three rounded lobes bound one ornamental opening"
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "affected_properties": [
+                  {
+                    "dimension": "appearance",
+                    "target": "depicted_artifact",
+                    "property": "surface.motif_geometry"
+                  },
+                  {
+                    "dimension": "material",
+                    "target": "depicted_artifact",
+                    "property": "surface.opening_boundary"
+                  }
+                ],
+                "applicability": {
+                  "status": "eligible",
+                  "source": "hybrid_visual_profile_resolution"
+                },
+                "opt_in_contract": {
+                  "effect": "promote_to_hard_visual_obligation",
+                  "visual_obligations_contract_version": "photo-visual-obligations/v1",
+                  "obligation": {
+                    "id": "orn_profile_gd46_three",
+                    "category": "owner_bound_ornament_structure",
+                    "activation": {
+                      "source": "composer_opt_in",
+                      "scope": "request_only",
+                      "source_intent_ids": []
+                    },
+                    "composition_instruction": "Bind this visible relation to the declared existing owner: exactly three rounded lobes bound one ornamental opening. Bind this visible relation to the declared existing owner: the three lobes belong to one continuous opening contour.",
+                    "component_semantics": {
+                      "minimum_component_groups": 2,
+                      "required_group_ids": [
+                        "component_1",
+                        "component_2"
+                      ],
+                      "groups": [
+                        {
+                          "id": "component_1",
+                          "any_terms": [
+                            "exactly three rounded lobes bound one ornamental opening"
+                          ]
+                        },
+                        {
+                          "id": "component_2",
+                          "any_terms": [
+                            "the three lobes belong to one continuous opening contour"
+                          ]
+                        }
+                      ]
+                    },
+                    "prompt_binding": {
+                      "composed_field": "visual_obligation_evidence",
+                      "required_evidence_fields": [
+                        "component_1_phrase",
+                        "component_2_phrase"
+                      ],
+                      "minimum_distinct_evidence_phrases": 2,
+                      "prompt_evidence_must_be_literal": true,
+                      "maximum_pairwise_content_token_overlap_ratio": 0.82,
+                      "forbidden_filler_phrases": [
+                        "visible evidence",
+                        "visual evidence",
+                        "required cue",
+                        "prompt phrase"
+                      ]
+                    },
+                    "evidence_requirements": {
+                      "component_1_phrase": {
+                        "min_content_words": 3,
+                        "must_mention_any": [
+                          "exactly three rounded lobes bound one ornamental opening"
+                        ]
+                      },
+                      "component_2_phrase": {
+                        "min_content_words": 3,
+                        "must_mention_any": [
+                          "the three lobes belong to one continuous opening contour"
+                        ]
+                      }
+                    },
+                    "runtime_expression": {
+                      "default_mode": "definition_with_optional_label",
+                      "prompt_label_terms": [],
+                      "forbidden_prompt_terms": [],
+                      "runtime_forbidden_labels": []
+                    },
+                    "render_gates": [
+                      {
+                        "id": "vo_orn_profile_gd46_three_1",
+                        "review_scale": "native",
+                        "description": "Original pixels must show exactly three rounded lobes bound one ornamental opening. Every component is required; partial evidence fails and occlusion is unobservable."
+                      },
+                      {
+                        "id": "vo_orn_profile_gd46_three_2",
+                        "review_scale": "native",
+                        "description": "Original pixels must show the three lobes belong to one continuous opening contour. Every component is required; partial evidence fails and occlusion is unobservable."
+                      }
+                    ],
+                    "reject_substitutes": [
+                      "쿼트러포일·실제 클로버 잎·대칭 장식 일반과 구별",
+                      "세잎·꽃잎 수가 다른 로제트와 구별"
+                    ]
+                  }
+                }
+              }
+            }
+          ],
+          "clarification": [
+            {
+              "json_pointer": "/0/semantic_clarification/candidates/7",
+              "record": {
+                "id": "clarification:visual-profile:orn_profile_gd46_three",
+                "source": "visual_meaning_registry",
+                "profile_id": "orn_profile_gd46_three",
+                "interpreted_meaning": "exactly three rounded lobes bound one ornamental opening; the three lobes belong to one continuous opening contour",
+                "meaning_components": [
+                  "세 로브 개구부",
+                  "three-lobed ornamental opening",
+                  "exactly three rounded lobes bound one ornamental opening",
+                  "the three lobes belong to one continuous opening contour"
+                ],
+                "runtime_expression_mode": "definition_with_optional_label",
+                "forbidden_runtime_labels": [],
+                "applicability": {
+                  "status": "eligible",
+                  "reason": "contextual_visual_concept_candidate"
+                },
+                "required_in_final_prompt": false,
+                "revisable": false,
+                "creative_sampling": false
+              }
+            }
+          ],
+          "bundle": []
+        }
+      },
+      {
+        "count": "four",
+        "surfaces": {
+          "identity": [
+            {
+              "json_pointer": "/0/slots/prop/candidates/1",
+              "record": {
+                "id": "slot:prop:orn_gd46_four",
+                "slot": "prop",
+                "entry_id": "orn_gd46_four",
+                "tags": [
+                  "ornament_structure"
+                ],
+                "kind": [],
+                "facets": {},
+                "applicability": {
+                  "status": "eligible",
+                  "source": "frozen_core_slot_contract",
+                  "reason": null
+                },
+                "conflicts_with": [],
+                "concept_terms": [
+                  "exactly four rounded lobes bound one ornamental opening",
+                  "the four lobes belong to one continuous opening contour"
+                ],
+                "content_form": "unordered_inspiration_terms",
+                "concept_units": [
+                  "exactly four rounded lobes bound one ornamental opening",
+                  "the four lobes belong to one continuous opening contour"
+                ],
+                "relations": [
+                  {
+                    "id": "declared_owner_structure",
+                    "type": "has_visible_structure",
+                    "subject": "artifact",
+                    "object": "the existing declared owner carrying four-lobed ornamental opening"
+                  }
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "adoption": "optional",
+                "affected_properties": [
+                  {
+                    "dimension": "appearance",
+                    "target": "depicted_artifact",
+                    "property": "surface.motif_geometry"
+                  },
+                  {
+                    "dimension": "material",
+                    "target": "depicted_artifact",
+                    "property": "surface.opening_boundary"
+                  }
+                ],
+                "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+              }
+            }
+          ],
+          "visual_profile": [
+            {
+              "json_pointer": "/0/visual_concept_candidates/candidates/5",
+              "record": {
+                "id": "visual-concept:orn_profile_gd46_four",
+                "content_form": "unordered_inspiration_terms",
+                "concept_terms": [
+                  "the four lobes belong to one continuous opening contour",
+                  "four-lobed ornamental opening",
+                  "네 로브 개구부",
+                  "exactly four rounded lobes bound one ornamental opening"
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "affected_properties": [
+                  {
+                    "dimension": "appearance",
+                    "target": "depicted_artifact",
+                    "property": "surface.motif_geometry"
+                  },
+                  {
+                    "dimension": "material",
+                    "target": "depicted_artifact",
+                    "property": "surface.opening_boundary"
+                  }
+                ],
+                "applicability": {
+                  "status": "eligible",
+                  "source": "hybrid_visual_profile_resolution"
+                },
+                "opt_in_contract": {
+                  "effect": "promote_to_hard_visual_obligation",
+                  "visual_obligations_contract_version": "photo-visual-obligations/v1",
+                  "obligation": {
+                    "id": "orn_profile_gd46_four",
+                    "category": "owner_bound_ornament_structure",
+                    "activation": {
+                      "source": "composer_opt_in",
+                      "scope": "request_only",
+                      "source_intent_ids": []
+                    },
+                    "composition_instruction": "Bind this visible relation to the declared existing owner: exactly four rounded lobes bound one ornamental opening. Bind this visible relation to the declared existing owner: the four lobes belong to one continuous opening contour.",
+                    "component_semantics": {
+                      "minimum_component_groups": 2,
+                      "required_group_ids": [
+                        "component_1",
+                        "component_2"
+                      ],
+                      "groups": [
+                        {
+                          "id": "component_1",
+                          "any_terms": [
+                            "exactly four rounded lobes bound one ornamental opening"
+                          ]
+                        },
+                        {
+                          "id": "component_2",
+                          "any_terms": [
+                            "the four lobes belong to one continuous opening contour"
+                          ]
+                        }
+                      ]
+                    },
+                    "prompt_binding": {
+                      "composed_field": "visual_obligation_evidence",
+                      "required_evidence_fields": [
+                        "component_1_phrase",
+                        "component_2_phrase"
+                      ],
+                      "minimum_distinct_evidence_phrases": 2,
+                      "prompt_evidence_must_be_literal": true,
+                      "maximum_pairwise_content_token_overlap_ratio": 0.82,
+                      "forbidden_filler_phrases": [
+                        "visible evidence",
+                        "visual evidence",
+                        "required cue",
+                        "prompt phrase"
+                      ]
+                    },
+                    "evidence_requirements": {
+                      "component_1_phrase": {
+                        "min_content_words": 3,
+                        "must_mention_any": [
+                          "exactly four rounded lobes bound one ornamental opening"
+                        ]
+                      },
+                      "component_2_phrase": {
+                        "min_content_words": 3,
+                        "must_mention_any": [
+                          "the four lobes belong to one continuous opening contour"
+                        ]
+                      }
+                    },
+                    "runtime_expression": {
+                      "default_mode": "definition_with_optional_label",
+                      "prompt_label_terms": [],
+                      "forbidden_prompt_terms": [],
+                      "runtime_forbidden_labels": []
+                    },
+                    "render_gates": [
+                      {
+                        "id": "vo_orn_profile_gd46_four_1",
+                        "review_scale": "native",
+                        "description": "Original pixels must show exactly four rounded lobes bound one ornamental opening. Every component is required; partial evidence fails and occlusion is unobservable."
+                      },
+                      {
+                        "id": "vo_orn_profile_gd46_four_2",
+                        "review_scale": "native",
+                        "description": "Original pixels must show the four lobes belong to one continuous opening contour. Every component is required; partial evidence fails and occlusion is unobservable."
+                      }
+                    ],
+                    "reject_substitutes": [
+                      "쿼트러포일·실제 클로버 잎·대칭 장식 일반과 구별",
+                      "세잎·꽃잎 수가 다른 로제트와 구별"
+                    ]
+                  }
+                }
+              }
+            }
+          ],
+          "clarification": [
+            {
+              "json_pointer": "/0/semantic_clarification/candidates/6",
+              "record": {
+                "id": "clarification:visual-profile:orn_profile_gd46_four",
+                "source": "visual_meaning_registry",
+                "profile_id": "orn_profile_gd46_four",
+                "interpreted_meaning": "exactly four rounded lobes bound one ornamental opening; the four lobes belong to one continuous opening contour",
+                "meaning_components": [
+                  "네 로브 개구부",
+                  "four-lobed ornamental opening",
+                  "exactly four rounded lobes bound one ornamental opening",
+                  "the four lobes belong to one continuous opening contour"
+                ],
+                "runtime_expression_mode": "definition_with_optional_label",
+                "forbidden_runtime_labels": [],
+                "applicability": {
+                  "status": "eligible",
+                  "reason": "contextual_visual_concept_candidate"
+                },
+                "required_in_final_prompt": false,
+                "revisable": false,
+                "creative_sampling": false
+              }
+            }
+          ],
+          "bundle": [
+            {
+              "json_pointer": "/0/candidate_bundles/candidates/4",
+              "record": {
+                "id": "bundle:orn_gd46_four_bundle",
+                "source_sha256": "a784f5d63a7217ae2203eb4413a318cc0485f1416b7c8fbdcbd91a824ac21af9",
+                "associated_profile_ids": [
+                  "orn_profile_gd46_four"
+                ],
+                "components": [
+                  {
+                    "id": "component_1",
+                    "concept_units": [
+                      "exactly four rounded lobes bound one ornamental opening"
+                    ],
+                    "minimum_realizations": 1
+                  },
+                  {
+                    "id": "component_2",
+                    "concept_units": [
+                      "the four lobes belong to one continuous opening contour"
+                    ],
+                    "minimum_realizations": 1
+                  }
+                ],
+                "member_candidates": [
+                  {
+                    "id": "slot:prop:orn_gd46_four",
+                    "slot": "prop",
+                    "entry_id": "orn_gd46_four",
+                    "concept_units": [
+                      "exactly four rounded lobes bound one ornamental opening",
+                      "the four lobes belong to one continuous opening contour"
+                    ],
+                    "relations": [
+                      {
+                        "id": "declared_owner_structure",
+                        "type": "has_visible_structure",
+                        "subject": "artifact",
+                        "object": "the existing declared owner carrying four-lobed ornamental opening"
+                      }
+                    ],
+                    "affected_dimensions": [
+                      "appearance",
+                      "material"
+                    ],
+                    "adoption": "optional",
+                    "affected_properties": [
+                      {
+                        "dimension": "appearance",
+                        "target": "depicted_artifact",
+                        "property": "surface.motif_geometry"
+                      },
+                      {
+                        "dimension": "material",
+                        "target": "depicted_artifact",
+                        "property": "surface.opening_boundary"
+                      }
+                    ]
+                  }
+                ],
+                "confusion_boundaries": [
+                  "쿼트러포일·실제 클로버 잎·대칭 장식 일반과 구별",
+                  "세잎·꽃잎 수가 다른 로제트와 구별"
+                ],
+                "relations": [
+                  {
+                    "id": "declared_owner_structure",
+                    "type": "has_visible_structure",
+                    "subject": "artifact",
+                    "object": "the existing declared owner carrying four-lobed ornamental opening"
+                  }
+                ],
+                "adoption": "optional",
+                "profile_activation": "independent_request_evidence_only",
+                "source_contract_sha256": "bdf56c3da9a24aefff6947fe1174718f9f02676167bc6ab9b3879fe7a7d4978d",
+                "content_form": "unordered_inspiration_terms",
+                "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+                "concept_units": [
+                  "exactly four rounded lobes bound one ornamental opening",
+                  "the four lobes belong to one continuous opening contour"
+                ],
+                "concept_terms": [
+                  "exactly four rounded lobes bound one ornamental opening",
+                  "the four lobes belong to one continuous opening contour"
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "conflicts_with": [],
+                "applicability": {
+                  "status": "eligible",
+                  "source": "all_members_eligible_and_dimensions_open"
+                },
+                "selection_contract": {
+                  "component_evidence": "every_component_id_to_literal_final_prompt_phrase",
+                  "relation_evidence": "every_relation_id_to_literal_final_prompt_phrase",
+                  "scope": "one_coherent_realization",
+                  "associated_profiles_are_not_promoted": true
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "painted_solid_panel": {
+    "selection_policy": {
+      "all_candidates_optional": true,
+      "selection_list_required_even_when_empty": true,
+      "unselected_candidates_add_no_prompt_or_review_duty": true,
+      "selected_candidates_promote_opt_in_contract_to_hard_obligation": true,
+      "matched_terms_scores_and_routing_reasons_not_exposed": true
+    },
+    "semantic_assertion_obligations": {
+      "contract_version": "photo-semantic-assertion-obligations/v1",
+      "enabled": true,
+      "source": "authorial_core_semantic_assertions",
+      "source_authorial_core_sha256": "55556a66c1f1633ac95e1b0fe7cf44d9c12048221304c2d010c5ef580a848e15",
+      "source_intent_lock_sha256": "c59baef90bfb09e5a9b9022c2a24702dbe4b63a5073e6172a0ea24d4faa2ce97",
+      "composed_field": "semantic_assertion_evidence",
+      "obligations": [
+        {
+          "assertion_id": "primary_subject_category",
+          "dimension": "subject",
+          "affected_dimensions": [
+            "subject"
+          ],
+          "source_span_ids": [
+            "topic"
+          ],
+          "semantic_axes": {
+            "subject_category": "object"
+          },
+          "frozen_evidence": {
+            "subject_phrase": "A cream motif with four rounded lobes"
+          },
+          "prompt_binding": {
+            "required_evidence_fields": [
+              "subject_phrase"
+            ],
+            "all_required_phrases_must_be_literal_in_final_prompt": true,
+            "evidence_must_remain_byte_identical": true,
+            "new_hard_evidence_from_retrieval_forbidden": true
+          }
+        },
+        {
+          "assertion_id": "requested_shape_and_surface",
+          "dimension": "concept",
+          "affected_dimensions": [
+            "concept"
+          ],
+          "source_span_ids": [
+            "topic"
+          ],
+          "semantic_axes": {
+            "outline": "four rounded lobes",
+            "surface_state": "paint on a solid wooden panel"
+          },
+          "frozen_evidence": {
+            "outline_phrase": "A cream motif with four rounded lobes",
+            "solid_surface_phrase": "The continuous wood surface supports the cream paint across the entire motif"
+          },
+          "prompt_binding": {
+            "required_evidence_fields": [
+              "outline_phrase",
+              "solid_surface_phrase"
+            ],
+            "all_required_phrases_must_be_literal_in_final_prompt": true,
+            "evidence_must_remain_byte_identical": true,
+            "new_hard_evidence_from_retrieval_forbidden": true
+          }
+        }
+      ],
+      "canonical_sha256": "1700e87842f37bb953638e1795f341366f6800cab2dc7e62be4c8454eee73570"
+    },
+    "semantic_clarification_composition_contract": {
+      "composed_field": "semantic_clarification_decisions",
+      "every_candidate_requires_a_typed_decision": true,
+      "required_candidates_cannot_be_rejected": true,
+      "governing_meaning_change_requires_new_core": true,
+      "applied_evidence_must_be_literal": true,
+      "forbidden_runtime_labels_must_remain_absent": true
+    },
+    "intent_preservation": {
+      "contract_version": "photo-intent-preservation/v1",
+      "source_authorial_core_sha256": "55556a66c1f1633ac95e1b0fe7cf44d9c12048221304c2d010c5ef580a848e15",
+      "source_intent_lock_sha256": "c59baef90bfb09e5a9b9022c2a24702dbe4b63a5073e6172a0ea24d4faa2ce97",
+      "priority_order": [
+        "requesting_user_definition",
+        "requesting_user_semantic_anchor",
+        "requesting_user_modifier_or_exclusion",
+        "agent_prepack_interpretation",
+        "creative_augmentation"
+      ],
+      "required_anchor_ids": [
+        "core_concept",
+        "core_subject",
+        "core_event",
+        "core_setting",
+        "motif_color",
+        "door_color",
+        "door_material"
+      ],
+      "locked_dimensions": [
+        "concept",
+        "subject",
+        "event",
+        "setting"
+      ],
+      "open_dimensions": [
+        "appearance",
+        "material",
+        "color",
+        "framing",
+        "composition",
+        "lighting",
+        "camera",
+        "timing",
+        "atmosphere",
+        "style"
+      ],
+      "material_change_action": "stop_and_rebuild_core_after_requester_input",
+      "creative_change_boundary": "open_dimensions_only_and_subordinate"
+    },
+    "candidates": [
+      {
+        "count": "three",
+        "surfaces": {
+          "identity": [
+            {
+              "json_pointer": "/0/slots/prop/candidates/0",
+              "record": {
+                "id": "slot:prop:orn_gd46_three",
+                "slot": "prop",
+                "entry_id": "orn_gd46_three",
+                "tags": [
+                  "ornament_structure"
+                ],
+                "kind": [],
+                "facets": {},
+                "applicability": {
+                  "status": "eligible",
+                  "source": "frozen_core_slot_contract",
+                  "reason": null
+                },
+                "conflicts_with": [],
+                "concept_terms": [
+                  "exactly three rounded lobes bound one ornamental opening",
+                  "the three lobes belong to one continuous opening contour"
+                ],
+                "content_form": "unordered_inspiration_terms",
+                "concept_units": [
+                  "exactly three rounded lobes bound one ornamental opening",
+                  "the three lobes belong to one continuous opening contour"
+                ],
+                "relations": [
+                  {
+                    "id": "declared_owner_structure",
+                    "type": "has_visible_structure",
+                    "subject": "artifact",
+                    "object": "the existing declared owner carrying three-lobed ornamental opening"
+                  }
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "adoption": "optional",
+                "affected_properties": [
+                  {
+                    "dimension": "appearance",
+                    "target": "depicted_artifact",
+                    "property": "surface.motif_geometry"
+                  },
+                  {
+                    "dimension": "material",
+                    "target": "depicted_artifact",
+                    "property": "surface.opening_boundary"
+                  }
+                ],
+                "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+              }
+            }
+          ],
+          "visual_profile": [
+            {
+              "json_pointer": "/0/visual_concept_candidates/candidates/0",
+              "record": {
+                "id": "visual-concept:orn_profile_gd46_three",
+                "content_form": "unordered_inspiration_terms",
+                "concept_terms": [
+                  "세 로브 개구부",
+                  "the three lobes belong to one continuous opening contour",
+                  "three-lobed ornamental opening",
+                  "exactly three rounded lobes bound one ornamental opening"
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "affected_properties": [
+                  {
+                    "dimension": "appearance",
+                    "target": "depicted_artifact",
+                    "property": "surface.motif_geometry"
+                  },
+                  {
+                    "dimension": "material",
+                    "target": "depicted_artifact",
+                    "property": "surface.opening_boundary"
+                  }
+                ],
+                "applicability": {
+                  "status": "eligible",
+                  "source": "hybrid_visual_profile_resolution"
+                },
+                "opt_in_contract": {
+                  "effect": "promote_to_hard_visual_obligation",
+                  "visual_obligations_contract_version": "photo-visual-obligations/v1",
+                  "obligation": {
+                    "id": "orn_profile_gd46_three",
+                    "category": "owner_bound_ornament_structure",
+                    "activation": {
+                      "source": "composer_opt_in",
+                      "scope": "request_only",
+                      "source_intent_ids": []
+                    },
+                    "composition_instruction": "Bind this visible relation to the declared existing owner: exactly three rounded lobes bound one ornamental opening. Bind this visible relation to the declared existing owner: the three lobes belong to one continuous opening contour.",
+                    "component_semantics": {
+                      "minimum_component_groups": 2,
+                      "required_group_ids": [
+                        "component_1",
+                        "component_2"
+                      ],
+                      "groups": [
+                        {
+                          "id": "component_1",
+                          "any_terms": [
+                            "exactly three rounded lobes bound one ornamental opening"
+                          ]
+                        },
+                        {
+                          "id": "component_2",
+                          "any_terms": [
+                            "the three lobes belong to one continuous opening contour"
+                          ]
+                        }
+                      ]
+                    },
+                    "prompt_binding": {
+                      "composed_field": "visual_obligation_evidence",
+                      "required_evidence_fields": [
+                        "component_1_phrase",
+                        "component_2_phrase"
+                      ],
+                      "minimum_distinct_evidence_phrases": 2,
+                      "prompt_evidence_must_be_literal": true,
+                      "maximum_pairwise_content_token_overlap_ratio": 0.82,
+                      "forbidden_filler_phrases": [
+                        "visible evidence",
+                        "visual evidence",
+                        "required cue",
+                        "prompt phrase"
+                      ]
+                    },
+                    "evidence_requirements": {
+                      "component_1_phrase": {
+                        "min_content_words": 3,
+                        "must_mention_any": [
+                          "exactly three rounded lobes bound one ornamental opening"
+                        ]
+                      },
+                      "component_2_phrase": {
+                        "min_content_words": 3,
+                        "must_mention_any": [
+                          "the three lobes belong to one continuous opening contour"
+                        ]
+                      }
+                    },
+                    "runtime_expression": {
+                      "default_mode": "definition_with_optional_label",
+                      "prompt_label_terms": [],
+                      "forbidden_prompt_terms": [],
+                      "runtime_forbidden_labels": []
+                    },
+                    "render_gates": [
+                      {
+                        "id": "vo_orn_profile_gd46_three_1",
+                        "review_scale": "native",
+                        "description": "Original pixels must show exactly three rounded lobes bound one ornamental opening. Every component is required; partial evidence fails and occlusion is unobservable."
+                      },
+                      {
+                        "id": "vo_orn_profile_gd46_three_2",
+                        "review_scale": "native",
+                        "description": "Original pixels must show the three lobes belong to one continuous opening contour. Every component is required; partial evidence fails and occlusion is unobservable."
+                      }
+                    ],
+                    "reject_substitutes": [
+                      "쿼트러포일·실제 클로버 잎·대칭 장식 일반과 구별",
+                      "세잎·꽃잎 수가 다른 로제트와 구별"
+                    ]
+                  }
+                }
+              }
+            }
+          ],
+          "clarification": [
+            {
+              "json_pointer": "/0/semantic_clarification/candidates/6",
+              "record": {
+                "id": "clarification:visual-profile:orn_profile_gd46_three",
+                "source": "visual_meaning_registry",
+                "profile_id": "orn_profile_gd46_three",
+                "interpreted_meaning": "exactly three rounded lobes bound one ornamental opening; the three lobes belong to one continuous opening contour",
+                "meaning_components": [
+                  "세 로브 개구부",
+                  "three-lobed ornamental opening",
+                  "exactly three rounded lobes bound one ornamental opening",
+                  "the three lobes belong to one continuous opening contour"
+                ],
+                "runtime_expression_mode": "definition_with_optional_label",
+                "forbidden_runtime_labels": [],
+                "applicability": {
+                  "status": "eligible",
+                  "reason": "contextual_visual_concept_candidate"
+                },
+                "required_in_final_prompt": false,
+                "revisable": false,
+                "creative_sampling": false
+              }
+            }
+          ],
+          "bundle": [
+            {
+              "json_pointer": "/0/candidate_bundles/candidates/4",
+              "record": {
+                "id": "bundle:orn_gd46_three_bundle",
+                "source_sha256": "697a8967885675a3277464997a3df932ff488dc59700f8ce66fe8aa26f6926d3",
+                "associated_profile_ids": [
+                  "orn_profile_gd46_three"
+                ],
+                "components": [
+                  {
+                    "id": "component_1",
+                    "concept_units": [
+                      "exactly three rounded lobes bound one ornamental opening"
+                    ],
+                    "minimum_realizations": 1
+                  },
+                  {
+                    "id": "component_2",
+                    "concept_units": [
+                      "the three lobes belong to one continuous opening contour"
+                    ],
+                    "minimum_realizations": 1
+                  }
+                ],
+                "member_candidates": [
+                  {
+                    "id": "slot:prop:orn_gd46_three",
+                    "slot": "prop",
+                    "entry_id": "orn_gd46_three",
+                    "concept_units": [
+                      "exactly three rounded lobes bound one ornamental opening",
+                      "the three lobes belong to one continuous opening contour"
+                    ],
+                    "relations": [
+                      {
+                        "id": "declared_owner_structure",
+                        "type": "has_visible_structure",
+                        "subject": "artifact",
+                        "object": "the existing declared owner carrying three-lobed ornamental opening"
+                      }
+                    ],
+                    "affected_dimensions": [
+                      "appearance",
+                      "material"
+                    ],
+                    "adoption": "optional",
+                    "affected_properties": [
+                      {
+                        "dimension": "appearance",
+                        "target": "depicted_artifact",
+                        "property": "surface.motif_geometry"
+                      },
+                      {
+                        "dimension": "material",
+                        "target": "depicted_artifact",
+                        "property": "surface.opening_boundary"
+                      }
+                    ]
+                  }
+                ],
+                "confusion_boundaries": [
+                  "쿼트러포일·실제 클로버 잎·대칭 장식 일반과 구별",
+                  "세잎·꽃잎 수가 다른 로제트와 구별"
+                ],
+                "relations": [
+                  {
+                    "id": "declared_owner_structure",
+                    "type": "has_visible_structure",
+                    "subject": "artifact",
+                    "object": "the existing declared owner carrying three-lobed ornamental opening"
+                  }
+                ],
+                "adoption": "optional",
+                "profile_activation": "independent_request_evidence_only",
+                "source_contract_sha256": "0525156826d562d66aae05ce7edf8429cf7757efbf1ebb541546705ff7886b9b",
+                "content_form": "unordered_inspiration_terms",
+                "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+                "concept_units": [
+                  "exactly three rounded lobes bound one ornamental opening",
+                  "the three lobes belong to one continuous opening contour"
+                ],
+                "concept_terms": [
+                  "exactly three rounded lobes bound one ornamental opening",
+                  "the three lobes belong to one continuous opening contour"
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "conflicts_with": [],
+                "applicability": {
+                  "status": "eligible",
+                  "source": "all_members_eligible_and_dimensions_open"
+                },
+                "selection_contract": {
+                  "component_evidence": "every_component_id_to_literal_final_prompt_phrase",
+                  "relation_evidence": "every_relation_id_to_literal_final_prompt_phrase",
+                  "scope": "one_coherent_realization",
+                  "associated_profiles_are_not_promoted": true
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "count": "four",
+        "surfaces": {
+          "identity": [
+            {
+              "json_pointer": "/0/slots/prop/candidates/1",
+              "record": {
+                "id": "slot:prop:orn_gd46_four",
+                "slot": "prop",
+                "entry_id": "orn_gd46_four",
+                "tags": [
+                  "ornament_structure"
+                ],
+                "kind": [],
+                "facets": {},
+                "applicability": {
+                  "status": "eligible",
+                  "source": "frozen_core_slot_contract",
+                  "reason": null
+                },
+                "conflicts_with": [],
+                "concept_terms": [
+                  "exactly four rounded lobes bound one ornamental opening",
+                  "the four lobes belong to one continuous opening contour"
+                ],
+                "content_form": "unordered_inspiration_terms",
+                "concept_units": [
+                  "exactly four rounded lobes bound one ornamental opening",
+                  "the four lobes belong to one continuous opening contour"
+                ],
+                "relations": [
+                  {
+                    "id": "declared_owner_structure",
+                    "type": "has_visible_structure",
+                    "subject": "artifact",
+                    "object": "the existing declared owner carrying four-lobed ornamental opening"
+                  }
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "adoption": "optional",
+                "affected_properties": [
+                  {
+                    "dimension": "appearance",
+                    "target": "depicted_artifact",
+                    "property": "surface.motif_geometry"
+                  },
+                  {
+                    "dimension": "material",
+                    "target": "depicted_artifact",
+                    "property": "surface.opening_boundary"
+                  }
+                ],
+                "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+              }
+            }
+          ],
+          "visual_profile": [
+            {
+              "json_pointer": "/0/visual_concept_candidates/candidates/7",
+              "record": {
+                "id": "visual-concept:orn_profile_gd46_four",
+                "content_form": "unordered_inspiration_terms",
+                "concept_terms": [
+                  "the four lobes belong to one continuous opening contour",
+                  "four-lobed ornamental opening",
+                  "네 로브 개구부",
+                  "exactly four rounded lobes bound one ornamental opening"
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "affected_properties": [
+                  {
+                    "dimension": "appearance",
+                    "target": "depicted_artifact",
+                    "property": "surface.motif_geometry"
+                  },
+                  {
+                    "dimension": "material",
+                    "target": "depicted_artifact",
+                    "property": "surface.opening_boundary"
+                  }
+                ],
+                "applicability": {
+                  "status": "eligible",
+                  "source": "hybrid_visual_profile_resolution"
+                },
+                "opt_in_contract": {
+                  "effect": "promote_to_hard_visual_obligation",
+                  "visual_obligations_contract_version": "photo-visual-obligations/v1",
+                  "obligation": {
+                    "id": "orn_profile_gd46_four",
+                    "category": "owner_bound_ornament_structure",
+                    "activation": {
+                      "source": "composer_opt_in",
+                      "scope": "request_only",
+                      "source_intent_ids": []
+                    },
+                    "composition_instruction": "Bind this visible relation to the declared existing owner: exactly four rounded lobes bound one ornamental opening. Bind this visible relation to the declared existing owner: the four lobes belong to one continuous opening contour.",
+                    "component_semantics": {
+                      "minimum_component_groups": 2,
+                      "required_group_ids": [
+                        "component_1",
+                        "component_2"
+                      ],
+                      "groups": [
+                        {
+                          "id": "component_1",
+                          "any_terms": [
+                            "exactly four rounded lobes bound one ornamental opening"
+                          ]
+                        },
+                        {
+                          "id": "component_2",
+                          "any_terms": [
+                            "the four lobes belong to one continuous opening contour"
+                          ]
+                        }
+                      ]
+                    },
+                    "prompt_binding": {
+                      "composed_field": "visual_obligation_evidence",
+                      "required_evidence_fields": [
+                        "component_1_phrase",
+                        "component_2_phrase"
+                      ],
+                      "minimum_distinct_evidence_phrases": 2,
+                      "prompt_evidence_must_be_literal": true,
+                      "maximum_pairwise_content_token_overlap_ratio": 0.82,
+                      "forbidden_filler_phrases": [
+                        "visible evidence",
+                        "visual evidence",
+                        "required cue",
+                        "prompt phrase"
+                      ]
+                    },
+                    "evidence_requirements": {
+                      "component_1_phrase": {
+                        "min_content_words": 3,
+                        "must_mention_any": [
+                          "exactly four rounded lobes bound one ornamental opening"
+                        ]
+                      },
+                      "component_2_phrase": {
+                        "min_content_words": 3,
+                        "must_mention_any": [
+                          "the four lobes belong to one continuous opening contour"
+                        ]
+                      }
+                    },
+                    "runtime_expression": {
+                      "default_mode": "definition_with_optional_label",
+                      "prompt_label_terms": [],
+                      "forbidden_prompt_terms": [],
+                      "runtime_forbidden_labels": []
+                    },
+                    "render_gates": [
+                      {
+                        "id": "vo_orn_profile_gd46_four_1",
+                        "review_scale": "native",
+                        "description": "Original pixels must show exactly four rounded lobes bound one ornamental opening. Every component is required; partial evidence fails and occlusion is unobservable."
+                      },
+                      {
+                        "id": "vo_orn_profile_gd46_four_2",
+                        "review_scale": "native",
+                        "description": "Original pixels must show the four lobes belong to one continuous opening contour. Every component is required; partial evidence fails and occlusion is unobservable."
+                      }
+                    ],
+                    "reject_substitutes": [
+                      "쿼트러포일·실제 클로버 잎·대칭 장식 일반과 구별",
+                      "세잎·꽃잎 수가 다른 로제트와 구별"
+                    ]
+                  }
+                }
+              }
+            }
+          ],
+          "clarification": [
+            {
+              "json_pointer": "/0/semantic_clarification/candidates/5",
+              "record": {
+                "id": "clarification:visual-profile:orn_profile_gd46_four",
+                "source": "visual_meaning_registry",
+                "profile_id": "orn_profile_gd46_four",
+                "interpreted_meaning": "exactly four rounded lobes bound one ornamental opening; the four lobes belong to one continuous opening contour",
+                "meaning_components": [
+                  "네 로브 개구부",
+                  "four-lobed ornamental opening",
+                  "exactly four rounded lobes bound one ornamental opening",
+                  "the four lobes belong to one continuous opening contour"
+                ],
+                "runtime_expression_mode": "definition_with_optional_label",
+                "forbidden_runtime_labels": [],
+                "applicability": {
+                  "status": "eligible",
+                  "reason": "contextual_visual_concept_candidate"
+                },
+                "required_in_final_prompt": false,
+                "revisable": false,
+                "creative_sampling": false
+              }
+            }
+          ],
+          "bundle": [
+            {
+              "json_pointer": "/0/candidate_bundles/candidates/0",
+              "record": {
+                "id": "bundle:orn_gd46_four_bundle",
+                "source_sha256": "a784f5d63a7217ae2203eb4413a318cc0485f1416b7c8fbdcbd91a824ac21af9",
+                "associated_profile_ids": [
+                  "orn_profile_gd46_four"
+                ],
+                "components": [
+                  {
+                    "id": "component_1",
+                    "concept_units": [
+                      "exactly four rounded lobes bound one ornamental opening"
+                    ],
+                    "minimum_realizations": 1
+                  },
+                  {
+                    "id": "component_2",
+                    "concept_units": [
+                      "the four lobes belong to one continuous opening contour"
+                    ],
+                    "minimum_realizations": 1
+                  }
+                ],
+                "member_candidates": [
+                  {
+                    "id": "slot:prop:orn_gd46_four",
+                    "slot": "prop",
+                    "entry_id": "orn_gd46_four",
+                    "concept_units": [
+                      "exactly four rounded lobes bound one ornamental opening",
+                      "the four lobes belong to one continuous opening contour"
+                    ],
+                    "relations": [
+                      {
+                        "id": "declared_owner_structure",
+                        "type": "has_visible_structure",
+                        "subject": "artifact",
+                        "object": "the existing declared owner carrying four-lobed ornamental opening"
+                      }
+                    ],
+                    "affected_dimensions": [
+                      "appearance",
+                      "material"
+                    ],
+                    "adoption": "optional",
+                    "affected_properties": [
+                      {
+                        "dimension": "appearance",
+                        "target": "depicted_artifact",
+                        "property": "surface.motif_geometry"
+                      },
+                      {
+                        "dimension": "material",
+                        "target": "depicted_artifact",
+                        "property": "surface.opening_boundary"
+                      }
+                    ]
+                  }
+                ],
+                "confusion_boundaries": [
+                  "쿼트러포일·실제 클로버 잎·대칭 장식 일반과 구별",
+                  "세잎·꽃잎 수가 다른 로제트와 구별"
+                ],
+                "relations": [
+                  {
+                    "id": "declared_owner_structure",
+                    "type": "has_visible_structure",
+                    "subject": "artifact",
+                    "object": "the existing declared owner carrying four-lobed ornamental opening"
+                  }
+                ],
+                "adoption": "optional",
+                "profile_activation": "independent_request_evidence_only",
+                "source_contract_sha256": "bdf56c3da9a24aefff6947fe1174718f9f02676167bc6ab9b3879fe7a7d4978d",
+                "content_form": "unordered_inspiration_terms",
+                "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+                "concept_units": [
+                  "exactly four rounded lobes bound one ornamental opening",
+                  "the four lobes belong to one continuous opening contour"
+                ],
+                "concept_terms": [
+                  "exactly four rounded lobes bound one ornamental opening",
+                  "the four lobes belong to one continuous opening contour"
+                ],
+                "affected_dimensions": [
+                  "appearance",
+                  "material"
+                ],
+                "conflicts_with": [],
+                "applicability": {
+                  "status": "eligible",
+                  "source": "all_members_eligible_and_dimensions_open"
+                },
+                "selection_contract": {
+                  "component_evidence": "every_component_id_to_literal_final_prompt_phrase",
+                  "relation_evidence": "every_relation_id_to_literal_final_prompt_phrase",
+                  "scope": "one_coherent_realization",
+                  "associated_profiles_are_not_promoted": true
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "single_round_brick": {
+    "selection_policy": {
+      "all_candidates_optional": true,
+      "selection_list_required_even_when_empty": true,
+      "unselected_candidates_add_no_prompt_or_review_duty": true,
+      "selected_candidates_promote_opt_in_contract_to_hard_obligation": true,
+      "matched_terms_scores_and_routing_reasons_not_exposed": true
+    },
+    "semantic_assertion_obligations": {
+      "contract_version": "photo-semantic-assertion-obligations/v1",
+      "enabled": true,
+      "source": "authorial_core_semantic_assertions",
+      "source_authorial_core_sha256": "43413b1801610c256cd9785d2859d25a599b95a17de4073ba98f0bd65c5cbb6e",
+      "source_intent_lock_sha256": "dabb0a9d8fc9c8f52b873098723220f95622ae28f3a9e600237659228adac195",
+      "composed_field": "semantic_assertion_evidence",
+      "obligations": [
+        {
+          "assertion_id": "primary_subject_category",
+          "dimension": "subject",
+          "affected_dimensions": [
+            "subject"
+          ],
+          "source_span_ids": [
+            "topic"
+          ],
+          "semantic_axes": {
+            "subject_category": "object"
+          },
+          "frozen_evidence": {
+            "subject_phrase": "round opening in a brick wall"
+          },
+          "prompt_binding": {
+            "required_evidence_fields": [
+              "subject_phrase"
+            ],
+            "all_required_phrases_must_be_literal_in_final_prompt": true,
+            "evidence_must_remain_byte_identical": true,
+            "new_hard_evidence_from_retrieval_forbidden": true
+          }
+        },
+        {
+          "assertion_id": "requested_shape_and_surface",
+          "dimension": "concept",
+          "affected_dimensions": [
+            "concept"
+          ],
+          "source_span_ids": [
+            "topic"
+          ],
+          "semantic_axes": {
+            "outline": "simple circle with smooth edges",
+            "surface_state": "opening through a wall"
+          },
+          "frozen_evidence": {
+            "outline_phrase": "The opening forms a simple circle with smooth edges",
+            "through_phrase": "the river is visible through it"
+          },
+          "prompt_binding": {
+            "required_evidence_fields": [
+              "outline_phrase",
+              "through_phrase"
+            ],
+            "all_required_phrases_must_be_literal_in_final_prompt": true,
+            "evidence_must_remain_byte_identical": true,
+            "new_hard_evidence_from_retrieval_forbidden": true
+          }
+        }
+      ],
+      "canonical_sha256": "420e1751ceef196a9be42c9772384f1099254b9c93c5cf44c0ba36cafde10190"
+    },
+    "semantic_clarification_composition_contract": {
+      "composed_field": "semantic_clarification_decisions",
+      "every_candidate_requires_a_typed_decision": true,
+      "required_candidates_cannot_be_rejected": true,
+      "governing_meaning_change_requires_new_core": true,
+      "applied_evidence_must_be_literal": true,
+      "forbidden_runtime_labels_must_remain_absent": true
+    },
+    "intent_preservation": {
+      "contract_version": "photo-intent-preservation/v1",
+      "source_authorial_core_sha256": "43413b1801610c256cd9785d2859d25a599b95a17de4073ba98f0bd65c5cbb6e",
+      "source_intent_lock_sha256": "dabb0a9d8fc9c8f52b873098723220f95622ae28f3a9e600237659228adac195",
+      "priority_order": [
+        "requesting_user_definition",
+        "requesting_user_semantic_anchor",
+        "requesting_user_modifier_or_exclusion",
+        "agent_prepack_interpretation",
+        "creative_augmentation"
+      ],
+      "required_anchor_ids": [
+        "core_concept",
+        "core_subject",
+        "core_event",
+        "core_setting",
+        "core_count",
+        "quiet_atmosphere"
+      ],
+      "locked_dimensions": [
+        "concept",
+        "subject",
+        "event",
+        "setting",
+        "count"
+      ],
+      "open_dimensions": [
+        "appearance",
+        "material",
+        "color",
+        "framing",
+        "composition",
+        "lighting",
+        "camera",
+        "timing",
+        "atmosphere",
+        "style"
+      ],
+      "material_change_action": "stop_and_rebuild_core_after_requester_input",
+      "creative_change_boundary": "open_dimensions_only_and_subordinate"
+    },
+    "candidates": [
+      {
+        "count": "three",
+        "surfaces": {
+          "identity": [],
+          "visual_profile": [],
+          "clarification": [],
+          "bundle": []
+        }
+      },
+      {
+        "count": "four",
+        "surfaces": {
+          "identity": [],
+          "visual_profile": [],
+          "clarification": [],
+          "bundle": []
+        }
+      }
+    ]
+  }
+}

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import contextvars
 import copy
 import hashlib
 import json
@@ -481,6 +482,7 @@ def expected_authorial_prompt_budget_contract() -> dict[str, Any]:
             "absolute_bounds_are_blocking": True,
             "required_evidence_expands_advisory_ceiling": True,
             "requester_meaning_outranks_concision": True,
+            "scene_coherence_outranks_concision": True,
         },
     }
 
@@ -2656,6 +2658,20 @@ def audit_core_retrieval(pack: dict[str, Any], source_data: dict[str, Any]) -> l
     return failures
 
 
+_BOUND_AUDIT_SOURCE = contextvars.ContextVar("photo_audit_source", default=None)
+
+
+def _audit_source_data() -> dict:
+    bound = _BOUND_AUDIT_SOURCE.get()
+    if bound is not None:
+        return bound
+    assets = Path(__file__).resolve().parents[1] / "assets"
+    data = candidate_semantics_generator.load_json(assets / "photo_prompt_tags.json")
+    data[candidate_semantics_generator.QUALITY_LAYERS_DATA_KEY] = candidate_semantics_generator.load_quality_layers(
+        assets / "photo_prompt_quality_layers.json")
+    return data
+
+
 def audit_candidate_semantic_contracts(
     pack: dict[str, Any],
     prompt_en: str,
@@ -2691,13 +2707,7 @@ def audit_candidate_semantic_contracts(
     # Recompute admission instead of trusting its published hash or booleans.
     source_data = {}
     try:
-        assets = Path(__file__).resolve().parents[1] / "assets"
-        source_data = candidate_semantics_generator.load_json(assets / "photo_prompt_tags.json")
-        source_data[candidate_semantics_generator.QUALITY_LAYERS_DATA_KEY] = (
-            candidate_semantics_generator.load_quality_layers(
-                assets / "photo_prompt_quality_layers.json"
-            )
-        )
+        source_data = _audit_source_data()
         expected_bundles = candidate_semantics_generator.candidate_pack_candidate_bundles(
             source_data, pack
         )
@@ -3961,7 +3971,7 @@ def audit_authorial_core(
         warnings.append(
             {
                 "check": "authorial_prompt_recommended_budget",
-                "reason": "prompt_en exceeds the default concise target; this is advisory because requester meaning and literal hard evidence take priority",
+                "reason": "prompt_en exceeds the recommended length; this is advisory because requester meaning, coherent scene context, and literal hard evidence take priority",
                 "recommended_maximum_words": recommended_maximum_words,
                 "absolute_maximum_words": absolute_maximum_words,
                 **prompt_metrics,
@@ -3971,7 +3981,7 @@ def audit_authorial_core(
             warnings.append(
                 {
                     "check": "authorial_prompt_optional_prose_budget",
-                    "reason": "prompt_en exceeds the evidence-adjusted advisory ceiling; trim optional candidate, styling, camera, or explanatory prose before hard evidence",
+                    "reason": "prompt_en exceeds the evidence-adjusted advisory ceiling; review redundant technique, candidate detail, and repeated explanation while preserving requester evidence and context needed to read the scene",
                     "required_evidence_headroom_words": required_evidence_headroom_words,
                     "absolute_maximum_words": absolute_maximum_words,
                     **prompt_metrics,
@@ -3997,7 +4007,7 @@ def audit_authorial_core(
         warnings.append(
             {
                 "check": "authorial_core_baseline_recommended_budget",
-                "reason": "baseline_prompt_en exceeds the default concise target but remains within the absolute bound",
+                "reason": "baseline_prompt_en exceeds the recommended length but remains within the absolute bound; preserve coherent scene context while reviewing redundancy",
                 "recommended_maximum_words": recommended_maximum_words,
                 "absolute_maximum_words": absolute_maximum_words,
                 **baseline_metrics,
@@ -5480,7 +5490,24 @@ def audit_render_repair_v6(
     return failures
 
 
-def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dict[str, Any]:
+def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any], *, source_data=None,
+                          runtime_receipt=None, runtime_store=None) -> dict[str, Any]:
+    """Bound runtime audit, or the explicit legacy in-memory fixture API.
+
+    The public CLI requires a receipt. Historical implementations and synthetic
+    tests retain the two-argument API; they do not claim live source freshness.
+    """
+    if runtime_receipt is not None:
+        from photo_runtime_sources import RuntimeSnapshotProvider
+        source_data = RuntimeSnapshotProvider(store=runtime_store).from_receipt(pack, runtime_receipt).data
+    token = _BOUND_AUDIT_SOURCE.set(source_data)
+    try:
+        return _audit_composed_prompt(pack, composed)
+    finally:
+        _BOUND_AUDIT_SOURCE.reset(token)
+
+
+def _audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     retired_fields = {"authorial_request", "hybrid_augmentation", "moe_response"} & set(pack)
     if retired_fields:
@@ -5502,11 +5529,7 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
         )
     failures.extend(audit_authorial_pack(pack))
     try:
-        assets = Path(__file__).resolve().parents[1] / "assets"
-        source_data = candidate_semantics_generator.load_json(assets / "photo_prompt_tags.json")
-        source_data[candidate_semantics_generator.QUALITY_LAYERS_DATA_KEY] = (
-            candidate_semantics_generator.load_quality_layers(assets / "photo_prompt_quality_layers.json")
-        )
+        source_data = _audit_source_data()
         failures.extend(audit_core_retrieval(pack, source_data))
     except (OSError, KeyError, TypeError, ValueError) as exc:
         failures.append({"check": "core_retrieval_contract", "reason": f"source recomputation failed: {exc}"})
@@ -5788,6 +5811,8 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--pack", required=True, help="Candidate pack JSON path or inline JSON.")
     parser.add_argument("--composed", required=True, help="Composed prompt JSON path or inline JSON.")
     parser.add_argument("--plain", action="store_true", help="Print only pass/fail summary.")
+    parser.add_argument("--runtime-store")
+    parser.add_argument("--runtime-receipt", help="Private receipt saved with this pack; otherwise resolve its exact hash from runtime storage.")
     return parser.parse_args(argv)
 
 
@@ -5796,7 +5821,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         args = parse_args(argv)
         pack = first_pack(load_json_arg(args.pack))
         composed = composed_object(load_json_arg(args.composed))
-        result = audit_composed_prompt(pack, composed)
+        from photo_runtime_sources import RuntimeSnapshotProvider
+        receipt_path = args.runtime_receipt
+        if receipt_path is None and Path(str(args.pack) + ".runtime-receipt.json").is_file():
+            receipt_path = str(args.pack) + ".runtime-receipt.json"
+        receipt = load_json_arg(receipt_path) if receipt_path else None
+        snapshot = RuntimeSnapshotProvider(store=Path(args.runtime_store) if args.runtime_store else None).from_receipt(pack, receipt)
+        result = audit_composed_prompt(pack, composed, source_data=snapshot.data)
     except Exception as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 2

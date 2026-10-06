@@ -1,0 +1,79 @@
+test_candidate_order_meaning_core_controls_negative_and_budget_cannot_be_rehashed (tests.test_photo_runtime_boundary_history.RuntimeBoundaryHistoryTests.test_candidate_order_meaning_core_controls_negative_and_budget_cannot_be_rehashed) ... ok
+test_current_real_cli_and_independent_receipt_audit_preserve_v28_exactly (tests.test_photo_runtime_boundary_history.RuntimeBoundaryHistoryTests.test_current_real_cli_and_independent_receipt_audit_preserve_v28_exactly) ... ERROR
+test_historical_resolver_accepts_only_the_sealed_runtime_transition (tests.test_photo_runtime_boundary_history.RuntimeBoundaryHistoryTests.test_historical_resolver_accepts_only_the_sealed_runtime_transition) ... ERROR
+test_missing_or_rehashed_proof_and_parent_manifest_fail (tests.test_photo_runtime_boundary_history.RuntimeBoundaryHistoryTests.test_missing_or_rehashed_proof_and_parent_manifest_fail) ... ok
+test_original_v28_runtime_snapshot_bytes_remain_hash_bound (tests.test_photo_runtime_boundary_history.RuntimeBoundaryHistoryTests.test_original_v28_runtime_snapshot_bytes_remain_hash_bound) ... ERROR
+test_runtime_data_and_active_shards_are_bound (tests.test_photo_runtime_boundary_history.RuntimeBoundaryHistoryTests.test_runtime_data_and_active_shards_are_bound) ... ok
+
+======================================================================
+ERROR: test_current_real_cli_and_independent_receipt_audit_preserve_v28_exactly (tests.test_photo_runtime_boundary_history.RuntimeBoundaryHistoryTests.test_current_real_cli_and_independent_receipt_audit_preserve_v28_exactly)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/water-main-merge-20261006/image-prompt/tests/test_photo_runtime_boundary_history.py", line 66, in test_current_real_cli_and_independent_receipt_audit_preserve_v28_exactly
+    result = validator.validate_photo_regression_baseline(ILLUSTRATION / 'assets', baseline_version=29)
+  File "/Users/chasoik/.codex/worktrees/water-main-merge-20261006/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 8248, in validate_photo_regression_baseline
+    _require(completed.returncode == 0,
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+             "original V29 replay failed: " + (completed.stderr or completed.stdout))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/water-main-merge-20261006/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1281, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: original V29 replay failed: Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import json,sys; from pathlib import Path; sys.path.insert(0,'skills/subculture-illustration-image-generator/scripts'); import validate_illustration_assets as v; print(json.dumps(v.validate_photo_regression_baseline(Path('skills/subculture-illustration-image-generator/assets'),baseline_version=29)))
+                                                                                                                                                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/photo-v29-original-25182iyk/tree/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 8422, in validate_photo_regression_baseline
+    _validate_v29_runtime_successor(asset_dir, repo_root, baseline, pack, raw, receipt)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/photo-v29-original-25182iyk/tree/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 8102, in _validate_v29_runtime_successor
+    payload = (repo_root / name).read_bytes()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/photo-v29-original-25182iyk/tree/docs/research-evidence/photo-prompt/retrieval-runtime-freshness-20261006/v28-parent-source-files/skills/photo-prompt-image-generator/references/maintenance.md'
+
+
+======================================================================
+ERROR: test_historical_resolver_accepts_only_the_sealed_runtime_transition (tests.test_photo_runtime_boundary_history.RuntimeBoundaryHistoryTests.test_historical_resolver_accepts_only_the_sealed_runtime_transition)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/water-main-merge-20261006/image-prompt/tests/test_photo_runtime_boundary_history.py", line 114, in test_historical_resolver_accepts_only_the_sealed_runtime_transition
+    shutil.copy2(self.original_root / name, target)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 529, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 313, in copyfile
+    with open(src, 'rb') as fsrc:
+         ~~~~^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/v29-original-source-458j_rjy/tree/docs/research-evidence/photo-prompt/retrieval-runtime-freshness-20261006/v28-parent-source-files/skills/photo-prompt-image-generator/scripts/prompt_generator.py'
+
+======================================================================
+ERROR: test_original_v28_runtime_snapshot_bytes_remain_hash_bound (tests.test_photo_runtime_boundary_history.RuntimeBoundaryHistoryTests.test_original_v28_runtime_snapshot_bytes_remain_hash_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/water-main-merge-20261006/image-prompt/tests/test_photo_runtime_boundary_history.py", line 105, in test_original_v28_runtime_snapshot_bytes_remain_hash_bound
+    with self.assertRaises(validator.ValidationFailure): self.validate()
+                                                         ~~~~~~~~~~~~~^^
+  File "/Users/chasoik/.codex/worktrees/water-main-merge-20261006/image-prompt/tests/test_photo_runtime_boundary_history.py", line 49, in validate
+    self.original_validator._validate_v29_runtime_successor(self.assets, self.repo, self.baseline,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.pack if pack is None else pack, self.raw if raw is None else raw)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/v29-original-source-458j_rjy/tree/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 8102, in _validate_v29_runtime_successor
+    payload = (repo_root / name).read_bytes()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/v29-runtime-boundary-n64lq31w/docs/research-evidence/photo-prompt/retrieval-runtime-freshness-20261006/v28-parent-source-files/skills/photo-prompt-image-generator/references/maintenance.md'
+
+----------------------------------------------------------------------
+Ran 6 tests in 103.223s
+
+FAILED (errors=3)

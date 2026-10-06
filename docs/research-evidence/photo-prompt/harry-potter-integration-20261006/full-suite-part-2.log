@@ -1,0 +1,92 @@
+.....................................................................................F...........................................................................................................................................................................................................................F........F......F....................E...................................F
+======================================================================
+ERROR: test_aggregate_validator_does_not_hide_partial_pixel_qualification (test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/tests/test_subculture_illustration_contract_v1.py", line 504, in test_aggregate_validator_does_not_hide_partial_pixel_qualification
+    summary = validate_all(ASSET_ROOT)
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 12560, in validate_all
+    photo_regression = validate_photo_regression_baseline(root)
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 7462, in validate_photo_regression_baseline
+    _require(
+    ~~~~~~~~^
+        digest == baseline.get("sha256"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "current photo baseline candidate-pack bytes drift",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift
+
+======================================================================
+FAIL: test_twenty_three_retained_rows_preserve_specialization_and_construction (test_photo_material_data_cleanup.MaterialDataCleanupTests.test_twenty_three_retained_rows_preserve_specialization_and_construction)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/tests/test_photo_material_data_cleanup.py", line 37, in test_twenty_three_retained_rows_preserve_specialization_and_construction
+    self.assertEqual(self.rows[row['slot'], row['id']], row['before'], row['id'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'id'[665 chars]skin', 'paraphrases': ['light passes through f[101 chars]친다']} != {'id'[665 chars]skin'}
+Diff is 1115 characters long. Set self.maxDiff to None to see it. : sheer_organza_chiffon_transmission
+
+======================================================================
+FAIL: test_general_profile_adult_eligibility_must_be_an_explicit_boolean (test_photo_visual_obligations.PhotoVisualObligationTests.test_general_profile_adult_eligibility_must_be_an_explicit_boolean)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/tests/test_photo_visual_obligations.py", line 573, in test_general_profile_adult_eligibility_must_be_an_explicit_boolean
+    self.assertTrue(
+    ~~~~~~~~~~~~~~~^
+        any(
+        ^^^^
+    ...<3 lines>...
+        errors,
+        ^^^^^^^
+    )
+    ^
+AssertionError: False is not true : ["visual obligation registry is not valid JSON: required visual-profile extensions are missing: ['photo_prompt_visual_obligations_appearance_relations.json']"]
+
+======================================================================
+FAIL: test_project_glossary_alias_cannot_own_multiple_profiles (test_photo_visual_obligations.PhotoVisualObligationTests.test_project_glossary_alias_cannot_own_multiple_profiles)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/tests/test_photo_visual_obligations.py", line 549, in test_project_glossary_alias_cannot_own_multiple_profiles
+    self.assertTrue(
+    ~~~~~~~~~~~~~~~^
+        any("already owned by inner_thigh_negative_space" in error for error in errors),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        errors,
+        ^^^^^^^
+    )
+    ^
+AssertionError: False is not true : ["visual obligation registry is not valid JSON: required visual-profile extensions are missing: ['photo_prompt_visual_obligations_appearance_relations.json']"]
+
+======================================================================
+FAIL: test_semantic_discovery_component_guard_must_be_boolean (test_photo_visual_obligations.PhotoVisualObligationTests.test_semantic_discovery_component_guard_must_be_boolean)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/tests/test_photo_visual_obligations.py", line 602, in test_semantic_discovery_component_guard_must_be_boolean
+    self.assertTrue(
+    ~~~~~~~~~~~~~~~^
+        any(
+        ^^^^
+    ...<4 lines>...
+        errors,
+        ^^^^^^^
+    )
+    ^
+AssertionError: False is not true : ["visual obligation registry is not valid JSON: required visual-profile extensions are missing: ['photo_prompt_visual_obligations_appearance_relations.json']"]
+
+======================================================================
+FAIL: test_illustration_modules_do_not_import_photo_runtime (test_subculture_illustration_photo_boundary.SubcultureIllustrationPhotoBoundaryTests.test_illustration_modules_do_not_import_photo_runtime) (path='validate_illustration_assets.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/harry-appearance-paraphrases/image-prompt/tests/test_subculture_illustration_photo_boundary.py", line 65, in test_illustration_modules_do_not_import_photo_runtime
+    self.assertNotIn("importlib", roots, imported)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'importlib' unexpectedly found in {'typing', 'illustration_audit', 'importlib', 'hashlib', 'os', 'json', 'copy', 'collections', 'pathlib', 're', 'tempfile', 'illustration_runtime', 'argparse', '__future__', 'unicodedata', 'subprocess', 'universal_scene_runtime'} : {'typing', 'illustration_audit', 'universal_scene_runtime', 'hashlib', 'os', 'importlib.util', 'json', 'copy', 'collections', 'pathlib', 're', 'tempfile', 'illustration_runtime', 'argparse', '__future__', 'subprocess', 'unicodedata'}
+
+----------------------------------------------------------------------
+Ran 379 tests in 1641.681s
+
+FAILED (failures=5, errors=1)

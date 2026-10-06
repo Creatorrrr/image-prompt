@@ -1,0 +1,142 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "a1075a88a7a7d5a2cbe914c587989bc3c7ce05f791b5e5113d7bdb9863c0ecaa",
+  "interpreted_intent": "Requester meaning is an independently randomized complex image test of the newly integrated water theme using the attached person portrait. The reference supplies visible face and short hair only. The authorial scene is a fictional boatyard worker draining storm rainwater from a supported dinghy. A practical aim connects the retained pool, pumping action, falling stream, impact and already lowered wet line; the viewer should feel the small relief of making a boat usable after rain. The moored-boat alternative was declined because harbor waves would obscure which water is being moved. Clothing, role, circumstances, mood, apparatus, stance and camera are agent-owned open choices, not requester definitions or locks. Subtle sensual support comes from natural face presence, unforced concentration and soft daylight; fetish and surreal treatment are inactive.",
+  "subject": "A fictional boatyard worker whose visible face and short hairstyle use the attached portrait",
+  "setting": "A small shoreline boatyard after a rain shower, with a wooden dinghy on two low cradles beside wet paving",
+  "event": "A manual bilge-pump stroke transfers retained rainwater from the dinghy to a ground puddle",
+  "visual_priorities": [
+    "The person and her two working hands establish a believable practical effort beside the supported boat.",
+    "A retained translucent pool, distinguishable intake and outlet, falling stream and impact ripples form one readable water path.",
+    "The darker former waterline and newly exposed boards show that the task has already changed the boat.",
+    "The portrait-based face and short bob retain distinct visible appearance within a modest environmental view."
+  ],
+  "baseline_prompt_en": "A documentary environmental photograph of water in several connected visible forms, organized as one coherent scene with linked causes and results. A person based visually on the supplied portrait is portrayed as a fictional boatyard worker. Use the attached image's visible face and short hairstyle, including the dark chin-length bob and fine parted fringe. She wears a faded ochre canvas work shirt with the cuffs turned back, dark work trousers and rubber boots, with a quietly appealing, natural face and a small look of concentration as she watches the water. At a small shoreline boatyard just after rain, an open varnished wooden dinghy rests firmly on two low cradles beside wet paving. The worker stands outside its near side, both boots planted on the paving and her torso leaning only slightly toward the gunwale. A compact manual bilge pump is fixed to the near gunwale within easy reach. Her right hand presses its short lever downward while her left palm steadies the rim, the two forearms visibly connected to their own shoulders. A clear intake hose curves into the shallow pool at the boat's lowest point, and a separate outlet hose curves over the near side with its open end held above a shallow ground puddle. The water is visibly moving and changing shape: a short falling discharge stream breaks into individual droplets where it strikes the puddle, lifting a low fan of splash and concentric ripples. Inside the dinghy, pale cloud reflections soften over the translucent bilge water while wooden seams remain visible underneath. A darker wet line lies above the remaining pool, leaving freshly exposed wood below it; small beads and thin rivulets cling to the varnished rim. From slightly above the gunwale in a front three-quarter view, the photograph includes her face, both working hands, the visible boat interior, the two hose endpoints and the receiving puddle in a single legible arrangement. Soft clearing daylight gives the water crisp local glints and the face gentle shape. Natural perspective and ample depth of field keep the water connections readable; the distant boats stay subordinate to her practical effort.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제",
+      "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지",
+      "basis": "request_context",
+      "resolution": "The prior request and reference conversation identify the recently integrated theme as water-related visual phenomena. It is understood broadly through visible water, without importing project glossaries.",
+      "sources": []
+    },
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "agent_general_knowledge",
+      "resolution": "Independently randomize an agent-authored photographic concept whose water forms have connected causes and visible results. Randomization and test expectations are agent-owned, not supplied definitions.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the attached portrait for directly visible face appearance and its short hairstyle. Body, age, personality, biography and identity are not established by the reference.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지",
+        "dimension": "concept",
+        "prompt_evidence": "water in several connected visible forms"
+      },
+      {
+        "anchor_id": "random_complexity",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "one coherent scene with linked causes and results"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "A person based visually on the supplied portrait"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지",
+        "dimension": "event",
+        "prompt_evidence": "The water is visibly moving and changing shape"
+      },
+      {
+        "anchor_id": "reference_face_hair",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the attached image's visible face and short hairstyle"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "identity",
+      "count",
+      "age",
+      "role",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "camera_axes",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "documentary environmental photography",
+    "family": "observational practical-task portrait",
+    "evidence": [
+      "natural light on a working face",
+      "causally connected water and wet material traces"
+    ]
+  },
+  "variation_key": "water-arm-1-8cc43a29"
+}
