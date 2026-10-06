@@ -5,6 +5,7 @@ import builtins
 import hashlib
 import importlib.util
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -835,6 +836,7 @@ def _v24_verified_payload(source_root: Path, row: dict) -> bytes:
         raise AssertionError(f'Frozen V24 historical source mode drift: {row["path"]}')
     raw = path.read_bytes()
     if row['source_path'] == row['path']:
+        raw = _v33_original_live_payload(source_root, row['path'], raw)
         _v32_require_after_payload(source_root, row['path'], raw)
     blob = hashlib.sha1(f'blob {len(raw)}\0'.encode('ascii') + raw).hexdigest()
     if (len(raw) != row['bytes'] or hashlib.sha256(raw).hexdigest() != row['sha256']
@@ -1754,7 +1756,7 @@ def materialize_v29_parent_source(directory: Path, *, source_root: Path = ROOT) 
 
 def v29_source_path(name: str, *, source_root: Path = ROOT) -> Path:
     """Authenticate the original V29 source for a historical DATA test."""
-    current = _v24_regular_path(source_root, name)
+    current = _v33_original_live_path(source_root, name)
     _v32_require_after_payload(source_root, name, current.read_bytes())
     proof, parent = _v30_transition(source_root)
     before = next((row for row in parent['members'] if row['path'] == name), None)
@@ -1878,7 +1880,7 @@ def materialize_v30_parent_source(directory: Path, *, source_root: Path = ROOT) 
 
 def v30_source_path(name: str, *, source_root: Path = ROOT) -> Path:
     """Authenticate the original V30 source for a historical DATA test."""
-    current = _v24_regular_path(source_root, name)
+    current = _v33_original_live_path(source_root, name)
     _v32_require_after_payload(source_root, name, current.read_bytes())
     proof, parent = _v31_transition(source_root)
     before = next((row for row in parent['members'] if row['path'] == name), None)
@@ -1976,7 +1978,7 @@ def _v29_preserved_retained_payload(source_root: Path, row: dict, current: bytes
 
 def v28_source_path(name: str, *, source_root: Path = ROOT) -> Path:
     """Select authenticated V28 bytes for a historical test, never arbitrary drift."""
-    current = _v24_regular_path(source_root, name)
+    current = _v33_original_live_path(source_root, name)
     _v32_require_after_payload(source_root, name, current.read_bytes())
     proof, parent = _v29_transition(source_root)
     before = next((row for row in parent['members'] if row['path'] == name), None)
@@ -2224,3 +2226,178 @@ def archived_v31_validator(directory: Path, *, source_root: Path = ROOT):
             else:
                 sys.modules[name] = original
     return modules['validate_illustration_assets']
+
+
+# V33 keeps every V32 assertion and original Git identity separately from live DATA.
+V33_SCOPE_PROOF = Path('docs/research-evidence/photo-prompt/data-quality-links-20261007/history/V33-DATA-SCOPE-PROOF.json')
+V33_SCOPE_PROOF_SHA256 = 'ece1b90ed71faa5f1f12d29bddf674ffa300cfcd6da1283782c534dbe01fa3d6'
+V32_PARENT_SOURCE = V33_SCOPE_PROOF.parent / 'V32-PARENT-SOURCE.json'
+V32_PARENT_SOURCE_SHA256 = '5ff9ae7551016f874aa29f2f2db084b8747ef001ac16da172bd9c435ffd7e37f'
+V32_PARENT_COMMIT = '96e20422316276a4e0b5ed97f44152e4931e7504'
+V32_PARENT_TREE = 'ae809d09bc01042c15b77271764036871d28949d'
+V33_SCOPE_SOURCE_PATHS = frozenset('skills/photo-prompt-image-generator/assets/' + name for name in (
+    'photo_prompt_visual_obligations.json',
+    'photo_prompt_photorealism_elements_extension.json',
+    'photo_prompt_realistic_background_extension.json',
+    'photo_prompt_semantic_index.json',
+    'photo_prompt_visual_profile_index.json',
+))
+
+
+def _v33_parent_manifest(source_root: Path = ROOT) -> dict:
+    """Authenticate original V32 source independently of current checksums or Git."""
+    raw = _v24_regular_path(source_root, V32_PARENT_SOURCE.as_posix()).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != V32_PARENT_SOURCE_SHA256:
+        raise AssertionError('Frozen V32 parent source manifest drift')
+    manifest = json.loads(raw)
+    rows = manifest.get('members') or []
+    counts = {'new_immutable_snapshot_same_git_blob': 9,
+              'retained_exact_git_blob': 25, 'reuse_authenticated_v31_backing': 1343}
+    if (manifest.get('schema') != 'photo-v32-parent-source-manifest/v1'
+            or manifest.get('source_pin') != V32_PARENT_COMMIT
+            or manifest.get('source_tree') != V32_PARENT_TREE
+            or manifest.get('member_count') != 1377 or len(rows) != 1377
+            or manifest.get('total_member_bytes') != 2609717339
+            or manifest.get('new_snapshot_bytes') != 12620835
+            or manifest.get('counts') != counts):
+        raise AssertionError('Frozen V32 parent source inventory drift')
+    _, older = _v32_transition(source_root)
+    previous = {row['path']: row for row in older['members']}
+    paths, backings = set(), {}
+    for row in rows:
+        path = _v17_safe_path(row['path']).as_posix()
+        source = _v17_safe_path(row['source_path']).as_posix()
+        if path in paths:
+            raise AssertionError('Duplicate V32 historical source path')
+        paths.add(path)
+        if (row.get('git_commit') != V32_PARENT_COMMIT or row.get('git_path') != path
+                or row.get('mode') not in ('100644', '100755') or type(row.get('bytes')) is not int
+                or row['bytes'] < 0 or not isinstance(row.get('sha256'), str)
+                or not isinstance(row.get('git_blob'), str) or len(row['sha256']) != 64
+                or len(row['git_blob']) != 40
+                or any(c not in '0123456789abcdef' for c in row['sha256'] + row['git_blob'])):
+            raise AssertionError('Frozen V32 historical source provenance drift')
+        identity = tuple(row[key] for key in ('git_blob', 'mode', 'bytes', 'sha256'))
+        if source in backings and backings[source] != identity:
+            raise AssertionError('Conflicting V32 historical source backing')
+        backings[source] = identity
+        if row['kind'] == 'reuse_authenticated_v31_backing':
+            allowed = all(row[key] == previous.get(path, {}).get(key)
+                          for key in ('source_path', 'git_blob', 'mode', 'bytes', 'sha256'))
+        elif row['kind'] == 'retained_exact_git_blob':
+            allowed = source == path
+        elif row['kind'] == 'new_immutable_snapshot_same_git_blob':
+            allowed = source == (V32_PARENT_SOURCE.parent / 'v32-parent-source-files' / path).as_posix()
+        else:
+            allowed = False
+        if not allowed:
+            raise AssertionError('Unregistered V32 historical source backing')
+    if (any(parent.as_posix() in paths for name in paths for parent in Path(name).parents)
+            or any(parent.as_posix() in backings for name in backings for parent in Path(name).parents)
+            or sum(row['bytes'] for row in rows) != manifest['total_member_bytes']
+            or {kind: sum(row['kind'] == kind for row in rows) for kind in counts} != counts
+            or sum(row['bytes'] for row in rows if row['kind'] == 'new_immutable_snapshot_same_git_blob')
+            != manifest['new_snapshot_bytes']
+            or not V33_SCOPE_SOURCE_PATHS.issubset(paths)):
+        raise AssertionError('Frozen V32 historical source inventory drift')
+    return manifest
+
+
+def _v33_transition(source_root: Path = ROOT) -> tuple[dict, dict]:
+    raw = _v24_regular_path(source_root, V33_SCOPE_PROOF.as_posix()).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != V33_SCOPE_PROOF_SHA256:
+        raise AssertionError('Frozen V33 scope proof drift')
+    proof, parent = json.loads(raw), _v33_parent_manifest(source_root)
+    if (proof.get('schema') != 'photo-data-scope-transition/v33'
+            or proof.get('previous_qualified_commit') != V32_PARENT_COMMIT
+            or proof.get('previous_qualified_tree') != V32_PARENT_TREE
+            or proof.get('parent_manifest') != V32_PARENT_SOURCE.as_posix()
+            or proof.get('parent_manifest_sha256') != V32_PARENT_SOURCE_SHA256
+            or proof.get('parent_member_count') != parent['member_count']
+            or set(proof.get('preserved_source_paths') or []) != V33_SCOPE_SOURCE_PATHS
+            or not isinstance(proof.get('source_files_after'), dict)
+            or not V33_SCOPE_SOURCE_PATHS.issubset(proof['source_files_after'])):
+        raise AssertionError('Frozen V33 scope lineage drift')
+    records = {row['path']: row for row in parent['members']}
+    for name, digest in proof['source_files_after'].items():
+        _v17_safe_path(name)
+        if (name not in records or not isinstance(digest, str) or len(digest) != 64
+                or any(c not in '0123456789abcdef' for c in digest)):
+            raise AssertionError('Frozen V33 source identity drift')
+    if any(records[name]['source_path'] == name for name in V33_SCOPE_SOURCE_PATHS):
+        raise AssertionError('Frozen V33 original live source not preserved')
+    return proof, parent
+
+
+def _v33_recovery_context(source_root: Path) -> bool:
+    return any((source_root / name).exists() or (source_root / name).is_symlink() for name in (
+        V33_SCOPE_PROOF, V32_PARENT_SOURCE,
+        Path('skills/subculture-illustration-image-generator/assets/photo_regression_baseline_v33.json'),
+    ))
+
+
+def _v33_original_live_path(source_root: Path, name: str) -> Path:
+    current = _v24_regular_path(source_root, name)
+    if name not in V33_SCOPE_SOURCE_PATHS or not _v33_recovery_context(source_root):
+        return current
+    proof, parent = _v33_transition(source_root)
+    before = next(row for row in parent['members'] if row['path'] == name)
+    if (current.stat().st_mode & 0o7777 != int(before['mode'][-3:], 8)
+            or hashlib.sha256(current.read_bytes()).hexdigest() != proof['source_files_after'][name]):
+        raise AssertionError(f'Frozen V33 retained live source payload or mode drift: {name}')
+    _v24_verified_payload(source_root, before)
+    return _v24_regular_path(source_root, before['source_path'])
+
+
+def _v33_original_live_payload(source_root: Path, name: str, current: bytes) -> bytes:
+    if name not in V33_SCOPE_SOURCE_PATHS or not _v33_recovery_context(source_root):
+        return current
+    proof, _ = _v33_transition(source_root)
+    if hashlib.sha256(current).hexdigest() != proof['source_files_after'][name]:
+        raise AssertionError(f'Frozen V33 retained live source payload drift: {name}')
+    path = _v33_original_live_path(source_root, name)
+    return path.read_bytes()
+
+
+def materialize_v32_parent_source(directory: Path, *, source_root: Path = ROOT) -> dict:
+    """Replay authenticated V32 bytes and modes atomically, without live fallback."""
+    _v24_empty_destination(directory)
+    manifest = _v33_parent_manifest(source_root)
+    for row in manifest['members']:
+        _v24_verified_payload(source_root, row)
+    directory.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='.sealed-v32-', dir=directory.parent) as temporary:
+        staged = Path(temporary) / 'tree'
+        staged.mkdir()
+        for row in manifest['members']:
+            target = staged / _v17_safe_path(row['path'])
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(_v24_verified_payload(source_root, row))
+            target.chmod(int(row['mode'][-3:], 8))
+        _v24_empty_destination(directory)
+        staged.replace(directory)
+    return manifest
+
+
+def v32_history_python(*, source_root: Path = ROOT) -> Path:
+    """Select only a local interpreter matching the unchanged V32 environment."""
+    proof, _ = _v32_transition(source_root)
+    required = proof['runtime_environment']
+    version = required['python']
+    override = os.environ.get('PHOTO_HISTORY_PYTHON')
+    candidates = ([override] if override else [sys.executable,
+                  str(Path.home() / '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3'),
+                  shutil.which(f'python{version[0]}.{version[1]}')])
+    code = "import json,sys,unicodedata; print(json.dumps({'implementation':sys.implementation.name,'python':list(sys.version_info[:3]),'unicode':unicodedata.unidata_version}))"
+    tried = set()
+    for value in candidates:
+        if not value or value in tried or not Path(value).is_file():
+            continue
+        tried.add(value)
+        try:
+            result = subprocess.run([value, '-c', code], capture_output=True, text=True, timeout=10)
+            if result.returncode == 0 and json.loads(result.stdout) == required:
+                return Path(value).absolute()
+        except (OSError, ValueError, subprocess.SubprocessError):
+            continue
+    raise AssertionError('Original V32 replay requires its exact Python/Unicode environment: ' + json.dumps(required))

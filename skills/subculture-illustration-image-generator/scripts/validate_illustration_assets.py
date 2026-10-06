@@ -8435,6 +8435,148 @@ def _validate_v32_robe_source_successor(asset_dir, repo_root, baseline, pack, ra
         RuntimeSnapshotProvider().from_receipt(pack, receipt)
 
 
+PHOTO_V33_SCOPE_PROOF_SHA256 = "ece1b90ed71faa5f1f12d29bddf674ffa300cfcd6da1283782c534dbe01fa3d6"
+PHOTO_V33_PARENT_MANIFEST_SHA256 = "5ff9ae7551016f874aa29f2f2db084b8747ef001ac16da172bd9c435ffd7e37f"
+
+
+def _validate_v33_data_scope_successor(asset_dir, repo_root, baseline, pack, raw, receipt=None):
+    """Qualify six added DATA scope leaves and the five resulting pack leaves."""
+    evidence_name = "docs/research-evidence/photo-prompt/data-quality-links-20261007/history/V33-DATA-SCOPE-PROOF.json"
+    evidence = _photo_v28_regular_path(repo_root, evidence_name)
+    _require(_sha256(evidence) == PHOTO_V33_SCOPE_PROOF_SHA256, "photo V33 immutable scope proof drift")
+    proof = _load_json(evidence)
+    _require(proof["schema"] == "photo-data-scope-transition/v33"
+             and proof["previous_qualified_commit"] == "96e20422316276a4e0b5ed97f44152e4931e7504"
+             and proof["previous_qualified_tree"] == "ae809d09bc01042c15b77271764036871d28949d"
+             and proof["parent_manifest_sha256"] == PHOTO_V33_PARENT_MANIFEST_SHA256
+             and baseline.get("data_scope_transition") == {
+                 "evidence_path": evidence_name, "evidence_sha256": PHOTO_V33_SCOPE_PROOF_SHA256,
+                 "previous_qualified_commit": proof["previous_qualified_commit"],
+                 "parent_manifest_sha256": PHOTO_V33_PARENT_MANIFEST_SHA256,
+             }, "photo V33 scope transition lineage drift")
+    previous_raw = (asset_dir / "photo_regression_baseline_v32_pack.json").read_bytes()
+    _require(_sha256(asset_dir / "photo_regression_baseline_v32.json") == proof["previous_manifest_sha256"]
+             and hashlib.sha256(previous_raw).hexdigest() == proof["previous_pack_sha256"]
+             and hashlib.sha256(raw).hexdigest() == proof["current_pack_sha256"] == baseline["sha256"]
+             and raw == (asset_dir / "photo_regression_baseline_v33_pack.json").read_bytes()
+             and json.loads(raw) == [pack] and pack["pack_id"] == proof["current_pack_id"],
+             "photo V33 frozen pack bytes drift")
+    pointers = ["/0/core_retrieval/canonical_sha256", "/0/core_retrieval/slot_corpus_sha256",
+                "/0/pack_id", "/0/provenance/tags_hash", "/0/slots/motion/candidate_count"]
+    changes = proof["reviewed_pack_delta"]
+    _require([row["pointer"] for row in changes] == pointers
+             and all(row["operation"] == "replace" for row in changes)
+             and changes[-1]["before"] == 34 and changes[-1]["after"] == 33,
+             "photo V33 unregistered pack scope change")
+    expected = json.loads(previous_raw)
+    for row in changes:
+        target = expected
+        parts = row["pointer"].split("/")[1:]
+        for part in parts[:-1]:
+            target = target[int(part)] if isinstance(target, list) else target[part]
+        key = int(parts[-1]) if isinstance(target, list) else parts[-1]
+        _require(target[key] == row["before"], "photo V33 original pack leaf drift")
+        target[key] = row["after"]
+    _require(expected == [pack], "photo V33 changed candidate meaning, ordering or frozen contract")
+    _require(baseline["frozen_inputs"] == proof["frozen_inputs"]
+             and all(_sha256(_photo_v28_regular_path(repo_root, name)) == sha
+                     for name, sha in proof["frozen_inputs"].items()), "photo V33 frozen input drift")
+    previous_proof_path = _photo_v28_regular_path(repo_root,
+        "docs/research-evidence/photo-prompt/robe-back-source-consistency-20261006/V32-ROBE-SOURCE-PROOF.json")
+    _require(_sha256(previous_proof_path) == PHOTO_V32_ROBE_PROOF_SHA256,
+             "photo V33 original V32 proof drift")
+    previous_proof = _load_json(previous_proof_path)
+    photo_prefix = "skills/photo-prompt-image-generator/assets/"
+    data_names = {"photo_prompt_visual_obligations.json", "photo_prompt_photorealism_elements_extension.json",
+                  "photo_prompt_realistic_background_extension.json"}
+    changed_names = data_names | {"photo_prompt_semantic_index.json", "photo_prompt_visual_profile_index.json"}
+    changed_paths = {photo_prefix + name for name in changed_names}
+    inventory = {path.name: _sha256(_photo_v28_regular_path(repo_root, str(path.relative_to(repo_root))))
+                 for path in (repo_root / photo_prefix).glob("*.json")}
+    _require(inventory == proof["source_inventory_after"]
+             and set(inventory) == set(previous_proof["source_inventory_after"])
+             and all(inventory[name] == sha for name, sha in previous_proof["source_inventory_after"].items()
+                     if name not in changed_names)
+             and set(proof["preserved_source_paths"]) == changed_paths
+             and set(proof["source_files_after"]) == set(previous_proof["source_files_after"])
+             and all(proof["source_files_after"][name] == sha
+                     for name, sha in previous_proof["source_files_after"].items() if name not in changed_paths),
+             "photo V33 changed unrelated authored DATA or runtime")
+    _require(all(_sha256(_photo_v28_regular_path(repo_root, name)) == sha
+                 for name, sha in proof["source_files_after"].items())
+             and all(_sha256(_photo_v28_regular_path(repo_root, name)) == sha
+                     for name, sha in proof["active_shards_after"].items())
+             and proof["retained_shards_before"] == previous_proof["active_shards_after"]
+             and all(_sha256(_photo_v28_regular_path(repo_root, name)) == sha
+                     for name, sha in proof["retained_shards_before"].items())
+             and all(_sha256(_photo_v28_regular_path(repo_root, name)) == sha
+                     for name, sha in proof["evidence_files"].items()),
+             "photo V33 unqualified source, active/retained shard or evidence drift")
+    from tests import photo_prompt_fixtures
+    try:
+        parent = photo_prompt_fixtures._v33_parent_manifest(repo_root)
+    except AssertionError as exc:
+        raise ValidationFailure(str(exc)) from exc
+    _require(parent["member_count"] == proof["parent_member_count"] == 1377,
+             "photo V33 original V32 inventory drift")
+    descriptor = "skills/subculture-illustration-image-generator/assets/universal_scene_baseline_v2.json"
+    originals = {}
+    for row in parent["members"]:
+        payload = _photo_v28_archived_payload(repo_root, row)
+        if row["path"] in {descriptor} | {photo_prefix + name for name in data_names}:
+            originals[row["path"]] = payload
+    allowed = {
+        photo_prefix + "photo_prompt_photorealism_elements_extension.json": [
+            "/slots/platform_framing/0/for_any", "/slots/platform_framing/0/kind"],
+        photo_prefix + "photo_prompt_realistic_background_extension.json": [
+            "/slots/motion/1/for_any", "/slots/motion/1/kind"],
+        photo_prefix + "photo_prompt_visual_obligations.json": [
+            "/profiles/114/activation/exclude_if_any_terms", "/profiles/114/activation/hard_activation"],
+    }
+    _require(set(proof["source_leaf_delta"]) == set(allowed), "photo V33 source leaf inventory drift")
+    for name, changes in proof["source_leaf_delta"].items():
+        expected_source = json.loads(originals[name])
+        _require([row["pointer"] for row in changes] == allowed[name]
+                 and all(row["operation"] == "add" and "before" not in row for row in changes),
+                 "photo V33 unregistered source scope leaf")
+        if name.endswith("photo_prompt_visual_obligations.json"):
+            _require(expected_source["profiles"][114]["id"] == "cello_endpin_seated_bowed"
+                     and changes[1]["after"]["contract_version"] == "photo-visual-hard-activation/v1"
+                     and [group["id"] for group in changes[1]["after"]["required_any_groups"]]
+                     == ["cello_instrument", "active_bowing", "seated_support"],
+                     "photo V33 cello hard activation scope drift")
+        else:
+            slot, index, identity = (("platform_framing", 0, "pr_casual_crop_subject_legibility_candidate")
+                                    if "photorealism" in name else ("motion", 1, "rb_shared_wind_response_candidate"))
+            _require(expected_source["slots"][slot][index]["id"] == identity
+                     and all(row["after"] == ["human"] for row in changes),
+                     "photo V33 human candidate scope drift")
+        for row in changes:
+            target = expected_source
+            parts = row["pointer"].split("/")[1:]
+            for part in parts[:-1]:
+                target = target[int(part)] if isinstance(target, list) else target[part]
+            _require(parts[-1] not in target, "photo V33 added source leaf already existed")
+            target[parts[-1]] = row["after"]
+        _require(_load_json(repo_root / name) == expected_source, "photo V33 unreviewed source leaf changed")
+    before = originals[descriptor]
+    old_sha = proof["previous_validator_sha256"].encode("ascii")
+    _require(hashlib.sha256(before).hexdigest() == proof["previous_universal_descriptor_sha256"]
+             and before.count(old_sha) == 1
+             and (asset_dir / "universal_scene_baseline_v2.json").read_bytes()
+             == before.replace(old_sha, _sha256(Path(__file__)).encode("ascii"), 1),
+             "photo V33 universal descriptor changed beyond validator hash")
+    if receipt is not None:
+        _require(receipt.get("generation_id") == proof["generation_id"]
+                 and receipt.get("source_fingerprint") == proof["source_fingerprint"],
+                 "photo V33 receipt source generation drift")
+        scripts = str(repo_root / "skills/photo-prompt-image-generator/scripts")
+        if scripts not in sys.path:
+            sys.path.insert(0, scripts)
+        from photo_runtime_sources import RuntimeSnapshotProvider
+        RuntimeSnapshotProvider().from_receipt(pack, receipt)
+
+
 def validate_photo_regression_baseline(
     asset_dir: Path, *, baseline_version: int | None = None
 ) -> dict[str, Any]:
@@ -8447,11 +8589,36 @@ def validate_photo_regression_baseline(
     previous_path = asset_dir / "photo_regression_baseline_v5.json"
     if baseline_version is None:
         baseline_version = next(
-            version for version in (32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
+            version for version in (33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7)
             if (asset_dir / f"photo_regression_baseline_v{version}.json").exists()
         )
-    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32}, "unsupported photo baseline version")
+    _require(baseline_version in {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33}, "unsupported photo baseline version")
     repo_root = Path(__file__).resolve().parents[3]
+    if baseline_version == 32 and (asset_dir / "photo_regression_baseline_v33.json").is_file():
+        from tests import photo_prompt_fixtures
+        with tempfile.TemporaryDirectory(prefix="photo-v32-original-") as temporary:
+            tree = Path(temporary).resolve() / "tree"
+            python = photo_prompt_fixtures.v32_history_python(source_root=repo_root)
+            photo_prompt_fixtures.materialize_v32_parent_source(tree, source_root=repo_root)
+            (tree / ".venv").symlink_to(python.parent.parent, target_is_directory=True)
+            code = (
+                "import json,sys; from pathlib import Path; "
+                "sys.path.insert(0,'skills/photo-prompt-image-generator/scripts'); "
+                "from photo_runtime_sources import SnapshotPublisher; SnapshotPublisher().publish(); "
+                "sys.path.insert(0,'skills/subculture-illustration-image-generator/scripts'); "
+                "import validate_illustration_assets as v; "
+                "print(json.dumps(v.validate_photo_regression_baseline("
+                "Path('skills/subculture-illustration-image-generator/assets'),baseline_version=32)))"
+            )
+            environment = os.environ.copy()
+            environment["PHOTO_RUNTIME_STORE"] = str(Path(temporary).resolve() / "runtime-store")
+            environment["GEMINI_API_KEY"] = ""
+            environment["GOOGLE_API_KEY"] = ""
+            completed = subprocess.run([str(python), "-c", code], cwd=tree,
+                                       env=environment, capture_output=True, text=True, timeout=300)
+            _require(completed.returncode == 0,
+                     "original V32 replay failed: " + (completed.stderr or completed.stdout))
+            return json.loads(completed.stdout.strip().splitlines()[-1])
     if baseline_version == 31 and (asset_dir / "photo_regression_baseline_v32.json").is_file():
         from tests import photo_prompt_fixtures
         with tempfile.TemporaryDirectory(prefix="photo-v31-original-") as temporary:
@@ -8720,7 +8887,7 @@ def validate_photo_regression_baseline(
         raw = temporary_output.read_bytes()
         payload = json.loads(raw)
         receipt = None
-        if baseline_version in (29, 30, 32):
+        if baseline_version in (29, 30, 32, 33):
             receipt_path = Path(str(temporary_output) + ".runtime-receipt.json")
             _require(receipt_path.is_file(), "photo V29 current command omitted its runtime receipt")
             receipt = _load_json(receipt_path)
@@ -8819,6 +8986,8 @@ def validate_photo_regression_baseline(
         _validate_v31_horror_main_successor(asset_dir, repo_root, baseline, pack, raw, receipt)
     if baseline_version == 32:
         _validate_v32_robe_source_successor(asset_dir, repo_root, baseline, pack, raw, receipt)
+    if baseline_version == 33:
+        _validate_v33_data_scope_successor(asset_dir, repo_root, baseline, pack, raw, receipt)
     return {
         "status": "pass",
         "schema": baseline["schema"],
