@@ -43,7 +43,11 @@ def main():
         if name in derived:continue
         if name==manifest:
             old=json.loads(git('show',base+':'+name));local=json.loads(raw);remote=json.loads(new)
-            assert local['sources'][:len(old['sources'])]==old['sources'] and remote['sources'][:len(old['sources'])]==old['sources']
+            original={row['file']:row for row in old['sources']};local_by_file={row['file']:row for row in local['sources']}
+            assert len(local_by_file)==len(local['sources']) and set(original)<=set(local_by_file)
+            assert [row['file'] for row in local['sources'] if row['file'] in original]==[row['file'] for row in old['sources']]
+            assert all({k:v for k,v in row.items() if k!='load_order'}=={k:v for k,v in local_by_file[name].items() if k!='load_order'} for name,row in original.items())
+            assert remote['sources'][:len(old['sources'])]==old['sources']
             rows=list(local['sources']);identities={row['file']:row for row in rows}
             for row in remote['sources']:
                 if row['file'] in identities:
