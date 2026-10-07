@@ -27,7 +27,7 @@ PROFILE_ROUTES = {
     "geomungo": "geomungo_fretted_suldae_zither",
     "alto saxophone": "alto_tenor_saxophone_reed_conical_body",
     "trumpet": "modern_piston_trumpet_three_valve",
-    "cello": "cello_endpin_seated_bowed",
+    "a seated musician bowing the cello strings": "cello_endpin_seated_bowed",
     "double bass": "double_bass_human_scale_floor_supported",
     "vibraphone": "vibraphone_metal_bars_motor_pedal",
     "xylophone": "xylophone_wooden_bar_resonator",
@@ -295,7 +295,7 @@ class PhotoInstrumentSemanticsTests(unittest.TestCase):
             "거문고": "geomungo_fretted_suldae_zither",
             "테너 색소폰": "alto_tenor_saxophone_reed_conical_body",
             "트럼펫": "modern_piston_trumpet_three_valve",
-            "첼로": "cello_endpin_seated_bowed",
+            "앉아서 첼로를 연주하는 연주자": "cello_endpin_seated_bowed",
             "콘트라베이스": "double_bass_human_scale_floor_supported",
             "비브라폰": "vibraphone_metal_bars_motor_pedal",
             "실로폰": "xylophone_wooden_bar_resonator",
@@ -321,6 +321,12 @@ class PhotoInstrumentSemanticsTests(unittest.TestCase):
             "soprano saxophone",
             "marimba performance",
             "standalone synthesizer",
+            "cello",
+            "첼로",
+            "첼리스트",
+            "a cellist checking the bow before an outdoor performance",
+            "a seated cellist inspecting the bow before playing",
+            "a standing musician playing the cello",
         )
         profile_ids = set(PROFILE_ROUTES.values())
         for negative in negatives:

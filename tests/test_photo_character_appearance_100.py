@@ -5,6 +5,7 @@ import json
 import sys
 import unittest
 from pathlib import Path
+from tests import photo_prompt_fixtures as fixtures
 
 ROOT=Path(__file__).resolve().parents[1]
 SKILL=ROOT/'skills/photo-prompt-image-generator'
@@ -65,11 +66,15 @@ class CharacterAppearance100Tests(unittest.TestCase):
     def test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates(self):
         before=json.loads((RUN/'BASELINE-REGISTRY.json').read_text())['profiles']
         self.assertEqual(len(before),1622)
+        original_cello_activation=self._authenticated_v34_cello_activation()
         for p in before:
             q=self.profiles[p['id']]
             with self.subTest(profile=p['id']):
                 for field in ('activation','render_gates','required_evidence_fields','composition_instruction'):
-                    self.assertEqual(p[field],q[field])
+                    actual=(original_cello_activation if field=='activation'
+                            and p['id']=='cello_endpin_seated_bowed'
+                            and original_cello_activation is not None else q[field])
+                    self.assertEqual(p[field],actual)
                 for field in ('definition','visual_components','contrast_examples','claim_limits'):
                     self.assertEqual(p['semantics'].get(field),q['semantics'].get(field))
                 for field in ('affected_dimensions','affected_properties','core_assertion_discovery'):
@@ -84,6 +89,43 @@ class CharacterAppearance100Tests(unittest.TestCase):
                     new=q['evidence_requirements'][field]
                     self.assertEqual(req['min_content_words'],new['min_content_words'])
                     self.assertTrue(set(req['must_mention_any'])<=set(new['must_mention_any']))
+
+    def _authenticated_v34_cello_activation(self):
+        if not fixtures._v34_scope_context(ROOT):
+            return None
+        support=fixtures._v34_scope_support(ROOT)
+        name='skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json'
+        # The complete live registry and immutable transition proof must match
+        # before a historical comparison can read the original activation.
+        original=json.loads(support.previous_payload(ROOT,name,(ROOT/name).read_bytes()))
+        return next(p['activation'] for p in original['profiles']
+                    if p['id']=='cello_endpin_seated_bowed')
+
+    def test_current_cello_activation_matches_authenticated_v34_scope_guard(self):
+        original=self._authenticated_v34_cello_activation()
+        current=self.profiles['cello_endpin_seated_bowed']['activation']
+        if original is None:
+            before=json.loads((RUN/'BASELINE-REGISTRY.json').read_text())['profiles']
+            self.assertEqual(next(p['activation'] for p in before
+                                  if p['id']=='cello_endpin_seated_bowed'),current)
+            return
+        support=fixtures._v34_scope_support(ROOT)
+        proof,_=support.transition(ROOT)
+        name='skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json'
+        changes=proof['source_leaf_delta'][name]
+        self.assertEqual([r['pointer'] for r in changes],[
+            '/profiles/114/activation/exclude_if_any_terms',
+            '/profiles/114/activation/hard_activation'])
+        expected=copy.deepcopy(original)
+        for change in changes:
+            self.assertEqual('add',change['operation'])
+            key=change['pointer'].rsplit('/',1)[1]
+            self.assertNotIn(key,expected)
+            expected[key]=change['after']
+        self.assertEqual(expected,current)
+        self.assertEqual('photo-visual-hard-activation/v1',current['hard_activation']['contract_version'])
+        self.assertEqual(['cello_instrument','active_bowing','seated_support'],
+            [group['id'] for group in current['hard_activation']['required_any_groups']])
 
     def test_existing_alternatives_remain_full_relations(self):
         for row in self.receipt['existing_owner_enrichments']:
