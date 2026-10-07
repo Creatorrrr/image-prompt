@@ -8475,7 +8475,7 @@ def _ethereal_v35_support(repo_root):
     return photo_ethereal_history_v35
 
 
-PHOTO_V36_CAMERA_SUPPORT_SHA256 = "3717c267afeffd07265423a30fdd773592f803d2aeee0f9f8c75b1168cb288f9"
+PHOTO_V36_CAMERA_SUPPORT_SHA256 = "69e2557055812211317616dad5ed294b24ec1dfe9b5e91103a66b15587dabe61"
 
 
 def _camera_v36_support(repo_root):
@@ -8494,13 +8494,20 @@ def validate_photo_regression_baseline(
     """Validate immutable photo history plus the current sibling boundary."""
 
     repo_root = Path(__file__).resolve().parents[3]
-    _require(Path(asset_dir).resolve() == repo_root / "skills/subculture-illustration-image-generator/assets",
-             "photo V36 asset directory mismatch")
-    if baseline_version == 36 or (asset_dir / "photo_regression_baseline_v36.json").exists():
-        return _camera_v36_support(repo_root).dispatch(
-            asset_dir, source_root=repo_root,
-            baseline_version=baseline_version,
-        )
+    current_asset_dir = repo_root / "skills/subculture-illustration-image-generator/assets"
+    if baseline_version == 36 or (
+        Path(asset_dir).resolve() == current_asset_dir
+        and (asset_dir / "photo_regression_baseline_v36.json").exists()
+    ):
+        _require(Path(asset_dir).resolve() == current_asset_dir,
+                 "photo V36 asset directory mismatch")
+        try:
+            return _camera_v36_support(repo_root).dispatch(
+                asset_dir, source_root=repo_root,
+                baseline_version=baseline_version,
+            )
+        except (AssertionError, RuntimeError, ValueError) as exc:
+            raise ValidationFailure(str(exc)) from exc
 
     historical_path = asset_dir / "photo_regression_baseline_v1.json"
     prior_path = asset_dir / "photo_regression_baseline_v2.json"

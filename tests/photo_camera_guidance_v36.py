@@ -22,7 +22,7 @@ import unicodedata
 
 BASE = "docs/research-evidence/photo-prompt/camera-guidance-v36-20261007/"
 PROOF = BASE + "V36-SOURCE-PROOF.json"
-PROOF_SHA256 = "4cdeb35e3d93ff9fb2626e006fc23fb47fb5939c0495fef59761d781dafe4984"
+PROOF_SHA256 = "aeaec23fddd921d84200227790458ba819554205aafc8d42174f33e87940c831"
 UPSTREAM_PACK_SHA256 = "3b36b45978e00f9f70455b5aa7952e26c45b4289e2e49751e5485da324b0a075"
 REVIEWED_DELTA_SHA256 = "e17bbc69f0c5ec5348d8b2080a8f1673d11f806fe0aed076928dae36da44d3f7"
 # Fresh 42-leaf observation, canonicalized to 33 exact object-member operations
