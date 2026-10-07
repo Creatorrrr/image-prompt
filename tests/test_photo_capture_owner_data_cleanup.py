@@ -25,7 +25,8 @@ class CaptureOwnerDataCleanupTests(unittest.TestCase):
         filenames = tuple(name for name in generator.RESEARCH_EXTENSION_FILENAMES
                           if name not in {'photo_prompt_motion_graphics_extension.json',
                                           'photo_prompt_cute_visual_forms_extension.json',
-                                          'photo_prompt_visual_grammar_extension.json'})
+                                          'photo_prompt_visual_grammar_extension.json',
+                                          'photo_prompt_vel_appearance_relations_extension.json'})
         inventory = generator.photo_source_manifest.SourceInventory.for_test(ASSETS, candidate_files=filenames)
         cls.data = generator.load_json(ASSETS / 'photo_prompt_tags.json', inventory=inventory)
         cls.rows = {(slot, row['id']): row for slot, rows in cls.data['slots'].items() for row in rows}

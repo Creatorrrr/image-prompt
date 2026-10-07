@@ -21,7 +21,7 @@ class ActionContextEffectsCleanupTests(unittest.TestCase):
         # Keep the exact historical cleanup oracle before the later grammar overlay.
         inventory = generator.photo_source_manifest.SourceInventory.for_test(
             ASSETS, candidate_files=tuple(name for name in generator.RESEARCH_EXTENSION_FILENAMES
-                if name != 'photo_prompt_visual_grammar_extension.json'))
+                if name not in {'photo_prompt_visual_grammar_extension.json', 'photo_prompt_vel_appearance_relations_extension.json'}))
         cls.data = generator.load_json(ASSETS / 'photo_prompt_tags.json', inventory=inventory)
         cls.frozen = json.loads((EVIDENCE / 'frozen-inventory-queries.json').read_text())
         cls.before = {(x['slot'], x['id']): x['before'] for x in cls.frozen['inventory']}

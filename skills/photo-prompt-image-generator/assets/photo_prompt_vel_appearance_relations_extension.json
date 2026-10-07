@@ -1,0 +1,1657 @@
+{
+  "schema_version": "photo-prompt-research-extension/v1",
+  "slots": {
+    "wardrobe_style": [
+      {
+        "id": "vel_closed_waist_vest_layers",
+        "ko": "닫힌 허리 베스트와 남는 중앙 안쪽 층",
+        "en": "the vest waist panel is closed continuously over the inner top; side vest straps rise beside a central upper-chest area where the inner top and tie remain visible; the jacket opening reveals separate vest and inner-top boundaries",
+        "weight": 0.38,
+        "tags": [
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "닫힌 허리 베스트와 남는 중앙 안쪽 층"
+        ],
+        "keywords": [
+          "닫힌 허리 베스트와 남는 중앙 안쪽 층",
+          "the vest waist panel is closed continuously over the inner top",
+          "side vest straps rise beside a central upper-chest area where the inner top and tie remain visible",
+          "the jacket opening reveals separate vest and inner-top boundaries"
+        ],
+        "paraphrases": [
+          "베스트 허리 앞판이 안쪽 탑 위에서 닫히고 옆 끈 사이 상흉부 중앙에는 탑과 넥타이가 남으며 재킷 안쪽 층의 경계가 구분된다",
+          "a closed waist vest covers the inner top at the waist while ascending side straps leave the central top and tie visible inside a separate jacket opening"
+        ],
+        "concept_units": [
+          "the vest waist panel is closed continuously over the inner top",
+          "side vest straps rise beside a central upper-chest area where the inner top and tie remain visible",
+          "the jacket opening reveals separate vest and inner-top boundaries"
+        ],
+        "relations": [
+          {
+            "id": "vel_closed_waist_vest_layers_r1",
+            "type": "lies_over",
+            "subject": "vest_waist",
+            "object": "inner_top_waist"
+          },
+          {
+            "id": "vel_closed_waist_vest_layers_r2",
+            "type": "border",
+            "subject": "vest_side_straps",
+            "object": "visible_central_top_and_tie"
+          },
+          {
+            "id": "vel_closed_waist_vest_layers_r3",
+            "type": "reveals",
+            "subject": "jacket_opening",
+            "object": "separate_inner_layers"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.structure"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vel_closed_waist_vest_layers_boundary",
+              "definition": "A waist closure and a visible upper center refer to different regions. Colors, collar design and fastening type remain separate choices.",
+              "claim_limits": [
+                "A waist closure and a visible upper center refer to different regions. Colors, collar design and fastening type remain separate choices."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "닫힌 허리 베스트와 남는 중앙 안쪽 층; the vest waist panel is closed continuously over the inner top; side vest straps rise beside a central upper-chest area where the inner top and tie remain visible; the jacket opening reveals separate vest and inner-top boundaries; 베스트 허리 앞판이 안쪽 탑 위에서 닫히고 옆 끈 사이 상흉부 중앙에는 탑과 넥타이가 남으며 재킷 안쪽 층의 경계가 구분된다; a closed waist vest covers the inner top at the waist while ascending side straps leave the central top and tie visible inside a separate jacket opening"
+      }
+    ],
+    "garment_detail": [
+      {
+        "id": "vel_slipped_attached_shoulder_strap",
+        "ko": "두 끈 중 하나가 내려온 부착 상태",
+        "en": "the same garment has two attached shoulder straps; one attached strap rests outside the upper arm while the other remains on its shoulder; both strap ends continue to the same garment panels",
+        "weight": 0.38,
+        "tags": [
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "두 끈 중 하나가 내려온 부착 상태"
+        ],
+        "keywords": [
+          "두 끈 중 하나가 내려온 부착 상태",
+          "the same garment has two attached shoulder straps",
+          "one attached strap rests outside the upper arm while the other remains on its shoulder",
+          "both strap ends continue to the same garment panels"
+        ],
+        "paraphrases": [
+          "두 어깨끈 중 한쪽이 위팔 외측에 내려와도 양쪽 끝의 의복 연결과 반대 어깨의 지지가 남는다",
+          "같은 두 끈 의복에서 한 끈은 위팔 바깥으로 내려오고 다른 끈은 어깨에 남으며 두 끈의 끝은 옷에 연결된다",
+          "one of two still-attached garment straps has slipped outside the upper arm while the opposite strap remains supported on the shoulder"
+        ],
+        "concept_units": [
+          "the same garment has two attached shoulder straps",
+          "one attached strap rests outside the upper arm while the other remains on its shoulder",
+          "both strap ends continue to the same garment panels"
+        ],
+        "relations": [
+          {
+            "id": "vel_slipped_attached_shoulder_strap_r1",
+            "type": "attaches_to",
+            "subject": "lowered_strap",
+            "object": "same_garment"
+          },
+          {
+            "id": "vel_slipped_attached_shoulder_strap_r2",
+            "type": "rests_on",
+            "subject": "supported_strap",
+            "object": "opposite_shoulder"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.straps.position"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vel_slipped_attached_shoulder_strap_boundary",
+              "definition": "This describes a two-strap garment state, not a one-shoulder design. The support and both connections must be observable.",
+              "claim_limits": [
+                "This describes a two-strap garment state, not a one-shoulder design. The support and both connections must be observable."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "두 끈 중 하나가 내려온 부착 상태; the same garment has two attached shoulder straps; one attached strap rests outside the upper arm while the other remains on its shoulder; both strap ends continue to the same garment panels; 두 어깨끈 중 한쪽이 위팔 외측에 내려와도 양쪽 끝의 의복 연결과 반대 어깨의 지지가 남는다; 같은 두 끈 의복에서 한 끈은 위팔 바깥으로 내려오고 다른 끈은 어깨에 남으며 두 끈의 끝은 옷에 연결된다; one of two still-attached garment straps has slipped outside the upper arm while the opposite strap remains supported on the shoulder"
+      },
+      {
+        "id": "vel_held_towel_continuous_front",
+        "ko": "같은 타월을 양손에 든 전면 가림",
+        "en": "both hands grip separate points on the upper edge of the same towel; the upper towel edge is tensioned while its center hangs continuously over the front torso and pelvis; the separately worn swimsuit remains behind the towel with only a small strap region visible",
+        "weight": 0.38,
+        "tags": [
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "같은 타월을 양손에 든 전면 가림"
+        ],
+        "keywords": [
+          "같은 타월을 양손에 든 전면 가림",
+          "both hands grip separate points on the upper edge of the same towel",
+          "the upper towel edge is tensioned while its center hangs continuously over the front torso and pelvis",
+          "the separately worn swimsuit remains behind the towel with only a small strap region visible"
+        ],
+        "paraphrases": [
+          "양손이 같은 타월 윗단의 다른 점을 잡고 위는 팽팽한 반면 중앙은 몸통과 골반 앞에 연속해서 늘어지며 뒤 수영복은 작은 끈 영역만 보인다",
+          "two hands hold one towel upper edge taut as its central panel drapes continuously across the torso and pelvis, leaving a small strap window of the separate swimsuit behind it"
+        ],
+        "concept_units": [
+          "both hands grip separate points on the upper edge of the same towel",
+          "the upper towel edge is tensioned while its center hangs continuously over the front torso and pelvis",
+          "the separately worn swimsuit remains behind the towel with only a small strap region visible"
+        ],
+        "relations": [
+          {
+            "id": "vel_held_towel_continuous_front_r1",
+            "type": "grips",
+            "subject": "left_hand",
+            "object": "same_towel_upper_edge"
+          },
+          {
+            "id": "vel_held_towel_continuous_front_r2",
+            "type": "grips",
+            "subject": "right_hand",
+            "object": "same_towel_upper_edge"
+          },
+          {
+            "id": "vel_held_towel_continuous_front_r3",
+            "type": "occludes",
+            "subject": "towel_center",
+            "object": "front_torso_and_pelvis"
+          },
+          {
+            "id": "vel_held_towel_continuous_front_r4",
+            "type": "lies_behind",
+            "subject": "swimsuit",
+            "object": "held_towel"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance",
+          "pose",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layering_and_coverage"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "hands.grip"
+          },
+          {
+            "dimension": "material",
+            "target": "existing_towel",
+            "property": "fabric.tension_and_drape"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vel_held_towel_continuous_front_boundary",
+              "definition": "This selected variant includes a separately worn swimsuit. Color and lower-edge height are open choices; the same cloth and central coverage must persist.",
+              "claim_limits": [
+                "This selected variant includes a separately worn swimsuit. Color and lower-edge height are open choices; the same cloth and central coverage must persist."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "같은 타월을 양손에 든 전면 가림; both hands grip separate points on the upper edge of the same towel; the upper towel edge is tensioned while its center hangs continuously over the front torso and pelvis; the separately worn swimsuit remains behind the towel with only a small strap region visible; 양손이 같은 타월 윗단의 다른 점을 잡고 위는 팽팽한 반면 중앙은 몸통과 골반 앞에 연속해서 늘어지며 뒤 수영복은 작은 끈 영역만 보인다; two hands hold one towel upper edge taut as its central panel drapes continuously across the torso and pelvis, leaving a small strap window of the separate swimsuit behind it"
+      }
+    ],
+    "texture": [
+      {
+        "id": "vel_mirror_surface_condensation_face",
+        "ko": "거울 표면 결로와 읽히는 반사 얼굴",
+        "en": "localized droplets or moisture haze belong to the mirror front surface; the same mirror retains a separately readable reflected face; reflected facial detail remains distinct from the surface moisture layer",
+        "weight": 0.38,
+        "tags": [
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "거울 표면 결로와 읽히는 반사 얼굴"
+        ],
+        "keywords": [
+          "거울 표면 결로와 읽히는 반사 얼굴",
+          "localized droplets or moisture haze belong to the mirror front surface",
+          "the same mirror retains a separately readable reflected face",
+          "reflected facial detail remains distinct from the surface moisture layer"
+        ],
+        "paraphrases": [
+          "거울 앞면의 국소 물방울이나 습기막과 그 뒤로 읽히는 반사 얼굴이 다른 광학 층으로 보인다",
+          "local condensation sits on the mirror face while the reflected facial features remain separately readable"
+        ],
+        "concept_units": [
+          "localized droplets or moisture haze belong to the mirror front surface",
+          "the same mirror retains a separately readable reflected face",
+          "reflected facial detail remains distinct from the surface moisture layer"
+        ],
+        "relations": [
+          {
+            "id": "vel_mirror_surface_condensation_face_r1",
+            "type": "belongs_to",
+            "subject": "condensation",
+            "object": "mirror_front_surface"
+          },
+          {
+            "id": "vel_mirror_surface_condensation_face_r2",
+            "type": "reflects",
+            "subject": "mirror",
+            "object": "readable_face"
+          }
+        ],
+        "affected_dimensions": [
+          "material",
+          "camera"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "material",
+            "target": "existing_mirror",
+            "property": "surface.condensation"
+          },
+          {
+            "dimension": "camera",
+            "target": "capture_camera",
+            "property": "focus.target"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vel_mirror_surface_condensation_face_boundary",
+              "definition": "Condensation does not imply a shower story. Its contrast depends on illumination; a continuous film need not be white.",
+              "claim_limits": [
+                "Condensation does not imply a shower story. Its contrast depends on illumination; a continuous film need not be white."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "거울 표면 결로와 읽히는 반사 얼굴; localized droplets or moisture haze belong to the mirror front surface; the same mirror retains a separately readable reflected face; reflected facial detail remains distinct from the surface moisture layer; 거울 앞면의 국소 물방울이나 습기막과 그 뒤로 읽히는 반사 얼굴이 다른 광학 층으로 보인다; local condensation sits on the mirror face while the reflected facial features remain separately readable"
+      }
+    ],
+    "wearable_accessory": [
+      {
+        "id": "vel_open_ring_choker_mount",
+        "ko": "초커 앞에 부착된 열린 금속 고리",
+        "en": "a rigid metal O-ring has a traceable open center at the choker front; the ring joins the neck-following band through readable mounting points; the ring aperture reveals the actual background behind the opening",
+        "weight": 0.38,
+        "tags": [
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "초커 앞에 부착된 열린 금속 고리"
+        ],
+        "keywords": [
+          "초커 앞에 부착된 열린 금속 고리",
+          "a rigid metal O-ring has a traceable open center at the choker front",
+          "the ring joins the neck-following band through readable mounting points",
+          "the ring aperture reveals the actual background behind the opening"
+        ],
+        "paraphrases": [
+          "목을 따르는 초커 띠 앞의 금속 O링이 부착점으로 이어지고 열린 중앙에는 뒤쪽 실제 배경이 보인다",
+          "a hollow metal ring mounted to the front of the neck band retains a visible opening and separately traceable attachment points"
+        ],
+        "concept_units": [
+          "a rigid metal O-ring has a traceable open center at the choker front",
+          "the ring joins the neck-following band through readable mounting points",
+          "the ring aperture reveals the actual background behind the opening"
+        ],
+        "relations": [
+          {
+            "id": "vel_open_ring_choker_mount_r1",
+            "type": "attaches_to",
+            "subject": "metal_ring",
+            "object": "choker_front_band"
+          },
+          {
+            "id": "vel_open_ring_choker_mount_r2",
+            "type": "reveals",
+            "subject": "ring_aperture",
+            "object": "actual_background"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "accessories.choker.structure"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "accessories.choker.material"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vel_open_ring_choker_mount_boundary",
+              "definition": "The ring and flexible neck band are distinct parts. No chain, restraint, force or relationship follows from this construction.",
+              "claim_limits": [
+                "The ring and flexible neck band are distinct parts. No chain, restraint, force or relationship follows from this construction."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "초커 앞에 부착된 열린 금속 고리; a rigid metal O-ring has a traceable open center at the choker front; the ring joins the neck-following band through readable mounting points; the ring aperture reveals the actual background behind the opening; 목을 따르는 초커 띠 앞의 금속 O링이 부착점으로 이어지고 열린 중앙에는 뒤쪽 실제 배경이 보인다; a hollow metal ring mounted to the front of the neck band retains a visible opening and separately traceable attachment points"
+      }
+    ],
+    "contact_point": [
+      {
+        "id": "vel_contact_bedding_depression",
+        "ko": "신체 접촉 위치에 대응하는 침구 눌림",
+        "en": "the resting head or shoulder contacts one soft bedding surface; the bedding is locally depressed at that same body contact patch; nearby less-compressed bedding continues around the depression",
+        "weight": 0.38,
+        "tags": [
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "신체 접촉 위치에 대응하는 침구 눌림"
+        ],
+        "keywords": [
+          "신체 접촉 위치에 대응하는 침구 눌림",
+          "the resting head or shoulder contacts one soft bedding surface",
+          "the bedding is locally depressed at that same body contact patch",
+          "nearby less-compressed bedding continues around the depression"
+        ],
+        "paraphrases": [
+          "머리나 어깨가 같은 푹신한 침구에 닿고 그 접촉 위치에서만 천이 눌리며 옆 침구는 덜 압축된 채 이어진다",
+          "soft bedding dips directly beneath the resting head or shoulder and continues into less-compressed fabric nearby"
+        ],
+        "concept_units": [
+          "the resting head or shoulder contacts one soft bedding surface",
+          "the bedding is locally depressed at that same body contact patch",
+          "nearby less-compressed bedding continues around the depression"
+        ],
+        "relations": [
+          {
+            "id": "vel_contact_bedding_depression_r1",
+            "type": "contacts",
+            "subject": "head_or_shoulder",
+            "object": "soft_bedding"
+          },
+          {
+            "id": "vel_contact_bedding_depression_r2",
+            "type": "coincides_with",
+            "subject": "bedding_depression",
+            "object": "same_contact_patch"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.support"
+          },
+          {
+            "dimension": "material",
+            "target": "existing_bedding",
+            "property": "surface.deformation"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vel_contact_bedding_depression_boundary",
+              "definition": "Visible depression supports a contact depiction, not a force, duration or physical comfort measurement.",
+              "claim_limits": [
+                "Visible depression supports a contact depiction, not a force, duration or physical comfort measurement."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "신체 접촉 위치에 대응하는 침구 눌림; the resting head or shoulder contacts one soft bedding surface; the bedding is locally depressed at that same body contact patch; nearby less-compressed bedding continues around the depression; 머리나 어깨가 같은 푹신한 침구에 닿고 그 접촉 위치에서만 천이 눌리며 옆 침구는 덜 압축된 채 이어진다; soft bedding dips directly beneath the resting head or shoulder and continues into less-compressed fabric nearby"
+      },
+      {
+        "id": "vel_shoe_chest_contact_separate_support",
+        "ko": "신발의 상대 의복 접촉과 별도 지지 발",
+        "en": "one actor shoe touches the other existing actor upper-chest garment; the shoe contact and receiving clothing patch are jointly visible; the contacting actor other foot rests separately on the floor",
+        "weight": 0.38,
+        "tags": [
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "신발의 상대 의복 접촉과 별도 지지 발"
+        ],
+        "keywords": [
+          "신발의 상대 의복 접촉과 별도 지지 발",
+          "one actor shoe touches the other existing actor upper-chest garment",
+          "the shoe contact and receiving clothing patch are jointly visible",
+          "the contacting actor other foot rests separately on the floor"
+        ],
+        "paraphrases": [
+          "한 인물의 신발이 다른 인물의 상흉부 의복에 닿고 받는 천과 접촉 경계가 보이며 반대 발은 바닥을 지지한다",
+          "one shoe contacts the other actor clothed upper chest while the contacting actor opposite foot remains separately planted on the floor"
+        ],
+        "concept_units": [
+          "one actor shoe touches the other existing actor upper-chest garment",
+          "the shoe contact and receiving clothing patch are jointly visible",
+          "the contacting actor other foot rests separately on the floor"
+        ],
+        "relations": [
+          {
+            "id": "vel_shoe_chest_contact_separate_support_r1",
+            "type": "contacts",
+            "subject": "contact_shoe",
+            "object": "other_actor_chest_garment"
+          },
+          {
+            "id": "vel_shoe_chest_contact_separate_support_r2",
+            "type": "supports_on",
+            "subject": "opposite_foot",
+            "object": "floor"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "relationship"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "feet.support_and_contact"
+          },
+          {
+            "dimension": "relationship",
+            "target": "other_subject",
+            "property": "contact.receiving_surface"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vel_shoe_chest_contact_separate_support_boundary",
+              "definition": "A nonsexual two-actor contact configuration, not an injury, consent or duration claim. It cannot introduce a second actor into a single-person scene.",
+              "claim_limits": [
+                "A nonsexual two-actor contact configuration, not an injury, consent or duration claim. It cannot introduce a second actor into a single-person scene."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "신발의 상대 의복 접촉과 별도 지지 발; one actor shoe touches the other existing actor upper-chest garment; the shoe contact and receiving clothing patch are jointly visible; the contacting actor other foot rests separately on the floor; 한 인물의 신발이 다른 인물의 상흉부 의복에 닿고 받는 천과 접촉 경계가 보이며 반대 발은 바닥을 지지한다; one shoe contacts the other actor clothed upper chest while the contacting actor opposite foot remains separately planted on the floor"
+      },
+      {
+        "id": "vel_hand_face_visible_clearance",
+        "ko": "손과 상대 얼굴 사이에 남는 간격",
+        "en": "one actor hand is directed toward the other existing actor face; a visible air gap separates the hand from that face; both the hand endpoint and face boundary remain readable together",
+        "weight": 0.38,
+        "tags": [
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "손과 상대 얼굴 사이에 남는 간격"
+        ],
+        "keywords": [
+          "손과 상대 얼굴 사이에 남는 간격",
+          "one actor hand is directed toward the other existing actor face",
+          "a visible air gap separates the hand from that face",
+          "both the hand endpoint and face boundary remain readable together"
+        ],
+        "paraphrases": [
+          "상대 얼굴 쪽으로 향한 손 끝과 얼굴 경계가 함께 보이며 둘 사이에 공기 간격이 남는다",
+          "the directed hand stops short of the other face with both endpoints visible across a clear gap"
+        ],
+        "concept_units": [
+          "one actor hand is directed toward the other existing actor face",
+          "a visible air gap separates the hand from that face",
+          "both the hand endpoint and face boundary remain readable together"
+        ],
+        "relations": [
+          {
+            "id": "vel_hand_face_visible_clearance_r1",
+            "type": "approaches",
+            "subject": "directed_hand",
+            "object": "other_actor_face"
+          },
+          {
+            "id": "vel_hand_face_visible_clearance_r2",
+            "type": "separates",
+            "subject": "air_gap",
+            "object": "hand_and_face"
+          }
+        ],
+        "affected_dimensions": [
+          "action",
+          "relationship"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "action",
+            "target": "main_subject",
+            "property": "hand.direction"
+          },
+          {
+            "dimension": "relationship",
+            "target": "other_subject",
+            "property": "contact.clearance"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vel_hand_face_visible_clearance_boundary",
+              "definition": "The gesture does not by itself prove rebuke, injury or emotion. A second actor must already exist in the frozen scene.",
+              "claim_limits": [
+                "The gesture does not by itself prove rebuke, injury or emotion. A second actor must already exist in the frozen scene."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "손과 상대 얼굴 사이에 남는 간격; one actor hand is directed toward the other existing actor face; a visible air gap separates the hand from that face; both the hand endpoint and face boundary remain readable together; 상대 얼굴 쪽으로 향한 손 끝과 얼굴 경계가 함께 보이며 둘 사이에 공기 간격이 남는다; the directed hand stops short of the other face with both endpoints visible across a clear gap"
+      },
+      {
+        "id": "vel_soft_contact_glass_patch",
+        "ko": "유리면에 닿아 눌린 국소 접촉 패치",
+        "en": "the selected soft body region meets the actual glass plane; a bounded contact patch shows local soft-surface flattening at that same plane; surrounding body and glass boundaries remain separately continuous",
+        "weight": 0.38,
+        "tags": [
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "유리면에 닿아 눌린 국소 접촉 패치"
+        ],
+        "keywords": [
+          "유리면에 닿아 눌린 국소 접촉 패치",
+          "the selected soft body region meets the actual glass plane",
+          "a bounded contact patch shows local soft-surface flattening at that same plane",
+          "surrounding body and glass boundaries remain separately continuous"
+        ],
+        "paraphrases": [
+          "지정한 부드러운 신체 부위가 실제 유리면에 닿고 그 패치에 국소 눌림이 보이며 주변 몸과 유리 경계는 각각 이어진다",
+          "a bounded soft body contact patch flattens against the actual pane while surrounding body and glass contours remain continuous"
+        ],
+        "concept_units": [
+          "the selected soft body region meets the actual glass plane",
+          "a bounded contact patch shows local soft-surface flattening at that same plane",
+          "surrounding body and glass boundaries remain separately continuous"
+        ],
+        "relations": [
+          {
+            "id": "vel_soft_contact_glass_patch_r1",
+            "type": "contacts",
+            "subject": "soft_body_region",
+            "object": "actual_glass_plane"
+          },
+          {
+            "id": "vel_soft_contact_glass_patch_r2",
+            "type": "coincides_with",
+            "subject": "local_flattening",
+            "object": "contact_patch"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "body_geometry"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.contact"
+          },
+          {
+            "dimension": "body_geometry",
+            "target": "main_subject",
+            "property": "contact.local_deformation"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vel_soft_contact_glass_patch_boundary",
+              "definition": "Contact is a visible local configuration. Force, duration, consent and confinement cannot be inferred from this patch.",
+              "claim_limits": [
+                "Contact is a visible local configuration. Force, duration, consent and confinement cannot be inferred from this patch."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "유리면에 닿아 눌린 국소 접촉 패치; the selected soft body region meets the actual glass plane; a bounded contact patch shows local soft-surface flattening at that same plane; surrounding body and glass boundaries remain separately continuous; 지정한 부드러운 신체 부위가 실제 유리면에 닿고 그 패치에 국소 눌림이 보이며 주변 몸과 유리 경계는 각각 이어진다; a bounded soft body contact patch flattens against the actual pane while surrounding body and glass contours remain continuous"
+      }
+    ],
+    "expression": [
+      {
+        "id": "vel_small_lip_gap_concealed_teeth",
+        "ko": "작은 입술 틈과 가려진 치아",
+        "en": "upper and lower lip edges leave one narrow visible gap; the jaw remains only slightly open; the teeth remain concealed behind the lips at this selected viewing angle",
+        "weight": 0.38,
+        "tags": [
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "작은 입술 틈과 가려진 치아"
+        ],
+        "keywords": [
+          "작은 입술 틈과 가려진 치아",
+          "upper and lower lip edges leave one narrow visible gap",
+          "the jaw remains only slightly open",
+          "the teeth remain concealed behind the lips at this selected viewing angle"
+        ],
+        "paraphrases": [
+          "입술 사이에 좁은 틈이 있지만 턱은 조금만 열리고 이 시점에서 치아는 입술 뒤에 가려져 있다",
+          "a slim opening separates the lips with a barely opened jaw and teeth concealed at the selected angle"
+        ],
+        "concept_units": [
+          "upper and lower lip edges leave one narrow visible gap",
+          "the jaw remains only slightly open",
+          "the teeth remain concealed behind the lips at this selected viewing angle"
+        ],
+        "relations": [
+          {
+            "id": "vel_small_lip_gap_concealed_teeth_r1",
+            "type": "separates_from",
+            "subject": "upper_lip",
+            "object": "lower_lip"
+          },
+          {
+            "id": "vel_small_lip_gap_concealed_teeth_r2",
+            "type": "occlude",
+            "subject": "lips",
+            "object": "teeth"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "mouth.aperture"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vel_small_lip_gap_concealed_teeth_boundary",
+              "definition": "This is the selected small-gap-and-hidden-teeth form. A still image without scale cannot establish millimeters, breathing or emotion.",
+              "claim_limits": [
+                "This is the selected small-gap-and-hidden-teeth form. A still image without scale cannot establish millimeters, breathing or emotion."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "작은 입술 틈과 가려진 치아; upper and lower lip edges leave one narrow visible gap; the jaw remains only slightly open; the teeth remain concealed behind the lips at this selected viewing angle; 입술 사이에 좁은 틈이 있지만 턱은 조금만 열리고 이 시점에서 치아는 입술 뒤에 가려져 있다; a slim opening separates the lips with a barely opened jaw and teeth concealed at the selected angle"
+      }
+    ],
+    "action": [
+      {
+        "id": "vel_barrier_localized_impact_depth",
+        "ko": "방어막 충돌과 뒤쪽 인물의 깊이 순서",
+        "en": "an incoming effect meets a localized area on the front barrier surface; the figure remains separately readable behind the partly transparent barrier; impact particles originate at the effect-barrier contact region",
+        "weight": 0.38,
+        "tags": [
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "방어막 충돌과 뒤쪽 인물의 깊이 순서"
+        ],
+        "keywords": [
+          "방어막 충돌과 뒤쪽 인물의 깊이 순서",
+          "an incoming effect meets a localized area on the front barrier surface",
+          "the figure remains separately readable behind the partly transparent barrier",
+          "impact particles originate at the effect-barrier contact region"
+        ],
+        "paraphrases": [
+          "날아온 효과가 앞쪽 방어막의 한 구역에 닿고 뒤 인물이 따로 보이며 입자는 그 충돌 구역에서 퍼진다",
+          "a localized incoming strike meets the barrier in front of a readable figure, with particles radiating from that barrier contact"
+        ],
+        "concept_units": [
+          "an incoming effect meets a localized area on the front barrier surface",
+          "the figure remains separately readable behind the partly transparent barrier",
+          "impact particles originate at the effect-barrier contact region"
+        ],
+        "relations": [
+          {
+            "id": "vel_barrier_localized_impact_depth_r1",
+            "type": "meets",
+            "subject": "incoming_effect",
+            "object": "barrier_front"
+          },
+          {
+            "id": "vel_barrier_localized_impact_depth_r2",
+            "type": "lies_behind",
+            "subject": "figure",
+            "object": "barrier"
+          },
+          {
+            "id": "vel_barrier_localized_impact_depth_r3",
+            "type": "originate_at",
+            "subject": "impact_particles",
+            "object": "barrier_contact"
+          }
+        ],
+        "affected_dimensions": [
+          "action",
+          "composition",
+          "lighting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "action",
+            "target": "existing_effect",
+            "property": "trajectory.contact"
+          },
+          {
+            "dimension": "composition",
+            "target": "existing_barrier",
+            "property": "depth.order"
+          },
+          {
+            "dimension": "lighting",
+            "target": "existing_contact_region",
+            "property": "emission"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vel_barrier_localized_impact_depth_boundary",
+              "definition": "The incoming effect, barrier and figure must already belong to the scene. Particular magic style or attack source remains open.",
+              "claim_limits": [
+                "The incoming effect, barrier and figure must already belong to the scene. Particular magic style or attack source remains open."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "방어막 충돌과 뒤쪽 인물의 깊이 순서; an incoming effect meets a localized area on the front barrier surface; the figure remains separately readable behind the partly transparent barrier; impact particles originate at the effect-barrier contact region; 날아온 효과가 앞쪽 방어막의 한 구역에 닿고 뒤 인물이 따로 보이며 입자는 그 충돌 구역에서 퍼진다; a localized incoming strike meets the barrier in front of a readable figure, with particles radiating from that barrier contact"
+      }
+    ],
+    "material": [
+      {
+        "id": "vel_glass_rubble_material_contrast",
+        "ko": "유리 파편과 불투명 잔해의 표면 구별",
+        "en": "bounded glass fragments have dielectric edges or partial transmission; nearby opaque rubble retains solid nontransmitting surfaces; both materials remain separate environmental objects",
+        "weight": 0.38,
+        "tags": [
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "유리 파편과 불투명 잔해의 표면 구별"
+        ],
+        "keywords": [
+          "유리 파편과 불투명 잔해의 표면 구별",
+          "bounded glass fragments have dielectric edges or partial transmission",
+          "nearby opaque rubble retains solid nontransmitting surfaces",
+          "both materials remain separate environmental objects"
+        ],
+        "paraphrases": [
+          "환경의 유리 조각은 투과 또는 유전체 가장자리를 보이고 옆의 불투명 잔해는 막힌 고체 표면으로 구별된다",
+          "separate environmental debris contrasts bounded glass fragments with solid opaque rubble surfaces"
+        ],
+        "concept_units": [
+          "bounded glass fragments have dielectric edges or partial transmission",
+          "nearby opaque rubble retains solid nontransmitting surfaces",
+          "both materials remain separate environmental objects"
+        ],
+        "relations": [
+          {
+            "id": "vel_glass_rubble_material_contrast_r1",
+            "type": "contrast_with",
+            "subject": "glass_fragments",
+            "object": "opaque_rubble"
+          }
+        ],
+        "affected_dimensions": [
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "material",
+            "target": "existing_debris",
+            "property": "surface.optical_response"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vel_glass_rubble_material_contrast_boundary",
+              "definition": "Glass glints depend on source and viewpoint. Environmental breakage does not establish any person injury or event sequence.",
+              "claim_limits": [
+                "Glass glints depend on source and viewpoint. Environmental breakage does not establish any person injury or event sequence."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "유리 파편과 불투명 잔해의 표면 구별; bounded glass fragments have dielectric edges or partial transmission; nearby opaque rubble retains solid nontransmitting surfaces; both materials remain separate environmental objects; 환경의 유리 조각은 투과 또는 유전체 가장자리를 보이고 옆의 불투명 잔해는 막힌 고체 표면으로 구별된다; separate environmental debris contrasts bounded glass fragments with solid opaque rubble surfaces"
+      }
+    ],
+    "light_type": [
+      {
+        "id": "vel_airborne_red_code_metal_receiver",
+        "ko": "공중 붉은 기호와 금속의 광원 반사 구별",
+        "en": "red luminous code shapes occupy the air in front of an existing machine; a separate bounded machine aperture acts as a red light source; nearby metal receives localized red reflections aligned with that source",
+        "weight": 0.38,
+        "tags": [
+          "observable_relation"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "공중 붉은 기호와 금속의 광원 반사 구별"
+        ],
+        "keywords": [
+          "공중 붉은 기호와 금속의 광원 반사 구별",
+          "red luminous code shapes occupy the air in front of an existing machine",
+          "a separate bounded machine aperture acts as a red light source",
+          "nearby metal receives localized red reflections aligned with that source"
+        ],
+        "paraphrases": [
+          "기계 앞 공중에 붉게 빛나는 코드가 있고 별도 틈의 붉은 광원과 그 방향을 받는 금속 반사가 구별된다",
+          "airborne red symbols, a bounded machine emission opening and source-aligned reflections on nearby metal remain three distinct light owners"
+        ],
+        "concept_units": [
+          "red luminous code shapes occupy the air in front of an existing machine",
+          "a separate bounded machine aperture acts as a red light source",
+          "nearby metal receives localized red reflections aligned with that source"
+        ],
+        "relations": [
+          {
+            "id": "vel_airborne_red_code_metal_receiver_r1",
+            "type": "occupies",
+            "subject": "luminous_code",
+            "object": "air_before_machine"
+          },
+          {
+            "id": "vel_airborne_red_code_metal_receiver_r2",
+            "type": "emits_toward",
+            "subject": "machine_aperture",
+            "object": "metal_receiver"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting",
+          "color"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "existing_machine",
+            "property": "emission.source"
+          },
+          {
+            "dimension": "lighting",
+            "target": "existing_metal",
+            "property": "reflected_color"
+          },
+          {
+            "dimension": "color",
+            "target": "existing_code",
+            "property": "emissive.color"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vel_airborne_red_code_metal_receiver_boundary",
+              "definition": "Symbols need not be readable language unless requested. A blood exclusion does not exclude red emitted light or reflected color.",
+              "claim_limits": [
+                "Symbols need not be readable language unless requested. A blood exclusion does not exclude red emitted light or reflected color."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "공중 붉은 기호와 금속의 광원 반사 구별; red luminous code shapes occupy the air in front of an existing machine; a separate bounded machine aperture acts as a red light source; nearby metal receives localized red reflections aligned with that source; 기계 앞 공중에 붉게 빛나는 코드가 있고 별도 틈의 붉은 광원과 그 방향을 받는 금속 반사가 구별된다; airborne red symbols, a bounded machine emission opening and source-aligned reflections on nearby metal remain three distinct light owners"
+      }
+    ]
+  },
+  "existing_slot_context_extensions": {
+    "wardrobe_style": {
+      "y2kr_rib_tank": {
+        "paraphrases": [
+          "민소매 탑 원단에 가늘고 솟은 세로 니트 골이 반복된다",
+          "소매 없는 탱크톱 표면의 세로 리브가 잔잔한 높낮이를 이룬다",
+          "a sleeveless top shows fine vertical knitted ridges repeating over its fabric",
+          "fine raised lengthwise knit ribs repeat across the sleeveless tank surface"
+        ],
+        "contexts": [
+          {
+            "id": "vel_y2kr_rib_tank_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "A label alone does not require this complete morphology.",
+              "Evidence must belong to sleeveless garment surface.",
+              "This specifies visible form, not a historical date, wearer identity, or hidden material performance."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "pfe_opaque_fit_candidate": {
+        "paraphrases": [
+          "불투명한 옷이 성인 몸통과 허리 및 엉덩이 윤곽을 따르며 솔기와 밑단 및 국소 주름으로 피부와 구별된다",
+          "성인의 몸 윤곽을 따르는 밀착 의복은 속 피부 디테일을 통과시키지 않고 천의 가장자리와 주름을 유지한다",
+          "opaque fabric follows the adult torso, waist and hips, with hems, seams and small folds keeping clothing separate from skin",
+          "the adult silhouette is followed by close-fitting nontransparent cloth whose edges and folds remain distinct from the body"
+        ],
+        "contexts": [
+          {
+            "id": "vel_pfe_opaque_fit_candidate_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "밀착과 비침의 독립성을 보여주는 선택안이다. 모든 bodycon이 불투명하거나 압박성이 강하다는 뜻이 아니며 기존 인물의 체형 변경을 지시하지 않는다.",
+              "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "pfe_skimming_candidate": {
+        "paraphrases": [
+          "성인 몸통과 엉덩이를 따르는 옷이 접촉 부위 사이에서 여유 있게 늘어지고 밑단과 옆선은 별도 천 층으로 남는다",
+          "옷은 성인의 몸 윤곽을 스치되 모든 면을 압착하지 않고 접촉점 사이의 늘어진 주름과 가장자리를 유지한다",
+          "the garment skims the adult torso and hips with hanging ease between contact areas and separately readable hems and side edges",
+          "soft cloth follows the adult contour while bridging contact points in relaxed folds, retaining its own hem and side boundaries"
+        ],
+        "contexts": [
+          {
+            "id": "vel_pfe_skimming_candidate_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "bodycon과 겹칠 수 있는 연속적인 핏이다. 보이지 않는 바이어스 재단, 섬유 종류, 보정 정도를 확정하지 않는다.",
+              "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "y2kr_bustier": {
+        "paraphrases": [
+          "컵의 형태를 정하는 봉제선과 몸통을 지지하는 밀착 패널이 서로 구분된다",
+          "몸통 패널 위 컵 솔기가 독립된 의복 구조로 남는다",
+          "cup-defining seams stay distinct from the fitted supporting torso panels",
+          "the shaped cup stitching and supporting body panels remain separately readable garment structures"
+        ],
+        "contexts": [
+          {
+            "id": "vel_y2kr_bustier_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "A label alone does not require this complete morphology.",
+              "Evidence must belong to garment cups and torso panels.",
+              "This specifies visible form, not a historical date, wearer identity, or hidden material performance."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "texture": {
+      "vg_faille_crossgrain_ribs": {
+        "paraphrases": [
+          "기존 천의 가는 가로 직조 골이 천의 굽음과 이어지고 작은 방향성 광택으로 드러난다",
+          "직물 표면의 낮고 촘촘한 횡방향 리브가 같은 천의 주름을 따라 연속된다",
+          "fine low crosswise woven ribs follow the existing cloth curvature under small directional highlights",
+          "the existing textile carries closely spaced flat cross-grain ridges bending with its surface"
+        ],
+        "contexts": [
+          {
+            "id": "vel_vg_faille_crossgrain_ribs_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "Faille names a ribbed cloth structure, not one exclusive fiber. Silk, rayon, cotton, wool or synthetic fibers may be used; fiber, color and garment silhouette remain independently specified."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "vg_matte_cloth_polished_metal": {
+        "paraphrases": [
+          "같은 조명 아래 기존 천은 넓고 부드러운 명암을, 기존 광택 금속은 경계가 선명한 반사를 보인다",
+          "기존 원단의 퍼진 색조 변화와 같은 빛 방향의 금속 반사 경계가 서로 대비된다",
+          "the existing cloth gives broad soft tonal changes while polished metal gives tighter bounded reflections under the same light",
+          "shared illumination contrasts soft matte textile shading with sharper reflections on the existing polished metal"
+        ],
+        "contexts": [
+          {
+            "id": "vel_vg_matte_cloth_polished_metal_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "Reflectance contrast does not establish alloy or fiber identity. Preserve existing owners and local colors."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "condensation_window_smear_texture": {
+        "paraphrases": [
+          "창유리 표면에 밀려 번진 응결 수분의 결",
+          "a dragged moisture smear lies on the window glass surface"
+        ],
+        "contexts": [
+          {
+            "id": "vel_condensation_window_smear_texture_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "The existing owner, object and action remain unchanged; retrieval context creates no hard obligation."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "garment_detail": {
+      "pfe_slit_candidate": {
+        "paraphrases": [
+          "치마 옆 패널의 마감된 두 가장자리 사이로 같은 다리가 이어지고 나머지 치마의 밑단과 늘어진 주름은 남는다",
+          "한 장의 치마 옆트임에 연속된 한쪽 다리가 보이며 열린 경계와 남은 치마 밑단이 따로 읽힌다",
+          "one continuous leg appears between two finished side-slit edges while the remaining skirt retains its hem and hanging folds",
+          "a bounded side opening separates two finished skirt edges around the same leg, leaving the other skirt panel draped to its own hem"
+        ],
+        "contexts": [
+          {
+            "id": "vel_pfe_slit_candidate_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "정지와 보행 모두 가능하다. thigh-high가 기본 높이를 강제하지 않으며, 보행 위상은 추가 요청일 때만 별도로 묶는다.",
+              "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "pfe_one_shoulder_candidate": {
+        "paraphrases": [
+          "성인의 한 어깨에만 연결된 의복 지지가 있고 반대 어깨는 연속된 비대칭 목선 밖에 남는다",
+          "성인 의상의 한쪽 어깨 지지와 사선 목선이 이어지며 다른 어깨는 그 목선 외부에 드러난다",
+          "one continuous diagonal neckline leaves the adult opposite shoulder outside the garment while the single supporting shoulder stays attached",
+          "the adult garment has one shoulder support and a traceable asymmetrical neckline bordering the opposite uncovered shoulder"
+        ],
+        "contexts": [
+          {
+            "id": "vel_pfe_one_shoulder_candidate_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "비대칭과 원숄더는 동의어가 아니다. 여러 가는 끈이 한 어깨를 지지할 수도 있으므로 끈 개수 대신 지지하는 어깨를 판별한다.",
+              "Only the declared owner relation is observable; actual consent, intent, identity, attractiveness and SNS effectiveness are not pixel claims.",
+              "한쪽 어깨 구조는 성별·체형·매력의 주장과 별개다.",
+              "가려진 지지점을 실제로 확인했다고 기록하지 않는다. 역사적 용례의 소재·문양을 일반 요구로 옮기지 않는다.",
+              "연결되는 어깨 수를 평가한다. 끈의 조각 수, 장식 리본 유무, 앞뒤 도식의 화면 좌우는 같은 개념의 필수 기준이 아니다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "lace_trim_edge": {
+        "paraphrases": [
+          "다른 바탕 원단의 가장자리에 좁은 레이스 띠가 봉제되고 열린 실무늬 셀과 물결 모양 자유 가장자리가 구분된다",
+          "의복 끝에 붙인 레이스는 반복되는 실제 빈 셀과 봉제 부착선 및 스캘럽 테두리를 유지한다",
+          "a narrow openwork lace strip is stitched to a different base fabric, with repeating empty cells and a scalloped free edge",
+          "the garment edge carries an attached lace band whose stitch join, open thread motifs and scalloped border remain distinct"
+        ],
+        "contexts": [
+          {
+            "id": "vel_lace_trim_edge_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "y2kr_bra_straps": {
+        "paraphrases": [
+          "어깨의 가는 안쪽 지지 끈이 바깥 의복의 끈과 별개로 이어진다",
+          "같은 어깨 위 안쪽 의복 끈과 바깥 의복 끈의 두 경계가 따로 읽힌다",
+          "a narrow inner support strap stays separately traceable beside the outer shoulder strap",
+          "the inner garment strap and outer clothing strap remain two distinct shoulder supports"
+        ],
+        "contexts": [
+          {
+            "id": "vel_y2kr_bra_straps_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "A label alone does not require this complete morphology.",
+              "Evidence must belong to strap layer at shoulders.",
+              "This specifies visible form, not a historical date, wearer identity, or hidden material performance."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "water_w159": {
+        "paraphrases": [
+          "지정한 몸 부위를 타월의 한 면이 겹쳐 두르고 가장자리 접촉과 천 결이 보인다",
+          "one continuous towel wraps and overlaps around the stated body region with readable fabric and edge contact"
+        ],
+        "contexts": [
+          {
+            "id": "vel_water_w159_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "The existing owner, object and action remain unchanged; retrieval context creates no hard obligation."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "surface_material": {
+      "satin_directional_luster_drape_surface": {
+        "paraphrases": [
+          "같은 새틴 계열 의복의 넓고 매끈한 광택이 주름 방향과 굽음을 따르고 어두운 면의 원단과 솔기가 이어진다",
+          "의복 가장자리로 연결된 새틴 표면에 주름을 따라 부드러운 빛 띠가 흐르고 그늘에서도 같은 천이 읽힌다",
+          "broad smooth luster follows curved satin garment folds while darker cloth planes, seams and edges remain connected",
+          "a coherent satin-like garment keeps shadow detail and traceable seams as wide highlights follow its draped fold direction"
+        ],
+        "contexts": [
+          {
+            "id": "vel_satin_directional_luster_drape_surface_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "egr_matte_mourning_crape": {
+        "paraphrases": [
+          "지정된 어두운 천은 미세하게 불규칙한 저광택 표면을 가지며 주름에는 절제된 빛과 원단 경계가 남는다",
+          "어두운 크레이프 원단의 잔잔한 불규칙 결이 주름과 함께 이어지고 빛은 약하게 남는다",
+          "the selected dark low-sheen cloth retains fine irregular texture, restrained fold highlights and readable textile edges",
+          "dark crape has a subtly uneven matte surface with connected folds and restrained edge-defining highlights"
+        ],
+        "contexts": [
+          {
+            "id": "vel_egr_matte_mourning_crape_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "Bind all components to the same declared owners; existing owners or compatible explicit authorial development are prerequisites.",
+              "Broad mood, style, material or botanical labels alone do not require this narrow relation.",
+              "Depicted appearance establishes no fabrication method, physical species identification, measured setting, historical identity, age, ethnicity, memory or mental state.",
+              "Reference facial and hair appearance, requested wardrobe, exposure, count and events remain separately governed; this relation supplies none of them.",
+              "All adopted components require native visible evidence; partial evidence fails and occlusion is unobservable."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "y2kr_satin": {
+        "paraphrases": [
+          "부드럽게 늘어진 매끈한 천 주름에 넓고 이어진 방향성 하이라이트가 남는다",
+          "smooth softly draped cloth folds carry broad continuous directional highlights"
+        ],
+        "contexts": [
+          {
+            "id": "vel_y2kr_satin_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "The existing owner, object and action remain unchanged; retrieval context creates no hard obligation."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "hair_style": {
+      "wet_damp_clumped_hair_state": {
+        "paraphrases": [
+          "젖거나 축축한 머리가 마른 상태보다 부피가 줄고 가닥 묶음과 무게 방향 또는 국소 부착 및 수분 단서를 함께 보인다",
+          "머리의 수분 흔적과 모여 붙은 가닥 및 눌린 부피가 중력 방향이나 접촉 지점과 일관된다",
+          "damp hair has reduced dry volume, moisture cues and bundled strands with coherent weight or local adherence",
+          "wet-looking hair is supported by compact strand clumps, lowered volume and consistent moisture and weight cues"
+        ],
+        "contexts": [
+          {
+            "id": "vel_wet_damp_clumped_hair_state_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "hr_wet_hair_skin_contact": {
+        "paraphrases": [
+          "젖은 머리 가닥이 가는 다발로 모이고 일부가 같은 사람의 볼과 목에 실제로 붙어 있다",
+          "볼과 목의 피부에 닿는 젖은 머리 다발의 접촉 경계가 보인다",
+          "narrow wet strand bundles visibly adhere to the same cheek and neck",
+          "clustered damp hair ropes touch the cheek and neck at readable skin-contact patches"
+        ],
+        "contexts": [
+          {
+            "id": "vel_hr_wet_hair_skin_contact_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "This is a project-authored observable interpretation, not a mandatory genre definition or a universal cultural appearance.",
+              "A still image does not establish sound, elapsed time, supernatural causation, biography, mental state, consent, chemical identity or cultural authenticity.",
+              "Approximate discovery is optional. Selecting this realization requires every comparison owner and component, and cannot override frozen requester meaning."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "body_pose": {
+      "pv_supine": {
+        "paraphrases": [
+          "같은 사람의 등쪽 몸통이 지지면에 닿고 앞쪽 몸통은 그 면 반대쪽을 향하며 팔다리는 누운 몸과 연결된다",
+          "지지면 위로 등은 내려앉고 앞몸통은 바깥을 향하며 사지는 같은 누운 인물의 관절로 이어진다",
+          "the reclining actor rests the back of the torso on the support with the front facing away and connected limbs",
+          "back-to-support contact identifies the supine actor while the anterior torso faces outward and every limb remains attached"
+        ],
+        "contexts": [
+          {
+            "id": "vel_pv_supine_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "Bind every limb and contact target to its declared actor; laterality is actor-relative.",
+              "Support means an observable support configuration, not measured force or motion history.",
+              "Each required component must be visible and pass; partial evidence fails and occlusion is unobservable.",
+              "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+              "This geometry creates no identity, body-shape, wardrobe, tone, camera or actor-count requirement."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "pv_side_lying": {
+        "paraphrases": [
+          "몸통 또는 엉덩이의 옆면이 지지면에 닿고 어깨와 골반도 옆으로 놓이며 팔로 버티기는 따로 정한다",
+          "옆으로 누운 몸의 어깨와 엉덩이가 같은 측면 방향을 보이고 옆 몸통이 받침에 닿는다",
+          "lateral torso or hip contact and side-oriented shoulders and hips identify side lying, with arm support separately specified",
+          "the actor lies on a torso or hip side with shoulders and pelvis turned sideways to the support"
+        ],
+        "contexts": [
+          {
+            "id": "vel_pv_side_lying_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "Bind every limb and contact target to its declared actor; laterality is actor-relative.",
+              "Support means an observable support configuration, not measured force or motion history.",
+              "Each required component must be visible and pass; partial evidence fails and occlusion is unobservable.",
+              "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+              "This geometry creates no identity, body-shape, wardrobe, tone, camera or actor-count requirement."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "pv_tall_kneel": {
+        "paraphrases": [
+          "두 무릎은 받침에 닿고 골반은 발뒤꿈치보다 높으며 허벅지는 몸통 쪽으로 일어난다",
+          "양 무릎으로 지지하며 엉덩이를 뒤꿈치 위로 들어 올려 허벅지를 세운 무릎 자세",
+          "both knees rest on the support while raised thighs place the pelvis clearly above the heels",
+          "the actor kneels upright on both grounded knees with thighs rising to a pelvis lifted above the heels"
+        ],
+        "contexts": [
+          {
+            "id": "vel_pv_tall_kneel_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "Bind every limb and contact target to its declared actor; laterality is actor-relative.",
+              "Support means an observable support configuration, not measured force or motion history.",
+              "Each required component must be visible and pass; partial evidence fails and occlusion is unobservable.",
+              "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+              "This geometry creates no identity, body-shape, wardrobe, tone, camera or actor-count requirement."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "pv_half_kneel": {
+        "paraphrases": [
+          "한쪽 무릎은 바닥에 닿고 다른 다리의 발은 앞으로 디뎌 두 지지점이 서로 다른 다리에 속한다",
+          "바닥의 한 무릎과 앞쪽에 세운 반대 발이 반무릎 자세를 지지한다",
+          "one grounded knee and the opposite planted forward foot belong to different legs",
+          "a half-kneeling actor supports on one floor-contact knee and the other foot planted ahead"
+        ],
+        "contexts": [
+          {
+            "id": "vel_pv_half_kneel_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "Bind every limb and contact target to its declared actor; laterality is actor-relative.",
+              "Support means an observable support configuration, not measured force or motion history.",
+              "Each required component must be visible and pass; partial evidence fails and occlusion is unobservable.",
+              "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+              "This geometry creates no identity, body-shape, wardrobe, tone, camera or actor-count requirement."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "pv_heel_sit": {
+        "paraphrases": [
+          "무릎과 정강이는 받침에 놓이고 골반은 뒤꿈치 쪽으로 낮아지며 허벅지가 정강이 위에 접힌다",
+          "뒤꿈치에 엉덩이를 낮춘 무릎 앉기에서 무릎과 정강이가 바닥에 닿고 하체 연결이 보인다",
+          "knees and shins contact the support as the pelvis settles toward the heels with thighs folded over the shins",
+          "the actor sits back toward the heels on grounded knees and shins, retaining a connected folded lower body"
+        ],
+        "contexts": [
+          {
+            "id": "vel_pv_heel_sit_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "Bind every limb and contact target to its declared actor; laterality is actor-relative.",
+              "Support means an observable support configuration, not measured force or motion history.",
+              "Each required component must be visible and pass; partial evidence fails and occlusion is unobservable.",
+              "A locked crop is preserved; an invisible prerequisite cannot be reported as satisfied.",
+              "This geometry creates no identity, body-shape, wardrobe, tone, camera or actor-count requirement."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "contrapposto_full_body": {
+        "paraphrases": [
+          "한 지지 다리에 주 체중을 두고 다른 다리는 풀리거나 굽으며 골반과 어깨가 반대로 기울어 머리와 몸통의 균형을 유지한다",
+          "전신 선 자세에서 지지 다리와 쉬는 다리가 구분되고 반대 기울기의 어깨와 골반이 같은 몸을 균형 있게 잇는다",
+          "one leg carries the standing weight while the other relaxes, with counter-tilted pelvis and shoulders balancing the head and torso",
+          "a balanced full-body stance contrasts a support leg with a relaxed leg and opposing shoulder-pelvis tilts"
+        ],
+        "contexts": [
+          {
+            "id": "vel_contrapposto_full_body_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "gaze_target": {
+      "mep_gaze_target_candidate": {
+        "paraphrases": [
+          "보이는 두 눈이 지정된 표적을 일관되게 향하고 얼굴 방향과 구도가 그 시선 관계를 읽게 한다",
+          "얼굴의 방향과 맞는 안구 시선이 같은 목표에 닿고 눈과 목표 판단에 필요한 영역이 프레임에 남는다",
+          "visible eyes point consistently toward the named target, with compatible face orientation and framing that shows the relation",
+          "the specified gaze target is supported by readable eyes, a compatible face direction and sufficient framing"
+        ],
+        "contexts": [
+          {
+            "id": "vel_mep_gaze_target_candidate_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "카메라 응시는 숙련·동의·자신감의 증명이 아니다.",
+              "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "head_eye_counterorientation_relation": {
+        "paraphrases": [
+          "머리가 향한 방향과 같은 인물의 눈동자가 향한 두 번째 목표가 다르고 눈과 목 연결은 자연스럽게 이어진다",
+          "the head turns one way while the same actor irises return toward a second readable target with coherent eyes and neck"
+        ],
+        "contexts": [
+          {
+            "id": "vel_head_eye_counterorientation_relation_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "The existing owner, object and action remain unchanged; retrieval context creates no hard obligation."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "reflection_logic": {
+      "rb_glass_reflection_transmission_candidate": {
+        "paraphrases": [
+          "창틀이 유리면을 정하고 맞은편 건물 반사가 그 면에 맺히며 다른 구역으로는 창 안쪽이 읽힌다",
+          "같은 창유리에서 맞은편 파사드의 반사와 유리 뒤 실내의 투과가 구역을 나누어 공존한다",
+          "a window frame anchors the pane, opposite-facade reflection occupies one region and the interior reads through another",
+          "the framed window combines a coherent opposite-building reflection with a separately readable interior through the glass"
+        ],
+        "contexts": [
+          {
+            "id": "vel_rb_glass_reflection_transmission_candidate_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "The selected owner and all components must be visible in one image.",
+              "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+              "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "gaze_engagement": {
+      "pv_gaze_direct": {
+        "paraphrases": [
+          "보이는 눈동자 또는 안구 축이 카메라를 향하고 얼굴 방향은 별도로 정해진다",
+          "readable pupils or eye axes point toward the lens independently of the stated face orientation"
+        ],
+        "contexts": [
+          {
+            "id": "vel_pv_gaze_direct_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "The existing owner, object and action remain unchanged; retrieval context creates no hard obligation."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "wearable_accessory": {
+      "unif_lapel_chain_separate_inner_neck": {
+        "paraphrases": [
+          "적갈색 바깥 라펠의 사슬 부착과 뒤쪽 올라온 안쪽 목선의 별도 의복 층이 구분된다",
+          "the chain stays attached to the maroon outer lapel while the raised inner collar remains a distinct layer behind it"
+        ],
+        "contexts": [
+          {
+            "id": "vel_unif_lapel_chain_separate_inner_neck_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "The existing owner, object and action remain unchanged; retrieval context creates no hard obligation."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "ctx_c019": {
+        "paraphrases": [
+          "성인의 목 둘레를 따라가는 가느다란 초커 띠",
+          "a slim neck band follows the adult neck contour"
+        ],
+        "contexts": [
+          {
+            "id": "vel_ctx_c019_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "The existing owner, object and action remain unchanged; retrieval context creates no hard obligation."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "prop": {
+      "real_holstered_service_pistol": {
+        "paraphrases": [
+          "눈에 보이는 홀스터 안에 놓인 실제 서비스 권총",
+          "a service pistol remains seated inside a visible holster"
+        ],
+        "contexts": [
+          {
+            "id": "vel_real_holstered_service_pistol_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "The existing owner, object and action remain unchanged; retrieval context creates no hard obligation."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "action": {
+      "carrying_holstered_real_sidearm": {
+        "paraphrases": [
+          "보이는 홀스터에 권총 모양 참고 소품을 넣어 착용한 상태",
+          "the actor wears a sidearm-shaped reference prop retained in a readable holster"
+        ],
+        "contexts": [
+          {
+            "id": "vel_carrying_holstered_real_sidearm_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "The existing owner, object and action remain unchanged; retrieval context creates no hard obligation."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "light_type": {
+      "status_led_glow": {
+        "paraphrases": [
+          "기계 상태 표시 LED의 작은 발광",
+          "a small status-indicator LED emits its own light"
+        ],
+        "contexts": [
+          {
+            "id": "vel_status_led_glow_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "The existing owner, object and action remain unchanged; retrieval context creates no hard obligation."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "contact_point": {
+      "no_contact_just_close": {
+        "paraphrases": [
+          "서로 가까운 두 표면 사이에 실제 간격이 남아 접촉하지 않은 배치",
+          "the nearby surfaces remain separated by a visible air gap"
+        ],
+        "contexts": [
+          {
+            "id": "vel_no_contact_just_close_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "The existing owner, object and action remain unchanged; retrieval context creates no hard obligation."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "fetish_styling": {
+      "glossy_latex_look": {
+        "paraphrases": [
+          "라텍스처럼 광택이 강한 패션 의복 조각",
+          "fashion garment pieces with a glossy latex-like surface"
+        ],
+        "contexts": [
+          {
+            "id": "vel_glossy_latex_look_meaning_boundary",
+            "definition": "Interpret the existing entry on its declared owner and within frozen scope.",
+            "claim_limits": [
+              "The existing owner, object and action remain unchanged; retrieval context creates no hard obligation."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    }
+  },
+  "visual_semantics": [],
+  "maintenance_ref": {
+    "contract_version": "photo-extension-maintenance-ref/v1",
+    "record_id": "vel-alternatives-20261007",
+    "sha256": "8e8bed8d5c4e49075dc909641156db393cabf0e046226012dd4738f353c6ecc8"
+  }
+}
