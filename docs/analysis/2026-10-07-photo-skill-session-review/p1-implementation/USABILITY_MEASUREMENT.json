@@ -1,0 +1,112 @@
+{
+  "workflow_init_controls_freeze": {
+    "wall_seconds": 0.032
+  },
+  "existing_cli_retrieve": {
+    "wall_seconds": 29.477,
+    "exit_code": 0,
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py",
+      "--request-envelope-json",
+      "/private/tmp/photo-p1-usability-case/run/revisions/bbad9ec638424b2dbc0beb44caa85c14/request_envelope_input.json",
+      "--authorial-core-json",
+      "/private/tmp/photo-p1-usability-case/run/revisions/964f9e7d359747ecbc93a3d82e2d443a/authorial_core_input.json",
+      "--creative-controls-json",
+      "/private/tmp/photo-p1-usability-case/run/revisions/9786f1b8fbde4c3c848bb0e91beadbfd/creative_controls.json",
+      "--embodiment-review-json",
+      "/private/tmp/photo-p1-usability-case/run/revisions/964f9e7d359747ecbc93a3d82e2d443a/embodiment_review.json",
+      "--new-author-camera-evidence",
+      "--seed",
+      "27",
+      "--runtime-store",
+      "/tmp/photo-p1-usability-case/runtime",
+      "--output-file",
+      "/tmp/photo-p1-usability-case/manual-pack.json",
+      "--runtime-receipt",
+      "/tmp/photo-p1-usability-case/manual-receipt.json"
+    ]
+  },
+  "workflow_retrieve": {
+    "wall_seconds": 34.932
+  },
+  "same_authored_inputs": {
+    "authorial_core_equal": true,
+    "controls_equal": true,
+    "baseline_equal": true
+  },
+  "workflow_compose_audit": {
+    "wall_seconds": 21.899
+  },
+  "existing_cli_composed_audit": {
+    "wall_seconds": 20.725,
+    "exit_code": 0,
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py",
+      "--pack",
+      "/private/tmp/photo-p1-usability-case/run/revisions/e74e1e7694d648d3866d02bf8bd4beb5/pack.json",
+      "--composed",
+      "/private/tmp/photo-p1-usability-case/run/revisions/482f079791424c41abc06a90fe348b45/composed.json",
+      "--runtime-receipt",
+      "/private/tmp/photo-p1-usability-case/run/revisions/e74e1e7694d648d3866d02bf8bd4beb5/runtime_receipt.json",
+      "--runtime-store",
+      "/tmp/photo-p1-usability-case/runtime"
+    ]
+  },
+  "workflow_prepare_render": {
+    "wall_seconds": 37.859
+  },
+  "manual_reference_arguments": {
+    "existing_retrieve_input_output_paths": 6,
+    "workflow_retrieve_input_output_paths": 1,
+    "existing_composed_audit_input_paths": 3,
+    "workflow_compose_audit_input_paths": 2,
+    "source_policy_seed_runtime_store_excluded": true
+  },
+  "author_calculated_hash_or_id_fields": {
+    "workflow": 0,
+    "omitted_and_stamped": [
+      "request.request_sha256",
+      "core.creative_controls_sha256",
+      "precore_selection.contract_bindings",
+      "embodiment_review.prompt_sha256",
+      "composed.pack_id",
+      "composed.core_retrieval_sha256",
+      "composed.authorial_core_binding.source_authorial_core_sha256",
+      "composed.authorial_core_binding.source_intent_lock_sha256",
+      "composed.embodiment_review.source_contract_sha256",
+      "composed.embodiment_review.review.prompt_sha256",
+      "render_request.bindings"
+    ]
+  },
+  "tamper": {
+    "wall_seconds": 20.607,
+    "result": "fail",
+    "image_calls": 0,
+    "authored_file_edits": 1,
+    "silently_repaired": false
+  },
+  "stale_next_stage": {
+    "wall_seconds": 0.002,
+    "error_code": "stale_artifact",
+    "image_calls": 0,
+    "authored_file_edits": 1
+  },
+  "recorder_crash_replay": {
+    "wall_seconds": 46.118,
+    "fixture_provider_calls": 1,
+    "replayed_appends": 2,
+    "ledger_rows": 1,
+    "additional_image_calls": 0,
+    "actual_network_calls": 0
+  },
+  "limits": [
+    "single maintenance fixture; no timing performance inference",
+    "same current source and authored bytes for old CLI and managed route",
+    "cold CLI generation first and warm managed route second; times are not comparable throughput",
+    "author judgment and human editing time are not measured",
+    "provider fixture; no native tool or real API invocation",
+    "retry writer zero parent full files established by closed projection tests, not human time trial"
+  ]
+}

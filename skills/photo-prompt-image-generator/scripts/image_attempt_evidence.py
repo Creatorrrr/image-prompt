@@ -98,6 +98,27 @@ def capture_api_error(error: Exception, context: dict) -> dict:
     }
 
 
+def capture_native_error(observed, context: dict) -> dict:
+    """Preserve the native observation and parse only explicit structured codes."""
+    candidates = [observed] if isinstance(observed, str) else [json.dumps(observed, ensure_ascii=True)]
+    if isinstance(observed, dict):
+        if isinstance(observed.get("message"), str): candidates.append(observed["message"])
+        for block in observed.get("content", []) if isinstance(observed.get("content"), list) else []:
+            if isinstance(block, dict) and block.get("type") == "text" and isinstance(block.get("text"), str):
+                candidates.append(block["text"])
+    reports = [error_details(text) for text in candidates]
+    explicit = [row for row in reports if row["classification_source"] == "structured_error_code"]
+    if explicit and len({row["error_code"] for row in explicit}) == 1:
+        details = explicit[0]
+    else:
+        details = error_details("")
+    message = candidates[0].replace("\n", " ")[:280]
+    return {"contract_version": CONTRACT_VERSION, **context,
+        "outcome": {"status": "safety_block" if details["error_code"] in BLOCK_CODES else "error", "display_message": message, **details},
+        "raw_error": {"kind": "native_tool_observation", "fidelity": "exact_string" if isinstance(observed, str) else "typed_capture",
+                      "value": observed, "limitations": ["only_observed_native_tool_fields"]}}
+
+
 def write_evidence(path: Path, evidence: dict) -> str:
     """Do not replace a previous attempt's evidence."""
     # JSON escapes preserve even an unpaired UTF-16 surrogate from native JS.
@@ -111,7 +132,7 @@ def write_evidence(path: Path, evidence: dict) -> str:
 def validate_evidence(path: Path, *, expected_sha256: str | None, attempt: int,
                       tool: str | None, status: str, prompt_en: str,
                       negative_en: str | None, generation_environment: str | None,
-                      failure_reason: str | None = None) -> dict:
+                      failure_reason: str | None = None, runtime_prompt_en: str | None = None) -> dict:
     content = path.read_bytes()
     sha256 = hashlib.sha256(content).hexdigest()
     if expected_sha256 and sha256 != expected_sha256:
@@ -140,7 +161,7 @@ def validate_evidence(path: Path, *, expected_sha256: str | None, attempt: int,
         raise ValueError("attempt evidence requires capture fidelity and limitations")
     if "value" not in raw or not isinstance(request.get("runtime_prompt_en"), str):
         raise ValueError("attempt evidence requires raw value and exact runtime prompt")
-    runtime = prompt_en + (f"\n\nAvoid: {negative_en}" if negative_en is not None else "")
+    runtime = runtime_prompt_en if runtime_prompt_en is not None else prompt_en + (f"\n\nAvoid: {negative_en}" if negative_en is not None else "")
     if request["runtime_prompt_en"] != runtime:
         raise ValueError("attempt evidence runtime prompt mismatch")
     if raw["fidelity"] == "exact_string" and not isinstance(raw["value"], str):
