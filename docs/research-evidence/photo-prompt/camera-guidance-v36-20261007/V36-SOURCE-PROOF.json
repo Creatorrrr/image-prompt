@@ -64,7 +64,11 @@
     "docs/research-evidence/photo-prompt/camera-guidance-v36-20261007/RENDER-REQUEST.json": "973092d6a20397ea63393b07093579eacd7a54e987a1271d7393316ca2f87419",
     "docs/research-evidence/photo-prompt/camera-guidance-v36-20261007/UNEDITED-4F3-PACK.json": "3b36b45978e00f9f70455b5aa7952e26c45b4289e2e49751e5485da324b0a075",
     "docs/research-evidence/photo-prompt/camera-guidance-v36-compatibility-20261007/CONTRACT.json": "9ba8d1c6e0e2b7ccd0fb401a0dc583204e07d6e199768dbdfa388a09e3f8f576",
-    "tests/test_photo_camera_guidance_v36_compatibility.py": "3a5938ffa4a5ade61e6db5c8cddc750ad8607ecd8cd3b7acfbbb1b96f11f656e"
+    "docs/research-evidence/photo-prompt/camera-guidance-v36-environments-20261007/CONTRACT.json": "c1875f42354c898f0c425909743223e391fa2af1c2de25ab85cdb279638c85fd",
+    "docs/research-evidence/photo-prompt/camera-guidance-v36-environments-20261007/CROSS-RUNTIME-RESULT.json": "c43742d1b0f516e6272704c4768540bbcd23bbdbaeb6901067f0f331e29b4582",
+    "docs/research-evidence/photo-prompt/camera-guidance-v36-environments-20261007/CROSS-RUNTIME-REVIEW.json": "67971c5c539f3ddfd55a504ab8ae7a87a46784a64150d4f8defed1d0c06f9628",
+    "tests/test_photo_camera_guidance_v36_compatibility.py": "3a5938ffa4a5ade61e6db5c8cddc750ad8607ecd8cd3b7acfbbb1b96f11f656e",
+    "tests/test_photo_camera_guidance_v36_environments.py": "13244b460aeb3675b77fdd3286d7a00e9cda23be12fefee1d8f9ef83ad6ef5c7"
   },
   "frozen_inputs": {
     "tests/fixtures/photo_prompt/current_boundary/controls.json": "0958274c1f1d5ec8b2faef5f3f7409d15f0256505411613cc33ad05f3a124896",
@@ -1568,6 +1572,12 @@
       "pointer": "/0/slots/world/candidate_count"
     }
   ],
+  "runtime_environment_acceptance": {
+    "contract_path": "docs/research-evidence/photo-prompt/camera-guidance-v36-environments-20261007/CONTRACT.json",
+    "contract_sha256": "c1875f42354c898f0c425909743223e391fa2af1c2de25ab85cdb279638c85fd",
+    "parent_commit": "17914d6871e051b0803e68166dc66f86557f3e9d",
+    "previous_proof_sha256": "aeaec23fddd921d84200227790458ba819554205aafc8d42174f33e87940c831"
+  },
   "runtime_request_path": "docs/research-evidence/photo-prompt/camera-guidance-v36-20261007/RENDER-REQUEST.json",
   "schema": "photo-camera-guidance-transition/v36",
   "source_files_after": {
@@ -1730,5 +1740,35 @@
   },
   "source_fingerprint": "64ddd1e44c0137305a401ce5c34cbb71766bd56e3b7ebd406bd81c70a8cdd95a",
   "unedited_upstream_pack_path": "docs/research-evidence/photo-prompt/camera-guidance-v36-20261007/UNEDITED-4F3-PACK.json",
-  "upstream_commit": "4f3d524ed035de8592e4b0c6ad5030b41ffc55af"
+  "upstream_commit": "4f3d524ed035de8592e4b0c6ad5030b41ffc55af",
+  "verified_runtime_environments": [
+    {
+      "algorithm_sha256": "3fde760470ecdd9e06e95113fbf3af604dfe42f601e1f806ec71d2aa6d00ca3a",
+      "environment": {
+        "implementation": "cpython",
+        "python": [
+          3,
+          12,
+          14
+        ],
+        "unicode": "15.0.0"
+      },
+      "generation_id": "456ab66e03ca8c8196458ca9fbdf81c9d5ec082feaf2980f00cdfbd4754ff703",
+      "source_fingerprint": "64ddd1e44c0137305a401ce5c34cbb71766bd56e3b7ebd406bd81c70a8cdd95a"
+    },
+    {
+      "algorithm_sha256": "3309db453022b4db499b9d0f99bf6270526dadff7c738a99494f2b0de77a6cff",
+      "environment": {
+        "implementation": "cpython",
+        "python": [
+          3,
+          14,
+          3
+        ],
+        "unicode": "16.0.0"
+      },
+      "generation_id": "2a2978af8e16aaf313570832eb6f1f6f942440bd17958a66b7d9c837ade0d70b",
+      "source_fingerprint": "5e1b8c83ee0aae5489f0b73441f377e4f11031c20844c80a1a126c4c8d0364ff"
+    }
+  ]
 }

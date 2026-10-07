@@ -22,7 +22,7 @@ import unicodedata
 
 BASE = "docs/research-evidence/photo-prompt/camera-guidance-v36-20261007/"
 PROOF = BASE + "V36-SOURCE-PROOF.json"
-PROOF_SHA256 = "aeaec23fddd921d84200227790458ba819554205aafc8d42174f33e87940c831"
+PROOF_SHA256 = "5fa361c01df0b3b3e4ec35e2b3d81a5677acaa939400f85aea6edd96f49bf8ce"
 UPSTREAM_PACK_SHA256 = "3b36b45978e00f9f70455b5aa7952e26c45b4289e2e49751e5485da324b0a075"
 REVIEWED_DELTA_SHA256 = "e17bbc69f0c5ec5348d8b2080a8f1673d11f806fe0aed076928dae36da44d3f7"
 # Fresh 42-leaf observation, canonicalized to 33 exact object-member operations
@@ -326,12 +326,55 @@ def current_environment():
     return {"implementation": sys.implementation.name, "python": list(sys.version_info[:3]), "unicode": unicodedata.unidata_version}
 
 
+RUNTIME_IDENTITY_FIELDS = ("generation_id", "source_fingerprint", "algorithm_sha256")
+# Seals cover each complete environment/identity row, not interchangeable fields.
+VERIFIED_RUNTIME_RECORDS = {
+    ("cpython", (3, 12, 14), "15.0.0"): "60d44679dbe24a3232943d6632949432d57cc29e36fe236e90a409979cb70bcf",
+    ("cpython", (3, 14, 3), "16.0.0"): "4490b2c9add46d024d7998c84a8c00bbc077940b77004171cd7fd0e71119b726",
+}
+REFERENCE_RUNTIME = ("cpython", (3, 12, 14), "15.0.0")
+
+
+def environment_key(environment):
+    require(type(environment) is dict and set(environment) == {"implementation", "python", "unicode"},
+            "V36 runtime environment shape drift")
+    version = environment["python"]
+    require(type(environment["implementation"]) is str and type(environment["unicode"]) is str
+            and type(version) is list and len(version) == 3 and all(type(part) is int for part in version),
+            "V36 runtime environment types drift")
+    return environment["implementation"], tuple(version), environment["unicode"]
+
+
+def selected_runtime_record(proof):
+    rows = proof.get("verified_runtime_environments")
+    require(type(rows) is list and len(rows) == len(VERIFIED_RUNTIME_RECORDS), "V36 verified runtime inventory drift")
+    records, identities = {}, {field: set() for field in RUNTIME_IDENTITY_FIELDS}
+    for row in rows:
+        require(type(row) is dict and set(row) == {"environment", *RUNTIME_IDENTITY_FIELDS}, "V36 runtime record fields drift")
+        key = environment_key(row["environment"])
+        require(key in VERIFIED_RUNTIME_RECORDS, "V36 unverified runtime environment")
+        require(key not in records, "V36 duplicate runtime environment")
+        for field in RUNTIME_IDENTITY_FIELDS:
+            value = row[field]
+            require(type(value) is str and HASH.fullmatch(value), "V36 invalid runtime identity: " + field)
+            require(value not in identities[field], "V36 duplicate runtime identity: " + field)
+            identities[field].add(value)
+        require(digest(canonical(row)) == VERIFIED_RUNTIME_RECORDS[key], "V36 runtime record seal drift")
+        records[key] = row
+    require(set(records) == set(VERIFIED_RUNTIME_RECORDS), "V36 verified runtime inventory drift")
+    reference = {field: proof.get(field) for field in ("environment", *RUNTIME_IDENTITY_FIELDS)}
+    require(same(reference, records[REFERENCE_RUNTIME]), "V36 reference runtime identity drift")
+    key = environment_key(current_environment())
+    require(key in records, "V36 exact runtime environment unavailable")
+    return copy.deepcopy(records[key])
+
+
 def qualify_snapshot(root, baseline, pack, raw, receipt, *, runtime_store):
     root = Path(root).resolve()
     proof = qualify_current(root, baseline, pack, raw)
     require(runtime_store is not None and Path(runtime_store).is_dir(), "V36 explicit runtime store unavailable")
-    require(proof.get("environment") == current_environment(), "V36 exact runtime environment unavailable")
-    require(isinstance(receipt, dict) and all(receipt.get(k) == proof.get(k) for k in ("generation_id", "source_fingerprint", "algorithm_sha256")), "V36 receipt identity drift")
+    record = selected_runtime_record(proof)
+    require(isinstance(receipt, dict) and all(receipt.get(k) == record[k] for k in RUNTIME_IDENTITY_FIELDS), "V36 receipt identity drift")
     scripts = root / PHOTO / "scripts"
     sys.path.insert(0, str(scripts))
     try:
@@ -344,8 +387,8 @@ def qualify_snapshot(root, baseline, pack, raw, receipt, *, runtime_store):
         snapshot = provider.from_receipt(pack, receipt)
         captured, _ = runtime.capture_sources(root / PHOTO)
         require(same(captured, snapshot.manifest["source"]), "V36 live source differs from receipt generation")
-        require(snapshot.generation_id == proof["generation_id"] and all(snapshot.manifest[k] == proof[k] for k in ("source_fingerprint", "algorithm_sha256"))
-                and snapshot.manifest["source"]["environment"] == current_environment(), "V36 snapshot identity drift")
+        require(snapshot.generation_id == record["generation_id"] and all(snapshot.manifest[k] == record[k] for k in ("source_fingerprint", "algorithm_sha256"))
+                and same(snapshot.manifest["source"]["environment"], record["environment"]), "V36 snapshot identity drift")
         composed = strict_json(regular(root, proof["baseline_composed_path"]).read_bytes())
         request_path = regular(root, proof["runtime_request_path"])
         request = strict_json(request_path.read_bytes())
@@ -413,15 +456,16 @@ runpy.run_path(str(target), run_name='__main__')
 
 
 def copy_runtime(source, target, root, proof):
+    record = selected_runtime_record(proof)
     source = Path(source).resolve()
     require(source.is_dir() and not target.exists(), "V36 existing runtime or isolated destination unavailable")
     for path in source.rglob("*"):
         require(not path.is_symlink(), "V36 runtime symlink")
     shutil.copytree(source, target)
-    require((target / "generations" / proof["generation_id"]).is_dir(), "V36 published generation unavailable")
+    require((target / "generations" / record["generation_id"]).is_dir(), "V36 published generation unavailable")
     namespace = digest(canonical({"root": str(root / PHOTO), "mode": "local_current", "remote": ""}))
     pointer = strict_json(regular(target, "local/" + namespace + "/CURRENT.json").read_bytes())
-    require(pointer.get("generation_id") == proof["generation_id"] and pointer.get("source_fingerprint") == proof["source_fingerprint"], "V36 source-root runtime pointer drift")
+    require(pointer.get("generation_id") == record["generation_id"] and pointer.get("source_fingerprint") == record["source_fingerprint"], "V36 source-root runtime pointer drift")
 
 
 def validate_current(asset_dir, *, source_root, runtime_store=None):
@@ -433,7 +477,7 @@ def validate_current(asset_dir, *, source_root, runtime_store=None):
     qualify_pack(proof, baseline, payload[0], raw, original_raw, regular(root, proof["unedited_upstream_pack_path"]).read_bytes())
     source_store = runtime_store or os.environ.get("PHOTO_RUNTIME_STORE")
     require(source_store is not None, "V36 requires an explicit existing PHOTO_RUNTIME_STORE")
-    require(proof.get("environment") == current_environment(), "V36 exact runtime environment unavailable")
+    selected_runtime_record(proof)
     with tempfile.TemporaryDirectory(prefix="photo-v36-current-") as temporary:
         work = Path(temporary)
         store, output = work / "runtime", work / "pack.json"

@@ -8475,7 +8475,7 @@ def _ethereal_v35_support(repo_root):
     return photo_ethereal_history_v35
 
 
-PHOTO_V36_CAMERA_SUPPORT_SHA256 = "69e2557055812211317616dad5ed294b24ec1dfe9b5e91103a66b15587dabe61"
+PHOTO_V36_CAMERA_SUPPORT_SHA256 = "f9446c1daccdf195b03a6539a6b46cf166482e734565dc25d81b4de54c8c101c"
 
 
 def _camera_v36_support(repo_root):
