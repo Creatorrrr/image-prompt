@@ -1,0 +1,24 @@
+Baseline source projection excludes the new grammar overlay. All historical original source bytes are unchanged by this task.
+test_historical_merged_state_and_current_eleven_keeps_are_exact (tests.test_photo_shelf_return_korean_state_data_cleanup.ShelfReturnKoreanStateDataCleanupTests.test_historical_merged_state_and_current_eleven_keeps_are_exact) ... FAIL
+
+======================================================================
+FAIL: test_historical_merged_state_and_current_eleven_keeps_are_exact (tests.test_photo_shelf_return_korean_state_data_cleanup.ShelfReturnKoreanStateDataCleanupTests.test_historical_merged_state_and_current_eleven_keeps_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_shelf_return_korean_state_data_cleanup.py", line 121, in test_historical_merged_state_and_current_eleven_keeps_are_exact
+    self.assertEqual(fixtures.bundle_meanings(fixtures.seduction_historical_bundles(current_historical)),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     fixtures.bundle_meanings(historical_bundles))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [{'id[532808 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[703605 chars]ly'}] != [{'id[532808 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[703586 chars]ly'}]
+
+First differing element 307:
+{'id'[817 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[87 chars]nly'}
+{'id'[817 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[68 chars]nly'}
+
+Diff is 2223582 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 1 test in 2.862s
+
+FAILED (failures=1)

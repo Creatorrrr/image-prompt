@@ -94,7 +94,8 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
                                           'photo_prompt_cute_visual_forms_extension.json',
                                           'photo_prompt_ornament_structure_extension.json',
                                           'photo_prompt_character_appearance_extension.json',
-                                          'photo_prompt_ethereal_gothic_scene_extension.json'})
+                                          'photo_prompt_ethereal_gothic_scene_extension.json',
+                                          'photo_prompt_visual_grammar_extension.json'})
         inventory = common.g.photo_source_manifest.SourceInventory.for_test(ASSETS, candidate_files=filenames)
         historical_current = common.g.load_json(ASSETS / 'photo_prompt_tags.json', inventory=inventory)
         historical_current = fixtures.seduction_historical_source_scope(historical_current)

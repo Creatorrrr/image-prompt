@@ -178,7 +178,7 @@ class EtherealGothicSceneTests(unittest.TestCase):
 
     def test_existing_context_additions_do_not_rewrite_original_meaning_or_guards(self):
         inventory=g.photo_source_manifest.SourceInventory.for_test(SKILL/'assets',candidate_files=tuple(
-            filename for filename in g.RESEARCH_EXTENSION_FILENAMES if filename!=EXT))
+            filename for filename in g.RESEARCH_EXTENSION_FILENAMES if filename not in {EXT,'photo_prompt_visual_grammar_extension.json'}))
         old=g.load_json(SKILL/'assets/photo_prompt_tags.json',inventory=inventory)
         for slot,updates in self.ext['existing_slot_context_extensions'].items():
             before={e['id']:e for e in old['slots'][slot]}
