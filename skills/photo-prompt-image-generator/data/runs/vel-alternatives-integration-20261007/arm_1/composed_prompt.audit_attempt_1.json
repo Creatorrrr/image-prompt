@@ -1,0 +1,250 @@
+{
+  "pack_id": "1189534e2d4ae20b",
+  "core_retrieval_sha256": "d3c99ae3c09043357588b35a78ca60f4cc12c400522f24fff1656f86261fd71d",
+  "composer": "agent",
+  "prompt_en": "A complex photographic concept showing one coherent visible moment in a tidal-power station relay hall beneath a storm seawall. A woman guided by the supplied portrait works beside a chest-height return-flow chamber hatch, observed during a careful manual restart. Her visible face and hair follow the supplied portrait: a short dark bob at jaw level, separated wispy fringe, large dark eyes, a small straight nose, and naturally full lips. Her fictional occupation and the technical circumstances belong to this scene. A quietly magnetic, absorbed presence comes from the softness of her slightly parted lips, the clean line of her neck above the work collar, and her calm concentration on the small pilot lamp rather than a performance for the camera. She stands upright on the dry grated catwalk, her torso turned a little toward the hatch. Her right arm extends toward the chest-height release lever, with a softly bent elbow and a straight wrist. Her gloved right fingers wrap around the ribbed lever bar, the palm touching its near side. Her left arm rests beside her hip. The lever has settled at its release stop and the heavy hatch is now open by a narrow visible slit; she still keeps light pressure on the bar while checking the adjacent pilot lamp. The small crimson lamp is built into the latch assembly and casts a confined red reflection along the nearest damp metal edge. This modest machine glow gives the adjustment a readable consequence amid the cool room. Her chin tips downward toward the lever, while both visible pupils lift toward the crimson pilot lamp a hand-span above it; her relaxed neck connects that small head angle naturally to her shoulders. Her streamlined graphite protective suit has a sleek sci-fi armored silhouette: slim contoured shoulder plates and narrow forearm shells over flexible fitted fabric, articulated dark joints, and a quiet diagonal seam across the torso. The chamber's old silver hatch rim shows rubbed edges, gray oxidation patches and fine scratches; thick black-iron structural ribs behind it are darker, rougher and pitted. Several separate clear water droplets cling to the porthole glass above the latch, with rounded bright rims and tiny refracted highlights; a thin wet track descends from one bead. The glass, old metal and long brushed-steel panels catch cold cyan ceiling light in distinct bounded reflections. Receding rib arches, return pipes and the catwalk rail establish the working hall around her. A medium three-quarter environmental portrait, framed from head to mid-thigh, keeps her face, the complete working right arm, the lever contact, the hatch slit and the pilot lamp readable together. The camera observes from her left-front at chest height with a natural 40 mm perspective. A soft warm task light touches the cheek and fringe, while cool side reflections describe the apparatus. Moderate depth of field preserves the water beads and material differences; realistic skin texture, gentle highlight roll-off and restrained fine grain complete a tactile, carefully staged technical photograph.",
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "chosen_candidate_ids": [
+    "slot:gaze_target:head_eye_counterorientation_relation"
+  ],
+  "chosen_visual_concept_ids": [],
+  "candidate_interpretations": [
+    {
+      "candidate_id": "slot:gaze_target:head_eye_counterorientation_relation",
+      "artistic_interpretation": "A connected head and eye direction difference makes the worker monitor the machine result while keeping her physical attention near the release bar.",
+      "transformation": "Turn the generic head-versus-eye relation into a chin inclined toward the lever and pupils lifted toward the pilot lamp above it, preserving the supplied face/hair and the one working arm.",
+      "prompt_evidence": "Her chin tips downward toward the lever, while both visible pupils lift toward the crimson pilot lamp a hand-span above it; her relaxed neck connects that small head angle naturally to her shoulders.",
+      "relation_evidence": {
+        "se_head_eye_direction_difference": "Her chin tips downward toward the lever, while both visible pupils lift toward the crimson pilot lamp a hand-span above it; her relaxed neck connects that small head angle naturally to her shoulders.",
+        "se_counteroriented_eye_target": "both visible pupils lift toward the crimson pilot lamp a hand-span above it"
+      },
+      "affected_dimensions": [
+        "pose",
+        "expression"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "pose",
+          "target": "main_subject",
+          "property": "head.orientation"
+        },
+        {
+          "dimension": "expression",
+          "target": "main_subject",
+          "property": "eyes.gaze_direction"
+        }
+      ]
+    }
+  ],
+  "authorial_core_binding": {
+    "source_authorial_core_sha256": "60bccfb6db92084d60ed6820a843efa110ad4fe34a308551bad259327f349432",
+    "source_intent_lock_sha256": "80ab6cf3b69ff9bf99489b360ec1886ffb4d99cc94eadbca6d9efb9de9819871",
+    "preserved_anchor_ids": [
+      "complex_concept",
+      "portrait_guided_subject",
+      "single_test_moment",
+      "portrait_visible_features"
+    ],
+    "preserved_evidence": [],
+    "authorial_decisions": [
+      {
+        "dimension": "pose",
+        "decision": "Give the head a small downward angle toward the working lever.",
+        "rationale": "This makes the nearby apparatus the physical attention anchor while maintaining a relaxed neck and the full arm contact.",
+        "prompt_evidence": "Her chin tips downward toward the lever"
+      },
+      {
+        "dimension": "expression",
+        "decision": "Let the same face lift both pupils to the pilot lamp above the lever.",
+        "rationale": "The new eye target shows that the worker is checking an adjacent visible result, rather than adding a separate gesture or actor.",
+        "prompt_evidence": "both visible pupils lift toward the crimson pilot lamp a hand-span above it"
+      }
+    ]
+  },
+  "semantic_clarification_decisions": [
+    {
+      "clarification_id": "clarification:authorial-core:interpreted-intent",
+      "decision": "applied",
+      "rationale": "Preserve the broad independent-test concept, portrait-guided subject, coherent instant and visible face/hair reference scope. Specific staging remains authorial.",
+      "prompt_evidence": "A complex photographic concept"
+    },
+    {
+      "clarification_id": "clarification:visual-profile:aircraft_pilot_operation",
+      "decision": "rejected",
+      "rationale": "This is a tidal-power service hall, with a hatch and release lever rather than an aircraft pilot station or flight-state evidence."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:composite_overwhelmed_expression",
+      "decision": "rejected",
+      "rationale": "The portrait remains quietly task-focused; a simultaneous upward-pupil open-jaw tongue display would change that particular working moment."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:contained_affect_self_presentation",
+      "decision": "rejected",
+      "rationale": "The baseline has calm concentration, but no interrupted self-regulation gesture or contained affect leak serving a social relationship."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:embodied_corruption_transition",
+      "decision": "rejected",
+      "rationale": "A spreading on-body corruption boundary would add a separate state-transition story to this mechanical operation."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:kuudere_composed_warmth_relation",
+      "decision": "rejected",
+      "rationale": "The task targets the apparatus; there is no trusted human counterpart, target-directed support action or visible benefit for that counterpart."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pc_pc21_owner_relation",
+      "decision": "rejected",
+      "rationale": "The porthole is beside the woman; the capture view does not see her face transmitted through a pane between camera and subject."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pc_pc23_owner_relation",
+      "decision": "rejected",
+      "rationale": "A small handheld mirror would compete with the working lever and is not part of the selected technical action."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:uncanny_coherence_mismatch",
+      "decision": "rejected",
+      "rationale": "The technical moment aims for coherent observation, and does not benefit from a localized reality or response mismatch."
+    }
+  ],
+  "creative_augmentation_brief": {
+    "decisions": [
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:location:two_world_portal_threshold_location",
+        "decision": "rejected",
+        "rationale": "An interworld crossing would replace the restrained engineered hall with a second-space event and add a surreal relationship."
+      },
+      {
+        "candidate_id": "slot:film_emulation:pr_film_grain_print_scan_scope_candidate",
+        "decision": "rejected",
+        "rationale": "The baseline already retains restrained grain. Adding a print/scan layer does not clarify the working moment, and no actual print history is intended."
+      },
+      {
+        "candidate_id": "slot:color_grading:rb_restrained_processing_candidate",
+        "decision": "rejected",
+        "rationale": "The independent draft already retains material distinctions and gradual highlights. No extra processing direction is needed for the legible latch interaction."
+      },
+      {
+        "candidate_id": "slot:color:hr_palette_metal_monochrome",
+        "decision": "rejected",
+        "rationale": "A metal monochrome scheme would reduce the useful cold-light/crimson-pilot separation that identifies the adjustment result."
+      },
+      {
+        "candidate_id": "slot:composition:pr_environmental_portrait_subject_place_candidate",
+        "decision": "rejected",
+        "rationale": "The draft already connects the working arm, lever and visible hall. Its required adult context would need a new literal witness solely to adopt redundant guidance."
+      }
+    ]
+  },
+  "adult_appeal_brief": {
+    "agency_phrase": "she still keeps light pressure on the bar while checking the adjacent pilot lamp",
+    "axes": {
+      "sensual": {
+        "intensity": 1,
+        "realization": "baseline",
+        "affected_dimensions": [],
+        "artistic_interpretation": "The softly parted lips, clean neck line and absorbed bearing provide subtle supporting attraction within the technical portrait; the added eye direction serves task legibility rather than a new sensual treatment.",
+        "prompt_evidence": "the softness of her slightly parted lips, the clean line of her neck above the work collar"
+      }
+    },
+    "blend": {
+      "emphasis": "sensual_led"
+    },
+    "contextual_review": [
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:expression:ae_smolder_attraction",
+        "reading": "irrelevant",
+        "reason": "The lamp is a practical check target, while attraction remains a subtle supporting quality. The required primary attraction/flirting context is not established.",
+        "proposed_application": "A more attraction-led eye display could be authored, but it would distract from this task-focused instant.",
+        "requirement_evidence": []
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:wearable_accessory:unif_neck_scarf_separate_hair_ornament",
+        "reading": "irrelevant",
+        "reason": "The raised scarf and separate hair ornament provide a fashion relation with no causal role in this technical moment.",
+        "proposed_application": "A scarf-plus-ornament styling alternative is within open appearance, but would compete with the short bob and clean work collar.",
+        "requirement_evidence": []
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:costume_style:wearable_plate_mail_armor_system",
+        "reading": "potential",
+        "reason": "Articulated protective attachments could lend subtle tactile appeal, but plate-and-mail shifts the technical worker toward a historical combat silhouette.",
+        "proposed_application": "A complete plate-and-mail look could be made coherent as a different fictional portrayal; the slim graphite industrial suit better retains the engineering action and source silhouette at the same supporting sensual strength.",
+        "requirement_evidence": []
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:body_pose:pc_pc13_component_3",
+        "reading": "relevant",
+        "reason": "The existing standing support and short lever reach already serve the same action phase.",
+        "proposed_application": "Retain the standing stance and softly bent elbow so the already-authored hand pressure looks economical; no source adoption or new posture detail is needed.",
+        "requirement_evidence": []
+      }
+    ],
+    "contextual_comparison": "At the same supporting sensual strength, the complete baseline offers absorbed face, a clean collar and economical protective clothing. A plate-and-mail alternative could create tactile appeal but would recast the job and body contour; scarf-plus-ornament styling adds a decorative relation without helping the hatch operation. A stronger attraction-led gaze would require a new primary direction and would compete with checking the lamp. Retain the baseline sensual portrayal and stance; use the ordinary enriched head/eye relation solely to make task-and-result attention readable."
+  },
+  "semantic_assertion_evidence": {
+    "source_contract_sha256": "3848b3049720811c657090999afcc6c465591c034a5c452cf4f370d275962714",
+    "evidence": {
+      "primary_subject": {
+        "subject_phrase": "A woman guided by the supplied portrait"
+      }
+    }
+  },
+  "embodiment_review": {
+    "source_contract_sha256": "ee11f5cce269b953491a88f2de94ea5e0163d968efd71ad77d9388fe534829b9",
+    "review": {
+      "contract_version": "photo-embodiment-review/v1",
+      "provenance": "agent_postcomposition",
+      "scope": "body_action",
+      "summary": "The complete final scene retains one standing human and one right-hand lever actuation. The added chin-down/head versus eyes-up/lamp relation remains on that same face with a small relaxed neck angle, leaving body support, arm reach and hand contact unchanged. All original contact and crop relations were reread with the new head and eye clause.",
+      "checks": {
+        "body_ownership": {
+          "status": "supported",
+          "reason": "The working arm and gloved fingers belong to the same pictured woman, and the left arm has a separate relaxed placement.",
+          "prompt_evidence": [
+            "Her right arm extends toward the chest-height release lever",
+            "Her gloved right fingers wrap around the ribbed lever bar",
+            "Her left arm rests beside her hip",
+            "her relaxed neck connects that small head angle naturally to her shoulders"
+          ]
+        },
+        "joint_chain_and_reach": {
+          "status": "supported",
+          "reason": "A chest-height nearby lever requires a short reach with the elbow slightly bent and the wrist aligned; no arm crosses behind the torso or apparatus.",
+          "prompt_evidence": [
+            "with a softly bent elbow and a straight wrist",
+            "her torso turned a little toward the hatch"
+          ]
+        },
+        "support_and_balance": {
+          "status": "supported",
+          "reason": "A standing figure on a dry level catwalk can retain balance while one hand applies light lever pressure. Supporting feet continue below the crop rather than floating or transferring weight to the lever.",
+          "prompt_evidence": [
+            "She stands upright on the dry grated catwalk",
+            "she still keeps light pressure on the bar"
+          ]
+        },
+        "contact_and_space": {
+          "status": "supported",
+          "reason": "The right palm and curled fingers meet the lever near side, keeping the wrist and release bar in the same visible space; the hatch slit is separate from the hand.",
+          "prompt_evidence": [
+            "the palm touching its near side",
+            "the heavy hatch is now open by a narrow visible slit"
+          ]
+        },
+        "visibility_and_projection": {
+          "status": "supported",
+          "reason": "The left-front head-to-mid-thigh view keeps the full working chain and both visible pupil positions assessable, with the pilot lamp a hand-span above the lever. The small chin angle does not hide the reference-guided face or relocate the arm.",
+          "prompt_evidence": [
+            "keeps her face, the complete working right arm, the lever contact, the hatch slit and the pilot lamp readable together",
+            "The camera observes from her left-front at chest height",
+            "both visible pupils lift toward the crimson pilot lamp a hand-span above it"
+          ]
+        }
+      },
+      "prompt_sha256": "2ea26bf1d89b46d6891d70c1091983d9386eddc7ce3dc9d3a4109c590f45656e"
+    }
+  }
+}

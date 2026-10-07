@@ -48,13 +48,28 @@ class EtherealV35BoundaryTests(unittest.TestCase):
         with self.assertRaisesRegex(validator.ValidationFailure,'lineage'):
             history.qualify_current(validator,self.assets,ROOT,baseline,self.pack,self.raw)
 
+    def copy_recovery_input(self,path,target):
+        # This historical fixture must use V35's sealed admitted live side,
+        # rather than silently treating today's later sources as V35 inputs.
+        names={(history.PHOTO/'photo_prompt_source_manifest.json').as_posix(),
+               'tests/test_photo_motion_artifact_owner_data_cleanup.py'}
+        source=ROOT/path
+        if path in names:
+            source=ROOT/'tests/fixtures/photo_prompt/ethereal_v35_recovery'/path
+            expected=self.proof['source_files_after'].get(path,history.TEST_RECOVERY.get(path))
+            row=next(r for r in self.parent['members'] if r['path']==path)
+            self.assertFalse(source.is_symlink())
+            self.assertEqual(history.digest(source.read_bytes()),expected)
+            self.assertEqual(source.stat().st_mode&0o7777,int(row['mode'][-3:],8))
+        shutil.copy2(source,target)
+
     def recovery_tree(self,root):
         name=(history.PHOTO/'photo_prompt_source_manifest.json').as_posix()
         parent=next(r for r in self.parent['members'] if r['path']==name)
         original=next(r for r in previous.source_manifest('v32',ROOT)['members'] if r['path']==name)
         paths={history.PARENT.as_posix(),history.PROOF.as_posix(),name,parent['source_path'],original['source_path'],(previous.BASE/'SOURCE-V32.json').as_posix()}
         for path in paths:
-            target=root/path;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(ROOT/path,target)
+            target=root/path;target.parent.mkdir(parents=True,exist_ok=True);self.copy_recovery_input(path,target)
         return name,original
 
     def test_live_drift_cannot_use_valid_original_recovery(self):
@@ -91,7 +106,7 @@ class EtherealV35BoundaryTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             root=Path(temporary).resolve()
             for path in [history.PARENT.as_posix(),history.PROOF.as_posix(),name,row['source_path']]:
-                target=root/path;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(ROOT/path,target)
+                target=root/path;target.parent.mkdir(parents=True,exist_ok=True);self.copy_recovery_input(path,target)
             original=history.previous_path(root,name)
             self.assertEqual(history.digest(original.read_bytes()),row['sha256'])
             live=root/name;live.write_bytes(live.read_bytes()+b'\n# rewritten assertions\n')

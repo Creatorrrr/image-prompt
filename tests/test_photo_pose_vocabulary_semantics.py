@@ -78,7 +78,8 @@ class PhotoPoseVocabularySemanticsTests(unittest.TestCase):
                                           "photo_prompt_slang_visual_extension.json",
                                           "photo_prompt_seduction_expression_extension.json",
                                           "photo_prompt_cute_visual_forms_extension.json",
-                                          "photo_prompt_visual_grammar_extension.json"})
+                                          "photo_prompt_visual_grammar_extension.json",
+                                          "photo_prompt_vel_appearance_relations_extension.json"})
         inventory = generator.photo_source_manifest.SourceInventory.for_test(ASSETS, candidate_files=filenames)
         before = generator.load_json(ASSETS / "photo_prompt_tags.json", inventory=inventory)
         for slot, additions in self.extension["existing_slot_context_extensions"].items():

@@ -27,7 +27,7 @@ class PhotorealismOwnerDataCleanupTests(unittest.TestCase):
         # test_photo_visual_grammar_integration, including every retained field.
         inventory = generator.photo_source_manifest.SourceInventory.for_test(
             ASSETS, candidate_files=tuple(name for name in generator.RESEARCH_EXTENSION_FILENAMES
-                if name != 'photo_prompt_visual_grammar_extension.json'))
+                if name not in {'photo_prompt_visual_grammar_extension.json', 'photo_prompt_vel_appearance_relations_extension.json'}))
         cls.data = generator.load_json(ASSETS / 'photo_prompt_tags.json', inventory=inventory)
         cls.rows = {(slot, row['id']): row for slot, rows in cls.data['slots'].items() for row in rows}
 

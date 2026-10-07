@@ -1,0 +1,22 @@
+--- before/tests/test_photo_candidate_semantics.py
++++ after/tests/test_photo_candidate_semantics.py
+@@ -121,6 +121,19 @@
+             self.assertEqual(reference["sha256"], semantics.digest(record))
+             self.assertNotIn("semantic_policy", extension)
+             self.assertNotIn("representation_modes", extension)
++            # A later DATA correction keeps the prior maintenance contract
++            # hash-bound instead of copying its metadata flags into a new
++            # record. Authenticate that chain and retain the original duty.
++            ancestry = set()
++            while "maintenance_only" not in record:
++                self.assertEqual(record["schema_version"], "photo-extension-maintenance/v1")
++                self.assertEqual(record["source_filename"], filename)
++                prior = record["prior_maintenance_ref"]
++                self.assertNotIn(prior["record_id"], ancestry)
++                ancestry.add(prior["record_id"])
++                self.assertEqual(prior["contract_version"], "photo-extension-maintenance-ref/v1")
++                record = json.loads((ROOT / "docs/research-evidence/photo-prompt/extension-maintenance" / (prior["record_id"] + ".json")).read_text())
++                self.assertEqual(prior["sha256"], semantics.digest(record))
+             self.assertTrue(record["maintenance_only"])
+         registered_count = sum(
+             bool(json.loads((ASSETS / name).read_text()).get("maintenance_ref"))

@@ -30,7 +30,8 @@ class SeductionExpressionIntegrationTests(unittest.TestCase):
         # cute overlay source invariants by test_photo_cute_visual_forms.
         filenames = tuple(name for name in pg.RESEARCH_EXTENSION_FILENAMES
                           if name not in {'photo_prompt_cute_visual_forms_extension.json',
-                                          'photo_prompt_visual_grammar_extension.json'})
+                                          'photo_prompt_visual_grammar_extension.json',
+                                          'photo_prompt_vel_appearance_relations_extension.json'})
         inventory = pg.photo_source_manifest.SourceInventory.for_test(ASSETS, candidate_files=filenames)
         historical = pg.load_json(ASSETS / 'photo_prompt_tags.json', inventory=inventory)
         candidates = {slot + '.' + row['id']: row

@@ -1,0 +1,2306 @@
+{
+  "schema_version": "vel-research-candidate-drafts/v1",
+  "distributable_runtime_data": false,
+  "drafts": [
+    {
+      "proposal_id": "VEL-002",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "garment_detail",
+      "en": "A fitted garment follows the declared torso contour; waist shaping belongs to its seams and outer boundary while the wearer's prescribed body proportions remain intact.",
+      "concept_units": [
+        "continuous garment edges",
+        "visible fitted waist boundary",
+        "seams or tension folds on that garment"
+      ],
+      "relations": [
+        {
+          "id": "vel_002_r1",
+          "type": "follows",
+          "subject": "garment",
+          "object": "declared torso"
+        },
+        {
+          "id": "vel_002_r2",
+          "type": "shape",
+          "subject": "waist seams",
+          "object": "same garment boundary"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "declared garment on the same subject",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "pfe_opaque_fit",
+        "pfe_skimming"
+      ],
+      "confusion_boundaries": [
+        "body reshaping to simulate fit",
+        "unrequested corset",
+        "tight fit as transparency"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-003",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "garment_detail",
+      "en": "Two finished edges form a side opening in the same dress; the selected leg is visible through that opening while the dress's remaining panel and hem remain continuous.",
+      "concept_units": [
+        "two finished slit edges",
+        "same garment panel and hem",
+        "one anatomically continuous leg"
+      ],
+      "relations": [
+        {
+          "id": "vel_003_r1",
+          "type": "bound",
+          "subject": "slit edges",
+          "object": "visible opening"
+        },
+        {
+          "id": "vel_003_r2",
+          "type": "appears through",
+          "subject": "leg",
+          "object": "same dress opening"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "one selected dress and one continuous leg",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "pfe_slit",
+        "slot:garment_detail:pfe_slit_candidate"
+      ],
+      "confusion_boundaries": [
+        "a torn panel instead of a constructed slit",
+        "two disconnected legs",
+        "generic China dress forced into a canonical qipao"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-004",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_004",
+      "primary_slot": "garment_detail",
+      "en": "Curved vertical seams divide a fitted vest's torso panels and remain visibly joined to those panels; a seam pattern alone does not introduce lacing, boning, underwear, or restraint.",
+      "concept_units": [
+        "curved panel seams",
+        "continuous adjoining cloth panels",
+        "declared vest silhouette"
+      ],
+      "relations": [
+        {
+          "id": "vel_004_r1",
+          "type": "join",
+          "subject": "curved seams",
+          "object": "torso panels"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "selected vest or bodice panel",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "slot:fetish_styling:corset_bustier_layered",
+        "slot:wardrobe_style:y2kr_bustier"
+      ],
+      "confusion_boundaries": [
+        "painted stripes",
+        "bra cup seams replacing torso panels",
+        "automatic lacing or boning"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-006",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "surface_material",
+      "en": "The selected black garment retains continuous edges and local reflective bands that curve with its folds; fit, base color, and specular response are separate owned properties.",
+      "concept_units": [
+        "bounded garment surface",
+        "fold-following specular bands",
+        "dark base planes retaining material detail"
+      ],
+      "relations": [
+        {
+          "id": "vel_006_r1",
+          "type": "lies on",
+          "subject": "highlight",
+          "object": "garment fold"
+        },
+        {
+          "id": "vel_006_r2",
+          "type": "belongs to",
+          "subject": "base color",
+          "object": "same garment"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "material",
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "selected garment surface",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "hvr_profile_fetish_material_owner",
+        "slot:fetish_styling:glossy_latex_look"
+      ],
+      "confusion_boundaries": [
+        "black acrylic furniture instead of clothing",
+        "global bloom instead of surface sheen",
+        "latex as an automatic sexual role"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-007",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "surface_material",
+      "en": "The declared leather-like panel has restrained surface sheen, while its adjacent metal ornament has separately bounded reflections and visible localized wear.",
+      "concept_units": [
+        "two separate material owners",
+        "restrained cloth or leather-like sheen",
+        "bounded metal highlight and wear"
+      ],
+      "relations": [
+        {
+          "id": "vel_007_r1",
+          "type": "attaches to",
+          "subject": "metal ornament",
+          "object": "declared panel"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "material"
+      ],
+      "property_effect_review": {
+        "owner_scope": "two declared garment or armor surfaces",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "global dirt over the person",
+        "all surfaces with the same gloss",
+        "patina as bodily injury"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-008",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "surface_material",
+      "en": "A continuous satin-like garment carries broad smooth luster along its fold curvature while seams and darker planes retain surface continuity.",
+      "concept_units": [
+        "continuous satin-like surface",
+        "fold direction",
+        "broad luster",
+        "seam and dark-plane continuity"
+      ],
+      "relations": [
+        {
+          "id": "vel_008_r1",
+          "type": "follows",
+          "subject": "luster",
+          "object": "same garment folds"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "material",
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "same satin-like garment",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "satin_directional_luster_drape_surface",
+        "slot:surface_material:satin_directional_luster_drape_surface",
+        "slot:surface_material:y2kr_satin"
+      ],
+      "confusion_boundaries": [
+        "silk as a synonym of every satin",
+        "wet skin shine replacing fabric luster",
+        "glare obscuring seam continuity"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-009",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "garment_detail",
+      "en": "A narrow openwork lace band is attached along an edge of the base garment, with a readable join and a distinct free edge.",
+      "concept_units": [
+        "narrow lace band",
+        "real openwork cells",
+        "attachment line",
+        "free lace edge"
+      ],
+      "relations": [
+        {
+          "id": "vel_009_r1",
+          "type": "joins along",
+          "subject": "lace band",
+          "object": "base garment edge"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance",
+        "material"
+      ],
+      "property_effect_review": {
+        "owner_scope": "lace band and separate base garment",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "lace_trim_attached_edge",
+        "slot:garment_detail:lace_trim_edge"
+      ],
+      "confusion_boundaries": [
+        "printed lace graphics",
+        "all-over lace replacing trim",
+        "detached lace accessory"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-010",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "garment_detail",
+      "en": "The declared neckline edge has a readable shape and depth relative to the torso; the requested visible body region is continuous with that edge.",
+      "concept_units": [
+        "neckline boundary",
+        "shape and torso reference",
+        "requested visible region"
+      ],
+      "relations": [
+        {
+          "id": "vel_010_r1",
+          "type": "bounds",
+          "subject": "neckline",
+          "object": "selected exposed region"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "adult subject, neckline edge and selected body region",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "decolletage_neckline_exposure",
+        "pfe_cleavage"
+      ],
+      "confusion_boundaries": [
+        "low neckline automatically meaning cleavage",
+        "chest highlight replacing an opening",
+        "cropped neckline claimed as verified"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-011",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "garment_detail",
+      "en": "A narrow shoulder strap runs continuously from the selected garment front over the shoulder to its declared rear attachment.",
+      "concept_units": [
+        "narrow strap width",
+        "shoulder crossing",
+        "front and rear garment attachment"
+      ],
+      "relations": [
+        {
+          "id": "vel_011_r1",
+          "type": "connects",
+          "subject": "strap",
+          "object": "same garment front and rear"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "selected dress strap",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "bag strap instead of garment strap",
+        "floating thin line",
+        "thinness as automatic undressing"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-012",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_012",
+      "primary_slot": "garment_detail",
+      "en": "One attached shoulder strap lies below its own shoulder crest; its front and rear garment connections remain traceable while the opposite side keeps its independently declared state.",
+      "concept_units": [
+        "selected side ownership",
+        "strap below shoulder crest",
+        "garment attachment continuity",
+        "opposite side state"
+      ],
+      "relations": [
+        {
+          "id": "vel_012_r1",
+          "type": "lies below",
+          "subject": "selected strap",
+          "object": "same-side shoulder crest"
+        },
+        {
+          "id": "vel_012_r2",
+          "type": "remain attached to",
+          "subject": "strap ends",
+          "object": "same garment"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "one garment-owned strap and its shoulder",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "pfe_one_shoulder",
+        "slot:garment_detail:y2kr_bra_straps"
+      ],
+      "confusion_boundaries": [
+        "designed one-shoulder garment",
+        "bag strap",
+        "both straps falling",
+        "additional unrequested exposure"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-014",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_014",
+      "primary_slot": "garment_detail",
+      "en": "Moisture belongs to one bounded cloth region; sheen and selected partial transmission are represented independently while the same fabric's edges remain continuous.",
+      "concept_units": [
+        "bounded wet region",
+        "cloth edge continuity",
+        "separate reflection evidence",
+        "separate transmission evidence if selected"
+      ],
+      "relations": [
+        {
+          "id": "vel_014_r1",
+          "type": "belongs to",
+          "subject": "moisture",
+          "object": "cloth region"
+        },
+        {
+          "id": "vel_014_r2",
+          "type": "is visible through",
+          "subject": "transmitted underlying contour",
+          "object": "selected cloth region"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance",
+        "material"
+      ],
+      "property_effect_review": {
+        "owner_scope": "declared cloth region",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "wet automatically becoming see-through",
+        "surface glare as transmission",
+        "dry sheer cloth as proof of wetness",
+        "unrequested change to exposed anatomy"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-015",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_015",
+      "primary_slot": "garment_detail",
+      "en": "The selected garment adheres locally to its declared body region; nearby cloth tension and folds connect that contact to traceable garment edges.",
+      "concept_units": [
+        "local cloth-body contact",
+        "connected tension folds",
+        "garment edge continuity"
+      ],
+      "relations": [
+        {
+          "id": "vel_015_r1",
+          "type": "contacts",
+          "subject": "garment patch",
+          "object": "declared body region"
+        },
+        {
+          "id": "vel_015_r2",
+          "type": "continue from",
+          "subject": "folds",
+          "object": "same contact boundary"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance",
+        "pose"
+      ],
+      "property_effect_review": {
+        "owner_scope": "selected garment and same subject region",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "slot:garment_detail:static_cling_fabric"
+      ],
+      "confusion_boundaries": [
+        "body deformation",
+        "static-cling synonym without moisture context",
+        "uniform vacuum wrapping",
+        "transparency inferred from adherence"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-016",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "hair_style",
+      "en": "Damp hair forms traceable strand bundles with local adherence to the declared skin region; roots and the contact path stay visible.",
+      "concept_units": [
+        "root-to-strand continuity",
+        "wet bundle state",
+        "declared skin contact"
+      ],
+      "relations": [
+        {
+          "id": "vel_016_r1",
+          "type": "adhere to",
+          "subject": "wet strands",
+          "object": "same subject cheek or neck"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance",
+        "pose"
+      ],
+      "property_effect_review": {
+        "owner_scope": "same subject hair and face or neck",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "wet_damp_clumped_hair_state",
+        "slot:hair_style:hr_wet_hair_skin_contact"
+      ],
+      "confusion_boundaries": [
+        "dry slick hairstyle",
+        "oily shine only",
+        "strands crossing into another owner"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-017",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "skin_condition",
+      "en": "Discrete droplets or bounded moisture on a selected skin patch carry light-consistent highlights without transferring that wetness to neighboring fabric or the whole body.",
+      "concept_units": [
+        "skin patch owner",
+        "droplet boundary or bounded moisture",
+        "coherent local highlight"
+      ],
+      "relations": [
+        {
+          "id": "vel_017_r1",
+          "type": "lies on",
+          "subject": "droplet highlight",
+          "object": "selected skin patch"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "selected visible skin patch",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "plastic skin",
+        "glitter or makeup as water",
+        "whole-body wetness inferred from one spot"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-018",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_018",
+      "primary_slot": "reflection_logic",
+      "en": "Condensation and discrete droplets occupy the mirror plane; visible reflection remains continuous in the unoccluded region while moisture does not migrate to the lens or the reflected person.",
+      "concept_units": [
+        "mirror plane",
+        "bounded condensation",
+        "discrete surface droplets",
+        "unoccluded reflection continuity"
+      ],
+      "relations": [
+        {
+          "id": "vel_018_r1",
+          "type": "occupies",
+          "subject": "condensation",
+          "object": "mirror plane"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "material"
+      ],
+      "property_effect_review": {
+        "owner_scope": "mirror or glass surface and visible room",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "rb_glass_reflection_transmission"
+      ],
+      "confusion_boundaries": [
+        "lens fog",
+        "opaque white paint",
+        "wet hair as proof of a completed shower"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-019",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "wearable_accessory",
+      "en": "The glove continuously covers the selected hand and forearm; its upper edge sits above the same arm's elbow with the declared gloss.",
+      "concept_units": [
+        "hand-to-forearm glove continuity",
+        "same elbow reference",
+        "upper cuff edge",
+        "local gloss"
+      ],
+      "relations": [
+        {
+          "id": "vel_019_r1",
+          "type": "lies above",
+          "subject": "glove cuff",
+          "object": "same arm elbow"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "selected glove on one arm",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "long sleeve mistaken for a glove",
+        "floating cuff",
+        "black glove as aggression or fetish intent"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-020",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_020",
+      "primary_slot": "wearable_accessory",
+      "en": "A close neck band retains a continuous fastening path; a selected front ring attaches to that band and remains distinct from any separately chosen protective neck piece.",
+      "concept_units": [
+        "neck-band continuity",
+        "front ornament attachment",
+        "ring contour",
+        "separate armor ownership"
+      ],
+      "relations": [
+        {
+          "id": "vel_020_r1",
+          "type": "attaches to",
+          "subject": "front ring",
+          "object": "neck band"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "neck band, front ornament and neck armor as separately selected objects",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "slot:wearable_accessory:y2kr_tattoo_choker",
+        "slot:wearable_accessory:royal_crest_choker"
+      ],
+      "confusion_boundaries": [
+        "bag ring",
+        "detached floating ring",
+        "neck armor forced into jewelry",
+        "ring interpreted as restraint"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-021",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_021",
+      "primary_slot": "wearable_accessory",
+      "en": "A narrow strap connects at declared garment points; the decorative chain hangs between or from its own attachment points with a coherent downward curve.",
+      "concept_units": [
+        "declared attachment points",
+        "continuous strap",
+        "continuous chain links",
+        "downward drape"
+      ],
+      "relations": [
+        {
+          "id": "vel_021_r1",
+          "type": "hangs from",
+          "subject": "chain",
+          "object": "declared garment attachment"
+        },
+        {
+          "id": "vel_021_r2",
+          "type": "joins",
+          "subject": "buckle",
+          "object": "selected strap segments"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "declared garment attachments and hanging chain",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "slot:wearable_accessory:y2kr_chain_strap",
+        "slot:wearable_accessory:unif_lapel_chain_separate_inner_neck"
+      ],
+      "confusion_boundaries": [
+        "floating chain",
+        "chain connecting unrelated bodies",
+        "taut restraint replacing loose decoration",
+        "accessory becoming a skin cut"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-023",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "wearable_accessory",
+      "en": "The selected leather-like tie knot sits below its collar reference with a traceable loop and a gravity-following hanging blade.",
+      "concept_units": [
+        "collar reference",
+        "lowered knot",
+        "continuous loop",
+        "hanging tie blade"
+      ],
+      "relations": [
+        {
+          "id": "vel_023_r1",
+          "type": "lies below",
+          "subject": "tie knot",
+          "object": "same collar"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "same subject tie and shirt collar",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "scarf or strap substitute",
+        "necktie as choking device",
+        "exposure expansion"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-024",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_024",
+      "primary_slot": "body_pose",
+      "en": "The reclining subject has readable torso and limb support; the bedding depresses at the same contact region and adjacent folds respond locally to that load.",
+      "concept_units": [
+        "declared reclining support",
+        "same body-bedding contact",
+        "localized depression",
+        "connected bedding folds"
+      ],
+      "relations": [
+        {
+          "id": "vel_024_r1",
+          "type": "depresses",
+          "subject": "body contact region",
+          "object": "same bedding patch"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "pose"
+      ],
+      "property_effect_review": {
+        "owner_scope": "one body and its supporting bedding",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "pv_profile_supine",
+        "pv_profile_side_lying"
+      ],
+      "confusion_boundaries": [
+        "bed dent away from the body",
+        "body levitation",
+        "global wrinkling as contact",
+        "bedroom as sexual activity"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-025",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "gaze_target",
+      "en": "The subject's visible gaze is directed toward their reflected face; the mirror plane and reflection align with the body's actual position beside the declared sink.",
+      "concept_units": [
+        "subject gaze target",
+        "mirror plane",
+        "same subject reflection",
+        "sink/body support if selected"
+      ],
+      "relations": [
+        {
+          "id": "vel_025_r1",
+          "type": "look toward",
+          "subject": "subject eyes",
+          "object": "own reflected face"
+        },
+        {
+          "id": "vel_025_r2",
+          "type": "corresponds to",
+          "subject": "reflection",
+          "object": "same subject"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "expression",
+        "pose",
+        "setting"
+      ],
+      "property_effect_review": {
+        "owner_scope": "subject, mirror plane and sink if present",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "rb_glass_reflection_transmission"
+      ],
+      "confusion_boundaries": [
+        "camera gaze substituting for mirror gaze",
+        "second person in the mirror",
+        "adding a sink to an unrelated portrait"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-026",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_026",
+      "primary_slot": "hand_pose",
+      "en": "The raised hand reaches the subject's own damp hair; fingertips and strand bundles share a visible contact region while arm continuity and torso balance remain intact.",
+      "concept_units": [
+        "same arm and hand owner",
+        "fingertip/hair contact",
+        "hair bundle continuity",
+        "body support"
+      ],
+      "relations": [
+        {
+          "id": "vel_026_r1",
+          "type": "contact",
+          "subject": "own fingertips",
+          "object": "own wet hair"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "pose",
+        "action"
+      ],
+      "property_effect_review": {
+        "owner_scope": "same subject hand and hair",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "slot:hair_style:hr_wet_hair_skin_contact"
+      ],
+      "confusion_boundaries": [
+        "hand near hair without required contact",
+        "another person's hand",
+        "detached strands"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-027",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "body_pose",
+      "en": "The selected kneeling configuration keeps knees, feet and pelvis support readable; the declared palms face upward and hold a selected cupped shape without an invented coercing actor.",
+      "concept_units": [
+        "selected knee and foot support",
+        "pelvis continuity",
+        "palms-up orientation",
+        "declared target if present"
+      ],
+      "relations": [
+        {
+          "id": "vel_027_r1",
+          "type": "contact",
+          "subject": "knees",
+          "object": "declared support"
+        },
+        {
+          "id": "vel_027_r2",
+          "type": "face",
+          "subject": "palms",
+          "object": "upward direction"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "pose",
+        "relationship"
+      ],
+      "property_effect_review": {
+        "owner_scope": "declared kneeling actor and hand targets",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "pv_profile_tall_kneel",
+        "pv_profile_heel_sit",
+        "pv_profile_half_kneel"
+      ],
+      "confusion_boundaries": [
+        "kneeling as automatic submission",
+        "new controller or deity added from the pose",
+        "prayer label as proof of personal belief"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-028",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "expression",
+      "en": "Visible eyelid aperture and pupil direction are recorded on the same face; a calm or dreamy reading is contextual authoring intent rather than proof of a unique internal state.",
+      "concept_units": [
+        "visible eyes",
+        "declared pupil target",
+        "eyelid aperture",
+        "same face ownership"
+      ],
+      "relations": [
+        {
+          "id": "vel_028_r1",
+          "type": "aim toward",
+          "subject": "eyes",
+          "object": "declared target"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "expression"
+      ],
+      "property_effect_review": {
+        "owner_scope": "one subject face and declared gaze target",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "eyelid relaxation as desire",
+        "camera gaze as consent",
+        "pensive as psychiatric diagnosis"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-029",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "expression",
+      "en": "The upper and lower lips remain near each other with a small visible central gap; jaw opening and lip shape retain the requested expression.",
+      "concept_units": [
+        "upper lip boundary",
+        "lower lip boundary",
+        "small central gap",
+        "independently constrained jaw"
+      ],
+      "relations": [
+        {
+          "id": "vel_029_r1",
+          "type": "bound",
+          "subject": "upper and lower lips",
+          "object": "small central opening"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "expression"
+      ],
+      "property_effect_review": {
+        "owner_scope": "same face upper and lower lip",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "ae_profile_lip_press",
+        "ae_profile_lip_tighten"
+      ],
+      "confusion_boundaries": [
+        "wide jaw drop",
+        "pout replacing lip parting",
+        "unscaled pixel gap certified as 1–2 mm"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-030",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_030",
+      "primary_slot": "viewer_position",
+      "en": "A first-person camera occupies its declared height beside the support surface and looks upward toward the subject; relative height does not itself introduce body contact or control.",
+      "concept_units": [
+        "camera height reference",
+        "camera view direction",
+        "subject position",
+        "declared POV body region when necessary"
+      ],
+      "relations": [
+        {
+          "id": "vel_030_r1",
+          "type": "lies below",
+          "subject": "camera",
+          "object": "subject face"
+        },
+        {
+          "id": "vel_030_r2",
+          "type": "points toward",
+          "subject": "camera optical axis",
+          "object": "subject face"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "camera",
+        "composition"
+      ],
+      "property_effect_review": {
+        "owner_scope": "declared camera and subject; POV body only if given",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "low angle as physical restraint",
+        "POV without a declared body interpreted as chest contact",
+        "close framing as consent"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-031",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "focus",
+      "en": "The selected face remains in focus while each independently required contact or garment boundary is readable at its own depth; shallow depth is a selected treatment rather than permission to erase required evidence.",
+      "concept_units": [
+        "face focus",
+        "required relationship visibility",
+        "chosen depth hierarchy"
+      ],
+      "relations": [
+        {
+          "id": "vel_031_r1",
+          "type": "includes",
+          "subject": "focus region",
+          "object": "required visible evidence when co-realized"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "camera",
+        "composition"
+      ],
+      "property_effect_review": {
+        "owner_scope": "frame, focus planes and required evidence owners",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "pfe_face_garment"
+      ],
+      "confusion_boundaries": [
+        "sharp face but hidden required contact",
+        "numerical aperture as proof of focus",
+        "changing requester blur to satisfy a test"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-032",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "prop",
+      "en": "Each declared weapon remains one continuous object with its own carrier or mounting; tactical footwear and armor retain separate object identities without proving an attack.",
+      "concept_units": [
+        "declared object count",
+        "continuous object body",
+        "carrier or mount ownership",
+        "separate footwear or armor"
+      ],
+      "relations": [
+        {
+          "id": "vel_032_r1",
+          "type": "belongs to",
+          "subject": "weapon",
+          "object": "declared carrier"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "setting",
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "declared carrier and separately counted equipment",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "slot:prop:real_holstered_service_pistol"
+      ],
+      "confusion_boundaries": [
+        "one weapon duplicated across hands",
+        "equipment silhouette as attack",
+        "oversized firearm as actual damage"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-033",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "prop",
+      "en": "One sidearm is seated in its visible holster attached to the declared carrier; it is not simultaneously held in a hand or directed at a target.",
+      "concept_units": [
+        "one holster opening",
+        "weapon seated inside",
+        "carrier attachment",
+        "independently declared hand state"
+      ],
+      "relations": [
+        {
+          "id": "vel_033_r1",
+          "type": "is seated in",
+          "subject": "sidearm",
+          "object": "same carrier holster"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "setting",
+        "action",
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "one sidearm and its worn holster",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "slot:prop:real_holstered_service_pistol",
+        "slot:action:carrying_holstered_real_sidearm"
+      ],
+      "confusion_boundaries": [
+        "held weapon substituted for holstered state",
+        "holster without the requested object",
+        "new aiming target"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-034",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_034",
+      "primary_slot": "action",
+      "en": "The selected held object has a readable hand contact and continuous geometry; a partial draw retains the same object partly inside its declared sheath while dual holding keeps two distinct hand-object pairings.",
+      "concept_units": [
+        "hand-object ownership",
+        "required contact",
+        "selected sheath overlap",
+        "distinct bilateral pairing if selected"
+      ],
+      "relations": [
+        {
+          "id": "vel_034_r1",
+          "type": "contacts",
+          "subject": "declared hand",
+          "object": "same selected object"
+        },
+        {
+          "id": "vel_034_r2",
+          "type": "overlaps",
+          "subject": "partly drawn object",
+          "object": "own sheath opening"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "action",
+        "pose",
+        "setting"
+      ],
+      "property_effect_review": {
+        "owner_scope": "declared hand, weapon and sheath if selected",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "drawing a picture as weapon drawing",
+        "two hands holding one object instead of two objects",
+        "fully exposed object replacing partial draw",
+        "changing prop state into attack"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-035",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_035",
+      "primary_slot": "action",
+      "en": "The declared prop's orientation is directed toward its specified target or off-frame direction; actor support and the prop's held contact remain readable without introducing a discharge or injury.",
+      "concept_units": [
+        "held-object continuity",
+        "declared direction",
+        "target ownership if present",
+        "actor support"
+      ],
+      "relations": [
+        {
+          "id": "vel_035_r1",
+          "type": "points toward",
+          "subject": "prop orientation",
+          "object": "declared target or direction"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "action",
+        "relationship",
+        "pose"
+      ],
+      "property_effect_review": {
+        "owner_scope": "declared actor, carried prop and target if specified",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "aiming as firing",
+        "new victim invented from preparation",
+        "combat stance as contact damage"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-037",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_037",
+      "primary_slot": "prop",
+      "en": "A fictional back-mounted unit connects to its declared carrier through a readable mount; the unit's silhouette and the human body's support remain separately traceable.",
+      "concept_units": [
+        "unit silhouette",
+        "visible mount",
+        "carrier continuity",
+        "separate body contour"
+      ],
+      "relations": [
+        {
+          "id": "vel_037_r1",
+          "type": "connects",
+          "subject": "equipment mount",
+          "object": "declared back carrier"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "setting",
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "fictional mounted equipment and carrier",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "floating machine",
+        "extra anatomical limb",
+        "real weapon engineering inferred from fictional shape"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-038",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_038",
+      "primary_slot": "action",
+      "en": "A fictional effect has a visible declared origin, a directed path and a localized encounter with the selected barrier; defensive actor and casting actor retain distinct roles if both are present.",
+      "concept_units": [
+        "declared origin",
+        "effect path",
+        "barrier surface",
+        "localized encounter",
+        "actor role ownership"
+      ],
+      "relations": [
+        {
+          "id": "vel_038_r1",
+          "type": "encounters",
+          "subject": "effect path",
+          "object": "declared barrier region"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "action",
+        "relationship",
+        "concept"
+      ],
+      "property_effect_review": {
+        "owner_scope": "declared fictional actors, effect origin and barrier",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "floating glow with no origin or target",
+        "attacker and defender swapped",
+        "barrier impact becomes bodily injury",
+        "outstretched arm as proof of casting"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-039",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_039",
+      "primary_slot": "ambient_particle",
+      "en": "Light sparks and material fragments occupy a bounded encounter region; each selected fragment remains distinct from the figure's body and from global image-plane grain.",
+      "concept_units": [
+        "bounded collision region",
+        "local luminous particles",
+        "material fragment identities",
+        "figure continuity"
+      ],
+      "relations": [
+        {
+          "id": "vel_039_r1",
+          "type": "originate near",
+          "subject": "sparks or fragments",
+          "object": "declared encounter zone"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "atmosphere",
+        "action",
+        "event"
+      ],
+      "property_effect_review": {
+        "owner_scope": "effect contact zone and separate material fragments",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "uniform sparkle overlay",
+        "blood instead of sparks",
+        "body parts instead of stone debris",
+        "dust as film grain"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-040",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "garment_detail",
+      "en": "The actor's cloak remains attached to its declared collar or shoulder points; trailing folds extend behind that actor with a coherent present pose.",
+      "concept_units": [
+        "cloak attachment",
+        "same actor ownership",
+        "trailing folds",
+        "present motion direction"
+      ],
+      "relations": [
+        {
+          "id": "vel_040_r1",
+          "type": "trail behind",
+          "subject": "cloak folds",
+          "object": "same actor"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance",
+        "action"
+      ],
+      "property_effect_review": {
+        "owner_scope": "same actor and attached cloak",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "cloak detaches",
+        "wind direction treated as universal parallelism",
+        "robe motion as injury or attack"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-041",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_041",
+      "primary_slot": "relational_action",
+      "en": "Where nonsexual physical restraint is explicitly requested, the acting limb has a readable contact with the declared target region, the target has a supporting surface, and the authored restriction is kept distinct from mere spatial overlap.",
+      "concept_units": [
+        "two distinct actor owners",
+        "specified target region",
+        "readable contact boundary",
+        "target supporting surface"
+      ],
+      "relations": [
+        {
+          "id": "vel_041_r1",
+          "type": "contacts",
+          "subject": "acting limb",
+          "object": "declared target region"
+        },
+        {
+          "id": "vel_041_r2",
+          "type": "rests on",
+          "subject": "target body",
+          "object": "declared support"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "relationship",
+        "pose"
+      ],
+      "property_effect_review": {
+        "owner_scope": "nonsexual declared actors and their contact regions",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "interpersonal_physical_assault_event"
+      ],
+      "confusion_boundaries": [
+        "low camera angle as restraint",
+        "occlusion mistaken for contact",
+        "comforting embrace as force",
+        "sexual framing introduced into source school context"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-043",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_043",
+      "primary_slot": "relational_action",
+      "en": "The declared speaker and listener occupy distinct positions around the selected threshold; the specified hand-to-face interval remains visibly open and their gaze targets remain owned.",
+      "concept_units": [
+        "two actor positions",
+        "declared threshold if present",
+        "visible hand-face gap",
+        "separate gaze targets"
+      ],
+      "relations": [
+        {
+          "id": "vel_043_r1",
+          "type": "remains separated from",
+          "subject": "speaker hand",
+          "object": "listener face"
+        },
+        {
+          "id": "vel_043_r2",
+          "type": "relate across",
+          "subject": "actor positions",
+          "object": "declared threshold"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "relationship",
+        "expression",
+        "pose"
+      ],
+      "property_effect_review": {
+        "owner_scope": "declared speaker, listener, hands/faces and threshold",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "slot:action:ctx_listen_and_leave_room"
+      ],
+      "confusion_boundaries": [
+        "rebuke as a strike",
+        "wounded disbelief as a skin wound",
+        "new sexual relation",
+        "adult actor substituted into historical age-15 source"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-045",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_045",
+      "primary_slot": "space_condition",
+      "en": "Damaged furniture or architecture retains identifiable broken boundaries and nearby owned debris; dust or smoke remains localized while the figure's separately declared skin, hair and clothing states stay intact.",
+      "concept_units": [
+        "named broken object",
+        "break boundary",
+        "same-object debris",
+        "localized air trace",
+        "independent figure state"
+      ],
+      "relations": [
+        {
+          "id": "vel_045_r1",
+          "type": "corresponds to",
+          "subject": "debris",
+          "object": "declared damaged object"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "setting",
+        "event",
+        "atmosphere"
+      ],
+      "property_effect_review": {
+        "owner_scope": "declared room/city surfaces and debris",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "ruin as proof of a recent fight",
+        "damaged room as wounded body",
+        "dark smoke as a specific cause",
+        "dangerous role as actual perpetration"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-046",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_046",
+      "primary_slot": "action",
+      "en": "The same actor holds the sword in its declared lowered orientation; an independently selected glove-removal state keeps glove edge, own hand contact and garment ownership continuous.",
+      "concept_units": [
+        "sword hand contact",
+        "lowered orientation",
+        "glove edge",
+        "same actor ownership"
+      ],
+      "relations": [
+        {
+          "id": "vel_046_r1",
+          "type": "is held by",
+          "subject": "sword",
+          "object": "declared hand"
+        },
+        {
+          "id": "vel_046_r2",
+          "type": "is grasped by",
+          "subject": "glove edge",
+          "object": "same actor hand when selected"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "action",
+        "pose",
+        "setting",
+        "appearance"
+      ],
+      "property_effect_review": {
+        "owner_scope": "same actor hand, sword and glove",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "lowered sword as proof of completed attack",
+        "extra blood on blade",
+        "unrequested undressing",
+        "glove replaced by a detached hand"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-047",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_047",
+      "primary_slot": "aftermath_trace",
+      "en": "A specifically requested fictional blood mark remains localized on its declared substrate or body region; a stained object does not introduce tissue disruption, an extra victim, or a perpetrator.",
+      "concept_units": [
+        "declared substrate",
+        "bounded mark distribution",
+        "body-region ownership if selected",
+        "preserved unrelated body continuity"
+      ],
+      "relations": [
+        {
+          "id": "vel_047_r1",
+          "type": "lies on",
+          "subject": "stain",
+          "object": "declared substrate"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "event",
+        "appearance",
+        "setting"
+      ],
+      "property_effect_review": {
+        "owner_scope": "declared fictional stain substrate or body region",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "bloodstain_observation_documentation",
+        "hvr_profile_gore_localized_tissue"
+      ],
+      "confusion_boundaries": [
+        "red light or paint as blood",
+        "minor smear becomes gore",
+        "blood-stained knife as perpetrator identity",
+        "unrequested additional victim"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-048",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_048",
+      "primary_slot": "skin_condition",
+      "en": "The specified skin region has bounded discoloration or a superficial mark while its larger anatomical continuity remains readable; grime and surface scratches are separately owned appearances.",
+      "concept_units": [
+        "named skin region",
+        "bounded discoloration or surface mark",
+        "anatomical continuity",
+        "independent dirt owner"
+      ],
+      "relations": [
+        {
+          "id": "vel_048_r1",
+          "type": "lies on",
+          "subject": "selected mark",
+          "object": "specified skin region"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance",
+        "event"
+      ],
+      "property_effect_review": {
+        "owner_scope": "specified fictional skin region and independent dirt",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "makeup as proven injury",
+        "smeared dirt as an open wound",
+        "automatic severe tissue loss",
+        "appearance as clinical diagnosis"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-050",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_050",
+      "primary_slot": "garment_detail",
+      "en": "Damage belongs to the selected garment edge or panel; separated fragments retain garment identity and the subject's body continuity and requester-prescribed visible regions remain unchanged.",
+      "concept_units": [
+        "garment damage owner",
+        "fragment textile identity",
+        "body continuity",
+        "prescribed coverage/exposure preserved"
+      ],
+      "relations": [
+        {
+          "id": "vel_050_r1",
+          "type": "derive from",
+          "subject": "detached cloth fragments",
+          "object": "declared garment panel"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "appearance",
+        "event"
+      ],
+      "property_effect_review": {
+        "owner_scope": "selected damaged garment and underlying subject",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "cloth fragments as flesh",
+        "new injury",
+        "automatic new body exposure",
+        "wear on a prop transferred to skin"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-051",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_051",
+      "primary_slot": "body_pose",
+      "en": "The selected actor transfers support through readable palm or knee contact and a coherent torso-limb chain; a rising configuration remains distinct from static kneeling or crawling.",
+      "concept_units": [
+        "specified support limbs",
+        "readable contact points",
+        "torso-limb continuity",
+        "selected action state"
+      ],
+      "relations": [
+        {
+          "id": "vel_051_r1",
+          "type": "supports",
+          "subject": "own palm or knee",
+          "object": "same actor on declared surface"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "pose",
+        "action"
+      ],
+      "property_effect_review": {
+        "owner_scope": "same actor limbs, torso and support surface",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "pv_profile_quadruped",
+        "pv_profile_half_kneel",
+        "pv_profile_seated_palm_brace"
+      ],
+      "confusion_boundaries": [
+        "floating hands",
+        "extra limbs",
+        "kneeling as proof of surrender",
+        "rising posture as sexual arousal"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-054",
+      "change_kind": "new_optional_relation_trial",
+      "proposed_new_id": "vel_relation_054",
+      "primary_slot": "contact_point",
+      "en": "The selected body region meets the declared glass plane at a readable boundary; reflection and transmission remain attached to that same plane and distinct from body geometry.",
+      "concept_units": [
+        "glass plane reference",
+        "specified contact boundary",
+        "same-plane reflection/transmission",
+        "body continuity"
+      ],
+      "relations": [
+        {
+          "id": "vel_054_r1",
+          "type": "contacts",
+          "subject": "declared body patch",
+          "object": "glass plane"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "pose",
+        "material"
+      ],
+      "property_effect_review": {
+        "owner_scope": "declared body region and glass plane",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "rb_glass_reflection_transmission"
+      ],
+      "confusion_boundaries": [
+        "overlap as contact",
+        "reflection as a second trapped person",
+        "lens distortion as body injury",
+        "cold palette as physical temperature"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-056",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "location",
+      "en": "Fog occupies scene depth among traceable branches; a separately selected fictional mouth reveals its own sharp teeth without turning the environment or smile into an attack event.",
+      "concept_units": [
+        "scene-depth fog",
+        "owned branch silhouette",
+        "selected mouth and teeth",
+        "separate figure identity"
+      ],
+      "relations": [
+        {
+          "id": "vel_056_r1",
+          "type": "occupies",
+          "subject": "fog",
+          "object": "declared scene depth"
+        },
+        {
+          "id": "vel_056_r2",
+          "type": "belong to",
+          "subject": "teeth",
+          "object": "selected fictional mouth"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "setting",
+        "expression"
+      ],
+      "property_effect_review": {
+        "owner_scope": "declared forest surfaces and fictional mouth",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [],
+      "confusion_boundaries": [
+        "horror label as mandatory blood",
+        "image-plane blur as fog",
+        "sharp teeth as actual assault",
+        "branch becoming a limb"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    },
+    {
+      "proposal_id": "VEL-057",
+      "change_kind": "extend_equivalent_meaning_or_keep",
+      "proposed_new_id": null,
+      "primary_slot": "medium",
+      "en": "Directional lights illuminate separately named surfaces; wet pavement reflects its environment, grain belongs to the image plane, and required body/object contact retains its own geometric evidence.",
+      "concept_units": [
+        "named light receivers",
+        "bounded pavement reflection",
+        "image-plane grain",
+        "independent interaction support"
+      ],
+      "relations": [
+        {
+          "id": "vel_057_r1",
+          "type": "illuminates",
+          "subject": "source light",
+          "object": "declared receiver"
+        },
+        {
+          "id": "vel_057_r2",
+          "type": "reflects",
+          "subject": "pavement",
+          "object": "declared scene"
+        },
+        {
+          "id": "vel_057_r3",
+          "type": "occupies",
+          "subject": "grain",
+          "object": "image plane"
+        }
+      ],
+      "proposed_affected_dimensions": [
+        "lighting",
+        "material",
+        "pose"
+      ],
+      "property_effect_review": {
+        "owner_scope": "declared image plane, surfaces, lights and interactions",
+        "requires_concrete_runtime_targets": true,
+        "target_or_property_changes_must_match_frozen_core": true,
+        "cross_owner_transfer_forbidden": true
+      },
+      "current_equivalent_candidates_or_profiles_to_review": [
+        "highlight_rolloff_tone_response",
+        "rb_glass_reflection_transmission"
+      ],
+      "confusion_boundaries": [
+        "cinematic as violence",
+        "caution tape as proven crime",
+        "grain as airborne dust",
+        "blue moonlight and warm candles as one local color"
+      ],
+      "runtime_exact_terms": [],
+      "promotion_blockers": [
+        "research-only; not validated as runtime schema",
+        "actual affected_properties target binding pending",
+        "equivalence/context/eligibility tests pending",
+        "indexes and current candidate-pack exposure pending",
+        "native pixel review and user judgment pending"
+      ],
+      "runtime_ready": false
+    }
+  ]
+}

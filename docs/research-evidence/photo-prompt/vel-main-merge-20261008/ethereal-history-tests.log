@@ -1,0 +1,34 @@
+test_historical_test_recovery_requires_the_declared_live_adapter (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_historical_test_recovery_requires_the_declared_live_adapter) ... FAIL
+test_live_drift_cannot_use_valid_original_recovery (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_live_drift_cannot_use_valid_original_recovery) ... FAIL
+test_original_bytes_and_mode_cannot_be_replaced_by_live_successor (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_original_bytes_and_mode_cannot_be_replaced_by_live_successor) ... ok
+test_previous_scene_inputs_hard_contract_and_all_other_candidates_are_preserved (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_previous_scene_inputs_hard_contract_and_all_other_candidates_are_preserved) ... ok
+test_rehashed_baseline_cannot_rebind_parent_lineage (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_rehashed_baseline_cannot_rebind_parent_lineage) ... ok
+test_rehashed_pack_with_changed_negative_or_core_cannot_qualify (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_rehashed_pack_with_changed_negative_or_core_cannot_qualify) ... ok
+test_v34_transition_api_remains_the_original_scope_proof (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_v34_transition_api_remains_the_original_scope_proof) ... ok
+
+======================================================================
+FAIL: test_historical_test_recovery_requires_the_declared_live_adapter (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_historical_test_recovery_requires_the_declared_live_adapter)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/vel-appearance-integration/image-prompt/tests/test_photo_ethereal_v35_boundary_history.py", line 95, in test_historical_test_recovery_requires_the_declared_live_adapter
+    original=history.previous_path(root,name)
+  File "/Users/chasoik/.codex/worktrees/vel-appearance-integration/image-prompt/tests/photo_ethereal_history_v35.py", line 64, in previous_path
+    if digest(current)!=TEST_RECOVERY[name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 historical test adapter drift: '+name)
+                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 historical test adapter drift: tests/test_photo_motion_artifact_owner_data_cleanup.py
+
+======================================================================
+FAIL: test_live_drift_cannot_use_valid_original_recovery (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_live_drift_cannot_use_valid_original_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/vel-appearance-integration/image-prompt/tests/test_photo_ethereal_v35_boundary_history.py", line 63, in test_live_drift_cannot_use_valid_original_recovery
+    recovered=history.previous_path(root,name)
+  File "/Users/chasoik/.codex/worktrees/vel-appearance-integration/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_source_manifest.json
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.400s
+
+FAILED (failures=2)

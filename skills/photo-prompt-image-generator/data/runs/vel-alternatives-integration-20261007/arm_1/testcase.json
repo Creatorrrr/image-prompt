@@ -1,0 +1,99 @@
+{
+  "schema_version": "independent-photo-pixel-testcase/v1",
+  "arm": "arm_1",
+  "phase": "frozen_before_project_local_retrieval",
+  "request_envelope_file_sha256": "edb86317dc6fab1310d5df386548e41f8c5fc77ba7d2e86de1dd6c9393809579",
+  "baseline_prompt_sha256": "49828dd49785203d7069db8f7cb7cb454988a031e709813d885fd2a13f4621f8",
+  "concept_plan_file_sha256": "038605090fe0a2c3eea938c8d0889ccaf395a99482605c1d025ed32727144951",
+  "keyword_expectations": [
+    {
+      "id": "K022",
+      "owner": "old hatch rim and separate structural ribs",
+      "baseline_evidence": "The chamber's old silver hatch rim shows rubbed edges, gray oxidation patches and fine scratches; thick black-iron structural ribs behind it are darker, rougher and pitted",
+      "pixel_pass": "A light silvery hatch rim visibly carries rubbed or scratched wear; separate dark iron-colored ribs have a rough surface. A single uniform shiny metal object is insufficient.",
+      "limits": "Pixels support metal appearance and wear, not chemical silver or iron composition.",
+      "source_phrase": "오래된 은빛과 흑철의 질감",
+      "source_meaning_ko": "가죽과 다른 금속 표면",
+      "source_id": "S03",
+      "ownership": "agent_authored_test_expectation",
+      "required_by_requester": false
+    },
+    {
+      "id": "K038",
+      "owner": "porthole glass above latch",
+      "baseline_evidence": "Several separate clear water droplets cling to the porthole glass above the latch, with rounded bright rims and tiny refracted highlights",
+      "pixel_pass": "Several discrete bead-shaped transparent droplets with rims and local highlights are visible on the intended pane. Uniform glare, grain or an undifferentiated wet smear fails this criterion.",
+      "limits": "A still photograph does not prove real water chemistry.",
+      "source_phrase": "water droplets",
+      "source_meaning_ko": "물방울",
+      "source_id": "S05",
+      "ownership": "agent_authored_test_expectation",
+      "required_by_requester": false
+    },
+    {
+      "id": "K094",
+      "owner": "the engineer's protective suit",
+      "baseline_evidence": "slim contoured shoulder plates and narrow forearm shells over flexible fitted fabric, articulated dark joints",
+      "pixel_pass": "The subject's suit has a streamlined fitted outline and visibly separate slim hard shoulder/forearm pieces with flexible dark joints. A generic cloth jacket or bulky knight armor fails.",
+      "limits": "Science-fiction styling is an authored aesthetic judgment.",
+      "source_phrase": "sleek sci-fi armored silhouette",
+      "source_meaning_ko": "매끈한 공상과학 갑옷 실루엣",
+      "source_id": "S16",
+      "ownership": "agent_authored_test_expectation",
+      "required_by_requester": false
+    },
+    {
+      "id": "K107",
+      "owner": "subject right arm and release lever",
+      "baseline_evidence": "Her right arm extends toward the chest-height release lever, with a softly bent elbow and a straight wrist",
+      "pixel_pass": "A connected shoulder-to-elbow-to-wrist-to-hand chain visibly reaches the lever, and the gloved hand physically grips it. A nearby hovering hand, concealed hand or unrelated arm fails.",
+      "limits": "A single frame cannot verify movement speed.",
+      "source_phrase": "outstretched arm",
+      "source_meaning_ko": "앞으로 뻗은 팔",
+      "source_id": "S10",
+      "ownership": "agent_authored_test_expectation",
+      "required_by_requester": false
+    },
+    {
+      "id": "K173",
+      "owner": "room glass and brushed steel panels",
+      "baseline_evidence": "The glass, old metal and long brushed-steel panels catch cold cyan ceiling light in distinct bounded reflections",
+      "pixel_pass": "Cool cyan or blue light and bounded reflections visibly belong to glass and metal room surfaces. An overall blue tint without reflective surface cues is partial rather than full success.",
+      "limits": "Cold color appearance does not prove ambient temperature.",
+      "source_phrase": "cold and reflective",
+      "source_meaning_ko": "차갑고 반사되는 공간·빛",
+      "source_id": "S13",
+      "ownership": "agent_authored_test_expectation",
+      "required_by_requester": false
+    },
+    {
+      "id": "K215",
+      "owner": "machine latch assembly and adjacent damp edge",
+      "baseline_evidence": "The small crimson lamp is built into the latch assembly and casts a confined red reflection along the nearest damp metal edge",
+      "pixel_pass": "An identifiable small crimson light source on the machine casts local illumination or reflection on the nearby apparatus. Red fabric, red staining or a detached red light fails this ownership criterion.",
+      "limits": "A still frame cannot prove the lamp changed from flickering to steady.",
+      "source_phrase": "subtle crimson machine glow",
+      "source_meaning_ko": "기계에서 나는 붉은 빛; 피가 아님",
+      "source_id": "S16",
+      "ownership": "agent_authored_test_expectation",
+      "required_by_requester": false
+    }
+  ],
+  "scene_expectations": [
+    {
+      "id": "causal_readability",
+      "owner": "hand, lever, hatch slit and adjacent lamp",
+      "pixel_pass": "The visible hand acts on the same apparatus whose narrow opening and local red lamp are seen. Do not infer a previous power outage or successful restart from pixels alone.",
+      "ownership": "agent_authored_test_expectation",
+      "required_by_requester": false
+    },
+    {
+      "id": "reference_visible_cues",
+      "owner": "visible subject face and hair",
+      "pixel_pass": "The subject retains the short dark bob, separated fringe, dark large eyes and recognizable face proportions of the supplied portrait at the chosen view. Assess visual resemblance only.",
+      "ownership": "request_derived_reference_use",
+      "required_by_requester": true
+    }
+  ],
+  "strict_status_rule": "Each criterion is pass, partial, fail or not_assessable from inspected native pixels. Prompt or runtime audit pass is never counted as pixel pass. Overall all-keyword success requires all six keyword criteria to pass. No user acceptance is inferred."
+}

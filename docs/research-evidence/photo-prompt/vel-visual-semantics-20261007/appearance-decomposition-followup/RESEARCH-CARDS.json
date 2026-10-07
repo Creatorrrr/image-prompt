@@ -1,0 +1,2474 @@
+{
+  "schema_version": "vel-appearance-cards/v1",
+  "status": "RESEARCH_ONLY",
+  "not_current_runtime_schema": true,
+  "cards": [
+    {
+      "id": "VD-001",
+      "title_ko": "닫힌 허리 베스트와 중앙의 안쪽 탑·넥타이",
+      "keyword_ids": [
+        "K008",
+        "K009",
+        "K010",
+        "K011",
+        "K012",
+        "K015",
+        "K052",
+        "K053"
+      ],
+      "prior_card_ids": [
+        "VEL-002",
+        "VEL-004",
+        "VEL-005",
+        "VEL-021",
+        "VEL-023"
+      ],
+      "proposal_kind": "new_relation_trial",
+      "priority": "P0",
+      "target_slots": [
+        "wardrobe_style",
+        "garment_detail",
+        "wearable_accessory"
+      ],
+      "owner_scope": "같은 착용자의 재킷·탑·베스트·칼라·넥타이, 각각 독립 층",
+      "required_components_en": [
+        "The vest waist panel has a continuous closed front over the inner top.",
+        "The side straps and panels ascend along the sides while the central upper-chest area retains the inner top and tie.",
+        "The jacket opening reveals the selected inner layers without merging their edges."
+      ],
+      "directed_relations": [
+        {
+          "subject": "vest waist panel",
+          "type": "lies_over",
+          "object": "inner top waist region"
+        },
+        {
+          "subject": "side straps",
+          "type": "attach_to",
+          "object": "vest side panels"
+        },
+        {
+          "subject": "jacket opening",
+          "type": "reveals",
+          "object": "inner top and vest"
+        },
+        {
+          "subject": "tie",
+          "type": "lies_over",
+          "object": "inner top central front"
+        }
+      ],
+      "source_case_keep_ko": "S02 문맥: 검정 베스트·흰색 U넥 골지 탑·검정 가죽 넥타이·파란 칼라·핀스트라이프 재킷을 사례 조건으로 보존한다. 닫힌 허리 앞판과 열린 상흉부 중앙은 서로 다른 영역이다.",
+      "optional_realization_ko": "일반형의 색·문양·버클 수·숨은 패드 치수는 요청에서 따로 정한다. busk, lacing, boning을 자동 추가하지 않는다.",
+      "confusion_boundaries_ko": [
+        "닫힌 앞판을 중앙이 뚫린 하네스로 대체",
+        "탑을 제거하거나 베스트와 한 벌로 합침",
+        "닫힌 허리 조건을 가슴 중앙까지 완전 차폐로 확대"
+      ],
+      "existing_ids_to_review": [
+        "slot:wardrobe_style:clt_ct023_v2",
+        "slot:wardrobe_style:y2kr_corset_top",
+        "slot:garment_detail:ccx_cc26_01"
+      ],
+      "research_source_ids": [
+        "A04",
+        "A06",
+        "R08"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "흰 탑 위 베스트 허리 앞판은 닫고 가슴 중앙의 탑과 넥타이는 남겨줘.",
+          "expected": "closed waist and visible upper center coexist"
+        },
+        {
+          "input_ko": "코르셋처럼 보이는 절개선만 있는 드레스.",
+          "expected": "no layered vest, busk or lacing obligation"
+        },
+        {
+          "mutation": "remove inner top while preserving black vest",
+          "expected": "FAIL_SOURCE_CASE_KEEP"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-002",
+      "title_ko": "골지 높낮이·평면 줄무늬·봉제선의 별도 소유",
+      "keyword_ids": [
+        "K008",
+        "K009",
+        "K015",
+        "K181"
+      ],
+      "prior_card_ids": [
+        "VEL-002",
+        "VEL-004",
+        "VEL-057"
+      ],
+      "proposal_kind": "extend_review",
+      "priority": "P0",
+      "target_slots": [
+        "wardrobe_style",
+        "texture",
+        "garment_detail"
+      ],
+      "owner_scope": "골지 탑 표면, 재킷 인쇄/직조 무늬, 패널 봉제선",
+      "required_components_en": [
+        "Raised knit ribs and recessed channels repeat on the declared top surface.",
+        "The selected stripe pattern follows the jacket panels without becoming raised knit ribs.",
+        "Seams remain garment construction boundaries rather than skin marks."
+      ],
+      "directed_relations": [
+        {
+          "subject": "raised ribs",
+          "type": "belong_to",
+          "object": "top fabric"
+        },
+        {
+          "subject": "pinstripes",
+          "type": "follow_surface_of",
+          "object": "jacket panels"
+        },
+        {
+          "subject": "seam channels",
+          "type": "divide",
+          "object": "garment panels"
+        }
+      ],
+      "source_case_keep_ko": "K009의 U자 목선·흰 바탕·세로 골, S02 재킷의 핀스트라이프는 해당 사례 안에서 보존한다.",
+      "optional_realization_ko": "골 간격의 변화는 편직 종류·당김·관점에 따른 변형 후보다. 모든 골지를 일정 치수나 동일 신장률로 고정하지 않는다.",
+      "confusion_boundaries_ko": [
+        "평면 스트라이프를 골지 돌출로 통과",
+        "faille의 가로 직조 리브를 세로 니트로 자동 대체",
+        "주름·모공·피부 긁힘을 옷의 골로 통과"
+      ],
+      "existing_ids_to_review": [
+        "y2kr_rib_tank",
+        "sw_rib",
+        "vg_faille_crossgrain_ribs_profile",
+        "slot:wardrobe_style:y2kr_rib_tank"
+      ],
+      "research_source_ids": [
+        "A01",
+        "A02",
+        "A03",
+        "A06"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "U넥 탑 표면의 세로 돌출 골과 골 사이 음영을 보여줘.",
+          "expected": "top-owned relief"
+        },
+        {
+          "input_ko": "매끈한 재킷에 평평한 가는 줄무늬.",
+          "expected": "no rib relief obligation"
+        },
+        {
+          "mutation": "put ribs only on background curtain",
+          "expected": "FAIL_OWNER"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-003",
+      "title_ko": "흘러내린 한쪽 끈과 반대쪽 지지의 비대칭",
+      "keyword_ids": [
+        "K029",
+        "K030",
+        "K033"
+      ],
+      "prior_card_ids": [
+        "VEL-011",
+        "VEL-012"
+      ],
+      "proposal_kind": "new_relation_trial",
+      "priority": "P0",
+      "target_slots": [
+        "garment_detail",
+        "wearable_accessory"
+      ],
+      "owner_scope": "같은 드레스의 두 어깨끈과 앞뒤 몸판",
+      "required_components_en": [
+        "One strap has left its shoulder support and lies loosely on the outside of that upper arm.",
+        "The opposite strap remains over its own shoulder.",
+        "Both straps retain their declared garment attachment endpoints."
+      ],
+      "directed_relations": [
+        {
+          "subject": "fallen strap",
+          "type": "rests_on",
+          "object": "same-side upper arm"
+        },
+        {
+          "subject": "retained strap",
+          "type": "passes_over",
+          "object": "opposite shoulder"
+        },
+        {
+          "subject": "strap endpoints",
+          "type": "attach_to",
+          "object": "same garment panels"
+        }
+      ],
+      "source_case_keep_ko": "K030의 한쪽 상태와 다른 쪽 잔존 지지를 보존한다. 끈을 내린 행위자나 미래의 탈의는 주어지지 않았다.",
+      "optional_realization_ko": "끈의 좌우는 요청으로 결정한다. 끈 폭·소재·늘어진 곡선 크기는 독립 변수다.",
+      "confusion_boundaries_ko": [
+        "원래 한 끈인 원숄더 디자인으로 대체",
+        "두 끈을 모두 어깨 아래로 내림",
+        "머리에 가린 끈을 흘러내린 끈으로 통과"
+      ],
+      "existing_ids_to_review": [
+        "pfe_one_shoulder",
+        "slot:garment_detail:pfe_one_shoulder_candidate"
+      ],
+      "research_source_ids": [
+        "A04"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "오른쪽 끈만 위팔 바깥에 내려오고 왼쪽은 어깨에 남아 있어.",
+          "expected": "asymmetric current state"
+        },
+        {
+          "input_ko": "원래 한쪽 어깨만 지지하는 드레스 디자인.",
+          "expected": "not a fallen two-strap state"
+        },
+        {
+          "mutation": "hide retained strap behind hair",
+          "expected": "UNOBSERVABLE_NOT_PASS"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-004",
+      "title_ko": "레이스 구멍·의복 파임·원단 비침의 분리",
+      "keyword_ids": [
+        "K025",
+        "K027",
+        "K028",
+        "K031",
+        "K032",
+        "K034",
+        "K035",
+        "K037"
+      ],
+      "prior_card_ids": [
+        "VEL-009",
+        "VEL-010",
+        "VEL-013",
+        "VEL-014"
+      ],
+      "proposal_kind": "extend_review",
+      "priority": "P0",
+      "target_slots": [
+        "garment_detail",
+        "surface_material"
+      ],
+      "owner_scope": "레이스 띠, 바탕 원단, 목선의 열린 영역, 그 뒤의 지정 대상",
+      "required_components_en": [
+        "Openwork cells belong to the attached lace strip.",
+        "The base garment remains a separate surface with its own opacity.",
+        "A neckline opening exposes only its declared bounded region."
+      ],
+      "directed_relations": [
+        {
+          "subject": "lace strip",
+          "type": "attaches_along",
+          "object": "base garment edge"
+        },
+        {
+          "subject": "openwork cells",
+          "type": "interrupt",
+          "object": "lace strip coverage"
+        },
+        {
+          "subject": "neckline boundary",
+          "type": "bounds",
+          "object": "declared exposed region"
+        }
+      ],
+      "source_case_keep_ko": "원문이 명시한 가슴골은 지우지 않고 나머지 의복 가림도 남긴다. 레이스의 빈 셀은 그 아래 바탕층에 가려질 수 있다.",
+      "optional_realization_ko": "꽃무늬·스캘럽 한 가지를 모든 lace trim의 필수 도안으로 고정하지 않는다. 투과도는 해당 원단/영역에만 적용한다.",
+      "confusion_boundaries_ko": [
+        "레이스 프린트를 실제 구멍으로 통과",
+        "레이스 띠 때문에 드레스 전체를 투명화",
+        "일반 neckline에 추가 파임/가슴골을 발명"
+      ],
+      "existing_ids_to_review": [
+        "lace_trim_attached_edge",
+        "slot:garment_detail:lace_trim_edge",
+        "decolletage_neckline_exposure"
+      ],
+      "research_source_ids": [
+        "A03",
+        "A05",
+        "A06",
+        "R07"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "불투명 바탕의 목선 가장자리에 열린 셀을 가진 레이스 띠를 달아줘.",
+          "expected": "open lace over independently opaque base"
+        },
+        {
+          "input_ko": "새틴에 인쇄된 꽃무늬 테두리.",
+          "expected": "not openwork lace"
+        },
+        {
+          "mutation": "replace bounded neckline with removed bodice",
+          "expected": "FAIL_BOUNDARY"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-005",
+      "title_ko": "젖음·밀착·반사·부분 비침의 조건부 결합",
+      "keyword_ids": [
+        "K016",
+        "K017",
+        "K018",
+        "K019",
+        "K020",
+        "K021",
+        "K022",
+        "K023",
+        "K024",
+        "K026",
+        "K035",
+        "K036",
+        "K037",
+        "K038",
+        "K039",
+        "K040",
+        "K042"
+      ],
+      "prior_card_ids": [
+        "VEL-006",
+        "VEL-007",
+        "VEL-008",
+        "VEL-014",
+        "VEL-015",
+        "VEL-016",
+        "VEL-017"
+      ],
+      "proposal_kind": "claim_guard",
+      "priority": "P0",
+      "target_slots": [
+        "surface_material",
+        "texture",
+        "garment_detail"
+      ],
+      "owner_scope": "지정된 원단/머리/피부의 국소 영역과 광원·겹침 경로",
+      "required_components_en": [
+        "Wetness, adherence, surface reflection and light transmission remain separate selected properties.",
+        "Any transmitted underlying color passes through the declared cloth region while its textile boundary stays visible.",
+        "Highlight placement follows the local surface orientation and the declared light-view geometry."
+      ],
+      "directed_relations": [
+        {
+          "subject": "wet region",
+          "type": "belongs_to",
+          "object": "declared material owner"
+        },
+        {
+          "subject": "cloth overlap",
+          "type": "changes_path_through",
+          "object": "selected textile layers"
+        },
+        {
+          "subject": "highlight",
+          "type": "is_received_on",
+          "object": "source-facing local surface"
+        }
+      ],
+      "source_case_keep_ko": "K042의 wet OR clingy를 AND로 바꾸지 않는다. K035/037의 약한 비침은 유지하되 젖음 하나만으로 추가 비침을 만들지 않는다.",
+      "optional_realization_ko": "젖어 어두워지는 영역·늘어진 주름·겹쳐 덜 비침은 선택된 소재와 장면의 실현 예다. 무광, 가죽 결, 주름 산의 밝음을 전 소재의 법칙으로 만들지 않는다.",
+      "confusion_boundaries_ko": [
+        "wet를 transparent로 자동 동의어화",
+        "반사 띠를 젖음의 유일한 증거로 삼음",
+        "능선은 언제나 밝고 골은 언제나 어둡다고 강제",
+        "NIR/UV 투과 연구를 가시광 노출 증거로 전용"
+      ],
+      "existing_ids_to_review": [
+        "pfe_opaque_fit",
+        "satin_directional_luster_drape_surface",
+        "wet_damp_clumped_hair_state"
+      ],
+      "research_source_ids": [
+        "A03",
+        "A05",
+        "A06",
+        "A08",
+        "R11",
+        "R12",
+        "R20"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "젖었지만 불투명한 탑.",
+          "expected": "wetness without transmission"
+        },
+        {
+          "input_ko": "마른 원단이 몸에 붙고 광택은 약해.",
+          "expected": "cling without wet or gloss"
+        },
+        {
+          "mutation": "turn wet-or-clingy into both mandatory",
+          "expected": "FAIL_LOGICAL_OPERATOR"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-006",
+      "title_ko": "거울의 결로 표면과 얼굴 초점의 다른 경로",
+      "keyword_ids": [
+        "K041",
+        "K043",
+        "K059",
+        "K061",
+        "K077",
+        "K079"
+      ],
+      "prior_card_ids": [
+        "VEL-018",
+        "VEL-025",
+        "VEL-030",
+        "VEL-031"
+      ],
+      "proposal_kind": "new_relation_trial",
+      "priority": "P0",
+      "target_slots": [
+        "surface_material",
+        "focus",
+        "garment_detail"
+      ],
+      "owner_scope": "거울 전면의 결로 패치, 거울 반사 경로, 인물 얼굴",
+      "required_components_en": [
+        "Condensation droplets or a scattering haze occupy a localized patch of the mirror surface.",
+        "The reflected image loses local contrast through that patch rather than the whole scene acquiring uniform blur.",
+        "The requested face-focus hierarchy remains readable through the selected usable viewing region."
+      ],
+      "directed_relations": [
+        {
+          "subject": "condensation patch",
+          "type": "lies_on",
+          "object": "mirror front surface"
+        },
+        {
+          "subject": "scattering patch",
+          "type": "attenuates",
+          "object": "local reflected image contrast"
+        },
+        {
+          "subject": "selected focus",
+          "type": "prioritizes",
+          "object": "requested face plane"
+        }
+      ],
+      "source_case_keep_ko": "K043의 김 서림·물방울 소유자를 거울로 유지하고 K079의 얼굴 주 초점을 별도로 보존한다.",
+      "optional_realization_ko": "물막이 항상 희거나 불투명한 것은 아니다. 닦인 영역·흐른 자국·방울 크기는 원문/선택에 있을 때만 사용한다.",
+      "confusion_boundaries_ko": [
+        "렌즈 디포커스를 거울 결로로 통과",
+        "얼굴 자체를 얼룩/백색 막으로 덮음",
+        "거울이 김 서렸다는 이유로 젖은 의상을 추가"
+      ],
+      "existing_ids_to_review": [
+        "slot:texture:condensation_window_smear_texture",
+        "rb_glass_reflection_transmission"
+      ],
+      "research_source_ids": [
+        "A06",
+        "A07",
+        "A09"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "거울 한쪽 결로는 남기고 반사된 얼굴은 선명하게 읽히게.",
+          "expected": "surface patch and face focus coexist"
+        },
+        {
+          "input_ko": "맑은 거울 앞에서 배경만 디포커스.",
+          "expected": "not condensation"
+        },
+        {
+          "mutation": "haze the face skin instead of mirror",
+          "expected": "FAIL_OWNER"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-007",
+      "title_ko": "초커 앞의 열린 금속 고리와 부착점",
+      "keyword_ids": [
+        "K046",
+        "K047"
+      ],
+      "prior_card_ids": [
+        "VEL-020"
+      ],
+      "proposal_kind": "new_relation_trial",
+      "priority": "P0",
+      "target_slots": [
+        "wearable_accessory",
+        "garment_detail"
+      ],
+      "owner_scope": "초커 띠, 그 앞 중앙의 고리, 고리 안의 실제 배경/띠",
+      "required_components_en": [
+        "A rigid circular metal perimeter is attached at the front center of the declared choker band.",
+        "Its center is an actual aperture rather than a solid round medallion.",
+        "The band follows the neck while the rigid ring retains its own shape."
+      ],
+      "directed_relations": [
+        {
+          "subject": "ring fitting",
+          "type": "attaches_to",
+          "object": "choker front center"
+        },
+        {
+          "subject": "ring perimeter",
+          "type": "bounds",
+          "object": "open aperture"
+        },
+        {
+          "subject": "choker band",
+          "type": "follows_contour_of",
+          "object": "neck"
+        }
+      ],
+      "source_case_keep_ko": "S04의 검정 띠와 은색 O-ring은 사례값이다. 고리 안으로 보이는 대상은 실제 시점·겹침에 맞춘다.",
+      "optional_realization_ko": "금속 반사와 얕은 접촉 그림자는 광원/시점에 따른 실현 단서다. 고리가 있다고 사슬·견인·조임을 추가하지 않는다.",
+      "confusion_boundaries_ko": [
+        "단단한 원판 팬던트로 대체",
+        "귀걸이/손가락 고리를 목의 고리로 통과",
+        "고리 중앙에 검정 색칠만 해서 구멍처럼 처리"
+      ],
+      "existing_ids_to_review": [
+        "slot:wearable_accessory:ctx_c019",
+        "slot:wearable_accessory:y2kr_grommet",
+        "slot:wearable_accessory:y2kr_tattoo_choker"
+      ],
+      "research_source_ids": [
+        "A06",
+        "R11"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "검정 목 띠 앞 중앙에 가운데가 빈 은색 고리가 부착되어 있어.",
+          "expected": "owned aperture and connection"
+        },
+        {
+          "input_ko": "목 띠 중앙의 둥근 은색 원판.",
+          "expected": "not open ring"
+        },
+        {
+          "mutation": "put hoop on ear with choker unchanged",
+          "expected": "FAIL_OWNER"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-008",
+      "title_ko": "초커 또는 넥 아머의 대안과 사례 보석",
+      "keyword_ids": [
+        "K048",
+        "K051"
+      ],
+      "prior_card_ids": [
+        "VEL-020",
+        "VEL-022"
+      ],
+      "proposal_kind": "context_guard",
+      "priority": "P1",
+      "target_slots": [
+        "wearable_accessory",
+        "garment_detail"
+      ],
+      "owner_scope": "선택된 목 장식 또는 보호판, 앞 중앙 장식",
+      "required_components_en": [
+        "Only the chosen collar-band or neck-armor realization occupies the specified neck region.",
+        "A source-case central gem belongs to that chosen accessory and has a visible mounting."
+      ],
+      "directed_relations": [
+        {
+          "subject": "chosen accessory",
+          "type": "surrounds",
+          "object": "declared neck region"
+        },
+        {
+          "subject": "central gem",
+          "type": "mounts_on",
+          "object": "chosen accessory front"
+        }
+      ],
+      "source_case_keep_ko": "S03의 엘프 문양, 깊은 청/남청 보석, 허벅지 일부 보호판은 해당 원문 문맥값이다.",
+      "optional_realization_ko": "일반 넥 아머에 엘프 문양·청색 보석을 필수화하지 않는다. 초커 OR 넥 아머 선택을 유지한다.",
+      "confusion_boundaries_ko": [
+        "대안 두 물건을 무조건 동시 착용",
+        "넥 아머에 원문 없는 보호 성능을 부여",
+        "일부 허벅지 보호판을 전신 중갑으로 확대"
+      ],
+      "existing_ids_to_review": [
+        "slot:wearable_accessory:royal_crest_choker"
+      ],
+      "research_source_ids": [
+        "R16",
+        "A06"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "문양이 없는 목 보호판 하나.",
+          "expected": "no source gem or elf pattern obligation"
+        },
+        {
+          "input_ko": "청색 보석 초커 또는 넥 아머 중 초커를 선택.",
+          "expected": "one chosen variant"
+        },
+        {
+          "mutation": "force both alternative neck pieces",
+          "expected": "FAIL_LOGICAL_OPERATOR"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-009",
+      "title_ko": "장식 사슬의 끝점·중력 곡선·부품별 반사",
+      "keyword_ids": [
+        "K049",
+        "K050",
+        "K053"
+      ],
+      "prior_card_ids": [
+        "VEL-021"
+      ],
+      "proposal_kind": "extend_review",
+      "priority": "P1",
+      "target_slots": [
+        "wearable_accessory",
+        "garment_detail"
+      ],
+      "owner_scope": "의복의 두 부착점과 그 사이 사슬, 버클",
+      "required_components_en": [
+        "The selected chain has visible attachment endpoints on the declared garment hardware.",
+        "The loose span sags between its supports while the links remain distinct from the flexible strap.",
+        "Buckles connect their own strap ends and panels."
+      ],
+      "directed_relations": [
+        {
+          "subject": "chain endpoint A",
+          "type": "attaches_to",
+          "object": "garment anchor A"
+        },
+        {
+          "subject": "chain endpoint B",
+          "type": "attaches_to",
+          "object": "garment anchor B"
+        },
+        {
+          "subject": "loose chain span",
+          "type": "hangs_between",
+          "object": "two garment anchors"
+        }
+      ],
+      "source_case_keep_ko": "S03 허리·골반의 느슨한 장식 연결과 S02 버클은 소유자와 위치를 섞지 않는다.",
+      "optional_realization_ko": "사슬의 모양은 길이·끝점 높이·자세에 따른다. 한 끝에 매단 펜던트는 별도 대안으로 다룬다.",
+      "confusion_boundaries_ko": [
+        "사슬이 허공에 뜸",
+        "끝점 없이 늘어진 선만 그려 연결로 통과",
+        "느슨한 장식을 팽팽한 구속 사슬로 전환"
+      ],
+      "existing_ids_to_review": [
+        "slot:wearable_accessory:y2kr_chain_strap",
+        "slot:wearable_accessory:unif_lapel_chain_separate_inner_neck"
+      ],
+      "research_source_ids": [
+        "A04",
+        "R17"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "재킷 두 부착점 사이에 느슨하게 처진 장식 사슬.",
+          "expected": "two anchored ends and loose span"
+        },
+        {
+          "input_ko": "목걸이 끝 하나에 달린 팬던트.",
+          "expected": "not mandatory two-anchor span"
+        },
+        {
+          "mutation": "move chain anchor to skin with no garment fitting",
+          "expected": "FAIL_CONNECTION"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-010",
+      "title_ko": "침구 눌림과 휴식 자세의 국소 대응",
+      "keyword_ids": [
+        "K054",
+        "K055",
+        "K056",
+        "K057",
+        "K065"
+      ],
+      "prior_card_ids": [
+        "VEL-024",
+        "VEL-028"
+      ],
+      "proposal_kind": "new_relation_trial",
+      "priority": "P0",
+      "target_slots": [
+        "body_pose",
+        "contact_point",
+        "texture"
+      ],
+      "owner_scope": "누운 인물의 머리·등/어깨, 베개·시트의 해당 접촉 패치",
+      "required_components_en": [
+        "The resting body has the selected support contacts without floating or penetrating.",
+        "The soft bedding depression occurs directly under the declared contact patch.",
+        "The adjacent bedding remains relatively less compressed and traceable as the same surface."
+      ],
+      "directed_relations": [
+        {
+          "subject": "head or shoulder",
+          "type": "rests_on",
+          "object": "selected pillow patch"
+        },
+        {
+          "subject": "body contact patch",
+          "type": "deforms",
+          "object": "local bedding region"
+        },
+        {
+          "subject": "free hand",
+          "type": "remains_near",
+          "object": "declared head or neck position"
+        }
+      ],
+      "source_case_keep_ko": "S03의 베개·긴 은백색 머리 퍼짐은 사례 조건이다. 손을 목 근처에 둔 휴식을 목 압박으로 바꾸지 않는다.",
+      "optional_realization_ko": "모든 supine 자세에 베개·긴 머리·침대나 접촉 주름을 추가하지 않는다. 우연히 시선이 만남·잠들기 전은 서사다.",
+      "confusion_boundaries_ko": [
+        "빈 곳의 주름을 신체 접촉 흔적으로 통과",
+        "베개가 몸을 관통",
+        "누운 자세에 반드시 고개/시선 방향을 한 가지로 고정"
+      ],
+      "existing_ids_to_review": [
+        "pv_profile_supine",
+        "pv_profile_side_lying"
+      ],
+      "research_source_ids": [
+        "A04",
+        "R17"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "머리를 베개에 기대고 머리 아래의 베개만 눌려 있어.",
+          "expected": "localized support deformation"
+        },
+        {
+          "input_ko": "바닥에 바로 누운 짧은 머리 인물.",
+          "expected": "no pillow or long-hair requirement"
+        },
+        {
+          "mutation": "depress pillow far from the head",
+          "expected": "FAIL_LOCATION"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-011",
+      "title_ko": "작은 입술 틈·치아 비노출·자연 비대칭",
+      "keyword_ids": [
+        "K069",
+        "K070",
+        "K071",
+        "K072",
+        "K196",
+        "K197",
+        "K198",
+        "K207",
+        "K208",
+        "K211"
+      ],
+      "prior_card_ids": [
+        "VEL-028",
+        "VEL-029",
+        "VEL-058",
+        "VEL-059",
+        "VEL-060"
+      ],
+      "proposal_kind": "new_relation_trial",
+      "priority": "P0",
+      "target_slots": [
+        "expression",
+        "lip_finish",
+        "body_pose"
+      ],
+      "owner_scope": "같은 초상 인물의 입술·턱·눈꺼풀과 별도의 어깨/골반",
+      "required_components_en": [
+        "The lips retain a small gap without a large jaw drop.",
+        "In the S07 case the teeth remain concealed while the requested quiet expression persists.",
+        "Source-specified small shoulder and pelvic asymmetries survive anatomy-defect exclusions."
+      ],
+      "directed_relations": [
+        {
+          "subject": "lip gap",
+          "type": "belongs_to",
+          "object": "subject mouth"
+        },
+        {
+          "subject": "teeth",
+          "type": "remain_occluded_by",
+          "object": "selected lip-jaw configuration"
+        },
+        {
+          "subject": "hands and shoulders",
+          "type": "remain_connected_in",
+          "object": "declared towel-holding posture"
+        }
+      ],
+      "source_case_keep_ko": "1–2 mm는 요청 수치로 보존하지만 픽셀 스케일 없는 사진으로 실측 PASS를 주장하지 않는다. S07 치아 비노출을 모든 parted lips의 뜻으로 일반화하지 않는다.",
+      "optional_realization_ko": "편안한 눈꺼풀은 반쯤 감은 눈·졸음의 고정 형상이 아니다. 미세 비대칭의 방향/크기도 요청 범위다.",
+      "confusion_boundaries_ko": [
+        "치아를 보여주는 큰 웃음으로 바꿈",
+        "small gap를 밀리미터 계측 성공으로 보고",
+        "broken wrist 제외를 강제 양손 대칭으로 처리"
+      ],
+      "existing_ids_to_review": [
+        "ae_profile_lip_press",
+        "ae_profile_lip_tighten",
+        "contrapposto_weight_shift"
+      ],
+      "research_source_ids": [
+        "A07",
+        "R05"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "아주 작게 벌어진 입술, 치아는 보이지 않고 어깨는 살짝 비대칭.",
+          "expected": "preserve all independent face/pose constraints"
+        },
+        {
+          "input_ko": "활짝 웃으며 치아를 보여줘.",
+          "expected": "not S07 small-gap realization"
+        },
+        {
+          "mutation": "remove the small gap to satisfy no pout",
+          "expected": "FAIL_POSITIVE_RETENTION"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-012",
+      "title_ko": "머리 방향·안구 시선·거울 목표의 독립 축",
+      "keyword_ids": [
+        "K056",
+        "K059",
+        "K060",
+        "K061",
+        "K065",
+        "K066",
+        "K067",
+        "K068",
+        "K069",
+        "K072",
+        "K077",
+        "K127"
+      ],
+      "prior_card_ids": [
+        "VEL-025",
+        "VEL-026",
+        "VEL-028",
+        "VEL-030",
+        "VEL-043"
+      ],
+      "proposal_kind": "extend_review",
+      "priority": "P0",
+      "target_slots": [
+        "gaze_target",
+        "gaze_engagement",
+        "body_orientation",
+        "expression"
+      ],
+      "owner_scope": "실제 머리, 두 눈의 시선 방향, 렌즈 또는 자신의 거울상 위치",
+      "required_components_en": [
+        "The selected gaze target is retained independently of head orientation.",
+        "A reflected-face target corresponds to the same depicted actor rather than a second person.",
+        "A raised chin may coexist with eyes directed toward the declared interlocutor."
+      ],
+      "directed_relations": [
+        {
+          "subject": "eyes",
+          "type": "look_toward",
+          "object": "selected target"
+        },
+        {
+          "subject": "head orientation",
+          "type": "belongs_to",
+          "object": "same actor"
+        },
+        {
+          "subject": "mirror image",
+          "type": "corresponds_to",
+          "object": "depicted actor"
+        }
+      ],
+      "source_case_keep_ko": "S07은 렌즈, S06은 자기 거울상, S14는 상대 인물을 목표로 한다. 얼굴을 보는 POV의 목표도 유지한다.",
+      "optional_realization_ko": "눈·머리 방향이 항상 일치해야 한다는 규칙을 만들지 않는다. 시선 머묾·움직임을 따라가지 않음은 정지 이미지로 시간 검증되지 않는다.",
+      "confusion_boundaries_ko": [
+        "거울 안 두 번째 인물 생성",
+        "턱을 든다는 이유로 상대를 향한 안구 방향까지 위로 이동",
+        "직접 응시를 동의/욕망/적대로 동의어화"
+      ],
+      "existing_ids_to_review": [
+        "slot:gaze_target:head_eye_counterorientation_relation",
+        "slot:gaze_engagement:pv_gaze_direct"
+      ],
+      "research_source_ids": [
+        "A07",
+        "A11",
+        "R04",
+        "R05"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "턱은 조금 위로 들고 눈은 맞은편 사람을 바라봐.",
+          "expected": "separate head and eye targets"
+        },
+        {
+          "input_ko": "거울에 반사된 자기 얼굴을 바라봐.",
+          "expected": "gaze to own reflection, not lens"
+        },
+        {
+          "mutation": "redirect eyes to camera while preserving mirror",
+          "expected": "FAIL_TARGET"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-013",
+      "title_ko": "시점 높이·거리·촬영 방향·초점의 네 가지 보존",
+      "keyword_ids": [
+        "K073",
+        "K074",
+        "K075",
+        "K076",
+        "K078",
+        "K079",
+        "K080",
+        "K081",
+        "K082",
+        "K117",
+        "K212"
+      ],
+      "prior_card_ids": [
+        "VEL-030",
+        "VEL-031",
+        "VEL-042",
+        "VEL-060"
+      ],
+      "proposal_kind": "extend_review",
+      "priority": "P0",
+      "target_slots": [
+        "camera_height",
+        "camera_direction",
+        "subject_framing",
+        "focus"
+      ],
+      "owner_scope": "capture camera, 상대 얼굴, 접촉/가림의 필수 경계",
+      "required_components_en": [
+        "Camera height is specified relative to the declared observer and subject.",
+        "The camera axis retains its named face target.",
+        "Viewing distance, projected proportions and the selected focus plane are recorded separately."
+      ],
+      "directed_relations": [
+        {
+          "subject": "camera optical axis",
+          "type": "points_toward",
+          "object": "declared face target"
+        },
+        {
+          "subject": "camera viewpoint",
+          "type": "has_height_relative_to",
+          "object": "observer or subject"
+        },
+        {
+          "subject": "focus plane",
+          "type": "prioritizes",
+          "object": "declared face and necessary relation"
+        }
+      ],
+      "source_case_keep_ko": "S15 바닥 가까운 눈 위치와 얼굴을 올려다봄은 비성적 시점이다. K079 얼굴 초점을 재질 강조를 이유로 옮기지 않는다.",
+      "optional_realization_ko": "같은 framing은 크롭으로도 만들 수 있으므로 close-up만으로 실제 거리 실측을 주장하지 않는다. 렌즈 초점거리만으로 원근을 확정하지 않는다.",
+      "confusion_boundaries_ko": [
+        "카메라 저각을 옷 안쪽 시선으로 바꿈",
+        "얼굴을 확대/재설계해 가까움처럼 처리",
+        "거울 초점과 거울 표면 초점을 같은 평면으로 자동 취급"
+      ],
+      "existing_ids_to_review": [
+        "slot:camera_height:water_w191"
+      ],
+      "research_source_ids": [
+        "A07",
+        "R13"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "관찰자 눈을 바닥 가까이 두고 상대 얼굴을 향해 올려다봐.",
+          "expected": "height, target and observer binding"
+        },
+        {
+          "input_ko": "같은 위치에서 크롭만 더 좁혀줘.",
+          "expected": "no camera-distance obligation"
+        },
+        {
+          "mutation": "shift sharpest focus from face to necklace",
+          "expected": "FAIL_FOCUS_OWNER"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-014",
+      "title_ko": "반투명 방어막·공격 경로·충돌 영역의 깊이 순서",
+      "keyword_ids": [
+        "K104",
+        "K105",
+        "K106",
+        "K107",
+        "K108",
+        "K109",
+        "K110",
+        "K111",
+        "K112",
+        "K113"
+      ],
+      "prior_card_ids": [
+        "VEL-038",
+        "VEL-039",
+        "VEL-040"
+      ],
+      "proposal_kind": "new_relation_trial",
+      "priority": "P0",
+      "target_slots": [
+        "surreal_physics_detail",
+        "relational_action",
+        "ambient_particle"
+      ],
+      "owner_scope": "시전자/지팡이, 방어막, 뒤의 인물, 충돌점·입자",
+      "required_components_en": [
+        "The selected barrier lies between the incoming effect and the protected figure.",
+        "The figure remains partly readable behind the barrier surface.",
+        "The localized impact zone occurs where the incoming path meets that surface rather than on the figure."
+      ],
+      "directed_relations": [
+        {
+          "subject": "incoming effect",
+          "type": "meets",
+          "object": "barrier contact zone"
+        },
+        {
+          "subject": "barrier",
+          "type": "lies_in_front_of",
+          "object": "protected figure"
+        },
+        {
+          "subject": "impact particles",
+          "type": "originate_near",
+          "object": "declared contact zone"
+        },
+        {
+          "subject": "cloak attachment",
+          "type": "remains_on",
+          "object": "same actor shoulder"
+        }
+      ],
+      "source_case_keep_ko": "S10의 teen/young adult 혼용은 비성적 판타지 액션으로만 유지한다. white-gold 입자는 해당 충돌 효과의 색 조건이다.",
+      "optional_realization_ko": "막의 문양·형태, 모든 입자의 초점 차이·속도는 고정하지 않는다. 원문 없는 신체 명중은 추가하지 않는다.",
+      "confusion_boundaries_ko": [
+        "방어막을 인물 뒤 장식으로 이동",
+        "투명 원을 만들고 공격 경로는 몸에 명중",
+        "입자를 모두 같은 전경층에 겹쳐 관통"
+      ],
+      "existing_ids_to_review": [
+        "slot:ambient_particle:egr_localized_suspended_particles"
+      ],
+      "research_source_ids": [
+        "A05",
+        "A06",
+        "A07",
+        "R04"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "들어오는 빛이 인물 앞 반투명 막 한곳에 부딪히고 뒤의 인물은 일부 보인다.",
+          "expected": "front barrier with localized encounter"
+        },
+        {
+          "input_ko": "인물 뒤의 장식용 빛 고리.",
+          "expected": "not blocking barrier"
+        },
+        {
+          "mutation": "move the impact onto the body",
+          "expected": "FAIL_TARGET_AND_STAGE"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-015",
+      "title_ko": "등 뒤 기계 장비의 연결과 원문 색 변형",
+      "keyword_ids": [
+        "K083",
+        "K084",
+        "K085",
+        "K086",
+        "K087",
+        "K088",
+        "K089",
+        "K090",
+        "K091",
+        "K092",
+        "K093",
+        "K094",
+        "K182",
+        "K183",
+        "K190",
+        "K202"
+      ],
+      "prior_card_ids": [
+        "VEL-032",
+        "VEL-033",
+        "VEL-037",
+        "VEL-057",
+        "VEL-058",
+        "VEL-059"
+      ],
+      "proposal_kind": "extend_review",
+      "priority": "P1",
+      "target_slots": [
+        "prop",
+        "wearable_accessory",
+        "garment_detail"
+      ],
+      "owner_scope": "기계식 등 장비, 그 지지 프레임, 같은 인물의 외부 갑옷",
+      "required_components_en": [
+        "The external back equipment is connected to a visible support on the same torso.",
+        "Equipment arms remain distinct from biological limbs.",
+        "The specified prop count, carried state and support connections are independently preserved."
+      ],
+      "directed_relations": [
+        {
+          "subject": "equipment arms",
+          "type": "attach_to",
+          "object": "back frame"
+        },
+        {
+          "subject": "back frame",
+          "type": "mounts_on",
+          "object": "same actor external armor"
+        },
+        {
+          "subject": "declared weapons",
+          "type": "remain_in",
+          "object": "selected held holstered or mounted state"
+        }
+      ],
+      "source_case_keep_ko": "S16 검정·흰색·은색 외장과 작은 주황 관절 발광은 해당 사례 변형에만 둔다. 붉은 코드/기계 발광과 색 소유자를 분리한다.",
+      "optional_realization_ko": "장비 수와 방향, 색을 미래 무장의 보편 형상으로 고정하지 않는다. 등 연결이 읽히지 않으면 실제 연결 PASS를 주장하지 않는다.",
+      "confusion_boundaries_ko": [
+        "장비 팔을 추가 신체 팔로 합침",
+        "본체와 떨어진 부유 장비로 대체",
+        "두 권총을 양손 사격 상태로 자동 강화"
+      ],
+      "existing_ids_to_review": [
+        "slot:prop:real_holstered_service_pistol",
+        "slot:action:carrying_holstered_real_sidearm"
+      ],
+      "research_source_ids": [
+        "A04",
+        "A06",
+        "R16"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "등 프레임에 붙은 외부 장비 팔, 생물학적 팔은 두 개.",
+          "expected": "equipment attachment distinct from anatomy"
+        },
+        {
+          "input_ko": "권총 두 자루를 집에 넣은 인물.",
+          "expected": "count does not imply dual wielding"
+        },
+        {
+          "mutation": "force orange light on any futuristic equipment",
+          "expected": "FAIL_CASE_TO_GENERIC_LEAK"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-016",
+      "title_ko": "접촉을 만드는 신발과 별도의 지지 발",
+      "keyword_ids": [
+        "K080",
+        "K081",
+        "K082",
+        "K114",
+        "K115",
+        "K117",
+        "K118",
+        "K119",
+        "K120"
+      ],
+      "prior_card_ids": [
+        "VEL-030",
+        "VEL-041",
+        "VEL-042"
+      ],
+      "proposal_kind": "new_relation_trial",
+      "priority": "P0",
+      "target_slots": [
+        "contact_point",
+        "relational_action",
+        "body_pose"
+      ],
+      "owner_scope": "서 있는 인물 A의 접촉 신발, 낮은 위치의 상대 B 윗가슴 의복, A의 다른 발과 바닥",
+      "required_components_en": [
+        "The declared shoe contacts the declared upper-chest clothing patch of the other actor.",
+        "That local soft cloth patch responds at the same contact location.",
+        "The other foot supports the standing actor on the floor independently of the contact shoe."
+      ],
+      "directed_relations": [
+        {
+          "subject": "actor A contact shoe",
+          "type": "contacts",
+          "object": "actor B upper-chest clothing patch"
+        },
+        {
+          "subject": "actor A other foot",
+          "type": "rests_on",
+          "object": "floor"
+        },
+        {
+          "subject": "actor A support leg",
+          "type": "supports",
+          "object": "actor A torso"
+        },
+        {
+          "subject": "observer eye viewpoint",
+          "type": "belongs_to",
+          "object": "actor B"
+        }
+      ],
+      "source_case_keep_ko": "S15는 비성적 강압 문맥으로만 보존한다. 접촉 도구가 신발이라는 뒤쪽 분해의 추가값은 원문 인증 전 사례 주장으로 기록한다.",
+      "optional_realization_ko": "힘의 수치, 통증, 호흡 손상, 반복 타격, 노출을 추가하지 않는다. 장래 중립 검증은 별도 성인 가상 인물과 비성적 장면으로 설계한다.",
+      "confusion_boundaries_ko": [
+        "손 접촉으로 신발 접촉을 대체",
+        "접촉 발에 모든 체중을 이전",
+        "바닥 지지 발을 상대 몸 위로 이동",
+        "낮은 카메라만 있고 실제 접촉은 없음"
+      ],
+      "existing_ids_to_review": [
+        "slot:contact_point:pv_foot_wall"
+      ],
+      "research_source_ids": [
+        "A04",
+        "R17"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "A의 신발과 B의 윗가슴 옷이 맞닿고 A의 다른 발은 바닥에 있어.",
+          "expected": "effector, receiver and support remain distinct"
+        },
+        {
+          "input_ko": "A가 B 옆에 서 있고 신발은 바닥에만 닿아.",
+          "expected": "no bodily contact obligation"
+        },
+        {
+          "mutation": "make both feet contact B",
+          "expected": "FAIL_SUPPORT_OWNER"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-017",
+      "title_ko": "접촉·누름·제한·지속 압력의 증거 단계",
+      "keyword_ids": [
+        "K115",
+        "K116",
+        "K118",
+        "K120",
+        "K182",
+        "K183"
+      ],
+      "prior_card_ids": [
+        "VEL-041",
+        "VEL-042",
+        "VEL-057"
+      ],
+      "proposal_kind": "claim_guard",
+      "priority": "P0",
+      "target_slots": [
+        "contact_point",
+        "relational_action"
+      ],
+      "owner_scope": "맞닿은 두 표면, 국소 변형, 동작 제한 관계, 별도의 시간 구간",
+      "required_components_en": [
+        "Contact is recorded at the named surfaces rather than inferred from projected overlap.",
+        "A selected pressing depiction retains a local contact-response cue on the soft receiver.",
+        "Steady duration and force magnitude remain unmeasured from one still image."
+      ],
+      "directed_relations": [
+        {
+          "subject": "declared effector",
+          "type": "contacts",
+          "object": "declared receiver patch"
+        },
+        {
+          "subject": "local response",
+          "type": "belongs_to",
+          "object": "receiver surface"
+        },
+        {
+          "subject": "temporal claim",
+          "type": "requires",
+          "object": "specified multi-frame evidence"
+        }
+      ],
+      "source_case_keep_ko": "holds down의 강압 의미를 자발적 휴식으로 순화하지 않는다. 한 프레임에서는 제약을 읽히는 배치만 검토하며 실제 움직임 제한 실험을 했다고 주장하지 않는다.",
+      "optional_realization_ko": "그림자가 어둡다고 큰 힘으로 판정하지 않는다. 정적 균형과 실제 동적 하중은 별도다.",
+      "confusion_boundaries_ko": [
+        "화면상의 겹침을 실제 접촉으로 통과",
+        "단단한 접촉 그림자만으로 힘/시간을 정량화",
+        "정지 이미지로 반복 유지·호흡 영향까지 PASS"
+      ],
+      "existing_ids_to_review": [
+        "slot:contact_point:no_contact_just_close"
+      ],
+      "research_source_ids": [
+        "A04",
+        "A11",
+        "R17"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "한 장의 그림에서 접촉 위치와 옷 눌림은 보이지만 힘은 계측하지 않았어.",
+          "expected": "geometry scored; magnitude and duration unscored"
+        },
+        {
+          "input_ko": "여러 프레임에서 접촉 위치가 유지됨.",
+          "expected": "temporal evidence still does not measure force"
+        },
+        {
+          "mutation": "infer steady pressure solely from dark shadow",
+          "expected": "FAIL_UNSUPPORTED_CLAIM"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-018",
+      "title_ko": "질책 손과 얼굴 사이의 가시적인 간격",
+      "keyword_ids": [
+        "K121",
+        "K122",
+        "K123",
+        "K124",
+        "K125",
+        "K126",
+        "K127",
+        "K128",
+        "K129",
+        "K130",
+        "K131",
+        "K132"
+      ],
+      "prior_card_ids": [
+        "VEL-043",
+        "VEL-044"
+      ],
+      "proposal_kind": "new_relation_trial",
+      "priority": "P0",
+      "target_slots": [
+        "proxemics",
+        "contact_point",
+        "relational_action"
+      ],
+      "owner_scope": "발화자 손, 상대 얼굴, 두 인물의 문턱 위치",
+      "required_components_en": [
+        "The raised or extended hand and the other actor face remain separated by a readable gap.",
+        "Both endpoints and the intervening space are framed together.",
+        "The dialogue or rebuff context remains separate from physical striking."
+      ],
+      "directed_relations": [
+        {
+          "subject": "speaker hand",
+          "type": "remains_separated_from",
+          "object": "other actor face"
+        },
+        {
+          "subject": "visible interval",
+          "type": "lies_between",
+          "object": "same hand and same face"
+        },
+        {
+          "subject": "actors",
+          "type": "occupy_sides_of",
+          "object": "declared threshold"
+        }
+      ],
+      "source_case_keep_ko": "S14의 비성적 언쟁, 치켜든 턱, 상한 자존심은 신체 부상·폭행으로 바꾸지 않는다. 문턱은 source-case 공간값이다.",
+      "optional_realization_ko": "손을 가리거나 화면 밖으로 보내 비접촉을 통과시키지 않는다. 원근상 겹쳐 경계가 확인되지 않으면 미관찰이다.",
+      "confusion_boundaries_ko": [
+        "손이 얼굴을 누르는 접촉으로 변경",
+        "두 끝점 중 하나를 가려 무접촉으로 통과",
+        "wounded disbelief를 멍/출혈로 해석"
+      ],
+      "existing_ids_to_review": [
+        "slot:contact_point:no_contact_just_close"
+      ],
+      "research_source_ids": [
+        "A07",
+        "R04",
+        "R05"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "내민 손과 상대 얼굴 사이로 배경이 보이고 두 경계가 모두 보여.",
+          "expected": "visible separation"
+        },
+        {
+          "input_ko": "손은 얼굴을 실제로 누르고 있어.",
+          "expected": "not noncontact rebuke"
+        },
+        {
+          "mutation": "crop the raised hand outside the image",
+          "expected": "UNOBSERVABLE_NOT_PASS"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-019",
+      "title_ko": "내려든 검·장갑 벗기·발도의 현재 상태",
+      "keyword_ids": [
+        "K087",
+        "K095",
+        "K096",
+        "K097",
+        "K098",
+        "K099",
+        "K100",
+        "K101",
+        "K102",
+        "K103",
+        "K133",
+        "K137",
+        "K138",
+        "K139"
+      ],
+      "prior_card_ids": [
+        "VEL-032",
+        "VEL-033",
+        "VEL-034",
+        "VEL-035",
+        "VEL-036",
+        "VEL-045",
+        "VEL-046"
+      ],
+      "proposal_kind": "extend_review",
+      "priority": "P1",
+      "target_slots": [
+        "action",
+        "hand_pose",
+        "prop"
+      ],
+      "owner_scope": "검/장갑/칼집/손의 독립 연결과 현재 배치",
+      "required_components_en": [
+        "A lowered sword points toward the floor with its holding arm down beside the actor.",
+        "A glove-removal state retains the pulling hand, the glove edge and the other wrist.",
+        "A partially drawn prop remains aligned with its storage opening without being converted to a discharged or striking state."
+      ],
+      "directed_relations": [
+        {
+          "subject": "holding hand",
+          "type": "grips",
+          "object": "declared prop"
+        },
+        {
+          "subject": "glove-removal hand",
+          "type": "grasps",
+          "object": "other glove edge"
+        },
+        {
+          "subject": "partly drawn blade",
+          "type": "continues_into",
+          "object": "same sheath opening"
+        }
+      ],
+      "source_case_keep_ko": "S09 전투 후 정리 동작과 S19 발도 도중은 서로 다른 사례다. 느리게·막 끝난이라는 시간 수식은 별도 서사로 유지한다.",
+      "optional_realization_ko": "세 상태를 한 인물/한 손에 무조건 동시 합치지 않는다. 재장전의 기술 절차나 실제 무기 성능은 연구 범위가 아니다.",
+      "confusion_boundaries_ko": [
+        "내려든 검을 상대 조준 상태로 변경",
+        "장갑 벗김을 상대 손목 잡기로 대체",
+        "발도 순간을 찌르기/발사 결과로 확대"
+      ],
+      "existing_ids_to_review": [
+        "slot:action:carrying_holstered_real_sidearm"
+      ],
+      "research_source_ids": [
+        "A04",
+        "A11"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "검 끝은 아래로, 다른 손은 자기 장갑 입구를 잡아 벗기는 중.",
+          "expected": "two owned current states"
+        },
+        {
+          "input_ko": "칼집에 완전히 들어간 검.",
+          "expected": "not partly drawn"
+        },
+        {
+          "mutation": "change lowered sword to threat-facing sword",
+          "expected": "FAIL_ACTION_STAGE"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-020",
+      "title_ko": "유리 파편과 불투명 잔해의 재질 대비",
+      "keyword_ids": [
+        "K112",
+        "K134",
+        "K135",
+        "K136",
+        "K140",
+        "K141",
+        "K142",
+        "K143",
+        "K144"
+      ],
+      "prior_card_ids": [
+        "VEL-039",
+        "VEL-045"
+      ],
+      "proposal_kind": "new_relation_trial",
+      "priority": "P1",
+      "target_slots": [
+        "aftermath_trace",
+        "surface_material",
+        "ambient_particle"
+      ],
+      "owner_scope": "지정된 유리 파편과 별도의 불투명 잔해, 그 근처 파손 물체",
+      "required_components_en": [
+        "The broken glass retains angular transparent or reflective fragment surfaces.",
+        "The selected opaque rubble remains a different material with traceable broken faces.",
+        "Damage belongs to the declared environment object rather than the character body."
+      ],
+      "directed_relations": [
+        {
+          "subject": "glass fragments",
+          "type": "belong_to",
+          "object": "declared broken glass object"
+        },
+        {
+          "subject": "opaque rubble",
+          "type": "belongs_to",
+          "object": "declared damaged structure"
+        },
+        {
+          "subject": "fragment reflection",
+          "type": "receives",
+          "object": "local light"
+        }
+      ],
+      "source_case_keep_ko": "원문의 일부 파손·아주 옅은 먼지와 S16의 도시 폐허/검은 연기는 규모와 소유자를 분리한다.",
+      "optional_realization_ko": "모든 유리 모서리의 반짝임이나 모든 돌의 무광을 의무화하지 않는다. 빛·거칠기·오염 상태에 따라 가시 단서를 정한다.",
+      "confusion_boundaries_ko": [
+        "회색 불투명 자갈을 유리 파편으로 통과",
+        "환경 잔해를 인체에 박힌 파편으로 전환",
+        "약한 먼지를 짙은 연막/대형 화재로 확대"
+      ],
+      "existing_ids_to_review": [
+        "rb_glass_reflection_transmission"
+      ],
+      "research_source_ids": [
+        "A06",
+        "R11",
+        "R12"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "바닥의 유리 조각과 옆의 거친 돌 잔해를 다른 표면으로 보여줘.",
+          "expected": "owned material contrast"
+        },
+        {
+          "input_ko": "닦이지 않은 어두운 유리라 뚜렷한 반짝임은 없어.",
+          "expected": "no universal edge-glint duty"
+        },
+        {
+          "mutation": "put all fragments in skin",
+          "expected": "FAIL_DAMAGE_OWNER"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-021",
+      "title_ko": "유리에 눌린 접촉을 가까움·반사와 구별",
+      "keyword_ids": [
+        "K169",
+        "K173",
+        "K183"
+      ],
+      "prior_card_ids": [
+        "VEL-054",
+        "VEL-057"
+      ],
+      "proposal_kind": "new_relation_trial",
+      "priority": "P0",
+      "target_slots": [
+        "contact_point",
+        "surface_material",
+        "body_pose"
+      ],
+      "owner_scope": "지정된 신체/의복 부분, 유리면, 실제 접촉 패치",
+      "required_components_en": [
+        "The declared contacting part meets the glass plane rather than stopping across a visible gap.",
+        "A pressed depiction has a bounded local contact-response cue, consistent with the stated material.",
+        "Reflected overlap is recorded as an optical image and does not substitute for contact geometry."
+      ],
+      "directed_relations": [
+        {
+          "subject": "declared body or cloth patch",
+          "type": "contacts",
+          "object": "glass plane"
+        },
+        {
+          "subject": "local flattening or cloth compression",
+          "type": "belongs_to",
+          "object": "contacting soft patch"
+        },
+        {
+          "subject": "reflection",
+          "type": "is_optical_image_of",
+          "object": "nearby scene"
+        }
+      ],
+      "source_case_keep_ko": "K169 분해의 바로 가까이에 놓임 OR 반사 겹침만으로 pressed를 통과시키지 않는다. 원래의 접촉 의도는 보존한다.",
+      "optional_realization_ko": "원문에 없는 강한 변형, 밀어붙인 행위자, 부상은 추가하지 않는다. 지정된 접촉 부위는 frozen core로 해결한다.",
+      "confusion_boundaries_ko": [
+        "유리와 떨어져 있는 근접 초상으로 대체",
+        "반사 얼굴을 실제 유리 접촉 얼굴로 통과",
+        "모든 접촉을 심한 얼굴 변형으로 과장"
+      ],
+      "existing_ids_to_review": [
+        "rb_glass_reflection_transmission"
+      ],
+      "research_source_ids": [
+        "A04",
+        "A06",
+        "A07",
+        "R11"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "손바닥이 유리에 맞닿아 국소 접촉 패치가 보인다.",
+          "expected": "contact-plane geometry"
+        },
+        {
+          "input_ko": "손은 유리에서 떨어져 있고 반사만 겹친다.",
+          "expected": "not pressed contact"
+        },
+        {
+          "mutation": "leave a visible gap and claim pressed",
+          "expected": "FAIL_CONTACT"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-022",
+      "title_ko": "수중·닫힌 용기·막힌 경로와 갇힘 서사",
+      "keyword_ids": [
+        "K166",
+        "K167",
+        "K168",
+        "K170",
+        "K171",
+        "K172",
+        "K174"
+      ],
+      "prior_card_ids": [
+        "VEL-052",
+        "VEL-055"
+      ],
+      "proposal_kind": "context_guard",
+      "priority": "P0",
+      "target_slots": [
+        "space_condition",
+        "location",
+        "relational_action"
+      ],
+      "owner_scope": "용기 경계, 내부 인물과 물, 요청된 이동 경로의 장벽",
+      "required_components_en": [
+        "The underwater setting has declared water and container cues on their own carriers.",
+        "The chamber boundaries remain continuous where shown.",
+        "If confinement is requested, a declared attempted path meets its blocking boundary rather than relying only on absent exits in a crop."
+      ],
+      "directed_relations": [
+        {
+          "subject": "container boundaries",
+          "type": "enclose",
+          "object": "selected interior"
+        },
+        {
+          "subject": "water cues",
+          "type": "belong_to",
+          "object": "selected interior medium"
+        },
+        {
+          "subject": "declared attempted path",
+          "type": "meets",
+          "object": "blocking boundary"
+        }
+      ],
+      "source_case_keep_ko": "갇힘/불안 설정은 서사로 남긴다. 열린 출구가 프레임에 없다는 사실로 실제 탈출 불가·질식·사망을 인증하지 않는다.",
+      "optional_realization_ko": "일반 수중 초상에는 막힌 경로·공포·구조를 발명하지 않는다. 경로는 요청이 갇힘을 요구하고 명확한 관계가 있을 때만 검증 대상으로 둔다.",
+      "confusion_boundaries_ko": [
+        "크롭에서 출구 부재를 물리적 감금 증거로 통과",
+        "닫힌 챔버를 우주 유해환경 habitat으로 자동 전환",
+        "물방울만으로 인물이 수중에 있다고 확정"
+      ],
+      "existing_ids_to_review": [
+        "slot:location:hr_sealed_habitat_external_limit"
+      ],
+      "research_source_ids": [
+        "A05",
+        "A07",
+        "R18"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "수중 전시 용기 안의 평온한 초상.",
+          "expected": "no unrequested confinement"
+        },
+        {
+          "input_ko": "인물이 닫힌 창 쪽으로 손을 내미나 경계가 그 경로를 막는다.",
+          "expected": "authored blocked-path depiction; no real diagnosis"
+        },
+        {
+          "mutation": "claim inescapable solely because no exit is in crop",
+          "expected": "FAIL_UNSUPPORTED_CLAIM"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-023",
+      "title_ko": "붉은 얼룩·빛 기호·기계 발광·반사 수신면",
+      "keyword_ids": [
+        "K019",
+        "K040",
+        "K146",
+        "K149",
+        "K154",
+        "K155",
+        "K173",
+        "K185",
+        "K188",
+        "K201",
+        "K214",
+        "K215"
+      ],
+      "prior_card_ids": [
+        "VEL-006",
+        "VEL-017",
+        "VEL-047",
+        "VEL-054",
+        "VEL-057",
+        "VEL-059",
+        "VEL-060"
+      ],
+      "proposal_kind": "new_relation_trial",
+      "priority": "P0",
+      "target_slots": [
+        "light_type",
+        "ambient_particle",
+        "surface_material",
+        "color"
+      ],
+      "owner_scope": "공중 코드 기호, 기계 틈의 광원, 근처 금속 수신면, 표면 얼룩",
+      "required_components_en": [
+        "Airborne red symbols remain separated luminous shapes rather than surface smears.",
+        "The subtle machine light originates inside its declared seam or aperture.",
+        "Any red reflection belongs to the adjacent receiver surface and follows the selected light geometry."
+      ],
+      "directed_relations": [
+        {
+          "subject": "code symbols",
+          "type": "occupy",
+          "object": "declared air volume"
+        },
+        {
+          "subject": "machine seam light",
+          "type": "emits_from",
+          "object": "machine aperture"
+        },
+        {
+          "subject": "emitted light",
+          "type": "is_received_on",
+          "object": "adjacent metal edge"
+        },
+        {
+          "subject": "stain",
+          "type": "adheres_to",
+          "object": "separate specified surface"
+        }
+      ],
+      "source_case_keep_ko": "S16 no blood 아래에도 붉은 코드·진홍 기계 발광은 남긴다. S18 dark red stains는 혈액인지 원문 문맥 없이 판정하지 않는다.",
+      "optional_realization_ko": "코드 문자의 정확한 텍스트가 없으면 읽히는 임의 주문/문장을 추가하지 않는다. 빨강 하나로 광원 또는 혈액을 진단하지 않는다.",
+      "confusion_boundaries_ko": [
+        "no blood 때문에 붉은 광원까지 삭제",
+        "코드 입자를 피부의 혈흔으로 대체",
+        "기계 틈이 아니라 인물 피부를 자체 발광체로 만듦",
+        "반사 색을 재질의 본래 색으로 확정"
+      ],
+      "existing_ids_to_review": [
+        "slot:light_type:status_led_glow",
+        "slot:ambient_particle:egr_localized_suspended_particles"
+      ],
+      "research_source_ids": [
+        "A06",
+        "R11",
+        "R12"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "기계 틈의 붉은 빛이 가까운 금속에만 비치며 혈흔은 없어.",
+          "expected": "emitter-receiver relation with scoped exclusion"
+        },
+        {
+          "input_ko": "칼날에 어두운 붉은 비발광 얼룩.",
+          "expected": "surface mark, not emitted light"
+        },
+        {
+          "mutation": "delete red code to satisfy no blood",
+          "expected": "FAIL_POSITIVE_RETENTION"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-024",
+      "title_ko": "양손 타월 윗단 장력·중앙 가림·수영복 가시 창",
+      "keyword_ids": [
+        "K069",
+        "K071",
+        "K196",
+        "K197",
+        "K198",
+        "K207",
+        "K208",
+        "K209",
+        "K210",
+        "K211"
+      ],
+      "prior_card_ids": [
+        "VEL-028",
+        "VEL-029",
+        "VEL-058",
+        "VEL-059",
+        "VEL-060"
+      ],
+      "proposal_kind": "new_relation_trial",
+      "priority": "P0",
+      "target_slots": [
+        "hand_pose",
+        "garment_detail",
+        "prop"
+      ],
+      "owner_scope": "동일 타월의 양쪽 손잡힘, 가로 윗단, 중앙/아랫단, 뒤의 수영복",
+      "required_components_en": [
+        "Each hand grips a declared point on the same towel upper edge.",
+        "The upper edge is tensioned between the hands while the central and lower towel area hangs in front of the torso and pelvis.",
+        "The selected towel coverage remains continuous across the specified front region.",
+        "Only the source-specified small shoulder-strap window of the swimsuit remains visible."
+      ],
+      "directed_relations": [
+        {
+          "subject": "left hand",
+          "type": "grips",
+          "object": "same towel upper-edge point A"
+        },
+        {
+          "subject": "right hand",
+          "type": "grips",
+          "object": "same towel upper-edge point B"
+        },
+        {
+          "subject": "towel front panel",
+          "type": "occludes",
+          "object": "declared torso and pelvis front"
+        },
+        {
+          "subject": "visible shoulder strap",
+          "type": "belongs_to",
+          "object": "swimsuit behind towel"
+        }
+      ],
+      "source_case_keep_ko": "S07 윗가슴 아래부터 허벅지 위쪽까지의 전면 가림, 대부분 가려진 산호색 수영복과 좁은 어깨끈은 사례 조건이다. 양손·자연스러운 높이 차이도 유지한다.",
+      "optional_realization_ko": "타월이 몸을 감싸는 변형과 양손으로 앞에 드는 변형은 별도다. 원문에 없는 배면 전체 가림·젖음·타월 크기 수치를 강제하지 않는다.",
+      "confusion_boundaries_ko": [
+        "양팔 벌림 때문에 타월 중앙을 열어 전면을 노출",
+        "타월을 두 개로 나눔",
+        "수영복 대신 맨 피부를 가시 창으로 통과",
+        "몸에 두른 타월로 양손 지지 관계를 대체"
+      ],
+      "existing_ids_to_review": [
+        "water_rel_w159",
+        "slot:garment_detail:water_w159"
+      ],
+      "research_source_ids": [
+        "A04",
+        "A06",
+        "A07"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "양손으로 타월 윗단을 잡되 중앙 천이 앞 몸통과 골반을 계속 가려.",
+          "expected": "two grips and continuous front occlusion"
+        },
+        {
+          "input_ko": "몸에 두른 수건, 손은 내려놓음.",
+          "expected": "not two-hand held-front state"
+        },
+        {
+          "mutation": "show swimsuit body through a towel center gap",
+          "expected": "FAIL_COVERAGE"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-025",
+      "title_ko": "형태 오류 배제 아래 남아야 할 미세 비대칭",
+      "keyword_ids": [
+        "K003",
+        "K055",
+        "K069",
+        "K072",
+        "K119",
+        "K120",
+        "K182",
+        "K198",
+        "K207",
+        "K208",
+        "K212",
+        "K216"
+      ],
+      "prior_card_ids": [
+        "VEL-001",
+        "VEL-024",
+        "VEL-028",
+        "VEL-042",
+        "VEL-057",
+        "VEL-058",
+        "VEL-059",
+        "VEL-060"
+      ],
+      "proposal_kind": "claim_guard",
+      "priority": "P0",
+      "target_slots": [
+        "body_pose",
+        "hand_pose",
+        "body_orientation"
+      ],
+      "owner_scope": "주체의 관절 연결, 각 손과 타월, 좌우 지지/어깨 높이",
+      "required_components_en": [
+        "Wrists and shoulders retain anatomically coherent connections for the selected action.",
+        "The request-specific small asymmetries are preserved rather than repaired into forced symmetry.",
+        "Support leg and body alignment remain separate from style or attitude labels."
+      ],
+      "directed_relations": [
+        {
+          "subject": "hand",
+          "type": "connects_through",
+          "object": "same-arm wrist and elbow"
+        },
+        {
+          "subject": "upper arm",
+          "type": "connects_to",
+          "object": "same actor shoulder"
+        },
+        {
+          "subject": "selected asymmetry",
+          "type": "belongs_to",
+          "object": "declared pose or face property"
+        }
+      ],
+      "source_case_keep_ko": "K207/208은 생성된 형태 결함 제외이며 부상 설정이 아니다. S07의 미세 골반 이동·어깨 높이 차이와 S08의 참조 얼굴 자연 비대칭을 보존한다.",
+      "optional_realization_ko": "일반 균형을 contrapposto로 통일하지 않는다. 신체/표정 참조의 각도와 투영은 따로 검토한다.",
+      "confusion_boundaries_ko": [
+        "자연 비대칭을 탈구로 오인",
+        "좋은 해부학을 이유로 요청된 한쪽 지지를 양쪽 동등 지지로 변경",
+        "비대칭 명칭만으로 관절 연결 결함을 허용"
+      ],
+      "existing_ids_to_review": [
+        "contrapposto_weight_shift",
+        "slot:gaze_target:head_eye_counterorientation_relation"
+      ],
+      "research_source_ids": [
+        "A07",
+        "R17"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "오른손을 조금 더 높게 들어 어깨 높이도 자연스럽게 달라.",
+          "expected": "coherent asymmetry"
+        },
+        {
+          "input_ko": "양손이 같은 높이인 대칭 동작.",
+          "expected": "no compulsory asymmetry"
+        },
+        {
+          "mutation": "force symmetric shoulders while unequal hand heights remain",
+          "expected": "FAIL_SOURCE_POSE_RETENTION"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-026",
+      "title_ko": "감정·역할 분해를 선택 가능한 연기 예시로 유지",
+      "keyword_ids": [
+        "K001",
+        "K002",
+        "K003",
+        "K004",
+        "K062",
+        "K064",
+        "K065",
+        "K066",
+        "K067",
+        "K068",
+        "K072",
+        "K083",
+        "K090",
+        "K100",
+        "K101",
+        "K103",
+        "K106",
+        "K121",
+        "K123",
+        "K124",
+        "K125",
+        "K128",
+        "K129",
+        "K130",
+        "K139",
+        "K145",
+        "K156",
+        "K157",
+        "K159",
+        "K161",
+        "K162",
+        "K163",
+        "K166",
+        "K167",
+        "K168",
+        "K174",
+        "K177",
+        "K179",
+        "K204",
+        "K211"
+      ],
+      "prior_card_ids": [
+        "VEL-001",
+        "VEL-027",
+        "VEL-028",
+        "VEL-032",
+        "VEL-035",
+        "VEL-038",
+        "VEL-043",
+        "VEL-044",
+        "VEL-045",
+        "VEL-047",
+        "VEL-051",
+        "VEL-052",
+        "VEL-055",
+        "VEL-056",
+        "VEL-057",
+        "VEL-059",
+        "VEL-060"
+      ],
+      "proposal_kind": "authoring_guidance",
+      "priority": "P1",
+      "target_slots": [
+        "expression",
+        "intent_state",
+        "situation_context"
+      ],
+      "owner_scope": "요청된 정서/역할, 독립 외형 단서와 그 장면 맥락",
+      "required_components_en": [
+        "The requested affect or role remains an authored semantic layer.",
+        "One compatible acting realization may support it without becoming its unique exact geometry.",
+        "Alternative meanings and nonsexual distress contexts remain distinct."
+      ],
+      "directed_relations": [
+        {
+          "subject": "selected acting cue",
+          "type": "supports",
+          "object": "authored scene meaning"
+        },
+        {
+          "subject": "context",
+          "type": "qualifies",
+          "object": "cue interpretation"
+        },
+        {
+          "subject": "alternative affect option",
+          "type": "remains_distinct_from",
+          "object": "other option"
+        }
+      ],
+      "source_case_keep_ko": "32개 해석 예시를 예시로 유지한다. 관능/몽환/경멸/불안과 눈꺼풀/입꼬리의 한 형태를 동의어로 만들지 않는다.",
+      "optional_realization_ko": "같은 의미의 다른 연기가 허용된다. 필요한 경우 원래 사건·반응·결과를 readable prose로 보존하며 예시의 기계적 강제는 피한다.",
+      "confusion_boundaries_ko": [
+        "pensive를 느린 눈 움직임 실측으로 통과",
+        "직접 시선을 자신감·동의의 충분조건으로 사용",
+        "고통/소진을 쾌락이나 자발적 복종으로 재해석"
+      ],
+      "existing_ids_to_review": [],
+      "research_source_ids": [
+        "R05",
+        "A11"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "차분하지만 상대에게 시선을 돌리지 않는 인물.",
+          "expected": "another compatible calm realization"
+        },
+        {
+          "input_ko": "입술이 조금 열렸다는 것만 확인.",
+          "expected": "no inferred emotion or consent"
+        },
+        {
+          "mutation": "make source acting example a universal exact alias",
+          "expected": "FAIL_AUTHORITY"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-027",
+      "title_ko": "참조 외형 비례·투영 변화·성인 대상 조건",
+      "keyword_ids": [
+        "K003",
+        "K212",
+        "K216",
+        "K217"
+      ],
+      "prior_card_ids": [
+        "VEL-001",
+        "VEL-060"
+      ],
+      "proposal_kind": "claim_guard",
+      "priority": "P1",
+      "target_slots": [
+        "subject",
+        "subject_framing",
+        "body_orientation"
+      ],
+      "owner_scope": "요청된 주체 수/성인 설정, 참조의 보이는 얼굴·머리, 촬영 방향",
+      "required_components_en": [
+        "The depicted subject count remains the declared count.",
+        "Adult status remains an explicit subject setting independent of facial appearance inference.",
+        "Visible reference proportions are reviewed under compatible head orientation and perspective before claiming a redesign."
+      ],
+      "directed_relations": [
+        {
+          "subject": "reference proportions",
+          "type": "guide",
+          "object": "requested visible face appearance"
+        },
+        {
+          "subject": "head orientation",
+          "type": "changes_projection_of",
+          "object": "same face"
+        },
+        {
+          "subject": "adult setting",
+          "type": "belongs_to",
+          "object": "declared subject"
+        }
+      ],
+      "source_case_keep_ko": "FACE=LOCKED의 요청된 외형 유지와 ONE ADULT WOMAN의 한 명·성인 설정을 각각 보존한다. 실제 신원/법적 나이는 사진에서 인증하지 않는다.",
+      "optional_realization_ko": "표정·빛·고개 회전에 의한 apparent ratio 차이를 실제 골격 변경으로 단정하지 않는다. 근거 없는 비율 수치/생체 측정은 추가하지 않는다.",
+      "confusion_boundaries_ko": [
+        "카메라 원근을 얼굴폭 확대 재설계로 보정",
+        "청순함을 아동 외형으로 변경",
+        "성인 외형처럼 보임을 실제 성인 확인으로 주장"
+      ],
+      "existing_ids_to_review": [],
+      "research_source_ids": [
+        "A07",
+        "R05"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "성인 한 명의 참조 얼굴 외형을 유지하되 고개를 약간 돌려줘.",
+          "expected": "appearance guidance with projection caveat"
+        },
+        {
+          "input_ko": "사진에서 어려 보이는 얼굴.",
+          "expected": "no age verification"
+        },
+        {
+          "mutation": "add a second reflected person to a one-person portrait",
+          "expected": "FAIL_SUBJECT_COUNT"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    },
+    {
+      "id": "VD-028",
+      "title_ko": "부정 조건의 소유 범위와 긍정 형상 보존",
+      "keyword_ids": [
+        "K189",
+        "K190",
+        "K191",
+        "K192",
+        "K193",
+        "K194",
+        "K195",
+        "K196",
+        "K197",
+        "K198",
+        "K199",
+        "K200",
+        "K201",
+        "K202",
+        "K203",
+        "K204",
+        "K205",
+        "K206",
+        "K207",
+        "K208",
+        "K007",
+        "K027",
+        "K031",
+        "K042",
+        "K048",
+        "K066",
+        "K157",
+        "K163",
+        "K209",
+        "K210",
+        "K213",
+        "K214",
+        "K215"
+      ],
+      "prior_card_ids": [
+        "VEL-003",
+        "VEL-010",
+        "VEL-014",
+        "VEL-020",
+        "VEL-028",
+        "VEL-049",
+        "VEL-052",
+        "VEL-058",
+        "VEL-059",
+        "VEL-060"
+      ],
+      "proposal_kind": "negative_firewall_plan",
+      "priority": "P0",
+      "target_slots": [
+        "garment_detail",
+        "expression",
+        "prop",
+        "ambient_particle"
+      ],
+      "owner_scope": "원래 부정 지시의 대상과 동시에 보존해야 할 의상·표정·장비·색",
+      "required_components_en": [
+        "Each exclusion retains its source owner, context and polarity.",
+        "Allowed garment fit, slit, weapon, colored light and quiet expression remain intact under their relevant exclusions.",
+        "OR alternatives remain alternatives, and source-specific coverage does not become a universal rule."
+      ],
+      "directed_relations": [
+        {
+          "subject": "source exclusion",
+          "type": "constrains",
+          "object": "its declared target property"
+        },
+        {
+          "subject": "retained positive component",
+          "type": "coexists_with",
+          "object": "scoped exclusion"
+        },
+        {
+          "subject": "alternative options",
+          "type": "remain_in",
+          "object": "authored OR relation"
+        }
+      ],
+      "source_case_keep_ko": "20개 원래 부정 지시를 positive retrieval로 뒤집지 않는다. no gore/no blood 아래 전투 장비·붉은 빛은 남기고, 노골적 표현 금지 아래 원래 핏/슬릿은 남긴다.",
+      "optional_realization_ko": "타월·갑옷·상처 배제·소재 불투명을 다른 원자료에 전파하지 않는다. 제외조건을 더 안전한 새로운 장면으로 바꾸는 대신 원래 허용된 형상을 보존한다.",
+      "confusion_boundaries_ko": [
+        "nudity/lingerie 같은 부정 토큰을 새 후보 검색 요청으로 사용",
+        "no blood로 모든 빨강을 제거",
+        "관능성 배제로 모든 표정을 삭제",
+        "원문의 OR를 all-of로 강제"
+      ],
+      "existing_ids_to_review": [
+        "pfe_slit",
+        "pfe_opaque_fit",
+        "slot:light_type:status_led_glow"
+      ],
+      "research_source_ids": [
+        "A06",
+        "A10",
+        "R02"
+      ],
+      "regression_examples": [
+        {
+          "input_ko": "원래 허벅지 시작 슬릿과 몸에 맞는 긴 드레스는 남기고 추가 노출은 없어.",
+          "expected": "positive slit and scoped exclusion coexist"
+        },
+        {
+          "input_ko": "붉은 기계 발광은 유지하고 혈흔은 제외.",
+          "expected": "color source retained"
+        },
+        {
+          "mutation": "route negative lingerie token into wardrobe selection",
+          "expected": "FAIL_NEGATION_FIREWALL"
+        }
+      ],
+      "minimum_view_ko": "모든 선택된 소유자·경계·관계가 동시에 읽히는 화면. 세부 질감은 native 크기로 추가 확인한다.",
+      "runtime_ready": false,
+      "activation_policy": "후보 조회는 frozen core 이후의 선택 도움이다. 키워드·유사도만으로 hard 의무를 만들지 않는다. 요청에 명시된 구성은 후보를 고르지 않아도 보존한다.",
+      "evidence_status": "source-derived paraphrase plus researcher-designed relations; historical original and native pixels not independently authenticated",
+      "pixel_gate": "Every selected component and directed relation must be visible on its declared owner. A wrong owner, substitute, or partial realization fails; unavailable or blocked evidence remains unscored."
+    }
+  ]
+}

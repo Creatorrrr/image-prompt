@@ -1,0 +1,889 @@
+{
+  "status": "PROPOSED_NOT_RUN",
+  "drafts": [
+    {
+      "id": "VD-DRAFT-001",
+      "card_id": "VD-001",
+      "kind": "new_relation_trial",
+      "proposed_slots": [
+        "wardrobe_style",
+        "garment_detail",
+        "wearable_accessory"
+      ],
+      "semantic_caption_en": "The vest waist panel has a continuous closed front over the inner top.; The side straps and panels ascend along the sides while the central upper-chest area retains the inner top and tie.; The jacket opening reveals the selected inner layers without merging their edges.",
+      "concept_units": [
+        "The vest waist panel has a continuous closed front over the inner top.",
+        "The side straps and panels ascend along the sides while the central upper-chest area retains the inner top and tie.",
+        "The jacket opening reveals the selected inner layers without merging their edges."
+      ],
+      "relations": [
+        {
+          "subject": "vest waist panel",
+          "type": "lies_over",
+          "object": "inner top waist region"
+        },
+        {
+          "subject": "side straps",
+          "type": "attach_to",
+          "object": "vest side panels"
+        },
+        {
+          "subject": "jacket opening",
+          "type": "reveals",
+          "object": "inner top and vest"
+        },
+        {
+          "subject": "tie",
+          "type": "lies_over",
+          "object": "inner top central front"
+        }
+      ],
+      "source_case_parameters_ko": "S02 문맥: 검정 베스트·흰색 U넥 골지 탑·검정 가죽 넥타이·파란 칼라·핀스트라이프 재킷을 사례 조건으로 보존한다. 닫힌 허리 앞판과 열린 상흉부 중앙은 서로 다른 영역이다.",
+      "optional_parameters_ko": "일반형의 색·문양·버클 수·숨은 패드 치수는 요청에서 따로 정한다. busk, lacing, boning을 자동 추가하지 않는다.",
+      "existing_ids_to_review": [
+        "slot:wardrobe_style:clt_ct023_v2",
+        "slot:wardrobe_style:y2kr_corset_top",
+        "slot:garment_detail:ccx_cc26_01"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-002",
+      "card_id": "VD-002",
+      "kind": "extend_review",
+      "proposed_slots": [
+        "wardrobe_style",
+        "texture",
+        "garment_detail"
+      ],
+      "semantic_caption_en": "Raised knit ribs and recessed channels repeat on the declared top surface.; The selected stripe pattern follows the jacket panels without becoming raised knit ribs.; Seams remain garment construction boundaries rather than skin marks.",
+      "concept_units": [
+        "Raised knit ribs and recessed channels repeat on the declared top surface.",
+        "The selected stripe pattern follows the jacket panels without becoming raised knit ribs.",
+        "Seams remain garment construction boundaries rather than skin marks."
+      ],
+      "relations": [
+        {
+          "subject": "raised ribs",
+          "type": "belong_to",
+          "object": "top fabric"
+        },
+        {
+          "subject": "pinstripes",
+          "type": "follow_surface_of",
+          "object": "jacket panels"
+        },
+        {
+          "subject": "seam channels",
+          "type": "divide",
+          "object": "garment panels"
+        }
+      ],
+      "source_case_parameters_ko": "K009의 U자 목선·흰 바탕·세로 골, S02 재킷의 핀스트라이프는 해당 사례 안에서 보존한다.",
+      "optional_parameters_ko": "골 간격의 변화는 편직 종류·당김·관점에 따른 변형 후보다. 모든 골지를 일정 치수나 동일 신장률로 고정하지 않는다.",
+      "existing_ids_to_review": [
+        "y2kr_rib_tank",
+        "sw_rib",
+        "vg_faille_crossgrain_ribs_profile",
+        "slot:wardrobe_style:y2kr_rib_tank"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-003",
+      "card_id": "VD-003",
+      "kind": "new_relation_trial",
+      "proposed_slots": [
+        "garment_detail",
+        "wearable_accessory"
+      ],
+      "semantic_caption_en": "One strap has left its shoulder support and lies loosely on the outside of that upper arm.; The opposite strap remains over its own shoulder.; Both straps retain their declared garment attachment endpoints.",
+      "concept_units": [
+        "One strap has left its shoulder support and lies loosely on the outside of that upper arm.",
+        "The opposite strap remains over its own shoulder.",
+        "Both straps retain their declared garment attachment endpoints."
+      ],
+      "relations": [
+        {
+          "subject": "fallen strap",
+          "type": "rests_on",
+          "object": "same-side upper arm"
+        },
+        {
+          "subject": "retained strap",
+          "type": "passes_over",
+          "object": "opposite shoulder"
+        },
+        {
+          "subject": "strap endpoints",
+          "type": "attach_to",
+          "object": "same garment panels"
+        }
+      ],
+      "source_case_parameters_ko": "K030의 한쪽 상태와 다른 쪽 잔존 지지를 보존한다. 끈을 내린 행위자나 미래의 탈의는 주어지지 않았다.",
+      "optional_parameters_ko": "끈의 좌우는 요청으로 결정한다. 끈 폭·소재·늘어진 곡선 크기는 독립 변수다.",
+      "existing_ids_to_review": [
+        "pfe_one_shoulder",
+        "slot:garment_detail:pfe_one_shoulder_candidate"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-004",
+      "card_id": "VD-004",
+      "kind": "extend_review",
+      "proposed_slots": [
+        "garment_detail",
+        "surface_material"
+      ],
+      "semantic_caption_en": "Openwork cells belong to the attached lace strip.; The base garment remains a separate surface with its own opacity.; A neckline opening exposes only its declared bounded region.",
+      "concept_units": [
+        "Openwork cells belong to the attached lace strip.",
+        "The base garment remains a separate surface with its own opacity.",
+        "A neckline opening exposes only its declared bounded region."
+      ],
+      "relations": [
+        {
+          "subject": "lace strip",
+          "type": "attaches_along",
+          "object": "base garment edge"
+        },
+        {
+          "subject": "openwork cells",
+          "type": "interrupt",
+          "object": "lace strip coverage"
+        },
+        {
+          "subject": "neckline boundary",
+          "type": "bounds",
+          "object": "declared exposed region"
+        }
+      ],
+      "source_case_parameters_ko": "원문이 명시한 가슴골은 지우지 않고 나머지 의복 가림도 남긴다. 레이스의 빈 셀은 그 아래 바탕층에 가려질 수 있다.",
+      "optional_parameters_ko": "꽃무늬·스캘럽 한 가지를 모든 lace trim의 필수 도안으로 고정하지 않는다. 투과도는 해당 원단/영역에만 적용한다.",
+      "existing_ids_to_review": [
+        "lace_trim_attached_edge",
+        "slot:garment_detail:lace_trim_edge",
+        "decolletage_neckline_exposure"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-006",
+      "card_id": "VD-006",
+      "kind": "new_relation_trial",
+      "proposed_slots": [
+        "surface_material",
+        "focus",
+        "garment_detail"
+      ],
+      "semantic_caption_en": "Condensation droplets or a scattering haze occupy a localized patch of the mirror surface.; The reflected image loses local contrast through that patch rather than the whole scene acquiring uniform blur.; The requested face-focus hierarchy remains readable through the selected usable viewing region.",
+      "concept_units": [
+        "Condensation droplets or a scattering haze occupy a localized patch of the mirror surface.",
+        "The reflected image loses local contrast through that patch rather than the whole scene acquiring uniform blur.",
+        "The requested face-focus hierarchy remains readable through the selected usable viewing region."
+      ],
+      "relations": [
+        {
+          "subject": "condensation patch",
+          "type": "lies_on",
+          "object": "mirror front surface"
+        },
+        {
+          "subject": "scattering patch",
+          "type": "attenuates",
+          "object": "local reflected image contrast"
+        },
+        {
+          "subject": "selected focus",
+          "type": "prioritizes",
+          "object": "requested face plane"
+        }
+      ],
+      "source_case_parameters_ko": "K043의 김 서림·물방울 소유자를 거울로 유지하고 K079의 얼굴 주 초점을 별도로 보존한다.",
+      "optional_parameters_ko": "물막이 항상 희거나 불투명한 것은 아니다. 닦인 영역·흐른 자국·방울 크기는 원문/선택에 있을 때만 사용한다.",
+      "existing_ids_to_review": [
+        "slot:texture:condensation_window_smear_texture",
+        "rb_glass_reflection_transmission"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-007",
+      "card_id": "VD-007",
+      "kind": "new_relation_trial",
+      "proposed_slots": [
+        "wearable_accessory",
+        "garment_detail"
+      ],
+      "semantic_caption_en": "A rigid circular metal perimeter is attached at the front center of the declared choker band.; Its center is an actual aperture rather than a solid round medallion.; The band follows the neck while the rigid ring retains its own shape.",
+      "concept_units": [
+        "A rigid circular metal perimeter is attached at the front center of the declared choker band.",
+        "Its center is an actual aperture rather than a solid round medallion.",
+        "The band follows the neck while the rigid ring retains its own shape."
+      ],
+      "relations": [
+        {
+          "subject": "ring fitting",
+          "type": "attaches_to",
+          "object": "choker front center"
+        },
+        {
+          "subject": "ring perimeter",
+          "type": "bounds",
+          "object": "open aperture"
+        },
+        {
+          "subject": "choker band",
+          "type": "follows_contour_of",
+          "object": "neck"
+        }
+      ],
+      "source_case_parameters_ko": "S04의 검정 띠와 은색 O-ring은 사례값이다. 고리 안으로 보이는 대상은 실제 시점·겹침에 맞춘다.",
+      "optional_parameters_ko": "금속 반사와 얕은 접촉 그림자는 광원/시점에 따른 실현 단서다. 고리가 있다고 사슬·견인·조임을 추가하지 않는다.",
+      "existing_ids_to_review": [
+        "slot:wearable_accessory:ctx_c019",
+        "slot:wearable_accessory:y2kr_grommet",
+        "slot:wearable_accessory:y2kr_tattoo_choker"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-009",
+      "card_id": "VD-009",
+      "kind": "extend_review",
+      "proposed_slots": [
+        "wearable_accessory",
+        "garment_detail"
+      ],
+      "semantic_caption_en": "The selected chain has visible attachment endpoints on the declared garment hardware.; The loose span sags between its supports while the links remain distinct from the flexible strap.; Buckles connect their own strap ends and panels.",
+      "concept_units": [
+        "The selected chain has visible attachment endpoints on the declared garment hardware.",
+        "The loose span sags between its supports while the links remain distinct from the flexible strap.",
+        "Buckles connect their own strap ends and panels."
+      ],
+      "relations": [
+        {
+          "subject": "chain endpoint A",
+          "type": "attaches_to",
+          "object": "garment anchor A"
+        },
+        {
+          "subject": "chain endpoint B",
+          "type": "attaches_to",
+          "object": "garment anchor B"
+        },
+        {
+          "subject": "loose chain span",
+          "type": "hangs_between",
+          "object": "two garment anchors"
+        }
+      ],
+      "source_case_parameters_ko": "S03 허리·골반의 느슨한 장식 연결과 S02 버클은 소유자와 위치를 섞지 않는다.",
+      "optional_parameters_ko": "사슬의 모양은 길이·끝점 높이·자세에 따른다. 한 끝에 매단 펜던트는 별도 대안으로 다룬다.",
+      "existing_ids_to_review": [
+        "slot:wearable_accessory:y2kr_chain_strap",
+        "slot:wearable_accessory:unif_lapel_chain_separate_inner_neck"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-010",
+      "card_id": "VD-010",
+      "kind": "new_relation_trial",
+      "proposed_slots": [
+        "body_pose",
+        "contact_point",
+        "texture"
+      ],
+      "semantic_caption_en": "The resting body has the selected support contacts without floating or penetrating.; The soft bedding depression occurs directly under the declared contact patch.; The adjacent bedding remains relatively less compressed and traceable as the same surface.",
+      "concept_units": [
+        "The resting body has the selected support contacts without floating or penetrating.",
+        "The soft bedding depression occurs directly under the declared contact patch.",
+        "The adjacent bedding remains relatively less compressed and traceable as the same surface."
+      ],
+      "relations": [
+        {
+          "subject": "head or shoulder",
+          "type": "rests_on",
+          "object": "selected pillow patch"
+        },
+        {
+          "subject": "body contact patch",
+          "type": "deforms",
+          "object": "local bedding region"
+        },
+        {
+          "subject": "free hand",
+          "type": "remains_near",
+          "object": "declared head or neck position"
+        }
+      ],
+      "source_case_parameters_ko": "S03의 베개·긴 은백색 머리 퍼짐은 사례 조건이다. 손을 목 근처에 둔 휴식을 목 압박으로 바꾸지 않는다.",
+      "optional_parameters_ko": "모든 supine 자세에 베개·긴 머리·침대나 접촉 주름을 추가하지 않는다. 우연히 시선이 만남·잠들기 전은 서사다.",
+      "existing_ids_to_review": [
+        "pv_profile_supine",
+        "pv_profile_side_lying"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-011",
+      "card_id": "VD-011",
+      "kind": "new_relation_trial",
+      "proposed_slots": [
+        "expression",
+        "lip_finish",
+        "body_pose"
+      ],
+      "semantic_caption_en": "The lips retain a small gap without a large jaw drop.; In the S07 case the teeth remain concealed while the requested quiet expression persists.; Source-specified small shoulder and pelvic asymmetries survive anatomy-defect exclusions.",
+      "concept_units": [
+        "The lips retain a small gap without a large jaw drop.",
+        "In the S07 case the teeth remain concealed while the requested quiet expression persists.",
+        "Source-specified small shoulder and pelvic asymmetries survive anatomy-defect exclusions."
+      ],
+      "relations": [
+        {
+          "subject": "lip gap",
+          "type": "belongs_to",
+          "object": "subject mouth"
+        },
+        {
+          "subject": "teeth",
+          "type": "remain_occluded_by",
+          "object": "selected lip-jaw configuration"
+        },
+        {
+          "subject": "hands and shoulders",
+          "type": "remain_connected_in",
+          "object": "declared towel-holding posture"
+        }
+      ],
+      "source_case_parameters_ko": "1–2 mm는 요청 수치로 보존하지만 픽셀 스케일 없는 사진으로 실측 PASS를 주장하지 않는다. S07 치아 비노출을 모든 parted lips의 뜻으로 일반화하지 않는다.",
+      "optional_parameters_ko": "편안한 눈꺼풀은 반쯤 감은 눈·졸음의 고정 형상이 아니다. 미세 비대칭의 방향/크기도 요청 범위다.",
+      "existing_ids_to_review": [
+        "ae_profile_lip_press",
+        "ae_profile_lip_tighten",
+        "contrapposto_weight_shift"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-012",
+      "card_id": "VD-012",
+      "kind": "extend_review",
+      "proposed_slots": [
+        "gaze_target",
+        "gaze_engagement",
+        "body_orientation",
+        "expression"
+      ],
+      "semantic_caption_en": "The selected gaze target is retained independently of head orientation.; A reflected-face target corresponds to the same depicted actor rather than a second person.; A raised chin may coexist with eyes directed toward the declared interlocutor.",
+      "concept_units": [
+        "The selected gaze target is retained independently of head orientation.",
+        "A reflected-face target corresponds to the same depicted actor rather than a second person.",
+        "A raised chin may coexist with eyes directed toward the declared interlocutor."
+      ],
+      "relations": [
+        {
+          "subject": "eyes",
+          "type": "look_toward",
+          "object": "selected target"
+        },
+        {
+          "subject": "head orientation",
+          "type": "belongs_to",
+          "object": "same actor"
+        },
+        {
+          "subject": "mirror image",
+          "type": "corresponds_to",
+          "object": "depicted actor"
+        }
+      ],
+      "source_case_parameters_ko": "S07은 렌즈, S06은 자기 거울상, S14는 상대 인물을 목표로 한다. 얼굴을 보는 POV의 목표도 유지한다.",
+      "optional_parameters_ko": "눈·머리 방향이 항상 일치해야 한다는 규칙을 만들지 않는다. 시선 머묾·움직임을 따라가지 않음은 정지 이미지로 시간 검증되지 않는다.",
+      "existing_ids_to_review": [
+        "slot:gaze_target:head_eye_counterorientation_relation",
+        "slot:gaze_engagement:pv_gaze_direct"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-013",
+      "card_id": "VD-013",
+      "kind": "extend_review",
+      "proposed_slots": [
+        "camera_height",
+        "camera_direction",
+        "subject_framing",
+        "focus"
+      ],
+      "semantic_caption_en": "Camera height is specified relative to the declared observer and subject.; The camera axis retains its named face target.; Viewing distance, projected proportions and the selected focus plane are recorded separately.",
+      "concept_units": [
+        "Camera height is specified relative to the declared observer and subject.",
+        "The camera axis retains its named face target.",
+        "Viewing distance, projected proportions and the selected focus plane are recorded separately."
+      ],
+      "relations": [
+        {
+          "subject": "camera optical axis",
+          "type": "points_toward",
+          "object": "declared face target"
+        },
+        {
+          "subject": "camera viewpoint",
+          "type": "has_height_relative_to",
+          "object": "observer or subject"
+        },
+        {
+          "subject": "focus plane",
+          "type": "prioritizes",
+          "object": "declared face and necessary relation"
+        }
+      ],
+      "source_case_parameters_ko": "S15 바닥 가까운 눈 위치와 얼굴을 올려다봄은 비성적 시점이다. K079 얼굴 초점을 재질 강조를 이유로 옮기지 않는다.",
+      "optional_parameters_ko": "같은 framing은 크롭으로도 만들 수 있으므로 close-up만으로 실제 거리 실측을 주장하지 않는다. 렌즈 초점거리만으로 원근을 확정하지 않는다.",
+      "existing_ids_to_review": [
+        "slot:camera_height:water_w191"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-014",
+      "card_id": "VD-014",
+      "kind": "new_relation_trial",
+      "proposed_slots": [
+        "surreal_physics_detail",
+        "relational_action",
+        "ambient_particle"
+      ],
+      "semantic_caption_en": "The selected barrier lies between the incoming effect and the protected figure.; The figure remains partly readable behind the barrier surface.; The localized impact zone occurs where the incoming path meets that surface rather than on the figure.",
+      "concept_units": [
+        "The selected barrier lies between the incoming effect and the protected figure.",
+        "The figure remains partly readable behind the barrier surface.",
+        "The localized impact zone occurs where the incoming path meets that surface rather than on the figure."
+      ],
+      "relations": [
+        {
+          "subject": "incoming effect",
+          "type": "meets",
+          "object": "barrier contact zone"
+        },
+        {
+          "subject": "barrier",
+          "type": "lies_in_front_of",
+          "object": "protected figure"
+        },
+        {
+          "subject": "impact particles",
+          "type": "originate_near",
+          "object": "declared contact zone"
+        },
+        {
+          "subject": "cloak attachment",
+          "type": "remains_on",
+          "object": "same actor shoulder"
+        }
+      ],
+      "source_case_parameters_ko": "S10의 teen/young adult 혼용은 비성적 판타지 액션으로만 유지한다. white-gold 입자는 해당 충돌 효과의 색 조건이다.",
+      "optional_parameters_ko": "막의 문양·형태, 모든 입자의 초점 차이·속도는 고정하지 않는다. 원문 없는 신체 명중은 추가하지 않는다.",
+      "existing_ids_to_review": [
+        "slot:ambient_particle:egr_localized_suspended_particles"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-015",
+      "card_id": "VD-015",
+      "kind": "extend_review",
+      "proposed_slots": [
+        "prop",
+        "wearable_accessory",
+        "garment_detail"
+      ],
+      "semantic_caption_en": "The external back equipment is connected to a visible support on the same torso.; Equipment arms remain distinct from biological limbs.; The specified prop count, carried state and support connections are independently preserved.",
+      "concept_units": [
+        "The external back equipment is connected to a visible support on the same torso.",
+        "Equipment arms remain distinct from biological limbs.",
+        "The specified prop count, carried state and support connections are independently preserved."
+      ],
+      "relations": [
+        {
+          "subject": "equipment arms",
+          "type": "attach_to",
+          "object": "back frame"
+        },
+        {
+          "subject": "back frame",
+          "type": "mounts_on",
+          "object": "same actor external armor"
+        },
+        {
+          "subject": "declared weapons",
+          "type": "remain_in",
+          "object": "selected held holstered or mounted state"
+        }
+      ],
+      "source_case_parameters_ko": "S16 검정·흰색·은색 외장과 작은 주황 관절 발광은 해당 사례 변형에만 둔다. 붉은 코드/기계 발광과 색 소유자를 분리한다.",
+      "optional_parameters_ko": "장비 수와 방향, 색을 미래 무장의 보편 형상으로 고정하지 않는다. 등 연결이 읽히지 않으면 실제 연결 PASS를 주장하지 않는다.",
+      "existing_ids_to_review": [
+        "slot:prop:real_holstered_service_pistol",
+        "slot:action:carrying_holstered_real_sidearm"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-016",
+      "card_id": "VD-016",
+      "kind": "new_relation_trial",
+      "proposed_slots": [
+        "contact_point",
+        "relational_action",
+        "body_pose"
+      ],
+      "semantic_caption_en": "The declared shoe contacts the declared upper-chest clothing patch of the other actor.; That local soft cloth patch responds at the same contact location.; The other foot supports the standing actor on the floor independently of the contact shoe.",
+      "concept_units": [
+        "The declared shoe contacts the declared upper-chest clothing patch of the other actor.",
+        "That local soft cloth patch responds at the same contact location.",
+        "The other foot supports the standing actor on the floor independently of the contact shoe."
+      ],
+      "relations": [
+        {
+          "subject": "actor A contact shoe",
+          "type": "contacts",
+          "object": "actor B upper-chest clothing patch"
+        },
+        {
+          "subject": "actor A other foot",
+          "type": "rests_on",
+          "object": "floor"
+        },
+        {
+          "subject": "actor A support leg",
+          "type": "supports",
+          "object": "actor A torso"
+        },
+        {
+          "subject": "observer eye viewpoint",
+          "type": "belongs_to",
+          "object": "actor B"
+        }
+      ],
+      "source_case_parameters_ko": "S15는 비성적 강압 문맥으로만 보존한다. 접촉 도구가 신발이라는 뒤쪽 분해의 추가값은 원문 인증 전 사례 주장으로 기록한다.",
+      "optional_parameters_ko": "힘의 수치, 통증, 호흡 손상, 반복 타격, 노출을 추가하지 않는다. 장래 중립 검증은 별도 성인 가상 인물과 비성적 장면으로 설계한다.",
+      "existing_ids_to_review": [
+        "slot:contact_point:pv_foot_wall"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-018",
+      "card_id": "VD-018",
+      "kind": "new_relation_trial",
+      "proposed_slots": [
+        "proxemics",
+        "contact_point",
+        "relational_action"
+      ],
+      "semantic_caption_en": "The raised or extended hand and the other actor face remain separated by a readable gap.; Both endpoints and the intervening space are framed together.; The dialogue or rebuff context remains separate from physical striking.",
+      "concept_units": [
+        "The raised or extended hand and the other actor face remain separated by a readable gap.",
+        "Both endpoints and the intervening space are framed together.",
+        "The dialogue or rebuff context remains separate from physical striking."
+      ],
+      "relations": [
+        {
+          "subject": "speaker hand",
+          "type": "remains_separated_from",
+          "object": "other actor face"
+        },
+        {
+          "subject": "visible interval",
+          "type": "lies_between",
+          "object": "same hand and same face"
+        },
+        {
+          "subject": "actors",
+          "type": "occupy_sides_of",
+          "object": "declared threshold"
+        }
+      ],
+      "source_case_parameters_ko": "S14의 비성적 언쟁, 치켜든 턱, 상한 자존심은 신체 부상·폭행으로 바꾸지 않는다. 문턱은 source-case 공간값이다.",
+      "optional_parameters_ko": "손을 가리거나 화면 밖으로 보내 비접촉을 통과시키지 않는다. 원근상 겹쳐 경계가 확인되지 않으면 미관찰이다.",
+      "existing_ids_to_review": [
+        "slot:contact_point:no_contact_just_close"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-019",
+      "card_id": "VD-019",
+      "kind": "extend_review",
+      "proposed_slots": [
+        "action",
+        "hand_pose",
+        "prop"
+      ],
+      "semantic_caption_en": "A lowered sword points toward the floor with its holding arm down beside the actor.; A glove-removal state retains the pulling hand, the glove edge and the other wrist.; A partially drawn prop remains aligned with its storage opening without being converted to a discharged or striking state.",
+      "concept_units": [
+        "A lowered sword points toward the floor with its holding arm down beside the actor.",
+        "A glove-removal state retains the pulling hand, the glove edge and the other wrist.",
+        "A partially drawn prop remains aligned with its storage opening without being converted to a discharged or striking state."
+      ],
+      "relations": [
+        {
+          "subject": "holding hand",
+          "type": "grips",
+          "object": "declared prop"
+        },
+        {
+          "subject": "glove-removal hand",
+          "type": "grasps",
+          "object": "other glove edge"
+        },
+        {
+          "subject": "partly drawn blade",
+          "type": "continues_into",
+          "object": "same sheath opening"
+        }
+      ],
+      "source_case_parameters_ko": "S09 전투 후 정리 동작과 S19 발도 도중은 서로 다른 사례다. 느리게·막 끝난이라는 시간 수식은 별도 서사로 유지한다.",
+      "optional_parameters_ko": "세 상태를 한 인물/한 손에 무조건 동시 합치지 않는다. 재장전의 기술 절차나 실제 무기 성능은 연구 범위가 아니다.",
+      "existing_ids_to_review": [
+        "slot:action:carrying_holstered_real_sidearm"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-020",
+      "card_id": "VD-020",
+      "kind": "new_relation_trial",
+      "proposed_slots": [
+        "aftermath_trace",
+        "surface_material",
+        "ambient_particle"
+      ],
+      "semantic_caption_en": "The broken glass retains angular transparent or reflective fragment surfaces.; The selected opaque rubble remains a different material with traceable broken faces.; Damage belongs to the declared environment object rather than the character body.",
+      "concept_units": [
+        "The broken glass retains angular transparent or reflective fragment surfaces.",
+        "The selected opaque rubble remains a different material with traceable broken faces.",
+        "Damage belongs to the declared environment object rather than the character body."
+      ],
+      "relations": [
+        {
+          "subject": "glass fragments",
+          "type": "belong_to",
+          "object": "declared broken glass object"
+        },
+        {
+          "subject": "opaque rubble",
+          "type": "belongs_to",
+          "object": "declared damaged structure"
+        },
+        {
+          "subject": "fragment reflection",
+          "type": "receives",
+          "object": "local light"
+        }
+      ],
+      "source_case_parameters_ko": "원문의 일부 파손·아주 옅은 먼지와 S16의 도시 폐허/검은 연기는 규모와 소유자를 분리한다.",
+      "optional_parameters_ko": "모든 유리 모서리의 반짝임이나 모든 돌의 무광을 의무화하지 않는다. 빛·거칠기·오염 상태에 따라 가시 단서를 정한다.",
+      "existing_ids_to_review": [
+        "rb_glass_reflection_transmission"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-021",
+      "card_id": "VD-021",
+      "kind": "new_relation_trial",
+      "proposed_slots": [
+        "contact_point",
+        "surface_material",
+        "body_pose"
+      ],
+      "semantic_caption_en": "The declared contacting part meets the glass plane rather than stopping across a visible gap.; A pressed depiction has a bounded local contact-response cue, consistent with the stated material.; Reflected overlap is recorded as an optical image and does not substitute for contact geometry.",
+      "concept_units": [
+        "The declared contacting part meets the glass plane rather than stopping across a visible gap.",
+        "A pressed depiction has a bounded local contact-response cue, consistent with the stated material.",
+        "Reflected overlap is recorded as an optical image and does not substitute for contact geometry."
+      ],
+      "relations": [
+        {
+          "subject": "declared body or cloth patch",
+          "type": "contacts",
+          "object": "glass plane"
+        },
+        {
+          "subject": "local flattening or cloth compression",
+          "type": "belongs_to",
+          "object": "contacting soft patch"
+        },
+        {
+          "subject": "reflection",
+          "type": "is_optical_image_of",
+          "object": "nearby scene"
+        }
+      ],
+      "source_case_parameters_ko": "K169 분해의 바로 가까이에 놓임 OR 반사 겹침만으로 pressed를 통과시키지 않는다. 원래의 접촉 의도는 보존한다.",
+      "optional_parameters_ko": "원문에 없는 강한 변형, 밀어붙인 행위자, 부상은 추가하지 않는다. 지정된 접촉 부위는 frozen core로 해결한다.",
+      "existing_ids_to_review": [
+        "rb_glass_reflection_transmission"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-023",
+      "card_id": "VD-023",
+      "kind": "new_relation_trial",
+      "proposed_slots": [
+        "light_type",
+        "ambient_particle",
+        "surface_material",
+        "color"
+      ],
+      "semantic_caption_en": "Airborne red symbols remain separated luminous shapes rather than surface smears.; The subtle machine light originates inside its declared seam or aperture.; Any red reflection belongs to the adjacent receiver surface and follows the selected light geometry.",
+      "concept_units": [
+        "Airborne red symbols remain separated luminous shapes rather than surface smears.",
+        "The subtle machine light originates inside its declared seam or aperture.",
+        "Any red reflection belongs to the adjacent receiver surface and follows the selected light geometry."
+      ],
+      "relations": [
+        {
+          "subject": "code symbols",
+          "type": "occupy",
+          "object": "declared air volume"
+        },
+        {
+          "subject": "machine seam light",
+          "type": "emits_from",
+          "object": "machine aperture"
+        },
+        {
+          "subject": "emitted light",
+          "type": "is_received_on",
+          "object": "adjacent metal edge"
+        },
+        {
+          "subject": "stain",
+          "type": "adheres_to",
+          "object": "separate specified surface"
+        }
+      ],
+      "source_case_parameters_ko": "S16 no blood 아래에도 붉은 코드·진홍 기계 발광은 남긴다. S18 dark red stains는 혈액인지 원문 문맥 없이 판정하지 않는다.",
+      "optional_parameters_ko": "코드 문자의 정확한 텍스트가 없으면 읽히는 임의 주문/문장을 추가하지 않는다. 빨강 하나로 광원 또는 혈액을 진단하지 않는다.",
+      "existing_ids_to_review": [
+        "slot:light_type:status_led_glow",
+        "slot:ambient_particle:egr_localized_suspended_particles"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    },
+    {
+      "id": "VD-DRAFT-024",
+      "card_id": "VD-024",
+      "kind": "new_relation_trial",
+      "proposed_slots": [
+        "hand_pose",
+        "garment_detail",
+        "prop"
+      ],
+      "semantic_caption_en": "Each hand grips a declared point on the same towel upper edge.; The upper edge is tensioned between the hands while the central and lower towel area hangs in front of the torso and pelvis.; The selected towel coverage remains continuous across the specified front region.; Only the source-specified small shoulder-strap window of the swimsuit remains visible.",
+      "concept_units": [
+        "Each hand grips a declared point on the same towel upper edge.",
+        "The upper edge is tensioned between the hands while the central and lower towel area hangs in front of the torso and pelvis.",
+        "The selected towel coverage remains continuous across the specified front region.",
+        "Only the source-specified small shoulder-strap window of the swimsuit remains visible."
+      ],
+      "relations": [
+        {
+          "subject": "left hand",
+          "type": "grips",
+          "object": "same towel upper-edge point A"
+        },
+        {
+          "subject": "right hand",
+          "type": "grips",
+          "object": "same towel upper-edge point B"
+        },
+        {
+          "subject": "towel front panel",
+          "type": "occludes",
+          "object": "declared torso and pelvis front"
+        },
+        {
+          "subject": "visible shoulder strap",
+          "type": "belongs_to",
+          "object": "swimsuit behind towel"
+        }
+      ],
+      "source_case_parameters_ko": "S07 윗가슴 아래부터 허벅지 위쪽까지의 전면 가림, 대부분 가려진 산호색 수영복과 좁은 어깨끈은 사례 조건이다. 양손·자연스러운 높이 차이도 유지한다.",
+      "optional_parameters_ko": "타월이 몸을 감싸는 변형과 양손으로 앞에 드는 변형은 별도다. 원문에 없는 배면 전체 가림·젖음·타월 크기 수치를 강제하지 않는다.",
+      "existing_ids_to_review": [
+        "water_rel_w159",
+        "slot:garment_detail:water_w159"
+      ],
+      "runtime_ready": false,
+      "not_current_runtime_schema": true,
+      "activation": "optional_postcore",
+      "property_footprint_status": "unresolved until every owner and actual effect is mapped under current generic contract"
+    }
+  ]
+}

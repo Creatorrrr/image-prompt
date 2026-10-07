@@ -163,7 +163,7 @@ class VisualGrammarIntegrationTests(unittest.TestCase):
     def test_additive_contexts_preserve_all_existing_fields_and_scope_guards(self):
         inventory = pg.photo_source_manifest.SourceInventory.for_test(SKILL / 'assets',
             candidate_files=tuple(name for name in pg.RESEARCH_EXTENSION_FILENAMES
-                if name != 'photo_prompt_visual_grammar_extension.json'))
+                if name not in {'photo_prompt_visual_grammar_extension.json', 'photo_prompt_vel_appearance_relations_extension.json'}))
         before = pg.load_json(SKILL / 'assets/photo_prompt_tags.json', inventory=inventory)
         for slot, additions in self.extension['existing_slot_context_extensions'].items():
             old = {e['id']: e for e in before['slots'][slot]}

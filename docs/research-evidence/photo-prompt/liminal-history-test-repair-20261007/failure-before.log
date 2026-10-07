@@ -1,0 +1,24 @@
+test_complete_merged_state_and_twenty_one_keeps_remain_exact (liminal_original_probe.LiminalActiveUseKoreanDataCleanupTests.test_complete_merged_state_and_twenty_one_keeps_remain_exact) ... ERROR
+
+======================================================================
+ERROR: test_complete_merged_state_and_twenty_one_keeps_remain_exact (liminal_original_probe.LiminalActiveUseKoreanDataCleanupTests.test_complete_merged_state_and_twenty_one_keeps_remain_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_liminal_active_use_korean_data_cleanup.py", line 100, in test_complete_merged_state_and_twenty_one_keeps_remain_exact
+    self.assertEqual(differences, [('action', 'waiting_in_between_use_space')])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 1271, in load_json
+    data = merge_research_extension(data, extension)
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 726, in merge_research_extension
+    photo_candidate_semantics.extend_slot_contexts(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        slots, extension.get("existing_slot_context_extensions"))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_semantics.py", line 88, in extend_slot_contexts
+    raise ValueError(f"context extension references unknown entry {slot}.{entry_id}")
+ValueError: context extension references unknown entry hand_pose.pv_steepled_fingers
+
+----------------------------------------------------------------------
+Ran 1 test in 1.789s
+
+FAILED (errors=1)
