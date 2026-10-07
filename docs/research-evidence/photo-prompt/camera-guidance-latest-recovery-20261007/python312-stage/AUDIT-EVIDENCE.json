@@ -1,0 +1,167 @@
+{
+  "audits": {
+    "composed-audit.json": {
+      "chosen_candidate_count": 0,
+      "chosen_visual_concept_ids": [],
+      "effective_visual_contract_sha256": null,
+      "failures": [],
+      "pack_id": "f1d5de6f1a273b65",
+      "quality_status": "warn",
+      "render_repair_contract_sha256": null,
+      "status": "pass",
+      "warnings": [
+        {
+          "check": "uncovered_intent",
+          "intent": "rainlit window reflections",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+        },
+        {
+          "check": "uncovered_intent",
+          "intent": "delicate rising steam",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+        },
+        {
+          "check": "uncovered_intent",
+          "intent": "A blue porcelain teacup",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+        }
+      ]
+    },
+    "core-retrieval-audit.json": {
+      "failures": [],
+      "status": "pass"
+    },
+    "ordinary-authorial-audit.json": {
+      "failures": [],
+      "status": "pass",
+      "warnings": []
+    },
+    "runtime-audit.json": {
+      "boundary": "This audit verifies exact text and reference bytes before generation. It does not inspect rendered pixels or establish user-perceived quality.",
+      "effective_visual_contract_sha256": null,
+      "failures": [],
+      "negative_matches_pack": true,
+      "pack_id": "f1d5de6f1a273b65",
+      "reference_count": 0,
+      "render_repair_contract_sha256": null,
+      "runtime_prompt_id": "c1dfaedd352c2358",
+      "schema_version": "photo-image-render-request-audit/v1",
+      "selected_visual_concept_ids": [],
+      "source_intent_lock_sha256": "33bc1d6dd431bd87c29897bd0a393a453787d068d308515ac627548eb30ae16b",
+      "status": "pass"
+    }
+  },
+  "trace_counts": {
+    "audit": {
+      "denials": [],
+      "entropy_read_events": 0,
+      "production_calls": {
+        "__main__._audit_composed_prompt": 1,
+        "__main__.audit_authorial_core": 1,
+        "__main__.audit_composed_prompt": 1,
+        "__main__.audit_core_retrieval": 1,
+        "photo_runtime_sources.capture_sources": 1,
+        "photo_runtime_sources.from_receipt": 1,
+        "photo_runtime_sources.load_generation": 1,
+        "photo_runtime_sources.verify_pack_bindings": 1,
+        "prompt_generator.build_core_slot_index": 1,
+        "prompt_generator.core_slot_focus_queries": 224,
+        "prompt_generator.generate_candidate_pack": 1,
+        "prompt_generator.load_runtime_data": 1,
+        "prompt_generator.load_semantic_index_payload": 1,
+        "prompt_generator.load_visual_profile_index": 1,
+        "prompt_generator.prepare_candidate_source": 1,
+        "prompt_generator.retrieve_core_slots": 2,
+        "prompt_generator.validate_semantic_index_metadata": 1,
+        "prompt_generator.validate_visual_profile_index_metadata": 1
+      },
+      "returncode": 0
+    },
+    "generate": {
+      "denials": [],
+      "entropy_read_events": 0,
+      "production_calls": {
+        "photo_runtime_sources.acquire": 1,
+        "photo_runtime_sources.capture_sources": 3,
+        "photo_runtime_sources.load_generation": 1,
+        "photo_runtime_sources.receipt": 1,
+        "photo_runtime_sources.verify_pack_bindings": 1,
+        "prompt_generator.core_slot_focus_queries": 112,
+        "prompt_generator.generate_candidate_pack": 1,
+        "prompt_generator.load_runtime_data": 1,
+        "prompt_generator.load_semantic_index_payload": 1,
+        "prompt_generator.load_visual_profile_index": 1,
+        "prompt_generator.prepare_candidate_source": 1,
+        "prompt_generator.retrieve_core_slots": 1,
+        "prompt_generator.validate_semantic_index_metadata": 1,
+        "prompt_generator.validate_visual_profile_index_metadata": 1
+      },
+      "returncode": 0
+    },
+    "publish": {
+      "denials": [],
+      "entropy_read_events": 0,
+      "production_calls": {
+        "photo_runtime_sources.capture_sources": 2,
+        "photo_runtime_sources.publish": 1,
+        "prompt_generator.build_core_slot_index": 1,
+        "prompt_generator.load_runtime_data": 1,
+        "prompt_generator.load_semantic_index_payload": 1,
+        "prompt_generator.load_visual_profile_index": 1,
+        "prompt_generator.validate_semantic_index_metadata": 1,
+        "prompt_generator.validate_visual_profile_index_metadata": 1,
+        "validate_photo_prompt_dictionary.validate_source_corpus": 1
+      },
+      "returncode": 0
+    },
+    "runtime": {
+      "denials": [],
+      "entropy_read_events": 0,
+      "production_calls": {
+        "__main__.audit_image_render_request": 1
+      },
+      "returncode": 0
+    },
+    "verify": {
+      "denials": [],
+      "entropy_read_events": 0,
+      "production_calls": {
+        "audit_composed_prompt.audit_authorial_core": 1,
+        "audit_composed_prompt.audit_core_retrieval": 1,
+        "compose_pack_view.build_view": 2,
+        "compose_pack_view.verify_view": 1,
+        "photo_runtime_sources.capture_sources": 2,
+        "photo_runtime_sources.from_receipt": 1,
+        "photo_runtime_sources.load_generation": 1,
+        "photo_runtime_sources.verify_pack_bindings": 1,
+        "prompt_generator.build_core_slot_index": 1,
+        "prompt_generator.core_slot_focus_queries": 224,
+        "prompt_generator.generate_candidate_pack": 1,
+        "prompt_generator.load_runtime_data": 1,
+        "prompt_generator.load_semantic_index_payload": 1,
+        "prompt_generator.load_visual_profile_index": 1,
+        "prompt_generator.prepare_candidate_source": 1,
+        "prompt_generator.retrieve_core_slots": 2,
+        "prompt_generator.validate_semantic_index_metadata": 1,
+        "prompt_generator.validate_visual_profile_index_metadata": 1
+      },
+      "returncode": 0
+    }
+  },
+  "verification": {
+    "baseline_composed_reused_exact": true,
+    "baseline_composed_sha256": "a2c3b08ed5308b9b3cb698aea89c4b4c6655697f5d56878e719038423c024fae",
+    "composer_view_verified": true,
+    "full_receipt_bound_pack_recomputation_equal": true,
+    "generation_id": "22ca4ea2bf0ca757e81dbd17259ca204ab36b9da6405d501e194164c7f4c30c2",
+    "normalized_core_controls_review_equal": true,
+    "original_cli_acquire_calls": 1,
+    "original_cli_source_captures": 2,
+    "pack_file_sha256": "3b36b45978e00f9f70455b5aa7952e26c45b4289e2e49751e5485da324b0a075",
+    "pack_id": "f1d5de6f1a273b65",
+    "seed": 910000,
+    "source_capture_equals_static_and_generation": true,
+    "source_fingerprint": "6762a852bb0bea52bfa468d733f5d5aa29ed681eab21c276239435db98814685",
+    "status": "pass"
+  }
+}
