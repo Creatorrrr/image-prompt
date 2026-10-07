@@ -1,0 +1,2034 @@
+{
+  "schema_version": "research-candidate-drafts/v1",
+  "status": "PROPOSED_NOT_INTEGRATED",
+  "is_runtime_schema": false,
+  "items": [
+    {
+      "draft_id": "egr_gold_ground_sparse_botanical_screen",
+      "semantic_card_id": "EG05",
+      "ko_label": "금박 화면의 식물·여백 배치",
+      "en": "A bounded gold-ground panel carries painted floral or branch motifs.; Unpainted gold intervals remain visible between those motif groups; actual scene branches retain separate owners.",
+      "proposed_slot": "prop",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R12",
+        "A03"
+      ],
+      "concept_units_proposal": [
+        "A bounded gold-ground panel carries painted floral or branch motifs.",
+        "Unpainted gold intervals remain visible between those motif groups; actual scene branches retain separate owners."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "painted_floral_motifs",
+          "type": "lie_on",
+          "object": "gold_ground_panel",
+          "owner_binding": [
+            "background.screen",
+            "screen.painted_motifs"
+          ]
+        },
+        {
+          "subject": "physical_branch",
+          "type": "is_separate_from",
+          "object": "painted_branch_motif",
+          "owner_binding": [
+            "scene.branch",
+            "screen.painted_motifs"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "dense gilded wallpaper across the entire room",
+        "a screen motif changes the subject's ethnicity or historical identity"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_neutral_lowered_upper_lids",
+      "semantic_card_id": "EG07",
+      "ko_label": "위협·졸음과 분리한 낮은 윗눈꺼풀",
+      "en": "The upper eyelid margins cover part of the visible irises.; Visible brow and mouth regions remain relaxed rather than snarling or grinning.",
+      "proposed_slot": "expression",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00"
+      ],
+      "concept_units_proposal": [
+        "The upper eyelid margins cover part of the visible irises.",
+        "Visible brow and mouth regions remain relaxed rather than snarling or grinning."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "upper_lid_margin",
+          "type": "partly_occludes",
+          "object": "same_eye_iris",
+          "owner_binding": [
+            "subject.eyes",
+            "subject.brows",
+            "subject.mouth"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "menacing distant gaze substituted for neutral lowering",
+        "closed eyes or sleep substituted for visible irises"
+      ],
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_tags.json",
+          "slot": "expression",
+          "id": "half_lidded_menacing_distant_gaze"
+        },
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_tags.json",
+          "slot": "eye_detail",
+          "id": "sleepy_half_lidded_eyes"
+        }
+      ],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_off_camera_upward_eyeline",
+      "semantic_card_id": "EG08",
+      "ko_label": "머리 회전과 구분한 위쪽 시선",
+      "en": "Both visible eye regions address the same declared off-camera direction.; The gaze direction is defined separately from head yaw and pitch.",
+      "proposed_slot": "expression",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00",
+        "L07",
+        "L08"
+      ],
+      "concept_units_proposal": [
+        "Both visible eye regions address the same declared off-camera direction.",
+        "The gaze direction is defined separately from head yaw and pitch."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "eye_direction",
+          "type": "points_toward",
+          "object": "declared_off_camera_target",
+          "owner_binding": [
+            "subject.eyes",
+            "camera_axis"
+          ]
+        },
+        {
+          "subject": "head_orientation",
+          "type": "is_separate_from",
+          "object": "eye_direction",
+          "owner_binding": [
+            "subject.eyes",
+            "camera_axis"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "chin lifting alone counts as upward gaze",
+        "each eye points to a different target"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_head_torso_orientation_axes",
+      "semantic_card_id": "EG09",
+      "ko_label": "얼굴·몸통 방향의 축 분리",
+      "en": "Head yaw, pitch and roll are separately declared relative to the camera.; The neck connects continuously to a separately oriented shoulder plane.",
+      "proposed_slot": "body_orientation",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00",
+        "L07",
+        "L08"
+      ],
+      "concept_units_proposal": [
+        "Head yaw, pitch and roll are separately declared relative to the camera.",
+        "The neck connects continuously to a separately oriented shoulder plane."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "head",
+          "type": "connected_by",
+          "object": "subject.neck",
+          "owner_binding": [
+            "subject.head",
+            "subject.neck",
+            "subject.torso",
+            "camera_axis"
+          ]
+        },
+        {
+          "subject": "head_yaw",
+          "type": "measured_relative_to",
+          "object": "camera_axis",
+          "owner_binding": [
+            "subject.head",
+            "subject.neck",
+            "subject.torso",
+            "camera_axis"
+          ]
+        },
+        {
+          "subject": "torso_yaw",
+          "type": "measured_relative_to",
+          "object": "camera_axis",
+          "owner_binding": [
+            "subject.head",
+            "subject.neck",
+            "subject.torso",
+            "camera_axis"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "three-quarter profile conflated with a three-quarter-length crop",
+        "head yaw is added twice as camera angle and relative neck turn"
+      ],
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_portrait_composition.json",
+          "id": "pc_pc02_owner_relation"
+        }
+      ],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_relaxed_lip_separation",
+      "semantic_card_id": "EG10",
+      "ko_label": "작은 입술 간격과 이완",
+      "en": "The upper and lower lip margins remain separate along a small readable gap.; Mouth corners stay relaxed without a wide open mouth.",
+      "proposed_slot": "expression",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00"
+      ],
+      "concept_units_proposal": [
+        "The upper and lower lip margins remain separate along a small readable gap.",
+        "Mouth corners stay relaxed without a wide open mouth."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "upper_lip_margin",
+          "type": "separated_from",
+          "object": "lower_lip_margin",
+          "owner_binding": [
+            "subject.upper_lip",
+            "subject.lower_lip"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "a pout or a broad open mouth",
+        "an exact millimeter measurement inferred from uncalibrated pixels"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_closed_eyes_composed_repose",
+      "semantic_card_id": "EG11",
+      "ko_label": "감은 눈의 별도 상태",
+      "en": "Both selected eye apertures are closed.; The head and shoulders retain the declared composed support.",
+      "proposed_slot": "eye_detail",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00"
+      ],
+      "concept_units_proposal": [
+        "Both selected eye apertures are closed.",
+        "The head and shoulders retain the declared composed support."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "closed_lid_edges",
+          "type": "cover",
+          "object": "eye_apertures",
+          "owner_binding": [
+            "subject.eyes",
+            "subject.posture"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "half-lidded irises count as closed eyes",
+        "sleep, illness or unconsciousness inferred"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_central_vertical_bust_axis",
+      "semantic_card_id": "EG13",
+      "ko_label": "좁은 중앙 수직축의 흉상",
+      "en": "The declared bust crop leaves a readable face and neck.; The selected vertical background element is aligned with the frame's central region.",
+      "proposed_slot": "composition",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00",
+        "L07",
+        "L08"
+      ],
+      "concept_units_proposal": [
+        "The declared bust crop leaves a readable face and neck.",
+        "The selected vertical background element is aligned with the frame's central region."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "bust_crop",
+          "type": "bounded_by",
+          "object": "image.frame",
+          "owner_binding": [
+            "image.frame",
+            "subject.bust",
+            "background.vertical_element"
+          ]
+        },
+        {
+          "subject": "background.vertical_element",
+          "type": "aligned_with",
+          "object": "frame_vertical_axis",
+          "owner_binding": [
+            "image.frame",
+            "subject.bust",
+            "background.vertical_element"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "a full-body crop substitutes for a bust",
+        "the subject must be perfectly mirrored to be centered"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_arcing_branch_frame",
+      "semantic_card_id": "EG14",
+      "ko_label": "꽃가지 아치와 얼굴 여백",
+      "en": "Attached woody branch paths curve around the portrait region.; Branch groups leave the requested facial features readable through their opening.",
+      "proposed_slot": "composition",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R01",
+        "R06",
+        "R07"
+      ],
+      "concept_units_proposal": [
+        "Attached woody branch paths curve around the portrait region.",
+        "Branch groups leave the requested facial features readable through their opening."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "flowers",
+          "type": "attached_to",
+          "object": "scene.branches",
+          "owner_binding": [
+            "scene.branches",
+            "subject.face"
+          ]
+        },
+        {
+          "subject": "branch_arcs",
+          "type": "bracket",
+          "object": "subject.face",
+          "owner_binding": [
+            "scene.branches",
+            "subject.face"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "a floating decorative flower border",
+        "a wreath attached to the head when scene framing was requested"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_dark_lateral_negative_space",
+      "semantic_card_id": "EG15",
+      "ko_label": "좌우의 어두운 여백",
+      "en": "Low-detail dark intervals remain beside the portrait.; Those intervals separate the primary face from peripheral ornament.",
+      "proposed_slot": "composition",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00"
+      ],
+      "concept_units_proposal": [
+        "Low-detail dark intervals remain beside the portrait.",
+        "Those intervals separate the primary face from peripheral ornament."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "dark_intervals",
+          "type": "separate",
+          "object": "portrait_and_ornament",
+          "owner_binding": [
+            "image.left_margin",
+            "image.right_margin",
+            "subject"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "a black vignette counts as scene negative space in every case",
+        "background uniformly loses all material detail"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_asymmetric_botanical_balance",
+      "semantic_card_id": "EG16",
+      "ko_label": "비대칭 꽃군의 균형",
+      "en": "Two selected floral groups retain unequal extents or heights.; Their distribution leaves the face as the declared focal region.",
+      "proposed_slot": "composition",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R12",
+        "A03",
+        "R06",
+        "R07"
+      ],
+      "concept_units_proposal": [
+        "Two selected floral groups retain unequal extents or heights.",
+        "Their distribution leaves the face as the declared focal region."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "left_flower_group",
+          "type": "differs_in_extent_from",
+          "object": "right_flower_group",
+          "owner_binding": [
+            "scene.left_flower_group",
+            "scene.right_flower_group",
+            "subject"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "equal mirrored flower groups",
+        "a specific numerical balance ratio is universal"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_portrait_focus_plane_order",
+      "semantic_card_id": "EG17",
+      "ko_label": "얼굴·레이스·꽃의 초점 평면",
+      "en": "The selected near eye stays readable at its focus plane.; A separate farther flower plane is visibly softer without duplicating physical flowers.",
+      "proposed_slot": "focus",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "L07",
+        "L08"
+      ],
+      "concept_units_proposal": [
+        "The selected near eye stays readable at its focus plane.",
+        "A separate farther flower plane is visibly softer without duplicating physical flowers."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "background_flowers",
+          "type": "farther_from_camera_than",
+          "object": "subject.near_eye",
+          "owner_binding": [
+            "subject.near_eye",
+            "scene.foreground",
+            "scene.background_flowers"
+          ]
+        },
+        {
+          "subject": "foreground_plane",
+          "type": "is_separate_from",
+          "object": "eye_focus_plane",
+          "owner_binding": [
+            "subject.near_eye",
+            "scene.foreground",
+            "scene.background_flowers"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "all foreground lace and eyes are guaranteed equally sharp at any distance",
+        "bokeh light discs substitute for blurred botanical forms",
+        "pe_background_bokeh is a related light-disc alternative, not an equivalent botanical-defocus profile."
+      ],
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_portrait_composition.json",
+          "id": "pc_pc19_owner_relation"
+        }
+      ],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_nape_coiled_bun",
+      "semantic_card_id": "EG18",
+      "ko_label": "목덜미의 낮은 번",
+      "en": "Gathered hair forms a compact coiled mass near the nape.; The bun connects to the same subject's gathered hair rather than floating above the head.",
+      "proposed_slot": "hair_style",
+      "treatment": "ENRICH_EXISTING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00"
+      ],
+      "concept_units_proposal": [
+        "Gathered hair forms a compact coiled mass near the nape.",
+        "The bun connects to the same subject's gathered hair rather than floating above the head."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "bun_mass",
+          "type": "located_near",
+          "object": "subject.nape",
+          "owner_binding": [
+            "subject.hair",
+            "subject.nape"
+          ]
+        },
+        {
+          "subject": "gathered_hair",
+          "type": "continues_into",
+          "object": "bun_mass",
+          "owner_binding": [
+            "subject.hair",
+            "subject.nape"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "a high topknot",
+        "a detached ornamental flower is mistaken for the bun"
+      ],
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_tags.json",
+          "slot": "hair_style",
+          "id": "low_bun_hair"
+        }
+      ],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_brow_level_blunt_fringe",
+      "semantic_card_id": "EG19",
+      "ko_label": "눈썹 높이의 일자 앞머리",
+      "en": "The front hair descends over the forehead to a blunt transverse edge.; The edge lies at the explicitly selected brow-relative height.",
+      "proposed_slot": "hair_style",
+      "treatment": "ENRICH_EXISTING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00"
+      ],
+      "concept_units_proposal": [
+        "The front hair descends over the forehead to a blunt transverse edge.",
+        "The edge lies at the explicitly selected brow-relative height."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "front_hair",
+          "type": "overlies",
+          "object": "subject.forehead",
+          "owner_binding": [
+            "subject.front_hair",
+            "subject.forehead",
+            "subject.brows"
+          ]
+        },
+        {
+          "subject": "fringe_edge",
+          "type": "located_relative_to",
+          "object": "subject.brows",
+          "owner_binding": [
+            "subject.front_hair",
+            "subject.forehead",
+            "subject.brows"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "a bob haircut is added because a blunt fringe was selected",
+        "eyes covered when brow-level ends were requested"
+      ],
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_character_appearance.json",
+          "id": "ca_blunt_fringe"
+        }
+      ],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_separate_cheek_tendrils",
+      "semantic_card_id": "EG20",
+      "ko_label": "옆머리 가닥과 리본 분리",
+      "en": "Narrow hair strands descend beside the cheek from traceable hair roots.; Those strands retain hair-like filament edges distinct from flat ribbons.",
+      "proposed_slot": "hair_style",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00"
+      ],
+      "concept_units_proposal": [
+        "Narrow hair strands descend beside the cheek from traceable hair roots.",
+        "Those strands retain hair-like filament edges distinct from flat ribbons."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "side_hair_strands",
+          "type": "descend_beside",
+          "object": "subject.cheek",
+          "owner_binding": [
+            "subject.side_hair",
+            "subject.cheek"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "flat fabric ribbons count as hair tendrils",
+        "strands emerge from cheeks or shoulders"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_attached_trailing_hair_ribbon",
+      "semantic_card_id": "EG21",
+      "ko_label": "헤어 매듭에 연결된 긴 리본",
+      "en": "Flat fabric ribbon ends continue from a readable hair fastening.; The same ribbon ends hang beside the subject with coherent gravity.",
+      "proposed_slot": "hair_style",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00"
+      ],
+      "concept_units_proposal": [
+        "Flat fabric ribbon ends continue from a readable hair fastening.",
+        "The same ribbon ends hang beside the subject with coherent gravity."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "ribbon_ends",
+          "type": "continue_from",
+          "object": "subject.hair_tie",
+          "owner_binding": [
+            "subject.hair_tie",
+            "hair_tie.ribbon_ends"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "unattached strips floating in the background",
+        "a tie adds a braid or twin tails automatically"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_cool_skin_warm_reflected_edge",
+      "semantic_card_id": "EG24",
+      "ko_label": "차가운 피부 기조와 따뜻한 반사",
+      "en": "The face retains its selected relatively cool base tendency.; Warm reflected or contour light affects bounded source-facing skin regions.",
+      "proposed_slot": "color",
+      "treatment": "ENRICH_EXISTING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "L01",
+        "L09"
+      ],
+      "concept_units_proposal": [
+        "The face retains its selected relatively cool base tendency.",
+        "Warm reflected or contour light affects bounded source-facing skin regions."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "warm_light",
+          "type": "illuminates",
+          "object": "source_facing_skin",
+          "owner_binding": [
+            "subject.skin",
+            "warm_light",
+            "background"
+          ]
+        },
+        {
+          "subject": "skin_local_color",
+          "type": "is_separate_from",
+          "object": "light_color",
+          "owner_binding": [
+            "subject.skin",
+            "warm_light",
+            "background"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "a global orange skin tint",
+        "warm skin makeup is confused with light reflected from a gold surface"
+      ],
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_color_relations.json",
+          "id": "cr_cool_subject"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_color_relations.json",
+          "id": "cr_colored_rim"
+        }
+      ],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_high_collar_lace_structure",
+      "semantic_card_id": "EG27",
+      "ko_label": "높은 칼라와 레이스 가장자리",
+      "en": "A standing collar forms a garment boundary around the lower neck.; Its lace pattern and selected scalloped edge remain attached to the collar.",
+      "proposed_slot": "garment_detail",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "A04",
+        "A11",
+        "A05"
+      ],
+      "concept_units_proposal": [
+        "A standing collar forms a garment boundary around the lower neck.",
+        "Its lace pattern and selected scalloped edge remain attached to the collar."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "standing_collar",
+          "type": "surrounds",
+          "object": "lower_neck",
+          "owner_binding": [
+            "subject.blouse_collar",
+            "subject.neck",
+            "collar.lace"
+          ]
+        },
+        {
+          "subject": "lace_edge",
+          "type": "attached_to",
+          "object": "collar",
+          "owner_binding": [
+            "subject.blouse_collar",
+            "subject.neck",
+            "collar.lace"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "all Victorian clothing must have the same high collar",
+        "a neck tattoo or jewelry substitutes for the collar"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_shoulder_bound_flower_corsage",
+      "semantic_card_id": "EG30",
+      "ko_label": "어깨에 붙은 꽃 코르사주",
+      "en": "A compact floral group is attached to the selected garment shoulder.; Its petal or fabric shapes stay localized at that attachment.",
+      "proposed_slot": "garment_detail",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00"
+      ],
+      "concept_units_proposal": [
+        "A compact floral group is attached to the selected garment shoulder.",
+        "Its petal or fabric shapes stay localized at that attachment."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "corsage",
+          "type": "attached_to",
+          "object": "declared_shoulder_garment",
+          "owner_binding": [
+            "subject.right_shoulder_garment",
+            "corsage"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "right in camera coordinates silently swaps the wearer's right",
+        "flowers float beside the shoulder or cover the whole torso"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_fabric_rosette_vs_living_flower",
+      "semantic_card_id": "EG31",
+      "ko_label": "천 장미와 식물 꽃의 구별",
+      "en": "A selected garment rosette is formed by gathered or folded fabric.; A separate living flower retains its own botanical stem and petal owner.",
+      "proposed_slot": "garment_detail",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00",
+        "A06",
+        "A07",
+        "A08"
+      ],
+      "concept_units_proposal": [
+        "A selected garment rosette is formed by gathered or folded fabric.",
+        "A separate living flower retains its own botanical stem and petal owner."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "folded_fabric",
+          "type": "forms",
+          "object": "garment.fabric_rosette",
+          "owner_binding": [
+            "garment.fabric_rosette",
+            "scene.living_flower"
+          ]
+        },
+        {
+          "subject": "living_flower",
+          "type": "attached_to",
+          "object": "botanical_stem",
+          "owner_binding": [
+            "garment.fabric_rosette",
+            "scene.living_flower"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "fabric flowers grow from skin",
+        "all corsage flowers are automatically living plants"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_micropleated_tulle_panel",
+      "semantic_card_id": "EG34",
+      "ko_label": "튈 위에 잡힌 미세 주름",
+      "en": "Narrow repeated pleat folds traverse a selected tulle panel.; The same panel retains a distinguishable fine mesh surface.",
+      "proposed_slot": "garment_detail",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "A06",
+        "A07",
+        "A08",
+        "R00"
+      ],
+      "concept_units_proposal": [
+        "Narrow repeated pleat folds traverse a selected tulle panel.",
+        "The same panel retains a distinguishable fine mesh surface."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "pleat_ridges",
+          "type": "formed_in",
+          "object": "same_tulle_panel",
+          "owner_binding": [
+            "garment.tulle_panel",
+            "panel.pleats"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "woven corded silk ribs substitute for pleat folds",
+        "a pleated skirt appears when a blouse panel was selected"
+      ],
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_textile_surface.json",
+          "id": "clothing_ct090_v2"
+        }
+      ],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_matte_mourning_crape",
+      "semantic_card_id": "EG37",
+      "ko_label": "낮은 광택의 크레이프 표면",
+      "en": "The selected dark cloth has a low-sheen finely irregular surface.; Its folds remain fabric forms with restrained highlights.",
+      "proposed_slot": "surface_material",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "A04",
+        "A11",
+        "A06",
+        "A07",
+        "A08"
+      ],
+      "concept_units_proposal": [
+        "The selected dark cloth has a low-sheen finely irregular surface.",
+        "Its folds remain fabric forms with restrained highlights."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "surface_texture",
+          "type": "lies_on",
+          "object": "garment.crape_like_panel",
+          "owner_binding": [
+            "garment.crape_like_panel"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "glossy satin",
+        "black color alone proves historical mourning crape"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_mume_on_leafless_woody_branches",
+      "semantic_card_id": "EG41",
+      "ko_label": "잎 적은 목질 가지의 매화",
+      "en": "Small pale flowers attach at intervals along a woody branch.; The selected flowering branch is leafless or sparsely leafed rather than a leafy bouquet.",
+      "proposed_slot": "prop",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R01"
+      ],
+      "concept_units_proposal": [
+        "Small pale flowers attach at intervals along a woody branch.",
+        "The selected flowering branch is leafless or sparsely leafed rather than a leafy bouquet."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "small_flowers",
+          "type": "attached_to",
+          "object": "same_woody_branch",
+          "owner_binding": [
+            "scene.mume_branch",
+            "branch.flowers"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "large magnolia cups",
+        "a fixed five-petal count imposed on every cultivar"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_camellia_flower_leaf_system",
+      "semantic_card_id": "EG42",
+      "ko_label": "동백의 큰 꽃과 광택 잎",
+      "en": "Selected larger flowers remain connected to a branching stem.; Broad glossy leaves retain their own leaf boundaries on the same branch.",
+      "proposed_slot": "prop",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R02"
+      ],
+      "concept_units_proposal": [
+        "Selected larger flowers remain connected to a branching stem.",
+        "Broad glossy leaves retain their own leaf boundaries on the same branch."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "flowers",
+          "type": "borne_on",
+          "object": "camellia_branch",
+          "owner_binding": [
+            "scene.camellia_branch",
+            "branch.flowers",
+            "branch.leaves"
+          ]
+        },
+        {
+          "subject": "leaves",
+          "type": "attached_to",
+          "object": "camellia_branch",
+          "owner_binding": [
+            "scene.camellia_branch",
+            "branch.flowers",
+            "branch.leaves"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "small blossoms on a leafless mume twig",
+        "flower petal count fixed across all cultivars"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_magnolia_large_petals",
+      "semantic_card_id": "EG43",
+      "ko_label": "목련의 큰 꽃 구조",
+      "en": "A selected magnolia variant has relatively large distinct floral segments.; The cup, bowl or star form is chosen explicitly for that variant.",
+      "proposed_slot": "prop",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R03"
+      ],
+      "concept_units_proposal": [
+        "A selected magnolia variant has relatively large distinct floral segments.",
+        "The cup, bowl or star form is chosen explicitly for that variant."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "large_flower",
+          "type": "attached_to",
+          "object": "declared_branch",
+          "owner_binding": [
+            "scene.magnolia_flower",
+            "flower.branch"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "all magnolia forms merged into one petal count",
+        "tiny repeated plum blossoms"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_near_black_layered_rose",
+      "semantic_card_id": "EG45",
+      "ko_label": "붉은 기운이 남은 어두운 장미",
+      "en": "Layered rose petals preserve a dark red or purple tendency in illuminated regions.; The selected near-black petals retain distinguishable folds.",
+      "proposed_slot": "prop",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R04"
+      ],
+      "concept_units_proposal": [
+        "Layered rose petals preserve a dark red or purple tendency in illuminated regions.",
+        "The selected near-black petals retain distinguishable folds."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "petal_layers",
+          "type": "form",
+          "object": "same_rose_bloom",
+          "owner_binding": [
+            "scene.rose",
+            "rose.petals"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "uniform dead black blob",
+        "natural black pigmentation or frost inferred from the color label"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_airy_small_flower_spray",
+      "semantic_card_id": "EG46",
+      "ko_label": "작은 꽃의 성긴 가지 무리",
+      "en": "Fine branching stems carry many small separated flowers.; Open intervals remain between the tiny flower groups.",
+      "proposed_slot": "prop",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R11",
+        "R06",
+        "R07"
+      ],
+      "concept_units_proposal": [
+        "Fine branching stems carry many small separated flowers.",
+        "Open intervals remain between the tiny flower groups."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "tiny_flowers",
+          "type": "attached_to",
+          "object": "fine_branching_stems",
+          "owner_binding": [
+            "scene.fine_flower_spray"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "a dense hydrangea head",
+        "purple hue automatically proves dyeing or a natural species-wide color"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_frost_on_petals",
+      "semantic_card_id": "EG48",
+      "ko_label": "서리·이슬·말린 꽃잎의 독립 상태",
+      "en": "Small pale ice-like crystals cling to the named dark petal surfaces; the petal folds remain readable.",
+      "proposed_slot": "texture",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00"
+      ],
+      "concept_units_proposal": [
+        "Small pale ice-like crystals cling to the declared petal surface.",
+        "The dark petal folds remain readable behind the localized crystals."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "surface_state",
+          "type": "bounded_on",
+          "object": "declared_petals",
+          "owner_binding": [
+            "declared_flower.petals",
+            "petal_surface_detail"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "near-black automatically means dried or frost-covered",
+        "glitter substitutes for ice; grains substitute for droplets"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_dew_on_petals",
+      "semantic_card_id": "EG48",
+      "ko_label": "서리·이슬·말린 꽃잎의 독립 상태",
+      "en": "Discrete clear droplets rest along the named petal edges; each droplet remains separate from film grain.",
+      "proposed_slot": "texture",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00"
+      ],
+      "concept_units_proposal": [
+        "Separate clear droplets lie on the named petal edge.",
+        "The droplet boundaries remain distinct from picture-plane grain."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "surface_state",
+          "type": "bounded_on",
+          "object": "declared_petals",
+          "owner_binding": [
+            "declared_flower.petals",
+            "petal_surface_detail"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "near-black automatically means dried or frost-covered",
+        "glitter substitutes for ice; grains substitute for droplets"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_dried_curled_petals",
+      "semantic_card_id": "EG48",
+      "ko_label": "서리·이슬·말린 꽃잎의 독립 상태",
+      "en": "The named dry petals have localized curled edges and uneven faded surface tones; no frost or droplets are added.",
+      "proposed_slot": "texture",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00"
+      ],
+      "concept_units_proposal": [
+        "Localized dry curled edges belong to the named petals.",
+        "Faded tones remain on the same petals without added wet droplets."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "surface_state",
+          "type": "bounded_on",
+          "object": "declared_petals",
+          "owner_binding": [
+            "declared_flower.petals",
+            "petal_surface_detail"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "near-black automatically means dried or frost-covered",
+        "glitter substitutes for ice; grains substitute for droplets"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_gold_leaf_like_bounded_panel",
+      "semantic_card_id": "EG53",
+      "ko_label": "빛을 받는 금박형 패널",
+      "en": "A bounded panel has subtly uneven reflective leaf-like surface patches.; The surface response follows illumination while the panel boundary remains readable.",
+      "proposed_slot": "surface_material",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "A09"
+      ],
+      "concept_units_proposal": [
+        "A bounded panel has subtly uneven reflective leaf-like surface patches.",
+        "The surface response follows illumination while the panel boundary remains readable."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "reflective_leaf_surface",
+          "type": "lies_on",
+          "object": "background.panel",
+          "owner_binding": [
+            "background.panel",
+            "panel.metallic_leaf_surface",
+            "acting_light"
+          ]
+        },
+        {
+          "subject": "light",
+          "type": "reflected_by",
+          "object": "panel.surface",
+          "owner_binding": [
+            "background.panel",
+            "panel.metallic_leaf_surface",
+            "acting_light"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "yellow emitted light counts as a gold-leaf material",
+        "gold material proves a particular fabrication technique or provenance"
+      ],
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_tags.json",
+          "slot": "surface_material",
+          "id": "tarnished_gold_leaf_surface"
+        }
+      ],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_gold_mosaic_tesserae",
+      "semantic_card_id": "EG54",
+      "ko_label": "구획과 이음이 있는 금빛 모자이크",
+      "en": "Small adjacent pieces retain repeated tile boundaries on the panel.; Light response may vary between pieces without merging them into one smooth sheet.",
+      "proposed_slot": "surface_material",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "A10"
+      ],
+      "concept_units_proposal": [
+        "Small adjacent pieces retain repeated tile boundaries on the panel.",
+        "Light response may vary between pieces without merging them into one smooth sheet."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "tesserae",
+          "type": "adjacent_within",
+          "object": "same_panel_boundary",
+          "owner_binding": [
+            "background.panel",
+            "panel.tesserae"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "reptile scales inferred from mosaic scale texture",
+        "continuous cracked gold leaf counts as separate tiles"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_localized_flaking_gilding",
+      "semantic_card_id": "EG55",
+      "ko_label": "선택 부위의 금박 벗겨짐",
+      "en": "Irregular losses interrupt selected parts of the reflective layer.; A distinguishable lower substrate remains inside the loss boundaries.",
+      "proposed_slot": "texture",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "A09"
+      ],
+      "concept_units_proposal": [
+        "Irregular losses interrupt selected parts of the reflective layer.",
+        "A distinguishable lower substrate remains inside the loss boundaries."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "leaf_layer_loss",
+          "type": "reveals",
+          "object": "same_panel_substrate",
+          "owner_binding": [
+            "panel.leaf_layer",
+            "panel.substrate"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "gold-colored dust floats off every surface",
+        "entire room becomes abandoned because one panel is weathered"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_gilded_artifact_branch",
+      "semantic_card_id": "EG56",
+      "ko_label": "식물 형태를 한 금빛 장식 부재",
+      "en": "A branch-shaped object retains a solid artifact boundary.; Its metallic surface response stays on that same member.",
+      "proposed_slot": "prop",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "A09",
+        "A02"
+      ],
+      "concept_units_proposal": [
+        "A branch-shaped object retains a solid artifact boundary.",
+        "Its metallic surface response stays on that same member."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "metallic_surface",
+          "type": "bounded_on",
+          "object": "branch_shaped_artifact",
+          "owner_binding": [
+            "artifact.branch_shaped_member"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "gold lighting transforms a living twig into metal",
+        "living plant growth inferred from a leaf-shaped artifact"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_charcoal_backdrop_dark_material",
+      "semantic_card_id": "EG57",
+      "ko_label": "차콜 배경과 어두운 재질",
+      "en": "The chosen background remains predominantly dark with restrained local material information.; Small lightness or material differences keep the subject boundary readable.",
+      "proposed_slot": "location",
+      "treatment": "ENRICH_EXISTING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00",
+        "L06"
+      ],
+      "concept_units_proposal": [
+        "The chosen background remains predominantly dark with restrained local material information.",
+        "Small lightness or material differences keep the subject boundary readable."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "subject_contour",
+          "type": "separated_from",
+          "object": "dark_backdrop",
+          "owner_binding": [
+            "background.backdrop",
+            "subject.outline"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "all dark backgrounds are seamless paper",
+        "a pure black clipping region erases required contour detail"
+      ],
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_color_relations.json",
+          "id": "cr_dark_on_dark"
+        }
+      ],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_occluded_vertical_emissive_slit",
+      "semantic_card_id": "EG60",
+      "ko_label": "인물 뒤 가려지는 세로 발광 틈",
+      "en": "A narrow vertically extended luminous aperture lies behind the subject.; The subject occludes that aperture where their silhouettes overlap; visible segments belong to the same aligned opening.",
+      "proposed_slot": "light_shape",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00",
+        "L01",
+        "L02",
+        "L03"
+      ],
+      "concept_units_proposal": [
+        "A narrow vertically extended luminous aperture lies behind the subject.",
+        "The subject occludes that aperture where their silhouettes overlap; visible segments belong to the same aligned opening."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "emissive_slit",
+          "type": "behind",
+          "object": "subject",
+          "owner_binding": [
+            "background.emissive_slit",
+            "subject.silhouette",
+            "background.panel"
+          ]
+        },
+        {
+          "subject": "subject.silhouette",
+          "type": "occludes",
+          "object": "overlapping_slit_region",
+          "owner_binding": [
+            "background.emissive_slit",
+            "subject.silhouette",
+            "background.panel"
+          ]
+        },
+        {
+          "subject": "slit_opening",
+          "type": "bounded_by",
+          "object": "background.panel",
+          "owner_binding": [
+            "background.emissive_slit",
+            "subject.silhouette",
+            "background.panel"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "unbroken stripe drawn over the face",
+        "golden rim without any visible selected aperture",
+        "a visible aperture guarantees wraparound light on every contour"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_low_key_vs_black_floor",
+      "semantic_card_id": "EG63",
+      "ko_label": "로우키 조명과 검정 톤 바닥 분리",
+      "en": "The scene's selected dark regions dominate the composition.; The output black floor is a separately selected tonal property.",
+      "proposed_slot": "lighting",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "L06",
+        "L01",
+        "L09"
+      ],
+      "concept_units_proposal": [
+        "The scene's selected dark regions dominate the composition.",
+        "The output black floor is a separately selected tonal property."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "scene_illumination",
+          "type": "is_separate_from",
+          "object": "output_black_floor",
+          "owner_binding": [
+            "scene.light_distribution",
+            "image_plane.dark_tones"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "low key always crushes blacks",
+        "lifted blacks add a bright physical fill lamp"
+      ],
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_editing_effects.json",
+          "id": "pe_lifted_black_floor_relation"
+        }
+      ],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_diffusion_vs_defocus_vs_halation",
+      "semantic_card_id": "EG65",
+      "ko_label": "확산·초점 흐림·필름 할레이션의 분리",
+      "en": "A selected diffusion variant softens specified contrast or highlight transitions.; Focus-plane eye or textile detail stays readable; a halo is required only for a separately selected halo-producing variant.",
+      "proposed_slot": "quality",
+      "treatment": "ENRICH_EXISTING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "L04",
+        "L05"
+      ],
+      "concept_units_proposal": [
+        "A selected diffusion variant softens specified contrast or highlight transitions.",
+        "Focus-plane eye or textile detail stays readable; a halo is required only for a separately selected halo-producing variant."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "diffusion_effect",
+          "type": "bounded_to",
+          "object": "selected_picture_regions",
+          "owner_binding": [
+            "image_plane.highlight_neighborhood",
+            "subject.focus_plane"
+          ]
+        },
+        {
+          "subject": "focus_state",
+          "type": "is_separate_from",
+          "object": "highlight_spread",
+          "owner_binding": [
+            "image_plane.highlight_neighborhood",
+            "subject.focus_plane"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "all diffusion must create a red halo",
+        "global blur, thick fog or flare ghosts count as restrained diffusion"
+      ],
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_editing_effects_extension.json",
+          "slot": "quality",
+          "id": "pe_neutral_diffusion"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations.json",
+          "id": "diffusion_filter_highlight_halation"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_editing_effects.json",
+          "id": "pe_local_bloom_relation"
+        }
+      ],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_owner_bound_palette_variants",
+      "semantic_card_id": "EG69",
+      "ko_label": "색 이름과 팔레트의 소유자 배정",
+      "en": "Each selected color role belongs to a named existing surface or light owner.; The hue families remain locally distinguishable while the requested overall chroma stays restrained.",
+      "proposed_slot": "color",
+      "treatment": "ENRICH_EXISTING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R00",
+        "L01",
+        "L09"
+      ],
+      "concept_units_proposal": [
+        "Each selected color role belongs to a named existing surface or light owner.",
+        "The hue families remain locally distinguishable while the requested overall chroma stays restrained."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "named_palette_role",
+          "type": "bounded_on",
+          "object": "declared_owner",
+          "owner_binding": [
+            "garment",
+            "background.panel",
+            "scene.flowers",
+            "skin",
+            "light"
+          ]
+        },
+        {
+          "subject": "local_material_color",
+          "type": "is_separate_from",
+          "object": "illumination_color",
+          "owner_binding": [
+            "garment",
+            "background.panel",
+            "scene.flowers",
+            "skin",
+            "light"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "three color words wash every region equally",
+        "antique gold is a fixed universal HEX value",
+        "a named palette necessarily adds new objects"
+      ],
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_color_relations.json",
+          "id": "cr_low_chroma"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_color_relations.json",
+          "id": "cr_dark_on_dark"
+        }
+      ],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    },
+    {
+      "draft_id": "egr_localized_atmosphere_and_stillness",
+      "semantic_card_id": "EG70",
+      "ko_label": "공기층·입자·정적의 독립 범위",
+      "en": "Selected haze or particles occupy declared scene regions with readable depth.; A static-pose or calm-air option is separate from the presence of smoke, mist or suspended petals.",
+      "proposed_slot": "ambient_particle",
+      "treatment": "NEW_SIBLING",
+      "status": "PROPOSED_NOT_INTEGRATED",
+      "is_runtime_record": false,
+      "source_ids": [
+        "R06",
+        "R07",
+        "R00"
+      ],
+      "concept_units_proposal": [
+        "Selected haze or particles occupy declared scene regions with readable depth.",
+        "A static-pose or calm-air option is separate from the presence of smoke, mist or suspended petals."
+      ],
+      "relations_proposal": [
+        {
+          "subject": "atmosphere",
+          "type": "occupies",
+          "object": "declared_scene_volume",
+          "owner_binding": [
+            "scene.atmosphere",
+            "declared_particles",
+            "subject",
+            "ribbons"
+          ]
+        },
+        {
+          "subject": "particle_visibility",
+          "type": "depends_on",
+          "object": "local_light_and_depth",
+          "owner_binding": [
+            "scene.atmosphere",
+            "declared_particles",
+            "subject",
+            "ribbons"
+          ]
+        }
+      ],
+      "confusion_negatives": [
+        "fine film grain becomes dust motes",
+        "ethereal adds a dense smoke veil over the eyes",
+        "stillness proves a literal stop of time"
+      ],
+      "existing_references": [],
+      "selection_preconditions": [
+        "The required owners already exist in the frozen core or are explicitly selected within an open dimension.",
+        "Read the entire candidate and bind every component to the same declared owners.",
+        "Do not add age, ethnicity, personality, exposure, extra people, faith, historical identity or new objects from style labels."
+      ],
+      "excluded_automatic_assumptions": [
+        "No fixed lens distance, light ratio, color temperature, exact lip gap, HEX code, generation provider or fabrication history."
+      ],
+      "locked_dimension_rule": "A required assertion can affect only a locked requested property; optional support cannot overwrite frozen closed properties.",
+      "owner_property_binding": "REQUIRES_RUNTIME_CONTRACT_REVIEW"
+    }
+  ]
+}

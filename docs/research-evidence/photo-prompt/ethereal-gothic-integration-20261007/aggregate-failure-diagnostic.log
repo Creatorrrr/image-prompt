@@ -1,0 +1,35 @@
+test_aggregate_validator_does_not_hide_partial_pixel_qualification (tests.test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification) ... ERROR
+
+======================================================================
+ERROR: test_aggregate_validator_does_not_hide_partial_pixel_qualification (tests.test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-qualification/image-prompt/tests/test_subculture_illustration_contract_v1.py", line 504, in test_aggregate_validator_does_not_hide_partial_pixel_qualification
+    summary = validate_all(ASSET_ROOT)
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-qualification/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 13905, in validate_all
+    photo_regression = validate_photo_regression_baseline(root)
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-qualification/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 8731, in validate_photo_regression_baseline
+    completed = subprocess.run(
+        actual_command,
+    ...<5 lines>...
+        timeout=60,
+    )
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1220, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2153, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1267, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['.venv/bin/python', 'skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py', '--seed', '910000', '--authorial-core-json', 'tests/fixtures/photo_prompt/current_boundary/core.json', '--request-envelope-json', 'tests/fixtures/photo_prompt/current_boundary/envelope.json', '--creative-controls-json', 'tests/fixtures/photo_prompt/current_boundary/controls.json', '--embodiment-review-json', 'tests/fixtures/photo_prompt/current_boundary/review.json', '--output-file', '/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/illustration-photo-boundary-hbpmdapt/photo-candidate-pack.json']' timed out after 60 seconds
+
+----------------------------------------------------------------------
+Ran 1 test in 64.880s
+
+FAILED (errors=1)

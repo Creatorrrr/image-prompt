@@ -1,0 +1,84 @@
+{
+  "schema_version": "ethereal-gothic-regression-diagnostics/v1",
+  "historical_v33_binding_comparison": [
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_source_manifest.json",
+      "sha256_before_task": "f0a05c2a4a9c30b91076117f53913fe9c252e3400f79ab01edd98ee2e2e8dd60",
+      "sha256_v33_sealed": "8c03e5c17cc282bd2027e37108530421a399a2be5dbdeb2c65a60b26f83cc371",
+      "sha256_current": "ecf7596df3d491c7613853a5b2576366296586c48bfcf48f9098dd065714c926",
+      "already_differed_before_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "sha256_before_task": "c286003aa0a482c45475eadd291f2773b1dabdbd1f4d306caef13faaf518c049",
+      "sha256_v33_sealed": "a20fee54449063722e5b5072ae2c1a4cdc997a4a16e1d03d506e4238cad5f5fe",
+      "sha256_current": "af6f2e6b6d520e0a75ac42118a6caf65168352737913aa93d48050952f9bdb83",
+      "already_differed_before_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "sha256_before_task": "fe0da60435f7c48fd94d6352538e9ae34f42f6a4e037ba328987c8f76661604b",
+      "sha256_v33_sealed": "ffd23843b6e3f80b01f4871caeb0316eb4de83ca7677e3e948b319f910270135",
+      "sha256_current": "6f110aee2ac82824f046cfd00bd14e13a180f12f2fcb873ea0e38826fdd1249a",
+      "already_differed_before_task": true
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_photorealism_elements_extension.json",
+      "sha256_before_task": "0a30afe422bf2caf08643aaea68e7d73f37efeb05eec1db7454fcaeab5421f4b",
+      "sha256_v33_sealed": "818cac4abebce43508c10090d67d816f20b1650875e91c5fd9752ab476b5a4f1",
+      "sha256_current": "0a30afe422bf2caf08643aaea68e7d73f37efeb05eec1db7454fcaeab5421f4b",
+      "already_differed_before_task": true
+    }
+  ],
+  "identified_historical_failure": "Frozen V24 historical source payload drift: photo_prompt_photorealism_elements_extension.json",
+  "historical_failure_file_unchanged_by_this_task": true,
+  "aggregate_diagnostic": "timeout60s during live CLI regeneration; rerun after concurrent processes finish",
+  "source_or_test_rules_weakened": false,
+  "limits": [
+    "Full suite final results are recorded separately. Pre-existing sealed hash differences do not prove every other failure predates this task."
+  ],
+  "aggregate_quiet_recheck": {
+    "status": "FAIL",
+    "elapsed_seconds": 17.583,
+    "cause": "current photo baseline candidate-pack bytes drift",
+    "log": "aggregate-quiet-recheck.log",
+    "timeout_reproduced": false
+  },
+  "initial_full_suite": {
+    "status": "FAIL_INCOMPLETE",
+    "discovered_placeholder_tests": 1803,
+    "ran_tests": 1705,
+    "failure_events": 39,
+    "error_events": 17,
+    "failed_import_placeholders_collapsed_by_initial_runner": 14
+  },
+  "supplement_import_execution": {
+    "status": "FAIL",
+    "module_attempts": 14,
+    "ran_tests": 157,
+    "failure_events": 0,
+    "error_events": 0,
+    "import_blocked_modules": [
+      "tests.test_photo_robe_source_boundary_history"
+    ],
+    "earlier_combined_supplement_aborted_on_v32_import_assertion": true,
+    "source_seals_or_gate_rules_relaxed": false
+  },
+  "current_primary_focused_check": {
+    "new_data_tests": 12,
+    "new_data_passed": 12,
+    "append_registration_check": "PASS",
+    "historical_motion_owner_inventory_check": "PASS",
+    "global_maintenance_check": "FAIL_EXISTING_CT073_RECORD_MISSING_MAINTENANCE_ONLY",
+    "executed_tests": 15,
+    "passed": 14,
+    "errors": 1
+  },
+  "own_metadata_revision": {
+    "record": "ethereal-gothic-20261007-v2",
+    "maintenance_only": true,
+    "current_candidate_meaning_equal_tested": true,
+    "qualification_generation_preserved": true
+  },
+  "scope_note": "Some historical mismatches existed before the task, but this is not proof all other failures predate the task. Current manifest/index modifications and the new additive overlay are explicitly accounted for. Whole suite remains FAIL."
+}

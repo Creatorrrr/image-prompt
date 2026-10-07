@@ -1,0 +1,53 @@
+{
+  "contract_version": "agent-selected-new-data-native-review/v1",
+  "pack_id": "0af3f03fdf8f79a1",
+  "image_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/ethereal-gothic-integration-20261007/arm_b/native_attempt_1.png",
+  "image_sha256": "8f8b2c0cc9efac65018e768afb215d7ca2ed90d0f9cf69cd9539f60ac1aa212a",
+  "review_scale": "native",
+  "native_dimensions": [
+    1122,
+    1402
+  ],
+  "attempt": 1,
+  "components": [
+    {
+      "candidate_id": "slot:garment_detail:egr_fabric_rosette_vs_living_flower",
+      "source_concept_unit": "the garment rosette consists of gathered or folded fabric with cloth edges",
+      "expected_visible": "A folded black cloth/silk rosette belongs to the blouse, with identifiable cloth edges; any tiny stitch must be assessed at native scale rather than inferred from the prompt.",
+      "status": "pass",
+      "observation": "A large black rosette at the right shoulder is visibly made of curled/folded textile-like strips with cloth edges and belongs to the lace garment. The native image distinguishes it from the ivory flower. Minute individual stitches are not fully resolved, so those extra authored microdetails are not claimed as verified."
+    },
+    {
+      "candidate_id": "slot:garment_detail:egr_fabric_rosette_vs_living_flower",
+      "source_concept_unit": "the separate existing flower retains botanical petals connected to its own stem",
+      "expected_visible": "The separate ivory flower has botanical petals connected to a green stem leading to the living plant, distinct from the garment rosette.",
+      "status": "pass",
+      "observation": "The large ivory trumpet flower at left has botanical petals and a visible green stem continuing toward the same potted plant; a separate unopened bud is also visible. The living flower is spatially distinct from the shoulder rosette."
+    },
+    {
+      "candidate_id": "bundle:egr_dark_lateral_negative_space_bundle",
+      "component_id": "component_1",
+      "source_concept_unit": "low-detail dark intervals remain beside the primary face",
+      "expected_visible": "Low-detail dark scene intervals physically lie beside the face; a global corner vignette alone does not count.",
+      "status": "fail",
+      "observation": "Dark hair and lace are present, but foliage and patterned glazing occupy the scene areas immediately outside both sides of the head. Two narrow continuous low-detail charcoal scene intervals beside the face are not clearly isolated at native scale."
+    },
+    {
+      "candidate_id": "bundle:egr_dark_lateral_negative_space_bundle",
+      "component_id": "component_2",
+      "source_concept_unit": "those intervals separate that face from the existing peripheral ornament",
+      "expected_visible": "The same lateral dark intervals distinguish the main face from the actual peripheral floral decoration; judging emptiness alone cannot prove separation.",
+      "status": "fail",
+      "observation": "The face is separated largely by its skin/hair contour and depth treatment. Because the same two actual low-detail dark background intervals are not established, their complete separation of face from peripheral floral ornament cannot be verified. This is incomplete implementation, not a claim that the overall gothic mood is absent."
+    }
+  ],
+  "component_pass_count": 2,
+  "component_fail_count": 2,
+  "overall_status": "partial_implementation",
+  "all_selected_components_complete": false,
+  "new_data_profiles_active": [],
+  "associated_profile_ids_are_advisory": true,
+  "strict_gate_review_file": "render_review.json",
+  "user_preference": "pending",
+  "causal_limit": "Cloth floral ornament and living ivory flowers already existed in the independent baseline. Newly explicit material-edge/owner clauses and dark-interval composition do not constitute proof of causal improvement without a baseline render control."
+}

@@ -1,0 +1,4271 @@
+{
+  "schema_version": "research-semantic-cards/v1",
+  "status": "PROPOSED_NOT_INTEGRATED",
+  "cards": [
+    {
+      "id": "EG01",
+      "key": "ethereal_gothic_context",
+      "label_ko": "고요한 고딕의 선택형 문맥",
+      "seed_categories": [
+        1
+      ],
+      "owners": [
+        "whole_request"
+      ],
+      "observable_components": [
+        "The portrait retains the requested photographic medium.",
+        "Dark fabric, pale blossoms and bounded warm ornament may support the stated mood without replacing the frozen scene."
+      ],
+      "directed_relations": [
+        {
+          "subject": "mood_label",
+          "type": "contextualizes",
+          "object": "selected_scene_components",
+          "owner_binding": [
+            "whole_request"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "gothic automatically adds graves, blood, heavy makeup or a cathedral",
+        "ethereal automatically makes a transparent ghost"
+      ],
+      "source_topics": [
+        "symbolism",
+        "public_prompt"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "CONTEXT_ONLY",
+        "existing_ids": [],
+        "proposed_slot": "genre",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A01",
+        "R08",
+        "R09",
+        "R10"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG02",
+      "key": "serene_melancholy",
+      "label_ko": "평온한 우울의 관찰 가능한 연출",
+      "seed_categories": [
+        2
+      ],
+      "owners": [
+        "subject.face",
+        "subject.shoulders",
+        "scene"
+      ],
+      "observable_components": [
+        "Visible brows and mouth remain relatively relaxed.",
+        "A composed posture and restrained scene accents support the requested quiet mood."
+      ],
+      "directed_relations": [
+        {
+          "subject": "face_configuration",
+          "type": "belongs_to",
+          "object": "subject",
+          "owner_binding": [
+            "subject.face",
+            "subject.shoulders",
+            "scene"
+          ]
+        },
+        {
+          "subject": "scene_accents",
+          "type": "support",
+          "object": "requested_mood",
+          "owner_binding": [
+            "subject.face",
+            "subject.shoulders",
+            "scene"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "automatic tears, frowning or collapse",
+        "a facial configuration proves the person's real emotional state"
+      ],
+      "source_topics": [
+        "symbolism",
+        "photographer"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "CONTEXT_ONLY",
+        "existing_ids": [],
+        "proposed_slot": "expression",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A01",
+        "R06",
+        "R07"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG03",
+      "key": "symbolist_photographic_adaptation",
+      "label_ko": "상징주의의 사진적 차용",
+      "seed_categories": [
+        1,
+        18
+      ],
+      "owners": [
+        "background.panel",
+        "scene.flowers"
+      ],
+      "observable_components": [
+        "Selected flowers and ornament carry an authored symbolic role.",
+        "The requested skin, hair and fabric remain photographic surfaces."
+      ],
+      "directed_relations": [
+        {
+          "subject": "symbolic_motif",
+          "type": "carried_by",
+          "object": "declared_scene_object",
+          "owner_binding": [
+            "background.panel",
+            "scene.flowers"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "style label replaces the entire image with an oil painting",
+        "a flower has one universal psychological meaning"
+      ],
+      "source_topics": [
+        "symbolism"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "CONTEXT_ONLY",
+        "existing_ids": [],
+        "proposed_slot": "aesthetic_trend",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A01"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG04",
+      "key": "flowing_botanical_artifact_frame",
+      "label_ko": "물체 프레임에 이어지는 식물 곡선",
+      "seed_categories": [
+        1,
+        4,
+        11
+      ],
+      "owners": [
+        "artifact.frame",
+        "artifact.ornament"
+      ],
+      "observable_components": [
+        "Long stem-like curves continue into the declared object frame.",
+        "Adjacent floral lines follow the same flowing structure."
+      ],
+      "directed_relations": [
+        {
+          "subject": "stem_curve",
+          "type": "continues_into",
+          "object": "artifact.frame",
+          "owner_binding": [
+            "artifact.frame",
+            "artifact.ornament"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "unrelated background vine is evidence for the artifact",
+        "all S curves imply Art Nouveau authenticity"
+      ],
+      "source_topics": [
+        "art_nouveau"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "REUSE",
+        "existing_ids": [
+          "orn_gd54",
+          "orn_profile_gd54"
+        ],
+        "proposed_slot": "prop",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A02"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_ornament_structure_extension.json",
+          "slot": "prop",
+          "id": "orn_gd54"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_ornament_structure.json",
+          "id": "orn_profile_gd54"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG05",
+      "key": "gold_ground_sparse_botanical_screen",
+      "label_ko": "금박 화면의 식물·여백 배치",
+      "seed_categories": [
+        1,
+        4,
+        11
+      ],
+      "owners": [
+        "background.screen",
+        "screen.painted_motifs",
+        "optional_scene.branch"
+      ],
+      "observable_components": [
+        "A bounded gold-ground panel carries painted floral or branch motifs.",
+        "Unpainted gold intervals remain visible between those motif groups; actual scene branches retain separate owners."
+      ],
+      "directed_relations": [
+        {
+          "subject": "painted_floral_motifs",
+          "type": "lie_on",
+          "object": "gold_ground_panel",
+          "owner_binding": [
+            "background.screen",
+            "screen.painted_motifs"
+          ]
+        },
+        {
+          "subject": "physical_branch",
+          "type": "is_separate_from",
+          "object": "painted_branch_motif",
+          "owner_binding": [
+            "scene.branch",
+            "screen.painted_motifs"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "dense gilded wallpaper across the entire room",
+        "a screen motif changes the subject's ethnicity or historical identity"
+      ],
+      "source_topics": [
+        "rinpa"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "prop",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R12",
+        "A03"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": [
+        "A03"
+      ]
+    },
+    {
+      "id": "EG06",
+      "key": "ceremonial_portrait_framing",
+      "label_ko": "의식적인 초상 프레이밍",
+      "seed_categories": [
+        1,
+        4,
+        12
+      ],
+      "owners": [
+        "background.frame",
+        "subject"
+      ],
+      "observable_components": [
+        "A distinct enclosing frame surrounds a readable portrait region.",
+        "Its central opening remains separate from surrounding ornament."
+      ],
+      "directed_relations": [
+        {
+          "subject": "background.frame",
+          "type": "surrounds",
+          "object": "subject_portrait_region",
+          "owner_binding": [
+            "background.frame",
+            "subject"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "religious affiliation or halo inferred from a formal frame",
+        "the frame covers the requested face"
+      ],
+      "source_topics": [
+        "gilded_portrait"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "CONTEXT_ONLY",
+        "existing_ids": [],
+        "proposed_slot": "composition",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R13",
+        "A09"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG07",
+      "key": "neutral_lowered_upper_lids",
+      "label_ko": "위협·졸음과 분리한 낮은 윗눈꺼풀",
+      "seed_categories": [
+        2,
+        3
+      ],
+      "owners": [
+        "subject.eyes",
+        "subject.brows",
+        "subject.mouth"
+      ],
+      "observable_components": [
+        "The upper eyelid margins cover part of the visible irises.",
+        "Visible brow and mouth regions remain relaxed rather than snarling or grinning."
+      ],
+      "directed_relations": [
+        {
+          "subject": "upper_lid_margin",
+          "type": "partly_occludes",
+          "object": "same_eye_iris",
+          "owner_binding": [
+            "subject.eyes",
+            "subject.brows",
+            "subject.mouth"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "menacing distant gaze substituted for neutral lowering",
+        "closed eyes or sleep substituted for visible irises"
+      ],
+      "source_topics": [
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [
+          "half_lidded_menacing_distant_gaze",
+          "sleepy_half_lidded_eyes"
+        ],
+        "proposed_slot": "expression",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_tags.json",
+          "slot": "expression",
+          "id": "half_lidded_menacing_distant_gaze"
+        },
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_tags.json",
+          "slot": "eye_detail",
+          "id": "sleepy_half_lidded_eyes"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG08",
+      "key": "off_camera_upward_eyeline",
+      "label_ko": "머리 회전과 구분한 위쪽 시선",
+      "seed_categories": [
+        3
+      ],
+      "owners": [
+        "subject.eyes",
+        "camera_axis"
+      ],
+      "observable_components": [
+        "Both visible eye regions address the same declared off-camera direction.",
+        "The gaze direction is defined separately from head yaw and pitch."
+      ],
+      "directed_relations": [
+        {
+          "subject": "eye_direction",
+          "type": "points_toward",
+          "object": "declared_off_camera_target",
+          "owner_binding": [
+            "subject.eyes",
+            "camera_axis"
+          ]
+        },
+        {
+          "subject": "head_orientation",
+          "type": "is_separate_from",
+          "object": "eye_direction",
+          "owner_binding": [
+            "subject.eyes",
+            "camera_axis"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "chin lifting alone counts as upward gaze",
+        "each eye points to a different target"
+      ],
+      "source_topics": [
+        "original_request",
+        "camera_geometry"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "expression",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00",
+        "L07",
+        "L08"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": [
+        "L08"
+      ]
+    },
+    {
+      "id": "EG09",
+      "key": "head_torso_orientation_axes",
+      "label_ko": "얼굴·몸통 방향의 축 분리",
+      "seed_categories": [
+        3,
+        4
+      ],
+      "owners": [
+        "subject.head",
+        "subject.neck",
+        "subject.torso",
+        "camera_axis"
+      ],
+      "observable_components": [
+        "Head yaw, pitch and roll are separately declared relative to the camera.",
+        "The neck connects continuously to a separately oriented shoulder plane."
+      ],
+      "directed_relations": [
+        {
+          "subject": "head",
+          "type": "connected_by",
+          "object": "subject.neck",
+          "owner_binding": [
+            "subject.head",
+            "subject.neck",
+            "subject.torso",
+            "camera_axis"
+          ]
+        },
+        {
+          "subject": "head_yaw",
+          "type": "measured_relative_to",
+          "object": "camera_axis",
+          "owner_binding": [
+            "subject.head",
+            "subject.neck",
+            "subject.torso",
+            "camera_axis"
+          ]
+        },
+        {
+          "subject": "torso_yaw",
+          "type": "measured_relative_to",
+          "object": "camera_axis",
+          "owner_binding": [
+            "subject.head",
+            "subject.neck",
+            "subject.torso",
+            "camera_axis"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "three-quarter profile conflated with a three-quarter-length crop",
+        "head yaw is added twice as camera angle and relative neck turn"
+      ],
+      "source_topics": [
+        "original_request",
+        "camera_geometry"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [
+          "pc_pc02_owner_relation"
+        ],
+        "proposed_slot": "body_orientation",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00",
+        "L07",
+        "L08"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_portrait_composition.json",
+          "id": "pc_pc02_owner_relation"
+        }
+      ],
+      "source_access_limits": [
+        "L08"
+      ]
+    },
+    {
+      "id": "EG10",
+      "key": "relaxed_lip_separation",
+      "label_ko": "작은 입술 간격과 이완",
+      "seed_categories": [
+        3
+      ],
+      "owners": [
+        "subject.upper_lip",
+        "subject.lower_lip"
+      ],
+      "observable_components": [
+        "The upper and lower lip margins remain separate along a small readable gap.",
+        "Mouth corners stay relaxed without a wide open mouth."
+      ],
+      "directed_relations": [
+        {
+          "subject": "upper_lip_margin",
+          "type": "separated_from",
+          "object": "lower_lip_margin",
+          "owner_binding": [
+            "subject.upper_lip",
+            "subject.lower_lip"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "a pout or a broad open mouth",
+        "an exact millimeter measurement inferred from uncalibrated pixels"
+      ],
+      "source_topics": [
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "expression",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG11",
+      "key": "closed_eyes_composed_repose",
+      "label_ko": "감은 눈의 별도 상태",
+      "seed_categories": [
+        3
+      ],
+      "owners": [
+        "subject.eyes",
+        "subject.posture"
+      ],
+      "observable_components": [
+        "Both selected eye apertures are closed.",
+        "The head and shoulders retain the declared composed support."
+      ],
+      "directed_relations": [
+        {
+          "subject": "closed_lid_edges",
+          "type": "cover",
+          "object": "eye_apertures",
+          "owner_binding": [
+            "subject.eyes",
+            "subject.posture"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "half-lidded irises count as closed eyes",
+        "sleep, illness or unconsciousness inferred"
+      ],
+      "source_topics": [
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "eye_detail",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG12",
+      "key": "lid_fold_vs_lid_position",
+      "label_ko": "눈꺼풀 덮임 형태와 일시 자세",
+      "seed_categories": [
+        3
+      ],
+      "owners": [
+        "subject.upper_lid_fold",
+        "subject.upper_lid_margin"
+      ],
+      "observable_components": [
+        "An explicitly requested upper-lid fold lies over part of the eyelid surface.",
+        "The movable lid margin's position remains independently declared."
+      ],
+      "directed_relations": [
+        {
+          "subject": "upper_lid_fold",
+          "type": "overlies",
+          "object": "upper_lid_surface",
+          "owner_binding": [
+            "subject.upper_lid_fold",
+            "subject.upper_lid_margin"
+          ]
+        },
+        {
+          "subject": "lid_fold_shape",
+          "type": "is_separate_from",
+          "object": "lid_aperture_state",
+          "owner_binding": [
+            "subject.upper_lid_fold",
+            "subject.upper_lid_margin"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "all lowered lids are hooded eyelid anatomy",
+        "fixed ethnicity or health inferred from eyelid form"
+      ],
+      "source_topics": [
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "DEFER_DOMAIN_REVIEW",
+        "existing_ids": [],
+        "proposed_slot": "eye_detail",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG13",
+      "key": "central_vertical_bust_axis",
+      "label_ko": "좁은 중앙 수직축의 흉상",
+      "seed_categories": [
+        4
+      ],
+      "owners": [
+        "image.frame",
+        "subject.bust",
+        "background.vertical_element"
+      ],
+      "observable_components": [
+        "The declared bust crop leaves a readable face and neck.",
+        "The selected vertical background element is aligned with the frame's central region."
+      ],
+      "directed_relations": [
+        {
+          "subject": "bust_crop",
+          "type": "bounded_by",
+          "object": "image.frame",
+          "owner_binding": [
+            "image.frame",
+            "subject.bust",
+            "background.vertical_element"
+          ]
+        },
+        {
+          "subject": "background.vertical_element",
+          "type": "aligned_with",
+          "object": "frame_vertical_axis",
+          "owner_binding": [
+            "image.frame",
+            "subject.bust",
+            "background.vertical_element"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "a full-body crop substitutes for a bust",
+        "the subject must be perfectly mirrored to be centered"
+      ],
+      "source_topics": [
+        "original_request",
+        "camera_geometry"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "composition",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00",
+        "L07",
+        "L08"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": [
+        "L08"
+      ]
+    },
+    {
+      "id": "EG14",
+      "key": "arcing_branch_frame",
+      "label_ko": "꽃가지 아치와 얼굴 여백",
+      "seed_categories": [
+        4,
+        9
+      ],
+      "owners": [
+        "scene.branches",
+        "subject.face"
+      ],
+      "observable_components": [
+        "Attached woody branch paths curve around the portrait region.",
+        "Branch groups leave the requested facial features readable through their opening."
+      ],
+      "directed_relations": [
+        {
+          "subject": "flowers",
+          "type": "attached_to",
+          "object": "scene.branches",
+          "owner_binding": [
+            "scene.branches",
+            "subject.face"
+          ]
+        },
+        {
+          "subject": "branch_arcs",
+          "type": "bracket",
+          "object": "subject.face",
+          "owner_binding": [
+            "scene.branches",
+            "subject.face"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "a floating decorative flower border",
+        "a wreath attached to the head when scene framing was requested"
+      ],
+      "source_topics": [
+        "mume",
+        "photographer"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "composition",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R01",
+        "R06",
+        "R07"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG15",
+      "key": "dark_lateral_negative_space",
+      "label_ko": "좌우의 어두운 여백",
+      "seed_categories": [
+        4,
+        12
+      ],
+      "owners": [
+        "image.left_margin",
+        "image.right_margin",
+        "subject"
+      ],
+      "observable_components": [
+        "Low-detail dark intervals remain beside the portrait.",
+        "Those intervals separate the primary face from peripheral ornament."
+      ],
+      "directed_relations": [
+        {
+          "subject": "dark_intervals",
+          "type": "separate",
+          "object": "portrait_and_ornament",
+          "owner_binding": [
+            "image.left_margin",
+            "image.right_margin",
+            "subject"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "a black vignette counts as scene negative space in every case",
+        "background uniformly loses all material detail"
+      ],
+      "source_topics": [
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "composition",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG16",
+      "key": "asymmetric_botanical_balance",
+      "label_ko": "비대칭 꽃군의 균형",
+      "seed_categories": [
+        4,
+        9
+      ],
+      "owners": [
+        "scene.left_flower_group",
+        "scene.right_flower_group",
+        "subject"
+      ],
+      "observable_components": [
+        "Two selected floral groups retain unequal extents or heights.",
+        "Their distribution leaves the face as the declared focal region."
+      ],
+      "directed_relations": [
+        {
+          "subject": "left_flower_group",
+          "type": "differs_in_extent_from",
+          "object": "right_flower_group",
+          "owner_binding": [
+            "scene.left_flower_group",
+            "scene.right_flower_group",
+            "subject"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "equal mirrored flower groups",
+        "a specific numerical balance ratio is universal"
+      ],
+      "source_topics": [
+        "rinpa",
+        "photographer"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "composition",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R12",
+        "A03",
+        "R06",
+        "R07"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": [
+        "A03"
+      ]
+    },
+    {
+      "id": "EG17",
+      "key": "portrait_focus_plane_order",
+      "label_ko": "얼굴·레이스·꽃의 초점 평면",
+      "seed_categories": [
+        4,
+        14
+      ],
+      "owners": [
+        "subject.near_eye",
+        "scene.foreground",
+        "scene.background_flowers"
+      ],
+      "observable_components": [
+        "The selected near eye stays readable at its focus plane.",
+        "A separate farther flower plane is visibly softer without duplicating physical flowers."
+      ],
+      "directed_relations": [
+        {
+          "subject": "background_flowers",
+          "type": "farther_from_camera_than",
+          "object": "subject.near_eye",
+          "owner_binding": [
+            "subject.near_eye",
+            "scene.foreground",
+            "scene.background_flowers"
+          ]
+        },
+        {
+          "subject": "foreground_plane",
+          "type": "is_separate_from",
+          "object": "eye_focus_plane",
+          "owner_binding": [
+            "subject.near_eye",
+            "scene.foreground",
+            "scene.background_flowers"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "all foreground lace and eyes are guaranteed equally sharp at any distance",
+        "bokeh light discs substitute for blurred botanical forms",
+        "pe_background_bokeh is a related light-disc alternative, not an equivalent botanical-defocus profile."
+      ],
+      "source_topics": [
+        "camera_geometry"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [
+          "pc_pc19_owner_relation"
+        ],
+        "proposed_slot": "focus",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "L07",
+        "L08"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_portrait_composition.json",
+          "id": "pc_pc19_owner_relation"
+        }
+      ],
+      "source_access_limits": [
+        "L08"
+      ]
+    },
+    {
+      "id": "EG18",
+      "key": "nape_coiled_bun",
+      "label_ko": "목덜미의 낮은 번",
+      "seed_categories": [
+        5
+      ],
+      "owners": [
+        "subject.hair",
+        "subject.nape"
+      ],
+      "observable_components": [
+        "Gathered hair forms a compact coiled mass near the nape.",
+        "The bun connects to the same subject's gathered hair rather than floating above the head."
+      ],
+      "directed_relations": [
+        {
+          "subject": "bun_mass",
+          "type": "located_near",
+          "object": "subject.nape",
+          "owner_binding": [
+            "subject.hair",
+            "subject.nape"
+          ]
+        },
+        {
+          "subject": "gathered_hair",
+          "type": "continues_into",
+          "object": "bun_mass",
+          "owner_binding": [
+            "subject.hair",
+            "subject.nape"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "a high topknot",
+        "a detached ornamental flower is mistaken for the bun"
+      ],
+      "source_topics": [
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "ENRICH_EXISTING",
+        "existing_ids": [
+          "low_bun_hair"
+        ],
+        "proposed_slot": "hair_style",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_tags.json",
+          "slot": "hair_style",
+          "id": "low_bun_hair"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG19",
+      "key": "brow_level_blunt_fringe",
+      "label_ko": "눈썹 높이의 일자 앞머리",
+      "seed_categories": [
+        5
+      ],
+      "owners": [
+        "subject.front_hair",
+        "subject.forehead",
+        "subject.brows"
+      ],
+      "observable_components": [
+        "The front hair descends over the forehead to a blunt transverse edge.",
+        "The edge lies at the explicitly selected brow-relative height."
+      ],
+      "directed_relations": [
+        {
+          "subject": "front_hair",
+          "type": "overlies",
+          "object": "subject.forehead",
+          "owner_binding": [
+            "subject.front_hair",
+            "subject.forehead",
+            "subject.brows"
+          ]
+        },
+        {
+          "subject": "fringe_edge",
+          "type": "located_relative_to",
+          "object": "subject.brows",
+          "owner_binding": [
+            "subject.front_hair",
+            "subject.forehead",
+            "subject.brows"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "a bob haircut is added because a blunt fringe was selected",
+        "eyes covered when brow-level ends were requested"
+      ],
+      "source_topics": [
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "ENRICH_EXISTING",
+        "existing_ids": [
+          "ca_blunt_fringe"
+        ],
+        "proposed_slot": "hair_style",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_character_appearance.json",
+          "id": "ca_blunt_fringe"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG20",
+      "key": "separate_cheek_tendrils",
+      "label_ko": "옆머리 가닥과 리본 분리",
+      "seed_categories": [
+        5
+      ],
+      "owners": [
+        "subject.side_hair",
+        "subject.cheek"
+      ],
+      "observable_components": [
+        "Narrow hair strands descend beside the cheek from traceable hair roots.",
+        "Those strands retain hair-like filament edges distinct from flat ribbons."
+      ],
+      "directed_relations": [
+        {
+          "subject": "side_hair_strands",
+          "type": "descend_beside",
+          "object": "subject.cheek",
+          "owner_binding": [
+            "subject.side_hair",
+            "subject.cheek"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "flat fabric ribbons count as hair tendrils",
+        "strands emerge from cheeks or shoulders"
+      ],
+      "source_topics": [
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "hair_style",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG21",
+      "key": "attached_trailing_hair_ribbon",
+      "label_ko": "헤어 매듭에 연결된 긴 리본",
+      "seed_categories": [
+        5
+      ],
+      "owners": [
+        "subject.hair_tie",
+        "hair_tie.ribbon_ends"
+      ],
+      "observable_components": [
+        "Flat fabric ribbon ends continue from a readable hair fastening.",
+        "The same ribbon ends hang beside the subject with coherent gravity."
+      ],
+      "directed_relations": [
+        {
+          "subject": "ribbon_ends",
+          "type": "continue_from",
+          "object": "subject.hair_tie",
+          "owner_binding": [
+            "subject.hair_tie",
+            "hair_tie.ribbon_ends"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "unattached strips floating in the background",
+        "a tie adds a braid or twin tails automatically"
+      ],
+      "source_topics": [
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "hair_style",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG22",
+      "key": "black_hair_surface_sheen",
+      "label_ko": "검은 머리의 절제된 윤기",
+      "seed_categories": [
+        5
+      ],
+      "owners": [
+        "subject.hair",
+        "acting_light"
+      ],
+      "observable_components": [
+        "The hair mass retains a dark local color.",
+        "Selected strands carry restrained light bands while individual hair edges remain readable."
+      ],
+      "directed_relations": [
+        {
+          "subject": "light_band",
+          "type": "follows",
+          "object": "hair_surface_orientation",
+          "owner_binding": [
+            "subject.hair",
+            "acting_light"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "wet clumping inferred solely from shine",
+        "lacquered plastic mass substitutes for readable hair"
+      ],
+      "source_topics": [
+        "original_request",
+        "light_surface"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "DEFER_DOMAIN_REVIEW",
+        "existing_ids": [],
+        "proposed_slot": "hair_color",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00",
+        "L01",
+        "L09"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG23",
+      "key": "soft_matte_textured_skin",
+      "label_ko": "피부의 매트감과 실제 질감",
+      "seed_categories": [
+        6
+      ],
+      "owners": [
+        "subject.skin",
+        "facial_light"
+      ],
+      "observable_components": [
+        "Selected skin regions keep fine nonuniform surface detail.",
+        "Specular highlights remain restrained without removing the facial form."
+      ],
+      "directed_relations": [
+        {
+          "subject": "fine_texture",
+          "type": "lies_on",
+          "object": "subject.skin",
+          "owner_binding": [
+            "subject.skin",
+            "facial_light"
+          ]
+        },
+        {
+          "subject": "light_gradient",
+          "type": "models",
+          "object": "facial_form",
+          "owner_binding": [
+            "subject.skin",
+            "facial_light"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "plastic smoothing",
+        "all pale skin becomes uniformly white or medically interpreted"
+      ],
+      "source_topics": [
+        "original_request",
+        "tonal_response"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "REUSE",
+        "existing_ids": [
+          "pe_texture_preserving_tone_evening_relation"
+        ],
+        "proposed_slot": "makeup_style",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00",
+        "L06"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_editing_effects.json",
+          "id": "pe_texture_preserving_tone_evening_relation"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG24",
+      "key": "cool_skin_warm_reflected_edge",
+      "label_ko": "차가운 피부 기조와 따뜻한 반사",
+      "seed_categories": [
+        6,
+        13,
+        14
+      ],
+      "owners": [
+        "subject.skin",
+        "warm_light",
+        "background"
+      ],
+      "observable_components": [
+        "The face retains its selected relatively cool base tendency.",
+        "Warm reflected or contour light affects bounded source-facing skin regions."
+      ],
+      "directed_relations": [
+        {
+          "subject": "warm_light",
+          "type": "illuminates",
+          "object": "source_facing_skin",
+          "owner_binding": [
+            "subject.skin",
+            "warm_light",
+            "background"
+          ]
+        },
+        {
+          "subject": "skin_local_color",
+          "type": "is_separate_from",
+          "object": "light_color",
+          "owner_binding": [
+            "subject.skin",
+            "warm_light",
+            "background"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "a global orange skin tint",
+        "warm skin makeup is confused with light reflected from a gold surface"
+      ],
+      "source_topics": [
+        "light_surface"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "ENRICH_EXISTING",
+        "existing_ids": [
+          "cr_cool_subject",
+          "cr_colored_rim"
+        ],
+        "proposed_slot": "color",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "L01",
+        "L09"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_color_relations.json",
+          "id": "cr_cool_subject"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_color_relations.json",
+          "id": "cr_colored_rim"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG25",
+      "key": "scoped_mauve_taupe_makeup",
+      "label_ko": "눈 화장·볼 색의 국소 범위",
+      "seed_categories": [
+        6
+      ],
+      "owners": [
+        "subject.eyelid_cosmetics",
+        "subject.cheeks"
+      ],
+      "observable_components": [
+        "Selected muted cosmetic pigment remains in its declared eyelid or cheek region.",
+        "The transition stays soft while the natural skin boundary remains readable."
+      ],
+      "directed_relations": [
+        {
+          "subject": "cosmetic_pigment",
+          "type": "bounded_within",
+          "object": "declared_face_region",
+          "owner_binding": [
+            "subject.eyelid_cosmetics",
+            "subject.cheeks"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "background mauve washes across all skin",
+        "heavy dark makeup added from the gothic label"
+      ],
+      "source_topics": [
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "DEFER_DOMAIN_REVIEW",
+        "existing_ids": [
+          "smoky_eye_diffused_gradient"
+        ],
+        "proposed_slot": "makeup_style",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations.json",
+          "id": "smoky_eye_diffused_gradient"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG26",
+      "key": "muted_lip_tint_finish",
+      "label_ko": "입술의 낮은 채도와 새틴·매트 마감",
+      "seed_categories": [
+        6
+      ],
+      "owners": [
+        "subject.lips"
+      ],
+      "observable_components": [
+        "The selected rose or berry pigment stays inside the declared lip region.",
+        "A chosen restrained finish remains distinguishable from wet mirror-like gloss."
+      ],
+      "directed_relations": [
+        {
+          "subject": "lip_pigment",
+          "type": "bounded_within",
+          "object": "subject.lips",
+          "owner_binding": [
+            "subject.lips"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "parted lips infer desire or intent",
+        "matte lip pigment removes the natural lip structure"
+      ],
+      "source_topics": [
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "DEFER_DOMAIN_REVIEW",
+        "existing_ids": [],
+        "proposed_slot": "lip_finish",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG27",
+      "key": "high_collar_lace_structure",
+      "label_ko": "높은 칼라와 레이스 가장자리",
+      "seed_categories": [
+        7
+      ],
+      "owners": [
+        "subject.blouse_collar",
+        "subject.neck",
+        "collar.lace"
+      ],
+      "observable_components": [
+        "A standing collar forms a garment boundary around the lower neck.",
+        "Its lace pattern and selected scalloped edge remain attached to the collar."
+      ],
+      "directed_relations": [
+        {
+          "subject": "standing_collar",
+          "type": "surrounds",
+          "object": "lower_neck",
+          "owner_binding": [
+            "subject.blouse_collar",
+            "subject.neck",
+            "collar.lace"
+          ]
+        },
+        {
+          "subject": "lace_edge",
+          "type": "attached_to",
+          "object": "collar",
+          "owner_binding": [
+            "subject.blouse_collar",
+            "subject.neck",
+            "collar.lace"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "all Victorian clothing must have the same high collar",
+        "a neck tattoo or jewelry substitutes for the collar"
+      ],
+      "source_topics": [
+        "mourning",
+        "lace"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "garment_detail",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A04",
+        "A11",
+        "A05"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": [
+        "A04"
+      ]
+    },
+    {
+      "id": "EG28",
+      "key": "sheer_cloth_declared_underlayer",
+      "label_ko": "비치는 천과 지정된 하층",
+      "seed_categories": [
+        7,
+        8,
+        14
+      ],
+      "owners": [
+        "subject.outer_cloth",
+        "subject.declared_underlayer"
+      ],
+      "observable_components": [
+        "Open cells or translucent cloth remain physically present through edges and folds.",
+        "Only the explicitly declared lower layer is visible through the outer textile."
+      ],
+      "directed_relations": [
+        {
+          "subject": "outer_cloth",
+          "type": "lies_in_front_of",
+          "object": "declared_underlayer",
+          "owner_binding": [
+            "subject.outer_cloth",
+            "subject.declared_underlayer"
+          ]
+        },
+        {
+          "subject": "transmission",
+          "type": "passes_through",
+          "object": "outer_cloth",
+          "owner_binding": [
+            "subject.outer_cloth",
+            "subject.declared_underlayer"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "sheer automatically removes lining or adds body exposure",
+        "flat black floral print on opaque fabric substitutes for open lace"
+      ],
+      "source_topics": [
+        "lace",
+        "textile"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "REUSE",
+        "existing_ids": [
+          "sheer_garment_optical_layering",
+          "clothing_ct079_v1"
+        ],
+        "proposed_slot": "surface_material",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A05",
+        "A06",
+        "A07",
+        "A08"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations.json",
+          "id": "sheer_garment_optical_layering"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_textile_surface.json",
+          "id": "clothing_ct079_v1"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG29",
+      "key": "mourning_couture_historical_context",
+      "label_ko": "상복 자료의 쿠튀르 차용",
+      "seed_categories": [
+        1,
+        7,
+        8
+      ],
+      "owners": [
+        "declared_garment",
+        "optional_scene_context"
+      ],
+      "observable_components": [
+        "Selected dark textiles can reference historically documented mourning clothing.",
+        "Historical staging, wearer circumstance and period fidelity remain separately specified."
+      ],
+      "directed_relations": [
+        {
+          "subject": "historical_reference",
+          "type": "informs",
+          "object": "selected_textile_choices",
+          "owner_binding": [
+            "declared_garment",
+            "optional_scene_context"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "a black dress proves bereavement",
+        "Victorian, Edwardian and all mourning stages are merged"
+      ],
+      "source_topics": [
+        "mourning"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "CONTEXT_ONLY",
+        "existing_ids": [],
+        "proposed_slot": "costume_style",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A04",
+        "A11"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": [
+        "A04"
+      ]
+    },
+    {
+      "id": "EG30",
+      "key": "shoulder_bound_flower_corsage",
+      "label_ko": "어깨에 붙은 꽃 코르사주",
+      "seed_categories": [
+        7,
+        9
+      ],
+      "owners": [
+        "subject.right_shoulder_garment",
+        "corsage"
+      ],
+      "observable_components": [
+        "A compact floral group is attached to the selected garment shoulder.",
+        "Its petal or fabric shapes stay localized at that attachment."
+      ],
+      "directed_relations": [
+        {
+          "subject": "corsage",
+          "type": "attached_to",
+          "object": "declared_shoulder_garment",
+          "owner_binding": [
+            "subject.right_shoulder_garment",
+            "corsage"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "right in camera coordinates silently swaps the wearer's right",
+        "flowers float beside the shoulder or cover the whole torso"
+      ],
+      "source_topics": [
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "garment_detail",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG31",
+      "key": "fabric_rosette_vs_living_flower",
+      "label_ko": "천 장미와 식물 꽃의 구별",
+      "seed_categories": [
+        7,
+        8,
+        9
+      ],
+      "owners": [
+        "garment.fabric_rosette",
+        "scene.living_flower"
+      ],
+      "observable_components": [
+        "A selected garment rosette is formed by gathered or folded fabric.",
+        "A separate living flower retains its own botanical stem and petal owner."
+      ],
+      "directed_relations": [
+        {
+          "subject": "folded_fabric",
+          "type": "forms",
+          "object": "garment.fabric_rosette",
+          "owner_binding": [
+            "garment.fabric_rosette",
+            "scene.living_flower"
+          ]
+        },
+        {
+          "subject": "living_flower",
+          "type": "attached_to",
+          "object": "botanical_stem",
+          "owner_binding": [
+            "garment.fabric_rosette",
+            "scene.living_flower"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "fabric flowers grow from skin",
+        "all corsage flowers are automatically living plants"
+      ],
+      "source_topics": [
+        "original_request",
+        "textile"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "garment_detail",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00",
+        "A06",
+        "A07",
+        "A08"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG32",
+      "key": "chantilly_net_floral_lace",
+      "label_ko": "샹티이형 망 바탕과 꽃 모티프",
+      "seed_categories": [
+        8
+      ],
+      "owners": [
+        "garment.lace_net",
+        "lace.floral_motifs"
+      ],
+      "observable_components": [
+        "Fine floral motifs attach to a continuous open net ground.",
+        "The small net cells remain readable between larger motifs."
+      ],
+      "directed_relations": [
+        {
+          "subject": "floral_motif",
+          "type": "attached_to",
+          "object": "continuous_net_ground",
+          "owner_binding": [
+            "garment.lace_net",
+            "lace.floral_motifs"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "guipure bars without a continuous ground net",
+        "a particular manufacturing process or fiber inferred from appearance"
+      ],
+      "source_topics": [
+        "lace"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "REUSE",
+        "existing_ids": [
+          "orn_gd31",
+          "orn_profile_gd31"
+        ],
+        "proposed_slot": "surface_material",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A05"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_ornament_structure_extension.json",
+          "slot": "garment_detail",
+          "id": "orn_gd31"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_ornament_structure.json",
+          "id": "orn_profile_gd31"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG33",
+      "key": "fine_tulle_mesh",
+      "label_ko": "튈의 미세한 열린 망",
+      "seed_categories": [
+        8
+      ],
+      "owners": [
+        "garment.tulle_panel"
+      ],
+      "observable_components": [
+        "Fine threads form a repeated network of actual open cells.",
+        "The mesh panel retains an attached edge, seam or fold."
+      ],
+      "directed_relations": [
+        {
+          "subject": "threads",
+          "type": "bound",
+          "object": "open_cells",
+          "owner_binding": [
+            "garment.tulle_panel"
+          ]
+        },
+        {
+          "subject": "panel_edge",
+          "type": "belongs_to",
+          "object": "garment.tulle_panel",
+          "owner_binding": [
+            "garment.tulle_panel"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "dense floral lace automatically appears",
+        "opaque polka dots substitute for mesh holes"
+      ],
+      "source_topics": [
+        "textile"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "REUSE",
+        "existing_ids": [
+          "clt_ct090_v2",
+          "clothing_ct090_v2"
+        ],
+        "proposed_slot": "surface_material",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A06",
+        "A07",
+        "A08"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_textile_surface_extension.json",
+          "slot": "surface_material",
+          "id": "clt_ct090_v2"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_textile_surface.json",
+          "id": "clothing_ct090_v2"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG34",
+      "key": "micropleated_tulle_panel",
+      "label_ko": "튈 위에 잡힌 미세 주름",
+      "seed_categories": [
+        7,
+        8
+      ],
+      "owners": [
+        "garment.tulle_panel",
+        "panel.pleats"
+      ],
+      "observable_components": [
+        "Narrow repeated pleat folds traverse a selected tulle panel.",
+        "The same panel retains a distinguishable fine mesh surface."
+      ],
+      "directed_relations": [
+        {
+          "subject": "pleat_ridges",
+          "type": "formed_in",
+          "object": "same_tulle_panel",
+          "owner_binding": [
+            "garment.tulle_panel",
+            "panel.pleats"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "woven corded silk ribs substitute for pleat folds",
+        "a pleated skirt appears when a blouse panel was selected"
+      ],
+      "source_topics": [
+        "textile",
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [
+          "clothing_ct090_v2"
+        ],
+        "proposed_slot": "garment_detail",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A06",
+        "A07",
+        "A08",
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_textile_surface.json",
+          "id": "clothing_ct090_v2"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG35",
+      "key": "crisp_sheer_organza_like_panel",
+      "label_ko": "각진 주름을 유지하는 얇은 오간자",
+      "seed_categories": [
+        8
+      ],
+      "owners": [
+        "garment.sheer_panel"
+      ],
+      "observable_components": [
+        "A light transparent or translucent panel holds relatively crisp folds.",
+        "The panel's attached seams and edges remain visible."
+      ],
+      "directed_relations": [
+        {
+          "subject": "angular_folds",
+          "type": "belong_to",
+          "object": "garment.sheer_panel",
+          "owner_binding": [
+            "garment.sheer_panel"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "soft fluid chiffon drape",
+        "fiber identity or exact weave inferred from a distant view"
+      ],
+      "source_topics": [
+        "textile"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "REUSE",
+        "existing_ids": [
+          "clothing_ct091_v1"
+        ],
+        "proposed_slot": "surface_material",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A06",
+        "A07",
+        "A08"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_textile_surface.json",
+          "id": "clothing_ct091_v1"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG36",
+      "key": "fluid_chiffon_like_drape",
+      "label_ko": "작은 유동 주름의 시폰",
+      "seed_categories": [
+        8
+      ],
+      "owners": [
+        "garment.translucent_panel"
+      ],
+      "observable_components": [
+        "A soft translucent cloth drops into small flowing folds.",
+        "The hanging cloth has a traceable garment attachment."
+      ],
+      "directed_relations": [
+        {
+          "subject": "fluid_folds",
+          "type": "hang_from",
+          "object": "declared_garment_attachment",
+          "owner_binding": [
+            "garment.translucent_panel"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "crisp self-supporting organza folds",
+        "fog or transparent glass replaces the cloth"
+      ],
+      "source_topics": [
+        "textile"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "REUSE",
+        "existing_ids": [
+          "clothing_ct091_v2"
+        ],
+        "proposed_slot": "surface_material",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A06",
+        "A07",
+        "A08"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_textile_surface.json",
+          "id": "clothing_ct091_v2"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG37",
+      "key": "matte_mourning_crape",
+      "label_ko": "낮은 광택의 크레이프 표면",
+      "seed_categories": [
+        8
+      ],
+      "owners": [
+        "garment.crape_like_panel"
+      ],
+      "observable_components": [
+        "The selected dark cloth has a low-sheen finely irregular surface.",
+        "Its folds remain fabric forms with restrained highlights."
+      ],
+      "directed_relations": [
+        {
+          "subject": "surface_texture",
+          "type": "lies_on",
+          "object": "garment.crape_like_panel",
+          "owner_binding": [
+            "garment.crape_like_panel"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "glossy satin",
+        "black color alone proves historical mourning crape"
+      ],
+      "source_topics": [
+        "mourning",
+        "textile"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "surface_material",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A04",
+        "A11",
+        "A06",
+        "A07",
+        "A08"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": [
+        "A04"
+      ]
+    },
+    {
+      "id": "EG38",
+      "key": "corded_silk_rib_surface",
+      "label_ko": "골이 있는 실크형 표면",
+      "seed_categories": [
+        8
+      ],
+      "owners": [
+        "garment.ribbed_panel"
+      ],
+      "observable_components": [
+        "Fine parallel surface ribs follow one cloth panel.",
+        "Broader cloth folds remain separate from the fine rib spacing."
+      ],
+      "directed_relations": [
+        {
+          "subject": "fine_ribs",
+          "type": "lie_on",
+          "object": "garment.ribbed_panel",
+          "owner_binding": [
+            "garment.ribbed_panel"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "garment pleats substituted for woven-looking ribs",
+        "fiber authenticity inferred from visible ribs"
+      ],
+      "source_topics": [
+        "mourning",
+        "textile"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "DEFER_DOMAIN_REVIEW",
+        "existing_ids": [],
+        "proposed_slot": "surface_material",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A04",
+        "A11",
+        "A06",
+        "A07",
+        "A08"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": [
+        "A04"
+      ]
+    },
+    {
+      "id": "EG39",
+      "key": "velvet_pile_and_variant_boundary",
+      "label_ko": "벨벳 결·크러시·데보레의 경계",
+      "seed_categories": [
+        8
+      ],
+      "owners": [
+        "garment.velvet_panel"
+      ],
+      "observable_components": [
+        "Dense short pile shows fold-dependent sheen.",
+        "Crushed-pile variation or transparent patterned regions are separately requested variants."
+      ],
+      "directed_relations": [
+        {
+          "subject": "pile_sheen",
+          "type": "varies_with",
+          "object": "cloth_fold_orientation",
+          "owner_binding": [
+            "garment.velvet_panel"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "all velvet must be crushed or burnout",
+        "fur or sharp patent reflections replace short velvet pile"
+      ],
+      "source_topics": [
+        "textile"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "REUSE",
+        "existing_ids": [
+          "clt_ct089_v2",
+          "clothing_ct089_v2"
+        ],
+        "proposed_slot": "surface_material",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A06",
+        "A07",
+        "A08"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_textile_surface_extension.json",
+          "slot": "surface_material",
+          "id": "clt_ct089_v2"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_textile_surface.json",
+          "id": "clothing_ct089_v2"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG40",
+      "key": "raised_botanical_threadwork",
+      "label_ko": "식물 자수와 부착 구조",
+      "seed_categories": [
+        7,
+        8
+      ],
+      "owners": [
+        "garment.ground_cloth",
+        "garment.embroidery"
+      ],
+      "observable_components": [
+        "Raised thread paths form selected botanical motifs above the ground cloth.",
+        "Visible anchor stitches or edge relief connect the motif to the same carrier."
+      ],
+      "directed_relations": [
+        {
+          "subject": "raised_threads",
+          "type": "attached_to",
+          "object": "garment.ground_cloth",
+          "owner_binding": [
+            "garment.ground_cloth",
+            "garment.embroidery"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "flat floral ink print",
+        "thread relief is evidence of metal filigree"
+      ],
+      "source_topics": [
+        "lace",
+        "textile"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "REUSE",
+        "existing_ids": [
+          "orn_gd33",
+          "orn_profile_gd33",
+          "orn_gd34",
+          "orn_profile_gd34"
+        ],
+        "proposed_slot": "garment_detail",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A05",
+        "A06",
+        "A07",
+        "A08"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_ornament_structure_extension.json",
+          "slot": "garment_detail",
+          "id": "orn_gd33"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_ornament_structure.json",
+          "id": "orn_profile_gd33"
+        },
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_ornament_structure_extension.json",
+          "slot": "garment_detail",
+          "id": "orn_gd34"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_ornament_structure.json",
+          "id": "orn_profile_gd34"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG41",
+      "key": "mume_on_leafless_woody_branches",
+      "label_ko": "잎 적은 목질 가지의 매화",
+      "seed_categories": [
+        9
+      ],
+      "owners": [
+        "scene.mume_branch",
+        "branch.flowers"
+      ],
+      "observable_components": [
+        "Small pale flowers attach at intervals along a woody branch.",
+        "The selected flowering branch is leafless or sparsely leafed rather than a leafy bouquet."
+      ],
+      "directed_relations": [
+        {
+          "subject": "small_flowers",
+          "type": "attached_to",
+          "object": "same_woody_branch",
+          "owner_binding": [
+            "scene.mume_branch",
+            "branch.flowers"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "large magnolia cups",
+        "a fixed five-petal count imposed on every cultivar"
+      ],
+      "source_topics": [
+        "mume"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "prop",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R01"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG42",
+      "key": "camellia_flower_leaf_system",
+      "label_ko": "동백의 큰 꽃과 광택 잎",
+      "seed_categories": [
+        9
+      ],
+      "owners": [
+        "scene.camellia_branch",
+        "branch.flowers",
+        "branch.leaves"
+      ],
+      "observable_components": [
+        "Selected larger flowers remain connected to a branching stem.",
+        "Broad glossy leaves retain their own leaf boundaries on the same branch."
+      ],
+      "directed_relations": [
+        {
+          "subject": "flowers",
+          "type": "borne_on",
+          "object": "camellia_branch",
+          "owner_binding": [
+            "scene.camellia_branch",
+            "branch.flowers",
+            "branch.leaves"
+          ]
+        },
+        {
+          "subject": "leaves",
+          "type": "attached_to",
+          "object": "camellia_branch",
+          "owner_binding": [
+            "scene.camellia_branch",
+            "branch.flowers",
+            "branch.leaves"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "small blossoms on a leafless mume twig",
+        "flower petal count fixed across all cultivars"
+      ],
+      "source_topics": [
+        "camellia"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "prop",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R02"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG43",
+      "key": "magnolia_large_petals",
+      "label_ko": "목련의 큰 꽃 구조",
+      "seed_categories": [
+        9
+      ],
+      "owners": [
+        "scene.magnolia_flower",
+        "flower.branch"
+      ],
+      "observable_components": [
+        "A selected magnolia variant has relatively large distinct floral segments.",
+        "The cup, bowl or star form is chosen explicitly for that variant."
+      ],
+      "directed_relations": [
+        {
+          "subject": "large_flower",
+          "type": "attached_to",
+          "object": "declared_branch",
+          "owner_binding": [
+            "scene.magnolia_flower",
+            "flower.branch"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "all magnolia forms merged into one petal count",
+        "tiny repeated plum blossoms"
+      ],
+      "source_topics": [
+        "magnolia"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "prop",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R03"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG44",
+      "key": "pendent_bell_flower_row",
+      "label_ko": "처진 종 모양 꽃열",
+      "seed_categories": [
+        9
+      ],
+      "owners": [
+        "scene.flower_stalk",
+        "stalk.bell_flowers"
+      ],
+      "observable_components": [
+        "Small bell-like flowers hang down along the selected flower stalk.",
+        "The selected flower mouths retain a downward orientation."
+      ],
+      "directed_relations": [
+        {
+          "subject": "bell_flowers",
+          "type": "hang_from",
+          "object": "same_stalk",
+          "owner_binding": [
+            "scene.flower_stalk",
+            "stalk.bell_flowers"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "upright lily trumpets",
+        "botanical species qualified from a search snippet alone"
+      ],
+      "source_topics": [
+        "lily_of_valley"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "DEFER_SOURCE_CONFIRMATION",
+        "existing_ids": [],
+        "proposed_slot": "prop",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R05"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": [
+        "R05"
+      ]
+    },
+    {
+      "id": "EG45",
+      "key": "near_black_layered_rose",
+      "label_ko": "붉은 기운이 남은 어두운 장미",
+      "seed_categories": [
+        9
+      ],
+      "owners": [
+        "scene.rose",
+        "rose.petals"
+      ],
+      "observable_components": [
+        "Layered rose petals preserve a dark red or purple tendency in illuminated regions.",
+        "The selected near-black petals retain distinguishable folds."
+      ],
+      "directed_relations": [
+        {
+          "subject": "petal_layers",
+          "type": "form",
+          "object": "same_rose_bloom",
+          "owner_binding": [
+            "scene.rose",
+            "rose.petals"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "uniform dead black blob",
+        "natural black pigmentation or frost inferred from the color label"
+      ],
+      "source_topics": [
+        "dark_rose"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "prop",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R04"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG46",
+      "key": "airy_small_flower_spray",
+      "label_ko": "작은 꽃의 성긴 가지 무리",
+      "seed_categories": [
+        9
+      ],
+      "owners": [
+        "scene.fine_flower_spray"
+      ],
+      "observable_components": [
+        "Fine branching stems carry many small separated flowers.",
+        "Open intervals remain between the tiny flower groups."
+      ],
+      "directed_relations": [
+        {
+          "subject": "tiny_flowers",
+          "type": "attached_to",
+          "object": "fine_branching_stems",
+          "owner_binding": [
+            "scene.fine_flower_spray"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "a dense hydrangea head",
+        "purple hue automatically proves dyeing or a natural species-wide color"
+      ],
+      "source_topics": [
+        "gypsophila",
+        "photographer"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "prop",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R11",
+        "R06",
+        "R07"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG47",
+      "key": "fern_frond_vs_leaf_motif",
+      "label_ko": "고사리 잎과 장식 잎",
+      "seed_categories": [
+        9
+      ],
+      "owners": [
+        "scene.frond",
+        "artifact.leaf_motif"
+      ],
+      "observable_components": [
+        "An explicitly selected frond has repeated smaller leaf divisions along its central axis.",
+        "A decorative leaf motif remains attached to its separately declared artifact."
+      ],
+      "directed_relations": [
+        {
+          "subject": "leaf_divisions",
+          "type": "arranged_along",
+          "object": "frond_axis",
+          "owner_binding": [
+            "scene.frond",
+            "artifact.leaf_motif"
+          ]
+        },
+        {
+          "subject": "decorative_leaf",
+          "type": "attached_to",
+          "object": "artifact",
+          "owner_binding": [
+            "scene.frond",
+            "artifact.leaf_motif"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "golden artifact leaves are living fern fronds",
+        "a botanical species inferred from generic ornament"
+      ],
+      "source_topics": [
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "DEFER_DOMAIN_REVIEW",
+        "existing_ids": [],
+        "proposed_slot": "prop",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG48",
+      "key": "petal_state_variants",
+      "label_ko": "서리·이슬·말린 꽃잎의 독립 상태",
+      "seed_categories": [
+        9,
+        18
+      ],
+      "owners": [
+        "declared_flower.petals",
+        "petal_surface_detail"
+      ],
+      "observable_components": [
+        "The explicitly selected surface state has localized crystals, droplets or dry curled edges.",
+        "That state stays on the same named petal owner."
+      ],
+      "directed_relations": [
+        {
+          "subject": "surface_state",
+          "type": "bounded_on",
+          "object": "declared_petals",
+          "owner_binding": [
+            "declared_flower.petals",
+            "petal_surface_detail"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "near-black automatically means dried or frost-covered",
+        "glitter substitutes for ice; grains substitute for droplets"
+      ],
+      "source_topics": [
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "texture",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG49",
+      "key": "open_filigree_local_ornament",
+      "label_ko": "국소 필리그리의 선재·틈",
+      "seed_categories": [
+        10
+      ],
+      "owners": [
+        "declared_jewelry",
+        "jewelry.wire_paths"
+      ],
+      "observable_components": [
+        "Fine curved members form a bounded jewelry motif.",
+        "Background or a separately declared backing remains distinguishable between those members."
+      ],
+      "directed_relations": [
+        {
+          "subject": "wire_paths",
+          "type": "bound",
+          "object": "local_open_intervals",
+          "owner_binding": [
+            "declared_jewelry",
+            "jewelry.wire_paths"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "printed golden curls",
+        "a ring, choker or religious emblem added automatically"
+      ],
+      "source_topics": [
+        "metal_ornament"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "DEFER_DOMAIN_REVIEW",
+        "existing_ids": [],
+        "proposed_slot": "wearable_accessory",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A09"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG50",
+      "key": "separate_bead_and_pearl_elements",
+      "label_ko": "구슬·진주의 반복 부품",
+      "seed_categories": [
+        10
+      ],
+      "owners": [
+        "declared_accessory",
+        "accessory.beads"
+      ],
+      "observable_components": [
+        "Small separate bead-like elements form the requested string or local embroidery.",
+        "Each bead retains a boundary distinct from the carrier."
+      ],
+      "directed_relations": [
+        {
+          "subject": "beads",
+          "type": "attached_to",
+          "object": "declared_accessory_carrier",
+          "owner_binding": [
+            "declared_accessory",
+            "accessory.beads"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "white image grain counts as seed pearls",
+        "jet-style implies verified jet material"
+      ],
+      "source_topics": [
+        "mourning",
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "DEFER_DOMAIN_REVIEW",
+        "existing_ids": [],
+        "proposed_slot": "wearable_accessory",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A04",
+        "A11",
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": [
+        "A04"
+      ]
+    },
+    {
+      "id": "EG51",
+      "key": "cameo_relief_in_mount",
+      "label_ko": "받침 안의 카메오형 부조",
+      "seed_categories": [
+        10
+      ],
+      "owners": [
+        "declared_accessory.mount",
+        "accessory.relief"
+      ],
+      "observable_components": [
+        "A bounded relief form projects above a contrasting field.",
+        "Its mounting border remains distinct from the same relief."
+      ],
+      "directed_relations": [
+        {
+          "subject": "relief_form",
+          "type": "raised_above",
+          "object": "accessory_field",
+          "owner_binding": [
+            "declared_accessory.mount",
+            "accessory.relief"
+          ]
+        },
+        {
+          "subject": "mounting_border",
+          "type": "surrounds",
+          "object": "relief_field",
+          "owner_binding": [
+            "declared_accessory.mount",
+            "accessory.relief"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "painted face icon substitutes for raised relief",
+        "a skull or cross introduced without request"
+      ],
+      "source_topics": [
+        "metal_ornament"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "DEFER_DOMAIN_REVIEW",
+        "existing_ids": [],
+        "proposed_slot": "wearable_accessory",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A09"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG52",
+      "key": "metal_surface_age_variants",
+      "label_ko": "황동·은·청동의 세월 표면",
+      "seed_categories": [
+        10,
+        11
+      ],
+      "owners": [
+        "declared_metal_object.surface"
+      ],
+      "observable_components": [
+        "Uneven dulling or selected patina remains bounded on the metal surface.",
+        "Material highlights follow object geometry rather than becoming light sources."
+      ],
+      "directed_relations": [
+        {
+          "subject": "surface_variation",
+          "type": "bounded_on",
+          "object": "metal_object",
+          "owner_binding": [
+            "declared_metal_object.surface"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "gold color proves brass alloy",
+        "all old metals have the same green corrosion"
+      ],
+      "source_topics": [
+        "metal_surface"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "DEFER_DOMAIN_REVIEW",
+        "existing_ids": [],
+        "proposed_slot": "surface_material",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A12"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG53",
+      "key": "gold_leaf_like_bounded_panel",
+      "label_ko": "빛을 받는 금박형 패널",
+      "seed_categories": [
+        11
+      ],
+      "owners": [
+        "background.panel",
+        "panel.metallic_leaf_surface",
+        "acting_light"
+      ],
+      "observable_components": [
+        "A bounded panel has subtly uneven reflective leaf-like surface patches.",
+        "The surface response follows illumination while the panel boundary remains readable."
+      ],
+      "directed_relations": [
+        {
+          "subject": "reflective_leaf_surface",
+          "type": "lies_on",
+          "object": "background.panel",
+          "owner_binding": [
+            "background.panel",
+            "panel.metallic_leaf_surface",
+            "acting_light"
+          ]
+        },
+        {
+          "subject": "light",
+          "type": "reflected_by",
+          "object": "panel.surface",
+          "owner_binding": [
+            "background.panel",
+            "panel.metallic_leaf_surface",
+            "acting_light"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "yellow emitted light counts as a gold-leaf material",
+        "gold material proves a particular fabrication technique or provenance"
+      ],
+      "source_topics": [
+        "gold_leaf"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [
+          "tarnished_gold_leaf_surface"
+        ],
+        "proposed_slot": "surface_material",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A09"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_tags.json",
+          "slot": "surface_material",
+          "id": "tarnished_gold_leaf_surface"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG54",
+      "key": "gold_mosaic_tesserae",
+      "label_ko": "구획과 이음이 있는 금빛 모자이크",
+      "seed_categories": [
+        11
+      ],
+      "owners": [
+        "background.panel",
+        "panel.tesserae"
+      ],
+      "observable_components": [
+        "Small adjacent pieces retain repeated tile boundaries on the panel.",
+        "Light response may vary between pieces without merging them into one smooth sheet."
+      ],
+      "directed_relations": [
+        {
+          "subject": "tesserae",
+          "type": "adjacent_within",
+          "object": "same_panel_boundary",
+          "owner_binding": [
+            "background.panel",
+            "panel.tesserae"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "reptile scales inferred from mosaic scale texture",
+        "continuous cracked gold leaf counts as separate tiles"
+      ],
+      "source_topics": [
+        "gold_mosaic"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "surface_material",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A10"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG55",
+      "key": "localized_flaking_gilding",
+      "label_ko": "선택 부위의 금박 벗겨짐",
+      "seed_categories": [
+        11
+      ],
+      "owners": [
+        "panel.leaf_layer",
+        "panel.substrate"
+      ],
+      "observable_components": [
+        "Irregular losses interrupt selected parts of the reflective layer.",
+        "A distinguishable lower substrate remains inside the loss boundaries."
+      ],
+      "directed_relations": [
+        {
+          "subject": "leaf_layer_loss",
+          "type": "reveals",
+          "object": "same_panel_substrate",
+          "owner_binding": [
+            "panel.leaf_layer",
+            "panel.substrate"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "gold-colored dust floats off every surface",
+        "entire room becomes abandoned because one panel is weathered"
+      ],
+      "source_topics": [
+        "gold_leaf"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "texture",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A09"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG56",
+      "key": "gilded_artifact_branch",
+      "label_ko": "식물 형태를 한 금빛 장식 부재",
+      "seed_categories": [
+        9,
+        11
+      ],
+      "owners": [
+        "artifact.branch_shaped_member"
+      ],
+      "observable_components": [
+        "A branch-shaped object retains a solid artifact boundary.",
+        "Its metallic surface response stays on that same member."
+      ],
+      "directed_relations": [
+        {
+          "subject": "metallic_surface",
+          "type": "bounded_on",
+          "object": "branch_shaped_artifact",
+          "owner_binding": [
+            "artifact.branch_shaped_member"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "gold lighting transforms a living twig into metal",
+        "living plant growth inferred from a leaf-shaped artifact"
+      ],
+      "source_topics": [
+        "gold_leaf",
+        "art_nouveau"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "prop",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "A09",
+        "A02"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG57",
+      "key": "charcoal_backdrop_dark_material",
+      "label_ko": "차콜 배경과 어두운 재질",
+      "seed_categories": [
+        12
+      ],
+      "owners": [
+        "background.backdrop",
+        "subject.outline"
+      ],
+      "observable_components": [
+        "The chosen background remains predominantly dark with restrained local material information.",
+        "Small lightness or material differences keep the subject boundary readable."
+      ],
+      "directed_relations": [
+        {
+          "subject": "subject_contour",
+          "type": "separated_from",
+          "object": "dark_backdrop",
+          "owner_binding": [
+            "background.backdrop",
+            "subject.outline"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "all dark backgrounds are seamless paper",
+        "a pure black clipping region erases required contour detail"
+      ],
+      "source_topics": [
+        "original_request",
+        "tonal_response"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "ENRICH_EXISTING",
+        "existing_ids": [
+          "cr_dark_on_dark"
+        ],
+        "proposed_slot": "location",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00",
+        "L06"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_color_relations.json",
+          "id": "cr_dark_on_dark"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG58",
+      "key": "shallow_architectural_niche",
+      "label_ko": "얕은 벽감의 공간 구조",
+      "seed_categories": [
+        12
+      ],
+      "owners": [
+        "background.niche",
+        "niche.opening"
+      ],
+      "observable_components": [
+        "A bounded recessed region has a readable front opening and interior depth.",
+        "Selected ornament belongs to the opening rather than filling unrelated walls."
+      ],
+      "directed_relations": [
+        {
+          "subject": "niche_interior",
+          "type": "recedes_behind",
+          "object": "opening_plane",
+          "owner_binding": [
+            "background.niche",
+            "niche.opening"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "a whole cathedral appears from the word niche",
+        "religious affiliation inferred from an architectural alcove"
+      ],
+      "source_topics": [
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "DEFER_DOMAIN_REVIEW",
+        "existing_ids": [],
+        "proposed_slot": "location",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG59",
+      "key": "antique_mirror_optional_variant",
+      "label_ko": "경계가 있는 타원 거울",
+      "seed_categories": [
+        12
+      ],
+      "owners": [
+        "scene.mirror",
+        "subject.reflected_face"
+      ],
+      "observable_components": [
+        "The mirror has a distinct physical boundary.",
+        "Any selected reflection remains geometrically related to the same subject and scene."
+      ],
+      "directed_relations": [
+        {
+          "subject": "reflection",
+          "type": "contained_within",
+          "object": "mirror_boundary",
+          "owner_binding": [
+            "scene.mirror",
+            "subject.reflected_face"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "another person's face appears without a mirror owner",
+        "mirror introduced by antique mood alone"
+      ],
+      "source_topics": [
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "REUSE",
+        "existing_ids": [
+          "pc_pc22_owner_relation"
+        ],
+        "proposed_slot": "prop",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_portrait_composition.json",
+          "id": "pc_pc22_owner_relation"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG60",
+      "key": "occluded_vertical_emissive_slit",
+      "label_ko": "인물 뒤 가려지는 세로 발광 틈",
+      "seed_categories": [
+        4,
+        13
+      ],
+      "owners": [
+        "background.emissive_slit",
+        "subject.silhouette",
+        "background.panel"
+      ],
+      "observable_components": [
+        "A narrow vertically extended luminous aperture lies behind the subject.",
+        "The subject occludes that aperture where their silhouettes overlap; visible segments belong to the same aligned opening."
+      ],
+      "directed_relations": [
+        {
+          "subject": "emissive_slit",
+          "type": "behind",
+          "object": "subject",
+          "owner_binding": [
+            "background.emissive_slit",
+            "subject.silhouette",
+            "background.panel"
+          ]
+        },
+        {
+          "subject": "subject.silhouette",
+          "type": "occludes",
+          "object": "overlapping_slit_region",
+          "owner_binding": [
+            "background.emissive_slit",
+            "subject.silhouette",
+            "background.panel"
+          ]
+        },
+        {
+          "subject": "slit_opening",
+          "type": "bounded_by",
+          "object": "background.panel",
+          "owner_binding": [
+            "background.emissive_slit",
+            "subject.silhouette",
+            "background.panel"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "unbroken stripe drawn over the face",
+        "golden rim without any visible selected aperture",
+        "a visible aperture guarantees wraparound light on every contour"
+      ],
+      "source_topics": [
+        "original_request",
+        "rim_light"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "light_shape",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00",
+        "L01",
+        "L02",
+        "L03"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": [
+        "L03"
+      ]
+    },
+    {
+      "id": "EG61",
+      "key": "selected_warm_rear_rim",
+      "label_ko": "선택된 턱·목·머리 윤곽의 역광",
+      "seed_categories": [
+        13
+      ],
+      "owners": [
+        "rear_source",
+        "subject.hair_edge",
+        "subject.neck_edge",
+        "subject.jaw_edge"
+      ],
+      "observable_components": [
+        "A selected rear light contribution reaches source-facing contour segments.",
+        "The warmer rim remains distinct from the front-lit face interior."
+      ],
+      "directed_relations": [
+        {
+          "subject": "rear_source",
+          "type": "illuminates",
+          "object": "source_facing_contours",
+          "owner_binding": [
+            "rear_source",
+            "subject.hair_edge",
+            "subject.neck_edge",
+            "subject.jaw_edge"
+          ]
+        },
+        {
+          "subject": "front_fill",
+          "type": "illuminates",
+          "object": "face_interior",
+          "owner_binding": [
+            "rear_source",
+            "subject.hair_edge",
+            "subject.neck_edge",
+            "subject.jaw_edge"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "all silhouette boundaries glow equally",
+        "outline painted on the image plane independent of source"
+      ],
+      "source_topics": [
+        "rim_light"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "REUSE",
+        "existing_ids": [
+          "pe_rear_rim",
+          "cr_colored_rim"
+        ],
+        "proposed_slot": "light_direction",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "L01",
+        "L02",
+        "L03"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_editing_effects_extension.json",
+          "slot": "light_direction",
+          "id": "pe_rear_rim"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_color_relations.json",
+          "id": "cr_colored_rim"
+        }
+      ],
+      "source_access_limits": [
+        "L03"
+      ]
+    },
+    {
+      "id": "EG62",
+      "key": "soft_directional_front_fill",
+      "label_ko": "입체감을 남긴 부드러운 정면 보조광",
+      "seed_categories": [
+        13,
+        14
+      ],
+      "owners": [
+        "front_fill_source",
+        "subject.face"
+      ],
+      "observable_components": [
+        "The acting frontal or near-frontal source produces broad shadow-edge transitions.",
+        "Facial form retains gradual light differences without specular clipping."
+      ],
+      "directed_relations": [
+        {
+          "subject": "front_fill_source",
+          "type": "illuminates",
+          "object": "face_front_planes",
+          "owner_binding": [
+            "front_fill_source",
+            "subject.face"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "completely flat uniform face color",
+        "out-of-focus eyes substitute for a soft source"
+      ],
+      "source_topics": [
+        "soft_light"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "REUSE",
+        "existing_ids": [
+          "soft_light_shadow_edge_relation"
+        ],
+        "proposed_slot": "light_type",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "L01",
+        "L09"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations.json",
+          "id": "soft_light_shadow_edge_relation"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG63",
+      "key": "low_key_vs_black_floor",
+      "label_ko": "로우키 조명과 검정 톤 바닥 분리",
+      "seed_categories": [
+        13,
+        17
+      ],
+      "owners": [
+        "scene.light_distribution",
+        "image_plane.dark_tones"
+      ],
+      "observable_components": [
+        "The scene's selected dark regions dominate the composition.",
+        "The output black floor is a separately selected tonal property."
+      ],
+      "directed_relations": [
+        {
+          "subject": "scene_illumination",
+          "type": "is_separate_from",
+          "object": "output_black_floor",
+          "owner_binding": [
+            "scene.light_distribution",
+            "image_plane.dark_tones"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "low key always crushes blacks",
+        "lifted blacks add a bright physical fill lamp"
+      ],
+      "source_topics": [
+        "tonal_response",
+        "soft_light"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [
+          "pe_lifted_black_floor_relation"
+        ],
+        "proposed_slot": "lighting",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "L06",
+        "L01",
+        "L09"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_editing_effects.json",
+          "id": "pe_lifted_black_floor_relation"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG64",
+      "key": "warm_background_cool_face_roles",
+      "label_ko": "따뜻한 배경과 상대적으로 차가운 얼굴",
+      "seed_categories": [
+        13,
+        15,
+        16
+      ],
+      "owners": [
+        "background.region",
+        "subject.face",
+        "source_contributions"
+      ],
+      "observable_components": [
+        "Selected background regions retain a warmer tendency than the face interior.",
+        "Light color footprints follow surfaces and occlusion instead of globally recoloring the face."
+      ],
+      "directed_relations": [
+        {
+          "subject": "background_color_role",
+          "type": "warmer_than",
+          "object": "face_interior_role",
+          "owner_binding": [
+            "background.region",
+            "subject.face",
+            "source_contributions"
+          ]
+        },
+        {
+          "subject": "source_footprint",
+          "type": "follows",
+          "object": "receiving_surface",
+          "owner_binding": [
+            "background.region",
+            "subject.face",
+            "source_contributions"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "all skin becomes blue",
+        "skin tone prescribed from ethnicity rather than the frozen request"
+      ],
+      "source_topics": [
+        "light_surface"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "REUSE",
+        "existing_ids": [
+          "cr_cool_subject",
+          "cr_two_color_lights"
+        ],
+        "proposed_slot": "color",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "L01",
+        "L09"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_color_relations.json",
+          "id": "cr_cool_subject"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_color_relations.json",
+          "id": "cr_two_color_lights"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG65",
+      "key": "diffusion_vs_defocus_vs_halation",
+      "label_ko": "확산·초점 흐림·필름 할레이션의 분리",
+      "seed_categories": [
+        14,
+        17
+      ],
+      "owners": [
+        "image_plane.highlight_neighborhood",
+        "subject.focus_plane"
+      ],
+      "observable_components": [
+        "A selected diffusion variant softens specified contrast or highlight transitions.",
+        "Focus-plane eye or textile detail stays readable; a halo is required only for a separately selected halo-producing variant."
+      ],
+      "directed_relations": [
+        {
+          "subject": "diffusion_effect",
+          "type": "bounded_to",
+          "object": "selected_picture_regions",
+          "owner_binding": [
+            "image_plane.highlight_neighborhood",
+            "subject.focus_plane"
+          ]
+        },
+        {
+          "subject": "focus_state",
+          "type": "is_separate_from",
+          "object": "highlight_spread",
+          "owner_binding": [
+            "image_plane.highlight_neighborhood",
+            "subject.focus_plane"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "all diffusion must create a red halo",
+        "global blur, thick fog or flare ghosts count as restrained diffusion"
+      ],
+      "source_topics": [
+        "optical_diffusion"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "ENRICH_EXISTING",
+        "existing_ids": [
+          "pe_neutral_diffusion",
+          "diffusion_filter_highlight_halation",
+          "pe_local_bloom_relation"
+        ],
+        "proposed_slot": "quality",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "L04",
+        "L05"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_editing_effects_extension.json",
+          "slot": "quality",
+          "id": "pe_neutral_diffusion"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations.json",
+          "id": "diffusion_filter_highlight_halation"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_editing_effects.json",
+          "id": "pe_local_bloom_relation"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG66",
+      "key": "gradual_highlight_response",
+      "label_ko": "클리핑과 공간 번짐을 구분한 롤오프",
+      "seed_categories": [
+        14,
+        17
+      ],
+      "owners": [
+        "image_plane.highlight_tones",
+        "subject.highlight_form"
+      ],
+      "observable_components": [
+        "Bright image tones approach the selected upper range gradually.",
+        "Important bright facial or cloth form retains readable internal variation."
+      ],
+      "directed_relations": [
+        {
+          "subject": "tone_response",
+          "type": "preserves",
+          "object": "highlight_form",
+          "owner_binding": [
+            "image_plane.highlight_tones",
+            "subject.highlight_form"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "a spatial luminous halo automatically counts as tonal roll-off",
+        "exposure metadata inferred from rendered pixels"
+      ],
+      "source_topics": [
+        "tonal_response"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "REUSE",
+        "existing_ids": [
+          "pe_gentle_rolloff",
+          "highlight_rolloff_tone_response"
+        ],
+        "proposed_slot": "color_grading",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "L06"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_editing_effects_extension.json",
+          "slot": "color_grading",
+          "id": "pe_gentle_rolloff"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations.json",
+          "id": "highlight_rolloff_tone_response"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG67",
+      "key": "fine_image_plane_grain",
+      "label_ko": "물체 표면과 구분한 고운 그레인",
+      "seed_categories": [
+        17
+      ],
+      "owners": [
+        "image_plane",
+        "subject.material_detail"
+      ],
+      "observable_components": [
+        "Fine irregular picture-plane grain remains visible in selected tonal regions.",
+        "The grain does not replace pores, lace threads or physical dust."
+      ],
+      "directed_relations": [
+        {
+          "subject": "grain",
+          "type": "overlays",
+          "object": "image_plane_tones",
+          "owner_binding": [
+            "image_plane",
+            "subject.material_detail"
+          ]
+        },
+        {
+          "subject": "material_detail",
+          "type": "is_separate_from",
+          "object": "grain",
+          "owner_binding": [
+            "image_plane",
+            "subject.material_detail"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "grain becomes skin damage or glitter",
+        "digital colored noise automatically proves film capture"
+      ],
+      "source_topics": [
+        "tonal_response"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "REUSE",
+        "existing_ids": [
+          "pe_fine_midtonal_grain",
+          "pe_fine_midtonal_grain_relation"
+        ],
+        "proposed_slot": "grain_profile",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "L06"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_editing_effects_extension.json",
+          "slot": "grain_profile",
+          "id": "pe_fine_midtonal_grain"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_editing_effects.json",
+          "id": "pe_fine_midtonal_grain_relation"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG68",
+      "key": "lifted_black_floor_readable_cloth",
+      "label_ko": "검정 바닥 상승과 옷의 세부",
+      "seed_categories": [
+        17
+      ],
+      "owners": [
+        "image_plane.dark_tones",
+        "garment.dark_detail"
+      ],
+      "observable_components": [
+        "The selected darkest output tones sit above an absolute black floor.",
+        "Adjacent dark cloth or hair details remain distinguishable."
+      ],
+      "directed_relations": [
+        {
+          "subject": "output_black_floor",
+          "type": "belongs_to",
+          "object": "image_plane",
+          "owner_binding": [
+            "image_plane.dark_tones",
+            "garment.dark_detail"
+          ]
+        },
+        {
+          "subject": "dark_detail",
+          "type": "retained_within",
+          "object": "selected_dark_regions",
+          "owner_binding": [
+            "image_plane.dark_tones",
+            "garment.dark_detail"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "crushed dark regions or a gray physical cloth substitute",
+        "a software slider direction is prescribed without a verified editor contract"
+      ],
+      "source_topics": [
+        "tonal_response"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "REUSE",
+        "existing_ids": [
+          "pe_lifted_black_floor",
+          "pe_lifted_black_floor_relation"
+        ],
+        "proposed_slot": "color_grading",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "L06"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "candidate",
+          "file": "photo_prompt_editing_effects_extension.json",
+          "slot": "color_grading",
+          "id": "pe_lifted_black_floor"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_editing_effects.json",
+          "id": "pe_lifted_black_floor_relation"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG69",
+      "key": "owner_bound_palette_variants",
+      "label_ko": "색 이름과 팔레트의 소유자 배정",
+      "seed_categories": [
+        15,
+        16
+      ],
+      "owners": [
+        "garment",
+        "background.panel",
+        "scene.flowers",
+        "skin",
+        "light"
+      ],
+      "observable_components": [
+        "Each selected color role belongs to a named existing surface or light owner.",
+        "The hue families remain locally distinguishable while the requested overall chroma stays restrained."
+      ],
+      "directed_relations": [
+        {
+          "subject": "named_palette_role",
+          "type": "bounded_on",
+          "object": "declared_owner",
+          "owner_binding": [
+            "garment",
+            "background.panel",
+            "scene.flowers",
+            "skin",
+            "light"
+          ]
+        },
+        {
+          "subject": "local_material_color",
+          "type": "is_separate_from",
+          "object": "illumination_color",
+          "owner_binding": [
+            "garment",
+            "background.panel",
+            "scene.flowers",
+            "skin",
+            "light"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "three color words wash every region equally",
+        "antique gold is a fixed universal HEX value",
+        "a named palette necessarily adds new objects"
+      ],
+      "source_topics": [
+        "original_request",
+        "light_surface"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "ENRICH_EXISTING",
+        "existing_ids": [
+          "cr_low_chroma",
+          "cr_dark_on_dark"
+        ],
+        "proposed_slot": "color",
+        "priority": "P0"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R00",
+        "L01",
+        "L09"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_color_relations.json",
+          "id": "cr_low_chroma"
+        },
+        {
+          "kind": "visual_profile",
+          "file": "photo_prompt_visual_obligations_color_relations.json",
+          "id": "cr_dark_on_dark"
+        }
+      ],
+      "source_access_limits": []
+    },
+    {
+      "id": "EG70",
+      "key": "localized_atmosphere_and_stillness",
+      "label_ko": "공기층·입자·정적의 독립 범위",
+      "seed_categories": [
+        2,
+        18
+      ],
+      "owners": [
+        "scene.atmosphere",
+        "declared_particles",
+        "subject",
+        "ribbons"
+      ],
+      "observable_components": [
+        "Selected haze or particles occupy declared scene regions with readable depth.",
+        "A static-pose or calm-air option is separate from the presence of smoke, mist or suspended petals."
+      ],
+      "directed_relations": [
+        {
+          "subject": "atmosphere",
+          "type": "occupies",
+          "object": "declared_scene_volume",
+          "owner_binding": [
+            "scene.atmosphere",
+            "declared_particles",
+            "subject",
+            "ribbons"
+          ]
+        },
+        {
+          "subject": "particle_visibility",
+          "type": "depends_on",
+          "object": "local_light_and_depth",
+          "owner_binding": [
+            "scene.atmosphere",
+            "declared_particles",
+            "subject",
+            "ribbons"
+          ]
+        }
+      ],
+      "confusion_boundaries": [
+        "fine film grain becomes dust motes",
+        "ethereal adds a dense smoke veil over the eyes",
+        "stillness proves a literal stop of time"
+      ],
+      "source_topics": [
+        "photographer",
+        "original_request"
+      ],
+      "claim_status": "researcher_authored_visual_proposal",
+      "integration": {
+        "treatment": "NEW_SIBLING",
+        "existing_ids": [],
+        "proposed_slot": "ambient_particle",
+        "priority": "P1"
+      },
+      "activation": "Only explicit, owner-specific requested components or deliberate authorial selection; broad mood/style labels do not activate the entire card.",
+      "native_gate": "All selected components and their directed relations must be visible on the declared owners in the original image. Hidden evidence is unobservable; partial evidence is not qualification.",
+      "source_ids": [
+        "R06",
+        "R07",
+        "R00"
+      ],
+      "source_coverage": "Only SOURCES.json claims are externally supported. These components, relations and candidate choices are authored research proposals.",
+      "existing_references": [],
+      "source_access_limits": []
+    }
+  ]
+}
