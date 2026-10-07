@@ -1,0 +1,64 @@
+{
+  "corrections": [
+    {
+      "correction_id": "catalog-path-wire-schema-01",
+      "timestamp_utc": "2026-10-06T16:48:00.878023+00:00",
+      "original_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/run/precore_feature_selection.json",
+      "original_file_sha256": "e92ed4507aa067bf5a690ba9bd8594a368362b8b54411d8bc7721b6a621718f5",
+      "corrected_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/run/precore_feature_selection.runtime.json",
+      "corrected_file_sha256": "60a04d831511c17d3bf7d616e2b07d9ee044556c8f21ebb5c6262654ec016a37",
+      "reason": "Official validator requires canonical catalog_path wire label, not the actual isolated absolute filesystem path. Catalog bytes are unchanged.",
+      "changed_fields": [
+        {
+          "field": "catalog_path",
+          "from": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/skill/precore/visual_feature_catalog.json",
+          "to": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json"
+        }
+      ],
+      "baseline_or_meaning_changed": false,
+      "original_files_preserved": true,
+      "data_access_order": [
+        "PRECORE-FROZEN.json created",
+        "runtime supplied",
+        "all frozen hashes verified",
+        "official feature validation failed on path metadata",
+        "validator constant inspected",
+        "corrected metadata in separate file",
+        "no candidate/profile DATA has been read or retrieved yet"
+      ],
+      "initial_validation": {
+        "exit_code": 2,
+        "stderr": "invalid pre-core feature selection: selection catalog_path is not the permitted pre-core catalog\n"
+      }
+    },
+    {
+      "correction_id": "request-literal-exclusion-02",
+      "timestamp_utc": "2026-10-06T16:49:46.887640+00:00",
+      "original_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/run/authorial_core.json",
+      "original_file_sha256": "bbe32a20c84a43b9370aa78d8cd60c3866b86f397441744051d2414c8b21818f",
+      "corrected_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/run/authorial_core.runtime.json",
+      "corrected_file_sha256": "1a3063b8dbd96f2cbb02d81d277688a4a091ffb9c26391314c56b3c3d2aac24c",
+      "reason": "Core normalizer requires exclusions to be literal substrings of active requester spans; use the original Korean object of the explicit no-people clause. This is only the wire representation of the same exclusion, not a new semantic choice.",
+      "changed_fields": [
+        {
+          "field": "user_exclusions",
+          "from": [
+            "people"
+          ],
+          "to": [
+            "사람"
+          ]
+        }
+      ],
+      "baseline_or_meaning_changed": false,
+      "original_files_preserved": true,
+      "first_generation_attempt_exit_code": 1,
+      "first_generation_attempt_data_access": false,
+      "data_access_order": [
+        "raw core generation rejected inside load_authorial_core_arg before provider.acquire",
+        "request-literal exclusion metadata corrected in separate core",
+        "formal feature validation repeated before any candidate/profile DATA access"
+      ]
+    }
+  ]
+}

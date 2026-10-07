@@ -1,0 +1,259 @@
+{
+  "contract_version": "photo-independent-qa-result/v1",
+  "case_id": "case-02",
+  "completed_at_utc": "2026-10-06T17:02:59+00:00",
+  "overall_status": "PARTIAL",
+  "input_provenance": "coordinator_created_synthetic_random_QA_topic; not represented as a direct human-authored photo request",
+  "source_request": "오래된 구리 주전자와 접힌 리넨을 이른 아침 자연광으로 찍은 사진. 사람은 없음.",
+  "precore_freeze_at_utc": "2026-10-06T16:40:56+00:00",
+  "precore_freeze_preserved": true,
+  "precore_schema_corrections": [
+    {
+      "changed_at_utc": "2026-10-06T16:48:13+00:00",
+      "kind": "schema_only",
+      "original_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/feature_selection.json",
+      "corrected_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/feature_selection.canonical.json",
+      "original_sha256": "da131a8c7a6d4cf8b29c921f45c8caf683f65bcde36eaeea9b17fcf27c07e2b5",
+      "corrected_sha256": "dbb46e93648f742efffa0a774fe484f6125e8658bab1d805b68c86a23f17aa7d",
+      "field": "catalog_path",
+      "before": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/skill/precore/visual_feature_catalog.json",
+      "after": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+      "reason": "The live validator requires the canonical SKILL catalog identifier even when --catalog points to the isolated actual file. The exact catalog byte hash, category selections and every evidence phrase are unchanged.",
+      "baseline_changed": false,
+      "meaning_changed": false,
+      "candidate_DATA_access_before_correction": false
+    },
+    {
+      "changed_at_utc": "2026-10-06T16:49:49+00:00",
+      "kind": "schema_literal_grounding_only",
+      "original_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/authorial_core.json",
+      "corrected_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/authorial_core.canonical.json",
+      "original_sha256": "0e06ff3baebac963e2ea91e15ab3f0153057469cfefe1e9ad3bfd8ea0eb1c5d4",
+      "corrected_sha256": "3144e0a3b9ad8762fd2e4bb7fd96ed9d4298f31987175d0911cd8a35f03f6231",
+      "field": "user_exclusions[0]",
+      "before": "people",
+      "after": "사람",
+      "reason": "The public v3 core normalizer requires each exclusion string itself to occur in an active source span. Replace the English rendering with the exact Korean source label for the same explicitly excluded humans. Neither exclusion meaning nor positive prompt changes.",
+      "baseline_changed": false,
+      "meaning_changed": false,
+      "candidate_DATA_access_before_correction": false,
+      "preceding_rejection": "generation-command.json returncode 1; core validation occurs before provider.acquire()"
+    }
+  ],
+  "initial_generation_rejected_before_DATA": true,
+  "successful_generation": {
+    "generation_id": "2135faf8f2451eac73b90c447edbd496545d20d974c158f44ec67d98e9107f2a",
+    "pack_id": "7f3c7b8e9d3f7b53",
+    "pack_sha256": "4469fec4513025e503deec7dc7e3e517b30586507019892af80bae6e2e7eeafd",
+    "receipt_canonical_sha256": "e621bc958ac1fa98a0b51bedfb2cb64bfdea8272802975013bf183383a69cac2",
+    "source_fingerprint": "98f7d0ffafa290a2f63583ce8ff41d1c38208bdacc12e1e279458bea81e9d24a",
+    "observed_at_utc": "2026-10-06T16:50:04.335814+00:00",
+    "runtime_store": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/runtime",
+    "source_root": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/skill",
+    "mode": "local_current",
+    "retrieval": "same_slot_core_focus_and_frozen_observation_bm25f_rrf",
+    "selection_mode": "core_bm25f",
+    "API_calls": 0
+  },
+  "report": {
+    "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/maintenance-report",
+    "report_id": "f78bc6c61ff252d7687f0b7faaf446350af3d0aa5b9538eb87a0ca5457ab8a2a",
+    "generation_id": "2135faf8f2451eac73b90c447edbd496545d20d974c158f44ec67d98e9107f2a",
+    "findings_count": {
+      "error": 0,
+      "info": 0,
+      "review": 46
+    }
+  },
+  "assessments": {
+    "technical_audit": {
+      "status": "PASS",
+      "scope": "교정된 공식 v3 입력 및 v6 pack/composed 계약의 로컬 기술 검증",
+      "evaluation_ko": "pre-core feature validator가 경고 없이 통과했고, 공식 composed audit는 failures=[]로 pass했다. 초기 입력의 catalog identifier와 제외 표현 바이트 grounding 2건은 원본을 보존한 사본에서만 교정했다. 영어 baseline·요청 의미·anchor·assertion은 모두 동일하다. audit의 8개 uncovered_intent 경고는 후보에 없던 필수 의미가 최종 자유 서술로 보존되었다는 정보이며 최종 문구 누락이 아니다.",
+      "evidence": [
+        "precore-final-validation-stdout.log",
+        "composed_audit.json",
+        "SCHEMA-CORRECTIONS.json",
+        "normalization-preservation-check.json"
+      ],
+      "warning_count": 8
+    },
+    "graph_accuracy": {
+      "status": "PASS",
+      "scope": "노출 슬롯 64개와 원본 JSON에서 재구성한 구조적 방향 관계",
+      "evaluation_ko": "관리 모듈을 import하지 않은 독립 검사로 원본 candidate_ids/candidate_slots와 복수 hard_profile_ids 및 단수 hard_profile_id를 읽어 2,971개 간선을 재구성했다. 보고서 간선과 13,517개 노드의 incoming/outgoing이 모두 일치했다. 노출 후보 17개는 명시된 번들 연결이 있고 47개는 원본에도 연결이 없는 정상 미연결이다. 리넨 후보의 CLI 조회도 path_count=0으로 성공했다.",
+      "exposed_slot_candidates": 64,
+      "linked": 17,
+      "normally_unlinked": 47,
+      "raw_source_file_hash_count": 96,
+      "global_edges": 2971,
+      "adjacency_nodes": 13517,
+      "reverse_profile_count": 33,
+      "evidence": [
+        "independent-graph-check.json",
+        "current-query-unlinked-stdout.log",
+        "query-connected-candidate-stdout.log",
+        "query-connected-profile-stdout.log"
+      ],
+      "meaning_boundary_ko": "candidate → bundle → profile은 작성된 연관 경로이다. 번들의 모든 component와 relation을 충족했다는 뜻이나 해당 profile의 필수 활성화 근거가 아니다. 조회는 meaning_support=not_inferred, review=unreviewed, profile_activation=independent_request_evidence_only를 보존한다. optional 후보·bundle·visual concept은 전부 비채택했고 effective_visual_contract_sha256은 null이다."
+    },
+    "freshness": {
+      "status": "PASS",
+      "scope": "자체 generation에 바인딩된 현재 보고서와 변조/root 거부",
+      "evaluation_ko": "자체 receipt의 generation_id로 보고서를 build했으며 같은 source_root/runtime-store를 지정한 --require-current 조회가 미연결 후보와 연결 후보·프로필 모두에서 성공했다. scratch 보고서 사본의 links.json 끝에 줄바꿈 한 바이트를 더한 뒤 내용은 같은 JSON인데도 checksum mismatch로 거부했다. scratch의 다른 root를 지정한 조회도 authority/root mismatch로 거부했다. sealed skill과 정상 보고서는 변경하지 않았다.",
+      "accepted_queries": {
+        "current-query-unlinked": {
+          "returncode": 0,
+          "freshness": "current_verified"
+        },
+        "query-connected-candidate": {
+          "returncode": 0,
+          "freshness": "current_verified"
+        },
+        "query-connected-profile": {
+          "returncode": 0,
+          "freshness": "current_verified"
+        }
+      },
+      "damaged_report_rejection": {
+        "returncode": 1,
+        "stderr": "Error: report_invalid: report member checksum mismatch: links.json"
+      },
+      "wrong_root_rejection": {
+        "returncode": 1,
+        "stderr": "Error: report_not_current: report authority/root differs from requested source"
+      },
+      "evidence": [
+        "freshness-mutation.json",
+        "current-query-unlinked-command.json",
+        "query-connected-candidate-command.json",
+        "query-connected-profile-command.json",
+        "reject-damaged-report-command.json",
+        "reject-wrong-root-command.json"
+      ]
+    },
+    "request_meaning_fidelity": {
+      "status": "PASS",
+      "scope": "coordinator synthetic case의 요청 의미와 영어 최종 문구",
+      "evaluation_ko": "오래된 구리 주전자와 접힌 리넨, 이른 아침, 자연광이 최종 영어에 직접 나타난다. 사람 제외는 원문 literal 제외 항목, no_people=true, object-only anchor로 유지한다. 비인간 context와 object assertion을 전달했으며 저장된 sensual=1은 사람 제외 때문에 effective 0으로 해소된다. 카메라 방향·높이는 원문에 없으므로 unprescribed/open/open 및 빈 evidence다. 창가, 돌 받침, 마모 위치, 배경, 천 색은 작성자 선택으로 두었다. baseline은 116단어이고 최종 prompt와 바이트가 동일하다.",
+      "baseline_preserved": true,
+      "prompt_sha256": "a65bebbd01c69cf6be67c2550f4f71d6cb0e7f4100d8efd9b733c7151fbf7b4e",
+      "creative_context": {
+        "subject_category": "nonhuman",
+        "no_people": true,
+        "explicit_nonsexual": false
+      },
+      "effective_sensual": 0,
+      "effective_fetish": 0,
+      "evidence": [
+        "request_envelope.json",
+        "creative_controls.json",
+        "authorial_core.canonical.json",
+        "composed_prompt.json",
+        "normalization-preservation-check.json"
+      ]
+    },
+    "artistic_judgement": {
+      "status": "PARTIAL",
+      "scope": "이미지 없이 실시한 독립 최종 영어 프롬프트 검토",
+      "evaluation_ko": "두 사물의 형태 대비, 사용 흔적, 천의 결, 조용한 아침빛은 한 장면에 잘 연결된다. 후보 틴트·노이즈·세탁 소품·콜라주를 추가하지 않은 선택은 요청의 간명함에 맞는다. 다만 창문 반사가 구리의 곡면에서 천의 윗 접힘에도 이어진다는 문구는 확산광과 반사광의 구분이 다소 모호하고, 창가 정물이라는 익숙한 배치 이상의 독창성이 강하지 않다. 요청의 정적 성격에는 어울리지만 실제 화면에서의 시각적 설득력과 예술적 선호는 검증되지 않았다.",
+      "strengths_ko": [
+        "사물의 둥근 볼륨과 천의 평평한 층을 연결한 형태 관계",
+        "구리 사용 흔적과 건조한 직물 결의 재질 구분",
+        "비채택 후보를 대신할 장치를 억지로 추가하지 않은 절제"
+      ],
+      "limitations_ko": [
+        "천에 이어지는 창문 반사의 광학적 해석이 모호함",
+        "아침은 명시되지만 시간의 픽셀 단서를 직접 확인하지 못함",
+        "이미지의 초점·광택·그림자·재질·구도는 아직 증거 없음"
+      ],
+      "evidence": [
+        "prompt.en.txt",
+        "compose-authoring-notes.json"
+      ]
+    }
+  },
+  "final_prompt_en": "An object-only still-life photograph of an old copper kettle beside a length of linen that lies folded, lit by natural light in the early morning. Both rest on a pale stone windowsill. The kettle's curved flank carries small rubbed patches and darkened seams; the linen's stacked folds reveal a coarse, dry weave. A soft window reflection runs along the copper curve and falls across the upper fold, making the metal's rounded volume answer the fabric's flat layers. The kettle holds the visual center, with a small interval of stone separating it from the linen. Cool, quiet shadows remain readable against a plain, dim interior background, while the warm copper and off-white cloth retain their natural colors.",
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "optional_adoption": {
+    "ordinary_candidates": [],
+    "visual_concepts": [],
+    "bundles": [],
+    "augmentation": []
+  },
+  "confirmed_implementation_bugs": [],
+  "checker_note": "The initial independent checker omitted singular hard_profile_id from its own source coverage; the raw-source format was added and both the initial result and the adjustment were preserved. This was not a confirmed report-graph defect.",
+  "image_pixel_evidence": {
+    "present": false,
+    "reason": "No image generation or API call was authorized or executed in this QA."
+  },
+  "user_acceptance_evidence": {
+    "present": false,
+    "reason": "No human image or prompt acceptance judgment was supplied."
+  },
+  "prohibited_access": {
+    "project_memory": false,
+    "primary_checkout": false,
+    "other_cases": false,
+    "tests_or_previous_prompt_fixtures": false,
+    "subagent_creation": false
+  },
+  "artifact_files": {
+    "PRECORE-FROZEN.json": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/PRECORE-FROZEN.json",
+      "sha256": "b5817bfa2fc7e6f1b77b50a0143eef9713195274309d6a7171215126ae6baae5"
+    },
+    "authorial_core.json": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/authorial_core.json",
+      "sha256": "0e06ff3baebac963e2ea91e15ab3f0153057469cfefe1e9ad3bfd8ea0eb1c5d4"
+    },
+    "authorial_core.canonical.json": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/authorial_core.canonical.json",
+      "sha256": "3144e0a3b9ad8762fd2e4bb7fd96ed9d4298f31987175d0911cd8a35f03f6231"
+    },
+    "feature_selection.json": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/feature_selection.json",
+      "sha256": "da131a8c7a6d4cf8b29c921f45c8caf683f65bcde36eaeea9b17fcf27c07e2b5"
+    },
+    "feature_selection.canonical.json": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/feature_selection.canonical.json",
+      "sha256": "dbb46e93648f742efffa0a774fe484f6125e8658bab1d805b68c86a23f17aa7d"
+    },
+    "SCHEMA-CORRECTIONS.json": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/SCHEMA-CORRECTIONS.json",
+      "sha256": "a9a95a9233bb53621ffe5b92cd36968d10ad119710190667ec8eac15d868c7b3"
+    },
+    "candidate_pack.json": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/candidate_pack.json",
+      "sha256": "8c851d08562a73c772fd2c4e0d63a71c86000068d7fbeedbb1d7abd16a055ad8"
+    },
+    "runtime-receipt.json": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/runtime-receipt.json",
+      "sha256": "36797bdc629dfe7bf128b198e47d5d5a62b273057c562dbe75295c690d9a1f30"
+    },
+    "composed_prompt.json": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/composed_prompt.json",
+      "sha256": "e45e7d030fa9f0e4814b8ecdd84164026ee96acc23ae6d23c5e98dac5123dd59"
+    },
+    "composed_audit.json": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/composed_audit.json",
+      "sha256": "6aa05d2877f285396cc3f9c5b3d6dd584ba3709da0879a1951e22d2c88ac06d4"
+    },
+    "independent-graph-check.json": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/independent-graph-check.json",
+      "sha256": "74a7e061ebdf844cd61ddb40cf8269709d82c75c99e4e9b527800d0306eb4295"
+    },
+    "normalization-preservation-check.json": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/normalization-preservation-check.json",
+      "sha256": "3f042484861a997f18c45a39f8a1617fe2910a2db1cb292508d3f18604f8dbf7"
+    },
+    "freshness-mutation.json": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/freshness-mutation.json",
+      "sha256": "4489703da597c09e85662e0ab290d89618aa8aab699a0b80a82a2bc9406fb3a5"
+    },
+    "prompt.en.txt": {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-02/run/prompt.en.txt",
+      "sha256": "a65bebbd01c69cf6be67c2550f4f71d6cb0e7f4100d8efd9b733c7151fbf7b4e"
+    }
+  }
+}

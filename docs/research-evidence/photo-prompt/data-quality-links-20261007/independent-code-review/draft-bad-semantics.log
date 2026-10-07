@@ -1,0 +1,26 @@
+{
+  "returncode": 1,
+  "report_created": false,
+  "stderr_tail": "Traceback (most recent call last):\n  File \"/Users/chasoik/.codex/worktrees/photo-data-quality-links/image-prompt/tools/photo_data_maintenance/cli.py\", line 85, in <module>\n    raise SystemExit(main())\n                     ~~~~^^\n  File \"/Users/chasoik/.codex/worktrees/photo-data-quality-links/image-prompt/tools/photo_data_maintenance/cli.py\", line 55, in main\n    manifest = write_report(captured, args.output, load_reviews(args.reviews))\n  File \"/Users/chasoik/.codex/worktrees/photo-data-quality-links/image-prompt/tools/photo_data_maintenance/report.py\", line 43, in write_report\n    findings = analyze(inventory, captured[\"findings\"])\n  File \"/Users/chasoik/.codex/worktrees/photo-data-quality-links/image-prompt/tools/photo_data_maintenance/quality.py\", line 48, in analyze\n    fields[\"semantics.definition\"] = (record.get(\"semantics\") or {}).get(\"definition\")\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'str' object has no attribute 'get'\n",
+  "command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/Users/chasoik/.codex/worktrees/photo-data-quality-links/image-prompt/tools/photo_data_maintenance/cli.py",
+    "audit",
+    "--source-root",
+    "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/code-review/draft-bad-semantics/skill",
+    "--runtime-store",
+    "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/code-review/draft-bad-semantics/runtime",
+    "--output",
+    "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/code-review/draft-bad-semantics/report"
+  ],
+  "code_binding": {
+    "__init__.py": "34df313affe525ae97466656ac4a35fd39ebac5ebc5a7824871604442542b02b",
+    "cli.py": "2277b23398d49d7baacdb4fe009440a506775a08cca33a08317e16eca18a859f",
+    "common.py": "a21ed400e57aeae5681027a8d8f50de50f59141e98cd5ba9a44fea1b7ada8fba",
+    "corpus.py": "8a871f4a9372db5ba953ab8331ac458a17a51999c9aac42fd886cd15e038f6c0",
+    "links.py": "1a7ac5d5bb44c335ad1f3313038971302031d7e1ae38d84b6eeac778ea38504a",
+    "quality.py": "117030ed210be90ff5c79041b4479fe034bbcbe1c4cf1ecc3dc5bfcb3b13d746",
+    "report.py": "64593d79dbbafa6e74f142868d35abd9d6a9f979034f713072551429a60dcee3",
+    "reviews.py": "b4927365f25cc0a793a86e51dd8a701b604ddba672adbd8d3dfc6296b7220070"
+  }
+}

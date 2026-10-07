@@ -1,0 +1,32 @@
+test_live_drift_cannot_use_valid_original_recovery (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_live_drift_cannot_use_valid_original_recovery) ... FAIL
+test_original_bytes_and_mode_cannot_be_replaced_by_live_successor (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_original_bytes_and_mode_cannot_be_replaced_by_live_successor) ... ok
+test_previous_scene_inputs_hard_contract_and_all_other_candidates_are_preserved (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_previous_scene_inputs_hard_contract_and_all_other_candidates_are_preserved) ... ok
+test_rehashed_baseline_cannot_rebind_parent_lineage (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_rehashed_baseline_cannot_rebind_parent_lineage) ... ok
+test_rehashed_pack_with_changed_negative_or_core_cannot_qualify (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_rehashed_pack_with_changed_negative_or_core_cannot_qualify) ... ok
+
+======================================================================
+FAIL: test_live_drift_cannot_use_valid_original_recovery (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_live_drift_cannot_use_valid_original_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/tests/test_photo_ethereal_v35_boundary_history.py", line 63, in test_live_drift_cannot_use_valid_original_recovery
+    recovered=history.previous_path(root,name)
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/tests/photo_ethereal_history_v35.py", line 61, in previous_path
+    proof,parent=transition(root);path=regular(root,name);current=path.read_bytes();row=next(r for r in parent['members'] if r['path']==name)
+                 ~~~~~~~~~~^^^^^^
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/tests/photo_ethereal_history_v35.py", line 50, in transition
+    raw=regular(root,PROOF).read_bytes()
+        ~~~~~~~^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/tests/photo_ethereal_history_v35.py", line 28, in regular
+    def regular(root,name):return _fixtures()._v24_regular_path(root,str(name))
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/tests/photo_prompt_fixtures.py", line 760, in _v24_regular_path
+    _v24_no_symlink_ancestors(path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/tests/photo_prompt_fixtures.py", line 755, in _v24_no_symlink_ancestors
+    raise AssertionError('Unsafe V24 historical source or destination symlink')
+AssertionError: Unsafe V24 historical source or destination symlink
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.370s
+
+FAILED (failures=1)

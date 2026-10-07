@@ -1,0 +1,134 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "버터 크루아상을 뜯어 놓은 모습을 따뜻한 아침 식탁 사진처럼 찍어 줘. 벌어진 안쪽이 잘 보이게 놓고, 음식과 식탁만 담아 줘.\n",
+  "creative_controls_sha256": "14ad00a622de7384bc84b29d427941c32052049751ca1432172a6e3af6969658",
+  "interpreted_intent": "Requester-owned: Butter croissant torn open; Opening visibly presented; Warm breakfast-table photograph; Only food and tabletop. Authorial choices within open dimensions: Wooden tabletop; Nearby kitchen window and daylight; Crumbs near the break; Pieces placed close together; Camera near table level. A formal centered bakery presentation and a breakfast interrupted just after tearing were considered; the latter better carries the requested warm morning feeling.",
+  "subject": "torn butter croissant at breakfast",
+  "setting": "wooden breakfast table beside a kitchen window",
+  "event": "the croissant rests torn open with its inside visible",
+  "visual_priorities": [
+    "opened center visible within the broken pastry",
+    "breakfast table and food carry the entire scene",
+    "warm domestic stillness"
+  ],
+  "baseline_prompt_en": "A butter croissant rests torn open on a wooden breakfast table. Its opened center is clearly visible, while the pieces sit close enough to read as the pastry just pulled apart. Crumbs remain near the break. The food and tabletop fill a warm breakfast still life, with a quiet stretch of bare wood beside the pastry. Daylight from a nearby kitchen window gives the scene the unhurried feeling of a breakfast just begun. The camera stays near the table, looking into the opening.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "torn butter croissant at breakfast",
+      "source_text": "버터 크루아상을 뜯어 놓은 모습을 따뜻한 아침 식탁 사진처럼 찍어 줘. 벌어진 안쪽이 잘 보이게 놓고, 음식과 식탁만 담아 줘.",
+      "basis": "request_context",
+      "resolution": "Butter croissant torn open; Opening visibly presented; Warm breakfast-table photograph; Only food and tabletop",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "requested_concept",
+        "source_text": "버터 크루아상을 뜯어 놓은 모습을 따뜻한 아침 식탁 사진처럼 찍어 줘. 벌어진 안쪽이 잘 보이게 놓고, 음식과 식탁만 담아 줘.",
+        "dimension": "concept",
+        "prompt_evidence": "a warm breakfast still life"
+      },
+      {
+        "anchor_id": "requested_subject",
+        "source_text": "버터 크루아상을 뜯어 놓은 모습을 따뜻한 아침 식탁 사진처럼 찍어 줘. 벌어진 안쪽이 잘 보이게 놓고, 음식과 식탁만 담아 줘.",
+        "dimension": "subject",
+        "prompt_evidence": "A butter croissant"
+      },
+      {
+        "anchor_id": "requested_event",
+        "source_text": "버터 크루아상을 뜯어 놓은 모습을 따뜻한 아침 식탁 사진처럼 찍어 줘. 벌어진 안쪽이 잘 보이게 놓고, 음식과 식탁만 담아 줘.",
+        "dimension": "event",
+        "prompt_evidence": "rests torn open"
+      },
+      {
+        "anchor_id": "requested_property_0",
+        "source_text": "버터 크루아상을 뜯어 놓은 모습을 따뜻한 아침 식탁 사진처럼 찍어 줘. 벌어진 안쪽이 잘 보이게 놓고, 음식과 식탁만 담아 줘.",
+        "dimension": "composition",
+        "target": "main_subject",
+        "property": "interior.visibility",
+        "prompt_evidence": "Its opened center is clearly visible"
+      },
+      {
+        "anchor_id": "requested_property_1",
+        "source_text": "버터 크루아상을 뜯어 놓은 모습을 따뜻한 아침 식탁 사진처럼 찍어 줘. 벌어진 안쪽이 잘 보이게 놓고, 음식과 식탁만 담아 줘.",
+        "dimension": "setting",
+        "target": "scene",
+        "property": "place",
+        "prompt_evidence": "breakfast table"
+      },
+      {
+        "anchor_id": "requested_property_2",
+        "source_text": "버터 크루아상을 뜯어 놓은 모습을 따뜻한 아침 식탁 사진처럼 찍어 줘. 벌어진 안쪽이 잘 보이게 놓고, 음식과 식탁만 담아 줘.",
+        "dimension": "composition",
+        "target": "scene",
+        "property": "contents",
+        "prompt_evidence": "The food and tabletop fill a warm breakfast still life"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "setting",
+      "appearance",
+      "material",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject_type",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "food"
+      },
+      "evidence": {
+        "subject_phrase": "A butter croissant"
+      }
+    },
+    {
+      "assertion_id": "capture_axes",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": null,
+  "variation_key": "case_a"
+}

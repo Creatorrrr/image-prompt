@@ -1,0 +1,98 @@
+test_historical_merged_state_and_current_eleven_keeps_are_exact (tests.test_photo_shelf_return_korean_state_data_cleanup.ShelfReturnKoreanStateDataCleanupTests.test_historical_merged_state_and_current_eleven_keeps_are_exact) ... ERROR
+test_historical_merged_state_and_current_ten_keeps_are_exact (tests.test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_historical_merged_state_and_current_ten_keeps_are_exact) ... ERROR
+test_historical_merged_state_and_current_nineteen_keeps_are_exact (tests.test_photo_protostar_korean_alias_data_cleanup.ProtostarKoreanAliasDataCleanupTests.test_historical_merged_state_and_current_nineteen_keeps_are_exact) ... ERROR
+test_complete_merged_state_and_twenty_one_keeps_remain_exact (tests.test_photo_liminal_active_use_korean_data_cleanup.LiminalActiveUseKoreanDataCleanupTests.test_complete_merged_state_and_twenty_one_keeps_remain_exact) ... ERROR
+test_composed_audit_recomputes_contract_and_rejects_evasive_prompt (tests.test_photo_render_repair.PhotoRenderRepairTests.test_composed_audit_recomputes_contract_and_rejects_evasive_prompt) ... ok
+test_legacy_lineage_shape_remains_unchanged (tests.test_photo_render_repair.PhotoRenderRepairTests.test_legacy_lineage_shape_remains_unchanged) ... ok
+test_lineage_requires_locked_action_and_one_assertion_owning_both_phrases (tests.test_photo_render_repair.PhotoRenderRepairTests.test_lineage_requires_locked_action_and_one_assertion_owning_both_phrases) ... ok
+test_modern_independent_manifest_preserves_repair_provenance (tests.test_photo_render_repair.PhotoRenderRepairTests.test_modern_independent_manifest_preserves_repair_provenance) ... ok
+test_object_agnostic_contract_handles_multiple_interaction_families (tests.test_photo_render_repair.PhotoRenderRepairTests.test_object_agnostic_contract_handles_multiple_interaction_families) ... ok
+test_render_review_requires_exact_major_gate_set_and_image_hash (tests.test_photo_render_repair.PhotoRenderRepairTests.test_render_review_requires_exact_major_gate_set_and_image_hash) ... ok
+test_requester_corrected_relation_is_frozen_after_parent_change (tests.test_photo_render_repair.PhotoRenderRepairTests.test_requester_corrected_relation_is_frozen_after_parent_change) ... ok
+test_runtime_request_requires_exact_repair_contract_hash (tests.test_photo_render_repair.PhotoRenderRepairTests.test_runtime_request_requires_exact_repair_contract_hash) ... ok
+test_v2_lineage_compiles_generic_prompt_and_pixel_contract (tests.test_photo_render_repair.PhotoRenderRepairTests.test_v2_lineage_compiles_generic_prompt_and_pixel_contract) ... ok
+test_v6_candidate_pack_exposes_recomputed_repair_contract (tests.test_photo_render_repair.PhotoRenderRepairTests.test_v6_candidate_pack_exposes_recomputed_repair_contract) ... ok
+
+======================================================================
+ERROR: test_historical_merged_state_and_current_eleven_keeps_are_exact (tests.test_photo_shelf_return_korean_state_data_cleanup.ShelfReturnKoreanStateDataCleanupTests.test_historical_merged_state_and_current_eleven_keeps_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/.codex-artifacts/ethereal-upstream-failure-baseline/tests/test_photo_shelf_return_korean_state_data_cleanup.py", line 121, in test_historical_merged_state_and_current_eleven_keeps_are_exact
+    self.assertEqual(fixtures.bundle_meanings(fixtures.seduction_historical_bundles(current_historical)),
+                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/.codex-artifacts/ethereal-upstream-failure-baseline/tests/photo_prompt_fixtures.py", line 1329, in seduction_historical_bundles
+    changes = {(row['slot'], row['id']): row for row in seduction_scope_delta()['metadata_rows']}
+                                                        ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/.codex-artifacts/ethereal-upstream-failure-baseline/tests/photo_prompt_fixtures.py", line 1300, in seduction_scope_delta
+    raw = path.read_bytes()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/.codex-artifacts/ethereal-upstream-failure-baseline/tests/fixtures/photo_prompt/seduction_expression_scope_delta.json'
+
+======================================================================
+ERROR: test_historical_merged_state_and_current_ten_keeps_are_exact (tests.test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_historical_merged_state_and_current_ten_keeps_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/.codex-artifacts/ethereal-upstream-failure-baseline/tests/test_photo_krummholz_korean_alias_data_cleanup.py", line 77, in test_historical_merged_state_and_current_ten_keeps_are_exact
+    self.assertEqual(fixtures.bundle_meanings(fixtures.seduction_historical_bundles(self.current['candidate_bundles']), within=historical),
+                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/.codex-artifacts/ethereal-upstream-failure-baseline/tests/photo_prompt_fixtures.py", line 1329, in seduction_historical_bundles
+    changes = {(row['slot'], row['id']): row for row in seduction_scope_delta()['metadata_rows']}
+                                                        ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/.codex-artifacts/ethereal-upstream-failure-baseline/tests/photo_prompt_fixtures.py", line 1300, in seduction_scope_delta
+    raw = path.read_bytes()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/.codex-artifacts/ethereal-upstream-failure-baseline/tests/fixtures/photo_prompt/seduction_expression_scope_delta.json'
+
+======================================================================
+ERROR: test_historical_merged_state_and_current_nineteen_keeps_are_exact (tests.test_photo_protostar_korean_alias_data_cleanup.ProtostarKoreanAliasDataCleanupTests.test_historical_merged_state_and_current_nineteen_keeps_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/.codex-artifacts/ethereal-upstream-failure-baseline/tests/test_photo_protostar_korean_alias_data_cleanup.py", line 72, in test_historical_merged_state_and_current_nineteen_keeps_are_exact
+    self.assertEqual(fixtures.bundle_meanings(fixtures.seduction_historical_bundles(self.current['candidate_bundles']), within=historical),
+                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/.codex-artifacts/ethereal-upstream-failure-baseline/tests/photo_prompt_fixtures.py", line 1329, in seduction_historical_bundles
+    changes = {(row['slot'], row['id']): row for row in seduction_scope_delta()['metadata_rows']}
+                                                        ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/.codex-artifacts/ethereal-upstream-failure-baseline/tests/photo_prompt_fixtures.py", line 1300, in seduction_scope_delta
+    raw = path.read_bytes()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/.codex-artifacts/ethereal-upstream-failure-baseline/tests/fixtures/photo_prompt/seduction_expression_scope_delta.json'
+
+======================================================================
+ERROR: test_complete_merged_state_and_twenty_one_keeps_remain_exact (tests.test_photo_liminal_active_use_korean_data_cleanup.LiminalActiveUseKoreanDataCleanupTests.test_complete_merged_state_and_twenty_one_keeps_remain_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/.codex-artifacts/ethereal-upstream-failure-baseline/tests/test_photo_liminal_active_use_korean_data_cleanup.py", line 99, in test_complete_merged_state_and_twenty_one_keeps_remain_exact
+    historical_current = fixtures.seduction_historical_source_scope(historical_current)
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/.codex-artifacts/ethereal-upstream-failure-baseline/tests/photo_prompt_fixtures.py", line 1309, in seduction_historical_source_scope
+    for change in seduction_scope_delta()['metadata_rows']:
+                  ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/.codex-artifacts/ethereal-upstream-failure-baseline/tests/photo_prompt_fixtures.py", line 1300, in seduction_scope_delta
+    raw = path.read_bytes()
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/.codex-artifacts/ethereal-upstream-failure-baseline/tests/fixtures/photo_prompt/seduction_expression_scope_delta.json'
+
+----------------------------------------------------------------------
+Ran 14 tests in 23.618s
+
+FAILED (errors=4)

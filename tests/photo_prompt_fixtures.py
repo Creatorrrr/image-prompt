@@ -835,6 +835,8 @@ def _v24_verified_payload(source_root: Path, row: dict) -> bytes:
         raise AssertionError(f'Frozen V24 historical source mode drift: {row["path"]}')
     raw = path.read_bytes()
     if row['source_path'] == row['path']:
+        if _v34_scope_context(source_root):
+            raw = _v34_scope_support(source_root).previous_payload(source_root, row['path'], raw)
         _v32_require_after_payload(source_root, row['path'], raw)
     blob = hashlib.sha1(f'blob {len(raw)}\0'.encode('ascii') + raw).hexdigest()
     if (len(raw) != row['bytes'] or hashlib.sha256(raw).hexdigest() != row['sha256']
@@ -1754,7 +1756,8 @@ def materialize_v29_parent_source(directory: Path, *, source_root: Path = ROOT) 
 
 def v29_source_path(name: str, *, source_root: Path = ROOT) -> Path:
     """Authenticate the original V29 source for a historical DATA test."""
-    current = _v24_regular_path(source_root, name)
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               if _v34_scope_context(source_root) else _v24_regular_path(source_root, name))
     _v32_require_after_payload(source_root, name, current.read_bytes())
     proof, parent = _v30_transition(source_root)
     before = next((row for row in parent['members'] if row['path'] == name), None)
@@ -1878,7 +1881,8 @@ def materialize_v30_parent_source(directory: Path, *, source_root: Path = ROOT) 
 
 def v30_source_path(name: str, *, source_root: Path = ROOT) -> Path:
     """Authenticate the original V30 source for a historical DATA test."""
-    current = _v24_regular_path(source_root, name)
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               if _v34_scope_context(source_root) else _v24_regular_path(source_root, name))
     _v32_require_after_payload(source_root, name, current.read_bytes())
     proof, parent = _v31_transition(source_root)
     before = next((row for row in parent['members'] if row['path'] == name), None)
@@ -1976,7 +1980,8 @@ def _v29_preserved_retained_payload(source_root: Path, row: dict, current: bytes
 
 def v28_source_path(name: str, *, source_root: Path = ROOT) -> Path:
     """Select authenticated V28 bytes for a historical test, never arbitrary drift."""
-    current = _v24_regular_path(source_root, name)
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               if _v34_scope_context(source_root) else _v24_regular_path(source_root, name))
     _v32_require_after_payload(source_root, name, current.read_bytes())
     proof, parent = _v29_transition(source_root)
     before = next((row for row in parent['members'] if row['path'] == name), None)
@@ -2137,7 +2142,9 @@ def _v32_recovery_context(source_root: Path) -> bool:
 
 
 def _v32_require_after_payload(source_root: Path, name: str, current: bytes) -> None:
-    if _v33_palette_context(source_root):
+    if _v34_scope_context(source_root):
+        current = _v34_scope_support(source_root).previous_payload(source_root, name, current)
+    elif _v33_palette_context(source_root):
         current = _v33_palette_support(source_root).previous_payload(source_root, name, current)
     if name not in V32_ROBE_SOURCE_PATHS or not _v32_recovery_context(source_root):
         return
@@ -2151,7 +2158,9 @@ def _v32_require_after_payload(source_root: Path, name: str, current: bytes) -> 
 
 def _v32_preserved_retained_payload(source_root: Path, row: dict, current: bytes) -> bytes | None:
     """Recover four sealed robe/index edits, then follow the authenticated history."""
-    if row['source_path'] == row['path'] and _v33_palette_context(source_root):
+    if row['source_path'] == row['path'] and _v34_scope_context(source_root):
+        current = _v34_scope_support(source_root).previous_payload(source_root, row['path'], current)
+    elif row['source_path'] == row['path'] and _v33_palette_context(source_root):
         support = _v33_palette_support(source_root)
         preserved = support.preserved_payload(source_root, row, current)
         if preserved is not None:
@@ -2253,3 +2262,32 @@ def _v33_palette_support(source_root):
     if hashlib.sha256(Path(photo_palette_history.__file__).read_bytes()).hexdigest() != PALETTE_HISTORY_SUPPORT_SHA256:
         raise AssertionError("Frozen V33 loaded support code drift")
     return photo_palette_history
+
+
+V34_SCOPE_SUPPORT_SHA256 = '2b458da5a982475c9ef132b5f8d54c2002cd3f2dda48a3fe200207bf817dc118'
+
+
+def _v34_scope_context(source_root):
+    base = Path('docs/research-evidence/photo-prompt/data-quality-links-main-merge-20261007/history')
+    return any((source_root / name).exists() or (source_root / name).is_symlink() for name in (
+        base / 'V34-DATA-SCOPE-PROOF.json', base / 'SOURCE-UPSTREAM-V33.json',
+        Path('skills/subculture-illustration-image-generator/assets/photo_regression_baseline_v34.json')))
+
+
+def _v34_scope_support(source_root):
+    path = _v24_regular_path(source_root, 'tests/photo_data_scope_history_v34.py')
+    if hashlib.sha256(path.read_bytes()).hexdigest() != V34_SCOPE_SUPPORT_SHA256:
+        raise AssertionError('Frozen V34 scope support code drift')
+    from tests import photo_data_scope_history_v34
+    if hashlib.sha256(Path(photo_data_scope_history_v34.__file__).read_bytes()).hexdigest() != V34_SCOPE_SUPPORT_SHA256:
+        raise AssertionError('Frozen V34 loaded scope support code drift')
+    from tests import photo_ethereal_history_v35
+    if photo_ethereal_history_v35.context(source_root):
+        path = _v24_regular_path(source_root, 'tests/photo_ethereal_history_v35.py')
+        if hashlib.sha256(path.read_bytes()).hexdigest() != V35_ETHEREAL_SUPPORT_SHA256 or hashlib.sha256(Path(photo_ethereal_history_v35.__file__).read_bytes()).hexdigest() != V35_ETHEREAL_SUPPORT_SHA256:
+            raise AssertionError('Frozen V35 recovery support code drift')
+        return photo_ethereal_history_v35.v34_recovery_adapter()
+    return photo_data_scope_history_v34
+
+
+V35_ETHEREAL_SUPPORT_SHA256 = '3058a5b5aa59851e5591dd823e933280bb6f75d083720e0b8332e79161bffe0d'

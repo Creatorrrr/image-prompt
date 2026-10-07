@@ -1,0 +1,172 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "임대 안내용으로 청소가 끝난 현관 사진을 만들어 주세요. 타일 바닥은 이미 깨끗하고 빗자루와 쓰레받기는 벽 옆에 세워 둔 상태예요. 사람이나 청소하는 동작은 넣지 마세요.",
+  "creative_controls_sha256": "585bf49d0c2860fd714b61dbe7845555981928d562ad700c1c25bd34a6691c1d",
+  "interpreted_intent": "Requester meaning: The Korean request specifies the completed state after cleaning, with clean tile and tools resting beside the wall; it excludes people and active cleaning. Author-created realization: The clear tiled entrance carries the listing information; the parked tools are a subordinate trace of completed care. Daylight entering through the doorway, neutral tile, simple threshold and wall junctions, straight vertical lines. This staging is an editable authorial choice within the requested facts.",
+  "subject": "A cleaned entrance",
+  "setting": "The entrance of a rental property",
+  "event": "Cleaning has finished and tools rest beside the wall",
+  "visual_priorities": [
+    "The already clean tiled floor carries the property information.",
+    "The broom and dustpan stay parked beside the wall.",
+    "The open room view conveys completed cleaning and usable entrance space."
+  ],
+  "baseline_prompt_en": "A rental-listing photograph shows an entrance after cleaning is finished. The tiled floor is already clean, and a broom and dustpan stand resting beside the wall. The tools are parked at the edge of the entrance, leaving the clean walking space clearly visible. Daylight enters through the doorway and spreads softly across the neutral tiles, revealing their joints and modest surface sheen. A view through the threshold connects the foreground floor to the inner wall and door opening, giving an honest sense of the entrance's usable depth. Straight vertical lines and a calm, open composition suit a practical property listing. The resting tools and settled, empty space convey a completed chore and a room ready to use.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete photographic request",
+      "source_text": "임대 안내용으로 청소가 끝난 현관 사진을 만들어 주세요. 타일 바닥은 이미 깨끗하고 빗자루와 쓰레받기는 벽 옆에 세워 둔 상태예요. 사람이나 청소하는 동작은 넣지 마세요.",
+      "basis": "request_context",
+      "resolution": "The Korean request specifies the completed state after cleaning, with clean tile and tools resting beside the wall; it excludes people and active cleaning.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [
+    "사람이나 청소하는 동작"
+  ],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "임대 안내용으로",
+        "dimension": "concept",
+        "prompt_evidence": "rental-listing photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "현관 사진",
+        "dimension": "subject",
+        "prompt_evidence": "an entrance after cleaning is finished"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "청소가 끝난",
+        "dimension": "event",
+        "prompt_evidence": "after cleaning is finished"
+      },
+      {
+        "anchor_id": "completed_state",
+        "source_text": "청소가 끝난",
+        "dimension": "action",
+        "prompt_evidence": "a completed chore"
+      },
+      {
+        "anchor_id": "clean_floor",
+        "source_text": "타일 바닥은 이미 깨끗하고",
+        "dimension": "material",
+        "prompt_evidence": "The tiled floor is already clean",
+        "target": "floor",
+        "property": "surface_state"
+      },
+      {
+        "anchor_id": "parked_tools",
+        "source_text": "빗자루와 쓰레받기는 벽 옆에 세워 둔 상태",
+        "dimension": "composition",
+        "prompt_evidence": "a broom and dustpan stand resting beside the wall",
+        "target": "cleaning_tools",
+        "property": "placement"
+      },
+      {
+        "anchor_id": "entrance_setting",
+        "source_text": "현관",
+        "dimension": "setting",
+        "prompt_evidence": "the entrance's usable depth",
+        "target": "scene",
+        "property": "location"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "action"
+    ],
+    "open_dimensions": [
+      "setting",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere",
+      "appearance"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "environment"
+      },
+      "evidence": {
+        "subject_phrase": "an entrance after cleaning is finished"
+      }
+    },
+    {
+      "assertion_id": "completed_cleaning",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "event"
+      ],
+      "axes": {
+        "phase": "finished",
+        "tools": "resting",
+        "floor": "already_clean"
+      },
+      "evidence": {
+        "phase_phrase": "after cleaning is finished",
+        "floor_phrase": "The tiled floor is already clean",
+        "tools_phrase": "a broom and dustpan stand resting beside the wall"
+      }
+    },
+    {
+      "assertion_id": "capture_camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "architectural photography",
+    "family": "practical rental-property listing",
+    "evidence": [
+      "The already clean tiled floor carries the property information.",
+      "The broom and dustpan stay parked beside the wall."
+    ]
+  },
+  "variation_key": "dry-cleaning-natural-c08"
+}

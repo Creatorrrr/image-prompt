@@ -1,0 +1,124 @@
+{
+  "changed_node_count": 3,
+  "changes": [
+    {
+      "node": "profile:cello_endpin_seated_bowed",
+      "kind": "profile",
+      "fields": {
+        "activation": {
+          "before": {
+            "exact_terms": [
+              "cello",
+              "violoncello",
+              "cello performance",
+              "cello player",
+              "첼로",
+              "첼로 연주",
+              "첼리스트"
+            ],
+            "requires_adult_character": false,
+            "semantic_discovery_requires_component_evidence": true
+          },
+          "after": {
+            "exact_terms": [
+              "cello",
+              "violoncello",
+              "cello performance",
+              "cello player",
+              "첼로",
+              "첼로 연주",
+              "첼리스트"
+            ],
+            "exclude_if_any_terms": [
+              "checking the bow",
+              "inspecting the bow",
+              "bow inspection",
+              "활을 확인",
+              "활 점검"
+            ],
+            "hard_activation": {
+              "contract_version": "photo-visual-hard-activation/v1",
+              "required_any_groups": [
+                {
+                  "any_terms": [
+                    "cello",
+                    "violoncello",
+                    "cellist",
+                    "첼로",
+                    "첼리스트"
+                  ],
+                  "id": "cello_instrument"
+                },
+                {
+                  "any_terms": [
+                    "bowing",
+                    "bows the strings",
+                    "playing the cello",
+                    "cello performance",
+                    "첼로 연주",
+                    "첼로를 연주",
+                    "첼로를 켜",
+                    "활로 줄을 켜"
+                  ],
+                  "id": "active_bowing"
+                },
+                {
+                  "any_terms": [
+                    "seated",
+                    "sitting",
+                    "between the knees",
+                    "앉아서",
+                    "앉은",
+                    "앉아",
+                    "무릎 사이"
+                  ],
+                  "id": "seated_support"
+                }
+              ]
+            },
+            "requires_adult_character": false,
+            "semantic_discovery_requires_component_evidence": true
+          }
+        }
+      }
+    },
+    {
+      "node": "slot:motion:rb_shared_wind_response_candidate",
+      "kind": "candidate",
+      "fields": {
+        "kind": {
+          "before": null,
+          "after": [
+            "human"
+          ]
+        },
+        "for_any": {
+          "before": null,
+          "after": [
+            "human"
+          ]
+        }
+      }
+    },
+    {
+      "node": "slot:platform_framing:pr_casual_crop_subject_legibility_candidate",
+      "kind": "candidate",
+      "fields": {
+        "kind": {
+          "before": null,
+          "after": [
+            "human"
+          ]
+        },
+        "for_any": {
+          "before": null,
+          "after": [
+            "human"
+          ]
+        }
+      }
+    }
+  ],
+  "nodes_added": [],
+  "nodes_removed": []
+}

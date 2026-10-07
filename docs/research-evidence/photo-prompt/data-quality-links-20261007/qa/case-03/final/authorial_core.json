@@ -1,0 +1,187 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "숲속 폭포의 물보라를 뒤에서 비추는 아침 햇빛의 사진. 사람은 없음.",
+  "creative_controls_sha256": "6040dbaa3726877767f42001bbea5aecebf817d389a211a23458c814c1ac197e",
+  "interpreted_intent": "The request specifies a forest waterfall and spray illuminated from behind by morning sunlight, with people excluded. Rear direction belongs to the illumination, while capture-camera direction and height are unspecified. The authored photograph lets the viewer notice the transient brightness of airborne water within a shaded forest. A landscape frame retaining the cascade and pool is preferred to a tight study of droplets alone because the visible water impact explains the spray and keeps the forest legible. The plunge pool, shadow contrast, pale gold highlights, wet rock and moss are restrained authorial realizations within creativity level 1, not additional requester requirements. The frame connects falling water, impact, airborne droplets and spreading ripples; its nonhuman moment is ordinary physical change under natural light.",
+  "subject": "Waterfall spray illuminated by sunlight",
+  "setting": "A waterfall within a forest in the morning",
+  "event": "Morning sunlight illuminates the waterfall spray from behind",
+  "visual_priorities": [
+    "Morning sunlight shining from behind the spray makes airborne droplets visibly luminous.",
+    "The visible cascade and its impact provide the physical origin of the spray, with ripples showing water continuing outward.",
+    "Subordinate trees, wet rock and moss retain a concrete forest setting around the illuminated water."
+  ],
+  "baseline_prompt_en": "A photograph of the spray at a forest waterfall, illuminated by morning sunlight shining from behind the spray. Falling water breaks against the pool, sending a drifting veil of fine droplets into the air. Light catches the airborne droplets, giving their edges a pale gold brightness against deep green woodland shadow. The cascade remains clearly visible beside this luminous cloud, with ripples spreading from its impact across the darker pool. Enclosing trees establish the forest around the water, their trunks and leaves receding into shade. Dark, water-polished rock and small patches of moss sit close to the falling water. A balanced landscape frame gives the illuminated spray the strongest visual presence while retaining its connection to the cascade and pool. The water has crisp, irregular detail, and brightness rolls gently into the surrounding natural shadows.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "숲속 폭포의 물보라",
+      "source_text": "숲속 폭포의 물보라",
+      "basis": "request_context",
+      "resolution": "Airborne spray produced by a waterfall situated within a forest; the primary subject is an environment rather than a person.",
+      "sources": []
+    },
+    {
+      "term": "뒤에서 비추는 아침 햇빛",
+      "source_text": "뒤에서 비추는 아침 햇빛",
+      "basis": "request_context",
+      "resolution": "Morning sunlight illuminates the waterfall spray from behind. This phrase prescribes light direction and does not prescribe the capture camera direction or height.",
+      "sources": []
+    },
+    {
+      "term": "사람은 없음.",
+      "source_text": "사람은 없음.",
+      "basis": "request_context",
+      "resolution": "People are explicitly excluded from the photographed scene. This is an explicit no-people instruction and is not an explicit nonsexual instruction.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [
+    "people"
+  ],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "숲속 폭포의 물보라를 뒤에서 비추는 아침 햇빛의 사진",
+        "dimension": "concept",
+        "prompt_evidence": "A photograph of the spray"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "숲속 폭포의 물보라",
+        "dimension": "subject",
+        "prompt_evidence": "the spray at a forest waterfall"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "물보라를 뒤에서 비추는 아침 햇빛",
+        "dimension": "event",
+        "prompt_evidence": "morning sunlight shining from behind the spray"
+      },
+      {
+        "anchor_id": "forest_environment",
+        "source_text": "숲속",
+        "dimension": "setting",
+        "target": "main_scene",
+        "property": "environment.type",
+        "prompt_evidence": "at a forest waterfall"
+      },
+      {
+        "anchor_id": "sunlight_source",
+        "source_text": "햇빛",
+        "dimension": "lighting",
+        "target": "waterfall_spray",
+        "property": "illumination.source",
+        "prompt_evidence": "morning sunlight"
+      },
+      {
+        "anchor_id": "rear_illumination",
+        "source_text": "뒤에서 비추는",
+        "dimension": "lighting",
+        "target": "waterfall_spray",
+        "property": "illumination.direction",
+        "prompt_evidence": "shining from behind the spray"
+      },
+      {
+        "anchor_id": "morning_time",
+        "source_text": "아침",
+        "dimension": "timing",
+        "target": "main_scene",
+        "property": "time_of_day",
+        "prompt_evidence": "morning sunlight"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "setting",
+      "lighting",
+      "timing",
+      "framing",
+      "composition",
+      "camera",
+      "color",
+      "material",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject_category",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "environment"
+      },
+      "evidence": {
+        "subject_phrase": "the spray at a forest waterfall"
+      }
+    },
+    {
+      "assertion_id": "backlit_spray_effect",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "event"
+      ],
+      "axes": {
+        "light_source": "morning_sunlight",
+        "light_direction": "behind_spray",
+        "affected_medium": "waterfall_spray",
+        "observable_effect": "illuminated_droplets"
+      },
+      "evidence": {
+        "light_source_phrase": "morning sunlight",
+        "illumination_relation_phrase": "morning sunlight shining from behind the spray",
+        "visible_effect_phrase": "Light catches the airborne droplets"
+      }
+    },
+    {
+      "assertion_id": "camera_axis_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "landscape",
+    "family": "observed natural-light landscape photography",
+    "evidence": [
+      "crisp, irregular detail",
+      "brightness rolls gently into the surrounding natural shadows"
+    ]
+  },
+  "variation_key": "independent-environment-03"
+}

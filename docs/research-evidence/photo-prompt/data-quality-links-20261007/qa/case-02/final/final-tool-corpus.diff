@@ -1,0 +1,24 @@
+--- tools/photo_data_maintenance/corpus.py	2026-10-07 01:43:36
++++ tool-final/tools/photo_data_maintenance/corpus.py	2026-10-07 02:23:30
+@@ -112,7 +112,7 @@
+     for name, value in sorted(values.items()):
+         try:
+             if kinds.get(name) == "candidate":
+-                slots = value.get("slots") or {}
++                slots = value.get("slots", {})
+                 if not isinstance(slots, dict):
+                     raise ValueError("slots must be an object")
+                 for slot, rows in slots.items():
+@@ -191,8 +191,11 @@
+         validator = importlib.import_module("validate_photo_prompt_dictionary")
+         for error in validator.validate_source_corpus(root, data, inv):
+             findings.append(finding("authored_contract_invalid", "error", [], error, field=error.split(":", 1)[0]))
+-    except (OSError, ValueError, TypeError, KeyError) as exc:
++    except (OSError, ValueError, TypeError, KeyError, AttributeError, IndexError) as exc:
+         findings.append(finding("authored_contract_invalid", "error", [], str(exc)))
++        # Native loaders can fail after partially assembling malformed drafts.
++        # Diagnose the captured raw records instead of adopting a partial corpus.
++        data = registry = None
+     if after_capture:
+         after_capture()
+     kinds2, raw2, findings2 = _scan(root, source_api)

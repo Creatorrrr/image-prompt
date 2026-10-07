@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "mutations_only_in_scratch": true,
+  "original_links_sha256": "f79be2080c9e52e29f159a0a9cfd518d6275f860dd96ee65523b07dc955f9f4c",
+  "damaged_links_sha256": "7d9aa8446a68a08ec56ed76f4aca5c4d260001802db3ae4d528d61dd28a8c91c",
+  "original_report_unchanged": true,
+  "tests": [
+    {
+      "test": "reject-damaged-report",
+      "expected": "nonzero exit and report_invalid: report member checksum mismatch: links.json",
+      "exit_code": 1,
+      "stderr": "Error: report_invalid: report member checksum mismatch: links.json",
+      "pass": true,
+      "argv": [
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-01/venv/bin/python",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-01/tools/photo_data_maintenance/cli.py",
+        "query",
+        "--report",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-01/scratch/damaged-report",
+        "--candidate",
+        "slot:lighting:rb_soft_source_environment_candidate",
+        "--source-root",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-01/skill",
+        "--runtime-store",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-01/runtime"
+      ],
+      "mutation_root": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-01/scratch",
+      "stdout_file": "reject-damaged-report.stdout.log",
+      "stderr_file": "reject-damaged-report.stderr.log"
+    },
+    {
+      "test": "reject-wrong-root",
+      "expected": "nonzero exit and report_not_current: report authority/root differs from requested source",
+      "exit_code": 1,
+      "stderr": "Error: report_not_current: report authority/root differs from requested source",
+      "pass": true,
+      "argv": [
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-01/venv/bin/python",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-01/tools/photo_data_maintenance/cli.py",
+        "query",
+        "--report",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-01/run/management-report",
+        "--candidate",
+        "slot:body_pose:cello_between_knees_floor_endpin_pose",
+        "--require-current",
+        "--source-root",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-01/scratch/wrong-root",
+        "--runtime-store",
+        "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-01/runtime"
+      ],
+      "mutation_root": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-01/scratch",
+      "stdout_file": "reject-wrong-root.stdout.log",
+      "stderr_file": "reject-wrong-root.stderr.log"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "recorded_at_utc": "2026-10-06T17:36:06.925243+00:00",
+  "type": "QA helper correction",
+  "failed_label": "final-tool-preservation-check",
+  "cause": "Helper required byte equality of independently produced source-check diagnostic JSON; touched-node set iteration changes ordering of proof rows between Python processes",
+  "differing_fields": [
+    "candidate_source_checks",
+    "source_checks",
+    "source_files"
+  ],
+  "difference_is_order_only": true,
+  "edge_projection_equal": true,
+  "query_projection_equal": true,
+  "inventory_links_and_query_bytes_equal": true,
+  "correction": "Compare independent edge/query projections directly and unordered source-proof rows canonically; preserve failed helper and command logs",
+  "original_helper_sha256": "fd4e1b013b99d21dbee27909878a082240894a51bd321d748d772fb60692ca06",
+  "corrected_helper_sha256": "12993927e165096132b89ac3ea41b0f8e43e86a0d80f0e051afba666d699cae5"
+}

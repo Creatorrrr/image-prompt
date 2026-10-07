@@ -1,0 +1,20 @@
+[
+  {
+    "original_check": "independent-source-check",
+    "reason": "The first independent helper hashed the record alone. The declared complete-compiled-record/v1 recipe hashes [kind, slot, record], as confirmed in corpus.py line 171. The helper was corrected; source data and tool code were not changed.",
+    "before_script": "run/independent_source_check.record_only_hash.py",
+    "before_sha256": "c47c4da57aaf93bc2f62fec37d7fc1b29ebeeb386008bb54a73c867b272623ae",
+    "after_script": "run/independent_source_check.py",
+    "after_sha256": "9bf9507c35f6d4fd9e924294fe8efc46adc6e4b9b53b0c33e226f947f78e9713",
+    "data_or_tool_mutation": false
+  },
+  {
+    "original_check": "independent-source-check-entity-recipe",
+    "reason": "Two candidate records include explicitly referenced existing_slot_context_extensions. Equality must compare the complete primary record plus the declared paraphrases/contexts from those extension references. The corrected independent helper merges only those source-authored fields and fails on unknown fields.",
+    "before_script": "run/independent_source_check.single_source_equality.py",
+    "before_sha256": "9bf9507c35f6d4fd9e924294fe8efc46adc6e4b9b53b0c33e226f947f78e9713",
+    "after_script": "run/independent_source_check.py",
+    "after_sha256": "3cfc5986767eccbd71f91ff1995739d60af5ae07ee7979caeed74775a7515b00",
+    "data_or_tool_mutation": false
+  }
+]

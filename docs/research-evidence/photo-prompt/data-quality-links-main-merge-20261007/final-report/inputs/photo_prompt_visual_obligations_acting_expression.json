@@ -1,0 +1,1411 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "profiles": [
+    {
+      "id": "ae_profile_lip_press",
+      "category": "observable_facial_or_hand_configuration",
+      "activation": {
+        "exact_terms": [
+          "입술 꾹 누르기",
+          "입술을 꾹 누른",
+          "lip pressing",
+          "pressed lips"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "actor_face_context",
+              "any_terms": [
+                "face",
+                "facial",
+                "portrait",
+                "actor",
+                "person",
+                "human",
+                "woman",
+                "man",
+                "얼굴",
+                "표정",
+                "인물",
+                "사람",
+                "배우",
+                "초상"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "upper and lower lips meet along a fully closed seam; the lip margins look compressed together",
+        "paraphrase_examples": [
+          "upper and lower lips press together along a closed seam",
+          "윗입술과 아랫입술이 닫힌 경계를 따라 눌려 맞닿는다",
+          "The upper and lower lip margins press together along a sealed seam."
+        ],
+        "visual_components": [
+          "upper and lower lips meet along a fully closed seam",
+          "the lip margins look compressed together"
+        ],
+        "contrast_examples": [
+          "lateral lip tightening alone",
+          "puckered lips projecting forward"
+        ],
+        "claim_limits": [
+          "Bind all parts and laterality to the frozen actor; no inferred real emotion, trait or consent.",
+          "Retain the frozen crop and eyeline; a hidden prerequisite is unobservable, not a pass.",
+          "Every required component must pass; partial evidence is a failure."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "입술을 꾹 누른 상태",
+          "upper and lower lips press together along a closed seam",
+          "upper and lower lips meet along a fully closed seam",
+          "the lip margins look compressed together",
+          "윗입술과 아랫입술이 닫힌 경계를 따라 눌려 맞닿는다",
+          "The upper and lower lip margins press together along a sealed seam."
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "lateral lip tightening alone",
+        "puckered lips projecting forward"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "upper and lower lips meet along a fully closed seam"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "upper and lower lips meet along a fully closed seam"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: upper and lower lips meet along a fully closed seam.",
+            "render_gate": {
+              "id": "vo_ae_profile_lip_press_1",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: upper and lower lips meet along a fully closed seam. Partial evidence fails; occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the lip margins look compressed together"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the lip margins look compressed together"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: the lip margins look compressed together.",
+            "render_gate": {
+              "id": "vo_ae_profile_lip_press_2",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: the lip margins look compressed together. Partial evidence fails; occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ae_profile_lip_tighten",
+      "category": "observable_facial_or_hand_configuration",
+      "activation": {
+        "exact_terms": [
+          "입술 조이기",
+          "입술을 가로로 팽팽하게",
+          "lip tightening",
+          "tightened lips"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "actor_face_context",
+              "any_terms": [
+                "face",
+                "facial",
+                "portrait",
+                "actor",
+                "person",
+                "human",
+                "woman",
+                "man",
+                "얼굴",
+                "표정",
+                "인물",
+                "사람",
+                "배우",
+                "초상"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "lip margins look taut and relatively thinned; a relatively straight mouth line accompanies the taut lip margins",
+        "paraphrase_examples": [
+          "lip margins look taut with reduced visible lip fullness",
+          "입술 가장자리가 가로로 팽팽해지고 입 선이 비교적 곧아진다",
+          "Taut thinned lip margins accompany a relatively straight mouth line."
+        ],
+        "visual_components": [
+          "lip margins look taut and relatively thinned",
+          "a relatively straight mouth line accompanies the taut lip margins"
+        ],
+        "contrast_examples": [
+          "simple vertical lip contact",
+          "lip sucking or rolling inward"
+        ],
+        "claim_limits": [
+          "Bind all parts and laterality to the frozen actor; no inferred real emotion, trait or consent.",
+          "Retain the frozen crop and eyeline; a hidden prerequisite is unobservable, not a pass.",
+          "Every required component must pass; partial evidence is a failure."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "입술을 가로로 팽팽하게 조인 상태",
+          "lip margins look taut with reduced visible lip fullness",
+          "lip margins look taut and relatively thinned",
+          "a relatively straight mouth line accompanies the taut lip margins",
+          "입술 가장자리가 가로로 팽팽해지고 입 선이 비교적 곧아진다",
+          "Taut thinned lip margins accompany a relatively straight mouth line."
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "simple vertical lip contact",
+        "lip sucking or rolling inward"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "lip margins look taut and relatively thinned"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "lip margins look taut and relatively thinned"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: lip margins look taut and relatively thinned.",
+            "render_gate": {
+              "id": "vo_ae_profile_lip_tighten_1",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: lip margins look taut and relatively thinned. Partial evidence fails; occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a relatively straight mouth line accompanies the taut lip margins"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a relatively straight mouth line accompanies the taut lip margins"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: a relatively straight mouth line accompanies the taut lip margins.",
+            "render_gate": {
+              "id": "vo_ae_profile_lip_tighten_2",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: a relatively straight mouth line accompanies the taut lip margins. Partial evidence fails; occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ae_profile_mouth_down",
+      "category": "observable_facial_or_hand_configuration",
+      "activation": {
+        "exact_terms": [
+          "입꼬리 내리기",
+          "downturned mouth",
+          "lowered mouth corners"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "actor_face_context",
+              "any_terms": [
+                "face",
+                "facial",
+                "portrait",
+                "actor",
+                "person",
+                "human",
+                "woman",
+                "man",
+                "얼굴",
+                "표정",
+                "인물",
+                "사람",
+                "배우",
+                "초상"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "both mouth corners angle downward; the central lip line remains distinct from the corner descent",
+        "paraphrase_examples": [
+          "both mouth corners angle downward"
+        ],
+        "visual_components": [
+          "both mouth corners angle downward",
+          "the central lip line remains distinct from the corner descent"
+        ],
+        "contrast_examples": [
+          "lip protrusion alone",
+          "sadness or sulking automatically imposed"
+        ],
+        "claim_limits": [
+          "Bind all parts and laterality to the frozen actor; no inferred real emotion, trait or consent.",
+          "Retain the frozen crop and eyeline; a hidden prerequisite is unobservable, not a pass.",
+          "Every required component must pass; partial evidence is a failure."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "입꼬리가 내려간 상태",
+          "both mouth corners angle downward",
+          "the central lip line remains distinct from the corner descent"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "lip protrusion alone",
+        "sadness or sulking automatically imposed"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "both mouth corners angle downward"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "both mouth corners angle downward"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: both mouth corners angle downward.",
+            "render_gate": {
+              "id": "vo_ae_profile_mouth_down_1",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: both mouth corners angle downward. Partial evidence fails; occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the central lip line remains distinct from the corner descent"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the central lip line remains distinct from the corner descent"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: the central lip line remains distinct from the corner descent.",
+            "render_gate": {
+              "id": "vo_ae_profile_mouth_down_2",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: the central lip line remains distinct from the corner descent. Partial evidence fails; occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ae_profile_inner_brow",
+      "category": "observable_facial_or_hand_configuration",
+      "activation": {
+        "exact_terms": [
+          "눈썹 안쪽 끝을 올린",
+          "inner brow raise",
+          "raised inner brows"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "actor_face_context",
+              "any_terms": [
+                "face",
+                "facial",
+                "portrait",
+                "actor",
+                "person",
+                "human",
+                "woman",
+                "man",
+                "얼굴",
+                "표정",
+                "인물",
+                "사람",
+                "배우",
+                "초상"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the inner eyebrow ends are visibly lifted; outer eyebrow ends are not required to rise equally",
+        "paraphrase_examples": [
+          "inner eyebrow ends rise above their outer portions",
+          "양 눈썹의 안쪽 끝이 바깥쪽보다 위로 들린다",
+          "The inner ends of both eyebrows lift relative to the outer ends."
+        ],
+        "visual_components": [
+          "the inner eyebrow ends are visibly lifted",
+          "outer eyebrow ends are not required to rise equally"
+        ],
+        "contrast_examples": [
+          "both brows lifted uniformly",
+          "sadness universally inferred"
+        ],
+        "claim_limits": [
+          "Bind all parts and laterality to the frozen actor; no inferred real emotion, trait or consent.",
+          "Retain the frozen crop and eyeline; a hidden prerequisite is unobservable, not a pass.",
+          "Every required component must pass; partial evidence is a failure."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "눈썹 안쪽 끝이 올라간 상태",
+          "inner eyebrow ends rise above their outer portions",
+          "the inner eyebrow ends are visibly lifted",
+          "outer eyebrow ends are not required to rise equally",
+          "양 눈썹의 안쪽 끝이 바깥쪽보다 위로 들린다",
+          "The inner ends of both eyebrows lift relative to the outer ends."
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "both brows lifted uniformly",
+        "sadness universally inferred"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the inner eyebrow ends are visibly lifted"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the inner eyebrow ends are visibly lifted"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: the inner eyebrow ends are visibly lifted.",
+            "render_gate": {
+              "id": "vo_ae_profile_inner_brow_1",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: the inner eyebrow ends are visibly lifted. Partial evidence fails; occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "outer eyebrow ends are not required to rise equally"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "outer eyebrow ends are not required to rise equally"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: outer eyebrow ends are not required to rise equally.",
+            "render_gate": {
+              "id": "vo_ae_profile_inner_brow_2",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: outer eyebrow ends are not required to rise equally. Partial evidence fails; occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ae_profile_knitted_brow",
+      "category": "observable_facial_or_hand_configuration",
+      "activation": {
+        "exact_terms": [
+          "미간 좁히기",
+          "미간으로 모인 눈썹",
+          "knitted brows",
+          "brow lowering"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "actor_face_context",
+              "any_terms": [
+                "face",
+                "facial",
+                "portrait",
+                "actor",
+                "person",
+                "human",
+                "woman",
+                "man",
+                "얼굴",
+                "표정",
+                "인물",
+                "사람",
+                "배우",
+                "초상"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "eyebrow inner ends move toward the glabella; the brow line visibly lowers toward the inner eye region",
+        "paraphrase_examples": [
+          "eyebrows draw inward and downward toward the glabella"
+        ],
+        "visual_components": [
+          "eyebrow inner ends move toward the glabella",
+          "the brow line visibly lowers toward the inner eye region"
+        ],
+        "contrast_examples": [
+          "a single eyebrow raised",
+          "anger imposed on concentration"
+        ],
+        "claim_limits": [
+          "Bind all parts and laterality to the frozen actor; no inferred real emotion, trait or consent.",
+          "Retain the frozen crop and eyeline; a hidden prerequisite is unobservable, not a pass.",
+          "Every required component must pass; partial evidence is a failure."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "미간 쪽으로 모이고 내려간 눈썹",
+          "eyebrows draw inward and downward toward the glabella",
+          "eyebrow inner ends move toward the glabella",
+          "the brow line visibly lowers toward the inner eye region"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "a single eyebrow raised",
+        "anger imposed on concentration"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "eyebrow inner ends move toward the glabella"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "eyebrow inner ends move toward the glabella"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: eyebrow inner ends move toward the glabella.",
+            "render_gate": {
+              "id": "vo_ae_profile_knitted_brow_1",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: eyebrow inner ends move toward the glabella. Partial evidence fails; occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the brow line visibly lowers toward the inner eye region"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the brow line visibly lowers toward the inner eye region"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: the brow line visibly lowers toward the inner eye region.",
+            "render_gate": {
+              "id": "vo_ae_profile_knitted_brow_2",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: the brow line visibly lowers toward the inner eye region. Partial evidence fails; occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ae_profile_single_brow",
+      "category": "observable_facial_or_hand_configuration",
+      "activation": {
+        "exact_terms": [
+          "한쪽 눈썹 올리기",
+          "한쪽 눈썹만 올린",
+          "single-brow raise",
+          "one raised eyebrow"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "actor_face_context",
+              "any_terms": [
+                "face",
+                "facial",
+                "portrait",
+                "actor",
+                "person",
+                "human",
+                "woman",
+                "man",
+                "얼굴",
+                "표정",
+                "인물",
+                "사람",
+                "배우",
+                "초상"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "only the requested eyebrow is raised; the opposite eyebrow retains a lower contour",
+        "paraphrase_examples": [
+          "one eyebrow rises above the opposite eyebrow"
+        ],
+        "visual_components": [
+          "only the requested eyebrow is raised",
+          "the opposite eyebrow retains a lower contour"
+        ],
+        "contrast_examples": [
+          "both brows raised",
+          "head roll mistaken for brow asymmetry"
+        ],
+        "claim_limits": [
+          "Bind all parts and laterality to the frozen actor; no inferred real emotion, trait or consent.",
+          "Retain the frozen crop and eyeline; a hidden prerequisite is unobservable, not a pass.",
+          "Every required component must pass; partial evidence is a failure."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "한쪽 눈썹만 올라간 상태",
+          "one eyebrow rises above the opposite eyebrow",
+          "only the requested eyebrow is raised",
+          "the opposite eyebrow retains a lower contour"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "both brows raised",
+        "head roll mistaken for brow asymmetry"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "only the requested eyebrow is raised"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "only the requested eyebrow is raised"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: only the requested eyebrow is raised.",
+            "render_gate": {
+              "id": "vo_ae_profile_single_brow_1",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: only the requested eyebrow is raised. Partial evidence fails; occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the opposite eyebrow retains a lower contour"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the opposite eyebrow retains a lower contour"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: the opposite eyebrow retains a lower contour.",
+            "render_gate": {
+              "id": "vo_ae_profile_single_brow_2",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: the opposite eyebrow retains a lower contour. Partial evidence fails; occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ae_profile_nose_wrinkle",
+      "category": "observable_facial_or_hand_configuration",
+      "activation": {
+        "exact_terms": [
+          "코 찡그리기",
+          "코를 찡그린",
+          "nose wrinkle",
+          "wrinkled nose"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "actor_face_context",
+              "any_terms": [
+                "face",
+                "facial",
+                "portrait",
+                "actor",
+                "person",
+                "human",
+                "woman",
+                "man",
+                "얼굴",
+                "표정",
+                "인물",
+                "사람",
+                "배우",
+                "초상"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the nose bridge region is visibly scrunched; the wrinkle follows the nose region rather than a cosmetic mark",
+        "paraphrase_examples": [
+          "the nose bridge region forms a visible wrinkle configuration",
+          "콧등 피부가 모여 짧은 주름과 당김을 만든다",
+          "The skin over the nose bridge bunches into short visible creases."
+        ],
+        "visual_components": [
+          "the nose bridge region is visibly scrunched",
+          "the wrinkle follows the nose region rather than a cosmetic mark"
+        ],
+        "contrast_examples": [
+          "upper-lip lifting alone",
+          "disgust inferred without context"
+        ],
+        "claim_limits": [
+          "Bind all parts and laterality to the frozen actor; no inferred real emotion, trait or consent.",
+          "Retain the frozen crop and eyeline; a hidden prerequisite is unobservable, not a pass.",
+          "Every required component must pass; partial evidence is a failure."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "콧등이 찡그려진 상태",
+          "the nose bridge region forms a visible wrinkle configuration",
+          "the nose bridge region is visibly scrunched",
+          "the wrinkle follows the nose region rather than a cosmetic mark",
+          "콧등 피부가 모여 짧은 주름과 당김을 만든다",
+          "The skin over the nose bridge bunches into short visible creases."
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "upper-lip lifting alone",
+        "disgust inferred without context"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the nose bridge region is visibly scrunched"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the nose bridge region is visibly scrunched"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: the nose bridge region is visibly scrunched.",
+            "render_gate": {
+              "id": "vo_ae_profile_nose_wrinkle_1",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: the nose bridge region is visibly scrunched. Partial evidence fails; occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the wrinkle follows the nose region rather than a cosmetic mark"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the wrinkle follows the nose region rather than a cosmetic mark"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: the wrinkle follows the nose region rather than a cosmetic mark.",
+            "render_gate": {
+              "id": "vo_ae_profile_nose_wrinkle_2",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: the wrinkle follows the nose region rather than a cosmetic mark. Partial evidence fails; occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ae_profile_upper_lip",
+      "category": "observable_facial_or_hand_configuration",
+      "activation": {
+        "exact_terms": [
+          "윗입술 들기",
+          "윗입술을 들어 올린",
+          "upper-lip raise",
+          "raised upper lip"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "actor_face_context",
+              "any_terms": [
+                "face",
+                "facial",
+                "portrait",
+                "actor",
+                "person",
+                "human",
+                "woman",
+                "man",
+                "얼굴",
+                "표정",
+                "인물",
+                "사람",
+                "배우",
+                "초상"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the upper lip visibly lifts toward the nose; the lift is distinct from an upward mouth-corner smile",
+        "paraphrase_examples": [
+          "the upper lip lifts toward the nose"
+        ],
+        "visual_components": [
+          "the upper lip visibly lifts toward the nose",
+          "the lift is distinct from an upward mouth-corner smile"
+        ],
+        "contrast_examples": [
+          "mouth-corner pulling alone",
+          "a required contempt label"
+        ],
+        "claim_limits": [
+          "Bind all parts and laterality to the frozen actor; no inferred real emotion, trait or consent.",
+          "Retain the frozen crop and eyeline; a hidden prerequisite is unobservable, not a pass.",
+          "Every required component must pass; partial evidence is a failure."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "윗입술 한가운데가 들린 상태",
+          "the upper lip lifts toward the nose",
+          "the upper lip visibly lifts toward the nose",
+          "the lift is distinct from an upward mouth-corner smile"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "mouth-corner pulling alone",
+        "a required contempt label"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the upper lip visibly lifts toward the nose"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the upper lip visibly lifts toward the nose"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: the upper lip visibly lifts toward the nose.",
+            "render_gate": {
+              "id": "vo_ae_profile_upper_lip_1",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: the upper lip visibly lifts toward the nose. Partial evidence fails; occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the lift is distinct from an upward mouth-corner smile"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the lift is distinct from an upward mouth-corner smile"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: the lift is distinct from an upward mouth-corner smile.",
+            "render_gate": {
+              "id": "vo_ae_profile_upper_lip_2",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: the lift is distinct from an upward mouth-corner smile. Partial evidence fails; occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ae_profile_squinch",
+      "category": "observable_facial_or_hand_configuration",
+      "activation": {
+        "exact_terms": [
+          "스퀸치",
+          "squinch",
+          "lifted lower eyelids"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "actor_face_context",
+              "any_terms": [
+                "face",
+                "facial",
+                "portrait",
+                "actor",
+                "person",
+                "human",
+                "woman",
+                "man",
+                "얼굴",
+                "표정",
+                "인물",
+                "사람",
+                "배우",
+                "초상"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "lower eyelid margins lift toward the irises; both eyes remain visibly open through narrowed apertures",
+        "paraphrase_examples": [
+          "lower eyelids lift to narrow the visible eye openings",
+          "The lower lid rims rise toward the irises while a narrow open gap remains in each eye.",
+          "아래 눈꺼풀 가장자리가 홍채 쪽으로 올라오면서 양눈에 좁지만 열린 틈이 남는다."
+        ],
+        "visual_components": [
+          "lower eyelid margins lift toward the irises",
+          "both eyes remain visibly open through narrowed apertures"
+        ],
+        "contrast_examples": [
+          "full squint driven mainly by upper-lid closure",
+          "a claimed confidence or sexual state"
+        ],
+        "claim_limits": [
+          "Bind all parts and laterality to the frozen actor; no inferred real emotion, trait or consent.",
+          "Retain the frozen crop and eyeline; a hidden prerequisite is unobservable, not a pass.",
+          "Every required component must pass; partial evidence is a failure."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "아래 눈꺼풀을 가볍게 올린 스퀸치",
+          "lower eyelids lift to narrow the visible eye openings",
+          "lower eyelid margins lift toward the irises",
+          "both eyes remain visibly open through narrowed apertures",
+          "The lower lid rims rise toward the irises while a narrow open gap remains in each eye.",
+          "아래 눈꺼풀 가장자리가 홍채 쪽으로 올라오면서 양눈에 좁지만 열린 틈이 남는다.",
+          "the lower lid rims sit higher toward the iris edges",
+          "아래 눈꺼풀 가장자리가 홍채 경계 쪽으로 올라와 있다",
+          "a narrow open aperture remains visible in each eye",
+          "양눈에 좁고 열린 눈 틈이 보인다"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "full squint driven mainly by upper-lid closure",
+        "a claimed confidence or sexual state"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "lower eyelid margins lift toward the irises",
+              "the lower lid rims sit higher toward the iris edges",
+              "아래 눈꺼풀 가장자리가 홍채 경계 쪽으로 올라와 있다"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "lower eyelid margins lift toward the irises",
+              "the lower lid rims sit higher toward the iris edges",
+              "아래 눈꺼풀 가장자리가 홍채 경계 쪽으로 올라와 있다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: lower eyelid margins lift toward the irises.",
+            "render_gate": {
+              "id": "vo_ae_profile_squinch_1",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: lower eyelid margins lift toward the irises. Partial evidence fails; occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "both eyes remain visibly open through narrowed apertures",
+              "a narrow open aperture remains visible in each eye",
+              "양눈에 좁고 열린 눈 틈이 보인다"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "both eyes remain visibly open through narrowed apertures",
+              "a narrow open aperture remains visible in each eye",
+              "양눈에 좁고 열린 눈 틈이 보인다"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: both eyes remain visibly open through narrowed apertures.",
+            "render_gate": {
+              "id": "vo_ae_profile_squinch_2",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: both eyes remain visibly open through narrowed apertures. Partial evidence fails; occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ae_profile_held_tears_lips",
+      "category": "observable_facial_or_hand_configuration",
+      "activation": {
+        "exact_terms": [
+          "눈물이 고인 채 입술을 꾹 다문",
+          "pooled tears with pressed lips"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "actor_face_context",
+              "any_terms": [
+                "face",
+                "facial",
+                "portrait",
+                "actor",
+                "person",
+                "human",
+                "woman",
+                "man",
+                "얼굴",
+                "표정",
+                "인물",
+                "사람",
+                "배우",
+                "초상"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "tear fluid is pooled along the lower eyelid margins; upper and lower lips press together along a closed seam",
+        "paraphrase_examples": [
+          "pooled tears accompany a closed compressed lip seam"
+        ],
+        "visual_components": [
+          "tear fluid is pooled along the lower eyelid margins",
+          "upper and lower lips press together along a closed seam"
+        ],
+        "contrast_examples": [
+          "all tear suppression forced into this pose",
+          "sobbing inferred from a still image"
+        ],
+        "claim_limits": [
+          "Bind all parts and laterality to the frozen actor; no inferred real emotion, trait or consent.",
+          "Retain the frozen crop and eyeline; a hidden prerequisite is unobservable, not a pass.",
+          "Every required component must pass; partial evidence is a failure."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "눈물을 고인 채 입술을 꾹 다문 형태",
+          "pooled tears accompany a closed compressed lip seam",
+          "tear fluid is pooled along the lower eyelid margins",
+          "upper and lower lips press together along a closed seam"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "all tear suppression forced into this pose",
+        "sobbing inferred from a still image"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "tear fluid is pooled along the lower eyelid margins"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "tear fluid is pooled along the lower eyelid margins"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: tear fluid is pooled along the lower eyelid margins.",
+            "render_gate": {
+              "id": "vo_ae_profile_held_tears_lips_1",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: tear fluid is pooled along the lower eyelid margins. Partial evidence fails; occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "upper and lower lips press together along a closed seam"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "upper and lower lips press together along a closed seam"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: upper and lower lips press together along a closed seam.",
+            "render_gate": {
+              "id": "vo_ae_profile_held_tears_lips_2",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: upper and lower lips press together along a closed seam. Partial evidence fails; occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "ae_profile_hand_mouth",
+      "category": "observable_facial_or_hand_configuration",
+      "activation": {
+        "exact_terms": [
+          "자기 손으로 입을 가린",
+          "own hand covering own mouth"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "actor_face_context",
+              "any_terms": [
+                "face",
+                "facial",
+                "portrait",
+                "actor",
+                "person",
+                "human",
+                "woman",
+                "man",
+                "얼굴",
+                "표정",
+                "인물",
+                "사람",
+                "배우",
+                "초상"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the actor's hand is connected to their own wrist and arm; that hand covers the front of the same actor's mouth",
+        "paraphrase_examples": [
+          "the actor's own hand covers the front of their own mouth",
+          "자기 손이 자기 입 앞을 가리되 손목과 손가락 연결이 보인다",
+          "The actor's own connected hand covers the front of their mouth."
+        ],
+        "visual_components": [
+          "the actor's hand is connected to their own wrist and arm",
+          "that hand covers the front of the same actor's mouth"
+        ],
+        "contrast_examples": [
+          "another actor's hand over the mouth",
+          "a hand at the cheek without mouth coverage",
+          "automatic surprise or coercion"
+        ],
+        "claim_limits": [
+          "Bind all parts and laterality to the frozen actor; no inferred real emotion, trait or consent.",
+          "Retain the frozen crop and eyeline; a hidden prerequisite is unobservable, not a pass.",
+          "Every required component must pass; partial evidence is a failure."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "자기 입 앞을 자기 손으로 가린 형태",
+          "the actor's own hand covers the front of their own mouth",
+          "the actor's hand is connected to their own wrist and arm",
+          "that hand covers the front of the same actor's mouth",
+          "자기 손이 자기 입 앞을 가리되 손목과 손가락 연결이 보인다",
+          "The actor's own connected hand covers the front of their mouth."
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "hand.configuration"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "another actor's hand over the mouth",
+        "a hand at the cheek without mouth coverage",
+        "automatic surprise or coercion"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the actor's hand is connected to their own wrist and arm"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the actor's hand is connected to their own wrist and arm"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: the actor's hand is connected to their own wrist and arm.",
+            "render_gate": {
+              "id": "vo_ae_profile_hand_mouth_1",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: the actor's hand is connected to their own wrist and arm. Partial evidence fails; occlusion is unobservable."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "that hand covers the front of the same actor's mouth"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "that hand covers the front of the same actor's mouth"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the declared actor and show this facial or contact relation clearly: that hand covers the front of the same actor's mouth.",
+            "render_gate": {
+              "id": "vo_ae_profile_hand_mouth_2",
+              "review_scale": "native",
+              "description": "Inspect the declared actor's original pixels for this complete relation: that hand covers the front of the same actor's mouth. Partial evidence fails; occlusion is unobservable."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

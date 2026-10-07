@@ -1,0 +1,197 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "가을 동네 소식지용 사진을 만들어 주세요. 성인 공원 관리인이 벤치에 내려앉은 마른 낙엽을 손솔로 털어내는 평범한 순간이면 좋겠어요.",
+  "creative_controls_sha256": "5fdaa188892aea8c43bf31236971e9d25862711b535033d157c1c02f1c0c1a3f",
+  "interpreted_intent": "Requester meaning: Dry leaves have landed on a park bench and are being brushed off by an adult caretaker; the task is outside and remains ordinary. Author-created realization: The bench becomes available again as the caretaker clears a seat for public use; retain autumn around the work so cleanup has a seasonal reason. A weathered slatted bench, standing reach across its seat, leaf litter below, subdued autumn color, open-air diffuse light, composed and personable working presence. This staging is an editable authorial choice within the requested facts.",
+  "subject": "An adult park caretaker",
+  "setting": "A park bench in autumn",
+  "event": "Brushing dry fallen leaves off the bench",
+  "visual_priorities": [
+    "The hand brush clears dry leaves from the seat rather than cleaning the path.",
+    "The caretaker and newly usable part of the bench stay connected in one frame.",
+    "Autumn foliage and ground litter give the task a seasonal context."
+  ],
+  "baseline_prompt_en": "An autumn neighborhood-newsletter photograph catches an ordinary moment of park care. An adult park caretaker brushes dry fallen leaves off a bench with a hand brush. The caretaker stands beside the seat, leaning comfortably from the hips with both feet on the path. The brush hand reaches across the near portion of the seat while the free hand rests on the bench back. Crisp brown leaves move over the seat's outer edge, and a newly cleared section of slats opens beside the remaining leaves. The worker's composed expression and easy carriage give the practical gesture an understated appeal. Leaf litter beneath the weathered bench and the autumn trees place the small act within its season. A medium view keeps the caretaker and the seat together, with soft outdoor light and quiet brown-green color giving the scene the familiarity of a neighborhood walk.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete photographic request",
+      "source_text": "가을 동네 소식지용 사진을 만들어 주세요. 성인 공원 관리인이 벤치에 내려앉은 마른 낙엽을 손솔로 털어내는 평범한 순간이면 좋겠어요.",
+      "basis": "request_context",
+      "resolution": "Dry leaves have landed on a park bench and are being brushed off by an adult caretaker; the task is outside and remains ordinary.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "가을 동네 소식지용 사진",
+        "dimension": "concept",
+        "prompt_evidence": "autumn neighborhood-newsletter photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "성인 공원 관리인",
+        "dimension": "subject",
+        "prompt_evidence": "An adult park caretaker"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "벤치에 내려앉은 마른 낙엽을 손솔로 털어내는",
+        "dimension": "event",
+        "prompt_evidence": "brushes dry fallen leaves off a bench with a hand brush"
+      },
+      {
+        "anchor_id": "requested_action",
+        "source_text": "손솔로 털어내는",
+        "dimension": "action",
+        "prompt_evidence": "brushes dry fallen leaves off a bench"
+      },
+      {
+        "anchor_id": "adult_age",
+        "source_text": "성인 공원 관리인",
+        "dimension": "age",
+        "prompt_evidence": "adult park caretaker"
+      },
+      {
+        "anchor_id": "bench_location",
+        "source_text": "벤치",
+        "dimension": "setting",
+        "prompt_evidence": "off a bench",
+        "target": "scene",
+        "property": "work_surface"
+      },
+      {
+        "anchor_id": "dry_leaves",
+        "source_text": "마른 낙엽",
+        "dimension": "material",
+        "prompt_evidence": "dry fallen leaves",
+        "target": "leaves",
+        "property": "material_state"
+      },
+      {
+        "anchor_id": "hand_brush",
+        "source_text": "손솔",
+        "dimension": "appearance",
+        "prompt_evidence": "hand brush",
+        "target": "cleanup_brush",
+        "property": "tool_type"
+      },
+      {
+        "anchor_id": "autumn",
+        "source_text": "가을",
+        "dimension": "timing",
+        "prompt_evidence": "autumn trees",
+        "target": "scene",
+        "property": "season"
+      },
+      {
+        "anchor_id": "ordinary_moment",
+        "source_text": "평범한 순간",
+        "dimension": "atmosphere",
+        "prompt_evidence": "ordinary moment of park care",
+        "target": "scene",
+        "property": "register"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "action",
+      "age"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "setting",
+      "style",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "An adult park caretaker"
+      }
+    },
+    {
+      "assertion_id": "requested_task",
+      "dimension": "action",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "action"
+      ],
+      "axes": {
+        "task": "leaf_brushing",
+        "actor": "park_caretaker",
+        "tool": "hand_brush",
+        "surface": "bench",
+        "material": "dry_fallen_leaves"
+      },
+      "evidence": {
+        "actor_phrase": "An adult park caretaker",
+        "action_phrase": "brushes dry fallen leaves off a bench with a hand brush"
+      }
+    },
+    {
+      "assertion_id": "capture_camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "documentary",
+    "family": "ordinary neighborhood feature photograph",
+    "evidence": [
+      "The hand brush clears dry leaves from the seat rather than cleaning the path.",
+      "The caretaker and newly usable part of the bench stay connected in one frame."
+    ]
+  },
+  "variation_key": "dry-cleaning-natural-c04"
+}

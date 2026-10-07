@@ -1,0 +1,306 @@
+{
+  "schema": "photo-data-quality-links-independent-qa/v1",
+  "case_id": "case-04",
+  "round": 2,
+  "completed_at_utc": "2026-10-06T17:21:50.371549+00:00",
+  "request_origin": "coordinator_created_synthetic_test_case",
+  "request_text": "겨울 저녁 작은 기차역 플랫폼의 지붕과 빗물 자국을 찍은 사진. 사람은 없음.",
+  "pack_id": "a997327a635ba1dd",
+  "generation_id": "db193081d04dba97d754e8809cebfb67a97133c7162a5429da965d53e9c88462",
+  "staged_generation_id": "db193081d04dba97d754e8809cebfb67a97133c7162a5429da965d53e9c88462",
+  "source_fingerprint": "6f42582a01533dedf985a68e65391e058bdd1c387954907c421c09143f10e351",
+  "source_root": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/skill",
+  "runtime_store": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/runtime",
+  "report_id": "79e7c2d2309d5d66fa01d46cb396719c88bdbed3116338d3138d894815faa262",
+  "overall_status": "PARTIAL",
+  "overall_reason_ko": "공식 감사, 새 관리 graph/freshness, 요청 의미와 초기 증거 보존, 두 대상의 no_people guard는 PASS이다. 작품은 이미지 없이 PARTIAL이며 다른 기존 advisory 의미 불일치 노출도 별도로 남겨 둔다.",
+  "checks": {
+    "technical_audit": {
+      "status": "PASS",
+      "reason_ko": "공식 feature validator와 새 receipt를 사용한 composed 감사가 성공했다. 실패 0개이며 요청 앵커가 자유 서술로 보존됐다는 경고 6개다.",
+      "feature_audit": {
+        "catalog_mode": "current",
+        "contract_version": "photo-precore-feature-selection/v1",
+        "request_id": "random-qa-20261007-04",
+        "selected_category_ids": [
+          "feature.primary_object",
+          "feature.location",
+          "feature.time",
+          "feature.environmental_details",
+          "feature.visual_density",
+          "feature.composition",
+          "feature.lighting_source"
+        ],
+        "selected_count": 7,
+        "valid": true,
+        "warnings": []
+      },
+      "composed_audit": {
+        "chosen_candidate_count": 0,
+        "chosen_visual_concept_ids": [],
+        "effective_visual_contract_sha256": null,
+        "failures": [],
+        "pack_id": "a997327a635ba1dd",
+        "quality_status": "warn",
+        "render_repair_contract_sha256": null,
+        "status": "pass",
+        "warnings": [
+          {
+            "check": "uncovered_intent",
+            "intent": "photograph of the roof canopy",
+            "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+          },
+          {
+            "check": "uncovered_intent",
+            "intent": "roof canopy",
+            "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+          },
+          {
+            "check": "uncovered_intent",
+            "intent": "rainwater stains",
+            "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+          },
+          {
+            "check": "uncovered_intent",
+            "intent": "small railway station platform",
+            "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+          },
+          {
+            "check": "uncovered_intent",
+            "intent": "winter evening",
+            "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+          },
+          {
+            "check": "uncovered_intent",
+            "intent": "The platform is empty",
+            "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+          }
+        ]
+      },
+      "local_lexical_pack_count": 1,
+      "camera_new_author_evidence_flag_used": true
+    },
+    "graph": {
+      "status": "PASS",
+      "reason_ko": "실제 새 root 원본 JSON의 candidate_ids/candidate_slots 및 hard_profile_id(s)에서 독립 복원한 모든 edge가 관리 graph와 일치했다. 후보/프로필/bundle의 실제 조회 경로와 역방향 관계도 일치했다.",
+      "global_edge_count": 2971,
+      "candidate_query_count": 64,
+      "profile_reverse_query_count": 29,
+      "bundle_query_count": 3,
+      "linked_exposed_candidates": 17,
+      "normal_unlinked_candidates": 47,
+      "all_edges_and_paths_and_source_refs_match": true,
+      "meaning_support": "not_inferred",
+      "profile_activation": "independent_request_evidence_only",
+      "association_promoted_to_semantic_completeness_or_hard_activation": false
+    },
+    "freshness": {
+      "status": "PASS",
+      "reason_ko": "새 root/report/runtime의 --require-current는 current_verified로 성공했다. scratch 보고서 links.json 손상과 잘못된 source root는 실제 CLI에서 거부됐다.",
+      "checks": {
+        "current_success": true,
+        "reverse_query_success": true,
+        "corrupted_copy_rejected": true,
+        "wrong_root_rejected": true,
+        "cli_forward_and_reverse_equal_independently_checked_results": true
+      },
+      "verified_root": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/skill"
+    },
+    "request_meaning_preservation": {
+      "status": "PASS",
+      "reason_ko": "겨울 저녁, 작은 기차역 플랫폼 지붕, 빗물 자국, 사람의 부재를 보존했다. 영어 baseline과 final prompt는 byte-identical이고 모든 초기 입력과 frozen snapshot 해시가 그대로다.",
+      "prompt_sha256": "8a464da6bae94ed8bdb2dc8039d80136f7fbcd6b08674056b254ce1f295ccf2c",
+      "candidate_selections": [],
+      "visual_concept_selections": [],
+      "required_assertion_ids": [
+        "primary_roof_object",
+        "visible_rainwater_trace"
+      ],
+      "camera_axes": "unprescribed/open with empty evidence",
+      "baseline_controls_and_feature_selection_unchanged": true
+    },
+    "targeted_human_candidate_guard": {
+      "status": "PASS",
+      "reason_ko": "수정 대상 둘 모두 실제 compiled kind/for_any가 human이며, 정확한 frozen object/no_people 문맥에서 explicit_no_people로 차단됐다. 슬롯, augmentation, bundle member, public pack 전체에서 해당 ID가 없다.",
+      "entries": [
+        {
+          "entry_id": "pr_casual_crop_subject_legibility_candidate",
+          "kind": [
+            "human"
+          ],
+          "for_any": [
+            "human"
+          ],
+          "block_reason": "explicit_no_people",
+          "eligible": false,
+          "public_pack_presence": {
+            "ordinary_slots": false,
+            "creative_augmentation": false,
+            "bundle_member": false,
+            "any_public_pack_reference": false
+          }
+        },
+        {
+          "entry_id": "rb_shared_wind_response_candidate",
+          "kind": [
+            "human"
+          ],
+          "for_any": [
+            "human"
+          ],
+          "block_reason": "explicit_no_people",
+          "eligible": false,
+          "public_pack_presence": {
+            "ordinary_slots": false,
+            "creative_augmentation": false,
+            "bundle_member": false,
+            "any_public_pack_reference": false
+          }
+        }
+      ]
+    },
+    "artistic_judgment": {
+      "status": "PARTIAL",
+      "reason_ko": "문장 수준에서는 지붕의 직선 구조와 불규칙한 물 흔적, 작은 따뜻한 조명과 차가운 저녁광, 부차적인 플랫폼/선로가 일관된 관찰 사진으로 연결된다. 실제 이미지의 물자국 우선순위·계절 식별성·빛·전체 작품 효과는 확인하지 않았다.",
+      "textual_direction": "coherent",
+      "pixels_and_rendered_artwork": "not_verified"
+    },
+    "residual_advisory_retrieval_quality": {
+      "status": "PARTIAL",
+      "reason_ko": "이번 두 수정 대상과 별도로, adult actor를 명시하는 hr_horror_comedy_task_contrast와 hr_mockumentary_evidence_display는 kind/for_any가 없고 eligible로 노출된다. adult vampire 관계 후보도 이 roof 요청의 의미와 맞지 않는다. 모두 미채택이며 관리 graph 오류로 해석하지 않았다.",
+      "evidence_file": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/residual_advisory_exposure.json",
+      "reported_to_coordinator": true,
+      "changes_to_sealed_skill": false
+    },
+    "isolation_and_preservation": {
+      "status": "PASS",
+      "reason_ko": "ISOLATION.json, 제공된 precore-frozen snapshot, 모든 sealed source/tool 해시와 초기 QA가 저장한 artifact 해시가 유지됐다. 새 출력·scratch·runtime만 사용했다.",
+      "initial_artifacts_verified_count": 26,
+      "sealed_runtime_members_verified_count": 165
+    }
+  },
+  "final_prompt_en": "An architectural photograph of the roof canopy of a small railway station platform on a winter evening. The roof and its rainwater stains are the main subject: dark, uneven runoff streaks descend along the fascia and spread beneath the roof seams, with pale dried tide lines edging the dampened patches. The canopy occupies most of the frame, while a narrow strip of platform paving, one supporting post, and the parallel rails establish its modest station setting. A single warm platform lamp draws out the overlapping stain edges and the slight roughness of the roof surface against the cold blue-gray dusk. The platform is empty, its paving carrying a subdued wet glimmer. Preserve the quiet difference between a working shelter's straight structure and the irregular water traces that have accumulated on it. Natural tonal transitions and legible surface texture make the photograph feel observed and still, with the surrounding station kept subordinate to the stained roof.",
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "saved_defaults": {
+    "sensual_configured": 1,
+    "sensual_effective": 0,
+    "fetish_configured": 0,
+    "fetish_effective": 0,
+    "axis_ineligibility_reason": "explicit_no_people",
+    "creativity": 1,
+    "surreal": 0,
+    "no_people": true,
+    "explicit_nonsexual": false
+  },
+  "camera_review": {
+    "capture_owner": "unprescribed",
+    "direction_requirement": "open",
+    "height_requirement": "open",
+    "polarity": "advisory",
+    "evidence": {}
+  },
+  "embodiment_scope": "not_applicable",
+  "coverage_boundary": {
+    "image_API_calls": 0,
+    "embedding_API_calls": 0,
+    "network_calls": 0,
+    "native_pixels": "not_verified_no_image_generated",
+    "user_acceptance": "not_verified",
+    "cello_specific_semantic_behavior": "not_exercised_by_this_architecture_case",
+    "other_cases_checkout_memory_tests_read": false
+  },
+  "artifact_files": [
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/round2_input_verification.json",
+      "sha256": "401914409d6137039617571ad221849a9299f250f4f7a65f8862c80ffd8cb9dd"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/initial_run_evidence_preservation.json",
+      "sha256": "41b2f0f83b744d0407e5269ab719157d0b6e90a777565b950dfb25aee70cf8ac"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/human_candidate_guard_verification.json",
+      "sha256": "3f33ea77d97069e90c51155bed2806903098fbe21111b03f3703228fb97c0f9c"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/residual_advisory_exposure.json",
+      "sha256": "304f0ed79f59efcb0ac6b8e62a39c00c49683facb9e11378a417552e03a2f9c5"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/candidate_pack.json",
+      "sha256": "dbb2c84b570042b9c3dbdcbd368618fc1293b148fff8b8e3ac988b145e5f9486"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/runtime-receipt.json",
+      "sha256": "b1a807adc73daf9b6d448efb889d00f4292b92c60992960a36efcce078be7c69"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/composer_view.json",
+      "sha256": "0bb073f9354c991ba4d09b8eecf495e3aa127f3a22a76ba575b74876333fe4c4"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/composed_prompt.json",
+      "sha256": "6f818af5e2c13f9a579b6f015c4a7b5a1951c7da8495c1d204dc2ae49443f0f9"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/final_prompt_en.txt",
+      "sha256": "36601672235d71aede969e261a1ac6ebe1c861b8234d51f80bcd6d0a7030c3e4"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/composition_decision_notes.json",
+      "sha256": "748cc0a5c9b83f6d6b45ca7d85c400d8987d497204cba87befe6a20850e0bd3f"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/independent_graph_check.py",
+      "sha256": "1ca3d6fba58d3576d810daa62d2d8207bd1873fcbf71398a5dba11daaeeb1da5"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/independent_graph_comparison.json",
+      "sha256": "6db64ba0dc06a99d3b6fe11b4f728bab21d2a3791692daab3076f6601eb48ac6"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/management_queries.json",
+      "sha256": "c4fd24c7ef8190d2006ea84270fea156e2f867d2ccee753c8102a469e89f3cea"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/freshness_and_rejection_checks.json",
+      "sha256": "f909b779654d6e1039d8483245df1313b0caab3804e08965034fa45d2f4d6637"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/audits/precore_feature_validation.json",
+      "sha256": "22875400cf9799fd8d652f82938e9d2db39281eb641da668fd6a091028b48897"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/audits/pack_generation.json",
+      "sha256": "19b94a88935cb0fcbf54d55f3f0dff10967eab69414729e0fdc253e25ad9c226"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/audits/composed_prompt_audit.json",
+      "sha256": "d3c90b71ab899d422881ad4383a1d4373c5189840feb7bb3209a4b1f874ea12a"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/audits/management_report_build.json",
+      "sha256": "febe318f215fdc8fd31883508e7ee0d5b388822be498805a113d74ffaf5c826d"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/audits/management_query_current_success.json",
+      "sha256": "30f51096d4f37f8e8f0171db524ebaa2a8427e5aabf49e585173efae6fc76549"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/audits/management_query_profile_reverse_pinned.json",
+      "sha256": "fd3b153166f528188c08bae16e52a347058b71a367d4bb13174ef1bfe0ba7a22"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/audits/management_query_corrupted_copy_rejected.json",
+      "sha256": "7b156382dacf768f452c301edc97c3ae3bc14ba6eea01abb8f539f131f84a865"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/audits/management_query_wrong_root_rejected.json",
+      "sha256": "4657d465667e941a151a723f255be934eebd0c7d1b72d25deee78cc8c34fc7fd"
+    },
+    {
+      "path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-04/round-2/run/management-report/manifest.json",
+      "sha256": "9ade0b7047eb18bf128abc33a58925fc9dfc7ba8cb2fbdcaa0fd7d4376b0bf74"
+    }
+  ]
+}

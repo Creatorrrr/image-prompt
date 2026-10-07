@@ -1,0 +1,61 @@
+test_composed_audit_recomputes_contract_and_rejects_evasive_prompt (tests.test_photo_render_repair.PhotoRenderRepairTests.test_composed_audit_recomputes_contract_and_rejects_evasive_prompt) ... ERROR
+test_legacy_lineage_shape_remains_unchanged (tests.test_photo_render_repair.PhotoRenderRepairTests.test_legacy_lineage_shape_remains_unchanged) ... ok
+test_lineage_requires_locked_action_and_one_assertion_owning_both_phrases (tests.test_photo_render_repair.PhotoRenderRepairTests.test_lineage_requires_locked_action_and_one_assertion_owning_both_phrases) ... ok
+test_modern_independent_manifest_preserves_repair_provenance (tests.test_photo_render_repair.PhotoRenderRepairTests.test_modern_independent_manifest_preserves_repair_provenance) ... ok
+test_object_agnostic_contract_handles_multiple_interaction_families (tests.test_photo_render_repair.PhotoRenderRepairTests.test_object_agnostic_contract_handles_multiple_interaction_families) ... ok
+test_render_review_requires_exact_major_gate_set_and_image_hash (tests.test_photo_render_repair.PhotoRenderRepairTests.test_render_review_requires_exact_major_gate_set_and_image_hash) ... ERROR
+test_requester_corrected_relation_is_frozen_after_parent_change (tests.test_photo_render_repair.PhotoRenderRepairTests.test_requester_corrected_relation_is_frozen_after_parent_change) ... ok
+test_runtime_request_requires_exact_repair_contract_hash (tests.test_photo_render_repair.PhotoRenderRepairTests.test_runtime_request_requires_exact_repair_contract_hash) ... ERROR
+test_v2_lineage_compiles_generic_prompt_and_pixel_contract (tests.test_photo_render_repair.PhotoRenderRepairTests.test_v2_lineage_compiles_generic_prompt_and_pixel_contract) ... ERROR
+test_v6_candidate_pack_exposes_recomputed_repair_contract (tests.test_photo_render_repair.PhotoRenderRepairTests.test_v6_candidate_pack_exposes_recomputed_repair_contract) ... ok
+
+======================================================================
+ERROR: test_composed_audit_recomputes_contract_and_rejects_evasive_prompt (tests.test_photo_render_repair.PhotoRenderRepairTests.test_composed_audit_recomputes_contract_and_rejects_evasive_prompt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/tests/test_photo_render_repair.py", line 358, in test_composed_audit_recomputes_contract_and_rejects_evasive_prompt
+    audit_composed_prompt.audit_render_repair_v6(
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'audit_composed_prompt' has no attribute 'audit_render_repair_v6'
+
+======================================================================
+ERROR: test_render_review_requires_exact_major_gate_set_and_image_hash (tests.test_photo_render_repair.PhotoRenderRepairTests.test_render_review_requires_exact_major_gate_set_and_image_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/tests/test_photo_render_repair.py", line 471, in test_render_review_requires_exact_major_gate_set_and_image_hash
+    passed = audit_image_render_review.audit_image_render_review(
+        pack, composed, review
+    )
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/skills/photo-prompt-image-generator/scripts/audit_image_render_review.py", line 100, in audit_image_render_review
+    expected_contract = audit_composed_prompt.expected_render_repair_contract(core)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'audit_composed_prompt' has no attribute 'expected_render_repair_contract'
+
+======================================================================
+ERROR: test_runtime_request_requires_exact_repair_contract_hash (tests.test_photo_render_repair.PhotoRenderRepairTests.test_runtime_request_requires_exact_repair_contract_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/tests/test_photo_render_repair.py", line 419, in test_runtime_request_requires_exact_repair_contract_hash
+    passed = audit_image_render_request.audit_image_render_request(
+        pack, composed, request
+    )
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/skills/photo-prompt-image-generator/scripts/audit_image_render_request.py", line 115, in audit_image_render_request
+    expected_render_repair = audit_composed_prompt.expected_render_repair_contract(
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'audit_composed_prompt' has no attribute 'expected_render_repair_contract'
+
+======================================================================
+ERROR: test_v2_lineage_compiles_generic_prompt_and_pixel_contract (tests.test_photo_render_repair.PhotoRenderRepairTests.test_v2_lineage_compiles_generic_prompt_and_pixel_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/tests/test_photo_render_repair.py", line 247, in test_v2_lineage_compiles_generic_prompt_and_pixel_contract
+    audit_composed_prompt.authorial_core_v3_semantic_contract_valid(core)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'audit_composed_prompt' has no attribute 'authorial_core_v3_semantic_contract_valid'
+
+----------------------------------------------------------------------
+Ran 10 tests in 16.595s
+
+FAILED (errors=4)
+<class 'dict'> ['total_tests', 'module_count', 'module_counts', 'partitions']
+normalizer /Users/chasoik/.codex/worktrees/ethereal-gothic-main-merge/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py

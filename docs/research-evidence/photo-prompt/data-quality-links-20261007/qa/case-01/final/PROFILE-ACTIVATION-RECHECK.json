@@ -1,0 +1,77 @@
+{
+  "status": "PASS",
+  "profile": "cello_endpin_seated_bowed",
+  "raw_source_ref": {
+    "file": "photo_prompt_visual_obligations.json",
+    "pointer": "/profiles/114"
+  },
+  "raw_activation": {
+    "exact_terms": [
+      "cello",
+      "violoncello",
+      "cello performance",
+      "cello player",
+      "첼로",
+      "첼로 연주",
+      "첼리스트"
+    ],
+    "requires_adult_character": false,
+    "semantic_discovery_requires_component_evidence": true,
+    "hard_activation": {
+      "contract_version": "photo-visual-hard-activation/v1",
+      "required_any_groups": [
+        {
+          "id": "cello_instrument",
+          "any_terms": [
+            "cello",
+            "violoncello",
+            "cellist",
+            "첼로",
+            "첼리스트"
+          ]
+        },
+        {
+          "id": "active_bowing",
+          "any_terms": [
+            "bowing",
+            "bows the strings",
+            "playing the cello",
+            "cello performance",
+            "첼로 연주",
+            "첼로를 연주",
+            "첼로를 켜",
+            "활로 줄을 켜"
+          ]
+        },
+        {
+          "id": "seated_support",
+          "any_terms": [
+            "seated",
+            "sitting",
+            "between the knees",
+            "앉아서",
+            "앉은",
+            "앉아",
+            "무릎 사이"
+          ]
+        }
+      ]
+    },
+    "exclude_if_any_terms": [
+      "checking the bow",
+      "inspecting the bow",
+      "bow inspection",
+      "활을 확인",
+      "활 점검"
+    ]
+  },
+  "actual_clarification_applicability": {
+    "status": "context_mismatch",
+    "reason": "the_authorial_core_resolved_the_term_to_a_different_contextual_sense"
+  },
+  "required_in_final_prompt": false,
+  "active_visual_obligations": null,
+  "request_event": "활을 확인하는",
+  "baseline_event": "checking a cello bow",
+  "judgement_ko": "악기의 정체는 여전히 첼로다. 활을 확인하는 준비 시점은 seated+active bowing 프로필의 연주 동작과 다르므로 hard 의무를 적용하지 않는 결과가 타당하다. 검사 제외 조건도 원본 active request 의미와 일치한다."
+}

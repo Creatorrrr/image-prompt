@@ -1,0 +1,35 @@
+[
+  {
+    "time_utc": "2026-10-06T16:47:55.607823+00:00",
+    "source_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/feature_selection.json",
+    "source_sha256": "93781075eb0d4b4dd65ec5eefbb209751b7a932875f0286054fe8c2a3cc6d2de",
+    "corrected_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/feature_selection.schema-corrected.json",
+    "corrected_sha256": "45ee0645130665f2166b2417e831984950fd33003541ea2cfcd914d6075715e4",
+    "field": "catalog_path",
+    "before": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/skill/precore/visual_feature_catalog.json",
+    "after": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+    "reason": "The official validator requires the canonical symbolic precore catalog path; replacing the isolation-specific absolute path is a schema correction only.",
+    "semantic_change": false,
+    "baseline_changed": false,
+    "candidate_or_profile_data_read_before_correction": false
+  },
+  {
+    "time_utc": "2026-10-06T16:49:48.223633+00:00",
+    "source_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/authorial_core.json",
+    "source_sha256": "334570c86040dd0e775abbbfddbe12a982419b37feb46ceeae3f702c862d4678",
+    "corrected_path": "/Users/chasoik/.cache/image-prompt/photo-data-quality-links-20261007/qa/case-05/run/authorial_core.schema-corrected.json",
+    "corrected_sha256": "58199a63533a5cbd1e33ff8ca8fa33076b620f7a5e6a260c9cced547486944db",
+    "field": "user_exclusions",
+    "before": [
+      "people"
+    ],
+    "after": [
+      "사람은 없음."
+    ],
+    "reason": "The public core validator requires each exclusion to be a literal active-request substring. The Korean requester exclusion is the exact source-grounded form of the previously recorded English people exclusion. The no-people context, request meaning and all baseline bytes stay unchanged.",
+    "semantic_change": false,
+    "baseline_changed": false,
+    "candidate_or_profile_data_read_before_correction": false,
+    "data_load_order_evidence": "generate_photo_prompt.py validates load_authorial_core_arg before RuntimeSnapshotProvider.acquire; first generation attempt returned before acquisition."
+  }
+]

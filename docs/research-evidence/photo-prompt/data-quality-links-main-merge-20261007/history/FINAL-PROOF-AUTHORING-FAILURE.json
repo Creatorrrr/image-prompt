@@ -1,0 +1,11 @@
+{
+  "schema": "photo-v34-authoring-failure/v1",
+  "evidence_type": "summary of observed final-proof authoring command failure",
+  "command": "python history/build_v34_boundary.py",
+  "exception": "KeyError: 0",
+  "location": "current_pack_id=current[0]['pack_id']",
+  "cause": "The new metadata loop reused the pack-list variable name for an extension dictionary.",
+  "correction": "Rename the extension dictionary variable to current_source; the pack list remains current.",
+  "proof_boundary": "The failing authoring run did not write a new proof or baseline and did not run qualification tests. Original records, frozen sources, expectations and the initial archive remained unchanged.",
+  "final_proof_sha256": "8ae1ae029becb12da5e742bd929b197d1a25497176f884e4fc90d67b9517d98d"
+}
