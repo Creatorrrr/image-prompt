@@ -1,0 +1,749 @@
+{
+  "cases": [
+    {
+      "case": "original",
+      "core": {
+        "contract_version": "photo-authorial-core/v3",
+        "provenance": "agent_prepack",
+        "source_request": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+        "interpreted_intent": "An adult guarded maid reveals concealed peer affection through practical care",
+        "subject": "one adult cat-eared maid and one adult coworker",
+        "setting": "a quiet staff service corridor after closing",
+        "event": "she treats a coworker's scraped wrist after a dropped medical tin",
+        "visual_priorities": [
+          "guarded practical peer care",
+          "recipient reaction and consequence",
+          "restrained feline ear reflex"
+        ],
+        "baseline_prompt_en": "An adult cat-eared maid in a quiet service corridor keeps her stern professional posture while an injured adult coworker sits beside her. A dropped first-aid tin triggers the moment. She wraps the coworker's scraped wrist with practical care, looks away before checking their reaction, and leaves a warm cup within reach. The coworker's relieved shoulders answer the gesture, while her compact ears tilt toward them and the same dark uniform keeps her identity continuous.",
+        "user_definitions": [],
+        "interpretation_provenance": [
+          {
+            "term": "츤데레",
+            "source_text": "츤데레",
+            "basis": "agent_general_knowledge",
+            "resolution": "guarded outward behavior with concealed positive affiliation toward a peer",
+            "sources": []
+          }
+        ],
+        "unresolved_ambiguities": [],
+        "user_exclusions": [],
+        "style": {
+          "domain": "character_editorial",
+          "family": "restrained narrative portrait",
+          "evidence": [
+            "quiet corridor depth",
+            "tactile first-aid props"
+          ]
+        },
+        "variation_key": "typed-v6-test",
+        "request_binding": {
+          "contract_version": "photo-request-binding/v1",
+          "request_id": "v6-request",
+          "request_sha256": "cef28fda9f3c4a0931956e412a9b28f0cb7b0910a7ce94a8018aa42b8ee45489",
+          "request_envelope_sha256": "c95d00cd38ff7e9762759079ddbe0d5b54b661a8e89546d75013370a25e20f00",
+          "active_spans": [
+            {
+              "span_id": "topic",
+              "start": 0,
+              "end": 36,
+              "text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면"
+            }
+          ]
+        },
+        "runtime_forbidden_labels": [],
+        "intent_lock": {
+          "contract_version": "photo-intent-lock/v2",
+          "priority": "requesting_user",
+          "semantic_anchors": [
+            {
+              "anchor_id": "concept",
+              "source_text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+              "dimension": "concept",
+              "prompt_evidence": "wraps the coworker's scraped wrist with practical care"
+            },
+            {
+              "anchor_id": "subject",
+              "source_text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+              "dimension": "subject",
+              "prompt_evidence": "An adult cat-eared maid"
+            },
+            {
+              "anchor_id": "event",
+              "source_text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+              "dimension": "event",
+              "prompt_evidence": "A dropped first-aid tin triggers the moment"
+            },
+            {
+              "anchor_id": "character_response",
+              "source_text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+              "dimension": "character_response",
+              "prompt_evidence": "looks away before checking their reaction"
+            }
+          ],
+          "locked_dimensions": [
+            "concept",
+            "subject",
+            "event",
+            "character_response"
+          ],
+          "open_dimensions": [
+            "framing",
+            "composition",
+            "lighting",
+            "camera",
+            "color"
+          ],
+          "augmentation_policy": "open_dimensions_only_and_subordinate",
+          "material_change_policy": "rebuild_core_after_requester_input",
+          "candidate_revision_policy": "forbidden",
+          "canonical_sha256": "1bbd3acf04670b9c4d893d31672e7d070b7a146f39e1e6bbcf7f79fa57ee0210",
+          "lock_id": "1bbd3acf04670b9c"
+        },
+        "semantic_assertions": [
+          {
+            "assertion_id": "guarded_peer_care",
+            "dimension": "character_response",
+            "polarity": "required",
+            "source_span_ids": [
+              "topic"
+            ],
+            "axes": {
+              "surface_affect": "guarded",
+              "underlying_affiliation": "positive",
+              "relationship_target": "adult_coworker",
+              "primary_action": "practical_care",
+              "affect_leak_timing": "delayed",
+              "affect_leak_channels": [
+                "gaze"
+              ],
+              "affect_leak_intentionality": "minimized",
+              "event_phase": "unfinished"
+            },
+            "evidence": {
+              "actor_phrase": "An adult cat-eared maid",
+              "baseline_phrase": "keeps her stern professional posture",
+              "trigger_phrase": "A dropped first-aid tin triggers the moment",
+              "target_phrase": "an injured adult coworker sits beside her",
+              "primary_action_phrase": "wraps the coworker's scraped wrist with practical care",
+              "visible_response_phrase": "The coworker's relieved shoulders answer the gesture",
+              "immediate_consequence_phrase": "leaves a warm cup within reach",
+              "continuity_phrase": "the same dark uniform keeps her identity continuous",
+              "affective_leak_phrase": "looks away before checking their reaction",
+              "nonhuman_reflex_phrase": "her compact ears tilt toward them"
+            },
+            "affected_dimensions": [
+              "character_response"
+            ],
+            "relations": [
+              {
+                "operator": "contrasts",
+                "left": "surface_affect",
+                "right": "underlying_affiliation"
+              },
+              {
+                "operator": "same_target",
+                "members": [
+                  "relationship_target",
+                  "primary_action",
+                  "affect_leak"
+                ]
+              },
+              {
+                "operator": "temporal_order",
+                "first": "surface_affect",
+                "then": "affect_leak"
+              }
+            ]
+          }
+        ],
+        "request_lineage": null,
+        "canonical_sha256": "43b3a0f72d49f96751721beb06275cd6ff518ad92e6dc7ba427ddbd3fe1663b9",
+        "core_id": "43b3a0f72d49f967"
+      },
+      "profile_id": "tsundere",
+      "result": {
+        "status": "consistent",
+        "reason": "typed_assertion_matches_profile",
+        "missing_axes": [],
+        "conflicting_axes": [],
+        "missing_relation_operators": [],
+        "matched_axis_classes": {
+          "surface_affect": [
+            "guarded"
+          ],
+          "underlying_affiliation": [
+            "positive"
+          ],
+          "affect_leak_timing": [
+            "after_surface"
+          ],
+          "affect_leak_intentionality": [
+            "minimized"
+          ]
+        },
+        "hard_eligible": false,
+        "frozen_core_revision_forbidden": true
+      }
+    },
+    {
+      "case": "missing",
+      "core": {
+        "contract_version": "photo-authorial-core/v3",
+        "provenance": "agent_prepack",
+        "source_request": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+        "interpreted_intent": "An adult guarded maid reveals concealed peer affection through practical care",
+        "subject": "one adult cat-eared maid and one adult coworker",
+        "setting": "a quiet staff service corridor after closing",
+        "event": "she treats a coworker's scraped wrist after a dropped medical tin",
+        "visual_priorities": [
+          "guarded practical peer care",
+          "recipient reaction and consequence",
+          "restrained feline ear reflex"
+        ],
+        "baseline_prompt_en": "An adult cat-eared maid in a quiet service corridor keeps her stern professional posture while an injured adult coworker sits beside her. A dropped first-aid tin triggers the moment. She wraps the coworker's scraped wrist with practical care, looks away before checking their reaction, and leaves a warm cup within reach. The coworker's relieved shoulders answer the gesture, while her compact ears tilt toward them and the same dark uniform keeps her identity continuous.",
+        "user_definitions": [],
+        "interpretation_provenance": [
+          {
+            "term": "츤데레",
+            "source_text": "츤데레",
+            "basis": "agent_general_knowledge",
+            "resolution": "guarded outward behavior with concealed positive affiliation toward a peer",
+            "sources": []
+          }
+        ],
+        "unresolved_ambiguities": [],
+        "user_exclusions": [],
+        "style": {
+          "domain": "character_editorial",
+          "family": "restrained narrative portrait",
+          "evidence": [
+            "quiet corridor depth",
+            "tactile first-aid props"
+          ]
+        },
+        "variation_key": "typed-v6-test",
+        "request_binding": {
+          "contract_version": "photo-request-binding/v1",
+          "request_id": "v6-request",
+          "request_sha256": "cef28fda9f3c4a0931956e412a9b28f0cb7b0910a7ce94a8018aa42b8ee45489",
+          "request_envelope_sha256": "c95d00cd38ff7e9762759079ddbe0d5b54b661a8e89546d75013370a25e20f00",
+          "active_spans": [
+            {
+              "span_id": "topic",
+              "start": 0,
+              "end": 36,
+              "text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면"
+            }
+          ]
+        },
+        "runtime_forbidden_labels": [],
+        "intent_lock": {
+          "contract_version": "photo-intent-lock/v2",
+          "priority": "requesting_user",
+          "semantic_anchors": [
+            {
+              "anchor_id": "concept",
+              "source_text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+              "dimension": "concept",
+              "prompt_evidence": "wraps the coworker's scraped wrist with practical care"
+            },
+            {
+              "anchor_id": "subject",
+              "source_text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+              "dimension": "subject",
+              "prompt_evidence": "An adult cat-eared maid"
+            },
+            {
+              "anchor_id": "event",
+              "source_text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+              "dimension": "event",
+              "prompt_evidence": "A dropped first-aid tin triggers the moment"
+            },
+            {
+              "anchor_id": "character_response",
+              "source_text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+              "dimension": "character_response",
+              "prompt_evidence": "looks away before checking their reaction"
+            }
+          ],
+          "locked_dimensions": [
+            "concept",
+            "subject",
+            "event",
+            "character_response"
+          ],
+          "open_dimensions": [
+            "framing",
+            "composition",
+            "lighting",
+            "camera",
+            "color"
+          ],
+          "augmentation_policy": "open_dimensions_only_and_subordinate",
+          "material_change_policy": "rebuild_core_after_requester_input",
+          "candidate_revision_policy": "forbidden",
+          "canonical_sha256": "1bbd3acf04670b9c4d893d31672e7d070b7a146f39e1e6bbcf7f79fa57ee0210",
+          "lock_id": "1bbd3acf04670b9c"
+        },
+        "semantic_assertions": [
+          {
+            "assertion_id": "guarded_peer_care",
+            "dimension": "character_response",
+            "polarity": "required",
+            "source_span_ids": [
+              "topic"
+            ],
+            "axes": {
+              "underlying_affiliation": "positive",
+              "relationship_target": "adult_coworker",
+              "primary_action": "practical_care",
+              "affect_leak_timing": "delayed",
+              "affect_leak_channels": [
+                "gaze"
+              ],
+              "affect_leak_intentionality": "minimized",
+              "event_phase": "unfinished"
+            },
+            "evidence": {
+              "actor_phrase": "An adult cat-eared maid",
+              "baseline_phrase": "keeps her stern professional posture",
+              "trigger_phrase": "A dropped first-aid tin triggers the moment",
+              "target_phrase": "an injured adult coworker sits beside her",
+              "primary_action_phrase": "wraps the coworker's scraped wrist with practical care",
+              "visible_response_phrase": "The coworker's relieved shoulders answer the gesture",
+              "immediate_consequence_phrase": "leaves a warm cup within reach",
+              "continuity_phrase": "the same dark uniform keeps her identity continuous",
+              "affective_leak_phrase": "looks away before checking their reaction",
+              "nonhuman_reflex_phrase": "her compact ears tilt toward them"
+            },
+            "affected_dimensions": [
+              "character_response"
+            ],
+            "relations": [
+              {
+                "operator": "contrasts",
+                "left": "surface_affect",
+                "right": "underlying_affiliation"
+              },
+              {
+                "operator": "same_target",
+                "members": [
+                  "relationship_target",
+                  "primary_action",
+                  "affect_leak"
+                ]
+              },
+              {
+                "operator": "temporal_order",
+                "first": "surface_affect",
+                "then": "affect_leak"
+              }
+            ]
+          }
+        ],
+        "request_lineage": null,
+        "canonical_sha256": "43b3a0f72d49f96751721beb06275cd6ff518ad92e6dc7ba427ddbd3fe1663b9",
+        "core_id": "43b3a0f72d49f967"
+      },
+      "profile_id": "tsundere",
+      "result": {
+        "status": "incomplete",
+        "reason": "required_axes_or_relations_missing",
+        "missing_axes": [
+          "surface_affect"
+        ],
+        "conflicting_axes": [],
+        "missing_relation_operators": [],
+        "matched_axis_classes": {
+          "surface_affect": [],
+          "underlying_affiliation": [
+            "positive"
+          ],
+          "affect_leak_timing": [
+            "after_surface"
+          ],
+          "affect_leak_intentionality": [
+            "minimized"
+          ]
+        },
+        "hard_eligible": false,
+        "frozen_core_revision_forbidden": true
+      }
+    },
+    {
+      "case": "unrecognized",
+      "core": {
+        "contract_version": "photo-authorial-core/v3",
+        "provenance": "agent_prepack",
+        "source_request": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+        "interpreted_intent": "An adult guarded maid reveals concealed peer affection through practical care",
+        "subject": "one adult cat-eared maid and one adult coworker",
+        "setting": "a quiet staff service corridor after closing",
+        "event": "she treats a coworker's scraped wrist after a dropped medical tin",
+        "visual_priorities": [
+          "guarded practical peer care",
+          "recipient reaction and consequence",
+          "restrained feline ear reflex"
+        ],
+        "baseline_prompt_en": "An adult cat-eared maid in a quiet service corridor keeps her stern professional posture while an injured adult coworker sits beside her. A dropped first-aid tin triggers the moment. She wraps the coworker's scraped wrist with practical care, looks away before checking their reaction, and leaves a warm cup within reach. The coworker's relieved shoulders answer the gesture, while her compact ears tilt toward them and the same dark uniform keeps her identity continuous.",
+        "user_definitions": [],
+        "interpretation_provenance": [
+          {
+            "term": "츤데레",
+            "source_text": "츤데레",
+            "basis": "agent_general_knowledge",
+            "resolution": "guarded outward behavior with concealed positive affiliation toward a peer",
+            "sources": []
+          }
+        ],
+        "unresolved_ambiguities": [],
+        "user_exclusions": [],
+        "style": {
+          "domain": "character_editorial",
+          "family": "restrained narrative portrait",
+          "evidence": [
+            "quiet corridor depth",
+            "tactile first-aid props"
+          ]
+        },
+        "variation_key": "typed-v6-test",
+        "request_binding": {
+          "contract_version": "photo-request-binding/v1",
+          "request_id": "v6-request",
+          "request_sha256": "cef28fda9f3c4a0931956e412a9b28f0cb7b0910a7ce94a8018aa42b8ee45489",
+          "request_envelope_sha256": "c95d00cd38ff7e9762759079ddbe0d5b54b661a8e89546d75013370a25e20f00",
+          "active_spans": [
+            {
+              "span_id": "topic",
+              "start": 0,
+              "end": 36,
+              "text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면"
+            }
+          ]
+        },
+        "runtime_forbidden_labels": [],
+        "intent_lock": {
+          "contract_version": "photo-intent-lock/v2",
+          "priority": "requesting_user",
+          "semantic_anchors": [
+            {
+              "anchor_id": "concept",
+              "source_text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+              "dimension": "concept",
+              "prompt_evidence": "wraps the coworker's scraped wrist with practical care"
+            },
+            {
+              "anchor_id": "subject",
+              "source_text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+              "dimension": "subject",
+              "prompt_evidence": "An adult cat-eared maid"
+            },
+            {
+              "anchor_id": "event",
+              "source_text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+              "dimension": "event",
+              "prompt_evidence": "A dropped first-aid tin triggers the moment"
+            },
+            {
+              "anchor_id": "character_response",
+              "source_text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+              "dimension": "character_response",
+              "prompt_evidence": "looks away before checking their reaction"
+            }
+          ],
+          "locked_dimensions": [
+            "concept",
+            "subject",
+            "event",
+            "character_response"
+          ],
+          "open_dimensions": [
+            "framing",
+            "composition",
+            "lighting",
+            "camera",
+            "color"
+          ],
+          "augmentation_policy": "open_dimensions_only_and_subordinate",
+          "material_change_policy": "rebuild_core_after_requester_input",
+          "candidate_revision_policy": "forbidden",
+          "canonical_sha256": "1bbd3acf04670b9c4d893d31672e7d070b7a146f39e1e6bbcf7f79fa57ee0210",
+          "lock_id": "1bbd3acf04670b9c"
+        },
+        "semantic_assertions": [
+          {
+            "assertion_id": "guarded_peer_care",
+            "dimension": "character_response",
+            "polarity": "required",
+            "source_span_ids": [
+              "topic"
+            ],
+            "axes": {
+              "surface_affect": "a previously unknown response",
+              "underlying_affiliation": "positive",
+              "relationship_target": "adult_coworker",
+              "primary_action": "practical_care",
+              "affect_leak_timing": "delayed",
+              "affect_leak_channels": [
+                "gaze"
+              ],
+              "affect_leak_intentionality": "minimized",
+              "event_phase": "unfinished"
+            },
+            "evidence": {
+              "actor_phrase": "An adult cat-eared maid",
+              "baseline_phrase": "keeps her stern professional posture",
+              "trigger_phrase": "A dropped first-aid tin triggers the moment",
+              "target_phrase": "an injured adult coworker sits beside her",
+              "primary_action_phrase": "wraps the coworker's scraped wrist with practical care",
+              "visible_response_phrase": "The coworker's relieved shoulders answer the gesture",
+              "immediate_consequence_phrase": "leaves a warm cup within reach",
+              "continuity_phrase": "the same dark uniform keeps her identity continuous",
+              "affective_leak_phrase": "looks away before checking their reaction",
+              "nonhuman_reflex_phrase": "her compact ears tilt toward them"
+            },
+            "affected_dimensions": [
+              "character_response"
+            ],
+            "relations": [
+              {
+                "operator": "contrasts",
+                "left": "surface_affect",
+                "right": "underlying_affiliation"
+              },
+              {
+                "operator": "same_target",
+                "members": [
+                  "relationship_target",
+                  "primary_action",
+                  "affect_leak"
+                ]
+              },
+              {
+                "operator": "temporal_order",
+                "first": "surface_affect",
+                "then": "affect_leak"
+              }
+            ]
+          }
+        ],
+        "request_lineage": null,
+        "canonical_sha256": "43b3a0f72d49f96751721beb06275cd6ff518ad92e6dc7ba427ddbd3fe1663b9",
+        "core_id": "43b3a0f72d49f967"
+      },
+      "profile_id": "tsundere",
+      "result": {
+        "status": "incomplete",
+        "reason": "required_axes_or_relations_missing",
+        "missing_axes": [
+          "surface_affect"
+        ],
+        "conflicting_axes": [],
+        "missing_relation_operators": [],
+        "matched_axis_classes": {
+          "surface_affect": [],
+          "underlying_affiliation": [
+            "positive"
+          ],
+          "affect_leak_timing": [
+            "after_surface"
+          ],
+          "affect_leak_intentionality": [
+            "minimized"
+          ]
+        },
+        "hard_eligible": false,
+        "frozen_core_revision_forbidden": true
+      }
+    },
+    {
+      "case": "relation_changed",
+      "core": {
+        "contract_version": "photo-authorial-core/v3",
+        "provenance": "agent_prepack",
+        "source_request": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+        "interpreted_intent": "An adult guarded maid reveals concealed peer affection through practical care",
+        "subject": "one adult cat-eared maid and one adult coworker",
+        "setting": "a quiet staff service corridor after closing",
+        "event": "she treats a coworker's scraped wrist after a dropped medical tin",
+        "visual_priorities": [
+          "guarded practical peer care",
+          "recipient reaction and consequence",
+          "restrained feline ear reflex"
+        ],
+        "baseline_prompt_en": "An adult cat-eared maid in a quiet service corridor keeps her stern professional posture while an injured adult coworker sits beside her. A dropped first-aid tin triggers the moment. She wraps the coworker's scraped wrist with practical care, looks away before checking their reaction, and leaves a warm cup within reach. The coworker's relieved shoulders answer the gesture, while her compact ears tilt toward them and the same dark uniform keeps her identity continuous.",
+        "user_definitions": [],
+        "interpretation_provenance": [
+          {
+            "term": "츤데레",
+            "source_text": "츤데레",
+            "basis": "agent_general_knowledge",
+            "resolution": "guarded outward behavior with concealed positive affiliation toward a peer",
+            "sources": []
+          }
+        ],
+        "unresolved_ambiguities": [],
+        "user_exclusions": [],
+        "style": {
+          "domain": "character_editorial",
+          "family": "restrained narrative portrait",
+          "evidence": [
+            "quiet corridor depth",
+            "tactile first-aid props"
+          ]
+        },
+        "variation_key": "typed-v6-test",
+        "request_binding": {
+          "contract_version": "photo-request-binding/v1",
+          "request_id": "v6-request",
+          "request_sha256": "cef28fda9f3c4a0931956e412a9b28f0cb7b0910a7ce94a8018aa42b8ee45489",
+          "request_envelope_sha256": "c95d00cd38ff7e9762759079ddbe0d5b54b661a8e89546d75013370a25e20f00",
+          "active_spans": [
+            {
+              "span_id": "topic",
+              "start": 0,
+              "end": 36,
+              "text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면"
+            }
+          ]
+        },
+        "runtime_forbidden_labels": [],
+        "intent_lock": {
+          "contract_version": "photo-intent-lock/v2",
+          "priority": "requesting_user",
+          "semantic_anchors": [
+            {
+              "anchor_id": "concept",
+              "source_text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+              "dimension": "concept",
+              "prompt_evidence": "wraps the coworker's scraped wrist with practical care"
+            },
+            {
+              "anchor_id": "subject",
+              "source_text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+              "dimension": "subject",
+              "prompt_evidence": "An adult cat-eared maid"
+            },
+            {
+              "anchor_id": "event",
+              "source_text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+              "dimension": "event",
+              "prompt_evidence": "A dropped first-aid tin triggers the moment"
+            },
+            {
+              "anchor_id": "character_response",
+              "source_text": "성인 네코미미 츤데레 메이드가 다친 동료를 퉁명스럽게 돌보는 장면",
+              "dimension": "character_response",
+              "prompt_evidence": "looks away before checking their reaction"
+            }
+          ],
+          "locked_dimensions": [
+            "concept",
+            "subject",
+            "event",
+            "character_response"
+          ],
+          "open_dimensions": [
+            "framing",
+            "composition",
+            "lighting",
+            "camera",
+            "color"
+          ],
+          "augmentation_policy": "open_dimensions_only_and_subordinate",
+          "material_change_policy": "rebuild_core_after_requester_input",
+          "candidate_revision_policy": "forbidden",
+          "canonical_sha256": "1bbd3acf04670b9c4d893d31672e7d070b7a146f39e1e6bbcf7f79fa57ee0210",
+          "lock_id": "1bbd3acf04670b9c"
+        },
+        "semantic_assertions": [
+          {
+            "assertion_id": "guarded_peer_care",
+            "dimension": "character_response",
+            "polarity": "required",
+            "source_span_ids": [
+              "topic"
+            ],
+            "axes": {
+              "surface_affect": "guarded",
+              "underlying_affiliation": "positive",
+              "relationship_target": "adult_coworker",
+              "primary_action": "practical_care",
+              "affect_leak_timing": "delayed",
+              "affect_leak_channels": [
+                "gaze"
+              ],
+              "affect_leak_intentionality": "minimized",
+              "event_phase": "unfinished"
+            },
+            "evidence": {
+              "actor_phrase": "An adult cat-eared maid",
+              "baseline_phrase": "keeps her stern professional posture",
+              "trigger_phrase": "A dropped first-aid tin triggers the moment",
+              "target_phrase": "an injured adult coworker sits beside her",
+              "primary_action_phrase": "wraps the coworker's scraped wrist with practical care",
+              "visible_response_phrase": "The coworker's relieved shoulders answer the gesture",
+              "immediate_consequence_phrase": "leaves a warm cup within reach",
+              "continuity_phrase": "the same dark uniform keeps her identity continuous",
+              "affective_leak_phrase": "looks away before checking their reaction",
+              "nonhuman_reflex_phrase": "her compact ears tilt toward them"
+            },
+            "affected_dimensions": [
+              "character_response"
+            ],
+            "relations": [
+              {
+                "operator": "contrasts",
+                "left": "surface_affect",
+                "right": "underlying_affiliation"
+              },
+              {
+                "operator": "same_target",
+                "members": [
+                  "relationship_target",
+                  "primary_action"
+                ]
+              },
+              {
+                "operator": "temporal_order",
+                "first": "surface_affect",
+                "then": "affect_leak"
+              }
+            ]
+          }
+        ],
+        "request_lineage": null,
+        "canonical_sha256": "43b3a0f72d49f96751721beb06275cd6ff518ad92e6dc7ba427ddbd3fe1663b9",
+        "core_id": "43b3a0f72d49f967"
+      },
+      "profile_id": "tsundere",
+      "result": {
+        "status": "incomplete",
+        "reason": "required_axes_or_relations_missing",
+        "missing_axes": [],
+        "conflicting_axes": [],
+        "missing_relation_operators": [
+          "same_target"
+        ],
+        "matched_axis_classes": {
+          "surface_affect": [
+            "guarded"
+          ],
+          "underlying_affiliation": [
+            "positive"
+          ],
+          "affect_leak_timing": [
+            "after_surface"
+          ],
+          "affect_leak_intentionality": [
+            "minimized"
+          ]
+        },
+        "hard_eligible": false,
+        "frozen_core_revision_forbidden": true
+      }
+    }
+  ],
+  "network_calls": 0
+}

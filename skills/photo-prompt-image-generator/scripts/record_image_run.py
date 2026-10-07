@@ -204,6 +204,28 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
             entry[key] = value
     if args.independent_no_cross_arm_inputs:
         entry["cross_arm_inputs_used"] = False
+    api_path = getattr(args, "api_render_input_json", None)
+    api_sha = getattr(args, "api_render_input_sha256", None)
+    api_fields = ("runtime_prompt_sha256", "requested_image_model", "observed_image_model", "image_size", "provider_request_id")
+    if api_path:
+        if args.tool != "openai_images_api" or not api_sha or not re.fullmatch(r"[0-9a-f]{64}", api_sha):
+            raise ValueError("API preflight requires API tool and exact sidecar SHA-256")
+        for field in api_fields:
+            value = getattr(args, field, None)
+            if value is not None or field == "observed_image_model":
+                entry[field] = value
+        from photo_api_render import validate_api_render_input
+        entry.update(validate_api_render_input(api_path, api_sha, entry))
+        if args.status == "success":
+            if not entry["image_paths"]:
+                raise ValueError("successful API attempt requires a saved image")
+            entry["image_hashes"] = []
+            for raw_path in entry["image_paths"]:
+                image_path = Path(raw_path)
+                image_path = image_path if image_path.is_absolute() else PROJECT_ROOT / image_path
+                entry["image_hashes"].append({"path": raw_path, "sha256": hashlib.sha256(image_path.read_bytes()).hexdigest()})
+    elif api_sha or any(getattr(args, field, None) is not None for field in api_fields):
+        raise ValueError("API execution fields require --api-render-input-json")
     return entry
 
 
@@ -225,7 +247,7 @@ def build_independent_manifest(entry: dict[str, object], args: argparse.Namespac
             continue
         image_hashes.append({'path': str(image_path), 'sha256': hashlib.sha256(image_path.read_bytes()).hexdigest()})
     manifest: dict[str, object] = {'contract_version': contract_version, **required_values, 'reference_sha256': list(args.reference_sha256 or []), 'cross_arm_inputs_used': False, 'ledger_run_id': entry['run_id'], 'pack_id': entry.get('pack_id'), 'prompt_id': entry['prompt_id'], 'status': entry['status'], 'tool': entry.get('tool'), 'image_paths': list(entry.get('image_paths') or []), 'image_hashes': image_hashes}
-    for field in ('chosen_visual_concept_ids', 'effective_visual_contract_sha256', 'render_repair_contract_sha256', 'failed_repair_gate_ids', 'generation_environment', 'attempt_evidence_path', 'attempt_evidence_sha256', 'error_capture_fidelity', 'error_details'):
+    for field in ('chosen_visual_concept_ids', 'effective_visual_contract_sha256', 'render_repair_contract_sha256', 'failed_repair_gate_ids', 'generation_environment', 'attempt_evidence_path', 'attempt_evidence_sha256', 'error_capture_fidelity', 'error_details', 'api_render_input_json', 'api_render_input_sha256', 'runtime_prompt_sha256', 'requested_image_model', 'observed_image_model', 'image_size', 'provider_request_id'):
         if field in entry:
             manifest[field] = entry[field]
     return manifest
@@ -254,6 +276,13 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--generation-environment", default=None, help="Observed execution environment; external imports are separate provenance records.")
     parser.add_argument("--attempt-evidence-json", type=Path, default=None, help="Versioned raw error evidence JSON for this exact attempt.")
     parser.add_argument("--attempt-evidence-sha256", default=None, help="Expected SHA-256 of the evidence file; verified before recording.")
+    parser.add_argument("--api-render-input-json", type=Path)
+    parser.add_argument("--api-render-input-sha256")
+    parser.add_argument("--runtime-prompt-sha256")
+    parser.add_argument("--requested-image-model")
+    parser.add_argument("--observed-image-model")
+    parser.add_argument("--image-size")
+    parser.add_argument("--provider-request-id")
     parser.add_argument("--argv-json", default=None, help="Prompt-generation argv as a JSON string array.")
     parser.add_argument("--pack-id", default=None, help="Candidate pack id used for agent composition.")
     parser.add_argument("--chosen-candidate-ids-json", default=None, help="JSON array or slot map of candidate ids chosen by the composer.")

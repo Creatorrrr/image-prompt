@@ -140,7 +140,7 @@ def validate_evidence(path: Path, *, expected_sha256: str | None, attempt: int,
         raise ValueError("attempt evidence requires capture fidelity and limitations")
     if "value" not in raw or not isinstance(request.get("runtime_prompt_en"), str):
         raise ValueError("attempt evidence requires raw value and exact runtime prompt")
-    runtime = prompt_en + (f"\n\nAvoid: {negative_en}" if negative_en else "")
+    runtime = prompt_en + (f"\n\nAvoid: {negative_en}" if negative_en is not None else "")
     if request["runtime_prompt_en"] != runtime:
         raise ValueError("attempt evidence runtime prompt mismatch")
     if raw["fidelity"] == "exact_string" and not isinstance(raw["value"], str):

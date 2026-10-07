@@ -1,0 +1,81 @@
+test_bad_receipt_fails_before_key_or_provider (tests.test_photo_api_render_preflight.PhotoApiRenderPreflightTests.test_bad_receipt_fails_before_key_or_provider) ... ok
+test_cli_dry_run (tests.test_photo_api_render_preflight.PhotoApiRenderPreflightTests.test_cli_dry_run) ... ok
+test_copies_are_immutable_and_sidecar_is_independently_checked (tests.test_photo_api_render_preflight.PhotoApiRenderPreflightTests.test_copies_are_immutable_and_sidecar_is_independently_checked) ... ok
+test_exact_transport_and_successful_ledger_binding (tests.test_photo_api_render_preflight.PhotoApiRenderPreflightTests.test_exact_transport_and_successful_ledger_binding) ... FAIL
+test_mutable_files_are_not_reread_after_preflight (tests.test_photo_api_render_preflight.PhotoApiRenderPreflightTests.test_mutable_files_are_not_reread_after_preflight) ... Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/__main__.py", line 18, in <module>
+    main(module=None)
+    ~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/main.py", line 104, in __init__
+    self.runTests()
+    ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/main.py", line 270, in runTests
+    self.result = testRunner.run(self.test)
+                  ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/runner.py", line 257, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 725, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 669, in run
+    self._callTestMethod(testMethod)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 615, in _callTestMethod
+    result = method()
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_api_render_preflight.py", line 120, in test_mutable_files_are_not_reread_after_preflight
+    self.assertTrue(self.execute(key="unused"))
+                    ~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_api_render_preflight.py", line 41, in execute
+    return api.generate_for_request(**self.paths, model="fixture-model", size="1024x1536", attempts=2,
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        concept="fixture", slug=None, out_base=self.directory / "results", timestamp="offline", ledger=self.directory / "ledger.ndjson", **extra)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/generate_images_via_api.py", line 117, in generate_for_request
+    prepared = prepare_api_render(pack_file, receipt_file, composed_file, request_file,
+        model=model, size=size, runtime_store=runtime_store)
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_api_render.py", line 91, in prepare_api_render
+    binding = audit_inputs(inputs, model=model, size=size, runtime_store=runtime_store)
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_api_render.py", line 43, in audit_inputs
+    snapshot = RuntimeSnapshotProvider(store=Path(runtime_store) if runtime_store else None).from_receipt(pack, receipt)
+  File "/Users/chasoik/Projects/image-prompt/tests/photo_api_fixtures.py", line 63, in verified_fixture_receipt
+    return _verified
+       ^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_runtime_sources.py", line 483, in from_receipt
+    verify_pack_bindings(pack, snapshot, generator, recompute_visual=True)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_runtime_sources.py", line 499, in verify_pack_bindings
+    expected = generator.generate_candidate_pack(snapshot.data, pack["authorial_core"], pack["creative_controls"],
+        pack["embodiment_preflight"]["baseline_review"], seed=pack["provenance"]["seed"],
+        visual_intent=pack.get("visual_intent"))
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 11554, in generate_candidate_pack
+    return build_candidate_pack(result, data)
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 10131, in build_candidate_pack
+    slots, core_retrieval, contract = retrieve_core_slots(data, authorial_core, provenance["creative_controls"])
+                                      ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 11436, in retrieve_core_slots
+    broad = rank_bm25f(bm25f, {"global_context": global_query}, allowed_ids=ids, limit=max(12, limit * 6))
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/bm25f_retrieval.py", line 414, in rank_bm25f
+    (field_data.get("term_frequencies") or {}).get(term, 0)
+     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

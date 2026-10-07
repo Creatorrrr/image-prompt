@@ -162,7 +162,7 @@ CANDIDATE_PACK_AUTHORIAL_COMPOSITION_VERSION = "photo-authorial-composition/v1"
 # These maps describe semantic impact, not topic meaning.  They let the current
 # request lock govern downstream defaults without special-casing any named
 # archetype, expression, culture, or genre.
-SEMANTIC_CLARIFICATION_CONTRACT_VERSION = "photo-semantic-clarification/v1"
+SEMANTIC_CLARIFICATION_CONTRACT_VERSION = "photo-semantic-clarification/v2"
 CREATIVE_AUGMENTATION_CONTRACT_VERSION = "photo-creative-augmentation/v1"
 VISUAL_INTENT_CONTRACT_VERSION = "photo-visual-intent/v1"
 VISUAL_OBLIGATION_REGISTRY_SCHEMA_VERSION = "photo-visual-obligation-registry/v3"
@@ -831,22 +831,13 @@ def semantic_text_contains_authored_term(text: Any, term: Any) -> bool:
     return bool(term_tokens) and term_tokens.issubset(text_tokens)
 
 
-def character_axis_value_classes(data: JsonDict, axis: str, value: Any) -> Set[str]:
-    """Map an authored free-text axis value onto data-declared semantic classes."""
+def character_axis_value_matches(data: JsonDict, axis: str, value: Any) -> JsonDict:
+    from photo_meaning_diagnostics import axis_value_matches
+    return axis_value_matches(value, character_axis_class_aliases(data, axis))
 
-    text = clean_spaces(str(value or "")).casefold()
-    if not text:
-        return set()
-    matched: Set[str] = set()
-    for class_id, aliases in character_axis_class_aliases(data, axis).items():
-        if any(
-            text == clean_spaces(str(alias)).casefold()
-            or semantic_text_contains_authored_term(text, alias)
-            for alias in aliases
-            if clean_spaces(str(alias))
-        ):
-            matched.add(class_id)
-    return matched
+
+def character_axis_value_classes(data: JsonDict, axis: str, value: Any) -> Set[str]:
+    return set(character_axis_value_matches(data, axis, value)["classes"])
 
 
 def validate_character_mechanism_graph(data: JsonDict) -> None:
@@ -988,6 +979,7 @@ def validate_character_mechanism_graph(data: JsonDict) -> None:
         "paraphrases",
         "axis_requirements",
         "axis_exclusions",
+        "axis_advisories",
         "required_relations",
         "required_evidence_roles",
         "confounders",
@@ -1022,7 +1014,7 @@ def validate_character_mechanism_graph(data: JsonDict) -> None:
                 raise ValueError(
                     f"character concept profile {profile_id} requires {label} label"
                 )
-        for field in ("axis_requirements", "axis_exclusions"):
+        for field in ("axis_requirements", "axis_exclusions", "axis_advisories"):
             constraints = profile.get(field) or {}
             if not isinstance(constraints, dict):
                 raise ValueError(
@@ -1033,10 +1025,13 @@ def validate_character_mechanism_graph(data: JsonDict) -> None:
                     raise ValueError(
                         f"character concept profile {profile_id}.{field}.{axis_id} is invalid"
                     )
-                if set(constraint) != {"semantic_classes"}:
+                expected_fields = {"semantic_classes", "reason"} if field == "axis_advisories" else {"semantic_classes"}
+                if field == "axis_advisories" and not str(constraint.get("reason") or "").strip():
+                    raise ValueError(f"character concept profile {profile_id}.{field}.{axis_id} needs a reason")
+                if set(constraint) != expected_fields:
                     raise ValueError(
                         f"character concept profile {profile_id}.{field}.{axis_id} "
-                        "must declare semantic_classes only"
+                        "has invalid constraint fields"
                     )
                 class_ids = normalize_list(constraint.get("semantic_classes"))
                 if not class_ids or not set(class_ids).issubset(
@@ -5594,69 +5589,45 @@ def evaluate_character_response_profile(
             "reason": "requester_definition_precedence",
             "hard_eligible": False,
         }
+    from photo_meaning_diagnostics import VERSION, axis_check, relation_check, raw_axis_values
     axes = resolution.get("semantic_axes") or {}
-    missing_axes: List[str] = []
-    conflicting_axes: List[str] = []
-    matched_classes: JsonDict = {}
-    for axis, constraint in (profile.get("axis_requirements") or {}).items():
-        allowed_classes = set(normalize_list((constraint or {}).get("semantic_classes")))
-        values = normalize_list(axes.get(axis))
-        actual_classes = {
-            class_id
-            for value in values
-            for class_id in character_axis_value_classes(data, axis, value)
-        }
-        matched_classes[str(axis)] = sorted(actual_classes)
-        if not actual_classes & allowed_classes:
-            missing_axes.append(str(axis))
-    for axis, constraint in (profile.get("axis_exclusions") or {}).items():
-        excluded_classes = set(normalize_list((constraint or {}).get("semantic_classes")))
-        values = normalize_list(axes.get(axis))
-        actual_classes = {
-            class_id
-            for value in values
-            for class_id in character_axis_value_classes(data, axis, value)
-        }
-        if actual_classes & excluded_classes:
-            conflicting_axes.append(str(axis))
-    asserted_relations = [
-        relation
-        for assertion in core.get("semantic_assertions") or []
-        if isinstance(assertion, dict)
-        and assertion.get("dimension") == "character_response"
-        and assertion.get("polarity") == "required"
-        for relation in assertion.get("relations") or []
-        if isinstance(relation, dict)
-    ]
-    asserted_relation_signatures = {
-        character_response_relation_signature(relation)
-        for relation in asserted_relations
-    }
-    missing_relations = [
-        str(relation.get("operator") or "")
-        for relation in profile.get("required_relations") or []
-        if isinstance(relation, dict)
-        and character_response_relation_signature(relation)
-        not in asserted_relation_signatures
-    ]
-    if conflicting_axes:
-        status = "conflicting"
-        reason = "excluded_semantic_classes_present"
-    elif missing_axes or missing_relations:
-        status = "incomplete"
-        reason = "required_axes_or_relations_missing"
-    else:
-        status = "consistent"
-        reason = "typed_assertion_matches_profile"
+    source_id = resolution["source_assertion_id"]
+    requirements, exclusions = profile.get("axis_requirements") or {}, profile.get("axis_exclusions") or {}
+    checks = []
+    for axis in sorted(set(requirements) | set(exclusions)):
+        check = axis_check(axis, raw_axis_values(axes.get(axis)),
+            normalize_list((requirements.get(axis) or {}).get("semantic_classes")),
+            normalize_list((exclusions.get(axis) or {}).get("semantic_classes")),
+            lambda value, axis=axis: character_axis_value_matches(data, axis, value), source_id=source_id)
+        check["blocking_effect"] = check["code"] == "axis_excluded_class" or (axis in requirements and check["blocking_effect"])
+        checks.append(check)
+    for axis, constraint in (profile.get("axis_advisories") or {}).items():
+        check = axis_check(axis, raw_axis_values(axes.get(axis)), normalize_list(constraint.get("semantic_classes")), [],
+            lambda value, axis=axis: character_axis_value_matches(data, axis, value), source_id=source_id, advisory=True)
+        check["advisory_reason"] = constraint["reason"]
+        checks.append(check)
+    relations = [relation for assertion in core.get("semantic_assertions") or []
+                 if isinstance(assertion, dict) and assertion.get("dimension") == "character_response"
+                 and assertion.get("polarity") == "required" for relation in assertion.get("relations") or []
+                 if isinstance(relation, dict)]
+    relation_checks = [relation_check(row, relations, character_response_relation_signature, source_id=source_id)
+                       for row in profile.get("required_relations") or [] if isinstance(row, dict)]
+    unmet = [row for row in checks if row["blocking_effect"]]
+    conflicting = [row["axis"] for row in unmet if row["code"] == "axis_excluded_class"]
+    unmet_relations = [row for row in relation_checks if row["blocking_effect"]]
     return {
-        "status": status,
-        "reason": reason,
-        "missing_axes": sorted(set(missing_axes)),
-        "conflicting_axes": sorted(set(conflicting_axes)),
-        "missing_relation_operators": sorted(set(missing_relations)),
-        "matched_axis_classes": matched_classes,
-        "hard_eligible": False,
-        "frozen_core_revision_forbidden": True,
+        "status": "conflicting" if conflicting else ("incomplete" if unmet or unmet_relations else "consistent"),
+        "reason": "excluded_semantic_classes_present" if conflicting else (
+            "profile_requirements_unresolved" if unmet or unmet_relations else "typed_assertion_matches_profile"),
+        "missing_axes": [row["axis"] for row in unmet if row["code"] == "axis_absent"],
+        "unrecognized_axes": [row["axis"] for row in unmet if row["code"] == "axis_value_unrecognized"],
+        "class_mismatch_axes": [row["axis"] for row in unmet if row["code"] == "axis_class_mismatch"],
+        "unmet_axes": sorted({row["axis"] for row in unmet}), "conflicting_axes": conflicting,
+        "missing_relation_operators": sorted({row["expected"]["operator"] for row in unmet_relations if row["code"] == "relation_operator_absent"}),
+        "unmet_relations": unmet_relations,
+        "matched_axis_classes": {row["axis"]: row["observed"] for row in checks},
+        "diagnostics": {"schema_version": VERSION, "checks": checks + relation_checks},
+        "hard_eligible": False, "frozen_core_revision_forbidden": True,
     }
 
 
@@ -6163,60 +6134,39 @@ def authorial_core_generation_constraints(
     }
 
 
-def visual_profile_context_applicability(
-    profile: JsonDict,
-    context_text: str,
-    *,
-    has_authorial_core_context: bool,
-    require_positive_context_terms: bool = True,
-) -> tuple[bool, str]:
-    """Apply shared negatives and lane-appropriate positive sense proof."""
+def visual_profile_context_diagnostics(profile: JsonDict, context_text: str, *,
+    has_authorial_core_context: bool, require_positive_context_terms: bool = True) -> JsonDict:
+    from photo_meaning_diagnostics import VERSION
+    activation = profile.get("activation") or {}
+    disambiguation = activation.get("context_disambiguation") or {}
+    reason, code, evidence, applicable = "context_applicable", "context_applicable", [], True
+    def hits(terms):
+        return [str(term) for term in terms or [] if str(term).strip() and intent_alias_matches(context_text, str(term))]
+    exclusions = hits(activation.get("exclude_if_any_terms"))
+    expected = []
+    if exclusions:
+        reason, code, evidence, applicable = "request_exclusion", "request_exclusion_term_matched", exclusions, False
+    elif has_authorial_core_context and disambiguation.get("required_with_authorial_core") is True:
+        exclusions = hits(disambiguation.get("exclude_if_any_terms"))
+        expected = [str(term) for term in disambiguation.get("any_terms") or [] if str(term).strip()]
+        evidence = hits(expected)
+        if exclusions:
+            reason, code, evidence, applicable = "context_disambiguation_exclusion", "context_exclusion_term_matched", exclusions, False
+        elif require_positive_context_terms and expected and not evidence:
+            reason, code, applicable = "context_disambiguation_mismatch", "positive_context_unrecognized", False
+    return {"schema_version": VERSION, "applicable": applicable, "reason": reason, "checks": [{
+        "kind": "context", "code": code, "source_id": str(profile.get("id") or ""),
+        "source_path": "visual_profile_resolution.request_sources", "raw_value": context_text,
+        "expected": expected, "observed": evidence, "evidence": evidence,
+        "match_basis": "authored_context_terms", "blocking_effect": not applicable,
+    }]}
 
-    activation = (
-        profile.get("activation")
-        if isinstance(profile.get("activation"), dict)
-        else {}
-    )
-    excluded_terms = [
-        str(term).strip()
-        for term in activation.get("exclude_if_any_terms") or []
-        if str(term).strip()
-    ]
-    if any(intent_alias_matches(context_text, term) for term in excluded_terms):
-        return False, "request_exclusion"
-    disambiguation = (
-        activation.get("context_disambiguation")
-        if isinstance(activation.get("context_disambiguation"), dict)
-        else {}
-    )
-    if (
-        has_authorial_core_context
-        and disambiguation.get("required_with_authorial_core") is True
-    ):
-        excluded_context = [
-            str(term).strip()
-            for term in disambiguation.get("exclude_if_any_terms") or []
-            if str(term).strip()
-        ]
-        if any(
-            intent_alias_matches(context_text, term) for term in excluded_context
-        ):
-            return False, "context_disambiguation_exclusion"
-        required_context = [
-            str(term).strip()
-            for term in disambiguation.get("any_terms") or []
-            if str(term).strip()
-        ]
-        if (
-            require_positive_context_terms
-            and required_context
-            and not any(
-                intent_alias_matches(context_text, term)
-                for term in required_context
-            )
-        ):
-            return False, "context_disambiguation_mismatch"
-    return True, "context_applicable"
+
+def visual_profile_context_applicability(profile: JsonDict, context_text: str, *,
+    has_authorial_core_context: bool, require_positive_context_terms: bool = True) -> tuple[bool, str]:
+    diagnostic = visual_profile_context_diagnostics(profile, context_text,
+        has_authorial_core_context=has_authorial_core_context, require_positive_context_terms=require_positive_context_terms)
+    return diagnostic["applicable"], diagnostic["reason"]
 
 
 def visual_profile_user_definition_override_ids(
@@ -6415,6 +6365,7 @@ def resolve_visual_profile_hits(
                 "profile_id": profile_id,
                 "match_basis": "exact",
                 "applicability_status": status,
+                "applicability_diagnostics": visual_profile_context_diagnostics(profile, context_text, has_authorial_core_context=has_authorial_core_context),
                 "hard_eligible": hard_eligible,
                 "optional_eligible": bool(
                     not mechanism_supported
@@ -6437,6 +6388,7 @@ def resolve_visual_profile_hits(
                 "match_basis": "exact",
                 "applicability_status": "context_mismatch",
                 "applicability_reason": exact_context_mismatches[profile_id],
+                "applicability_diagnostics": visual_profile_context_diagnostics(profiles[profile_id], context_text, has_authorial_core_context=has_authorial_core_context),
                 "hard_eligible": False,
                 "optional_eligible": False,
                 "source_intent_ids": [],
@@ -7898,11 +7850,12 @@ def candidate_pack_semantic_clarification(
             and resolution_hit.get("applicability_status") == "context_mismatch"
         ):
             status = "context_mismatch"
-            reason = "the_authorial_core_resolved_the_term_to_a_different_contextual_sense"
+            diagnostic = resolution_hit.get("applicability_diagnostics") or {}
+            reason = str((diagnostic.get("checks") or [{}])[0].get("code") or resolution_hit.get("applicability_reason") or "positive_context_unrecognized")
             required = False
         else:
-            status = "requires_existing_adult_context"
-            reason = "meaning_is_exposed_but_the_existing_adult_context_gate_did_not_activate"
+            status = str((resolution_hit or {}).get("applicability_status") or "requires_existing_adult_context")
+            reason = "existing_adult_context_required" if status == "requires_existing_adult_context" else status
             required = False
         candidates.append(
             {
@@ -7921,7 +7874,9 @@ def candidate_pack_semantic_clarification(
                     for item in runtime.get("runtime_forbidden_labels") or []
                     if str(item).strip()
                 ],
-                "applicability": {"status": status, "reason": reason},
+                "applicability": {"status": status, "reason": reason, "diagnostics": visual_profile_context_diagnostics(
+                    profile, " ".join(str(row.get("text") or "") for row in candidate_pack_visual_obligation_request_sources(result, trace)),
+                    has_authorial_core_context=bool(core), require_positive_context_terms=status != "eligible")},
                 "required_in_final_prompt": required,
                 "revisable": False,
                 "creative_sampling": False,

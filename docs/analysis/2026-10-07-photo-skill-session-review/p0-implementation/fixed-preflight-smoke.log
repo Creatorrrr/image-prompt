@@ -1,0 +1,18 @@
+test_exact_transport_and_successful_ledger_binding (tests.test_photo_api_render_preflight.PhotoApiRenderPreflightTests.test_exact_transport_and_successful_ledger_binding) ... FAIL
+test_zero_one_and_multiple_open_dimensions_pass_full_audit (tests.test_photo_authorship_policy.PhotoAuthorshipPolicyTests.test_zero_one_and_multiple_open_dimensions_pass_full_audit) ... ok
+
+======================================================================
+FAIL: test_exact_transport_and_successful_ledger_binding (tests.test_photo_api_render_preflight.PhotoApiRenderPreflightTests.test_exact_transport_and_successful_ledger_binding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_api_render_preflight.py", line 96, in test_exact_transport_and_successful_ledger_binding
+    self.assertTrue(self.execute(key="unused"), self.stderr.getvalue())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : Error: composed_audit: {"status": "fail", "quality_status": "warn", "pack_id": "17ef844953b7e076", "chosen_candidate_count": 0, "chosen_visual_concept_ids": [], "effective_visual_contract_sha256": null, "render_repair_contract_sha256": null, "failures": [{"check": "core_retrieval_contract", "reason": "core retrieval source recomputation failed: creative-control snapshot is stale, malformed or differs from its frozen inputs"}, {"check": "authorial_core_integrity", "reason": "v6 pack is not bound to one valid versioned pre-pack authorial core and retrieval query"}, {"check": "creative_controls_binding", "reason": "creative-control snapshot is stale, malformed or differs from its frozen inputs"}, {"check": "meaning_diagnostics_source", "reason": "creative-control snapshot is stale, malformed or differs from its frozen inputs"}, {"check": "candidate_semantic_contract", "candidate_id": "", "reason": "candidate bundle source recomputation failed: creative-control snapshot is stale, malformed or differs from its frozen inputs"}], "warnings": [{"check": "uncovered_intent", "reason": "uncovered candidate-pack intent was preserved by free description/assertion", "intent": "rainlit window reflections"}, {"check": "uncovered_intent", "reason": "uncovered candidate-pack intent was preserved by free description/assertion", "intent": "delicate rising steam"}, {"check": "uncovered_intent", "reason": "uncovered candidate-pack intent was preserved by free description/assertion", "intent": "A blue porcelain teacup"}]}
+[pack] fixture recorder rejected input
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 100.815s
+
+FAILED (failures=1)

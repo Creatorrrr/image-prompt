@@ -30,18 +30,28 @@ If no concrete path exists, finish as preview-only and say no worktree copy or l
 
 ## Explicit API Path
 
-When API use is authorized, use:
+When API use is authorized, supply the original pack, its exact private runtime receipt, the composed object and the concrete `photo-image-render-request/v2`:
 
 ```bash
 .venv/bin/python skills/photo-prompt-image-generator/scripts/generate_images_via_api.py \
-  --prompt-json <audited-prompt.json> --concept "<concept>"
+  --pack /absolute/path/pack.json \
+  --runtime-receipt /absolute/path/pack.json.runtime-receipt.json \
+  --composed /absolute/path/composed.json \
+  --render-request /absolute/path/render-request.json \
+  --concept "<concept>" --dry-run
 ```
 
-The script forwards prompt and negative bytes unchanged, saves successful images, and records every `tool: openai_images_api` attempt. It forwards available `pack_id`, chosen candidate IDs, composer, audit status, augmentation brief, and source argv; retry rows link to the immediately preceding attempt. A recorder failure makes the run fail instead of silently leaving an untraceable success.
+`--dry-run` saves a preflight report and performs no key lookup, provider invocation or attempt ledger write. Omit it only for the authorized actual attempt. Use `--runtime-store` when the receipt's generation is stored outside the default runtime store. The adapter requires a positive `--attempts`; its current defaults remain two attempts, `gpt-image-2` and `1024x1536`. Existing authorization and the run's actual attempt policy govern those choices.
+
+The adapter resolves the pinned receipt and freshly runs both composed and runtime audits. Self-declared PASS is not proof. Quality warnings remain visible in the report without becoming hard failures. It saves `photo-api-render-preflight/v1` with exact input bytes, generation, audit results and immutable execution parameters before reading the key or invoking the API. Preparation failures are reported separately with call count zero and never become attempt rows. There is no `--prompt-json`, folder scan or skip-audit execution path. Multiple-object input lists fail rather than silently selecting the first object.
+
+This adapter is text-only. Nonempty references, active reference-edit modes, attached-image parameters and unsupported runtime additions fail before invocation. Use an already authorized reference-capable tool for those requests; never clear the references or copy their paths into prose to force this adapter to run. For this API lane only, the runtime string must equal the composed prompt plus its optional exact `\n\nAvoid: <negative_en>` suffix. The shared native runtime auditor retains its continuous-containment contract. The adapter sends the audited runtime string without whitespace normalization, recombination or rewriting.
+
+Every actual attempt binds the same sidecar file/hash, runtime text hash, pack, selected IDs, composer, core/intent/repair hashes and requested model/size. `observed_image_model` is null unless a model is actually supplied by the response; the requested model is not a substitute. Observed request IDs are separate metadata. The recorder independently verifies sidecar inputs and audits before appending. Successful API rows also retain saved image hashes. Historical rows are preserved without fabricated new provenance.
 
 Failed API attempts also save a `photo-image-attempt-evidence/v1` file beside the output. It retains the complete HTTP response bytes as base64, the observed request ID header, and separately parsed error fields. `failure_reason` is only a short display message. Invalid UTF-8 affects that display, not the retained bytes; a failed body read is explicitly `unavailable`. Only explicit `moderation_blocked` or `content_policy_violation` codes classify a safety block. A generic `safety` word, HTTP 400, or a malformed response stays `error`. Evidence or recorder failures stop the run before another API call.
 
-If the API returns image bytes but their local save fails, record the failure with `invocation_outcome: returned` and stop. A local persistence failure does not trigger another image generation.
+Returned bytes are first saved in a unique recovery file before the image writer runs. If the API returns image bytes but their local save fails, record the failure with `invocation_outcome: returned` and stop. A local persistence failure does not trigger another image generation. Explicit moderation blocks stop unchanged retries. Only observed transient HTTP errors (429 or 500/502/503/504) may retry within the authorized bound; an unobserved provider result is marked unknown in error evidence and stops automatic retries.
 
 ## Native Error Capture
 

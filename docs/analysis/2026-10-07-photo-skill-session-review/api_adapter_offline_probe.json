@@ -1,0 +1,43 @@
+{
+  "purpose": "Offline adapter control-flow probe; no network, no image generation and no real ledger write.",
+  "input_fields": [
+    "prompt_en"
+  ],
+  "has_pack": false,
+  "has_composed_audit": false,
+  "has_runtime_request": false,
+  "adapter_result": true,
+  "stub_api_calls": 1,
+  "real_api_calls": 0,
+  "real_ledger_writes": 0,
+  "forwarded_runtime": [
+    {
+      "requested_model": "gpt-image-2",
+      "prompt": "A still life photograph of a porcelain teapot on a wooden table.",
+      "size": "1024x1536"
+    }
+  ],
+  "captured_ledger_flags": [
+    [
+      "--ts",
+      "2026-10-07T10:11:52.274125+09:00",
+      "--concept",
+      "offline-probe",
+      "--prompt-en",
+      "A still life photograph of a porcelain teapot on a wooden table.",
+      "--attempt",
+      "1",
+      "--status",
+      "success",
+      "--tool",
+      "openai_images_api",
+      "--generation-environment",
+      "openai_images_api",
+      "--prompt-id",
+      "2d266492c038843c",
+      "--image-path",
+      "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/photo-skill-offline-probe-qnzgm7j1/offline-probe-fixed/2d266492c038843c-seedNone-attempt1.png"
+    ]
+  ],
+  "limitation": "This verifies the wrapper permits invocation without the skill preflight artifacts. It is not an API or image-quality test."
+}

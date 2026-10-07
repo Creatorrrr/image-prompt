@@ -1,0 +1,45 @@
+test_zero_one_and_multiple_open_dimensions_pass_full_audit (tests.test_photo_authorship_policy.PhotoAuthorshipPolicyTests.test_zero_one_and_multiple_open_dimensions_pass_full_audit) ... 
+  test_zero_one_and_multiple_open_dimensions_pass_full_audit (tests.test_photo_authorship_policy.PhotoAuthorshipPolicyTests.test_zero_one_and_multiple_open_dimensions_pass_full_audit) (opened=()) ... FAIL
+  test_zero_one_and_multiple_open_dimensions_pass_full_audit (tests.test_photo_authorship_policy.PhotoAuthorshipPolicyTests.test_zero_one_and_multiple_open_dimensions_pass_full_audit) (opened=('framing',)) ... FAIL
+  test_zero_one_and_multiple_open_dimensions_pass_full_audit (tests.test_photo_authorship_policy.PhotoAuthorshipPolicyTests.test_zero_one_and_multiple_open_dimensions_pass_full_audit) (opened=('framing', 'lighting', 'camera')) ... FAIL
+
+======================================================================
+FAIL: test_zero_one_and_multiple_open_dimensions_pass_full_audit (tests.test_photo_authorship_policy.PhotoAuthorshipPolicyTests.test_zero_one_and_multiple_open_dimensions_pass_full_audit) (opened=())
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_authorship_policy.py", line 134, in test_zero_one_and_multiple_open_dimensions_pass_full_audit
+    self.assertEqual(audit["status"], "pass", audit["failures"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'fail' != 'pass'
+- fail
++ pass
+ : [{'check': 'meaning_diagnostics_source', 'reason': 'clarification references an unknown profile'}]
+
+======================================================================
+FAIL: test_zero_one_and_multiple_open_dimensions_pass_full_audit (tests.test_photo_authorship_policy.PhotoAuthorshipPolicyTests.test_zero_one_and_multiple_open_dimensions_pass_full_audit) (opened=('framing',))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_authorship_policy.py", line 134, in test_zero_one_and_multiple_open_dimensions_pass_full_audit
+    self.assertEqual(audit["status"], "pass", audit["failures"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'fail' != 'pass'
+- fail
++ pass
+ : [{'check': 'meaning_diagnostics_source', 'reason': 'clarification references an unknown profile'}]
+
+======================================================================
+FAIL: test_zero_one_and_multiple_open_dimensions_pass_full_audit (tests.test_photo_authorship_policy.PhotoAuthorshipPolicyTests.test_zero_one_and_multiple_open_dimensions_pass_full_audit) (opened=('framing', 'lighting', 'camera'))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_authorship_policy.py", line 134, in test_zero_one_and_multiple_open_dimensions_pass_full_audit
+    self.assertEqual(audit["status"], "pass", audit["failures"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'fail' != 'pass'
+- fail
++ pass
+ : [{'check': 'meaning_diagnostics_source', 'reason': 'clarification references an unknown profile'}]
+
+----------------------------------------------------------------------
+Ran 1 test in 42.570s
+
+FAILED (failures=3)

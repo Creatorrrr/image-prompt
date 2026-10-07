@@ -273,7 +273,8 @@ class PhotoCharacterResponseConceptTests(unittest.TestCase):
             profile,
         )
         self.assertEqual(result["status"], "incomplete")
-        self.assertEqual(result["missing_relation_operators"], ["same_target"])
+        self.assertEqual(result["missing_relation_operators"], [])
+        self.assertEqual(result["unmet_relations"][0]["code"], "relation_members_mismatch")
 
         assertion["axes"]["underlying_affiliation"] = "negative"
         result = prompt_generator.evaluate_character_response_profile(
