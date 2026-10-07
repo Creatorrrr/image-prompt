@@ -296,4 +296,3 @@ flowchart LR
 캐릭터 그래프의 intentional/involuntary affect 조건이 보조 advisory로 옮겨진 변경도 확인했다. G05 보강은 이 축을 새 필수 조건으로 되돌리는 방식으로 구현하지 않는다. 기존 작업과 겹치는 부분은 반영 때 최신 원본으로 다시 비교한다.
 
 이 연구가 작성한 것은 별도의 분석·근거·계획 파일과 gitignored 원본 캐시다. 운영 assets·검색 인덱스·스킬·테스트를 수정하거나 commit/push하지 않았다.
-
