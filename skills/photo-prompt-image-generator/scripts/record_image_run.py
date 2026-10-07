@@ -4,6 +4,9 @@
 from __future__ import annotations
 
 import argparse
+import fcntl
+import os
+import uuid
 import hashlib
 import json
 import re
@@ -115,6 +118,11 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
         "image_paths": list(args.image_path or []),
         "tool": args.tool,
     }
+    operation = getattr(args, "workflow_operation_id", None)
+    if operation is not None:
+        if not re.fullmatch(r"[0-9a-f]{32}(?::[1-9][0-9]*)?", operation):
+            raise ValueError("invalid workflow operation ID")
+        entry["workflow_operation_id"] = operation
     generation_environment = getattr(args, "generation_environment", None)
     evidence_path = getattr(args, "attempt_evidence_json", None)
     evidence_sha256 = getattr(args, "attempt_evidence_sha256", None)
@@ -122,6 +130,17 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
         entry["generation_environment"] = generation_environment
     if evidence_sha256 and not evidence_path:
         raise ValueError("--attempt-evidence-sha256 requires --attempt-evidence-json")
+    native_path = getattr(args, "native_render_plan_json", None)
+    native_sha = getattr(args, "native_render_plan_sha256", None)
+    native_runtime = None
+    if native_path:
+        if args.tool != "image_gen" or not native_sha or hashlib.sha256(Path(native_path).read_bytes()).hexdigest() != native_sha:
+            raise ValueError("native plan requires exact native tool and SHA binding")
+        native_runtime = json.loads(Path(native_path).read_bytes())["payload"]["prompt"]
+    elif native_sha:
+        raise ValueError("native plan SHA requires its original plan file")
+    if native_path and getattr(args, "api_render_input_json", None):
+        raise ValueError("an attempt cannot use both native and API transport")
     if evidence_path:
         if evidence_sha256 and not re.fullmatch(r"[0-9a-f]{64}", evidence_sha256):
             raise ValueError("--attempt-evidence-sha256 must be a 64-character SHA-256")
@@ -130,7 +149,7 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
             attempt=args.attempt, tool=args.tool, status=args.status,
             prompt_en=args.prompt_en, negative_en=args.negative_en,
             generation_environment=generation_environment,
-            failure_reason=args.failure_reason,
+            failure_reason=args.failure_reason, runtime_prompt_en=native_runtime,
         ))
     if args.pack_id:
         entry["pack_id"] = args.pack_id
@@ -226,6 +245,17 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
                 entry["image_hashes"].append({"path": raw_path, "sha256": hashlib.sha256(image_path.read_bytes()).hexdigest()})
     elif api_sha or any(getattr(args, field, None) is not None for field in api_fields):
         raise ValueError("API execution fields require --api-render-input-json")
+    if native_path:
+        from photo_native_bridge import validate_native_record
+        entry.update(validate_native_record(native_path, native_sha, entry))
+    if operation and args.status == "success" and "image_hashes" not in entry:
+        if not entry["image_paths"]:
+            raise ValueError("successful workflow attempt requires concrete image bytes")
+        entry["image_hashes"] = []
+        for raw_path in entry["image_paths"]:
+            path = Path(raw_path)
+            path = path if path.is_absolute() else PROJECT_ROOT / path
+            entry["image_hashes"].append({"path": raw_path, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
     return entry
 
 
@@ -254,9 +284,38 @@ def build_independent_manifest(entry: dict[str, object], args: argparse.Namespac
 
 
 def append_entry(ledger: Path, entry: dict[str, object]) -> None:
+    """Atomic append; reattach the identical operation/run, reject conflicts."""
+    ledger = Path(ledger)
     ledger.parent.mkdir(parents=True, exist_ok=True)
-    with ledger.open("a", encoding="utf-8") as handle:
-        handle.write(json.dumps(entry, ensure_ascii=False, sort_keys=True) + "\n")
+    with ledger.with_name(ledger.name + ".LOCK").open("a+b") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        raw = ledger.read_bytes() if ledger.exists() else b""
+        if raw and not raw.endswith(b"\n"):
+            raise ValueError("ledger has an incomplete row; reconcile before appending")
+        for line in raw.splitlines():
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            same_run = row.get("run_id") == entry["run_id"]
+            same_op = bool(entry.get("workflow_operation_id")) and row.get("workflow_operation_id") == entry["workflow_operation_id"]
+            if same_run or same_op:
+                if row != entry:
+                    raise ValueError("ledger identity conflict")
+                return
+        temporary = ledger.with_name(ledger.name + "." + uuid.uuid4().hex + ".tmp")
+        try:
+            with temporary.open("xb") as handle:
+                handle.write(raw + (json.dumps(entry, ensure_ascii=False, sort_keys=True) + "\n").encode("utf-8"))
+                handle.flush()
+                os.fsync(handle.fileno())
+            os.replace(temporary, ledger)
+            descriptor = os.open(ledger.parent, os.O_RDONLY)
+            try:
+                os.fsync(descriptor)
+            finally:
+                os.close(descriptor)
+        finally:
+            temporary.unlink(missing_ok=True)
 
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
@@ -268,6 +327,9 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--prompt-id", default=None, help="Expected prompt_id. If supplied, it must match --prompt-en.")
     parser.add_argument("--seed", type=int, default=None, help="Prompt generation seed, if available.")
     parser.add_argument("--attempt", type=int, required=True, help="1-based attempt number for this prompt.")
+    parser.add_argument("--native-render-plan-json", type=Path)
+    parser.add_argument("--native-render-plan-sha256")
+    parser.add_argument("--workflow-operation-id")
     parser.add_argument("--retry-of", default=None, help="run_id of the previous attempt, when this is a retry.")
     parser.add_argument("--status", required=True, choices=sorted(VALID_STATUSES), help="Attempt outcome.")
     parser.add_argument("--failure-reason", default=None, help="Safety/filter/tool error detail, if any.")

@@ -126,3 +126,7 @@ Count actual tool invocations, keeping preparation/audit failures and unknown in
 `assets/run_ledger.schema.json` is the public record contract. Keep its required keys, optional provenance fields, and enums synchronized with `record_image_run.py`; focused tests compare recorder output against that schema.
 
 Report the image tool used and whether a repo-local copy was created.
+
+## Managed execution
+
+After core freeze, [photo-workflow.md](photo-workflow.md) describes the managed `--run` path. It reuses the same P0 API adapter and fresh audits. Record already-existing authorization with `authorize`; the record is not independent permission. `render-api --dry-run` needs no authorization or key. Native execution uses an audited plan, a durable start marker, the tool-environment bridge, and the actual observed result. No concrete native file means `preview_only`, without a paid fallback or a fabricated ledger image. An uncertain invocation stops automatic reexecution.

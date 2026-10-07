@@ -8488,6 +8488,19 @@ def _camera_v36_support(repo_root):
     return photo_camera_guidance_v36
 
 
+PHOTO_V37_WORKFLOW_SUPPORT_SHA256 = "e4d8d35dc48570b75882097afd2550377073dab3d02c63934ad2581ca2075ad1"
+
+
+def _workflow_v37_support(repo_root):
+    path = _photo_v28_regular_path(repo_root, "tests/photo_workflow_boundary_v37.py")
+    _require(_sha256(path) == PHOTO_V37_WORKFLOW_SUPPORT_SHA256,
+             "photo V37 support code drift")
+    from tests import photo_workflow_boundary_v37
+    _require(_sha256(Path(photo_workflow_boundary_v37.__file__)) == PHOTO_V37_WORKFLOW_SUPPORT_SHA256,
+             "photo V37 loaded support code drift")
+    return photo_workflow_boundary_v37
+
+
 def validate_photo_regression_baseline(
     asset_dir: Path, *, baseline_version: int | None = None
 ) -> dict[str, Any]:
@@ -8495,6 +8508,20 @@ def validate_photo_regression_baseline(
 
     repo_root = Path(__file__).resolve().parents[3]
     current_asset_dir = repo_root / "skills/subculture-illustration-image-generator/assets"
+    if baseline_version == 37 or (
+        Path(asset_dir).resolve() == current_asset_dir
+        and (asset_dir / "photo_regression_baseline_v37.json").exists()
+    ):
+        _require(Path(asset_dir).resolve() == current_asset_dir,
+                 "photo V37 asset directory mismatch")
+        try:
+            return _workflow_v37_support(repo_root).dispatch(
+                asset_dir, source_root=repo_root,
+                baseline_version=baseline_version,
+            )
+        except (AssertionError, RuntimeError, ValueError) as exc:
+            raise ValidationFailure(str(exc)) from exc
+
     if baseline_version == 36 or (
         Path(asset_dir).resolve() == current_asset_dir
         and (asset_dir / "photo_regression_baseline_v36.json").exists()

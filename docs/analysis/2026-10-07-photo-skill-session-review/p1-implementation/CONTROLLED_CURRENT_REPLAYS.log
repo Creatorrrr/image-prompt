@@ -1,0 +1,536 @@
+=== deterministic-current ===
+test_all_six_archived_payloads_reject_bytes_mode_symlink_and_missing_file (tests.test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_all_six_archived_payloads_reject_bytes_mode_symlink_and_missing_file) ... FAIL
+test_historical_drift_cannot_use_an_untampered_live_successor (tests.test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_historical_drift_cannot_use_an_untampered_live_successor) ... FAIL
+test_live_drift_cannot_use_the_sealed_successor_recovery (tests.test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_live_drift_cannot_use_the_sealed_successor_recovery) ... FAIL
+test_recovery_requires_both_immutable_transition_manifests_and_proofs (tests.test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_recovery_requires_both_immutable_transition_manifests_and_proofs) ... FAIL
+test_sealed_v28_recovery_preserves_exact_v27_and_v26_payloads (tests.test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_sealed_v28_recovery_preserves_exact_v27_and_v26_payloads) ... FAIL
+test_v27_index_rollback_cannot_bypass_v28_live_source_binding (tests.test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_v27_index_rollback_cannot_bypass_v28_live_source_binding) ... FAIL
+test_v27_materialization_rejects_missing_or_rehashed_manifest_before_writing (tests.test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_v27_materialization_rejects_missing_or_rehashed_manifest_before_writing) ... FAIL
+test_complete_merged_state_and_twenty_one_keeps_remain_exact (tests.test_photo_liminal_active_use_korean_data_cleanup.LiminalActiveUseKoreanDataCleanupTests.test_complete_merged_state_and_twenty_one_keeps_remain_exact) ... FAIL
+test_original_v34_assertions_replay_without_revision (tests.test_photo_data_scope_v34_boundary_history.OriginalV34BoundaryReplayTests.test_original_v34_assertions_replay_without_revision) ... FAIL
+test_historical_merged_state_and_current_nineteen_keeps_are_exact (tests.test_photo_protostar_korean_alias_data_cleanup.ProtostarKoreanAliasDataCleanupTests.test_historical_merged_state_and_current_nineteen_keeps_are_exact) ... FAIL
+
+======================================================================
+FAIL: test_all_six_archived_payloads_reject_bytes_mode_symlink_and_missing_file (tests.test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_all_six_archived_payloads_reject_bytes_mode_symlink_and_missing_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/test_photo_appearance_boundary_history.py", line 132, in setUp
+    source = (fixtures.v29_source_path(str(name))
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_prompt_fixtures.py", line 1759, in v29_source_path
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json
+
+======================================================================
+FAIL: test_historical_drift_cannot_use_an_untampered_live_successor (tests.test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_historical_drift_cannot_use_an_untampered_live_successor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/test_photo_appearance_boundary_history.py", line 132, in setUp
+    source = (fixtures.v29_source_path(str(name))
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_prompt_fixtures.py", line 1759, in v29_source_path
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json
+
+======================================================================
+FAIL: test_live_drift_cannot_use_the_sealed_successor_recovery (tests.test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_live_drift_cannot_use_the_sealed_successor_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/test_photo_appearance_boundary_history.py", line 132, in setUp
+    source = (fixtures.v29_source_path(str(name))
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_prompt_fixtures.py", line 1759, in v29_source_path
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json
+
+======================================================================
+FAIL: test_recovery_requires_both_immutable_transition_manifests_and_proofs (tests.test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_recovery_requires_both_immutable_transition_manifests_and_proofs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/test_photo_appearance_boundary_history.py", line 132, in setUp
+    source = (fixtures.v29_source_path(str(name))
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_prompt_fixtures.py", line 1759, in v29_source_path
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json
+
+======================================================================
+FAIL: test_sealed_v28_recovery_preserves_exact_v27_and_v26_payloads (tests.test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_sealed_v28_recovery_preserves_exact_v27_and_v26_payloads)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/test_photo_appearance_boundary_history.py", line 132, in setUp
+    source = (fixtures.v29_source_path(str(name))
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_prompt_fixtures.py", line 1759, in v29_source_path
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json
+
+======================================================================
+FAIL: test_v27_index_rollback_cannot_bypass_v28_live_source_binding (tests.test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_v27_index_rollback_cannot_bypass_v28_live_source_binding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/test_photo_appearance_boundary_history.py", line 132, in setUp
+    source = (fixtures.v29_source_path(str(name))
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_prompt_fixtures.py", line 1759, in v29_source_path
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json
+
+======================================================================
+FAIL: test_v27_materialization_rejects_missing_or_rehashed_manifest_before_writing (tests.test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_v27_materialization_rejects_missing_or_rehashed_manifest_before_writing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/test_photo_appearance_boundary_history.py", line 132, in setUp
+    source = (fixtures.v29_source_path(str(name))
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_prompt_fixtures.py", line 1759, in v29_source_path
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json
+
+======================================================================
+FAIL: test_complete_merged_state_and_twenty_one_keeps_remain_exact (tests.test_photo_liminal_active_use_korean_data_cleanup.LiminalActiveUseKoreanDataCleanupTests.test_complete_merged_state_and_twenty_one_keeps_remain_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/test_photo_liminal_active_use_korean_data_cleanup.py", line 143, in test_complete_merged_state_and_twenty_one_keeps_remain_exact
+    self.assertEqual(current_keys - set(original_rows), new_keys)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+('subject', 'water_w088')
+('subject', 'water_w091')
+('surface_material', 'water_w120')
+('species_marker', 'hr_vampire_identity_variant')
+('surreal_physics_detail', 'hr_cosmic_incompatible_scale')
+('lighting', 'pal_app_red_navy_violet_noir_light')
+('composition', 'water_w050')
+('color', 'hr_palette_display_limited')
+('scale_relation', 'hr_sublime_scale_limit')
+('location', 'water_w081')
+('lighting', 'hr_chiaroscuro_shape')
+('color', 'pal_app_teal_orange_figure_ground')
+('location', 'water_w128')
+('location', 'hr_basement_single_stair')
+('light_direction', 'hr_toplight_orbital_shadow')
+('composition', 'hr_foreground_occluded_view')
+('wearable_accessory', 'water_w144')
+('gaze_target', 'hr_offscreen_reaction_vector')
+('prop', 'hr_bell_displaced_clapper')
+('location', 'water_w002')
+('color', 'hr_palette_neon_opposed_sources')
+('lens_artifact', 'hr_localized_unstable_outline')
+('surface_material', 'hr_abject_boundary_failure')
+('location', 'hr_tunnel_two_exit_limits')
+('weather', 'water_w015')
+('subject', 'water_w105')
+('location', 'hr_mansion_inherited_barrier')
+('contact_point', 'hr_restraint_escape_geometry')
+('transition_stage', 'hr_metamorphosis_transition_band')
+('surface_material', 'water_w005')
+('face_shape_relation', 'hr_displaced_features')
+('viewer_position', 'hr_voyeuristic_occluded_view')
+('subject', 'water_w183')
+('surreal_physics_detail', 'hr_false_escape_repeated_marker')
+('eye_detail', 'hr_clouded_iris_surface')
+('prop', 'hr_automaton_drive_trace')
+('subject', 'water_w106')
+('ambient_particle', 'hr_haze_light_volume')
+('texture', 'hr_corrosion_used_touch_zone')
+('surface_material', 'water_w117')
+('subject', 'water_w101')
+('location', 'water_w175')
+('situation_context', 'hr_religious_protection_breach')
+('aftermath_trace', 'water_w116')
+('surface_material', 'water_w007')
+('anatomical_connection', 'hr_dismemberment_separation')
+('hair_style', 'hr_wet_hair_skin_contact')
+('lighting', 'pal_app_cyan_magenta_dark_light')
+('prop', 'hr_cemetery_name_absence')
+('aftermath_trace', 'water_w022')
+('color', 'pal_app_electric_blue_lime')
+('composition', 'hr_dramatic_irony_unseen_back')
+('garment_detail', 'water_w161')
+('aftermath_trace', 'water_w119')
+('aftermath_trace', 'hr_creature_ecological_trace')
+('location', 'water_w064')
+('weather', 'hr_fog_distance_occlusion')
+('subject', 'water_w104')
+('reflection_logic', 'hr_uncanny_familiar_discrepancy')
+('subject', 'water_w092')
+('ambient_particle', 'water_w024')
+('location', 'water_w067')
+('location', 'water_w075')
+('surface_material', 'water_w043')
+('lens', 'hr_wide_close_distance')
+('reflection_logic', 'hr_psychological_record_conflict')
+('gaze_target', 'hr_doll_gaze_relation')
+('texture', 'pal_app_navy_white_red_marine')
+('location', 'hr_flooded_depth_uncertainty')
+('surface_material', 'water_w056')
+('subject', 'water_w103')
+('prop', 'hr_roster_countable_gap')
+('color_grading', 'water_w053')
+('reflection_logic', 'hr_elevator_presence_comparison')
+('texture', 'water_w188')
+('subject', 'water_w182')
+('situation_context', 'hr_horror_comedy_task_contrast')
+('color', 'pal_app_neutral_cobalt_accent')
+('surreal_physics_detail', 'hr_still_air_single_cloth')
+('color', 'hr_palette_metal_monochrome')
+('reflection_logic', 'water_w047')
+('wearable_accessory', 'water_w150')
+('body_pose', 'hr_levitation_clearance')
+('aftermath_trace', 'hr_lingering_end_trace')
+('relational_action', 'hr_exorcism_contested_threshold')
+('composition', 'water_w190')
+('caption_context', 'hr_mockumentary_evidence_display')
+('body_pose', 'hr_jiangshi_rigid_pose')
+('aftermath_trace', 'hr_splatter_visible_aftermath')
+('prop', 'hr_warning_rule_visual_context')
+('color', 'hr_palette_single_crimson')
+('surface_material', 'pal_app_black_antique_gold_ivory')
+('prop', 'hr_diary_present_record')
+('frame_anchor_medium', 'hr_screenlife_interface_relation')
+('expression', 'hr_extended_smile_geometry')
+('texture', 'pal_app_beige_grid_red_line')
+('capture_context', 'hr_grand_guignol_stage_artifice')
+('surface_material', 'water_w017')
+('aftermath_trace', 'hr_gore_localized_tissue')
+('relational_action', 'hr_taboo_crossing_boundary')
+('capture_context', 'hr_found_footage_record_boundary')
+('composition', 'hr_laboratory_observation_barrier')
+('action', 'water_w023')
+('color', 'pal_app_tomato_basil_mozzarella')
+('concept_tension', 'hr_safe_boundary_failure')
+('surreal_physics_detail', 'hr_surreal_one_rule_violation')
+('subject', 'water_w040')
+('subject', 'water_w093')
+('proxemics', 'hr_psychosexual_competing_attention')
+('color', 'hr_palette_daylight_ritual')
+('subject', 'water_w126')
+('reflection_logic', 'hr_shadow_independent_pose')
+('color', 'hr_palette_faded_record')
+('ambient_particle', 'water_w018')
+('prop', 'water_w172')
+('surface_material', 'water_w020')
+('light_direction', 'hr_underlight_face_planes')
+('surreal_physics_detail', 'hr_smoke_bounded_deflection')
+('composition', 'hr_suspense_information_gap')
+('location', 'hr_hospital_protection_gap')
+('color', 'pal_app_rose_quartz_serenity')
+('ambient_particle', 'water_w171')
+('surreal_physics_detail', 'hr_body_melt_support_loss')
+('composition', 'hr_incomplete_witness_fragment')
+('lighting', 'water_w055')
+('anatomical_connection', 'hr_bodily_fusion_shared_junction')
+('concept_tension', 'hr_gothic_past_present')
+('relational_action', 'hr_vampiric_seduction_dual_signal')
+('composition', 'hr_forest_occluded_depth')
+('surface_material', 'pal_app_navy_brass_cream')
+('surface_material', 'pal_app_celadon_graywhite_ink')
+('surface_material', 'water_w014')
+('location', 'water_w166')
+('reflection_logic', 'hr_pool_submerged_presence')
+('subject', 'water_w098')
+('color_grading', 'pal_app_achromatic_single_red')
+('face_shape_relation', 'hr_sunken_eye_socket')
+('lighting', 'pal_app_yellow_black_cyan_industrial')
+('action', 'water_w032')
+('prop', 'hr_macabre_memorial_presence')
+('lighting', 'pal_app_dark_phosphor_green')
+('frame_anchor_medium', 'hr_recording_local_discrepancy')
+('eye_detail', 'hr_blackened_sclera')
+('prop', 'water_w151')
+('prop_direction', 'hr_forbidden_knowledge_context')
+('texture', 'water_w048')
+('hair_style', 'water_w156')
+('relational_action', 'hr_folk_horror_collective_boundary')
+('texture', 'water_w042')
+('surreal_physics_detail', 'hr_translucent_body_occlusion')
+('concept_tension', 'hr_curse_object_consequence')
+('location', 'hr_hotel_connecting_door')
+('action', 'water_w021')
+('proxemics', 'hr_erotic_horror_attraction_threat')
+('prop_direction', 'hr_mask_face_layer')
+('camera_height', 'water_w191')
+('location', 'water_w141')
+('surface_material', 'pal_app_aubergine_old_gold')
+('location', 'hr_school_schedule_absence')
+('subject', 'hr_revenant_corporeal_return')
+('aftermath_trace', 'hr_snow_track_terminal')
+('subject', 'water_w111')
+('color', 'pal_app_camel_chocolate_cream')
+('location', 'hr_corridor_repeating_bay')
+('concept_tension', 'hr_dream_waking_object_match')
+('texture', 'hr_wax_elapsed_material')
+('subject', 'water_w100')
+('action', 'water_w147')
+('subject', 'hr_mannequin_population_difference')
+('hair_style', 'water_w157')
+('body_pose', 'water_w145')
+('prop_direction', 'hr_talisman_bridge_seam')
+('anatomical_connection', 'hr_werewolf_transition')
+('location', 'water_w089')
+('motion', 'water_w169')
+('relational_action', 'hr_summoning_center_intrusion')
+('surface_material', 'pal_app_aqua_white_silver')
+('location', 'water_w078')
+('subject', 'water_w083')
+('color', 'pal_app_black_oxblood_bone')
+('color', 'hr_palette_mold_ward')
+('location', 'hr_stairwell_hidden_landing')
+('color', 'hr_palette_flesh_steel')
+('relational_action', 'hr_slasher_pursuit_corridor')
+('location', 'water_w131')
+('space_condition', 'hr_claustrophobic_body_clearance')
+('light_shape', 'water_w049')
+('color', 'pal_app_lavender_blue_coral_gradient')
+('texture', 'water_w026')
+('location', 'water_w077')
+('surreal_physics_detail', 'hr_disorientation_route_conflict')
+('reflection_logic', 'hr_reflection_pose_disagreement')
+('location', 'water_w094')
+('texture', 'glass_near_contact_reflected_fringes')
+('ambient_particle', 'water_w027')
+('lighting', 'water_w051')
+('surface_material', 'water_w004')
+('weather', 'hr_rain_window_cutoff')
+('composition', 'hr_terror_anticipation')
+('prop', 'hr_wreath_fresh_decay_contrast')
+('prop', 'water_w139')
+('prop_direction', 'hr_ritual_boundary_crossing')
+('subject', 'hr_tsukumogami_tool_agency')
+('location', 'water_w065')
+('surface_material', 'pal_app_ice_white_platinum')
+('location', 'water_w071')
+('surface_material', 'pal_app_silver_iceblue_white_chrome')
+('skin_condition', 'hr_pallor_local_color')
+('surface_material', 'pal_app_black_signal_orange_silver')
+('color', 'pal_app_ivory_mushroom_olive')
+('subject', 'hr_zombie_reanimated_body')
+('texture', 'water_w028')
+('surface_material', 'water_w162')
+('anatomical_connection', 'hr_parasite_host_junction')
+('atmosphere', 'hr_ground_fog_low_band')
+('surreal_physics_detail', 'hr_poltergeist_object_displacement')
+('relational_action', 'hr_seance_shared_focus')
+('color', 'pal_app_cobalt_white_terracotta')
+('lighting', 'hr_daylight_exposed_threat')
+('motion', 'water_w036')
+('location', 'water_w069')
+('location', 'hr_attic_hidden_volume')
+('aftermath_trace', 'hr_haunting_place_residue')
+('subject', 'water_w179')
+('surface_material', 'water_w177')
+('location', 'water_w129')
+('lighting', 'pal_app_blue_amber_mixed_light')
+('location', 'water_w080')
+('surface_material', 'pal_app_ivory_champagne_gold')
+('body_orientation', 'hr_possession_agency_split')
+('location', 'hr_well_depth_boundary')
+('light_shape', 'water_w046')
+('aftermath_trace', 'hr_ominous_local_sign')
+('color', 'hr_palette_underwater_depth')
+('aftermath_trace', 'hr_dust_removed_silhouette')
+('reflection_logic', 'hr_portrait_identity_discrepancy')
+('relational_action', 'hr_doppelganger_pair_divergence')
+('expression', 'hr_kuchisake_mask_reveal')
+('prop_direction', 'hr_sealing_bounded_breach')
+('anatomical_connection', 'hr_grotesque_hybrid_joint')
+('action', 'water_w034')
+('location', 'water_w060')
+('location', 'hr_sealed_habitat_external_limit')
+('texture', 'pal_app_green_red_ribbon')
+('location', 'water_w057')
+('ambient_particle', 'water_w090')
+('action', 'water_w062')
+('relational_action', 'hr_occult_directed_ritual')
+('fetish_styling', 'hr_fetish_material_owner')
+('composition', 'hr_giallo_partial_witness')
+('color', 'pal_app_chocolate_caramel_cream')
+('texture', 'water_w030')
+('time_of_day', 'hr_twilight_detail_threshold')
+('location', 'water_w122')
+('aftermath_trace', 'water_w121')
+('surface_material', 'pal_app_whiteporcelain_cobalt')
+('skin_condition', 'hr_putrefaction_material_state')
+('texture', 'hr_fungal_boundary_spread')
+('action', 'water_w025')
+('frame_anchor_medium', 'hr_analog_broadcast_intrusion')
+('color', 'hr_palette_clean_cold_room')
+('composition', 'hr_dread_held_exit')
+('location', 'water_w076')
+('surreal_physics_detail', 'hr_supernatural_coherent_breach')
+('subject', 'water_w096')
+('skin_finish', 'hr_waxy_skin_surface')
+('subject', 'water_w107')
+('anatomical_connection', 'hr_decapitation_head_body')
+('aftermath_trace', 'hr_stale_air_recent_trace')
+('apparatus_pov', 'hr_pov_declared_owner')
+('appearance_type', 'hr_faceless_smooth_plane')
+('texture', 'hr_damp_material_consistency')
+('situation_context', 'hr_morgue_inventory_mismatch')
+('color', 'hr_palette_candle_cold_exterior')
+('texture', 'water_w019')
+('lighting', 'hr_silhouette_background_relation')
+('lens_artifact', 'water_w052')
+('lighting', 'water_w192')
+('texture', 'pal_app_primary_color_orthogonal_grid')
+('location', 'water_w068')
+('color_grading', 'pal_app_green_dark_global_tint')
+('location', 'hr_industrial_processing_route')
+('subject', 'hr_dokkaebi_object_origin')
+('aftermath_trace', 'hr_body_trace_wrong_location')
+('anatomical_connection', 'hr_body_horror_uncontrolled_change')
+('body_pose', 'water_w008')
+('surface_material', 'water_w006')
+('expression', 'hr_mouth_eye_affect_split')
+('surface_material', 'pal_app_rust_ink_dirtycream')
+('texture', 'water_w031')
+('surface_material', 'pal_app_emerald_black_gold')
+('action', 'water_w035')
+('body_pose', 'water_w152')
+('wearable_accessory', 'water_w146')
+('color', 'hr_palette_moon_ink')
+('color', 'pal_app_warm_white_oatmeal')
+('color', 'pal_app_espresso_cobalt_cream')
+('texture', 'water_w033')
+('species_marker', 'hr_gumiho_mimicry_boundary')
+('location', 'water_w061')
+('subject', 'water_w108')
+('wardrobe_style', 'hr_shroud_floor_drag')
+('location', 'water_w070')
+('lighting', 'water_w054')
+('prop', 'water_w044')
+('situation_context', 'hr_eerie_expected_absence')
+('color', 'pal_app_blush_rose_wine')
+('garment_detail', 'water_w159')
+('surface_material', 'water_w045')
+('prop', 'water_w138')
+
+======================================================================
+FAIL: test_original_v34_assertions_replay_without_revision (tests.test_photo_data_scope_v34_boundary_history.OriginalV34BoundaryReplayTests.test_original_v34_assertions_replay_without_revision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/test_photo_data_scope_v34_boundary_history.py", line 14, in test_original_v34_assertions_replay_without_revision
+    history.materialize_original(tree,source_root=ROOT,link_verified=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_ethereal_history_v35.py", line 92, in materialize_original
+    for row in parent['members']:exact_payload(source_root,row)
+                                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_ethereal_history_v35.py", line 47, in exact_payload
+    if path.stat().st_mode&0o7777!=int(row['mode'][-3:],8) or len(raw)!=row['bytes'] or digest(raw)!=row['sha256'] or blob!=row['git_blob']:raise AssertionError('Frozen V35 original source payload or mode drift: '+row['path'])
+                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 original source payload or mode drift: skills/photo-prompt-image-generator/SKILL.md
+
+======================================================================
+FAIL: test_historical_merged_state_and_current_nineteen_keeps_are_exact (tests.test_photo_protostar_korean_alias_data_cleanup.ProtostarKoreanAliasDataCleanupTests.test_historical_merged_state_and_current_nineteen_keeps_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py", line 72, in test_historical_merged_state_and_current_nineteen_keeps_are_exact
+    self.assertEqual(fixtures.bundle_meanings(fixtures.seduction_historical_bundles(self.current['candidate_bundles']), within=historical),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     fixtures.bundle_meanings(historical))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [{'id[532808 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[703605 chars]ly'}] != [{'id[532808 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[703586 chars]ly'}]
+
+First differing element 307:
+{'id'[817 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[87 chars]nly'}
+{'id'[817 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[68 chars]nly'}
+
+Diff is 2223582 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 10 tests in 9.062s
+
+FAILED (failures=10)
+
+=== current-final ===
+test_historical_test_recovery_requires_the_declared_live_adapter (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_historical_test_recovery_requires_the_declared_live_adapter) ... FAIL
+test_live_drift_cannot_use_valid_original_recovery (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_live_drift_cannot_use_valid_original_recovery) ... FAIL
+setUpClass (tests.test_photo_runtime_boundary_history.RuntimeBoundaryHistoryTests) ... ERROR
+test_original_assertions_replay_without_revision (tests.test_photo_palette_boundary_history.OriginalBoundaryReplayTests.test_original_assertions_replay_without_revision) ... FAIL
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_runtime_boundary_history.RuntimeBoundaryHistoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/test_photo_runtime_boundary_history.py", line 27, in setUpClass
+    cls.original_validator = fixtures.archived_v29_validator(cls.original_root)
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_prompt_fixtures.py", line 1789, in archived_v29_validator
+    manifest = materialize_v29_parent_source(directory, source_root=source_root)
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_prompt_fixtures.py", line 1744, in materialize_v29_parent_source
+    _v24_verified_payload(source_root, row)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_prompt_fixtures.py", line 856, in _v24_verified_payload
+    raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json
+
+======================================================================
+FAIL: test_historical_test_recovery_requires_the_declared_live_adapter (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_historical_test_recovery_requires_the_declared_live_adapter)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/test_photo_ethereal_v35_boundary_history.py", line 95, in test_historical_test_recovery_requires_the_declared_live_adapter
+    original=history.previous_path(root,name)
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_ethereal_history_v35.py", line 64, in previous_path
+    if digest(current)!=TEST_RECOVERY[name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 historical test adapter drift: '+name)
+                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 historical test adapter drift: tests/test_photo_motion_artifact_owner_data_cleanup.py
+
+======================================================================
+FAIL: test_live_drift_cannot_use_valid_original_recovery (tests.test_photo_ethereal_v35_boundary_history.EtherealV35BoundaryTests.test_live_drift_cannot_use_valid_original_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/test_photo_ethereal_v35_boundary_history.py", line 63, in test_live_drift_cannot_use_valid_original_recovery
+    recovered=history.previous_path(root,name)
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_source_manifest.json
+
+======================================================================
+FAIL: test_original_assertions_replay_without_revision (tests.test_photo_palette_boundary_history.OriginalBoundaryReplayTests.test_original_assertions_replay_without_revision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/test_photo_palette_boundary_history.py", line 12, in test_original_assertions_replay_without_revision
+    history.materialize_original(tree,source_root=ROOT,link_verified=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_ethereal_history_v35.py", line 92, in materialize_original
+    for row in parent['members']:exact_payload(source_root,row)
+                                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/photo-p0-main-merge-20261007/image-prompt/tests/photo_ethereal_history_v35.py", line 47, in exact_payload
+    if path.stat().st_mode&0o7777!=int(row['mode'][-3:],8) or len(raw)!=row['bytes'] or digest(raw)!=row['sha256'] or blob!=row['git_blob']:raise AssertionError('Frozen V35 original source payload or mode drift: '+row['path'])
+                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 original source payload or mode drift: skills/photo-prompt-image-generator/SKILL.md
+
+----------------------------------------------------------------------
+Ran 3 tests in 2.692s
+
+FAILED (failures=3, errors=1)

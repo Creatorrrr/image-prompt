@@ -108,7 +108,7 @@ class PhotoPrepackIsolationTests(unittest.TestCase):
             skill_text.index("phase 2 — retrieve"),
         )
         self.assertIn(
-            "the `skill.md` procedure, the named neutral catalog, and the named creative-control definition/resolver are the only project-local material available before the core",
+            "the `skill.md` procedure and the exact named neutral precore files above are the only project-local authoring material available before the core",
             skill_text,
         )
         self.assertIn(
@@ -126,7 +126,12 @@ class PhotoPrepackIsolationTests(unittest.TestCase):
                 for path in precore_dir.iterdir()
                 if path.name not in {".DS_Store", "__pycache__"}
             },
-            {"visual_feature_catalog.json", "creative_controls.json", "creative_controls.py"},
+            {
+                "visual_feature_catalog.json", "creative_controls.json", "creative_controls.py",
+                "prepare_photo_run.py", "photo_authoring_wire.py", "photo_authoring_contracts.py",
+                "photo_camera_authoring.py", "photo_embodiment_review.py", "photo_feature_selection.py",
+                "photo_run_files.py", "photo_workflow_shapes.json",
+            },
         )
         resolver = (precore_dir / "creative_controls.py").read_text(encoding="utf-8")
         imports = set()
