@@ -1,0 +1,58 @@
+{
+  "camera_guidance_transition": {
+    "evidence_path": "docs/research-evidence/photo-prompt/camera-guidance-v36-20261007/V36-SOURCE-PROOF.json",
+    "evidence_sha256": "4cdeb35e3d93ff9fb2626e006fc23fb47fb5939c0495fef59761d781dafe4984",
+    "upstream_commit": "4f3d524ed035de8592e4b0c6ad5030b41ffc55af"
+  },
+  "change_scope": "Qualify the observed original V35-to-upstream4f3 pack transition, then prove the camera authoring documentation correction has zero pack delta on the same current runtime. No production runtime, DATA, schema or anchor-cap changes are made by this successor.",
+  "command": [
+    ".venv/bin/python",
+    "skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py",
+    "--seed",
+    "910000",
+    "--authorial-core-json",
+    "tests/fixtures/photo_prompt/current_boundary/core.json",
+    "--request-envelope-json",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json",
+    "--creative-controls-json",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json",
+    "--embodiment-review-json",
+    "tests/fixtures/photo_prompt/current_boundary/review.json",
+    "--output-file",
+    "/tmp/subculture-illustration-photo-baseline-v36.json"
+  ],
+  "contract_version": "photo-candidate-pack/v6",
+  "created_at": "2026-10-07",
+  "frozen_inputs": {
+    "tests/fixtures/photo_prompt/current_boundary/controls.json": "0958274c1f1d5ec8b2faef5f3f7409d15f0256505411613cc33ad05f3a124896",
+    "tests/fixtures/photo_prompt/current_boundary/core.json": "7be72244a8aa95c92a0bfc041f16bf544d376a9664366ad92c92cc728ebf6316",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json": "170ca49644a3ae0703d5d98875007bbaa74a0794202089ded9f617d532443524",
+    "tests/fixtures/photo_prompt/current_boundary/review.json": "0039a9afdb6b7fa6d3989dc0187297eba8e3de436c012ce13d20f570bb55f7fd"
+  },
+  "historical_baseline": {
+    "path": "photo_regression_baseline_v35.json",
+    "schema": "photo_regression_baseline/v35",
+    "sha256": "7f0f6259088cffb823b1e022a3052e9c25af931af5b252a6eda2680113cc91f8"
+  },
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "pack_id": "f1d5de6f1a273b65",
+  "parallel_local_baseline": {
+    "path": "docs/research-evidence/photo-prompt/seduction-expression-main-merge-20261005/parallel-local-seduction-v13.json",
+    "purpose": "Preserved original pre-main seduction observation; independent of main V13 uniform history.",
+    "sha256": "11ac31b9ab126b2a0711724cf625644772592adc2c688a760d9a6c6b37894850"
+  },
+  "preserved_contract_sha256": "acc9fedeae95ae67b4214e1bedd622f12e0a9f0d24639fd2193ca5f368ba4e5f",
+  "private_fields_absent": [
+    "argv",
+    "sample_prompt_id",
+    "concept_gate_results",
+    "concept_scene_variants",
+    "character_response",
+    "adult_appeal"
+  ],
+  "public_candidate_count": 64,
+  "purpose": "Current fixed-input CLI and exact receipt qualification with explicit upstream P0/grammar semantic differences. Original V1–V35 bytes and checks remain immutable; exact historical replay is unavailable in the current environment. Data-improvement count delta is zero.",
+  "schema": "photo_regression_baseline/v36",
+  "sha256": "3b36b45978e00f9f70455b5aa7952e26c45b4289e2e49751e5485da324b0a075",
+  "status": "current"
+}
