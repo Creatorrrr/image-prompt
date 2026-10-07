@@ -12,6 +12,7 @@ import base64
 import datetime
 import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
@@ -107,12 +108,28 @@ def record(args_list: list[str]) -> dict[str, str]:
 def generate_for_request(pack_file: Path, *, receipt_file: Path, composed_file: Path, request_file: Path,
     model: str, size: str, attempts: int, concept: str | None, slug: str | None, out_base: Path,
     timestamp: str, runtime_store: Path | None = None, dry_run: bool = False,
-    ledger: Path | None = None, key: str | None = None) -> bool:
+    ledger: Path | None = None, key: str | None = None, initial_retry_of: str | None = None,
+    workflow_operation_id: str | None = None, attempt_event=None, execution_summary: Path | None = None) -> bool:
+    summary = {"schema_version": "photo-api-execution/v1", "operation_id": workflow_operation_id,
+               "image_call_count": 0, "attempts": [], "status": "preparing"}
+    def event(stage, **fields):
+        summary["status"] = stage
+        row = {"stage": stage, **fields}
+        summary["attempts"].append(row)
+        if stage == "invocation_started":
+            summary["image_call_count"] += 1
+        if execution_summary is not None:
+            from photo_workflow_state import atomic_write, encode
+            atomic_write(execution_summary, encode(summary))
+        if attempt_event is not None:
+            attempt_event(row)
     resolved_slug = slug_for(pack_file, slug)
+    if workflow_operation_id is not None and not re.fullmatch(r"[0-9a-f]{32}", workflow_operation_id):
+        raise ValueError("invalid workflow operation ID")
     if attempts < 1:
         print("attempts must be positive", file=sys.stderr)
         return False
-    out_dir = out_base / f"{resolved_slug}-{timestamp}-{uuid.uuid4().hex}"
+    out_dir = out_base / (workflow_operation_id if workflow_operation_id else f"{resolved_slug}-{timestamp}-{uuid.uuid4().hex}")
     try:
         prepared = prepare_api_render(pack_file, receipt_file, composed_file, request_file,
             model=model, size=size, runtime_store=runtime_store)
@@ -141,15 +158,23 @@ def generate_for_request(pack_file: Path, *, receipt_file: Path, composed_file: 
     composer, audit_status, augmentation_brief = execution["composer"], execution["audit_status"], execution["augmentation_brief"]
     resolved_concept = concept or resolved_slug
     source_argv = None
-    key = key if key is not None else load_api_key()
+    try:
+        key = key if key is not None else load_api_key()
+    except SystemExit:
+        event("preflight_failed", known_no_invocations=True)
+        return False
 
-    previous_run_id: str | None = None
+    previous_run_id: str | None = initial_retry_of
     for attempt in range(1, attempts + 1):
         status, failure, dest, evidence = None, None, None, None
         started_at = datetime.datetime.now().astimezone().isoformat(timespec="microseconds")
         call_returned = False
         response = None
         retry_allowed = False
+        operation_attempt = f"{workflow_operation_id}:{attempt}" if workflow_operation_id else None
+        reserved_run_id = stable_text_id(f"{started_at}|{prompt_id}|{attempt}")
+        event("invocation_started", attempt=attempt, timestamp=started_at, run_id=reserved_run_id,
+              operation_attempt=operation_attempt, preflight=str(preflight_path), preflight_sha256=preflight_sha)
         try:
             response = call_api(key, execution["model"], full_prompt, execution["size"])
             call_returned = True
@@ -158,7 +183,15 @@ def generate_for_request(pack_file: Path, *, receipt_file: Path, composed_file: 
             recovery = out_dir / f"attempt{attempt}.returned-image.bin"
             with recovery.open("xb") as handle:
                 handle.write(response.image_bytes)
+                handle.flush()
+                os.fsync(handle.fileno())
+            event("result_received", attempt=attempt, recovery=str(recovery), sha256=hashlib.sha256(response.image_bytes).hexdigest())
             dest.write_bytes(response.image_bytes)
+            descriptor = os.open(dest, os.O_RDWR)
+            try:
+                os.fsync(descriptor)
+            finally:
+                os.close(descriptor)
             status = "success"
             print(f"[{resolved_slug}] attempt {attempt} OK → {repo_ledger_path(dest)}")
         except Exception as error:  # noqa: BLE001 - 네트워크/디코딩 등 모든 실패를 레저에 기록
@@ -180,6 +213,7 @@ def generate_for_request(pack_file: Path, *, receipt_file: Path, composed_file: 
                 evidence_sha256 = write_evidence(evidence_path, evidence)
             except OSError as error:
                 print(f"[{resolved_slug}] attempt {attempt} evidence save failed; stopping: {error}", file=sys.stderr)
+                event("persistence_failed", attempt=attempt)
                 return False
             print(f"[{resolved_slug}] attempt {attempt} {status}: {failure[:120]}")
 
@@ -241,12 +275,22 @@ def generate_for_request(pack_file: Path, *, receipt_file: Path, composed_file: 
             ledger_args += ["--argv-json", compact_json(source_argv)]
         if previous_run_id:
             ledger_args += ["--retry-of", previous_run_id]
+        if operation_attempt:
+            ledger_args += ["--workflow-operation-id", operation_attempt]
+        event("record_ready", attempt=attempt, ledger_args=ledger_args,
+              image_path=str(dest) if dest is not None and status == "success" else None,
+              evidence_path=str(evidence_path) if evidence_path else None, outcome=status,
+              provider_outcome=evidence.get("provider_outcome") if evidence else "returned")
         try:
             ledger_result = record(ledger_args)
         except RuntimeError as error:
+            event("recorder_failed", attempt=attempt)
             print(f"[{resolved_slug}] {error}", file=sys.stderr)
             return False
         previous_run_id = ledger_result["run_id"]
+        event("attempt_recorded", attempt=attempt, ledger_run_id=previous_run_id, outcome=status,
+              provider_outcome=evidence.get("provider_outcome") if evidence else "returned",
+              terminal=(status == "success" or status == "safety_block" or not retry_allowed or call_returned or attempt == attempts))
         if status == "success":
             return True
         if status == "safety_block" or (not call_returned and not retry_allowed):

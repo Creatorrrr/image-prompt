@@ -11,27 +11,37 @@ import hashlib
 import json
 from typing import Any
 
-CHARACTER_RESPONSE_RELATION_MEMBERS = {
-    "actor",
-    "baseline",
-    "surface_affect",
-    "underlying_affiliation",
-    "relationship_target",
-    "target",
-    "primary_action",
-    "affect_leak",
-    "affect_leak_timing",
-    "trigger",
-    "visible_response",
-    "immediate_consequence",
-    "continuity",
-    "event_phase",
-}
+from photo_precore_bridge import load as _load_precore
+_contracts = _load_precore("photo_authoring_contracts")
+AUTHORIAL_CORE_V3_CONTRACT_VERSION = _contracts.AUTHORIAL_CORE_V3_CONTRACT_VERSION
+AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS = _contracts.AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
+AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS = _contracts.AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS
+AUTHORIAL_PROMPT_MIN_WORDS = _contracts.AUTHORIAL_PROMPT_MIN_WORDS
+AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS = _contracts.AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS
+CHARACTER_RESPONSE_RELATION_MEMBERS = _contracts.CHARACTER_RESPONSE_RELATION_MEMBERS
+CHARACTER_RESPONSE_REQUIRED_AXES = _contracts.CHARACTER_RESPONSE_REQUIRED_AXES
+CHARACTER_RESPONSE_REQUIRED_EVIDENCE = _contracts.CHARACTER_RESPONSE_REQUIRED_EVIDENCE
+INTENT_LOCK_CONTRACT_VERSION = _contracts.INTENT_LOCK_CONTRACT_VERSION
+INTENT_LOCK_DIMENSIONS = _contracts.INTENT_LOCK_DIMENSIONS
+INTENT_LOCK_PROPERTY_CONTRACT_VERSION = _contracts.INTENT_LOCK_PROPERTY_CONTRACT_VERSION
+RENDER_REPAIR_ALLOWED_AXES = _contracts.RENDER_REPAIR_ALLOWED_AXES
+RENDER_REPAIR_CONTACT_EXPECTATIONS = _contracts.RENDER_REPAIR_CONTACT_EXPECTATIONS
+RENDER_REPAIR_DIMENSION_AXES = _contracts.RENDER_REPAIR_DIMENSION_AXES
+RENDER_REPAIR_IMPORTANCE_VALUES = _contracts.RENDER_REPAIR_IMPORTANCE_VALUES
+RENDER_REPAIR_INTERACTION_STATES = _contracts.RENDER_REPAIR_INTERACTION_STATES
+RENDER_REPAIR_RELATION_ORIGINS = _contracts.RENDER_REPAIR_RELATION_ORIGINS
+REQUEST_BINDING_CONTRACT_VERSION = _contracts.REQUEST_BINDING_CONTRACT_VERSION
+REQUEST_ENVELOPE_CONTRACT_VERSION = _contracts.REQUEST_ENVELOPE_CONTRACT_VERSION
+REQUEST_LINEAGE_V2_CONTRACT_VERSION = _contracts.REQUEST_LINEAGE_V2_CONTRACT_VERSION
+REQUIRED_INTENT_LOCK_DIMENSIONS = _contracts.REQUIRED_INTENT_LOCK_DIMENSIONS
+SUBJECT_CATEGORIES = _contracts.SUBJECT_CATEGORIES
+authored_subject_category = _contracts.authored_subject_category
+canonical_json_sha256 = _contracts.canonical_json_sha256
+
 
 
 AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v3"
 
-AUTHORIAL_CORE_V3_CONTRACT_VERSION = "photo-authorial-core/v3"
 
 ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION = "photo-adult-appeal-dimension-scope/v4"
 
@@ -56,39 +66,8 @@ def intent_property_locks(intent_lock: dict) -> list[dict]:
     return [dict(row) for row in intent_lock.get("semantic_anchors", []) if "property" in row]
 
 
-SUBJECT_CATEGORIES = frozenset({
-    "human", "animal", "object", "food", "plant", "environment", "sign", "unknown",
-})
 
 
-def authored_subject_category(assertions: list[dict], context: dict | None = None) -> str | None:
-    """Read the optional primary-subject type from frozen, grounded assertions.
-
-    This is a handoff, never a noun classifier. The coarse nonhuman creative
-    context and an absent/unknown type do not authorize object-only slots.
-    """
-    categories = set()
-    for row in assertions:
-        axes = row.get("axes") or {}
-        if "subject_category" not in axes:
-            continue
-        value = axes["subject_category"]
-        values = value if isinstance(value, list) else [value]
-        if (row.get("dimension") != "subject" or row.get("polarity") != "required"
-                or "subject" not in (row.get("affected_dimensions") or [])
-                or len(values) != 1 or not isinstance(values[0], str)
-                or values[0] not in SUBJECT_CATEGORIES):
-            raise ValueError("subject_category requires one supported category in a required subject assertion")
-        categories.add(values[0])
-    if len(categories) > 1:
-        raise ValueError("subject_category assertions disagree about the primary subject")
-    category = next(iter(categories), None)
-    context = context or {}
-    if category == "human" and (context.get("subject_category") == "nonhuman" or context.get("no_people")):
-        raise ValueError("typed human subject conflicts with the frozen creative context")
-    if category not in {None, "human"} and context.get("subject_category") == "human":
-        raise ValueError("typed subject category conflicts with the frozen human creative context")
-    return category
 
 
 def property_effects_allowed(intent_lock: dict, dimensions, effects) -> bool:
@@ -127,11 +106,8 @@ def property_effects_allowed(intent_lock: dict, dimensions, effects) -> bool:
 
 AUTHORIAL_PROMPT_BUDGET_CONTRACT_VERSION = "photo-authorial-prompt-budget/v3"
 
-AUTHORIAL_PROMPT_MIN_WORDS = 48
 
-AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS = 720
 
-AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS = 1280
 
 AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS = 320
 
@@ -146,83 +122,19 @@ SEMANTIC_ASSERTION_OBLIGATIONS_CONTRACT_VERSION = (
     "photo-semantic-assertion-obligations/v1"
 )
 
-REQUEST_LINEAGE_V2_CONTRACT_VERSION = "photo-request-lineage/v2"
 
 RENDER_REPAIR_CONTRACT_VERSION = "photo-render-repair/v1"
 
-RENDER_REPAIR_IMPORTANCE_VALUES = {"primary", "supporting"}
 
-RENDER_REPAIR_INTERACTION_STATES = {
-    "held",
-    "wielded",
-    "used",
-    "handed_off",
-    "carried",
-    "worn",
-    "sheathed",
-    "mounted",
-    "resting",
-    "other",
-}
 
-RENDER_REPAIR_CONTACT_EXPECTATIONS = {
-    "required",
-    "transitional",
-    "absent",
-    "unspecified",
-}
 
-RENDER_REPAIR_RELATION_ORIGINS = {
-    "parent_preserved",
-    "requester_corrected",
-}
 
-RENDER_REPAIR_ALLOWED_AXES = {
-    "object_geometry",
-    "contact_geometry",
-    "local_pose",
-    "camera",
-    "framing",
-    "lighting",
-    "material",
-    "occlusion",
-}
 
-RENDER_REPAIR_DIMENSION_AXES = {
-    "camera": "camera",
-    "framing": "framing",
-    "lighting": "lighting",
-    "material": "material",
-}
 
-CHARACTER_RESPONSE_REQUIRED_AXES = {
-    "surface_affect",
-    "underlying_affiliation",
-    "relationship_target",
-    "primary_action",
-    "affect_leak_timing",
-    "affect_leak_channels",
-    "event_phase",
-}
 
-CHARACTER_RESPONSE_REQUIRED_EVIDENCE = {
-    "actor_phrase",
-    "baseline_phrase",
-    "trigger_phrase",
-    "target_phrase",
-    "primary_action_phrase",
-    "affective_leak_phrase",
-    "visible_response_phrase",
-    "immediate_consequence_phrase",
-    "continuity_phrase",
-}
 
-REQUEST_ENVELOPE_CONTRACT_VERSION = "photo-request-envelope/v1"
 
-REQUEST_BINDING_CONTRACT_VERSION = "photo-request-binding/v1"
 
-INTENT_LOCK_CONTRACT_VERSION = "photo-intent-lock/v2"
-INTENT_LOCK_PROPERTY_CONTRACT_VERSION = "photo-intent-lock/v2"
 
 INTENT_PRESERVATION_CONTRACT_VERSION = "photo-intent-preservation/v1"
 
@@ -232,43 +144,8 @@ DOWNSTREAM_INTENT_PRECEDENCE_CONTRACT_VERSION = (
 
 NEGATIVE_INTENT_GUARD_CONTRACT_VERSION = "photo-negative-intent-guard/v1"
 
-INTENT_LOCK_DIMENSIONS = {
-    "concept",
-    "subject",
-    "identity",
-    "count",
-    "age",
-    "role",
-    "species",
-    "appearance",
-    "pose",
-    "body_geometry",
-    "expression",
-    "action",
-    "event",
-    "setting",
-    "relationship",
-    "sexual_tone",
-    "style",
-    "reference_use",
-    "viewer_outcome",
-    "text",
-    "format",
-    "framing",
-    "composition",
-    "lighting",
-    "camera",
-    "color",
-    "material",
-    "timing",
-    "atmosphere",
-}
 
-AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS = INTENT_LOCK_DIMENSIONS | {
-    "character_response",
-}
 
-REQUIRED_INTENT_LOCK_DIMENSIONS = {"concept", "subject", "event"}
 
 # Automatic negatives describe photographic defects. Requester exclusions and
 # identity-preservation controls are admitted through separate consumer checks.
@@ -316,16 +193,3 @@ AUTHORIAL_IDENTITY_PRESERVATION_NEGATIVE_TERMS = {
 
 AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION = "photo-authorial-authorship-policy/v2"
 AUTHORIAL_CORE_BINDING_CONTRACT_VERSION = "photo-authorial-core-binding/v3"
-
-
-def canonical_json_sha256(payload: Any) -> str:
-    """Hash exact canonical UTF-8 JSON bytes without interpreting their content."""
-
-    return hashlib.sha256(
-        json.dumps(
-            payload,
-            ensure_ascii=False,
-            sort_keys=True,
-            separators=(",", ":"),
-        ).encode("utf-8")
-    ).hexdigest()

@@ -18,6 +18,12 @@
     "error_details": ["attempt_evidence_path"]
   },
   "properties": {
+    "native_render_plan_json": {"type": "string", "minLength": 1},
+    "native_render_plan_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "workflow_operation_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}(:[1-9][0-9]*)?$"
+    },
     "ts": {
       "type": "string",
       "description": "ISO8601 timestamp supplied by the caller"
