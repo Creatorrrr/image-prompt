@@ -17,7 +17,12 @@ import photo_candidate_semantics as semantics
 class ActionContextEffectsCleanupTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.data = generator.load_json(ASSETS / 'photo_prompt_tags.json')
+        cls.current = generator.load_json(ASSETS / 'photo_prompt_tags.json')
+        # Keep the exact historical cleanup oracle before the later grammar overlay.
+        inventory = generator.photo_source_manifest.SourceInventory.for_test(
+            ASSETS, candidate_files=tuple(name for name in generator.RESEARCH_EXTENSION_FILENAMES
+                if name != 'photo_prompt_visual_grammar_extension.json'))
+        cls.data = generator.load_json(ASSETS / 'photo_prompt_tags.json', inventory=inventory)
         cls.frozen = json.loads((EVIDENCE / 'frozen-inventory-queries.json').read_text())
         cls.before = {(x['slot'], x['id']): x['before'] for x in cls.frozen['inventory']}
 
@@ -36,6 +41,14 @@ class ActionContextEffectsCleanupTests(unittest.TestCase):
         self.assertEqual(len(rows), 36)
         for r in rows:
             self.assertEqual(self.row(r['slot'], r['id']), r['before'], r['id'])
+
+    def test_later_grammar_context_preserves_every_prior_meaning_and_effect(self):
+        for record in self.frozen['inventory']:
+            old = self.row(record['slot'], record['id'])
+            live = next(x for x in self.current['slots'][record['slot']] if x['id'] == record['id'])
+            retained = set(old) - {'paraphrases', 'contextual_usage'}
+            self.assertEqual({k: live.get(k) for k in retained}, {k: old[k] for k in retained})
+            self.assertTrue(set(old.get('paraphrases', [])) <= set(live.get('paraphrases', [])))
 
     def test_action_captions_remove_only_comparison_or_rewrite_prose(self):
         mirror = self.row('action', 'mirror_selfie')

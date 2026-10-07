@@ -1,0 +1,2676 @@
+{
+  "schema_version": "photo-prompt-research-extension/v1",
+  "slots": {
+    "world": [
+      {
+        "id": "vg_separate_genre_carriers",
+        "ko": "장르를 기존 구조와 다른 풍경에 나누어 배정",
+        "en": "the existing architectural structure carries one visual genre; a separately bounded existing vista carries the other genre; shared light and material edges connect both regions",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "장르를 기존 구조와 다른 풍경에 나누어 배정"
+        ],
+        "keywords": [
+          "장르를 기존 구조와 다른 풍경에 나누어 배정",
+          "separate genre carriers relation"
+        ],
+        "paraphrases": [
+          "기존 건축 구조가 한 장르의 형태를 담당한다; 분리된 기존 풍경 영역이 다른 장르를 담당한다; 공통 빛과 재료 경계가 두 영역을 연결한다",
+          "the existing architectural structure carries one visual genre; a separately bounded existing vista carries the other genre; shared light and material edges connect both regions"
+        ],
+        "concept_units": [
+          "the existing architectural structure carries one visual genre",
+          "a separately bounded existing vista carries the other genre",
+          "shared light and material edges connect both regions"
+        ],
+        "relations": [
+          {
+            "id": "vg_separate_genre_carriers_r1",
+            "type": "carries",
+            "subject": "existing_architecture",
+            "object": "first_genre_form"
+          },
+          {
+            "id": "vg_separate_genre_carriers_r2",
+            "type": "carries",
+            "subject": "existing_vista",
+            "object": "second_genre_form"
+          },
+          {
+            "id": "vg_separate_genre_carriers_r3",
+            "type": "joins",
+            "subject": "shared_light",
+            "object": "both_existing_regions"
+          }
+        ],
+        "affected_dimensions": [
+          "setting",
+          "style",
+          "lighting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "setting",
+            "target": "existing_architecture",
+            "property": "surface.form"
+          },
+          {
+            "dimension": "setting",
+            "target": "existing_vista",
+            "property": "visible_form"
+          },
+          {
+            "dimension": "style",
+            "target": "*",
+            "property": "genre.carrier_assignment"
+          },
+          {
+            "dimension": "lighting",
+            "target": "*",
+            "property": "surface.illumination"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_separate_genre_carriers_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "the existing architectural structure carries one visual genre; a separately bounded existing vista carries the other genre; shared light and material edges connect both regions",
+              "claim_limits": [
+                "All carriers must already be compatible with the frozen scene. The two named genres do not prescribe a universal genre count."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "장르를 기존 구조와 다른 풍경에 나누어 배정; the existing architectural structure carries one visual genre; a separately bounded existing vista carries the other genre; shared light and material edges connect both regions; 기존 건축 구조가 한 장르의 형태를 담당한다; 분리된 기존 풍경 영역이 다른 장르를 담당한다; 공통 빛과 재료 경계가 두 영역을 연결한다"
+      }
+    ],
+    "concept_tension": [
+      {
+        "id": "vg_wardrobe_place_contrast",
+        "ko": "기존 의상과 일상 장소의 공동 조명 대비",
+        "en": "the existing garment retains its distinct construction; the existing everyday place remains recognizable; the same practical illumination reaches garment and place",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "기존 의상과 일상 장소의 공동 조명 대비"
+        ],
+        "keywords": [
+          "기존 의상과 일상 장소의 공동 조명 대비",
+          "wardrobe place contrast relation"
+        ],
+        "paraphrases": [
+          "기존 의상의 특징적인 구조가 유지된다; 기존 일상 장소의 단서가 읽힌다; 같은 현장 광원이 의상과 장소에 닿는다",
+          "the existing garment retains its distinct construction; the existing everyday place remains recognizable; the same practical illumination reaches garment and place"
+        ],
+        "concept_units": [
+          "the existing garment retains its distinct construction",
+          "the existing everyday place remains recognizable",
+          "the same practical illumination reaches garment and place"
+        ],
+        "relations": [
+          {
+            "id": "vg_wardrobe_place_contrast_r1",
+            "type": "contrasts_with",
+            "subject": "existing_garment",
+            "object": "existing_everyday_place"
+          },
+          {
+            "id": "vg_wardrobe_place_contrast_r2",
+            "type": "illuminates",
+            "subject": "shared_practical_source",
+            "object": "garment_and_place"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance",
+          "setting",
+          "lighting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.structure"
+          },
+          {
+            "dimension": "setting",
+            "target": "existing_place",
+            "property": "recognition_cues"
+          },
+          {
+            "dimension": "lighting",
+            "target": "*",
+            "property": "surface.illumination"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_wardrobe_place_contrast_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "the existing garment retains its distinct construction; the existing everyday place remains recognizable; the same practical illumination reaches garment and place",
+              "claim_limits": [
+                "The contrast is optional. It cannot replace the frozen garment or setting or introduce a particular dress or fluorescent fixture."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "기존 의상과 일상 장소의 공동 조명 대비; the existing garment retains its distinct construction; the existing everyday place remains recognizable; the same practical illumination reaches garment and place; 기존 의상의 특징적인 구조가 유지된다; 기존 일상 장소의 단서가 읽힌다; 같은 현장 광원이 의상과 장소에 닿는다"
+      }
+    ],
+    "emotional_contradiction": [
+      {
+        "id": "vg_composure_local_reaction",
+        "ko": "유지되는 태도와 같은 인물의 국소 반응",
+        "en": "the actor's main bearing remains composed; a smaller facial or hand reaction belongs to that same actor; the local reaction contrasts with the maintained bearing",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "유지되는 태도와 같은 인물의 국소 반응"
+        ],
+        "keywords": [
+          "유지되는 태도와 같은 인물의 국소 반응",
+          "composure local reaction relation"
+        ],
+        "paraphrases": [
+          "인물의 주된 태도는 정돈된 채 유지된다; 작은 얼굴 또는 손 반응이 같은 인물에게 속한다; 국소 반응이 유지되는 태도와 대비된다",
+          "the actor's main bearing remains composed; a smaller facial or hand reaction belongs to that same actor; the local reaction contrasts with the maintained bearing"
+        ],
+        "concept_units": [
+          "the actor's main bearing remains composed",
+          "a smaller facial or hand reaction belongs to that same actor",
+          "the local reaction contrasts with the maintained bearing"
+        ],
+        "relations": [
+          {
+            "id": "vg_composure_local_reaction_r1",
+            "type": "belongs_to",
+            "subject": "local_reaction",
+            "object": "same_actor"
+          },
+          {
+            "id": "vg_composure_local_reaction_r2",
+            "type": "contrasts_with",
+            "subject": "local_reaction",
+            "object": "maintained_bearing"
+          }
+        ],
+        "affected_dimensions": [
+          "expression",
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.bearing"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_composure_local_reaction_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "the actor's main bearing remains composed; a smaller facial or hand reaction belongs to that same actor; the local reaction contrasts with the maintained bearing",
+              "claim_limits": [
+                "Visible contrast does not establish a hidden emotion, diagnosis, stable personality or affiliation. A requested behavioral archetype still requires its own actor-target-action-consequence contract."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "유지되는 태도와 같은 인물의 국소 반응; the actor's main bearing remains composed; a smaller facial or hand reaction belongs to that same actor; the local reaction contrasts with the maintained bearing; 인물의 주된 태도는 정돈된 채 유지된다; 작은 얼굴 또는 손 반응이 같은 인물에게 속한다; 국소 반응이 유지되는 태도와 대비된다"
+      }
+    ],
+    "expression": [
+      {
+        "id": "vg_post_laugh_relaxation",
+        "ko": "웃음 뒤 이완된 입과 남은 눈 주변 웃음",
+        "en": "the actor's mouth rests in a relaxed near-closed position; that actor's eye corners retain a small smile crease; the relaxed mouth and smiling eye area remain visible together",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "웃음 뒤 이완된 입과 남은 눈 주변 웃음"
+        ],
+        "keywords": [
+          "웃음 뒤 이완된 입과 남은 눈 주변 웃음",
+          "post laugh relaxation relation"
+        ],
+        "paraphrases": [
+          "인물의 입이 이완된 거의 닫힌 상태에 놓인다; 같은 인물의 눈꼬리에 작은 웃음 주름이 남는다; 이완된 입과 웃는 눈 주변이 함께 보인다",
+          "the actor's mouth rests in a relaxed near-closed position; that actor's eye corners retain a small smile crease; the relaxed mouth and smiling eye area remain visible together"
+        ],
+        "concept_units": [
+          "the actor's mouth rests in a relaxed near-closed position",
+          "that actor's eye corners retain a small smile crease",
+          "the relaxed mouth and smiling eye area remain visible together"
+        ],
+        "relations": [
+          {
+            "id": "vg_post_laugh_relaxation_r1",
+            "type": "belongs_to",
+            "subject": "relaxed_mouth",
+            "object": "same_actor"
+          },
+          {
+            "id": "vg_post_laugh_relaxation_r2",
+            "type": "belongs_to",
+            "subject": "smiling_eye_area",
+            "object": "same_actor"
+          },
+          {
+            "id": "vg_post_laugh_relaxation_r3",
+            "type": "coexists_with",
+            "subject": "relaxed_mouth",
+            "object": "smiling_eye_area"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_post_laugh_relaxation_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "the actor's mouth rests in a relaxed near-closed position; that actor's eye corners retain a small smile crease; the relaxed mouth and smiling eye area remain visible together",
+              "claim_limits": [
+                "The visible facial configuration can suggest relaxation after laughter; one still cannot prove that laughter occurred earlier."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "웃음 뒤 이완된 입과 남은 눈 주변 웃음; the actor's mouth rests in a relaxed near-closed position; that actor's eye corners retain a small smile crease; the relaxed mouth and smiling eye area remain visible together; 인물의 입이 이완된 거의 닫힌 상태에 놓인다; 같은 인물의 눈꼬리에 작은 웃음 주름이 남는다; 이완된 입과 웃는 눈 주변이 함께 보인다"
+      }
+    ],
+    "contact_point": [
+      {
+        "id": "vg_pencil_paper_trace",
+        "ko": "지지된 종이와 연필 끝에서 이어지는 흑연선",
+        "en": "the actor's hand holds the pencil through a coherent wrist connection; the paper sheet rests on a visible support surface; the pencil tip contacts that same sheet; a local graphite line continues from the pencil contact point",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "지지된 종이와 연필 끝에서 이어지는 흑연선"
+        ],
+        "keywords": [
+          "지지된 종이와 연필 끝에서 이어지는 흑연선",
+          "pencil paper trace relation"
+        ],
+        "paraphrases": [
+          "인물의 손과 손목이 이어진 채 연필을 잡는다; 종이가 보이는 받침 표면 위에 놓인다; 연필 끝이 같은 종이에 닿는다; 접촉점에서 국소 흑연선이 이어진다",
+          "the actor's hand holds the pencil through a coherent wrist connection; the paper sheet rests on a visible support surface; the pencil tip contacts that same sheet; a local graphite line continues from the pencil contact point"
+        ],
+        "concept_units": [
+          "the actor's hand holds the pencil through a coherent wrist connection",
+          "the paper sheet rests on a visible support surface",
+          "the pencil tip contacts that same sheet",
+          "a local graphite line continues from the pencil contact point"
+        ],
+        "relations": [
+          {
+            "id": "vg_pencil_paper_trace_r1",
+            "type": "holds",
+            "subject": "actor_hand",
+            "object": "pencil"
+          },
+          {
+            "id": "vg_pencil_paper_trace_r2",
+            "type": "supports",
+            "subject": "support_surface",
+            "object": "paper_sheet"
+          },
+          {
+            "id": "vg_pencil_paper_trace_r3",
+            "type": "contacts",
+            "subject": "pencil_tip",
+            "object": "same_paper_sheet"
+          },
+          {
+            "id": "vg_pencil_paper_trace_r4",
+            "type": "continues_from",
+            "subject": "local_graphite_line",
+            "object": "pencil_contact_point"
+          }
+        ],
+        "affected_dimensions": [
+          "action",
+          "pose",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "action",
+            "target": "main_subject",
+            "property": "body.hand_tool_contact"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_wrist_configuration"
+          },
+          {
+            "dimension": "material",
+            "target": "paper_sheet",
+            "property": "surface.graphite_trace"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_pencil_paper_trace_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "the actor's hand holds the pencil through a coherent wrist connection; the paper sheet rests on a visible support surface; the pencil tip contacts that same sheet; a local graphite line continues from the pencil contact point",
+              "claim_limits": [
+                "The line must connect to the visible contact point. Hand count, paper layout, content accuracy and professional identity are separate meanings."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "지지된 종이와 연필 끝에서 이어지는 흑연선; the actor's hand holds the pencil through a coherent wrist connection; the paper sheet rests on a visible support surface; the pencil tip contacts that same sheet; a local graphite line continues from the pencil contact point; 인물의 손과 손목이 이어진 채 연필을 잡는다; 종이가 보이는 받침 표면 위에 놓인다; 연필 끝이 같은 종이에 닿는다; 접촉점에서 국소 흑연선이 이어진다"
+      },
+      {
+        "id": "vg_hand_water_local_ripples",
+        "ko": "손의 수면 접촉점과 국소 파문·젖음 경계",
+        "en": "the actor's fingertips meet the water at a visible contact boundary; small ripples center on that same contact region; the contacting skin has a bounded wet edge beside dry skin",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "손의 수면 접촉점과 국소 파문·젖음 경계"
+        ],
+        "keywords": [
+          "손의 수면 접촉점과 국소 파문·젖음 경계",
+          "hand water local ripples relation"
+        ],
+        "paraphrases": [
+          "인물의 손끝이 보이는 접촉 경계에서 수면에 닿는다; 작은 파문이 같은 접촉 영역을 중심으로 퍼진다; 닿는 피부에는 마른 피부 옆의 한정된 젖음 경계가 있다",
+          "the actor's fingertips meet the water at a visible contact boundary; small ripples center on that same contact region; the contacting skin has a bounded wet edge beside dry skin"
+        ],
+        "concept_units": [
+          "the actor's fingertips meet the water at a visible contact boundary",
+          "small ripples center on that same contact region",
+          "the contacting skin has a bounded wet edge beside dry skin"
+        ],
+        "relations": [
+          {
+            "id": "vg_hand_water_local_ripples_r1",
+            "type": "contacts",
+            "subject": "actor_fingertips",
+            "object": "water_surface_boundary"
+          },
+          {
+            "id": "vg_hand_water_local_ripples_r2",
+            "type": "centers_on",
+            "subject": "local_ripples",
+            "object": "same_contact_region"
+          },
+          {
+            "id": "vg_hand_water_local_ripples_r3",
+            "type": "adjoins",
+            "subject": "bounded_wet_skin",
+            "object": "dry_skin"
+          }
+        ],
+        "affected_dimensions": [
+          "action",
+          "pose",
+          "material",
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "action",
+            "target": "main_subject",
+            "property": "body.hand_water_contact"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "material",
+            "target": "water_surface",
+            "property": "surface.local_deformation"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "skin.wetness"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_hand_water_local_ripples_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "the actor's fingertips meet the water at a visible contact boundary; small ripples center on that same contact region; the contacting skin has a bounded wet edge beside dry skin",
+              "claim_limits": [
+                "One still supports local contact and visible surface geometry, not the measured wave speed, exact causal history or water safety."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "손의 수면 접촉점과 국소 파문·젖음 경계; the actor's fingertips meet the water at a visible contact boundary; small ripples center on that same contact region; the contacting skin has a bounded wet edge beside dry skin; 인물의 손끝이 보이는 접촉 경계에서 수면에 닿는다; 작은 파문이 같은 접촉 영역을 중심으로 퍼진다; 닿는 피부에는 마른 피부 옆의 한정된 젖음 경계가 있다"
+      }
+    ],
+    "narrative_phase": [
+      {
+        "id": "vg_bag_support_transfer",
+        "ko": "손에서 기존 받침으로 옮겨지는 가방 지지",
+        "en": "the bag's base rests against the receiving support; the same bag's handle lies just beyond the releasing fingers; the hand and bag retain a short readable release gap",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "손에서 기존 받침으로 옮겨지는 가방 지지"
+        ],
+        "keywords": [
+          "손에서 기존 받침으로 옮겨지는 가방 지지",
+          "bag support transfer relation"
+        ],
+        "paraphrases": [
+          "가방 바닥이 새 받침에 닿아 놓인다; 같은 가방 손잡이가 놓는 손가락 바로 바깥에 있다; 손과 가방 사이에 짧고 읽히는 놓기 간격이 남는다",
+          "the bag's base rests against the receiving support; the same bag's handle lies just beyond the releasing fingers; the hand and bag retain a short readable release gap"
+        ],
+        "concept_units": [
+          "the bag's base rests against the receiving support",
+          "the same bag's handle lies just beyond the releasing fingers",
+          "the hand and bag retain a short readable release gap"
+        ],
+        "relations": [
+          {
+            "id": "vg_bag_support_transfer_r1",
+            "type": "supports",
+            "subject": "receiving_support",
+            "object": "bag_base"
+          },
+          {
+            "id": "vg_bag_support_transfer_r2",
+            "type": "separates_from",
+            "subject": "releasing_fingers",
+            "object": "same_bag_handle"
+          }
+        ],
+        "affected_dimensions": [
+          "action",
+          "pose",
+          "composition"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "action",
+            "target": "main_subject",
+            "property": "body.hand_prop_release"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "composition",
+            "target": "bag",
+            "property": "spatial_arrangement"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_bag_support_transfer_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "the bag's base rests against the receiving support; the same bag's handle lies just beyond the releasing fingers; the hand and bag retain a short readable release gap",
+              "claim_limits": [
+                "This is the supported settling variant of release, not every falling-bag phase. Still pixels do not prove past or future trajectory."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "손에서 기존 받침으로 옮겨지는 가방 지지; the bag's base rests against the receiving support; the same bag's handle lies just beyond the releasing fingers; the hand and bag retain a short readable release gap; 가방 바닥이 새 받침에 닿아 놓인다; 같은 가방 손잡이가 놓는 손가락 바로 바깥에 있다; 손과 가방 사이에 짧고 읽히는 놓기 간격이 남는다"
+      }
+    ],
+    "focus": [
+      {
+        "id": "vg_face_hands_place_readability",
+        "ko": "얼굴·행동 손·장소 단서의 공동 가독성",
+        "en": "the face remains readable within the selected crop; the action-bearing hand and contact remain recognizable; one existing place cue retains enough form to identify the setting",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "얼굴·행동 손·장소 단서의 공동 가독성"
+        ],
+        "keywords": [
+          "얼굴·행동 손·장소 단서의 공동 가독성",
+          "face hands place readability relation"
+        ],
+        "paraphrases": [
+          "선택된 크롭 안에서 얼굴이 읽힌다; 행동을 담당하는 손과 접촉점이 알아보인다; 기존 장소 단서 하나가 장소를 읽을 만큼 형태를 유지한다",
+          "the face remains readable within the selected crop; the action-bearing hand and contact remain recognizable; one existing place cue retains enough form to identify the setting"
+        ],
+        "concept_units": [
+          "the face remains readable within the selected crop",
+          "the action-bearing hand and contact remain recognizable",
+          "one existing place cue retains enough form to identify the setting"
+        ],
+        "relations": [
+          {
+            "id": "vg_face_hands_place_readability_r1",
+            "type": "preserves_readability_of",
+            "subject": "focus_distribution",
+            "object": "face_hand_and_place_cue"
+          }
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "camera",
+            "target": "camera",
+            "property": "optical.focus"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_face_hands_place_readability_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "the face remains readable within the selected crop; the action-bearing hand and contact remain recognizable; one existing place cue retains enough form to identify the setting",
+              "claim_limits": [
+                "This distributes focus within an already permitted crop. It cannot widen a locked crop, add a hand or prescribe equal sharpness everywhere."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "얼굴·행동 손·장소 단서의 공동 가독성; the face remains readable within the selected crop; the action-bearing hand and contact remain recognizable; one existing place cue retains enough form to identify the setting; 선택된 크롭 안에서 얼굴이 읽힌다; 행동을 담당하는 손과 접촉점이 알아보인다; 기존 장소 단서 하나가 장소를 읽을 만큼 형태를 유지한다"
+      }
+    ],
+    "composition": [
+      {
+        "id": "vg_flat_artifact_raised_foreground",
+        "ko": "평면 종이 작품과 입체 전경의 지지·깊이 분리",
+        "en": "the linework remains flat on the bounded paper surface; a separate foreground object has visible thickness or relief; their distinct supports and depth order remain readable",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "평면 종이 작품과 입체 전경의 지지·깊이 분리"
+        ],
+        "keywords": [
+          "평면 종이 작품과 입체 전경의 지지·깊이 분리",
+          "flat artifact raised foreground relation"
+        ],
+        "paraphrases": [
+          "선은 경계가 보이는 종이 표면 위에 평면으로 남는다; 분리된 전경 물체는 두께 또는 돌출을 가진다; 서로 다른 받침과 깊이 순서가 읽힌다",
+          "the linework remains flat on the bounded paper surface; a separate foreground object has visible thickness or relief; their distinct supports and depth order remain readable"
+        ],
+        "concept_units": [
+          "the linework remains flat on the bounded paper surface",
+          "a separate foreground object has visible thickness or relief",
+          "their distinct supports and depth order remain readable"
+        ],
+        "relations": [
+          {
+            "id": "vg_flat_artifact_raised_foreground_r1",
+            "type": "lies_on",
+            "subject": "flat_linework",
+            "object": "paper_surface"
+          },
+          {
+            "id": "vg_flat_artifact_raised_foreground_r2",
+            "type": "stands_in_front_of",
+            "subject": "raised_foreground_object",
+            "object": "flat_artifact"
+          },
+          {
+            "id": "vg_flat_artifact_raised_foreground_r3",
+            "type": "rests_on",
+            "subject": "each_object",
+            "object": "its_visible_support"
+          }
+        ],
+        "affected_dimensions": [
+          "composition",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "composition",
+            "target": "depicted_artifact",
+            "property": "layout.depth"
+          },
+          {
+            "dimension": "material",
+            "target": "depicted_artifact",
+            "property": "surface.relief"
+          },
+          {
+            "dimension": "composition",
+            "target": "foreground_object",
+            "property": "layout.depth"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_flat_artifact_raised_foreground_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "the linework remains flat on the bounded paper surface; a separate foreground object has visible thickness or relief; their distinct supports and depth order remain readable",
+              "claim_limits": [
+                "This preserves two separate owners. It is not the contiguous drawing-to-thread transformation."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "평면 종이 작품과 입체 전경의 지지·깊이 분리; the linework remains flat on the bounded paper surface; a separate foreground object has visible thickness or relief; their distinct supports and depth order remain readable; 선은 경계가 보이는 종이 표면 위에 평면으로 남는다; 분리된 전경 물체는 두께 또는 돌출을 가진다; 서로 다른 받침과 깊이 순서가 읽힌다"
+      }
+    ],
+    "lighting": [
+      {
+        "id": "vg_cool_window_warm_practical_receivers",
+        "ko": "차가운 창빛과 따뜻한 현장광의 수신 영역 분리",
+        "en": "cool window light reaches its facing surfaces; a warm practical source reaches a separately bounded surface region; the receiver zones retain distinct local illumination",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "차가운 창빛과 따뜻한 현장광의 수신 영역 분리"
+        ],
+        "keywords": [
+          "차가운 창빛과 따뜻한 현장광의 수신 영역 분리",
+          "cool window warm practical receivers relation"
+        ],
+        "paraphrases": [
+          "차가운 창빛이 창을 향한 표면에 닿는다; 따뜻한 현장 광원이 다른 한정 표면에 닿는다; 수신 영역이 구분되는 국소 조명을 유지한다",
+          "cool window light reaches its facing surfaces; a warm practical source reaches a separately bounded surface region; the receiver zones retain distinct local illumination"
+        ],
+        "concept_units": [
+          "cool window light reaches its facing surfaces",
+          "a warm practical source reaches a separately bounded surface region",
+          "the receiver zones retain distinct local illumination"
+        ],
+        "relations": [
+          {
+            "id": "vg_cool_window_warm_practical_receivers_r1",
+            "type": "illuminates",
+            "subject": "cool_window_source",
+            "object": "window_facing_surfaces"
+          },
+          {
+            "id": "vg_cool_window_warm_practical_receivers_r2",
+            "type": "illuminates",
+            "subject": "warm_practical_source",
+            "object": "bounded_warm_receiver"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting",
+          "color"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "*",
+            "property": "surface.illumination"
+          },
+          {
+            "dimension": "color",
+            "target": "light",
+            "property": "light.color"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_cool_window_warm_practical_receivers_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "cool window light reaches its facing surfaces; a warm practical source reaches a separately bounded surface region; the receiver zones retain distinct local illumination",
+              "claim_limits": [
+                "Light color is distinct from object local color. Both source regions must fit the frozen scene."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "차가운 창빛과 따뜻한 현장광의 수신 영역 분리; cool window light reaches its facing surfaces; a warm practical source reaches a separately bounded surface region; the receiver zones retain distinct local illumination; 차가운 창빛이 창을 향한 표면에 닿는다; 따뜻한 현장 광원이 다른 한정 표면에 닿는다; 수신 영역이 구분되는 국소 조명을 유지한다"
+      }
+    ],
+    "light_type": [
+      {
+        "id": "vg_frontal_flash_warm_ambient",
+        "ko": "근거리 정면 플래시와 뒤쪽 따뜻한 주변광",
+        "en": "a near-camera flash supplies direct light on the foreground actor; warm practical illumination remains on the rear room surfaces; the foreground and rear receivers keep distinct source roles",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "근거리 정면 플래시와 뒤쪽 따뜻한 주변광"
+        ],
+        "keywords": [
+          "근거리 정면 플래시와 뒤쪽 따뜻한 주변광",
+          "frontal flash warm ambient relation"
+        ],
+        "paraphrases": [
+          "카메라 가까운 플래시가 전경 인물에 직접 빛을 준다; 뒤쪽 방 표면에는 따뜻한 현장광이 남는다; 전경과 뒤쪽 수신 표면의 광원 역할이 나뉜다",
+          "a near-camera flash supplies direct light on the foreground actor; warm practical illumination remains on the rear room surfaces; the foreground and rear receivers keep distinct source roles"
+        ],
+        "concept_units": [
+          "a near-camera flash supplies direct light on the foreground actor",
+          "warm practical illumination remains on the rear room surfaces",
+          "the foreground and rear receivers keep distinct source roles"
+        ],
+        "relations": [
+          {
+            "id": "vg_frontal_flash_warm_ambient_r1",
+            "type": "illuminates",
+            "subject": "near_camera_flash",
+            "object": "foreground_actor"
+          },
+          {
+            "id": "vg_frontal_flash_warm_ambient_r2",
+            "type": "illuminates",
+            "subject": "warm_ambient_source",
+            "object": "rear_room_surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting",
+          "color"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "main_subject",
+            "property": "surface.illumination"
+          },
+          {
+            "dimension": "lighting",
+            "target": "existing_room",
+            "property": "surface.illumination"
+          },
+          {
+            "dimension": "color",
+            "target": "light",
+            "property": "light.color"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_frontal_flash_warm_ambient_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "a near-camera flash supplies direct light on the foreground actor; warm practical illumination remains on the rear room surfaces; the foreground and rear receivers keep distinct source roles",
+              "claim_limits": [
+                "The near-camera source does not prove a phone capture or real capture history. Extra lighting apparatus is not implied."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "근거리 정면 플래시와 뒤쪽 따뜻한 주변광; a near-camera flash supplies direct light on the foreground actor; warm practical illumination remains on the rear room surfaces; the foreground and rear receivers keep distinct source roles; 카메라 가까운 플래시가 전경 인물에 직접 빛을 준다; 뒤쪽 방 표면에는 따뜻한 현장광이 남는다; 전경과 뒤쪽 수신 표면의 광원 역할이 나뉜다"
+      }
+    ],
+    "texture": [
+      {
+        "id": "vg_matte_cloth_polished_metal",
+        "ko": "같은 빛을 받는 매트한 천과 광택 금속",
+        "en": "the existing cloth spreads broad soft tonal changes; the existing polished metal carries bounded sharper reflections; both responses follow the same stated light direction",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "같은 빛을 받는 매트한 천과 광택 금속"
+        ],
+        "keywords": [
+          "같은 빛을 받는 매트한 천과 광택 금속",
+          "matte cloth polished metal relation"
+        ],
+        "paraphrases": [
+          "기존 천에는 넓고 부드러운 명암 변화가 퍼진다; 기존 광택 금속에는 한정된 선명한 반사가 있다; 두 표면 반응이 같은 지정 빛 방향을 따른다",
+          "the existing cloth spreads broad soft tonal changes; the existing polished metal carries bounded sharper reflections; both responses follow the same stated light direction"
+        ],
+        "concept_units": [
+          "the existing cloth spreads broad soft tonal changes",
+          "the existing polished metal carries bounded sharper reflections",
+          "both responses follow the same stated light direction"
+        ],
+        "relations": [
+          {
+            "id": "vg_matte_cloth_polished_metal_r1",
+            "type": "responds_to",
+            "subject": "matte_cloth",
+            "object": "same_light"
+          },
+          {
+            "id": "vg_matte_cloth_polished_metal_r2",
+            "type": "responds_to",
+            "subject": "polished_metal",
+            "object": "same_light"
+          },
+          {
+            "id": "vg_matte_cloth_polished_metal_r3",
+            "type": "differs_from",
+            "subject": "broad_cloth_response",
+            "object": "bounded_metal_reflection"
+          }
+        ],
+        "affected_dimensions": [
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "material",
+            "target": "existing_cloth",
+            "property": "surface.reflectance"
+          },
+          {
+            "dimension": "material",
+            "target": "existing_metal",
+            "property": "surface.reflectance"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_matte_cloth_polished_metal_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "the existing cloth spreads broad soft tonal changes; the existing polished metal carries bounded sharper reflections; both responses follow the same stated light direction",
+              "claim_limits": [
+                "Reflectance contrast does not establish alloy or fiber identity. Preserve existing owners and local colors."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "같은 빛을 받는 매트한 천과 광택 금속; the existing cloth spreads broad soft tonal changes; the existing polished metal carries bounded sharper reflections; both responses follow the same stated light direction; 기존 천에는 넓고 부드러운 명암 변화가 퍼진다; 기존 광택 금속에는 한정된 선명한 반사가 있다; 두 표면 반응이 같은 지정 빛 방향을 따른다"
+      },
+      {
+        "id": "vg_faille_crossgrain_ribs",
+        "ko": "기존 천 표면의 촘촘한 가로 리브 직조",
+        "en": "fine flat cross-grain ribs repeat across the existing cloth; the ribs bend continuously with the cloth surface; small directional highlights reveal the rib relief",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "기존 천 표면의 촘촘한 가로 리브 직조"
+        ],
+        "keywords": [
+          "기존 천 표면의 촘촘한 가로 리브 직조",
+          "faille crossgrain ribs relation"
+        ],
+        "paraphrases": [
+          "기존 천에 촘촘하고 납작한 가로 리브가 반복된다; 리브가 천 표면을 따라 연속적으로 굽는다; 작은 방향성 반사로 리브 돌출이 읽힌다",
+          "fine flat cross-grain ribs repeat across the existing cloth; the ribs bend continuously with the cloth surface; small directional highlights reveal the rib relief"
+        ],
+        "concept_units": [
+          "fine flat cross-grain ribs repeat across the existing cloth",
+          "the ribs bend continuously with the cloth surface",
+          "small directional highlights reveal the rib relief"
+        ],
+        "relations": [
+          {
+            "id": "vg_faille_crossgrain_ribs_r1",
+            "type": "forms",
+            "subject": "crossgrain_weave",
+            "object": "flat_rib_relief"
+          },
+          {
+            "id": "vg_faille_crossgrain_ribs_r2",
+            "type": "follows",
+            "subject": "rib_direction",
+            "object": "existing_cloth_surface"
+          }
+        ],
+        "affected_dimensions": [
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "material",
+            "target": "existing_cloth",
+            "property": "surface.weave"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_faille_crossgrain_ribs_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "fine flat cross-grain ribs repeat across the existing cloth; the ribs bend continuously with the cloth surface; small directional highlights reveal the rib relief",
+              "claim_limits": [
+                "Faille names a ribbed cloth structure, not one exclusive fiber. Silk, rayon, cotton, wool or synthetic fibers may be used; fiber, color and garment silhouette remain independently specified."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "기존 천 표면의 촘촘한 가로 리브 직조; fine flat cross-grain ribs repeat across the existing cloth; the ribs bend continuously with the cloth surface; small directional highlights reveal the rib relief; 기존 천에 촘촘하고 납작한 가로 리브가 반복된다; 리브가 천 표면을 따라 연속적으로 굽는다; 작은 방향성 반사로 리브 돌출이 읽힌다"
+      }
+    ],
+    "garment_detail": [
+      {
+        "id": "vg_ribbon_to_garment_seam",
+        "ko": "기존 리본 끝에서 의상 절개선으로 이어지는 연결",
+        "en": "one existing ribbon tail retains a readable flat strip; that same strip joins the existing garment seam at a visible junction; the seam continues away from the junction on the garment surface",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "기존 리본 끝에서 의상 절개선으로 이어지는 연결"
+        ],
+        "keywords": [
+          "기존 리본 끝에서 의상 절개선으로 이어지는 연결",
+          "ribbon to garment seam relation"
+        ],
+        "paraphrases": [
+          "기존 리본 꼬리 하나가 납작한 띠 형태를 유지한다; 같은 띠가 보이는 접합점에서 기존 의상 절개선에 이어진다; 절개선이 접합점에서 의상 표면을 따라 계속된다",
+          "one existing ribbon tail retains a readable flat strip; that same strip joins the existing garment seam at a visible junction; the seam continues away from the junction on the garment surface"
+        ],
+        "concept_units": [
+          "one existing ribbon tail retains a readable flat strip",
+          "that same strip joins the existing garment seam at a visible junction",
+          "the seam continues away from the junction on the garment surface"
+        ],
+        "relations": [
+          {
+            "id": "vg_ribbon_to_garment_seam_r1",
+            "type": "joins_at",
+            "subject": "existing_ribbon_tail",
+            "object": "garment_seam_junction"
+          },
+          {
+            "id": "vg_ribbon_to_garment_seam_r2",
+            "type": "continues_from",
+            "subject": "existing_garment_seam",
+            "object": "same_junction"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.details"
+          },
+          {
+            "dimension": "material",
+            "target": "existing_garment",
+            "property": "surface.junction"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_ribbon_to_garment_seam_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "one existing ribbon tail retains a readable flat strip; that same strip joins the existing garment seam at a visible junction; the seam continues away from the junction on the garment surface",
+              "claim_limits": [
+                "The ribbon and seam must already belong to the permitted garment. A fantastical material transition requires the separately requested or authored impossible relationship."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "기존 리본 끝에서 의상 절개선으로 이어지는 연결; one existing ribbon tail retains a readable flat strip; that same strip joins the existing garment seam at a visible junction; the seam continues away from the junction on the garment surface; 기존 리본 꼬리 하나가 납작한 띠 형태를 유지한다; 같은 띠가 보이는 접합점에서 기존 의상 절개선에 이어진다; 절개선이 접합점에서 의상 표면을 따라 계속된다"
+      }
+    ],
+    "motion": [
+      {
+        "id": "vg_shared_airflow_hair_ribbon",
+        "ko": "같은 국소 바람에 다르게 굽는 머리카락과 리본",
+        "en": "loose hair strands remain rooted at the actor's head; the existing ribbon tail remains attached at its own anchor; hair and ribbon curve in a compatible local airflow with different shapes",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "같은 국소 바람에 다르게 굽는 머리카락과 리본"
+        ],
+        "keywords": [
+          "같은 국소 바람에 다르게 굽는 머리카락과 리본",
+          "shared airflow hair ribbon relation"
+        ],
+        "paraphrases": [
+          "잔머리가 인물의 머리에 뿌리 연결을 유지한다; 기존 리본 꼬리가 자기 고정점에 연결된다; 머리카락과 리본이 같은 국소 바람에 맞는 서로 다른 곡선을 만든다",
+          "loose hair strands remain rooted at the actor's head; the existing ribbon tail remains attached at its own anchor; hair and ribbon curve in a compatible local airflow with different shapes"
+        ],
+        "concept_units": [
+          "loose hair strands remain rooted at the actor's head",
+          "the existing ribbon tail remains attached at its own anchor",
+          "hair and ribbon curve in a compatible local airflow with different shapes"
+        ],
+        "relations": [
+          {
+            "id": "vg_shared_airflow_hair_ribbon_r1",
+            "type": "roots_at",
+            "subject": "loose_hair",
+            "object": "same_actor_head"
+          },
+          {
+            "id": "vg_shared_airflow_hair_ribbon_r2",
+            "type": "attaches_to",
+            "subject": "ribbon_tail",
+            "object": "own_anchor"
+          },
+          {
+            "id": "vg_shared_airflow_hair_ribbon_r3",
+            "type": "responds_to",
+            "subject": "hair_and_ribbon",
+            "object": "compatible_local_airflow"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance",
+          "action"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "hair.style"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.details"
+          },
+          {
+            "dimension": "action",
+            "target": "existing_ribbon",
+            "property": "motion.configuration"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_shared_airflow_hair_ribbon_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "loose hair strands remain rooted at the actor's head; the existing ribbon tail remains attached at its own anchor; hair and ribbon curve in a compatible local airflow with different shapes",
+              "claim_limits": [
+                "Visible forms can be compatible with shared airflow; one frame does not measure wind or temporal inertia. Distinct carrier attachment and form matter more than identical direction arrows."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "같은 국소 바람에 다르게 굽는 머리카락과 리본; loose hair strands remain rooted at the actor's head; the existing ribbon tail remains attached at its own anchor; hair and ribbon curve in a compatible local airflow with different shapes; 잔머리가 인물의 머리에 뿌리 연결을 유지한다; 기존 리본 꼬리가 자기 고정점에 연결된다; 머리카락과 리본이 같은 국소 바람에 맞는 서로 다른 곡선을 만든다"
+      }
+    ],
+    "surreal_physics_detail": [
+      {
+        "id": "vg_bounded_stillness_exception",
+        "ko": "지정 정지 영역과 이어지는 예외 동작",
+        "en": "the declared suspended objects retain a bounded still configuration; one separately declared actor or region continues an identifiable action; the exception has a readable spatial boundary against the still region",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "지정 정지 영역과 이어지는 예외 동작"
+        ],
+        "keywords": [
+          "지정 정지 영역과 이어지는 예외 동작",
+          "bounded stillness exception relation"
+        ],
+        "paraphrases": [
+          "지정된 정지 물체들이 한정된 정지 구성을 유지한다; 별도 지정한 인물이나 영역 하나는 알아볼 수 있는 행동을 이어간다; 예외 영역과 정지 영역 사이의 공간 경계가 읽힌다",
+          "the declared suspended objects retain a bounded still configuration; one separately declared actor or region continues an identifiable action; the exception has a readable spatial boundary against the still region"
+        ],
+        "concept_units": [
+          "the declared suspended objects retain a bounded still configuration",
+          "one separately declared actor or region continues an identifiable action",
+          "the exception has a readable spatial boundary against the still region"
+        ],
+        "relations": [
+          {
+            "id": "vg_bounded_stillness_exception_r1",
+            "type": "occupies",
+            "subject": "suspended_objects",
+            "object": "declared_still_region"
+          },
+          {
+            "id": "vg_bounded_stillness_exception_r2",
+            "type": "acts_within",
+            "subject": "declared_exception",
+            "object": "separate_region"
+          }
+        ],
+        "affected_dimensions": [
+          "action",
+          "composition"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "action",
+            "target": "declared_exception",
+            "property": "motion.configuration"
+          },
+          {
+            "dimension": "composition",
+            "target": "suspended_objects",
+            "property": "spatial_arrangement"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_bounded_stillness_exception_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "the declared suspended objects retain a bounded still configuration; one separately declared actor or region continues an identifiable action; the exception has a readable spatial boundary against the still region",
+              "claim_limits": [
+                "This is an optional impossible-scene realization. A still image cannot establish literal time stoppage, and the number of exceptions comes from the authored scene rather than a universal one-rule limit."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "지정 정지 영역과 이어지는 예외 동작; the declared suspended objects retain a bounded still configuration; one separately declared actor or region continues an identifiable action; the exception has a readable spatial boundary against the still region; 지정된 정지 물체들이 한정된 정지 구성을 유지한다; 별도 지정한 인물이나 영역 하나는 알아볼 수 있는 행동을 이어간다; 예외 영역과 정지 영역 사이의 공간 경계가 읽힌다"
+      }
+    ],
+    "transition_stage": [
+      {
+        "id": "vg_graphite_thread_raised_flower",
+        "ko": "종이 흑연선에서 실과 입체 꽃으로 이어지는 경계",
+        "en": "a flat graphite line remains attached to the bounded paper surface; that same line rises into a strand at one visible paper junction; the strand continues into the raised flower's stem or lace structure; flat line junction strand and flower remain one continuous path",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "종이 흑연선에서 실과 입체 꽃으로 이어지는 경계"
+        ],
+        "keywords": [
+          "종이 흑연선에서 실과 입체 꽃으로 이어지는 경계",
+          "graphite thread raised flower relation"
+        ],
+        "paraphrases": [
+          "평면 흑연선이 경계가 보이는 종이 표면에 남는다; 같은 선이 보이는 종이 접합점 하나에서 실로 솟는다; 실이 입체 꽃의 줄기 또는 레이스 구조로 이어진다; 평면 선·접합점·실·꽃이 하나의 연속 경로를 유지한다",
+          "a flat graphite line remains attached to the bounded paper surface; that same line rises into a strand at one visible paper junction; the strand continues into the raised flower's stem or lace structure; flat line junction strand and flower remain one continuous path"
+        ],
+        "concept_units": [
+          "a flat graphite line remains attached to the bounded paper surface",
+          "that same line rises into a strand at one visible paper junction",
+          "the strand continues into the raised flower's stem or lace structure",
+          "flat line junction strand and flower remain one continuous path"
+        ],
+        "relations": [
+          {
+            "id": "vg_graphite_thread_raised_flower_r1",
+            "type": "lies_on",
+            "subject": "flat_graphite_line",
+            "object": "paper_surface"
+          },
+          {
+            "id": "vg_graphite_thread_raised_flower_r2",
+            "type": "rises_at",
+            "subject": "same_line",
+            "object": "visible_paper_junction"
+          },
+          {
+            "id": "vg_graphite_thread_raised_flower_r3",
+            "type": "continues_into",
+            "subject": "raised_strand",
+            "object": "flower_stem_or_lace"
+          },
+          {
+            "id": "vg_graphite_thread_raised_flower_r4",
+            "type": "connects",
+            "subject": "continuous_material_path",
+            "object": "flat_source_and_raised_result"
+          }
+        ],
+        "affected_dimensions": [
+          "material",
+          "composition"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "material",
+            "target": "depicted_artifact",
+            "property": "surface.material_state"
+          },
+          {
+            "dimension": "material",
+            "target": "depicted_artifact",
+            "property": "surface.junction"
+          },
+          {
+            "dimension": "composition",
+            "target": "depicted_artifact",
+            "property": "layout.depth"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_graphite_thread_raised_flower_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "a flat graphite line remains attached to the bounded paper surface; that same line rises into a strand at one visible paper junction; the strand continues into the raised flower's stem or lace structure; flat line junction strand and flower remain one continuous path",
+              "claim_limits": [
+                "This is an authored impossible material transition, not a claim about an ordinary physical process. It changes the depicted artifact rather than the reference person's body."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "종이 흑연선에서 실과 입체 꽃으로 이어지는 경계; a flat graphite line remains attached to the bounded paper surface; that same line rises into a strand at one visible paper junction; the strand continues into the raised flower's stem or lace structure; flat line junction strand and flower remain one continuous path; 평면 흑연선이 경계가 보이는 종이 표면에 남는다; 같은 선이 보이는 종이 접합점 하나에서 실로 솟는다; 실이 입체 꽃의 줄기 또는 레이스 구조로 이어진다; 평면 선·접합점·실·꽃이 하나의 연속 경로를 유지한다"
+      }
+    ],
+    "scale_relation": [
+      {
+        "id": "vg_artifact_common_plane_scale",
+        "ko": "기존 모형과 같은 깊이에 놓인 알려진 크기 기준",
+        "en": "the existing miniature artifact retains recognizable small structural features; an existing familiar-size reference lies at the same depth as those features; the local size comparison remains readable within their shared depth plane",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation"
+        ],
+        "aliases": [
+          "기존 모형과 같은 깊이에 놓인 알려진 크기 기준"
+        ],
+        "keywords": [
+          "기존 모형과 같은 깊이에 놓인 알려진 크기 기준",
+          "artifact common plane scale relation"
+        ],
+        "paraphrases": [
+          "기존 미니어처 작품에 알아볼 수 있는 작은 구조가 남는다; 기존의 익숙한 크기 기준이 그 구조와 같은 깊이에 놓인다; 공통 깊이 평면 안에서 국소 크기 비교가 읽힌다",
+          "the existing miniature artifact retains recognizable small structural features; an existing familiar-size reference lies at the same depth as those features; the local size comparison remains readable within their shared depth plane"
+        ],
+        "concept_units": [
+          "the existing miniature artifact retains recognizable small structural features",
+          "an existing familiar-size reference lies at the same depth as those features",
+          "the local size comparison remains readable within their shared depth plane"
+        ],
+        "relations": [
+          {
+            "id": "vg_artifact_common_plane_scale_r1",
+            "type": "shares_depth_with",
+            "subject": "existing_scale_reference",
+            "object": "miniature_artifact_features"
+          },
+          {
+            "id": "vg_artifact_common_plane_scale_r2",
+            "type": "compares_local_size_with",
+            "subject": "miniature_artifact_features",
+            "object": "same_depth_scale_reference"
+          }
+        ],
+        "affected_dimensions": [
+          "composition"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "composition",
+            "target": "existing_model",
+            "property": "scale.relative_reference"
+          },
+          {
+            "dimension": "composition",
+            "target": "existing_scale_reference",
+            "property": "layout.depth"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vg_artifact_common_plane_scale_boundary",
+              "definition": "Use the complete relation on the declared existing owners within frozen scope.",
+              "observable_interpretation": "the existing miniature artifact retains recognizable small structural features; an existing familiar-size reference lies at the same depth as those features; the local size comparison remains readable within their shared depth plane",
+              "claim_limits": [
+                "Both artifact and reference must already fit the frozen scene; this relation adds neither a person nor a coin. The reference may be a hand or another familiar-size existing object.",
+                "Visible relative scale and depth do not establish calibrated SI dimensions. Preserve the reference person's appearance and the artifact's structural identity."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "기존 모형과 같은 깊이에 놓인 알려진 크기 기준; the existing miniature artifact retains recognizable small structural features; an existing familiar-size reference lies at the same depth as those features; the local size comparison remains readable within their shared depth plane; 기존 미니어처 작품에 알아볼 수 있는 작은 구조가 남는다; 기존의 익숙한 크기 기준이 그 구조와 같은 깊이에 놓인다; 공통 깊이 평면 안에서 국소 크기 비교가 읽힌다"
+      }
+    ]
+  },
+  "existing_slot_context_extensions": {
+    "medium": {
+      "street_snapshot": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g01_street_snapshot",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "the chosen capture register governs the same frame",
+            "claim_limits": [
+              "documentary나 RAW는 실제 촬영 이력의 증거가 아니다.",
+              "순수 수채 요청을 사진 프롬프트로 바꾸지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "mood": {
+      "domestic_melancholy": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g04_domestic_melancholy",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "context connects the selected affect reading to visible scene evidence",
+            "claim_limits": [
+              "정서를 증명하는 얼굴 모양 한 가지를 정의하지 않는다.",
+              "눈물·비·소품을 모든 우울 요청에 기본 삽입하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "expression": {
+      "ae_lip_press": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g08_ae_lip_press",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "both margins press against each other on the same face",
+            "claim_limits": [
+              "닫힘만 보이는 표현에는 압박 hard duty를 추가하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ],
+        "paraphrases": [
+          "the closed lip seam shows compressed upper and lower margins",
+          "입술이 닫힌 경계에서 위아래 가장자리가 눌려 맞닿는다"
+        ]
+      }
+    },
+    "capture_context": {
+      "off_camera_companion_everyday_capture": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g09_off_camera_companion_everyday_capture",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "camera position belongs to the declared interaction geometry",
+            "claim_limits": [
+              "viewer role는 연출 맥락이다.",
+              "친구 시점 후보 때문에 두 번째 인물을 화면에 추가하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "viewer_position": {
+      "viewer_as_confidant": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g09_viewer_as_confidant",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "camera position belongs to the declared interaction geometry",
+            "claim_limits": [
+              "viewer role는 연출 맥락이다.",
+              "친구 시점 후보 때문에 두 번째 인물을 화면에 추가하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "relational_action": {
+      "two_people_sitting_without_words": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g10_two_people_sitting_without_words",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "each participant directs attention toward the declared counterpart or shared target",
+            "claim_limits": [
+              "상호 주의가 호감이나 애정의 진위를 증명하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "body_pose": {
+      "pv_single_support": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g11_pv_single_support",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "body configuration responds to the declared support leg",
+            "claim_limits": [
+              "단순 지지 관계와 고전 contrapposto의 전체 구성을 구별한다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ],
+        "paraphrases": [
+          "one planted leg carries the main support while the other rests more lightly, with the connected torso above the base",
+          "한쪽 다리가 주된 지지를 맡고 다른 다리는 가볍게 놓이며 몸통이 지지 기반 위로 연결된다"
+        ]
+      },
+      "contrapposto_full_body": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g11_contrapposto_full_body",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "body configuration responds to the declared support leg",
+            "claim_limits": [
+              "단순 지지 관계와 고전 contrapposto의 전체 구성을 구별한다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "narrative_phase": {
+      "precontact_readiness_visible_gap": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g12_precontact_readiness_visible_gap",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "the present actor-target relation agrees with one selected phase",
+            "claim_limits": [
+              "단계 라벨이 이전·다음 사건을 픽셀로 입증하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "locomotion_counterturn_midphase": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g12_locomotion_counterturn_midphase",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "the present actor-target relation agrees with one selected phase",
+            "claim_limits": [
+              "단계 라벨이 이전·다음 사건을 픽셀로 입증하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "settling_aftereffect_trace_phase": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g12_settling_aftereffect_trace_phase",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "the present actor-target relation agrees with one selected phase",
+            "claim_limits": [
+              "단계 라벨이 이전·다음 사건을 픽셀로 입증하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "contact_point": {
+      "cv_two_hand_cup": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g15_cv_two_hand_cup",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "both owned hands wrap around the same cup",
+            "claim_limits": [
+              "온기·냄새·컵의 실제 온도는 손 접촉만으로 증명하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "action": {
+      "ctx_warm_cup_hold": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g15_ctx_warm_cup_hold",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "both owned hands wrap around the same cup",
+            "claim_limits": [
+              "온기·냄새·컵의 실제 온도는 손 접촉만으로 증명하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "composition": {
+      "subject_field_negative_space_relation": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g16_subject_field_negative_space_relation",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "a bounded empty or quiet field supports the subject without erasing required context",
+            "claim_limits": [
+              "negative space 일반과 body-bounded negative space를 구별한다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ],
+        "paraphrases": [
+          "a contiguous quiet field adjoins the subject silhouette and belongs to the surrounding image area",
+          "피사체 윤곽에 이어진 고요한 배경 여백이 화면 주변 영역에 놓인다"
+        ]
+      },
+      "primary_secondary_figure_ground_hierarchy": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g40_primary_secondary_figure_ground_hierarchy",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "detail concentration supports the primary shape rather than replacing its hierarchy",
+            "claim_limits": [
+              "단순 명암과 적은 정보가 모든 미감의 정답은 아니다.",
+              "사진의 위계는 재사용하되 붓질·선 처리 의미는 별도 보존한다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "color": {
+      "cr_candidate_vivid_on_muted": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g17_cr_candidate_vivid_on_muted",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "one declared accent remains separate from its quieter field",
+            "claim_limits": [
+              "muted는 achromatic과 다르다.",
+              "빛이나 반사 속 같은 강조색을 독립 개체 개수와 구분한다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ],
+        "paraphrases": [
+          "a bounded vivid color accent sits within a larger low-saturation color field",
+          "한정된 선명한 강조색이 더 큰 저채도 색 영역 안에 놓인다"
+        ]
+      },
+      "pal_app_neutral_cobalt_accent": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g27_pal_app_neutral_cobalt_accent",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "local colors stay on their declared carriers with a clear hierarchy",
+            "claim_limits": [
+              "기존 코발트 팔레트는 바인딩 구조의 비교 대상이며 빨강 팔레트와 동의어가 아니다.",
+              "20개 조합을 모두 새 hard profile로 복제하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "light_shape": {
+      "egr_occluded_vertical_emissive_slit": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g21_egr_occluded_vertical_emissive_slit",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "source shape, overlap and edge response share a coherent spatial arrangement",
+            "claim_limits": [
+              "따뜻한 색만으로 역광이나 실제 광원 모양을 입증하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "lens_artifact": {
+      "water_droplets_on_lens": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g24_water_droplets_on_lens",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "lens or glass marks and highlight spread occupy their respective carrier layers",
+            "claim_limits": [
+              "현재 diffusion_filter_highlight_halation 명칭과 정의는 필름 현상과 구분해 검토한다.",
+              "픽셀 모양이 실제 필름이나 필터 사용을 증명하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "rain_streaks_on_glass": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g24_rain_streaks_on_glass",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "lens or glass marks and highlight spread occupy their respective carrier layers",
+            "claim_limits": [
+              "현재 diffusion_filter_highlight_halation 명칭과 정의는 필름 현상과 구분해 검토한다.",
+              "픽셀 모양이 실제 필름이나 필터 사용을 증명하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "color_grading": {
+      "pe_faded_black_floor": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g26_pe_faded_black_floor",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "tone response preserves the chosen shadow and bright-region evidence",
+            "claim_limits": [
+              "lifted blacks와 deep blacks는 목표 영역·곡선 선택을 명확히 한다.",
+              "smooth가 무조건 좋은 마감이라는 주장으로 쓰지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "lit_noir_deep_detailed_black_finish": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g26_lit_noir_deep_detailed_black_finish",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "tone response preserves the chosen shadow and bright-region evidence",
+            "claim_limits": [
+              "lifted blacks와 deep blacks는 목표 영역·곡선 선택을 명확히 한다.",
+              "smooth가 무조건 좋은 마감이라는 주장으로 쓰지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      },
+      "lit_golden_protected_warm_rolloff": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g26_lit_golden_protected_warm_rolloff",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "tone response preserves the chosen shadow and bright-region evidence",
+            "claim_limits": [
+              "lifted blacks와 deep blacks는 목표 영역·곡선 선택을 명확히 한다.",
+              "smooth가 무조건 좋은 마감이라는 주장으로 쓰지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "hair_style": {
+      "pr_hair_strand_owner_and_cause_candidate": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g31_pr_hair_strand_owner_and_cause_candidate",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "owned strands respond to an established breeze or movement and source direction",
+            "claim_limits": [
+              "바람 없는 고정 장면에는 바람을 새로 넣지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ],
+        "paraphrases": [
+          "loose strands keep visible roots and follow a locally readable light or airflow cause",
+          "잔머리가 보이는 뿌리를 유지하고 국소 빛이나 공기 흐름에 따른 형태를 보인다"
+        ]
+      }
+    },
+    "skin_finish": {
+      "skin_microtexture_local_light_response": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g32_skin_microtexture_local_light_response",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "illumination varies over the same skin surface without redefining its local identity",
+            "claim_limits": [
+              "솜털·모공·잡티를 모든 초상의 의무로 추가하지 않는다.",
+              "일러스트 얼굴에 실사 피부 결을 강제하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "complexion_coverage": {
+      "sheer_complexion_texture_preservation": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g32_sheer_complexion_texture_preservation",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "illumination varies over the same skin surface without redefining its local identity",
+            "claim_limits": [
+              "솜털·모공·잡티를 모든 초상의 의무로 추가하지 않는다.",
+              "일러스트 얼굴에 실사 피부 결을 강제하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "location": {
+      "lived_in_studio_room": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g33_lived_in_studio_room",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "trace and present action share the same established place",
+            "claim_limits": [
+              "흔적이 실제 과거 사건을 증명하지 않는다.",
+              "요청에 없는 물건을 늘려 생활감 목표를 채우지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "space_condition": {
+      "lived_in_clutter": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g33_lived_in_clutter",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "trace and present action share the same established place",
+            "claim_limits": [
+              "흔적이 실제 과거 사건을 증명하지 않는다.",
+              "요청에 없는 물건을 늘려 생활감 목표를 채우지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "scale_relation": {
+      "canonical_size_anchor_relation": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g38_canonical_size_anchor_relation",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "object scale is constrained by an established anchor rather than by blur alone",
+            "claim_limits": [
+              "미니어처 인상과 물리적 축소 의미를 구별한다.",
+              "기준물 추가는 setting/prop 범위가 열려 있을 때만 가능하다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "subject": {
+      "miniature_city_scene": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g38_miniature_city_scene",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "object scale is constrained by an established anchor rather than by blur alone",
+            "claim_limits": [
+              "미니어처 인상과 물리적 축소 의미를 구별한다.",
+              "기준물 추가는 setting/prop 범위가 열려 있을 때만 가능하다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    },
+    "surface_material": {
+      "pe_pencil_print": {
+        "contexts": [
+          {
+            "id": "visual_grammar_g39_pe_pencil_print",
+            "definition": "Context for the existing meaning; this is not a synonym for a broader combined scene.",
+            "observable_interpretation": "drawing marks and washes remain on their declared paper support",
+            "claim_limits": [
+              "photo corpus에는 촬영된 종이 작품의 표면으로 제한해 사용할 수 있다.",
+              "순수 일러스트를 photo medium으로 자동 등록하지 않는다."
+            ],
+            "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+          }
+        ]
+      }
+    }
+  },
+  "visual_semantics": [
+    {
+      "id": "vg_separate_genre_carriers_bundle",
+      "primary_visual_proposition": "the existing architectural structure carries one visual genre; a separately bounded existing vista carries the other genre; shared light and material edges connect both regions",
+      "hard_profile_ids": [
+        "vg_separate_genre_carriers_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the existing architectural structure carries one visual genre"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "a separately bounded existing vista carries the other genre"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "shared light and material edges connect both regions"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_separate_genre_carriers"
+      ],
+      "candidate_slots": {
+        "vg_separate_genre_carriers": "world"
+      },
+      "confusion_boundaries": [
+        "unassigned genre adjectives",
+        "extra crowns wings or spacecraft introduced by a genre name"
+      ],
+      "source_keywords": [
+        "장르를 기존 구조와 다른 풍경에 나누어 배정"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_wardrobe_place_contrast_bundle",
+      "primary_visual_proposition": "the existing garment retains its distinct construction; the existing everyday place remains recognizable; the same practical illumination reaches garment and place",
+      "hard_profile_ids": [
+        "vg_wardrobe_place_contrast_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the existing garment retains its distinct construction"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "the existing everyday place remains recognizable"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "the same practical illumination reaches garment and place"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_wardrobe_place_contrast"
+      ],
+      "candidate_slots": {
+        "vg_wardrobe_place_contrast": "concept_tension"
+      },
+      "confusion_boundaries": [
+        "a garment pasted over an unrelated studio background",
+        "lighting used as permission to replace a locked outfit"
+      ],
+      "source_keywords": [
+        "기존 의상과 일상 장소의 공동 조명 대비"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_composure_local_reaction_bundle",
+      "primary_visual_proposition": "the actor's main bearing remains composed; a smaller facial or hand reaction belongs to that same actor; the local reaction contrasts with the maintained bearing",
+      "hard_profile_ids": [
+        "vg_composure_local_reaction_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the actor's main bearing remains composed"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "a smaller facial or hand reaction belongs to that same actor"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "the local reaction contrasts with the maintained bearing"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_composure_local_reaction"
+      ],
+      "candidate_slots": {
+        "vg_composure_local_reaction": "emotional_contradiction"
+      },
+      "confusion_boundaries": [
+        "two different people supplying the two reactions",
+        "side-eye as proof of a relationship archetype"
+      ],
+      "source_keywords": [
+        "유지되는 태도와 같은 인물의 국소 반응"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_post_laugh_relaxation_bundle",
+      "primary_visual_proposition": "the actor's mouth rests in a relaxed near-closed position; that actor's eye corners retain a small smile crease; the relaxed mouth and smiling eye area remain visible together",
+      "hard_profile_ids": [
+        "vg_post_laugh_relaxation_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the actor's mouth rests in a relaxed near-closed position"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "that actor's eye corners retain a small smile crease"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "the relaxed mouth and smiling eye area remain visible together"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_post_laugh_relaxation"
+      ],
+      "candidate_slots": {
+        "vg_post_laugh_relaxation": "expression"
+      },
+      "confusion_boundaries": [
+        "an open-mouth laugh",
+        "sleeping with slack eyelids",
+        "pressed or puckered lips"
+      ],
+      "source_keywords": [
+        "웃음 뒤 이완된 입과 남은 눈 주변 웃음"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_pencil_paper_trace_bundle",
+      "primary_visual_proposition": "the actor's hand holds the pencil through a coherent wrist connection; the paper sheet rests on a visible support surface; the pencil tip contacts that same sheet; a local graphite line continues from the pencil contact point",
+      "hard_profile_ids": [
+        "vg_pencil_paper_trace_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the actor's hand holds the pencil through a coherent wrist connection"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "the paper sheet rests on a visible support surface"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "the pencil tip contacts that same sheet"
+          ]
+        },
+        {
+          "id": "component_4",
+          "visible_evidence": [
+            "a local graphite line continues from the pencil contact point"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_pencil_paper_trace"
+      ],
+      "candidate_slots": {
+        "vg_pencil_paper_trace": "contact_point"
+      },
+      "confusion_boundaries": [
+        "a pencil hovering above the sheet",
+        "a printed pencil illustration",
+        "a hand merely holding a page",
+        "pencil-shaped eyebrows"
+      ],
+      "source_keywords": [
+        "지지된 종이와 연필 끝에서 이어지는 흑연선"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_bag_support_transfer_bundle",
+      "primary_visual_proposition": "the bag's base rests against the receiving support; the same bag's handle lies just beyond the releasing fingers; the hand and bag retain a short readable release gap",
+      "hard_profile_ids": [
+        "vg_bag_support_transfer_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the bag's base rests against the receiving support"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "the same bag's handle lies just beyond the releasing fingers"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "the hand and bag retain a short readable release gap"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_bag_support_transfer"
+      ],
+      "candidate_slots": {
+        "vg_bag_support_transfer": "narrative_phase"
+      },
+      "confusion_boundaries": [
+        "an unsupported bag floating beside a hand",
+        "a still-held handle",
+        "a bag elsewhere in the room"
+      ],
+      "source_keywords": [
+        "손에서 기존 받침으로 옮겨지는 가방 지지"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_face_hands_place_readability_bundle",
+      "primary_visual_proposition": "the face remains readable within the selected crop; the action-bearing hand and contact remain recognizable; one existing place cue retains enough form to identify the setting",
+      "hard_profile_ids": [
+        "vg_face_hands_place_readability_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the face remains readable within the selected crop"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "the action-bearing hand and contact remain recognizable"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "one existing place cue retains enough form to identify the setting"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_face_hands_place_readability"
+      ],
+      "candidate_slots": {
+        "vg_face_hands_place_readability": "focus"
+      },
+      "confusion_boundaries": [
+        "a sharp face with a blurred contact point",
+        "a uniformly sharp inventory of the entire background"
+      ],
+      "source_keywords": [
+        "얼굴·행동 손·장소 단서의 공동 가독성"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_flat_artifact_raised_foreground_bundle",
+      "primary_visual_proposition": "the linework remains flat on the bounded paper surface; a separate foreground object has visible thickness or relief; their distinct supports and depth order remain readable",
+      "hard_profile_ids": [
+        "vg_flat_artifact_raised_foreground_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the linework remains flat on the bounded paper surface"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "a separate foreground object has visible thickness or relief"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "their distinct supports and depth order remain readable"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_flat_artifact_raised_foreground"
+      ],
+      "candidate_slots": {
+        "vg_flat_artifact_raised_foreground": "composition"
+      },
+      "confusion_boundaries": [
+        "a flat drawing of the entire scene",
+        "an object printed into the paper",
+        "an unconnected floating prop"
+      ],
+      "source_keywords": [
+        "평면 종이 작품과 입체 전경의 지지·깊이 분리"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_cool_window_warm_practical_receivers_bundle",
+      "primary_visual_proposition": "cool window light reaches its facing surfaces; a warm practical source reaches a separately bounded surface region; the receiver zones retain distinct local illumination",
+      "hard_profile_ids": [
+        "vg_cool_window_warm_practical_receivers_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "cool window light reaches its facing surfaces"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "a warm practical source reaches a separately bounded surface region"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "the receiver zones retain distinct local illumination"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_cool_window_warm_practical_receivers"
+      ],
+      "candidate_slots": {
+        "vg_cool_window_warm_practical_receivers": "lighting"
+      },
+      "confusion_boundaries": [
+        "a global blue-orange grade",
+        "two colors without corresponding sources and receivers"
+      ],
+      "source_keywords": [
+        "차가운 창빛과 따뜻한 현장광의 수신 영역 분리"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_frontal_flash_warm_ambient_bundle",
+      "primary_visual_proposition": "a near-camera flash supplies direct light on the foreground actor; warm practical illumination remains on the rear room surfaces; the foreground and rear receivers keep distinct source roles",
+      "hard_profile_ids": [
+        "vg_frontal_flash_warm_ambient_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "a near-camera flash supplies direct light on the foreground actor"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "warm practical illumination remains on the rear room surfaces"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "the foreground and rear receivers keep distinct source roles"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_frontal_flash_warm_ambient"
+      ],
+      "candidate_slots": {
+        "vg_frontal_flash_warm_ambient": "light_type"
+      },
+      "confusion_boundaries": [
+        "warm light treated as flash",
+        "a studio rim-light rig added to a phone snapshot"
+      ],
+      "source_keywords": [
+        "근거리 정면 플래시와 뒤쪽 따뜻한 주변광"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_matte_cloth_polished_metal_bundle",
+      "primary_visual_proposition": "the existing cloth spreads broad soft tonal changes; the existing polished metal carries bounded sharper reflections; both responses follow the same stated light direction",
+      "hard_profile_ids": [
+        "vg_matte_cloth_polished_metal_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the existing cloth spreads broad soft tonal changes"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "the existing polished metal carries bounded sharper reflections"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "both responses follow the same stated light direction"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_matte_cloth_polished_metal"
+      ],
+      "candidate_slots": {
+        "vg_matte_cloth_polished_metal": "texture"
+      },
+      "confusion_boundaries": [
+        "identical plastic gloss on both owners",
+        "flat yellow paint substituted for metal",
+        "a new metal object added only to supply contrast"
+      ],
+      "source_keywords": [
+        "같은 빛을 받는 매트한 천과 광택 금속"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_faille_crossgrain_ribs_bundle",
+      "primary_visual_proposition": "fine flat cross-grain ribs repeat across the existing cloth; the ribs bend continuously with the cloth surface; small directional highlights reveal the rib relief",
+      "hard_profile_ids": [
+        "vg_faille_crossgrain_ribs_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "fine flat cross-grain ribs repeat across the existing cloth"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "the ribs bend continuously with the cloth surface"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "small directional highlights reveal the rib relief"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_faille_crossgrain_ribs"
+      ],
+      "candidate_slots": {
+        "vg_faille_crossgrain_ribs": "texture"
+      },
+      "confusion_boundaries": [
+        "silk as a synonym for faille",
+        "broad knit ribs",
+        "satin sheen without cross-grain structure"
+      ],
+      "source_keywords": [
+        "기존 천 표면의 촘촘한 가로 리브 직조"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_ribbon_to_garment_seam_bundle",
+      "primary_visual_proposition": "one existing ribbon tail retains a readable flat strip; that same strip joins the existing garment seam at a visible junction; the seam continues away from the junction on the garment surface",
+      "hard_profile_ids": [
+        "vg_ribbon_to_garment_seam_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "one existing ribbon tail retains a readable flat strip"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "that same strip joins the existing garment seam at a visible junction"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "the seam continues away from the junction on the garment surface"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_ribbon_to_garment_seam"
+      ],
+      "candidate_slots": {
+        "vg_ribbon_to_garment_seam": "garment_detail"
+      },
+      "confusion_boundaries": [
+        "a detached hair ribbon",
+        "a ribbon beside an unrelated seam",
+        "a decorative line with no junction"
+      ],
+      "source_keywords": [
+        "기존 리본 끝에서 의상 절개선으로 이어지는 연결"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_hand_water_local_ripples_bundle",
+      "primary_visual_proposition": "the actor's fingertips meet the water at a visible contact boundary; small ripples center on that same contact region; the contacting skin has a bounded wet edge beside dry skin",
+      "hard_profile_ids": [
+        "vg_hand_water_local_ripples_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the actor's fingertips meet the water at a visible contact boundary"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "small ripples center on that same contact region"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "the contacting skin has a bounded wet edge beside dry skin"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_hand_water_local_ripples"
+      ],
+      "candidate_slots": {
+        "vg_hand_water_local_ripples": "contact_point"
+      },
+      "confusion_boundaries": [
+        "a hand hovering over water",
+        "waves centered elsewhere",
+        "an entirely wet body used as local contact proof",
+        "ripples caused by speech without contact"
+      ],
+      "source_keywords": [
+        "손의 수면 접촉점과 국소 파문·젖음 경계"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_shared_airflow_hair_ribbon_bundle",
+      "primary_visual_proposition": "loose hair strands remain rooted at the actor's head; the existing ribbon tail remains attached at its own anchor; hair and ribbon curve in a compatible local airflow with different shapes",
+      "hard_profile_ids": [
+        "vg_shared_airflow_hair_ribbon_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "loose hair strands remain rooted at the actor's head"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "the existing ribbon tail remains attached at its own anchor"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "hair and ribbon curve in a compatible local airflow with different shapes"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_shared_airflow_hair_ribbon"
+      ],
+      "candidate_slots": {
+        "vg_shared_airflow_hair_ribbon": "motion"
+      },
+      "confusion_boundaries": [
+        "identical parallel copied curves",
+        "hair detached from roots",
+        "a free-floating ribbon",
+        "opposing responses without a compatible local cause"
+      ],
+      "source_keywords": [
+        "같은 국소 바람에 다르게 굽는 머리카락과 리본"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_bounded_stillness_exception_bundle",
+      "primary_visual_proposition": "the declared suspended objects retain a bounded still configuration; one separately declared actor or region continues an identifiable action; the exception has a readable spatial boundary against the still region",
+      "hard_profile_ids": [
+        "vg_bounded_stillness_exception_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the declared suspended objects retain a bounded still configuration"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "one separately declared actor or region continues an identifiable action"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "the exception has a readable spatial boundary against the still region"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_bounded_stillness_exception"
+      ],
+      "candidate_slots": {
+        "vg_bounded_stillness_exception": "surreal_physics_detail"
+      },
+      "confusion_boundaries": [
+        "global motion blur",
+        "unassigned floating clutter",
+        "stillness treated as proof that time literally stopped"
+      ],
+      "source_keywords": [
+        "지정 정지 영역과 이어지는 예외 동작"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_graphite_thread_raised_flower_bundle",
+      "primary_visual_proposition": "a flat graphite line remains attached to the bounded paper surface; that same line rises into a strand at one visible paper junction; the strand continues into the raised flower's stem or lace structure; flat line junction strand and flower remain one continuous path",
+      "hard_profile_ids": [
+        "vg_graphite_thread_raised_flower_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "a flat graphite line remains attached to the bounded paper surface"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "that same line rises into a strand at one visible paper junction"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "the strand continues into the raised flower's stem or lace structure"
+          ]
+        },
+        {
+          "id": "component_4",
+          "visible_evidence": [
+            "flat line junction strand and flower remain one continuous path"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_graphite_thread_raised_flower"
+      ],
+      "candidate_slots": {
+        "vg_graphite_thread_raised_flower": "transition_stage"
+      },
+      "confusion_boundaries": [
+        "a loose thread beside a drawing",
+        "a flower placed on a print",
+        "all elements still flat",
+        "an invisible or interrupted junction"
+      ],
+      "source_keywords": [
+        "종이 흑연선에서 실과 입체 꽃으로 이어지는 경계"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "vg_artifact_common_plane_scale_bundle",
+      "primary_visual_proposition": "the existing miniature artifact retains recognizable small structural features; an existing familiar-size reference lies at the same depth as those features; the local size comparison remains readable within their shared depth plane",
+      "hard_profile_ids": [
+        "vg_artifact_common_plane_scale_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the existing miniature artifact retains recognizable small structural features"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "an existing familiar-size reference lies at the same depth as those features"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "the local size comparison remains readable within their shared depth plane"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "vg_artifact_common_plane_scale"
+      ],
+      "candidate_slots": {
+        "vg_artifact_common_plane_scale": "scale_relation"
+      },
+      "confusion_boundaries": [
+        "tilt-shift blur on a full-size city",
+        "a distant large object used as a false near-plane reference",
+        "an unrecognized shape used as an absolute measurement"
+      ],
+      "source_keywords": [
+        "기존 모형과 같은 깊이에 놓인 알려진 크기 기준"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    }
+  ],
+  "maintenance_ref": {
+    "contract_version": "photo-extension-maintenance-ref/v1",
+    "record_id": "visual-grammar-keyword-20261007",
+    "sha256": "0dd99738a7e65bd85bdc261a109a93831447c38c3d511844f5c92cb94beaefda"
+  }
+}

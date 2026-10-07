@@ -22,7 +22,13 @@ class PhotorealismOwnerDataCleanupTests(unittest.TestCase):
     def setUpClass(cls):
         cls.frozen = json.loads((EVIDENCE / 'frozen-inventory-queries.json').read_text())
         cls.acceptance = json.loads((EVIDENCE / 'acceptance-decisions.json').read_text())
-        cls.data = generator.load_json(ASSETS / 'photo_prompt_tags.json')
+        # Authenticate this earlier owner cleanup against its original source
+        # scope. The later additive grammar overlay is checked independently by
+        # test_photo_visual_grammar_integration, including every retained field.
+        inventory = generator.photo_source_manifest.SourceInventory.for_test(
+            ASSETS, candidate_files=tuple(name for name in generator.RESEARCH_EXTENSION_FILENAMES
+                if name != 'photo_prompt_visual_grammar_extension.json'))
+        cls.data = generator.load_json(ASSETS / 'photo_prompt_tags.json', inventory=inventory)
         cls.rows = {(slot, row['id']): row for slot, rows in cls.data['slots'].items() for row in rows}
 
     def test_inventory_and_primary_diagnostics_are_frozen(self):

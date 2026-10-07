@@ -156,7 +156,14 @@ class PhotoRetrievalPropertyEligibilityTests(unittest.TestCase):
         pack = self.pack()
         row = next(c for c in pack["slots"]["camera_direction"]["candidates"] if c["entry_id"] == "missing")
         row["applicability"]["status"] = "eligible"
-        with mock.patch.object(pg, "load_json", return_value=self.corpus()):
+        original_load = pg.load_json
+        def scoped_load(path, *args, **kwargs):
+            # Forge only candidate source data. The registry has its own schema
+            # and must remain real so this test reaches the property guard.
+            if Path(path).name == "photo_prompt_tags.json":
+                return self.corpus()
+            return original_load(path, *args, **kwargs)
+        with mock.patch.object(pg, "load_json", side_effect=scoped_load):
             failures = auditor.audit_candidate_semantic_contracts(pack, pack["authorial_core"]["baseline_prompt_en"],
                 {row["id"]}, {row["id"]: row}, [{"candidate_id": row["id"]}])
         self.assertTrue(any("property effects" in f["reason"] for f in failures), failures)
