@@ -252,6 +252,56 @@
     },
     "cross_arm_inputs_used": {
       "type": "boolean"
+    },
+    "api_render_input_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "runtime_prompt_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "api_render_input_json": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requested_image_model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "image_size": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provider_request_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observed_image_model": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "image_hashes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
     }
   }
 }

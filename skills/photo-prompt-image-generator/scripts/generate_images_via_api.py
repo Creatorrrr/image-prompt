@@ -1,15 +1,8 @@
 #!/usr/bin/env python3
-"""Generate images for saved prompt JSON files via the OpenAI Images API.
+"""Generate from an exact pack/receipt/composed/runtime input after fresh audits.
 
-The prompt text is forwarded byte-identical (prompt_en + "\n\nAvoid: <negative_en>");
-no rewriting or safety softening happens here, which is required for prompt-dictionary
-testing. Every attempt is appended to the run ledger via record_image_run.py.
-
-Usage:
-  python3 generate_images_via_api.py --prompt-json <file.json> --concept "<컨셉>" [--slug <slug>]
-  python3 generate_images_via_api.py --prompt-dir <dir> [--attempts 2]
-
-API key resolution: $OPENAI_API_KEY, then the project .env.
+Only the audited text-only runtime string is sent. References and raw prompt
+inputs fail before key resolution or a paid invocation. Dry-run has no calls.
 """
 
 from __future__ import annotations
@@ -22,6 +15,8 @@ import json
 import re
 import subprocess
 import sys
+import uuid
+from dataclasses import dataclass
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -32,6 +27,14 @@ RECORD = SCRIPT_DIR / "record_image_run.py"
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 from image_attempt_evidence import capture_api_error, write_evidence
+from photo_api_render import prepare_api_render, save_preflight, PreflightError
+
+
+@dataclass(frozen=True)
+class ApiImageResult:
+    image_bytes: bytes
+    observed_model: str | None = None
+    request_id: str | None = None
 
 
 def load_api_key() -> str:
@@ -48,7 +51,7 @@ def load_api_key() -> str:
     raise SystemExit("OPENAI_API_KEY not found in environment or project .env")
 
 
-def call_api(key: str, model: str, prompt: str, size: str) -> bytes:
+def call_api(key: str, model: str, prompt: str, size: str) -> ApiImageResult:
     payload = json.dumps({"model": model, "prompt": prompt, "size": size, "n": 1}).encode()
     request = urllib.request.Request(
         "https://api.openai.com/v1/images/generations",
@@ -57,7 +60,10 @@ def call_api(key: str, model: str, prompt: str, size: str) -> bytes:
     )
     with urllib.request.urlopen(request, timeout=300) as response:
         data = json.loads(response.read())
-    return base64.b64decode(data["data"][0]["b64_json"])
+        request_id = response.headers.get("x-request-id")
+    observed = data.get("model")
+    return ApiImageResult(base64.b64decode(data["data"][0]["b64_json"], validate=True),
+        observed if isinstance(observed, str) and observed else None, request_id)
 
 
 def slug_for(path: Path, override: str | None) -> str:
@@ -98,67 +104,70 @@ def record(args_list: list[str]) -> dict[str, str]:
     return {str(key): str(value) for key, value in payload.items()}
 
 
-def generate_for_file(
-    prompt_file: Path,
-    *,
-    key: str,
-    model: str,
-    size: str,
-    attempts: int,
-    concept: str | None,
-    slug: str | None,
-    out_base: Path,
-    timestamp: str,
-) -> bool:
-    payload = json.loads(prompt_file.read_text(encoding="utf-8"))
-    result = payload[0] if isinstance(payload, list) else payload
-    prompt_en = str(result.get("prompt_en") or "")
-    if not prompt_en:
-        print(f"[{prompt_file.name}] prompt_en missing; skipped", file=sys.stderr)
+def generate_for_request(pack_file: Path, *, receipt_file: Path, composed_file: Path, request_file: Path,
+    model: str, size: str, attempts: int, concept: str | None, slug: str | None, out_base: Path,
+    timestamp: str, runtime_store: Path | None = None, dry_run: bool = False,
+    ledger: Path | None = None, key: str | None = None) -> bool:
+    resolved_slug = slug_for(pack_file, slug)
+    if attempts < 1:
+        print("attempts must be positive", file=sys.stderr)
         return False
-    negative_raw = result.get("negative_en")
-    negative_en = None if negative_raw is None else str(negative_raw)
-    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
-    prompt_id = str(provenance.get("prompt_id") or stable_text_id(prompt_en))
-    seed = provenance.get("seed")
-    full_prompt = prompt_en + (f"\n\nAvoid: {negative_en}" if negative_en else "")
-    pack_id = str(result.get("pack_id") or provenance.get("pack_id") or "")
-    chosen_candidate_ids = result.get("chosen_candidate_ids")
-    chosen_visual_concept_ids = result.get("chosen_visual_concept_ids")
-    effective_visual_contract_sha256 = str(
-        result.get("effective_visual_contract_sha256") or ""
-    )
-    composer = str(result.get("composer") or "")
-    audit = result.get("audit") if isinstance(result.get("audit"), dict) else {}
-    audit_status = str(result.get("audit_status") or audit.get("status") or "")
-    augmentation_brief = result.get("augmentation_brief")
-    source_argv = provenance.get("argv")
-    resolved_slug = slug_for(prompt_file, slug)
-    resolved_concept = concept or str((provenance.get("concept_lock") or [""])[0] or resolved_slug)
-    out_dir = out_base / f"{resolved_slug}-{timestamp}"
+    out_dir = out_base / f"{resolved_slug}-{timestamp}-{uuid.uuid4().hex}"
     try:
-        out_dir.mkdir(parents=True, exist_ok=True)
-    except OSError as error:
-        print(f"[{resolved_slug}] output preparation failed before any API call: {error}", file=sys.stderr)
+        prepared = prepare_api_render(pack_file, receipt_file, composed_file, request_file,
+            model=model, size=size, runtime_store=runtime_store)
+        out_dir.mkdir(parents=True, exist_ok=False)
+        preflight_path = out_dir / "preflight.json"
+        preflight_sha = save_preflight(preflight_path, prepared)
+    except (ValueError, OSError, KeyError, TypeError) as error:
+        try:
+            out_dir.mkdir(parents=True, exist_ok=True)
+            with (out_dir / "preflight-failure.json").open("x", encoding="utf-8") as handle:
+                json.dump({"schema_version": "photo-api-render-preflight/v1", "status": "fail", "image_call_count": 0,
+                    "stage": getattr(error, "stage", "input_or_persistence"), "detail": getattr(error, "detail", str(error))}, handle, ensure_ascii=False, indent=2)
+        except OSError:
+            pass  # Display the original preparation failure; never call to repair it.
+        print(f"[{resolved_slug}] preflight failed; API calls: 0; {error}", file=sys.stderr)
         return False
+    if dry_run:
+        print(compact_json({"status": "pass", "preflight": str(preflight_path), "sha256": preflight_sha, "image_call_count": 0}))
+        return True
+    execution = prepared.document["execution"]
+    prompt_en, negative_en, full_prompt = execution["prompt_en"], execution["negative_en"], execution["runtime_prompt_en"]
+    prompt_id, seed = stable_text_id(prompt_en), None
+    pack_id = execution["pack_id"]
+    chosen_candidate_ids, chosen_visual_concept_ids = execution["chosen_candidate_ids"], execution["chosen_visual_concept_ids"]
+    effective_visual_contract_sha256 = execution["effective_visual_contract_sha256"] if chosen_visual_concept_ids else None
+    composer, audit_status, augmentation_brief = execution["composer"], execution["audit_status"], execution["augmentation_brief"]
+    resolved_concept = concept or resolved_slug
+    source_argv = None
+    key = key if key is not None else load_api_key()
 
     previous_run_id: str | None = None
-    for attempt in range(1, max(1, attempts) + 1):
+    for attempt in range(1, attempts + 1):
         status, failure, dest, evidence = None, None, None, None
         started_at = datetime.datetime.now().astimezone().isoformat(timespec="microseconds")
         call_returned = False
+        response = None
+        retry_allowed = False
         try:
-            image = call_api(key, model, full_prompt, size)
+            response = call_api(key, execution["model"], full_prompt, execution["size"])
             call_returned = True
             dest = out_dir / f"{prompt_id}-seed{seed}-attempt{attempt}.png"
-            dest.write_bytes(image)
+            # Preserve returned bytes even if the image writer fails.
+            recovery = out_dir / f"attempt{attempt}.returned-image.bin"
+            with recovery.open("xb") as handle:
+                handle.write(response.image_bytes)
+            dest.write_bytes(response.image_bytes)
             status = "success"
             print(f"[{resolved_slug}] attempt {attempt} OK → {repo_ledger_path(dest)}")
         except Exception as error:  # noqa: BLE001 - 네트워크/디코딩 등 모든 실패를 레저에 기록
+            retry_allowed = isinstance(error, urllib.error.HTTPError) and error.code in {429, 500, 502, 503, 504}
             evidence = capture_api_error(error, {
                 "tool": "openai_images_api", "generation_environment": "openai_images_api", "attempt": attempt,
                 "started_at": started_at, "ended_at": datetime.datetime.now().astimezone().isoformat(timespec="microseconds"),
                 "invocation_outcome": "returned" if call_returned else "rejected",
+                "provider_outcome": "returned" if call_returned else ("rejected" if isinstance(error, urllib.error.HTTPError) else "unknown"),
                 "request": {"prompt_en": prompt_en, "negative_en": negative_en, "runtime_prompt_en": full_prompt, "requested_model": model, "size": size},
             })
 
@@ -183,7 +192,21 @@ def generate_for_file(
             "--tool", "openai_images_api",
             "--generation-environment", "openai_images_api",
         ]
-        ledger_args += ["--prompt-id", prompt_id]
+        ledger_args += ["--prompt-id", prompt_id,
+            "--api-render-input-json", str(preflight_path), "--api-render-input-sha256", preflight_sha,
+            "--runtime-prompt-sha256", execution["runtime_prompt_sha256"],
+            "--requested-image-model", execution["model"], "--image-size", execution["size"],
+            "--authorial-core-sha256", execution["authorial_core_sha256"],
+            "--intent-lock-sha256", execution["intent_lock_sha256"], "--image-call-count", str(attempt)]
+        if execution["render_repair_contract_sha256"]:
+            ledger_args += ["--render-repair-contract-sha256", execution["render_repair_contract_sha256"]]
+        if response is not None:
+            if response.observed_model:
+                ledger_args += ["--observed-image-model", response.observed_model]
+            if response.request_id:
+                ledger_args += ["--provider-request-id", response.request_id]
+        if ledger is not None:
+            ledger_args += ["--ledger", str(ledger)]
         if seed is not None:
             ledger_args += ["--seed", str(seed)]
         if negative_en is not None:
@@ -226,6 +249,8 @@ def generate_for_file(
         previous_run_id = ledger_result["run_id"]
         if status == "success":
             return True
+        if status == "safety_block" or (not call_returned and not retry_allowed):
+            return False
         if call_returned:
             # The provider returned an image; retrying a local save failure would
             # generate another image rather than repair its persistence.
@@ -233,47 +258,27 @@ def generate_for_file(
     return False
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate images for saved prompt JSON via OpenAI Images API.")
-    parser.add_argument("--prompt-json", action="append", default=[], help="Prompt JSON file (generator output). Repeatable.")
-    parser.add_argument("--prompt-dir", default=None, help="Directory of *.prompt.json or *.json generator outputs.")
-    parser.add_argument("--concept", default=None, help="Concept label for the ledger (single-file mode).")
-    parser.add_argument("--slug", default=None, help="Filesystem slug override (single-file mode).")
+def main(argv=None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    for flag in ("pack", "runtime-receipt", "composed", "render-request"):
+        parser.add_argument("--" + flag, type=Path, required=True)
+    parser.add_argument("--runtime-store", type=Path)
+    parser.add_argument("--concept")
+    parser.add_argument("--slug")
     parser.add_argument("--model", default="gpt-image-2")
     parser.add_argument("--size", default="1024x1536")
-    parser.add_argument("--attempts", type=int, default=2, help="Max attempts per prompt with the unchanged text.")
-    parser.add_argument("--out-base", default=str(PROJECT_ROOT / "generated_images"))
-    args = parser.parse_args()
-
-    files = [Path(item) for item in args.prompt_json]
-    if args.prompt_dir:
-        directory = Path(args.prompt_dir)
-        files += sorted(directory.glob("*.prompt.json")) or sorted(
-            path for path in directory.glob("*.json") if not path.name.endswith(".explain.json")
-        )
-    if not files:
-        parser.error("provide --prompt-json or --prompt-dir")
-    if (args.concept or args.slug) and len(files) > 1:
-        parser.error("--concept/--slug only apply to single-file mode")
-
-    key = load_api_key()
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    successes = 0
-    for prompt_file in files:
-        ok = generate_for_file(
-            prompt_file,
-            key=key,
-            model=args.model,
-            size=args.size,
-            attempts=args.attempts,
-            concept=args.concept,
-            slug=args.slug,
-            out_base=Path(args.out_base),
-            timestamp=timestamp,
-        )
-        successes += int(ok)
-    print(f"done: {successes}/{len(files)} succeeded")
-    return 0 if successes == len(files) else 1
+    parser.add_argument("--attempts", type=int, default=2)
+    parser.add_argument("--out-base", type=Path, default=PROJECT_ROOT / "generated_images")
+    parser.add_argument("--ledger", type=Path)
+    parser.add_argument("--dry-run", action="store_true")
+    args = parser.parse_args(argv)
+    if args.attempts < 1:
+        parser.error("--attempts must be positive")
+    return 0 if generate_for_request(args.pack, receipt_file=args.runtime_receipt,
+        composed_file=args.composed, request_file=args.render_request, runtime_store=args.runtime_store,
+        model=args.model, size=args.size, attempts=args.attempts, concept=args.concept, slug=args.slug,
+        out_base=args.out_base, timestamp=datetime.datetime.now().strftime("%Y%m%d_%H%M%S"),
+        dry_run=args.dry_run, ledger=args.ledger) else 1
 
 
 if __name__ == "__main__":

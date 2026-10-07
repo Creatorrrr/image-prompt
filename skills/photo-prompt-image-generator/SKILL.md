@@ -479,6 +479,8 @@ Do not load every reference for a normal prompt request. Maintenance fixtures an
 - The supported workflow is V6, request envelope V1, core V3, intent lock V2, creative controls V4 and embodiment preflight V1.
 - Removed pack/core versions and missing current policy markers fail validation. Historical artifacts remain evidence and can be inspected with their historical implementation.
 - Public packs withhold scores, probabilities, private ranking evidence and expanded argv.
+- Current meaning clarification is V2. Source-grounded diagnostics distinguish absence, unrecognized expression, actual exclusion and relation structure; they never revise the frozen core or create hard obligations.
+- The API adapter requires the original pack, exact runtime receipt, composed object and render request, and freshly audits both stages. Its text-only lane rejects unsupported references before invocation; dry-run performs no key lookup or image call. See `references/image-runtime.md` after the core is frozen.
 
 ## Validation for Skill Maintenance
 

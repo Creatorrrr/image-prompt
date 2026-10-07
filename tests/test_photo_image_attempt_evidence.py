@@ -23,6 +23,8 @@ sys.path.insert(0, str(SCRIPTS))
 import generate_images_via_api as api
 import image_attempt_evidence as evidence
 import record_image_run as recorder
+from tests.photo_api_fixtures import write_valid_inputs, verified_fixture_receipt
+from photo_runtime_sources import RuntimeSnapshotProvider
 
 PROMPT, NEGATIVE = "A copper bell in window light.", "low resolution"
 RUNTIME = PROMPT + "\n\nAvoid: " + NEGATIVE
@@ -42,8 +44,7 @@ class ApiErrorEvidenceTests(unittest.TestCase):
     def run_wrapper(self, body, *, attempts=1, recorder_failure=False, local_save_failure=False, evidence_save_failure=False):
         with tempfile.TemporaryDirectory() as directory:
             temp = Path(directory)
-            prompt = temp / "fixture.prompt.json"
-            prompt.write_text(json.dumps({"prompt_en": PROMPT, "negative_en": NEGATIVE}))
+            paths = write_valid_inputs(temp)
             ledger = temp / "ledger.ndjson"
             recorder_calls = []
             def record(flags):
@@ -56,16 +57,16 @@ class ApiErrorEvidenceTests(unittest.TestCase):
                 if status:
                     raise RuntimeError("fixture recorder rejected evidence")
                 return json.loads(output.getvalue())
-            error = urllib.error.HTTPError("https://offline.invalid", 400, "fixture", {"x-request-id": "header-request-id"}, body if hasattr(body, "read") else io.BytesIO(body))
+            error = body if isinstance(body, Exception) else urllib.error.HTTPError("https://offline.invalid", 400, "fixture", {"x-request-id": "header-request-id"}, body if hasattr(body, "read") else io.BytesIO(body))
             original_write_bytes = Path.write_bytes
             def write_bytes(path, data):
                 if local_save_failure and path.suffix == ".png":
                     raise OSError("fixture image save failed")
                 return original_write_bytes(path, data)
-            api_response = {"return_value": b"offline image bytes"} if local_save_failure else {"side_effect": error}
+            api_response = {"return_value": api.ApiImageResult(b"offline image bytes")} if local_save_failure else {"side_effect": error}
             evidence_writer = {"side_effect": OSError("fixture evidence save failed")} if evidence_save_failure else {"wraps": evidence.write_evidence}
-            with mock.patch.object(api, "call_api", **api_response) as calls, mock.patch.object(api, "record", side_effect=record), mock.patch.object(api, "write_evidence", **evidence_writer), mock.patch.object(Path, "write_bytes", new=write_bytes), mock.patch("urllib.request.urlopen", side_effect=AssertionError("network forbidden")), contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
-                ok = api.generate_for_file(prompt, key="unused-fixture", model="fixture-model", size="1024x1536", attempts=attempts, concept=None, slug=None, out_base=temp / "results", timestamp="offline")
+            with mock.patch.object(RuntimeSnapshotProvider, "from_receipt", new=verified_fixture_receipt), mock.patch.object(api, "call_api", **api_response) as calls, mock.patch.object(api, "record", side_effect=record), mock.patch.object(api, "write_evidence", **evidence_writer), mock.patch.object(Path, "write_bytes", new=write_bytes), mock.patch("urllib.request.urlopen", side_effect=AssertionError("network forbidden")), contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                ok = api.generate_for_request(**paths, key="unused-fixture", model="fixture-model", size="1024x1536", attempts=attempts, concept=None, slug=None, out_base=temp / "results", timestamp="offline")
             rows = [json.loads(line) for line in ledger.read_text().splitlines()] if ledger.exists() else []
             captured = [json.loads(p.read_text()) for p in sorted((temp / "results").rglob("*.error.json"))]
             if rows:
@@ -90,6 +91,19 @@ class ApiErrorEvidenceTests(unittest.TestCase):
         self.assertEqual(base64.b64decode(captured[0]["raw_error"]["value"]["base64"]), body)
         self.assertEqual(captured[0]["raw_error"]["fidelity"], "exact_bytes")
         self.assertLessEqual(len(rows[0]["failure_reason"]), 280)
+
+    def test_recorded_policy_block_does_not_retry_unchanged_input(self):
+        _, count, rows, _, _ = self.run_wrapper(provider_body(), attempts=3)
+        self.assertEqual(count, 1)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["status"], "safety_block")
+
+    def test_unknown_provider_outcome_stops_automatic_retries(self):
+        _, count, rows, captured, _ = self.run_wrapper(TimeoutError("provider result unobserved"), attempts=3)
+        self.assertEqual(count, 1)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["status"], "error")
+        self.assertEqual(captured[0]["provider_outcome"], "unknown")
 
     def test_non_utf8_response_is_recorded_with_exact_bytes(self):
         body = b"\xff\xfe gateway safety moderation error"

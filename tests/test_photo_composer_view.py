@@ -30,6 +30,21 @@ def fixture():
 
 
 class PhotoComposerViewTests(unittest.TestCase):
+    def test_meaning_diagnostics_survive_catalog_and_detail(self):
+        pack = fixture()
+        row = pack["visual_concept_candidates"]["candidates"][0]
+        row["semantic_consistency"] = {"status": "incomplete", "diagnostics": {
+            "schema_version": "photo-meaning-diagnostics/v1", "checks": [{
+                "code": "axis_value_unrecognized", "raw_value": ["unregistered response"],
+                "expected": ["guarded"], "observed": [], "blocking_effect": True}]}}
+        pack["pack_id"] = view.digest(dict(pack, pack_id=None))[:16]
+        overview = view.build_view(pack)
+        self.assertEqual(overview["candidate_catalog"][0]["semantic_consistency"], row["semantic_consistency"])
+        detail = view.build_view(pack, [row["id"]])
+        self.assertEqual(detail["candidates"][0]["candidate"]["semantic_consistency"], row["semantic_consistency"])
+        view.verify_view(pack, overview)
+        view.verify_view(pack, detail)
+
     def test_unknown_requirements_and_required_meaning_remain_exact(self):
         pack = fixture()
         original = copy.deepcopy(pack)

@@ -225,7 +225,7 @@ MOE_NEGATIVE_DEFAULT_TERMS_BY_RULE = {
         "signage behind the subject",
     ),
 }
-SEMANTIC_CLARIFICATION_CONTRACT_VERSION = "photo-semantic-clarification/v1"
+SEMANTIC_CLARIFICATION_CONTRACT_VERSION = "photo-semantic-clarification/v2"
 CREATIVE_AUGMENTATION_CONTRACT_VERSION = "photo-creative-augmentation/v1"
 
 
@@ -2669,6 +2669,8 @@ def _audit_source_data() -> dict:
     data = candidate_semantics_generator.load_json(assets / "photo_prompt_tags.json")
     data[candidate_semantics_generator.QUALITY_LAYERS_DATA_KEY] = candidate_semantics_generator.load_quality_layers(
         assets / "photo_prompt_quality_layers.json")
+    data[candidate_semantics_generator.VISUAL_OBLIGATIONS_DATA_KEY] = candidate_semantics_generator.load_visual_obligation_registry(
+        assets / "photo_prompt_visual_obligations.json")
     return data
 
 
@@ -4375,6 +4377,37 @@ def audit_semantic_clarification(
                 "check": "semantic_clarification_authority",
                 "reason": "required clarification must project frozen requester evidence; the authored direction is separate context",
             })
+    if core.get("contract_version") == AUTHORIAL_CORE_V3_CONTRACT_VERSION:
+        try:
+            data = _audit_source_data()
+            source = {"provenance": {**(pack.get("provenance") or {}), "authorial_core": core, "creative_controls": pack.get("creative_controls")}}
+            rows = candidate_semantics_generator.candidate_pack_visual_obligation_request_sources(source, {})
+            context = " ".join(str(row.get("text") or "") for row in rows)
+            registry = data.get(candidate_semantics_generator.VISUAL_OBLIGATIONS_DATA_KEY) or {}
+            profiles = {row["id"]: row for row in registry.get("profiles") or []}
+            for candidate in candidates:
+                if candidate.get("source") != "visual_meaning_registry":
+                    continue
+                profile = profiles.get(candidate.get("profile_id"))
+                applicability = candidate.get("applicability") or {}
+                if profile is None:
+                    raise ValueError("clarification references an unknown profile")
+                diagnostic = candidate_semantics_generator.visual_profile_context_diagnostics(profile, context,
+                    has_authorial_core_context=True, require_positive_context_terms=applicability.get("status") != "eligible")
+                if applicability.get("diagnostics") != diagnostic:
+                    failures.append({"check": "semantic_clarification_diagnostics", "reason": "context diagnostic differs from frozen source and authored rules", "clarification_id": candidate["id"]})
+                if applicability.get("status") == "context_mismatch" and applicability.get("reason") != diagnostic["checks"][0]["code"]:
+                    failures.append({"check": "semantic_clarification_diagnostics", "reason": "context mismatch reason has no matching diagnostic evidence"})
+            profiles = {"character_response_concept:" + row["id"]: row for row in candidate_semantics_generator.character_response_concept_profiles(data)}
+            for candidate in ((pack.get("character_response") or {}).get("advisory_retrieval") or {}).get("candidates") or []:
+                if candidate.get("candidate_type") != "concept_profile":
+                    continue
+                profile = profiles.get(candidate.get("candidate_id"))
+                expected_consistency = candidate_semantics_generator.evaluate_character_response_profile(core, data, profile) if profile else None
+                if candidate.get("semantic_consistency") != expected_consistency:
+                    failures.append({"check": "character_response_diagnostics", "reason": "profile diagnostic differs from frozen assertion and authored rules"})
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            failures.append({"check": "meaning_diagnostics_source", "reason": str(error)})
     pack_candidate_ids = candidate_ids_from_pack(pack) | set(candidate_map)
     decisions = [
         row
@@ -4421,7 +4454,7 @@ def audit_semantic_clarification(
                     "clarification_id": clarification_id,
                 }
             )
-        if status in {"context_mismatch", "requires_existing_adult_context"} and state != "rejected":
+        if status in {"context_mismatch", "requires_existing_adult_context", "requires_explicit_mechanism"} and state != "rejected":
             failures.append(
                 {
                     "check": "semantic_clarification_applicability",
