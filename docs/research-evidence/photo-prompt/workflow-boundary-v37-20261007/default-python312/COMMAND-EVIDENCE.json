@@ -1,0 +1,92 @@
+{
+  "actual_cli_events": [
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "\nimport os, runpy, sys\nfrom pathlib import Path\nroot, target, output, store = map(Path, sys.argv[1:5])\narguments = sys.argv[5:]\nassert sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode\nassert set(os.environ) <= {'PATH','LANG','LC_ALL','TZ','PHOTO_RUNTIME_STORE'}\nassert Path(os.environ['PHOTO_RUNTIME_STORE']) == store\ndef deny(reason): raise RuntimeError('V36 guard denied: ' + reason)\ndef normalized(value, dir_fd=None):\n    path = Path(os.fsdecode(value))\n    if not path.is_absolute() and isinstance(dir_fd, int) and dir_fd >= 0:\n        path = Path(os.readlink('/proc/self/fd/' + str(dir_fd))) / path\n    return path.resolve()\ndef check_write(value, dir_fd=None):\n    path = normalized(value, dir_fd)\n    if not path.is_relative_to(output.parent): deny('write outside isolated output')\n    if path.is_relative_to(store):\n        parts = path.relative_to(store).parts\n        if parts and parts[0] not in {'receipts','receipt-index'} and path.name != 'LOCK': deny('immutable runtime mutation')\ndef audit(event, args):\n    if event.startswith('socket.') or event in {'subprocess.Popen','os.system','os.posix_spawn','os.fork','os.exec','pty.spawn'}: deny(event)\n    if event == 'import' and args[0].split('.')[0] in {'google','openai','requests','httpx','aiohttp','keyring','dotenv'}: deny('provider/credential import')\n    if event == 'open' and isinstance(args[0], (str, bytes)):\n        path = normalized(args[0])\n        if path.name in {'.env','.netrc','.npmrc','credentials'} or '.ssh' in path.parts or '.aws' in path.parts: deny('credential file access')\n        flags = args[2] if isinstance(args[2], int) else 0\n        if flags & (os.O_WRONLY|os.O_RDWR|os.O_CREAT|os.O_TRUNC|os.O_APPEND): check_write(args[0])\n    if event in {'os.mkdir','os.remove','os.rmdir','os.chmod','os.utime','os.truncate'} and isinstance(args[0], (str, bytes)):\n        if event == 'os.mkdir' and normalized(args[0], args[-1]).is_dir(): return\n        check_write(args[0], args[-1] if isinstance(args[-1], int) else None)\n    if event in {'os.rename','os.link'}:\n        check_write(args[0], args[2] if len(args) > 2 else None)\n        check_write(args[1], args[3] if len(args) > 3 else None)\n    if event == 'os.symlink': deny('symlink creation')\ndef profile(frame, event, arg):\n    if event != 'call': return\n    module, name = frame.f_globals.get('__name__',''), frame.f_code.co_name\n    if module in {'build_semantic_index','build_visual_profile_index','generate_images_via_api','photo_api_render','sync_photo_runtime_source'} and name not in {'<module>','<dictcomp>','<listcomp>','<lambda>'}: deny('provider/key function')\n    if name in {'get_gemini_api_key','cached_gemini_client','embed_texts_with_gemini','embed_single_semantic_text','load_api_key','call_api'}: deny('provider/key function')\n    if module == 'photo_runtime_sources' and name in {'publish','fetch','source_update','complete_source_update'}: deny('publisher/fetch fallback')\n    if module == 'core_slot_index_storage' and name == 'create': deny('cache creation')\n    if module == 'prompt_generator' and name == 'build_core_slot_index': deny('lexical cache fallback')\nsys.addaudithook(audit)\nsys.setprofile(profile)\nsys.path.insert(0, str(root/'skills/photo-prompt-image-generator/scripts'))\nsys.argv = [str(target), *arguments]\nrunpy.run_path(str(target), run_name='__main__')\n",
+        "/workspace/scratch/ce8f20680f5a/recovery-after-reset-20261007-1417/v37-integration",
+        "/workspace/scratch/ce8f20680f5a/recovery-after-reset-20261007-1417/v37-integration/skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py",
+        "/workspace/scratch/ce8f20680f5a/recovery-after-reset-20261007-1417/v37-final-qualification/private312/temporary/photo-v37-current-83tynu4c/pack.json",
+        "/workspace/scratch/ce8f20680f5a/recovery-after-reset-20261007-1417/v37-final-qualification/private312/temporary/photo-v37-current-83tynu4c/runtime",
+        "--seed",
+        "910000",
+        "--authorial-core-json",
+        "tests/fixtures/photo_prompt/current_boundary/core.json",
+        "--request-envelope-json",
+        "tests/fixtures/photo_prompt/current_boundary/envelope.json",
+        "--creative-controls-json",
+        "tests/fixtures/photo_prompt/current_boundary/controls.json",
+        "--embodiment-review-json",
+        "tests/fixtures/photo_prompt/current_boundary/review.json",
+        "--output-file",
+        "/workspace/scratch/ce8f20680f5a/recovery-after-reset-20261007-1417/v37-final-qualification/private312/temporary/photo-v37-current-83tynu4c/pack.json"
+      ],
+      "cwd": "/workspace/scratch/ce8f20680f5a/recovery-after-reset-20261007-1417/v37-integration",
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PATH": "/usr/bin:/bin",
+        "PHOTO_RUNTIME_STORE": "/workspace/scratch/ce8f20680f5a/recovery-after-reset-20261007-1417/v37-final-qualification/private312/temporary/photo-v37-current-83tynu4c/runtime",
+        "TZ": "UTC"
+      },
+      "event": "start",
+      "executable_sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+      "kind": "actual_cli",
+      "label": "actual_cli-292",
+      "utc": "2026-10-07T16:45:53.334990+00:00"
+    },
+    {
+      "elapsed_ns": 54330374731,
+      "event": "end",
+      "exit_code": 0,
+      "kind": "actual_cli",
+      "label": "actual_cli-292",
+      "utc": "2026-10-07T16:46:47.626503+00:00"
+    }
+  ],
+  "all_child_exit_codes_zero": true,
+  "boundary": "Fixed629; current main30fc DATA is not qualified by this evidence.",
+  "composition_warning_count": 3,
+  "default_result_sha256": "10e4e14b9495606dd710687e91296328507c7d02ef3accc4a1093bc3f597f6e7",
+  "execution_end_sha256": "73b7e4799bc591f4edf03c47466ab471ef1025059a9ee4e10da76f956b0f82e6",
+  "full_local_ledger_sha256": "0ba0b7d7482af488e1bff712f994e033075199a374f85688caf92e3fc00ae7cd",
+  "outer_end": {
+    "elapsed_seconds": 359.53276579500016,
+    "exit_code": 0,
+    "start_sha256": "89d74307828382542e41d857849686f50700384c03d955ab46bc5d40c8665272",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "67afcde9d9d79d010a505385f764978cedb43b14a5486ebd9a7204d29b49d8b7",
+    "utc": "2026-10-07T16:51:47.519094+00:00"
+  },
+  "outer_start": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "-I",
+      "-S",
+      "-B",
+      "/workspace/scratch/ce8f20680f5a/recovery-after-reset-20261007-1417/v37-final-qualification/run_default.py",
+      "312"
+    ],
+    "cwd": "/workspace/scratch/ce8f20680f5a/recovery-after-reset-20261007-1417/v37-integration",
+    "environment": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "PATH": "/usr/bin:/bin",
+      "PHOTO_RUNTIME_STORE": "/workspace/scratch/ce8f20680f5a/recovery-after-reset-20261007-1417/runtime312-preparation/private/runtime-store",
+      "TZ": "UTC"
+    },
+    "executable_sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+    "release_sha256": "70aba8d527c8e24cff80ee1a08e5e7c41316eae212af7306f7a77715e1807a79",
+    "remote_receipt_sha256": "6790b49733ea86219fc1d9445bd786d9c268d7b2fc7f2496d673ced291343c9e",
+    "script_sha256": "28e41dc1b56bfcc3a96f6e0d18ebd312a561bd5ad766f309f6a8b90c8efde753",
+    "utc": "2026-10-07T16:45:47.985551+00:00"
+  },
+  "quality_status": "warn",
+  "readonly_git_cat_file_invocations": 584,
+  "same_runtime_audits_exactly_equal": true,
+  "schema": "v37-default-invocation-evidence/v1"
+}
