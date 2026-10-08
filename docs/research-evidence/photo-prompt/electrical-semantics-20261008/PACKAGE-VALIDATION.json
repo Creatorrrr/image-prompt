@@ -1,0 +1,61 @@
+{
+  "schema_version": "electrical-research-package-validation/v1",
+  "date": "2026-10-08",
+  "checks": {
+    "json_parse_count": 11,
+    "ordered_keyword_digest_matches_visible_dom": true,
+    "keyword_rows": 435,
+    "sections": 26,
+    "unique_research_card_ids": 116,
+    "source_records": 42,
+    "draft_blueprints": 95,
+    "regression_plan_cases": 36,
+    "card_source_draft_case_references_valid": true,
+    "markdown_local_links_valid": true,
+    "p0_a_12_card_scope_valid": true,
+    "all_blueprints_runtime_unready": true,
+    "positive_text_excludes_urls_and_research_status": true
+  },
+  "preservation": {
+    "protected_count": 469,
+    "unchanged_count": 467,
+    "changed_files": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "tests/test_photo_ethereal_v35_boundary_history.py"
+    ],
+    "missing_files": [],
+    "status": "concurrent_drift_observed_no_overwrite",
+    "interpretation": "This task wrote only the newly created research directory. Two protected files changed during the research window; their hashes are recorded without reverting or attributing an author. A fresh source/index snapshot is required before implementation.",
+    "drift_records": [
+      {
+        "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+        "before_sha256": "f1f7d3b3ca33bc68fb25531423084780dd548098497e8538b619b2f30c3fd0a7",
+        "observed_sha256": "20092e5bdcd452dce455f4155577a54fb63e91bea9ab2278d3edd39b785bc91b",
+        "touched_by_this_task": false
+      },
+      {
+        "path": "tests/test_photo_ethereal_v35_boundary_history.py",
+        "before_sha256": "3fa52f1da7262103c9dd0075150754318762fed2e677e94f6e479fd6f55262be",
+        "observed_sha256": "731d5af950121526e16e17a54c8615220b5a56176cd049519b4964a951d22d24",
+        "touched_by_this_task": false
+      }
+    ]
+  },
+  "not_executed": [
+    "runtime_source_integration",
+    "dictionary_or_runtime_validation",
+    "index_rebuild",
+    "embedding_calls",
+    "candidate_pack_execution",
+    "regression_behavior_tests",
+    "image_generation",
+    "native_pixel_review",
+    "user_acceptance",
+    "git_commit",
+    "push",
+    "PR_creation"
+  ],
+  "qualification": "Research package integrity only, not runtime or image qualification.",
+  "research_package_status": "structural_checks_passed_runtime_unexecuted",
+  "task_written_scope": "docs/research-evidence/photo-prompt/electrical-semantics-20261008/"
+}

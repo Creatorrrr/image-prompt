@@ -1,0 +1,51 @@
+{
+  "contract_version": "photo-embodiment-review/v1",
+  "provenance": "agent_prepack",
+  "prompt_sha256": "4070b37955b33e4632acb747a7440c06b1d0cd6e839f5e54009de7cee0c455f3",
+  "scope": "body_action",
+  "summary": "One human body stands on the operator side of a demonstration bench. Her left hand rests on a nearby console edge; her right hand holds a light pencil above a logbook. The electrical sources occupy the far apparatus side behind a clear cover. The body uses ordinary two-arm articulation with a supported standing stance; feet may lie below the frame and are supported by the room floor. The selected view must reveal forearm continuity, hand ownership and the pencil grasp while preserving face and electrical endpoints.",
+  "checks": {
+    "body_ownership": {
+      "status": "supported",
+      "reason": "Both named hands belong to the single referenced woman. Left and right tasks are simultaneous but different; neither electrical terminal is a hand contact target.",
+      "prompt_evidence": [
+        "The woman stands on the console side",
+        "Her left hand rests on the near edge of the console",
+        "her right hand holds a pencil just above an open logbook"
+      ]
+    },
+    "joint_chain_and_reach": {
+      "status": "supported",
+      "reason": "The near console edge and logbook lie in front of the standing operator within relaxed elbow reach. Upper arms can descend from her shoulders and forearms bend toward the near bench; the pencil is a light load with ordinary finger grasp. No cross-body or above-shoulder reach is required.",
+      "prompt_evidence": [
+        "Her left hand rests on the near edge of the console",
+        "her right hand holds a pencil just above an open logbook"
+      ]
+    },
+    "support_and_balance": {
+      "status": "supported",
+      "reason": "A standing stance places both feet on the room floor even where lower legs fall below the selected crop. Her hands carry only a pencil; neither supports suspended body weight. The left palm may rest on the fixed console without shifting her center of mass over the apparatus.",
+      "prompt_evidence": [
+        "The woman stands on the console side",
+        "Her left hand rests on the near edge of the console"
+      ]
+    },
+    "contact_and_space": {
+      "status": "supported",
+      "reason": "The left palm makes a single explicit near-console contact. The right fingers contact the pencil, whose point hovers above the logbook rather than sharing a surface with the left palm. The apparatus cover separates the far electrical devices from the body and still allows their optical observation.",
+      "prompt_evidence": [
+        "Her left hand rests on the near edge of the console",
+        "her right hand holds a pencil just above an open logbook",
+        "A transparent apparatus cover sits between these devices and the operator's console"
+      ]
+    },
+    "visibility_and_projection": {
+      "status": "supported",
+      "reason": "The three-quarter medium-wide view separates electrical sources on the left from the referenced face on the right and hands lower between them. The forearms must remain connected to their owner, pencil and logbook remain readable, and the clear cover must not occlude the spark endpoints. The exact crop is an open authorial dimension, not a universal anatomical rule.",
+      "prompt_evidence": [
+        "the apparatus to the left, her face to the right, and the hands and logbook lower between them",
+        "Keep the face, spark endpoints, and curved glass wall sufficiently resolved to read together"
+      ]
+    }
+  }
+}

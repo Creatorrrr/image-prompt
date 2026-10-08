@@ -1,0 +1,48 @@
+{
+  "schema_version": "agent-native-test-criteria/v1",
+  "provenance": "agent_prepack",
+  "requester_requirements": "Visible new electrical topic and supplied image use; detailed storm scene and criteria are independently authored test choices.",
+  "frozen_before_retrieval": true,
+  "seed": 8647799625889260945,
+  "phenomena_pair": "horizontal intracloud lightning and localized pointed-metal corona",
+  "hard_agent_test_gates": [
+    {
+      "gate_id": "arm2_cloud_network",
+      "criterion": "A bright branching channel or network extends primarily horizontally within a storm cloud. Cloud volume is lit internally and its visible forks remain above the sea horizon.",
+      "observable": "The cloud channel has separate visible branches, broad cloud diffusion and a distant cloud carrier.",
+      "fail_or_uncertain": "Only a featureless glow, painted lines, or an apparent long mast-to-cloud connecting arc does not pass."
+    },
+    {
+      "gate_id": "arm2_pointed_metal_corona",
+      "criterion": "Compact blue-violet brush-like luminous filaments originate at exposed pointed metal tips on the nearby signal mast. The tips and tiny corona are visibly attached and localized.",
+      "observable": "At least one clearly recognizable sharp carrier tip with delicate local filament structure; the baseline targets two distinct tips.",
+      "fail_or_uncertain": "A blue LED dot, ordinary reflection, combustion flame or distant sky bolt coinciding with the mast does not pass."
+    },
+    {
+      "gate_id": "arm2_distinct_sources",
+      "criterion": "The mast corona and cloud lightning can both be located and distinguished by carrier, morphology and scale in the same native image.",
+      "observable": "Dark/neutral space and depth separate localized nearby tip glow from the broad distant branching cloud channel.",
+      "fail_or_uncertain": "One continuous electrical beam, or one effect too weak to recognize, prevents a pass."
+    },
+    {
+      "gate_id": "arm2_causal_working_moment",
+      "criterion": "The observer visibly secures the log with one hand while the other grasps the casement latch; page curl, spray or narrowing window gap makes her purpose readable.",
+      "observable": "At least the two physical targets and corresponding hand contact are identifiable; a viewer can infer she is protecting a record from weather.",
+      "fail_or_uncertain": "Generic standing/gazing with disconnected props or unclear hand ownership does not pass."
+    },
+    {
+      "gate_id": "arm2_reference_appearance",
+      "criterion": "The woman’s face and dark chin-length bob with fine center fringe plausibly resemble the supplied reference at the chosen scale.",
+      "observable": "Specific face shape, eye/nose/lip proportions and bob silhouette are assessable.",
+      "fail_or_uncertain": "Unassessable small/hidden face or substantially different hair/face does not pass."
+    }
+  ],
+  "supplemental_review": [
+    "Describe whole-image impression without control labels before calibration.",
+    "Judge hierarchy and emotional credibility separately from topic fidelity.",
+    "A static image can support visible physical relations; it cannot measure real electric field or prove an actual discharge mechanism.",
+    "Technical audit pass, perceived artistic effect and user acceptance remain separate."
+  ],
+  "native_generation_budget": 1,
+  "repair_policy": "Report any native gate failure or generation error to coordinator before further generation."
+}

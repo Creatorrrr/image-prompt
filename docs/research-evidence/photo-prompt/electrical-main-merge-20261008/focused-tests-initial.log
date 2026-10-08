@@ -1,0 +1,28 @@
+...............F...............................................
+======================================================================
+FAIL: test_maintenance_and_source_binding (test_photo_swimwear_semantics.SwimwearSemanticsTests.test_maintenance_and_source_binding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/electrical-main-merge-20261008/image-prompt/tests/test_photo_swimwear_semantics.py", line 114, in test_maintenance_and_source_binding
+    self.assertEqual(record['authored_source_sha256'],cs.digest(raw))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'ba15ce1004e16811875e00893759d00e67ee2b361760b115bc12f02db17801d1' != '6035e005ca3b84842b9a757863f58ab5d7134b99adec482452556952e54b082a'
+- ba15ce1004e16811875e00893759d00e67ee2b361760b115bc12f02db17801d1
++ 6035e005ca3b84842b9a757863f58ab5d7134b99adec482452556952e54b082a
+
+
+----------------------------------------------------------------------
+Ran 63 tests in 62.194s
+
+FAILED (failures=1)
+{
+  "provider": "gemini",
+  "semantic_text_recipe": "semantic-text-v5",
+  "bm25f_policy_version": "photo-semantic-bm25f-policy/v3",
+  "embedding_model": "gemini-embedding-2",
+  "embedding_dimensions": 768,
+  "entries": 10845,
+  "storage_format": "sharded-json-v1",
+  "shard_count": 16,
+  "output": "/Users/chasoik/.codex/worktrees/electrical-main-merge-20261008/image-prompt/skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json"
+}

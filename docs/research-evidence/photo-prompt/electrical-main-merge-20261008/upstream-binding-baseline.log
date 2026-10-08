@@ -1,0 +1,20 @@
+test_exact_upstream_source_binding (__main__.UpstreamBindingBaseline.test_exact_upstream_source_binding) ... FAIL
+
+======================================================================
+FAIL: test_exact_upstream_source_binding (__main__.UpstreamBindingBaseline.test_exact_upstream_source_binding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<stdin>", line 13, in test_exact_upstream_source_binding
+  File "/Users/chasoik/.codex/worktrees/electrical-main-merge-20261008/image-prompt/tests/test_photo_swimwear_semantics.py", line 114, in test_maintenance_and_source_binding
+    self.assertEqual(record['authored_source_sha256'],cs.digest(raw))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'ba15ce1004e16811875e00893759d00e67ee2b361760b115bc12f02db17801d1' != '6035e005ca3b84842b9a757863f58ab5d7134b99adec482452556952e54b082a'
+- ba15ce1004e16811875e00893759d00e67ee2b361760b115bc12f02db17801d1
++ 6035e005ca3b84842b9a757863f58ab5d7134b99adec482452556952e54b082a
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.005s
+
+FAILED (failures=1)
+Reproduced the same binding failure with the exact pulled-main source and record bytes.

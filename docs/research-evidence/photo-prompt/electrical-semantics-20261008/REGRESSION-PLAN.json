@@ -1,0 +1,680 @@
+{
+  "contract_version": "electrical-regression-plan/v1",
+  "cases": [
+    {
+      "id": "R01",
+      "family": "spark_endpoints",
+      "request_ko": "두 금속 끝 사이에 짧은 스파크가 보이는 장면",
+      "positive_expectation": "같은 두 tip에 양끝이 닿는 통로",
+      "mutation_or_counterexample": "끝점을 다른 장치에 붙이거나 반짝이는 금속 입자로 대체",
+      "expected_boundary": "필수 종점이 가려지거나 다른 owner면 실패",
+      "stages": [
+        "composition",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL005"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R02",
+      "family": "arc_corona_glow",
+      "request_ko": "전극 두 개 사이의 집중된 아크를 보여줘",
+      "positive_expectation": "양쪽 부착부와 연속 발광 기둥",
+      "mutation_or_counterexample": "국소 tip glow 또는 관 전체의 부드러운 glow로 대체",
+      "expected_boundary": "같은 brightness만으로 subtype 충족으로 판정하지 않음",
+      "stages": [
+        "meaning",
+        "retrieval",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL006",
+        "EL007",
+        "EL008"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R03",
+      "family": "tip_locality",
+      "request_ko": "첨탑 끝 가까이에 작은 코로나 발광이 보이게",
+      "positive_expectation": "같은 첨탑 tip 주변의 국소 발광",
+      "mutation_or_counterexample": "전체 건물과 인물에 방전 후광을 확대",
+      "expected_boundary": "출처와 실제 변경 property 밖의 effect는 거절",
+      "stages": [
+        "composition",
+        "effect_scope",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL007",
+        "EL026"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R04",
+      "family": "globe_radial_topology",
+      "request_ko": "유리 플라즈마 구의 중앙에서 안쪽 벽으로 가는 가닥을 보여줘",
+      "positive_expectation": "중앙 전극·같은 sphere·inner glass의 연결",
+      "mutation_or_counterexample": "중앙 전극을 제거하거나 sphere 밖에서 시작",
+      "expected_boundary": "주제 label이 남아도 관계 누락은 실패",
+      "stages": [
+        "composition",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL011"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R05",
+      "family": "globe_outer_touch",
+      "request_ko": "구 바깥의 손가락 아래로 내부 방전 가닥이 모여",
+      "positive_expectation": "외부 손끝·유리 경계·내부 가닥이 같은 contact에 대응",
+      "mutation_or_counterexample": "손가락이 glass를 관통하거나 다른 손의 위치에 모임",
+      "expected_boundary": "glass separation과 same contact 모두 유지",
+      "stages": [
+        "embodiment",
+        "composition",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL012"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R06",
+      "family": "polysemy_corona",
+      "request_ko": "태양 코로나를 차폐 원반 바깥의 밝기로 표현해줘",
+      "positive_expectation": "태양·차폐·바깥 대기의 관측 문맥",
+      "mutation_or_counterexample": "도체 tip corona로 바꾸거나 CME front를 의무 추가",
+      "expected_boundary": "공유 단어가 다른 owner/profile의 의무를 만들지 않음",
+      "stages": [
+        "meaning",
+        "retrieval"
+      ],
+      "research_card_ids": [
+        "EL033",
+        "EL007"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R07",
+      "family": "heat_lightning",
+      "request_ko": "먼 지평선의 열번개 섬광을 찍은 듯하게",
+      "positive_expectation": "먼 뇌우의 광역과 어두운 foreground",
+      "mutation_or_counterexample": "열기·증기·불꽃·특별한 주황 번개를 필수 추가",
+      "expected_boundary": "heat라는 명칭이 새 발생 원리를 만들지 않음",
+      "stages": [
+        "meaning",
+        "composition"
+      ],
+      "research_card_ids": [
+        "EL022"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R08",
+      "family": "polarity_not_color",
+      "request_ko": "음극성 낙뢰를 흰 섬광으로 묘사해줘",
+      "positive_expectation": "요청 polarity 문맥과 cloud-ground 공간 관계 보존",
+      "mutation_or_counterexample": "흰색을 양극성 증거로 판단하거나 색을 강제 변경",
+      "expected_boundary": "극성은 정지 픽셀의 색 gate로 평가하지 않음",
+      "stages": [
+        "meaning",
+        "native_review_limits"
+      ],
+      "research_card_ids": [
+        "EL015",
+        "EL053"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R09",
+      "family": "time_direction",
+      "request_ko": "탑 꼭대기에 붙은 상향 번개 형태를 한 사진으로",
+      "positive_expectation": "탑 top의 부착과 위쪽 분지를 평가",
+      "mutation_or_counterexample": "한 사진으로 시작 시점·진행 방향·속도 PASS 선언",
+      "expected_boundary": "공간 형태와 temporal claim의 판정 분리",
+      "stages": [
+        "meaning",
+        "native_review_limits"
+      ],
+      "research_card_ids": [
+        "EL019",
+        "EL021"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R10",
+      "family": "tle_connected_or_separated",
+      "request_ko": "운정에서 직접 솟는 제트와 그 위 분리된 스프라이트를 구별해줘",
+      "positive_expectation": "jet는운정기점·sprite는상부간격",
+      "mutation_or_counterexample": "색은유지하고두현상의기점을교환",
+      "expected_boundary": "연결·분리 관계가 subtype 의미를 소유",
+      "stages": [
+        "meaning",
+        "retrieval",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL028",
+        "EL029",
+        "EL027"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R11",
+      "family": "elves_ring",
+      "request_ko": "뇌우보다 훨씬 위의 희미한 ELVES 고리를 보여줘",
+      "positive_expectation": "고리·하부 storm·간격/중심 관계",
+      "mutation_or_counterexample": "원을 UFO나 cloud corona로 대체",
+      "expected_boundary": "형태와 대기 owner가 모두 맞아야 함;속도 미평가",
+      "stages": [
+        "composition",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL030"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R12",
+      "family": "aurora_subtype",
+      "request_ko": "넓게 퍼지는 확산 오로라를 원해 커튼 모양은 지정하지 않았어",
+      "positive_expectation": "정의와선택subtype을유지",
+      "mutation_or_counterexample": "커튼 profile hit를 근거로수직ray의무 추가",
+      "expected_boundary": "커튼 subtype 규칙을 모든 오로라로 확장하지 않음",
+      "stages": [
+        "meaning",
+        "retrieval",
+        "obligations"
+      ],
+      "research_card_ids": [
+        "EL031"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R13",
+      "family": "offscreen_endpoint",
+      "request_ko": "구름에서 공중으로 끝나는 통로 전체가 보이게",
+      "positive_expectation": "channel far end와ground의분리",
+      "mutation_or_counterexample": "ground endpoint를crop하고cloud-air PASS선언",
+      "expected_boundary": "보이지 않는 종점은 확인된 공중 종점이 아님",
+      "stages": [
+        "framing",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL018",
+        "EL015"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R14",
+      "family": "series_topology",
+      "request_ko": "전구 두 개가 하나의 경로에 직렬로 연결된 회로도",
+      "positive_expectation": "한 branch의연속두load",
+      "mutation_or_counterexample": "화면상나란함은유지하고shared nodes로배선변경",
+      "expected_boundary": "위치가 아닌 topology를 검사",
+      "stages": [
+        "meaning",
+        "diagram",
+        "composition"
+      ],
+      "research_card_ids": [
+        "EL036",
+        "EL037"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R15",
+      "family": "parallel_shared_nodes",
+      "request_ko": "두 가지가 같은 두 노드를 공유하는 병렬 회로도",
+      "positive_expectation": "양쪽sharednode와각branchcontinuity",
+      "mutation_or_counterexample": "하나의공통노드만연결하거나교차선을node로오인",
+      "expected_boundary": "두 shared endpoint 모두 증거 필요",
+      "stages": [
+        "diagram",
+        "composition",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL037"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R16",
+      "family": "meter_modes",
+      "request_ko": "전압계로 같은 부하 양끝을 비교하는 모형",
+      "positive_expectation": "probe tips·same meter·선택측정mode",
+      "mutation_or_counterexample": "전류계연결과동치로바꾸거나tip한개를다른회로로옮김",
+      "expected_boundary": "측정 subtype과 owner 일치;수치 정확도 별도",
+      "stages": [
+        "family_split",
+        "composition",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL057"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R17",
+      "family": "circuit_state",
+      "request_ko": "같은 source와 부하의 닫힌 경로와 열린 스위치를 구별해줘",
+      "positive_expectation": "return선·switchgap소유가일관",
+      "mutation_or_counterexample": "return제거·gap메움·꺼진lamp로만개방판정",
+      "expected_boundary": "시각적 topology와 실제 통전 원인 분리",
+      "stages": [
+        "meaning",
+        "composition",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL034",
+        "EL035"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R18",
+      "family": "pcb_cloth_carrier",
+      "request_ko": "옷감 위 회로 프린트 문양은 유지하고 실제 장치로 바꾸지 마",
+      "positive_expectation": "bounded garment print",
+      "mutation_or_counterexample": "기판패드·전류·피부번개를추가하거나prop으로carrier이동",
+      "expected_boundary": "carrier/property lock은 slot 이동으로 우회 불가",
+      "stages": [
+        "effect_scope",
+        "composition"
+      ],
+      "research_card_ids": [
+        "EL038"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R19",
+      "family": "coil_device_variant",
+      "request_ko": "기존 코일 장치의 상부 구형 단자를 그대로 두고 가닥만 보강",
+      "positive_expectation": "samecolumn·구형terminal·기점보존",
+      "mutation_or_counterexample": "표준이미지라는이유로torus로교체·권선제거",
+      "expected_boundary": "기존 geometry와 requester definition 우선",
+      "stages": [
+        "effect_scope",
+        "composition",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL091",
+        "EL039"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R20",
+      "family": "emission_reflection_grade",
+      "request_ko": "금속 반사는 유지하고 방전의 가장자리만 보라색으로",
+      "positive_expectation": "selectedsource의edgeproperty만변경",
+      "mutation_or_counterexample": "의복·피부·globalgrade를보라색으로바꿈",
+      "expected_boundary": "간접 color/lighting effects까지 선언하고 lock 대조",
+      "stages": [
+        "effect_scope",
+        "composition"
+      ],
+      "research_card_ids": [
+        "EL053",
+        "EL039"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R21",
+      "family": "reflection_owner",
+      "request_ko": "같은 프레임의 번개가 젖은 바닥에 대응되게 반사돼",
+      "positive_expectation": "visible source·수광면·alignment",
+      "mutation_or_counterexample": "바닥반사를다른source의색/위치로바꿈",
+      "expected_boundary": "profile재사용시 complete owner 관계 보존",
+      "stages": [
+        "composition",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL051"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R22",
+      "family": "reflection_boundary",
+      "request_ko": "젖은 지면 반사와 마른 부분의 끊김을 보이게",
+      "positive_expectation": "wet-dry경계와차폐/끊김",
+      "mutation_or_counterexample": "전체바닥을매끈한mirror로바꾸거나경계가림",
+      "expected_boundary": "선택된 hard 관계의 부분 구현은 실패",
+      "stages": [
+        "effect_scope",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL051"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R23",
+      "family": "skin_scar_dendrite",
+      "request_ko": "피부의 가는 분지 홍반과 이마의 각진 흉터를 별개로",
+      "positive_expectation": "declaredskinregion·branching·비발광형태",
+      "mutation_or_counterexample": "skinpattern을고체내부에넣거나영구glowing scar로전환",
+      "expected_boundary": "carrier·시간 의미 보존;진단·화상깊이 판정 금지",
+      "stages": [
+        "meaning",
+        "effect_scope",
+        "native_review_limits"
+      ],
+      "research_card_ids": [
+        "EL080",
+        "EL081"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R24",
+      "family": "fault_cause_trace",
+      "request_ko": "그을린 접점과 녹은 피복의 표면 흔적을 조사 사진으로",
+      "positive_expectation": "samecontact/wire damage patch",
+      "mutation_or_counterexample": "흔적만으로단락/과부하/방화/사망확정",
+      "expected_boundary": "흔적의 형태와 숨은 원인 문맥을 구분",
+      "stages": [
+        "meaning",
+        "native_review_limits"
+      ],
+      "research_card_ids": [
+        "EL075",
+        "EL076"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R25",
+      "family": "esd_hidden_failure",
+      "request_ko": "정전기 방전 손상으로 작동을 멈춘 부품 외형을 묘사해줘",
+      "positive_expectation": "요청정의보존·동작고장은별도문맥",
+      "mutation_or_counterexample": "큰불꽃·탄기판·폭발을필수로추가",
+      "expected_boundary": "ESD damage의 visible trace가 항상 존재하지 않음",
+      "stages": [
+        "meaning",
+        "obligations"
+      ],
+      "research_card_ids": [
+        "EL077"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R26",
+      "family": "audio_limits",
+      "request_ko": "변압기실의 웅웅거림과 먼 천둥을 연상시키는 사진",
+      "positive_expectation": "선택source와장면/반응을평가",
+      "mutation_or_counterexample": "정지사진을근거로음량·주파수·녹음성공PASS",
+      "expected_boundary": "sound 자체는 오디오 기록 영역;photo에소리기호의무없음",
+      "stages": [
+        "composition",
+        "native_review_limits"
+      ],
+      "research_card_ids": [
+        "EL116"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R27",
+      "family": "time_flicker_capture",
+      "request_ko": "같은 램프의 연속 점멸을 기록하는 장면",
+      "positive_expectation": "sequence·sameowner·brightness변화",
+      "mutation_or_counterexample": "사진banding만으로frequency/AC/고장확정",
+      "expected_boundary": "시간 주장과 camera artifact를 별도 판정",
+      "stages": [
+        "meaning",
+        "native_review_limits"
+      ],
+      "research_card_ids": [
+        "EL055",
+        "EL054"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R28",
+      "family": "charge_discharge_direction",
+      "request_ko": "충전 케이블이 연결된 장치와 배터리 방전 문맥을 구분",
+      "positive_expectation": "port·connector·supplycontinuity",
+      "mutation_or_counterexample": "충전/방전말만으로스파크·가시전자흐름·배터리량추정",
+      "expected_boundary": "연결과 에너지 방향/량의 구분;대전 다의어도 검토",
+      "stages": [
+        "meaning",
+        "retrieval",
+        "native_review_limits"
+      ],
+      "research_card_ids": [
+        "EL065",
+        "EL064"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R29",
+      "family": "bioelectricity_visible_animal",
+      "request_ko": "담수 속 전기뱀장어를 실제 동물 사진처럼",
+      "positive_expectation": "확인된외형과habitat",
+      "mutation_or_counterexample": "수중blue arcs·다른fin·전기기관외부노출을의무추가",
+      "expected_boundary": "생체기능과 직접관측형태를 분리",
+      "stages": [
+        "meaning",
+        "composition",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL082",
+        "EL083"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R30",
+      "family": "aed_same_patient",
+      "request_ko": "같은 환자에 붙은 두 패드와 하나의 AED가 연결돼",
+      "positive_expectation": "samechest·leadpair·samedevice",
+      "mutation_or_counterexample": "다른환자에pad하나씩·lead중간단절·장치없는번개",
+      "expected_boundary": "모든필수연결과소유를평가;임상성과는미평가",
+      "stages": [
+        "embodiment",
+        "composition",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL085"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R31",
+      "family": "device_purpose_collision",
+      "request_ko": "유리 전극 장치의 역사적 전시 사진이고 성적 맥락은 지정하지 않았어",
+      "positive_expectation": "선택판본·case·handpiece·glass",
+      "mutation_or_counterexample": "violetwand검색hit만으로성적행위·치료효능·강압서사추가",
+      "expected_boundary": "문화·의료·강압 목적은 외형/유사도로 자동 결정하지 않음",
+      "stages": [
+        "meaning",
+        "retrieval",
+        "obligations"
+      ],
+      "research_card_ids": [
+        "EL092",
+        "EL110",
+        "EL113"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R32",
+      "family": "chain_vs_starburst",
+      "request_ko": "한 손에서 대상 A로 그리고 A에서 B로 잇는 연쇄 번개",
+      "positive_expectation": "source→A→B의다른segment와targetidentity",
+      "mutation_or_counterexample": "손에서A/B로직접분기하는starburst·A/B중복",
+      "expected_boundary": "방향성 관계와 cardinality를 보존",
+      "stages": [
+        "composition",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL098",
+        "EL097"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R33",
+      "family": "barrier_vs_armor",
+      "request_ko": "몸에서 떨어진 평면 전기 방벽을 원해",
+      "positive_expectation": "body밖boundaryplane",
+      "mutation_or_counterexample": "몸을따르는aura/armor로carrier변경",
+      "expected_boundary": "family분해·separation·geometry lock 검증",
+      "stages": [
+        "family_split",
+        "effect_scope",
+        "native"
+      ],
+      "research_card_ids": [
+        "EL100"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R34",
+      "family": "reanimation_vs_treatment",
+      "request_ko": "SF의 전기적 소생 설정과 현실 제세동 자료를 구분해줘",
+      "positive_expectation": "각자의원인/장치/사건범위를유지",
+      "mutation_or_counterexample": "fictionalresurrection을AED의료효능으로확정",
+      "expected_boundary": "의미해석·픽셀반응·치료성과를 분리",
+      "stages": [
+        "meaning",
+        "native_review_limits"
+      ],
+      "research_card_ids": [
+        "EL108",
+        "EL085"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R35",
+      "family": "figurative_literal",
+      "request_ko": "두 사람이 전기가 통하는 느낌 그리고 휴식으로 충전하는 일상 장면",
+      "positive_expectation": "실제관계/휴식event를보존",
+      "mutation_or_counterexample": "공중번개·피부pad·charger·고정하트/표정을의무추가",
+      "expected_boundary": "whole-request와비유문맥우선;비유를물리방전으로route금지",
+      "stages": [
+        "meaning",
+        "retrieval",
+        "obligations"
+      ],
+      "research_card_ids": [
+        "EL114",
+        "EL115"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    },
+    {
+      "id": "R36",
+      "family": "authority_locks_negation",
+      "request_ko": "번개라는 말은 의복의 각진 줄무늬를 뜻하며 머리카락과 피부색은 그대로",
+      "positive_expectation": "requesterdefinition·active source span·속성lock보존",
+      "mutation_or_counterexample": "approxprofilehit/반대예시/인용된번개로hardduty생성·다른slot으로color변경",
+      "expected_boundary": "queryhit는선택제안;정의·부정·carrier·lock보다우선하지않음",
+      "stages": [
+        "meaning",
+        "retrieval",
+        "effect_scope",
+        "obligations",
+        "composition"
+      ],
+      "research_card_ids": [
+        "EL097",
+        "EL053",
+        "EL001"
+      ],
+      "execution_status": "planned_not_run",
+      "authorship": "Research-informed public test design; not a blind independent holdout."
+    }
+  ],
+  "executed_case_count": 0,
+  "native_generation_count": 0,
+  "promotion_rule": "Actual changed-source contract/retrieval tests are required during integration. Native image evaluation needs separately requested image work and exact frozen meaning; no weak partial passes.",
+  "hidden_claims_not_pixel_gates": [
+    "voltage",
+    "current",
+    "polarity",
+    "temperature",
+    "frequency",
+    "duration",
+    "onset_direction",
+    "sound",
+    "consent",
+    "medical_outcome",
+    "death",
+    "purpose",
+    "safety"
+  ]
+}
