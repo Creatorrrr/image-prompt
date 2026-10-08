@@ -62727,15 +62727,15 @@
           "software mirror frame",
           "phone screen photo"
         ],
-        "requires_adult_character": true,
+        "requires_adult_character": false,
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "A physical mirror boundary contains both one clearly adult subject's reflection and the phone held by that subject. The reflected gaze, hand-device contact, mirror-plane depth, and occlusion agree as one capture topology, so a direct front-camera selfie, an empty reflection, or an arbitrary phone cannot substitute.",
+        "definition": "A physical mirror boundary contains the declared reflected subjects and the capture phone visibly gripped by its declared operator. Hand device contact, reflected room depth, specified gaze target and any phone occlusion agree with one physical reflection. Age, actor count, gender and clothing follow the request.",
         "paraphrase_examples": [
-          "the mirror edge and reflected room establish a physical plane containing both the adult subject and her held phone",
-          "거울 경계 안에서 성인 피사체와 손에 든 휴대폰이 같은 반사 공간을 공유함",
-          "the subject's reflection gaze and phone occlusion agree with the mirror rather than a software frame"
+          "the declared subjects and the phone held by the capture operator occupy one physical reflected room",
+          "지정된 인물들과 촬영자가 쥔 폰이 같은 물리 반사 공간에 놓인다",
+          "phone occlusion and specified gaze target agree with the same mirror plane"
         ],
         "contrast_examples": [
           "a direct arm-length selfie",
@@ -62748,10 +62748,9 @@
       "concept_candidate": {
         "concept_terms": [
           "physical mirror plane",
-          "adult subject and held phone inside reflection",
-          "coherent reflection gaze and occlusion",
-          "hand-device contact",
-          "not direct selfie or software frame"
+          "declared subjects and held capture phone inside reflection",
+          "coherent specified gaze and phone occlusion",
+          "hand device contact"
         ]
       },
       "runtime_expression": {
@@ -62782,15 +62781,15 @@
           {
             "id": "mirror_subject_inside",
             "match_terms": [
-              "one clearly adult subject's face hair and body appear inside that same reflected space",
-              "한 명의 분명한 성인 피사체 얼굴 머리카락 몸이 같은 반사 공간 안에 보임"
+              "the declared subjects occupy the same physically reflected room as the visibly held capture phone",
+              "지정된 인물들이 손에 쥔 촬영 폰과 같은 물리 반사 공간에 보인다"
             ]
           },
           {
             "id": "mirror_device_contact",
             "match_terms": [
-              "the reflected subject visibly grips one phone and the hand-to-device contact remains anatomically coherent",
-              "반사된 피사체가 휴대폰 하나를 실제로 쥐고 손과 기기 접촉이 일관됨"
+              "the declared capture operator visibly grips the capture phone with coherent wrist ownership and finger device contact",
+              "지정된 촬영자의 손목과 손가락이 촬영 폰의 그립에 일관되게 이어진다"
             ]
           },
           {
@@ -62803,8 +62802,8 @@
           {
             "id": "mirror_topology_boundary",
             "match_terms": [
-              "the physical mirror reflection contains the adult subject and visibly gripped phone with coherent hand contact gaze placement and any facial occlusion",
-              "직접 셀피 빈 거울 분리된 휴대폰 화면 사진 또는 소프트웨어 테두리는 대체하지 못함"
+              "the physical mirror reflection contains the declared subjects and visibly gripped capture phone with coherent contact specified gaze and any facial occlusion",
+              "물리 거울 안에서 지정된 인물들과 쥔 폰의 접촉 시선 가림이 일관된다"
             ]
           }
         ],
@@ -62842,7 +62841,7 @@
                 "requirement": {
                   "min_content_words": 12,
                   "must_mention_any": [
-                    "one clearly adult subject's face hair and body appear inside that same reflected space"
+                    "the declared subjects occupy the same physically reflected room as the visibly held capture phone"
                   ]
                 }
               },
@@ -62851,7 +62850,7 @@
                 "requirement": {
                   "min_content_words": 13,
                   "must_mention_any": [
-                    "the reflected subject visibly grips one phone and the hand-to-device contact remains anatomically coherent"
+                    "the declared capture operator visibly grips the capture phone with coherent wrist ownership and finger device contact"
                   ]
                 }
               },
@@ -62869,12 +62868,12 @@
                 "requirement": {
                   "min_content_words": 15,
                   "must_mention_any": [
-                    "the physical mirror reflection contains the adult subject and visibly gripped phone with coherent hand contact gaze placement and any facial occlusion"
+                    "the physical mirror reflection contains the declared subjects and visibly gripped capture phone with coherent contact specified gaze and any facial occlusion"
                   ]
                 }
               }
             ],
-            "instruction": "Keep one physical mirror boundary readable, place the clearly adult subject and the phone she visibly grips inside the same reflected room, and align reflected gaze, hand contact, and facial occlusion with the mirror plane.",
+            "instruction": "Keep a readable physical mirror boundary and the declared subjects in one reflected room with the capture phone visibly gripped by its declared operator. Preserve declared age, count, gender, clothing, crop, gaze target and phone occlusion; a hidden face region need not become visible.",
             "render_gates": [
               {
                 "id": "vo_social_mirror_physical_plane",
@@ -62884,12 +62883,12 @@
               {
                 "id": "vo_social_mirror_subject_and_phone_inside",
                 "review_scale": "both",
-                "description": "The clearly adult subject and the phone she holds both appear inside the same reflection."
+                "description": "The declared subjects and the phone held by the declared capture operator appear in the same physical reflection, preserving declared actor count and any requested facial occlusion."
               },
               {
                 "id": "vo_social_mirror_hand_device_contact",
                 "review_scale": "native",
-                "description": "The reflected hand visibly grips one phone with coherent anatomy and device placement."
+                "description": "The capture operator visibly grips the phone with coherent wrist ownership and finger device contact."
               },
               {
                 "id": "vo_social_mirror_gaze_occlusion_coherent",
