@@ -10,4 +10,6 @@
 - [기존 main 및 신규 원본 보존](LOCAL-INTENT-VERIFICATION.json), [최초 인덱스 재생성](LOCAL-INDEX-REBUILD.json)
 - [최초 검증](LOCAL-CHECKS.json), [원래 이미지 테스트 보고서](../../../analysis/2026-10-08-fashion-fit-integration-and-native-tests.md)
 
-원격 pull 후의 병합·검증 결과와 실제 push/main 일치는 별도 완료 기록으로 남긴다. 전체 테스트 모음과 이미지 검증을 이 Git 작업에서 다시 실행했다고 주장하지 않는다.
+origin/main을 pull한 결과 이미 최신이어서 충돌은 없었다. 기존 원본 112개 등록과 패션 핏 원본 두 파일의 바이트 보존을 확인했다. 관련 회귀 81개, 최초 패션 핏 검사 10개, 사전 검증과 시각 인덱스 deep check가 통과했다. 게시 코퍼스는 semantic 11,181개와 시각 프로필 2,934개이며 임베딩 호출은 0회다. 전체 테스트 모음과 이미지 검증은 이 Git 작업에서 다시 실행하지 않았다.
+
+[원격 pull](pull.log), [양쪽 원본 의도 보존](MERGE-INTENT-VERIFICATION.json), [81개 회귀](focused-tests.json), [로컬 추가 데이터 캐시 검증](PRIMARY-VECTOR-PREFLIGHT.json)에 근거를 기록했다. 실제 push/main 일치와 원래 작업 공간 보존, 워크트리 제거는 완료 후 별도 영수증으로 남긴다.
