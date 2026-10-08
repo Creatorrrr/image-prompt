@@ -1,0 +1,100 @@
+{
+  "composed_audit": {
+    "status": "pass",
+    "quality_status": "warn",
+    "pack_id": "d27bf3e52efd00c7",
+    "chosen_candidate_count": 1,
+    "chosen_visual_concept_ids": [],
+    "effective_visual_contract_sha256": null,
+    "render_repair_contract_sha256": null,
+    "failures": [],
+    "warnings": [
+      {
+        "check": "uncovered_intent",
+        "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+        "intent": "A photographic study of garment fit"
+      },
+      {
+        "check": "uncovered_intent",
+        "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+        "intent": "a photographed woman"
+      },
+      {
+        "check": "uncovered_intent",
+        "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+        "intent": "wearing clothing with visible fit"
+      },
+      {
+        "check": "uncovered_intent",
+        "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+        "intent": "The supplied reference guides her visible face and hair"
+      }
+    ]
+  },
+  "runtime_audit": {
+    "schema_version": "photo-image-render-request-audit/v1",
+    "pack_id": "d27bf3e52efd00c7",
+    "status": "pass",
+    "runtime_prompt_id": "733c32a1d9fffbdf",
+    "source_intent_lock_sha256": "9e26819e7e6d95a155acc50a8d65a343c06bff34f43f9fe3a4bb5f12079eaa7c",
+    "render_repair_contract_sha256": null,
+    "negative_matches_pack": true,
+    "effective_visual_contract_sha256": null,
+    "selected_visual_concept_ids": [],
+    "reference_count": 1,
+    "failures": [],
+    "boundary": "This audit verifies exact text and reference bytes before generation. It does not inspect rendered pixels or establish user-perceived quality."
+  },
+  "effective_visual": null,
+  "contract_failures": [],
+  "repair": null,
+  "character": null,
+  "character_gates": [],
+  "embodiment_gates": [
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ],
+  "visual_review_audit": {
+    "schema_version": "moe-render-review/v1",
+    "pack_id": "d27bf3e52efd00c7",
+    "contract_version": "photo-embodiment-preflight/v1",
+    "qualification_status": "failed_technical_hard_gates",
+    "technical_qualified": false,
+    "representative_eligible": false,
+    "required_hard_gate_count": 5,
+    "required_hard_gates": [
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "source_character_response_contract_sha256": null,
+    "effective_visual_contract_sha256": null,
+    "selected_visual_concept_ids": [],
+    "failed_hard_gates": [
+      {
+        "gate": "embodiment_contact_and_space",
+        "status": "fail",
+        "evidence": "The clip/finger and shoe/floor contacts remain coherent, but the final reviewed central jacket button does not connect the fronts. The button and its corresponding buttonhole sit on visibly separated front edges with ivory knit between them. The explicitly reviewed garment fastening contact is absent."
+      },
+      {
+        "gate": "embodiment_visibility_and_projection",
+        "status": "fail",
+        "evidence": "Full length and both shoes are visible. At native 1:1, the screen-left bent-arm cap has a distinct raised wool edge over its join, but the screen-right cap lacks an equally inspectable raised-rim versus recessed-seam pair. The shorter hem reveals central knit and waistband, while the screen-left lower edge and side coverage hide complete waistband endpoints. The critical each-cap and full-front-band relations remain partial, not a diagnosed anatomical deformity."
+      }
+    ],
+    "schema_failures": [],
+    "user_judgment": {
+      "baseline_available": true,
+      "genuinely_moe": "pending",
+      "better_than_baseline": "pending",
+      "source": "not_yet_received",
+      "evidence": "The actual first generated parent image is available as a repair comparison image. No requester judgment about moe, preference or improvement has been received. The agent observed color/crop improvement and remaining fit failures separately."
+    },
+    "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+  }
+}

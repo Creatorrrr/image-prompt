@@ -1,0 +1,67 @@
+{
+  "generic": {
+    "schema_version": "photo-image-render-review-audit/v1",
+    "pack_id": "b640a0327a07aa83",
+    "status": "pass",
+    "qualification_status": "fail",
+    "technical_qualified": false,
+    "source_render_repair_contract_sha256": "650713473b3cda4b82986f6c0eb2ab2e18e1a329933a26adcfb739208ecd063c",
+    "reviewed_result_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_3/generated_images/native_attempt_2.png",
+    "reviewed_result_sha256": "db90a43a0e44b224afe2a0ccd8a859c81ab169908baccb37518f0467153ee1b3",
+    "failed_gate_ids": [
+      "rr_vest_rear_anchor_visibility_gross_structure_coherent",
+      "rr_vest_rear_anchor_visibility_intended_interaction_matches"
+    ],
+    "failures": [],
+    "boundary": "This audit validates a named review record and its exact generic hard-gate set. The reviewer supplies pixel judgments; the audit does not infer pixels or user preference."
+  },
+  "visual": {
+    "schema_version": "moe-render-review/v1",
+    "pack_id": "b640a0327a07aa83",
+    "contract_version": "photo-visual-obligations/v1",
+    "qualification_status": "failed_technical_hard_gates",
+    "technical_qualified": false,
+    "representative_eligible": false,
+    "required_hard_gate_count": 7,
+    "required_hard_gates": [
+      "vo_fit_ff62_v3_1",
+      "vo_fit_ff62_v3_2",
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "source_character_response_contract_sha256": null,
+    "effective_visual_contract_sha256": "ae30b8162329ebff372f82e80694b8ebe1131a8fe5d81f73cf7119b0139eb7b6",
+    "selected_visual_concept_ids": [
+      "visual-concept:fit_ff62_v3"
+    ],
+    "failed_hard_gates": [
+      {
+        "gate": "vo_fit_ff62_v3_1",
+        "status": "fail",
+        "evidence": "UNOBSERVABLE_NOT_PASS. The front olive attachment patches and two horizontal bridges are visible. The upper rear black path loses trace at the blue-shell/gray-lining edge, and the lower rear attachment is occluded by the near hand and that edge. The broader olive side strip does not reveal both fabric-anchor endpoints or prove their same-vest ownership in this one saved native image."
+      },
+      {
+        "gate": "vo_fit_ff62_v3_2",
+        "status": "fail",
+        "evidence": "The two central buckles and nearby entering webbing sections are locally recognizable. The explicit gate also requires their declared owner and both endpoints in this same saved image; rear attachment trace remains hidden at the upper shell edge and lower hand/shell boundary. A local buckle cue is only partial full-contract evidence, so UNOBSERVABLE_NOT_PASS."
+      },
+      {
+        "gate": "embodiment_visibility_and_projection",
+        "status": "fail",
+        "evidence": "UNOBSERVABLE_NOT_PASS. The near-side view reveals more olive side fabric but does not make both rear box-stitched attachment junctions assessable. Upper termination falls under the shell/lining edge and lower termination is additionally covered by the hand. Front patch visibility cannot substitute for either missing rear endpoint."
+      }
+    ],
+    "schema_failures": [],
+    "user_judgment": {
+      "baseline_available": true,
+      "genuinely_moe": "pending",
+      "better_than_baseline": "pending",
+      "source": "not_yet_received",
+      "evidence": "Attempt 1 and the supplied portrait are available as evidence; the requesting user has given no final technical/appeal/preference decision."
+    },
+    "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+  }
+}

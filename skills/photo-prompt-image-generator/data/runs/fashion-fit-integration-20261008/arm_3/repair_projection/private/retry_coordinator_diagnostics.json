@@ -1,0 +1,98 @@
+{
+  "status": "pass",
+  "parent_audit": {
+    "composed_audit": {
+      "status": "pass",
+      "quality_status": "warn",
+      "pack_id": "e5f835fd66061c0d",
+      "chosen_candidate_count": 2,
+      "chosen_visual_concept_ids": [],
+      "effective_visual_contract_sha256": null,
+      "render_repair_contract_sha256": null,
+      "failures": [],
+      "warnings": [
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "Photographic study of visible garment fit"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "showing a woman"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "in a concrete clothing-fit situation"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "Use the attached image as visual guidance for her face and dark bob with wispy bangs"
+        }
+      ]
+    },
+    "runtime_audit": {
+      "schema_version": "photo-image-render-request-audit/v1",
+      "pack_id": "e5f835fd66061c0d",
+      "status": "pass",
+      "runtime_prompt_id": "19e489c26a2d35a2",
+      "source_intent_lock_sha256": "f00fb4a29f1eee282e47c686f8e67b26fe780e71a575f33cbfe9f1812d995912",
+      "render_repair_contract_sha256": null,
+      "negative_matches_pack": true,
+      "effective_visual_contract_sha256": null,
+      "selected_visual_concept_ids": [],
+      "reference_count": 1,
+      "failures": [],
+      "boundary": "This audit verifies exact text and reference bytes before generation. It does not inspect rendered pixels or establish user-perceived quality."
+    },
+    "effective_visual": null,
+    "contract_failures": [],
+    "repair": null,
+    "character": null,
+    "character_gates": [],
+    "embodiment_gates": [
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "visual_review_audit": {
+      "schema_version": "moe-render-review/v1",
+      "pack_id": "e5f835fd66061c0d",
+      "contract_version": "photo-embodiment-preflight/v1",
+      "qualification_status": "failed_technical_hard_gates",
+      "technical_qualified": false,
+      "representative_eligible": false,
+      "required_hard_gate_count": 5,
+      "required_hard_gates": [
+        "embodiment_body_ownership",
+        "embodiment_joint_chain_and_reach",
+        "embodiment_support_and_balance",
+        "embodiment_contact_and_space",
+        "embodiment_visibility_and_projection"
+      ],
+      "source_character_response_contract_sha256": null,
+      "effective_visual_contract_sha256": null,
+      "selected_visual_concept_ids": [],
+      "failed_hard_gates": [
+        {
+          "gate": "embodiment_visibility_and_projection",
+          "status": "fail",
+          "evidence": "UNOBSERVABLE_NOT_PASS: the front olive fabric anchor patches and both rectangular buckles are visible, but each rear webbing section runs toward a narrow dark/olive strip beneath the open blue jacket and pale lining. The rear box-stitched fabric anchor cannot be traced clearly as an endpoint on the same vest, so the complete consequential connection is not assessable."
+        }
+      ],
+      "schema_failures": [],
+      "user_judgment": {
+        "baseline_available": false,
+        "genuinely_moe": "pending",
+        "better_than_baseline": "not_applicable",
+        "source": "not_yet_received",
+        "evidence": ""
+      },
+      "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "schema_version": "fashion-fit-native-pixel-review/v1",
+  "arm": 3,
+  "attempt": 1,
+  "result_image": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_3/generated_images/native_attempt_1.png",
+  "result_sha256": "8be9fdef24fe08b4a04754cf555cab83eec0ebf89991044644157dc32c41b4df",
+  "native_resolution": [
+    1237,
+    1272
+  ],
+  "reviewer": "independent_agent_arm_3_native_pixel_review",
+  "review_scales": [
+    "native"
+  ],
+  "selected_new_candidates": [
+    {
+      "candidate_id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "gate_id": "ff03_same_jacket_enlarged_proportions",
+      "status": "pass",
+      "evidence": "The blue shell visibly extends broadly over the shoulder region; its near sleeve is wide with large elbow folds, and the loose open torso panels hang well away from the firmer olive vest. The same continuous blue jacket owns those shoulder, sleeve and torso boundaries.",
+      "limitation": "The shoulder joint is clothed; the fit judgment uses visible neck/upper-arm geometry and the continuous jacket boundary rather than exposed anatomy."
+    },
+    {
+      "candidate_id": "augmentation:adult_appeal:sensual:garment_detail:fit_ff62_v3_candidate",
+      "gate_id": "ff62_same_vest_anchor_buckle_topology",
+      "status": "fail",
+      "observation_class": "UNOBSERVABLE_NOT_PASS",
+      "evidence": "Both front olive stitched fabric patches, two horizontal black webbing paths and two rectangular metal buckles appear. The rear-side webbing endpoints disappear at the jacket/lining boundary; rear fabric attachment patches on that same olive vest cannot be independently identified. The buckle alone does not prove complete topology.",
+      "same_garment_endpoints_observable": false
+    }
+  ],
+  "independent_test_gates": [
+    {
+      "gate_id": "base_layer_owner_fit",
+      "status": "pass",
+      "evidence": "A charcoal inner T-shirt is distinct at the neckline and near side, lying close through the visible upper torso and ribs."
+    },
+    {
+      "gate_id": "layered_ease_contrast",
+      "status": "pass",
+      "evidence": "The closer charcoal knit, firmer olive vest front and wide blue nylon shell form three distinct textile layers with different slack and folds."
+    },
+    {
+      "gate_id": "same_vest_strap_topology",
+      "status": "fail",
+      "observation_class": "UNOBSERVABLE_NOT_PASS",
+      "evidence": "The rear fabric attachment rectangles are obscured by the shell/lining on both side bridges."
+    },
+    {
+      "gate_id": "local_strap_adjustment",
+      "status": "fail",
+      "observation_class": "PARTIAL_NOT_PASS",
+      "evidence": "The near hand grips a downward free tail after the lower buckle, but the declared complete endpoint visibility does not survive."
+    },
+    {
+      "gate_id": "vest_zipper_state",
+      "status": "pass",
+      "evidence": "The same olive front has a joined lower zipper track and an upper V opening that exposes the charcoal T-shirt."
+    },
+    {
+      "gate_id": "outer_jacket_state",
+      "status": "fail",
+      "observation_class": "PARTIAL_NOT_PASS",
+      "evidence": "The jacket is open, crinkled, broad-sleeved and cuff-fastened, but its near panel/lining still occludes the rear vest anchors."
+    },
+    {
+      "gate_id": "reference_face_hair",
+      "status": "pass",
+      "evidence": "Dark chin-length bob, wispy fringe, softly shaped face, large dark eyes and natural pink lips visibly follow the supplied appearance guide; this is visual guidance, not identity verification."
+    },
+    {
+      "gate_id": "scene_legibility",
+      "status": "pass",
+      "evidence": "Open tool-filled repair case, water beads, coiled dock rope, wet harbor pavement and boats support a gear-check pause; the returning glance and local fit-check gesture are readable."
+    }
+  ],
+  "summary": {
+    "new_candidate_relationships_pass": 1,
+    "new_candidate_relationships_fail": 1,
+    "independent_gates_pass": 5,
+    "independent_gates_fail": 3,
+    "duplicated_failure_cause": "The three independent failures trace to the same rear-anchor occlusion; counts are checklist results, not independent statistical observations."
+  },
+  "whole_test_status": "fail",
+  "user_judgment": {
+    "source": "not_yet_received",
+    "decision": "pending"
+  }
+}

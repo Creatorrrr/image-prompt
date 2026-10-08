@@ -1,0 +1,123 @@
+{
+  "schema_version": "fashion-fit-pixel-review/v1",
+  "attempt": 2,
+  "parent_ledger_run_id": "06aaf7ee5558cd92",
+  "result_image": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_1/ownership_narrowed/repair_1/generated_images/letterpress-fit-repair-1.png",
+  "result_sha256": "64dcc2baf109e25b9442cbec1c8dd692331c07c571070b7ab052479db3133a48",
+  "review_scale": "Original 1024x1536 PNG plus unresized native 1:1 shoulder, button/waist and hem/shoe crops.",
+  "inspection_crops_file": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_1/ownership_narrowed/repair_1/inspection/crop_provenance.json",
+  "strict_policy": "Every selected relation and both same-garment endpoints must coexist in this one native image; partial/hidden/unobservable is not pass.",
+  "gates": {
+    "baseline_jacket_shoulder": {
+      "status": "fail",
+      "failure_kind": "partial_endpoint_support",
+      "evidence": "The jacket-to-sleeve joins are readable, but the wearer outer shoulder point underneath the structured wool is not separately identifiable well enough to establish the predeclared seam-to-body landmark relationship. A cap ridge alone does not prove that anatomical endpoint alignment."
+    },
+    "baseline_jacket_ease": {
+      "status": "fail",
+      "failure_kind": "closure_state_mismatch",
+      "evidence": "The cloth has room and hanging ease, but the button sits on one separated jacket front while the corresponding buttonhole is on the opposite open edge. Ivory knit lies between them; the two fronts are not joined at that fastener."
+    },
+    "baseline_trouser_ease": {
+      "status": "pass",
+      "evidence": "The visible central waistband follows her waist and continues into the same matching wool trousers. Both thigh and knee regions hang freely, with broad textile space and continuous seams. Concealed side waistband ends are separately failed under the repair visibility target."
+    },
+    "baseline_trouser_break": {
+      "status": "fail",
+      "failure_kind": "partial_or_unobservable",
+      "evidence": "Both front trouser hems and loafer insteps are visible with soft folds. The exact single-break condition is not clear on both legs, and both rear-hem-to-floor clearances are not simultaneously inspectable in this frontal view. Complete same-leg endpoints were required before rendering."
+    },
+    "selected_fit_ff10_v2_owner_relation": {
+      "status": "fail",
+      "failure_kind": "partial_realization_not_pass",
+      "owner": "main_subject.jacket",
+      "evidence": "At native 1:1, the screen-left bent-arm sleeve cap has a narrow raised/rolled wool edge with a darker attachment line immediately beneath it. The screen-right relaxed-arm cap has a readable panel join, but an independently distinct raised rim above its recessed attachment seam cannot be confidently separated from the ordinary shoulder edge. The each-sleeve relation therefore fails as a whole.",
+      "per_sleeve": {
+        "actor_right_screen_left": {
+          "status": "pass",
+          "sleeve_head_ridge": {
+            "status": "pass",
+            "evidence": "A narrow rolled wool edge rises at the bent-arm cap and remains continuous with that jacket sleeve."
+          },
+          "same_jacket_attachment_seam": {
+            "status": "pass",
+            "evidence": "A darker inset line below the rolled cap edge joins that sleeve to the jacket body."
+          },
+          "rises_above_relation": {
+            "status": "pass",
+            "evidence": "The raised edge and lower attachment line are locally separable at the top of this same cap."
+          }
+        },
+        "actor_left_screen_right": {
+          "status": "fail",
+          "sleeve_head_ridge": {
+            "status": "fail",
+            "evidence": "The upper cap presents a conventional shoulder contour and dark join; a separate raised wool rim is not unambiguously resolved at native scale."
+          },
+          "same_jacket_attachment_seam": {
+            "status": "pass",
+            "evidence": "The relaxed sleeve attachment line is traceable from the shoulder down the same jacket panel."
+          },
+          "rises_above_relation": {
+            "status": "fail",
+            "evidence": "The required two distinct shallow textile levels are not independently inspectable on this cap."
+          }
+        }
+      }
+    },
+    "scene_legibility": {
+      "status": "pass",
+      "evidence": "The spare wooden clip, gaze toward the proof, two clips on the hanging cord, old press and type drawers make the practical waiting situation readable. A first exhibition, actual damp ink and drying duration remain authored circumstances rather than facts established by the still."
+    },
+    "reference_guidance": {
+      "status": "pass",
+      "evidence": "Short dark brown bob, separated fine fringe, dark eyes, gently tapering face and natural rose lips retain the visible reference guidance. This supports face/hair cues without an identity or biography claim."
+    }
+  },
+  "repair_target_results": {
+    "sleeve_head": {
+      "status": "fail",
+      "reason": "One cap improves, but both same-jacket ridge-above-seam relations do not coexist fully."
+    },
+    "hem_landmark": {
+      "status": "fail",
+      "reason": "The hem is shorter and a central ivory knit interval is visible, but the screen-left jacket edge drops over the waistband and both side ends of the complete front band remain concealed. A continuous front knit strip and fully revealed band are missing."
+    },
+    "closure_state": {
+      "status": "fail",
+      "reason": "Button and corresponding hole remain on separated open front edges; the requested fastening contact is not realized."
+    },
+    "surface_illumination": {
+      "status": "partial_not_pass",
+      "reason": "Grazing light clarifies the bent-arm cap and central hem gap, but it does not make the other cap rim and full band endpoints independently assessable."
+    }
+  },
+  "new_candidate_pixel_status": "fail_partial_not_pass",
+  "image_fidelity_status": "fail",
+  "machine_review_file": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_1/ownership_narrowed/repair_1/render_review_repair_1.json",
+  "formal_review_status": "independent_record_valid_pass_technical_fail",
+  "whole_image_review": {
+    "scene_legibility": "The scene is inhabited and causally readable: she holds a useful spare clip while watching the hanging print near working press equipment. Actual ink moisture and exhibition history are not image claims.",
+    "face_hair_guidance": "The visible bob, fine fringe and soft face guidance survive with a natural three-quarter attention direction. No reference identity equivalence is claimed.",
+    "visual_hierarchy": "Face and held clip lead, charcoal wool organizes the full figure, the cream hanging print provides the second focal plane, and blue-violet window depth with warm lamp pools connects the workshop. Invented readable poster text adds narrative tone but does not prove the planned exhibition.",
+    "materials": "Brushed wool jacket and matching trousers, ribbed ivory knit, polished loafers, matte paper and worn timber are distinct and plausible.",
+    "controls_impression": "The restrained warm half-smile and tactile tailoring plausibly support saved sensual=1 without asserting measured attraction. Fetish=0 and surreal=0 add no extra treatment; creativity=1 remains a modest coherent variation.",
+    "improvements": "Matching charcoal trousers and a shorter jacket hem improve the initial color and length fidelity. One sleeve cap gains a readable raised edge.",
+    "remaining_failures": "The bilateral new-candidate relation, fastened jacket front, full visible waistband and exact combined trouser-break test remain incomplete. The photograph is aesthetically coherent while these fit gates fail."
+  },
+  "user_judgment": "not_yet_received",
+  "additional_generation_calls": 1,
+  "arm_total_image_calls": 2,
+  "formal_audit_file": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_1/ownership_narrowed/repair_1/render_review_repair_1_audit.json",
+  "formal_audit_scope": "independent_receipt_bound_formal_audit; managed admission is not claimed",
+  "formal_failed_gate_ids": [
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ],
+  "managed_review_admission": {
+    "status": "error",
+    "code": "review_result_not_bound_to_observed_attempt",
+    "operation_historical_status": "preview_only",
+    "arbitrary_state_mutation": false
+  }
+}
