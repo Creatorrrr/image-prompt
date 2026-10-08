@@ -105,7 +105,7 @@ class PhotoHairVisualSemanticsTests(unittest.TestCase):
             "studio portrait with cornrow braids": "cornrow_scalp_row_topology",
             "adult portrait with locs hairstyle": "locs_cord_structure",
             "트윈테일 헤어를 한 성인 인물": "bilateral_twin_tail_gather",
-            "editorial portrait with balayage hair": "balayage_ribbon_color_placement",
+            "editorial portrait with selected balayage ribbon pattern": "balayage_ribbon_color_placement",
             "rain portrait with damp clumped hair": "wet_damp_clumped_hair_state",
         }
         for text, expected_id in cases.items():
@@ -120,6 +120,8 @@ class PhotoHairVisualSemanticsTests(unittest.TestCase):
             "database locks and file locks",
             "twin tails of two comets",
             "balayage paint technique on a canvas",
+            "editorial portrait with balayage hair",
+            "portrait with styled wet-look hair",
             "a wet-look leather jacket",
             "long hair with ordinary face-framing layers",
             "two ribbons clipped onto loose hair",

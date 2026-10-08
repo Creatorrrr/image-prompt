@@ -1,0 +1,124 @@
+{
+  "schema_version": "independent-hair-native-review/v1",
+  "arm": "B",
+  "attempt": 2,
+  "reviewer": "independent_arm_b_agent",
+  "review_order": "This review was frozen before receiving the root independent verdict.",
+  "source_test_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/character-hair-integration-20261008/arm_b/neutral_test_design.json",
+  "source_test_sha256": "8785caa85e577b86d03f70423d6f768c7ba21cf197a9b8ffedae618bc56fb728",
+  "source_test_conditions_unchanged": true,
+  "image_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/character-hair-integration-20261008/arm_b/results/attempt_2.png",
+  "image_sha256": "b49dc76f528a6e726b9d0308688307ef03e6511a402386d738e85c87a87752ca",
+  "native_dimensions": {
+    "width": 1237,
+    "height": 1272
+  },
+  "reviewed_scales": [
+    "native"
+  ],
+  "conditions": [
+    {
+      "id": "B1_single_gather",
+      "visible_condition": "One gathered hair root sits behind the subject's right ear, with smooth scalp strands converging into it and one free loose tail falling over the right shoulder to the upper chest.",
+      "pass_evidence_required": "The root, converging strands and contiguous single tail are visible in the same image.",
+      "status": "FAIL",
+      "reviewed_scales": [
+        "native"
+      ],
+      "image_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/character-hair-integration-20261008/arm_b/results/attempt_2.png",
+      "image_sha256": "b49dc76f528a6e726b9d0308688307ef03e6511a402386d738e85c87a87752ca",
+      "evidence": "One low root and a continuous loose tail are visible, but the gather is on the subject's anatomical left (viewer-right in this non-mirrored portrait) and falls over the left shoulder. The near-side left arm steadies the press while the far right hand handles the sheet, supporting that orientation. The required right-side location is not realized; the tail also extends lower than the stated upper-chest endpoint."
+    },
+    {
+      "id": "B2_three_strand_braid",
+      "visible_condition": "A narrow three-strand scalp braid extends from the right temple above the right ear; at least three alternating interwoven crossings are visually readable.",
+      "pass_evidence_required": "Repeated strand over-under crossings, not merely waves or two-strand twisting, are resolved at native pixels.",
+      "status": "FAIL",
+      "reviewed_scales": [
+        "native"
+      ],
+      "image_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/character-hair-integration-20261008/arm_b/results/attempt_2.png",
+      "image_sha256": "b49dc76f528a6e726b9d0308688307ef03e6511a402386d738e85c87a87752ca",
+      "evidence": "The braid has at least three readable alternating interwoven crossings and is scalp-bound. Its first visible woven section starts high near the crown/part, then follows the side toward the ear. A right-temple origin above the outer eyebrow is not shown; this is a route mismatch rather than an absence of braid texture."
+    },
+    {
+      "id": "B3_braid_feeds_root",
+      "visible_condition": "The temple braid terminates in the same gathered root as the ponytail, with a visible continuous join rather than a second dangling end.",
+      "pass_evidence_required": "The end-to-root path can be followed without guessing a hidden connector.",
+      "status": "UNOBSERVABLE_NOT_PASS",
+      "reviewed_scales": [
+        "native"
+      ],
+      "image_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/character-hair-integration-20261008/arm_b/results/attempt_2.png",
+      "image_sha256": "b49dc76f528a6e726b9d0308688307ef03e6511a402386d738e85c87a87752ca",
+      "evidence": "The braid descends behind the visible ear, but the final segment entering the gathered root is concealed by ear-side hair and the crescent/ribbon assembly. The same-root terminal cannot be followed continuously without guessing an unseen connector. This does not prove a detached braid."
+    },
+    {
+      "id": "B4_ribbon_attachment",
+      "visible_condition": "A deep cobalt cloth ribbon wraps the gathered root and forms a compact knot, two bow loops and two short free ends.",
+      "pass_evidence_required": "The ribbon visibly encircles that hair root and its bow grows from the knot.",
+      "status": "UNOBSERVABLE_NOT_PASS",
+      "reviewed_scales": [
+        "native"
+      ],
+      "image_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/character-hair-integration-20261008/arm_b/results/attempt_2.png",
+      "image_sha256": "b49dc76f528a6e726b9d0308688307ef03e6511a402386d738e85c87a87752ca",
+      "evidence": "Deep cobalt cloth contacts and wraps the visible gather and forms a compact bow. One large folded loop and one long free tail are clearly traceable; the opposite folded region and overlapped narrow strip do not resolve two separate loops plus two separate short ends. Their count is unobservable rather than confirmed absent."
+    },
+    {
+      "id": "B5_ornament_contact",
+      "visible_condition": "A small polished silver crescent barrette is clipped into hair immediately above the wrapped root, with its solid edge touching strands and a narrow contact shadow.",
+      "pass_evidence_required": "A separate rigid metal crescent attaches to the hair at the described site; attachment is visible.",
+      "status": "PASS",
+      "reviewed_scales": [
+        "native"
+      ],
+      "image_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/character-hair-integration-20261008/arm_b/results/attempt_2.png",
+      "image_sha256": "b49dc76f528a6e726b9d0308688307ef03e6511a402386d738e85c87a87752ca",
+      "evidence": "A separate rigid silver crescent sits directly above and adjacent to the cobalt-wrapped root. Its upper outer edge meets dark hair with a narrow dark contact boundary; the lower crescent partly overlaps cloth. The local site and metal-to-strand edge contact are visible. This PASS is for the frozen visible contact condition, without claiming hidden spring mechanics or compensating for the wrong-side gather in B1."
+    }
+  ],
+  "all_of_result": "FAIL",
+  "passing_ids": [
+    "B5_ornament_contact"
+  ],
+  "failed_ids": [
+    "B1_single_gather",
+    "B2_three_strand_braid"
+  ],
+  "unobservable_not_pass_ids": [
+    "B3_braid_feeds_root",
+    "B4_ribbon_attachment"
+  ],
+  "all_conditions_same_saved_image": true,
+  "diagnostic_crops": [
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/character-hair-integration-20261008/arm_b/results/hair_native_inspection_crop_2.png",
+      "sha256": "9501065545cde686edceaa5bc09ab634d537581c355234155579a94380817d67",
+      "source_rectangle": {
+        "x": 410,
+        "y": 0,
+        "width": 620,
+        "height": 600
+      },
+      "scale": "native 1:1",
+      "purpose": "supplemental inspection only; saved parent image unchanged"
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/character-hair-integration-20261008/arm_b/results/attachment_native_inspection_crop_2.png",
+      "sha256": "163dddeefdaf004f2639150ecd518b9c19d971b1c8dc0bedea7c0a4726148f2d",
+      "source_rectangle": {
+        "x": 760,
+        "y": 315,
+        "width": 300,
+        "height": 280
+      },
+      "scale": "native 1:1",
+      "purpose": "supplemental inspection only; saved parent image unchanged"
+    }
+  ],
+  "cumulative_actual_image_calls": 2,
+  "additional_call_limit_exhausted": true,
+  "source_contribution_limit": "No optional candidate or visual profile was adopted in the repair pack. New three-strand braid and fabric-ribbon candidates were not exposed. Partial native improvements do not establish data-driven improvement over the prior version.",
+  "user_acceptance": "not_yet_received"
+}

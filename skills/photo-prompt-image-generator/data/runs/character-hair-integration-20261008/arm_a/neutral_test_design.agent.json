@@ -1,0 +1,88 @@
+{
+  "provenance": "independent_agent_proposal",
+  "arm": "A",
+  "test_lane": "haircut, fringe, zone-specific length structure",
+  "seed": "14986281802291613258",
+  "seed_method": "secrets.randbits(64), random.Random(seed); no project candidate access",
+  "random_draw": {
+    "place": "last ferry optical repair room",
+    "activity": "aligning a damaged transparency beneath a manual projector"
+  },
+  "concept": "Last-ferry optical technician pauses while aligning a damaged navigation transparency beneath a manual projector; salt streaks on the porthole and a repaired tear on the illuminated slide tie weather delay, work and present response into one frame.",
+  "reference_scope": "Visible facial appearance cues only: dark round-oval eyes, fine brows, softly tapered face, small nose, gently full lips. Hair is explicitly redesigned by the agent. No actual identity, age, biography, personality or body similarity is inferred.",
+  "alternatives_compared": [
+    {
+      "concept": "neutral salon haircut study",
+      "decision": "declined",
+      "reason": "Clear geometry but loses the requester-authorized complex lived situation."
+    },
+    {
+      "concept": "windy ferry deck repair",
+      "decision": "declined",
+      "reason": "Wind would displace edges and hide the cut geometry needed for an interpretable test."
+    },
+    {
+      "concept": "sheltered ferry optical room",
+      "decision": "selected",
+      "reason": "An occupied work moment with a porthole, manual projector and repaired slide stays connected while still hair and controlled light make length zones readable."
+    }
+  ],
+  "visible_conditions": [
+    {
+      "id": "A1",
+      "condition": "Short dense blunt micro-fringe forms a continuous horizontal edge on the upper forehead, leaving a visible band of forehead above both eyebrows.",
+      "confusions": [
+        "long eyebrow-touching fringe",
+        "translucent see-through fringe",
+        "center-parted curtain fringe"
+      ]
+    },
+    {
+      "id": "A2",
+      "condition": "A smooth upper bob shell ends in a blunt edge at the jaw on both visible sides.",
+      "confusions": [
+        "whole hairstyle a single long length",
+        "gradual layered taper",
+        "merely tucked long hair posing as a bob"
+      ]
+    },
+    {
+      "id": "A3",
+      "condition": "Two loose lower hair panels emerge from beneath the short upper shell and extend clearly below the clavicles to the upper chest.",
+      "confusions": [
+        "tied twin tails",
+        "braids",
+        "detached extensions floating away from the head",
+        "hair ending at the shoulders"
+      ]
+    },
+    {
+      "id": "A4",
+      "condition": "The upper jaw-length edge and the much longer lower panels show a crisp, large length discontinuity, with both levels visible together on the same head.",
+      "confusions": [
+        "ordinary long hair with a few short face-framing strands",
+        "soft continuous layer gradient",
+        "two people owning separate hair zones"
+      ]
+    },
+    {
+      "id": "A5",
+      "condition": "Full fringe, both jaw-level edges, shoulder landmarks and lower-panel ends are in the same sharp native frame and unobscured by hands, hats, window edges or props.",
+      "confusions": [
+        "off-frame lower tips",
+        "neckline or apron merges with hair",
+        "motion blur",
+        "one zone hidden behind the face"
+      ]
+    }
+  ],
+  "camera_visibility": {
+    "view": "near-front three-quarter head-and-mid-torso view, head yaw about 15 degrees, viewer at face height",
+    "crop": "complete crown with modest headroom through mid torso; both clavicles and long-panel endpoints included",
+    "lighting": "soft porthole side light with quiet fill; warm lower projector lamp remains subordinate",
+    "contrast": "ochre apron behind dark lower panels; quiet pale wall behind upper bob; controlled shiny strands",
+    "body_action": "both hands work on a waist-height slide tray below all hair endpoints; the head lifts to meet the viewer while the shoulders remain oriented to the bench"
+  },
+  "pixel_rule": "all-of A1 through A5; PASS only when every condition is visible and satisfied; FAIL for a visible contradiction; UNOBSERVABLE_NOT_PASS for hidden or ambiguous evidence",
+  "independence_boundary": "Only current task, supplied reference, current SKILL.md and exact neutral precore inputs used. No old research, other arm, source dictionaries, profile, semantic index, tests, candidate pack or earlier prompt was accessed before freeze."
+}

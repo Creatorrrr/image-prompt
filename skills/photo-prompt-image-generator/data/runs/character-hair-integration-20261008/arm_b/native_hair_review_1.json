@@ -1,0 +1,63 @@
+{
+  "schema_version": "independent-hair-native-review/v1",
+  "arm": "B",
+  "reviewer": "agent_hair_render_b",
+  "pack_id": "9b1598f9e77eb8fb",
+  "source_test_sha256": "8785caa85e577b86d03f70423d6f768c7ba21cf197a9b8ffedae618bc56fb728",
+  "result_image": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/character-hair-integration-20261008/arm_b/results/attempt_1.png",
+  "result_sha256": "4a3381a18a73dc1d3a0c507eb440d11434be59b27453862da31bf976d643f0f3",
+  "native_dimensions": [
+    1024,
+    1536
+  ],
+  "review_scale": "native",
+  "same_saved_image_all_components": true,
+  "inspection_crop": {
+    "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/character-hair-integration-20261008/arm_b/results/hair_native_inspection_crop_1.png",
+    "sha256": "97f037abb01e825b4c38f0d888800115caeffb0d22871fd9269f5a8c7719585a",
+    "rect_pixels": {
+      "left": 180,
+      "top": 0,
+      "width": 420,
+      "height": 560
+    },
+    "scale": "native_1_to_1",
+    "diagnostic_only_not_a_new_generation_or_final_edit": true
+  },
+  "conditions": [
+    {
+      "id": "B1_single_gather",
+      "status": "PASS",
+      "evidence": "One cobalt-bound lateral gather appears behind the woman's right lower ear; smooth rear hair converges into the band and one loose tail continues over the same right shoulder toward the chest."
+    },
+    {
+      "id": "B2_three_strand_braid",
+      "status": "FAIL",
+      "evidence": "At least three alternating interwoven plait crossings are readable, but the first visible braid crossing originates high near the front crown/part and runs down the temple. The specified right-temple start is not realized as the complete condition.",
+      "subcue_topology": "PASS",
+      "subcue_start_route": "FAIL"
+    },
+    {
+      "id": "B3_braid_feeds_root",
+      "status": "UNOBSERVABLE_NOT_PASS",
+      "evidence": "The braid disappears behind the upper ear/side hair before the ribbon-bound ponytail root. Its terminal-to-root path cannot be followed in the same frame. A hidden connector is not credited as a pass; a detached braid is not diagnosed."
+    },
+    {
+      "id": "B4_ribbon_attachment",
+      "status": "PASS",
+      "evidence": "Deep cobalt cloth wraps the single gathered base, with a central knot, a broad left bow loop and smaller near-head loop plus two short free blue ends. The band-to-hair-root contact is visible."
+    },
+    {
+      "id": "B5_ornament_contact",
+      "status": "FAIL",
+      "evidence": "The silver crescent is a distinct rigid piece touching hair and casting a narrow shadow, but it sits beside the upper ear at the braid region. An ear-height gap separates it from the lower ribbon-wrapped root, instead of the specified immediately adjacent position above that root.",
+      "subcue_hair_contact": "PASS",
+      "subcue_root_proximity": "FAIL"
+    }
+  ],
+  "aggregation": "ALL_OF",
+  "overall": "FAIL",
+  "actual_image_calls": 1,
+  "source_exposure_boundary": "Only enriched side-gather sca_h09 was selected. New braid and fabric-root ribbon candidates were not exposed. This image cannot establish their runtime contribution or a before-after improvement.",
+  "user_acceptance": "not_yet_received"
+}

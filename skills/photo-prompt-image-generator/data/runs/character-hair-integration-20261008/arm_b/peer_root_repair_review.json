@@ -1,0 +1,38 @@
+{
+  "reviewer": "root independent original-pixel review before child verdict",
+  "image": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/character-hair-integration-20261008/arm_b/results/attempt_2.png",
+  "image_sha256": "b49dc76f528a6e726b9d0308688307ef03e6511a402386d738e85c87a87752ca",
+  "review_scale": "native original 1237x1272",
+  "frozen_test_sha256": "8785caa85e577b86d03f70423d6f768c7ba21cf197a9b8ffedae618bc56fb728",
+  "conditions": [
+    {
+      "id": "B1_single_gather",
+      "status": "FAIL",
+      "evidence": "One gathered root and a contiguous free tail are visible at the nearer ear/shoulder. The free tail ends much lower on the torso, near the forearm/lower chest, rather than the frozen upper-chest endpoint. This fail does not require inferring the hidden far-side route or validating anatomical right from the displayed view."
+    },
+    {
+      "id": "B2_three_strand_braid",
+      "status": "FAIL",
+      "evidence": "Multiple alternating braid crossings are readable, but the braid begins high beside the crown and follows the head downward. The frozen first crossing at the right temple above the ear is not realized."
+    },
+    {
+      "id": "B3_braid_feeds_root",
+      "status": "UNOBSERVABLE_NOT_PASS",
+      "evidence": "The braid can be followed behind the exposed ear, but the final route into the ponytail root is obscured by the ear, dark strands and ribbon. A continuous terminal-to-same-root join cannot be verified without guessing."
+    },
+    {
+      "id": "B4_ribbon_attachment",
+      "status": "PASS",
+      "evidence": "Dark cobalt cloth sits around the gather as a distinct tied bow with compact central knot, two folded loops and two free cloth tails. It remains separate from the loose hair."
+    },
+    {
+      "id": "B5_ornament_contact",
+      "status": "PASS",
+      "evidence": "The rigid polished silver crescent now lies immediately above the wrapped root, adjoining dark hair at its outer edge with a local dark contact boundary. Its placement beside the tied root is improved from the first image."
+    }
+  ],
+  "aggregate": "FAIL",
+  "aggregation": "Every original B1-B5 condition must pass; improvements or hidden connectors cannot turn the whole test into a pass.",
+  "native_calls_for_arm": 2,
+  "scope": "One bounded geometry repair. Original test and original failed image remain intact. No newly integrated hair candidate was adopted in this repair."
+}

@@ -117,6 +117,8 @@ class ScenePreservationTests(DataCase):
         self.assertEqual(len(evidence['prior_23_rows']),23)
         # Pose and its later acting overlay add equivalent reviewed context.
         # Keep the historical source hash and separately protect its live meaning.
+        # The hair overlay references SCA/appearance rows omitted from this
+        # historical inventory; omit that dependent overlay in this fixture too.
         filenames=tuple(name for name in generator.RESEARCH_EXTENSION_FILENAMES
                         if name not in {'photo_prompt_pose_vocabulary_extension.json',
                                         'photo_prompt_acting_expression_extension.json',
@@ -127,6 +129,7 @@ class ScenePreservationTests(DataCase):
                                         'photo_prompt_cute_visual_forms_extension.json',
                                         'photo_prompt_character_appearance_extension.json',
                                         'photo_prompt_visual_grammar_extension.json',
+                                        'photo_prompt_character_hair_extension.json',
                                           'photo_prompt_vel_appearance_relations_extension.json'})
         assets=ROOT/'skills/photo-prompt-image-generator/assets'
         inventory=generator.photo_source_manifest.SourceInventory.for_test(assets,candidate_files=filenames)
