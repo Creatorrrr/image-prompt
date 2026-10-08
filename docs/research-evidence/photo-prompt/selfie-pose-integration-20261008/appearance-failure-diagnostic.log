@@ -1,0 +1,21 @@
+test_sealed_v28_recovery_preserves_exact_v27_and_v26_payloads (tests.test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_sealed_v28_recovery_preserves_exact_v27_and_v26_payloads) ... FAIL
+
+======================================================================
+FAIL: test_sealed_v28_recovery_preserves_exact_v27_and_v26_payloads (tests.test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_sealed_v28_recovery_preserves_exact_v27_and_v26_payloads)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/tests/test_photo_appearance_boundary_history.py", line 132, in setUp
+    source = (fixtures.v29_source_path(str(name))
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/tests/photo_prompt_fixtures.py", line 1759, in v29_source_path
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json
+
+----------------------------------------------------------------------
+Ran 1 test in 0.143s
+
+FAILED (failures=1)

@@ -1,0 +1,79 @@
+{
+  "schema_version": "photo-source-contribution/v1",
+  "generation_id": "8d793f025f759eb7f782d0a194f9dd7f0781370aaff2bbea331146e940c3ab2f",
+  "source_fingerprint": "fe7ac255143e52fe70b9c64cc7bd02961d176b0258f35a1769aeff6b562a825c",
+  "pack_id": "b889a5e9d99b64f2",
+  "new_source_exposed_candidates": [
+    {
+      "id": "slot:lighting:sf_173_base",
+      "source_pointer": "/slots/lighting/candidates/0",
+      "concept_terms": [
+        "dominant source lies to one side of the face",
+        "one face half is brighter than the other",
+        "the light boundary runs near the central face plane"
+      ]
+    },
+    {
+      "id": "slot:capture_mode:sf_071_base",
+      "source_pointer": "/slots/capture_mode/candidates/0",
+      "concept_terms": [
+        "active lens lies approximately at the actor eye level",
+        "one capture arm extends toward the device",
+        "face remains directed toward the selected lens or screen target"
+      ]
+    }
+  ],
+  "new_source_exposed_profiles": [],
+  "new_source_adopted_candidate_ids": [
+    "slot:capture_mode:sf_071_base"
+  ],
+  "new_source_adopted_profile_ids": [],
+  "existing_source_adopted_visual_concept_ids": [
+    "visual-concept:pc_pc16_owner_relation"
+  ],
+  "literal_new_source_evidence": {
+    "candidate_id": "slot:capture_mode:sf_071_base",
+    "artistic_interpretation": "The camera becomes a conversational counterpart at the worker's approximate eye line, while her separate spare hand presents the red broken pin. The change serves the previously authored relief-and-repair moment.",
+    "transformation": "Refine the open camera height from slightly above the eyes to approximately the eye line; keep the existing direct ultra-wide self-capture and the actor-right capture/actor-left display roles.",
+    "prompt_evidence": "Her extended right capture arm brings the phone lens to approximately the height of her eyes, and her face and gaze turn toward that self-held lens",
+    "relation_evidence": {
+      "visible_geometry": "the phone lens to approximately the height of her eyes",
+      "owner_1": "Her right shoulder, upper arm and forearm make one continuous diagonal toward the lower-left edge",
+      "owner_2": "her face and gaze turn toward that self-held lens"
+    },
+    "affected_dimensions": [
+      "camera",
+      "pose"
+    ],
+    "affected_properties": [
+      {
+        "dimension": "camera",
+        "target": "camera",
+        "property": "capture.mode"
+      },
+      {
+        "dimension": "pose",
+        "target": "main_subject",
+        "property": "body.capture_hand_role"
+      },
+      {
+        "dimension": "camera",
+        "target": "camera",
+        "property": "viewpoint.height"
+      }
+    ]
+  },
+  "literal_existing_profile_evidence": {
+    "pc_pc16_owner_relation": {
+      "component_1_phrase": "the subject attached hand extends toward the camera position: her spare left hand holds a hand-length broken wooden joining pin toward the camera",
+      "component_2_phrase": "the offered object follows the visible subject hand contact; the red-striped wood projects forward from her fingers and its splintered end remains distinct",
+      "component_3_phrase": "the offered hand or object occupies a nearer plane than the face: the near left hand and wooden pin loom larger than her centered face",
+      "component_4_phrase": "the near object leaves the requested facial expression region readable, keeping her eyes and tired half-smile fully visible"
+    }
+  },
+  "frozen_core_unchanged": true,
+  "concept_origin": "Independent random draw before source access; carousel repair and ultra-wide choice were already authored.",
+  "new_source_contribution": "sf_071_base refines camera height to approximate eye line and binds capture-arm/face-to-lens ownership. It is an optional candidate accepted on artistic and semantic grounds. No sf_profile was exposed or activated. The 0.5 device multiplier was not selected or asserted as measured.",
+  "coverage_boundary": "The V2 capture_mode route now exposes a new capture candidate. Specific ultra-wide distortion remains independently authored and is judged separately from the new eye-line capture relation.",
+  "original_gap_evidence": "data-contribution.json and original run remain preserved; original actual image calls=0."
+}

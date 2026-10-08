@@ -1,0 +1,157 @@
+{
+  "image_path": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/mirror/generated_images/mirror-lantern-native-01.png",
+  "image_sha256": "f73a839b60a97f7d30ec1396b3f8645baaaa719e5ec1e837a67ec0b809648da2",
+  "native_original_directly_viewed": true,
+  "regions": {
+    "coordinate_system": "native image pixels, origin at top left, manually estimated inclusive bounding boxes",
+    "native_size": [
+      1237,
+      1272
+    ],
+    "face": [
+      424,
+      106,
+      700,
+      457
+    ],
+    "phone_and_capture_grip": [
+      278,
+      259,
+      465,
+      596
+    ],
+    "phone_rear_lens_array": [
+      335,
+      270,
+      398,
+      332
+    ],
+    "lantern_hand_and_handle": [
+      692,
+      588,
+      881,
+      811
+    ],
+    "lantern_body": [
+      566,
+      746,
+      1002,
+      1202
+    ],
+    "blue_repair_seam": [
+      752,
+      785,
+      818,
+      1189
+    ],
+    "damaged_paper_and_workbench": [
+      845,
+      469,
+      1171,
+      1011
+    ],
+    "blue_thread_spool": [
+      918,
+      657,
+      992,
+      718
+    ],
+    "rainy_window_and_coast": [
+      98,
+      16,
+      439,
+      446
+    ]
+  },
+  "official_gate_ids": [
+    "embodiment_body_ownership",
+    "embodiment_contact_and_space",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_visibility_and_projection"
+  ],
+  "supplemental_observations": [
+    {
+      "id": "topic.physical_mirror_capture_owner",
+      "status": "PASS",
+      "authority": "supplemental selected ordinary candidate/topic observation, not a visual-profile hard gate",
+      "source_candidate_id": "slot:capture_mode:sf_capture_physical_mirror",
+      "evidence_regions": [
+        "phone_and_capture_grip",
+        "face",
+        "lantern_hand_and_handle"
+      ],
+      "evidence": "One reflected subject visibly grips the phone; its back and camera array face the bounded mirror image. The phone, body, carried lantern and workbench share the same reflected room. This supports the depicted self-portrait construction.",
+      "limitations": "A still cannot prove that a particular hardware camera was active, that a shutter was pressed, or that this synthetic image was physically taken by the depicted device."
+    },
+    {
+      "id": "topic.same_reflected_space",
+      "status": "PASS",
+      "authority": "supplemental selected ordinary candidate/topic observation",
+      "source_candidate_id": "slot:capture_mode:sf_capture_physical_mirror",
+      "evidence_regions": [
+        "face",
+        "phone_and_capture_grip",
+        "lantern_body",
+        "damaged_paper_and_workbench"
+      ],
+      "evidence": "The physical wooden boundary encloses a continuous workshop scene with compatible scale/occlusion of the one subject, held phone, lantern and bench.",
+      "limitations": "The visible geometry supports one mirror space; exact three-dimensional calibration and real capture history are not recoverable from this single synthetic view."
+    },
+    {
+      "id": "authorial.reference_face_and_hair",
+      "status": "PASS",
+      "authority": "appearance comparison with the supplied reference; no identity claim",
+      "evidence_regions": [
+        "face"
+      ],
+      "evidence": "The generated visible face retains the reference's softly defined facial outline, eyes/nose/lip arrangement and short dark bob with wispy bangs. Hair strands and cheek presence are recognizable at native scale.",
+      "limitations": "This is a qualitative appearance comparison, not biometric identity, age or biography verification."
+    },
+    {
+      "id": "authorial.repair_cause_and_result",
+      "status": "PASS",
+      "authority": "image-grounded authorial scene observation",
+      "evidence_regions": [
+        "lantern_body",
+        "blue_repair_seam",
+        "damaged_paper_and_workbench",
+        "blue_thread_spool"
+      ],
+      "evidence": "A recognizable paper/bamboo lantern hangs from its rigid handle; a prominent blue sewn seam crosses the translucent paper. Crumpled stock, bamboo hoops and a matching blue spool make material work and repair legible.",
+      "limitations": "The paper stock's exact moisture content, prior damage chronology, first-success claim and festival history cannot be proven; the objects support a plausible repair reading."
+    },
+    {
+      "id": "authorial.small_relief_expression",
+      "status": "PARTIAL",
+      "authority": "supplemental artist observation",
+      "evidence_regions": [
+        "face",
+        "blue_repair_seam"
+      ],
+      "evidence": "The mouth is softened into a small smile and the brow is relaxed, compatible with the repaired-object context.",
+      "limitations": "Tiredness and relief as exact internal states are not established. The face is calm and gently engaged; the author's richer fictional motive remains interpretation."
+    },
+    {
+      "id": "authorial.exact_phone_screen_gaze",
+      "status": "UNOBSERVABLE",
+      "authority": "unselected generic baseline gaze observation; not an official gate",
+      "evidence_regions": [
+        "face",
+        "phone_and_capture_grip"
+      ],
+      "evidence": "Eyes and the phone back are visible, but the screen faces away from the mirror and its surface is not shown. Exact eye-to-screen alignment cannot be confidently distinguished from nearby camera/mirror-directed attention.",
+      "limitations": "Do not promote a small apparent pupil direction into a verified gaze target. sf_096 is exposed but unselected; sf_097 exists only in the uninvoked V1 preflight."
+    },
+    {
+      "id": "actual.active_capture_hardware",
+      "status": "UNOBSERVABLE",
+      "authority": "claim boundary",
+      "evidence_regions": [
+        "phone_rear_lens_array"
+      ],
+      "evidence": "The camera array is visible as hardware appearance.",
+      "limitations": "A still does not show which lens is electronically active or an actual shutter event."
+    }
+  ]
+}

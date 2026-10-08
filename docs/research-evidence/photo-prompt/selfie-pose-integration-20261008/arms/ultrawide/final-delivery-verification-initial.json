@@ -1,0 +1,27 @@
+{
+  "schema_version": "photo-final-delivery-verification/v1",
+  "status": "FAIL",
+  "checks": {
+    "native_image_hash": true,
+    "native_original_byte_identical": true,
+    "native_png_dimensions": true,
+    "exact_runtime_text_equals_request": true,
+    "runtime_hash_equals_manifest_and_ledger": true,
+    "exact_pack_negative_preserved": true,
+    "new_candidate_literal_in_exact_runtime": true,
+    "reference_hash_unchanged": true,
+    "one_actual_call_one_ledger_row": true,
+    "original_run_zero_actual_calls": true,
+    "core_unchanged": true,
+    "source_generation_v2": true,
+    "exact_authoritative_nine_gate_set": true,
+    "nine_recorded_passes": true,
+    "review_valid_technical_pass": true,
+    "user_acceptance_pending": true,
+    "no_new_hard_gates": true,
+    "final_prompt_equals_compose": false
+  },
+  "explanation": "The initial verifier assumed the display prompt file had no storage newline. The file has exactly one terminal storage newline beyond the 3234-byte composed prompt; the 3793-byte audited runtime prompt/request are unchanged and byte-exact. No image, prompt content, gate or audit record was edited.",
+  "final_file_bytes": 3235,
+  "composed_prompt_bytes": 3234
+}

@@ -1,0 +1,84 @@
+{
+  "proof_scope": "Real Gemini query vectors and current full visual index; diagnostic optional exposure and exact negatives. Research-author maintenance probes, not independent holdout, final adoption or pixel evidence.",
+  "positive_probes": [
+    {
+      "id": "thumb_index_cross",
+      "query": "한 손의 엄지와 검지 끝이 서로 엇갈려 작은 교차를 만들고 나머지 세 손가락은 손바닥으로 접힌다. 손목부터 그 교차 끝까지 같은 인물의 손으로 이어지는 초상 사진.",
+      "expected_profile": "sf_profile_051_base",
+      "expected_profile_exposed": true,
+      "expected_optional_only": true,
+      "hits": [
+        {
+          "profile_id": "sf_profile_051_base",
+          "match_basis": "embedding",
+          "hard_eligible": false
+        }
+      ]
+    },
+    {
+      "id": "shaka_digits",
+      "query": "한 인물이 엄지와 새끼손가락만 양옆으로 펴고 가운데 세 손가락을 손바닥에 굽힌다. 두 펴진 손가락과 손목이 같은 손의 양끝으로 이어지는 셀프포트레이트.",
+      "expected_profile": "sf_profile_050_base",
+      "expected_profile_exposed": false,
+      "expected_optional_only": false,
+      "hits": []
+    },
+    {
+      "id": "mirror_chin_clear",
+      "query": "물리 거울 반사 안에서 인물이 촬영 폰을 가슴 윗부분에 쥔다. 폰 윗변이 턱보다 아래라 눈과 코와 입이 모두 그 위에 드러나며 손목과 쥔 폰이 같은 반사된 방 안에 연결된다.",
+      "expected_profile": "sf_profile_094_base",
+      "expected_profile_exposed": true,
+      "expected_optional_only": true,
+      "hits": [
+        {
+          "profile_id": "sf_profile_094_base",
+          "match_basis": "embedding",
+          "hard_eligible": false
+        },
+        {
+          "profile_id": "sf_profile_091_base",
+          "match_basis": "embedding",
+          "hard_eligible": false
+        }
+      ]
+    },
+    {
+      "id": "surface_shadow_bands",
+      "query": "창의 블라인드를 통과한 빛이 얼굴과 어깨에 평행한 어두운 띠를 만든다. 띠는 코와 볼의 굴곡을 따라 휘어지며 광원을 가리는 블라인드 간격과 같은 방향으로 이어지는 인물 사진.",
+      "expected_profile": "sf_profile_177_base",
+      "expected_profile_exposed": true,
+      "expected_optional_only": true,
+      "hits": [
+        {
+          "profile_id": "sf_profile_177_base",
+          "match_basis": "embedding",
+          "hard_eligible": false
+        }
+      ]
+    }
+  ],
+  "hard_negative_probes": [
+    {
+      "query": "a V-shaped radio antenna on an empty roof",
+      "new_hard_profiles": [],
+      "pass": true
+    },
+    {
+      "query": "a glass rectangle beside a phone screen photograph",
+      "new_hard_profiles": [],
+      "pass": true
+    },
+    {
+      "query": "a political Gen Z stare discussed in a newspaper",
+      "new_hard_profiles": [],
+      "pass": true
+    },
+    {
+      "query": "a portrait of one person without any physical mirror",
+      "new_hard_profiles": [],
+      "pass": true
+    }
+  ],
+  "positive_expected_exposed": 3,
+  "negative_passes": 4
+}

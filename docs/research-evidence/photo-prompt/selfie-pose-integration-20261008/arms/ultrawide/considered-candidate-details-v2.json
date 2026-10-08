@@ -1,0 +1,1255 @@
+{
+  "contract_version": "photo-composer-view/v2",
+  "mode": "candidate_details",
+  "source_pack_id": "b889a5e9d99b64f2",
+  "source_pack_sha256": "f4663947bde6a2ff001c31262530c8878da0d3d9a8327aeb58a5cf78a5591620",
+  "candidates": [
+    {
+      "id": "slot:capture_mode:sf_071_base",
+      "source_pointer": "/slots/capture_mode/candidates/0",
+      "candidate": {
+        "id": "slot:capture_mode:sf_071_base",
+        "slot": "capture_mode",
+        "entry_id": "sf_071_base",
+        "tags": [
+          "human",
+          "selfie_visual_form",
+          "capture_mode"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "active lens lies approximately at the actor eye level",
+          "one capture arm extends toward the device",
+          "face remains directed toward the selected lens or screen target"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "active lens lies approximately at the actor eye level",
+          "one capture arm extends toward the device",
+          "face remains directed toward the selected lens or screen target"
+        ],
+        "relations": [
+          {
+            "id": "visible_geometry",
+            "type": "at_height_of",
+            "subject": "camera.lens",
+            "object": "main_subject.face.eyes"
+          },
+          {
+            "id": "owner_1",
+            "type": "belongs_to",
+            "subject": "main_subject.arm",
+            "object": "main_subject"
+          },
+          {
+            "id": "owner_2",
+            "type": "belongs_to",
+            "subject": "main_subject.face",
+            "object": "main_subject"
+          }
+        ],
+        "affected_dimensions": [
+          "camera",
+          "pose"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "camera",
+            "target": "camera",
+            "property": "capture.mode"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.capture_hand_role"
+          },
+          {
+            "dimension": "camera",
+            "target": "camera",
+            "property": "viewpoint.height"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "visual-concept:pc_pc16_owner_relation",
+      "source_pointer": "/visual_concept_candidates/candidates/0",
+      "candidate": {
+        "id": "visual-concept:pc_pc16_owner_relation",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "the offered object follows the visible subject hand contact",
+          "카메라 쪽으로 건네기",
+          "the subject attached hand extends toward the camera position",
+          "the offered hand or object occupies a nearer plane than the face",
+          "reaching toward camera",
+          "offering gesture",
+          "the near object leaves the requested facial expression region readable"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "pc_pc16_owner_relation",
+            "category": "portrait_composition_owner_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Preserve the requester-supported owner and make this relation visible: the subject attached hand extends toward the camera position Preserve the requester-supported owner and make this relation visible: the offered object follows the visible subject hand contact Preserve the requester-supported owner and make this relation visible: the offered hand or object occupies a nearer plane than the face Preserve the requester-supported owner and make this relation visible: the near object leaves the requested facial expression region readable",
+            "component_semantics": {
+              "minimum_component_groups": 4,
+              "required_group_ids": [
+                "component_1",
+                "component_2",
+                "component_3",
+                "component_4"
+              ],
+              "groups": [
+                {
+                  "id": "component_1",
+                  "any_terms": [
+                    "the subject attached hand extends toward the camera position",
+                    "인물의 몸에 연결된 손이 카메라 위치를 향해 뻗는다"
+                  ]
+                },
+                {
+                  "id": "component_2",
+                  "any_terms": [
+                    "the offered object follows the visible subject hand contact",
+                    "건네는 물건은 보이는 인물의 손과 접촉한 상태로 이어진다"
+                  ]
+                },
+                {
+                  "id": "component_3",
+                  "any_terms": [
+                    "the offered hand or object occupies a nearer plane than the face",
+                    "건네는 손이나 물건은 얼굴보다 가까운 평면에 놓인다"
+                  ]
+                },
+                {
+                  "id": "component_4",
+                  "any_terms": [
+                    "the near object leaves the requested facial expression region readable",
+                    "가까운 물건 뒤로 요청한 얼굴 표정 부위를 읽을 수 있다"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "component_1_phrase",
+                "component_2_phrase",
+                "component_3_phrase",
+                "component_4_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 4,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "component_1_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "the subject attached hand extends toward the camera position"
+                ]
+              },
+              "component_2_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "the offered object follows the visible subject hand contact"
+                ]
+              },
+              "component_3_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "the offered hand or object occupies a nearer plane than the face"
+                ]
+              },
+              "component_4_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "the near object leaves the requested facial expression region readable"
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_pc_pc16_owner_relation_1",
+                "review_scale": "both",
+                "description": "the subject attached hand extends toward the camera position. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+              },
+              {
+                "id": "vo_pc_pc16_owner_relation_2",
+                "review_scale": "native",
+                "description": "the offered object follows the visible subject hand contact. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+              },
+              {
+                "id": "vo_pc_pc16_owner_relation_3",
+                "review_scale": "both",
+                "description": "the offered hand or object occupies a nearer plane than the face. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+              },
+              {
+                "id": "vo_pc_pc16_owner_relation_4",
+                "review_scale": "both",
+                "description": "the near object leaves the requested facial expression region readable. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+              }
+            ],
+            "reject_substitutes": [
+              "카메라를 잡은 셀피 팔과 구분한다.",
+              "프레임 밖 관객의 손을 주인공의 팔로 연결하지 않는다."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:composition:ri_pieta_support_readable_composition",
+      "source_pointer": "/creative_augmentation/candidates/0",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:composition:ri_pieta_support_readable_composition",
+        "slot": "composition",
+        "axis": "sensual",
+        "source_kind": "adult_appeal",
+        "concept_terms": [
+          "the Virgin remains a clothed supporting figure",
+          "the adult Christ body remains limp in the selected representation",
+          "the lap and arms support that body with the selected wrist grip"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "source_candidate_id": "slot:composition:ri_pieta_support_readable_composition",
+        "entry_id": "ri_pieta_support_readable_composition",
+        "affected_dimensions": [
+          "composition"
+        ],
+        "context_requirements": {
+          "requires_primary_any_tags": [
+            "pieta",
+            "mary",
+            "christ",
+            "피에타",
+            "성모",
+            "그리스도"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:composition:ri_pieta_support_readable_composition",
+          "raw_requirements": {
+            "requires_primary_any_tags": [
+              "pieta",
+              "mary",
+              "christ",
+              "피에타",
+              "성모",
+              "그리스도"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:primary_any",
+              "operator": "any",
+              "context": "primary",
+              "values": [
+                "christ",
+                "mary",
+                "pieta",
+                "그리스도",
+                "성모",
+                "피에타"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:composition:ri_pieta_support_readable_composition",
+                  "field": "requires_primary_any_tags"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "2fbb111f99b1892be7c88d2609651a8c9746270070292a62845ef0479cc89da9"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "affected_properties": [
+          {
+            "dimension": "composition",
+            "target": "image_plane",
+            "property": "layout"
+          }
+        ],
+        "expression_scope": "portrayal_or_scene_relation",
+        "contextual_usage": {},
+        "conflicts_with": [],
+        "semantic_band": "near",
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "the Virgin remains a clothed supporting figure",
+          "the adult Christ body remains limp in the selected representation",
+          "the lap and arms support that body with the selected wrist grip"
+        ],
+        "relations": [
+          {
+            "id": "ri_pieta_support_framing_owner",
+            "type": "makes_readable",
+            "subject": "image_plane",
+            "object": "the Virgin remains a clothed supporting figure; the adult Christ body remains limp in the selected representation; the lap and arms support that body with the selected wrist grip"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:composition:ri_pieta_support_readable_composition",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/0",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:composition:ri_pieta_support_readable_composition",
+        "source_candidate_id": "slot:composition:ri_pieta_support_readable_composition",
+        "slot": "composition",
+        "entry_id": "ri_pieta_support_readable_composition",
+        "axis": "sensual",
+        "carrier": "composition",
+        "expression_scope": "portrayal_or_scene_relation",
+        "affected_dimensions": [
+          "composition"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "composition",
+            "target": "image_plane",
+            "property": "layout"
+          }
+        ],
+        "contextual_usage": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword",
+          "alternatives:keyword_scope",
+          "coherence:keyword",
+          "coherence:keyword_scope",
+          "relation_event:keyword"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "requires_primary_any_tags": [
+            "pieta",
+            "mary",
+            "christ",
+            "피에타",
+            "성모",
+            "그리스도"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:composition:ri_pieta_support_readable_composition",
+          "raw_requirements": {
+            "requires_primary_any_tags": [
+              "pieta",
+              "mary",
+              "christ",
+              "피에타",
+              "성모",
+              "그리스도"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:primary_any",
+              "operator": "any",
+              "context": "primary",
+              "values": [
+                "christ",
+                "mary",
+                "pieta",
+                "그리스도",
+                "성모",
+                "피에타"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:composition:ri_pieta_support_readable_composition",
+                  "field": "requires_primary_any_tags"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "2fbb111f99b1892be7c88d2609651a8c9746270070292a62845ef0479cc89da9"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "the Virgin remains a clothed supporting figure",
+          "the adult Christ body remains limp in the selected representation",
+          "the lap and arms support that body with the selected wrist grip"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "the Virgin remains a clothed supporting figure",
+          "the adult Christ body remains limp in the selected representation",
+          "the lap and arms support that body with the selected wrist grip"
+        ],
+        "relations": [
+          {
+            "id": "ri_pieta_support_framing_owner",
+            "type": "makes_readable",
+            "subject": "image_plane",
+            "object": "the Virgin remains a clothed supporting figure; the adult Christ body remains limp in the selected representation; the lap and arms support that body with the selected wrist grip"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:hand_pose:se_one_hand_behind_head",
+      "source_pointer": "/creative_augmentation/candidates/1",
+      "candidate": {
+        "id": "slot:hand_pose:se_one_hand_behind_head",
+        "slot": "hand_pose",
+        "axis": null,
+        "source_kind": "slot",
+        "concept_terms": [
+          "the specified single hand lies at the same actor posterior head",
+          "its elbow forearm and wrist form one continuous arm chain",
+          "the other hand retains its existing posture"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "entry_id": "se_one_hand_behind_head",
+        "conflicts_with": [],
+        "semantic_band": "near",
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "the specified single hand lies at the same actor posterior head",
+          "its elbow forearm and wrist form one continuous arm chain",
+          "the other hand retains its existing posture"
+        ],
+        "relations": [
+          {
+            "id": "se_one_hand_behind_head_r1",
+            "type": "placed_at",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.posterior_head"
+          },
+          {
+            "id": "se_one_hand_behind_head_r2",
+            "type": "attached_to",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.declared_arm"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:hand_pose:se_one_hand_behind_head",
+      "source_pointer": "/slots/hand_pose/candidates/1",
+      "candidate": {
+        "id": "slot:hand_pose:se_one_hand_behind_head",
+        "slot": "hand_pose",
+        "entry_id": "se_one_hand_behind_head",
+        "tags": [
+          "human",
+          "hand_pose"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "the specified single hand lies at the same actor posterior head",
+          "its elbow forearm and wrist form one continuous arm chain",
+          "the other hand retains its existing posture"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "the specified single hand lies at the same actor posterior head",
+          "its elbow forearm and wrist form one continuous arm chain",
+          "the other hand retains its existing posture"
+        ],
+        "relations": [
+          {
+            "id": "se_one_hand_behind_head_r1",
+            "type": "placed_at",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.posterior_head"
+          },
+          {
+            "id": "se_one_hand_behind_head_r2",
+            "type": "attached_to",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.declared_arm"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:shot_scale:close_up_face_shot",
+      "source_pointer": "/creative_augmentation/candidates/2",
+      "candidate": {
+        "id": "slot:shot_scale:close_up_face_shot",
+        "slot": "shot_scale",
+        "axis": null,
+        "source_kind": "slot",
+        "concept_terms": [
+          "close-up face shot scale"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "entry_id": "close_up_face_shot",
+        "conflicts_with": [],
+        "semantic_band": "near",
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "close-up face shot scale"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "framing"
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:shot_scale:close_up_face_shot",
+      "source_pointer": "/slots/shot_scale/candidates/0",
+      "candidate": {
+        "id": "slot:shot_scale:close_up_face_shot",
+        "slot": "shot_scale",
+        "entry_id": "close_up_face_shot",
+        "tags": [
+          "camera",
+          "scale",
+          "portrait",
+          "beauty"
+        ],
+        "kind": [],
+        "facets": {
+          "shot_scale": [
+            "close_up"
+          ]
+        },
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "close-up face shot scale"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "close-up face shot scale"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "framing"
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:composition:pc_pc16_component_3",
+      "source_pointer": "/creative_augmentation/candidates/3",
+      "candidate": {
+        "id": "slot:composition:pc_pc16_component_3",
+        "slot": "composition",
+        "axis": null,
+        "source_kind": "slot",
+        "concept_terms": [
+          "the offered hand or object occupies a nearer plane than the face"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "entry_id": "pc_pc16_component_3",
+        "conflicts_with": [],
+        "semantic_band": "near",
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "the offered hand or object occupies a nearer plane than the face"
+        ],
+        "relations": [
+          {
+            "id": "pc_pc16_component_3_owner",
+            "type": "declared_owner_scope",
+            "subject": "near object and main face",
+            "object": "the requester-supported main portrait and frame"
+          }
+        ],
+        "affected_dimensions": [
+          "composition"
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:composition:pc_pc16_component_3",
+      "source_pointer": "/slots/composition/candidates/0",
+      "candidate": {
+        "id": "slot:composition:pc_pc16_component_3",
+        "slot": "composition",
+        "entry_id": "pc_pc16_component_3",
+        "tags": [
+          "human",
+          "portrait",
+          "composition"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "the offered hand or object occupies a nearer plane than the face"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "the offered hand or object occupies a nearer plane than the face"
+        ],
+        "relations": [
+          {
+            "id": "pc_pc16_component_3_owner",
+            "type": "declared_owner_scope",
+            "subject": "near object and main face",
+            "object": "the requester-supported main portrait and frame"
+          }
+        ],
+        "affected_dimensions": [
+          "composition"
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:color:cr_candidate_split_complementary",
+      "source_pointer": "/creative_augmentation/candidates/4",
+      "candidate": {
+        "id": "slot:color:cr_candidate_split_complementary",
+        "slot": "color",
+        "axis": null,
+        "source_kind": "slot",
+        "concept_terms": [
+          "a base hue occupies one named region while two other regions carry hues flanking its opposite on the specified wheel",
+          "the two flanking hue regions remain distinct from each other and from the base"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "entry_id": "cr_candidate_split_complementary",
+        "conflicts_with": [],
+        "semantic_band": "near",
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "a base hue occupies one named region while two other regions carry hues flanking its opposite on the specified wheel",
+          "the two flanking hue regions remain distinct from each other and from the base"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "color"
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:color:cr_candidate_split_complementary",
+      "source_pointer": "/slots/color/candidates/0",
+      "candidate": {
+        "id": "slot:color:cr_candidate_split_complementary",
+        "slot": "color",
+        "entry_id": "cr_candidate_split_complementary",
+        "tags": [
+          "color"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "a base hue occupies one named region while two other regions carry hues flanking its opposite on the specified wheel",
+          "the two flanking hue regions remain distinct from each other and from the base"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "a base hue occupies one named region while two other regions carry hues flanking its opposite on the specified wheel",
+          "the two flanking hue regions remain distinct from each other and from the base"
+        ],
+        "relations": [],
+        "affected_dimensions": [
+          "color"
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:composition:ri_hodegetria_pointing_readable_composition",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/4",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:composition:ri_hodegetria_pointing_readable_composition",
+        "source_candidate_id": "slot:composition:ri_hodegetria_pointing_readable_composition",
+        "slot": "composition",
+        "entry_id": "ri_hodegetria_pointing_readable_composition",
+        "axis": "sensual",
+        "carrier": "composition",
+        "expression_scope": "portrayal_or_scene_relation",
+        "affected_dimensions": [
+          "composition"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "composition",
+            "target": "image_plane",
+            "property": "layout"
+          }
+        ],
+        "contextual_usage": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword",
+          "alternatives:keyword_scope",
+          "coherence:keyword",
+          "coherence:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "requires_primary_any_tags": [
+            "hodegetria",
+            "virgin",
+            "theotokos",
+            "호데게트리아",
+            "성모"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:composition:ri_hodegetria_pointing_readable_composition",
+          "raw_requirements": {
+            "requires_primary_any_tags": [
+              "hodegetria",
+              "virgin",
+              "theotokos",
+              "호데게트리아",
+              "성모"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:primary_any",
+              "operator": "any",
+              "context": "primary",
+              "values": [
+                "hodegetria",
+                "theotokos",
+                "virgin",
+                "성모",
+                "호데게트리아"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:composition:ri_hodegetria_pointing_readable_composition",
+                  "field": "requires_primary_any_tags"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "2b8c398f93254c48b7803773f22d072373147533ef9cd6f71abcb4439e43d061"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "the Virgin own left arm supports the separate child figure",
+          "the Virgin own right hand points toward that same child",
+          "the two figures and their supporting and pointing hands retain clear ownership"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "the Virgin own left arm supports the separate child figure",
+          "the Virgin own right hand points toward that same child",
+          "the two figures and their supporting and pointing hands retain clear ownership"
+        ],
+        "relations": [
+          {
+            "id": "ri_hodegetria_pointing_framing_owner",
+            "type": "makes_readable",
+            "subject": "image_plane",
+            "object": "the Virgin own left arm supports the separate child figure; the Virgin own right hand points toward that same child; the two figures and their supporting and pointing hands retain clear ownership"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/7",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+        "source_candidate_id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+        "slot": "wardrobe_style",
+        "entry_id": "fit_ff03_v2_candidate",
+        "axis": "sensual",
+        "carrier": "wardrobe_style",
+        "expression_scope": "whole_direction",
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.shoulder.extent"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.sleeve_width"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.body_clearance"
+          }
+        ],
+        "contextual_usage": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword_scope",
+          "relation_concept:keyword",
+          "relation_concept:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+          "raw_requirements": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "277b889849e9476c3018b80af6a3f7a436757802d2614afff210f0d8054e21c4"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "The jacket extends broadly across the shoulders.",
+          "its roomy sleeves and torso share the same enlarged proportions."
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "The jacket extends broadly across the shoulders.",
+          "its roomy sleeves and torso share the same enlarged proportions."
+        ],
+        "relations": [
+          {
+            "id": "fit_ff03_v2_owner_relation",
+            "type": "extend_beyond",
+            "subject": "jacket shoulder and sleeve edges",
+            "object": "same wearer's shoulder and torso contour"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:garment_detail:electric_static_cling_cloth",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/8",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:garment_detail:electric_static_cling_cloth",
+        "source_candidate_id": "slot:garment_detail:electric_static_cling_cloth",
+        "slot": "garment_detail",
+        "entry_id": "electric_static_cling_cloth",
+        "axis": "sensual",
+        "carrier": "garment_detail",
+        "expression_scope": "construction_or_material",
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "*",
+            "property": "wardrobe"
+          },
+          {
+            "dimension": "appearance",
+            "target": "*",
+            "property": "garment"
+          },
+          {
+            "dimension": "appearance",
+            "target": "*",
+            "property": "fabric.contact_state"
+          },
+          {
+            "dimension": "material",
+            "target": "*",
+            "property": "wardrobe"
+          },
+          {
+            "dimension": "material",
+            "target": "*",
+            "property": "garment"
+          },
+          {
+            "dimension": "material",
+            "target": "*",
+            "property": "fabric.contact_state"
+          }
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "electrical_observable_scope",
+              "definition": "천의 국소 달라붙음",
+              "observable_interpretation": "one cloth patch clings to a declared adjacent surface; free fabric hangs beyond that bounded contact; small folds converge toward the contact patch",
+              "claim_limits": [
+                "달라붙음은 시각 형태이며 마찰대전 증명이 아님;비침 자동 추가 금지",
+                "A visual resemblance is not proof of hidden voltage, current, polarity, temperature, material identity, safety, medical diagnosis, death, consent, purpose, or physical causation.",
+                "Still images cannot directly establish sound, onset direction, duration, repeated flicker, charge/discharge direction, measured speed, successful treatment, or before-after history."
+              ],
+              "activation_authority": "interpretation_only_not_required"
+            }
+          ]
+        },
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "relation_concept:keyword",
+          "relation_concept:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {},
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:garment_detail:electric_static_cling_cloth",
+          "raw_requirements": {},
+          "requirements": [],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "fd14548eb293db2e14edcbeac87d6d794eb1f34b211cdf39bc443b07b7562961"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "one cloth patch clings to a declared adjacent surface",
+          "free fabric hangs beyond that bounded contact",
+          "small folds converge toward the contact patch"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "one cloth patch clings to a declared adjacent surface",
+          "free fabric hangs beyond that bounded contact",
+          "small folds converge toward the contact patch"
+        ],
+        "relations": [
+          {
+            "id": "relation_1",
+            "subject": "cloth_patch",
+            "type": "clings_to",
+            "object": "adjacent_surface"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:composition:ri_chakra_white2_readable_composition",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/2",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:composition:ri_chakra_white2_readable_composition",
+        "source_candidate_id": "slot:composition:ri_chakra_white2_readable_composition",
+        "slot": "composition",
+        "entry_id": "ri_chakra_white2_readable_composition",
+        "axis": "sensual",
+        "carrier": "composition",
+        "expression_scope": "portrayal_or_scene_relation",
+        "affected_dimensions": [
+          "composition"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "composition",
+            "target": "image_plane",
+            "property": "layout"
+          }
+        ],
+        "contextual_usage": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword",
+          "alternatives:keyword_scope",
+          "coherence:keyword",
+          "coherence:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "requires_primary_any_tags": [
+            "chakrasamvara",
+            "차크라삼바라",
+            "승락"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:composition:ri_chakra_white2_readable_composition",
+          "raw_requirements": {
+            "requires_primary_any_tags": [
+              "chakrasamvara",
+              "차크라삼바라",
+              "승락"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:primary_any",
+              "operator": "any",
+              "context": "primary",
+              "values": [
+                "chakrasamvara",
+                "승락",
+                "차크라삼바라"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:composition:ri_chakra_white2_readable_composition",
+                  "field": "requires_primary_any_tags"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "1d2fdedc0a5acb0dae20264c09619b5c9065a7941e59813ff3c0b44f3ba1a04e"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "the selected white central figure has one face and two hands",
+          "the vajra and bell remain crossed at the central figure chest",
+          "the separate red consort sits on the lap and wraps her legs around the central figure"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "the selected white central figure has one face and two hands",
+          "the vajra and bell remain crossed at the central figure chest",
+          "the separate red consort sits on the lap and wraps her legs around the central figure"
+        ],
+        "relations": [
+          {
+            "id": "ri_chakra_white2_framing_owner",
+            "type": "makes_readable",
+            "subject": "image_plane",
+            "object": "the selected white central figure has one face and two hands; the vajra and bell remain crossed at the central figure chest; the separate red consort sits on the lap and wraps her legs around the central figure"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    }
+  ],
+  "view_sha256": "bfd83e2df03e628e72a59fec0879b8c098d774774f1907efe34d86b2a3285a6d"
+}

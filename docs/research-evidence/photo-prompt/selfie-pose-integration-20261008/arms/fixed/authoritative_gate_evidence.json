@@ -1,0 +1,269 @@
+{
+  "exact_gate_set": [
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ],
+  "result_sha256": "3c475f90adcf98d3749d3ec6250481a3e2f9773633d24c88f01f49b759950743",
+  "full_native_original_inspected": true,
+  "gates": [
+    {
+      "gate_id": "embodiment_body_ownership",
+      "status": "PASS",
+      "review_scale": "native",
+      "original_image_size": [
+        1237,
+        1272
+      ],
+      "pixel_regions": [
+        {
+          "bbox_xyxy": [
+            128,
+            641,
+            333,
+            982
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        },
+        {
+          "bbox_xyxy": [
+            787,
+            531,
+            1097,
+            811
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        },
+        {
+          "bbox_xyxy": [
+            212,
+            319,
+            897,
+            817
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        }
+      ],
+      "evidence": "The one visible woman owns both connected task arms. Native regions right arm/hand [128,641,333,982] and left arm/hand [787,531,1097,811] connect to the same shoulder/torso [212,319,897,817]. Each ends at its declared prop; there is no visible second owner or disconnected important hand.",
+      "limitations": "Some upper arm is covered by rolled sleeves; the visible continuity suffices for the two critical ownership chains."
+    },
+    {
+      "gate_id": "embodiment_joint_chain_and_reach",
+      "status": "PASS",
+      "review_scale": "native",
+      "original_image_size": [
+        1237,
+        1272
+      ],
+      "pixel_regions": [
+        {
+          "bbox_xyxy": [
+            133,
+            641,
+            357,
+            1022
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        },
+        {
+          "bbox_xyxy": [
+            787,
+            528,
+            1097,
+            811
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        }
+      ],
+      "evidence": "The right sleeve-to-forearm-to-wrist chain reaches the near envelope [133,798,357,1022]; the left bent elbow and forearm reach the channel grip [913,528,1097,811]. Both reaches are coherent at native scale. The rendered left target is higher than the authored waist-height choice, but this change does not break the connected articulation or object reach.",
+      "limitations": "Rendered channel height differs from the authorial prompt. This gate evaluates coherent actuation, not a requester-prescribed height; camera/pose were open."
+    },
+    {
+      "gate_id": "embodiment_support_and_balance",
+      "status": "PASS",
+      "review_scale": "native",
+      "original_image_size": [
+        1237,
+        1272
+      ],
+      "pixel_regions": [
+        {
+          "bbox_xyxy": [
+            167,
+            851,
+            425,
+            1074
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        },
+        {
+          "bbox_xyxy": [
+            74,
+            980,
+            555,
+            1175
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        },
+        {
+          "bbox_xyxy": [
+            962,
+            528,
+            1097,
+            713
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        },
+        {
+          "bbox_xyxy": [
+            711,
+            984,
+            1207,
+            1272
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        }
+      ],
+      "evidence": "The envelope bottom sits on the inverted bowl base [167,851,425,1074], and the bowl rim rests on the wooden bench [74,980,555,1175]. The left hand visibly bears the short channel at [962,528,1097,713]. The torso and visible hips remain coherent under the mild forward lean. Pail and crate portions [711,984,1207,1272] agree with ordinary receiving support.",
+      "limitations": "Feet and the pail/crate base contact extend beyond the lower crop. Exact plantar balance and full receiver base support are unobservable; ordinary off-frame support is allowed by the embodiment contract and no contradictory visible load-bearing state appears."
+    },
+    {
+      "gate_id": "embodiment_contact_and_space",
+      "status": "PASS",
+      "review_scale": "native",
+      "original_image_size": [
+        1237,
+        1272
+      ],
+      "pixel_regions": [
+        {
+          "bbox_xyxy": [
+            133,
+            798,
+            292,
+            982
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        },
+        {
+          "bbox_xyxy": [
+            167,
+            964,
+            357,
+            1028
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        },
+        {
+          "bbox_xyxy": [
+            962,
+            528,
+            1097,
+            713
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        },
+        {
+          "bbox_xyxy": [
+            857,
+            333,
+            1169,
+            972
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        },
+        {
+          "bbox_xyxy": [
+            778,
+            984,
+            1147,
+            1138
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        }
+      ],
+      "evidence": "Right fingertips overlap and steady the paper envelope with a readable boundary [133,798,292,982]; its lower edge meets the dry bowl top [167,964,357,1028]. The left thumb and fingers wrap opposite sides of the brass channel [962,528,1097,713] without fusing the hand into the trough. The open trough and outlet [857,333,1169,972] leave a free water path to the pail [778,984,1147,1138].",
+      "limitations": "The rendered trough slopes down toward screen-left, opposite the authored screen-right slope. Its visible gravity path and intended protective contact remain coherent; the authorial direction mismatch is separately failed as supplemental fidelity."
+    },
+    {
+      "gate_id": "embodiment_visibility_and_projection",
+      "status": "PASS",
+      "review_scale": "native",
+      "original_image_size": [
+        1237,
+        1272
+      ],
+      "pixel_regions": [
+        {
+          "bbox_xyxy": [
+            133,
+            798,
+            357,
+            1022
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        },
+        {
+          "bbox_xyxy": [
+            857,
+            333,
+            1169,
+            939
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        },
+        {
+          "bbox_xyxy": [
+            1088,
+            0,
+            1199,
+            349
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        },
+        {
+          "bbox_xyxy": [
+            887,
+            902,
+            954,
+            972
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        },
+        {
+          "bbox_xyxy": [
+            908,
+            937,
+            943,
+            1094
+          ],
+          "coordinate_origin": "top_left",
+          "precision": "manual_approximate"
+        }
+      ],
+      "evidence": "The full native frame exposes both consequential hand contacts, paper-on-bowl relation and the trough-to-pail route. Roof droplets [1088,0,1199,349], the channel [857,333,1169,939], its outlet [887,902,954,972] and the falling stream [908,937,943,1094] can be read together in this same saved image. Anatomical right maps to screen-left and left to screen-right. The near torso crop still retains the critical event.",
+      "limitations": "The requested authorial head-to-knees crop is not reproduced and neither a timer nor the actual capture owner is visible. Those are distinct from this gate’s critical contact/projection assessment."
+    }
+  ],
+  "proof_boundary": "Agent observations on the actual full native file, not an automatic pixel detector or user acceptance."
+}

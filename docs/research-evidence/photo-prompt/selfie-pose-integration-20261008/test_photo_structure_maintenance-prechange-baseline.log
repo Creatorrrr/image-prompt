@@ -1,0 +1,31 @@
+test_discovery_minimum_does_not_reduce_evidence_or_pixel_duties (tests.test_photo_structure_maintenance.PhotoAuthoredComponentSourceTests.test_discovery_minimum_does_not_reduce_evidence_or_pixel_duties) ... ok
+test_every_live_profile_has_one_valid_source (tests.test_photo_structure_maintenance.PhotoAuthoredComponentSourceTests.test_every_live_profile_has_one_valid_source) ... ok
+test_irregular_joint_contracts_match_frozen_pre_migration_meaning (tests.test_photo_structure_maintenance.PhotoAuthoredComponentSourceTests.test_irregular_joint_contracts_match_frozen_pre_migration_meaning) ... ok
+test_joint_duties_survive_context_specialization (tests.test_photo_structure_maintenance.PhotoAuthoredComponentSourceTests.test_joint_duties_survive_context_specialization) ... ok
+test_missing_unknown_and_duplicate_bindings_fail (tests.test_photo_structure_maintenance.PhotoAuthoredComponentSourceTests.test_missing_unknown_and_duplicate_bindings_fail) ... ok
+test_source_duplicates_and_stale_compiled_fields_fail (tests.test_photo_structure_maintenance.PhotoAuthoredComponentSourceTests.test_source_duplicates_and_stale_compiled_fields_fail) ... ok
+test_duplicate_authored_required_list_is_rejected (tests.test_photo_structure_maintenance.PhotoSourceManifestTests.test_duplicate_authored_required_list_is_rejected) ... ok
+test_importing_public_generator_does_not_read_candidate_assets (tests.test_photo_structure_maintenance.PhotoSourceManifestTests.test_importing_public_generator_does_not_read_candidate_assets) ... ok
+test_invalid_registrations_fail (tests.test_photo_structure_maintenance.PhotoSourceManifestTests.test_invalid_registrations_fail) ... ok
+test_missing_required_and_unregistered_files_are_distinct (tests.test_photo_structure_maintenance.PhotoSourceManifestTests.test_missing_required_and_unregistered_files_are_distinct) ... ok
+test_registration_preserves_both_load_orders_and_required_policy (tests.test_photo_structure_maintenance.PhotoSourceManifestTests.test_registration_preserves_both_load_orders_and_required_policy) ... FAIL
+
+======================================================================
+FAIL: test_registration_preserves_both_load_orders_and_required_policy (tests.test_photo_structure_maintenance.PhotoSourceManifestTests.test_registration_preserves_both_load_orders_and_required_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/selfie-prechange-baseline-vtk5ylwq/tests/test_photo_structure_maintenance.py", line 142, in test_registration_preserves_both_load_orders_and_required_policy
+    self.assertEqual(list(sources.extension_files("candidate")), original["candidate"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['pho[3061 chars]ons_extension.json', 'photo_prompt_fashion_fit_extension.json'] != ['pho[3061 chars]ons_extension.json']
+
+First list contains 1 additional elements.
+First extra element 65:
+'photo_prompt_fashion_fit_extension.json'
+
+Diff is 3515 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 11 tests in 1.040s
+
+FAILED (failures=1)

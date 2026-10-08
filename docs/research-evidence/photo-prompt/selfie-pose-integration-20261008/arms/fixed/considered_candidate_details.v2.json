@@ -1,0 +1,687 @@
+{
+  "contract_version": "photo-composer-view/v2",
+  "mode": "candidate_details",
+  "source_pack_id": "6b3214de39969414",
+  "source_pack_sha256": "48c77f9eb2b49e4d5793fc49ea86ddfb7ae8e3cedad47124808d90672dba4855",
+  "candidates": [
+    {
+      "id": "slot:capture_mode:sf_capture_direct_handheld",
+      "source_pointer": "/slots/capture_mode/candidates/0",
+      "candidate": {
+        "id": "slot:capture_mode:sf_capture_direct_handheld",
+        "slot": "capture_mode",
+        "entry_id": "sf_capture_direct_handheld",
+        "tags": [
+          "human",
+          "capture_mode"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "direct handheld self portrait with one capture hand holding the active camera",
+          "the remaining hand has its separately declared pose or contact role",
+          "capture device visibility follows the chosen framing"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "direct handheld self portrait with one capture hand holding the active camera",
+          "the remaining hand has its separately declared pose or contact role",
+          "capture device visibility follows the chosen framing"
+        ],
+        "relations": [
+          {
+            "id": "capture_owner",
+            "type": "assigned_to",
+            "subject": "camera.capture",
+            "object": "declared_capture_operator"
+          }
+        ],
+        "affected_dimensions": [
+          "camera",
+          "pose"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "camera",
+            "target": "camera",
+            "property": "capture.mode"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.capture_hand_role"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:gaze_engagement:se_eye_visible_through_own_hair",
+      "source_pointer": "/slots/gaze_engagement/candidates/0",
+      "candidate": {
+        "id": "slot:gaze_engagement:se_eye_visible_through_own_hair",
+        "slot": "gaze_engagement",
+        "entry_id": "se_eye_visible_through_own_hair",
+        "tags": [
+          "human",
+          "gaze_engagement"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "existing hair strands overlap part of the declared actor eye region",
+          "the specified eye aperture and iris-direction cue remain visible",
+          "the hair and eye belong to the same actor"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "existing hair strands overlap part of the declared actor eye region",
+          "the specified eye aperture and iris-direction cue remain visible",
+          "the hair and eye belong to the same actor"
+        ],
+        "relations": [
+          {
+            "id": "se_eye_visible_through_own_hair_r1",
+            "type": "partial_occlusion",
+            "subject": "main_subject.hair",
+            "object": "main_subject.eye_region"
+          },
+          {
+            "id": "se_eye_visible_through_own_hair_r2",
+            "type": "directed_gaze",
+            "subject": "main_subject.eyes",
+            "object": "the specified gaze target"
+          }
+        ],
+        "affected_dimensions": [
+          "expression",
+          "appearance"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.gaze_direction"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "hair"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:hand_pose:se_one_hand_behind_head",
+      "source_pointer": "/slots/hand_pose/candidates/0",
+      "candidate": {
+        "id": "slot:hand_pose:se_one_hand_behind_head",
+        "slot": "hand_pose",
+        "entry_id": "se_one_hand_behind_head",
+        "tags": [
+          "human",
+          "hand_pose"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "the specified single hand lies at the same actor posterior head",
+          "its elbow forearm and wrist form one continuous arm chain",
+          "the other hand retains its existing posture"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "the specified single hand lies at the same actor posterior head",
+          "its elbow forearm and wrist form one continuous arm chain",
+          "the other hand retains its existing posture"
+        ],
+        "relations": [
+          {
+            "id": "se_one_hand_behind_head_r1",
+            "type": "placed_at",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.posterior_head"
+          },
+          {
+            "id": "se_one_hand_behind_head_r2",
+            "type": "attached_to",
+            "subject": "main_subject.declared_hand",
+            "object": "main_subject.declared_arm"
+          }
+        ],
+        "affected_dimensions": [
+          "pose"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.hand_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body.arm_configuration"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:expression:ae_smolder_attraction",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/11",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:expression:ae_smolder_attraction",
+        "source_candidate_id": "slot:expression:ae_smolder_attraction",
+        "slot": "expression",
+        "entry_id": "ae_smolder_attraction",
+        "axis": "sensual",
+        "carrier": "expression",
+        "expression_scope": "portrayal_or_scene_relation",
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.eyeline"
+          }
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "ae_smolder_attraction_portrayal_context",
+              "application_conditions": [
+                "Adult attraction must be explicit; duration remains unverified from the still."
+              ],
+              "limits": [
+                "actual gaze duration claimed from a still",
+                "restrained anger forced into adult attraction"
+              ],
+              "status": "optional_contextual_portrayal_not_hidden_state_inference"
+            }
+          ]
+        },
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword",
+          "alternatives:keyword_scope",
+          "relation_concept:keyword",
+          "relation_concept:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "requires_all_tags": [
+            "adult"
+          ],
+          "requires_primary_any_tags": [
+            "attraction",
+            "alluring",
+            "flirting",
+            "seductive",
+            "매혹",
+            "유혹"
+          ],
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:expression:ae_smolder_attraction",
+          "raw_requirements": {
+            "requires_all_tags": [
+              "adult"
+            ],
+            "requires_primary_any_tags": [
+              "attraction",
+              "alluring",
+              "flirting",
+              "seductive",
+              "매혹",
+              "유혹"
+            ],
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:all",
+              "operator": "all",
+              "context": "scene",
+              "values": [
+                "adult"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:expression:ae_smolder_attraction",
+                  "field": "requires_all_tags"
+                }
+              ]
+            },
+            {
+              "id": "entry:primary_any",
+              "operator": "any",
+              "context": "primary",
+              "values": [
+                "alluring",
+                "attraction",
+                "flirting",
+                "seductive",
+                "매혹",
+                "유혹"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:expression:ae_smolder_attraction",
+                  "field": "requires_primary_any_tags"
+                }
+              ]
+            },
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:expression:ae_smolder_attraction",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "f900946fa86cf25884a00ec3dae37f5e3c55aedefd1674fd6804f834c69beb92"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "the irises align with the already requested target",
+          "the eye opening retains the requested form"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "the irises align with the already requested target",
+          "the eye opening retains the requested form"
+        ],
+        "relations": [
+          {
+            "id": "actor_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the declared actor's stated local face and eye configuration"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/7",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+        "source_candidate_id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+        "slot": "wardrobe_style",
+        "entry_id": "fit_ff03_v2_candidate",
+        "axis": "sensual",
+        "carrier": "wardrobe_style",
+        "expression_scope": "whole_direction",
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.shoulder.extent"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.sleeve_width"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.body_clearance"
+          }
+        ],
+        "contextual_usage": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword_scope",
+          "relation_concept:keyword",
+          "relation_concept:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+          "raw_requirements": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "277b889849e9476c3018b80af6a3f7a436757802d2614afff210f0d8054e21c4"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "The jacket extends broadly across the shoulders.",
+          "its roomy sleeves and torso share the same enlarged proportions."
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "The jacket extends broadly across the shoulders.",
+          "its roomy sleeves and torso share the same enlarged proportions."
+        ],
+        "relations": [
+          {
+            "id": "fit_ff03_v2_owner_relation",
+            "type": "extend_beyond",
+            "subject": "jacket shoulder and sleeve edges",
+            "object": "same wearer's shoulder and torso contour"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:garment_detail:electric_static_cling_cloth",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/6",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:garment_detail:electric_static_cling_cloth",
+        "source_candidate_id": "slot:garment_detail:electric_static_cling_cloth",
+        "slot": "garment_detail",
+        "entry_id": "electric_static_cling_cloth",
+        "axis": "sensual",
+        "carrier": "garment_detail",
+        "expression_scope": "construction_or_material",
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "*",
+            "property": "wardrobe"
+          },
+          {
+            "dimension": "appearance",
+            "target": "*",
+            "property": "garment"
+          },
+          {
+            "dimension": "appearance",
+            "target": "*",
+            "property": "fabric.contact_state"
+          },
+          {
+            "dimension": "material",
+            "target": "*",
+            "property": "wardrobe"
+          },
+          {
+            "dimension": "material",
+            "target": "*",
+            "property": "garment"
+          },
+          {
+            "dimension": "material",
+            "target": "*",
+            "property": "fabric.contact_state"
+          }
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "electrical_observable_scope",
+              "definition": "천의 국소 달라붙음",
+              "observable_interpretation": "one cloth patch clings to a declared adjacent surface; free fabric hangs beyond that bounded contact; small folds converge toward the contact patch",
+              "claim_limits": [
+                "달라붙음은 시각 형태이며 마찰대전 증명이 아님;비침 자동 추가 금지",
+                "A visual resemblance is not proof of hidden voltage, current, polarity, temperature, material identity, safety, medical diagnosis, death, consent, purpose, or physical causation.",
+                "Still images cannot directly establish sound, onset direction, duration, repeated flicker, charge/discharge direction, measured speed, successful treatment, or before-after history."
+              ],
+              "activation_authority": "interpretation_only_not_required"
+            }
+          ]
+        },
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "relation_concept:keyword",
+          "relation_concept:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {},
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:garment_detail:electric_static_cling_cloth",
+          "raw_requirements": {},
+          "requirements": [],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "fd14548eb293db2e14edcbeac87d6d794eb1f34b211cdf39bc443b07b7562961"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "one cloth patch clings to a declared adjacent surface",
+          "free fabric hangs beyond that bounded contact",
+          "small folds converge toward the contact patch"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "one cloth patch clings to a declared adjacent surface",
+          "free fabric hangs beyond that bounded contact",
+          "small folds converge toward the contact patch"
+        ],
+        "relations": [
+          {
+            "id": "relation_1",
+            "subject": "cloth_patch",
+            "type": "clings_to",
+            "object": "adjacent_surface"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:expression:soft_off_camera_home_gaze",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/10",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:expression:soft_off_camera_home_gaze",
+        "source_candidate_id": "slot:expression:soft_off_camera_home_gaze",
+        "slot": "expression",
+        "entry_id": "soft_off_camera_home_gaze",
+        "axis": "sensual",
+        "carrier": "expression",
+        "expression_scope": "portrayal_or_scene_relation",
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [],
+        "contextual_usage": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword",
+          "alternatives:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:expression:soft_off_camera_home_gaze",
+          "raw_requirements": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:expression:soft_off_camera_home_gaze",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "e508a472c6e86bd8bebb27f4c8d5c7c8241436d4326383dc3c456c62ec0ec9a3"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "a soft off-camera gaze in a relaxed home moment"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "a soft off-camera gaze in a relaxed home moment"
+        ],
+        "relations": [],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    }
+  ],
+  "view_sha256": "bedffc5fea9c182c84394ecfaaf58a5835d982112cc0d4e268e2503e4dce569e"
+}

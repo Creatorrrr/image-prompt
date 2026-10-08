@@ -1,0 +1,4209 @@
+[
+  {
+    "research_unit_id": "SF001",
+    "label_ko": "옅은 미소",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_smile_closed",
+        "slot": "expression",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "입을 다문 미소",
+        "en": "mouth corners rise visibly; lips remain closed without visible teeth; eye expression is independently specified",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF002",
+    "label_ko": "치아가 보이는 미소",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_smile_teeth",
+        "slot": "expression",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "치아가 드러난 미소",
+        "en": "mouth corners rise; lips separate to reveal teeth; jaw opening is independently sized",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF003",
+    "label_ko": "웃음이 터지는 순간",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_smile_teeth",
+        "slot": "expression",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "치아가 드러난 미소",
+        "en": "mouth corners rise; lips separate to reveal teeth; jaw opening is independently sized",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF004",
+    "label_ko": "눈웃음",
+    "new_variants": [
+      {
+        "research_unit_id": "SF004",
+        "variant": "base",
+        "candidate_id": "sf_004_base",
+        "profile_id": "sf_profile_004_base",
+        "slot": "expression",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S03",
+          "S04"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "눈꺼풀과 입술을 함께 보이게 해 변형을 판별한다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "ae_smize",
+        "slot": "expression",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json",
+        "ko": "눈 주변 움직임이 있는 미소 제안",
+        "en": "mouth corners rise; cheeks lift and the eye openings narrow without full closure",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF005",
+    "label_ko": "스퀸치",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "ae_squinch",
+        "slot": "expression",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json",
+        "ko": "아래 눈꺼풀을 가볍게 올린 스퀸치",
+        "en": "lower eyelid margins lift toward the irises; both eyes remain visibly open through narrowed apertures",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF006",
+    "label_ko": "젠지 파우트",
+    "new_variants": [
+      {
+        "research_unit_id": "SF006",
+        "variant": "base",
+        "candidate_id": "sf_006_base",
+        "profile_id": "sf_profile_006_base",
+        "slot": "expression",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S03",
+          "S04",
+          "S05",
+          "S06"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "윗입술·아랫입술·눈이 함께 보이는 얼굴 크롭을 쓴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF007",
+    "label_ko": "덕페이스",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "ae_pucker",
+        "slot": "expression",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json",
+        "ko": "앞으로 내민 키시 페이스",
+        "en": "the lips form a forward-projecting rounded contour; the mouth corners gather toward the center",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF008",
+    "label_ko": "입술 살짝 벌리기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_parted_lips",
+        "slot": "expression",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "입술 사이 작은 틈",
+        "en": "upper and lower lips have a visible small gap; teeth exposure is optional; eye shape and lip protrusion are independent",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF009",
+    "label_ko": "한쪽 입꼬리 미소",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_asymmetric_mouth",
+        "slot": "expression",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "좌우가 다른 입꼬리",
+        "en": "one mouth corner differs visibly from the other; face yaw does not alone explain the asymmetry; no personality or motive is inferred",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF010",
+    "label_ko": "찡긋 웃기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "ae_nose_wrinkle",
+        "slot": "expression",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json",
+        "ko": "콧등이 찡그려진 상태",
+        "en": "the nose bridge region is visibly scrunched; the wrinkle follows the nose region rather than a cosmetic mark",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      },
+      {
+        "id": "pv_smile_closed",
+        "slot": "expression",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "입을 다문 미소",
+        "en": "mouth corners rise visibly; lips remain closed without visible teeth; eye expression is independently specified",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF011",
+    "label_ko": "렌즈 정면 응시",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_gaze_direct",
+        "slot": "gaze_engagement",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "카메라 방향의 두 눈 시선",
+        "en": "visible pupils or eye axes converge toward the camera direction; face direction is separately stated; occluded eyes cannot establish eye contact",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF012",
+    "label_ko": "사선 얼굴",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_head_turn",
+        "slot": "body_orientation",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "몸통과 독립된 머리 회전",
+        "en": "face yaw differs from thorax direction; neck joins the turned head to the torso; eye direction is not inferred from nose direction alone",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF013",
+    "label_ko": "옆얼굴",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_head_turn",
+        "slot": "body_orientation",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "몸통과 독립된 머리 회전",
+        "en": "face yaw differs from thorax direction; neck joins the turned head to the torso; eye direction is not inferred from nose direction alone",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF014",
+    "label_ko": "고개 기울이기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_head_tilt",
+        "slot": "body_orientation",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "머리의 좌우 기울기",
+        "en": "head roll differs from thorax roll; neck continuity is visible; camera horizon is independently known",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF015",
+    "label_ko": "턱을 내리고 올려다보기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_chin_down",
+        "slot": "body_orientation",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "턱을 내린 머리 각도",
+        "en": "head pitches downward relative to thorax; chin-neck relation remains visible; camera elevation is separately stated",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      },
+      {
+        "id": "pv_gaze_up",
+        "slot": "gaze_engagement",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "위쪽을 향한 눈의 시선",
+        "en": "eye axes point above the face's forward direction; face pitch and target are independently stated; pupils remain sufficiently visible",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF016",
+    "label_ko": "턱을 들고 내려다보기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_chin_up",
+        "slot": "body_orientation",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "턱을 든 머리 각도",
+        "en": "head pitches upward relative to thorax; jaw and neck landmarks remain readable; camera elevation is separately stated",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      },
+      {
+        "id": "pv_gaze_down",
+        "slot": "gaze_engagement",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "아래쪽을 향한 눈의 시선",
+        "en": "eye axes point below the face's forward direction; face pitch and target are independently stated; pupils remain sufficiently visible",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF017",
+    "label_ko": "옆으로 시선 빼기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_gaze_offcamera",
+        "slot": "gaze_engagement",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "카메라 밖의 명시된 시선",
+        "en": "eye axes point away from the camera; selected direction or target is stated; head turn is an independent parameter",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF018",
+    "label_ko": "아래 보기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_gaze_down",
+        "slot": "gaze_engagement",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "아래쪽을 향한 눈의 시선",
+        "en": "eye axes point below the face's forward direction; face pitch and target are independently stated; pupils remain sufficiently visible",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF019",
+    "label_ko": "눈 감기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_eyes_closed",
+        "slot": "expression",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "양쪽 눈 감기",
+        "en": "both eyelid openings close; both eye regions remain visible; mouth expression is independently selected",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF020",
+    "label_ko": "윙크",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_wink",
+        "slot": "expression",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "한쪽 눈만 닫힌 윙크",
+        "en": "one eyelid opening closes; the other remains visibly open; closed side is recorded in actor coordinates",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF021",
+    "label_ko": "볼 콕",
+    "new_variants": [
+      {
+        "research_unit_id": "SF021",
+        "variant": "base",
+        "candidate_id": "sf_021_base",
+        "profile_id": "sf_profile_021_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "검지 끝과 볼의 접점·손목을 같은 프레임에 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF022",
+    "label_ko": "손바닥에 볼 기대기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF022",
+        "variant": "base",
+        "candidate_id": "sf_022_base",
+        "profile_id": "sf_profile_022_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "볼·손바닥·손목을 보이고 하중형은 팔꿈치 받침도 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF023",
+    "label_ko": "한 주먹 턱받침",
+    "new_variants": [
+      {
+        "research_unit_id": "SF023",
+        "variant": "base",
+        "candidate_id": "sf_023_base",
+        "profile_id": "sf_profile_023_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "턱·주먹·손목을 담고 지지형은 팔꿈치 지지면도 남긴다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_chin_support",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "턱을 받치는 손과 팔의 지지",
+        "en": "chin rests on a stated palm or knuckle area; elbow or forearm has a visible receiving support when loaded; hand-arm-head continuity is readable",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      },
+      {
+        "id": "pv_clenched_fist",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "접힌 네 손가락과 엄지의 주먹",
+        "en": "four fingers fold into the palm; thumb remains visibly assigned outside or beside the folded digits; wrist continues to one forearm",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF024",
+    "label_ko": "콩순이식 양 주먹",
+    "new_variants": [
+      {
+        "research_unit_id": "SF024",
+        "variant": "base",
+        "candidate_id": "sf_024_base",
+        "profile_id": "sf_profile_024_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09",
+          "S07"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "양 주먹 전체·얼굴·각 손목을 담는다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_clenched_fist",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "접힌 네 손가락과 엄지의 주먹",
+        "en": "four fingers fold into the palm; thumb remains visibly assigned outside or beside the folded digits; wrist continues to one forearm",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF025",
+    "label_ko": "양손 꽃받침",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_flower_chin",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "턱 아래 두 손 꽃받침",
+        "en": "two hands open or cup beside the underside of the chin; wrists and elbows belong to separate arms; palms and fingers form the selected bilateral frame",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF026",
+    "label_ko": "한 손 꽃받침",
+    "new_variants": [
+      {
+        "research_unit_id": "SF026",
+        "variant": "base",
+        "candidate_id": "sf_026_base",
+        "profile_id": "sf_profile_026_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "손 전체와 턱의 간격 또는 접촉을 남긴다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_palms_up",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "위쪽을 향한 손바닥",
+        "en": "palm surfaces face the declared upward direction; finger and thumb landmarks distinguish palm from dorsum; camera-relative orientation is separately recorded",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF027",
+    "label_ko": "턱선 L자",
+    "new_variants": [
+      {
+        "research_unit_id": "SF027",
+        "variant": "base",
+        "candidate_id": "sf_027_base",
+        "profile_id": "sf_profile_027_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "엄지·검지·턱의 세 접점 관계를 담는다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_finger_gun",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "검지와 엄지의 손가락 총",
+        "en": "index finger extends toward the declared direction; thumb rises away from the index; remaining fingers fold",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF028",
+    "label_ko": "손등 턱받침",
+    "new_variants": [
+      {
+        "research_unit_id": "SF028",
+        "variant": "base",
+        "candidate_id": "sf_028_base",
+        "profile_id": "sf_profile_028_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "손톱·관절 또는 손등 단서와 턱 접촉을 남긴다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_chin_support",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "턱을 받치는 손과 팔의 지지",
+        "en": "chin rests on a stated palm or knuckle area; elbow or forearm has a visible receiving support when loaded; hand-arm-head continuity is readable",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF029",
+    "label_ko": "볼 살짝 집기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF029",
+        "variant": "base",
+        "candidate_id": "sf_029_base",
+        "profile_id": "sf_profile_029_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "두 손가락 끝과 작은 피부 주름이 읽히는 가까운 크롭을 쓴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF030",
+    "label_ko": "양손으로 볼 감싸기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF030",
+        "variant": "base",
+        "candidate_id": "sf_030_base",
+        "profile_id": "sf_profile_030_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "양 볼·손가락·손목이 읽히게 한다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_cupped_hands",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "오목한 손바닥의 컵 모양",
+        "en": "palm and fingers form a concave receiving shape; one or two hands are explicitly selected; gripped object is optional and separately declared",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF031",
+    "label_ko": "티렉스 손",
+    "new_variants": [
+      {
+        "research_unit_id": "SF031",
+        "variant": "base",
+        "candidate_id": "sf_031_base",
+        "profile_id": "sf_profile_031_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09",
+          "S08"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "얼굴 옆의 손가락 굽힘과 손등을 원본 크기로 확인한다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_relaxed_fingers",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "느슨하게 굽힌 손가락",
+        "en": "digits show small varied bends; finger count and joints remain coherent; wrist position is separately declared",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF032",
+    "label_ko": "입술 끝 터치",
+    "new_variants": [
+      {
+        "research_unit_id": "SF032",
+        "variant": "base",
+        "candidate_id": "sf_032_base",
+        "profile_id": "sf_profile_032_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "손가락 끝·입술 경계·눈을 함께 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF033",
+    "label_ko": "쉿 포즈",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_shush",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "입술 앞의 세로 검지",
+        "en": "one index finger rises vertically in front of the lips; finger-lip contact or small gap is explicitly selected; hand owner and face target match",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF034",
+    "label_ko": "얼굴 반 가리기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF034",
+        "variant": "base",
+        "candidate_id": "sf_034_base",
+        "profile_id": "sf_profile_034_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "손 경계와 남은 한쪽 눈·코·입의 범위를 확인한다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_self_cover_hands",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "손바닥으로 지정된 부위 가리기",
+        "en": "hands belong to the same declared actor; selected palms occlude the explicitly named body or garment region; finger-arm continuity is visible; coverage and clothing state remain separately requested",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF035",
+    "label_ko": "한쪽 눈 가리기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF035",
+        "variant": "base",
+        "candidate_id": "sf_035_base",
+        "profile_id": "sf_profile_035_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "가려지지 않은 눈·코·입과 손 가림 경계를 남긴다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_self_cover_hands",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "손바닥으로 지정된 부위 가리기",
+        "en": "hands belong to the same declared actor; selected palms occlude the explicitly named body or garment region; finger-arm continuity is visible; coverage and clothing state remain separately requested",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF036",
+    "label_ko": "손가락 사이로 보기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF036",
+        "variant": "base",
+        "candidate_id": "sf_036_base",
+        "profile_id": "sf_profile_036_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "손가락 틈의 눈에 초점을 맞추고 손목 연결을 남긴다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_splayed_fingers",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "서로 벌어진 손가락",
+        "en": "five digits are separated enough to count; palm orientation is explicitly selected; a single still image establishes shape rather than shaking motion",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF037",
+    "label_ko": "이마 짚기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF037",
+        "variant": "base",
+        "candidate_id": "sf_037_base",
+        "profile_id": "sf_profile_037_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "이마 접촉·손바닥 면·팔 연결을 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF038",
+    "label_ko": "햇빛 가리기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF038",
+        "variant": "base",
+        "candidate_id": "sf_038_base",
+        "profile_id": "sf_profile_038_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "손의 수평면·눈썹·눈과 실제 그림자를 담는다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_palms_down",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "아래쪽을 향한 손바닥",
+        "en": "palm surfaces face the declared downward direction; wrist and hand contour remain visible; camera-relative orientation is separately recorded",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF039",
+    "label_ko": "관자놀이 터치",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_temple_touch",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "관자놀이 손 접촉",
+        "en": "hand contacts the lateral forehead near temple; face landmarks identify the target; contact role is touch unless explicit support is requested",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF040",
+    "label_ko": "입 가리고 웃기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "ae_hand_mouth",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json",
+        "ko": "자기 입 앞을 자기 손으로 가린 형태",
+        "en": "the actor's hand is connected to their own wrist and arm; that hand covers the front of the same actor's mouth",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF041",
+    "label_ko": "기본 브이",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_v_sign",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "검지·중지의 V 모양",
+        "en": "index and middle fingers extend and separate; ring and little fingers fold; thumb remains attached and distinguishable; palm orientation is independently selected",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF042",
+    "label_ko": "눈 옆 가로 브이",
+    "new_variants": [
+      {
+        "research_unit_id": "SF042",
+        "variant": "base",
+        "candidate_id": "sf_042_base",
+        "profile_id": "sf_profile_042_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S07"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "V 방향·눈꼬리·손목을 함께 담는다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_v_sign",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "검지·중지의 V 모양",
+        "en": "index and middle fingers extend and separate; ring and little fingers fold; thumb remains attached and distinguishable; palm orientation is independently selected",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF043",
+    "label_ko": "턱 아래 브이",
+    "new_variants": [
+      {
+        "research_unit_id": "SF043",
+        "variant": "base",
+        "candidate_id": "sf_043_base",
+        "profile_id": "sf_profile_043_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S07"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "턱·검지·중지 관계와 손목을 남긴다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_v_sign",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "검지·중지의 V 모양",
+        "en": "index and middle fingers extend and separate; ring and little fingers fold; thumb remains attached and distinguishable; palm orientation is independently selected",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF044",
+    "label_ko": "갸루피스",
+    "new_variants": [
+      {
+        "research_unit_id": "SF044",
+        "variant": "base",
+        "candidate_id": "sf_044_base",
+        "profile_id": "sf_profile_044_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S07"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "아래를 향한 손끝·팔 깊이·얼굴을 함께 보인다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_v_sign",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "검지·중지의 V 모양",
+        "en": "index and middle fingers extend and separate; ring and little fingers fold; thumb remains attached and distinguishable; palm orientation is independently selected",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF045",
+    "label_ko": "잔망루피식 정수리 브이",
+    "new_variants": [
+      {
+        "research_unit_id": "SF045",
+        "variant": "base",
+        "candidate_id": "sf_045_base",
+        "profile_id": "sf_profile_045_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S07"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "정수리와 V 전체를 잘리지 않게 남긴다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_v_sign",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "검지·중지의 V 모양",
+        "en": "index and middle fingers extend and separate; ring and little fingers fold; thumb remains attached and distinguishable; palm orientation is independently selected",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF046",
+    "label_ko": "토끼 귀",
+    "new_variants": [
+      {
+        "research_unit_id": "SF046",
+        "variant": "base",
+        "candidate_id": "sf_046_base",
+        "profile_id": "sf_profile_046_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S07"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "양 V·정수리·두 손목을 담는다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_double_v",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "두 손의 각각 독립된 V",
+        "en": "each hand has index-middle V geometry; both wrists connect to separate actor arms; each hand's palm direction is explicitly selected",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF047",
+    "label_ko": "높낮이 다른 더블 브이",
+    "new_variants": [
+      {
+        "research_unit_id": "SF047",
+        "variant": "base",
+        "candidate_id": "sf_047_base",
+        "profile_id": "sf_profile_047_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S07"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "양손·팔의 소유와 상대 높이를 읽을 수 있게 한다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_double_v",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "두 손의 각각 독립된 V",
+        "en": "each hand has index-middle V geometry; both wrists connect to separate actor arms; each hand's palm direction is explicitly selected",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF048",
+    "label_ko": "고양이 발",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_cat_paw",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "느슨하게 접은 고양이 발 손",
+        "en": "wrists flex in the selected paw-like arrangement; fingers curl loosely without forming a rigid fist; hand placement is explicitly stated",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF049",
+    "label_ko": "경례",
+    "new_variants": [
+      {
+        "research_unit_id": "SF049",
+        "variant": "base",
+        "candidate_id": "sf_049_base",
+        "profile_id": "sf_profile_049_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S07"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "손끝·이마와 팔꿈치의 관계를 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF050",
+    "label_ko": "샤카",
+    "new_variants": [
+      {
+        "research_unit_id": "SF050",
+        "variant": "base",
+        "candidate_id": "sf_050_base",
+        "profile_id": "sf_profile_050_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S07"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "엄지·새끼·접힌 세 손가락을 확인한다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF051",
+    "label_ko": "손가락 하트",
+    "new_variants": [
+      {
+        "research_unit_id": "SF051",
+        "variant": "base",
+        "candidate_id": "sf_051_base",
+        "profile_id": "sf_profile_051_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "엄지·검지의 작은 교차를 원본 크기에서 읽히게 한다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF052",
+    "label_ko": "볼하트",
+    "new_variants": [
+      {
+        "research_unit_id": "SF052",
+        "variant": "base",
+        "candidate_id": "sf_052_base",
+        "profile_id": "sf_profile_052_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "손 곡선·볼·작은 사이 공간이 읽혀야 한다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF053",
+    "label_ko": "양 볼하트",
+    "new_variants": [
+      {
+        "research_unit_id": "SF053",
+        "variant": "base",
+        "candidate_id": "sf_053_base",
+        "profile_id": "sf_profile_053_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "양손 실루엣과 양 볼을 함께 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF054",
+    "label_ko": "양손 하트",
+    "new_variants": [
+      {
+        "research_unit_id": "SF054",
+        "variant": "base",
+        "candidate_id": "sf_054_base",
+        "profile_id": "sf_profile_054_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "양손 전체·하트 안 빈 공간·두 손목을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF055",
+    "label_ko": "머리 위 큰 하트",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_arm_heart",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "머리 위 팔의 하트 윤곽",
+        "en": "both arms rise above head level; elbows and wrists create opposing curved halves; hands meet or nearly meet at the requested apex",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF056",
+    "label_ko": "고양이 하트",
+    "new_variants": [
+      {
+        "research_unit_id": "SF056",
+        "variant": "base",
+        "candidate_id": "sf_056_base",
+        "profile_id": "sf_profile_056_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09",
+          "S23"
+        ],
+        "named_activation_deferred": true,
+        "observability_ko": "하트 빈 공간·두 귀 봉우리·손 소유를 원본으로 확인한다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF057",
+    "label_ko": "상대를 기다리는 반쪽 하트",
+    "new_variants": [
+      {
+        "research_unit_id": "SF057",
+        "variant": "base",
+        "candidate_id": "sf_057_base",
+        "profile_id": "sf_profile_057_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "반쪽 손과 빈 공간을 함께 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF058",
+    "label_ko": "눈을 둘러싼 작은 하트",
+    "new_variants": [
+      {
+        "research_unit_id": "SF058",
+        "variant": "base",
+        "candidate_id": "sf_058_base",
+        "profile_id": "sf_profile_058_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "하트 안 눈동자·양손·반대 눈 또는 입 일부를 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF059",
+    "label_ko": "엄지척",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_thumbs_up",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "네 손가락을 접고 엄지 세우기",
+        "en": "thumb extends upward from the hand; other four fingers fold; wrist-to-forearm continuity is readable",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF060",
+    "label_ko": "렌즈 가리키기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF060",
+        "variant": "base",
+        "candidate_id": "sf_060_base",
+        "profile_id": "sf_profile_060_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "검지 끝·손바닥·손목의 깊이 연결을 남긴다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_foreshortened_reach",
+        "slot": "body_orientation",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "카메라 깊이 방향으로 뻗은 팔",
+        "en": "arm extends toward the camera in depth; hand/forearm scale and overlap reflect that direction; shoulder-elbow-wrist continuity remains coherent; this changes a viewpoint relation without claiming a focal length",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF061",
+    "label_ko": "귀 뒤로 머리 넘기기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF061",
+        "variant": "base",
+        "candidate_id": "sf_061_base",
+        "profile_id": "sf_profile_061_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "귀·가닥·손끝의 통과 관계를 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF062",
+    "label_ko": "머리 쓸어 넘기기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF062",
+        "variant": "base",
+        "candidate_id": "sf_062_base",
+        "profile_id": "sf_profile_062_base",
+        "slot": "action",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "헤어라인·손바닥·움직인 가닥을 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF063",
+    "label_ko": "포니테일 잡기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF063",
+        "variant": "base",
+        "candidate_id": "sf_063_base",
+        "profile_id": "sf_profile_063_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "묶인 뿌리와 손의 잡는 지점·연결 가닥을 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF064",
+    "label_ko": "머리 한 가닥 만지기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF064",
+        "variant": "base",
+        "candidate_id": "sf_064_base",
+        "profile_id": "sf_profile_064_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "손끝 주변 가닥과 머리로 이어지는 경로를 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF065",
+    "label_ko": "셔츠 칼라 잡기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_lapel_grip",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "옷깃을 잡은 손가락",
+        "en": "fingers pinch or grip a visible collar or lapel edge; the fabric edge responds to that contact; hand remains attached to its owner",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF066",
+    "label_ko": "재킷 라펠 잡기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_lapel_grip",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "옷깃을 잡은 손가락",
+        "en": "fingers pinch or grip a visible collar or lapel edge; the fabric edge responds to that contact; hand remains attached to its owner",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF067",
+    "label_ko": "소매에 손 숨기기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF067",
+        "variant": "base",
+        "candidate_id": "sf_067_base",
+        "profile_id": "sf_profile_067_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "소매 입구와 보이는 손끝·팔의 연결을 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF068",
+    "label_ko": "선글라스 내리기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF068",
+        "variant": "base",
+        "candidate_id": "sf_068_base",
+        "profile_id": "sf_profile_068_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "잡는 지점·코 위 프레임·노출된 눈을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF069",
+    "label_ko": "안경 고쳐 쓰기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF069",
+        "variant": "base",
+        "candidate_id": "sf_069_base",
+        "profile_id": "sf_profile_069_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "프레임 접점·손끝·눈 사이 간격을 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF070",
+    "label_ko": "모자 챙 잡기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF070",
+        "variant": "base",
+        "candidate_id": "sf_070_base",
+        "profile_id": "sf_profile_070_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "손끝·챙·모자의 연결과 얼굴 가림 범위를 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF071",
+    "label_ko": "눈높이 기본 셀카",
+    "new_variants": [
+      {
+        "research_unit_id": "SF071",
+        "variant": "base",
+        "candidate_id": "sf_071_base",
+        "profile_id": "sf_profile_071_base",
+        "slot": "capture_context",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "직접 셀카는 촬영 팔·깊이 단서를 남기되 기기 전체 노출을 강제하지 않는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF072",
+    "label_ko": "약한 하이앵글",
+    "new_variants": [
+      {
+        "research_unit_id": "SF072",
+        "variant": "base",
+        "candidate_id": "sf_072_base",
+        "profile_id": "sf_profile_072_base",
+        "slot": "composition",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "눈·턱·어깨 및 필요한 공간 기준을 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF073",
+    "label_ko": "팔을 올린 하이앵글",
+    "new_variants": [
+      {
+        "research_unit_id": "SF073",
+        "variant": "base",
+        "candidate_id": "sf_073_base",
+        "profile_id": "sf_profile_073_base",
+        "slot": "capture_context",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "팔 진입점·얼굴·아래쪽 몸의 깊이 관계를 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF074",
+    "label_ko": "정수리 위 탑다운",
+    "new_variants": [
+      {
+        "research_unit_id": "SF074",
+        "variant": "base",
+        "candidate_id": "sf_074_base",
+        "profile_id": "sf_profile_074_base",
+        "slot": "composition",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "정수리·어깨·지지면 배치를 포함한다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF075",
+    "label_ko": "가슴 높이 로우앵글",
+    "new_variants": [
+      {
+        "research_unit_id": "SF075",
+        "variant": "base",
+        "candidate_id": "sf_075_base",
+        "profile_id": "sf_profile_075_base",
+        "slot": "composition",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "목·턱과 배경의 수직 원근을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF076",
+    "label_ko": "바닥 높이 셀프포트레이트",
+    "new_variants": [
+      {
+        "research_unit_id": "SF076",
+        "variant": "base",
+        "candidate_id": "sf_076_base",
+        "profile_id": "sf_profile_076_base",
+        "slot": "capture_context",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "몸과 지면의 관계를 보여주는 넓은 구도를 쓴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF077",
+    "label_ko": "기울어진 화면",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pc_pc30_component_2",
+        "slot": "composition",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_portrait_composition_extension.json",
+        "ko": "원래 수평인 여러 장면 선이 일관된 기울기 방향을 공유한다",
+        "en": "multiple normally level scene lines share a coherent tilt direction",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      },
+      {
+        "id": "pc_px08_component_3",
+        "slot": "composition",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_portrait_composition_extension.json",
+        "ko": "몸 대각선과 카메라 롤의 분리: 구성요소 3",
+        "en": "the two angle relations remain independently describable in the same image",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF078",
+    "label_ko": "극근접 크롭",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pc_pc30_component_4",
+        "slot": "subject_framing",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_portrait_composition_extension.json",
+        "ko": "회전된 크롭 뒤에도 지정한 얼굴 부위를 읽을 수 있다",
+        "en": "the nominated facial region remains readable after the rotated crop",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF079",
+    "label_ko": "반쪽 얼굴 크롭",
+    "new_variants": [
+      {
+        "research_unit_id": "SF079",
+        "variant": "base",
+        "candidate_id": "sf_079_base",
+        "profile_id": "sf_profile_079_base",
+        "slot": "subject_framing",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "프레임 경계가 얼굴을 자르는 위치를 명확히 보인다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF080",
+    "label_ko": "배경을 크게 넣는 셀카",
+    "new_variants": [
+      {
+        "research_unit_id": "SF080",
+        "variant": "base",
+        "candidate_id": "sf_080_base",
+        "profile_id": "sf_profile_080_base",
+        "slot": "subject_framing",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "인물·장소·촬영 방식의 공간 관계를 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF081",
+    "label_ko": "큰 머리·작은 몸",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "ultrawide_near_far_scale_expansion",
+        "slot": "lens",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_photo_era_extension.json",
+        "ko": "초광각 근거리-원거리 스케일 확장",
+        "en": "ultra-wide near-to-far scale expansion",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF082",
+    "label_ko": "긴 팔 대각선",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_foreshortened_reach",
+        "slot": "body_orientation",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "카메라 깊이 방향으로 뻗은 팔",
+        "en": "arm extends toward the camera in depth; hand/forearm scale and overlap reflect that direction; shoulder-elbow-wrist continuity remains coherent; this changes a viewpoint relation without claiming a focal length",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF083",
+    "label_ko": "손바닥 내밀기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_foreshortened_reach",
+        "slot": "body_orientation",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "카메라 깊이 방향으로 뻗은 팔",
+        "en": "arm extends toward the camera in depth; hand/forearm scale and overlap reflect that direction; shoulder-elbow-wrist continuity remains coherent; this changes a viewpoint relation without claiming a focal length",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      },
+      {
+        "id": "pv_splayed_fingers",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "서로 벌어진 손가락",
+        "en": "five digits are separated enough to count; palm orientation is explicitly selected; a single still image establishes shape rather than shaking motion",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF084",
+    "label_ko": "소품이 큰 전경",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "ultrawide_near_far_scale_expansion",
+        "slot": "lens",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_photo_era_extension.json",
+        "ko": "초광각 근거리-원거리 스케일 확장",
+        "en": "ultra-wide near-to-far scale expansion",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF085",
+    "label_ko": "신발 전경",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "ultrawide_near_far_scale_expansion",
+        "slot": "lens",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_photo_era_extension.json",
+        "ko": "초광각 근거리-원거리 스케일 확장",
+        "en": "ultra-wide near-to-far scale expansion",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF086",
+    "label_ko": "가장자리 과장",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "ultrawide_near_far_scale_expansion",
+        "slot": "lens",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_photo_era_extension.json",
+        "ko": "초광각 근거리-원거리 스케일 확장",
+        "en": "ultra-wide near-to-far scale expansion",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF087",
+    "label_ko": "무릎이 앞에 오는 구도",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_knee_hug",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "세운 무릎을 팔로 감싸기",
+        "en": "pelvis is supported; one or two knees rise toward the torso as requested; arms visibly wrap the specified knees",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      },
+      {
+        "id": "ultrawide_near_far_scale_expansion",
+        "slot": "lens",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_photo_era_extension.json",
+        "ko": "초광각 근거리-원거리 스케일 확장",
+        "en": "ultra-wide near-to-far scale expansion",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF088",
+    "label_ko": "하늘 배경 올려찍기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF088",
+        "variant": "base",
+        "candidate_id": "sf_088_base",
+        "profile_id": "sf_profile_088_base",
+        "slot": "composition",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S02",
+          "S13"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "턱 아래 방향·어깨와 하늘의 배치를 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF089",
+    "label_ko": "방 안에 작게 서기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF089",
+        "variant": "base",
+        "candidate_id": "sf_089_base",
+        "profile_id": "sf_profile_089_base",
+        "slot": "subject_framing",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S02",
+          "S13"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "인물 전신과 방의 모서리·바닥선을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF090",
+    "label_ko": "앞뒤 크기 대비",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_side_by_side",
+        "slot": "relational_action",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "두 인물의 나란한 배치",
+        "en": "the first actor and the second actor occupy adjacent lateral positions; each body has independent ground or seat support; facing directions and contact are declared separately",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF091",
+    "label_ko": "얼굴 전체 가리기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF091",
+        "variant": "base",
+        "candidate_id": "sf_091_base",
+        "profile_id": "sf_profile_091_base",
+        "slot": "capture_context",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S11",
+          "S12"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "폰의 가림 범위·손 접점·거울 기준을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF092",
+    "label_ko": "얼굴 절반 가리기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF092",
+        "variant": "base",
+        "candidate_id": "sf_092_base",
+        "profile_id": "sf_profile_092_base",
+        "slot": "capture_context",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S11",
+          "S12"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "폰 경계·남은 눈·볼·손을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF093",
+    "label_ko": "눈 하나만 드러내기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF093",
+        "variant": "base",
+        "candidate_id": "sf_093_base",
+        "profile_id": "sf_profile_093_base",
+        "slot": "capture_context",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S11",
+          "S12"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "노출된 눈과 폰 모서리의 관계를 원본으로 확인한다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF094",
+    "label_ko": "휴대폰을 턱 아래에",
+    "new_variants": [
+      {
+        "research_unit_id": "SF094",
+        "variant": "base",
+        "candidate_id": "sf_094_base",
+        "profile_id": "sf_profile_094_base",
+        "slot": "capture_context",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S11",
+          "S12"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "얼굴·턱·폰 윗변·손 접점을 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF095",
+    "label_ko": "얼굴 옆에 휴대폰",
+    "new_variants": [
+      {
+        "research_unit_id": "SF095",
+        "variant": "base",
+        "candidate_id": "sf_095_base",
+        "profile_id": "sf_profile_095_base",
+        "slot": "capture_context",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S11",
+          "S12"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "얼굴과 폰 사이 간격·손 접점·거울 공간을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF096",
+    "label_ko": "화면을 내려다보기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF096",
+        "variant": "base",
+        "candidate_id": "sf_096_base",
+        "profile_id": "sf_profile_096_base",
+        "slot": "gaze_engagement",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S11",
+          "S12"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "눈동자·폰 위치를 담되 화면 내용 노출은 요구하지 않는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF097",
+    "label_ko": "거울 속 렌즈 보기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF097",
+        "variant": "base",
+        "candidate_id": "sf_097_base",
+        "profile_id": "sf_profile_097_base",
+        "slot": "gaze_engagement",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S11",
+          "S12"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "눈·폰의 렌즈 위치를 담고 미세한 시선 차이는 판정 보류할 수 있다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF098",
+    "label_ko": "거울 한쪽으로 치우치기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF098",
+        "variant": "base",
+        "candidate_id": "sf_098_base",
+        "profile_id": "sf_profile_098_base",
+        "slot": "composition",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S11",
+          "S12"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "거울 경계·인물 실루엣·빈 공간을 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF099",
+    "label_ko": "두 거울로 다른 면 보이기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF099",
+        "variant": "base",
+        "candidate_id": "sf_099_base",
+        "profile_id": "sf_profile_099_base",
+        "slot": "composition",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S11",
+          "S12"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "두 물리 거울 경계와 각 반사의 대응 단서를 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF100",
+    "label_ko": "상의 디테일 크롭",
+    "new_variants": [
+      {
+        "research_unit_id": "SF100",
+        "variant": "base",
+        "candidate_id": "sf_100_base",
+        "profile_id": "sf_profile_100_base",
+        "slot": "subject_framing",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S11",
+          "S12"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "의상 상세와 크롭 끝선을 명확히 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF101",
+    "label_ko": "한쪽 다리에 체중 싣기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_single_support",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "한 다리 주 지지",
+        "en": "one planted leg supplies the principal visible support; the free leg has a different relaxed or lightly contacting role; the pelvis and torso remain connected over the support base",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF102",
+    "label_ko": "한 발 앞으로",
+    "new_variants": [
+      {
+        "research_unit_id": "SF102",
+        "variant": "base",
+        "candidate_id": "sf_102_base",
+        "profile_id": "sf_profile_102_base",
+        "slot": "body_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S14"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "머리부터 양발과 바닥 접촉까지 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF103",
+    "label_ko": "발목 교차",
+    "new_variants": [
+      {
+        "research_unit_id": "SF103",
+        "variant": "base",
+        "candidate_id": "sf_103_base",
+        "profile_id": "sf_profile_103_base",
+        "slot": "body_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S14"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "교차점·양 발목·바닥 접촉을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF104",
+    "label_ko": "넓은 삼각형",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_wide_stance",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "양발의 넓은 지지 폭",
+        "en": "two grounded feet are separated laterally; the lateral base is wider than a feet-together stance; knee and toe orientation are independent",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF105",
+    "label_ko": "느슨한 S라인",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_single_support",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "한 다리 주 지지",
+        "en": "one planted leg supplies the principal visible support; the free leg has a different relaxed or lightly contacting role; the pelvis and torso remain connected over the support base",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF106",
+    "label_ko": "팔꿈치·무릎 각 만들기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_negative_space_arms",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "팔과 몸통 사이 빈 공간",
+        "en": "a visible gap separates selected upper arm from torso; elbow and wrist arrangement define that gap; silhouette preserves the gap from the requested view",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF107",
+    "label_ko": "한쪽 뒤꿈치 들기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_toe_light_touch",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "가볍게 닿는 발끝",
+        "en": "toe or forefoot makes a visible light contact; heel remains lifted or elsewhere as explicitly selected; principal support is assigned separately",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF108",
+    "label_ko": "벽 기대기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_wall_shoulder_support",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "어깨·등과 벽의 기대기 접촉",
+        "en": "shoulder or back makes visible wall contact; feet retain a plausible ground base; contact role can support the selected lean",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF109",
+    "label_ko": "옆모습 옷핏",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_head_turn",
+        "slot": "body_orientation",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "몸통과 독립된 머리 회전",
+        "en": "face yaw differs from thorax direction; neck joins the turned head to the torso; eye direction is not inferred from nose direction alone",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF110",
+    "label_ko": "뒤돌아 어깨 너머 보기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_rear_three_quarter",
+        "slot": "body_orientation",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "등과 몸 옆면을 함께 보이는 방향",
+        "en": "back and one lateral torso side are simultaneously visible; thorax remains rear-oriented relative to camera; head turn is independently specified",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      },
+      {
+        "id": "pv_head_turn",
+        "slot": "body_orientation",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "몸통과 독립된 머리 회전",
+        "en": "face yaw differs from thorax direction; neck joins the turned head to the torso; eye direction is not inferred from nose direction alone",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF111",
+    "label_ko": "바닥에 편하게 다리 접기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_cross_leg_floor",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "바닥에서 정강이를 교차한 앉기",
+        "en": "pelvis contacts the floor; both legs fold with shins crossing in front; feet do not need to rest on opposite thighs",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF112",
+    "label_ko": "양 무릎 높이 다르게",
+    "new_variants": [
+      {
+        "research_unit_id": "SF112",
+        "variant": "base",
+        "candidate_id": "sf_112_base",
+        "profile_id": "sf_profile_112_base",
+        "slot": "body_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "양 무릎·골반·발 경로를 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF113",
+    "label_ko": "한 무릎 세우기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF113",
+        "variant": "base",
+        "candidate_id": "sf_113_base",
+        "profile_id": "sf_profile_113_base",
+        "slot": "body_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "골반·양 다리·팔꿈치 접점을 담는다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_knee_hug",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "세운 무릎을 팔로 감싸기",
+        "en": "pelvis is supported; one or two knees rise toward the torso as requested; arms visibly wrap the specified knees",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF114",
+    "label_ko": "다리 대각선 뻗기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_seated_legs_extended",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "지지면 앞쪽으로 다리 뻗기",
+        "en": "pelvis rests on a seat or floor; specified legs extend forward from the pelvis; heel or calf contact is separately visible",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF115",
+    "label_ko": "정면 쪼그려 앉기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_squat_grounded",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "양발로 지지하는 낮은 스쿼트",
+        "en": "pelvis lowers through hip and knee flexion; both feet supply the ground base; knee or pelvis-floor contact is absent unless a variant explicitly requests it",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF116",
+    "label_ko": "옆으로 쪼그려 앉기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_squat_grounded",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "양발로 지지하는 낮은 스쿼트",
+        "en": "pelvis lowers through hip and knee flexion; both feet supply the ground base; knee or pelvis-floor contact is absent unless a variant explicitly requests it",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF117",
+    "label_ko": "의자 앞쪽에 앉기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF117",
+        "variant": "base",
+        "candidate_id": "sf_117_base",
+        "profile_id": "sf_profile_117_base",
+        "slot": "body_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "좌면 접점·앞쪽 끝선·양 다리를 담는다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_seated_upright",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "좌면 위 수직 앉기",
+        "en": "pelvis contacts a seat; the torso rises above the seat with readable length; feet or another explicit base support the lower legs",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF118",
+    "label_ko": "의자에서 다리 꼬기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_knee_over_knee",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "앉아서 무릎 위 교차",
+        "en": "one thigh crosses over the other at knee level; pelvis remains seated; the lower legs continue from the correct knee owners",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF119",
+    "label_ko": "의자 뒤로 앉기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_reverse_chair",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "등받이를 향한 거꾸로 앉기",
+        "en": "the torso faces the chair backrest; pelvis contacts the seat; leg placement is stated independently of the reversed direction",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF120",
+    "label_ko": "소파 앞 바닥에 기대기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF120",
+        "variant": "base",
+        "candidate_id": "sf_120_base",
+        "profile_id": "sf_profile_120_base",
+        "slot": "body_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "바닥 골반 접점·소파 접점·다리를 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF121",
+    "label_ko": "바로 누운 얼굴 셀카",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_supine",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "등을 지지면에 둔 바로 눕기",
+        "en": "back of torso rests on the support surface; anterior torso generally faces away from that surface; limbs connect to the reclining actor",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF122",
+    "label_ko": "옆으로 누워 베개 기대기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_side_lying",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "몸 옆면으로 지지하는 눕기",
+        "en": "lateral torso or hip contacts the support surface; shoulders and hips read as side-oriented; arm-propping is declared separately",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF123",
+    "label_ko": "엎드려 팔꿈치 받치기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_prone_forearms",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "엎드려 두 전완으로 상체 받치기",
+        "en": "lower anterior torso remains on the surface; forearms contact the surface in front; chest rises between the shoulders while both elbow owners stay clear",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF124",
+    "label_ko": "소파에 비스듬히 기대기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_side_lying",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "몸 옆면으로 지지하는 눕기",
+        "en": "lateral torso or hip contacts the support surface; shoulders and hips read as side-oriented; arm-propping is declared separately",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF125",
+    "label_ko": "침대 가장자리에 앉기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_seated_upright",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "좌면 위 수직 앉기",
+        "en": "pelvis contacts a seat; the torso rises above the seat with readable length; feet or another explicit base support the lower legs",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF126",
+    "label_ko": "한 팔을 머리 뒤로",
+    "new_variants": [
+      {
+        "research_unit_id": "SF126",
+        "variant": "base",
+        "candidate_id": "sf_126_base",
+        "profile_id": "sf_profile_126_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "머리·팔꿈치·어깨와 지지면을 담는다."
+      }
+    ],
+    "existing_component_refs": [
+      {
+        "id": "pv_arms_behind_head",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "양손을 머리 뒤에 두기",
+        "en": "both arms connect from shoulders to elbows; hands reach behind or under the head as the support variant states; elbows retain distinct ownership",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF127",
+    "label_ko": "무릎 끌어안기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_knee_hug",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "세운 무릎을 팔로 감싸기",
+        "en": "pelvis is supported; one or two knees rise toward the torso as requested; arms visibly wrap the specified knees",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      },
+      {
+        "id": "pv_curled_side",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "옆으로 누워 몸을 접기",
+        "en": "side of torso remains supported; hips and knees flex toward the trunk; arms and head continue the compact arrangement when selected",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF128",
+    "label_ko": "담요 감싸기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_sheet_wrap",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "몸을 둘러 지지된 시트",
+        "en": "sheet contacts and wraps the selected torso region; hands or another declared mechanism hold its edge; coverage boundaries remain readable; clothing state is independent of the wrap",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF129",
+    "label_ko": "엎드려 발을 뒤로 올리기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_prone_feet_raised",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "엎드려 무릎을 굽히고 발 들기",
+        "en": "torso and thighs remain prone-supported; knees flex to raise the lower legs; feet are visibly clear of the support surface",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF130",
+    "label_ko": "밤비 포즈",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_heel_sit",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "뒤꿈치 쪽에 골반을 낮춘 무릎 앉기",
+        "en": "knees and shins rest on the support surface; pelvis lowers toward the heels with thighs above the shins; feet and lower-body arrangement distinguish it from tall kneeling",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF131",
+    "label_ko": "컵 너머 바라보기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_mug_grip",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "컵을 잡는 손과 손잡이 접촉",
+        "en": "selected fingers grip handle or cup body; mug has a coherent independent silhouette; one- or two-hand ownership is explicit",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF132",
+    "label_ko": "음식 들어 보이기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF132",
+        "variant": "base",
+        "candidate_id": "sf_132_base",
+        "profile_id": "sf_profile_132_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "음식·손·얼굴의 관계를 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF133",
+    "label_ko": "책으로 얼굴 일부 가리기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF133",
+        "variant": "one_hand",
+        "candidate_id": "sf_133_one_hand",
+        "profile_id": "sf_profile_133_one_hand",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "책 가장자리·잡는 손·남은 얼굴을 담는다."
+      },
+      {
+        "research_unit_id": "SF133",
+        "variant": "two_hand",
+        "candidate_id": "sf_133_two_hand",
+        "profile_id": "sf_profile_133_two_hand",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "책 가장자리·잡는 손·남은 얼굴을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF134",
+    "label_ko": "꽃 향기 맡기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF134",
+        "variant": "base",
+        "candidate_id": "sf_134_base",
+        "profile_id": "sf_profile_134_base",
+        "slot": "contact_point",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "줄기·잡는 손·꽃·코의 거리를 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF135",
+    "label_ko": "메이크업 수정 중",
+    "new_variants": [
+      {
+        "research_unit_id": "SF135",
+        "variant": "lipstick",
+        "candidate_id": "sf_135_lipstick",
+        "profile_id": "sf_profile_135_lipstick",
+        "slot": "action",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "도구 끝·얼굴 접점·잡는 손을 담는다."
+      },
+      {
+        "research_unit_id": "SF135",
+        "variant": "brush",
+        "candidate_id": "sf_135_brush",
+        "profile_id": "sf_profile_135_brush",
+        "slot": "action",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "도구 끝·얼굴 접점·잡는 손을 담는다."
+      },
+      {
+        "research_unit_id": "SF135",
+        "variant": "puff",
+        "candidate_id": "sf_135_puff",
+        "profile_id": "sf_profile_135_puff",
+        "slot": "action",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "도구 끝·얼굴 접점·잡는 손을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF136",
+    "label_ko": "양치 중 셀카",
+    "new_variants": [
+      {
+        "research_unit_id": "SF136",
+        "variant": "base",
+        "candidate_id": "sf_136_base",
+        "profile_id": "sf_profile_136_base",
+        "slot": "action",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "칫솔 머리·입·손잡이·손을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF137",
+    "label_ko": "한 걸음 움직이는 셀프포트레이트",
+    "new_variants": [
+      {
+        "research_unit_id": "SF137",
+        "variant": "base",
+        "candidate_id": "sf_137_base",
+        "profile_id": "sf_profile_137_base",
+        "slot": "action",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "양발·무릎·몸통의 단계 관계를 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF138",
+    "label_ko": "머리카락이 흩날리는 순간",
+    "new_variants": [
+      {
+        "research_unit_id": "SF138",
+        "variant": "base",
+        "candidate_id": "sf_138_base",
+        "profile_id": "sf_profile_138_base",
+        "slot": "action",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "가닥 뿌리·흩날림 방향·얼굴을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF139",
+    "label_ko": "돌아보는 중간",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_head_turn",
+        "slot": "body_orientation",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "몸통과 독립된 머리 회전",
+        "en": "face yaw differs from thorax direction; neck joins the turned head to the torso; eye direction is not inferred from nose direction alone",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF140",
+    "label_ko": "주차한 차 안 창가 셀카",
+    "new_variants": [
+      {
+        "research_unit_id": "SF140",
+        "variant": "base",
+        "candidate_id": "sf_140_base",
+        "profile_id": "sf_profile_140_base",
+        "slot": "capture_context",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "차창·좌석·얼굴·빛 방향을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF141",
+    "label_ko": "얼굴 나란히",
+    "new_variants": [
+      {
+        "research_unit_id": "SF141",
+        "variant": "base",
+        "candidate_id": "sf_141_base",
+        "profile_id": "sf_profile_141_base",
+        "slot": "relational_action",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S12"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "두 얼굴·어깨 연결과 겹침을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF142",
+    "label_ko": "머리 기대기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_head_shoulder_pair",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "상대 어깨에 머리 기대기",
+        "en": "the first actor head contacts the second actor shoulder; head still joins the first actor neck; shoulder belongs to the second actor and supplies the specified resting support",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF143",
+    "label_ko": "함께 만드는 하트",
+    "new_variants": [
+      {
+        "research_unit_id": "SF143",
+        "variant": "base",
+        "candidate_id": "sf_143_base",
+        "profile_id": "sf_profile_143_base",
+        "slot": "relational_action",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S12"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "하트 접점·양손 손목·두 인물 얼굴을 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF144",
+    "label_ko": "뒤에서 감싸기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_back_hug",
+        "slot": "relational_action",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "뒤쪽 인물의 앞쪽 인물 감싸기",
+        "en": "the first actor remains behind the second actor; the first actor arms reach around the second actor torso; the second actor limbs do not become the first actor's hands",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF145",
+    "label_ko": "위에서 모이는 원형",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_circle_group",
+        "slot": "relational_action",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "중심 둘레의 원형 인물 배치",
+        "en": "each named actor occupies a position around one declared center; facing directions relative to center are explicit; actor count and contacts remain independently readable",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF146",
+    "label_ko": "높낮이 삼각형",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_staggered_group",
+        "slot": "relational_action",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "서로 다른 높이의 그룹",
+        "en": "identified actors occupy distinct head or seat heights; each has a declared support base; the requested triangular silhouette is separately verified",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF147",
+    "label_ko": "앞뒤 거울 그룹",
+    "new_variants": [
+      {
+        "research_unit_id": "SF147",
+        "variant": "base",
+        "candidate_id": "sf_147_base",
+        "profile_id": "sf_profile_147_base",
+        "slot": "relational_action",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S12"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "거울 경계·촬영자 손·모든 얼굴을 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF148",
+    "label_ko": "네 컷 표정 변화",
+    "new_variants": [
+      {
+        "research_unit_id": "SF148",
+        "variant": "base",
+        "candidate_id": "sf_148_base",
+        "profile_id": "sf_profile_148_base",
+        "slot": "composition",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S12"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "각 컷의 얼굴·손·패널 경계를 별도로 심사한다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF149",
+    "label_ko": "같은 표정·한 명만 다른 표정",
+    "new_variants": [
+      {
+        "research_unit_id": "SF149",
+        "variant": "base",
+        "candidate_id": "sf_149_base",
+        "profile_id": "sf_profile_149_base",
+        "slot": "relational_action",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S12"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "모든 얼굴을 표정 비교 가능한 크기로 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF150",
+    "label_ko": "반려동물 눈높이",
+    "new_variants": [
+      {
+        "research_unit_id": "SF150",
+        "variant": "base",
+        "candidate_id": "sf_150_base",
+        "profile_id": "sf_profile_150_base",
+        "slot": "relational_action",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S12"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "사람·동물 얼굴과 각각의 몸 연결을 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF151",
+    "label_ko": "오프숄더 어깨선",
+    "new_variants": [
+      {
+        "research_unit_id": "SF151",
+        "variant": "base",
+        "candidate_id": "sf_151_base",
+        "profile_id": "sf_profile_151_base",
+        "slot": "body_orientation",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S09",
+          "S10"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "의상 가장자리·어깨·목·얼굴을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF152",
+    "label_ko": "등 라인·백리스",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_rear_three_quarter",
+        "slot": "body_orientation",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "등과 몸 옆면을 함께 보이는 방향",
+        "en": "back and one lateral torso side are simultaneously visible; thorax remains rear-oriented relative to camera; head turn is independently specified",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF153",
+    "label_ko": "쇄골 주변 손동작",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_collarbone_touch",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "쇄골 부근의 손 접촉",
+        "en": "fingers or palm contact the visible upper-chest/clavicle region; hand owner is explicit; the position is distinct from garment gripping",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF154",
+    "label_ko": "뒤태 셀카",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_rear_three_quarter",
+        "slot": "body_orientation",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "등과 몸 옆면을 함께 보이는 방향",
+        "en": "back and one lateral torso side are simultaneously visible; thorax remains rear-oriented relative to camera; head turn is independently specified",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF155",
+    "label_ko": "옆선과 체중 이동",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_single_support",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "한 다리 주 지지",
+        "en": "one planted leg supplies the principal visible support; the free leg has a different relaxed or lightly contacting role; the pelvis and torso remain connected over the support base",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      },
+      {
+        "id": "pv_negative_space_arms",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "팔과 몸통 사이 빈 공간",
+        "en": "a visible gap separates selected upper arm from torso; elbow and wrist arrangement define that gap; silhouette preserves the gap from the requested view",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF156",
+    "label_ko": "팔을 올린 스트레치",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_wrists_cross_overhead",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "머리 위 손목 교차",
+        "en": "both arms rise above the head; wrists cross at an identifiable point; each hand remains assigned to its own arm",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      },
+      {
+        "id": "pv_arms_behind_head",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "양손을 머리 뒤에 두기",
+        "en": "both arms connect from shoulders to elbows; hands reach behind or under the head as the support variant states; elbows retain distinct ownership",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF157",
+    "label_ko": "로브·타월 랩",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_robe_edge_hold",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "로브 가장자리와 손의 접촉",
+        "en": "selected fingers grip a visible robe edge; robe opening amount is explicitly specified; coverage remains consistent with the frozen request",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      },
+      {
+        "id": "pv_sheet_wrap",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "몸을 둘러 지지된 시트",
+        "en": "sheet contacts and wraps the selected torso region; hands or another declared mechanism hold its edge; coverage boundaries remain readable; clothing state is independent of the wrap",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF158",
+    "label_ko": "란제리·수영복 패션 리클라인",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_side_lying",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "몸 옆면으로 지지하는 눕기",
+        "en": "lateral torso or hip contacts the support surface; shoulders and hips read as side-oriented; arm-propping is declared separately",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF159",
+    "label_ko": "창가 옆선 실루엣",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_negative_space_arms",
+        "slot": "body_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "팔과 몸통 사이 빈 공간",
+        "en": "a visible gap separates selected upper arm from torso; elbow and wrist arrangement define that gap; silhouette preserves the gap from the requested view",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF160",
+    "label_ko": "아랫입술 가볍게 물기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "ae_lip_bite",
+        "slot": "expression",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json",
+        "ko": "아랫입술을 가볍게 문 상태",
+        "en": "upper teeth contact the lower lip; the contact belongs to the actor's own mouth",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF161",
+    "label_ko": "팔짱 낀 정면",
+    "new_variants": [
+      {
+        "research_unit_id": "SF161",
+        "variant": "base",
+        "candidate_id": "sf_161_base",
+        "profile_id": "sf_profile_161_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S17"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "양 팔꿈치·전완·손 소유를 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF162",
+    "label_ko": "주머니 손·넓은 자세",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_thumb_hook",
+        "slot": "contact_point",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "주머니·벨트 고리에 엄지만 걸기",
+        "en": "thumb contacts the selected pocket edge or belt loop; other fingers remain outside as requested; garment target and hand owner are identifiable",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF163",
+    "label_ko": "근육 포즈",
+    "new_variants": [
+      {
+        "research_unit_id": "SF163",
+        "variant": "base",
+        "candidate_id": "sf_163_base",
+        "profile_id": "sf_profile_163_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S17"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "양 어깨·팔꿈치·주먹을 모두 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF164",
+    "label_ko": "복서 가드",
+    "new_variants": [
+      {
+        "research_unit_id": "SF164",
+        "variant": "base",
+        "candidate_id": "sf_164_base",
+        "profile_id": "sf_profile_164_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S17"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "주먹·눈·팔꿈치·몸통을 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF165",
+    "label_ko": "주먹을 앞으로 멈추기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_foreshortened_reach",
+        "slot": "body_orientation",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "카메라 깊이 방향으로 뻗은 팔",
+        "en": "arm extends toward the camera in depth; hand/forearm scale and overlap reflect that direction; shoulder-elbow-wrist continuity remains coherent; this changes a viewpoint relation without claiming a focal length",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      },
+      {
+        "id": "pv_clenched_fist",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "접힌 네 손가락과 엄지의 주먹",
+        "en": "four fingers fold into the palm; thumb remains visibly assigned outside or beside the folded digits; wrist continues to one forearm",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF166",
+    "label_ko": "손가락 총",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_finger_gun",
+        "slot": "hand_pose",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "검지와 엄지의 손가락 총",
+        "en": "index finger extends toward the declared direction; thumb rises away from the index; remaining fingers fold",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF167",
+    "label_ko": "가운데손가락 제스처",
+    "new_variants": [
+      {
+        "research_unit_id": "SF167",
+        "variant": "base",
+        "candidate_id": "sf_167_base",
+        "profile_id": "sf_profile_167_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S17"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "손 전체가 판별 가능한 크기로 보이게 한다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF168",
+    "label_ko": "록 핸드사인",
+    "new_variants": [
+      {
+        "research_unit_id": "SF168",
+        "variant": "base",
+        "candidate_id": "sf_168_base",
+        "profile_id": "sf_profile_168_base",
+        "slot": "hand_pose",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S17"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "펴고 접힌 손가락 네 개와 엄지 위치를 확인한다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF169",
+    "label_ko": "으르렁·분노 연기",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "ae_knitted_brow",
+        "slot": "expression",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json",
+        "ko": "미간 쪽으로 모이고 내려간 눈썹",
+        "en": "eyebrow inner ends move toward the glabella; the brow line visibly lowers toward the inner eye region",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      },
+      {
+        "id": "ae_upper_lip",
+        "slot": "expression",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_acting_expression_extension.json",
+        "ko": "윗입술 한가운데가 들린 상태",
+        "en": "the upper lip visibly lifts toward the nose; the lift is distinct from an upward mouth-corner smile",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF170",
+    "label_ko": "공포·빌런 응시",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "pv_chin_down",
+        "slot": "body_orientation",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "턱을 내린 머리 각도",
+        "en": "head pitches downward relative to thorax; chin-neck relation remains visible; camera elevation is separately stated",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      },
+      {
+        "id": "pv_gaze_direct",
+        "slot": "gaze_engagement",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_pose_vocabulary_extension.json",
+        "ko": "카메라 방향의 두 눈 시선",
+        "en": "visible pupils or eye axes converge toward the camera direction; face direction is separately stated; occluded eyes cannot establish eye contact",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF171",
+    "label_ko": "창 정면의 부드러운 셀카",
+    "new_variants": [
+      {
+        "research_unit_id": "SF171",
+        "variant": "base",
+        "candidate_id": "sf_171_base",
+        "profile_id": "sf_profile_171_base",
+        "slot": "lighting",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02",
+          "S12",
+          "S18"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "얼굴 명암과 창 방향을 평가할 단서를 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF172",
+    "label_ko": "옆창 사선광",
+    "new_variants": [
+      {
+        "research_unit_id": "SF172",
+        "variant": "base",
+        "candidate_id": "sf_172_base",
+        "profile_id": "sf_profile_172_base",
+        "slot": "lighting",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02",
+          "S12",
+          "S18"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "양 얼굴 면과 그림자 전이를 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF173",
+    "label_ko": "반쪽 조명",
+    "new_variants": [
+      {
+        "research_unit_id": "SF173",
+        "variant": "base",
+        "candidate_id": "sf_173_base",
+        "profile_id": "sf_profile_173_base",
+        "slot": "lighting",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02",
+          "S12",
+          "S18"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "밝은 면·어두운 면·명암 경계를 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF174",
+    "label_ko": "머리카락 역광",
+    "new_variants": [
+      {
+        "research_unit_id": "SF174",
+        "variant": "base",
+        "candidate_id": "sf_174_base",
+        "profile_id": "sf_profile_174_base",
+        "slot": "lighting",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02",
+          "S12",
+          "S18"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "머리 가장자리 빛과 광원 방향·얼굴을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF175",
+    "label_ko": "플래시 거울 셀카",
+    "new_variants": [
+      {
+        "research_unit_id": "SF175",
+        "variant": "base",
+        "candidate_id": "sf_175_base",
+        "profile_id": "sf_profile_175_base",
+        "slot": "lighting",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02",
+          "S12",
+          "S18"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "폰·거울 기준·플래시 반사 위치와 얼굴을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF176",
+    "label_ko": "움직임이 남는 셀카",
+    "new_variants": [],
+    "existing_component_refs": [
+      {
+        "id": "rb_local_motion_blur_candidate",
+        "slot": "motion",
+        "file": "skills/photo-prompt-image-generator/assets/photo_prompt_realistic_background_extension.json",
+        "ko": "움직인 부위에 제한된 번짐",
+        "en": "A small blur follows the moving hand while the stationary doorframe and torso remain clear.",
+        "reuse_status": "component_review_only",
+        "constraints": "접촉 대상·손 개수·좌면·의상·시점이 같아야 재사용한다. 해당 ID가 전체 셀카 변형의 동등성을 입증하지 않는다."
+      }
+    ],
+    "integration_decision": "compose_existing_components",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF177",
+    "label_ko": "블라인드·창틀 그림자",
+    "new_variants": [
+      {
+        "research_unit_id": "SF177",
+        "variant": "base",
+        "candidate_id": "sf_177_base",
+        "profile_id": "sf_profile_177_base",
+        "slot": "lighting",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02",
+          "S12",
+          "S18"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "줄무늬의 명암 전이·표면 굴곡·빛 방향을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF178",
+    "label_ko": "작은 손거울 속 얼굴",
+    "new_variants": [
+      {
+        "research_unit_id": "SF178",
+        "variant": "base",
+        "candidate_id": "sf_178_base",
+        "profile_id": "sf_profile_178_base",
+        "slot": "composition",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02",
+          "S12",
+          "S18"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "거울 경계·손잡이 접점·반사 얼굴과 실제 얼굴의 대응을 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF179",
+    "label_ko": "유리창 반사 겹치기",
+    "new_variants": [
+      {
+        "research_unit_id": "SF179",
+        "variant": "base",
+        "candidate_id": "sf_179_base",
+        "profile_id": "sf_profile_179_base",
+        "slot": "composition",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02",
+          "S12",
+          "S18"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "유리 경계·겹친 얼굴·창밖 장면을 함께 담는다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  },
+  {
+    "research_unit_id": "SF180",
+    "label_ko": "그림자 셀프포트레이트",
+    "new_variants": [
+      {
+        "research_unit_id": "SF180",
+        "variant": "base",
+        "candidate_id": "sf_180_base",
+        "profile_id": "sf_profile_180_base",
+        "slot": "composition",
+        "decision": "new_context_or_contact_variant",
+        "source_ids": [
+          "S25",
+          "S01",
+          "S02",
+          "S12",
+          "S18"
+        ],
+        "named_activation_deferred": false,
+        "observability_ko": "그림자 윤곽·받는 면·빛 방향의 단서를 남긴다."
+      }
+    ],
+    "existing_component_refs": [],
+    "integration_decision": "new_reviewed_variants",
+    "claim_boundary": "Existing refs preserve their own full meaning; a component match does not establish entire-pose equivalence. No new bare bambi or cat-heart activation."
+  }
+]

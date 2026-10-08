@@ -1,0 +1,35 @@
+test_v1_v2_exact_replay_and_photo_baseline_remain_immutable (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests.test_v1_v2_exact_replay_and_photo_baseline_remain_immutable) ... ERROR
+
+======================================================================
+ERROR: test_v1_v2_exact_replay_and_photo_baseline_remain_immutable (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests.test_v1_v2_exact_replay_and_photo_baseline_remain_immutable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/selfie-prechange-baseline-y6gft2gy/tests/test_subculture_illustration_universal_scene_v3.py", line 4697, in test_v1_v2_exact_replay_and_photo_baseline_remain_immutable
+    photo = validate_photo_regression_baseline(ASSET_ROOT)
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/selfie-prechange-baseline-y6gft2gy/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 8776, in validate_photo_regression_baseline
+    completed = subprocess.run(
+        actual_command,
+    ...<5 lines>...
+        timeout=60,
+    )
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 554, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1038, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1989, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: '.venv/bin/python'
+
+----------------------------------------------------------------------
+Ran 1 test in 11.005s
+
+FAILED (errors=1)

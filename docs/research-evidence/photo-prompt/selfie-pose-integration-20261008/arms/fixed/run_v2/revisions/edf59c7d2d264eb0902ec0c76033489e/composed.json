@@ -1,0 +1,262 @@
+{
+  "pack_id": "6b3214de39969414",
+  "composer": "agent",
+  "prompt_en": "Make an environmental self-portrait of a woman with reference-guided facial appearance, catching a self-authored portrait moment in a narrow working greenhouse. Use the supplied image as guidance for her face and hair: softly rounded facial proportions, a short straight dark bob and wispy bangs. A fine strand from that bob crosses only the outer corner of her anatomical right eye; its eyelid opening and the iris aimed toward the lens remain visible beside the strand. The greenhouse has weathered green glazing bars, damp fern leaves and a waist-high wooden potting bench; a low roof joint above the screen-right end of the bench is still dripping after rain. She is protecting a creased paper seed envelope from the leak with a small, improvised arrangement, and the caught water makes her success visible. She stands behind the bench, weight settled evenly, torso inclined only slightly forward, elbows comfortably bent beside her torso. Her anatomical right hand, on screen-left, steadies the seed envelope on the flat base of an inverted terracotta bowl at the dry end of the bench. Her anatomical left hand, on screen-right, supports the middle of a narrow open brass half-channel at waist height. The channel slopes down to screen-right, its upper end directly under the roof drip and its lower open end above a zinc pail resting on a low wooden crate beside the bench. Bright droplets strike the upper trough, run along its concave interior and fall from its lower lip into the pail. A few pale seeds rest beside the open envelope on the dry clay surface. Both hand contacts and the water route are clearly visible. She has just lifted her attention toward the lens, her mouth holding a slight, lopsided smile of amused relief; her warm, direct eyes and relaxed shoulders make the portrait feel personal. She wears a faded olive canvas apron over a soft pale-green cotton blouse with rolled sleeves. The capture camera is secured on a dry shelf across the bench, facing her directly at eye level; a comfortable environmental frame from above her head to her knees includes both hands, the bowl, the full short channel and the receiving pail. Soft cool dawn through wet glass meets a gentle warmer patch on her face. Keep the facial presence primary, then let the two hand roles and the redirected water reveal why this quiet moment matters. Natural photographic textures, clear spatial depth, restrained color and lifelike skin.",
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "chosen_candidate_ids": [
+    "slot:gaze_engagement:se_eye_visible_through_own_hair"
+  ],
+  "chosen_visual_concept_ids": [],
+  "core_retrieval_sha256": "be51e1a32e1cc1e02bb9357df7df267653128d08528b8766f22cbd16d3f9491b",
+  "candidate_interpretations": [
+    {
+      "candidate_id": "slot:gaze_engagement:se_eye_visible_through_own_hair",
+      "artistic_interpretation": "The existing bob has one partial eye overlap while the eye still addresses the lens, supporting the intimate work portrait without changing the two task hands.",
+      "transformation": "Bind the generic own-hair relation to a fine bob strand at the anatomical right outer eye corner, and bind the visible iris to the already-authored lens acknowledgment.",
+      "prompt_evidence": "A fine strand from that bob crosses only the outer corner of her anatomical right eye; its eyelid opening and the iris aimed toward the lens remain visible beside the strand.",
+      "affected_dimensions": [
+        "appearance",
+        "expression"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "hair"
+        },
+        {
+          "dimension": "expression",
+          "target": "main_subject",
+          "property": "eyes.gaze_direction"
+        },
+        {
+          "dimension": "expression",
+          "target": "main_subject",
+          "property": "face.expression"
+        }
+      ],
+      "relation_evidence": {
+        "se_eye_visible_through_own_hair_r1": "A fine strand from that bob crosses only the outer corner of her anatomical right eye",
+        "se_eye_visible_through_own_hair_r2": "the iris aimed toward the lens remain visible beside the strand"
+      }
+    }
+  ],
+  "authorial_core_binding": {
+    "source_authorial_core_sha256": "2b2ca8fc1f5c695209c8866d8b428a4888f98b75ab795862728272226802663d",
+    "source_intent_lock_sha256": "d0975a2e4a9dca782e347592cd14a122a9f5282cf39746188275535c8fe3446d",
+    "preserved_anchor_ids": [
+      "self_portrait_concept",
+      "reference_subject",
+      "self_authored_moment",
+      "face_hair_reference_scope"
+    ],
+    "preserved_evidence": [],
+    "authorial_decisions": [
+      {
+        "dimension": "appearance",
+        "decision": "Refine one strand of the already present bob into a partial outer eye overlap with the eye aperture kept visible.",
+        "rationale": "This compatible new source relation makes reference hair and visible camera acknowledgment work together, while leaving the independent seed-rescue mechanism intact.",
+        "prompt_evidence": "A fine strand from that bob crosses only the outer corner of her anatomical right eye; its eyelid opening and the iris aimed toward the lens remain visible beside the strand."
+      }
+    ]
+  },
+  "coverage_assertions": {
+    "an environmental self-portrait": [
+      "an environmental self-portrait"
+    ],
+    "a self-authored portrait moment": [
+      "a self-authored portrait moment"
+    ],
+    "a woman with reference-guided facial appearance": [
+      "a woman with reference-guided facial appearance"
+    ],
+    "Use the supplied image as guidance for her face and hair": [
+      "Use the supplied image as guidance for her face and hair"
+    ]
+  },
+  "semantic_assertion_evidence": {
+    "source_contract_sha256": "25aada2fa75fe4a18ead5aa04705b33253bee2c3fd1f941890a971cc3941440a",
+    "evidence": {
+      "human_subject": {
+        "subject_phrase": "a woman with reference-guided facial appearance"
+      }
+    }
+  },
+  "semantic_clarification_decisions": [
+    {
+      "clarification_id": "clarification:authorial-core:interpreted-intent",
+      "decision": "applied",
+      "rationale": "The literal self-portrait, reference subject and reference-use anchors retain the requester-owned meaning. The fictional rescue remains open authorial staging.",
+      "prompt_evidence": "Make an environmental self-portrait of a woman with reference-guided facial appearance, catching a self-authored portrait moment"
+    },
+    {
+      "clarification_id": "clarification:visual-profile:aircraft_pilot_operation",
+      "decision": "rejected",
+      "rationale": "The full meaning requires an aircraft station, flight controls and a flight-phase state; none serves the greenhouse seed rescue. Decline the unrelated operational role."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:contained_affect_self_presentation",
+      "decision": "rejected",
+      "rationale": "A controlled social surface, contained affect leak and interrupted connection gesture would change the modest work acknowledgment into a different behavioral proposition. The existing relieved expression better fits the visible caught water."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:diegetic_reality_invariant_failure",
+      "decision": "rejected",
+      "rationale": "One impossible shared world rule would redirect this ordinary material rescue toward an uncanny proposition. The frozen surreal 0 adds no such treatment, and this optional route is less useful than the plausible leak."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:embodied_corruption_transition",
+      "decision": "rejected",
+      "rationale": "An unfinished on-body corruption boundary would introduce a different transition and visual hierarchy. The useful present change here is water diversion, so this optional transition is declined."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:kuudere_composed_warmth_relation",
+      "decision": "rejected",
+      "rationale": "The complete realization needs an identifiable trusted adult counterpart and a same-target helpful consequence. The seed-protection scene has no human counterpart; adding one is unnecessary and less focused."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pc_pc12_owner_relation",
+      "decision": "rejected",
+      "rationale": "Arcing an arm around the face is authorially possible, but removes one of the two protective task hands and weakens the readable rescue. Keep the task arrangement on artistic grounds."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pc_pc21_owner_relation",
+      "decision": "rejected",
+      "rationale": "The greenhouse glazing is background context. This profile needs a pane between camera and face, transmitted facial visibility and a separate reflection layer. Moving the camera behind that pane would reduce direct contact and water-route legibility."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pc_pc23_owner_relation",
+      "decision": "rejected",
+      "rationale": "The complete handheld mirror construction occupies a supporting hand and introduces a reflected-face focal plane. Both are authorially possible, but the two present task contacts better explain the emotion."
+    }
+  ],
+  "creative_augmentation_brief": {
+    "decisions": [
+      {
+        "candidate_id": "slot:situation_context:hr_eerie_expected_absence",
+        "decision": "rejected",
+        "rationale": "The present photograph gains meaning from visible seed-protection work. A eerie expected-absence proposition would add a separate reason to read the greenhouse and dilute the quiet relieved acknowledgment."
+      },
+      {
+        "candidate_id": "slot:film_emulation:pr_film_grain_print_scan_scope_candidate",
+        "decision": "rejected",
+        "rationale": "A global film/print/scan treatment is compatible in open camera scope, but the material surfaces already provide photographic texture. Keep the clearer natural texture for hand contact and water-route inspection."
+      },
+      {
+        "candidate_id": "slot:gaze_target:ia_gaze_reference",
+        "decision": "rejected",
+        "rationale": "A document-directed gaze could make the envelope a reading task. The already-authored camera acknowledgment better shares relief while the hands continue protective work."
+      },
+      {
+        "candidate_id": "slot:grain_profile:rb_low_light_noise_candidate",
+        "decision": "rejected",
+        "rationale": "The candidate uses darker neutral wall tones and fine luminance variation. The greenhouse is glass and damp leaves at dawn; introducing a separate low-light wall emphasis contributes little to the current readable scene."
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:garment_detail:vel_held_towel_continuous_front",
+        "decision": "rejected",
+        "rationale": "A held front towel introduces an additional action-bearing garment and grip. The present blouse/apron and two protective hand roles better support the same subtle appeal without a competing contact."
+      }
+    ]
+  },
+  "adult_appeal_brief": {
+    "agency_phrase": "She is protecting a creased paper seed envelope from the leak with a small, improvised arrangement",
+    "axes": {
+      "sensual": {
+        "intensity": 1,
+        "realization": "baseline",
+        "affected_dimensions": [],
+        "artistic_interpretation": "Warm direct eyes, a slight lopsided smile and relaxed shoulders give this protective-work portrait personal attraction as a subtle supporting quality; the task remains the primary proposition.",
+        "prompt_evidence": "her warm, direct eyes and relaxed shoulders make the portrait feel personal"
+      },
+      "fetish": {
+        "intensity": 0,
+        "realization": "baseline",
+        "affected_dimensions": [],
+        "artistic_interpretation": "No added fetish treatment at the saved zero intensity.",
+        "prompt_evidence": ""
+      }
+    },
+    "blend": {
+      "emphasis": "sensual_led"
+    },
+    "contextual_review": [
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:expression:ae_smolder_attraction",
+        "reading": "irrelevant",
+        "reason": "The complete context requires explicit adult attraction as a primary reading. The authored scene has supporting warmth during practical seed work; adulthood or attraction is not inferred from the reference."
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+        "reading": "potential",
+        "reason": "A roomy jacket can contribute easy, unguarded presence without changing the subtle strength, but its volume would cover useful elbow and hand-chain context.",
+        "proposed_application": "One coherent alternative would place an oversized canvas work jacket over the apron, rolling the large cuffs back so the protective fingertips remain visible. Compare that informal silhouette with the current light blouse and apron; keep the current arrangement for clearer arm articulation."
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:garment_detail:electric_static_cling_cloth",
+        "reading": "potential",
+        "reason": "A bounded blouse patch attached to an adjacent surface could supply tactile intimacy at supporting strength, but adds a separate garment contact that does not clarify the rescue. The visible form would not prove static electricity.",
+        "proposed_application": "An alternative could show a small sleeve patch adhering locally to the damp apron bib while loose cotton hangs beyond it. That would produce an additional material focus beside the two work contacts; retain the baseline because the face and water already carry the experience."
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:expression:soft_off_camera_home_gaze",
+        "reading": "irrelevant",
+        "reason": "The full candidate is an off-camera gaze in a relaxed home moment. The present setting is a working greenhouse and the lens acknowledgment gives the work a shared modest response; adopting the complete home relation offers less coherence."
+      }
+    ],
+    "contextual_comparison": "At the same subtle sensual 1 strength, the oversized work-jacket alternative offers relaxed volume but weakens the visible arm chain; a locally adhering sleeve patch offers tactile emphasis but competes with the seed and gutter contacts. The smolder route needs a different primary attraction context and the home/off-camera route changes the situation. Retain the light blouse, apron and warm direct acknowledgment from the complete baseline. The adopted own-hair/eye relation is a visibility refinement, not an added adult-axis direction."
+  },
+  "embodiment_review": {
+    "source_contract_sha256": "82f5e4d4e355755e0a09829acf3ebc972a778af24144aca0618e09d84b060a0e",
+    "review": {
+      "contract_version": "photo-embodiment-review/v1",
+      "provenance": "agent_postcomposition",
+      "scope": "body_action",
+      "summary": "Ordinary human standing support, both elbows bent, right fingertips steady paper against a supported inverted bowl, left hand bears only a short lightweight half-channel. Water falls through free space into a pail on a crate. Camera ownership is separate from both task hands. Re-reviewed the full final prompt after the small hair/eye clarification: the strand crosses an outer eye corner, iris direction and aperture remain visible, and neither task hand or physical contact changes.",
+      "checks": {
+        "body_ownership": {
+          "status": "supported",
+          "reason": "Each anatomical hand is explicitly attributed to the same woman and mapped to the opposite screen side in the frontal view. Her right hand stabilizes paper, left supports brass; neither is assigned a capture-device grip.",
+          "prompt_evidence": [
+            "Her anatomical right hand, on screen-left",
+            "Her anatomical left hand, on screen-right"
+          ]
+        },
+        "joint_chain_and_reach": {
+          "status": "supported",
+          "reason": "The woman stands immediately behind a waist-high bench, both elbows bent beside her torso. Each short forearm reaches a separate object on the nearby bench rather than crossing to a remote overhead joint; the falling drip bridges roof-to-channel distance.",
+          "prompt_evidence": [
+            "elbows comfortably bent beside her torso",
+            "supports the middle of a narrow open brass half-channel at waist height"
+          ]
+        },
+        "support_and_balance": {
+          "status": "supported",
+          "reason": "Both feet can support her outside the knee crop with evenly settled weight and only a slight torso incline. The bowl bears the seed envelope; the crate bears the pail. Only the light short channel loads her left hand.",
+          "prompt_evidence": [
+            "weight settled evenly, torso inclined only slightly forward",
+            "a zinc pail resting on a low wooden crate beside the bench"
+          ]
+        },
+        "contact_and_space": {
+          "status": "supported",
+          "reason": "Right fingertips press the envelope to a flat inverted bowl base. Left hand supports the middle underside of an upward-open trough, clear of the free water path. The upper trough sits under falling drops and the lower lip above the pail; gravity follows the stated slope.",
+          "prompt_evidence": [
+            "steadies the seed envelope on the flat base of an inverted terracotta bowl",
+            "The channel slopes down to screen-right, its upper end directly under the roof drip and its lower open end above a zinc pail"
+          ]
+        },
+        "visibility_and_projection": {
+          "status": "supported",
+          "reason": "A direct frontal environmental view maps her anatomical right to screen-left and left to screen-right. The head-to-knees crop deliberately includes both contacts, the full short channel and the elevated pail. Hand fingers may partially occlude contact surfaces but the positive spatial roles remain assessable.",
+          "prompt_evidence": [
+            "Both hand contacts and the water route are clearly visible",
+            "from above her head to her knees includes both hands, the bowl, the full short channel and the receiving pail",
+            "its eyelid opening and the iris aimed toward the lens remain visible beside the strand"
+          ]
+        }
+      },
+      "prompt_sha256": "a8d5048092662bb7710ab553e266f91072ab95c179bd6f6018ba8b9c720dbb2a"
+    }
+  }
+}

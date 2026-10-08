@@ -1,0 +1,921 @@
+{
+  "schema_version": "photo-independent-arm-qualification/v1",
+  "arm_id": "ultrawide",
+  "written_at": "2026-10-08T13:57:14.790450+00:00",
+  "result": {
+    "technical_status": "PASS",
+    "official_strict_pixel_status": "PASS",
+    "official_strict_pixel_pass_count": 9,
+    "official_strict_pixel_gate_count": 9,
+    "new_data_pixel_correspondence": "PARTIAL",
+    "new_data_source_and_literal_status": "PASS",
+    "user_acceptance": "PENDING",
+    "qualification_status": "visual_technical_qualified_user_judgment_pending",
+    "representative_eligible": false,
+    "repair_performed": false,
+    "actual_image_call_count": 1,
+    "summary_ko": "회전목마 수선 중 부러진 붉은 목재를 내보이는 직접 셀카. 공식 9개 조건은 모두 PASS이고 새 sf_071의 촬영 팔·얼굴 지향은 보인다. 실제 렌즈 높이·기기 접촉·렌즈 종류는 프레임 밖이므로 새 데이터의 전체 픽셀 대응은 PARTIAL, 사용자 수용은 미확인이다."
+  },
+  "independence": {
+    "random_seed": 35437455,
+    "random_algorithm": "Python random.Random(seed).randrange(4)",
+    "draw_index": 1,
+    "selected_concept_id": "carousel_repair",
+    "alternatives": [
+      {
+        "id": "rooftop_cyanotype",
+        "whole_image_idea": "Relief at saving the first readable print from a rooftop gust: a woman records a self-portrait beside a slanting line of blue botanical sheets, her spare hand displays one damp sheet secured to a glass support, fallen clips and a puddle make the interruption visible.",
+        "comparison": "Strong sheet-to-face relation and graphic blue rhythm; the unstable glass support needs especially simple safe staging."
+      },
+      {
+        "id": "carousel_repair",
+        "whole_image_idea": "A small repair that restores celebration: a woman records a self-portrait in a carousel restoration bay, her spare hand shows a snapped painted wooden peg while the rejoined mane remains clamped behind her; wood dust and a newly lit test bulb connect breakage to provisional success.",
+        "comparison": "Strong material continuity and human pride, but the broken peg can be too small to read in the single frame."
+      },
+      {
+        "id": "harbor_lantern",
+        "whole_image_idea": "The last lantern made ready after a harbor squall: a woman records a self-portrait in a narrow waterfront repair shed, her spare hand lifts the repaired bamboo-and-paper lantern by its handle; the translucent patch, wet drying ropes and an open storm-lit doorway connect the damaged object to relieved delight.",
+        "comparison": "Large recognizable object, readable patch and inviting face can carry the moment; keeping the spare-hand handle contact legible matters."
+      },
+      {
+        "id": "greenhouse_frost",
+        "whole_image_idea": "Tender victory over an ordinary cold night: a woman records a self-portrait inside a tram converted into a winter greenhouse, her spare hand steadies a small seed tray while a newly taped split window, condensation and loosely wrapped insulating foil reveal the effort to protect the sprouts.",
+        "comparison": "A quiet cause-and-response theme with a distinctive place; multiple glass surfaces could weaken direct-selfie capture ownership."
+      }
+    ],
+    "candidate_data_access_before_selection": false,
+    "concept_before_camera": true,
+    "cross_arm_inputs_used": false,
+    "subagents_created_by_this_arm": 0
+  },
+  "request_and_frozen_core": {
+    "request_sha256": "e01d0ad2bb1da5978db473bef7ce3e0212453e8f35839532c8ba05a27dbc7fff",
+    "request_envelope_input_file_sha256": "862622c30ddaab8518b5b3b704d41ad32aede7b375040c7b2c1c23f6a4d9c7ce",
+    "contracts": {
+      "envelope": "ab9cd6d4d88d7e20d68b04ed2d0d830f4d464965600b54ca9821006b24c78ac9",
+      "core": "720d758736dd21bcb79a9ee6e9f117b73305a67c8f3cdf31f02b6249e39150f5",
+      "intent_lock": "5cedcbeeb795ad74920c19bb71944c92aeb27e8e73597c9c85d86f1a3594d888",
+      "controls": "9024a769d5e0bb9f7bec6aed5da0deea33e0796bf9542c90b16d9ffe4803456d"
+    },
+    "same_original_request_bytes": true,
+    "same_precore_author_inputs": true,
+    "frozen_core_unchanged": true,
+    "active_span_ids": [
+      "complex_topic",
+      "image_reference"
+    ],
+    "preserved_anchor_ids": [
+      "complex_self_portrait",
+      "reference_subject",
+      "self_portrait_event",
+      "reference_scope"
+    ],
+    "active_coverage": {
+      "A layered self-portrait": [
+        "A layered self-portrait"
+      ],
+      "she takes her own photograph": [
+        "she takes her own photograph"
+      ],
+      "the referenced woman": [
+        "the referenced woman"
+      ],
+      "the supplied image guiding her visible face and hair": [
+        "the supplied image guiding her visible face and hair"
+      ]
+    },
+    "feature_selection": {
+      "valid": true,
+      "contract_version": "photo-precore-feature-selection/v1",
+      "request_id": "selfie-pose-20261008-ultrawide",
+      "selected_category_ids": [
+        "feature.situation",
+        "feature.subject",
+        "feature.location",
+        "feature.narrative_clues",
+        "feature.hand_gesture",
+        "feature.facial_expression",
+        "feature.lens_characteristics",
+        "feature.spatial_depth",
+        "feature.clothing"
+      ],
+      "selected_count": 9,
+      "warnings": []
+    },
+    "camera_assertion": {
+      "capture_owner": "unprescribed",
+      "direction_requirement": "open",
+      "height_requirement": "open",
+      "polarity": "advisory"
+    },
+    "capture_authorial_choice": "direct handheld ultra-wide selfie; actor-right capture arm/actor-left display hand in the final prompt",
+    "open_dimension_refinements": [
+      {
+        "dimension": "composition",
+        "decision": "Clarify the spare-hand owner, wood contact and near-to-far relation using the complete selected owner-relation concept.",
+        "rationale": "The left-hand repair evidence is the scene carrying link; preserving its distinct role from the camera arm and its low placement makes the face and repaired horse jointly readable."
+      },
+      {
+        "dimension": "pose",
+        "decision": "Assign the actor-right capture arm to the lower-left image edge and the actor-left displaying hand to the lower-right foreground.",
+        "rationale": "From a frontal camera facing the subject, these actor-relative limbs naturally project to opposite screen sides. Explicit final ownership avoids an unnecessary crossed-arm mechanism while retaining self-capture, the pin contact and the complete offered-object relation."
+      },
+      {
+        "dimension": "camera",
+        "decision": "Place the active self-held phone lens approximately on her eye line while retaining the independently authored ultra-wide projection.",
+        "rationale": "The new sf_071_base candidate makes the self-capture arm, face target and approximate eye-line relation explicit. Conversational height supports the quietly shared repair victory and remains an authorial open choice, not a requester camera lock."
+      }
+    ],
+    "controls": {
+      "sensual": 1,
+      "fetish": 0,
+      "surreal": 0,
+      "creativity": 1,
+      "emphasis": "sensual_led",
+      "reference_edit_mode": "off",
+      "viewer_enabled": false,
+      "trend_mode": "off"
+    },
+    "control_application": {
+      "sensual_1": "subtle everyday presence through near conversational eye contact and relaxed personal expression",
+      "fetish_0": "no added fetish direction",
+      "surreal_0": "ordinary material and spatial causality",
+      "creativity_1": "restrained variations within an independently chosen plausible layered scene; explicit requester complexity informs the scene rather than changing the control value"
+    },
+    "authoring_brief_actual_review": true
+  },
+  "reference": {
+    "path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+    "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+    "directly_viewed_before_authoring_and_generation": true,
+    "usage_scope": "visible face and short dark bob/wispy fringe only",
+    "actual_identity_age_or_biography_inferred": false,
+    "sent_as": "referenced_image_paths"
+  },
+  "source_and_adoption": {
+    "schema_version": "photo-source-contribution/v1",
+    "generation_id": "8d793f025f759eb7f782d0a194f9dd7f0781370aaff2bbea331146e940c3ab2f",
+    "source_fingerprint": "fe7ac255143e52fe70b9c64cc7bd02961d176b0258f35a1769aeff6b562a825c",
+    "pack_id": "b889a5e9d99b64f2",
+    "new_source_exposed_candidates": [
+      {
+        "id": "slot:lighting:sf_173_base",
+        "source_pointer": "/slots/lighting/candidates/0",
+        "concept_terms": [
+          "dominant source lies to one side of the face",
+          "one face half is brighter than the other",
+          "the light boundary runs near the central face plane"
+        ]
+      },
+      {
+        "id": "slot:capture_mode:sf_071_base",
+        "source_pointer": "/slots/capture_mode/candidates/0",
+        "concept_terms": [
+          "active lens lies approximately at the actor eye level",
+          "one capture arm extends toward the device",
+          "face remains directed toward the selected lens or screen target"
+        ]
+      }
+    ],
+    "new_source_exposed_profiles": [],
+    "new_source_adopted_candidate_ids": [
+      "slot:capture_mode:sf_071_base"
+    ],
+    "new_source_adopted_profile_ids": [],
+    "existing_source_adopted_visual_concept_ids": [
+      "visual-concept:pc_pc16_owner_relation"
+    ],
+    "literal_new_source_evidence": {
+      "candidate_id": "slot:capture_mode:sf_071_base",
+      "artistic_interpretation": "The camera becomes a conversational counterpart at the worker's approximate eye line, while her separate spare hand presents the red broken pin. The change serves the previously authored relief-and-repair moment.",
+      "transformation": "Refine the open camera height from slightly above the eyes to approximately the eye line; keep the existing direct ultra-wide self-capture and the actor-right capture/actor-left display roles.",
+      "prompt_evidence": "Her extended right capture arm brings the phone lens to approximately the height of her eyes, and her face and gaze turn toward that self-held lens",
+      "relation_evidence": {
+        "visible_geometry": "the phone lens to approximately the height of her eyes",
+        "owner_1": "Her right shoulder, upper arm and forearm make one continuous diagonal toward the lower-left edge",
+        "owner_2": "her face and gaze turn toward that self-held lens"
+      },
+      "affected_dimensions": [
+        "camera",
+        "pose"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "camera",
+          "target": "camera",
+          "property": "capture.mode"
+        },
+        {
+          "dimension": "pose",
+          "target": "main_subject",
+          "property": "body.capture_hand_role"
+        },
+        {
+          "dimension": "camera",
+          "target": "camera",
+          "property": "viewpoint.height"
+        }
+      ]
+    },
+    "literal_existing_profile_evidence": {
+      "pc_pc16_owner_relation": {
+        "component_1_phrase": "the subject attached hand extends toward the camera position: her spare left hand holds a hand-length broken wooden joining pin toward the camera",
+        "component_2_phrase": "the offered object follows the visible subject hand contact; the red-striped wood projects forward from her fingers and its splintered end remains distinct",
+        "component_3_phrase": "the offered hand or object occupies a nearer plane than the face: the near left hand and wooden pin loom larger than her centered face",
+        "component_4_phrase": "the near object leaves the requested facial expression region readable, keeping her eyes and tired half-smile fully visible"
+      }
+    },
+    "frozen_core_unchanged": true,
+    "concept_origin": "Independent random draw before source access; carousel repair and ultra-wide choice were already authored.",
+    "new_source_contribution": "sf_071_base refines camera height to approximate eye line and binds capture-arm/face-to-lens ownership. It is an optional candidate accepted on artistic and semantic grounds. No sf_profile was exposed or activated. The 0.5 device multiplier was not selected or asserted as measured.",
+    "coverage_boundary": "The V2 capture_mode route now exposes a new capture candidate. Specific ultra-wide distortion remains independently authored and is judged separately from the new eye-line capture relation.",
+    "original_gap_evidence": "data-contribution.json and original run remain preserved; original actual image calls=0."
+  },
+  "original_run_coverage_gap": {
+    "run_path": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/run",
+    "generation_id": "4561ae291c9a5626888dc0b05c295ebbe0a4416d40b7099b3c7d3e7216376ccf",
+    "source_fingerprint": "333f41dd7bbc9c404ce9ac774824d4480dfd6f8d02f344538b15ea57f950196c",
+    "pack_id": "91f07c256e8c73d3",
+    "capture_context_slot_exposed": false,
+    "new_exposed_candidate_ids": [
+      "slot:lighting:sf_173_base"
+    ],
+    "actual_image_call_count": 0,
+    "started_marker_was_reservation_only": true,
+    "old_payload_not_invoked": true,
+    "gap_evidence_path": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/data-contribution.json",
+    "hold_evidence_path": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/generation-hold.json",
+    "v2_replay_preserves_original_run": true
+  },
+  "runtime": {
+    "run_path": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/run_v2",
+    "runtime_store": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/runtime-store",
+    "generation_id": "8d793f025f759eb7f782d0a194f9dd7f0781370aaff2bbea331146e940c3ab2f",
+    "source_fingerprint": "fe7ac255143e52fe70b9c64cc7bd02961d176b0258f35a1769aeff6b562a825c",
+    "pack_id": "b889a5e9d99b64f2",
+    "pack_version": "v6",
+    "pack_sha256": "f4663947bde6a2ff001c31262530c8878da0d3d9a8327aeb58a5cf78a5591620",
+    "canonical_runtime_receipt_sha256": "35c0d8f647a88defecf43335d9ba80694365bb17be96d2ab20807fdde95c8a4b",
+    "skill_sha256_at_freeze": "9e9b87e6f0b2c1ec1c36bd8e9d55f90950d53529a0b873722b546924dfc7043b",
+    "runtime_prompt_sha256": "a9dca317de0006b598dcee6b1a8391db7fe38ac274473fcf7c38f4b1b49cd033",
+    "runtime_prompt_byte_count": 3793,
+    "composed_prompt_sha256": "1649dc4dcddb13f96c215c6801bbc849019a72f6baf1e2831dc66ee98d8b5421",
+    "composed_prompt_byte_count": 3234,
+    "final_prompt_file_byte_count": 3235,
+    "final_prompt_file_has_one_storage_newline": true,
+    "negative_preserved_exactly": true,
+    "image_render_request_audit": {
+      "schema_version": "photo-image-render-request-audit/v1",
+      "pack_id": "b889a5e9d99b64f2",
+      "status": "pass",
+      "runtime_prompt_id": "a9dca317de0006b5",
+      "source_intent_lock_sha256": "5cedcbeeb795ad74920c19bb71944c92aeb27e8e73597c9c85d86f1a3594d888",
+      "render_repair_contract_sha256": null,
+      "negative_matches_pack": true,
+      "effective_visual_contract_sha256": "09f78eab3ab03a99f29bfe33a8d27ba8d3d7677d4890e261fdbd2eb2603f4b84",
+      "selected_visual_concept_ids": [
+        "visual-concept:pc_pc16_owner_relation"
+      ],
+      "reference_count": 1,
+      "failures": [],
+      "boundary": "This audit verifies exact text and reference bytes before generation. It does not inspect rendered pixels or establish user-perceived quality."
+    },
+    "compose_audit": {
+      "status": "pass",
+      "quality_status": "warn",
+      "pack_id": "b889a5e9d99b64f2",
+      "chosen_candidate_count": 1,
+      "chosen_visual_concept_ids": [
+        "visual-concept:pc_pc16_owner_relation"
+      ],
+      "effective_visual_contract_sha256": "09f78eab3ab03a99f29bfe33a8d27ba8d3d7677d4890e261fdbd2eb2603f4b84",
+      "render_repair_contract_sha256": null,
+      "failures": [],
+      "warnings": [
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "A layered self-portrait"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "she takes her own photograph"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "the referenced woman"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "the supplied image guiding her visible face and hair"
+        }
+      ]
+    },
+    "transparent_background": false,
+    "receipt": {
+      "schema": "photo-runtime-receipt/v1",
+      "request_id": "e7aaae21e9ce4d20a8ac571ea9926090",
+      "generation_id": "8d793f025f759eb7f782d0a194f9dd7f0781370aaff2bbea331146e940c3ab2f",
+      "pack_sha256": "f4663947bde6a2ff001c31262530c8878da0d3d9a8327aeb58a5cf78a5591620",
+      "observation": {
+        "mode": "local_current",
+        "root": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/skills/photo-prompt-image-generator",
+        "local_epoch": 20,
+        "observed_at": "2026-10-08T13:07:56.203901+00:00"
+      },
+      "source_fingerprint": "fe7ac255143e52fe70b9c64cc7bd02961d176b0258f35a1769aeff6b562a825c",
+      "algorithm_sha256": "b12e7530cb4fae4a73274482bb3723782739a8babae525cc03b1169753d76285",
+      "slot_cache_key": "87064fd6b565f069b5e9b376321162f5a60001e67fa394d7af5c875a6d699b8f",
+      "cache_status": "hit",
+      "bindings": {
+        "tags_hash": "014219921200750d660a66d54f5196b5a58b926e4e360b97e3033e2a8c1c4b0c",
+        "authorial_core_sha256": "720d758736dd21bcb79a9ee6e9f117b73305a67c8f3cdf31f02b6249e39150f5",
+        "core_retrieval_sha256": "4e24bf63d7dc512e06cff60a054c7b62aac5fd2e0dd8ecc2684de1e46e45f587",
+        "slot_corpus_sha256": "8aa5f8954504852a4be19d474a7dddaa926f56317d3eae0193ae899af9099a9a",
+        "visual": {
+          "visual_obligations": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "visual_concept_candidates": "9644a0e6e11b7576bf3049bd72e8a9ca020b47243dd0c330c158ca0ef94a9853",
+          "semantic_clarification": "dd3fae332ce56fa067a1326bce208cdd203920938170ce48ca85147f8770959e"
+        }
+      },
+      "canonical_sha256": "35c0d8f647a88defecf43335d9ba80694365bb17be96d2ab20807fdde95c8a4b"
+    }
+  },
+  "generation": {
+    "schema_version": "observed-native-image-result/v1",
+    "actual_image_call_count": 1,
+    "tool": "image_gen.imagegen",
+    "generation_environment": "native_imagegen",
+    "returned_local_path": "/Users/chasoik/.codex/generated_images/01a11b6d-26a7-7133-aaa1-6e9ad1184cbf/exec-0a41ad32-3793-4abe-9409-a8b0277dd6df.png",
+    "repo_local_copy": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/generated-native-attempt-1.png",
+    "image_sha256": "d04c54288782034f2402d025c4b4b614c4a23876977d3be3ce14952603ba6b26",
+    "native_dimensions": [
+      1237,
+      1272
+    ],
+    "native_format": "PNG",
+    "source_copy_byte_identical": true,
+    "observed_image_model": null,
+    "actual_invocation_started_at": "2026-10-08T13:23:25.869Z",
+    "actual_invocation_ended_at": "2026-10-08T13:24:12.866Z",
+    "operation_id": "117e214c275648109cb1297422137689",
+    "ledger_run_id": "74baae94fc047b86",
+    "ledger_row_count": 1,
+    "tool_fallback_used": false,
+    "repair_call_count": 0,
+    "moderation_block_observed": false,
+    "native_save_success_is_not_user_acceptance": true
+  },
+  "official_pixel_review": {
+    "authoritative_gate_shape": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/run_v2/revisions/70b9ef4cf0c94fb8b62de597b397b15d/visual_review_shape.json",
+    "contract_sha256": "09f78eab3ab03a99f29bfe33a8d27ba8d3d7677d4890e261fdbd2eb2603f4b84",
+    "hard_gates_added": false,
+    "required_gate_ids": [
+      "vo_pc_pc16_owner_relation_1",
+      "vo_pc_pc16_owner_relation_2",
+      "vo_pc_pc16_owner_relation_3",
+      "vo_pc_pc16_owner_relation_4",
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "native_dimensions": [
+      1237,
+      1272
+    ],
+    "native_directly_inspected": true,
+    "full_native_view_payload_dimensions": [
+      1237,
+      1272
+    ],
+    "full_native_view_no_scale_reduction": true,
+    "thumbnail_directly_inspected": true,
+    "thumbnail_dimensions": [
+      311,
+      320
+    ],
+    "bbox_coordinates": "Approximate x0,y0,x1,y1 in the original 1237x1272 PNG; zero-based origin at upper-left. Boxes identify actual inspected regions, not measured pose angles.",
+    "hard_gate_observations": [
+      {
+        "gate_id": "vo_pc_pc16_owner_relation_1",
+        "status": "PASS",
+        "required_review_scale": "both",
+        "reviewed_scales": [
+          "native",
+          "thumbnail"
+        ],
+        "native_regions": [
+          {
+            "region_id": "display_arm_hand",
+            "bbox_xyxy": [
+              671,
+              814,
+              1218,
+              1272
+            ]
+          },
+          {
+            "region_id": "capture_arm",
+            "bbox_xyxy": [
+              0,
+              548,
+              497,
+              1272
+            ]
+          }
+        ],
+        "evidence": "The actor-left presenting hand is connected through the bare wrist/forearm to the indigo sleeve at image-right and reaches toward the viewing position. It holds the red broken fragment in the near foreground. This is distinct from the actor-right capture arm exiting image-left. Native and 311x320 thumbnail both preserve that owner distinction.",
+        "limits": "Qualitative raster observation; no physical lens, distance, exact height or actual biography is measured."
+      },
+      {
+        "gate_id": "vo_pc_pc16_owner_relation_2",
+        "status": "PASS",
+        "required_review_scale": "native",
+        "reviewed_scales": [
+          "native"
+        ],
+        "native_regions": [
+          {
+            "region_id": "finger_wood_contact",
+            "bbox_xyxy": [
+              863,
+              849,
+              1100,
+              1073
+            ]
+          },
+          {
+            "region_id": "wood_fragment",
+            "bbox_xyxy": [
+              813,
+              669,
+              995,
+              986
+            ]
+          }
+        ],
+        "evidence": "At native resolution the red-painted wooden fragment sits between the visible thumb and opposed curled/index-side fingers. Skin and wood meet at identifiable contact boundaries, and the upper splintered end continues from the held painted shaft. The object is not floating or carried by another actor.",
+        "limits": "Qualitative raster observation; no physical lens, distance, exact height or actual biography is measured."
+      },
+      {
+        "gate_id": "vo_pc_pc16_owner_relation_3",
+        "status": "PASS",
+        "required_review_scale": "both",
+        "reviewed_scales": [
+          "native",
+          "thumbnail"
+        ],
+        "native_regions": [
+          {
+            "region_id": "display_arm_hand",
+            "bbox_xyxy": [
+              671,
+              814,
+              1218,
+              1272
+            ]
+          },
+          {
+            "region_id": "face_and_expression",
+            "bbox_xyxy": [
+              355,
+              250,
+              800,
+              648
+            ]
+          },
+          {
+            "region_id": "horse_repair_context",
+            "bbox_xyxy": [
+              800,
+              45,
+              1237,
+              856
+            ]
+          }
+        ],
+        "evidence": "The presenting fingers and painted wood occupy the foreground over the subject sleeve/torso, while the face is farther back and the white horse/workbench recede farther again. The near hand is enlarged and the depth layers remain distinguishable at thumbnail and native scale. This judges visible depth ordering, not measured distance or lens metadata.",
+        "limits": "Qualitative raster observation; no physical lens, distance, exact height or actual biography is measured."
+      },
+      {
+        "gate_id": "vo_pc_pc16_owner_relation_4",
+        "status": "PASS",
+        "required_review_scale": "both",
+        "reviewed_scales": [
+          "native",
+          "thumbnail"
+        ],
+        "native_regions": [
+          {
+            "region_id": "wood_fragment",
+            "bbox_xyxy": [
+              813,
+              669,
+              995,
+              986
+            ]
+          },
+          {
+            "region_id": "face_and_expression",
+            "bbox_xyxy": [
+              355,
+              250,
+              800,
+              648
+            ]
+          }
+        ],
+        "evidence": "The low image-right wood and grip remain below and beside the face. Both eyes, brows and the slight mouth-corner smile are readable as one face, with no object crossing the expression-bearing region. The same separation survives thumbnail inspection.",
+        "limits": "Qualitative raster observation; no physical lens, distance, exact height or actual biography is measured."
+      },
+      {
+        "gate_id": "embodiment_body_ownership",
+        "status": "PASS",
+        "required_review_scale": "native",
+        "reviewed_scales": [
+          "native"
+        ],
+        "native_regions": [
+          {
+            "region_id": "capture_arm",
+            "bbox_xyxy": [
+              0,
+              548,
+              497,
+              1272
+            ]
+          },
+          {
+            "region_id": "display_arm_hand",
+            "bbox_xyxy": [
+              671,
+              814,
+              1218,
+              1272
+            ]
+          },
+          {
+            "region_id": "standing_torso_waist",
+            "bbox_xyxy": [
+              236,
+              557,
+              880,
+              1272
+            ]
+          }
+        ],
+        "evidence": "The image-left camera-directed arm traces continuously from the actor-right shoulder through rolled sleeve to the near forearm exiting the crop. The opposite actor-left wrist and hand connect to their own sleeve and hold the wood. Both belong to the same centered subject; no detached or transferred task hand is visible.",
+        "limits": "Qualitative raster observation; no physical lens, distance, exact height or actual biography is measured."
+      },
+      {
+        "gate_id": "embodiment_joint_chain_and_reach",
+        "status": "PASS",
+        "required_review_scale": "native",
+        "reviewed_scales": [
+          "native"
+        ],
+        "native_regions": [
+          {
+            "region_id": "capture_arm",
+            "bbox_xyxy": [
+              0,
+              548,
+              497,
+              1272
+            ]
+          },
+          {
+            "region_id": "display_arm_hand",
+            "bbox_xyxy": [
+              671,
+              814,
+              1218,
+              1272
+            ]
+          },
+          {
+            "region_id": "standing_torso_waist",
+            "bbox_xyxy": [
+              236,
+              557,
+              880,
+              1272
+            ]
+          }
+        ],
+        "evidence": "The extended actor-right capture arm forms a plausible shoulder/sleeve/forearm chain toward the near crop. The actor-left displaying arm bends and brings its attached hand forward with a coherent wrist direction. The simultaneous reaches fit the torso and do not require crossed shoulders or an extra arm. The capture hand itself is beyond the photograph.",
+        "limits": "Qualitative raster observation; no physical lens, distance, exact height or actual biography is measured."
+      },
+      {
+        "gate_id": "embodiment_support_and_balance",
+        "status": "PASS",
+        "required_review_scale": "native",
+        "reviewed_scales": [
+          "native"
+        ],
+        "native_regions": [
+          {
+            "region_id": "standing_torso_waist",
+            "bbox_xyxy": [
+              236,
+              557,
+              880,
+              1272
+            ]
+          },
+          {
+            "region_id": "horse_repair_context",
+            "bbox_xyxy": [
+              800,
+              45,
+              1237,
+              856
+            ]
+          }
+        ],
+        "evidence": "The torso and belted waist present a plausible upright working stance, carrying only a phone implied by the capture gesture and a small wood piece. The large horse is separately borne by the visible workshop bench/context. Feet and exact floor contact are outside the crop, an ordinary occlusion rather than contradictory visible support.",
+        "limits": "Qualitative raster observation; no physical lens, distance, exact height or actual biography is measured."
+      },
+      {
+        "gate_id": "embodiment_contact_and_space",
+        "status": "PASS",
+        "required_review_scale": "native",
+        "reviewed_scales": [
+          "native"
+        ],
+        "native_regions": [
+          {
+            "region_id": "finger_wood_contact",
+            "bbox_xyxy": [
+              863,
+              849,
+              1100,
+              1073
+            ]
+          },
+          {
+            "region_id": "wood_fragment",
+            "bbox_xyxy": [
+              813,
+              669,
+              995,
+              986
+            ]
+          },
+          {
+            "region_id": "face_and_expression",
+            "bbox_xyxy": [
+              355,
+              250,
+              800,
+              648
+            ]
+          }
+        ],
+        "evidence": "The presenting digits grip the intact painted shaft with distinct skin/wood edges. The splintered tip remains free above the grip, and the low right foreground leaves the eyes, mouth and horse repair context separate. The visible finger articulation provides space for the object.",
+        "limits": "Qualitative raster observation; no physical lens, distance, exact height or actual biography is measured."
+      },
+      {
+        "gate_id": "embodiment_visibility_and_projection",
+        "status": "PASS",
+        "required_review_scale": "native",
+        "reviewed_scales": [
+          "native"
+        ],
+        "native_regions": [
+          {
+            "region_id": "capture_arm",
+            "bbox_xyxy": [
+              0,
+              548,
+              497,
+              1272
+            ]
+          },
+          {
+            "region_id": "display_arm_hand",
+            "bbox_xyxy": [
+              671,
+              814,
+              1218,
+              1272
+            ]
+          },
+          {
+            "region_id": "face_and_expression",
+            "bbox_xyxy": [
+              355,
+              250,
+              800,
+              648
+            ]
+          },
+          {
+            "region_id": "horse_repair_context",
+            "bbox_xyxy": [
+              800,
+              45,
+              1237,
+              856
+            ]
+          }
+        ],
+        "evidence": "The full native frame makes the critical hand/wood contact, face, separate capture-arm projection and receding repaired horse jointly assessable. Foreground enlargement and occlusion are coherent with the intended close self-portrait. The camera body is intrinsically outside this direct view; its actual lens type, precise height and any 0.5 setting are not established from the raster.",
+        "limits": "Qualitative raster observation; no physical lens, distance, exact height or actual biography is measured."
+      }
+    ],
+    "managed_audit": {
+      "schema_version": "moe-render-review/v1",
+      "pack_id": "b889a5e9d99b64f2",
+      "contract_version": "photo-visual-obligations/v1",
+      "qualification_status": "visual_technical_qualified_user_judgment_pending",
+      "technical_qualified": true,
+      "representative_eligible": false,
+      "required_hard_gate_count": 9,
+      "required_hard_gates": [
+        "vo_pc_pc16_owner_relation_1",
+        "vo_pc_pc16_owner_relation_2",
+        "vo_pc_pc16_owner_relation_3",
+        "vo_pc_pc16_owner_relation_4",
+        "embodiment_body_ownership",
+        "embodiment_joint_chain_and_reach",
+        "embodiment_support_and_balance",
+        "embodiment_contact_and_space",
+        "embodiment_visibility_and_projection"
+      ],
+      "source_character_response_contract_sha256": null,
+      "effective_visual_contract_sha256": "09f78eab3ab03a99f29bfe33a8d27ba8d3d7677d4890e261fdbd2eb2603f4b84",
+      "selected_visual_concept_ids": [
+        "visual-concept:pc_pc16_owner_relation"
+      ],
+      "failed_hard_gates": [],
+      "schema_failures": [],
+      "user_judgment": {
+        "baseline_available": false,
+        "genuinely_moe": "pending",
+        "better_than_baseline": "not_applicable",
+        "source": "not_yet_received",
+        "evidence": "No direct requesting-user acceptance or preference judgment has been received."
+      },
+      "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+    },
+    "audit_boundary": "The auditor validates the recorded evidence schema/gate status, not visual truth. Gate observations are based on this arm directly reading the full native image and thumbnail."
+  },
+  "independent_topic_pixel_review": {
+    "new_candidate": "slot:capture_mode:sf_071_base",
+    "declared_input_and_literal_binding": "PASS",
+    "visible_capture_arm_projection": "PASS",
+    "face_toward_viewing_lens_direction": "PASS",
+    "approximate_eye_line_visual_consistency": "PARTIAL: conversational near-eye view is plausible, but the active lens is outside the picture and precise physical height is unmeasured.",
+    "actual_camera_lens_height": "UNOBSERVABLE",
+    "physical_camera_hand_device_contact": "UNOBSERVABLE: the capture hand/device is off-frame; the visible outgoing arm is coherent.",
+    "new_data_pixel_correspondence": "PARTIAL with visible arm/gaze correspondence and an explicit physical-height/device limit; this is supplemental and not a new hard gate.",
+    "authorial_ultrawide_projection": "Foreground arm/hand enlargement and receding space are supported; actual lens type is UNOBSERVABLE.",
+    "0_5_device_multiplier": "Not selected, not sent as a measured fact, and UNOBSERVABLE from the raster."
+  },
+  "artist_notes": {
+    "schema_version": "image-grounded-artist-notes/v1",
+    "image_path": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/generated-native-attempt-1.png",
+    "image_sha256": "d04c54288782034f2402d025c4b4b614c4a23876977d3be3ce14952603ba6b26",
+    "impression_before_control_comparison": "An intimate workshop selfie: a quiet half-smile, dusty indigo work clothing, broken red wood held close and a worn carved horse under warm light, with cool evening outside. The visual story reads as a person documenting a repair pause.",
+    "strengths": [
+      "The face, large foreground grip and repaired horse form a clear near-to-far hierarchy.",
+      "Short bob, wispy fringe and familiar soft facial proportions visibly carry the permitted reference guidance. This does not establish actual identity.",
+      "Red paint links the splintered wood to the horse mane, while dust, sanding block and metal seam support the restoration setting.",
+      "The self-directed camera-arm projection gives the viewer conversational proximity."
+    ],
+    "limitations": [
+      "The camera body and active lens are outside the raster; exact physical height, actual lens kind and device multiplier cannot be measured.",
+      "The precise old joining-pin mechanism and before/after repair success remain authorial context; pixels establish broken painted wood beside a repaired-looking horse, not the full history.",
+      "The horse appears behind the actor-left side rather than the original optional actor-right staging; this is not a requester-owned lock or an active hard-gate failure.",
+      "The metallic seam support looks like a bridging plate/brace rather than unmistakable temporary clamp hardware; this is a minor authorial-detail deviation.",
+      "Tiredness and the imagined ridiculous victory are interpretations; the visible face supports a slight relaxed smile."
+    ],
+    "control_calibration": {
+      "sensual_1": "Subtle everyday personal presence is supported by close gaze, gentle expression and soft work clothing; it does not lead over the repair relation.",
+      "fetish_0": "No added fetish direction is visible or claimed; material attention serves the repair.",
+      "surreal_0": "The depicted space and action retain ordinary causal/material coherence.",
+      "creativity_1": "The layered but plausible restoration scene uses restrained authorial variation within the explicit complex concept request."
+    },
+    "independent_topic_observations": {
+      "new_candidate": "slot:capture_mode:sf_071_base",
+      "declared_input_and_literal_binding": "PASS",
+      "visible_capture_arm_projection": "PASS",
+      "face_toward_viewing_lens_direction": "PASS",
+      "approximate_eye_line_visual_consistency": "PARTIAL: conversational near-eye view is plausible, but the active lens is outside the picture and precise physical height is unmeasured.",
+      "actual_camera_lens_height": "UNOBSERVABLE",
+      "physical_camera_hand_device_contact": "UNOBSERVABLE: the capture hand/device is off-frame; the visible outgoing arm is coherent.",
+      "new_data_pixel_correspondence": "PARTIAL with visible arm/gaze correspondence and an explicit physical-height/device limit; this is supplemental and not a new hard gate.",
+      "authorial_ultrawide_projection": "Foreground arm/hand enlargement and receding space are supported; actual lens type is UNOBSERVABLE.",
+      "0_5_device_multiplier": "Not selected, not sent as a measured fact, and UNOBSERVABLE from the raster."
+    },
+    "overall_artist_judgment": "Coherent and engaging as a repair-pause selfie; the visual context gives the small smile a plausible reason. Artist judgment is agent-owned and not user acceptance.",
+    "user_acceptance": "not_yet_received",
+    "repair_necessity": "No authoritative hard gate failed. No additional generation is needed for the minor authorial-detail deviations or unmeasurable camera metadata."
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "No direct requesting-user acceptance or preference judgment has been received."
+  },
+  "audit_corrections_and_applicability": {
+    "original_compose_schema_fix": "Fetish-zero baseline brief added to required bookkeeping; prompt and frozen core unchanged.",
+    "visual_review_initial_wire_rejection": "JSON null user-judgment fields were rejected; changed to pending/not_applicable enum strings. Pixel evidence and all nine statuses were unchanged.",
+    "visual_review_wire_correction_path": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/review-wire-correction.json",
+    "generic_render_repair_review": {
+      "schema_version": "photo-generic-review-applicability-note/v1",
+      "render_repair_contract_present": false,
+      "required_generic_repair_gates": [],
+      "generic_repair_review_required": false,
+      "available_review_shapes": [
+        "visual"
+      ],
+      "applicable_pixel_review": "visual-review-v2.json contains the exact nine active visual/embodiment gates",
+      "attempted_generic_auditor_exit_code": 1,
+      "attempted_generic_audit_output": "image-render-review-audit-output-v2.json",
+      "explanation": "The generic repair auditor requires a v2 lineage repair target. This initial generation has no render_repair contract, so generic repair qualification is not applicable. The exploratory unsupported call is preserved as a validator rejection, not relabeled PASS and not a pixel defect.",
+      "pixel_judgments_changed": false
+    },
+    "generic_auditor_rejection_output_path": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/image-render-review-audit-output-v2.json",
+    "final_verifier_initial_mismatch": "Display prompt contains one terminal storage newline; corrected verifier checks this exact storage format without changing any authored/runtime bytes.",
+    "final_verifier_initial_evidence_path": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/final-delivery-verification-initial.json"
+  },
+  "final_delivery_verification": {
+    "schema_version": "photo-final-delivery-verification/v1",
+    "status": "PASS",
+    "verified_at": "2026-10-08T13:57:14.790450+00:00",
+    "checks": {
+      "native_image_hash": true,
+      "native_original_byte_identical": true,
+      "native_png_dimensions": true,
+      "exact_runtime_text_equals_request": true,
+      "runtime_hash_equals_manifest_and_ledger": true,
+      "final_prompt_equals_compose_plus_storage_newline": true,
+      "exact_pack_negative_preserved": true,
+      "new_candidate_literal_in_exact_runtime": true,
+      "reference_hash_unchanged": true,
+      "one_actual_call_one_ledger_row": true,
+      "original_run_zero_actual_calls": true,
+      "core_unchanged": true,
+      "source_generation_v2": true,
+      "exact_authoritative_nine_gate_set": true,
+      "nine_recorded_passes": true,
+      "review_valid_technical_pass": true,
+      "user_acceptance_pending": true,
+      "no_new_hard_gates": true
+    },
+    "native_image_path": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/generated-native-attempt-1.png",
+    "native_image_sha256": "d04c54288782034f2402d025c4b4b614c4a23876977d3be3ce14952603ba6b26",
+    "native_dimensions": [
+      1237,
+      1272
+    ],
+    "runtime_prompt_sha256": "a9dca317de0006b598dcee6b1a8391db7fe38ac274473fcf7c38f4b1b49cd033",
+    "runtime_prompt_byte_count": 3793,
+    "final_prompt_sha256": "85ce0bcf354129efa94e1efe31dd3cff02ca7552bf43f5cf82b711c4d21c76a1",
+    "final_prompt_byte_count": 3235,
+    "composed_prompt_sha256": "1649dc4dcddb13f96c215c6801bbc849019a72f6baf1e2831dc66ee98d8b5421",
+    "display_prompt_storage_newline": true,
+    "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+    "ledger_row_count": 1,
+    "actual_call_count": 1,
+    "boundary": "File/hash/record consistency checks supplement directly inspected native/thumbnail pixels. They do not infer visual truth, actual camera metadata or requesting-user acceptance."
+  },
+  "artifacts": {
+    "report": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/report.md",
+    "qualification": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/qualification.json",
+    "image": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/generated-native-attempt-1.png",
+    "returned_original_image": "/Users/chasoik/.codex/generated_images/01a11b6d-26a7-7133-aaa1-6e9ad1184cbf/exec-0a41ad32-3793-4abe-9409-a8b0277dd6df.png",
+    "thumbnail": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/inspection-thumbnail-attempt-1.png",
+    "final_prompt": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/final-prompt-v2.txt",
+    "composed_input": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/composed-input-v2.json",
+    "exact_runtime_prompt": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/exact-runtime-prompt-v2.txt",
+    "exact_runtime_request": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/exact-runtime-request-v2.json",
+    "runtime_receipt": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/exact-runtime-receipt-v2.json",
+    "compose_audit": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/compose-audit-output-v2.json",
+    "image_render_request_audit": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/run_v2/revisions/4859398eba794c6b907a7a7ca6e46a6d/runtime_audit.json",
+    "authoritative_gate_shape": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/run_v2/revisions/70b9ef4cf0c94fb8b62de597b397b15d/visual_review_shape.json",
+    "visual_review": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/visual-review-v2.json",
+    "moe_visual_review_audit": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/run_v2/revisions/3c73938f05684afb9102dc5335a84ab0/review_audit.json",
+    "pixel_observations": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/pixel-observations-v2.json",
+    "artist_notes": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/artist-notes-v2.json",
+    "new_data_contribution": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/data-contribution-v2.json",
+    "source_id_catalog": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/new-source-id-catalog-v2.json",
+    "random_selection": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/random-concept-selection.json",
+    "precore_read_manifest": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/precore-explicit-read-manifest.json",
+    "core_freeze_summary": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/phase1-freeze-summary.json",
+    "unchanged_core_replay": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/phase1-v2-replay.json",
+    "ledger": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/image_runs.ndjson",
+    "independent_run_manifest": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/run_manifest.json",
+    "manifest_provenance": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/manifest-provenance.json",
+    "delivery_verification": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/final-delivery-verification.json",
+    "generic_repair_audit_applicability": "/Users/chasoik/.codex/worktrees/selfie-pose-integration/image-prompt/docs/research-evidence/photo-prompt/selfie-pose-integration-20261008/arms/ultrawide/generic-repair-review-applicability.json"
+  }
+}
