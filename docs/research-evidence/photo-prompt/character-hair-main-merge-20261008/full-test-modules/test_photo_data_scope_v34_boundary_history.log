@@ -1,0 +1,21 @@
+test_original_v34_assertions_replay_without_revision (test_photo_data_scope_v34_boundary_history.OriginalV34BoundaryReplayTests.test_original_v34_assertions_replay_without_revision) ... FAIL
+
+======================================================================
+FAIL: test_original_v34_assertions_replay_without_revision (test_photo_data_scope_v34_boundary_history.OriginalV34BoundaryReplayTests.test_original_v34_assertions_replay_without_revision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-main-merge/image-prompt/tests/test_photo_data_scope_v34_boundary_history.py", line 14, in test_original_v34_assertions_replay_without_revision
+    history.materialize_original(tree,source_root=ROOT,link_verified=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-main-merge/image-prompt/tests/photo_ethereal_history_v35.py", line 92, in materialize_original
+    for row in parent['members']:exact_payload(source_root,row)
+                                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-main-merge/image-prompt/tests/photo_ethereal_history_v35.py", line 47, in exact_payload
+    if path.stat().st_mode&0o7777!=int(row['mode'][-3:],8) or len(raw)!=row['bytes'] or digest(raw)!=row['sha256'] or blob!=row['git_blob']:raise AssertionError('Frozen V35 original source payload or mode drift: '+row['path'])
+                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 original source payload or mode drift: skills/photo-prompt-image-generator/SKILL.md
+
+----------------------------------------------------------------------
+Ran 1 test in 0.697s
+
+FAILED (failures=1)

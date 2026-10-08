@@ -1,0 +1,40 @@
+test_exact_terms_activate_and_negations_or_confusers_fail_closed (test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_exact_terms_activate_and_negations_or_confusers_fail_closed) ... ok
+test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract (test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract) ... FAIL
+test_generated_index_is_registry_bound_for_new_profile (test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_generated_index_is_registry_bound_for_new_profile) ... ok
+test_independent_makeup_axes_retain_reference_candidates (test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_independent_makeup_axes_retain_reference_candidates) ... ok
+test_profile_is_an_eight_component_fail_closed_pixel_contract (test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_profile_is_an_eight_component_fail_closed_pixel_contract) ... ok
+test_semantics_do_not_encode_demographic_or_value_inference (test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_semantics_do_not_encode_demographic_or_value_inference) ... ok
+test_source_observation_is_hash_bound_and_identity_independent (test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_source_observation_is_hash_bound_and_identity_independent) ... ERROR
+
+======================================================================
+ERROR: test_source_observation_is_hash_bound_and_identity_independent (test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_source_observation_is_hash_bound_and_identity_independent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/test_photo_makeup_reference_balance.py", line 133, in test_source_observation_is_hash_bound_and_identity_independent
+    (RUN_ROOT / "shared" / "source_observation.json").read_text(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        encoding="utf-8"
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/artifacts/photo-runs/20260831-makeup-reference-five-arm-v1/shared/source_observation.json'
+
+======================================================================
+FAIL: test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract (test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/test_photo_makeup_reference_balance.py", line 150, in test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract
+    self.assertEqual(len(core_paths), 5)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 5
+
+----------------------------------------------------------------------
+Ran 7 tests in 58.967s
+
+FAILED (failures=1, errors=1)

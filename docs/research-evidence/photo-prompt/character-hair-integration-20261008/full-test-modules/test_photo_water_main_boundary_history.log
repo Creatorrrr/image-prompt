@@ -1,0 +1,22 @@
+setUpClass (test_photo_water_main_boundary_history.WaterMainBoundaryHistoryTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (test_photo_water_main_boundary_history.WaterMainBoundaryHistoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/test_photo_water_main_boundary_history.py", line 26, in setUpClass
+    cls.original_validator=fixtures.archived_v30_validator(cls.original_root)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_prompt_fixtures.py", line 1914, in archived_v30_validator
+    manifest = materialize_v30_parent_source(directory, source_root=source_root)
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_prompt_fixtures.py", line 1869, in materialize_v30_parent_source
+    _v24_verified_payload(source_root, row)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_prompt_fixtures.py", line 856, in _v24_verified_payload
+    raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/SKILL.md
+
+----------------------------------------------------------------------
+Ran 0 tests in 2.580s
+
+FAILED (errors=1)

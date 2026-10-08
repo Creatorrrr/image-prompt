@@ -1,0 +1,128 @@
+{
+  "contract_version": "photo-composer-view/v2",
+  "mode": "candidate_details",
+  "source_pack_id": "6d32c50f2f8f5bdb",
+  "source_pack_sha256": "7e2b9ca44b7d03a2ac4b69e727dd0cdb3e13e901abd6368b2ec7aa95a0f7219c",
+  "candidates": [
+    {
+      "id": "slot:hair_color:chrh_hair_color_state_underlights",
+      "source_pointer": "/slots/hair_color/candidates/1",
+      "candidate": {
+        "id": "slot:hair_color:chrh_hair_color_state_underlights",
+        "slot": "hair_color",
+        "entry_id": "chrh_hair_color_state_underlights",
+        "tags": [
+          "human",
+          "hair",
+          "observable_relation"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "a contrasting color occupies the selected lower or inner hair layer",
+          "the colored strands remain part of the same hairstyle beneath the outer layer"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "a contrasting color occupies the selected lower or inner hair layer",
+          "the colored strands remain part of the same hairstyle beneath the outer layer"
+        ],
+        "relations": [
+          {
+            "id": "hair_color_state_underlights_owner",
+            "type": "declared_owner_scope",
+            "subject": "the selected hair arrangement",
+            "object": "main_subject"
+          },
+          {
+            "id": "hair_color_state_underlights_r1",
+            "type": "belongs_to",
+            "subject": "subject_a.hair",
+            "object": "subject_a"
+          },
+          {
+            "id": "hair_color_state_underlights_r2",
+            "type": "lies_beneath",
+            "subject": "subject_a.hair.inner_layer",
+            "object": "subject_a.hair.outer_layer"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "hair.color.underlights"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:hair_color:sca_h20",
+      "source_pointer": "/slots/hair_color/candidates/0",
+      "candidate": {
+        "id": "slot:hair_color:sca_h20",
+        "slot": "hair_color",
+        "entry_id": "sca_h20",
+        "tags": [
+          "human",
+          "observable_relation"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "an outer hair layer retains one stated color",
+          "a revealed inner layer carries a different stated color"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "an outer hair layer retains one stated color",
+          "a revealed inner layer carries a different stated color"
+        ],
+        "relations": [
+          {
+            "id": "declared_owner",
+            "type": "declared_owner_scope",
+            "subject": "the selected hair arrangement",
+            "object": "main_subject"
+          },
+          {
+            "id": "same_owner_components",
+            "type": "same_owner",
+            "subject": "an outer hair layer retains one stated color",
+            "object": "a revealed inner layer carries a different stated color"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "hair.color.layer_partition"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    }
+  ],
+  "view_sha256": "fe3a5abdff371098a5904e2d786cf521cb10b55f79d27e7c1aaa773bd6925a20"
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": "agent-native-hair-all-of-review/v1",
+  "reviewer": "agent_c",
+  "arm": "c",
+  "source_test_design_sha256": "73f5ebdf283dd80e7d356edc47b2846817f5f7154931d560a031a12565ab2a8a",
+  "conditions_unchanged_from_pre_data_freeze": true,
+  "result_image": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/character-hair-integration-20261008/arm_c/generated_images/planetarium-disc-initial-20261008/image.png",
+  "result_sha256": "1174b844374a69887b127461627059c9e227696f5f5175749fa80ae68f58c846",
+  "native_dimensions": [
+    1024,
+    1536
+  ],
+  "review_scale": "native",
+  "same_single_saved_image_for_all_gates": true,
+  "actual_image_call_count": 1,
+  "gates": [
+    {
+      "gate_id": "C1_DARK_OUTER_PANEL",
+      "status": "PASS",
+      "evidence": "A contiguous deep brown outer cap covers the crown and upper side. Narrow warm-white reflection bands curve across that cap while the intervals remain dark brown, distinguishing local color from the highlights.",
+      "visible_region": "crown and upper outer side, approximately x 270-730 and y 55-330"
+    },
+    {
+      "gate_id": "C2_BRIGHT_INNER_PANEL",
+      "status": "PASS",
+      "evidence": "A broad pale gray-silver hair strip is revealed below the brown lift behind the near ear on screen right and descends to shoulder-length ends. It remains a distinctly lighter hair panel under diffuse/shadowed light rather than only a thin specular stripe.",
+      "visible_region": "near ear and neck-side silver strip, approximately x 610-748 and y 328-630"
+    },
+    {
+      "gate_id": "C3_LAYER_OVERLAP",
+      "status": "PASS",
+      "evidence": "The dark outer hair is swept backward by the raised hand and visibly crosses above the pale inner roots at the near ear. The silver panel emerges underneath and continues down the same head/neck-side hairstyle, rather than forming a left/right top-level split or a separate ribbon.",
+      "visible_region": "lifted brown edge and silver origin near ear, approximately x 625-725 and y 260-430"
+    },
+    {
+      "gate_id": "C4_DRY_CROWN_SHEEN",
+      "status": "PASS",
+      "evidence": "The crown has smooth fine separated brown fibers, controlled narrow curved highlights and visible small flyaways. It retains a combed dry-looking cap distinct from the much more grouped lower lengths, with no wet-clump appearance at the crown.",
+      "visible_region": "top/crown texture, approximately x 330-645 and y 68-238"
+    },
+    {
+      "gate_id": "C5_DAMP_TIP_WATER",
+      "status": "FAIL",
+      "evidence": "The lower brown and silver lengths form wet-looking grouped strands with scattered bright bead-like droplets, but the grouped damp appearance extends upward through the ear/neck-side lower lengths. The image does not confine that state to the lowest few centimeters of both color layers. The original narrow moisture boundary is therefore not realized. Individual water-bead legibility on every required color end is also weaker than the outer/inner color relation.",
+      "visible_region": "lower side hair from ear/neck region through ends, approximately x 300-757 and y 390-710",
+      "failure_type": "visual moisture-boundary distribution; not a diagnosed body-geometry defect",
+      "measurement_limit": "No centimeter ruler is present; the visible grouped region is judged relative to the much longer hair span rather than as a real-world measured length."
+    }
+  ],
+  "pass_count": 4,
+  "gate_count": 5,
+  "all_of_status": "FAIL",
+  "source_adopted_underlights_pixel_status": "PASS",
+  "body_geometry_failure_observed": false,
+  "retry_performed": false,
+  "retry_reason": "No confirmed body-geometry failure; do not generate another image to hide the moisture-boundary fidelity failure.",
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  },
+  "peer_review_record": "peer_review_root.json"
+}

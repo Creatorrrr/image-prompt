@@ -1,0 +1,134 @@
+setUpClass (test_photo_appearance_boundary_history.AppearanceBoundaryHistoryTests) ... ERROR
+test_all_six_archived_payloads_reject_bytes_mode_symlink_and_missing_file (test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_all_six_archived_payloads_reject_bytes_mode_symlink_and_missing_file) ... FAIL
+test_historical_drift_cannot_use_an_untampered_live_successor (test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_historical_drift_cannot_use_an_untampered_live_successor) ... FAIL
+test_live_drift_cannot_use_the_sealed_successor_recovery (test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_live_drift_cannot_use_the_sealed_successor_recovery) ... FAIL
+test_recovery_requires_both_immutable_transition_manifests_and_proofs (test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_recovery_requires_both_immutable_transition_manifests_and_proofs) ... FAIL
+test_sealed_v28_recovery_preserves_exact_v27_and_v26_payloads (test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_sealed_v28_recovery_preserves_exact_v27_and_v26_payloads) ... FAIL
+test_v27_index_rollback_cannot_bypass_v28_live_source_binding (test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_v27_index_rollback_cannot_bypass_v28_live_source_binding) ... FAIL
+test_v27_materialization_rejects_missing_or_rehashed_manifest_before_writing (test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_v27_materialization_rejects_missing_or_rehashed_manifest_before_writing) ... FAIL
+
+======================================================================
+ERROR: setUpClass (test_photo_appearance_boundary_history.AppearanceBoundaryHistoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/test_photo_appearance_boundary_history.py", line 18, in setUpClass
+    cls.validator=fixtures.archived_v27_validator(cls.source_root)
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_prompt_fixtures.py", line 1656, in archived_v27_validator
+    manifest = materialize_v27_parent_source(directory, source_root=source_root)
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_prompt_fixtures.py", line 1639, in materialize_v27_parent_source
+    _v24_verified_payload(source_root, row)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_prompt_fixtures.py", line 856, in _v24_verified_payload
+    raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/SKILL.md
+
+======================================================================
+FAIL: test_all_six_archived_payloads_reject_bytes_mode_symlink_and_missing_file (test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_all_six_archived_payloads_reject_bytes_mode_symlink_and_missing_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/test_photo_appearance_boundary_history.py", line 132, in setUp
+    source = (fixtures.v29_source_path(str(name))
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_prompt_fixtures.py", line 1759, in v29_source_path
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json
+
+======================================================================
+FAIL: test_historical_drift_cannot_use_an_untampered_live_successor (test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_historical_drift_cannot_use_an_untampered_live_successor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/test_photo_appearance_boundary_history.py", line 132, in setUp
+    source = (fixtures.v29_source_path(str(name))
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_prompt_fixtures.py", line 1759, in v29_source_path
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json
+
+======================================================================
+FAIL: test_live_drift_cannot_use_the_sealed_successor_recovery (test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_live_drift_cannot_use_the_sealed_successor_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/test_photo_appearance_boundary_history.py", line 132, in setUp
+    source = (fixtures.v29_source_path(str(name))
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_prompt_fixtures.py", line 1759, in v29_source_path
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json
+
+======================================================================
+FAIL: test_recovery_requires_both_immutable_transition_manifests_and_proofs (test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_recovery_requires_both_immutable_transition_manifests_and_proofs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/test_photo_appearance_boundary_history.py", line 132, in setUp
+    source = (fixtures.v29_source_path(str(name))
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_prompt_fixtures.py", line 1759, in v29_source_path
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json
+
+======================================================================
+FAIL: test_sealed_v28_recovery_preserves_exact_v27_and_v26_payloads (test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_sealed_v28_recovery_preserves_exact_v27_and_v26_payloads)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/test_photo_appearance_boundary_history.py", line 132, in setUp
+    source = (fixtures.v29_source_path(str(name))
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_prompt_fixtures.py", line 1759, in v29_source_path
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json
+
+======================================================================
+FAIL: test_v27_index_rollback_cannot_bypass_v28_live_source_binding (test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_v27_index_rollback_cannot_bypass_v28_live_source_binding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/test_photo_appearance_boundary_history.py", line 132, in setUp
+    source = (fixtures.v29_source_path(str(name))
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_prompt_fixtures.py", line 1759, in v29_source_path
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json
+
+======================================================================
+FAIL: test_v27_materialization_rejects_missing_or_rehashed_manifest_before_writing (test_photo_appearance_boundary_history.AppearanceFixtureRecoveryTests.test_v27_materialization_rejects_missing_or_rehashed_manifest_before_writing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/test_photo_appearance_boundary_history.py", line 132, in setUp
+    source = (fixtures.v29_source_path(str(name))
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_prompt_fixtures.py", line 1759, in v29_source_path
+    current = (_v34_scope_support(source_root).previous_path(source_root, name)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json
+
+----------------------------------------------------------------------
+Ran 7 tests in 2.483s
+
+FAILED (failures=7, errors=1)

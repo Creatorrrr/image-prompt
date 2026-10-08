@@ -1,0 +1,51 @@
+{
+  "schema_version": "independent-hair-structure-test/v1",
+  "provenance": "agent_precore_test_proposal",
+  "source_request_owner": "requesting_user raw bytes are in coordinator envelope; every detailed condition here is agent authored",
+  "arm": "B",
+  "seed": 3927461530,
+  "topic_lane": "gathering, braiding and ornament attachment",
+  "conditions": [
+    {
+      "id": "B1_single_gather",
+      "visible_condition": "One gathered hair root sits behind the subject's right ear, with smooth scalp strands converging into it and one free loose tail falling over the right shoulder to the upper chest.",
+      "pass_evidence": "The root, converging strands and contiguous single tail are visible in the same image.",
+      "confusion_or_fail": "A loose haircut; a bun; two separate ponytails; a detached tail; a hidden gather."
+    },
+    {
+      "id": "B2_three_strand_braid",
+      "visible_condition": "A narrow three-strand scalp braid extends from the right temple above the right ear; at least three alternating interwoven crossings are visually readable.",
+      "pass_evidence": "Repeated strand over-under crossings, not merely waves or two-strand twisting, are resolved at native pixels.",
+      "confusion_or_fail": "A rolled rope, single twisted lock, waved ribbon, or vague ridged texture without readable three-strand crossings."
+    },
+    {
+      "id": "B3_braid_feeds_root",
+      "visible_condition": "The temple braid terminates in the same gathered root as the ponytail, with a visible continuous join rather than a second dangling end.",
+      "pass_evidence": "The end-to-root path can be followed without guessing a hidden connector.",
+      "confusion_or_fail": "A braid passing behind the head; a loose braid beside the ponytail; a detached braid or an unobservable join."
+    },
+    {
+      "id": "B4_ribbon_attachment",
+      "visible_condition": "A deep cobalt cloth ribbon wraps the gathered root and forms a compact knot, two bow loops and two short free ends.",
+      "pass_evidence": "The ribbon visibly encircles that hair root and its bow grows from the knot.",
+      "confusion_or_fail": "A headband; floating decorative bow; blue hair; ribbon merely lying beside the tail; loops merging into hair."
+    },
+    {
+      "id": "B5_ornament_contact",
+      "visible_condition": "A small polished silver crescent barrette is clipped into hair immediately above the wrapped root, with its solid edge touching strands and a narrow contact shadow.",
+      "pass_evidence": "A separate rigid metal crescent attaches to the hair at the described site; attachment is visible.",
+      "confusion_or_fail": "An earring; halo; crescent painted on hair; floating ornament; ornament worn only on ribbon ends; hidden contact."
+    }
+  ],
+  "aggregation": "ALL_OF: all five must PASS. Any FAIL means FAIL. Any UNOBSERVABLE_NOT_PASS is not a pass. A visible positive cue cannot compensate for a hidden or failed relationship.",
+  "camera_visibility": {
+    "direction": "front-right three-quarter, 35 degrees to subject right",
+    "height": "slightly above the eyes, 10 degrees downward",
+    "crop": "whole head through below the waist, head top retained, root and tail unobstructed",
+    "focus": "face, right temple braid, gathering root and ornament all resolved; hands remain below the hair",
+    "limitations": "Only one side is judged. No rear-side structure, actual reference identity or body similarity claim is part of this test."
+  },
+  "negative_confusion_cases_are_test_documentation_only": true,
+  "candidate_data_seen_before_design": false,
+  "other_arms_seen_before_design": false
+}

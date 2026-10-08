@@ -1,0 +1,84 @@
+test_actual_core_normalization_keeps_review_inputs_but_retrieval_abstains (test_photo_camera_clause_polarity.CameraClausePolarityTests.test_actual_core_normalization_keeps_review_inputs_but_retrieval_abstains) ... ok
+test_compatible_diagonal_and_repeated_predicates_preserve_complete_literal_clause (test_photo_camera_clause_polarity.CameraClausePolarityTests.test_compatible_diagonal_and_repeated_predicates_preserve_complete_literal_clause) ... ok
+test_foreign_subject_or_target_orientation_does_not_contradict_the_capture (test_photo_camera_clause_polarity.CameraClausePolarityTests.test_foreign_subject_or_target_orientation_does_not_contradict_the_capture) ... ok
+test_local_uncertainty_and_negative_continuations_cannot_leave_positive_prefixes (test_photo_camera_clause_polarity.CameraClausePolarityTests.test_local_uncertainty_and_negative_continuations_cannot_leave_positive_prefixes) ... ok
+test_same_capture_conflicting_coordinations_keep_the_tail_until_abstention (test_photo_camera_clause_polarity.CameraClausePolarityTests.test_same_capture_conflicting_coordinations_keep_the_tail_until_abstention) ... ok
+test_suffix_negation_cannot_be_projected_as_positive_direction (test_photo_camera_clause_polarity.CameraClausePolarityTests.test_suffix_negation_cannot_be_projected_as_positive_direction) ... ok
+test_two_camera_legacy_abstains_but_explicit_structured_capture_owner_remains (test_photo_camera_clause_polarity.CameraClausePolarityTests.test_two_camera_legacy_abstains_but_explicit_structured_capture_owner_remains) ... ok
+test_unselected_direction_choices_or_temporal_sequence_are_not_one_capture (test_photo_camera_clause_polarity.CameraClausePolarityTests.test_unselected_direction_choices_or_temporal_sequence_are_not_one_capture) ... ok
+test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract (test_photo_camera_clause_polarity.CameraClausePublicLegacyTests.test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract) ... 
+  test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract (test_photo_camera_clause_polarity.CameraClausePublicLegacyTests.test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract) (clause='The camera points upward under no circumstances.') ... ERROR
+  test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract (test_photo_camera_clause_polarity.CameraClausePublicLegacyTests.test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract) (clause='The camera looks upward and downward.') ... ERROR
+  test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract (test_photo_camera_clause_polarity.CameraClausePublicLegacyTests.test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract) (clause='The camera points horizontally forward and backward.') ... ERROR
+  test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract (test_photo_camera_clause_polarity.CameraClausePublicLegacyTests.test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract) (clause='The camera points upward left or downward right.') ... ERROR
+  test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract (test_photo_camera_clause_polarity.CameraClausePublicLegacyTests.test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract) (clause='The camera looks upward toward the blanket.') ... ERROR
+
+======================================================================
+ERROR: test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract (test_photo_camera_clause_polarity.CameraClausePublicLegacyTests.test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract) (clause='The camera points upward under no circumstances.')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/test_photo_camera_clause_polarity.py", line 161, in test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract
+    self.assertEqual(cli.main(argv + ['--seed', '829', '--output-file', str(output)]), 0)
+                     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py", line 51, in main
+    snapshot = provider.acquire()
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/skills/photo-prompt-image-generator/scripts/photo_runtime_sources.py", line 384, in acquire
+    raise FreshnessError("source_revision_pending", "current source has no completed validated publication; finish maintenance and publish")
+photo_runtime_sources.FreshnessError: source_revision_pending: current source has no completed validated publication; finish maintenance and publish
+
+======================================================================
+ERROR: test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract (test_photo_camera_clause_polarity.CameraClausePublicLegacyTests.test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract) (clause='The camera looks upward and downward.')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/test_photo_camera_clause_polarity.py", line 161, in test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract
+    self.assertEqual(cli.main(argv + ['--seed', '829', '--output-file', str(output)]), 0)
+                     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py", line 51, in main
+    snapshot = provider.acquire()
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/skills/photo-prompt-image-generator/scripts/photo_runtime_sources.py", line 384, in acquire
+    raise FreshnessError("source_revision_pending", "current source has no completed validated publication; finish maintenance and publish")
+photo_runtime_sources.FreshnessError: source_revision_pending: current source has no completed validated publication; finish maintenance and publish
+
+======================================================================
+ERROR: test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract (test_photo_camera_clause_polarity.CameraClausePublicLegacyTests.test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract) (clause='The camera points horizontally forward and backward.')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/test_photo_camera_clause_polarity.py", line 161, in test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract
+    self.assertEqual(cli.main(argv + ['--seed', '829', '--output-file', str(output)]), 0)
+                     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py", line 51, in main
+    snapshot = provider.acquire()
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/skills/photo-prompt-image-generator/scripts/photo_runtime_sources.py", line 384, in acquire
+    raise FreshnessError("source_revision_pending", "current source has no completed validated publication; finish maintenance and publish")
+photo_runtime_sources.FreshnessError: source_revision_pending: current source has no completed validated publication; finish maintenance and publish
+
+======================================================================
+ERROR: test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract (test_photo_camera_clause_polarity.CameraClausePublicLegacyTests.test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract) (clause='The camera points upward left or downward right.')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/test_photo_camera_clause_polarity.py", line 161, in test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract
+    self.assertEqual(cli.main(argv + ['--seed', '829', '--output-file', str(output)]), 0)
+                     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py", line 51, in main
+    snapshot = provider.acquire()
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/skills/photo-prompt-image-generator/scripts/photo_runtime_sources.py", line 384, in acquire
+    raise FreshnessError("source_revision_pending", "current source has no completed validated publication; finish maintenance and publish")
+photo_runtime_sources.FreshnessError: source_revision_pending: current source has no completed validated publication; finish maintenance and publish
+
+======================================================================
+ERROR: test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract (test_photo_camera_clause_polarity.CameraClausePublicLegacyTests.test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract) (clause='The camera looks upward toward the blanket.')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/tests/test_photo_camera_clause_polarity.py", line 161, in test_legacy_public_cli_preserves_complete_inputs_and_optional_order_contract
+    self.assertEqual(cli.main(argv + ['--seed', '829', '--output-file', str(output)]), 0)
+                     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py", line 51, in main
+    snapshot = provider.acquire()
+  File "/Users/chasoik/.codex/worktrees/character-hair-integration/image-prompt/skills/photo-prompt-image-generator/scripts/photo_runtime_sources.py", line 384, in acquire
+    raise FreshnessError("source_revision_pending", "current source has no completed validated publication; finish maintenance and publish")
+photo_runtime_sources.FreshnessError: source_revision_pending: current source has no completed validated publication; finish maintenance and publish
+
+----------------------------------------------------------------------
+Ran 9 tests in 19.555s
+
+FAILED (errors=5)

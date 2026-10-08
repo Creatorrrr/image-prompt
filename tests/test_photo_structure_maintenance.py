@@ -126,6 +126,18 @@ class PhotoSourceManifestTests(unittest.TestCase):
         original["candidate"].append("photo_prompt_visual_grammar_extension.json")
         original["visual_profile"].append("photo_prompt_visual_obligations_visual_grammar.json")
         original["required_candidates"].append("photo_prompt_visual_grammar_extension.json")
+        # Preserve the sealed baseline while checking the exact append order
+        # of later authored registrations already published on main.
+        for candidate, visual in [
+            ("photo_prompt_vel_appearance_relations_extension.json", "photo_prompt_visual_obligations_vel_appearance_relations.json"),
+            ("photo_prompt_fire_relations_extension.json", "photo_prompt_visual_obligations_fire_relations.json"),
+            ("photo_prompt_soil_earth_extension.json", "photo_prompt_visual_obligations_soil_earth.json"),
+            ("photo_prompt_electrical_relations_extension.json", "photo_prompt_visual_obligations_electrical_relations.json"),
+            ("photo_prompt_character_hair_extension.json", "photo_prompt_visual_obligations_character_hair.json"),
+        ]:
+            original["candidate"].append(candidate)
+            original["visual_profile"].append(visual)
+            original["required_candidates"].append(candidate)
         self.assertEqual(list(sources.extension_files("candidate")), original["candidate"])
         self.assertEqual(list(sources.extension_files("visual_profile")), original["visual_profile"])
         self.assertEqual(sources.required_files("candidate"), original["required_candidates"])

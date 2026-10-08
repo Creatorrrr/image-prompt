@@ -1,0 +1,257 @@
+{
+  "contract_version": "character-hair-independent-test-registry/v1",
+  "scope": "Tests frozen before updated candidate access and before native image generation.",
+  "arms": [
+    {
+      "arm": "arm_a",
+      "test_path": "skills/photo-prompt-image-generator/data/runs/character-hair-integration-20261008/arm_a/neutral_test_design.agent.json",
+      "test_sha256": "cb74e2621d3d8f6c1dc35982fd020830c7d3e2be3dfde99c2afd8b036a94d148",
+      "test": {
+        "provenance": "independent_agent_proposal",
+        "arm": "A",
+        "test_lane": "haircut, fringe, zone-specific length structure",
+        "seed": "14986281802291613258",
+        "seed_method": "secrets.randbits(64), random.Random(seed); no project candidate access",
+        "random_draw": {
+          "place": "last ferry optical repair room",
+          "activity": "aligning a damaged transparency beneath a manual projector"
+        },
+        "concept": "Last-ferry optical technician pauses while aligning a damaged navigation transparency beneath a manual projector; salt streaks on the porthole and a repaired tear on the illuminated slide tie weather delay, work and present response into one frame.",
+        "reference_scope": "Visible facial appearance cues only: dark round-oval eyes, fine brows, softly tapered face, small nose, gently full lips. Hair is explicitly redesigned by the agent. No actual identity, age, biography, personality or body similarity is inferred.",
+        "alternatives_compared": [
+          {
+            "concept": "neutral salon haircut study",
+            "decision": "declined",
+            "reason": "Clear geometry but loses the requester-authorized complex lived situation."
+          },
+          {
+            "concept": "windy ferry deck repair",
+            "decision": "declined",
+            "reason": "Wind would displace edges and hide the cut geometry needed for an interpretable test."
+          },
+          {
+            "concept": "sheltered ferry optical room",
+            "decision": "selected",
+            "reason": "An occupied work moment with a porthole, manual projector and repaired slide stays connected while still hair and controlled light make length zones readable."
+          }
+        ],
+        "visible_conditions": [
+          {
+            "id": "A1",
+            "condition": "Short dense blunt micro-fringe forms a continuous horizontal edge on the upper forehead, leaving a visible band of forehead above both eyebrows.",
+            "confusions": [
+              "long eyebrow-touching fringe",
+              "translucent see-through fringe",
+              "center-parted curtain fringe"
+            ]
+          },
+          {
+            "id": "A2",
+            "condition": "A smooth upper bob shell ends in a blunt edge at the jaw on both visible sides.",
+            "confusions": [
+              "whole hairstyle a single long length",
+              "gradual layered taper",
+              "merely tucked long hair posing as a bob"
+            ]
+          },
+          {
+            "id": "A3",
+            "condition": "Two loose lower hair panels emerge from beneath the short upper shell and extend clearly below the clavicles to the upper chest.",
+            "confusions": [
+              "tied twin tails",
+              "braids",
+              "detached extensions floating away from the head",
+              "hair ending at the shoulders"
+            ]
+          },
+          {
+            "id": "A4",
+            "condition": "The upper jaw-length edge and the much longer lower panels show a crisp, large length discontinuity, with both levels visible together on the same head.",
+            "confusions": [
+              "ordinary long hair with a few short face-framing strands",
+              "soft continuous layer gradient",
+              "two people owning separate hair zones"
+            ]
+          },
+          {
+            "id": "A5",
+            "condition": "Full fringe, both jaw-level edges, shoulder landmarks and lower-panel ends are in the same sharp native frame and unobscured by hands, hats, window edges or props.",
+            "confusions": [
+              "off-frame lower tips",
+              "neckline or apron merges with hair",
+              "motion blur",
+              "one zone hidden behind the face"
+            ]
+          }
+        ],
+        "camera_visibility": {
+          "view": "near-front three-quarter head-and-mid-torso view, head yaw about 15 degrees, viewer at face height",
+          "crop": "complete crown with modest headroom through mid torso; both clavicles and long-panel endpoints included",
+          "lighting": "soft porthole side light with quiet fill; warm lower projector lamp remains subordinate",
+          "contrast": "ochre apron behind dark lower panels; quiet pale wall behind upper bob; controlled shiny strands",
+          "body_action": "both hands work on a waist-height slide tray below all hair endpoints; the head lifts to meet the viewer while the shoulders remain oriented to the bench"
+        },
+        "pixel_rule": "all-of A1 through A5; PASS only when every condition is visible and satisfied; FAIL for a visible contradiction; UNOBSERVABLE_NOT_PASS for hidden or ambiguous evidence",
+        "independence_boundary": "Only current task, supplied reference, current SKILL.md and exact neutral precore inputs used. No old research, other arm, source dictionaries, profile, semantic index, tests, candidate pack or earlier prompt was accessed before freeze."
+      }
+    },
+    {
+      "arm": "arm_b",
+      "test_path": "skills/photo-prompt-image-generator/data/runs/character-hair-integration-20261008/arm_b/neutral_test_design.json",
+      "test_sha256": "8785caa85e577b86d03f70423d6f768c7ba21cf197a9b8ffedae618bc56fb728",
+      "test": {
+        "schema_version": "independent-hair-structure-test/v1",
+        "provenance": "agent_precore_test_proposal",
+        "source_request_owner": "requesting_user raw bytes are in coordinator envelope; every detailed condition here is agent authored",
+        "arm": "B",
+        "seed": 3927461530,
+        "topic_lane": "gathering, braiding and ornament attachment",
+        "conditions": [
+          {
+            "id": "B1_single_gather",
+            "visible_condition": "One gathered hair root sits behind the subject's right ear, with smooth scalp strands converging into it and one free loose tail falling over the right shoulder to the upper chest.",
+            "pass_evidence": "The root, converging strands and contiguous single tail are visible in the same image.",
+            "confusion_or_fail": "A loose haircut; a bun; two separate ponytails; a detached tail; a hidden gather."
+          },
+          {
+            "id": "B2_three_strand_braid",
+            "visible_condition": "A narrow three-strand scalp braid extends from the right temple above the right ear; at least three alternating interwoven crossings are visually readable.",
+            "pass_evidence": "Repeated strand over-under crossings, not merely waves or two-strand twisting, are resolved at native pixels.",
+            "confusion_or_fail": "A rolled rope, single twisted lock, waved ribbon, or vague ridged texture without readable three-strand crossings."
+          },
+          {
+            "id": "B3_braid_feeds_root",
+            "visible_condition": "The temple braid terminates in the same gathered root as the ponytail, with a visible continuous join rather than a second dangling end.",
+            "pass_evidence": "The end-to-root path can be followed without guessing a hidden connector.",
+            "confusion_or_fail": "A braid passing behind the head; a loose braid beside the ponytail; a detached braid or an unobservable join."
+          },
+          {
+            "id": "B4_ribbon_attachment",
+            "visible_condition": "A deep cobalt cloth ribbon wraps the gathered root and forms a compact knot, two bow loops and two short free ends.",
+            "pass_evidence": "The ribbon visibly encircles that hair root and its bow grows from the knot.",
+            "confusion_or_fail": "A headband; floating decorative bow; blue hair; ribbon merely lying beside the tail; loops merging into hair."
+          },
+          {
+            "id": "B5_ornament_contact",
+            "visible_condition": "A small polished silver crescent barrette is clipped into hair immediately above the wrapped root, with its solid edge touching strands and a narrow contact shadow.",
+            "pass_evidence": "A separate rigid metal crescent attaches to the hair at the described site; attachment is visible.",
+            "confusion_or_fail": "An earring; halo; crescent painted on hair; floating ornament; ornament worn only on ribbon ends; hidden contact."
+          }
+        ],
+        "aggregation": "ALL_OF: all five must PASS. Any FAIL means FAIL. Any UNOBSERVABLE_NOT_PASS is not a pass. A visible positive cue cannot compensate for a hidden or failed relationship.",
+        "camera_visibility": {
+          "direction": "front-right three-quarter, 35 degrees to subject right",
+          "height": "slightly above the eyes, 10 degrees downward",
+          "crop": "whole head through below the waist, head top retained, root and tail unobstructed",
+          "focus": "face, right temple braid, gathering root and ornament all resolved; hands remain below the hair",
+          "limitations": "Only one side is judged. No rear-side structure, actual reference identity or body similarity claim is part of this test."
+        },
+        "negative_confusion_cases_are_test_documentation_only": true,
+        "candidate_data_seen_before_design": false,
+        "other_arms_seen_before_design": false
+      }
+    },
+    {
+      "arm": "arm_c",
+      "test_path": "skills/photo-prompt-image-generator/data/runs/character-hair-integration-20261008/arm_c/neutral_test_design.json",
+      "test_sha256": "73f5ebdf283dd80e7d356edc47b2846817f5f7154931d560a031a12565ab2a8a",
+      "test": {
+        "schema_version": "agent-neutral-hair-test/v1",
+        "provenance": "agent_proposal",
+        "arm": "c",
+        "lane": "color placement, outer/inner layer, diffuse brightness, surface finish versus moisture",
+        "independent_seed": 2795109987673587965,
+        "concept_key": "planetarium_disc_restoration",
+        "request_envelope_sha256": "db13bd7a21dc13e5ae26328d23a3facb92a95202bf62aebc61bc6ef62b291a76",
+        "request_text_is_exact_user_message": true,
+        "request_text_contains_agent_proposal": false,
+        "reference_scope": "Only visible facial impression; no identity, age, actual personality or body similarity claim. Hair is explicitly redesigned.",
+        "primary_visual_conditions": [
+          {
+            "gate_id": "C1_DARK_OUTER_PANEL",
+            "condition": "Deep coffee-brown outer hair covers the crown and upper side, retaining dark local color between narrow reflections.",
+            "status_rule": "PASS only when a contiguous outer dark panel can be identified at native pixels.",
+            "confusion_cases": [
+              "a shadow over uniformly pale hair",
+              "a mostly silver crown",
+              "colored light that supplies the darkness"
+            ]
+          },
+          {
+            "gate_id": "C2_BRIGHT_INNER_PANEL",
+            "condition": "A broad pale neutral-silver inner panel grows below the lifted outer panel near the left ear/nape and continues to shoulder-length ends.",
+            "status_rule": "PASS only when the brighter hair is a distinct broad inner layer, not isolated highlights.",
+            "confusion_cases": [
+              "silver specular highlights on brown strands",
+              "left/right split dye",
+              "random silver streaks on top",
+              "bright background seen between strands"
+            ]
+          },
+          {
+            "gate_id": "C3_LAYER_OVERLAP",
+            "condition": "The lifted dark edge visibly overlaps the silver inner panel at the near ear/nape and leaves the silver panel readable underneath.",
+            "status_rule": "PASS only when top-over-inner placement is visible in a single connected region.",
+            "confusion_cases": [
+              "separate wig or clip-in ribbon",
+              "front money piece",
+              "root-to-tip ombre",
+              "panel hidden by hand or collar"
+            ]
+          },
+          {
+            "gate_id": "C4_DRY_CROWN_SHEEN",
+            "condition": "The crown is dry and smoothly combed with fine separated strands and controlled satin gloss.",
+            "status_rule": "PASS only when dry separated strands and a narrow reflection are both supported; sheen alone does not prove dry.",
+            "confusion_cases": [
+              "wet clumped crown",
+              "plastic helmet surface",
+              "matte dark hair with no readable finish",
+              "global exposure clipping"
+            ]
+          },
+          {
+            "gate_id": "C5_DAMP_TIP_WATER",
+            "condition": "Only the lower few centimeters of both colored layers form small irregular damp strand groups with distinct water beads on several ends, while the crown remains dry.",
+            "status_rule": "PASS only when actual bead shapes and tip clumping can be read on hair; mere shine is insufficient.",
+            "confusion_cases": [
+              "dry textured tips",
+              "wet-look styling with no water evidence",
+              "raindrops only on the window or coat",
+              "whole head damp",
+              "water jewelry or bead decoration"
+            ]
+          }
+        ],
+        "camera_visibility": {
+          "direction": "left-front three-quarter",
+          "height": "eye height",
+          "crop": "entire crown through lower bench edge, vertical medium close-up",
+          "required_regions": [
+            "crown",
+            "left ear and nape opening",
+            "outer-over-inner overlap",
+            "shoulder-length tips of both colors",
+            "tiny water beads on several hair ends",
+            "connected forearms and supported disc"
+          ],
+          "lighting": "neutral-white broad key with natural local color",
+          "observability_rule": "Hidden, cropped, blurred, or ambiguously lit conditions are UNOBSERVABLE_NOT_PASS, never PASS."
+        },
+        "decision_rule": "All five hair gates must PASS on saved native pixels. The neutral pre-core test remains an agent proposal and does not create a requester profile obligation. Retrieval, exposure, adoption, prompt audit and pixel results are separate evidence stages.",
+        "creative_controls": {
+          "sensual": 1,
+          "fetish": 0,
+          "resolved_emphasis": "sensual_led",
+          "creativity": 1,
+          "surreal": 0,
+          "reference_edit_mode": "off",
+          "viewer_experience": false,
+          "trend_layer": "off",
+          "canonical_sha256": "429bc7742ea4b8f3a7444f4d3e1838e1f2938d720536aa834c4432282259487a"
+        },
+        "precore_access_statement": "Only exact SKILL.md, neutral precore files, coordinator user-envelope, and supplied portrait were read. No source integration, assets, scripts, references, prior prompts, or other arms were read."
+      }
+    }
+  ]
+}

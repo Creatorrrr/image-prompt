@@ -1,0 +1,24 @@
+{
+  "schema_version": "arm-local-preparation-diagnostics/v1",
+  "image_call_count": 1,
+  "provider_error": null,
+  "corrected_local_issues": [
+    {
+      "step": "copy helper",
+      "code": "ModuleNotFoundError: PIL",
+      "resolution": "Use standard-library PNG IHDR inspection and byte-identical shutil copy; no image regeneration."
+    },
+    {
+      "step": "manifest helper",
+      "code": "KeyError: ledger_args",
+      "resolution": "Use the actual same ledger row fields with recorder parse_args/build_independent_manifest; no ledger append or new invocation."
+    },
+    {
+      "step": "review binding",
+      "code": "review_result_not_bound_to_observed_attempt",
+      "resolution": "Bind official review to the observed original tool path. Workspace copy remains byte-identical with the same image SHA."
+    }
+  ],
+  "preserved_rejected_review": "visual_review.copy-path-first.json",
+  "native_display_mime_corrected_only": true
+}

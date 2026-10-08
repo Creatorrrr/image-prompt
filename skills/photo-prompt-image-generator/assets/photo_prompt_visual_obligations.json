@@ -17204,39 +17204,32 @@
       "category": "hair_color_placement",
       "activation": {
         "exact_terms": [
-          "balayage hair",
-          "brown balayage hair",
-          "balayage highlights",
-          "발레아쥬 헤어",
-          "발레아쥬"
+          "irregular lighter ribbon hair placement",
+          "selected balayage ribbon pattern",
+          "불규칙한 밝은 리본 헤어 배색"
         ],
         "requires_adult_character": false,
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "A distributed hair-color placement built from irregular freehand lighter ribbons through the mid-lengths and ends, retaining a darker base and soft root transitions rather than forming one full-width root-to-end gradient.",
+        "definition": "A selected distributed color pattern with irregular lighter ribbons, a darker base, soft root transitions and readable base continuity. Coloring method and any coexisting root-to-tip gradient are separate axes.",
         "paraphrase_examples": [
           "어두운 뿌리에서 부드럽게 이어지며 중간과 끝에 불규칙한 밝은 리본이 분산된 염색",
           "lighter ribbons appear at varied positions and widths across the hair surface",
           "the base color remains visible between ribbons instead of becoming one continuous ombre field"
         ],
         "contrast_examples": [
-          "one broad full-width root-to-end ombre gradient",
-          "regular evenly spaced foil highlights",
-          "a hard horizontal dip-dye boundary",
-          "uniformly lightened hair with no darker base continuity"
+          "a uniform gradient with no separately readable color ribbons",
+          "lighting reflections on otherwise uniform pigment"
         ]
       },
       "concept_candidate": {
         "concept_terms": [
-          "irregular freehand light ribbons",
-          "soft darker-root transition",
-          "varied mid-length placement",
-          "lighter ends",
+          "irregular lighter hair ribbons",
+          "soft root transition",
+          "varied mid-length and end placement",
           "visible base color between ribbons",
-          "distributed surface highlights",
-          "nonuniform ribbon widths",
-          "not full-width ombre"
+          "nonuniform ribbon widths"
         ]
       },
       "runtime_expression": {
@@ -17248,10 +17241,8 @@
         "runtime_forbidden_labels": []
       },
       "reject_substitutes": [
-        "full_width_ombre_gradient",
-        "hard_dip_dye_boundary",
-        "regular_foil_highlights",
-        "uniform_lightening",
+        "gradient_without_ribbon_structure",
+        "uniform_lightening_without_base_gaps",
         "lighting_specular_only"
       ],
       "authored_components": {
@@ -17292,9 +17283,8 @@
           {
             "id": "gradient_foil_confound_control",
             "match_terms": [
-              "a full-width ombre gradient and regular foil stripes do not substitute",
-              "dip-dye boundaries and uniform root-to-tip streaks cannot carry the placement",
-              "옴브레 딥다이 규칙적 포일 줄무늬와 구분됨"
+              "the irregular colored ribbons remain separately readable along the strands",
+              "각 색 리본과 바탕의 구분되는 영역"
             ]
           }
         ],
@@ -17363,13 +17353,13 @@
                 "requirement": {
                   "min_content_words": 9,
                   "must_mention_any": [
-                    "a full-width ombre gradient and regular foil stripes do not substitute",
-                    "dip-dye boundaries and uniform root-to-tip streaks cannot carry the placement"
+                    "the irregular colored ribbons remain separately readable along the strands",
+                    "base-colored gaps separate those same irregular lighter ribbons"
                   ]
                 }
               }
             ],
-            "instruction": "Use enough visible hair surface under neutral readable light to show irregular lighter ribbons, soft transitions from darker roots, varied mid-length and end placement, and darker base color between ribbons. A full-width ombre field, dip-dye line, regular foil stripes, or lighting highlights cannot substitute.",
+            "instruction": "Show irregular lighter ribbons, soft root transitions, varied mid-length and end placement, and base-colored gaps on the same visible hair. A coexisting root-to-tip gradient preserves the independently readable ribbons and gaps.",
             "render_gates": [
               {
                 "id": "vo_hair_balayage_irregular_ribbons",
@@ -17394,7 +17384,7 @@
               {
                 "id": "vo_hair_balayage_not_ombre_or_foil",
                 "review_scale": "native",
-                "description": "Ombre dip-dye regular foil stripes and lighting highlights do not substitute."
+                "description": "Colored ribbons and intervening base regions remain readable as hair color, including when a length gradient coexists; specular reflection alone cannot establish them."
               }
             ]
           }
@@ -17406,8 +17396,6 @@
       "category": "hair_finish_state",
       "activation": {
         "exact_terms": [
-          "wet-look hair",
-          "wet look hair",
           "rain-damp hair",
           "damp clumped hair",
           "젖은 헤어",
@@ -17424,8 +17412,7 @@
           "shine may support the state but clumping volume collapse and local adhesion establish it",
           "젖거나 축축한 머리가 마른 상태보다 부피가 줄고 가닥 묶음과 무게 방향 또는 국소 부착 및 수분 단서를 함께 보인다",
           "머리의 수분 흔적과 모여 붙은 가닥 및 눌린 부피가 중력 방향이나 접촉 지점과 일관된다",
-          "damp hair has reduced dry volume, moisture cues and bundled strands with coherent weight or local adherence",
-          "wet-looking hair is supported by compact strand clumps, lowered volume and consistent moisture and weight cues"
+          "damp hair has reduced dry volume, moisture cues and bundled strands with coherent weight or local adherence"
         ],
         "contrast_examples": [
           "dry glossy hair under a strong rim light",
@@ -17442,12 +17429,9 @@
           "localized face or neck adherence",
           "spatially coherent moisture",
           "supporting wet sheen",
-          "temporary finish state",
-          "not dry gloss alone",
           "젖거나 축축한 머리가 마른 상태보다 부피가 줄고 가닥 묶음과 무게 방향 또는 국소 부착 및 수분 단서를 함께 보인다",
           "머리의 수분 흔적과 모여 붙은 가닥 및 눌린 부피가 중력 방향이나 접촉 지점과 일관된다",
-          "damp hair has reduced dry volume, moisture cues and bundled strands with coherent weight or local adherence",
-          "wet-looking hair is supported by compact strand clumps, lowered volume and consistent moisture and weight cues"
+          "damp hair has reduced dry volume, moisture cues and bundled strands with coherent weight or local adherence"
         ]
       },
       "runtime_expression": {

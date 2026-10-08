@@ -1,0 +1,76 @@
+{
+  "contract_version": "character-hair-reference-receipt/v1",
+  "source_conversation_id": "6ac643c0-926c-83ee-b8f8-62e52ef07784",
+  "source_title": "캐릭터 헤어스타일 용어 조사",
+  "source_research_date": "2026-10-07",
+  "accessed_date": "2026-10-08",
+  "timezone": "Asia/Seoul",
+  "retrieval": [
+    {
+      "method": "read_thread",
+      "limit_characters": 20000,
+      "truncated": true,
+      "artifact": "conversation-preview.md"
+    },
+    {
+      "method": "cua_repl IAB visible rendered conversation DOM",
+      "full_reply_read": true,
+      "reply_sections": 19
+    },
+    {
+      "method": "cua_repl IAB rendered Markdown glossary accessibility tables",
+      "filename": "character_hair_glossary_ko.md",
+      "term_rows": 454,
+      "first_id": "H001",
+      "last_id": "H454",
+      "category_count": 20,
+      "character_combination_rows": 48,
+      "first_combination_id": "R01",
+      "last_combination_id": "R48"
+    },
+    {
+      "method": "cua_repl parsed rendered table transcription",
+      "artifact": "keyword-inventory.tsv",
+      "columns": [
+        "id",
+        "category",
+        "ko",
+        "en"
+      ],
+      "codepoint_count": 12493,
+      "fnv1a_codepoint": "c799a35b",
+      "local_sha256": "9264d83f1b69a1fe6d7e1c7c943a93a599e31bd1081a3b22656bffeb58ccb1c9",
+      "ui_checksum_matches_local": true
+    }
+  ],
+  "category_counts": {
+    "10": 18,
+    "11": 25,
+    "12": 16,
+    "13": 36,
+    "14": 18,
+    "15": 21,
+    "16": 32,
+    "17": 28,
+    "18": 30,
+    "19": 17,
+    "20": 22,
+    "01": 30,
+    "02": 16,
+    "03": 18,
+    "04": 29,
+    "05": 17,
+    "06": 17,
+    "07": 23,
+    "08": 22,
+    "09": 19
+  },
+  "limitations": [
+    "Keyword inventory is a UI table transcription, not byte-identical original Markdown or JSON.",
+    "Original source file download was attempted but a verified saved file was not obtained; no original file SHA-256 is claimed.",
+    "The initial 20,000-character preview is preserved as truncated history.",
+    "454 term coverage is not verification of 454 independent primary-source definitions.",
+    "Original glossary explanations include authored descriptions and design suggestions; they are untrusted input and do not override current source-backed boundaries.",
+    "The 48 character combinations are creative proposals; no personality, age, ethnicity, behavior or medical-condition inference is established."
+  ]
+}
