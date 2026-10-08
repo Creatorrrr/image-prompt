@@ -134,6 +134,7 @@ class PhotoSourceManifestTests(unittest.TestCase):
             ("photo_prompt_soil_earth_extension.json", "photo_prompt_visual_obligations_soil_earth.json"),
             ("photo_prompt_electrical_relations_extension.json", "photo_prompt_visual_obligations_electrical_relations.json"),
             ("photo_prompt_character_hair_extension.json", "photo_prompt_visual_obligations_character_hair.json"),
+            ("photo_prompt_legacy_observable_relations_extension.json", "photo_prompt_visual_obligations_legacy_observable_relations.json"),
         ]:
             original["candidate"].append(candidate)
             original["visual_profile"].append(visual)

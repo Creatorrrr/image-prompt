@@ -1,0 +1,781 @@
+{
+  "schema_version": "photo-prompt-research-extension/v1",
+  "slots": {
+    "action": [
+      {
+        "id": "lor_hand_shadow_receiver",
+        "ko": "기존 광원과 상대 눈 사이 손이 만드는 국소 그림자",
+        "en": "the declared hand lies between the existing lamp and the recipient eyes; a localized shadow from that hand falls across the recipient eye region; the lamp hand and shadowed recipient remain visibly connected in the same frame",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation",
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "기존 광원과 상대 눈 사이 손이 만드는 국소 그림자"
+        ],
+        "keywords": [
+          "기존 광원과 상대 눈 사이 손이 만드는 국소 그림자",
+          "hand shadow receiver relation"
+        ],
+        "paraphrases": [
+          "기존 광원과 상대의 눈 사이에 선언된 손이 놓인다; 그 손의 국소 그림자가 상대의 눈 주변에 드리운다; 광원과 손과 그림자를 받은 상대가 같은 프레임에서 연결된다",
+          "the declared hand lies between the existing lamp and the recipient eyes; a localized shadow from that hand falls across the recipient eye region; the lamp hand and shadowed recipient remain visibly connected in the same frame"
+        ],
+        "concept_units": [
+          "the declared hand lies between the existing lamp and the recipient eyes",
+          "a localized shadow from that hand falls across the recipient eye region",
+          "the lamp hand and shadowed recipient remain visibly connected in the same frame"
+        ],
+        "relations": [
+          {
+            "id": "lor_hand_shadow_receiver_r1",
+            "type": "intervenes_between",
+            "subject": "declared_hand",
+            "object": "lamp_to_recipient_ray"
+          },
+          {
+            "id": "lor_hand_shadow_receiver_r2",
+            "type": "casts_shadow_on",
+            "subject": "declared_hand",
+            "object": "recipient_eye_region"
+          }
+        ],
+        "affected_dimensions": [
+          "action",
+          "lighting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "action",
+            "target": "declared_helper",
+            "property": "body.hand_position"
+          },
+          {
+            "dimension": "lighting",
+            "target": "declared_recipient",
+            "property": "surface.shadow"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "lor_hand_shadow_receiver_boundary",
+              "definition": "Complete visible relation on the existing declared owners.",
+              "observable_interpretation": "the declared hand lies between the existing lamp and the recipient eyes; a localized shadow from that hand falls across the recipient eye region; the lamp hand and shadowed recipient remain visibly connected in the same frame",
+              "claim_limits": [
+                "Use only owners and objects already compatible with the frozen core; introduce no role, person, prop, age or event by a label.",
+                "Discovery is optional. Only explicit selection or a precise maintained relation label creates its declared evidence duties.",
+                "Partial or occluded evidence is not a pass. Visible arrangement does not establish an unseen motive or historical cause.",
+                "The visible shadow supports a shielding action, not moral goodness, supernatural protection, or a required helper identity."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "기존 광원과 상대 눈 사이 손이 만드는 국소 그림자; the declared hand lies between the existing lamp and the recipient eyes; a localized shadow from that hand falls across the recipient eye region; the lamp hand and shadowed recipient remain visibly connected in the same frame; 기존 광원과 상대의 눈 사이에 선언된 손이 놓인다; 그 손의 국소 그림자가 상대의 눈 주변에 드리운다; 광원과 손과 그림자를 받은 상대가 같은 프레임에서 연결된다"
+      }
+    ],
+    "contact_point": [
+      {
+        "id": "lor_cover_handoff",
+        "ko": "기존 덮개를 건네는 두 손과 이어지는 천의 지지",
+        "en": "the declared giver hand supports one edge of the existing cover fabric; the declared recipient hand receives a distinct edge of that same cover; one continuous visible fabric span joins both hand contacts during the handoff",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation",
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "기존 덮개를 건네는 두 손과 이어지는 천의 지지"
+        ],
+        "keywords": [
+          "기존 덮개를 건네는 두 손과 이어지는 천의 지지",
+          "cover handoff relation"
+        ],
+        "paraphrases": [
+          "건네는 손이 기존 덮개 천의 한쪽 가장자리를 받친다; 받는 손이 같은 덮개의 다른 가장자리를 받는다; 두 손의 접촉 사이에 같은 천의 연속 구간이 보인다",
+          "the declared giver hand supports one edge of the existing cover fabric; the declared recipient hand receives a distinct edge of that same cover; one continuous visible fabric span joins both hand contacts during the handoff"
+        ],
+        "concept_units": [
+          "the declared giver hand supports one edge of the existing cover fabric",
+          "the declared recipient hand receives a distinct edge of that same cover",
+          "one continuous visible fabric span joins both hand contacts during the handoff"
+        ],
+        "relations": [
+          {
+            "id": "lor_cover_handoff_r1",
+            "type": "supports",
+            "subject": "giver_hand",
+            "object": "cover_edge_one"
+          },
+          {
+            "id": "lor_cover_handoff_r2",
+            "type": "receives",
+            "subject": "recipient_hand",
+            "object": "cover_edge_two"
+          },
+          {
+            "id": "lor_cover_handoff_r3",
+            "type": "connects",
+            "subject": "continuous_cover",
+            "object": "both_hand_contacts"
+          }
+        ],
+        "affected_dimensions": [
+          "action"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "action",
+            "target": "declared_giver",
+            "property": "body.hand_object_contact"
+          },
+          {
+            "dimension": "action",
+            "target": "declared_recipient",
+            "property": "body.hand_object_contact"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "lor_cover_handoff_boundary",
+              "definition": "Complete visible relation on the existing declared owners.",
+              "observable_interpretation": "the declared giver hand supports one edge of the existing cover fabric; the declared recipient hand receives a distinct edge of that same cover; one continuous visible fabric span joins both hand contacts during the handoff",
+              "claim_limits": [
+                "Use only owners and objects already compatible with the frozen core; introduce no role, person, prop, age or event by a label.",
+                "Discovery is optional. Only explicit selection or a precise maintained relation label creates its declared evidence duties.",
+                "Partial or occluded evidence is not a pass. Visible arrangement does not establish an unseen motive or historical cause.",
+                "The contact and transfer do not infer vulnerability, illness, mercy, or the relationship status of either person."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "기존 덮개를 건네는 두 손과 이어지는 천의 지지; the declared giver hand supports one edge of the existing cover fabric; the declared recipient hand receives a distinct edge of that same cover; one continuous visible fabric span joins both hand contacts during the handoff; 건네는 손이 기존 덮개 천의 한쪽 가장자리를 받친다; 받는 손이 같은 덮개의 다른 가장자리를 받는다; 두 손의 접촉 사이에 같은 천의 연속 구간이 보인다"
+      },
+      {
+        "id": "lor_shared_document_reference",
+        "ko": "같은 문서 표시 지점을 가리키는 손과 상대의 시선",
+        "en": "the already declared document rests on a visible support shared by the participants; one declared fingertip points at an identifiable marked region on that document; the other declared participant gaze follows the same document region in the frame",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation",
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "같은 문서 표시 지점을 가리키는 손과 상대의 시선"
+        ],
+        "keywords": [
+          "같은 문서 표시 지점을 가리키는 손과 상대의 시선",
+          "shared document reference relation"
+        ],
+        "paraphrases": [
+          "기존 문서가 참여자들이 함께 보는 받침에 놓인다; 한 사람의 손끝이 그 문서의 식별 가능한 표시 영역을 가리킨다; 다른 사람의 시선이 같은 문서 영역을 향하는 것이 프레임에서 보인다",
+          "the already declared document rests on a visible support shared by the participants; one declared fingertip points at an identifiable marked region on that document; the other declared participant gaze follows the same document region in the frame"
+        ],
+        "concept_units": [
+          "the already declared document rests on a visible support shared by the participants",
+          "one declared fingertip points at an identifiable marked region on that document",
+          "the other declared participant gaze follows the same document region in the frame"
+        ],
+        "relations": [
+          {
+            "id": "lor_shared_document_reference_r1",
+            "type": "rests_on",
+            "subject": "declared_document",
+            "object": "shared_support"
+          },
+          {
+            "id": "lor_shared_document_reference_r2",
+            "type": "points_at",
+            "subject": "declared_fingertip",
+            "object": "marked_document_region"
+          },
+          {
+            "id": "lor_shared_document_reference_r3",
+            "type": "looks_toward",
+            "subject": "other_participant",
+            "object": "same_document_region"
+          }
+        ],
+        "affected_dimensions": [
+          "action",
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "action",
+            "target": "declared_pointer",
+            "property": "body.hand_document_contact"
+          },
+          {
+            "dimension": "expression",
+            "target": "other_participant",
+            "property": "gaze.target"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "lor_shared_document_reference_boundary",
+              "definition": "Complete visible relation on the existing declared owners.",
+              "observable_interpretation": "the already declared document rests on a visible support shared by the participants; one declared fingertip points at an identifiable marked region on that document; the other declared participant gaze follows the same document region in the frame",
+              "claim_limits": [
+                "Use only owners and objects already compatible with the frozen core; introduce no role, person, prop, age or event by a label.",
+                "Discovery is optional. Only explicit selection or a precise maintained relation label creates its declared evidence duties.",
+                "Partial or occluded evidence is not a pass. Visible arrangement does not establish an unseen motive or historical cause.",
+                "Do not infer legal testimony, truth, a profession, readable credentials, agreement or diagnosis. Preserve requester-owned text requirements."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "같은 문서 표시 지점을 가리키는 손과 상대의 시선; the already declared document rests on a visible support shared by the participants; one declared fingertip points at an identifiable marked region on that document; the other declared participant gaze follows the same document region in the frame; 기존 문서가 참여자들이 함께 보는 받침에 놓인다; 한 사람의 손끝이 그 문서의 식별 가능한 표시 영역을 가리킨다; 다른 사람의 시선이 같은 문서 영역을 향하는 것이 프레임에서 보인다"
+      },
+      {
+        "id": "lor_supported_precision_contact",
+        "ko": "받침 위 기존 부품과 정밀 도구 끝의 실제 접촉",
+        "en": "the already declared small component rests on a visible stable support; the declared hand visibly holds the already declared precision tool; that same tool tip meets one identifiable working point of the supported component",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation",
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "for_any": [
+          "human",
+          "object"
+        ],
+        "aliases": [
+          "받침 위 기존 부품과 정밀 도구 끝의 실제 접촉"
+        ],
+        "keywords": [
+          "받침 위 기존 부품과 정밀 도구 끝의 실제 접촉",
+          "supported precision contact relation"
+        ],
+        "paraphrases": [
+          "기존 작은 부품이 식별 가능한 안정된 받침 위에 놓인다; 선언된 손이 기존 정밀 도구를 실제로 쥔다; 그 도구 끝이 받쳐진 부품의 식별 가능한 작업 지점에 닿는다",
+          "the already declared small component rests on a visible stable support; the declared hand visibly holds the already declared precision tool; that same tool tip meets one identifiable working point of the supported component"
+        ],
+        "concept_units": [
+          "the already declared small component rests on a visible stable support",
+          "the declared hand visibly holds the already declared precision tool",
+          "that same tool tip meets one identifiable working point of the supported component"
+        ],
+        "relations": [
+          {
+            "id": "lor_supported_precision_contact_r1",
+            "type": "supported_by",
+            "subject": "declared_component",
+            "object": "stable_support"
+          },
+          {
+            "id": "lor_supported_precision_contact_r2",
+            "type": "holds",
+            "subject": "declared_hand",
+            "object": "declared_tool"
+          },
+          {
+            "id": "lor_supported_precision_contact_r3",
+            "type": "contacts",
+            "subject": "same_tool_tip",
+            "object": "component_working_point"
+          }
+        ],
+        "affected_dimensions": [
+          "action"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "action",
+            "target": "declared_actor",
+            "property": "body.hand_tool_contact"
+          },
+          {
+            "dimension": "action",
+            "target": "declared_component",
+            "property": "tool.working_contact"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "lor_supported_precision_contact_boundary",
+              "definition": "Complete visible relation on the existing declared owners.",
+              "observable_interpretation": "the already declared small component rests on a visible stable support; the declared hand visibly holds the already declared precision tool; that same tool tip meets one identifiable working point of the supported component",
+              "claim_limits": [
+                "Use only owners and objects already compatible with the frozen core; introduce no role, person, prop, age or event by a label.",
+                "Discovery is optional. Only explicit selection or a precise maintained relation label creates its declared evidence duties.",
+                "Partial or occluded evidence is not a pass. Visible arrangement does not establish an unseen motive or historical cause.",
+                "Visible contact does not prove successful repair, calibration, a profession or a specific procedure. Do not replace existing polishing, writing or tool types."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "받침 위 기존 부품과 정밀 도구 끝의 실제 접촉; the already declared small component rests on a visible stable support; the declared hand visibly holds the already declared precision tool; that same tool tip meets one identifiable working point of the supported component; 기존 작은 부품이 식별 가능한 안정된 받침 위에 놓인다; 선언된 손이 기존 정밀 도구를 실제로 쥔다; 그 도구 끝이 받쳐진 부품의 식별 가능한 작업 지점에 닿는다"
+      }
+    ],
+    "gaze_engagement": [
+      {
+        "id": "lor_observer_event_orientation",
+        "ko": "주변 인물의 시선과 몸 방향이 기존 사건 단서로 모임",
+        "en": "the declared observer gaze points toward the already declared focal event; the same observer visible body orientation also faces that event region; the observer and the focal event cue are both readable within one frame",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation",
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "주변 인물의 시선과 몸 방향이 기존 사건 단서로 모임"
+        ],
+        "keywords": [
+          "주변 인물의 시선과 몸 방향이 기존 사건 단서로 모임",
+          "observer event orientation relation"
+        ],
+        "paraphrases": [
+          "주변 인물의 시선이 이미 선언된 사건을 향한다; 같은 인물의 보이는 몸 방향도 그 사건 영역을 향한다; 시선을 주는 인물과 사건 단서가 같은 프레임에서 읽힌다",
+          "the declared observer gaze points toward the already declared focal event; the same observer visible body orientation also faces that event region; the observer and the focal event cue are both readable within one frame"
+        ],
+        "concept_units": [
+          "the declared observer gaze points toward the already declared focal event",
+          "the same observer visible body orientation also faces that event region",
+          "the observer and the focal event cue are both readable within one frame"
+        ],
+        "relations": [
+          {
+            "id": "lor_observer_event_orientation_r1",
+            "type": "looks_toward",
+            "subject": "declared_observer",
+            "object": "focal_event"
+          },
+          {
+            "id": "lor_observer_event_orientation_r2",
+            "type": "orients_toward",
+            "subject": "same_observer_body",
+            "object": "focal_event_region"
+          }
+        ],
+        "affected_dimensions": [
+          "expression",
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "declared_observer",
+            "property": "gaze.target"
+          },
+          {
+            "dimension": "pose",
+            "target": "declared_observer",
+            "property": "body.orientation"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "lor_observer_event_orientation_boundary",
+              "definition": "Complete visible relation on the existing declared owners.",
+              "observable_interpretation": "the declared observer gaze points toward the already declared focal event; the same observer visible body orientation also faces that event region; the observer and the focal event cue are both readable within one frame",
+              "claim_limits": [
+                "Use only owners and objects already compatible with the frozen core; introduce no role, person, prop, age or event by a label.",
+                "Discovery is optional. Only explicit selection or a precise maintained relation label creates its declared evidence duties.",
+                "Partial or occluded evidence is not a pass. Visible arrangement does not establish an unseen motive or historical cause.",
+                "Directed attention alone does not prove awe, agreement, empathy, or the event cause. No crowd or emotion is added by this candidate."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "주변 인물의 시선과 몸 방향이 기존 사건 단서로 모임; the declared observer gaze points toward the already declared focal event; the same observer visible body orientation also faces that event region; the observer and the focal event cue are both readable within one frame; 주변 인물의 시선이 이미 선언된 사건을 향한다; 같은 인물의 보이는 몸 방향도 그 사건 영역을 향한다; 시선을 주는 인물과 사건 단서가 같은 프레임에서 읽힌다"
+      }
+    ],
+    "narrative_phase": [
+      {
+        "id": "lor_received_item_material_trace",
+        "ko": "상대가 닿을 수 있는 물건과 분리된 열린 운반 흔적",
+        "en": "the already declared item rests on a visible support within the recipient reach; its already declared open carrier lies separately on the same receiving surface; the visible recipient item and carrier form one local arrangement without an invented giver",
+        "weight": 0.35,
+        "tags": [
+          "visual_relation",
+          "human"
+        ],
+        "kind": [
+          "human"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "상대가 닿을 수 있는 물건과 분리된 열린 운반 흔적"
+        ],
+        "keywords": [
+          "상대가 닿을 수 있는 물건과 분리된 열린 운반 흔적",
+          "received item material trace relation"
+        ],
+        "paraphrases": [
+          "기존 물건이 상대의 손이 닿는 범위의 받침에 놓인다; 이미 선언된 열린 운반물이 같은 받침에 분리되어 놓인다; 상대와 물건과 운반물이 건네는 인물을 추가하지 않고 한 국소 배치로 보인다",
+          "the already declared item rests on a visible support within the recipient reach; its already declared open carrier lies separately on the same receiving surface; the visible recipient item and carrier form one local arrangement without an invented giver"
+        ],
+        "concept_units": [
+          "the already declared item rests on a visible support within the recipient reach",
+          "its already declared open carrier lies separately on the same receiving surface",
+          "the visible recipient item and carrier form one local arrangement without an invented giver"
+        ],
+        "relations": [
+          {
+            "id": "lor_received_item_material_trace_r1",
+            "type": "rests_on",
+            "subject": "declared_received_item",
+            "object": "receiving_surface"
+          },
+          {
+            "id": "lor_received_item_material_trace_r2",
+            "type": "within_reach_of",
+            "subject": "declared_received_item",
+            "object": "declared_recipient"
+          },
+          {
+            "id": "lor_received_item_material_trace_r3",
+            "type": "separated_from",
+            "subject": "open_declared_carrier",
+            "object": "received_item"
+          }
+        ],
+        "affected_dimensions": [
+          "event",
+          "setting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "event",
+            "target": "declared_received_item",
+            "property": "support.current_state"
+          },
+          {
+            "dimension": "setting",
+            "target": "open_declared_carrier",
+            "property": "relative.position"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "lor_received_item_material_trace_boundary",
+              "definition": "Complete visible relation on the existing declared owners.",
+              "observable_interpretation": "the already declared item rests on a visible support within the recipient reach; its already declared open carrier lies separately on the same receiving surface; the visible recipient item and carrier form one local arrangement without an invented giver",
+              "claim_limits": [
+                "Use only owners and objects already compatible with the frozen core; introduce no role, person, prop, age or event by a label.",
+                "Discovery is optional. Only explicit selection or a precise maintained relation label creates its declared evidence duties.",
+                "Partial or occluded evidence is not a pass. Visible arrangement does not establish an unseen motive or historical cause.",
+                "This is current material evidence only. It cannot establish a prior rescue, anonymous kindness, a crisis, healing, a miracle, or who placed the objects."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "embedding_text": "상대가 닿을 수 있는 물건과 분리된 열린 운반 흔적; the already declared item rests on a visible support within the recipient reach; its already declared open carrier lies separately on the same receiving surface; the visible recipient item and carrier form one local arrangement without an invented giver; 기존 물건이 상대의 손이 닿는 범위의 받침에 놓인다; 이미 선언된 열린 운반물이 같은 받침에 분리되어 놓인다; 상대와 물건과 운반물이 건네는 인물을 추가하지 않고 한 국소 배치로 보인다"
+      }
+    ]
+  },
+  "visual_semantics": [
+    {
+      "id": "lor_hand_shadow_receiver_bundle",
+      "primary_visual_proposition": "the declared hand lies between the existing lamp and the recipient eyes; a localized shadow from that hand falls across the recipient eye region; the lamp hand and shadowed recipient remain visibly connected in the same frame",
+      "hard_profile_ids": [
+        "lor_hand_shadow_receiver_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the declared hand lies between the existing lamp and the recipient eyes"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "a localized shadow from that hand falls across the recipient eye region"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "the lamp hand and shadowed recipient remain visibly connected in the same frame"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "lor_hand_shadow_receiver"
+      ],
+      "candidate_slots": {
+        "lor_hand_shadow_receiver": "action"
+      },
+      "confusion_boundaries": [
+        "a hand shading only its own eyes",
+        "a generic guardian label",
+        "two people beside a lamp without a hand-cast shadow"
+      ],
+      "source_keywords": [
+        "기존 광원과 상대 눈 사이 손이 만드는 국소 그림자"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "lor_cover_handoff_bundle",
+      "primary_visual_proposition": "the declared giver hand supports one edge of the existing cover fabric; the declared recipient hand receives a distinct edge of that same cover; one continuous visible fabric span joins both hand contacts during the handoff",
+      "hard_profile_ids": [
+        "lor_cover_handoff_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the declared giver hand supports one edge of the existing cover fabric"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "the declared recipient hand receives a distinct edge of that same cover"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "one continuous visible fabric span joins both hand contacts during the handoff"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "lor_cover_handoff"
+      ],
+      "candidate_slots": {
+        "lor_cover_handoff": "contact_point"
+      },
+      "confusion_boundaries": [
+        "a coat merely worn by one person",
+        "unconnected hands near unrelated fabrics",
+        "a fixed caregiver costume"
+      ],
+      "source_keywords": [
+        "기존 덮개를 건네는 두 손과 이어지는 천의 지지"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "lor_observer_event_orientation_bundle",
+      "primary_visual_proposition": "the declared observer gaze points toward the already declared focal event; the same observer visible body orientation also faces that event region; the observer and the focal event cue are both readable within one frame",
+      "hard_profile_ids": [
+        "lor_observer_event_orientation_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the declared observer gaze points toward the already declared focal event"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "the same observer visible body orientation also faces that event region"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "the observer and the focal event cue are both readable within one frame"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "lor_observer_event_orientation"
+      ],
+      "candidate_slots": {
+        "lor_observer_event_orientation": "gaze_engagement"
+      },
+      "confusion_boundaries": [
+        "a crowd looking at unrelated points",
+        "only an awe adjective",
+        "eyes outside the visible frame"
+      ],
+      "source_keywords": [
+        "주변 인물의 시선과 몸 방향이 기존 사건 단서로 모임"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "lor_received_item_material_trace_bundle",
+      "primary_visual_proposition": "the already declared item rests on a visible support within the recipient reach; its already declared open carrier lies separately on the same receiving surface; the visible recipient item and carrier form one local arrangement without an invented giver",
+      "hard_profile_ids": [
+        "lor_received_item_material_trace_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the already declared item rests on a visible support within the recipient reach"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "its already declared open carrier lies separately on the same receiving surface"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "the visible recipient item and carrier form one local arrangement without an invented giver"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "lor_received_item_material_trace"
+      ],
+      "candidate_slots": {
+        "lor_received_item_material_trace": "narrative_phase"
+      },
+      "confusion_boundaries": [
+        "an untouched sealed package",
+        "a generic miracle or aftercare label",
+        "an inferred helper outside the frame"
+      ],
+      "source_keywords": [
+        "상대가 닿을 수 있는 물건과 분리된 열린 운반 흔적"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "lor_shared_document_reference_bundle",
+      "primary_visual_proposition": "the already declared document rests on a visible support shared by the participants; one declared fingertip points at an identifiable marked region on that document; the other declared participant gaze follows the same document region in the frame",
+      "hard_profile_ids": [
+        "lor_shared_document_reference_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the already declared document rests on a visible support shared by the participants"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "one declared fingertip points at an identifiable marked region on that document"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "the other declared participant gaze follows the same document region in the frame"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "lor_shared_document_reference"
+      ],
+      "candidate_slots": {
+        "lor_shared_document_reference": "contact_point"
+      },
+      "confusion_boundaries": [
+        "two separate documents with unrelated marks",
+        "a press badge or court label alone",
+        "an invisible or disconnected pointing hand"
+      ],
+      "source_keywords": [
+        "같은 문서 표시 지점을 가리키는 손과 상대의 시선"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    },
+    {
+      "id": "lor_supported_precision_contact_bundle",
+      "primary_visual_proposition": "the already declared small component rests on a visible stable support; the declared hand visibly holds the already declared precision tool; that same tool tip meets one identifiable working point of the supported component",
+      "hard_profile_ids": [
+        "lor_supported_precision_contact_profile"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "the already declared small component rests on a visible stable support"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "the declared hand visibly holds the already declared precision tool"
+          ]
+        },
+        {
+          "id": "component_3",
+          "visible_evidence": [
+            "that same tool tip meets one identifiable working point of the supported component"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "lor_supported_precision_contact"
+      ],
+      "candidate_slots": {
+        "lor_supported_precision_contact": "contact_point"
+      },
+      "confusion_boundaries": [
+        "a tool floating beside a component",
+        "mere occupation shorthand",
+        "an off-frame tool tip or unsupported part"
+      ],
+      "source_keywords": [
+        "받침 위 기존 부품과 정밀 도구 끝의 실제 접촉"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only"
+    }
+  ],
+  "maintenance_ref": {
+    "contract_version": "photo-extension-maintenance-ref/v1",
+    "record_id": "legacy-observable-relations-20261008-v1",
+    "sha256": "c15d9597b3db6d3481f494f6fa1ba845bd8aafb266bef4d98b34f5b640ba82e6"
+  }
+}
