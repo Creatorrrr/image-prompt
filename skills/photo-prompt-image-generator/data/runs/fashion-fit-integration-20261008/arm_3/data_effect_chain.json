@@ -1,0 +1,325 @@
+{
+  "schema_version": "fashion-fit-data-effect-chain/v1",
+  "source_generation_id": "0c8cb761362bff39d912ae24fae79451e41c41fff886a420352adc25fa317925",
+  "source_fingerprint": "312589c3b0342ad1469cfacffd2600faf210b28f4670f28cf50b7d782905df0a",
+  "pack_id": "e5f835fd66061c0d",
+  "pack_sha256": "16e03b41699de3e8f3bb0e2aed111105ede98c8d92d1efb100bb427b308d0cc2",
+  "public_new_exposures": [
+    {
+      "id": "bundle:fit_ff52_v2_bundle",
+      "source_pointer": "/candidate_bundles/candidates/1",
+      "concept_terms": [
+        "Two straps cross once on the back.",
+        "each continues to an attachment on the opposite lower side."
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "all_members_eligible_and_dimensions_open"
+      },
+      "conflicts_with": [],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "concept_units": [
+        "Two straps cross once on the back.",
+        "each continues to an attachment on the opposite lower side."
+      ],
+      "relations": [
+        {
+          "id": "fit_ff52_v2_owner_relation",
+          "type": "cross_once_before_opposite_attachment",
+          "subject": "two back straps",
+          "object": "same top's opposite lower anchor points"
+        }
+      ],
+      "adoption": "optional",
+      "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+    },
+    {
+      "id": "slot:garment_detail:fit_ff52_v2_candidate",
+      "source_pointer": "/slots/garment_detail/candidates/0",
+      "concept_terms": [
+        "Two straps cross once on the back.",
+        "each continues to an attachment on the opposite lower side."
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "frozen_core_slot_contract",
+        "reason": null
+      },
+      "conflicts_with": [],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "slot": "garment_detail",
+      "concept_units": [
+        "Two straps cross once on the back.",
+        "each continues to an attachment on the opposite lower side."
+      ],
+      "relations": [
+        {
+          "id": "fit_ff52_v2_owner_relation",
+          "type": "cross_once_before_opposite_attachment",
+          "subject": "two back straps",
+          "object": "same top's opposite lower anchor points"
+        }
+      ],
+      "adoption": "optional",
+      "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.structure.back_strap_connection"
+        }
+      ]
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/7",
+      "concept_terms": [
+        "The jacket extends broadly across the shoulders.",
+        "its roomy sleeves and torso share the same enlarged proportions."
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "contextual_corpus_retrieval",
+        "basis": "writable_scope",
+        "reason": "scope compatible; scene and aesthetic interpretation pending"
+      },
+      "conflicts_with": [],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "slot": "wardrobe_style",
+      "axis": "sensual",
+      "source_candidate_id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+      "concept_units": [
+        "The jacket extends broadly across the shoulders.",
+        "its roomy sleeves and torso share the same enlarged proportions."
+      ],
+      "relations": [
+        {
+          "id": "fit_ff03_v2_owner_relation",
+          "type": "extend_beyond",
+          "subject": "jacket shoulder and sleeve edges",
+          "object": "same wearer's shoulder and torso contour"
+        }
+      ],
+      "adoption": "optional",
+      "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.fit.shoulder.extent"
+        },
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.fit.sleeve_width"
+        },
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.fit.body_clearance"
+        }
+      ],
+      "expression_scope": "whole_direction",
+      "contextual_status": "unassessed",
+      "retrieval_evidence": [
+        "relation_concept:keyword",
+        "relation_concept:keyword_scope",
+        "relation_event:keyword",
+        "relation_event:keyword_scope"
+      ],
+      "context_requirements": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "context_prerequisites": {
+        "contract_version": "photo-candidate-context/v1",
+        "source_id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+        "raw_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "requirements": [
+          {
+            "id": "entry:subject_any",
+            "operator": "any",
+            "context": "subject",
+            "values": [
+              "human"
+            ],
+            "sources": [
+              {
+                "kind": "entry",
+                "id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+                "field": "for_any"
+              }
+            ]
+          }
+        ],
+        "quality_layer_sources": [],
+        "evaluation": "final_scene_literal_evidence_and_declared_scope",
+        "semantic_truth_owner": "composer_review",
+        "canonical_sha256": "277b889849e9476c3018b80af6a3f7a436757802d2614afff210f0d8054e21c4"
+      },
+      "context_preflight": {
+        "status": "unassessed",
+        "evaluation": "final_scene"
+      },
+      "scene_retrieval_support": false,
+      "retrieval_status": "returned"
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:garment_detail:fit_ff62_v3_candidate",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/10",
+      "concept_terms": [
+        "A garment strap bridges two visible fabric anchors on the same item.",
+        "a buckle joins its two webbing sections."
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "contextual_corpus_retrieval",
+        "basis": "writable_scope",
+        "reason": "scope compatible; scene and aesthetic interpretation pending"
+      },
+      "conflicts_with": [],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "slot": "garment_detail",
+      "axis": "sensual",
+      "source_candidate_id": "slot:garment_detail:fit_ff62_v3_candidate",
+      "concept_units": [
+        "A garment strap bridges two visible fabric anchors on the same item.",
+        "a buckle joins its two webbing sections."
+      ],
+      "relations": [
+        {
+          "id": "fit_ff62_v3_owner_relation",
+          "type": "joins_through_buckle_between",
+          "subject": "same garment's webbing strap",
+          "object": "two visible fabric anchors of that garment"
+        }
+      ],
+      "adoption": "optional",
+      "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.structure.strap_anchors"
+        },
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.structure.strap_fastener"
+        }
+      ],
+      "expression_scope": "construction_or_material",
+      "contextual_status": "unassessed",
+      "retrieval_evidence": [
+        "coherence:keyword",
+        "coherence:keyword_scope",
+        "relation_concept:keyword",
+        "relation_concept:keyword_scope"
+      ],
+      "context_requirements": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "context_prerequisites": {
+        "contract_version": "photo-candidate-context/v1",
+        "source_id": "slot:garment_detail:fit_ff62_v3_candidate",
+        "raw_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "requirements": [
+          {
+            "id": "entry:subject_any",
+            "operator": "any",
+            "context": "subject",
+            "values": [
+              "human"
+            ],
+            "sources": [
+              {
+                "kind": "entry",
+                "id": "slot:garment_detail:fit_ff62_v3_candidate",
+                "field": "for_any"
+              }
+            ]
+          }
+        ],
+        "quality_layer_sources": [],
+        "evaluation": "final_scene_literal_evidence_and_declared_scope",
+        "semantic_truth_owner": "composer_review",
+        "canonical_sha256": "ad1bdf998e9babf5c0ade4c7011df81da540a8a1bc2ee543a1a4c1efdf6efaf0"
+      },
+      "context_preflight": {
+        "status": "unassessed",
+        "evaluation": "final_scene"
+      },
+      "scene_retrieval_support": false,
+      "retrieval_status": "returned"
+    }
+  ],
+  "new_visual_profile_exposure_count": 0,
+  "visual_profile_exposure_limit": "The eight returned optional visual concepts are older profiles. Newly registered fit_ff visual profiles are not selectable in this exact pack; no profile was forced or activated from an invented requester definition.",
+  "selected_new_candidates": [
+    {
+      "candidate_id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "literal_prompt_evidence": "The blue nylon rain jacket is oversized as one coherent outer garment: its dropped shoulder seams sit outside her shoulder joints, its wide sleeves match the broad hanging torso, and a visible air margin separates this same jacket from the firmer vest beneath",
+      "relation_id": "fit_ff03_v2_owner_relation",
+      "selection_reason": "A complete same-jacket broad shoulder/sleeve/torso realization suits the open outer-layer proportions."
+    },
+    {
+      "candidate_id": "augmentation:adult_appeal:sensual:garment_detail:fit_ff62_v3_candidate",
+      "literal_prompt_evidence": "At each olive vest side connection, one webbing section is box-stitched to its front fabric anchor and another to its rear fabric anchor; these two sections join through a central rectangular metal buckle on that same vest",
+      "relation_id": "fit_ff62_v3_owner_relation",
+      "selection_reason": "The exact same-vest fabric-anchor/webbing/buckle connection strengthens the already independent side-strap test."
+    }
+  ],
+  "rejected_new_candidates": [
+    {
+      "candidate_id": "slot:garment_detail:fit_ff52_v2_candidate",
+      "reason": "A single back crossing and opposite-lower attachments is a distinct optional connection system. A back-focused rewrite is possible but not preferred for the exposed side-gap task and forward face guidance."
+    },
+    {
+      "candidate_id": "bundle:fit_ff52_v2_bundle",
+      "reason": "The complete crossing and opposite-back anchors are not represented by the selected side bridges; selecting the associated profile is not implied by bundle exposure."
+    }
+  ],
+  "final_prompt_sha256": "7197a435123a0e7cede922fc28f1771c673688ce6da3efb4e70e8b575935f1df",
+  "baseline_comparison": "The new candidate meanings refine unbound appearance and local pose/camera only; requester anchors and baseline provenance remain frozen. No rendering counterfactual or causal improvement claim is made.",
+  "runtime_source_mode_observed": {
+    "coherence": "keyword",
+    "alternatives": "keyword",
+    "relation_event": "keyword",
+    "relation_concept": "keyword"
+  },
+  "native_pixel_status": "fail",
+  "native_pixel_review_attempt_1": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_3/fit_pixel_review_attempt_1.json",
+  "native_relationship_results": [
+    {
+      "candidate_id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "status": "pass",
+      "observation_class": null,
+      "gate_id": "ff03_same_jacket_enlarged_proportions"
+    },
+    {
+      "candidate_id": "augmentation:adult_appeal:sensual:garment_detail:fit_ff62_v3_candidate",
+      "status": "fail",
+      "observation_class": "UNOBSERVABLE_NOT_PASS",
+      "gate_id": "ff62_same_vest_anchor_buckle_topology"
+    }
+  ]
+}

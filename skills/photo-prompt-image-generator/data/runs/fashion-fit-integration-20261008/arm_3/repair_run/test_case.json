@@ -1,0 +1,93 @@
+{
+  "schema_version": "independent-fashion-fit-repair-test/v1",
+  "arm": 3,
+  "seed": 310820261,
+  "concept": "비가 잠시 그친 한낮 항구 정비 공간에서 출항 전 수리 키트를 확인하며 기능성 조끼 옆끈을 마무리 조정하는 여성",
+  "provenance": "Independent general knowledge and random scene synthesis, before project-local candidates",
+  "request_envelope_sha256": "8db4d418377b0c9659f5a4259f04909dc5a0dd61c9d189068e560803a7e6dd0e",
+  "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+  "baseline_prompt_sha256": "3c3af3c67c78d5263e446c41ae2e7b93ddb52e77071d2e51c32e1358eb7fce31",
+  "decision_rules": {
+    "pass": "The entire relationship and identifiable same-garment endpoints are visible in native pixels.",
+    "partial_or_hidden": "FAIL or UNOBSERVABLE_NOT_PASS; prompt/audit validity alone is insufficient.",
+    "user_judgment": "not_yet_received"
+  },
+  "test_gates": [
+    {
+      "gate_id": "base_layer_owner_fit",
+      "expected": "Close-fitting charcoal cotton jersey is identifiable as the inner T-shirt along the ribs, distinct from vest and rain jacket."
+    },
+    {
+      "gate_id": "layered_ease_contrast",
+      "expected": "Base is close, vest structured, outer nylon jacket roomy; visible layer edges and differential fabric slack."
+    },
+    {
+      "gate_id": "same_vest_strap_topology",
+      "expected": "Two near-side webbing bridges connect front and back panels of the same olive vest through separate buckles; both stitched endpoints visible for each."
+    },
+    {
+      "gate_id": "local_strap_adjustment",
+      "expected": "Right fingers pinch the free tail after the lower buckle, leaving buckle and attachment loops observable."
+    },
+    {
+      "gate_id": "vest_zipper_state",
+      "expected": "Lower vest zipper joined to sternum, upper V opening showing the T-shirt; zipper parts belong to the same vest."
+    },
+    {
+      "gate_id": "outer_jacket_state",
+      "expected": "Open crinkled nylon jacket surrounds the vest; near panel opens away from the side connection and cuff is wrist-fastened."
+    },
+    {
+      "gate_id": "reference_face_hair",
+      "expected": "Observed reference face and dark bob with wispy bangs guide visible appearance; pose and outfit are independent."
+    },
+    {
+      "gate_id": "scene_legibility",
+      "expected": "Open repair kit, rain traces and harbor alcove support a gear-check pause; gesture and inviting glance remain readable."
+    }
+  ],
+  "post_retrieval_gates": [
+    {
+      "gate_id": "ff03_same_jacket_enlarged_proportions",
+      "candidate_id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "relation_id": "fit_ff03_v2_owner_relation",
+      "expected": "The blue jacket shoulder boundaries extend beyond the same woman's shoulder joints; wide sleeves and a broad torso share its oversized proportions with visible inner-layer clearance.",
+      "same_owner_required": true
+    },
+    {
+      "gate_id": "ff62_same_vest_anchor_buckle_topology",
+      "candidate_id": "augmentation:adult_appeal:sensual:garment_detail:fit_ff62_v3_candidate",
+      "relation_id": "fit_ff62_v3_owner_relation",
+      "expected": "On the same olive vest, each front fabric anchor and rear fabric anchor visibly attaches its own webbing section; the two sections join through a central buckle. Both endpoints, paths and fastening are visible in the same saved image.",
+      "same_owner_required": true
+    }
+  ],
+  "postcomposition_local_pose_note": "Fingers moved below the fastening line, preserving the independent free-tail adjustment and both same-vest endpoints. Camera side explicitly right-front; both changes are authorial open staging.",
+  "repair_attempt": 2,
+  "initial_case_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_3/test_case.json",
+  "initial_failure_class": "pixel_realization_mismatch",
+  "initial_failed_gate_ids": [
+    "embodiment_visibility_and_projection"
+  ],
+  "repair_allowed_properties": [
+    {
+      "dimension": "appearance",
+      "target": "main_subject",
+      "property": "wardrobe.wearing_state.jacket_panel_fold"
+    },
+    {
+      "dimension": "camera",
+      "target": "camera",
+      "property": "viewpoint.direction"
+    }
+  ],
+  "selected_new_visual_profile": "visual-concept:fit_ff62_v3",
+  "full_opt_in_gate_ids": [
+    "vo_fit_ff62_v3_1",
+    "vo_fit_ff62_v3_2"
+  ],
+  "new_baseline_prompt_sha256": "168c81e3a906fad7b6b2dd5c92845a64871795fd17e0a0480806ea5489807700",
+  "one_additional_invocation_limit": 1,
+  "positive_repair": "Fold the same blue near jacket panel and lining behind shoulder and hip, exposing olive rear fabric strip; slightly more lateral near-front camera direction; keep worn vest and lower free-tail pinch.",
+  "original_case_scope_note": "Original actor-right staging remains authorial; the neutral preserved retry describes the same near hand. Original 8 gate expectations remain recorded, and any native mismatch will be reported rather than silently rewritten."
+}

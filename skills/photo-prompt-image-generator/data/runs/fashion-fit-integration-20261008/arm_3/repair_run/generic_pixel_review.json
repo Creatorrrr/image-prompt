@@ -1,0 +1,49 @@
+{
+  "schema_version": "photo-image-render-review/v1",
+  "pack_id": "b640a0327a07aa83",
+  "source_render_repair_contract_sha256": "650713473b3cda4b82986f6c0eb2ab2e18e1a329933a26adcfb739208ecd063c",
+  "result": {
+    "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_3/generated_images/native_attempt_2.png",
+    "sha256": "db90a43a0e44b224afe2a0ccd8a859c81ab169908baccb37518f0467153ee1b3"
+  },
+  "reviewer": {
+    "reviewer_id": "independent_agent_arm_3_native_and_thumbnail_review",
+    "method": "direct_pixel_inspection"
+  },
+  "gates": [
+    {
+      "gate_id": "rr_vest_rear_anchor_visibility_object_class_legible",
+      "status": "pass",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "At the 234 by 320 Quick Look thumbnail, the olive utility vest, two dark horizontal fastening bars and lower-hand fit check remain recognizable alongside the kit. In the actual 1072 by 1467 native returned image, woven webbing and central buckle forms distinguish the intended garment-side bridge object class. This class-level pass does not prove rear textile-endpoint topology."
+    },
+    {
+      "gate_id": "rr_vest_rear_anchor_visibility_gross_structure_coherent",
+      "status": "fail",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "UNOBSERVABLE_NOT_PASS for the frozen major anchor/bridge topology. Visible front panels and central fastenings are broadly coherent and no grotesque deformation is diagnosed, but the required upper/lower rear fabric attachments cannot both be traced as parts of one worn olive vest. Their shell/hand occlusion prevents full major-structure qualification."
+    },
+    {
+      "gate_id": "rr_vest_rear_anchor_visibility_intended_interaction_matches",
+      "status": "fail",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "At thumbnail and native scale the woman continues wearing the vest and pinches its lower free tail below a buckle; no removal, relocation or transfer is observed. However, the frozen recognition relationship requires two complete front/rear anchor pairs on that same vest. Those rear endpoints remain unobservable in the native image, so the complete preserved actor-object relationship is only partial and is not a pass."
+    },
+    {
+      "gate_id": "rr_vest_rear_anchor_visibility_contact_anatomy_coherent",
+      "status": "pass",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "At native scale the lower tail is pinched by a visibly connected thumb/index below the fastening, with coherent wrist/cuff/finger boundaries and a plausible bent-arm reach. Other hand and principal supporting body anatomy remain coherent; no severe contact fusion is observed."
+    }
+  ]
+}

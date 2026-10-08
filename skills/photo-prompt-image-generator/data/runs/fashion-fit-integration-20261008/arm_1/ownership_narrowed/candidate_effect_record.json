@@ -1,0 +1,62 @@
+{
+  "schema_version": "fashion-fit-selection-effect/v1",
+  "source_binding": {
+    "generation_id": "0c8cb761362bff39d912ae24fae79451e41c41fff886a420352adc25fa317925",
+    "source_fingerprint": "312589c3b0342ad1469cfacffd2600faf210b28f4670f28cf50b7d782905df0a",
+    "runtime_store": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_1/ownership_narrowed/runtime_store"
+  },
+  "pack_id": "6766e7934f2b2bc9",
+  "pack_file_sha256": "ba9029fb53f6bdaa16db63dfb9f758f8551bdccfc73964394fcfcd0de508c164",
+  "core_retrieval_sha256": "0a3a52721e08e01341e67d1a635df998c597f3d4984259fdd613bc232a487492",
+  "new_catalog_ids": [
+    "slot:garment_detail:fit_ff09_v1_candidate",
+    "bundle:fit_ff10_v2_bundle",
+    "bundle:fit_ff09_v1_bundle",
+    "bundle:fit_ff64_v1_bundle",
+    "slot:garment_detail:fit_ff10_v2_candidate",
+    "slot:garment_detail:fit_ff09_v1_candidate",
+    "slot:wardrobe_style:fit_ff64_v1_candidate",
+    "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate"
+  ],
+  "unique_new_variants": [
+    "fit_ff09_v1",
+    "fit_ff10_v2",
+    "fit_ff64_v1",
+    "fit_ff03_v2"
+  ],
+  "new_visual_concept_profiles_exposed": [],
+  "selected_new_candidate_id": "slot:garment_detail:fit_ff10_v2_candidate",
+  "selected_relation_id": "fit_ff10_v2_owner_relation",
+  "affected_dimensions": [
+    "appearance"
+  ],
+  "affected_properties": [
+    {
+      "dimension": "appearance",
+      "target": "main_subject",
+      "property": "wardrobe.structure.sleeve_head"
+    }
+  ],
+  "baseline_has_added_ridge_phrase": false,
+  "literal_prompt_evidence": "A narrow roped ridge crowns each sleeve head just above that same jacket's shoulder attachment seam; a thin grazing highlight makes the two connected wool boundaries visible.",
+  "rejections": {
+    "fit_ff09_v1": "Wrong chosen carrier/hidden shirt seam under outer jacket; full shirt relation not adopted.",
+    "fit_ff64_v1": "Coherent cropped boxy dropped-join alternative, but it replaces the useful clean shoulder placement and adds wider sleeves; baseline plus sleeve ridge preferred.",
+    "fit_ff03_v2": "Coherent enlarged whole-jacket alternative, but it adds more width without clarifying the printshop purpose as well as the chosen seam/ridge relation.",
+    "bundles": "Associated profiles are advisory and cannot create profile activation; no bundle adopted."
+  },
+  "new_pixel_gate": {
+    "id": "selected_fit_ff10_v2_owner_relation",
+    "owner": "main_subject.jacket",
+    "endpoint_1": "raised wool sleeve-head ridge",
+    "endpoint_2": "same jacket shoulder attachment seam directly below ridge",
+    "expected": "A narrow shallow ridge crowns the sleeve head above its continuous attachment seam. Both textile endpoints and their connection must be visible in the same native image.",
+    "review_scale": "native",
+    "partial_is_fail": true
+  },
+  "focal_coverage": "Broad requester-owned garment-fit concept is anchored. The optional new construction relation is selected with full source relation evidence, and will be separately judged as a custom same-garment pixel gate. No new profile-hard-gate claim is made.",
+  "user_judgment": "not_yet_received",
+  "native_pixel_status": "fail",
+  "native_image_sha256": "5b6a5c8e3718480dcf4d3516e181608887f059191c1634d9e3a6b3fdbfe586a6",
+  "native_pixel_review_file": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_1/ownership_narrowed/pixel_review_attempt_1.json"
+}

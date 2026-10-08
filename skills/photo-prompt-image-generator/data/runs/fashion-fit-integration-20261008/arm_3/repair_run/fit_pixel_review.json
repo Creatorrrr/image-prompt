@@ -1,0 +1,137 @@
+{
+  "schema_version": "native-fashion-fit-review/v1",
+  "arm": 3,
+  "attempt": 2,
+  "image_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_3/generated_images/native_attempt_2.png",
+  "image_sha256": "db90a43a0e44b224afe2a0ccd8a859c81ab169908baccb37518f0467153ee1b3",
+  "native_dimensions": [
+    1072,
+    1467
+  ],
+  "selected_data_relationships": [
+    {
+      "gate_id": "ff03_same_jacket_enlarged_proportions",
+      "status": "pass",
+      "selected_initial_candidate_id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "relation_id": "fit_ff03_v2_owner_relation",
+      "review_scale": "native",
+      "evidence": "One continuous blue shell has a generous shoulder boundary, wide sleeve and broad hanging side/body around the same wearer and inner vest. Its matching roomy proportions are retained in this saved repair image."
+    },
+    {
+      "gate_id": "ff62_same_vest_anchor_buckle_topology",
+      "status": "fail",
+      "selected_initial_candidate_id": "augmentation:adult_appeal:sensual:garment_detail:fit_ff62_v3_candidate",
+      "selected_repair_visual_concept_id": "visual-concept:fit_ff62_v3",
+      "relation_id": "fit_ff62_v3_owner_relation",
+      "review_scale": "native",
+      "observation_class": "UNOBSERVABLE_NOT_PASS",
+      "evidence": "Front patches and central fastening cues are recognizable, but neither rear attachment can be traced as a complete, visible, box-stitched fabric endpoint belonging to the same olive vest. Upper trace ends at shell/lining; lower endpoint is occluded by the near hand/shell."
+    }
+  ],
+  "original_predeclared_test_gates": [
+    {
+      "gate_id": "base_layer_owner_fit",
+      "expected": "Close-fitting charcoal cotton jersey is identifiable as the inner T-shirt along the ribs, distinct from vest and rain jacket.",
+      "status": "pass",
+      "review_scale": "native",
+      "pixel_evidence": "The charcoal jersey is a distinct close inner garment along the visible ribs/upper arm and below the olive vest. Its soft folds remain different from the firmer woven vest and broad shell."
+    },
+    {
+      "gate_id": "layered_ease_contrast",
+      "expected": "Base is close, vest structured, outer nylon jacket roomy; visible layer edges and differential fabric slack.",
+      "status": "pass",
+      "review_scale": "native",
+      "pixel_evidence": "Close charcoal base, structured olive front panels and voluminous blue shoulder/sleeve/body remain three visually distinct layers; the wide near sleeve and hanging outer panel show greater clearance."
+    },
+    {
+      "gate_id": "same_vest_strap_topology",
+      "expected": "Two near-side webbing bridges connect front and back panels of the same olive vest through separate buckles; both stitched endpoints visible for each.",
+      "status": "fail",
+      "review_scale": "native",
+      "pixel_evidence": "Both front attachment areas and two horizontal buckles are visible. The upper rear strap junction loses trace under the blue/lining edge, and the lower rear junction is hidden by the near hand and shell edge. A larger olive strip does not prove both rear fabric endpoints. UNOBSERVABLE_NOT_PASS."
+    },
+    {
+      "gate_id": "local_strap_adjustment",
+      "expected": "Right fingers pinch the free tail after the lower buckle, leaving buckle and attachment loops observable.",
+      "status": "fail",
+      "review_scale": "native",
+      "pixel_evidence": "A connected near thumb/index visibly pinch the lower hanging free tail below its buckle, but the full rear attachment stays hidden. The original actor-right staging is not independently verified: the displayed near hand reads as the subject left in this front view. Preserve the original expected gate rather than relabel it."
+    },
+    {
+      "gate_id": "vest_zipper_state",
+      "expected": "Lower vest zipper joined to sternum, upper V opening showing the T-shirt; zipper parts belong to the same vest.",
+      "status": "pass",
+      "review_scale": "native",
+      "pixel_evidence": "The olive front zipper is joined below the central chest split and the upper V shows the charcoal shirt; both zipped front pieces read as the same olive vest."
+    },
+    {
+      "gate_id": "outer_jacket_state",
+      "expected": "Open crinkled nylon jacket surrounds the vest; near panel opens away from the side connection and cuff is wrist-fastened.",
+      "status": "fail",
+      "review_scale": "native",
+      "pixel_evidence": "The blue shell remains open and crinkled with a wrist cuff and more visible olive side strip, but its near lining/panel still borders and hides the rear attachment region. The requested visibility consequence of opening away is incomplete."
+    },
+    {
+      "gate_id": "reference_face_hair",
+      "expected": "Observed reference face and dark bob with wispy bangs guide visible appearance; pose and outfit are independent.",
+      "status": "pass",
+      "review_scale": "native",
+      "pixel_evidence": "The face proportions, dark jaw-length bob and thin separated bangs visibly follow the supplied portrait guide. This is appearance guidance, not identity authentication or a personality/biography inference."
+    },
+    {
+      "gate_id": "scene_legibility",
+      "expected": "Open repair kit, rain traces and harbor alcove support a gear-check pause; gesture and inviting glance remain readable.",
+      "status": "pass",
+      "review_scale": "native",
+      "pixel_evidence": "Wet workbench, open metal kit with tools, coils of dock rope, rain-marked paving and harbor boats make a practical gear-check pause readable. The warm camera glance is visible; the planned future boat trip is only implied, not independently observable."
+    }
+  ],
+  "original_gate_counts": {
+    "pass": 5,
+    "fail": 3
+  },
+  "new_opt_in_visual_gate_ids": [
+    "vo_fit_ff62_v3_1",
+    "vo_fit_ff62_v3_2"
+  ],
+  "local_fastening_component_observation": "Both central buckle silhouettes and short entering webbing sections are recognizable. This local cue is not full same-owner endpoint proof.",
+  "component_locations_approximate_screen_pixels": {
+    "upper_front_anchor_and_buckle": [
+      577,
+      731,
+      710,
+      802
+    ],
+    "upper_rear_junction_occlusion": [
+      724,
+      720,
+      789,
+      813
+    ],
+    "lower_front_anchor_and_buckle": [
+      608,
+      891,
+      727,
+      977
+    ],
+    "lower_rear_junction_occlusion": [
+      714,
+      888,
+      825,
+      1018
+    ]
+  },
+  "decision_rules": {
+    "pass": "The entire relationship and identifiable same-garment endpoints are visible in native pixels.",
+    "partial_or_hidden": "FAIL or UNOBSERVABLE_NOT_PASS; prompt/audit validity alone is insufficient.",
+    "user_judgment": "not_yet_received"
+  },
+  "overall_selected_data_result": "fail",
+  "repair_visibility_result": "improved_side_strip_but_required_rear_endpoints_unobservable",
+  "whole_case_result": "fail",
+  "additional_generation_allowed": false,
+  "user_judgment": {
+    "source": "not_yet_received",
+    "decision": "pending"
+  }
+}

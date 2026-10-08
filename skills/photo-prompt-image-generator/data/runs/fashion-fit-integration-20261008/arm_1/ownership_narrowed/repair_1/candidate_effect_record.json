@@ -1,0 +1,288 @@
+{
+  "schema_version": "fashion-fit-candidate-effect/v1",
+  "stage": "bounded_repair_postcore",
+  "core_sha256": "5098d09b414b93c4ae462a5dbc32a6d14c4900590ab13b41a3ecd1cb4a88838d",
+  "intent_lock_sha256": "9e26819e7e6d95a155acc50a8d65a343c06bff34f43f9fe3a4bb5f12079eaa7c",
+  "pack_id": "d27bf3e52efd00c7",
+  "pack_file_sha256": "6190b89de9e9dc18659ae2cc049da9c0c5507613b69565ad8396d768c48cce5b",
+  "source_binding": {
+    "generation_id": "4561ae291c9a5626888dc0b05c295ebbe0a4416d40b7099b3c7d3e7216376ccf",
+    "source_fingerprint": "333f41dd7bbc9c404ce9ac774824d4480dfd6f8d02f344538b15ea57f950196c",
+    "runtime_store": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_1/ownership_narrowed/runtime_store"
+  },
+  "exposed_new_fit_rows": [
+    {
+      "id": "bundle:fit_ff10_v2_bundle",
+      "source_pointer": "/candidate_bundles/candidates/1",
+      "concept_terms": [
+        "The sleeve head rises slightly above the shoulder join.",
+        "a narrow ridge outlines that same attachment seam."
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "all_members_eligible_and_dimensions_open"
+      },
+      "conflicts_with": [],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "concept_units": [
+        "The sleeve head rises slightly above the shoulder join.",
+        "a narrow ridge outlines that same attachment seam."
+      ],
+      "relations": [
+        {
+          "id": "fit_ff10_v2_owner_relation",
+          "type": "rises_above",
+          "subject": "sleeve head ridge",
+          "object": "same jacket's shoulder attachment seam"
+        }
+      ],
+      "adoption": "optional",
+      "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+    },
+    {
+      "id": "bundle:fit_ff04_v1_bundle",
+      "source_pointer": "/candidate_bundles/candidates/3",
+      "concept_terms": [
+        "The cropped jacket has nearly straight side edges.",
+        "its broad hem ends above the trouser waistband."
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "all_members_eligible_and_dimensions_open"
+      },
+      "conflicts_with": [],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "concept_units": [
+        "The cropped jacket has nearly straight side edges.",
+        "its broad hem ends above the trouser waistband."
+      ],
+      "relations": [
+        {
+          "id": "fit_ff04_v1_owner_relation",
+          "type": "ends_above",
+          "subject": "cropped jacket hem",
+          "object": "same wearer's trouser waistband"
+        }
+      ],
+      "adoption": "optional",
+      "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+    },
+    {
+      "id": "slot:garment_detail:fit_ff10_v2_candidate",
+      "source_pointer": "/slots/garment_detail/candidates/0",
+      "concept_terms": [
+        "The sleeve head rises slightly above the shoulder join.",
+        "a narrow ridge outlines that same attachment seam."
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "frozen_core_slot_contract",
+        "reason": null
+      },
+      "conflicts_with": [],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "slot": "garment_detail",
+      "concept_units": [
+        "The sleeve head rises slightly above the shoulder join.",
+        "a narrow ridge outlines that same attachment seam."
+      ],
+      "relations": [
+        {
+          "id": "fit_ff10_v2_owner_relation",
+          "type": "rises_above",
+          "subject": "sleeve head ridge",
+          "object": "same jacket's shoulder attachment seam"
+        }
+      ],
+      "adoption": "optional",
+      "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.structure.sleeve_head"
+        }
+      ]
+    },
+    {
+      "id": "slot:wardrobe_style:fit_ff04_v1_candidate",
+      "source_pointer": "/slots/wardrobe_style/candidates/0",
+      "concept_terms": [
+        "The cropped jacket has nearly straight side edges.",
+        "its broad hem ends above the trouser waistband."
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "frozen_core_slot_contract",
+        "reason": null
+      },
+      "conflicts_with": [],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "slot": "wardrobe_style",
+      "concept_units": [
+        "The cropped jacket has nearly straight side edges.",
+        "its broad hem ends above the trouser waistband."
+      ],
+      "relations": [
+        {
+          "id": "fit_ff04_v1_owner_relation",
+          "type": "ends_above",
+          "subject": "cropped jacket hem",
+          "object": "same wearer's trouser waistband"
+        }
+      ],
+      "adoption": "optional",
+      "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.silhouette.torso_outline"
+        },
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.length.hem_landmark"
+        }
+      ]
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/0",
+      "concept_terms": [
+        "The jacket extends broadly across the shoulders.",
+        "its roomy sleeves and torso share the same enlarged proportions."
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "contextual_corpus_retrieval",
+        "basis": "writable_scope",
+        "reason": "scope compatible; scene and aesthetic interpretation pending"
+      },
+      "conflicts_with": [],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "slot": "wardrobe_style",
+      "axis": "sensual",
+      "source_candidate_id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+      "concept_units": [
+        "The jacket extends broadly across the shoulders.",
+        "its roomy sleeves and torso share the same enlarged proportions."
+      ],
+      "relations": [
+        {
+          "id": "fit_ff03_v2_owner_relation",
+          "type": "extend_beyond",
+          "subject": "jacket shoulder and sleeve edges",
+          "object": "same wearer's shoulder and torso contour"
+        }
+      ],
+      "adoption": "optional",
+      "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.fit.shoulder.extent"
+        },
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.fit.sleeve_width"
+        },
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.fit.body_clearance"
+        }
+      ],
+      "expression_scope": "whole_direction",
+      "contextual_status": "unassessed",
+      "retrieval_evidence": [
+        "coherence:keyword_scope",
+        "relation_concept:keyword",
+        "relation_concept:keyword_scope",
+        "relation_event:keyword",
+        "relation_event:keyword_scope"
+      ],
+      "context_requirements": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "context_prerequisites": {
+        "contract_version": "photo-candidate-context/v1",
+        "source_id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+        "raw_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "requirements": [
+          {
+            "id": "entry:subject_any",
+            "operator": "any",
+            "context": "subject",
+            "values": [
+              "human"
+            ],
+            "sources": [
+              {
+                "kind": "entry",
+                "id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+                "field": "for_any"
+              }
+            ]
+          }
+        ],
+        "quality_layer_sources": [],
+        "evaluation": "final_scene_literal_evidence_and_declared_scope",
+        "semantic_truth_owner": "composer_review",
+        "canonical_sha256": "277b889849e9476c3018b80af6a3f7a436757802d2614afff210f0d8054e21c4"
+      },
+      "context_preflight": {
+        "status": "unassessed",
+        "evaluation": "final_scene"
+      },
+      "scene_retrieval_support": false,
+      "retrieval_status": "returned"
+    }
+  ],
+  "new_fit_visual_concept_ids": [],
+  "selected_candidate_ids": [
+    "slot:garment_detail:fit_ff10_v2_candidate"
+  ],
+  "literal_relation_evidence": {
+    "fit_ff10_v2_owner_relation": "The top of each sleeve cap has a thin raised wool rim, immediately above a separately readable recessed attachment seam. The raised rim and the seam below it form two distinct shallow edges of that same sleeve-to-jacket join."
+  },
+  "final_prompt_sha256": "b40e5c98f51af2aa0bdaca673239252aa0964e07d7cd089ce047c61dfd668724",
+  "native_pixel_status": "fail_partial_not_pass",
+  "rejections": [
+    {
+      "candidate_id": "slot:wardrobe_style:fit_ff04_v1_candidate",
+      "reason": "Complete candidate also changes wardrobe.silhouette.torso_outline, which is outside the allowed repair properties. The generic short-hem relationship was independently authored from the observed failure before retrieval."
+    },
+    {
+      "candidate_id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "reason": "Whole enlarged shoulder/sleeve/body-clearance effects exceed property-only repair scope."
+    }
+  ],
+  "effect_claim_limit": "This child revalidates and repairs the originally adopted ff10 relation. Its fresh baseline was written from the closed failure projection before candidate access. It is not a new randomized causal ablation; original post-retrieval adoption and failed native pixels remain separately preserved.",
+  "native_image_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_1/ownership_narrowed/repair_1/generated_images/letterpress-fit-repair-1.png",
+  "native_image_sha256": "64dcc2baf109e25b9442cbec1c8dd692331c07c571070b7ab052479db3133a48",
+  "native_ledger_run_id": "c7b7df37dd89ba5c",
+  "native_ledger_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_1/ownership_narrowed/image_runs.ndjson",
+  "pixel_review_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_1/ownership_narrowed/repair_1/pixel_review_repair_1.json",
+  "tool_call_count_this_child": 1,
+  "tool_call_count_whole_arm": 2,
+  "capture_recovery_file": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_1/ownership_narrowed/repair_1/native_capture_recovery.json"
+}

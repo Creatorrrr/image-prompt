@@ -1,0 +1,226 @@
+{
+  "schema": "fashion-fit-implementation-plan/v1",
+  "state": "planned_not_executed",
+  "generated_from": "semantic-cards.json + bounded research findings",
+  "counts": {
+    "seed_terms": 513,
+    "sources": 41,
+    "semantic_families": 64,
+    "candidate_drafts": 119
+  },
+  "priority_card_ids": {
+    "P0": [
+      "FF01",
+      "FF02",
+      "FF03",
+      "FF04",
+      "FF05",
+      "FF08",
+      "FF09",
+      "FF15",
+      "FF19",
+      "FF21",
+      "FF22",
+      "FF23",
+      "FF24",
+      "FF26",
+      "FF31",
+      "FF33",
+      "FF34",
+      "FF37",
+      "FF38",
+      "FF39",
+      "FF41",
+      "FF42",
+      "FF44",
+      "FF48",
+      "FF49",
+      "FF52",
+      "FF56",
+      "FF57",
+      "FF63",
+      "FF64"
+    ],
+    "P1": [
+      "FF06",
+      "FF07",
+      "FF10",
+      "FF11",
+      "FF12",
+      "FF13",
+      "FF14",
+      "FF17",
+      "FF18",
+      "FF20",
+      "FF25",
+      "FF27",
+      "FF28",
+      "FF29",
+      "FF30",
+      "FF32",
+      "FF35",
+      "FF36",
+      "FF40",
+      "FF43",
+      "FF46",
+      "FF47",
+      "FF53",
+      "FF54",
+      "FF55",
+      "FF58",
+      "FF60",
+      "FF62"
+    ],
+    "P2": [
+      "FF16",
+      "FF45",
+      "FF50",
+      "FF51",
+      "FF59",
+      "FF61"
+    ]
+  },
+  "runtime_files_created": 0,
+  "provider_calls": 0,
+  "phases": [
+    {
+      "id": "FIT-PHASE-1",
+      "title_ko": "의미 동등성·개별 근거·승격 범위",
+      "depends_on": [],
+      "outputs": [
+        "term-plan.csv successor review",
+        "approved variant-to-existing-ID decisions"
+      ],
+      "actions": [
+        "Review all 513 terms against meaning, owner, complete effects, visibility and scope.",
+        "Use existing meaning; add equivalent context; split a scoped variant; or retain specification/pending status.",
+        "Confirm lantern panel diagrams, colloquial contexts and individually unconfirmed intimate/product variants before hard promotion.",
+        "Deduplicate 119 draft clauses; do not treat their count as a target for new runtime entries."
+      ],
+      "exit_criteria": [
+        "Every promoted variant has directly applicable evidence, confusion boundaries, owner and property scope.",
+        "Every term has an explicit reuse/enrich/new/specification/pending disposition."
+      ]
+    },
+    {
+      "id": "FIT-PHASE-2",
+      "title_ko": "원본 확장·시각 구성 요소 작성",
+      "depends_on": [
+        "FIT-PHASE-1"
+      ],
+      "proposed_files": [
+        "skills/photo-prompt-image-generator/assets/photo_prompt_fashion_fit_extension.json",
+        "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_fashion_fit.json"
+      ],
+      "existing_surfaces_to_review": [
+        "photo_prompt_source_manifest.json",
+        "existing_slot_context_extensions",
+        "clothing_structure",
+        "portrait_fashion_exposure",
+        "swimwear",
+        "historical_womenswear"
+      ],
+      "actions": [
+        "Recheck current dirty state and manifest order before implementation.",
+        "Register extensions only in the canonical manifest; omit generated visual fields from source.",
+        "Bind concrete concept nodes/relations; narrow family templates to all and only selected effects.",
+        "Use authored_components v1 or v2 according to actual evidence duties.",
+        "Keep original authored records and maintenance history; write successor records for changed bodies.",
+        "Keep raw keywords, sources and research text outside runtime relevance fields."
+      ],
+      "exit_criteria": [
+        "Dictionary/schema/manifest/reference checks pass.",
+        "No unrequested identity, body, scene, age, color, material or length effect escapes declarations."
+      ]
+    },
+    {
+      "id": "FIT-PHASE-3",
+      "title_ko": "인덱스·BM25F·검증된 런타임 세대",
+      "depends_on": [
+        "FIT-PHASE-2"
+      ],
+      "actions": [
+        "Use source_update and canonical builders/publication from the current maintenance contract.",
+        "Rebuild source metadata, dictionary/BM25F and visual registry indexes against one source revision.",
+        "Reuse vectors only for identical entry/text/provider/model/dimensions; embed changed text with batch size 1.",
+        "Do not manually merge generated shards or claim a pending generation is current."
+      ],
+      "exit_criteria": [
+        "Authored/dictionary and both deep-index checks pass.",
+        "Public receipt and validated runtime generation share the expected source/registry hashes."
+      ]
+    },
+    {
+      "id": "FIT-PHASE-4",
+      "title_ko": "공개 검색·선택·구성 회귀",
+      "depends_on": [
+        "FIT-PHASE-3"
+      ],
+      "planned_comparisons": 38,
+      "planned_mutations": 10,
+      "related_tests": [
+        "test_photo_candidate_semantics.py",
+        "test_photo_core_retrieval.py",
+        "test_photo_visual_profile_retrieval.py",
+        "test_photo_womens_casualwear_visual_semantics.py",
+        "test_photo_womens_activewear_visual_semantics.py",
+        "test_photo_body_morphology_semantics.py",
+        "test_photo_swimwear_semantics.py",
+        "test_photo_costume_cosplay_semantics.py"
+      ],
+      "actions": [
+        "Write independent ko/en requests, controls and frozen cores before reading candidates.",
+        "Change one fit axis per minimal pair; inspect public exposure, selection, guard rejection and composed evidence.",
+        "Test different-garment owner binding and locked-property rejection.",
+        "Preserve unselected alternatives and existing historical fixtures; broaden tests only for actual impact/risk."
+      ],
+      "exit_criteria": [
+        "Planned invariant cases and relevant existing regressions pass.",
+        "Known preexisting failures, retrieval/composition and index integrity are reported separately."
+      ]
+    },
+    {
+      "id": "FIT-PHASE-5",
+      "title_ko": "생성 요청 시 이미지·관찰 관계",
+      "depends_on": [
+        "FIT-PHASE-4"
+      ],
+      "condition": "Only when image generation is requested later.",
+      "planned_pixel_clusters": 12,
+      "actions": [
+        "Preserve exact request/core/controls/settings and original images; a shared seed is no pixel identity guarantee.",
+        "Review only selected obligations at native resolution, including same-garment relation endpoints.",
+        "Do not change a locked camera/crop to make a hidden requirement visible.",
+        "Use UNOBSERVABLE_NOT_PASS and partial_is_fail; exclude static claims about hidden measurement/performance.",
+        "Record moderation, meaning preservation, visual quality and requester preference independently."
+      ],
+      "exit_criteria": [
+        "Activated observable gates pass without unrelated changes.",
+        "Blocked/unobservable/partial cases are not counted as successful renders."
+      ]
+    },
+    {
+      "id": "FIT-PHASE-6",
+      "title_ko": "증거 수준에 맞는 정식 승격·전달",
+      "depends_on": [
+        "FIT-PHASE-4"
+      ],
+      "optional_dependency": "FIT-PHASE-5 for rendered-quality claims",
+      "actions": [
+        "Link each adopted variant to source term, semantic card, runtime ID, successor provenance and validation.",
+        "State authored/retrieval/composition/pixel/preference evidence tiers precisely.",
+        "Preserve concurrent changes and record actual commit/PR/push state only when performed."
+      ],
+      "exit_criteria": [
+        "Each adopted record has traceable meaning and validation; deferred evidence remains explicit."
+      ]
+    }
+  ],
+  "decision_rules": {
+    "reuse": "Same meaning, concrete owner, complete effects and evidence scope.",
+    "equivalent_context": "Paraphrase/context only; no meaning/effect widening.",
+    "scoped_variant": "Separate meaning, owner or effect requires a distinct reviewed variant.",
+    "nonvisual": "Retain requested specification; never manufacture an observable numerical/performance proof."
+  },
+  "completion_of_this_request": "Research and incorporation plan delivered; implementation is a future task."
+}

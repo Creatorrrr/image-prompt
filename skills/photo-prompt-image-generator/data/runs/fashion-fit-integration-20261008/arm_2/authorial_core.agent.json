@@ -1,0 +1,147 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "ae5c8ad9d41a8a97c816db7878da92d4b03d8367dcd23a25f9b0c493e9d8ea3f",
+  "interpreted_intent": "The requester asks for independent random complex concepts that test the integrated clothing-fit topic in actual reference-guided photographic images. Fashion fit means visible relationships between a worn garment and its body region, distinct from garment identity or a purely nominal style. My agent-owned arm concentrates on a dress upper body, sleeves, and neckline. Random seed 5799112123705302875 selected a coastal ferry terminal opening setup at first morning light, card recovery, a charcoal fine-twill dress, and concentration warming into a smile. These invented circumstances and garment details are optional authorial staging, not requester definitions or exclusions. The photograph should feel inhabited: a small tidying action and visibly incomplete reception setup explain why she is here; tactile dress form and poised warmth make her presence inviting at sensual=1, fetish=0, creativity=1, surreal=0. A blank-wall fashion pose was considered, but the chosen small practical task makes shape and material readable in a more particular moment. Reference scope is visible face and hair guidance only, with no identity, actual personality, biography, outfit, or pose inference.",
+  "subject": "A visible woman wearing a dress, guided by the attached reference face and short dark hair.",
+  "setting": "A coastal ferry terminal ticket hall with harbor-facing windows and a reception table, during a private opening setup.",
+  "event": "A worn garment reveals its upper-body fit while the subject recovers a place card beside a reception table.",
+  "visual_priorities": [
+    "Visible same-dress upper panel, neckline, and sleeve relationships to the wearer.",
+    "Card, hand, and low side box form one readable recovery action.",
+    "Concentration softens into warmth amid a visibly incomplete opening setup.",
+    "Reference face and short dark hair retain visible guidance at conversational distance."
+  ],
+  "baseline_prompt_en": "An inhabited photographic study of clothing fit: a visible woman is wearing a garment whose fit is visible, in the ticket hall of a coastal ferry terminal during the final preparations for a private opening. Her face and hair are guided by the visible reference appearance, especially the short dark bob, fine separated fringe, brown eyes, softly defined features, and natural skin texture. The first dim morning light after an overnight setup comes through the large harbor-facing windows, settling across faded terrazzo, folded chairs, and a reception table with an open carton beneath it. A few handwritten place cards have slipped from the table. She has gathered most of them into a shallow wooden box at her left hip; one last card is held lightly between her right thumb and index finger as her right forearm angles outward and lowers it toward the box. Her left hand supports the box from below, beside rather than across her torso. She stands balanced on both feet with her shoulders nearly facing the camera, absorbed concentration breaking into warmth as she glances down at the recovered card. She wears a warm charcoal fine-twill dress with a gently shaped upper body and long sleeves, the neckline opening cleanly across her upper chest. The dress remains readable as one continuous worn garment from its shoulder seams through the waist and upper skirt. There is a quiet contrast between the shaped body of the dress and the easier movement of the sleeves; the weave catches soft directional light as her arm moves. The front of the torso, both sleeves, and the neckline edge occupy unobstructed areas of the image. Frame her from head to just below the knees in a vertical photograph, with the box low at the side and the reception table receding behind her. The camera is an observing companion at a comfortable conversational distance. Her intent hand movement and briefly warming face lead the image, followed by the dress construction and the modest evidence of a long night of preparations. Keep the dawn light natural, the fabric tactile, and the background recognizable but quieter than the person.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번에 반영한 주제",
+      "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지",
+      "basis": "request_context",
+      "resolution": "The topic in this active conversation is fashion fit: visible worn-garment shape and material relationships to the body. The dress and ferry-terminal realization is my own optional concept, not a definition supplied by the requester.",
+      "sources": []
+    },
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+      "basis": "agent_general_knowledge",
+      "resolution": "Independently sample multiple ordinary scene dimensions using a recorded random seed, then arrange their physical and causal relationships into one coherent photograph.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용",
+      "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성",
+      "basis": "request_context",
+      "resolution": "Use visible face and hair appearance as guidance for the pictured human subject. The supplied image does not establish a fictional story, wardrobe, pose, biography, or personality.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "fit_concept",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지",
+        "dimension": "concept",
+        "prompt_evidence": "photographic study of clothing fit"
+      },
+      {
+        "anchor_id": "visible_subject",
+        "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성",
+        "dimension": "subject",
+        "prompt_evidence": "a visible woman"
+      },
+      {
+        "anchor_id": "visible_fit_event",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지",
+        "dimension": "event",
+        "prompt_evidence": "wearing a garment whose fit is visible"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성",
+        "dimension": "reference_use",
+        "prompt_evidence": "Her face and hair are guided by the visible reference appearance"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "material",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "timing",
+      "atmosphere",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "style",
+      "text",
+      "format",
+      "sexual_tone"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "human_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "fashion_fit_validation"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "a visible woman"
+      }
+    },
+    {
+      "assertion_id": "camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "fashion_fit_validation"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "inhabited fashion observation",
+    "evidence": [
+      "Natural first morning light across matte woven fabric.",
+      "A practical hand action amid reception setup traces."
+    ]
+  },
+  "variation_key": "fashion-fit-arm-2-seed-5799112123705302875"
+}

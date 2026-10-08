@@ -1,0 +1,43 @@
+{
+  "schema": "photo-data-effect-exposure-review/v1",
+  "evaluated_after_core_freeze": true,
+  "evaluated_after_integration_ready": true,
+  "observed_utc": "2026-10-08T11:52:42.353032+00:00",
+  "core_sha256": "cad78848f58d6511b2709a6e662929a6e5de9b25ab56c93d7a3d68bcf19527b0",
+  "baseline_sha256": "ef8c5766d977a8810d543fffd1eec4b35db540f4350fd6ee2ce9403d9644e454",
+  "pack_id": "3d3c027db3a7ee5f",
+  "pack_sha256": "055b622e322dd47c70ce7a98dc2cf4e28d8563ce92e556ccc8fa7044985c3e65",
+  "source_binding": {
+    "generation_id": "0c8cb761362bff39d912ae24fae79451e41c41fff886a420352adc25fa317925",
+    "source_fingerprint": "312589c3b0342ad1469cfacffd2600faf210b28f4670f28cf50b7d782905df0a",
+    "runtime_store": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_2/runtime-store"
+  },
+  "new_prefix": "fit_ff",
+  "exposed_new_candidates": [
+    {
+      "id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "concept_units": [
+        "The jacket extends broadly across the shoulders.",
+        "its roomy sleeves and torso share the same enlarged proportions."
+      ],
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/11",
+      "applicability": {
+        "status": "eligible",
+        "source": "contextual_corpus_retrieval",
+        "basis": "writable_scope",
+        "reason": "scope compatible; scene and aesthetic interpretation pending"
+      }
+    }
+  ],
+  "selected_new_candidate_ids": [],
+  "rejections": [
+    {
+      "id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "reason_kind": "carrier_mismatch_and_artistic_scope",
+      "reason": "The complete candidate describes one oversized jacket across shoulders, sleeves, and torso. The independently frozen case is a dress upper-panel/sleeve/neckline study. Translating jacket into dress would evade its declared carrier; adding the jacket over the dress would conceal the targeted dress endpoints. A jacket is not a requester exclusion. It is an eligible open choice that is declined because it does not serve this independent case."
+    }
+  ],
+  "data_effect_test_status": "not_testable_in_this_pack",
+  "image_call_count": 0,
+  "claim_limit": "Exposure is established, but no suitable new fit data was adopted; a later baseline image cannot establish a new-data pixel effect."
+}

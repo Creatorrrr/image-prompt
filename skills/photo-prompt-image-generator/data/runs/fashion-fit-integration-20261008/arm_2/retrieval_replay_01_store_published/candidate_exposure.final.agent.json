@@ -1,0 +1,142 @@
+{
+  "schema": "photo-data-effect-exposure-review/v1",
+  "render_pack": {
+    "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_2/retrieval_replay_01_store_published/revisions/4e26573e9a914196846631ba978d01fe/pack.json",
+    "sha256": "4c12e146b43325eb25203b554fb2ffe708256f32d4e16c0edab44c20a54e28f3"
+  },
+  "render_runtime_receipt": {
+    "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_2/retrieval_replay_01_store_published/revisions/4e26573e9a914196846631ba978d01fe/runtime_receipt.json",
+    "sha256": "38331d0abbcfd98fa9bbd87bd7e8a27cc38e3c28469ee4e92ac1cc0483c570e3"
+  },
+  "render_pack_id": "a4b3576c4621c124",
+  "render_source_binding": {
+    "generation_id": "6576587f94bf0f5d7d44281a4dd13e6a8caa585bee7aca7b891027d8dff55563",
+    "source_fingerprint": "5b2241d4fc503a49d83e41e51c5de6303b07ec37211ebbbedaa510802df26c4b",
+    "runtime_store": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_2/runtime-store"
+  },
+  "initial_pack_id": "3d3c027db3a7ee5f",
+  "initial_pack_preserved": true,
+  "source_pending_runs_preserved": [
+    "retrieval_replay_01",
+    "retrieval_replay_01_published"
+  ],
+  "render_run": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_2/retrieval_replay_01_store_published",
+  "scene_seed": 5799112123705302875,
+  "replay_seed": 522031685427948259,
+  "exposed_new_candidates": [
+    {
+      "id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/0",
+      "concept_terms": [
+        "The jacket extends broadly across the shoulders.",
+        "its roomy sleeves and torso share the same enlarged proportions."
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "contextual_corpus_retrieval",
+        "basis": "writable_scope",
+        "reason": "scope compatible; scene and aesthetic interpretation pending"
+      },
+      "conflicts_with": [],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "slot": "wardrobe_style",
+      "axis": "sensual",
+      "source_candidate_id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+      "concept_units": [
+        "The jacket extends broadly across the shoulders.",
+        "its roomy sleeves and torso share the same enlarged proportions."
+      ],
+      "relations": [
+        {
+          "id": "fit_ff03_v2_owner_relation",
+          "type": "extend_beyond",
+          "subject": "jacket shoulder and sleeve edges",
+          "object": "same wearer's shoulder and torso contour"
+        }
+      ],
+      "adoption": "optional",
+      "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.fit.shoulder.extent"
+        },
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.fit.sleeve_width"
+        },
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.fit.body_clearance"
+        }
+      ],
+      "expression_scope": "whole_direction",
+      "contextual_status": "unassessed",
+      "retrieval_evidence": [
+        "relation_concept:keyword",
+        "relation_concept:keyword_scope",
+        "relation_event:keyword",
+        "relation_event:keyword_scope"
+      ],
+      "context_requirements": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "context_prerequisites": {
+        "contract_version": "photo-candidate-context/v1",
+        "source_id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+        "raw_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "requirements": [
+          {
+            "id": "entry:subject_any",
+            "operator": "any",
+            "context": "subject",
+            "values": [
+              "human"
+            ],
+            "sources": [
+              {
+                "kind": "entry",
+                "id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+                "field": "for_any"
+              }
+            ]
+          }
+        ],
+        "quality_layer_sources": [],
+        "evaluation": "final_scene_literal_evidence_and_declared_scope",
+        "semantic_truth_owner": "composer_review",
+        "canonical_sha256": "277b889849e9476c3018b80af6a3f7a436757802d2614afff210f0d8054e21c4"
+      },
+      "context_preflight": {
+        "status": "unassessed",
+        "evaluation": "final_scene"
+      },
+      "scene_retrieval_support": false,
+      "retrieval_status": "returned"
+    }
+  ],
+  "selected_new_candidate_ids": [],
+  "rejected_new_candidates": [
+    {
+      "id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "reason": "Complete meaning is one oversized jacket across its shoulders, sleeves and torso. It is eligible but artistically declined for this independent dress panel/sleeve/neckline case. Jacket-to-dress substitution would change the carrier and violate complete adoption; an added jacket would obscure the studied dress. Jackets are not requester exclusions."
+    }
+  ],
+  "new_data_retrieval_qualification": "fail",
+  "new_data_pixel_effect_qualification": "not_testable_zero_compatible_adoption",
+  "render_purpose": "Complete the authorized independent baseline dress image and native fidelity review, while retaining the failed new-data exposure/adoption result. Existing optional fabric-relation data may support a separate baseline physical review and never counts as new fit_ff adoption.",
+  "core_sha256": "cad78848f58d6511b2709a6e662929a6e5de9b25ab56c93d7a3d68bcf19527b0",
+  "freeze_receipt_sha256": "28fd0bfa6d2cf206068ed70ef7ff3fffc81aa786b0f35c98156b48a8c1165d78",
+  "image_call_count_before_render": 0
+}

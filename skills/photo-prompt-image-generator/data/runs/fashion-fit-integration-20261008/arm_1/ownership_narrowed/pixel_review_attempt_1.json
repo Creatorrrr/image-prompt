@@ -1,0 +1,69 @@
+{
+  "schema_version": "independent-fashion-fit-pixel-review/v1",
+  "attempt": 1,
+  "result_image": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_1/ownership_narrowed/generated_images/letterpress-fit-attempt-1.png",
+  "result_sha256": "5b6a5c8e3718480dcf4d3516e181608887f059191c1634d9e3a6b3fdbfe586a6",
+  "review_scale": "native",
+  "inspection_crops_file": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_1/ownership_narrowed/inspection/crop_provenance.json",
+  "strict_policy": "partial_is_fail; unobservable_is_not_pass",
+  "gates": {
+    "baseline_jacket_shoulder": {
+      "status": "fail",
+      "evidence": "The sleeve-attachment region and wrist cuff are visible on the relaxed arm, but the shoulder-point alignment is not independently distinguishable from the structured outer jacket contour at this view. This is partial endpoint support and is not promoted to PASS.",
+      "failure_kind": "partial_endpoint_support"
+    },
+    "baseline_jacket_ease": {
+      "status": "fail",
+      "evidence": "The jacket has visible body ease, but its button is on a separated front edge; the two fronts are not visibly joined at that button. Thus the same-garment fastened closure and surrounding ease relation is missing.",
+      "failure_kind": "closure_state_mismatch"
+    },
+    "baseline_trouser_ease": {
+      "status": "pass",
+      "evidence": "The visible front waistband follows the waist closely and continues into the same pale trousers, whose cloth hangs freely through both thighs and knees. The jacket covers side waistband portions, reported separately under projection."
+    },
+    "baseline_trouser_break": {
+      "status": "fail",
+      "evidence": "Both long trouser hems and corresponding loafer insteps are visible, with a soft fold especially on the screen-left leg. The exact single-fold condition and both rear-hem clearances are not fully inspectable together; the partial same-leg support is insufficient for this predeclared combined gate.",
+      "failure_kind": "partial_or_unobservable"
+    },
+    "selected_fit_ff10_v2_owner_relation": {
+      "status": "fail",
+      "evidence": "The native shoulder crop shows a normally rounded dark wool cap and attachment area. A separate narrow raised rope edge above that same attachment seam cannot be identified on either sleeve head; generic shoulder structure is insufficient for the selected candidate.",
+      "failure_kind": "distinct_ridge_not_identifiable",
+      "owner": "main_subject.jacket",
+      "endpoint_1": {
+        "name": "sleeve head ridge",
+        "status": "fail",
+        "evidence": "No independently distinguishable narrow raised wool ridge is visible."
+      },
+      "endpoint_2": {
+        "name": "same jacket shoulder attachment seam",
+        "status": "pass",
+        "evidence": "The relaxed-arm upper-sleeve attachment region remains visible and belongs continuously to the same dark jacket."
+      }
+    },
+    "scene_legibility": {
+      "status": "pass",
+      "evidence": "The old press, ink tools, type drawers, suspended printed sheet, cord clips, held spare clip and gaze toward the sheet create a readable practical workshop pause. The first-exhibition backstory and ink-drying timing remain authored interpretation."
+    },
+    "reference_guidance": {
+      "status": "pass",
+      "evidence": "The image retains the visible short dark brown bob with fine fringe, dark eyes, softly tapered face and natural rose lips as guidance. Different three-quarter angle and warm/cool light prevent any identity claim."
+    }
+  },
+  "new_candidate_pixel_status": "fail",
+  "image_fidelity_status": "fail",
+  "machine_review_file": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/data/runs/fashion-fit-integration-20261008/arm_1/ownership_narrowed/render_review_attempt_1.json",
+  "whole_image_review": {
+    "unlabeled_impression": "A warm, tactile environmental fashion portrait: a quietly amused woman with a clothespin, looking toward a hanging city print in an old workshop at violet dusk.",
+    "scene_legibility": "The printed sheet and spare clip make the pause understandable without its written synopsis; a viewer can read a small practical drying arrangement. The exhibition milestone is not established by the pixels.",
+    "subject_presence_and_hierarchy": "The warm face and ivory knit bring attention first to the woman, the hanging proof forms the second focus, and old press/type furniture supplies credible depth. Her reserved half-smile and directed gaze connect presence to the practical scene.",
+    "material_and_photography": "Wool nap, knit ribs, cream paper, metal press and worn floor have distinct material surfaces. Warm practical light and cool window depth share the room convincingly.",
+    "limitations": "Trousers changed from matching charcoal to pale wool, and the jacket is longer and unfastened. That contrast improves visual separation but weakens exact authored fidelity. The small sleeve-ridge relation did not survive distinctly.",
+    "control_calibration": "The unlabeled image reads calm and personally appealing. Compared with frozen sensual=1, that appeal is a supporting quality; no added fetish focus or surreal effect is perceptible. User preference is pending."
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "evidence": null
+  }
+}
