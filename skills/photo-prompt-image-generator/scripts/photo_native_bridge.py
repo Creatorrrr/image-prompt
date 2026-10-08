@@ -14,9 +14,14 @@ BRIDGE_JAVASCRIPT = r'''
 async function runPhotoNative({tools, run, workflowScript, python, ledger, observe}) {
   const quote = s => "'" + String(s).replaceAll("'", "'\\''") + "'";
   async function command(argv) {
-    const answer = await tools.exec_command({cmd: argv.map(quote).join(" "), max_output_tokens: 2000});
+    let answer = await tools.exec_command({cmd: argv.map(quote).join(" "), max_output_tokens: 8192});
+    let output = answer.output;
+    while (answer.session_id !== undefined) {
+      answer = await tools.write_stdin({session_id: answer.session_id, chars: "", yield_time_ms: 1000, max_output_tokens: 8192});
+      output += answer.output;
+    }
     if (answer.exit_code !== 0) throw new Error("native_bridge_command_failed");
-    return JSON.parse(answer.output);
+    return JSON.parse(output);
   }
   const started = await command([python, workflowScript, "native-started", "--run", run]);
   let result;

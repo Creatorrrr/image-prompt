@@ -165,6 +165,8 @@ def prepare_render(args):
             **parameters}
         if pack.get("render_repair"):
             request["render_repair_contract_sha256"] = pack["render_repair"]["canonical_sha256"]
+        if composed.get("chosen_visual_concept_ids"):
+            request["effective_visual_contract_sha256"] = value(state, "composed_audit").get("effective_visual_contract_sha256")
         path = Path(args.run).resolve() / ".staging" / (uuid.uuid4().hex + ".request.json")
         atomic_write(path, encode(request))
         temporary = dict(state, artifacts=dict(state["artifacts"]))
