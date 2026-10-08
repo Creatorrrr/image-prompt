@@ -61424,6 +61424,96 @@
           "product"
         ],
         "embedding_text": "soft prop-shadow falloff"
+      },
+      {
+        "id": "partial_solar_eclipse_canopy_aperture_elaboration",
+        "ko": "이미 설정된 부분일식의 햇빛이 같은 잎 지붕과 수광면을 잇는 기존 경로를 따르고, 그 안에서 태양상을 맺기에 적절한 잎 사이의 작은 틈을 통해 밝은 초승달 모양의 태양상이 일반적인 잎 그림자 사이에 반복해서 나타난다",
+        "en": "during the established partial solar eclipse, adequate small interleaf openings on the retained canopy-to-receiver light route project repeated bright crescent Sun images among ordinary leaf shadows",
+        "weight": 0.5,
+        "tags": [
+          "natural_light",
+          "pattern",
+          "shadow"
+        ],
+        "embedding_text": "partial-eclipse sunlight follows the retained route through the established leafy canopy onto its established receiver surface; small interleaf openings within that canopy have geometry adequate for solar projection at the retained canopy-to-receiver separation; repeated bright crescent images of the partly obscured Sun appear on that same receiver, with their source shape consistent with the established partial phase; ordinary dark leaf shadows remain around and between the bright solar images on the same receiver",
+        "concept_units": [
+          "partial-eclipse sunlight follows the retained route through the established leafy canopy onto its established receiver surface",
+          "small interleaf openings within that canopy have geometry adequate for solar projection at the retained canopy-to-receiver separation",
+          "repeated bright crescent images of the partly obscured Sun appear on that same receiver, with their source shape consistent with the established partial phase",
+          "ordinary dark leaf shadows remain around and between the bright solar images on the same receiver"
+        ],
+        "relations": [
+          {
+            "id": "partial_solar_eclipse_canopy_aperture_elaboration_light_path",
+            "type": "passes_through",
+            "subject": "partially_eclipsed_sunlight",
+            "object": "canopy_gaps"
+          },
+          {
+            "id": "partial_solar_eclipse_canopy_aperture_elaboration_receiver",
+            "type": "projects_crescent_sun_images_onto",
+            "subject": "canopy_gaps",
+            "object": "receiver_surface"
+          },
+          {
+            "id": "partial_solar_eclipse_canopy_aperture_elaboration_leaf_shadows",
+            "type": "casts_ordinary_leaf_shadows_on",
+            "subject": "existing_leafy_canopy",
+            "object": "receiver_surface"
+          }
+        ],
+        "affected_dimensions": [
+          "setting",
+          "lighting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "setting",
+            "target": "existing_leafy_canopy",
+            "property": "spatial_structure"
+          },
+          {
+            "dimension": "lighting",
+            "target": "receiver_surface",
+            "property": "illumination.pattern"
+          }
+        ],
+        "requires_all_tags": [
+          "partial",
+          "solar",
+          "eclipse"
+        ],
+        "requires_any_tags": [
+          "canopy",
+          "leaf",
+          "leaves",
+          "leafy",
+          "foliage"
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "partial_solar_eclipse_canopy_aperture_elaboration_context",
+              "definition": "This optional realization retains an independently established partial solar eclipse, the same Sun, leafy canopy and receiver owners, and their affirmative connected sunlight route. Where setting and lighting are explicitly open, previously unbound interleaf aperture microgeometry may be authored within that canopy and retained route so that a suitable subset of openings forms solar images at the retained source and receiver geometry. Adequate openings must exist in the final realization; neither a numerical diameter nor prior declaration of aperture adequacy is required. The canopy may be outside the frame.",
+              "observable_interpretation": "partial-eclipse sunlight follows the retained route through the established leafy canopy onto its established receiver surface; small interleaf openings within that canopy have geometry adequate for solar projection at the retained canopy-to-receiver separation; repeated bright crescent images of the partly obscured Sun appear on that same receiver, with their source shape consistent with the established partial phase; ordinary dark leaf shadows remain around and between the bright solar images on the same receiver",
+              "claim_limits": [
+                "This row declares the unconditional union of setting and lighting. Both must be explicitly open, even when adequate apertures are retained without a new setting choice. A missing open dimension is not permission; do not modify the core or narrow the source effects to gain admission.",
+                "The setting effect is only previously unbound aperture microgeometry within the existing leafy canopy. The spatial_structure property is a conservative existing vocabulary path, not permission to change canopy identity, position, overall arrangement, or any prescribed geometry. Do not resize or relocate an already prescribed opening, move the receiver, change the source direction or retained separation, cut new openings, or add aperture apparatus.",
+                "The existing_leafy_canopy and receiver_surface roles must bind to the actual scene owners, and canopy_gaps belong to that same canopy. Retain every requester-owned property and required evidence. Reconcile equivalent owner and property names semantically: literal, wildcard and ancestor-path checks alone do not resolve aliases. Do not rename or transfer an owner or property to avoid a lock.",
+                "Retain the established Sun-to-canopy-to-receiver connection. Newly detailing unbound openings on that route is a setting choice; describing the same route and received-light outcome is not a relationship change. Creating a missing route, changing connectivity or using another canopy or receiver is outside this row, regardless of a broad open dimension.",
+                "A canopy name alone does not establish the existing connected sunlight route. Preserve independently supplied affirmative received-sunlight context. Do not invent a solar event, source, receiver or connection to qualify the option.",
+                "The received lighting effect is the shape and distribution of illumination on the same receiver. The bright crescents are projected images of the partly obscured Sun, not crescent-shaped leaves or apertures and not dark crescent shadows.",
+                "Judge optical adequacy in the complete final scene relative to retained source illumination, aperture geometry and canopy-to-receiver separation. Calling a gap small is not proof. No fixed orientation, size, number, sharpness or claim that every gap produces a recognizable image is supplied.",
+                "Preserve the established partial phase and source shape. Annular rings, totality, uneclipsed disks, ordinary leaf shadows alone, artificial crescent gobos, printed crescents, water caustics and camera artifacts do not instantiate this whole meaning.",
+                "Crescent-like marks alone do not establish a real eclipse, date, location, unseen source or prior event. Retain the supplied event and connected owner context separately.",
+                "The requires_all_tags and requires_any_tags fields remain coarse lexical filters. They do not prove affirmative event meaning, connected owners, adequate geometry, final physical feasibility or scope. Their success cannot override semantic conflict, and lexical non-exposure is not semantic inadmissibility.",
+                "New aperture elaboration is authored setting context, not retained evidence. Record its actual property effects and material setting and lighting decisions in the existing supported fields, with complete literal relation evidence. The source context compiler does not turn this aperture prose into a new mechanical prerequisite or a conditional effect branch.",
+                "Reject this optional candidate if the event or retained route is missing or conflicting, either declared dimension is not explicitly open, any affected same-owner property is protected, the fixed geometry is incompatible, or coherent realization would require effects outside this contract. An unmentioned aperture measurement alone is neither a prohibition nor evidence of adequacy."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        }
       }
     ],
     "camera_type": [
