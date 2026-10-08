@@ -1,0 +1,1639 @@
+{
+  "contract_version": "photo-composer-view/v2",
+  "mode": "candidate_details",
+  "source_pack_id": "2cb0afc9676d67ee",
+  "source_pack_sha256": "a82666ea922f23452213a7bae5fcdcdd59e9db892deb1251eab4d8baf6c6c9cc",
+  "candidates": [
+    {
+      "id": "visual-concept:pr_hair_strand_owner_and_cause",
+      "source_pointer": "/visual_concept_candidates/candidates/3",
+      "candidate": {
+        "id": "visual-concept:pr_hair_strand_owner_and_cause",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "hair strand owner and cause relation",
+          "hair and facial contours remain separate without penetration",
+          "flyaway strands connect to the hairline or tie point",
+          "wind pushes loose hair",
+          "local strands agree with the main hair direction",
+          "hair moves with the breeze",
+          "hairline-attached strands",
+          "their movement agrees with the stated breeze dampness or action",
+          "잔머리의 부착과 움직임 원인"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "pr_hair_strand_owner_and_cause",
+            "category": "photographic_scene_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Show this relation on its selected owner: flyaway strands connect to the hairline or tie point Show this relation on its selected owner: local strands agree with the main hair direction Show this relation on its selected owner: their movement agrees with the stated breeze dampness or action Show this relation on its selected owner: hair and facial contours remain separate without penetration",
+            "component_semantics": {
+              "minimum_component_groups": 4,
+              "required_group_ids": [
+                "component_1",
+                "component_2",
+                "component_3",
+                "component_4"
+              ],
+              "groups": [
+                {
+                  "id": "component_1",
+                  "any_terms": [
+                    "flyaway strands connect to the hairline or tie point"
+                  ]
+                },
+                {
+                  "id": "component_2",
+                  "any_terms": [
+                    "local strands agree with the main hair direction"
+                  ]
+                },
+                {
+                  "id": "component_3",
+                  "any_terms": [
+                    "their movement agrees with the stated breeze dampness or action"
+                  ]
+                },
+                {
+                  "id": "component_4",
+                  "any_terms": [
+                    "hair and facial contours remain separate without penetration"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "component_1_phrase",
+                "component_2_phrase",
+                "component_3_phrase",
+                "component_4_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 4,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "component_1_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "flyaway strands connect to the hairline or tie point"
+                ]
+              },
+              "component_2_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "local strands agree with the main hair direction"
+                ]
+              },
+              "component_3_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "their movement agrees with the stated breeze dampness or action"
+                ]
+              },
+              "component_4_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "hair and facial contours remain separate without penetration"
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_pr_hair_strand_owner_and_cause_1",
+                "review_scale": "native",
+                "description": "flyaway strands connect to the hairline or tie point. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+              },
+              {
+                "id": "vo_pr_hair_strand_owner_and_cause_2",
+                "review_scale": "native",
+                "description": "local strands agree with the main hair direction. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+              },
+              {
+                "id": "vo_pr_hair_strand_owner_and_cause_3",
+                "review_scale": "native",
+                "description": "their movement agrees with the stated breeze dampness or action. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+              },
+              {
+                "id": "vo_pr_hair_strand_owner_and_cause_4",
+                "review_scale": "native",
+                "description": "hair and facial contours remain separate without penetration. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+              }
+            ],
+            "reject_substitutes": [
+              "공중에 떠 있는 독립 머리카락",
+              "모든 머리카락을 일괄 난류로 흐트림",
+              "요청된 정돈 헤어를 무조건 헝클어뜨림"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "visual-concept:kuudere_composed_warmth_relation",
+      "source_pointer": "/visual_concept_candidates/candidates/0",
+      "candidate": {
+        "id": "visual-concept:kuudere_composed_warmth_relation",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "one quiet target-directed practical support action",
+          "no hostile denial shy withdrawal open exuberance possessive control or abrupt personality switch",
+          "calm low-expression baseline that remains stable",
+          "unmistakably adult fictional character",
+          "one identifiable trusted adult counterpart",
+          "restrained lower-lid brow or mouth-corner softening as optional facial support",
+          "stable upright posture and economical gesture as optional posture support",
+          "one already-visible benefit for that same counterpart",
+          "relationship behavior rather than expressionless beauty or a caring prop alone",
+          "one localized warmth cue rather than a broad smile",
+          "neat simple silhouette and muted or cool-neutral styling as optional appearance support",
+          "hair color eye color hairstyle costume gender and role remain request-driven rather than personality evidence"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "kuudere_composed_warmth_relation",
+            "category": "behavioral_archetype",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Preserve the requested adult fictional identity, role, wardrobe, and visual style. In one still, keep a calm low-expression baseline visibly stable while one concrete, quiet practical action helps one identifiable trusted adult counterpart and leaves an already-visible helpful consequence for that same counterpart. Add only one localized warmth leak, such as slight lower-lid easing, a restrained brow release, a fractional mouth-corner softening, or reduced tension in the hand or shoulder nearest the target. Optional outward support may use economical gesture, stable upright posture, a neat simple silhouette, restrained grooming, or a muted/cool-neutral palette, but these are conventions rather than requirements. Do not assign fixed hair color, eye color, hairstyle, costume, gender, occupation, gaze direction, camera angle, or prop, and do not let expressionlessness, competence, beauty, a cool palette, or a caring object substitute for the same-target action and consequence. Preserve the counterpart's autonomy; avoid hostile denial, shy withdrawal, possessive control, broad open affection, or an abrupt personality switch.",
+            "component_semantics": {
+              "minimum_component_groups": 5,
+              "required_group_ids": [
+                "composed_low_expression_surface",
+                "specific_trusted_target",
+                "quiet_target_directed_support",
+                "localized_warmth_leak",
+                "visible_same_target_consequence"
+              ],
+              "groups": [
+                {
+                  "id": "composed_low_expression_surface",
+                  "any_terms": [
+                    "침착한 저표현 표면",
+                    "차분한 태도를 유지",
+                    "담담한 표정 기준선",
+                    "composed low-expression surface",
+                    "calm restrained baseline",
+                    "stable emotional reserve",
+                    "冷静で表情の少ない表面",
+                    "平静な抑制を保つ"
+                  ]
+                },
+                {
+                  "id": "specific_trusted_target",
+                  "any_terms": [
+                    "같은 신뢰 상대",
+                    "특정 성인 동료",
+                    "한 명의 믿는 상대",
+                    "same trusted adult counterpart",
+                    "one identifiable trusted counterpart",
+                    "specific adult companion",
+                    "同じ信頼相手",
+                    "特定の成人の仲間"
+                  ]
+                },
+                {
+                  "id": "quiet_target_directed_support",
+                  "any_terms": [
+                    "조용히 실용적으로 돕",
+                    "필요한 물건을 먼저 건넴",
+                    "상대의 불편을 말없이 해결",
+                    "quietly solves one practical problem",
+                    "understated target-directed support",
+                    "silently places needed help within reach",
+                    "静かに実用的な助けを行う",
+                    "必要な物を黙って差し出す"
+                  ]
+                },
+                {
+                  "id": "localized_warmth_leak",
+                  "any_terms": [
+                    "입매만 작게 풀",
+                    "눈가만 부드러워",
+                    "한쪽 어깨의 긴장만 완화",
+                    "one small mouth-corner softening",
+                    "only the lower lids ease",
+                    "one localized warmth cue",
+                    "口元だけがわずかに和らぐ",
+                    "目元だけが柔らかくなる"
+                  ]
+                },
+                {
+                  "id": "visible_same_target_consequence",
+                  "any_terms": [
+                    "같은 상대가 안도",
+                    "그 동료가 작업을 재개",
+                    "상대의 불편이 이미 해결",
+                    "the same counterpart visibly relaxes",
+                    "the counterpart can resume the task",
+                    "the practical problem is visibly resolved",
+                    "同じ相手が安心する",
+                    "相手が作業を再開できる"
+                  ]
+                },
+                {
+                  "id": "supporting_low_amplitude_face",
+                  "any_terms": [
+                    "거의 움직이지 않는 눈썹과 작은 입매 변화",
+                    "하안검 긴장만 아주 조금 풀림",
+                    "restrained brow and fractional mouth change",
+                    "slight lower-lid easing without a broad smile",
+                    "静かな眉とごく小さな口元の変化"
+                  ]
+                },
+                {
+                  "id": "supporting_economical_posture",
+                  "any_terms": [
+                    "곧고 안정적인 자세와 절제된 손동작",
+                    "불필요한 몸짓이 적은 움직임",
+                    "stable upright posture and economical gesture",
+                    "low-amplitude movement without theatrical posing",
+                    "安定した姿勢と控えめな手の動き"
+                  ]
+                },
+                {
+                  "id": "supporting_restrained_styling",
+                  "any_terms": [
+                    "단정하고 절제된 실루엣",
+                    "저채도 또는 차가운 중성 계열",
+                    "neat restrained silhouette",
+                    "muted or cool-neutral styling",
+                    "整った控えめなシルエット",
+                    "低彩度または寒色寄りの中性色"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "adult_fictional_subject_phrase",
+                "composed_surface_phrase",
+                "specific_trusted_target_phrase",
+                "quiet_support_action_phrase",
+                "localized_warmth_leak_phrase",
+                "same_target_consequence_phrase",
+                "stable_surface_coexistence_phrase",
+                "appearance_nonproof_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 8,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "adult_fictional_subject_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "adult fictional character",
+                  "unmistakably adult character",
+                  "adult fictional subject",
+                  "adult fictional coworker",
+                  "adult fictional partner"
+                ],
+                "must_not_contain": [
+                  "girl",
+                  "teen",
+                  "schoolgirl"
+                ]
+              },
+              "composed_surface_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "composed low-expression surface",
+                  "calm restrained baseline",
+                  "stable emotional reserve",
+                  "low-amplitude composed expression"
+                ]
+              },
+              "specific_trusted_target_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "same trusted adult counterpart",
+                  "one identifiable trusted counterpart",
+                  "specific adult companion",
+                  "same trusted coworker"
+                ]
+              },
+              "quiet_support_action_phrase": {
+                "min_content_words": 4,
+                "must_mention_any": [
+                  "quietly solves one practical problem",
+                  "understated target-directed support",
+                  "silently places needed help within reach",
+                  "quietly adjusts the counterpart's wet sleeve",
+                  "hands over the needed tool without ceremony"
+                ]
+              },
+              "localized_warmth_leak_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "one small mouth-corner softening",
+                  "only the lower lids ease",
+                  "one localized warmth cue",
+                  "restrained brow release",
+                  "near-target shoulder tension eases"
+                ]
+              },
+              "same_target_consequence_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "the same counterpart visibly relaxes",
+                  "the counterpart can resume the task",
+                  "the practical problem is visibly resolved",
+                  "the same trusted coworker is visibly more comfortable"
+                ]
+              },
+              "stable_surface_coexistence_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "stable surface and localized warmth coexist",
+                  "composure remains intact in the same moment",
+                  "one still preserves the calm baseline",
+                  "without an abrupt personality switch"
+                ]
+              },
+              "appearance_nonproof_phrase": {
+                "min_content_words": 4,
+                "must_mention_any": [
+                  "appearance remains request-driven rather than personality proof",
+                  "hair eyes costume and role are not personality evidence",
+                  "muted styling is optional support only",
+                  "expressionless beauty alone does not carry the concept"
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_only",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [
+                "kuudere",
+                "cooldere",
+                "cool-dere",
+                "쿨데레",
+                "쿠데레",
+                "쿨 데레",
+                "クーデレ"
+              ],
+              "runtime_forbidden_labels": [
+                "kuudere",
+                "cooldere",
+                "cool-dere",
+                "쿨데레",
+                "쿠데레",
+                "쿨 데레",
+                "クーデレ"
+              ]
+            },
+            "render_gates": [
+              {
+                "id": "vo_kuudere_adult_fictional_identity",
+                "review_scale": "both",
+                "description": "The subject and any relationship counterpart are unmistakably adult fictional people, while the requested identity, role, and styling remain intact."
+              },
+              {
+                "id": "vo_kuudere_composed_surface",
+                "review_scale": "thumbnail",
+                "description": "A calm low-expression baseline remains immediately legible without becoming hostile, frightened, vacant, or broadly cheerful."
+              },
+              {
+                "id": "vo_kuudere_specific_trusted_target",
+                "review_scale": "thumbnail",
+                "description": "The quiet support action and localized warmth clearly point to one identifiable trusted adult counterpart rather than everyone in the scene."
+              },
+              {
+                "id": "vo_kuudere_quiet_support_action",
+                "review_scale": "both",
+                "description": "One practical target-directed act is concretely readable and is not replaced by an adjective, gaze, costume, role, or caring prop alone."
+              },
+              {
+                "id": "vo_kuudere_localized_warmth",
+                "review_scale": "native",
+                "description": "Exactly one restrained facial, hand, or shoulder region softens toward the trusted counterpart while the rest of the composed baseline remains stable."
+              },
+              {
+                "id": "vo_kuudere_same_target_consequence",
+                "review_scale": "both",
+                "description": "An already-visible helpful consequence belongs to the same counterpart, such as relief, restored comfort, or resumed activity."
+              },
+              {
+                "id": "vo_kuudere_stable_coexistence",
+                "review_scale": "both",
+                "description": "Stable composure, selective warmth, practical support, and its same-target consequence coexist in one still without an abrupt personality reversal."
+              },
+              {
+                "id": "vo_kuudere_appearance_is_optional_support",
+                "review_scale": "both",
+                "description": "Hair, eyes, costume, gender, role, posture, and muted or cool styling remain optional; none is accepted as archetype proof without the relationship behavior."
+              }
+            ],
+            "reject_substitutes": [
+              "expressionless_or_attractive_face_only",
+              "cool_palette_or_muted_costume_only",
+              "hair_eye_color_or_hairstyle_as_personality_evidence",
+              "competent_professional_role_only",
+              "routine_service_or_caring_prop_only",
+              "generic_shyness_or_anxious_avoidance",
+              "hostile_rejection_or_flustered_tsundere_denial",
+              "broad_open_affection_or_large_smile",
+              "possessive_monitoring_control_or_boundary_intrusion",
+              "warmth_cue_without_specific_target",
+              "support_action_without_visible_same_target_consequence",
+              "abrupt_full_personality_switch",
+              "reference_face_treated_as_personality_evidence"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "visual-concept:pc_pc23_owner_relation",
+      "source_pointer": "/visual_concept_candidates/candidates/1",
+      "candidate": {
+        "id": "visual-concept:pc_pc23_owner_relation",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "a visible hand supports one small mirror at plausible contact points",
+          "handheld mirror portrait",
+          "the reflected face and direct surroundings retain a coherent focus hierarchy",
+          "the reflected expression remains readable at the mirror image scale",
+          "selective face reflection",
+          "작은 손거울 안의 얼굴",
+          "the mirror boundary encloses the selected reflected face region"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "pc_pc23_owner_relation",
+            "category": "portrait_composition_owner_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Preserve the requester-supported owner and make this relation visible: a visible hand supports one small mirror at plausible contact points Preserve the requester-supported owner and make this relation visible: the mirror boundary encloses the selected reflected face region Preserve the requester-supported owner and make this relation visible: the reflected expression remains readable at the mirror image scale Preserve the requester-supported owner and make this relation visible: the reflected face and direct surroundings retain a coherent focus hierarchy",
+            "component_semantics": {
+              "minimum_component_groups": 4,
+              "required_group_ids": [
+                "component_1",
+                "component_2",
+                "component_3",
+                "component_4"
+              ],
+              "groups": [
+                {
+                  "id": "component_1",
+                  "any_terms": [
+                    "a visible hand supports one small mirror at plausible contact points",
+                    "보이는 손이 자연스러운 접촉점에서 작은 거울 하나를 지지한다"
+                  ]
+                },
+                {
+                  "id": "component_2",
+                  "any_terms": [
+                    "the mirror boundary encloses the selected reflected face region",
+                    "거울 경계가 선택한 반사 얼굴 부위를 둘러싼다"
+                  ]
+                },
+                {
+                  "id": "component_3",
+                  "any_terms": [
+                    "the reflected expression remains readable at the mirror image scale",
+                    "거울 이미지의 크기에서 반사된 표정을 읽을 수 있다"
+                  ]
+                },
+                {
+                  "id": "component_4",
+                  "any_terms": [
+                    "the reflected face and direct surroundings retain a coherent focus hierarchy",
+                    "반사 얼굴과 직접 보이는 주변이 일관된 초점 우선순위를 유지한다"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "component_1_phrase",
+                "component_2_phrase",
+                "component_3_phrase",
+                "component_4_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 4,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "component_1_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "a visible hand supports one small mirror at plausible contact points"
+                ]
+              },
+              "component_2_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "the mirror boundary encloses the selected reflected face region"
+                ]
+              },
+              "component_3_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "the reflected expression remains readable at the mirror image scale"
+                ]
+              },
+              "component_4_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "the reflected face and direct surroundings retain a coherent focus hierarchy"
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_pc_pc23_owner_relation_1",
+                "review_scale": "native",
+                "description": "a visible hand supports one small mirror at plausible contact points. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+              },
+              {
+                "id": "vo_pc_pc23_owner_relation_2",
+                "review_scale": "both",
+                "description": "the mirror boundary encloses the selected reflected face region. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+              },
+              {
+                "id": "vo_pc_pc23_owner_relation_3",
+                "review_scale": "both",
+                "description": "the reflected expression remains readable at the mirror image scale. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+              },
+              {
+                "id": "vo_pc_pc23_owner_relation_4",
+                "review_scale": "native",
+                "description": "the reflected face and direct surroundings retain a coherent focus hierarchy. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+              }
+            ],
+            "reject_substitutes": [
+              "손거울이 보여도 얼굴 반사가 없으면 실패한다.",
+              "눈 한 조각만 요청한 경우 표정 전체를 요구하지 않는다."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "visual-concept:embodied_corruption_transition",
+      "source_pointer": "/visual_concept_candidates/candidates/2",
+      "candidate": {
+        "id": "visual-concept:embodied_corruption_transition",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "optional allegiance choice",
+          "former identity still visible",
+          "unfinished on-body boundary",
+          "embodied dark-state transition",
+          "context-specific visible cause",
+          "corruption remains first-read",
+          "optional former-self remnant"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "embodied_corruption_transition",
+            "category": "state_transition",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "When the request context means an embodied character transition, show a readable former state, a dark current state, an unfinished on-body boundary, and one visible context-specific cause or choice. Allegiance change and a suppressed former-self remnant are optional senses, not mandatory meanings of every corruption request.",
+            "component_semantics": {
+              "minimum_component_groups": 2,
+              "required_group_ids": [
+                "embodied_transition_boundary"
+              ],
+              "groups": [
+                {
+                  "id": "former_state",
+                  "any_terms": [
+                    "옛 제복",
+                    "과거의 상징",
+                    "밝은 절반",
+                    "former bright uniform",
+                    "old allegiance emblem",
+                    "former self remains visible"
+                  ]
+                },
+                {
+                  "id": "embodied_transition_boundary",
+                  "any_terms": [
+                    "몸 위에 어둠이 번지는 경계",
+                    "손목에서 멈춘 검은 변화",
+                    "반쯤 검게 변한",
+                    "on-body boundary",
+                    "darkness spreading across her body",
+                    "half-darkened body",
+                    "split former and dark state"
+                  ]
+                },
+                {
+                  "id": "allegiance_choice",
+                  "any_terms": [
+                    "옛 배지를 놓",
+                    "어두운 상징을 받",
+                    "old badge falling",
+                    "releases the former emblem",
+                    "accepts the dark charm",
+                    "changes allegiance"
+                  ]
+                },
+                {
+                  "id": "suppressed_remnant",
+                  "any_terms": [
+                    "망설이는 입꼬리",
+                    "따뜻함을 억누",
+                    "hesitant warm mouth corner",
+                    "former warmth leaks through",
+                    "suppresses a caring reflex"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "former_state_phrase",
+                "dark_current_state_phrase",
+                "on_body_transition_boundary_phrase",
+                "context_specific_cause_phrase",
+                "unfinished_transition_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 5,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "former_state_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "former state",
+                  "former identity",
+                  "old allegiance",
+                  "bright uniform",
+                  "former emblem"
+                ]
+              },
+              "dark_current_state_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "dark current state",
+                  "darkened state",
+                  "black-violet state",
+                  "corrupted state"
+                ]
+              },
+              "on_body_transition_boundary_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "on-body boundary",
+                  "boundary across her",
+                  "stops at her wrist",
+                  "spreading across her body"
+                ]
+              },
+              "context_specific_cause_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "visible cause",
+                  "present-tense choice",
+                  "accepts the change",
+                  "resists the change",
+                  "source of the transformation"
+                ]
+              },
+              "unfinished_transition_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "unfinished transition",
+                  "mid-transition",
+                  "still spreading",
+                  "not yet complete"
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [
+                "dark corruption transition",
+                "corrupted state"
+              ],
+              "forbidden_prompt_terms": [
+                "political corruption",
+                "data corruption",
+                "file corruption"
+              ],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_corruption_former_state_visible",
+                "review_scale": "both",
+                "description": "A coherent former identity or allegiance remains visibly readable, not merely described by metadata."
+              },
+              {
+                "id": "vo_corruption_dark_state_embodied",
+                "review_scale": "both",
+                "description": "The darkened state changes the actual character's face, body, styling, or behavior rather than appearing only as surrounding symbols."
+              },
+              {
+                "id": "vo_corruption_on_body_boundary",
+                "review_scale": "native",
+                "description": "A clear unfinished boundary between former and dark states exists on the character."
+              },
+              {
+                "id": "vo_corruption_contextual_cause",
+                "review_scale": "thumbnail",
+                "description": "A visible cause or present-tense choice expresses the request-specific sense of corruption without forcing one allegiance or relationship story."
+              },
+              {
+                "id": "vo_corruption_remains_primary",
+                "review_scale": "both",
+                "description": "The corruption transition remains the first-read event rather than a generic cute or caring beat."
+              }
+            ],
+            "reject_substitutes": [
+              "black_clothing_only",
+              "dark_crystals_or_runes_only",
+              "completed_costume_swap_without_transition",
+              "good_and_evil_split_without_present_action",
+              "warm_care_scene_where_corruption_is_secondary"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "visual-concept:aircraft_pilot_operation",
+      "source_pointer": "/visual_concept_candidates/candidates/4",
+      "candidate": {
+        "id": "visual-concept:aircraft_pilot_operation",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "flight deck responsibility",
+          "cockpit checklist work",
+          "primary control contact",
+          "operational rather than costume-only pilot identity",
+          "preflight taxi or approach phase",
+          "adult aircraft operator",
+          "instrument and outside-view agreement"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "aircraft_pilot_operation",
+            "category": "professional_role",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Keep the adult aircraft operator, one primary control or checklist contact, and a matching instrument-to-outside flight state readable in the same frame. Choose one operational phase and make the cockpit relationship carry the role instead of a helmet, flight suit, logo, or generic technology styling.",
+            "component_semantics": {
+              "minimum_component_groups": 3,
+              "required_group_ids": [
+                "pilot_station_identity",
+                "control_or_checklist_contact",
+                "matched_flight_state"
+              ],
+              "groups": [
+                {
+                  "id": "pilot_station_identity",
+                  "any_terms": [
+                    "adult pilot seated at the aircraft controls",
+                    "pilot station on a flight deck",
+                    "성인 조종사가 항공기 조종석에 앉아 있음",
+                    "비행 갑판의 조종사 좌석"
+                  ]
+                },
+                {
+                  "id": "control_or_checklist_contact",
+                  "any_terms": [
+                    "hand on the yoke or control stick",
+                    "throttle contact during a check",
+                    "finger following a cockpit checklist",
+                    "조종간이나 스로틀에 닿은 손",
+                    "체크리스트를 따라가는 손가락"
+                  ]
+                },
+                {
+                  "id": "matched_flight_state",
+                  "any_terms": [
+                    "instruments agree with the visible runway",
+                    "attitude display matches the horizon",
+                    "taxi state matches the outside view",
+                    "계기와 활주로 상태가 일치",
+                    "자세계와 외부 수평선이 일치"
+                  ]
+                },
+                {
+                  "id": "operational_phase",
+                  "any_terms": [
+                    "preflight control check",
+                    "taxi and run-up",
+                    "approach cross-check",
+                    "비행 전 점검",
+                    "택시 또는 접근 단계"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "adult_aircraft_operator_phrase",
+                "pilot_station_phrase",
+                "primary_control_contact_phrase",
+                "matched_flight_state_phrase",
+                "operational_phase_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 5,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "adult_aircraft_operator_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "adult aircraft pilot",
+                  "adult aircraft operator",
+                  "adult flight-deck pilot"
+                ]
+              },
+              "pilot_station_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "seated at the aircraft controls",
+                  "pilot station on the flight deck",
+                  "inside the aircraft cockpit"
+                ]
+              },
+              "primary_control_contact_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "hand on the yoke",
+                  "hand on the control stick",
+                  "throttle contact",
+                  "finger following the cockpit checklist"
+                ]
+              },
+              "matched_flight_state_phrase": {
+                "min_content_words": 4,
+                "must_mention_any": [
+                  "instruments agree with the visible runway",
+                  "attitude display matches the horizon",
+                  "taxi state matches the outside view"
+                ]
+              },
+              "operational_phase_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "preflight control check",
+                  "taxi and run-up phase",
+                  "approach cross-check phase"
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "label_plus_definition",
+              "prompt_label_terms": [
+                "aircraft pilot"
+              ],
+              "forbidden_prompt_terms": [
+                "pilot program",
+                "pilot episode",
+                "pilot light",
+                "ship pilot",
+                "mecha pilot"
+              ],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_pilot_aircraft_operator_identity",
+                "review_scale": "thumbnail",
+                "description": "The adult subject first reads as the operator of a real aircraft rather than a traveler, attendant, racer, or costume model."
+              },
+              {
+                "id": "vo_pilot_control_contact",
+                "review_scale": "both",
+                "description": "A hand, foot, or checklist interaction visibly connects the pilot to a primary aircraft-control task."
+              },
+              {
+                "id": "vo_pilot_flight_state_coherence",
+                "review_scale": "native",
+                "description": "The depicted controls, instruments, runway or horizon, and operational phase agree rather than forming decorative cockpit noise."
+              },
+              {
+                "id": "vo_pilot_cockpit_relationship",
+                "review_scale": "both",
+                "description": "The pilot station and aircraft environment remain large and legible enough to carry the professional role."
+              },
+              {
+                "id": "vo_pilot_not_costume_or_helmet_only",
+                "review_scale": "thumbnail",
+                "description": "A helmet, flight suit, badge, mecha cockpit, or generic instrument wall alone does not substitute for aircraft operation."
+              }
+            ],
+            "reject_substitutes": [
+              "pilot_helmet_or_flight_suit_only",
+              "cabin_crew_or_airport_staff",
+              "air_traffic_controller",
+              "mecha_or_racing_pilot",
+              "ship_or_harbor_pilot",
+              "pilot_program_episode_or_light",
+              "cockpit_background_without_control_relation"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "visual-concept:rb_low_light_noise",
+      "source_pointer": "/visual_concept_candidates/candidates/5",
+      "candidate": {
+        "id": "visual-concept:rb_low_light_noise",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "dark wall",
+          "저조도 명도 노이즈의 제한적 질감",
+          "low light",
+          "darker neutral wall tones contain fine random luminance variation",
+          "the main object edges remain readable",
+          "luminance noise",
+          "low light noise relation",
+          "the fine variation remains distinct from colored blocks and surface scratches"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "rb_low_light_noise",
+            "category": "photographic_environment_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Show this selected relationship in the declared environment: darker neutral wall tones contain fine random luminance variation Show this selected relationship in the declared environment: the main object edges remain readable Show this selected relationship in the declared environment: the fine variation remains distinct from colored blocks and surface scratches",
+            "component_semantics": {
+              "minimum_component_groups": 3,
+              "required_group_ids": [
+                "component_1",
+                "component_2",
+                "component_3"
+              ],
+              "groups": [
+                {
+                  "id": "component_1",
+                  "any_terms": [
+                    "darker neutral wall tones contain fine random luminance variation"
+                  ]
+                },
+                {
+                  "id": "component_2",
+                  "any_terms": [
+                    "the main object edges remain readable"
+                  ]
+                },
+                {
+                  "id": "component_3",
+                  "any_terms": [
+                    "the fine variation remains distinct from colored blocks and surface scratches"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "component_1_phrase",
+                "component_2_phrase",
+                "component_3_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 3,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "component_1_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "darker neutral wall tones contain fine random luminance variation"
+                ]
+              },
+              "component_2_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "the main object edges remain readable"
+                ]
+              },
+              "component_3_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "the fine variation remains distinct from colored blocks and surface scratches"
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_rb_low_light_noise_1",
+                "review_scale": "native",
+                "description": "darker neutral wall tones contain fine random luminance variation. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+              },
+              {
+                "id": "vo_rb_low_light_noise_2",
+                "review_scale": "native",
+                "description": "the main object edges remain readable. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+              },
+              {
+                "id": "vo_rb_low_light_noise_3",
+                "review_scale": "native",
+                "description": "the fine variation remains distinct from colored blocks and surface scratches. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+              }
+            ],
+            "reject_substitutes": [
+              "대낮 저감도에도 강제",
+              "필름 긁힘",
+              "벽 재질을 노이즈로 대체"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "visual-concept:rectangle_silhouette_relation",
+      "source_pointer": "/visual_concept_candidates/candidates/6",
+      "candidate": {
+        "id": "visual-concept:rectangle_silhouette_relation",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "upper torso reference",
+          "같은 시점에서 이어진 성인 상체와 허리와 골반 외곽은 폭 변화가 비교적 작고 허리의 안쪽 굴곡이 얕다.",
+          "hip continuity",
+          "anatomical transitions",
+          "small width change",
+          "low natural-waist indentation",
+          "no exact equality",
+          "The connected adult upper torso, waist and hip contours show relatively little width change from one view, with a shallow waist indentation.",
+          "adult bilateral silhouette"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "rectangle_silhouette_relation",
+            "category": "adult_silhouette_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Use an adult front or restrained three-quarter view with both contours visible from upper torso through hips, showing relatively small width change and low natural-waist indentation while separating oversized clothing, posture, crop, and lens effects.",
+            "component_semantics": {
+              "minimum_component_groups": 4,
+              "required_group_ids": [
+                "adult_bilateral_view",
+                "upper_reference",
+                "low_waist_indentation",
+                "hip_continuity"
+              ],
+              "groups": [
+                {
+                  "id": "adult_bilateral_view",
+                  "any_terms": [
+                    "adult front or restrained three-quarter bilateral silhouette",
+                    "both torso edges remain visible",
+                    "성인 몸통의 양측 외곽선이 함께 보임"
+                  ]
+                },
+                {
+                  "id": "upper_reference",
+                  "any_terms": [
+                    "upper torso breadth anchors the width comparison",
+                    "shoulder and ribcage remain readable",
+                    "어깨와 흉곽 폭이 기준으로 보임"
+                  ]
+                },
+                {
+                  "id": "low_waist_indentation",
+                  "any_terms": [
+                    "small inward change at the natural waist",
+                    "low bilateral waist indentation",
+                    "자연 허리의 양측 함몰이 약함"
+                  ]
+                },
+                {
+                  "id": "hip_continuity",
+                  "any_terms": [
+                    "hips continue with relatively small width change",
+                    "torso waist and hips form a coherent near-straight relation",
+                    "몸통 허리 골반의 폭 변화가 작게 이어짐"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "adult_bilateral_view_phrase",
+                "upper_reference_phrase",
+                "low_waist_indentation_phrase",
+                "hip_continuity_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 4,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "adult_bilateral_view_phrase": {
+                "min_content_words": 4,
+                "must_mention_any": [
+                  "adult front or restrained three-quarter bilateral silhouette",
+                  "both torso edges remain visible"
+                ]
+              },
+              "upper_reference_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "upper torso breadth anchors the width comparison",
+                  "shoulder and ribcage remain readable"
+                ]
+              },
+              "low_waist_indentation_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "small inward change at the natural waist",
+                  "low bilateral waist indentation"
+                ]
+              },
+              "hip_continuity_phrase": {
+                "min_content_words": 4,
+                "must_mention_any": [
+                  "hips continue with relatively small width change",
+                  "torso waist and hips form a coherent near-straight relation"
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "label_plus_definition",
+              "prompt_label_terms": [
+                "rectangle silhouette relation"
+              ],
+              "forbidden_prompt_terms": [
+                "box-shaped body",
+                "perfect rectangle"
+              ],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_rectangle_bilateral_read",
+                "review_scale": "thumbnail",
+                "description": "Both adult outer contours remain visible from upper torso through natural waist to hips."
+              },
+              {
+                "id": "vo_rectangle_low_waist_change",
+                "review_scale": "both",
+                "description": "The natural waist shows comparatively low indentation without disappearing behind clothing or crop."
+              },
+              {
+                "id": "vo_rectangle_width_continuity",
+                "review_scale": "both",
+                "description": "Upper torso, waist, and hip widths change modestly while anatomical transitions remain coherent."
+              },
+              {
+                "id": "vo_rectangle_not_clothing_or_geometry",
+                "review_scale": "native",
+                "description": "A straight garment, rigid posture, crop, lens effect, or literal rectangle alone does not substitute."
+              }
+            ],
+            "reject_substitutes": [
+              "straight_garment_only",
+              "rigid_posture_only",
+              "missing_waist_or_hips_crop",
+              "literal_geometry_or_exact_equality",
+              "camera_flattening_only"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "visual-concept:diegetic_reality_invariant_failure",
+      "source_pointer": "/visual_concept_candidates/candidates/7",
+      "candidate": {
+        "id": "visual-concept:diegetic_reality_invariant_failure",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "quiet second-look contradiction",
+          "semantic binding swap",
+          "native material identity preserved under one shared transform",
+          "depth-aware irregular feathered boundary",
+          "invisible three-dimensional field revealed only through material consequences",
+          "immediate authored contradiction",
+          "causal orphan",
+          "temporal phase lag",
+          "surface-following refraction parallax and micro-occlusion",
+          "same measurable consequence across several surfaces",
+          "one broken world invariant",
+          "clean photographic capture of an ordinary world",
+          "topological recursion",
+          "invisible spatial coordinate discontinuity",
+          "coherent unaffected regions",
+          "observer-dependent rendering",
+          "material-specific phase sampling across separated depths"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "diegetic_reality_invariant_failure",
+            "category": "world_invariant_failure",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Establish a familiar physically coherent scene through clean photographic capture, select exactly one world invariant to fail, and include a clear normal control state against which the violation can be compared. Apply the same measurable offset, delay, dependency, correspondence, or recursion across at least three separated affected surfaces. Within every affected region, preserve the source surface's native material identity, local texture, thickness, lighting, depth, boundary shape, and occlusion while the chosen rule changes its coordinates or correspondence; the error must follow the three-dimensional scene rather than cut and move a flat image plane. Size and place the matched instances so their shared rule can be inferred from the image without prompt text or a caption, and keep every unaffected hand, face, object boundary, material, perspective, and light response convincingly ordinary. Choose a deliberate reveal strength: either an immediate authored contradiction or a quiet second-look contradiction. In either mode, it must read as one integrated world system rather than a visible effect shell, portal, particle dissolve, or generic image failure.",
+            "component_semantics": {
+              "minimum_component_groups": 4,
+              "required_group_ids": [
+                "normal_world_baseline",
+                "single_failed_invariant",
+                "repeated_cross_surface_consequence",
+                "affected_surface_material_coherence"
+              ],
+              "groups": [
+                {
+                  "id": "normal_world_baseline",
+                  "any_terms": [
+                    "ordinary physical baseline",
+                    "normal coherent world",
+                    "familiar everyday scene",
+                    "plausible photographic baseline",
+                    "평범한 물리적 기준선",
+                    "정상적이고 일관된 세계",
+                    "익숙한 일상 장면"
+                  ]
+                },
+                {
+                  "id": "single_failed_invariant",
+                  "any_terms": [
+                    "one spatial coordinate rule fails",
+                    "one temporal phase rule fails",
+                    "one causal dependency rule fails",
+                    "one optical correspondence rule fails",
+                    "one topological rule fails",
+                    "하나의 공간 좌표 규칙 위반",
+                    "하나의 시간 위상 규칙 위반",
+                    "하나의 인과 규칙 위반",
+                    "하나의 광학 대응 규칙 위반"
+                  ]
+                },
+                {
+                  "id": "repeated_cross_surface_consequence",
+                  "any_terms": [
+                    "same displacement repeats across surfaces",
+                    "same temporal lag repeats across materials",
+                    "same causal orphan repeats throughout the scene",
+                    "same rule affects horizon shadow reflection and cloth",
+                    "여러 표면에 같은 변위가 반복",
+                    "여러 재질에 같은 시간 지연이 반복",
+                    "수평선 그림자 반사 옷감에 같은 규칙이 적용"
+                  ]
+                },
+                {
+                  "id": "clean_capture_medium",
+                  "any_terms": [
+                    "optically clean photographic capture",
+                    "clean camera record",
+                    "unbroken photographic medium",
+                    "natural lens and sensor response",
+                    "광학적으로 깨끗한 사진 기록",
+                    "정상적인 카메라 기록"
+                  ]
+                },
+                {
+                  "id": "affected_surface_material_coherence",
+                  "any_terms": [
+                    "affected surfaces preserve native material identity",
+                    "each transformed material keeps its own texture lighting thickness and occlusion",
+                    "skin straw cloth water and air retain material-specific continuity",
+                    "the shared transform follows local surface topology and depth",
+                    "영향받은 표면도 고유한 재질 정체성을 유지",
+                    "피부 밀짚 천 물 공기가 각자의 질감과 조명을 유지",
+                    "공통 변환이 표면의 굴곡과 깊이를 따라감"
+                  ]
+                },
+                {
+                  "id": "unaffected_region_coherence",
+                  "any_terms": [
+                    "unaffected scene remains coherent",
+                    "intact body and object geometry",
+                    "ordinary perspective outside the failure",
+                    "unaffected sand and sky stay physical",
+                    "영향받지 않은 장면은 일관됨",
+                    "오류 밖의 원근과 형태는 정상"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "clean_capture_phrase",
+                "normal_world_baseline_phrase",
+                "single_invariant_failure_phrase",
+                "cross_surface_repetition_phrase",
+                "affected_surface_coherence_phrase",
+                "unaffected_coherence_phrase",
+                "reveal_legibility_phrase",
+                "authored_rule_legibility_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 8,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "clean_capture_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "optically clean photographic capture",
+                  "clean camera record",
+                  "unbroken photographic medium",
+                  "natural lens and sensor response"
+                ]
+              },
+              "normal_world_baseline_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "ordinary physical baseline",
+                  "normal coherent world",
+                  "familiar everyday scene",
+                  "plausible photographic baseline"
+                ]
+              },
+              "single_invariant_failure_phrase": {
+                "min_content_words": 4,
+                "must_mention_any": [
+                  "one spatial coordinate rule fails",
+                  "one temporal phase rule fails",
+                  "one causal dependency rule fails",
+                  "one optical correspondence rule fails",
+                  "one topological rule fails"
+                ]
+              },
+              "cross_surface_repetition_phrase": {
+                "min_content_words": 4,
+                "must_mention_any": [
+                  "same displacement repeats across surfaces",
+                  "same temporal lag repeats across materials",
+                  "same causal orphan repeats throughout the scene",
+                  "same rule affects horizon shadow reflection and cloth"
+                ]
+              },
+              "affected_surface_coherence_phrase": {
+                "min_content_words": 5,
+                "must_mention_any": [
+                  "affected surfaces preserve native material identity",
+                  "each transformed material keeps its own texture lighting thickness and occlusion",
+                  "skin straw cloth water and air retain material-specific continuity",
+                  "the shared transform follows local surface topology and depth"
+                ]
+              },
+              "unaffected_coherence_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "unaffected scene remains coherent",
+                  "intact body and object geometry",
+                  "ordinary perspective outside the failure",
+                  "unaffected sand and sky stay physical"
+                ]
+              },
+              "reveal_legibility_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "immediate authored contradiction",
+                  "deliberate anomaly legible on the first read",
+                  "first glance ordinary second glance impossible",
+                  "quiet second-look contradiction",
+                  "intended reveal timing remains clear"
+                ]
+              },
+              "authored_rule_legibility_phrase": {
+                "min_content_words": 5,
+                "must_mention_any": [
+                  "three matched contradictions make one authored world rule unmistakable",
+                  "the repeated correspondence makes the broken rule inferable from the image alone",
+                  "one identical measurable relation links every anomalous surface",
+                  "a matched normal control isolates the deliberate rule violation"
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [
+                "reality error",
+                "world-rule failure"
+              ],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_reality_error_clean_capture",
+                "review_scale": "both",
+                "description": "Lens, sensor, exposure, and image surface read as clean photographic capture rather than a damaged display or file."
+              },
+              {
+                "id": "vo_reality_error_normal_baseline",
+                "review_scale": "thumbnail",
+                "description": "The scene establishes an immediately familiar and physically coherent baseline before the contradiction is inspected."
+              },
+              {
+                "id": "vo_reality_error_single_invariant",
+                "review_scale": "both",
+                "description": "Exactly one spatial, temporal, causal, optical, or topological invariant supplies the governing error rule."
+              },
+              {
+                "id": "vo_reality_error_cross_surface_consistency",
+                "review_scale": "native",
+                "description": "At least three affected surfaces repeat the same measurable displacement, lag, dependency, correspondence, or recursion."
+              },
+              {
+                "id": "vo_reality_error_affected_surface_coherence",
+                "review_scale": "native",
+                "description": "Within every affected region, native material identity, local texture, lighting, thickness, depth, boundary shape, and occlusion remain coherent under the shared rule; source pixels or facial texture are not stamped onto unrelated surfaces."
+              },
+              {
+                "id": "vo_reality_error_unaffected_coherence",
+                "review_scale": "native",
+                "description": "Unaffected anatomy, objects, perspective, lighting, and materials remain internally coherent and physically plausible."
+              },
+              {
+                "id": "vo_reality_error_reveal_legibility",
+                "review_scale": "both",
+                "description": "The contradiction appears at the deliberately selected reveal strength, immediate or delayed, while remaining clearly authored, subordinate to one inferable world rule, and distinguishable from generic image failure."
+              },
+              {
+                "id": "vo_reality_error_not_media_or_portal_substitute",
+                "review_scale": "both",
+                "description": "A screen effect, split seam, collage, visible translucent shell, enclosing splash ring, portal, magical rift, flat image-plane slice, particle dissolve, or random anomaly stack does not substitute for the repeated world rule."
+              },
+              {
+                "id": "vo_reality_error_authored_rule_legibility",
+                "review_scale": "both",
+                "description": "Without prompt text, a caption, or metadata, a viewer can state the single failed world rule and point to at least three separated instances that share its same measurable relation; merely saying that something looks wrong fails."
+              },
+              {
+                "id": "vo_reality_error_not_generation_defect_substitute",
+                "review_scale": "native",
+                "description": "An isolated malformed hand or face, fused object, broken texture or text, accidental reflection or shadow mismatch, or other familiar synthesis defect does not carry the reality-error concept."
+              }
+            ],
+            "reject_substitutes": [
+              "rgb_split_or_channel_offset",
+              "codec_blocks_scanlines_or_vhs_noise",
+              "visible_split_screen_or_collage_seam",
+              "glowing_portal_or_magical_rift",
+              "visible_translucent_shell_or_water_sheet",
+              "enclosing_splash_ring_as_field_boundary",
+              "flat_image_plane_slice_ignoring_depth_and_material",
+              "particle_dissolve_without_measurable_cross_surface_correspondence",
+              "facial_texture_stamped_onto_unrelated_surface",
+              "random_multi_anomaly_surrealism",
+              "single_local_deformation_without_cross_surface_rule",
+              "inconsistent_offsets_or_lags_across_affected_surfaces",
+              "isolated_generation_defect_without_inferable_rule",
+              "malformed_anatomy_object_merge_or_texture_failure",
+              "anomaly_requires_prompt_or_caption_to_be_understood",
+              "viewer_can_only_say_something_looks_wrong"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "view_sha256": "e05479271911069ab247b12757c8c2d0264435436713280fa44bb9073c54e8ff"
+}

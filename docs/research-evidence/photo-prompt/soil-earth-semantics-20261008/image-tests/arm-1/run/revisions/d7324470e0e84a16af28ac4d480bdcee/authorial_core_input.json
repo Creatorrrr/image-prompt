@@ -1,0 +1,134 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보 데이터에 반영해줘. 그 다음 스킬의 최신 버전을 사용하여 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "b1fc426b05065404823204836e8d7428357b20d28780cc5bfebdf12f3c4a375c",
+  "interpreted_intent": "Requester asks independent random complex image qualification of the soil/earth topic and use of the attached photograph. Topic soil/earth comes from actual preceding user context, not a retrieved glossary. The test scene, court, roller, rain damage, outfit and staging are agent-owned: storm runoff roughened a once-used clay court; a woman presses its damp clods with a hand roller while an erosion groove and sediment fan retain the preceding water movement. The intended experience is tactile effort and a small, credible restoration whose cause and visible result remain readable. Compare the selected single roller transformation to a rake-and-added-clay alternative; keep the roller because it creates a clearer contact-to-result relation. Subtle sensual supporting presence comes from attentive expression, bare shoulders and practical movement, with fetish and surreal treatment off. Reference scope is visible face and hair only; no identity, life or personality inference.",
+  "subject": "woman using supplied portrait as face-and-hair appearance reference",
+  "setting": "old outdoor clay tennis court just after a shower, an agent-chosen field setting",
+  "event": "visible material change in earth during work, with agent-chosen hand rolling",
+  "visual_priorities": [
+    "Hands, connected handle, cylinder contact and compressed earth form the main action-result chain.",
+    "The rough clods ahead and smooth strip behind differ by surface shape and reflectance.",
+    "Rain washout, interrupted court line and settled fine sediment explain the repair.",
+    "Face and short dark bob remain visibly referential within the working scene."
+  ],
+  "baseline_prompt_en": "A soil-centered field photograph showing a legible moment of material change in earth. A woman with the face-and-hair appearance of the supplied photograph works on an old outdoor clay tennis court just after a rain shower. Her short dark brown chin-length bob and wispy separated fringe retain the visible hair reference. Her dark brown eyes, soft rounded oval face and naturally full lips retain the visible face reference. At the shutter she is pushing a broad cylindrical hand roller over the rain-roughened earthen surface. Both hands grip the same crossbar at waist height, her elbows remain slightly bent, and the two side arms of the handle connect visibly to the roller axle. She leans into one slow step with her boots staggered on firm ground. The cylinder presses the rough damp clods into a continuous smooth strip trailing behind it, while an irregular ridge of loose earth remains immediately ahead of its contact edge. The smooth strip catches soft light differently from the still-lumpy surface. Her attentive sideways glance follows the boundary of the newly flattened clay; parted lips and a loose lock of hair give the practical effort a quiet personal appeal. She wears a rust-colored sleeveless cotton top, olive work shorts and clay-stained rubber ankle boots. A narrow washout beside the working strip interrupts an old white court line and leads into a shallow puddle. Pale fine sediment has settled in a fan at the puddle's edge, with small pebbles left farther uphill. The damp compacted earth is darker than a dry crumbly patch near the fence. A sagging net and vine-covered fence establish a once-used court being brought back into shape. Clay, displaced grains, the roller and her effort carry the story; the background is subdued. Make a natural documentary photograph from a three-quarter front angle at waist height, wide enough to include her face, both hands, boots, the entire roller and the linked ground traces. Soft post-rain daylight, honest skin texture, moderate depth of field and restrained earth colors keep the material states readable.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent random complex topic concept",
+      "source_text": "각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여",
+      "basis": "request_context",
+      "resolution": "The actual preceding user topic is soil/earth. A independently selected test scene must make material states and relations observable; any chosen court, tool or geometry is agent staging, not requester prescription.",
+      "sources": []
+    },
+    {
+      "term": "attached image use",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use visible face and hair appearance from the supplied portrait as a reference while the field scene, body staging and wardrobe remain authored. Appearance cannot establish actual identity or biography.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "soil_concept",
+        "source_text": "이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "concept",
+        "prompt_evidence": "A soil-centered field photograph"
+      },
+      {
+        "anchor_id": "reference_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "A woman with the face-and-hair appearance of the supplied photograph"
+      },
+      {
+        "anchor_id": "soil_visible_event",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "event",
+        "prompt_evidence": "a legible moment of material change in earth"
+      },
+      {
+        "anchor_id": "reference_hair",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "main_subject",
+        "property": "hair.visible_appearance",
+        "prompt_evidence": "Her short dark brown chin-length bob and wispy separated fringe retain the visible hair reference"
+      },
+      {
+        "anchor_id": "reference_face",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "target": "main_subject",
+        "property": "face.visible_appearance",
+        "prompt_evidence": "Her dark brown eyes, soft rounded oval face and naturally full lips retain the visible face reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "reference_use",
+      "viewer_outcome",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "camera_axis_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "concept"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photographic",
+    "family": "natural documentary field portrait",
+    "evidence": [
+      "soft post-rain daylight",
+      "linked ground traces and physically connected rolling action"
+    ]
+  },
+  "variation_key": "soil-earth-arm-1-seed-126364945"
+}
