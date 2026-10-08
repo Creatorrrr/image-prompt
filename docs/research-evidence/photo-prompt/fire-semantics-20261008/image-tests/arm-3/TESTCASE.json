@@ -1,0 +1,100 @@
+{
+  "contract_version": "fire-semantics-image-test/v1",
+  "arm_id": "arm-3",
+  "worktree_id": "fire-semantics-tests/image-prompt",
+  "actual_requester_authorization": {
+    "raw_request_path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/REQUEST.txt",
+    "raw_request_sha256": "e01d0ad2bb1da5978db473bef7ce3e0212453e8f35839532c8ba05a27dbc7fff",
+    "coordinator_envelope_path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/ENVELOPE-arm-3.json",
+    "coordinator_envelope_file_sha256": "3b73756caf0bb9041094beb7ca0351cac03a21fa2b3a7ef50d4062beb66e95a4",
+    "authorization_scope": "The requesting user explicitly asked for three independent subagents to choose different random complex concepts, write prompts using the supplied photograph, generate images, and test whether the integrated fire topic is actually rendered. Initial native generation and one minimal contract-compliant repair on pixel-gate failure are authorized in the coordinator task."
+  },
+  "synthetic_concept": {
+    "author": "arm-3 agent, independently before local retrieval",
+    "origin": "agent-authored test design; request.txt is not a quotation from the requesting user",
+    "title_ko": "정전된 숙소의 벽난로 곁에서 젖은 귀가를 풀어내는 순간",
+    "domain": "everyday life and inhabited architecture",
+    "comparison": "A candle-lit remembrance hall would hinge on inferred ritual and purpose. A working masonry hearth in a rain-dark boarding-house common room makes heat, light, fuel and bodily relief directly visible, so that realization was chosen.",
+    "randomness_note": "Independent open-concept choice from general knowledge; no other arm or project-local candidate inputs were consulted.",
+    "final_refinement": "The selected new fire_f096 relation refines the generic fireplace into a domestic cooking platform, connecting the visible wood fire with the kettle and held drink."
+  },
+  "reference_scope": {
+    "path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+    "role": "face and black bob/wispy bangs appearance reference only",
+    "not_established": [
+      "actual identity",
+      "actual age",
+      "biography",
+      "personality"
+    ],
+    "inspected_original_pixels": true
+  },
+  "precore_sources_allowed": [
+    "current requester envelope and coordinator instructions",
+    "supplied reference photograph",
+    "general knowledge",
+    "current SKILL.md",
+    "exact named neutral precore controls/catalog/prepare and helpers"
+  ],
+  "no_cross_arm_inputs": true,
+  "source_exposure_and_selection": {
+    "contribution_record": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-3/NEW-DATA-CONTRIBUTION.json",
+    "new_fire_entries_exposed": [
+      "slot:location:fire_f096",
+      "slot:prop:fire_f097",
+      "slot:ambient_particle:fire_f048",
+      "augmentation:adult_appeal:sensual:costume_style:fire_f077"
+    ],
+    "new_fire_visual_concepts_exposed": [],
+    "selected_new_fire_candidate_ids": [
+      "slot:location:fire_f096"
+    ],
+    "selected_visual_concept_ids": []
+  },
+  "image_call_count": 1,
+  "pixel_test_design": [
+    {
+      "id": "test.fire_combustion_source",
+      "requirement": "Flames visibly originate at the logs inside the masonry fireplace."
+    },
+    {
+      "id": "test.embers_ash",
+      "requirement": "Dull red embers and gray ash remain distinct from yellow-orange flame tongues."
+    },
+    {
+      "id": "test.firelight_ownership",
+      "requirement": "Warm light reaches the near side of the face, nearby metal and damp tile from the hearth direction."
+    },
+    {
+      "id": "test.vapor_sources",
+      "requirement": "Cup steam and fireplace smoke have visibly distinct owners and paths."
+    },
+    {
+      "id": "test.arrival_relief",
+      "requirement": "Damp return traces, supported warming hands and facial release connect as a plausible pause."
+    },
+    {
+      "id": "test.reference",
+      "requirement": "Visible face proportions, black bob and wispy bangs track the supplied appearance reference."
+    },
+    {
+      "id": "test.platform_firebox_kettle",
+      "requirement": "The continuous raised masonry platform surrounds one low fire opening, with the kettle seated directly above that same heating cavity. This test requirement is an agent-authored supplemental observation of the complete selected new candidate."
+    }
+  ],
+  "requesting_user_acceptance": "pending",
+  "generated_image_path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-3/generated-images/attempt-1-native.png",
+  "final_result": {
+    "primary_fire_topic": "pass",
+    "selected_new_fire_candidate_relation": "pass",
+    "formal_hard_gates": "pass",
+    "formal_gate_count": 5,
+    "full_agent_supplemental_testcase": "fail",
+    "supplemental_pass_count": 6,
+    "supplemental_fail_count": 1,
+    "failed_supplemental_test_ids": [
+      "test.vapor_sources"
+    ],
+    "requesting_user_acceptance": "pending"
+  }
+}

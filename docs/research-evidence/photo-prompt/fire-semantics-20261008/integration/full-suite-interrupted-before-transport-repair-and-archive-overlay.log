@@ -1,0 +1,98 @@
+.......................................................................EFFFFFFF........................./opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 429: 'fixture'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+...............................................................................................................EEEEE.....................EE...........................................F........................F.F...........Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/__main__.py", line 18, in <module>
+    main(module=None)
+    ~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/main.py", line 104, in __init__
+    self.runTests()
+    ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/main.py", line 270, in runTests
+    self.result = testRunner.run(self.test)
+                  ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/runner.py", line 257, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 725, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 669, in run
+    self._callTestMethod(testMethod)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 615, in _callTestMethod
+    result = method()
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_character_render_review.py", line 144, in test_missing_extra_partial_or_unsubstantiated_gates_fail_closed
+    self.assertFalse(self.audit(review)["technical_qualified"])
+                     ~~~~~~~~~~^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_character_render_review.py", line 118, in audit
+    return auditor.audit_moe_render_review(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.pack if pack is None else pack,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        review,
+        ^^^^^^^
+        composed=self.composed if composed is None else composed,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/skills/photo-prompt-image-generator/scripts/audit_moe_render_review.py", line 165, in audit_moe_render_review
+    derive_character_response_render_gates(pack, composed)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/skills/photo-prompt-image-generator/scripts/audit_moe_render_review.py", line 126, in derive_character_response_render_gates
+    inherited = audit_composed_prompt.audit_composed_prompt(pack, composed)
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py", line 5538, in audit_composed_prompt
+    return _audit_composed_prompt(pack, composed)
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py", line 5716, in _audit_composed_prompt
+    audit_candidate_interpretations(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pack,
+        ^^^^^
+    ...<3 lines>...
+        candidate_objects,
+        ^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py", line 2944, in audit_candidate_interpretations
+    failures.extend(audit_candidate_semantic_contracts(pack, prompt_en, chosen, candidate_objects, semantic_evidence_rows))
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py", line 2712, in audit_candidate_semantic_contracts
+    source_data = _audit_source_data()
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py", line 2672, in _audit_source_data
+    data[candidate_semantics_generator.VISUAL_OBLIGATIONS_DATA_KEY] = candidate_semantics_generator.load_visual_obligation_registry(
+                                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        assets / "photo_prompt_visual_obligations.json")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 1368, in load_visual_obligation_registry
+    payload["profiles"] = [compile_visual_profile(profile) for profile in profiles]
+                           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/skills/photo-prompt-image-generator/scripts/visual_profile_contracts.py", line 204, in compile_visual_profile
+    return _compile_grouped_components(profile, source)
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/skills/photo-prompt-image-generator/scripts/visual_profile_contracts.py", line 51, in _compile_grouped_components
+    groups.append({"id": component_id, "any_terms": copy.deepcopy(_terms(component["match_terms"], "component.match_terms"))})
+                                                    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/copy.py", line 131, in deepcopy
+    y = copier(x, memo)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/copy.py", line 177, in _deepcopy_list
+    append(deepcopy(a, memo))
+    ~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

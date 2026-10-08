@@ -1,0 +1,114 @@
+{
+  "schema": "photo-supplemental-pixel-tests/v1",
+  "arm_id": "arm-3",
+  "pack_id": "814cda523a38848e",
+  "image": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-3/generated-images/attempt-1-native.png",
+  "image_sha256": "68c8781b60effabce6cdad9a08c37ccf7c1a19adc35ac0a228068fabab1f458a",
+  "native_dimensions": [
+    1448,
+    1086
+  ],
+  "thumbnail": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-3/generated-images/attempt-1-thumbnail.png",
+  "thumbnail_sha256": "7b444ac1593f0bc3adc801369adc2b3aed5d53b01a1c087c28a87a9c2abdcccf",
+  "thumbnail_dimensions": [
+    384,
+    288
+  ],
+  "inspection": [
+    "saved original viewed with detail original",
+    "saved whole-frame thumbnail viewed with detail original"
+  ],
+  "testcases": [
+    {
+      "id": "test.fire_combustion_source",
+      "status": "pass",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "Yellow-orange flame tongues visibly rise from and wrap the charred split logs in the low masonry firebox. At thumbnail scale the living flame, fuel and contained hearth remain one readable fire source.",
+      "origin": "agent-authored synthetic test design, not quoted requester requirement"
+    },
+    {
+      "id": "test.embers_ash",
+      "status": "pass",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "The native image separates bright yellow-orange flame edges above the grate from darker red-orange glowing fuel pieces and pale gray granular ash below. Their coarse color and vertical-state separation survives the thumbnail.",
+      "origin": "agent-authored synthetic test design, not quoted requester requirement"
+    },
+    {
+      "id": "test.firelight_ownership",
+      "status": "pass",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "Warm amber patches gather on the flame-facing masonry, near hands and leg, the brass umbrella holder and nearby wet-tile highlights, while window and exterior surfaces remain cool blue. The received light is spatially local rather than a uniform orange frame tint; exclusive photometric attribution is not established from one still.",
+      "origin": "agent-authored synthetic test design, not quoted requester requirement"
+    },
+    {
+      "id": "test.vapor_sources",
+      "status": "fail",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "A faint white wisp is visible above the held cup at native scale and another pale plume appears beside the kettle. A separate smoke thread inside the firebox running toward the chimney throat is not identifiable in the saved native image or thumbnail. Kettle vapor cannot substitute for smoke owned by the fuel/firebox.",
+      "origin": "agent-authored synthetic test design, not quoted requester requirement"
+    },
+    {
+      "id": "test.arrival_relief",
+      "status": "pass",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "The coat and folded umbrella at the wet entrance, damp-looking scarf on the bench, glossy floor traces, supported two-handed cup grip and relaxed parted lips form a plausible warming pause after returning through cold wet weather. Pixels support that readable situation, not the invented exact backstory or a measured emotional state.",
+      "origin": "agent-authored synthetic test design, not quoted requester requirement"
+    },
+    {
+      "id": "test.reference",
+      "status": "pass",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "The visible face retains the supplied portrait's delicate facial proportions, prominent dark eyes, nose-mouth arrangement, black chin-length bob and wispy central fringe. Clothing and room change within the allowed scope; this appearance comparison establishes no actual identity or age.",
+      "origin": "agent-authored synthetic test design, not quoted requester requirement"
+    },
+    {
+      "id": "test.platform_firebox_kettle",
+      "status": "pass",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "One continuous raised masonry block wraps the low fuel opening, and the dark cast-iron kettle sits on its upper surface directly above that same opening. All three complete selected fire_f096 components and the contains/below relations are visible in one native frame and remain recognizable in the whole thumbnail. Heat transfer and water temperature are not measured.",
+      "origin": "agent-authored synthetic test design, not quoted requester requirement"
+    }
+  ],
+  "primary_fire_topic": "pass",
+  "selected_new_candidate_relation": "pass",
+  "full_supplemental_testcase": "fail",
+  "supplemental_pass_count": 6,
+  "supplemental_fail_count": 1,
+  "formal_hard_gate_list_is_separate": true,
+  "generic_render_repair_gate_set_applicable": [],
+  "selected_visual_profile_gate_set_applicable": [],
+  "reference_identity_control_gate_set_applicable": [],
+  "reference_appearance_observed_separately": true,
+  "nonblocking_authorial_detail_observations": [
+    {
+      "status": "fail",
+      "detail": "The kettle is visibly resting on a flat upper masonry surface; the authored nesting seat/rim is not distinctly rendered. This does not erase the selected candidate's vessel-above-firebox relation."
+    }
+  ],
+  "repair_decision": {
+    "new_invocation": false,
+    "reason": "The exact derived five embodiment hard gates and the complete selected fire_f096 relation pass. Missing firebox smoke remains a failed authored observation; it has no selected hard-profile contract and does not change the successful fuel, firelight and platform-vessel topic tests. Retain the initial image with this explicit limitation rather than declaring the full synthetic testcase successful."
+  },
+  "requesting_user_acceptance": "pending"
+}

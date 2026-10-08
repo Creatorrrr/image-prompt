@@ -1,0 +1,103 @@
+{
+  "schema_version": "photo-coordinator-runtime-preparation-failure/v1",
+  "observed_at": "2026-10-07T16:47:14.166725+00:00",
+  "command": "photo_workflow.py prepare-render --lane native",
+  "image_call_count": 0,
+  "state_phase": "composition_audited",
+  "composed_audit_status": "pass",
+  "runtime_audit_status": "fail",
+  "failure": {
+    "check": "effective_visual_contract_sha256",
+    "expected": "8bd30c9a0382fbed9f031bd10bdb06f281bd6b23c44f37206015b5e26093838b",
+    "actual": null,
+    "reason": "a selected visual concept requires the runtime request to bind the pack-plus-composed effective visual contract"
+  },
+  "cause_evidence": {
+    "source": "skills/photo-prompt-image-generator/scripts/photo_workflow.py",
+    "function": "prepare_render",
+    "allowed_parameters": [
+      "references",
+      "referenced_image_paths",
+      "num_last_images_to_include",
+      "transparent_background",
+      "runtime_prompt_en",
+      "runtime_negative_en"
+    ],
+    "built_request_omits": "effective_visual_contract_sha256"
+  },
+  "preserved_inputs": {
+    "request_raw": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/ba4815981cad47c8ac0fa0ec311d8f3f/request_raw.json",
+      "sha256": "e01d0ad2bb1da5978db473bef7ce3e0212453e8f35839532c8ba05a27dbc7fff"
+    },
+    "request_envelope_input": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/ba4815981cad47c8ac0fa0ec311d8f3f/request_envelope_input.json",
+      "sha256": "25a3a8579dddcb853b50d0bb414d440779e48cbf036696761b3069d30e9b9301"
+    },
+    "authoring_shapes": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/ba4815981cad47c8ac0fa0ec311d8f3f/authoring_shapes.json",
+      "sha256": "7275ad1a9c3d0c05ba916bbbedff7a85797390b5f484a6264c4670ed6a5b552f"
+    },
+    "creative_controls": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/bf7ab5bbeec049e38d07a9efd5cabbad/creative_controls.json",
+      "sha256": "6589c613748de0cd9d0fc9a5b3dcaacc137bae65c15ebabc969f4f5adb1e91cb"
+    },
+    "authorial_core_input": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/8786783c644a488f8b089f13ce18aa39/authorial_core_input.json",
+      "sha256": "b197caa4a865befe2f76a7fdb709ef21b2ec5b695410668bf12bcfce6612f261"
+    },
+    "authorial_core_normalized": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/8786783c644a488f8b089f13ce18aa39/authorial_core_normalized.json",
+      "sha256": "ec2f65009ec5c5d23ed02a61d00e04d72f19a87971d5667d79578dea3985f394"
+    },
+    "request_envelope_normalized": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/8786783c644a488f8b089f13ce18aa39/request_envelope_normalized.json",
+      "sha256": "744f8728d994295608a47713e3726a23e7fbfa0187ece62150a6d535d4cbd116"
+    },
+    "embodiment_review": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/8786783c644a488f8b089f13ce18aa39/embodiment_review.json",
+      "sha256": "e75a0269bdfda7cc39d47423ebed81fd44c6f7f2530c95b7b6e67d1b06611a99"
+    },
+    "feature_selection": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/8786783c644a488f8b089f13ce18aa39/feature_selection.json",
+      "sha256": "10d6dfba840c4899cce8c5daaa2ef5f705e7824f776dfe067d6a675d86eec647"
+    },
+    "feature_selection_audit": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/8786783c644a488f8b089f13ce18aa39/feature_selection_audit.json",
+      "sha256": "74dd9598504b59af7562f1b13bf3454d8765a9657a173250c42ef43fafb1378e"
+    },
+    "catalog": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/8786783c644a488f8b089f13ce18aa39/catalog.json",
+      "sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5"
+    },
+    "baseline": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/8786783c644a488f8b089f13ce18aa39/baseline.txt",
+      "sha256": "b224fcdcb6c9ff667e9b2268d8473c7615ab70f1e8ed0f8aea5fa1ce66a5feb6"
+    },
+    "freeze_author_input_hashes": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/8786783c644a488f8b089f13ce18aa39/freeze_author_input_hashes.json",
+      "sha256": "85a156cc5499122436a7e42f0cc9458a875e2bf5ef701621a8a377355ccb65df"
+    },
+    "freeze_receipt": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/8786783c644a488f8b089f13ce18aa39/freeze_receipt.json",
+      "sha256": "6963ffc181fd604321c9095768c282bc24f5b7c33b91fae810476df54a1da1d9"
+    },
+    "pack": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/263cacb5cbb24f03b416cbb0afaacf45/pack.json",
+      "sha256": "688d34349b181ad0fd7f2bd0c18b2a493143cd3c45c97dffe5d1af6db6b05582"
+    },
+    "runtime_receipt": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/263cacb5cbb24f03b416cbb0afaacf45/runtime_receipt.json",
+      "sha256": "0ec9af514cc7a8f7db24a1f601c570ce1ce6f86dabc818a86dd8f7bb8a7c8252"
+    },
+    "composed": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/fb56b87068d843d8bdaf8de3987d0c1b/composed.json",
+      "sha256": "ce45adcc82ab2411670872e8b9a0cdd7444f29daf42416c9f1b75a5e9b6945fc"
+    },
+    "composed_audit": {
+      "path": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/run/revisions/fb56b87068d843d8bdaf8de3987d0c1b/composed_audit.json",
+      "sha256": "4a8a5b05eb0a24705fa2a6f407522390c627c47d4816ebf5ec6c40e0746a884c"
+    }
+  },
+  "shared_script_edits_by_arm": false
+}

@@ -1,0 +1,90 @@
+{
+  "schema_version": "independent-fire-image-testcase/v1",
+  "arm_id": "arm-2",
+  "author": "agent",
+  "synthetic_testcase_is_user_quote": false,
+  "original_authorization": {
+    "request_file": "../REQUEST.txt",
+    "request_sha256": "e01d0ad2bb1da5978db473bef7ce3e0212453e8f35839532c8ba05a27dbc7fff",
+    "coordinator_envelope_file": "../ENVELOPE-arm-2.json",
+    "coordinator_envelope_sha256": "c06cce36a46fbfde995e757f2667703b5f314e43f9ee335b0260229c2b747a6f",
+    "scope": "The original user asks three independent subagents to select different random complex concepts, write prompts using the attached person image, generate images and verify actual theme realization."
+  },
+  "independent_random_choice": {
+    "algorithm": "sha256(128-bit secrets token) modulo four agent-authored outdoor scenarios",
+    "entropy_token": "e26bc327357d6de978defc432140db7a",
+    "option_count": 4,
+    "index": 3,
+    "options": [
+      {
+        "id": "coastal_basalt_squall",
+        "setting": "a coastal basalt headland at blue hour after a cold rain squall",
+        "moment": "shielding a small wood fire while a kettle comes to the boil"
+      },
+      {
+        "id": "alpine_moraine_hail",
+        "setting": "an alpine moraine beside a glacial lake at dawn as a hail shower passes",
+        "moment": "steadying a windscreen beside a small campfire while heating water"
+      },
+      {
+        "id": "rainforest_river_bend",
+        "setting": "a mossy rock terrace beside a rainforest river after a downpour",
+        "moment": "feeding a contained wood fire while its heat lifts moisture from the surrounding stone"
+      },
+      {
+        "id": "black_sand_lagoon_wind",
+        "setting": "a black-sand lagoon at dusk under wind-driven coastal rain",
+        "moment": "protecting a brazier flame with a windscreen while warming a kettle"
+      }
+    ],
+    "chosen": {
+      "id": "black_sand_lagoon_wind",
+      "setting": "a black-sand lagoon at dusk under wind-driven coastal rain",
+      "moment": "protecting a brazier flame with a windscreen while warming a kettle"
+    },
+    "inputs": "current user request, permitted reference pixels, general visual reasoning only",
+    "candidate_or_other_arm_inputs": false
+  },
+  "agent_concrete_testcase": "Agent-authored arm-2 testcase, not a user quotation. Generate a reference-guided environmental photograph at a black-sand lagoon during wind-driven drizzle. The woman steadies a steel windscreen beside a shallow brazier so a kettle can continue boiling. Test whether real fuel-attached fire, embers, smoke, distinct kettle steam, directional firelight, wet-stone reflection, weather relation and a physically credible gripping action can be read together. Use only the reference face and black bob with bangs. Retain default sensual 1/fetish 0 as subtle natural presence. Inspect actual native pixels and thumbnail; separate baseline success from any postcore fire-data contribution. User acceptance remains pending.",
+  "reference": {
+    "absolute_path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+    "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+    "role": "face_and_hair_reference",
+    "directly_inspected": true,
+    "appearance_scope": [
+      "facial proportions",
+      "black bob",
+      "wispy bangs"
+    ],
+    "age_or_identity_inference": false
+  },
+  "precore_isolation": {
+    "allowed_sources": [
+      "current user request and parent task context identifying fire",
+      "reference pixels",
+      "general visual reasoning",
+      "exact SKILL.md",
+      "exact neutral precore controls and catalog",
+      "neutral prepare and shared helpers"
+    ],
+    "other_arm_data_read": false,
+    "candidate_profile_or_research_read_before_freeze": false
+  },
+  "pixel_success_criteria": [
+    "Flame is rooted in combustible fuel in the brazier, with readable fuel/ember state.",
+    "Smoke begins at the fuel and kettle steam begins at the spout; the origins stay visibly distinct.",
+    "Glove contacts the windscreen with a plausible visible arm chain and support.",
+    "Firelight and wet-rock reflection have the nearby fire as their visible source.",
+    "Wind/drizzle, cold shoreline and protected practical kettle fire make one readable situation.",
+    "Reference face, black bob and bangs remain apparent while wardrobe and scene are new."
+  ],
+  "confusion_boundaries": [
+    "Pale kettle steam is not proof of fire smoke.",
+    "Orange wet-rock reflection is not a second source of fire.",
+    "Red fuel ember is not a free-standing flame.",
+    "Rain streaks are not ember sparks.",
+    "A profile exposed or a literal prompt phrase is not pixel evidence or causal proof of data contribution."
+  ],
+  "user_acceptance": "pending",
+  "actual_native_call_limit": 2
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "postcore-fire-contribution/v1",
+  "baseline_sha256": "b224fcdcb6c9ff667e9b2268d8473c7615ab70f1e8ed0f8aea5fa1ce66a5feb6",
+  "final_prompt_sha256": "17d6ecbdfd5198453762a2960eca03b87d2b602f81c7e03daab7aa5b06252b32",
+  "exposed_new_slot_ids": [
+    "slot:location:fire_f067",
+    "slot:action:fire_f098",
+    "slot:action:fire_f153",
+    "slot:prop:fire_f094",
+    "slot:ambient_particle:fire_f005",
+    "slot:light_shape:fire_f021",
+    "slot:lighting:fire_f037"
+  ],
+  "exposed_new_visual_profile_ids": [
+    "fire_rel_f067",
+    "fire_rel_f153",
+    "fire_rel_f094",
+    "fire_rel_f002"
+  ],
+  "selected_new_candidate_ids": [
+    "slot:ambient_particle:fire_f005",
+    "slot:lighting:fire_f037"
+  ],
+  "selected_new_visual_profile_ids": [
+    "fire_rel_f002"
+  ],
+  "literal_additions": [
+    {
+      "origin": "visual-concept:fire_rel_f002",
+      "phrase": "The open front of the brazier exposes recognizable wood surfaces beneath the fire, with several continuous flame tongues attached to those surfaces and open gaps between the wood and flame tips.",
+      "present_in_baseline": false,
+      "role": "fuel surfaces, multiple continuous flame tongues and air gaps"
+    },
+    {
+      "origin": "slot:ambient_particle:fire_f005",
+      "phrase": "A single irregular charcoal fleck with a dark center and glowing orange edge has lifted from the exposed log end, separated from that fuel by a visible sliver of air.",
+      "present_in_baseline": false,
+      "role": "solid glowing fuel fragment separated from source"
+    },
+    {
+      "origin": "slot:lighting:fire_f037",
+      "phrase": "The brazier's firelight warms her fire-facing cheek and the kettle flank, while her far cheek falls into cooler, darker shadow.",
+      "present_in_baseline": false,
+      "role": "directional firelight and darker far cheek"
+    }
+  ],
+  "baseline_already_present": [
+    "small wood fire",
+    "fuel-attached flames",
+    "red-orange solid fuel embers",
+    "fire smoke and kettle steam with separate authored origins",
+    "localized firelight and wet-stone reflection"
+  ],
+  "causal_claim_limit": "This proves candidate exposure, explicit selection and literal prompt contribution; no baseline image is generated, so there is no counterfactual causal pixel claim.",
+  "pixel_results": {
+    "full_fire_rel_f002": "pass",
+    "fire_f005_visible_fragment_form": "pass",
+    "fire_f037_metal_receiver": "pass",
+    "fire_f037_face_only_attribution": "fail_ambiguous_source",
+    "strict_review_audit": "pass",
+    "actual_image_calls": 1,
+    "without_baseline_render_causal_pixel_attribution": "not_established"
+  }
+}

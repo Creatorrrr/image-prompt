@@ -1,0 +1,309 @@
+{
+  "pack_id": "e58c07a4247e66d8",
+  "composer": "agent",
+  "prompt_en": "A photorealistic environmental portrait centers on a woman with the reference face and black bob with wispy bangs, beside a small wood fire. Visible flames rise from burning fuel. The supplied photograph guides her facial proportions, black chin-length hair and fine fringe as she appears in a newly staged coastal moment. At dusk on the black-sand shore of a lagoon, a passing squall has left glossy basalt slabs, low grey cloud and wind-driven drizzle. She has stopped above the tide line to heat water, and is holding a curved steel windscreen steady so the kettle can keep boiling. She crouches to the left of a shallow iron brazier, both boot soles planted on a flat basalt slab, her bent knees supporting an easy forward lean. Her navy weather jacket has a rust-colored wool collar, and its wet fabric folds naturally at the elbows. Her right gloved hand grips the cool upper rim of the windscreen on the upwind left side of the brazier; her visible forearm connects that hand to her right elbow. Her other gloved hand rests on her own near thigh. The screen, glove, fire and kettle are all visible with clear space between their edges. Two split logs lie in the brazier, their blackened surfaces split by dull red-orange embers; yellow-orange flame tongues remain attached to the logs and lean toward the right with the wind. The open front of the brazier exposes recognizable wood surfaces beneath the fire, with several continuous flame tongues attached to those surfaces and open gaps between the wood and flame tips. A single irregular charcoal fleck with a dark center and glowing orange edge has lifted from the exposed log end, separated from that fuel by a visible sliver of air. A squat metal kettle stands on a low stable grate directly over the burning wood. Thin grey smoke begins at the charred log ends, while pale translucent steam begins at the kettle spout; their separate origins stay readable as both drift into the damp air. The brazier's firelight warms her fire-facing cheek and the kettle flank, while her far cheek falls into cooler, darker shadow. A small broken orange reflection lies on the wet basalt beside the brazier. She looks down toward the kettle with focused eyes and a faint softening around her mouth, caught at the moment the fragile little boil holds despite the gust. The cold blue-grey lagoon, rippled water and distant black dune ridge stay visible behind her. A camera at her crouching eye level sees her from a front three-quarter position, using a 40mm environmental-portrait perspective with enough depth of field to keep her face, gripping glove, kettle spout, fuel and the nearby wet stone readable in one landscape frame. Real skin texture, wet fabric, restrained highlight roll-off and the fire's localized warm light preserve the feeling of a candid field photograph.",
+  "negative_en": "3d render look, awkward animal anatomy, body distortion, broken facial features, broken window geometry, cartoon style, cgi look, digital illustration, distorted fingers, excessive hdr, fake-looking background, flat collage look, illustration look, impossible perspective, inaccurate reflections, inconsistent shadows, low resolution, obvious cutout edges, over-processed retouching, overly smooth fur, plastic-looking food texture, plastic-looking skin, unmatched lighting, unrealistic hands, unrealistic steam, warped product geometry, warped walls",
+  "chosen_candidate_ids": [
+    "slot:ambient_particle:fire_f005",
+    "slot:lighting:fire_f037"
+  ],
+  "chosen_visual_concept_ids": [
+    "visual-concept:fire_rel_f002"
+  ],
+  "authorial_core_binding": {
+    "preserved_anchor_ids": [
+      "core_concept",
+      "core_subject",
+      "core_event",
+      "reference_face_hair"
+    ],
+    "preserved_evidence": [],
+    "authorial_decisions": [
+      {
+        "dimension": "action",
+        "decision": "Expose the brazier front and several fuel-connected flame tongues with readable intervening air gaps.",
+        "rationale": "The selected full wood-flame profile makes the combustion source readable without changing the kettle purpose or hand grip.",
+        "affected_properties": [
+          {
+            "dimension": "action",
+            "target": "fuel_surface",
+            "property": "source_target_connection"
+          }
+        ]
+      },
+      {
+        "dimension": "atmosphere",
+        "decision": "Add one nearby airborne glowing charcoal fleck with a recognizable solid center.",
+        "rationale": "The selected particle candidate tests fuel-fragment origin and separates an ember from the white drizzle.",
+        "affected_properties": [
+          {
+            "dimension": "atmosphere",
+            "target": "fuel_fragment",
+            "property": "particle_structure"
+          }
+        ]
+      },
+      {
+        "dimension": "lighting",
+        "decision": "Tie warm cheek and kettle illumination to the brazier while leaving the far cheek cooler and darker.",
+        "rationale": "The selected firelight relation gives the warmth a visible source and makes the cold wet setting more expressive.",
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "receiver_surface",
+            "property": "illumination.firelight"
+          }
+        ]
+      }
+    ]
+  },
+  "semantic_clarification_decisions": [
+    {
+      "clarification_id": "clarification:authorial-core:interpreted-intent",
+      "decision": "applied",
+      "rationale": "Retain the frozen fire and reference appearance meaning without promoting incidental staging to user requirements.",
+      "prompt_evidence": "a woman with the reference face and black bob with wispy bangs"
+    },
+    {
+      "clarification_id": "clarification:visual-profile:deliberate_underarm_salience",
+      "decision": "rejected",
+      "rationale": "An overhead raised-arm hollow would replace the low windscreen grip and does not serve this practical weather moment."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:ed_rain_threshold",
+      "decision": "rejected",
+      "rationale": "The scene is an open lagoon shore and has no doorway, folded umbrella or interior boundary to make this complete profile applicable."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:embodied_corruption_transition",
+      "decision": "rejected",
+      "rationale": "A spreading on-body corruption state has no meaning in the chosen ordinary weather scene and would obscure the reference-guided face."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:fire_rel_f002",
+      "decision": "applied",
+      "rationale": "This complete wood surface and attached flame meaning fits the already-authored brazier and clarifies the source geometry.",
+      "prompt_evidence": "The open front of the brazier exposes recognizable wood surfaces beneath the fire, with several continuous flame tongues attached to those surfaces and open gaps between the wood and flame tips."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:fire_rel_f067",
+      "decision": "rejected",
+      "rationale": "An enclosed room and burning furniture would move the practical coastal kettle fire into a materially different setting."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:fire_rel_f094",
+      "decision": "rejected",
+      "rationale": "A graspable torch shaft and burning head would introduce a second purpose and object; the contained brazier serves this scene better."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:fire_rel_f153",
+      "decision": "rejected",
+      "rationale": "The generic explicitly requested target contract is not needed because the selected wood-surface profile already carries the fuel-to-flame relation without inventing a new user target."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:kuudere_composed_warmth_relation",
+      "decision": "rejected",
+      "rationale": "The scene has one person and no trusted counterpart receiving a visible benefit; reference appearance cannot establish this archetype."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pc_pc21_owner_relation",
+      "decision": "rejected",
+      "rationale": "A glass pane and transmitted face would add an unnecessary intervening surface and compromise the direct outdoor action."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pc_pc23_owner_relation",
+      "decision": "rejected",
+      "rationale": "A handheld mirror would compete with the hand holding the windscreen and adds no reason to heat water."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pr_environmental_portrait_subject_place",
+      "decision": "rejected",
+      "rationale": "The generic place/task idea is already authored, but this profile adds an adult-subject requirement that is not established by the reference or current controls."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:vg_face_hands_place_readability_profile",
+      "decision": "rejected",
+      "rationale": "The authored frame already retains the face, action-bearing glove and lagoon. Adding this optional full contract is unnecessary to the fire-specific test."
+    }
+  ],
+  "creative_augmentation_brief": {
+    "decisions": [
+      {
+        "candidate_id": "slot:grain_profile:rb_low_light_noise_candidate",
+        "decision": "rejected",
+        "rationale": "A dark interior wall noise relation has no wall receiver on this lagoon shore and would not strengthen fire legibility."
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:costume_style:fire_f077",
+        "decision": "rejected",
+        "rationale": "A firefighter outfit and tool change the portrayed purpose and add a job identity not established by the scene."
+      },
+      {
+        "candidate_id": "slot:action:fire_f153",
+        "decision": "rejected",
+        "rationale": "The selected wood flame profile already carries the source relation; the generic explicitly requested target wording adds no useful new realization."
+      },
+      {
+        "candidate_id": "slot:action:fire_f098",
+        "decision": "rejected",
+        "rationale": "A poker contacting a fuel piece would replace or overload the already readable windscreen grip."
+      },
+      {
+        "candidate_id": "slot:location:fire_f067",
+        "decision": "rejected",
+        "rationale": "A room fire would abandon the selected coastal weather relation that motivates shielding the kettle fire."
+      }
+    ]
+  },
+  "semantic_assertion_evidence": {
+    "source_contract_sha256": "b0591255629a2af065d2bff63c350960c9c62cc98a78260c84dc6f46e69ff3ba",
+    "evidence": {
+      "primary_human_subject": {
+        "subject_phrase": "a woman with the reference face and black bob with wispy bangs"
+      },
+      "fire_visible_burning": {
+        "phenomenon_phrase": "Visible flames rise from burning fuel."
+      }
+    }
+  },
+  "visual_obligation_evidence": {
+    "fire_rel_f002": {
+      "component_1_phrase": "recognizable wood surfaces beneath the fire",
+      "component_2_phrase": "several continuous flame tongues attached to those surfaces",
+      "component_3_phrase": "open gaps between the wood and flame tips"
+    }
+  },
+  "candidate_interpretations": [
+    {
+      "candidate_id": "slot:ambient_particle:fire_f005",
+      "artistic_interpretation": "The small lifted charcoal piece places a solid glowing ember in the air near its actual wood source and contrasts with rain.",
+      "transformation": "Use one near-source charcoal fleck in the existing wind instead of an unrelated shower of luminous particles.",
+      "prompt_evidence": "A single irregular charcoal fleck with a dark center and glowing orange edge has lifted from the exposed log end, separated from that fuel by a visible sliver of air.",
+      "relation_evidence": {
+        "f005_relation_1": "A single irregular charcoal fleck with a dark center and glowing orange edge has lifted from the exposed log end, separated from that fuel by a visible sliver of air."
+      },
+      "affected_properties": [
+        {
+          "dimension": "atmosphere",
+          "target": "fuel_fragment",
+          "property": "particle_structure"
+        }
+      ]
+    },
+    {
+      "candidate_id": "slot:lighting:fire_f037",
+      "artistic_interpretation": "Directional firelight makes the woman and kettle feel briefly warmed within the cold lagoon weather.",
+      "transformation": "Retain the authored close fire source but add a darker far cheek to reveal direction and falloff across the same face.",
+      "prompt_evidence": "The brazier's firelight warms her fire-facing cheek and the kettle flank, while her far cheek falls into cooler, darker shadow.",
+      "relation_evidence": {
+        "f037_relation_1": "The brazier's firelight warms her fire-facing cheek and the kettle flank, while her far cheek falls into cooler, darker shadow."
+      },
+      "affected_properties": [
+        {
+          "dimension": "lighting",
+          "target": "receiver_surface",
+          "property": "illumination.firelight"
+        }
+      ]
+    }
+  ],
+  "adult_appeal_brief": {
+    "agency_phrase": "She has stopped above the tide line to heat water, and is holding a curved steel windscreen steady so the kettle can keep boiling.",
+    "axes": {
+      "sensual": {
+        "intensity": 1,
+        "realization": "baseline",
+        "affected_dimensions": [],
+        "affected_properties": [],
+        "artistic_interpretation": "The attentive face and barely softened mouth make a subtle approachable human presence within the practical task; warmth supports the whole portrayal without becoming its subject.",
+        "prompt_evidence": "She looks down toward the kettle with focused eyes and a faint softening around her mouth"
+      },
+      "fetish": {
+        "intensity": 0,
+        "realization": "baseline",
+        "affected_dimensions": [],
+        "artistic_interpretation": "No added special erotic focus is applied."
+      }
+    },
+    "blend": {
+      "emphasis": "sensual_led"
+    },
+    "contextual_review": [
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:location:fire_f067",
+        "reading": "irrelevant",
+        "reason": "A room fire replaces the open coastal refuge and loses the windscreen purpose."
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:wardrobe_style:vel_closed_waist_vest_layers",
+        "reading": "potential",
+        "reason": "A layered vest could offer a tidy personal silhouette at the same subtle attraction strength.",
+        "proposed_application": "A weather jacket over an inner top and closed vest could keep the face personable while she grips the screen, but the formal tie and separate waist layers distract from the wet field clothing."
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:garment_detail:vel_held_towel_continuous_front",
+        "reading": "irrelevant",
+        "reason": "Both hands tensioning a towel over a swimsuit would replace the screen grip and undermine this cold wet heating-water situation."
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:expression:ae_smolder_attraction",
+        "reading": "conflicting",
+        "reason": "Its explicit adult attraction and flirting prerequisites are not established by the source or this practical moment; the reference cannot supply age."
+      }
+    ],
+    "contextual_comparison": "At sensual 1, the existing attentive face and subtle mouth softening fit a field pause and make the person accessible. A vest under the jacket could give comparable personal charm but adds formal layer boundaries and a tie that do not explain the action. A smoldering gaze changes the subject of attention, while towel handling and a room fire weaken the purpose. Retain the authored practical weather clothes and responsive face."
+  },
+  "embodiment_review": {
+    "source_contract_sha256": "9a2e711a9b1d4f5995c3557486fa37808720603ee3fc0fa5a2afbc34d2eac215",
+    "review": {
+      "contract_version": "photo-embodiment-review/v1",
+      "provenance": "agent_postcomposition",
+      "scope": "body_action",
+      "summary": "The full composed scene retains the stable crouch and right-glove windscreen grip. Open brazier front, airborne charcoal fleck and localized cheek shadow do not alter body reach, support or contact; fuel and kettle remain independently supported.",
+      "checks": {
+        "body_ownership": {
+          "status": "supported",
+          "reason": "The right glove belongs to the woman's right arm; the other glove rests on her own thigh, so neither hand transfers to kettle or fire.",
+          "prompt_evidence": [
+            "her visible forearm connects that hand to her right elbow",
+            "Her other gloved hand rests on her own near thigh."
+          ]
+        },
+        "joint_chain_and_reach": {
+          "status": "supported",
+          "reason": "Crouching next to a shallow brazier puts the screen rim within ordinary forearm reach; the elbow-to-glove chain remains visible and does not require a backward wrist or dislocated shoulder.",
+          "prompt_evidence": [
+            "Her right gloved hand grips the cool upper rim of the windscreen",
+            "her visible forearm connects that hand to her right elbow"
+          ]
+        },
+        "support_and_balance": {
+          "status": "supported",
+          "reason": "Both boot soles bear on one flat basalt slab while bent knees support a modest forward lean. The kettle has a stable grate rather than balancing on the woman or floating.",
+          "prompt_evidence": [
+            "both boot soles planted on a flat basalt slab",
+            "her bent knees supporting an easy forward lean",
+            "A squat metal kettle stands on a low stable grate"
+          ]
+        },
+        "contact_and_space": {
+          "status": "supported",
+          "reason": "The glove contacts the cool upper screen rim on the upwind left edge, separated from log tongues and grate. Other hand stays on thigh. Screen has stable lower contact and the hand restrains it against wind.",
+          "prompt_evidence": [
+            "Her right gloved hand grips the cool upper rim of the windscreen on the upwind left side of the brazier",
+            "The screen, glove, fire and kettle are all visible with clear space between their edges."
+          ]
+        },
+        "visibility_and_projection": {
+          "status": "supported",
+          "reason": "The front three-quarter view at crouching eye level can reveal face, forearm, gripping glove, side screen and kettle spout; a landscape environmental frame retains the nearby fuel and stone. This is authored plausible geometry, not pixel verification.",
+          "prompt_evidence": [
+            "A camera at her crouching eye level sees her from a front three-quarter position",
+            "her face, gripping glove, kettle spout, fuel and the nearby wet stone readable in one landscape frame"
+          ]
+        }
+      },
+      "prompt_sha256": "17d6ecbdfd5198453762a2960eca03b87d2b602f81c7e03daab7aa5b06252b32"
+    }
+  }
+}

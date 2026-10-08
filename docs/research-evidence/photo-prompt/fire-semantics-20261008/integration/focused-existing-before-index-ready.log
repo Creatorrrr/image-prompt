@@ -1,0 +1,296 @@
+======================================================================
+ERROR: test_maintenance_prose_is_external_and_hash_bound (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_maintenance_prose_is_external_and_hash_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_candidate_semantics.py", line 120, in test_maintenance_prose_is_external_and_hash_bound
+    record = json.loads((ROOT / "docs/research-evidence/photo-prompt/extension-maintenance" / (reference["record_id"] + ".json")).read_text())
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/extension-maintenance/intellectual-equivalents-20261005-v1.json'
+
+======================================================================
+FAIL: test_contained_affect_profile_uses_components_and_blocks_labels_at_runtime (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_contained_affect_profile_uses_components_and_blocks_labels_at_runtime)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 887, in test_contained_affect_profile_uses_components_and_blocks_labels_at_runtime
+    pack = self.moe_pack(
+        "Photorealistic adult character portrait with a menhera gothic-lolita concept and a contained affect leak",
+        seed=1413,
+    )
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 97, in moe_pack
+    return fixtures.run_current(
+           ~~~~~~~~~~~~~~~~~~~~^
+        raw, seed=seed, creativity=0, extra_args=extra,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        envelope_input=fixtures.envelope(source, tuple([concept, *additional])),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/photo_prompt_fixtures.py", line 1246, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_invalid: snapshot validation failed: visual profile index registry_sha256 does not match the visual registry; regenerate it with build_visual_profile_index.py
+
+
+======================================================================
+FAIL: test_indirect_components_surface_optional_candidate_and_selection_promotes_gates (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_indirect_components_surface_optional_candidate_and_selection_promotes_gates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 759, in test_indirect_components_surface_optional_candidate_and_selection_promotes_gates
+    pack = self.moe_pack(
+        "Photorealistic explicitly nonsexual behavior-led moe scene of an adult "
+    ...<2 lines>...
+        seed=1410,
+    )
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 97, in moe_pack
+    return fixtures.run_current(
+           ~~~~~~~~~~~~~~~~~~~~^
+        raw, seed=seed, creativity=0, extra_args=extra,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        envelope_input=fixtures.envelope(source, tuple([concept, *additional])),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/photo_prompt_fixtures.py", line 1246, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_invalid: snapshot validation failed: visual profile index registry_sha256 does not match the visual registry; regenerate it with build_visual_profile_index.py
+
+
+======================================================================
+FAIL: test_kuudere_profile_requires_stable_composure_and_same_target_care (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_kuudere_profile_requires_stable_composure_and_same_target_care)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 1442, in test_kuudere_profile_requires_stable_composure_and_same_target_care
+    pack = self.moe_pack(
+        "Photorealistic adult fictional coworker character portrait with a "
+        "kuudere concept",
+        seed=1421,
+    )
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 97, in moe_pack
+    return fixtures.run_current(
+           ~~~~~~~~~~~~~~~~~~~~^
+        raw, seed=seed, creativity=0, extra_args=extra,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        envelope_input=fixtures.envelope(source, tuple([concept, *additional])),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/photo_prompt_fixtures.py", line 1246, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_invalid: snapshot validation failed: visual profile index registry_sha256 does not match the visual registry; regenerate it with build_visual_profile_index.py
+
+
+======================================================================
+FAIL: test_named_challenge_materializes_prompt_and_render_obligations (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_named_challenge_materializes_prompt_and_render_obligations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 467, in test_named_challenge_materializes_prompt_and_render_obligations
+    pack = self.moe_pack(
+        "Photorealistic explicitly nonsexual behavior-led moe scene of an adult "
+        "woman, mid-twenties or older, doing a bubble tea challenge"
+    )
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 97, in moe_pack
+    return fixtures.run_current(
+           ~~~~~~~~~~~~~~~~~~~~^
+        raw, seed=seed, creativity=0, extra_args=extra,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        envelope_input=fixtures.envelope(source, tuple([concept, *additional])),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/photo_prompt_fixtures.py", line 1246, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_invalid: snapshot validation failed: visual profile index registry_sha256 does not match the visual registry; regenerate it with build_visual_profile_index.py
+
+
+======================================================================
+FAIL: test_prepack_visual_intent_is_hash_bound_and_source_grounded (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_prepack_visual_intent_is_hash_bound_and_source_grounded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 635, in test_prepack_visual_intent_is_hash_bound_and_source_grounded
+    pack = self.moe_pack(
+        "Photorealistic explicitly nonsexual behavior-led moe scene of an adult "
+    ...<3 lines>...
+        visual_intent=visual_intent,
+    )
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 97, in moe_pack
+    return fixtures.run_current(
+           ~~~~~~~~~~~~~~~~~~~~^
+        raw, seed=seed, creativity=0, extra_args=extra,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        envelope_input=fixtures.envelope(source, tuple([concept, *additional])),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/photo_prompt_fixtures.py", line 1246, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_invalid: snapshot validation failed: visual profile index registry_sha256 does not match the visual registry; regenerate it with build_visual_profile_index.py
+
+
+======================================================================
+FAIL: test_project_glossary_absolute_territory_expands_to_thigh_geometry (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_project_glossary_absolute_territory_expands_to_thigh_geometry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 491, in test_project_glossary_absolute_territory_expands_to_thigh_geometry
+    pack = self.moe_pack(
+        "성인 여성의 일본 서브컬처 절대공역 모에 사진",
+        seed=1405,
+    )
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 97, in moe_pack
+    return fixtures.run_current(
+           ~~~~~~~~~~~~~~~~~~~~^
+        raw, seed=seed, creativity=0, extra_args=extra,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        envelope_input=fixtures.envelope(source, tuple([concept, *additional])),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/photo_prompt_fixtures.py", line 1246, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_invalid: snapshot validation failed: visual profile index registry_sha256 does not match the visual registry; regenerate it with build_visual_profile_index.py
+
+
+======================================================================
+FAIL: test_raw_character_label_does_not_introduce_a_fixed_render_contract (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_raw_character_label_does_not_introduce_a_fixed_render_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 1436, in test_raw_character_label_does_not_introduce_a_fixed_render_contract
+    pack = self.moe_pack("Photorealistic nonsexual adult portrait with calm protective 마망 warmth")
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 97, in moe_pack
+    return fixtures.run_current(
+           ~~~~~~~~~~~~~~~~~~~~^
+        raw, seed=seed, creativity=0, extra_args=extra,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        envelope_input=fixtures.envelope(source, tuple([concept, *additional])),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/photo_prompt_fixtures.py", line 1246, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_invalid: snapshot validation failed: visual profile index registry_sha256 does not match the visual registry; regenerate it with build_visual_profile_index.py
+
+
+======================================================================
+FAIL: test_selected_visual_concept_binds_runtime_and_render_review (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_selected_visual_concept_binds_runtime_and_render_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 1141, in test_selected_visual_concept_binds_runtime_and_render_review
+    pack = self.moe_pack(
+        "Photorealistic explicitly nonsexual behavior-led moe scene of an adult "
+    ...<2 lines>...
+        seed=1412,
+    )
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 97, in moe_pack
+    return fixtures.run_current(
+           ~~~~~~~~~~~~~~~~~~~~^
+        raw, seed=seed, creativity=0, extra_args=extra,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        envelope_input=fixtures.envelope(source, tuple([concept, *additional])),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/photo_prompt_fixtures.py", line 1246, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_invalid: snapshot validation failed: Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py.
+
+
+======================================================================
+FAIL: test_semantic_evidence_and_sensitive_runtime_labels_fail_closed (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_semantic_evidence_and_sensitive_runtime_labels_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 836, in test_semantic_evidence_and_sensitive_runtime_labels_fail_closed
+    pack = self.moe_pack(
+        "Photorealistic fully clothed nonsexual adult character whose pupils "
+    ...<2 lines>...
+        seed=1411,
+    )
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 97, in moe_pack
+    return fixtures.run_current(
+           ~~~~~~~~~~~~~~~~~~~~^
+        raw, seed=seed, creativity=0, extra_args=extra,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        envelope_input=fixtures.envelope(source, tuple([concept, *additional])),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/photo_prompt_fixtures.py", line 1246, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_invalid: snapshot validation failed: Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py.
+
+
+======================================================================
+FAIL: test_visual_only_render_review_uses_effective_visual_gate_contract (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_visual_only_render_review_uses_effective_visual_gate_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 1306, in test_visual_only_render_review_uses_effective_visual_gate_contract
+    pack = self.moe_pack("adult portrait with a twin-tail hairstyle")
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 97, in moe_pack
+    return fixtures.run_current(
+           ~~~~~~~~~~~~~~~~~~~~^
+        raw, seed=seed, creativity=0, extra_args=extra,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        envelope_input=fixtures.envelope(source, tuple([concept, *additional])),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/photo_prompt_fixtures.py", line 1246, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_invalid: snapshot validation failed: Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py.
+
+
+======================================================================
+FAIL: test_visual_render_gate_failure_and_uncontracted_gate_fail_closed (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_visual_render_gate_failure_and_uncontracted_gate_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 1375, in test_visual_render_gate_failure_and_uncontracted_gate_fail_closed
+    pack = self.moe_pack(
+        "Photorealistic explicitly nonsexual behavior-led moe scene of an adult "
+        "woman, mid-twenties or older, doing a bubble tea challenge",
+        seed=1405,
+    )
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 97, in moe_pack
+    return fixtures.run_current(
+           ~~~~~~~~~~~~~~~~~~~~^
+        raw, seed=seed, creativity=0, extra_args=extra,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        envelope_input=fixtures.envelope(source, tuple([concept, *additional])),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/photo_prompt_fixtures.py", line 1246, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_invalid: snapshot validation failed: Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py.
+
+
+======================================================================
+FAIL: test_yandere_profile_requires_affection_control_relation_not_role_prop (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_yandere_profile_requires_affection_control_relation_not_role_prop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 1008, in test_yandere_profile_requires_affection_control_relation_not_role_prop
+    pack = self.moe_pack(
+        "Photorealistic adult fictional nurse character portrait with a yandere concept",
+        seed=1414,
+    )
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/test_photo_visual_obligations.py", line 97, in moe_pack
+    return fixtures.run_current(
+           ~~~~~~~~~~~~~~~~~~~~^
+        raw, seed=seed, creativity=0, extra_args=extra,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        envelope_input=fixtures.envelope(source, tuple([concept, *additional])),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/tests/photo_prompt_fixtures.py", line 1246, in run_current
+    raise AssertionError(result.stderr)
+AssertionError: Error: source_invalid: snapshot validation failed: Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py.
+
+
+----------------------------------------------------------------------
+Ran 57 tests in 240.611s
+
+FAILED (failures=12, errors=1)

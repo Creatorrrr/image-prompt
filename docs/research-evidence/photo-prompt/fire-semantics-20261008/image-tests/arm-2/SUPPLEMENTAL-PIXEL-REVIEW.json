@@ -1,0 +1,123 @@
+{
+  "schema_version": "independent-fire-supplemental-pixel-review/v1",
+  "arm_id": "arm-2",
+  "result_image": "/Users/chasoik/.codex/worktrees/fire-semantics-tests/image-prompt/docs/research-evidence/photo-prompt/fire-semantics-20261008/image-tests/arm-2/initial-native.png",
+  "result_sha256": "bf0c2d9afe0ce1b6605b2dc064ab462985cac54d4fce1fb4eb49e0a5631d59f5",
+  "direct_inspection": {
+    "native": true,
+    "thumbnail": true,
+    "analytical_detail_crops": [
+      "initial-hand-detail.png",
+      "initial-fire-detail.png",
+      "initial-face-detail.png"
+    ],
+    "source_pixels_unchanged": true
+  },
+  "first_impression_before_control_labels": "An attentive person crouches beside a working fire and steaming kettle on a cold wet coast. The glove and screen make the task coherent, and the fire carries the strongest color accent.",
+  "artistic_direction": "The face, protective grip, wet weather and functioning kettle form one readable moment. Texture and mixed warm/cold light make the person present in the place. The reflected warmth on metal and stone is more convincing than source-specific illumination on the face.",
+  "control_calibration": {
+    "sensual_1": "Natural appealing presence and subtle mouth/eye response support the practical scene; no intensity score is claimed from metadata.",
+    "fetish_0": "The visible glove, wet jacket and boots read as practical task clothing; no special erotic focus was authored.",
+    "surreal_0": "The core scene remains an ordinary plausible photograph, with no intentional impossible relation."
+  },
+  "checks": [
+    {
+      "id": "fuel_flame_and_ember_states",
+      "status": "pass",
+      "evidence": "Native foreground shows cracked solid logs with red-orange fissure glow beneath distinct yellow flame tongues. Glowing solid fuel is distinguishable from the gas-shaped flames.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    },
+    {
+      "id": "fire_smoke_vs_kettle_steam",
+      "status": "pass",
+      "evidence": "A pale plume begins directly at the kettle spout on the right, while thinner grey wisps begin around the log bed and behind the grate on the left. The native frame keeps the origins distinct even though the upper moist plumes mingle.",
+      "reviewed_scales": [
+        "native"
+      ]
+    },
+    {
+      "id": "weather_and_protected_heat_purpose",
+      "status": "pass",
+      "evidence": "Wind-driven drizzle, wet black rocks, cold grey sea and flames leaning right coexist with a person holding the upwind metal screen and a steaming kettle directly above the wood. The practical heating-water situation reads at thumbnail scale.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    },
+    {
+      "id": "wet_surface_fire_reflection",
+      "status": "pass",
+      "evidence": "Broken orange highlights lie on the wet basalt directly below and beside the glowing brazier, while remote shore surfaces stay cold grey. The reflection remains a receiving surface rather than another source fire.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    },
+    {
+      "id": "selected_fire_f005_glowing_fragment_form",
+      "status": "pass",
+      "evidence": "To the right of the spout and above the flame tips, one slender angular fragment has a dark interior and glowing orange rim separated from the fuel bed by grey air. It differs from thin pale rain streaks. The still does not establish its chemistry, trajectory or historical release.",
+      "reviewed_scales": [
+        "native"
+      ]
+    },
+    {
+      "id": "selected_fire_f037_declared_metal_receiver",
+      "status": "pass",
+      "evidence": "The lower kettle flank and fire-facing steel screen carry localized amber illumination, while the upper/back metal stays cooler and darker. These are declared receiving surfaces next to the same visible fire.",
+      "reviewed_scales": [
+        "native"
+      ]
+    },
+    {
+      "id": "selected_fire_f037_face_only_source_attribution",
+      "status": "fail",
+      "evidence": "The face has a warm visible cheek and a darker far region, but the highlight comes from upper left and the frame also contains a golden horizon. Attribution of that face light specifically to the low brazier is ambiguous, so the stricter face-only observation is not promoted to a pass.",
+      "reviewed_scales": [
+        "native"
+      ]
+    },
+    {
+      "id": "reference_face_hair_appearance",
+      "status": "pass",
+      "evidence": "Compared with the directly inspected reference, the output retains the black short bob with fine bangs, a similar oval face, brow/eye spacing, nose-to-mouth placement and full lower-lip form under a new downturned angle. This is a visible appearance comparison, not an identity or age determination.",
+      "reviewed_scales": [
+        "native"
+      ]
+    },
+    {
+      "id": "agent_authored_lagoon_and_landscape_fidelity",
+      "status": "fail",
+      "evidence": "The saved output is 1237 by 1272, close to square rather than the authored landscape frame. The background reads as a rough open rocky coast; a sheltered lagoon and broad black-sand expanse are not clearly established. These are agent-chosen staging differences, not changes to the user-owned fire/reference meaning.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ]
+    }
+  ],
+  "strict_contract_status": "pass",
+  "strict_gate_count": 9,
+  "full_selected_profile_status": {
+    "fire_rel_f002": "pass_all_four_gates"
+  },
+  "generic_repair_review_applicability": {
+    "active": false,
+    "reason": "There is no render_repair contract; review-shape derived only visual+embodiment reviews. General prop coherence was inspected in the embodiment gates."
+  },
+  "reference_control_applicability": {
+    "active_reference_identity_control": false,
+    "actual_reference_attached": true,
+    "reference_roles": [
+      "face_and_hair_reference_only"
+    ],
+    "supplemental_visible_reference_comparison_done": true,
+    "no_person_identity_or_age_established": true
+  },
+  "repair_decision": "No strict gate failed; no additional native generation was needed. Preserve the image and report the stricter face-light/source and agent staging failures as observed limits.",
+  "scientific_claim_limit": "Still pixels do not establish temperature, chemistry, wind speed, safe operation or causal history. Without a baseline render, the added data cannot be given a counterfactual causal credit for the successful fire pixels.",
+  "user_acceptance": "pending",
+  "actual_image_call_count": 1
+}

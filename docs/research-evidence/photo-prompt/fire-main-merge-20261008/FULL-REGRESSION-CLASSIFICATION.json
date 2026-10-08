@@ -1,0 +1,268 @@
+{
+  "schema_version": "fire-main-full-regression-classification/v1",
+  "full_result": {
+    "schema_version": "photo-full-discovery-module-run/v1",
+    "workers": 6,
+    "seconds": 2184.018,
+    "discovered_cases": 2031,
+    "modules": 224,
+    "reported_cases": 1947,
+    "passed_modules": 202,
+    "failed_modules": 22,
+    "all_cases_accounted": false
+  },
+  "setup_aborted_cases": 84,
+  "focused_tests": {
+    "count": 35,
+    "status": "PASS"
+  },
+  "global_green": false,
+  "all_failures_proven_preexisting": false,
+  "historical_oracles_rewritten": false,
+  "rows": [
+    {
+      "module": "test_photo_appearance_boundary_history",
+      "category": "sealed_skill_and_refreshed_index",
+      "reported_cases": 7,
+      "discovered_cases": 14,
+      "exceptions": [
+        "AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/SKILL.md",
+        "AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_appearance_boundary_history.log",
+      "diagnosis": "The sealed historical SKILL check and current index byte check reject this state. SKILL is unchanged from fetched main; index regeneration is intentional."
+    },
+    {
+      "module": "test_photo_character_appearance_100",
+      "category": "sealed_existing_source",
+      "reported_cases": 13,
+      "discovered_cases": 13,
+      "exceptions": [
+        "AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_character_appearance_100.log",
+      "diagnosis": "The sealed V24/V35 source replay rejects existing source bytes. Relevant SKILL/candidate/profile sources are unchanged from fetched main."
+    },
+    {
+      "module": "test_photo_ct073_back_band_data",
+      "category": "sealed_existing_source",
+      "reported_cases": 0,
+      "discovered_cases": 13,
+      "exceptions": [
+        "AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_ct073_back_band_data.log",
+      "diagnosis": "The sealed V24/V35 source replay rejects existing source bytes. Relevant SKILL/candidate/profile sources are unchanged from fetched main."
+    },
+    {
+      "module": "test_photo_ct073_boundary_history",
+      "category": "sealed_existing_source",
+      "reported_cases": 0,
+      "discovered_cases": 20,
+      "exceptions": [
+        "AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_ct073_boundary_history.log",
+      "diagnosis": "The sealed V24/V35 source replay rejects existing source bytes. Relevant SKILL/candidate/profile sources are unchanged from fetched main."
+    },
+    {
+      "module": "test_photo_cute_visual_forms",
+      "category": "curated_inventory_missing_dependency",
+      "reported_cases": 7,
+      "discovered_cases": 7,
+      "exceptions": [
+        "ValueError: context extension references unknown entry texture.vg_faille_crossgrain_ribs"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_cute_visual_forms.log",
+      "diagnosis": "The historical test inventory excludes a source referenced by the retained VEL overlay. The complete live dictionary validates."
+    },
+    {
+      "module": "test_photo_data_scope_boundary_history",
+      "category": "sealed_existing_source",
+      "reported_cases": 1,
+      "discovered_cases": 1,
+      "exceptions": [
+        "AssertionError: Frozen V35 original source payload or mode drift: skills/photo-prompt-image-generator/SKILL.md"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_data_scope_boundary_history.log",
+      "diagnosis": "The sealed V24/V35 source replay rejects existing source bytes. Relevant SKILL/candidate/profile sources are unchanged from fetched main."
+    },
+    {
+      "module": "test_photo_data_scope_v34_boundary_history",
+      "category": "sealed_existing_source",
+      "reported_cases": 1,
+      "discovered_cases": 1,
+      "exceptions": [
+        "AssertionError: Frozen V35 original source payload or mode drift: skills/photo-prompt-image-generator/SKILL.md"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_data_scope_v34_boundary_history.log",
+      "diagnosis": "The sealed V24/V35 source replay rejects existing source bytes. Relevant SKILL/candidate/profile sources are unchanged from fetched main."
+    },
+    {
+      "module": "test_photo_ethereal_gothic_scene",
+      "category": "curated_inventory_missing_dependency",
+      "reported_cases": 12,
+      "discovered_cases": 12,
+      "exceptions": [
+        "ValueError: context extension references unknown entry texture.vg_faille_crossgrain_ribs"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_ethereal_gothic_scene.log",
+      "diagnosis": "The historical test inventory excludes a source referenced by the retained VEL overlay. The complete live dictionary validates."
+    },
+    {
+      "module": "test_photo_horror_main_boundary_history",
+      "category": "sealed_existing_source",
+      "reported_cases": 0,
+      "discovered_cases": 9,
+      "exceptions": [
+        "AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/SKILL.md"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_horror_main_boundary_history.log",
+      "diagnosis": "The sealed V24/V35 source replay rejects existing source bytes. Relevant SKILL/candidate/profile sources are unchanged from fetched main."
+    },
+    {
+      "module": "test_photo_krummholz_korean_alias_data_cleanup",
+      "category": "historical_bundle_metadata",
+      "reported_cases": 8,
+      "discovered_cases": 8,
+      "exceptions": [
+        "AssertionError: Lists differ: [{'id[532808 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[703605 chars]ly'}] != [{'id[532808 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[703586 chars]ly'}]"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_krummholz_korean_alias_data_cleanup.log",
+      "diagnosis": "Historical merged bundle metadata differs at focus/saturation confusion wording. The exact historical oracle is retained."
+    },
+    {
+      "module": "test_photo_muted_color_boundary_history",
+      "category": "sealed_existing_source",
+      "reported_cases": 0,
+      "discovered_cases": 12,
+      "exceptions": [
+        "AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/SKILL.md"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_muted_color_boundary_history.log",
+      "diagnosis": "The sealed V24/V35 source replay rejects existing source bytes. Relevant SKILL/candidate/profile sources are unchanged from fetched main."
+    },
+    {
+      "module": "test_photo_palette_boundary_history",
+      "category": "sealed_existing_source",
+      "reported_cases": 1,
+      "discovered_cases": 1,
+      "exceptions": [
+        "AssertionError: Frozen V35 original source payload or mode drift: skills/photo-prompt-image-generator/SKILL.md"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_palette_boundary_history.log",
+      "diagnosis": "The sealed V24/V35 source replay rejects existing source bytes. Relevant SKILL/candidate/profile sources are unchanged from fetched main."
+    },
+    {
+      "module": "test_photo_portrait_fashion_exposure",
+      "category": "existing_profile_projection",
+      "reported_cases": 12,
+      "discovered_cases": 12,
+      "exceptions": [
+        "AssertionError: {'id'[1443 chars]uous']}, 'runtime_expression': {'default_mode'[2429 chars]}}]}} != {'id'[1443 chars]uous', '성인의 한 어깨에만 연결된 의복 지지가 있고 반대 어깨는 연속된 비대[2804 chars]}}]}}"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_portrait_fashion_exposure.log",
+      "diagnosis": "Existing pfe_one_shoulder context differs from the initial exact projection. Its source is unchanged from fetched main."
+    },
+    {
+      "module": "test_photo_protostar_korean_alias_data_cleanup",
+      "category": "historical_bundle_metadata",
+      "reported_cases": 8,
+      "discovered_cases": 8,
+      "exceptions": [
+        "AssertionError: Lists differ: [{'id[532808 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[703605 chars]ly'}] != [{'id[532808 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[703586 chars]ly'}]"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_protostar_korean_alias_data_cleanup.log",
+      "diagnosis": "Historical merged bundle metadata differs at focus/saturation confusion wording. The exact historical oracle is retained."
+    },
+    {
+      "module": "test_photo_robe_source_boundary_history",
+      "category": "sealed_existing_source",
+      "reported_cases": 1,
+      "discovered_cases": 1,
+      "exceptions": [
+        "AssertionError: Frozen V35 original source payload or mode drift: skills/photo-prompt-image-generator/SKILL.md"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_robe_source_boundary_history.log",
+      "diagnosis": "The sealed V24/V35 source replay rejects existing source bytes. Relevant SKILL/candidate/profile sources are unchanged from fetched main."
+    },
+    {
+      "module": "test_photo_runtime_boundary_history",
+      "category": "sealed_existing_source",
+      "reported_cases": 0,
+      "discovered_cases": 6,
+      "exceptions": [
+        "AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_runtime_boundary_history.log",
+      "diagnosis": "The sealed V24/V35 source replay rejects existing source bytes. Relevant SKILL/candidate/profile sources are unchanged from fetched main."
+    },
+    {
+      "module": "test_photo_scene_budget_boundary_history",
+      "category": "sealed_existing_source",
+      "reported_cases": 0,
+      "discovered_cases": 10,
+      "exceptions": [
+        "AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/SKILL.md",
+        "AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_scene_budget_boundary_history.log",
+      "diagnosis": "The sealed V24/V35 source replay rejects existing source bytes. Relevant SKILL/candidate/profile sources are unchanged from fetched main."
+    },
+    {
+      "module": "test_photo_shelf_return_korean_state_data_cleanup",
+      "category": "historical_bundle_metadata",
+      "reported_cases": 10,
+      "discovered_cases": 10,
+      "exceptions": [
+        "AssertionError: Lists differ: [{'id[532808 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[703605 chars]ly'}] != [{'id[532808 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[703586 chars]ly'}]"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_shelf_return_korean_state_data_cleanup.log",
+      "diagnosis": "Historical merged bundle metadata differs at focus/saturation confusion wording. The exact historical oracle is retained."
+    },
+    {
+      "module": "test_photo_structure_maintenance",
+      "category": "exact_registration_list",
+      "reported_cases": 11,
+      "discovered_cases": 11,
+      "exceptions": [
+        "AssertionError: Lists differ: ['pho[2721 chars]json', 'photo_prompt_vel_appearance_relations_[57 chars]son'] != ['pho[2721 chars]json']"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_structure_maintenance.log",
+      "diagnosis": "The historical expected registration list lacks VEL/fire additions. All 100 existing main rows and their order/required flags are preserved; the two new fire rows append."
+    },
+    {
+      "module": "test_photo_water_main_boundary_history",
+      "category": "sealed_existing_source",
+      "reported_cases": 0,
+      "discovered_cases": 7,
+      "exceptions": [
+        "AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/SKILL.md"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_photo_water_main_boundary_history.log",
+      "diagnosis": "The sealed V24/V35 source replay rejects existing source bytes. Relevant SKILL/candidate/profile sources are unchanged from fetched main."
+    },
+    {
+      "module": "test_subculture_illustration_contract_v1",
+      "category": "current_pack_exact_byte_replay",
+      "reported_cases": 34,
+      "discovered_cases": 34,
+      "exceptions": [
+        "validate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_subculture_illustration_contract_v1.log",
+      "diagnosis": "Current output bytes differ from the historical candidate-pack oracle; this replay remains unqualified."
+    },
+    {
+      "module": "test_subculture_illustration_universal_scene_v3",
+      "category": "current_pack_exact_byte_replay",
+      "reported_cases": 43,
+      "discovered_cases": 43,
+      "exceptions": [
+        "validate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift"
+      ],
+      "log": "docs/research-evidence/photo-prompt/fire-main-merge-20261008/full-suite-modules/test_subculture_illustration_universal_scene_v3.log",
+      "diagnosis": "Current output bytes differ from the historical candidate-pack oracle; this replay remains unqualified."
+    }
+  ]
+}

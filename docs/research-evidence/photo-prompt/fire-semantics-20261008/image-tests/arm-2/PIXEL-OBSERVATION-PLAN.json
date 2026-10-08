@@ -1,0 +1,83 @@
+{
+  "schema_version": "agent-fire-pixel-observation-plan/v1",
+  "created_after_core_freeze": true,
+  "candidate_access_in_this_plan": false,
+  "initial_artistic_direction": "A small protected pocket of usable fire warmth in wet coastal weather, with an attentive reference-guided person and a practical kettle boil.",
+  "required_scales": [
+    "native",
+    "thumbnail"
+  ],
+  "image_truth_rules": [
+    "Any selected profile must pass every derived gate in one actual image.",
+    "Absent, obscured, transferred-owner or partial required components are fail.",
+    "Prompt presence, metadata PASS and a retrieved term are not pixel success."
+  ],
+  "baseline_observables": [
+    {
+      "id": "fuel_flame",
+      "owner": "wood in shallow iron brazier",
+      "property": "blackened fuel and rooted flame",
+      "relation": "flame arises from fuel in container"
+    },
+    {
+      "id": "ember_state",
+      "owner": "burning split logs",
+      "property": "dull red-orange embers between charred surfaces",
+      "relation": "ember glow is in solid fuel rather than another free flame"
+    },
+    {
+      "id": "smoke_vs_steam",
+      "owners": [
+        "charred log ends",
+        "kettle spout"
+      ],
+      "properties": [
+        "thin grey smoke",
+        "pale translucent steam"
+      ],
+      "relation": "separate visible origin points"
+    },
+    {
+      "id": "person_action",
+      "owner": "reference-guided woman",
+      "property": "glove grips screen rim",
+      "relation": "visible forearm-to-hand chain and stable crouching support"
+    },
+    {
+      "id": "firelight_reflection",
+      "owner": "nearby fire",
+      "property": "localized warm cheek/metal and orange wet-stone reflection",
+      "relation": "light/reflection are colocated with source"
+    },
+    {
+      "id": "weather_coherence",
+      "owner": "coastal scene",
+      "property": "wet dark shore, wind/drizzle",
+      "relation": "wind leans flame and motivates shielding a working kettle fire"
+    }
+  ],
+  "uncontrolled_limit": "One initial generation cannot establish a counterfactual causal effect of candidate data. Literal differences prove prompt contribution only; pixel support proves current render fidelity.",
+  "user_acceptance": "pending",
+  "selected_candidate_checks": [
+    {
+      "id": "selected_fire_f005_fragment",
+      "expected": "One irregular solid-looking glowing fragment is suspended in air near the actual log end; a free bright dot or drizzle streak alone is insufficient.",
+      "claim_limit": "The still cannot prove its material chemistry, airborne trajectory or causal release history."
+    },
+    {
+      "id": "selected_fire_f037_receiver",
+      "expected": "The same face shows a warm region turned toward the fire and a darker cooler region turned away, spatially tied to the brazier source.",
+      "claim_limit": "The still supports light direction, not temperature or a measured heat field."
+    }
+  ],
+  "selected_visual_profile_checks": {
+    "profile_id": "fire_rel_f002",
+    "derived_gate_ids": [
+      "vo_fire_f002_1",
+      "vo_fire_f002_2",
+      "vo_fire_f002_3",
+      "vo_fire_f002_owned_relation"
+    ],
+    "requires_entire_profile_in_one_image": true
+  }
+}

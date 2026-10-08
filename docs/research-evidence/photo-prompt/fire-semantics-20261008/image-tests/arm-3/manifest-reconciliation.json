@@ -1,0 +1,44 @@
+{
+  "schema": "photo-independent-manifest-reconciliation/v1",
+  "observed_at": "2026-10-07T17:12:11.993077+00:00",
+  "failed_cli_replay": {
+    "error": "Error: ledger identity conflict",
+    "cause": "The managed row was already admitted without arm metadata; adding those fields makes the same identity different, so the append guard rejects replacement."
+  },
+  "recovery": "Fresh validate_native_record of the exact admitted row, followed by the original recorder build_independent_manifest with full independent provenance; only the V2 manifest is written.",
+  "ledger_preserved_byte_for_byte": true,
+  "ledger_sha256": "940f3a851a85f86b6bc76fe5bcda9ddc3bd84247e8790286cd17b80afd275a25",
+  "ledger_run_id": "a6d3c80b609034d9",
+  "manifest_sha256": "d41f9cd2674577fe1f947c77a7db5e8fbcd76503fce8e23fe28ea7d9aaaa4cae",
+  "actual_image_call_count": 1,
+  "additional_image_calls": 0,
+  "no_duplicate_ledger_created": true,
+  "native_validation_derived_fields": [
+    "native_render_plan_json",
+    "native_render_plan_sha256",
+    "runtime_prompt_sha256"
+  ],
+  "manifest_required_field_keys": [
+    "contract_version",
+    "arm_id",
+    "worktree_id",
+    "skill_sha256",
+    "source_ref",
+    "candidate_pack_version",
+    "image_call_count",
+    "authorial_core_sha256",
+    "intent_lock_sha256",
+    "reference_sha256",
+    "cross_arm_inputs_used",
+    "ledger_run_id",
+    "pack_id",
+    "prompt_id",
+    "status",
+    "tool",
+    "image_paths",
+    "image_hashes",
+    "chosen_visual_concept_ids",
+    "generation_environment",
+    "runtime_prompt_sha256"
+  ]
+}

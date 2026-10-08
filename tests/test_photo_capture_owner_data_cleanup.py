@@ -21,12 +21,14 @@ class CaptureOwnerDataCleanupTests(unittest.TestCase):
         cls.acceptance = json.loads((EVIDENCE / 'acceptance-decisions.json').read_text())
         # This oracle freezes the 20261001 ownership revision. Exclude only
         # the later additive motion paraphrase overlay and its dependent cute
-        # context overlay; current merged data is tested independently.
+        # context overlay. The later fire overlay also adds optical context;
+        # tests.test_photo_fire_relations checks its current merged meaning.
         filenames = tuple(name for name in generator.RESEARCH_EXTENSION_FILENAMES
                           if name not in {'photo_prompt_motion_graphics_extension.json',
                                           'photo_prompt_cute_visual_forms_extension.json',
                                           'photo_prompt_visual_grammar_extension.json',
-                                          'photo_prompt_vel_appearance_relations_extension.json'})
+                                          'photo_prompt_vel_appearance_relations_extension.json',
+                                          'photo_prompt_fire_relations_extension.json'})
         inventory = generator.photo_source_manifest.SourceInventory.for_test(ASSETS, candidate_files=filenames)
         cls.data = generator.load_json(ASSETS / 'photo_prompt_tags.json', inventory=inventory)
         cls.rows = {(slot, row['id']): row for slot, rows in cls.data['slots'].items() for row in rows}

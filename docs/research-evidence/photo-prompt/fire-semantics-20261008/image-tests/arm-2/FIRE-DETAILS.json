@@ -1,0 +1,504 @@
+{
+  "contract_version": "photo-composer-view/v2",
+  "mode": "candidate_details",
+  "source_pack_id": "e58c07a4247e66d8",
+  "source_pack_sha256": "f7f2cd06787dbda9623757d91a4f324b357a7cc6f5bf7e4c0926662f28e30048",
+  "candidates": [
+    {
+      "id": "visual-concept:fire_rel_f002",
+      "source_pointer": "/visual_concept_candidates/candidates/11",
+      "candidate": {
+        "id": "visual-concept:fire_rel_f002",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "several continuous flame tongues attached to those surfaces",
+          "open gaps between the wood and flame tips",
+          "recognizable wood surfaces beneath the fire",
+          "장작 표면에서 솟는 화염"
+        ],
+        "affected_dimensions": [
+          "action"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "action",
+            "target": "fuel_surface",
+            "property": "source_target_connection"
+          }
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "fire_rel_f002",
+            "category": "fire_component_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Retain the complete selected realization on the stated owners: recognizable wood surfaces beneath the fire; several continuous flame tongues attached to those surfaces; open gaps between the wood and flame tips. Metadata remains declared context; invisible attributes are not pixel evidence.",
+            "component_semantics": {
+              "minimum_component_groups": 2,
+              "required_group_ids": [
+                "component_2"
+              ],
+              "groups": [
+                {
+                  "id": "component_1",
+                  "any_terms": [
+                    "recognizable wood surfaces beneath the fire",
+                    "wood surfaces",
+                    "burning wood",
+                    "stacked logs"
+                  ]
+                },
+                {
+                  "id": "component_2",
+                  "any_terms": [
+                    "several continuous flame tongues attached to those surfaces",
+                    "flame tongues",
+                    "flames attached to the wood"
+                  ]
+                },
+                {
+                  "id": "component_3",
+                  "any_terms": [
+                    "open gaps between the wood and flame tips",
+                    "gaps between the logs",
+                    "gaps between the wood"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "component_1_phrase",
+                "component_2_phrase",
+                "component_3_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 3,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "component_1_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "recognizable wood surfaces beneath the fire"
+                ]
+              },
+              "component_2_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "several continuous flame tongues attached to those surfaces"
+                ]
+              },
+              "component_3_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "open gaps between the wood and flame tips"
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_fire_f002_1",
+                "review_scale": "native",
+                "description": "Inspect the complete visible component on its stated owner fuel_surface: recognizable wood surfaces beneath the fire. Partial, hidden or different-owner substitutes fail. This does not establish temperature, chemical identity or causal history."
+              },
+              {
+                "id": "vo_fire_f002_2",
+                "review_scale": "native",
+                "description": "Inspect the complete visible component on its stated owner flame: several continuous flame tongues attached to those surfaces. Partial, hidden or different-owner substitutes fail. This does not establish temperature, chemical identity or causal history."
+              },
+              {
+                "id": "vo_fire_f002_3",
+                "review_scale": "native",
+                "description": "Inspect the complete visible component on its stated owner air_gap: open gaps between the wood and flame tips. Partial, hidden or different-owner substitutes fail. This does not establish temperature, chemical identity or causal history."
+              },
+              {
+                "id": "vo_fire_f002_owned_relation",
+                "review_scale": "both",
+                "description": "The visible parts share their specified physical owners and continuous spatial connections in this single frame: fuel_surface anchors flame. A transferred component or disconnected neighboring object fails."
+              }
+            ],
+            "reject_substitutes": [
+              "독립 발광 입자·용암·그을린 장작만으로 현재 화염을 대신하지 않는다."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "visual-concept:fire_rel_f094",
+      "source_pointer": "/visual_concept_candidates/candidates/10",
+      "candidate": {
+        "id": "visual-concept:fire_rel_f094",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "one graspable shaft or declared torch body",
+          "a bounded burning head at its upper end",
+          "flames attached to that head",
+          "손잡이 위 연료가 타는 횃불"
+        ],
+        "affected_dimensions": [
+          "setting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "setting",
+            "target": "torch",
+            "property": "object.arrangement"
+          }
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "fire_rel_f094",
+            "category": "fire_component_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Retain the complete selected realization on the stated owners: one graspable shaft or declared torch body; a bounded burning head at its upper end; flames attached to that head. Metadata remains declared context; invisible attributes are not pixel evidence.",
+            "component_semantics": {
+              "minimum_component_groups": 2,
+              "required_group_ids": [
+                "component_2"
+              ],
+              "groups": [
+                {
+                  "id": "component_1",
+                  "any_terms": [
+                    "one graspable shaft or declared torch body",
+                    "torch shaft",
+                    "torch body"
+                  ]
+                },
+                {
+                  "id": "component_2",
+                  "any_terms": [
+                    "a bounded burning head at its upper end",
+                    "burning torch head",
+                    "fuel at the torch head"
+                  ]
+                },
+                {
+                  "id": "component_3",
+                  "any_terms": [
+                    "flames attached to that head",
+                    "flames attached to the head",
+                    "flame rooted at the torch head"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "component_1_phrase",
+                "component_2_phrase",
+                "component_3_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 3,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "component_1_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "one graspable shaft or declared torch body"
+                ]
+              },
+              "component_2_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "a bounded burning head at its upper end"
+                ]
+              },
+              "component_3_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "flames attached to that head"
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_fire_f094_1",
+                "review_scale": "native",
+                "description": "Inspect the complete visible component on its stated owner torch: one graspable shaft or declared torch body. Partial, hidden or different-owner substitutes fail. This does not establish temperature, chemical identity or causal history."
+              },
+              {
+                "id": "vo_fire_f094_2",
+                "review_scale": "native",
+                "description": "Inspect the complete visible component on its stated owner fuel_head: a bounded burning head at its upper end. Partial, hidden or different-owner substitutes fail. This does not establish temperature, chemical identity or causal history."
+              },
+              {
+                "id": "vo_fire_f094_3",
+                "review_scale": "native",
+                "description": "Inspect the complete visible component on its stated owner flame: flames attached to that head. Partial, hidden or different-owner substitutes fail. This does not establish temperature, chemical identity or causal history."
+              },
+              {
+                "id": "vo_fire_f094_owned_relation",
+                "review_scale": "both",
+                "description": "The visible parts share their specified physical owners and continuous spatial connections in this single frame: torch supports fuel_head; fuel_head anchors flame. A transferred component or disconnected neighboring object fails."
+              }
+            ],
+            "reject_substitutes": [
+              "토치 공구·성화·의례 횃불의 용도를 자동 혼합하지 않는다."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "slot:ambient_particle:fire_f005",
+      "source_pointer": "/slots/ambient_particle/candidates/0",
+      "candidate": {
+        "id": "slot:ambient_particle:fire_f005",
+        "slot": "ambient_particle",
+        "entry_id": "fire_f005",
+        "tags": [
+          "combustion"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "a recognizable irregular glowing fuel fragment",
+          "air separating the fragment from its original fuel bed",
+          "a distinct source fire or charred fuel bed"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "a recognizable irregular glowing fuel fragment",
+          "air separating the fragment from its original fuel bed",
+          "a distinct source fire or charred fuel bed"
+        ],
+        "relations": [
+          {
+            "id": "f005_relation_1",
+            "type": "releases",
+            "subject": "source",
+            "object": "fuel_fragment"
+          }
+        ],
+        "affected_dimensions": [
+          "atmosphere"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "atmosphere",
+            "target": "fuel_fragment",
+            "property": "particle_structure"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:light_shape:fire_f021",
+      "source_pointer": "/slots/light_shape/candidates/0",
+      "candidate": {
+        "id": "slot:light_shape:fire_f021",
+        "slot": "light_shape",
+        "entry_id": "fire_f021",
+        "tags": [
+          "flame_geometry"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "an extended declared fuel or fictional source line",
+          "a laterally continuous row of attached flames",
+          "one coherent foreground and background across the front"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "an extended declared fuel or fictional source line",
+          "a laterally continuous row of attached flames",
+          "one coherent foreground and background across the front"
+        ],
+        "relations": [
+          {
+            "id": "f021_relation_1",
+            "type": "anchors",
+            "subject": "fuel_line",
+            "object": "flame_front"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "fire_front",
+            "property": "emission_geometry"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:lighting:fire_f037",
+      "source_pointer": "/slots/lighting/candidates/0",
+      "candidate": {
+        "id": "slot:lighting:fire_f037",
+        "slot": "lighting",
+        "entry_id": "fire_f037",
+        "tags": [
+          "color_light"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "one declared luminous fire source",
+          "warm illumination on the face or surface turned toward that fire",
+          "a darker region on the surface turned away from it"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "one declared luminous fire source",
+          "warm illumination on the face or surface turned toward that fire",
+          "a darker region on the surface turned away from it"
+        ],
+        "relations": [
+          {
+            "id": "f037_relation_1",
+            "type": "illuminates",
+            "subject": "fire_source",
+            "object": "receiver_surface"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "receiver_surface",
+            "property": "illumination.firelight"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:prop:fire_f094",
+      "source_pointer": "/slots/prop/candidates/0",
+      "candidate": {
+        "id": "slot:prop:fire_f094",
+        "slot": "prop",
+        "entry_id": "fire_f094",
+        "tags": [
+          "domestic_fire"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "one graspable shaft or declared torch body",
+          "a bounded burning head at its upper end",
+          "flames attached to that head"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "one graspable shaft or declared torch body",
+          "a bounded burning head at its upper end",
+          "flames attached to that head"
+        ],
+        "relations": [
+          {
+            "id": "f094_relation_1",
+            "type": "supports",
+            "subject": "torch",
+            "object": "fuel_head"
+          },
+          {
+            "id": "f094_relation_2",
+            "type": "anchors",
+            "subject": "fuel_head",
+            "object": "flame"
+          }
+        ],
+        "affected_dimensions": [
+          "setting"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "setting",
+            "target": "torch",
+            "property": "object.arrangement"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    }
+  ],
+  "view_sha256": "74bc637e01e7de96e215fa094075c3fc1e4c042f2a448073e6a1aba2c8ac0681"
+}

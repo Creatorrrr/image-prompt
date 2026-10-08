@@ -1,0 +1,30 @@
+test_acceptance_binds_lexical_gain_dense_cost_and_all_attempts (test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_acceptance_binds_lexical_gain_dense_cost_and_all_attempts) ... ok
+test_bare_names_and_independent_probe_texts_remain_frozen (test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_bare_names_and_independent_probe_texts_remain_frozen) ... ok
+test_complete_raw_extension_has_only_one_alias_append (test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_complete_raw_extension_has_only_one_alias_append) ... ok
+test_current_semantic_surface_preserves_frozen_krummholz_meaning (test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_current_semantic_surface_preserves_frozen_krummholz_meaning) ... ok
+test_exact_frozen_scope_queries_and_budget (test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_exact_frozen_scope_queries_and_budget) ... ok
+test_historical_merged_state_and_current_ten_keeps_are_exact (test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_historical_merged_state_and_current_ten_keeps_are_exact) ... FAIL
+test_previous_reef_correction_and_all_other_source_rows_remain_intact (test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_previous_reef_correction_and_all_other_source_rows_remain_intact) ... ok
+test_specialization_existing_names_and_every_other_field_are_preserved (test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_specialization_existing_names_and_every_other_field_are_preserved) ... ok
+
+======================================================================
+FAIL: test_historical_merged_state_and_current_ten_keeps_are_exact (test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_historical_merged_state_and_current_ten_keeps_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/fire-main-merge-20261008/image-prompt/tests/test_photo_krummholz_korean_alias_data_cleanup.py", line 77, in test_historical_merged_state_and_current_ten_keeps_are_exact
+    self.assertEqual(fixtures.bundle_meanings(fixtures.seduction_historical_bundles(self.current['candidate_bundles']), within=historical),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     fixtures.bundle_meanings(historical))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [{'id[532808 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[703605 chars]ly'}] != [{'id[532808 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[703586 chars]ly'}]
+
+First differing element 307:
+{'id'[817 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[87 chars]nly'}
+{'id'[817 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[68 chars]nly'}
+
+Diff is 2223582 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 8 tests in 6.923s
+
+FAILED (failures=1)
