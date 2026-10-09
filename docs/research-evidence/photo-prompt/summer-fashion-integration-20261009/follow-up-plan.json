@@ -1,0 +1,54 @@
+{
+  "schema_version": "summer-fashion-post-native-plan/v1",
+  "status": "planned_not_executed",
+  "bound_generation_id": "4d983fa8c19d53c5be8f1269ef5897d9c04ae02a90ed3e3d76eff0e7e47cb756",
+  "items": [
+    {
+      "id": "bermuda-skort-landmark",
+      "priority": "P1",
+      "basis": "case_a: mid-thigh hems fail the knee-near landmark and owner relation",
+      "source_variant": "suf_sf069_v1",
+      "action": "Retain existing gates and build standalone Bermuda, standalone skort, and combined controlled cases.",
+      "pass_criterion": "Both hems and their same-owner knees are observable and the declared knee-near relation holds."
+    },
+    {
+      "id": "continuous-woven-layer-transmission",
+      "priority": "P1",
+      "basis": "case_a: open placket and crochet holes do not prove transmission through the selected woven shirt",
+      "source_variant": "sheer_garment_optical_layering",
+      "action": "Use the saved failure crops and paired continuous-panel/opaque-inner-layer cases to test the actual optical path.",
+      "pass_criterion": "An inner-layer boundary transmits through the same continuous shirt panel, and denser folds show a readable transmission difference."
+    },
+    {
+      "id": "actor-relative-hand-actuation",
+      "priority": "P1",
+      "basis": "case_a and case_c: hand-to-object roles mirrored despite coherent contact",
+      "action": "Add bidirectional owner-to-shoulder-to-arm-to-hand-to-object cases and keep exact authored handedness separate from anatomical plausibility.",
+      "pass_criterion": "Both prescribed actor-side roles and visible contact endpoints match in the same saved image."
+    },
+    {
+      "id": "optional-profile-retrieval-coverage",
+      "priority": "P2",
+      "basis": "case_b: suf_sf002_v2 candidate and bundle exposed; new visual profile not exposed",
+      "source_variant": "suf_sf002_v2",
+      "action": "Compare the unchanged-core retrieval trace with separate Korean/English contextual probes; inspect optional profile exposure without associated-profile hard promotion.",
+      "pass_criterion": "The relevant profile can be exposed and selected optionally; label-only input stays non-mandatory."
+    },
+    {
+      "id": "moderation-unobserved-pixels",
+      "priority": "P2",
+      "basis": "case_b: explicit output moderation_blocked",
+      "action": "Preserve the blocked attempt and unrun pixel gates. Any meaning-changing new case requires an explicitly corrected requester scope and a separate run.",
+      "pass_criterion": "Begin pixel review only after a real provider-returned image; retain this blocked case as NOT_RUN_NOT_PASS.",
+      "automatic_retry": false,
+      "alternate_route_bypass": false
+    },
+    {
+      "id": "representative-family-expansion",
+      "priority": "P2",
+      "basis": "Only selected variants were inspected; 159 new variants and 469 registry gates are not fully native-qualified.",
+      "action": "Extend the research plan's 18 representative pixel groups, prioritizing component, relation, owner, and confusion-boundary coverage.",
+      "pass_criterion": "Report source, retrieval, prompt, native pixels, moderation and user acceptance independently."
+    }
+  ]
+}

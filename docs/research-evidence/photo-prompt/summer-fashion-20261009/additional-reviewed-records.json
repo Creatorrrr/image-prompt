@@ -1,0 +1,118 @@
+[
+  {
+    "kind": "slot_candidate",
+    "slot": "garment_detail",
+    "id": "fit_ff09_v1_candidate",
+    "entry": {
+      "id": "fit_ff09_v1_candidate",
+      "ko": "어깨 끝 바깥 상완에 소매 연결선이 놓이는 셔츠",
+      "en": "The shirt's sleeve-attachment seam sits beyond the shoulder tip on the upper arm; the sleeve hangs from that lower join.",
+      "weight": 0.35,
+      "tags": [
+        "clothing"
+      ],
+      "aliases": [
+        "drop-shoulder shirt seam beyond shoulder tip",
+        "드롭 숄더 셔츠의 어깨 끝 밖 연결선"
+      ],
+      "keywords": [
+        "drop-shoulder shirt seam beyond shoulder tip",
+        "드롭 숄더 셔츠의 어깨 끝 밖 연결선",
+        "The shirt's sleeve-attachment seam sits beyond the shoulder tip on the upper arm.",
+        "the sleeve hangs from that lower join."
+      ],
+      "embedding_text": "The shirt's sleeve-attachment seam sits beyond the shoulder tip on the upper arm; the sleeve hangs from that lower join. | shirt sleeve attachment seam lies beyond same wearer's shoulder tip on the upper arm",
+      "concept_units": [
+        "The shirt's sleeve-attachment seam sits beyond the shoulder tip on the upper arm.",
+        "the sleeve hangs from that lower join."
+      ],
+      "relations": [
+        {
+          "id": "fit_ff09_v1_owner_relation",
+          "type": "lies_beyond",
+          "subject": "shirt sleeve attachment seam",
+          "object": "same wearer's shoulder tip on the upper arm"
+        }
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.fit.shoulder.seam_position"
+        },
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.structure.sleeve_attachment"
+        }
+      ],
+      "core_assertion_discovery": true,
+      "for_any": [
+        "human"
+      ]
+    },
+    "source": "skills/photo-prompt-image-generator/assets/photo_prompt_fashion_fit_extension.json",
+    "source_sha256": "9b8795d08c5222525beff993c33023ec1bc66e651527ed7e39063b3664edefcd"
+  },
+  {
+    "kind": "slot_candidate",
+    "slot": "garment_detail",
+    "id": "fit_ff09_v2_candidate",
+    "entry": {
+      "id": "fit_ff09_v2_candidate",
+      "ko": "어깨 바깥으로 연장된 의복 끝에 소매가 붙는 재킷",
+      "en": "The jacket shoulder extends outward beyond the wearer's shoulder; its sleeve attaches at the extended garment edge.",
+      "weight": 0.35,
+      "tags": [
+        "clothing"
+      ],
+      "aliases": [
+        "어깨 바깥으로 연장된 의복 끝에 소매가 붙는 재킷",
+        "The jacket shoulder extends outward beyond the wearer's shoulder; its sleeve attaches at the extended garment edge."
+      ],
+      "keywords": [
+        "어깨 바깥으로 연장된 의복 끝에 소매가 붙는 재킷",
+        "The jacket shoulder extends outward beyond the wearer's shoulder; its sleeve attaches at the extended garment edge.",
+        "The jacket shoulder extends outward beyond the wearer's shoulder.",
+        "its sleeve attaches at the extended garment edge."
+      ],
+      "embedding_text": "The jacket shoulder extends outward beyond the wearer's shoulder; its sleeve attaches at the extended garment edge. | jacket extended shoulder edge supports same jacket's attached sleeve outside the shoulder tip",
+      "concept_units": [
+        "The jacket shoulder extends outward beyond the wearer's shoulder.",
+        "its sleeve attaches at the extended garment edge."
+      ],
+      "relations": [
+        {
+          "id": "fit_ff09_v2_owner_relation",
+          "type": "supports",
+          "subject": "jacket extended shoulder edge",
+          "object": "same jacket's attached sleeve outside the shoulder tip"
+        }
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.fit.shoulder.extent"
+        },
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.structure.sleeve_attachment"
+        }
+      ],
+      "core_assertion_discovery": true,
+      "for_any": [
+        "human"
+      ]
+    },
+    "source": "skills/photo-prompt-image-generator/assets/photo_prompt_fashion_fit_extension.json",
+    "source_sha256": "9b8795d08c5222525beff993c33023ec1bc66e651527ed7e39063b3664edefcd"
+  }
+]

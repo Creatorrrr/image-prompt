@@ -1,0 +1,190 @@
+...................................................................................F.F...........................................................E.F...................................E..............................................................................................................F.......................FFF....F...................F.................................F......................................................................................E......................................................
+======================================================================
+ERROR: test_equivalent_overlay_preserves_all_existing_meaning_effects_and_guards (test_photo_cute_visual_forms.CuteVisualFormsTests.test_equivalent_overlay_preserves_all_existing_meaning_effects_and_guards)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_cute_visual_forms.py", line 34, in test_equivalent_overlay_preserves_all_existing_meaning_effects_and_guards
+    before=g.load_json(ASSETS/'photo_prompt_tags.json',inventory=inventory)
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 1271, in load_json
+    data = merge_research_extension(data, extension)
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 726, in merge_research_extension
+    photo_candidate_semantics.extend_slot_contexts(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        slots, extension.get("existing_slot_context_extensions"))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_semantics.py", line 88, in extend_slot_contexts
+    raise ValueError(f"context extension references unknown entry {slot}.{entry_id}")
+ValueError: context extension references unknown entry texture.vg_faille_crossgrain_ribs
+
+======================================================================
+ERROR: test_existing_context_additions_do_not_rewrite_original_meaning_or_guards (test_photo_ethereal_gothic_scene.EtherealGothicSceneTests.test_existing_context_additions_do_not_rewrite_original_meaning_or_guards)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_ethereal_gothic_scene.py", line 182, in test_existing_context_additions_do_not_rewrite_original_meaning_or_guards
+    old=g.load_json(SKILL/'assets/photo_prompt_tags.json',inventory=inventory)
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 1271, in load_json
+    data = merge_research_extension(data, extension)
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 726, in merge_research_extension
+    photo_candidate_semantics.extend_slot_contexts(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        slots, extension.get("existing_slot_context_extensions"))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/skills/photo-prompt-image-generator/scripts/photo_candidate_semantics.py", line 88, in extend_slot_contexts
+    raise ValueError(f"context extension references unknown entry {slot}.{entry_id}")
+ValueError: context extension references unknown entry texture.vg_faille_crossgrain_ribs
+
+======================================================================
+ERROR: setUpClass (test_photo_water_main_boundary_history.WaterMainBoundaryHistoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_water_main_boundary_history.py", line 26, in setUpClass
+    cls.original_validator=fixtures.archived_v30_validator(cls.original_root)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/photo_prompt_fixtures.py", line 1914, in archived_v30_validator
+    manifest = materialize_v30_parent_source(directory, source_root=source_root)
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/photo_prompt_fixtures.py", line 1869, in materialize_v30_parent_source
+    _v24_verified_payload(source_root, row)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/photo_prompt_fixtures.py", line 856, in _v24_verified_payload
+    raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/SKILL.md
+
+======================================================================
+FAIL: test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates (test_photo_character_appearance_100.CharacterAppearance100Tests.test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_character_appearance_100.py", line 69, in test_all_previous_profiles_keep_meaning_activation_effects_and_native_gates
+    original_cello_activation=self._authenticated_v34_cello_activation()
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_character_appearance_100.py", line 100, in _authenticated_v34_cello_activation
+    original=json.loads(support.previous_payload(ROOT,name,(ROOT/name).read_bytes()))
+                        ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/photo_ethereal_history_v35.py", line 75, in previous_payload
+    def previous_payload(root,name,current):return previous_path(root,name,current).read_bytes() if context(root) else current
+                                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json
+
+======================================================================
+FAIL: test_current_cello_activation_matches_authenticated_v34_scope_guard (test_photo_character_appearance_100.CharacterAppearance100Tests.test_current_cello_activation_matches_authenticated_v34_scope_guard)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_character_appearance_100.py", line 105, in test_current_cello_activation_matches_authenticated_v34_scope_guard
+    original=self._authenticated_v34_cello_activation()
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_character_appearance_100.py", line 100, in _authenticated_v34_cello_activation
+    original=json.loads(support.previous_payload(ROOT,name,(ROOT/name).read_bytes()))
+                        ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/photo_ethereal_history_v35.py", line 75, in previous_payload
+    def previous_payload(root,name,current):return previous_path(root,name,current).read_bytes() if context(root) else current
+                                                   ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/photo_ethereal_history_v35.py", line 69, in previous_path
+    if digest(current)!=proof['source_files_after'][name] or path.stat().st_mode&0o7777!=int(row['mode'][-3:],8):raise AssertionError('Frozen V35 retained live source payload or mode drift: '+name)
+                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 retained live source payload or mode drift: skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json
+
+======================================================================
+FAIL: test_original_assertions_replay_without_revision (test_photo_data_scope_boundary_history.OriginalBoundaryReplayTests.test_original_assertions_replay_without_revision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_data_scope_boundary_history.py", line 12, in test_original_assertions_replay_without_revision
+    history.materialize_original(tree,source_root=ROOT,link_verified=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/photo_ethereal_history_v35.py", line 92, in materialize_original
+    for row in parent['members']:exact_payload(source_root,row)
+                                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/photo_ethereal_history_v35.py", line 47, in exact_payload
+    if path.stat().st_mode&0o7777!=int(row['mode'][-3:],8) or len(raw)!=row['bytes'] or digest(raw)!=row['sha256'] or blob!=row['git_blob']:raise AssertionError('Frozen V35 original source payload or mode drift: '+row['path'])
+                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 original source payload or mode drift: skills/photo-prompt-image-generator/SKILL.md
+
+======================================================================
+FAIL: test_added_projection_preserves_initial_profiles_candidates_and_source_links (test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_added_projection_preserves_initial_profiles_candidates_and_source_links)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_portrait_fashion_exposure.py", line 204, in test_added_projection_preserves_initial_profiles_candidates_and_source_links
+    self.assertEqual(p, comparable)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: {'id'[1443 chars]uous']}, 'runtime_expression': {'default_mode'[2429 chars]}}]}} != {'id'[1443 chars]uous', '성인의 한 어깨에만 연결된 의복 지지가 있고 반대 어깨는 연속된 비대[2804 chars]}}]}}
+Diff is 15495 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed) (arm_id='arm-a-energy')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_poverty_visual_semantics.py", line 385, in test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed
+    self.assertTrue(result_path.is_file())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed) (arm_id='arm-b-working-income')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_poverty_visual_semantics.py", line 385, in test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed
+    self.assertTrue(result_path.is_file())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed) (arm_id='arm-c-transport')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_poverty_visual_semantics.py", line 385, in test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed
+    self.assertTrue(result_path.is_file())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_historical_merged_state_and_current_nineteen_keeps_are_exact (test_photo_protostar_korean_alias_data_cleanup.ProtostarKoreanAliasDataCleanupTests.test_historical_merged_state_and_current_nineteen_keeps_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py", line 72, in test_historical_merged_state_and_current_nineteen_keeps_are_exact
+    self.assertEqual(fixtures.bundle_meanings(fixtures.seduction_historical_bundles(self.current['candidate_bundles']), within=historical),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     fixtures.bundle_meanings(historical))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [{'id[532808 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[703605 chars]ly'}] != [{'id[532808 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[703586 chars]ly'}]
+
+First differing element 307:
+{'id'[817 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[87 chars]nly'}
+{'id'[817 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[68 chars]nly'}
+
+Diff is 2223582 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_original_assertions_replay_without_revision (test_photo_robe_source_boundary_history.OriginalBoundaryReplayTests.test_original_assertions_replay_without_revision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_robe_source_boundary_history.py", line 14, in test_original_assertions_replay_without_revision
+    history.materialize_original(tree, source_root=ROOT, link_verified=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/photo_ethereal_history_v35.py", line 92, in materialize_original
+    for row in parent['members']:exact_payload(source_root,row)
+                                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/photo_ethereal_history_v35.py", line 47, in exact_payload
+    if path.stat().st_mode&0o7777!=int(row['mode'][-3:],8) or len(raw)!=row['bytes'] or digest(raw)!=row['sha256'] or blob!=row['git_blob']:raise AssertionError('Frozen V35 original source payload or mode drift: '+row['path'])
+                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 original source payload or mode drift: skills/photo-prompt-image-generator/SKILL.md
+
+======================================================================
+FAIL: test_historical_merged_state_and_current_eleven_keeps_are_exact (test_photo_shelf_return_korean_state_data_cleanup.ShelfReturnKoreanStateDataCleanupTests.test_historical_merged_state_and_current_eleven_keeps_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_shelf_return_korean_state_data_cleanup.py", line 121, in test_historical_merged_state_and_current_eleven_keeps_are_exact
+    self.assertEqual(fixtures.bundle_meanings(fixtures.seduction_historical_bundles(current_historical)),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     fixtures.bundle_meanings(historical_bundles))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [{'id[532808 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[703605 chars]ly'}] != [{'id[532808 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[703586 chars]ly'}]
+
+First differing element 307:
+{'id'[817 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[87 chars]nly'}
+{'id'[817 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[68 chars]nly'}
+
+Diff is 2223582 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 518 tests in 3760.028s
+
+FAILED (failures=10, errors=3)

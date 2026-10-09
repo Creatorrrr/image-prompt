@@ -1,0 +1,254 @@
+{
+  "contract_version": "photo-composer-view/v2",
+  "mode": "candidate_details",
+  "source_pack_id": "c8d79d88e102cd50",
+  "source_pack_sha256": "5e6ec8e16774e3c5ce0c82a454f0bdcf19edcaba8b6817ad2dd7051e1082247d",
+  "candidates": [
+    {
+      "id": "visual-concept:spring_sf057_02",
+      "source_pointer": "/visual_concept_candidates/candidates/0",
+      "candidate": {
+        "id": "visual-concept:spring_sf057_02",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "실 경로 사이의 실제 열린 니트 구멍",
+          "오픈워크 니트 visible variant",
+          "Openwork knit visible variant",
+          "Open stitches of the knit garment leave clear gaps bounded by connected yarn paths.",
+          "The opaque yarn and the surface visible through each true gap remain distinct.",
+          "Open stitches of the knit garment leave clear gaps bounded by connected yarn paths. The opaque yarn and the surface visible through each true gap remain distinct."
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.textile.openwork_topology"
+          }
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "spring_sf057_02",
+            "category": "spring_selected_clothing_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Preserve the selected owner-bound arrangement in one coherent image: Open stitches of the knit garment leave clear gaps bounded by connected yarn paths. The opaque yarn and the surface visible through each true gap remain distinct.",
+            "component_semantics": {
+              "minimum_component_groups": 2,
+              "required_group_ids": [
+                "part_1",
+                "part_2"
+              ],
+              "groups": [
+                {
+                  "id": "part_1",
+                  "any_terms": [
+                    "Open stitches of the knit garment leave clear gaps bounded by connected yarn paths.",
+                    "open stitches",
+                    "connected yarn paths",
+                    "knit openings"
+                  ]
+                },
+                {
+                  "id": "part_2",
+                  "any_terms": [
+                    "The opaque yarn and the surface visible through each true gap remain distinct.",
+                    "opaque yarn",
+                    "true gaps"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "part_1_phrase",
+                "part_2_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 2,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "part_1_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "Open stitches of the knit garment leave clear gaps bounded by connected yarn paths."
+                ]
+              },
+              "part_2_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "The opaque yarn and the surface visible through each true gap remain distinct."
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_spring_sf057_02_visible_variant",
+                "review_scale": "native",
+                "description": "Resolve continuous connected yarn around multiple true open cells and distinguish the underneath surface from the opaque yarn. All declared parts refer to these same owners. An occluded endpoint, cropped landmark, printed imitation or different owner is UNOBSERVABLE_NOT_PASS; partial fulfillment fails."
+              }
+            ],
+            "reject_substitutes": [
+              "Printed diamonds, a dark flat patch or a transparent filled panel has a different structure."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "bundle:spf_sf104_2_bundle",
+      "source_pointer": "/candidate_bundles/candidates/6",
+      "candidate": {
+        "id": "bundle:spf_sf104_2_bundle",
+        "source_sha256": "e1241631d94b36bccc582f39ea62fe6ca5bc087171b72c5f0d9f38d5d75c78fd",
+        "associated_profile_ids": [
+          "spring_sf104_2"
+        ],
+        "components": [
+          {
+            "id": "component_1",
+            "concept_units": [
+              "The selected blouse and skirt carry closely related muted warm tones"
+            ],
+            "minimum_realizations": 1
+          },
+          {
+            "id": "component_2",
+            "concept_units": [
+              "Their separate cloth boundaries remain readable between the two colors"
+            ],
+            "minimum_realizations": 1
+          }
+        ],
+        "member_candidates": [
+          {
+            "id": "slot:color:spf_sf104_2",
+            "slot": "color",
+            "entry_id": "spf_sf104_2",
+            "concept_units": [
+              "The selected blouse and skirt carry closely related muted warm tones",
+              "Their separate cloth boundaries remain readable between the two colors"
+            ],
+            "relations": [
+              {
+                "id": "existing_wearer_scope",
+                "type": "belongs_to_existing_wearer",
+                "subject": "selected blouse and skirt",
+                "object": "main_subject"
+              },
+              {
+                "id": "sf104_2_relation_1",
+                "type": "closely_related_to",
+                "subject": "selected blouse muted warm tone",
+                "object": "selected skirt muted warm tone"
+              },
+              {
+                "id": "sf104_2_relation_2",
+                "type": "distinct_from",
+                "subject": "selected blouse cloth boundary",
+                "object": "selected skirt cloth boundary"
+              }
+            ],
+            "affected_dimensions": [
+              "color"
+            ],
+            "adoption": "optional",
+            "affected_properties": [
+              {
+                "dimension": "color",
+                "target": "main_subject",
+                "property": "wardrobe.blouse.color"
+              },
+              {
+                "dimension": "color",
+                "target": "main_subject",
+                "property": "wardrobe.skirt.color"
+              },
+              {
+                "dimension": "color",
+                "target": "main_subject",
+                "property": "wardrobe.palette.item_relationship"
+              }
+            ]
+          }
+        ],
+        "confusion_boundaries": [
+          "An identical hue on all background surfaces or strongly opposed saturated colors is a different color relation."
+        ],
+        "relations": [
+          {
+            "id": "existing_wearer_scope",
+            "type": "belongs_to_existing_wearer",
+            "subject": "selected blouse and skirt",
+            "object": "main_subject"
+          },
+          {
+            "id": "sf104_2_relation_1",
+            "type": "closely_related_to",
+            "subject": "selected blouse muted warm tone",
+            "object": "selected skirt muted warm tone"
+          },
+          {
+            "id": "sf104_2_relation_2",
+            "type": "distinct_from",
+            "subject": "selected blouse cloth boundary",
+            "object": "selected skirt cloth boundary"
+          }
+        ],
+        "adoption": "optional",
+        "profile_activation": "independent_request_evidence_only",
+        "source_contract_sha256": "a8727c84346ec32b7dff82342dc93a41f96dfb7690241b2279ac322a9e9b0143",
+        "content_form": "unordered_inspiration_terms",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+        "concept_units": [
+          "The selected blouse and skirt carry closely related muted warm tones",
+          "Their separate cloth boundaries remain readable between the two colors"
+        ],
+        "concept_terms": [
+          "The selected blouse and skirt carry closely related muted warm tones",
+          "Their separate cloth boundaries remain readable between the two colors"
+        ],
+        "affected_dimensions": [
+          "color"
+        ],
+        "conflicts_with": [],
+        "applicability": {
+          "status": "eligible",
+          "source": "all_members_eligible_and_dimensions_open"
+        },
+        "selection_contract": {
+          "component_evidence": "every_component_id_to_literal_final_prompt_phrase",
+          "relation_evidence": "every_relation_id_to_literal_final_prompt_phrase",
+          "scope": "one_coherent_realization",
+          "associated_profiles_are_not_promoted": true
+        }
+      }
+    }
+  ],
+  "view_sha256": "be435f4454d8b610f0427c0a2c00da4c80240fb31d8087705eb2d1900899a5f1"
+}

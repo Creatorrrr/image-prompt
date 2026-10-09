@@ -122,7 +122,8 @@ class PortraitFashionExposureTests(unittest.TestCase):
                 self.assertEqual(cs.public_bundles(data, missing)["candidates"], [])
 
     def test_research_sources_and_proposals_do_not_leak_into_runtime(self):
-        record = json.loads((ROOT / "docs/research-evidence/photo-prompt/extension-maintenance/photo_prompt_portrait_fashion_exposure_extension.json").read_text())
+        ref = self.ext["maintenance_ref"]
+        record = json.loads((ROOT / "docs/research-evidence/photo-prompt/extension-maintenance" / (ref["record_id"] + ".json")).read_text())
         self.assertEqual(cs.digest(record), self.ext["maintenance_ref"]["sha256"])
         authored = copy.deepcopy(self.ext)
         authored.pop("maintenance_ref")

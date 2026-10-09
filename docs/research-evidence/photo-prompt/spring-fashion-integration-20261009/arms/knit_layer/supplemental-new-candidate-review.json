@@ -1,0 +1,132 @@
+{
+  "schema_version": "spring-new-candidate-supplemental-review/v1",
+  "arm_id": "knit_layer",
+  "source_generation": "a7fd58162695c7c23a9257ac89b13434e94e6899fc3891858b837636ad1ced6c",
+  "pack_id": "c8d79d88e102cd50",
+  "result_image": "/Users/chasoik/.codex/worktrees/spring-fashion-integration-20261009/image-prompt/generated_images/riverside-print-spring-knit-7390e5e48c564d6885d7c25676f4cffd/knit-layer.png",
+  "result_sha256": "795800ed38b1c4206fc0a59d94cf3dbd5ba3f32bbd959231eabc72687a8642b6",
+  "source_plan_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/spring-fashion-integration-20261009/arms/knit_layer/selected-new-candidate-observation-plan.json",
+  "source_plan_sha256": "093f52b9021da74f9cd9700defa89a4a0c171f79d33836ac23453444a90f4d94",
+  "authority": "Supplemental preplanned all-of observation set; excluded from runtime hard_gates.",
+  "rows": [
+    {
+      "id": "warm_bundle_owner",
+      "candidate_id": "bundle:spf_sf104_2_bundle",
+      "relation_id": "existing_wearer_scope",
+      "owners": [
+        "same woman",
+        "her blouse",
+        "her skirt"
+      ],
+      "success": "Both separately bounded garments belong to the same pictured woman.",
+      "failure": "A garment on another figure, sample or background cannot donate this evidence.",
+      "status": "pass",
+      "visibility": "visible",
+      "evidence": "The peach blouse and mushroom skirt are both worn by the single woman; neither surface is donated by another figure or background sample.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "observation_view": "thumbnail and upper_body_projection"
+    },
+    {
+      "id": "warm_bundle_hue",
+      "candidate_id": "bundle:spf_sf104_2_bundle",
+      "component_id": "component_1",
+      "relation_id": "sf104_2_relation_1",
+      "owners": [
+        "peach blouse surface",
+        "mushroom skirt surface"
+      ],
+      "success": "Both actual garment surfaces carry closely related muted warm tones within one image.",
+      "failure": "Global warm cast, saturated opposing colors or one hidden garment fails; partial is fail.",
+      "status": "pass",
+      "visibility": "visible",
+      "evidence": "The actual blouse is softly peach and the skirt warm mushroom-taupe. Their subdued adjacent warm hues remain distinguishable from the cooler sage inner garment, rather than relying on the room's warm cast alone.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "observation_view": "thumbnail and skirt_boundaries"
+    },
+    {
+      "id": "warm_bundle_boundaries",
+      "candidate_id": "bundle:spf_sf104_2_bundle",
+      "component_id": "component_2",
+      "relation_id": "sf104_2_relation_2",
+      "owners": [
+        "blouse hem",
+        "skirt waistband"
+      ],
+      "success": "Both real cloth boundaries remain distinct and readable in the same region and image.",
+      "failure": "A flat print, hidden seam or missing edge is UNOBSERVABLE_NOT_PASS.",
+      "status": "fail",
+      "visibility": "partially_visible",
+      "evidence": "The blouse's stitched lower hem and the skirt surface are distinct, but the preplanned second endpoint was the skirt waistband. Its actual upper edge is concealed by the extending blouse. A visible skirt side outline cannot be substituted after rendering for that preplanned endpoint; the complete two-boundary test is unobservable.",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "observation_view": "knit_and_three_layers and skirt_boundaries"
+    },
+    {
+      "id": "new_knit_topology",
+      "candidate_id": "visual-concept:spring_sf057_02",
+      "component_id": "part_1",
+      "owners": [
+        "outer ivory vest yarn paths",
+        "true knit gaps"
+      ],
+      "success": "Connected opaque yarn paths physically bound multiple actual holes on the same vest.",
+      "failure": "Printed diamonds, dark filled areas or unresolved yarn continuity fail.",
+      "status": "pass",
+      "visibility": "visible",
+      "evidence": "Opaque ivory yarn visibly connects around many open diamond-shaped cells across the same vest. The strands carry loop texture and overlap relief; the cell interiors are actual views of lower clothing rather than printed dark marks.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observation_view": "knit_and_three_layers"
+    },
+    {
+      "id": "new_knit_under_surface",
+      "candidate_id": "visual-concept:spring_sf057_02",
+      "component_id": "part_2",
+      "owners": [
+        "outer vest opaque yarn",
+        "separate peach blouse visible through holes"
+      ],
+      "success": "The lower blouse surface is owned separately and visible through true gaps while yarn remains opaque.",
+      "failure": "A flat combined print, missing lower owner or obscured cells fails.",
+      "status": "pass",
+      "visibility": "visible",
+      "evidence": "The same opaque ivory strands border gaps through which a separate peach translucent blouse is visible. Sage cloth and skin are then transmitted through that blouse in different chest regions, while the yarn remains an exterior opaque surface.",
+      "reviewed_scales": [
+        "native"
+      ],
+      "observation_view": "knit_and_three_layers"
+    }
+  ],
+  "all_of_result": "fail",
+  "pass_count": 4,
+  "fail_count": 1,
+  "per_selected_meaning": {
+    "bundle:spf_sf104_2_bundle": {
+      "status": "fail",
+      "passed_rows": 2,
+      "required_rows": 3,
+      "limit": "Palette and wearer relation observed; the preplanned waistband endpoint is concealed."
+    },
+    "visual-concept:spring_sf057_02": {
+      "status": "pass",
+      "passed_rows": 2,
+      "required_rows": 2
+    }
+  },
+  "associated_color_profile": "spring_sf104_2",
+  "associated_color_profile_hard_activation": false,
+  "associated_color_profile_native_qualification": "not_tested_as_a_hard_profile",
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}

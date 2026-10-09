@@ -1,0 +1,1071 @@
+{
+  "contract_version": "photo-composer-view/v2",
+  "mode": "candidate_details",
+  "source_pack_id": "d02ba727095c4a51",
+  "source_pack_sha256": "f67ff0f9d20ddde95de0382f8696f1f8086ab44aebc5e3bbf9231b7695380560",
+  "candidates": [
+    {
+      "id": "bundle:spf_sf004_01_bundle",
+      "source_pointer": "/candidate_bundles/candidates/7",
+      "candidate": {
+        "id": "bundle:spf_sf004_01_bundle",
+        "source_sha256": "4b67626a7e34d0132392dce57a822e80588288986b0509df198ce41421f36441",
+        "associated_profile_ids": [
+          "spring_sf004_01"
+        ],
+        "components": [
+          {
+            "id": "component_01",
+            "concept_units": [
+              "the top neckline has a straight horizontal lower edge"
+            ],
+            "minimum_realizations": 1
+          },
+          {
+            "id": "component_02",
+            "concept_units": [
+              "two upright side edges join the ends of that same lower edge"
+            ],
+            "minimum_realizations": 1
+          }
+        ],
+        "member_candidates": [
+          {
+            "id": "slot:garment_detail:spf_sf004_01",
+            "slot": "garment_detail",
+            "entry_id": "spf_sf004_01",
+            "concept_units": [
+              "the top neckline has a straight horizontal lower edge",
+              "two upright side edges join the ends of that same lower edge"
+            ],
+            "relations": [
+              {
+                "id": "declared_owner",
+                "type": "declared_owner_scope",
+                "subject": "top",
+                "object": "main_subject"
+              },
+              {
+                "id": "edge_01",
+                "type": "joined_to",
+                "subject": "top.neckline.lower_edge",
+                "object": "top.neckline.side_edges"
+              }
+            ],
+            "affected_dimensions": [
+              "appearance"
+            ],
+            "adoption": "optional",
+            "affected_properties": [
+              {
+                "dimension": "appearance",
+                "target": "main_subject",
+                "property": "wardrobe.neckline.contour"
+              }
+            ]
+          }
+        ],
+        "confusion_boundaries": [
+          "A rounded U edge or two slopes meeting in a V does not form this three-sided opening."
+        ],
+        "relations": [
+          {
+            "id": "declared_owner",
+            "type": "declared_owner_scope",
+            "subject": "top",
+            "object": "main_subject"
+          },
+          {
+            "id": "edge_01",
+            "type": "joined_to",
+            "subject": "top.neckline.lower_edge",
+            "object": "top.neckline.side_edges"
+          }
+        ],
+        "adoption": "optional",
+        "profile_activation": "independent_request_evidence_only",
+        "source_contract_sha256": "67e554408b1aea9eedcdd1d3dc5cb2506abd5ad85abc8193a19ea78d22a484aa",
+        "content_form": "unordered_inspiration_terms",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+        "concept_units": [
+          "the top neckline has a straight horizontal lower edge",
+          "two upright side edges join the ends of that same lower edge"
+        ],
+        "concept_terms": [
+          "the top neckline has a straight horizontal lower edge",
+          "two upright side edges join the ends of that same lower edge"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "conflicts_with": [],
+        "applicability": {
+          "status": "eligible",
+          "source": "all_members_eligible_and_dimensions_open"
+        },
+        "selection_contract": {
+          "component_evidence": "every_component_id_to_literal_final_prompt_phrase",
+          "relation_evidence": "every_relation_id_to_literal_final_prompt_phrase",
+          "scope": "one_coherent_realization",
+          "associated_profiles_are_not_promoted": true
+        }
+      }
+    },
+    {
+      "id": "bundle:spf_sf104_2_bundle",
+      "source_pointer": "/candidate_bundles/candidates/3",
+      "candidate": {
+        "id": "bundle:spf_sf104_2_bundle",
+        "source_sha256": "e1241631d94b36bccc582f39ea62fe6ca5bc087171b72c5f0d9f38d5d75c78fd",
+        "associated_profile_ids": [
+          "spring_sf104_2"
+        ],
+        "components": [
+          {
+            "id": "component_1",
+            "concept_units": [
+              "The selected blouse and skirt carry closely related muted warm tones"
+            ],
+            "minimum_realizations": 1
+          },
+          {
+            "id": "component_2",
+            "concept_units": [
+              "Their separate cloth boundaries remain readable between the two colors"
+            ],
+            "minimum_realizations": 1
+          }
+        ],
+        "member_candidates": [
+          {
+            "id": "slot:color:spf_sf104_2",
+            "slot": "color",
+            "entry_id": "spf_sf104_2",
+            "concept_units": [
+              "The selected blouse and skirt carry closely related muted warm tones",
+              "Their separate cloth boundaries remain readable between the two colors"
+            ],
+            "relations": [
+              {
+                "id": "existing_wearer_scope",
+                "type": "belongs_to_existing_wearer",
+                "subject": "selected blouse and skirt",
+                "object": "main_subject"
+              },
+              {
+                "id": "sf104_2_relation_1",
+                "type": "closely_related_to",
+                "subject": "selected blouse muted warm tone",
+                "object": "selected skirt muted warm tone"
+              },
+              {
+                "id": "sf104_2_relation_2",
+                "type": "distinct_from",
+                "subject": "selected blouse cloth boundary",
+                "object": "selected skirt cloth boundary"
+              }
+            ],
+            "affected_dimensions": [
+              "color"
+            ],
+            "adoption": "optional",
+            "affected_properties": [
+              {
+                "dimension": "color",
+                "target": "main_subject",
+                "property": "wardrobe.blouse.color"
+              },
+              {
+                "dimension": "color",
+                "target": "main_subject",
+                "property": "wardrobe.skirt.color"
+              },
+              {
+                "dimension": "color",
+                "target": "main_subject",
+                "property": "wardrobe.palette.item_relationship"
+              }
+            ]
+          }
+        ],
+        "confusion_boundaries": [
+          "An identical hue on all background surfaces or strongly opposed saturated colors is a different color relation."
+        ],
+        "relations": [
+          {
+            "id": "existing_wearer_scope",
+            "type": "belongs_to_existing_wearer",
+            "subject": "selected blouse and skirt",
+            "object": "main_subject"
+          },
+          {
+            "id": "sf104_2_relation_1",
+            "type": "closely_related_to",
+            "subject": "selected blouse muted warm tone",
+            "object": "selected skirt muted warm tone"
+          },
+          {
+            "id": "sf104_2_relation_2",
+            "type": "distinct_from",
+            "subject": "selected blouse cloth boundary",
+            "object": "selected skirt cloth boundary"
+          }
+        ],
+        "adoption": "optional",
+        "profile_activation": "independent_request_evidence_only",
+        "source_contract_sha256": "a8727c84346ec32b7dff82342dc93a41f96dfb7690241b2279ac322a9e9b0143",
+        "content_form": "unordered_inspiration_terms",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+        "concept_units": [
+          "The selected blouse and skirt carry closely related muted warm tones",
+          "Their separate cloth boundaries remain readable between the two colors"
+        ],
+        "concept_terms": [
+          "The selected blouse and skirt carry closely related muted warm tones",
+          "Their separate cloth boundaries remain readable between the two colors"
+        ],
+        "affected_dimensions": [
+          "color"
+        ],
+        "conflicts_with": [],
+        "applicability": {
+          "status": "eligible",
+          "source": "all_members_eligible_and_dimensions_open"
+        },
+        "selection_contract": {
+          "component_evidence": "every_component_id_to_literal_final_prompt_phrase",
+          "relation_evidence": "every_relation_id_to_literal_final_prompt_phrase",
+          "scope": "one_coherent_realization",
+          "associated_profiles_are_not_promoted": true
+        }
+      }
+    },
+    {
+      "id": "visual-concept:vg_face_hands_place_readability_profile",
+      "source_pointer": "/visual_concept_candidates/candidates/8",
+      "candidate": {
+        "id": "visual-concept:vg_face_hands_place_readability_profile",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "얼굴·행동 손·장소 단서의 공동 가독성",
+          "선택된 크롭 안에서 얼굴이 읽힌다",
+          "행동을 담당하는 손과 접촉점이 알아보인다",
+          "기존 장소 단서 하나가 장소를 읽을 만큼 형태를 유지한다",
+          "one existing place cue retains enough form to identify the setting",
+          "the action-bearing hand and contact remain recognizable",
+          "the face remains readable within the selected crop"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "camera",
+            "target": "camera",
+            "property": "optical.focus"
+          }
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "vg_face_hands_place_readability_profile",
+            "category": "owner_bound_visual_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Keep this complete visible relation on its declared owner: the face remains readable within the selected crop. Keep this complete visible relation on its declared owner: the action-bearing hand and contact remain recognizable. Keep this complete visible relation on its declared owner: one existing place cue retains enough form to identify the setting.",
+            "component_semantics": {
+              "minimum_component_groups": 3,
+              "required_group_ids": [
+                "component_1",
+                "component_2",
+                "component_3"
+              ],
+              "groups": [
+                {
+                  "id": "component_1",
+                  "any_terms": [
+                    "the face remains readable within the selected crop",
+                    "선택된 크롭 안에서 얼굴이 읽힌다",
+                    "face",
+                    "얼굴"
+                  ]
+                },
+                {
+                  "id": "component_2",
+                  "any_terms": [
+                    "the action-bearing hand and contact remain recognizable",
+                    "행동을 담당하는 손과 접촉점이 알아보인다",
+                    "hand",
+                    "contact",
+                    "손"
+                  ]
+                },
+                {
+                  "id": "component_3",
+                  "any_terms": [
+                    "one existing place cue retains enough form to identify the setting",
+                    "기존 장소 단서 하나가 장소를 읽을 만큼 형태를 유지한다",
+                    "place cue",
+                    "setting",
+                    "장소 단서"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "component_1_phrase",
+                "component_2_phrase",
+                "component_3_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 3,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "component_1_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "the face remains readable within the selected crop",
+                  "선택된 크롭 안에서 얼굴이 읽힌다",
+                  "face",
+                  "얼굴"
+                ]
+              },
+              "component_2_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "the action-bearing hand and contact remain recognizable",
+                  "행동을 담당하는 손과 접촉점이 알아보인다",
+                  "hand",
+                  "contact",
+                  "손"
+                ]
+              },
+              "component_3_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "one existing place cue retains enough form to identify the setting",
+                  "기존 장소 단서 하나가 장소를 읽을 만큼 형태를 유지한다",
+                  "place cue",
+                  "setting",
+                  "장소 단서"
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_vg_face_hands_place_readability_1",
+                "review_scale": "both",
+                "description": "Inspect the saved pixels for the face remains readable within the selected crop. Occluded, disconnected or partial realization fails; naming an object alone does not prove this relation."
+              },
+              {
+                "id": "vo_vg_face_hands_place_readability_2",
+                "review_scale": "both",
+                "description": "Inspect the saved pixels for the action-bearing hand and contact remain recognizable. Occluded, disconnected or partial realization fails; naming an object alone does not prove this relation."
+              },
+              {
+                "id": "vo_vg_face_hands_place_readability_3",
+                "review_scale": "both",
+                "description": "Inspect the saved pixels for one existing place cue retains enough form to identify the setting. Occluded, disconnected or partial realization fails; naming an object alone does not prove this relation."
+              }
+            ],
+            "reject_substitutes": [
+              "a sharp face with a blurred contact point",
+              "a uniformly sharp inventory of the entire background"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/8",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+        "source_candidate_id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+        "slot": "wardrobe_style",
+        "entry_id": "fit_ff03_v2_candidate",
+        "axis": "sensual",
+        "carrier": "wardrobe_style",
+        "expression_scope": "whole_direction",
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.shoulder.extent"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.sleeve_width"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.body_clearance"
+          }
+        ],
+        "contextual_usage": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword_scope",
+          "relation_concept:keyword",
+          "relation_concept:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+          "raw_requirements": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "277b889849e9476c3018b80af6a3f7a436757802d2614afff210f0d8054e21c4"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "The jacket extends broadly across the shoulders.",
+          "its roomy sleeves and torso share the same enlarged proportions."
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "The jacket extends broadly across the shoulders.",
+          "its roomy sleeves and torso share the same enlarged proportions."
+        ],
+        "relations": [
+          {
+            "id": "fit_ff03_v2_owner_relation",
+            "type": "extend_beyond",
+            "subject": "jacket shoulder and sleeve edges",
+            "object": "same wearer's shoulder and torso contour"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:expression:ae_smolder_attraction",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/1",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:expression:ae_smolder_attraction",
+        "source_candidate_id": "slot:expression:ae_smolder_attraction",
+        "slot": "expression",
+        "entry_id": "ae_smolder_attraction",
+        "axis": "sensual",
+        "carrier": "expression",
+        "expression_scope": "portrayal_or_scene_relation",
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.eyeline"
+          }
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "ae_smolder_attraction_portrayal_context",
+              "application_conditions": [
+                "Adult attraction must be explicit; duration remains unverified from the still."
+              ],
+              "limits": [
+                "actual gaze duration claimed from a still",
+                "restrained anger forced into adult attraction"
+              ],
+              "status": "optional_contextual_portrayal_not_hidden_state_inference"
+            }
+          ]
+        },
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword",
+          "relation_concept:keyword",
+          "relation_concept:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "requires_all_tags": [
+            "adult"
+          ],
+          "requires_primary_any_tags": [
+            "attraction",
+            "alluring",
+            "flirting",
+            "seductive",
+            "매혹",
+            "유혹"
+          ],
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:expression:ae_smolder_attraction",
+          "raw_requirements": {
+            "requires_all_tags": [
+              "adult"
+            ],
+            "requires_primary_any_tags": [
+              "attraction",
+              "alluring",
+              "flirting",
+              "seductive",
+              "매혹",
+              "유혹"
+            ],
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:all",
+              "operator": "all",
+              "context": "scene",
+              "values": [
+                "adult"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:expression:ae_smolder_attraction",
+                  "field": "requires_all_tags"
+                }
+              ]
+            },
+            {
+              "id": "entry:primary_any",
+              "operator": "any",
+              "context": "primary",
+              "values": [
+                "alluring",
+                "attraction",
+                "flirting",
+                "seductive",
+                "매혹",
+                "유혹"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:expression:ae_smolder_attraction",
+                  "field": "requires_primary_any_tags"
+                }
+              ]
+            },
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:expression:ae_smolder_attraction",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "f900946fa86cf25884a00ec3dae37f5e3c55aedefd1674fd6804f834c69beb92"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "the irises align with the already requested target",
+          "the eye opening retains the requested form"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "the irises align with the already requested target",
+          "the eye opening retains the requested form"
+        ],
+        "relations": [
+          {
+            "id": "actor_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the declared actor's stated local face and eye configuration"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:garment_detail:vel_held_towel_continuous_front",
+      "source_pointer": "/creative_augmentation/candidates/0",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:garment_detail:vel_held_towel_continuous_front",
+        "slot": "garment_detail",
+        "axis": "sensual",
+        "source_kind": "adult_appeal",
+        "concept_terms": [
+          "both hands grip separate points on the upper edge of the same towel",
+          "the upper towel edge is tensioned while its center hangs continuously over the front torso and pelvis",
+          "the separately worn swimsuit remains behind the towel with only a small strap region visible"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "source_candidate_id": "slot:garment_detail:vel_held_towel_continuous_front",
+        "entry_id": "vel_held_towel_continuous_front",
+        "affected_dimensions": [
+          "appearance",
+          "material",
+          "pose"
+        ],
+        "context_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:garment_detail:vel_held_towel_continuous_front",
+          "raw_requirements": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:garment_detail:vel_held_towel_continuous_front",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "b7f109c697deadcf713c2c9f4554838674e8eb5f55aa5fdf9f843c02a47eff65"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": true,
+        "retrieval_status": "returned",
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layering_and_coverage"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "hands.grip"
+          },
+          {
+            "dimension": "material",
+            "target": "existing_towel",
+            "property": "fabric.tension_and_drape"
+          }
+        ],
+        "expression_scope": "construction_or_material",
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vel_held_towel_continuous_front_boundary",
+              "definition": "This selected variant includes a separately worn swimsuit. Color and lower-edge height are open choices; the same cloth and central coverage must persist.",
+              "claim_limits": [
+                "This selected variant includes a separately worn swimsuit. Color and lower-edge height are open choices; the same cloth and central coverage must persist."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "conflicts_with": [],
+        "semantic_band": "near",
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "both hands grip separate points on the upper edge of the same towel",
+          "the upper towel edge is tensioned while its center hangs continuously over the front torso and pelvis",
+          "the separately worn swimsuit remains behind the towel with only a small strap region visible"
+        ],
+        "relations": [
+          {
+            "id": "vel_held_towel_continuous_front_r1",
+            "type": "grips",
+            "subject": "left_hand",
+            "object": "same_towel_upper_edge"
+          },
+          {
+            "id": "vel_held_towel_continuous_front_r2",
+            "type": "grips",
+            "subject": "right_hand",
+            "object": "same_towel_upper_edge"
+          },
+          {
+            "id": "vel_held_towel_continuous_front_r3",
+            "type": "occludes",
+            "subject": "towel_center",
+            "object": "front_torso_and_pelvis"
+          },
+          {
+            "id": "vel_held_towel_continuous_front_r4",
+            "type": "lies_behind",
+            "subject": "swimsuit",
+            "object": "held_towel"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:garment_detail:vel_held_towel_continuous_front",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/0",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:garment_detail:vel_held_towel_continuous_front",
+        "source_candidate_id": "slot:garment_detail:vel_held_towel_continuous_front",
+        "slot": "garment_detail",
+        "entry_id": "vel_held_towel_continuous_front",
+        "axis": "sensual",
+        "carrier": "garment_detail",
+        "expression_scope": "construction_or_material",
+        "affected_dimensions": [
+          "appearance",
+          "material",
+          "pose"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layering_and_coverage"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "hands.grip"
+          },
+          {
+            "dimension": "material",
+            "target": "existing_towel",
+            "property": "fabric.tension_and_drape"
+          }
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "vel_held_towel_continuous_front_boundary",
+              "definition": "This selected variant includes a separately worn swimsuit. Color and lower-edge height are open choices; the same cloth and central coverage must persist.",
+              "claim_limits": [
+                "This selected variant includes a separately worn swimsuit. Color and lower-edge height are open choices; the same cloth and central coverage must persist."
+              ],
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+            }
+          ]
+        },
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword",
+          "alternatives:keyword_scope",
+          "coherence:keyword",
+          "coherence:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": true,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:garment_detail:vel_held_towel_continuous_front",
+          "raw_requirements": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:garment_detail:vel_held_towel_continuous_front",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "b7f109c697deadcf713c2c9f4554838674e8eb5f55aa5fdf9f843c02a47eff65"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "both hands grip separate points on the upper edge of the same towel",
+          "the upper towel edge is tensioned while its center hangs continuously over the front torso and pelvis",
+          "the separately worn swimsuit remains behind the towel with only a small strap region visible"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "both hands grip separate points on the upper edge of the same towel",
+          "the upper towel edge is tensioned while its center hangs continuously over the front torso and pelvis",
+          "the separately worn swimsuit remains behind the towel with only a small strap region visible"
+        ],
+        "relations": [
+          {
+            "id": "vel_held_towel_continuous_front_r1",
+            "type": "grips",
+            "subject": "left_hand",
+            "object": "same_towel_upper_edge"
+          },
+          {
+            "id": "vel_held_towel_continuous_front_r2",
+            "type": "grips",
+            "subject": "right_hand",
+            "object": "same_towel_upper_edge"
+          },
+          {
+            "id": "vel_held_towel_continuous_front_r3",
+            "type": "occludes",
+            "subject": "towel_center",
+            "object": "front_torso_and_pelvis"
+          },
+          {
+            "id": "vel_held_towel_continuous_front_r4",
+            "type": "lies_behind",
+            "subject": "swimsuit",
+            "object": "held_towel"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:wardrobe_style:winter_wf24_v1_candidate",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/11",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:wardrobe_style:winter_wf24_v1_candidate",
+        "source_candidate_id": "slot:wardrobe_style:winter_wf24_v1_candidate",
+        "slot": "wardrobe_style",
+        "entry_id": "winter_wf24_v1_candidate",
+        "axis": "sensual",
+        "carrier": "wardrobe_style",
+        "expression_scope": "whole_direction",
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.structure.front_overlap"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.closure.button_rows"
+          }
+        ],
+        "contextual_usage": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword_scope",
+          "relation_concept:keyword",
+          "relation_concept:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:wardrobe_style:winter_wf24_v1_candidate",
+          "raw_requirements": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:wardrobe_style:winter_wf24_v1_candidate",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "b2f0b31f2a2f1d6bbd7224b7b5ac2a8de43c227e0135821ab6beca3322c10a7c"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "The coat's front panels overlap broadly beneath two visible rows of buttons."
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "The coat's front panels overlap broadly beneath two visible rows of buttons."
+        ],
+        "relations": [
+          {
+            "id": "winter_wf24_v1_owner_relation",
+            "type": "overlap_beneath",
+            "subject": "two coat front panels",
+            "object": "same coat's two button rows"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    }
+  ],
+  "view_sha256": "846b22902af6c155e456ce09c157289564e2d0614c3c520bd255db12acee85fa"
+}

@@ -1,0 +1,486 @@
+{
+  "schema_version": "photo-prepixel-observation-plan/v1",
+  "arm": "ornament_shoe",
+  "concept_name": "비 뒤 첫 배를 기다리는 접힌 항로",
+  "independent_no_cross_arm_inputs": true,
+  "state": "prepared_before_retrieval_awaiting_same_generation_READY",
+  "run": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/spring-fashion-integration-20261009/arms/ornament_shoe/run",
+  "bindings": {
+    "core_canonical_sha256": "393271e22974a13aa70795cce9d045625ca01288116378a4df28bee37d786af2",
+    "intent_lock_canonical_sha256": "7d8f3a30b16fa389cb35ac91966fe6e2353c9628cd26493853a541716c119f12",
+    "baseline_sha256": "f90af1b67f4df4c8b7ba3d8405a3fb065644f3bcd0636e93d46c7b6b3f55ad23",
+    "workflow_sha256": "15103148920e7410844645b8675cae4334adcad4b128f1cb39175bb1d05d4eaf",
+    "request_envelope_file_sha256": "c66753a536517e5d8dcfb4d32141e8380cdfa671075f7345f923cdd23d19fa8e",
+    "creative_controls_sha256": "3bd6848258539b9a8c7a6e99b40b1fe90691d9804b598a39bbbbf1be588e3f52"
+  },
+  "reference": {
+    "path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+    "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+    "scope": "visible facial appearance and short black hair only; no body measurements, outfit or biography inference"
+  },
+  "postcore_documents": [
+    {
+      "path": "/Users/chasoik/.codex/worktrees/spring-fashion-integration-20261009/image-prompt/skills/photo-prompt-image-generator/SKILL.md",
+      "sha256": "9e9b87e6f0b2c1ec1c36bd8e9d55f90950d53529a0b873722b546924dfc7043b"
+    },
+    {
+      "path": "/Users/chasoik/.codex/worktrees/spring-fashion-integration-20261009/image-prompt/skills/photo-prompt-image-generator/references/photo-workflow.md",
+      "sha256": "8394686276f4b48307e9af3e879d9013594b4baea15a26afee9002d2d9645bbb"
+    },
+    {
+      "path": "/Users/chasoik/.codex/worktrees/spring-fashion-integration-20261009/image-prompt/skills/photo-prompt-image-generator/references/image-runtime.md",
+      "sha256": "53be78897f83529e1eab2db85c8fbd574723d5058622c7ca07eef6530d84ef35"
+    },
+    {
+      "path": "/Users/chasoik/.codex/worktrees/spring-fashion-integration-20261009/image-prompt/skills/photo-prompt-image-generator/references/composition-contract.md",
+      "sha256": "9dbcb58868014880c33db1c12663eb208ffdcefc7caae4f30b9f25dc663d19a4"
+    },
+    {
+      "path": "/Users/chasoik/.codex/worktrees/spring-fashion-integration-20261009/image-prompt/skills/photo-prompt-image-generator/references/embodiment-preflight.md",
+      "sha256": "0b7920336e87063c1436e3335dde288bb844672d78f630d0769dea17543f3745"
+    }
+  ],
+  "scope": {
+    "requester_owned": [
+      "core topic test photograph",
+      "reference-guided subject",
+      "spring clothing visibly worn",
+      "reference face/hair use"
+    ],
+    "authorial_and_optional": [
+      "ferry landing and rain traces",
+      "fastening gesture and notice sheet",
+      "shoulder flower and blouse drape",
+      "upper skirt wrap and lower pleats",
+      "lace-up ballet flats",
+      "seated pose, color, camera, framing and light"
+    ],
+    "additional_test_garments": "None selected or added. After READY, any compatible test refinement remains an authored open-dimension choice or an explicitly selected optional contract."
+  },
+  "angle_and_information_budget": {
+    "current_camera_plan": "Vertical head-to-toe, just below seated eye level and obliquely across the bench; this is baseline staging on an open camera dimension.",
+    "critical_projection": "Keep both feet and ankle loops in frame, the center clothing area unobscured by the side notice sheet, and the reaching hand/clip/wire beside the torso.",
+    "focal_hierarchy": "Reference-guided face and fastening fingertips lead; shoulder flower, wrap/pleats and shoe ribbons form subordinate structural rhythms; small boat and wet landing supply context.",
+    "complexity": "One main person, one active right-hand fastening, a separate left-hand support, one blouse, one skirt, and two shoes. Complexity comes from connected attachment, overlap, fold and ribbon relationships already authored.",
+    "legibility_tradeoff": "If a small required structure is hidden or below native resolution, record fail for its actual effective gate rather than inventing details from the prompt. Read optional projections after pack retrieval before deciding whether a refinement improves visibility."
+  },
+  "observations": [
+    {
+      "observation_id": "obs_reference",
+      "title_ko": "참고 얼굴과 짧은 검은 머리",
+      "authority": "request_owned_reference_scope",
+      "baseline_evidence": [
+        "visible facial features and short black hair guided by the supplied portrait"
+      ],
+      "owners": [
+        "reference portrait",
+        "same main subject"
+      ],
+      "directed_relations": [
+        {
+          "type": "guides_visible_appearance",
+          "subject": "reference portrait.face_and_hair",
+          "object": "main_subject.face_and_hair"
+        }
+      ],
+      "required_view": "A readable oblique face view and visible bob outline; compare source and result at native scale without requiring a new camera angle.",
+      "review_scale": "native",
+      "success_criterion": "The face is visibly guided by the supplied eye/brow, nose and lip appearance, and the hair remains short and black with a fine forehead fringe and bob contour.",
+      "false_substitutes": [
+        "Generic substituted face with unrelated appearance",
+        "Long hair replacing the short bob",
+        "Face hidden beyond comparison"
+      ],
+      "claim_limits": [
+        "Appearance guidance is not proof of personal identity, biography or exact biometric equality. Body dimensions and source outfit are outside reference scope."
+      ],
+      "future_hard_contract": "Only duties derived from the immutable pack and an explicitly adopted compatible opt-in obligation become hard. This observation row is not itself a hard gate.",
+      "status": "not_run"
+    },
+    {
+      "observation_id": "obs_flower",
+      "title_ko": "어깨 장식의 실제 고정점과 입체 꽃잎",
+      "authority": "agent_authored_baseline",
+      "baseline_evidence": [
+        "A fabric flower is fixed at the left shoulder: separate curled petal edges gather around a compact center, and the flower's base sits flush against the blouse at that single attachment point"
+      ],
+      "owners": [
+        "main_subject",
+        "same blouse",
+        "fabric flower"
+      ],
+      "directed_relations": [
+        {
+          "type": "attached_to",
+          "subject": "flower.base",
+          "object": "blouse.left_shoulder"
+        },
+        {
+          "type": "gathers_around",
+          "subject": "flower.curled_petals",
+          "object": "flower.compact_center"
+        }
+      ],
+      "required_view": "The left shoulder, flower base and blouse contact surface must remain visible together; shallow contact shadow can support depth.",
+      "review_scale": "native",
+      "success_criterion": "Petal edges resolve as raised curled fabric forms around one center, and the base contacts the same blouse at the left shoulder.",
+      "false_substitutes": [
+        "Flat floral print",
+        "A flower floating beside the shoulder",
+        "A real flower, jewelry motif or ornament on another garment"
+      ],
+      "claim_limits": [
+        "Visible attachment does not prove a hidden pin, stitch method, fiber content or removable fastening."
+      ],
+      "future_hard_contract": "Only duties derived from the immutable pack and an explicitly adopted compatible opt-in obligation become hard. This observation row is not itself a hard gate.",
+      "status": "not_run"
+    },
+    {
+      "observation_id": "obs_drape",
+      "title_ko": "장식 아래에서 반대 허리로 이어지는 블라우스 드레이프",
+      "authority": "agent_authored_baseline",
+      "baseline_evidence": [
+        "Her pale apricot blouse has a soft diagonal drape descending from the left shoulder toward the opposite waist",
+        "The folds radiate from beneath that base instead of floating beside it"
+      ],
+      "owners": [
+        "same blouse",
+        "same shoulder flower"
+      ],
+      "directed_relations": [
+        {
+          "type": "descends_toward",
+          "subject": "blouse.diagonal_drape",
+          "object": "blouse.opposite_waist"
+        },
+        {
+          "type": "radiates_from_beneath",
+          "subject": "blouse.fold_bases",
+          "object": "flower.attached_base"
+        }
+      ],
+      "required_view": "See the flower base, diagonal fold starts and destination at the opposite waist in the same front/oblique torso view.",
+      "review_scale": "native",
+      "success_criterion": "The blouse folds emerge below the attached base and follow a coherent downward diagonal on that same garment.",
+      "false_substitutes": [
+        "Detached fabric ribbon across the body",
+        "A shadow or printed stripe masquerading as a fold",
+        "Unconnected wrinkles far from the flower"
+      ],
+      "claim_limits": [
+        "A static fold arrangement does not reveal sewing history or physical tension values."
+      ],
+      "future_hard_contract": "Only duties derived from the immutable pack and an explicitly adopted compatible opt-in obligation become hard. This observation row is not itself a hard gate.",
+      "status": "not_run"
+    },
+    {
+      "observation_id": "obs_wrap",
+      "title_ko": "치마 앞판의 층 순서와 사선 자유 경계",
+      "authority": "agent_authored_baseline",
+      "baseline_evidence": [
+        "Her sage skirt has an upper wrap panel crossing the waist, its diagonal free edge visibly lying over the under-panel"
+      ],
+      "owners": [
+        "same skirt",
+        "outer wrap panel",
+        "under-panel"
+      ],
+      "directed_relations": [
+        {
+          "type": "overlaps",
+          "subject": "skirt.upper_wrap_panel",
+          "object": "skirt.under_panel"
+        },
+        {
+          "type": "crosses",
+          "subject": "skirt.upper_wrap_panel",
+          "object": "wearer.waist"
+        }
+      ],
+      "required_view": "The waist crossing, diagonal free edge and a continuation of the under-panel must all be visible; the sheet stays beside the torso.",
+      "review_scale": "native",
+      "success_criterion": "Two actual skirt surfaces remain separable along a diagonal edge, and the free edge lies over the under-panel with consistent local depth.",
+      "false_substitutes": [
+        "One dark line on a single panel",
+        "A center slit substituting for overlap",
+        "Pose or perspective alone creating apparent diagonal order"
+      ],
+      "claim_limits": [
+        "Visible overlap does not prove an adjustable wrap closure, hidden tie or opening mechanism."
+      ],
+      "future_hard_contract": "Only duties derived from the immutable pack and an explicitly adopted compatible opt-in obligation become hard. This observation row is not itself a hard gate.",
+      "status": "not_run"
+    },
+    {
+      "observation_id": "obs_pleats",
+      "title_ko": "같은 치마의 반복 플리츠와 무릎 아래 연속성",
+      "authority": "agent_authored_baseline",
+      "baseline_evidence": [
+        "below that edge, a broad lower section falls in repeated narrow vertical pleats",
+        "The pleats open slightly over the nearer bent knee and continue into long folds below it"
+      ],
+      "owners": [
+        "same skirt lower section",
+        "nearer knee"
+      ],
+      "directed_relations": [
+        {
+          "type": "below",
+          "subject": "skirt.pleated_section",
+          "object": "skirt.wrap_edge"
+        },
+        {
+          "type": "opens_over",
+          "subject": "skirt.pleats",
+          "object": "wearer.nearer_bent_knee"
+        },
+        {
+          "type": "continues_below",
+          "subject": "skirt.pleat_paths",
+          "object": "wearer.nearer_knee"
+        }
+      ],
+      "required_view": "Show the wrap-to-lower-section transition, the nearer knee region and the lower fold paths toward the hem together.",
+      "review_scale": "native",
+      "success_criterion": "Repeated folded edges belong to the same lower skirt section, widen locally over the bent knee, and continue below rather than stopping as disconnected stripes.",
+      "false_substitutes": [
+        "Printed stripes",
+        "Rib knitting",
+        "Random wrinkles without repeated fold edges",
+        "A separate pleated background panel"
+      ],
+      "claim_limits": [
+        "Pleat geometry does not prove heat setting or a manufacturing process. A fan-to-hem profile would be an additional optional variant, not automatically equivalent to local knee opening."
+      ],
+      "future_hard_contract": "Only duties derived from the immutable pack and an explicitly adopted compatible opt-in obligation become hard. This observation row is not itself a hard gate.",
+      "status": "not_run"
+    },
+    {
+      "observation_id": "obs_ribbons",
+      "title_ko": "신발에서 발등 교차를 거쳐 발목 매듭까지 이어지는 끈",
+      "authority": "agent_authored_baseline",
+      "baseline_evidence": [
+        "thin ribbons threaded from the shoe's side attachments across the instep in clear X crossings, then continuing around the ankle into a small tied bow",
+        "the ribbon paths remain visible against the skin and separate from the skirt hem"
+      ],
+      "owners": [
+        "left shoe and left foot",
+        "right shoe and right foot",
+        "each shoe own ribbons"
+      ],
+      "directed_relations": [
+        {
+          "type": "starts_at",
+          "subject": "shoe.ribbon_paths",
+          "object": "same_shoe.side_attachments"
+        },
+        {
+          "type": "crosses_over",
+          "subject": "same_shoe.ribbon_pair",
+          "object": "same_foot.instep"
+        },
+        {
+          "type": "continues_around",
+          "subject": "same_shoe.ribbon_paths",
+          "object": "same_ankle"
+        },
+        {
+          "type": "joins",
+          "subject": "same_shoe.ribbon_ends",
+          "object": "same_ankle.bow"
+        }
+      ],
+      "required_view": "Both foot uppers and ankle loops remain in frame, the nearer foot turned outward, and skirt hems clear of the ribbons. Inspect each shoe separately at native scale.",
+      "review_scale": "native",
+      "success_criterion": "The ribbons can be traced from the shoe attachments through an instep X and around the same ankle to a tied bow, retaining the correct foot and shoe owner.",
+      "false_substitutes": [
+        "Ankle bracelet disconnected from the shoe",
+        "Painted skin lines",
+        "Crossings joining different feet",
+        "Straps vanishing beneath an occluded hem",
+        "Ribbon ends unrelated to the bow"
+      ],
+      "claim_limits": [
+        "A strap route does not prove fastening strength, comfort, dance skill or material composition."
+      ],
+      "future_hard_contract": "Only duties derived from the immutable pack and an explicitly adopted compatible opt-in obligation become hard. This observation row is not itself a hard gate.",
+      "status": "not_run"
+    },
+    {
+      "observation_id": "obs_clip",
+      "title_ko": "오른손·클립·종이·와이어의 실제 접촉",
+      "authority": "agent_authored_baseline",
+      "baseline_evidence": [
+        "the right thumb and forefinger pressing a wooden clip over the paper and wire",
+        "The other upper corner is already fastened"
+      ],
+      "owners": [
+        "same main subject right hand",
+        "wooden clip",
+        "same route sheet",
+        "notice-frame wire"
+      ],
+      "directed_relations": [
+        {
+          "type": "presses",
+          "subject": "right_thumb_and_forefinger",
+          "object": "wooden_clip"
+        },
+        {
+          "type": "holds_together",
+          "subject": "wooden_clip",
+          "object": "sheet.upper_corner_and_frame_wire"
+        }
+      ],
+      "required_view": "An oblique view must show the right thumb/forefinger ownership, clip jaw region, paper corner and wire within reachable side space.",
+      "review_scale": "native",
+      "success_criterion": "Digits belong to the right hand, contact the clip coherently, and the clip catches the paper corner at the same wire while the other corner is visibly supported.",
+      "false_substitutes": [
+        "Floating clip",
+        "Fingers fused into the paper",
+        "Clip on the board but disconnected from paper/wire",
+        "A removed or relocated sheet avoiding the contact"
+      ],
+      "claim_limits": [
+        "The initial run has no repair lineage. Use pack-derived embodiment duties; do not invent rr repair gates or diagnose unseen joint mechanics."
+      ],
+      "future_hard_contract": "Only duties derived from the immutable pack and an explicitly adopted compatible opt-in obligation become hard. This observation row is not itself a hard gate.",
+      "status": "not_run"
+    },
+    {
+      "observation_id": "obs_support",
+      "title_ko": "앉은 지지와 두 발의 소유·균형",
+      "authority": "agent_authored_baseline",
+      "baseline_evidence": [
+        "Her hips are supported by the bench",
+        "her left palm rests beside her hip on the seat",
+        "Both feet rest flat on the planks, the nearer foot half a shoe-length ahead and angled outward"
+      ],
+      "owners": [
+        "same main subject",
+        "bench seat",
+        "landing planks"
+      ],
+      "directed_relations": [
+        {
+          "type": "supported_by",
+          "subject": "wearer.pelvis",
+          "object": "bench.seat"
+        },
+        {
+          "type": "rests_on",
+          "subject": "wearer.left_palm",
+          "object": "bench.seat"
+        },
+        {
+          "type": "rests_on",
+          "subject": "wearer.both_feet",
+          "object": "landing.planks"
+        }
+      ],
+      "required_view": "Retain enough bench and floor context to read sitting and both foot contacts; garment-covered anatomy need not be exposed merely to prove support.",
+      "review_scale": "native",
+      "success_criterion": "The seated torso, connected legs and seat agree with one body; left palm contact and two coherent feet on planks support the intended state.",
+      "false_substitutes": [
+        "Detached limbs",
+        "Seat impossible relative to pelvis",
+        "A hovering foot described as flat contact",
+        "Foot paths belonging to another body"
+      ],
+      "claim_limits": [
+        "Hidden but ordinary support is not automatically failure. Judge consequential relationships, not universal body ratios or reference body measurements."
+      ],
+      "future_hard_contract": "Only duties derived from the immutable pack and an explicitly adopted compatible opt-in obligation become hard. This observation row is not itself a hard gate.",
+      "status": "not_run"
+    },
+    {
+      "observation_id": "obs_story",
+      "title_ko": "젖은 흔적·재고정된 모서리·돌아오는 배의 현재 순간",
+      "authority": "agent_authored_baseline",
+      "baseline_evidence": [
+        "a damp crease runs diagonally across the paper, and a small ferry is entering the gap between the landing posts",
+        "Darkened wet planks and a pale reflection under the bench carry the recent rain"
+      ],
+      "owners": [
+        "route sheet",
+        "wet landing",
+        "small returning ferry",
+        "same wearer"
+      ],
+      "directed_relations": [
+        {
+          "type": "carries_trace",
+          "subject": "sheet.damp_crease",
+          "object": "recent_rain_context"
+        },
+        {
+          "type": "enters_between",
+          "subject": "small_ferry",
+          "object": "landing.posts"
+        }
+      ],
+      "required_view": "Read the complete frame first, then inspect the sheet crease and wet-plank reflections while keeping the boat subordinate in the background.",
+      "review_scale": "both",
+      "success_criterion": "The fastening act, already-held corner, weather traces and approaching small boat form a plausible current situation without needing the title explained.",
+      "false_substitutes": [
+        "Unrelated decorative boat",
+        "Dry generic backdrop despite the wet trace story",
+        "A striking portrait whose work situation is unreadable"
+      ],
+      "claim_limits": [
+        "The image cannot prove actual ferry schedules, a real preceding storm, private feelings or the portrait person biography. This is supplemental artistic observation."
+      ],
+      "future_hard_contract": "Only duties derived from the immutable pack and an explicitly adopted compatible opt-in obligation become hard. This observation row is not itself a hard gate.",
+      "status": "not_run"
+    }
+  ],
+  "effective_hard_gate_set": {
+    "status": "not_derived_before_pack_and_composed_selection",
+    "gate_ids": [],
+    "derivation": "After READY use review-shape from the exact immutable generation and audited composed selection. Copy that exact union into review records; do not substitute this planning table."
+  },
+  "anticipated_embodiment_contract": {
+    "source": "references/embodiment-preflight.md; final policy still to be derived from pack",
+    "likely_applicable_check_names": [
+      "body_ownership",
+      "joint_chain_and_reach",
+      "support_and_balance",
+      "contact_and_space",
+      "visibility_and_projection"
+    ],
+    "review_scale": "native",
+    "planned_status": "not_run"
+  },
+  "selection_boundary": {
+    "bundle_profile_rule": "Bundle-associated profile IDs remain advisory. A separately selected opt-in visual concept carries its whole obligation and gates.",
+    "topic_specific_cautions": [
+      "A neckline-mounted rolled rosette is not automatically equal to the baseline shoulder flower.",
+      "A fan-to-hem pleat arrangement is not automatically equal to local opening over a bent knee.",
+      "A shoe bow is not sufficient evidence for a continuous ankle lace route.",
+      "Pointelle would need each opening rim formed by actual knit yarn loops; it is not inserted merely to use a new term."
+    ]
+  },
+  "review_sequence": [
+    "View the saved whole image and describe its impression before consulting control intensity labels.",
+    "Use the actual image path/hash and observe each declared thumbnail/native scale.",
+    "Fill every exact effective hard gate with pass or fail and image-grounded evidence; partial or unseen relationships cannot pass.",
+    "Keep supplementary relation observations, overall preference and intensity impression separate from the exact hard_gates list.",
+    "Use user_judgment.source=not_yet_received until direct requester feedback."
+  ],
+  "execution_boundary": {
+    "runtime": "built-in image_gen",
+    "planned_actual_invocations": 1,
+    "authorization": "existing actual requesting-user image-generation instruction; no additional API/CLI path is authorized",
+    "native_attachment": "Use the exact local reference through referenced_image_paths after fresh runtime audit, with the same reference hash.",
+    "unknown_or_preview_only": "Retain the observed outcome and stop; no inferred image path, fabricated saved-image ledger or automatic rerender.",
+    "pending_steps": [
+      "coordinator validated generation READY",
+      "one pack retrieve and exact receipt generation check",
+      "full compatible candidate details and authored composition",
+      "fresh composed and runtime audits",
+      "durable native-plan/native-started before one tool invocation",
+      "save concrete returned file and review against exact effective gates"
+    ]
+  },
+  "documentation_note": "composition-contract.md explains prompt-budget V3 near its start but its final marker paragraph still says budget V2. The actual current pack and matching generation auditors remain the execution authority; this plan does not rewrite shared docs."
+}
