@@ -1,0 +1,81 @@
+.......................................................................EFFFFFFF........................./opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 429: 'fixture'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+...........................................................................................................................................................................................................F.F..........................................................................................................................EE......................................E.........................................FF..............................................................................................................E.............................Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/__main__.py", line 18, in <module>
+    main(module=None)
+    ~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/main.py", line 104, in __init__
+    self.runTests()
+    ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/main.py", line 270, in runTests
+    self.result = testRunner.run(self.test)
+                  ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/runner.py", line 257, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 725, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 669, in run
+    self._callTestMethod(testMethod)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 615, in _callTestMethod
+    result = method()
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_fantasy_visual_semantics.py", line 176, in test_direct_terms_route_to_only_the_intended_new_profile
+    matched_new = set(self.hard_visual_matches(term)) & PROFILE_IDS
+                      ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/tests/test_photo_fantasy_visual_semantics.py", line 136, in hard_visual_matches
+    prompt_generator.candidate_pack_auto_visual_obligation_matches(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.registry,
+        ^^^^^^^^^^^^^^
+    ...<8 lines>...
+        ],
+        ^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 5617, in candidate_pack_auto_visual_obligation_matches
+    resolution = resolve_visual_profile_hits(
+        registry,
+        source_rows,
+        adult_context=True,
+    )
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 5050, in resolve_visual_profile_hits
+    or candidate_pack_visual_component_match(profile, context_text)
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 5674, in candidate_pack_visual_component_match
+    if any(
+       ^^^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 5675, in <genexpr>
+    intent_alias_matches(text, str(term))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 2618, in intent_alias_matches
+    normalized_alias = clean_spaces(
+        re.sub(r"[-\u2013\u2014/]+", " ", str(alias or "").lower().replace("_", " "))
+    )
+  File "/Users/chasoik/.codex/worktrees/spring-fashion-main-20261009/image-prompt/skills/photo-prompt-image-generator/precore/photo_authoring_wire.py", line 69, in clean_spaces
+    text = re.sub(r"([.!?]){2,}", r"\1", text)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/__init__.py", line 208, in sub
+    return _compile(pattern, flags).sub(repl, string, count)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
