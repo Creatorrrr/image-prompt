@@ -8130,6 +8130,3729 @@
         "입체 단추열",
         "손목에 별도 태블릿 부착"
       ]
+    },
+    {
+      "id": "spring_sf094_01",
+      "category": "spring_selected_clothing_relation",
+      "activation": {
+        "exact_terms": [
+          "A small ribbon bow attaches to the blouse's neckline. A separate narrow lace trim follows the adjacent neckline edge with visible thread motifs and openings."
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_visible_variant",
+              "any_terms": [
+                "A small ribbon bow attaches to the blouse's neckline. A separate narrow lace trim follows the adjacent neckline edge with visible thread motifs and openings."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "A small ribbon bow attaches to the blouse's neckline. A separate narrow lace trim follows the adjacent neckline edge with visible thread motifs and openings.",
+        "paraphrase_examples": [
+          "On the existing declared garment owners, a small ribbon bow attaches to the blouse's neckline. A separate narrow lace trim follows the adjacent neckline edge with visible thread motifs and openings."
+        ],
+        "visual_components": [
+          "A small ribbon bow attaches to the blouse's neckline.",
+          "A separate narrow lace trim follows the adjacent neckline edge with visible thread motifs and openings."
+        ],
+        "contrast_examples": [
+          "A bow print, detached hair ribbon or solid floral piping is a different owner or texture."
+        ],
+        "claim_limits": [
+          "Only this explicitly selected visible variant is described. Related family variants remain alternatives.",
+          "Apply to the existing declared owners and same primary wearer. An unbound garment or different wearer cannot donate its components.",
+          "A required visible endpoint hidden by occlusion or crop is unobservable and cannot pass. Native pixels, prompt binding and user preference are separate evidence.",
+          "This exact combination does not establish a broad style identity, age, personality or sexual behavior.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v2",
+        "components": [
+          {
+            "id": "part_1",
+            "match_terms": [
+              "A small ribbon bow attaches to the blouse's neckline.",
+              "neckline ribbon bow"
+            ]
+          },
+          {
+            "id": "part_2",
+            "match_terms": [
+              "A separate narrow lace trim follows the adjacent neckline edge with visible thread motifs and openings.",
+              "narrow open lace trim"
+            ]
+          }
+        ],
+        "discovery": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "part_1",
+            "part_2"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "part_1",
+              "part_2"
+            ],
+            "evidence": [
+              {
+                "field": "part_1_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "A small ribbon bow attaches to the blouse's neckline."
+                  ]
+                }
+              },
+              {
+                "field": "part_2_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "A separate narrow lace trim follows the adjacent neckline edge with visible thread motifs and openings."
+                  ]
+                }
+              }
+            ],
+            "instruction": "Preserve the selected owner-bound arrangement in one coherent image: A small ribbon bow attaches to the blouse's neckline. A separate narrow lace trim follows the adjacent neckline edge with visible thread motifs and openings.",
+            "render_gates": [
+              {
+                "id": "vo_spring_sf094_01_visible_variant",
+                "review_scale": "native",
+                "description": "Resolve the bow attachment, the distinct lace strip joined beside it and actual small open threadwork on that same neckline. All declared parts refer to these same owners. An occluded endpoint, cropped landmark, printed imitation or different owner is UNOBSERVABLE_NOT_PASS; partial fulfillment fails."
+              }
+            ]
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "블라우스 목선의 작은 리본과 별도 좁은 레이스",
+          "A small ribbon bow attaches to the blouse's neckline. A separate narrow lace trim follows the adjacent neckline edge with visible thread motifs and openings.",
+          "A small ribbon bow attaches to the blouse's neckline.",
+          "A separate narrow lace trim follows the adjacent neckline edge with visible thread motifs and openings.",
+          "코케트 visible variant",
+          "Coquette visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.ornament.bow_attachment"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.trim.lace_attachment"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.trim.lace_openwork"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.ornament.bow_scale"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.trim.lace_width"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "A bow print, detached hair ribbon or solid floral piping is a different owner or texture."
+      ]
+    },
+    {
+      "id": "spring_sf095_01",
+      "category": "spring_selected_clothing_relation",
+      "activation": {
+        "exact_terms": [
+          "A knitted wrap top crosses its own front panels on the same wearer. The separate leg warmers cover the lower legs, and the separate low flat shoes enclose the feet."
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_visible_variant",
+              "any_terms": [
+                "A knitted wrap top crosses its own front panels on the same wearer. The separate leg warmers cover the lower legs, and the separate low flat shoes enclose the feet."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "A knitted wrap top crosses its own front panels on the same wearer. The separate leg warmers cover the lower legs, and the separate low flat shoes enclose the feet.",
+        "paraphrase_examples": [
+          "On the existing declared garment owners, a knitted wrap top crosses its own front panels on the same wearer. The separate leg warmers cover the lower legs, and the separate low flat shoes enclose the feet."
+        ],
+        "visual_components": [
+          "A knitted wrap top crosses its own front panels on the same wearer.",
+          "The separate leg warmers cover the lower legs, and the separate low flat shoes enclose the feet."
+        ],
+        "contrast_examples": [
+          "A plain cardigan, tights replacing warmers or pointe shoes replacing low flats does not establish the selected item combination."
+        ],
+        "claim_limits": [
+          "Only this explicitly selected visible variant is described. Related family variants remain alternatives.",
+          "Apply to the existing declared owners and same primary wearer. An unbound garment or different wearer cannot donate its components.",
+          "A required visible endpoint hidden by occlusion or crop is unobservable and cannot pass. Native pixels, prompt binding and user preference are separate evidence.",
+          "This combination proves no ballet role, skill, required tutu or complete style-family membership.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v2",
+        "components": [
+          {
+            "id": "part_1",
+            "match_terms": [
+              "A knitted wrap top crosses its own front panels on the same wearer.",
+              "knitted wrap top"
+            ]
+          },
+          {
+            "id": "part_2",
+            "match_terms": [
+              "The separate leg warmers cover the lower legs, and the separate low flat shoes enclose the feet.",
+              "separate leg warmers",
+              "low flat shoes"
+            ]
+          }
+        ],
+        "discovery": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "part_1",
+            "part_2"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "part_1",
+              "part_2"
+            ],
+            "evidence": [
+              {
+                "field": "part_1_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "A knitted wrap top crosses its own front panels on the same wearer."
+                  ]
+                }
+              },
+              {
+                "field": "part_2_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "The separate leg warmers cover the lower legs, and the separate low flat shoes enclose the feet."
+                  ]
+                }
+              }
+            ],
+            "instruction": "Preserve the selected owner-bound arrangement in one coherent image: A knitted wrap top crosses its own front panels on the same wearer. The separate leg warmers cover the lower legs, and the separate low flat shoes enclose the feet.",
+            "render_gates": [
+              {
+                "id": "vo_spring_sf095_01_visible_variant",
+                "review_scale": "native",
+                "description": "See the knit wrap crossing, both separate warmer edges on the lower legs and actual low shoe soles on the same wearer. All declared parts refer to these same owners. An occluded endpoint, cropped landmark, printed imitation or different owner is UNOBSERVABLE_NOT_PASS; partial fulfillment fails."
+              }
+            ]
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "랩 니트 상의와 별도 레그워머·낮은 신발 조합",
+          "A knitted wrap top crosses its own front panels on the same wearer. The separate leg warmers cover the lower legs, and the separate low flat shoes enclose the feet.",
+          "A knitted wrap top crosses its own front panels on the same wearer.",
+          "The separate leg warmers cover the lower legs, and the separate low flat shoes enclose the feet.",
+          "발레코어 visible variant",
+          "Balletcore visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.top.front_overlap"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.textile.knit_structure"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.legwarmer.coverage"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.shoe.heel_height"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "A plain cardigan, tights replacing warmers or pointe shoes replacing low flats does not establish the selected item combination."
+      ]
+    },
+    {
+      "id": "spring_sf096_03",
+      "category": "spring_selected_clothing_relation",
+      "activation": {
+        "exact_terms": [
+          "The same wearer's loose outfit includes the vest with open thread motifs. The separate embroidered trim attaches to a garment edge in that outfit."
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_visible_variant",
+              "any_terms": [
+                "The same wearer's loose outfit includes the vest with open thread motifs. The separate embroidered trim attaches to a garment edge in that outfit."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "The same wearer's loose outfit includes the vest with open thread motifs. The separate embroidered trim attaches to a garment edge in that outfit.",
+        "paraphrase_examples": [
+          "On the existing declared garment owners, the same wearer's loose outfit includes the vest with open thread motifs. The separate embroidered trim attaches to a garment edge in that outfit."
+        ],
+        "visual_components": [
+          "The same wearer's loose outfit includes the vest with open thread motifs.",
+          "The separate embroidered trim attaches to a garment edge in that outfit."
+        ],
+        "contrast_examples": [
+          "A floral vest print, generalized rustic background or embroidery floating on skin does not establish the selected clothing combination."
+        ],
+        "claim_limits": [
+          "Only this explicitly selected visible variant is described. Related family variants remain alternatives.",
+          "Apply to the existing declared owners and same primary wearer. An unbound garment or different wearer cannot donate its components.",
+          "A required visible endpoint hidden by occlusion or crop is unobservable and cannot pass. Native pixels, prompt binding and user preference are separate evidence.",
+          "Broad bohemian identity, nationality, residence and fiber provenance are not implied.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v2",
+        "components": [
+          {
+            "id": "part_1",
+            "match_terms": [
+              "The same wearer's loose outfit includes the vest with open thread motifs.",
+              "open-motif vest"
+            ]
+          },
+          {
+            "id": "part_2",
+            "match_terms": [
+              "The separate embroidered trim attaches to a garment edge in that outfit.",
+              "separate embroidered trim"
+            ]
+          }
+        ],
+        "discovery": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "part_1",
+            "part_2"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "part_1",
+              "part_2"
+            ],
+            "evidence": [
+              {
+                "field": "part_1_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "The same wearer's loose outfit includes the vest with open thread motifs."
+                  ]
+                }
+              },
+              {
+                "field": "part_2_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "The separate embroidered trim attaches to a garment edge in that outfit."
+                  ]
+                }
+              }
+            ],
+            "instruction": "Preserve the selected owner-bound arrangement in one coherent image: The same wearer's loose outfit includes the vest with open thread motifs. The separate embroidered trim attaches to a garment edge in that outfit.",
+            "render_gates": [
+              {
+                "id": "vo_spring_sf096_03_visible_variant",
+                "review_scale": "native",
+                "description": "Read slack garment folds, true threaded openings on the vest and a distinct stitched trim attached to its declared garment edge. All declared parts refer to these same owners. An occluded endpoint, cropped landmark, printed imitation or different owner is UNOBSERVABLE_NOT_PASS; partial fulfillment fails."
+              }
+            ]
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "느슨한 복식의 열린 문양 베스트와 별도 자수 테두리",
+          "The same wearer's loose outfit includes the vest with open thread motifs. The separate embroidered trim attaches to a garment edge in that outfit.",
+          "The same wearer's loose outfit includes the vest with open thread motifs.",
+          "The separate embroidered trim attaches to a garment edge in that outfit.",
+          "보헤미안·보호 visible variant",
+          "Bohemian / Boho visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.local_ease"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.vest.openwork_topology"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.trim.embroidery_attachment"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "A floral vest print, generalized rustic background or embroidery floating on skin does not establish the selected clothing combination."
+      ]
+    },
+    {
+      "id": "spring_sf097_03",
+      "category": "spring_selected_clothing_relation",
+      "activation": {
+        "exact_terms": [
+          "The polo top has an attached shirt-like collar and a short front placket. The same wearer combines it with a short pleated skirt and the separate sports-style socks."
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_visible_variant",
+              "any_terms": [
+                "The polo top has an attached shirt-like collar and a short front placket. The same wearer combines it with a short pleated skirt and the separate sports-style socks."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "The polo top has an attached shirt-like collar and a short front placket. The same wearer combines it with a short pleated skirt and the separate sports-style socks.",
+        "paraphrase_examples": [
+          "On the existing declared garment owners, the polo top has an attached shirt-like collar and a short front placket. The same wearer combines it with a short pleated skirt and the separate sports-style socks."
+        ],
+        "visual_components": [
+          "The polo top has an attached shirt-like collar and a short front placket.",
+          "The same wearer combines it with a short pleated skirt and the separate sports-style socks."
+        ],
+        "contrast_examples": [
+          "A crew tee, printed skirt stripes or bare lower legs does not establish the selected three-item combination."
+        ],
+        "claim_limits": [
+          "Only this explicitly selected visible variant is described. Related family variants remain alternatives.",
+          "Apply to the existing declared owners and same primary wearer. An unbound garment or different wearer cannot donate its components.",
+          "A required visible endpoint hidden by occlusion or crop is unobservable and cannot pass. Native pixels, prompt binding and user preference are separate evidence.",
+          "Sports performance, school enrollment, tennis role and social class remain unproved.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v2",
+        "components": [
+          {
+            "id": "part_1",
+            "match_terms": [
+              "The polo top has an attached shirt-like collar and a short front placket.",
+              "polo collar placket"
+            ]
+          },
+          {
+            "id": "part_2",
+            "match_terms": [
+              "The same wearer combines it with a short pleated skirt and the separate sports-style socks.",
+              "pleated skirt sports socks"
+            ]
+          }
+        ],
+        "discovery": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "part_1",
+            "part_2"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "part_1",
+              "part_2"
+            ],
+            "evidence": [
+              {
+                "field": "part_1_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "The polo top has an attached shirt-like collar and a short front placket."
+                  ]
+                }
+              },
+              {
+                "field": "part_2_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "The same wearer combines it with a short pleated skirt and the separate sports-style socks."
+                  ]
+                }
+              }
+            ],
+            "instruction": "Preserve the selected owner-bound arrangement in one coherent image: The polo top has an attached shirt-like collar and a short front placket. The same wearer combines it with a short pleated skirt and the separate sports-style socks.",
+            "render_gates": [
+              {
+                "id": "vo_spring_sf097_03_visible_variant",
+                "review_scale": "native",
+                "description": "See the polo collar-to-placket junction, real short-skirt folds and distinct sock edges on the same wearer. All declared parts refer to these same owners. An occluded endpoint, cropped landmark, printed imitation or different owner is UNOBSERVABLE_NOT_PASS; partial fulfillment fails."
+              }
+            ]
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "같은 착용자의 폴로·짧은 플리츠 치마·별도 삭스",
+          "The polo top has an attached shirt-like collar and a short front placket. The same wearer combines it with a short pleated skirt and the separate sports-style socks.",
+          "The polo top has an attached shirt-like collar and a short front placket.",
+          "The same wearer combines it with a short pleated skirt and the separate sports-style socks.",
+          "테니스코어 visible variant",
+          "Tenniscore visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.collar.structure"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.placket.extent"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.skirt.pleats"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.skirt.hem_height"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.hosiery.sock_presence"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "A crew tee, printed skirt stripes or bare lower legs does not establish the selected three-item combination."
+      ]
+    },
+    {
+      "id": "spring_sf098_03",
+      "category": "spring_selected_clothing_relation",
+      "activation": {
+        "exact_terms": [
+          "The same wearer combines a simple tee and the trousers with visible diagonal cloth yarn ridges. The separate jacket lies outside the tee and holds a clearly formed textile shoulder and front outline."
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_visible_variant",
+              "any_terms": [
+                "The same wearer combines a simple tee and the trousers with visible diagonal cloth yarn ridges. The separate jacket lies outside the tee and holds a clearly formed textile shoulder and front outline."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "The same wearer combines a simple tee and the trousers with visible diagonal cloth yarn ridges. The separate jacket lies outside the tee and holds a clearly formed textile shoulder and front outline.",
+        "paraphrase_examples": [
+          "On the existing declared garment owners, the same wearer combines a simple tee and the trousers with visible diagonal cloth yarn ridges. The separate jacket lies outside the tee and holds a clearly formed textile shoulder and front outline."
+        ],
+        "visual_components": [
+          "The same wearer combines a simple tee and the trousers with visible diagonal cloth yarn ridges.",
+          "The separate jacket lies outside the tee and holds a clearly formed textile shoulder and front outline."
+        ],
+        "contrast_examples": [
+          "A one-piece printed outfit, a body shoulder contour or loose cloth without a distinct jacket is different."
+        ],
+        "claim_limits": [
+          "Only this explicitly selected visible variant is described. Related family variants remain alternatives.",
+          "Apply to the existing declared owners and same primary wearer. An unbound garment or different wearer cannot donate its components.",
+          "A required visible endpoint hidden by occlusion or crop is unobservable and cannot pass. Native pixels, prompt binding and user preference are separate evidence.",
+          "Jeans fiber identity, price, status and internal tailoring remain metadata.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v2",
+        "components": [
+          {
+            "id": "part_1",
+            "match_terms": [
+              "The same wearer combines a simple tee and the trousers with visible diagonal cloth yarn ridges.",
+              "tee twill trousers"
+            ]
+          },
+          {
+            "id": "part_2",
+            "match_terms": [
+              "The separate jacket lies outside the tee and holds a clearly formed textile shoulder and front outline.",
+              "shaped jacket over tee"
+            ]
+          }
+        ],
+        "discovery": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "part_1",
+            "part_2"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "part_1",
+              "part_2"
+            ],
+            "evidence": [
+              {
+                "field": "part_1_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "The same wearer combines a simple tee and the trousers with visible diagonal cloth yarn ridges."
+                  ]
+                }
+              },
+              {
+                "field": "part_2_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "The separate jacket lies outside the tee and holds a clearly formed textile shoulder and front outline."
+                  ]
+                }
+              }
+            ],
+            "instruction": "Preserve the selected owner-bound arrangement in one coherent image: The same wearer combines a simple tee and the trousers with visible diagonal cloth yarn ridges. The separate jacket lies outside the tee and holds a clearly formed textile shoulder and front outline.",
+            "render_gates": [
+              {
+                "id": "vo_spring_sf098_03_visible_variant",
+                "review_scale": "native",
+                "description": "Read the separate tee, two trouser branches with resolved diagonal cloth yarn ridges and an actual shaped jacket boundary layered over the tee. All declared parts refer to these same owners. An occluded endpoint, cropped landmark, printed imitation or different owner is UNOBSERVABLE_NOT_PASS; partial fulfillment fails."
+              }
+            ]
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "티셔츠·트윌 바지 위에 놓인 형태 있는 재킷",
+          "The same wearer combines a simple tee and the trousers with visible diagonal cloth yarn ridges. The separate jacket lies outside the tee and holds a clearly formed textile shoulder and front outline.",
+          "The same wearer combines a simple tee and the trousers with visible diagonal cloth yarn ridges.",
+          "The separate jacket lies outside the tee and holds a clearly formed textile shoulder and front outline.",
+          "캐주얼 시크 visible variant",
+          "Casual chic visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.top.tee_structure"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.pants.branch_topology"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.textile.visible_twill"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.jacket.contour"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layer.order"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "A one-piece printed outfit, a body shoulder contour or loose cloth without a distinct jacket is different."
+      ]
+    },
+    {
+      "id": "spring_sf099_03",
+      "category": "spring_selected_clothing_relation",
+      "activation": {
+        "exact_terms": [
+          "Alternating navy and light bands repeat across the same top's fabric. The same wearer's separate trousers have a light color."
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_visible_variant",
+              "any_terms": [
+                "Alternating navy and light bands repeat across the same top's fabric. The same wearer's separate trousers have a light color."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "Alternating navy and light bands repeat across the same top's fabric. The same wearer's separate trousers have a light color.",
+        "paraphrase_examples": [
+          "On the existing declared garment owners, alternating navy and light bands repeat across the same top's fabric. The same wearer's separate trousers have a light color."
+        ],
+        "visual_components": [
+          "Alternating navy and light bands repeat across the same top's fabric.",
+          "The same wearer's separate trousers have a light color."
+        ],
+        "contrast_examples": [
+          "A striped background, navy solid top or global light filter does not supply these item-owned colors."
+        ],
+        "claim_limits": [
+          "Only this explicitly selected visible variant is described. Related family variants remain alternatives.",
+          "Apply to the existing declared owners and same primary wearer. An unbound garment or different wearer cannot donate its components.",
+          "A required visible endpoint hidden by occlusion or crop is unobservable and cannot pass. Native pixels, prompt binding and user preference are separate evidence.",
+          "Nautical role, nationality, coastal residence, economic status and logo absence are not implied.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v2",
+        "components": [
+          {
+            "id": "part_1",
+            "match_terms": [
+              "Alternating navy and light bands repeat across the same top's fabric.",
+              "navy light stripes"
+            ]
+          },
+          {
+            "id": "part_2",
+            "match_terms": [
+              "The same wearer's separate trousers have a light color.",
+              "light trousers"
+            ]
+          }
+        ],
+        "discovery": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "part_1",
+            "part_2"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "part_1",
+              "part_2"
+            ],
+            "evidence": [
+              {
+                "field": "part_1_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "Alternating navy and light bands repeat across the same top's fabric."
+                  ]
+                }
+              },
+              {
+                "field": "part_2_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "The same wearer's separate trousers have a light color."
+                  ]
+                }
+              }
+            ],
+            "instruction": "Preserve the selected owner-bound arrangement in one coherent image: Alternating navy and light bands repeat across the same top's fabric. The same wearer's separate trousers have a light color.",
+            "render_gates": [
+              {
+                "id": "vo_spring_sf099_03_visible_variant",
+                "review_scale": "native",
+                "description": "Read alternating dark-blue and light textile bands on the top and a separately bounded light trouser surface. All declared parts refer to these same owners. An occluded endpoint, cropped landmark, printed imitation or different owner is UNOBSERVABLE_NOT_PASS; partial fulfillment fails."
+              }
+            ]
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "짙은 남색과 밝은 줄의 상의·밝은 바지 배색",
+          "Alternating navy and light bands repeat across the same top's fabric. The same wearer's separate trousers have a light color.",
+          "Alternating navy and light bands repeat across the same top's fabric.",
+          "The same wearer's separate trousers have a light color.",
+          "코스털·노티컬 visible variant",
+          "Coastal / Nautical visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "color"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "color",
+            "target": "main_subject",
+            "property": "wardrobe.color.top_a.pattern"
+          },
+          {
+            "dimension": "color",
+            "target": "main_subject",
+            "property": "wardrobe.color.trousers_a.lightness"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "A striped background, navy solid top or global light filter does not supply these item-owned colors."
+      ]
+    },
+    {
+      "id": "spring_sf101_02",
+      "category": "spring_selected_clothing_relation",
+      "activation": {
+        "exact_terms": [
+          "The same wearer's dark blouse contains visibly connected lace threads and open motif spaces. The separate dark skirt holds a defined textile outline below the blouse."
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_visible_variant",
+              "any_terms": [
+                "The same wearer's dark blouse contains visibly connected lace threads and open motif spaces. The separate dark skirt holds a defined textile outline below the blouse."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "The same wearer's dark blouse contains visibly connected lace threads and open motif spaces. The separate dark skirt holds a defined textile outline below the blouse.",
+        "paraphrase_examples": [
+          "On the existing declared garment owners, the same wearer's dark blouse contains visibly connected lace threads and open motif spaces. The separate dark skirt holds a defined textile outline below the blouse."
+        ],
+        "visual_components": [
+          "The same wearer's dark blouse contains visibly connected lace threads and open motif spaces.",
+          "The separate dark skirt holds a defined textile outline below the blouse."
+        ],
+        "contrast_examples": [
+          "A dark floral print, one-piece lace dress or uniformly dark image supplies different owners and structure."
+        ],
+        "claim_limits": [
+          "Only this explicitly selected visible variant is described. Related family variants remain alternatives.",
+          "Apply to the existing declared owners and same primary wearer. An unbound garment or different wearer cannot donate its components.",
+          "A required visible endpoint hidden by occlusion or crop is unobservable and cannot pass. Native pixels, prompt binding and user preference are separate evidence.",
+          "Broad goth identity, sexual conduct and wearer personality are not established.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v2",
+        "components": [
+          {
+            "id": "part_1",
+            "match_terms": [
+              "The same wearer's dark blouse contains visibly connected lace threads and open motif spaces.",
+              "dark open lace blouse"
+            ]
+          },
+          {
+            "id": "part_2",
+            "match_terms": [
+              "The separate dark skirt holds a defined textile outline below the blouse.",
+              "defined dark skirt"
+            ]
+          }
+        ],
+        "discovery": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "part_1",
+            "part_2"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "part_1",
+              "part_2"
+            ],
+            "evidence": [
+              {
+                "field": "part_1_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "The same wearer's dark blouse contains visibly connected lace threads and open motif spaces."
+                  ]
+                }
+              },
+              {
+                "field": "part_2_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "The separate dark skirt holds a defined textile outline below the blouse."
+                  ]
+                }
+              }
+            ],
+            "instruction": "Preserve the selected owner-bound arrangement in one coherent image: The same wearer's dark blouse contains visibly connected lace threads and open motif spaces. The separate dark skirt holds a defined textile outline below the blouse.",
+            "render_gates": [
+              {
+                "id": "vo_spring_sf101_02_visible_variant",
+                "review_scale": "native",
+                "description": "Resolve real open-thread motifs on the dark blouse and a distinctly bounded dark skirt with a formed cloth silhouette. All declared parts refer to these same owners. An occluded endpoint, cropped landmark, printed imitation or different owner is UNOBSERVABLE_NOT_PASS; partial fulfillment fails."
+              }
+            ]
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "어두운 레이스 블라우스와 별도 형태 있는 치마",
+          "The same wearer's dark blouse contains visibly connected lace threads and open motif spaces. The separate dark skirt holds a defined textile outline below the blouse.",
+          "The same wearer's dark blouse contains visibly connected lace threads and open motif spaces.",
+          "The separate dark skirt holds a defined textile outline below the blouse.",
+          "소프트 고스 visible variant",
+          "Soft goth visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "color",
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "color",
+            "target": "main_subject",
+            "property": "wardrobe.color.blouse_a"
+          },
+          {
+            "dimension": "color",
+            "target": "main_subject",
+            "property": "wardrobe.color.skirt_a"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.textile.lace_openwork"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.skirt.contour"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "A dark floral print, one-piece lace dress or uniformly dark image supplies different owners and structure."
+      ]
+    },
+    {
+      "id": "spring_sf102_01",
+      "category": "spring_selected_clothing_relation",
+      "activation": {
+        "exact_terms": [
+          "The surface of the dress carries broad soft reflections along its folds. A small separate ornament visibly attaches near that dress's neckline."
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_visible_variant",
+              "any_terms": [
+                "The surface of the dress carries broad soft reflections along its folds. A small separate ornament visibly attaches near that dress's neckline."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "The surface of the dress carries broad soft reflections along its folds. A small separate ornament visibly attaches near that dress's neckline.",
+        "paraphrase_examples": [
+          "On the existing declared garment owners, the surface of the dress carries broad soft reflections along its folds. A small separate ornament visibly attaches near that dress's neckline."
+        ],
+        "visual_components": [
+          "The surface of the dress carries broad soft reflections along its folds.",
+          "A small separate ornament visibly attaches near that dress's neckline."
+        ],
+        "contrast_examples": [
+          "A lens flare, jewel-like print or detached necklace unrelated to the dress cannot establish the relation."
+        ],
+        "claim_limits": [
+          "Only this explicitly selected visible variant is described. Related family variants remain alternatives.",
+          "Apply to the existing declared owners and same primary wearer. An unbound garment or different wearer cannot donate its components.",
+          "A required visible endpoint hidden by occlusion or crop is unobservable and cannot pass. Native pixels, prompt binding and user preference are separate evidence.",
+          "Glamour, wealth, body measurements, age and gemstone identity are not pixel facts.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v2",
+        "components": [
+          {
+            "id": "part_1",
+            "match_terms": [
+              "The surface of the dress carries broad soft reflections along its folds.",
+              "soft reflective dress"
+            ]
+          },
+          {
+            "id": "part_2",
+            "match_terms": [
+              "A small separate ornament visibly attaches near that dress's neckline.",
+              "attached neckline ornament"
+            ]
+          }
+        ],
+        "discovery": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "part_1",
+            "part_2"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "part_1",
+              "part_2"
+            ],
+            "evidence": [
+              {
+                "field": "part_1_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "The surface of the dress carries broad soft reflections along its folds."
+                  ]
+                }
+              },
+              {
+                "field": "part_2_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "A small separate ornament visibly attaches near that dress's neckline."
+                  ]
+                }
+              }
+            ],
+            "instruction": "Preserve the selected owner-bound arrangement in one coherent image: The surface of the dress carries broad soft reflections along its folds. A small separate ornament visibly attaches near that dress's neckline.",
+            "render_gates": [
+              {
+                "id": "vo_spring_sf102_01_visible_variant",
+                "review_scale": "native",
+                "description": "Read broad smooth reflected highlights on the dress and an actual small ornament attachment near its own neckline. All declared parts refer to these same owners. An occluded endpoint, cropped landmark, printed imitation or different owner is UNOBSERVABLE_NOT_PASS; partial fulfillment fails."
+              }
+            ]
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "부드럽게 반사하는 드레스 목선의 작은 장식",
+          "The surface of the dress carries broad soft reflections along its folds. A small separate ornament visibly attaches near that dress's neckline.",
+          "The surface of the dress carries broad soft reflections along its folds.",
+          "A small separate ornament visibly attaches near that dress's neckline.",
+          "글래머러스 visible variant",
+          "Glamorous visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.textile.reflectance"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.ornament.attachment"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.ornament.scale"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "A lens flare, jewel-like print or detached necklace unrelated to the dress cannot establish the relation."
+      ]
+    },
+    {
+      "id": "spring_sf094_2",
+      "category": "owner_bound_spring_garment_variant",
+      "activation": {
+        "exact_terms": [
+          "Floral motifs belong to the selected skirt cloth; That skirt falls in soft gathered folds beneath a separate top.",
+          "별도 상의 아래에서 부드럽게 모인 꽃무늬 치마"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "Floral motifs belong to the selected skirt cloth; That skirt falls in soft gathered folds beneath a separate top.",
+                "별도 상의 아래에서 부드럽게 모인 꽃무늬 치마"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "Floral motifs belong to the selected skirt cloth; That skirt falls in soft gathered folds beneath a separate top.",
+        "paraphrase_examples": [
+          "Observable selected floral skirt and separate top: Floral motifs belong to the selected skirt cloth; That skirt falls in soft gathered folds beneath a separate top"
+        ],
+        "visual_components": [
+          "Floral motifs belong to the selected skirt cloth",
+          "That skirt falls in soft gathered folds beneath a separate top"
+        ],
+        "contrast_examples": [
+          "Flowers on the blouse, a flat floral background or lace motifs belonging to another layer do not supply the declared floral gathered skirt."
+        ],
+        "claim_limits": [
+          "This is one selected visible variant. Other terms or members of the related term family remain alternatives, not cumulative requirements.",
+          "Bind every selected item, body landmark and attachment to the existing declared wearer; no candidate creates a new person or alters identity, age, body measurements, pose, camera or background.",
+          "Visible cloth appearance does not establish fiber composition, hidden padding, internal support, process history, performance, tactile feel or absence of concealed garments.",
+          "A native gate requires the actual declared owner and the relevant boundaries or connection endpoints in the saved image; a label, prompt audit or similar nearby item is insufficient.",
+          "These item relations are one optional styling variant and do not prove romantic, coquette or feminine personality, age or behavior.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "Floral motifs belong to the selected skirt cloth"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "Floral motifs belong to the selected skirt cloth"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected floral skirt and separate top of the declared wearer, keep this selected relation visible: Floral motifs belong to the selected skirt cloth.",
+            "render_gate": {
+              "id": "vo_spring_sf094_2_1",
+              "review_scale": "native",
+              "description": "At native resolution, verify that floral motifs belong to the selected skirt cloth. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "That skirt falls in soft gathered folds beneath a separate top"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "That skirt falls in soft gathered folds beneath a separate top"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected floral skirt and separate top of the declared wearer, keep this selected relation visible: That skirt falls in soft gathered folds beneath a separate top.",
+            "render_gate": {
+              "id": "vo_spring_sf094_2_2",
+              "review_scale": "native",
+              "description": "At native resolution, verify that that skirt falls in soft gathered folds beneath a separate top. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "별도 상의 아래에서 부드럽게 모인 꽃무늬 치마",
+          "Floral motifs belong to the selected skirt cloth",
+          "That skirt falls in soft gathered folds beneath a separate top",
+          "로맨틱 visible variant",
+          "Romantic visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.skirt.folds"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.print.motif"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layer.order"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "Flowers on the blouse, a flat floral background or lace motifs belonging to another layer do not supply the declared floral gathered skirt."
+      ]
+    },
+    {
+      "id": "spring_sf096_1",
+      "category": "owner_bound_spring_garment_variant",
+      "activation": {
+        "exact_terms": [
+          "Small floral motifs occupy the selected dress cloth; The same dress has rounded puff sleeves and a distinct apron-like front panel.",
+          "작은 꽃무늬 드레스의 퍼프 소매와 앞치마형 앞판"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "Small floral motifs occupy the selected dress cloth; The same dress has rounded puff sleeves and a distinct apron-like front panel.",
+                "작은 꽃무늬 드레스의 퍼프 소매와 앞치마형 앞판"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "Small floral motifs occupy the selected dress cloth; The same dress has rounded puff sleeves and a distinct apron-like front panel.",
+        "paraphrase_examples": [
+          "Observable selected dress: Small floral motifs occupy the selected dress cloth; The same dress has rounded puff sleeves and a distinct apron-like front panel"
+        ],
+        "visual_components": [
+          "Small floral motifs occupy the selected dress cloth",
+          "The same dress has rounded puff sleeves and a distinct apron-like front panel"
+        ],
+        "contrast_examples": [
+          "A floral wall, an unrelated apron or ordinary sleeve folds cannot replace the flowered dress’s own puff sleeves and front panel."
+        ],
+        "claim_limits": [
+          "This is one selected visible variant. Other terms or members of the related term family remain alternatives, not cumulative requirements.",
+          "Bind every selected item, body landmark and attachment to the existing declared wearer; no candidate creates a new person or alters identity, age, body measurements, pose, camera or background.",
+          "Visible cloth appearance does not establish fiber composition, hidden padding, internal support, process history, performance, tactile feel or absence of concealed garments.",
+          "A native gate requires the actual declared owner and the relevant boundaries or connection endpoints in the saved image; a label, prompt audit or similar nearby item is insufficient.",
+          "This selected outfit variant establishes no rural residence, ethnicity, occupation, era or cottagecore lifestyle.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "Small floral motifs occupy the selected dress cloth"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "Small floral motifs occupy the selected dress cloth"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected dress of the declared wearer, keep this selected relation visible: Small floral motifs occupy the selected dress cloth.",
+            "render_gate": {
+              "id": "vo_spring_sf096_1_1",
+              "review_scale": "native",
+              "description": "At native resolution, verify that small floral motifs occupy the selected dress cloth. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "The same dress has rounded puff sleeves and a distinct apron-like front panel"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "The same dress has rounded puff sleeves and a distinct apron-like front panel"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected dress of the declared wearer, keep this selected relation visible: The same dress has rounded puff sleeves and a distinct apron-like front panel.",
+            "render_gate": {
+              "id": "vo_spring_sf096_1_2",
+              "review_scale": "native",
+              "description": "At native resolution, verify that the same dress has rounded puff sleeves and a distinct apron-like front panel. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "작은 꽃무늬 드레스의 퍼프 소매와 앞치마형 앞판",
+          "Small floral motifs occupy the selected dress cloth",
+          "The same dress has rounded puff sleeves and a distinct apron-like front panel",
+          "코티지코어 visible variant",
+          "Cottagecore visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.print.motif_scale"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.sleeve.volume_distribution"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.dress.overpanel_connection"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "A floral wall, an unrelated apron or ordinary sleeve folds cannot replace the flowered dress’s own puff sleeves and front panel."
+      ]
+    },
+    {
+      "id": "spring_sf097_1",
+      "category": "owner_bound_spring_garment_variant",
+      "activation": {
+        "exact_terms": [
+          "The selected polo top has its own collar and short center-front opening; The same wearer pairs that top with a skirt of repeated cloth pleats; Distinct loafer shoes with continuous low uppers belong to the same outfit.",
+          "같은 착용자의 폴로 상의와 플리츠 치마·로퍼 조합"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "The selected polo top has its own collar and short center-front opening; The same wearer pairs that top with a skirt of repeated cloth pleats; Distinct loafer shoes with continuous low uppers belong to the same outfit.",
+                "같은 착용자의 폴로 상의와 플리츠 치마·로퍼 조합"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "The selected polo top has its own collar and short center-front opening; The same wearer pairs that top with a skirt of repeated cloth pleats; Distinct loafer shoes with continuous low uppers belong to the same outfit.",
+        "paraphrase_examples": [
+          "Observable selected top skirt and shoes: The selected polo top has its own collar and short center-front opening; The same wearer pairs that top with a skirt of repeated cloth pleats; Distinct loafer shoes with continuous low uppers belong to the same outfit"
+        ],
+        "visual_components": [
+          "The selected polo top has its own collar and short center-front opening",
+          "The same wearer pairs that top with a skirt of repeated cloth pleats",
+          "Distinct loafer shoes with continuous low uppers belong to the same outfit"
+        ],
+        "contrast_examples": [
+          "A tennis prop, school setting or polo logo does not supply the declared collar/opening, cloth pleats and loafer footwear."
+        ],
+        "claim_limits": [
+          "This is one selected visible variant. Other terms or members of the related term family remain alternatives, not cumulative requirements.",
+          "Bind every selected item, body landmark and attachment to the existing declared wearer; no candidate creates a new person or alters identity, age, body measurements, pose, camera or background.",
+          "Visible cloth appearance does not establish fiber composition, hidden padding, internal support, process history, performance, tactile feel or absence of concealed garments.",
+          "A native gate requires the actual declared owner and the relevant boundaries or connection endpoints in the saved image; a label, prompt audit or similar nearby item is insufficient.",
+          "This optional combination does not establish school enrollment, tennis ability, wealth or uniform status; it is not a universal preppy definition.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "The selected polo top has its own collar and short center-front opening"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "The selected polo top has its own collar and short center-front opening"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected top skirt and shoes of the declared wearer, keep this selected relation visible: The selected polo top has its own collar and short center-front opening.",
+            "render_gate": {
+              "id": "vo_spring_sf097_1_1",
+              "review_scale": "native",
+              "description": "At native resolution, verify that the selected polo top has its own collar and short center-front opening. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "The same wearer pairs that top with a skirt of repeated cloth pleats"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "The same wearer pairs that top with a skirt of repeated cloth pleats"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected top skirt and shoes of the declared wearer, keep this selected relation visible: The same wearer pairs that top with a skirt of repeated cloth pleats.",
+            "render_gate": {
+              "id": "vo_spring_sf097_1_2",
+              "review_scale": "native",
+              "description": "At native resolution, verify that the same wearer pairs that top with a skirt of repeated cloth pleats. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "Distinct loafer shoes with continuous low uppers belong to the same outfit"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "Distinct loafer shoes with continuous low uppers belong to the same outfit"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected top skirt and shoes of the declared wearer, keep this selected relation visible: Distinct loafer shoes with continuous low uppers belong to the same outfit.",
+            "render_gate": {
+              "id": "vo_spring_sf097_1_3",
+              "review_scale": "native",
+              "description": "At native resolution, verify that distinct loafer shoes with continuous low uppers belong to the same outfit. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "같은 착용자의 폴로 상의와 플리츠 치마·로퍼 조합",
+          "The selected polo top has its own collar and short center-front opening",
+          "The same wearer pairs that top with a skirt of repeated cloth pleats",
+          "Distinct loafer shoes with continuous low uppers belong to the same outfit",
+          "프레피 visible variant",
+          "Preppy visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.top.collar"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.top.placket_extent"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.skirt.pleats"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.shoe.upper_structure"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layer.item_combination"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "A tennis prop, school setting or polo logo does not supply the declared collar/opening, cloth pleats and loafer footwear."
+      ]
+    },
+    {
+      "id": "spring_sf098_1",
+      "category": "owner_bound_spring_garment_variant",
+      "activation": {
+        "exact_terms": [
+          "The selected upper top remains a separate garment above the leggings; Two legging tubes follow the same legs; Low sneaker uppers stay below the same ankle landmarks.",
+          "같은 착용자의 별도 상의·레깅스와 낮은 스니커즈 조합"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "The selected upper top remains a separate garment above the leggings; Two legging tubes follow the same legs; Low sneaker uppers stay below the same ankle landmarks.",
+                "같은 착용자의 별도 상의·레깅스와 낮은 스니커즈 조합"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "The selected upper top remains a separate garment above the leggings; Two legging tubes follow the same legs; Low sneaker uppers stay below the same ankle landmarks.",
+        "paraphrase_examples": [
+          "Observable selected top leggings and sneakers: The selected upper top remains a separate garment above the leggings; Two legging tubes follow the same legs; Low sneaker uppers stay below the same ankle landmarks"
+        ],
+        "visual_components": [
+          "The selected upper top remains a separate garment above the leggings",
+          "Two legging tubes follow the same legs",
+          "Low sneaker uppers stay below the same ankle landmarks"
+        ],
+        "contrast_examples": [
+          "A one-piece suit, a skirt hiding the legging boundaries or high boot shafts does not supply the selected separate top/leggings/low-sneaker arrangement."
+        ],
+        "claim_limits": [
+          "This is one selected visible variant. Other terms or members of the related term family remain alternatives, not cumulative requirements.",
+          "Bind every selected item, body landmark and attachment to the existing declared wearer; no candidate creates a new person or alters identity, age, body measurements, pose, camera or background.",
+          "Visible cloth appearance does not establish fiber composition, hidden padding, internal support, process history, performance, tactile feel or absence of concealed garments.",
+          "A native gate requires the actual declared owner and the relevant boundaries or connection endpoints in the saved image; a label, prompt audit or similar nearby item is insufficient.",
+          "Sports-style is context for one item selection, not a pixel duty; appearance proves no athletic performance, moisture wicking or compression.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "The selected upper top remains a separate garment above the leggings"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "The selected upper top remains a separate garment above the leggings"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected top leggings and sneakers of the declared wearer, keep this selected relation visible: The selected upper top remains a separate garment above the leggings.",
+            "render_gate": {
+              "id": "vo_spring_sf098_1_1",
+              "review_scale": "native",
+              "description": "At native resolution, verify that the selected upper top remains a separate garment above the leggings. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "Two legging tubes follow the same legs"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "Two legging tubes follow the same legs"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected top leggings and sneakers of the declared wearer, keep this selected relation visible: Two legging tubes follow the same legs.",
+            "render_gate": {
+              "id": "vo_spring_sf098_1_2",
+              "review_scale": "native",
+              "description": "At native resolution, verify that two legging tubes follow the same legs. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "Low sneaker uppers stay below the same ankle landmarks"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "Low sneaker uppers stay below the same ankle landmarks"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected top leggings and sneakers of the declared wearer, keep this selected relation visible: Low sneaker uppers stay below the same ankle landmarks.",
+            "render_gate": {
+              "id": "vo_spring_sf098_1_3",
+              "review_scale": "native",
+              "description": "At native resolution, verify that low sneaker uppers stay below the same ankle landmarks. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "같은 착용자의 별도 상의·레깅스와 낮은 스니커즈 조합",
+          "The selected upper top remains a separate garment above the leggings",
+          "Two legging tubes follow the same legs",
+          "Low sneaker uppers stay below the same ankle landmarks",
+          "애슬레저 visible variant",
+          "Athleisure visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layer.item_combination"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.bottom.leg_tube_structure"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.shoe.upper_height"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "A one-piece suit, a skirt hiding the legging boundaries or high boot shafts does not supply the selected separate top/leggings/low-sneaker arrangement."
+      ]
+    },
+    {
+      "id": "spring_sf099_1",
+      "category": "owner_bound_spring_garment_variant",
+      "activation": {
+        "exact_terms": [
+          "Horizontal stripes follow the selected top cloth; The same wearer pairs it with straight-sided denim-look trousers; Flat shoes retain low heel profiles beneath the same outfit.",
+          "같은 착용자의 가로줄 상의·곧은 데님룩 바지와 플랫 조합"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "Horizontal stripes follow the selected top cloth; The same wearer pairs it with straight-sided denim-look trousers; Flat shoes retain low heel profiles beneath the same outfit.",
+                "같은 착용자의 가로줄 상의·곧은 데님룩 바지와 플랫 조합"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "Horizontal stripes follow the selected top cloth; The same wearer pairs it with straight-sided denim-look trousers; Flat shoes retain low heel profiles beneath the same outfit.",
+        "paraphrase_examples": [
+          "Observable selected top trousers and flat shoes: Horizontal stripes follow the selected top cloth; The same wearer pairs it with straight-sided denim-look trousers; Flat shoes retain low heel profiles beneath the same outfit"
+        ],
+        "visual_components": [
+          "Horizontal stripes follow the selected top cloth",
+          "The same wearer pairs it with straight-sided denim-look trousers",
+          "Flat shoes retain low heel profiles beneath the same outfit"
+        ],
+        "contrast_examples": [
+          "Wall stripes, tapered trouser legs or a visibly high heel is a different declared item arrangement."
+        ],
+        "claim_limits": [
+          "This is one selected visible variant. Other terms or members of the related term family remain alternatives, not cumulative requirements.",
+          "Bind every selected item, body landmark and attachment to the existing declared wearer; no candidate creates a new person or alters identity, age, body measurements, pose, camera or background.",
+          "Visible cloth appearance does not establish fiber composition, hidden padding, internal support, process history, performance, tactile feel or absence of concealed garments.",
+          "A native gate requires the actual declared owner and the relevant boundaries or connection endpoints in the saved image; a label, prompt audit or similar nearby item is insufficient.",
+          "Denim-look is appearance, not verified fiber or dye process; this combination proves no nationality, residence, price or sailing skill.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "Horizontal stripes follow the selected top cloth"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "Horizontal stripes follow the selected top cloth"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected top trousers and flat shoes of the declared wearer, keep this selected relation visible: Horizontal stripes follow the selected top cloth.",
+            "render_gate": {
+              "id": "vo_spring_sf099_1_1",
+              "review_scale": "native",
+              "description": "At native resolution, verify that horizontal stripes follow the selected top cloth. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "The same wearer pairs it with straight-sided denim-look trousers"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "The same wearer pairs it with straight-sided denim-look trousers"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected top trousers and flat shoes of the declared wearer, keep this selected relation visible: The same wearer pairs it with straight-sided denim-look trousers.",
+            "render_gate": {
+              "id": "vo_spring_sf099_1_2",
+              "review_scale": "native",
+              "description": "At native resolution, verify that the same wearer pairs it with straight-sided denim-look trousers. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "Flat shoes retain low heel profiles beneath the same outfit"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "Flat shoes retain low heel profiles beneath the same outfit"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected top trousers and flat shoes of the declared wearer, keep this selected relation visible: Flat shoes retain low heel profiles beneath the same outfit.",
+            "render_gate": {
+              "id": "vo_spring_sf099_1_3",
+              "review_scale": "native",
+              "description": "At native resolution, verify that flat shoes retain low heel profiles beneath the same outfit. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "같은 착용자의 가로줄 상의·곧은 데님룩 바지와 플랫 조합",
+          "Horizontal stripes follow the selected top cloth",
+          "The same wearer pairs it with straight-sided denim-look trousers",
+          "Flat shoes retain low heel profiles beneath the same outfit",
+          "프렌치 시크 visible variant",
+          "French chic visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.print.stripe_direction"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.pants.leg_contour"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.textile.denim_appearance"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.shoe.heel_profile"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layer.item_combination"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "Wall stripes, tapered trouser legs or a visibly high heel is a different declared item arrangement."
+      ]
+    },
+    {
+      "id": "spring_sf100_1",
+      "category": "owner_bound_spring_garment_variant",
+      "activation": {
+        "exact_terms": [
+          "The selected fitted top has a short torso hem; The same jeans waistband lies low relative to the wearer’s waist; A small bag hangs just below that wearer’s shoulder from a short strap attached to both bag ends.",
+          "짧은 밀착 상의·낮은 허리 청바지와 짧은 스트랩 소형 숄더백"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "The selected fitted top has a short torso hem; The same jeans waistband lies low relative to the wearer’s waist; A small bag hangs just below that wearer’s shoulder from a short strap attached to both bag ends.",
+                "짧은 밀착 상의·낮은 허리 청바지와 짧은 스트랩 소형 숄더백"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "The selected fitted top has a short torso hem; The same jeans waistband lies low relative to the wearer’s waist; A small bag hangs just below that wearer’s shoulder from a short strap attached to both bag ends.",
+        "paraphrase_examples": [
+          "Observable selected top jeans and shoulder bag: The selected fitted top has a short torso hem; The same jeans waistband lies low relative to the wearer’s waist; A small bag hangs just below that wearer’s shoulder from a short strap attached to both bag ends"
+        ],
+        "visual_components": [
+          "The selected fitted top has a short torso hem",
+          "The same jeans waistband lies low relative to the wearer’s waist",
+          "A small bag hangs just below that wearer’s shoulder from a short strap attached to both bag ends"
+        ],
+        "contrast_examples": [
+          "A long loose top, high-waisted trousers or a long crossbody strap is a different outfit and bag path."
+        ],
+        "claim_limits": [
+          "This is one selected visible variant. Other terms or members of the related term family remain alternatives, not cumulative requirements.",
+          "Bind every selected item, body landmark and attachment to the existing declared wearer; no candidate creates a new person or alters identity, age, body measurements, pose, camera or background.",
+          "Visible cloth appearance does not establish fiber composition, hidden padding, internal support, process history, performance, tactile feel or absence of concealed garments.",
+          "A native gate requires the actual declared owner and the relevant boundaries or connection endpoints in the saved image; a label, prompt audit or similar nearby item is insufficient.",
+          "This chosen combination does not define every Y2K variant or prescribe era, a body-proportion change, midriff exposure or a hidden layer absence.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "The selected fitted top has a short torso hem"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "The selected fitted top has a short torso hem"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected top jeans and shoulder bag of the declared wearer, keep this selected relation visible: The selected fitted top has a short torso hem.",
+            "render_gate": {
+              "id": "vo_spring_sf100_1_1",
+              "review_scale": "native",
+              "description": "At native resolution, verify that the selected fitted top has a short torso hem. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "The same jeans waistband lies low relative to the wearer’s waist"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "The same jeans waistband lies low relative to the wearer’s waist"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected top jeans and shoulder bag of the declared wearer, keep this selected relation visible: The same jeans waistband lies low relative to the wearer’s waist.",
+            "render_gate": {
+              "id": "vo_spring_sf100_1_2",
+              "review_scale": "native",
+              "description": "At native resolution, verify that the same jeans waistband lies low relative to the wearer’s waist. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "A small bag hangs just below that wearer’s shoulder from a short strap attached to both bag ends"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "A small bag hangs just below that wearer’s shoulder from a short strap attached to both bag ends"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected top jeans and shoulder bag of the declared wearer, keep this selected relation visible: A small bag hangs just below that wearer’s shoulder from a short strap attached to both bag ends.",
+            "render_gate": {
+              "id": "vo_spring_sf100_1_3",
+              "review_scale": "native",
+              "description": "At native resolution, verify that a small bag hangs just below that wearer’s shoulder from a short strap attached to both bag ends. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "짧은 밀착 상의·낮은 허리 청바지와 짧은 스트랩 소형 숄더백",
+          "The selected fitted top has a short torso hem",
+          "The same jeans waistband lies low relative to the wearer’s waist",
+          "A small bag hangs just below that wearer’s shoulder from a short strap attached to both bag ends",
+          "Y2K visible variant",
+          "Y2K style visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.top.length"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.local_contact"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.bottom.waistband_height"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.bag.size"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.bag.strap_length"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.bag.strap_attachment"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layer.item_combination"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "A long loose top, high-waisted trousers or a long crossbody strap is a different outfit and bag path."
+      ]
+    },
+    {
+      "id": "spring_sf101_3",
+      "category": "owner_bound_spring_garment_variant",
+      "activation": {
+        "exact_terms": [
+          "Separate reflective stud-like pieces attach to the selected belt; That belt crosses outside the same short skirt waist; Repeated cloth pleats continue below the belt on that skirt; The same skirt hem ends above the corresponding knee landmarks.",
+          "같은 짧은 플리츠 치마 바깥을 가로지르는 스터드 벨트"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "Separate reflective stud-like pieces attach to the selected belt; That belt crosses outside the same short skirt waist; Repeated cloth pleats continue below the belt on that skirt; The same skirt hem ends above the corresponding knee landmarks.",
+                "같은 짧은 플리츠 치마 바깥을 가로지르는 스터드 벨트"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "Separate reflective stud-like pieces attach to the selected belt; That belt crosses outside the same short skirt waist; Repeated cloth pleats continue below the belt on that skirt; The same skirt hem ends above the corresponding knee landmarks.",
+        "paraphrase_examples": [
+          "Observable selected belt and pleated skirt: Separate reflective stud-like pieces attach to the selected belt; That belt crosses outside the same short skirt waist; Repeated cloth pleats continue below the belt on that skirt; The same skirt hem ends above the corresponding knee landmarks"
+        ],
+        "visual_components": [
+          "Separate reflective stud-like pieces attach to the selected belt",
+          "That belt crosses outside the same short skirt waist",
+          "Repeated cloth pleats continue below the belt on that skirt",
+          "The same skirt hem ends above the corresponding knee landmarks"
+        ],
+        "contrast_examples": [
+          "Printed metal dots, a detached chain or pleats on another skirt cannot supply the same belt attachments and belt-over-skirt arrangement."
+        ],
+        "claim_limits": [
+          "This is one selected visible variant. Other terms or members of the related term family remain alternatives, not cumulative requirements.",
+          "Bind every selected item, body landmark and attachment to the existing declared wearer; no candidate creates a new person or alters identity, age, body measurements, pose, camera or background.",
+          "Visible cloth appearance does not establish fiber composition, hidden padding, internal support, process history, performance, tactile feel or absence of concealed garments.",
+          "A native gate requires the actual declared owner and the relevant boundaries or connection endpoints in the saved image; a label, prompt audit or similar nearby item is insufficient.",
+          "Stud appearance does not prove metal composition; style labels do not require sexual behavior, restraint, consent, exposure or a body change.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "Separate reflective stud-like pieces attach to the selected belt"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "Separate reflective stud-like pieces attach to the selected belt"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected belt and pleated skirt of the declared wearer, keep this selected relation visible: Separate reflective stud-like pieces attach to the selected belt.",
+            "render_gate": {
+              "id": "vo_spring_sf101_3_1",
+              "review_scale": "native",
+              "description": "At native resolution, verify that separate reflective stud-like pieces attach to the selected belt. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "That belt crosses outside the same short skirt waist"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "That belt crosses outside the same short skirt waist"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected belt and pleated skirt of the declared wearer, keep this selected relation visible: That belt crosses outside the same short skirt waist.",
+            "render_gate": {
+              "id": "vo_spring_sf101_3_2",
+              "review_scale": "native",
+              "description": "At native resolution, verify that that belt crosses outside the same short skirt waist. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "Repeated cloth pleats continue below the belt on that skirt"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "Repeated cloth pleats continue below the belt on that skirt"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected belt and pleated skirt of the declared wearer, keep this selected relation visible: Repeated cloth pleats continue below the belt on that skirt.",
+            "render_gate": {
+              "id": "vo_spring_sf101_3_3",
+              "review_scale": "native",
+              "description": "At native resolution, verify that repeated cloth pleats continue below the belt on that skirt. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "The same skirt hem ends above the corresponding knee landmarks"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "The same skirt hem ends above the corresponding knee landmarks"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected belt and pleated skirt of the declared wearer, keep this selected relation visible: The same skirt hem ends above the corresponding knee landmarks.",
+            "render_gate": {
+              "id": "vo_spring_sf101_3_4",
+              "review_scale": "native",
+              "description": "At native resolution, verify that the same skirt hem ends above the corresponding knee landmarks. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "같은 짧은 플리츠 치마 바깥을 가로지르는 스터드 벨트",
+          "Separate reflective stud-like pieces attach to the selected belt",
+          "That belt crosses outside the same short skirt waist",
+          "Repeated cloth pleats continue below the belt on that skirt",
+          "The same skirt hem ends above the corresponding knee landmarks",
+          "펑크·록 시크 visible variant",
+          "Punk / Rock chic visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.accessory.belt_route"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.accessory.hardware_attachment"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.skirt.pleats"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.skirt.hem_height"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layer.order"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "Printed metal dots, a detached chain or pleats on another skirt cannot supply the same belt attachments and belt-over-skirt arrangement."
+      ]
+    },
+    {
+      "id": "spring_sf102_2",
+      "category": "owner_bound_spring_garment_variant",
+      "activation": {
+        "exact_terms": [
+          "The same top neckline opens widely across the upper torso; Soft cloth folds descend along that top’s sleeves.",
+          "같은 상의의 넓은 목선과 소매에 처지는 부드러운 직물 주름"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "The same top neckline opens widely across the upper torso; Soft cloth folds descend along that top’s sleeves.",
+                "같은 상의의 넓은 목선과 소매에 처지는 부드러운 직물 주름"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "The same top neckline opens widely across the upper torso; Soft cloth folds descend along that top’s sleeves.",
+        "paraphrase_examples": [
+          "Observable selected top: The same top neckline opens widely across the upper torso; Soft cloth folds descend along that top’s sleeves"
+        ],
+        "visual_components": [
+          "The same top neckline opens widely across the upper torso",
+          "Soft cloth folds descend along that top’s sleeves"
+        ],
+        "contrast_examples": [
+          "A low narrow neckline, torso folds or a hair drape does not supply the declared wide neckline and same-top sleeve folds."
+        ],
+        "claim_limits": [
+          "This is one selected visible variant. Other terms or members of the related term family remain alternatives, not cumulative requirements.",
+          "Bind every selected item, body landmark and attachment to the existing declared wearer; no candidate creates a new person or alters identity, age, body measurements, pose, camera or background.",
+          "Visible cloth appearance does not establish fiber composition, hidden padding, internal support, process history, performance, tactile feel or absence of concealed garments.",
+          "A native gate requires the actual declared owner and the relevant boundaries or connection endpoints in the saved image; a label, prompt audit or similar nearby item is insufficient.",
+          "These cloth relations do not establish innocence, glamour, attraction, youth or body measurements.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "The same top neckline opens widely across the upper torso"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "The same top neckline opens widely across the upper torso"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected top of the declared wearer, keep this selected relation visible: The same top neckline opens widely across the upper torso.",
+            "render_gate": {
+              "id": "vo_spring_sf102_2_1",
+              "review_scale": "native",
+              "description": "At native resolution, verify that the same top neckline opens widely across the upper torso. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "Soft cloth folds descend along that top’s sleeves"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "Soft cloth folds descend along that top’s sleeves"
+            ],
+            "min_content_words": 3,
+            "instruction": "On the existing selected top of the declared wearer, keep this selected relation visible: Soft cloth folds descend along that top’s sleeves.",
+            "render_gate": {
+              "id": "vo_spring_sf102_2_2",
+              "review_scale": "native",
+              "description": "At native resolution, verify that soft cloth folds descend along that top’s sleeves. Trace the stated owner and both endpoints or cloth boundaries. Every named attachment, landmark or layer must be readable; cropped, blurred or occluded required parts are UNOBSERVABLE_NOT_PASS."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "같은 상의의 넓은 목선과 소매에 처지는 부드러운 직물 주름",
+          "The same top neckline opens widely across the upper torso",
+          "Soft cloth folds descend along that top’s sleeves",
+          "여리핏·청순글램 visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.neckline.width"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.sleeve.drape"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "A low narrow neckline, torso folds or a hair drape does not supply the declared wide neckline and same-top sleeve folds."
+      ]
+    },
+    {
+      "id": "spring_sf094_03",
+      "category": "spring_fashion_selected_visible_structure",
+      "activation": {
+        "exact_terms": [
+          "the selected outfit forms a shaped waist line; its skirt falls in soft flowing folds; a small ornament attaches to that same outfit."
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_geometry",
+              "any_terms": [
+                "the selected outfit forms a shaped waist line; its skirt falls in soft flowing folds; a small ornament attaches to that same outfit."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the selected outfit forms a shaped waist line; its skirt falls in soft flowing folds; a small ornament attaches to that same outfit.",
+        "paraphrase_examples": [
+          "형태를 잡은 허리·부드러운 치마·부착 장식의 같은 착장"
+        ],
+        "visual_components": [
+          "the selected outfit forms a shaped waist line",
+          "its skirt falls in soft flowing folds",
+          "a small ornament attaches to that same outfit"
+        ],
+        "contrast_examples": [
+          "One bow alone does not establish the whole garment combination; the outfit does not prove personality, sexual behavior or age."
+        ],
+        "claim_limits": [
+          "Only the complete selected visible variant is represented; a family or style name does not activate its sibling variants.",
+          "Use the existing declared garment, accessory and wearer. A different owner or unsupported prerequisite makes this choice inapplicable.",
+          "Visible boundaries and contact must be inspectable in the saved image; prompt wording, a painted imitation or unresolved occlusion is insufficient.",
+          "Pixels do not certify fiber composition, hidden garment presence or absence, manufacturing history, functional performance, body measurements, biography, social class or desire.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_01",
+            "match_terms": [
+              "the selected outfit forms a shaped waist line"
+            ],
+            "evidence_field": "component_01_phrase",
+            "evidence_terms": [
+              "the selected outfit forms a shaped waist line"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: the selected outfit forms a shaped waist line.",
+            "render_gate": {
+              "id": "vo_spring_sf094_03_01",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: the selected outfit forms a shaped waist line. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          },
+          {
+            "id": "component_02",
+            "match_terms": [
+              "its skirt falls in soft flowing folds"
+            ],
+            "evidence_field": "component_02_phrase",
+            "evidence_terms": [
+              "its skirt falls in soft flowing folds"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: its skirt falls in soft flowing folds.",
+            "render_gate": {
+              "id": "vo_spring_sf094_03_02",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: its skirt falls in soft flowing folds. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          },
+          {
+            "id": "component_03",
+            "match_terms": [
+              "a small ornament attaches to that same outfit"
+            ],
+            "evidence_field": "component_03_phrase",
+            "evidence_terms": [
+              "a small ornament attaches to that same outfit"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: a small ornament attaches to that same outfit.",
+            "render_gate": {
+              "id": "vo_spring_sf094_03_03",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: a small ornament attaches to that same outfit. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "형태를 잡은 허리·부드러운 치마·부착 장식의 같은 착장",
+          "the selected outfit forms a shaped waist line; its skirt falls in soft flowing folds; a small ornament attaches to that same outfit.",
+          "페미닌 visible variant",
+          "Feminine visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.silhouette.waist_shape"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.skirt.folds"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.ornament.attachment"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.ornament.scale"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "One bow alone does not establish the whole garment combination; the outfit does not prove personality, sexual behavior or age."
+      ],
+      "visual_relation": {
+        "schema_version": "photo-visual-relation/v1",
+        "status": "advisory",
+        "owner_axis": "main_subject",
+        "source": {
+          "kind": "advisory_candidate",
+          "literal_evidence": [
+            "the selected outfit forms a shaped waist line",
+            "its skirt falls in soft flowing folds",
+            "a small ornament attaches to that same outfit"
+          ],
+          "priority": "P2",
+          "confidence": "high"
+        },
+        "entities": [
+          "outfit",
+          "main_subject",
+          "outfit.shaped_waist_and_flowing_skirt",
+          "outfit.small_ornament"
+        ],
+        "visible_regions": [
+          "selected outfit surface and boundaries",
+          "both endpoints of each selected structural relation"
+        ],
+        "relations": [
+          "outfit declared_owner_scope main_subject",
+          "outfit.shaped_waist_and_flowing_skirt belongs_to outfit",
+          "outfit.small_ornament attached_to outfit"
+        ],
+        "observable_effects": [
+          "the selected outfit forms a shaped waist line",
+          "its skirt falls in soft flowing folds",
+          "a small ornament attaches to that same outfit"
+        ],
+        "confusion_negatives": [
+          "One bow alone does not establish the whole garment combination; the outfit does not prove personality, sexual behavior or age."
+        ],
+        "observability": {
+          "required_visible_regions": [
+            "selected outfit surface and boundaries",
+            "both endpoints of each selected structural relation"
+          ],
+          "minimum_review_scale": "native",
+          "crop_policy": "A cropped required boundary cannot receive a pass.",
+          "occlusion_policy": "A hidden required endpoint remains unresolved in pixel review.",
+          "proof_budget": {
+            "thumbnail": "Check selected object placement and overall silhouette only.",
+            "native": "Resolve each component boundary and both relation endpoints."
+          },
+          "ineligible_state": "UNSCORED"
+        },
+        "activation": {
+          "hard_only_from_exact_source": true,
+          "embedding_only_is_advisory": true,
+          "all_required_components_coexist": true
+        },
+        "invariant_fields": [
+          "wearer identity and anatomy",
+          "unselected garment and accessory owners",
+          "camera pose lighting and setting outside the declared effects"
+        ],
+        "flexible_fields": [
+          "wardrobe.silhouette.waist_shape",
+          "wardrobe.skirt.folds",
+          "wardrobe.ornament.attachment",
+          "wardrobe.ornament.scale"
+        ]
+      }
+    },
+    {
+      "id": "spring_sf096_02",
+      "category": "spring_fashion_selected_visible_structure",
+      "activation": {
+        "exact_terms": [
+          "a high neckline encloses the upper opening of the dress; full sleeves attach to that same bodice; a long skirt continues from the bodice through joined tiers."
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_geometry",
+              "any_terms": [
+                "a high neckline encloses the upper opening of the dress; full sleeves attach to that same bodice; a long skirt continues from the bodice through joined tiers."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "a high neckline encloses the upper opening of the dress; full sleeves attach to that same bodice; a long skirt continues from the bodice through joined tiers.",
+        "paraphrase_examples": [
+          "높은 목선·풍성한 소매·긴 층 치마의 같은 드레스"
+        ],
+        "visual_components": [
+          "a high neckline encloses the upper opening of the dress",
+          "full sleeves attach to that same bodice",
+          "a long skirt continues from the bodice through joined tiers"
+        ],
+        "contrast_examples": [
+          "Floral print alone does not create this garment combination; rural residence, ethnicity and historical social role remain unproven."
+        ],
+        "claim_limits": [
+          "Only the complete selected visible variant is represented; a family or style name does not activate its sibling variants.",
+          "Use the existing declared garment, accessory and wearer. A different owner or unsupported prerequisite makes this choice inapplicable.",
+          "Visible boundaries and contact must be inspectable in the saved image; prompt wording, a painted imitation or unresolved occlusion is insufficient.",
+          "Pixels do not certify fiber composition, hidden garment presence or absence, manufacturing history, functional performance, body measurements, biography, social class or desire.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_01",
+            "match_terms": [
+              "a high neckline encloses the upper opening of the dress"
+            ],
+            "evidence_field": "component_01_phrase",
+            "evidence_terms": [
+              "a high neckline encloses the upper opening of the dress"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: a high neckline encloses the upper opening of the dress.",
+            "render_gate": {
+              "id": "vo_spring_sf096_02_01",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: a high neckline encloses the upper opening of the dress. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          },
+          {
+            "id": "component_02",
+            "match_terms": [
+              "full sleeves attach to that same bodice"
+            ],
+            "evidence_field": "component_02_phrase",
+            "evidence_terms": [
+              "full sleeves attach to that same bodice"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: full sleeves attach to that same bodice.",
+            "render_gate": {
+              "id": "vo_spring_sf096_02_02",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: full sleeves attach to that same bodice. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          },
+          {
+            "id": "component_03",
+            "match_terms": [
+              "a long skirt continues from the bodice through joined tiers"
+            ],
+            "evidence_field": "component_03_phrase",
+            "evidence_terms": [
+              "a long skirt continues from the bodice through joined tiers"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: a long skirt continues from the bodice through joined tiers.",
+            "render_gate": {
+              "id": "vo_spring_sf096_02_03",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: a long skirt continues from the bodice through joined tiers. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "높은 목선·풍성한 소매·긴 층 치마의 같은 드레스",
+          "a high neckline encloses the upper opening of the dress; full sleeves attach to that same bodice; a long skirt continues from the bodice through joined tiers.",
+          "프레리 visible variant",
+          "Prairie style visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.neckline.height"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.sleeve.volume"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.sleeve.attachment"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.skirt.length"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.dress.tier_connections"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "Floral print alone does not create this garment combination; rural residence, ethnicity and historical social role remain unproven."
+      ],
+      "visual_relation": {
+        "schema_version": "photo-visual-relation/v1",
+        "status": "advisory",
+        "owner_axis": "main_subject",
+        "source": {
+          "kind": "advisory_candidate",
+          "literal_evidence": [
+            "a high neckline encloses the upper opening of the dress",
+            "full sleeves attach to that same bodice",
+            "a long skirt continues from the bodice through joined tiers"
+          ],
+          "priority": "P2",
+          "confidence": "high"
+        },
+        "entities": [
+          "dress",
+          "main_subject",
+          "dress.full_sleeves",
+          "dress.bodice",
+          "dress.long_tiered_skirt",
+          "dress.high_neckline",
+          "dress.upper_opening"
+        ],
+        "visible_regions": [
+          "selected dress surface and boundaries",
+          "both endpoints of each selected structural relation"
+        ],
+        "relations": [
+          "dress declared_owner_scope main_subject",
+          "dress.full_sleeves attached_to dress.bodice",
+          "dress.long_tiered_skirt joined_to dress.bodice",
+          "dress.high_neckline within dress.upper_opening"
+        ],
+        "observable_effects": [
+          "a high neckline encloses the upper opening of the dress",
+          "full sleeves attach to that same bodice",
+          "a long skirt continues from the bodice through joined tiers"
+        ],
+        "confusion_negatives": [
+          "Floral print alone does not create this garment combination; rural residence, ethnicity and historical social role remain unproven."
+        ],
+        "observability": {
+          "required_visible_regions": [
+            "selected dress surface and boundaries",
+            "both endpoints of each selected structural relation"
+          ],
+          "minimum_review_scale": "native",
+          "crop_policy": "A cropped required boundary cannot receive a pass.",
+          "occlusion_policy": "A hidden required endpoint remains unresolved in pixel review.",
+          "proof_budget": {
+            "thumbnail": "Check selected object placement and overall silhouette only.",
+            "native": "Resolve each component boundary and both relation endpoints."
+          },
+          "ineligible_state": "UNSCORED"
+        },
+        "activation": {
+          "hard_only_from_exact_source": true,
+          "embedding_only_is_advisory": true,
+          "all_required_components_coexist": true
+        },
+        "invariant_fields": [
+          "wearer identity and anatomy",
+          "unselected garment and accessory owners",
+          "camera pose lighting and setting outside the declared effects"
+        ],
+        "flexible_fields": [
+          "wardrobe.neckline.height",
+          "wardrobe.sleeve.volume",
+          "wardrobe.sleeve.attachment",
+          "wardrobe.skirt.length",
+          "wardrobe.dress.tier_connections"
+        ]
+      }
+    },
+    {
+      "id": "spring_sf097_02",
+      "category": "spring_fashion_selected_visible_structure",
+      "activation": {
+        "exact_terms": [
+          "an open blazer lies outside the same wearer's collared button-front shirt; straight trouser legs continue below those separate upper layers."
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_geometry",
+              "any_terms": [
+                "an open blazer lies outside the same wearer's collared button-front shirt; straight trouser legs continue below those separate upper layers."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "an open blazer lies outside the same wearer's collared button-front shirt; straight trouser legs continue below those separate upper layers.",
+        "paraphrase_examples": [
+          "열린 블레이저 안의 단추 셔츠와 곧은 바지"
+        ],
+        "visual_components": [
+          "an open blazer lies outside the same wearer's collared button-front shirt",
+          "straight trouser legs continue below those separate upper layers"
+        ],
+        "contrast_examples": [
+          "A shirt printed onto one jacket panel lacks independent layers; school status, wealth, fiber identity and educational background are not established."
+        ],
+        "claim_limits": [
+          "Only the complete selected visible variant is represented; a family or style name does not activate its sibling variants.",
+          "Use the existing declared garment, accessory and wearer. A different owner or unsupported prerequisite makes this choice inapplicable.",
+          "Visible boundaries and contact must be inspectable in the saved image; prompt wording, a painted imitation or unresolved occlusion is insufficient.",
+          "Pixels do not certify fiber composition, hidden garment presence or absence, manufacturing history, functional performance, body measurements, biography, social class or desire.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_01",
+            "match_terms": [
+              "an open blazer lies outside the same wearer's collared button-front shirt"
+            ],
+            "evidence_field": "component_01_phrase",
+            "evidence_terms": [
+              "an open blazer lies outside the same wearer's collared button-front shirt"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: an open blazer lies outside the same wearer's collared button-front shirt.",
+            "render_gate": {
+              "id": "vo_spring_sf097_02_01",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: an open blazer lies outside the same wearer's collared button-front shirt. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          },
+          {
+            "id": "component_02",
+            "match_terms": [
+              "straight trouser legs continue below those separate upper layers"
+            ],
+            "evidence_field": "component_02_phrase",
+            "evidence_terms": [
+              "straight trouser legs continue below those separate upper layers"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: straight trouser legs continue below those separate upper layers.",
+            "render_gate": {
+              "id": "vo_spring_sf097_02_02",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: straight trouser legs continue below those separate upper layers. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "열린 블레이저 안의 단추 셔츠와 곧은 바지",
+          "an open blazer lies outside the same wearer's collared button-front shirt; straight trouser legs continue below those separate upper layers.",
+          "아이비 visible variant",
+          "Ivy style visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layer.order"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.blazer.closure.current_state"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.shirt.collar"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.shirt.front_button_band"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.pants.leg_width"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layer.item_combination"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "A shirt printed onto one jacket panel lacks independent layers; school status, wealth, fiber identity and educational background are not established."
+      ],
+      "visual_relation": {
+        "schema_version": "photo-visual-relation/v1",
+        "status": "advisory",
+        "owner_axis": "main_subject",
+        "source": {
+          "kind": "advisory_candidate",
+          "literal_evidence": [
+            "an open blazer lies outside the same wearer's collared button-front shirt",
+            "straight trouser legs continue below those separate upper layers"
+          ],
+          "priority": "P2",
+          "confidence": "high"
+        },
+        "entities": [
+          "outfit",
+          "main_subject",
+          "outfit.open_blazer",
+          "outfit.collared_button_front_shirt",
+          "outfit.straight_trousers",
+          "outfit.upper_layers"
+        ],
+        "visible_regions": [
+          "selected outfit surface and boundaries",
+          "both endpoints of each selected structural relation"
+        ],
+        "relations": [
+          "outfit declared_owner_scope main_subject",
+          "outfit.open_blazer outside outfit.collared_button_front_shirt",
+          "outfit.straight_trousers below outfit.upper_layers"
+        ],
+        "observable_effects": [
+          "an open blazer lies outside the same wearer's collared button-front shirt",
+          "straight trouser legs continue below those separate upper layers"
+        ],
+        "confusion_negatives": [
+          "A shirt printed onto one jacket panel lacks independent layers; school status, wealth, fiber identity and educational background are not established."
+        ],
+        "observability": {
+          "required_visible_regions": [
+            "selected outfit surface and boundaries",
+            "both endpoints of each selected structural relation"
+          ],
+          "minimum_review_scale": "native",
+          "crop_policy": "A cropped required boundary cannot receive a pass.",
+          "occlusion_policy": "A hidden required endpoint remains unresolved in pixel review.",
+          "proof_budget": {
+            "thumbnail": "Check selected object placement and overall silhouette only.",
+            "native": "Resolve each component boundary and both relation endpoints."
+          },
+          "ineligible_state": "UNSCORED"
+        },
+        "activation": {
+          "hard_only_from_exact_source": true,
+          "embedding_only_is_advisory": true,
+          "all_required_components_coexist": true
+        },
+        "invariant_fields": [
+          "wearer identity and anatomy",
+          "unselected garment and accessory owners",
+          "camera pose lighting and setting outside the declared effects"
+        ],
+        "flexible_fields": [
+          "wardrobe.layer.order",
+          "wardrobe.blazer.closure.current_state",
+          "wardrobe.shirt.collar",
+          "wardrobe.shirt.front_button_band",
+          "wardrobe.pants.leg_width",
+          "wardrobe.layer.item_combination"
+        ]
+      }
+    },
+    {
+      "id": "spring_sf098_02",
+      "category": "spring_fashion_selected_visible_structure",
+      "activation": {
+        "exact_terms": [
+          "an open blazer lies over a separately bounded sports top; wide trouser legs belong to the same wearer's lower garment."
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_geometry",
+              "any_terms": [
+                "an open blazer lies over a separately bounded sports top; wide trouser legs belong to the same wearer's lower garment."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "an open blazer lies over a separately bounded sports top; wide trouser legs belong to the same wearer's lower garment.",
+        "paraphrase_examples": [
+          "스포츠 상의 밖의 열린 블레이저와 넓은 바지"
+        ],
+        "visual_components": [
+          "an open blazer lies over a separately bounded sports top",
+          "wide trouser legs belong to the same wearer's lower garment"
+        ],
+        "contrast_examples": [
+          "One printed sports motif on a blazer does not create a separate sports top; sports ability and performance properties remain unscored."
+        ],
+        "claim_limits": [
+          "Only the complete selected visible variant is represented; a family or style name does not activate its sibling variants.",
+          "Use the existing declared garment, accessory and wearer. A different owner or unsupported prerequisite makes this choice inapplicable.",
+          "Visible boundaries and contact must be inspectable in the saved image; prompt wording, a painted imitation or unresolved occlusion is insufficient.",
+          "Pixels do not certify fiber composition, hidden garment presence or absence, manufacturing history, functional performance, body measurements, biography, social class or desire.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_01",
+            "match_terms": [
+              "an open blazer lies over a separately bounded sports top"
+            ],
+            "evidence_field": "component_01_phrase",
+            "evidence_terms": [
+              "an open blazer lies over a separately bounded sports top"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: an open blazer lies over a separately bounded sports top.",
+            "render_gate": {
+              "id": "vo_spring_sf098_02_01",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: an open blazer lies over a separately bounded sports top. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          },
+          {
+            "id": "component_02",
+            "match_terms": [
+              "wide trouser legs belong to the same wearer's lower garment"
+            ],
+            "evidence_field": "component_02_phrase",
+            "evidence_terms": [
+              "wide trouser legs belong to the same wearer's lower garment"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: wide trouser legs belong to the same wearer's lower garment.",
+            "render_gate": {
+              "id": "vo_spring_sf098_02_02",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: wide trouser legs belong to the same wearer's lower garment. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "스포츠 상의 밖의 열린 블레이저와 넓은 바지",
+          "an open blazer lies over a separately bounded sports top; wide trouser legs belong to the same wearer's lower garment.",
+          "스포티 시크 visible variant",
+          "Sporty chic visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layer.order"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.blazer.closure.current_state"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.inner_top.garment_type"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.pants.leg_width"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layer.item_combination"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "One printed sports motif on a blazer does not create a separate sports top; sports ability and performance properties remain unscored."
+      ],
+      "visual_relation": {
+        "schema_version": "photo-visual-relation/v1",
+        "status": "advisory",
+        "owner_axis": "main_subject",
+        "source": {
+          "kind": "advisory_candidate",
+          "literal_evidence": [
+            "an open blazer lies over a separately bounded sports top",
+            "wide trouser legs belong to the same wearer's lower garment"
+          ],
+          "priority": "P2",
+          "confidence": "high"
+        },
+        "entities": [
+          "outfit",
+          "main_subject",
+          "outfit.open_blazer",
+          "outfit.sports_top",
+          "outfit.wide_trousers",
+          "wearer"
+        ],
+        "visible_regions": [
+          "selected outfit surface and boundaries",
+          "both endpoints of each selected structural relation"
+        ],
+        "relations": [
+          "outfit declared_owner_scope main_subject",
+          "outfit.open_blazer outside outfit.sports_top",
+          "outfit.wide_trousers belongs_to wearer"
+        ],
+        "observable_effects": [
+          "an open blazer lies over a separately bounded sports top",
+          "wide trouser legs belong to the same wearer's lower garment"
+        ],
+        "confusion_negatives": [
+          "One printed sports motif on a blazer does not create a separate sports top; sports ability and performance properties remain unscored."
+        ],
+        "observability": {
+          "required_visible_regions": [
+            "selected outfit surface and boundaries",
+            "both endpoints of each selected structural relation"
+          ],
+          "minimum_review_scale": "native",
+          "crop_policy": "A cropped required boundary cannot receive a pass.",
+          "occlusion_policy": "A hidden required endpoint remains unresolved in pixel review.",
+          "proof_budget": {
+            "thumbnail": "Check selected object placement and overall silhouette only.",
+            "native": "Resolve each component boundary and both relation endpoints."
+          },
+          "ineligible_state": "UNSCORED"
+        },
+        "activation": {
+          "hard_only_from_exact_source": true,
+          "embedding_only_is_advisory": true,
+          "all_required_components_coexist": true
+        },
+        "invariant_fields": [
+          "wearer identity and anatomy",
+          "unselected garment and accessory owners",
+          "camera pose lighting and setting outside the declared effects"
+        ],
+        "flexible_fields": [
+          "wardrobe.layer.order",
+          "wardrobe.blazer.closure.current_state",
+          "wardrobe.inner_top.garment_type",
+          "wardrobe.pants.leg_width",
+          "wardrobe.layer.item_combination"
+        ]
+      }
+    },
+    {
+      "id": "spring_sf099_02",
+      "category": "spring_fashion_selected_visible_structure",
+      "activation": {
+        "exact_terms": [
+          "the visible jacket and trouser panels have unmarked surfaces; those two garments share a restrained neutral color palette."
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_geometry",
+              "any_terms": [
+                "the visible jacket and trouser panels have unmarked surfaces; those two garments share a restrained neutral color palette."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the visible jacket and trouser panels have unmarked surfaces; those two garments share a restrained neutral color palette.",
+        "paraphrase_examples": [
+          "표시 없는 재킷과 바지의 절제된 중성색 관계"
+        ],
+        "visual_components": [
+          "the visible jacket and trouser panels have unmarked surfaces",
+          "those two garments share a restrained neutral color palette"
+        ],
+        "contrast_examples": [
+          "A neutral background filter does not establish garment-local color; visible unmarked panels do not certify hidden logo absence, actual price or luxury provenance."
+        ],
+        "claim_limits": [
+          "Only the complete selected visible variant is represented; a family or style name does not activate its sibling variants.",
+          "Use the existing declared garment, accessory and wearer. A different owner or unsupported prerequisite makes this choice inapplicable.",
+          "Visible boundaries and contact must be inspectable in the saved image; prompt wording, a painted imitation or unresolved occlusion is insufficient.",
+          "Pixels do not certify fiber composition, hidden garment presence or absence, manufacturing history, functional performance, body measurements, biography, social class or desire.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_01",
+            "match_terms": [
+              "the visible jacket and trouser panels have unmarked surfaces"
+            ],
+            "evidence_field": "component_01_phrase",
+            "evidence_terms": [
+              "the visible jacket and trouser panels have unmarked surfaces"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: the visible jacket and trouser panels have unmarked surfaces.",
+            "render_gate": {
+              "id": "vo_spring_sf099_02_01",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: the visible jacket and trouser panels have unmarked surfaces. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          },
+          {
+            "id": "component_02",
+            "match_terms": [
+              "those two garments share a restrained neutral color palette"
+            ],
+            "evidence_field": "component_02_phrase",
+            "evidence_terms": [
+              "those two garments share a restrained neutral color palette"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: those two garments share a restrained neutral color palette.",
+            "render_gate": {
+              "id": "vo_spring_sf099_02_02",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: those two garments share a restrained neutral color palette. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "표시 없는 재킷과 바지의 절제된 중성색 관계",
+          "the visible jacket and trouser panels have unmarked surfaces; those two garments share a restrained neutral color palette.",
+          "미니멀 visible variant",
+          "Minimal visible variant",
+          "콰이어트 럭셔리 visible variant",
+          "Quiet luxury visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.jacket.surface.markings"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.pants.surface.markings"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.palette.item_relationship"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "A neutral background filter does not establish garment-local color; visible unmarked panels do not certify hidden logo absence, actual price or luxury provenance."
+      ],
+      "visual_relation": {
+        "schema_version": "photo-visual-relation/v1",
+        "status": "advisory",
+        "owner_axis": "main_subject",
+        "source": {
+          "kind": "advisory_candidate",
+          "literal_evidence": [
+            "the visible jacket and trouser panels have unmarked surfaces",
+            "those two garments share a restrained neutral color palette"
+          ],
+          "priority": "P2",
+          "confidence": "high"
+        },
+        "entities": [
+          "jacket_and_trousers",
+          "main_subject",
+          "jacket.visible_color",
+          "trousers.visible_color",
+          "outfit.unmarked_surfaces",
+          "jacket_and_trousers.visible_panels"
+        ],
+        "visible_regions": [
+          "selected jacket_and_trousers surface and boundaries",
+          "both endpoints of each selected structural relation"
+        ],
+        "relations": [
+          "jacket_and_trousers declared_owner_scope main_subject",
+          "jacket.visible_color shares_palette trousers.visible_color",
+          "outfit.unmarked_surfaces on jacket_and_trousers.visible_panels"
+        ],
+        "observable_effects": [
+          "the visible jacket and trouser panels have unmarked surfaces",
+          "those two garments share a restrained neutral color palette"
+        ],
+        "confusion_negatives": [
+          "A neutral background filter does not establish garment-local color; visible unmarked panels do not certify hidden logo absence, actual price or luxury provenance."
+        ],
+        "observability": {
+          "required_visible_regions": [
+            "selected jacket_and_trousers surface and boundaries",
+            "both endpoints of each selected structural relation"
+          ],
+          "minimum_review_scale": "native",
+          "crop_policy": "A cropped required boundary cannot receive a pass.",
+          "occlusion_policy": "A hidden required endpoint remains unresolved in pixel review.",
+          "proof_budget": {
+            "thumbnail": "Check selected object placement and overall silhouette only.",
+            "native": "Resolve each component boundary and both relation endpoints."
+          },
+          "ineligible_state": "UNSCORED"
+        },
+        "activation": {
+          "hard_only_from_exact_source": true,
+          "embedding_only_is_advisory": true,
+          "all_required_components_coexist": true
+        },
+        "invariant_fields": [
+          "wearer identity and anatomy",
+          "unselected garment and accessory owners",
+          "camera pose lighting and setting outside the declared effects"
+        ],
+        "flexible_fields": [
+          "wardrobe.jacket.surface.markings",
+          "wardrobe.pants.surface.markings",
+          "wardrobe.palette.item_relationship"
+        ]
+      }
+    },
+    {
+      "id": "spring_sf101_01",
+      "category": "spring_fashion_selected_visible_structure",
+      "activation": {
+        "exact_terms": [
+          "lace trim attaches to the slip dress fabric edge; a separate cardigan lies outside that same dress."
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_geometry",
+              "any_terms": [
+                "lace trim attaches to the slip dress fabric edge; a separate cardigan lies outside that same dress."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "lace trim attaches to the slip dress fabric edge; a separate cardigan lies outside that same dress.",
+        "paraphrase_examples": [
+          "레이스가 연결된 슬립 드레스 밖의 별도 카디건"
+        ],
+        "visual_components": [
+          "lace trim attaches to the slip dress fabric edge",
+          "a separate cardigan lies outside that same dress"
+        ],
+        "contrast_examples": [
+          "A lace print or one simulated cardigan panel cannot replace the distinct trim and layer relation; hidden underwear presence is unproven."
+        ],
+        "claim_limits": [
+          "Only the complete selected visible variant is represented; a family or style name does not activate its sibling variants.",
+          "Use the existing declared garment, accessory and wearer. A different owner or unsupported prerequisite makes this choice inapplicable.",
+          "Visible boundaries and contact must be inspectable in the saved image; prompt wording, a painted imitation or unresolved occlusion is insufficient.",
+          "Pixels do not certify fiber composition, hidden garment presence or absence, manufacturing history, functional performance, body measurements, biography, social class or desire.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_01",
+            "match_terms": [
+              "lace trim attaches to the slip dress fabric edge"
+            ],
+            "evidence_field": "component_01_phrase",
+            "evidence_terms": [
+              "lace trim attaches to the slip dress fabric edge"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: lace trim attaches to the slip dress fabric edge.",
+            "render_gate": {
+              "id": "vo_spring_sf101_01_01",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: lace trim attaches to the slip dress fabric edge. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          },
+          {
+            "id": "component_02",
+            "match_terms": [
+              "a separate cardigan lies outside that same dress"
+            ],
+            "evidence_field": "component_02_phrase",
+            "evidence_terms": [
+              "a separate cardigan lies outside that same dress"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: a separate cardigan lies outside that same dress.",
+            "render_gate": {
+              "id": "vo_spring_sf101_01_02",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: a separate cardigan lies outside that same dress. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "레이스가 연결된 슬립 드레스 밖의 별도 카디건",
+          "lace trim attaches to the slip dress fabric edge; a separate cardigan lies outside that same dress.",
+          "란제리 룩 visible variant",
+          "Lingerie dressing visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.dress.garment_type"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.trim.connection"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layer.order"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "A lace print or one simulated cardigan panel cannot replace the distinct trim and layer relation; hidden underwear presence is unproven."
+      ],
+      "visual_relation": {
+        "schema_version": "photo-visual-relation/v1",
+        "status": "advisory",
+        "owner_axis": "main_subject",
+        "source": {
+          "kind": "advisory_candidate",
+          "literal_evidence": [
+            "lace trim attaches to the slip dress fabric edge",
+            "a separate cardigan lies outside that same dress"
+          ],
+          "priority": "P2",
+          "confidence": "high"
+        },
+        "entities": [
+          "outfit",
+          "main_subject",
+          "slip_dress.lace_trim",
+          "slip_dress.fabric_edge",
+          "cardigan",
+          "slip_dress"
+        ],
+        "visible_regions": [
+          "selected outfit surface and boundaries",
+          "both endpoints of each selected structural relation"
+        ],
+        "relations": [
+          "outfit declared_owner_scope main_subject",
+          "slip_dress.lace_trim attached_to slip_dress.fabric_edge",
+          "cardigan outside slip_dress"
+        ],
+        "observable_effects": [
+          "lace trim attaches to the slip dress fabric edge",
+          "a separate cardigan lies outside that same dress"
+        ],
+        "confusion_negatives": [
+          "A lace print or one simulated cardigan panel cannot replace the distinct trim and layer relation; hidden underwear presence is unproven."
+        ],
+        "observability": {
+          "required_visible_regions": [
+            "selected outfit surface and boundaries",
+            "both endpoints of each selected structural relation"
+          ],
+          "minimum_review_scale": "native",
+          "crop_policy": "A cropped required boundary cannot receive a pass.",
+          "occlusion_policy": "A hidden required endpoint remains unresolved in pixel review.",
+          "proof_budget": {
+            "thumbnail": "Check selected object placement and overall silhouette only.",
+            "native": "Resolve each component boundary and both relation endpoints."
+          },
+          "ineligible_state": "UNSCORED"
+        },
+        "activation": {
+          "hard_only_from_exact_source": true,
+          "embedding_only_is_advisory": true,
+          "all_required_components_coexist": true
+        },
+        "invariant_fields": [
+          "wearer identity and anatomy",
+          "unselected garment and accessory owners",
+          "camera pose lighting and setting outside the declared effects"
+        ],
+        "flexible_fields": [
+          "wardrobe.dress.garment_type",
+          "wardrobe.trim.connection",
+          "wardrobe.layer.order"
+        ]
+      }
+    },
+    {
+      "id": "spring_sf101_04",
+      "category": "spring_fashion_selected_visible_structure",
+      "activation": {
+        "exact_terms": [
+          "a separate fashion harness lies over the continuous blouse surface; its strap segments connect at a visible buckle."
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_geometry",
+              "any_terms": [
+                "a separate fashion harness lies over the continuous blouse surface; its strap segments connect at a visible buckle."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "a separate fashion harness lies over the continuous blouse surface; its strap segments connect at a visible buckle.",
+        "paraphrase_examples": [
+          "연속 블라우스 위에서 버클로 이어지는 별도 하네스"
+        ],
+        "visual_components": [
+          "a separate fashion harness lies over the continuous blouse surface",
+          "its strap segments connect at a visible buckle"
+        ],
+        "contrast_examples": [
+          "Printed straps or disconnected hardware lack this physical connection; a fashion harness does not establish restraint, consent or sexual activity."
+        ],
+        "claim_limits": [
+          "Only the complete selected visible variant is represented; a family or style name does not activate its sibling variants.",
+          "Use the existing declared garment, accessory and wearer. A different owner or unsupported prerequisite makes this choice inapplicable.",
+          "Visible boundaries and contact must be inspectable in the saved image; prompt wording, a painted imitation or unresolved occlusion is insufficient.",
+          "Pixels do not certify fiber composition, hidden garment presence or absence, manufacturing history, functional performance, body measurements, biography, social class or desire.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_01",
+            "match_terms": [
+              "a separate fashion harness lies over the continuous blouse surface"
+            ],
+            "evidence_field": "component_01_phrase",
+            "evidence_terms": [
+              "a separate fashion harness lies over the continuous blouse surface"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: a separate fashion harness lies over the continuous blouse surface.",
+            "render_gate": {
+              "id": "vo_spring_sf101_04_01",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: a separate fashion harness lies over the continuous blouse surface. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          },
+          {
+            "id": "component_02",
+            "match_terms": [
+              "its strap segments connect at a visible buckle"
+            ],
+            "evidence_field": "component_02_phrase",
+            "evidence_terms": [
+              "its strap segments connect at a visible buckle"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: its strap segments connect at a visible buckle.",
+            "render_gate": {
+              "id": "vo_spring_sf101_04_02",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: its strap segments connect at a visible buckle. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "연속 블라우스 위에서 버클로 이어지는 별도 하네스",
+          "a separate fashion harness lies over the continuous blouse surface; its strap segments connect at a visible buckle.",
+          "페티시 인스파이어드 visible variant",
+          "Fetish-inspired fashion visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layer.order"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.accessory.strap_topology"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.accessory.buckle_connection"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "Printed straps or disconnected hardware lack this physical connection; a fashion harness does not establish restraint, consent or sexual activity."
+      ],
+      "visual_relation": {
+        "schema_version": "photo-visual-relation/v1",
+        "status": "advisory",
+        "owner_axis": "main_subject",
+        "source": {
+          "kind": "advisory_candidate",
+          "literal_evidence": [
+            "a separate fashion harness lies over the continuous blouse surface",
+            "its strap segments connect at a visible buckle"
+          ],
+          "priority": "P2",
+          "confidence": "high"
+        },
+        "entities": [
+          "harness_and_blouse",
+          "main_subject",
+          "fashion_harness",
+          "blouse.continuous_surface",
+          "fashion_harness.buckle",
+          "fashion_harness.strap_segments"
+        ],
+        "visible_regions": [
+          "selected harness_and_blouse surface and boundaries",
+          "both endpoints of each selected structural relation"
+        ],
+        "relations": [
+          "harness_and_blouse declared_owner_scope main_subject",
+          "fashion_harness outside blouse.continuous_surface",
+          "fashion_harness.buckle joins fashion_harness.strap_segments"
+        ],
+        "observable_effects": [
+          "a separate fashion harness lies over the continuous blouse surface",
+          "its strap segments connect at a visible buckle"
+        ],
+        "confusion_negatives": [
+          "Printed straps or disconnected hardware lack this physical connection; a fashion harness does not establish restraint, consent or sexual activity."
+        ],
+        "observability": {
+          "required_visible_regions": [
+            "selected harness_and_blouse surface and boundaries",
+            "both endpoints of each selected structural relation"
+          ],
+          "minimum_review_scale": "native",
+          "crop_policy": "A cropped required boundary cannot receive a pass.",
+          "occlusion_policy": "A hidden required endpoint remains unresolved in pixel review.",
+          "proof_budget": {
+            "thumbnail": "Check selected object placement and overall silhouette only.",
+            "native": "Resolve each component boundary and both relation endpoints."
+          },
+          "ineligible_state": "UNSCORED"
+        },
+        "activation": {
+          "hard_only_from_exact_source": true,
+          "embedding_only_is_advisory": true,
+          "all_required_components_coexist": true
+        },
+        "invariant_fields": [
+          "wearer identity and anatomy",
+          "unselected garment and accessory owners",
+          "camera pose lighting and setting outside the declared effects"
+        ],
+        "flexible_fields": [
+          "wardrobe.layer.order",
+          "wardrobe.accessory.strap_topology",
+          "wardrobe.accessory.buckle_connection"
+        ]
+      }
     }
   ]
 }
