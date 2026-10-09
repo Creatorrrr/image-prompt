@@ -107,6 +107,12 @@ class ColorRelationsTests(unittest.TestCase):
         self.assertEqual(ref['sha256'],cs.digest(record))
         raw=copy.deepcopy(self.extension);raw.pop('maintenance_ref')
         self.assertEqual(record['authored_source_sha256'],cs.digest(raw))
+        # The current source binding is checked above; qualify the original
+        # nonvisual exclusions through its authenticated maintenance ancestry.
+        while 'maintenance_only' not in record:
+            prior=record['prior_maintenance_ref']
+            record=json.loads((ROOT/'docs/research-evidence/photo-prompt/extension-maintenance'/(prior['record_id']+'.json')).read_text())
+            self.assertEqual(prior['sha256'],cs.digest(record))
         for family in ['equiluminance','simultaneous_contrast','palette_continuity','palette_progression','palette_shift','palette_inversion','color_motif','color_coding']:
             coverage=record['maintenance_only']['family_coverage'][family]
             self.assertEqual(coverage['candidates'],[]);self.assertEqual(coverage['profiles'],[])

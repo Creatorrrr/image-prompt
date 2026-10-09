@@ -1,0 +1,1351 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "description": "Independent selected visible garment, surface, layer and accessory relations.",
+  "profiles": [
+    {
+      "id": "suf_sf049_v1",
+      "category": "summer_coverage_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "the garment edge sits below the collarbones; the exposed collarbone area remains unobstructed"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "the garment edge sits below the collarbones; the exposed collarbone area remains unobstructed"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the garment edge sits below the collarbones; the exposed collarbone area remains unobstructed",
+        "paraphrase_examples": [
+          "의복 윗선 위에 드러난 쇄골 영역",
+          "the garment upper edge leaves visible the collarbone area",
+          "visible collarbones",
+          "데콜테"
+        ],
+        "visual_components": [
+          "the garment edge sits below the collarbones",
+          "the exposed collarbone area remains unobstructed",
+          "the garment upper edge leaves visible the collarbone area"
+        ],
+        "contrast_examples": [
+          "네크라인 이름이나 컵 모양만으로 cleavage를 확정하지 않는다."
+        ],
+        "claim_limits": [
+          "요청된 해당 부위가 실제 시점·원단·머리카락에 가려지지 않아야 한다.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the garment edge sits below the collarbones"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the garment edge sits below the collarbones"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the garment edge sits below the collarbones",
+            "render_gate": {
+              "id": "vo_suf_sf049_v1_1",
+              "review_scale": "native",
+              "description": "the garment edge sits below the collarbones The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the exposed collarbone area remains unobstructed"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the exposed collarbone area remains unobstructed"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the exposed collarbone area remains unobstructed",
+            "render_gate": {
+              "id": "vo_suf_sf049_v1_2",
+              "review_scale": "native",
+              "description": "the exposed collarbone area remains unobstructed The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the garment upper edge leaves visible the collarbone area"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the garment upper edge leaves visible the collarbone area"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the garment upper edge leaves visible the collarbone area",
+            "render_gate": {
+              "id": "vo_suf_sf049_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the garment upper edge leaves visible the collarbone area Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "의복 윗선 위에 드러난 쇄골 영역",
+          "the garment edge sits below the collarbones; the exposed collarbone area remains unobstructed",
+          "visible collarbones",
+          "데콜테"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.neckline.height"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.collarbone"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "네크라인 이름이나 컵 모양만으로 cleavage를 확정하지 않는다."
+      ]
+    },
+    {
+      "id": "suf_sf049_v2",
+      "category": "summer_coverage_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "the central neckline opening reveals the groove between the adult wearer's breasts; the garment panels retain visible inner edges beside that opening"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "the central neckline opening reveals the groove between the adult wearer's breasts; the garment panels retain visible inner edges beside that opening"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the central neckline opening reveals the groove between the adult wearer's breasts; the garment panels retain visible inner edges beside that opening",
+        "paraphrase_examples": [
+          "성인 의복 중앙 개구부에서 보이는 가슴 사이 홈",
+          "the central garment neckline opening reveals the groove between the same adult wearer's breasts",
+          "central cleavage opening"
+        ],
+        "visual_components": [
+          "the central neckline opening reveals the groove between the adult wearer's breasts",
+          "the garment panels retain visible inner edges beside that opening",
+          "the central garment neckline opening reveals the groove between the same adult wearer's breasts"
+        ],
+        "contrast_examples": [
+          "네크라인 이름이나 컵 모양만으로 cleavage를 확정하지 않는다."
+        ],
+        "claim_limits": [
+          "요청된 해당 부위가 실제 시점·원단·머리카락에 가려지지 않아야 한다.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the central neckline opening reveals the groove between the adult wearer's breasts"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the central neckline opening reveals the groove between the adult wearer's breasts"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the central neckline opening reveals the groove between the adult wearer's breasts",
+            "render_gate": {
+              "id": "vo_suf_sf049_v2_1",
+              "review_scale": "native",
+              "description": "the central neckline opening reveals the groove between the adult wearer's breasts The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the garment panels retain visible inner edges beside that opening"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the garment panels retain visible inner edges beside that opening"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the garment panels retain visible inner edges beside that opening",
+            "render_gate": {
+              "id": "vo_suf_sf049_v2_2",
+              "review_scale": "native",
+              "description": "the garment panels retain visible inner edges beside that opening The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the central garment neckline opening reveals the groove between the same adult wearer's breasts"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the central garment neckline opening reveals the groove between the same adult wearer's breasts"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the central garment neckline opening reveals the groove between the same adult wearer's breasts",
+            "render_gate": {
+              "id": "vo_suf_sf049_v2_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the central garment neckline opening reveals the groove between the same adult wearer's breasts Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "성인 의복 중앙 개구부에서 보이는 가슴 사이 홈",
+          "the central neckline opening reveals the groove between the adult wearer's breasts; the garment panels retain visible inner edges beside that opening",
+          "central cleavage opening"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.neckline.depth"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.central_chest"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "네크라인 이름이나 컵 모양만으로 cleavage를 확정하지 않는다."
+      ]
+    },
+    {
+      "id": "suf_sf050_v1",
+      "category": "summer_coverage_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a bounded outer breast contour is visible beside the adult bodice arm opening; the same opaque bodice covers the central breast surface"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "a bounded outer breast contour is visible beside the adult bodice arm opening; the same opaque bodice covers the central breast surface"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "a bounded outer breast contour is visible beside the adult bodice arm opening; the same opaque bodice covers the central breast surface",
+        "paraphrase_examples": [
+          "성인 불투명 몸판 옆에서 보이는 가슴 외곽",
+          "the same adult bodice side edge leaves visible a bounded outer breast contour"
+        ],
+        "visual_components": [
+          "a bounded outer breast contour is visible beside the adult bodice arm opening",
+          "the same opaque bodice covers the central breast surface",
+          "the same adult bodice side edge leaves visible a bounded outer breast contour"
+        ],
+        "contrast_examples": [
+          "깊은 암홀·micro crop·underbust seam이 해당 노출을 필수로 만들지 않는다; 슬랭은 의복 종류 아님."
+        ],
+        "claim_limits": [
+          "해당 경계와 이를 덮는 가장자리의 관계가 직접 보여야 함; 선정 여부와 사실 판정은 별도.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a bounded outer breast contour is visible beside the adult bodice arm opening"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a bounded outer breast contour is visible beside the adult bodice arm opening"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: a bounded outer breast contour is visible beside the adult bodice arm opening",
+            "render_gate": {
+              "id": "vo_suf_sf050_v1_1",
+              "review_scale": "native",
+              "description": "a bounded outer breast contour is visible beside the adult bodice arm opening The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the same opaque bodice covers the central breast surface"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the same opaque bodice covers the central breast surface"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the same opaque bodice covers the central breast surface",
+            "render_gate": {
+              "id": "vo_suf_sf050_v1_2",
+              "review_scale": "native",
+              "description": "the same opaque bodice covers the central breast surface The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the same adult bodice side edge leaves visible a bounded outer breast contour"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the same adult bodice side edge leaves visible a bounded outer breast contour"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the same adult bodice side edge leaves visible a bounded outer breast contour",
+            "render_gate": {
+              "id": "vo_suf_sf050_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the same adult bodice side edge leaves visible a bounded outer breast contour Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "성인 불투명 몸판 옆에서 보이는 가슴 외곽",
+          "a bounded outer breast contour is visible beside the adult bodice arm opening; the same opaque bodice covers the central breast surface"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.lateral_chest"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.structure.armhole"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.transmission"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.lateral_bust"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.armhole"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.surface.sheer_opacity"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.transmission"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "깊은 암홀·micro crop·underbust seam이 해당 노출을 필수로 만들지 않는다; 슬랭은 의복 종류 아님."
+      ]
+    },
+    {
+      "id": "suf_sf050_v2",
+      "category": "summer_coverage_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a bounded lower breast contour is visible below the adult top edge; the upper breast surface remains covered by the same opaque top"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "a bounded lower breast contour is visible below the adult top edge; the upper breast surface remains covered by the same opaque top"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "a bounded lower breast contour is visible below the adult top edge; the upper breast surface remains covered by the same opaque top",
+        "paraphrase_examples": [
+          "성인 불투명 상의 아래에서 보이는 가슴 아랫경계",
+          "the same adult top lower edge sits above a bounded lower breast contour"
+        ],
+        "visual_components": [
+          "a bounded lower breast contour is visible below the adult top edge",
+          "the upper breast surface remains covered by the same opaque top",
+          "the same adult top lower edge sits above a bounded lower breast contour"
+        ],
+        "contrast_examples": [
+          "깊은 암홀·micro crop·underbust seam이 해당 노출을 필수로 만들지 않는다; 슬랭은 의복 종류 아님."
+        ],
+        "claim_limits": [
+          "해당 경계와 이를 덮는 가장자리의 관계가 직접 보여야 함; 선정 여부와 사실 판정은 별도.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a bounded lower breast contour is visible below the adult top edge"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a bounded lower breast contour is visible below the adult top edge"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: a bounded lower breast contour is visible below the adult top edge",
+            "render_gate": {
+              "id": "vo_suf_sf050_v2_1",
+              "review_scale": "native",
+              "description": "a bounded lower breast contour is visible below the adult top edge The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the upper breast surface remains covered by the same opaque top"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the upper breast surface remains covered by the same opaque top"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the upper breast surface remains covered by the same opaque top",
+            "render_gate": {
+              "id": "vo_suf_sf050_v2_2",
+              "review_scale": "native",
+              "description": "the upper breast surface remains covered by the same opaque top The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the same adult top lower edge sits above a bounded lower breast contour"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the same adult top lower edge sits above a bounded lower breast contour"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the same adult top lower edge sits above a bounded lower breast contour",
+            "render_gate": {
+              "id": "vo_suf_sf050_v2_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the same adult top lower edge sits above a bounded lower breast contour Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "성인 불투명 상의 아래에서 보이는 가슴 아랫경계",
+          "a bounded lower breast contour is visible below the adult top edge; the upper breast surface remains covered by the same opaque top"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.lower_chest"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.length.top_hem"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.transmission"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.lower_bust"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.top.hem_relative_to_waist"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.length.bodice_lower_edge"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.surface.sheer_opacity"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.transmission"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "깊은 암홀·micro crop·underbust seam이 해당 노출을 필수로 만들지 않는다; 슬랭은 의복 종류 아님."
+      ]
+    },
+    {
+      "id": "suf_sf051_v1",
+      "category": "summer_coverage_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "the top hem ends above the navel; the lower waistband sits below it, leaving the navel visible between the garment edges"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "the top hem ends above the navel; the lower waistband sits below it, leaving the navel visible between the garment edges"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the top hem ends above the navel; the lower waistband sits below it, leaving the navel visible between the garment edges",
+        "paraphrase_examples": [
+          "상의 밑단과 허리선 사이에 보이는 배꼽",
+          "the exposed abdomen gap contains the visible navel",
+          "visible navel between garment edges"
+        ],
+        "visual_components": [
+          "the top hem ends above the navel",
+          "the lower waistband sits below it, leaving the navel visible between the garment edges",
+          "the exposed abdomen gap contains the visible navel"
+        ],
+        "contrast_examples": [
+          "cropped/high-rise/low-rise 각 이름은 배꼽의 실제 가시성을 보증하지 않는다."
+        ],
+        "claim_limits": [
+          "상하의 기준선과 배꼽이 한 시점에 식별됨.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the top hem ends above the navel"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the top hem ends above the navel"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the top hem ends above the navel",
+            "render_gate": {
+              "id": "vo_suf_sf051_v1_1",
+              "review_scale": "native",
+              "description": "the top hem ends above the navel The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the lower waistband sits below it, leaving the navel visible between the garment edges"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the lower waistband sits below it, leaving the navel visible between the garment edges"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the lower waistband sits below it, leaving the navel visible between the garment edges",
+            "render_gate": {
+              "id": "vo_suf_sf051_v1_2",
+              "review_scale": "native",
+              "description": "the lower waistband sits below it, leaving the navel visible between the garment edges The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the exposed abdomen gap contains the visible navel"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the exposed abdomen gap contains the visible navel"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the exposed abdomen gap contains the visible navel",
+            "render_gate": {
+              "id": "vo_suf_sf051_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the exposed abdomen gap contains the visible navel Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "상의 밑단과 허리선 사이에 보이는 배꼽",
+          "the top hem ends above the navel; the lower waistband sits below it, leaving the navel visible between the garment edges",
+          "visible navel between garment edges"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.length.top_hem"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.waistline.height"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.midriff"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.navel"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.top.hem_relative_to_waist"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.length.bodice_lower_edge"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.waistband_landmark"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.abdominal_gap"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "cropped/high-rise/low-rise 각 이름은 배꼽의 실제 가시성을 보증하지 않는다."
+      ]
+    },
+    {
+      "id": "suf_sf051_v2",
+      "category": "summer_coverage_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a narrow abdomen strip appears below the top hem; the waistband covers the navel beneath that strip"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "a narrow abdomen strip appears below the top hem; the waistband covers the navel beneath that strip"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "a narrow abdomen strip appears below the top hem; the waistband covers the navel beneath that strip",
+        "paraphrase_examples": [
+          "복부 띠만 보이고 배꼽은 허리선에 가려진 착장",
+          "the exposed abdomen gap lies above the covered navel"
+        ],
+        "visual_components": [
+          "a narrow abdomen strip appears below the top hem",
+          "the waistband covers the navel beneath that strip",
+          "the exposed abdomen gap lies above the covered navel"
+        ],
+        "contrast_examples": [
+          "cropped/high-rise/low-rise 각 이름은 배꼽의 실제 가시성을 보증하지 않는다."
+        ],
+        "claim_limits": [
+          "상하의 기준선과 배꼽이 한 시점에 식별됨.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a narrow abdomen strip appears below the top hem"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a narrow abdomen strip appears below the top hem"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: a narrow abdomen strip appears below the top hem",
+            "render_gate": {
+              "id": "vo_suf_sf051_v2_1",
+              "review_scale": "native",
+              "description": "a narrow abdomen strip appears below the top hem The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the waistband covers the navel beneath that strip"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the waistband covers the navel beneath that strip"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the waistband covers the navel beneath that strip",
+            "render_gate": {
+              "id": "vo_suf_sf051_v2_2",
+              "review_scale": "native",
+              "description": "the waistband covers the navel beneath that strip The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the exposed abdomen gap lies above the covered navel"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the exposed abdomen gap lies above the covered navel"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the exposed abdomen gap lies above the covered navel",
+            "render_gate": {
+              "id": "vo_suf_sf051_v2_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the exposed abdomen gap lies above the covered navel Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "복부 띠만 보이고 배꼽은 허리선에 가려진 착장",
+          "a narrow abdomen strip appears below the top hem; the waistband covers the navel beneath that strip"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.length.top_hem"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.waistline.height"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.midriff"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.navel"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.top.hem_relative_to_waist"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.length.bodice_lower_edge"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.waistband_landmark"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.abdominal_gap"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "cropped/high-rise/low-rise 각 이름은 배꼽의 실제 가시성을 보증하지 않는다."
+      ]
+    },
+    {
+      "id": "suf_sf052_v1",
+      "category": "summer_coverage_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "two skirt edges separate below a slit apex at the upper thigh; the same long hem continues on both sides"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "two skirt edges separate below a slit apex at the upper thigh; the same long hem continues on both sides"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "two skirt edges separate below a slit apex at the upper thigh; the same long hem continues on both sides",
+        "paraphrase_examples": [
+          "윗허벅지 트임 꼭짓점 양쪽에 남은 긴 스커트 밑단",
+          "the skirt slit edges separate below a slit apex at the upper thigh",
+          "high skirt slit"
+        ],
+        "visual_components": [
+          "two skirt edges separate below a slit apex at the upper thigh",
+          "the same long hem continues on both sides",
+          "the skirt slit edges separate below a slit apex at the upper thigh"
+        ],
+        "contrast_examples": [
+          "긴 skirt와 thigh-high slit은 공존; 트임 높음이 다리 노출을 항상 보증하지 않는다."
+        ],
+        "claim_limits": [
+          "밑단·트임 상단과 다리가 보이는 전체/사선; 닫힌 겹침이면 가시성은 미확인.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "two skirt edges separate below a slit apex at the upper thigh"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "two skirt edges separate below a slit apex at the upper thigh"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: two skirt edges separate below a slit apex at the upper thigh",
+            "render_gate": {
+              "id": "vo_suf_sf052_v1_1",
+              "review_scale": "native",
+              "description": "two skirt edges separate below a slit apex at the upper thigh The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the same long hem continues on both sides"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the same long hem continues on both sides"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the same long hem continues on both sides",
+            "render_gate": {
+              "id": "vo_suf_sf052_v1_2",
+              "review_scale": "native",
+              "description": "the same long hem continues on both sides The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the skirt slit edges separate below a slit apex at the upper thigh"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the skirt slit edges separate below a slit apex at the upper thigh"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the skirt slit edges separate below a slit apex at the upper thigh",
+            "render_gate": {
+              "id": "vo_suf_sf052_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the skirt slit edges separate below a slit apex at the upper thigh Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "윗허벅지 트임 꼭짓점 양쪽에 남은 긴 스커트 밑단",
+          "two skirt edges separate below a slit apex at the upper thigh; the same long hem continues on both sides",
+          "high skirt slit"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.structure.slit.apex"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.length.hem"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.thigh"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.details.hem_slit_vent"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.length.hem_landmark"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "긴 skirt와 thigh-high slit은 공존; 트임 높음이 다리 노출을 항상 보증하지 않는다."
+      ]
+    },
+    {
+      "id": "suf_sf053_v1",
+      "category": "summer_coverage_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "openwork holes reveal an opaque inner layer; the surrounding yarn forms the outer garment surface"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "openwork holes reveal an opaque inner layer; the surrounding yarn forms the outer garment surface"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "openwork holes reveal an opaque inner layer; the surrounding yarn forms the outer garment surface",
+        "paraphrase_examples": [
+          "불투명 이너가 실제 오픈워크 구멍 뒤에 놓인 층",
+          "the openwork holes reveal the opaque inner layer"
+        ],
+        "visual_components": [
+          "openwork holes reveal an opaque inner layer",
+          "the surrounding yarn forms the outer garment surface",
+          "the openwork holes reveal the opaque inner layer"
+        ],
+        "contrast_examples": [
+          "mesh/lace/crochet=나체가 아님; lining이 조직 구멍 뒤를 덮을 수 있다."
+        ],
+        "claim_limits": [
+          "구멍·실·아래층 경계를 원해상도에서 확인.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "openwork holes reveal an opaque inner layer"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "openwork holes reveal an opaque inner layer"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: openwork holes reveal an opaque inner layer",
+            "render_gate": {
+              "id": "vo_suf_sf053_v1_1",
+              "review_scale": "native",
+              "description": "openwork holes reveal an opaque inner layer The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the surrounding yarn forms the outer garment surface"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the surrounding yarn forms the outer garment surface"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the surrounding yarn forms the outer garment surface",
+            "render_gate": {
+              "id": "vo_suf_sf053_v1_2",
+              "review_scale": "native",
+              "description": "the surrounding yarn forms the outer garment surface The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the openwork holes reveal the opaque inner layer"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the openwork holes reveal the opaque inner layer"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the openwork holes reveal the opaque inner layer",
+            "render_gate": {
+              "id": "vo_suf_sf053_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the openwork holes reveal the opaque inner layer Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "불투명 이너가 실제 오픈워크 구멍 뒤에 놓인 층",
+          "openwork holes reveal an opaque inner layer; the surrounding yarn forms the outer garment surface"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_topology"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.transmission"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layers.order"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layers.inner_coverage"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.surface.sheer_opacity"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_topology"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.transmission"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "mesh/lace/crochet=나체가 아님; lining이 조직 구멍 뒤를 덮을 수 있다."
+      ]
+    },
+    {
+      "id": "suf_sf055_v1",
+      "category": "summer_coverage_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "the inner underwear back straps rise above the low trouser waistband; the straps join into a visible Y at the back"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "the inner underwear back straps rise above the low trouser waistband; the straps join into a visible Y at the back"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the inner underwear back straps rise above the low trouser waistband; the straps join into a visible Y at the back",
+        "paraphrase_examples": [
+          "낮은 바지 허리선 위에서 Y로 합류하는 독립 이너 끈",
+          "the inner underwear back straps rise above the outer trouser waistband"
+        ],
+        "visual_components": [
+          "the inner underwear back straps rise above the low trouser waistband",
+          "the straps join into a visible Y at the back",
+          "the inner underwear back straps rise above the outer trouser waistband"
+        ],
+        "contrast_examples": [
+          "naked dressing은 실제 나체가 필수 아님; whale tail의 끈을 겉옷 허리띠나 동물 꼬리로 대체 못함."
+        ],
+        "claim_limits": [
+          "층별 소유자와 이너의 계속되는 경계, 뒤쪽이면 뒤면 확인.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the inner underwear back straps rise above the low trouser waistband"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the inner underwear back straps rise above the low trouser waistband"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the inner underwear back straps rise above the low trouser waistband",
+            "render_gate": {
+              "id": "vo_suf_sf055_v1_1",
+              "review_scale": "native",
+              "description": "the inner underwear back straps rise above the low trouser waistband The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the straps join into a visible Y at the back"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the straps join into a visible Y at the back"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the straps join into a visible Y at the back",
+            "render_gate": {
+              "id": "vo_suf_sf055_v1_2",
+              "review_scale": "native",
+              "description": "the straps join into a visible Y at the back The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the inner underwear back straps rise above the outer trouser waistband"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the inner underwear back straps rise above the outer trouser waistband"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the inner underwear back straps rise above the outer trouser waistband",
+            "render_gate": {
+              "id": "vo_suf_sf055_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the inner underwear back straps rise above the outer trouser waistband Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "낮은 바지 허리선 위에서 Y로 합류하는 독립 이너 끈",
+          "the inner underwear back straps rise above the low trouser waistband; the straps join into a visible Y at the back"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layers.order"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layers.inner_coverage"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.waistline.height"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.structure.back_strap_connection"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.waistband_landmark"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "naked dressing은 실제 나체가 필수 아님; whale tail의 끈을 겉옷 허리띠나 동물 꼬리로 대체 못함."
+      ]
+    }
+  ]
+}

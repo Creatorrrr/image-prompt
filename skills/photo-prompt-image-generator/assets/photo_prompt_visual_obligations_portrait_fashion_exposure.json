@@ -3230,6 +3230,320 @@
           }
         ]
       }
+    },
+    {
+      "id": "spring_sf039_02",
+      "category": "spring_selected_clothing_relation",
+      "activation": {
+        "exact_terms": [
+          "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge. The visible textile edge belongs to that same top and remains distinct from the skin contour."
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_visible_variant",
+              "any_terms": [
+                "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge. The visible textile edge belongs to that same top and remains distinct from the skin contour."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge. The visible textile edge belongs to that same top and remains distinct from the skin contour.",
+        "paraphrase_examples": [
+          "On the existing declared garment owners, a small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge. The visible textile edge belongs to that same top and remains distinct from the skin contour."
+        ],
+        "visual_components": [
+          "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge.",
+          "The visible textile edge belongs to that same top and remains distinct from the skin contour."
+        ],
+        "contrast_examples": [
+          "An underbust seam, corset worn over a blouse, midriff skin or a cup shadow does not supply underside-breast exposure."
+        ],
+        "claim_limits": [
+          "Only this explicitly selected visible variant is described. Related family variants remain alternatives.",
+          "Apply to the existing declared owners and same primary wearer. An unbound garment or different wearer cannot donate its components.",
+          "A required visible endpoint hidden by occlusion or crop is unobservable and cannot pass. Native pixels, prompt binding and user preference are separate evidence.",
+          "This one coverage result neither implies nudity elsewhere nor establishes absent hidden underwear.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v2",
+        "components": [
+          {
+            "id": "part_1",
+            "match_terms": [
+              "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge.",
+              "underside breast skin"
+            ]
+          },
+          {
+            "id": "part_2",
+            "match_terms": [
+              "The visible textile edge belongs to that same top and remains distinct from the skin contour.",
+              "same top lower edge"
+            ]
+          }
+        ],
+        "discovery": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "part_1",
+            "part_2"
+          ]
+        },
+        "obligations": [
+          {
+            "component_ids": [
+              "part_1",
+              "part_2"
+            ],
+            "evidence": [
+              {
+                "field": "part_1_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge."
+                  ]
+                }
+              },
+              {
+                "field": "part_2_phrase",
+                "requirement": {
+                  "min_content_words": 3,
+                  "must_mention_any": [
+                    "The visible textile edge belongs to that same top and remains distinct from the skin contour."
+                  ]
+                }
+              }
+            ],
+            "instruction": "Preserve the selected owner-bound arrangement in one coherent image: A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge. The visible textile edge belongs to that same top and remains distinct from the skin contour.",
+            "render_gates": [
+              {
+                "id": "vo_spring_sf039_02_visible_variant",
+                "review_scale": "native",
+                "description": "Resolve the adult subject context, the exact lower-breast skin location and the same top's real boundary; fabric or shadow cannot be scored as skin. All declared parts refer to these same owners. An occluded endpoint, cropped landmark, printed imitation or different owner is UNOBSERVABLE_NOT_PASS; partial fulfillment fails."
+              }
+            ]
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "상의 밑단 바로 아래의 작은 아래가슴 피부 영역",
+          "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge. The visible textile edge belongs to that same top and remains distinct from the skin contour.",
+          "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge.",
+          "The visible textile edge belongs to that same top and remains distinct from the skin contour.",
+          "언더붑 visible variant",
+          "Underboob visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.lower_breast"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "An underbust seam, corset worn over a blouse, midriff skin or a cup shadow does not supply underside-breast exposure."
+      ]
+    },
+    {
+      "id": "spring_sf039_01",
+      "category": "spring_fashion_selected_visible_structure",
+      "activation": {
+        "exact_terms": [
+          "the adult wearer's top side edge ends beside a small lateral breast region; that lateral skin region is visibly outside the same top boundary."
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_geometry",
+              "any_terms": [
+                "the adult wearer's top side edge ends beside a small lateral breast region; that lateral skin region is visibly outside the same top boundary."
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the adult wearer's top side edge ends beside a small lateral breast region; that lateral skin region is visibly outside the same top boundary.",
+        "paraphrase_examples": [
+          "성인 상의 옆 경계 밖에 보이는 작은 측면 가슴 피부"
+        ],
+        "visual_components": [
+          "the adult wearer's top side edge ends beside a small lateral breast region",
+          "that lateral skin region is visibly outside the same top boundary"
+        ],
+        "contrast_examples": [
+          "An underbust seam, skin-colored lining or dark side shadow does not establish this skin location; the inner visible surface must be inspected."
+        ],
+        "claim_limits": [
+          "Only the complete selected visible variant is represented; a family or style name does not activate its sibling variants.",
+          "Use the existing declared garment, accessory and wearer. A different owner or unsupported prerequisite makes this choice inapplicable.",
+          "Visible boundaries and contact must be inspectable in the saved image; prompt wording, a painted imitation or unresolved occlusion is insufficient.",
+          "Pixels do not certify fiber composition, hidden garment presence or absence, manufacturing history, functional performance, body measurements, biography, social class or desire.",
+          "Fashion labels provide optional discovery of this visible example only; they do not prove hidden material, process or support, or activate a family of variants."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_01",
+            "match_terms": [
+              "the adult wearer's top side edge ends beside a small lateral breast region"
+            ],
+            "evidence_field": "component_01_phrase",
+            "evidence_terms": [
+              "the adult wearer's top side edge ends beside a small lateral breast region"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: the adult wearer's top side edge ends beside a small lateral breast region.",
+            "render_gate": {
+              "id": "vo_spring_sf039_01_01",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: the adult wearer's top side edge ends beside a small lateral breast region. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          },
+          {
+            "id": "component_02",
+            "match_terms": [
+              "that lateral skin region is visibly outside the same top boundary"
+            ],
+            "evidence_field": "component_02_phrase",
+            "evidence_terms": [
+              "that lateral skin region is visibly outside the same top boundary"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep this selected owner-bound structure readable in the photograph: that lateral skin region is visibly outside the same top boundary.",
+            "render_gate": {
+              "id": "vo_spring_sf039_01_02",
+              "review_scale": "native",
+              "description": "Inspect this actual same-owner structure at native resolution: that lateral skin region is visibly outside the same top boundary. The declared surface, boundary and relational endpoints must resolve in this same saved image. Missing, occluded, printed, substituted or partial geometry fails."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "성인 상의 옆 경계 밖에 보이는 작은 측면 가슴 피부",
+          "the adult wearer's top side edge ends beside a small lateral breast region; that lateral skin region is visibly outside the same top boundary.",
+          "사이드붑 visible variant",
+          "Sideboob visible variant"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.side_breast"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.top.side_edge"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "An underbust seam, skin-colored lining or dark side shadow does not establish this skin location; the inner visible surface must be inspected."
+      ],
+      "visual_relation": {
+        "schema_version": "photo-visual-relation/v1",
+        "status": "advisory",
+        "owner_axis": "main_subject",
+        "source": {
+          "kind": "advisory_candidate",
+          "literal_evidence": [
+            "the adult wearer's top side edge ends beside a small lateral breast region",
+            "that lateral skin region is visibly outside the same top boundary"
+          ],
+          "priority": "P2",
+          "confidence": "high"
+        },
+        "entities": [
+          "adult_top",
+          "main_subject",
+          "top.side_edge",
+          "adult_wearer.lateral_breast",
+          "adult_wearer.visible_lateral_skin",
+          "top.side_boundary"
+        ],
+        "visible_regions": [
+          "selected adult_top surface and boundaries",
+          "both endpoints of each selected structural relation"
+        ],
+        "relations": [
+          "adult_top declared_owner_scope main_subject",
+          "top.side_edge beside adult_wearer.lateral_breast",
+          "adult_wearer.visible_lateral_skin outside top.side_boundary"
+        ],
+        "observable_effects": [
+          "the adult wearer's top side edge ends beside a small lateral breast region",
+          "that lateral skin region is visibly outside the same top boundary"
+        ],
+        "confusion_negatives": [
+          "An underbust seam, skin-colored lining or dark side shadow does not establish this skin location; the inner visible surface must be inspected."
+        ],
+        "observability": {
+          "required_visible_regions": [
+            "selected adult_top surface and boundaries",
+            "both endpoints of each selected structural relation"
+          ],
+          "minimum_review_scale": "native",
+          "crop_policy": "A cropped required boundary cannot receive a pass.",
+          "occlusion_policy": "A hidden required endpoint remains unresolved in pixel review.",
+          "proof_budget": {
+            "thumbnail": "Check selected object placement and overall silhouette only.",
+            "native": "Resolve each component boundary and both relation endpoints."
+          },
+          "ineligible_state": "UNSCORED"
+        },
+        "activation": {
+          "hard_only_from_exact_source": true,
+          "embedding_only_is_advisory": true,
+          "all_required_components_coexist": true
+        },
+        "invariant_fields": [
+          "wearer identity and anatomy",
+          "unselected garment and accessory owners",
+          "camera pose lighting and setting outside the declared effects"
+        ],
+        "flexible_fields": [
+          "wardrobe.coverage.side_breast",
+          "wardrobe.top.side_edge"
+        ]
+      }
     }
   ]
 }
