@@ -1,0 +1,100 @@
+test_aggregate_validator_does_not_hide_partial_pixel_qualification (tests.test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification) ... ERROR
+test_original_assertions_replay_without_revision (tests.test_photo_palette_boundary_history.OriginalBoundaryReplayTests.test_original_assertions_replay_without_revision) ... FAIL
+setUpClass (tests.test_photo_ct073_back_band_data.CT073BackBandDataTests) ... ERROR
+test_existing_render_manifests_keep_historical_failure_labels (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneDataContractTests.test_existing_render_manifests_keep_historical_failure_labels) ... ERROR
+test_v1_v2_exact_replay_and_photo_baseline_remain_immutable (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests.test_v1_v2_exact_replay_and_photo_baseline_remain_immutable) ... ERROR
+
+======================================================================
+ERROR: test_aggregate_validator_does_not_hide_partial_pixel_qualification (tests.test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/tests/test_subculture_illustration_contract_v1.py", line 504, in test_aggregate_validator_does_not_hide_partial_pixel_qualification
+    summary = validate_all(ASSET_ROOT)
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 13956, in validate_all
+    photo_regression = validate_photo_regression_baseline(root)
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 8829, in validate_photo_regression_baseline
+    _require(
+    ~~~~~~~~^
+        digest == baseline.get("sha256"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "current photo baseline candidate-pack bytes drift",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1281, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_ct073_back_band_data.CT073BackBandDataTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/tests/test_photo_ct073_back_band_data.py", line 136, in setUpClass
+    fixtures.materialize_v25_parent_source(root, source_root=ROOT)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/tests/photo_prompt_fixtures.py", line 1408, in materialize_v25_parent_source
+    _v24_verified_payload(source_root, row)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/tests/photo_prompt_fixtures.py", line 856, in _v24_verified_payload
+    raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json
+
+======================================================================
+ERROR: test_existing_render_manifests_keep_historical_failure_labels (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneDataContractTests.test_existing_render_manifests_keep_historical_failure_labels)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/tests/test_subculture_illustration_universal_scene_v3.py", line 1712, in test_existing_render_manifests_keep_historical_failure_labels
+    result = validate_all(str(ASSET_ROOT), verify_local_images=False)
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 13956, in validate_all
+    photo_regression = validate_photo_regression_baseline(root)
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 8829, in validate_photo_regression_baseline
+    _require(
+    ~~~~~~~~^
+        digest == baseline.get("sha256"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "current photo baseline candidate-pack bytes drift",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1281, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift
+
+======================================================================
+ERROR: test_v1_v2_exact_replay_and_photo_baseline_remain_immutable (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests.test_v1_v2_exact_replay_and_photo_baseline_remain_immutable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/tests/test_subculture_illustration_universal_scene_v3.py", line 4697, in test_v1_v2_exact_replay_and_photo_baseline_remain_immutable
+    photo = validate_photo_regression_baseline(ASSET_ROOT)
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 8829, in validate_photo_regression_baseline
+    _require(
+    ~~~~~~~~^
+        digest == baseline.get("sha256"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "current photo baseline candidate-pack bytes drift",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1281, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift
+
+======================================================================
+FAIL: test_original_assertions_replay_without_revision (tests.test_photo_palette_boundary_history.OriginalBoundaryReplayTests.test_original_assertions_replay_without_revision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/tests/test_photo_palette_boundary_history.py", line 12, in test_original_assertions_replay_without_revision
+    history.materialize_original(tree,source_root=ROOT,link_verified=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/tests/photo_ethereal_history_v35.py", line 92, in materialize_original
+    for row in parent['members']:exact_payload(source_root,row)
+                                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/autumn-before-change-20261009/image-prompt/tests/photo_ethereal_history_v35.py", line 47, in exact_payload
+    if path.stat().st_mode&0o7777!=int(row['mode'][-3:],8) or len(raw)!=row['bytes'] or digest(raw)!=row['sha256'] or blob!=row['git_blob']:raise AssertionError('Frozen V35 original source payload or mode drift: '+row['path'])
+                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 original source payload or mode drift: docs/research-evidence/photo-prompt/data-quality-links-20261007/history/README.md
+
+----------------------------------------------------------------------
+Ran 4 tests in 90.993s
+
+FAILED (failures=1, errors=4)

@@ -1,0 +1,737 @@
+{
+  "contract_version": "photo-composer-view/v2",
+  "mode": "candidate_details",
+  "source_pack_id": "ad8c5d4b7a0e6220",
+  "source_pack_sha256": "e41c74773fd64093a12ce03b21ed031c42d370fe9e44db0926a5ddfb9b8254a7",
+  "candidates": [
+    {
+      "id": "slot:garment_detail:autumn_afr027_v1_candidate",
+      "source_pointer": "/slots/garment_detail/candidates/0",
+      "candidate": {
+        "id": "slot:garment_detail:autumn_afr027_v1_candidate",
+        "slot": "garment_detail",
+        "entry_id": "autumn_afr027_v1_candidate",
+        "tags": [
+          "clothing"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "The cropped cardigan's buttoned front ends at the waistband of the same wearer's skirt."
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "The cropped cardigan's buttoned front ends at the waistband of the same wearer's skirt."
+        ],
+        "relations": [
+          {
+            "id": "autumn_afr027_v1_owner_relation",
+            "type": "end_at",
+            "subject": "cropped cardigan hem",
+            "object": "same wearer's skirt waistband"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.garment_type"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.structure.front_fastener"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.length.hem_landmark"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.details.layer_order"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "visual-concept:pr_fabric_tension_fold_attachment",
+      "source_pointer": "/visual_concept_candidates/candidates/6",
+      "candidate": {
+        "id": "visual-concept:pr_fabric_tension_fold_attachment",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "fine garment creases",
+          "folds originate at a seam joint or pulling contact",
+          "fold direction agrees with the body's action or pose",
+          "sleeve folds",
+          "직물 주름의 장력·재봉선 소유",
+          "folds preserve the garment silhouette and closure",
+          "fabric tension fold attachment relation",
+          "fabric creases at a bent elbow",
+          "the garment's fabric texture or sheen is distinguishable"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "pr_fabric_tension_fold_attachment",
+            "category": "photographic_scene_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Show this relation on its selected owner: the garment's fabric texture or sheen is distinguishable Show this relation on its selected owner: folds originate at a seam joint or pulling contact Show this relation on its selected owner: fold direction agrees with the body's action or pose Show this relation on its selected owner: folds preserve the garment silhouette and closure",
+            "component_semantics": {
+              "minimum_component_groups": 4,
+              "required_group_ids": [
+                "component_1",
+                "component_2",
+                "component_3",
+                "component_4"
+              ],
+              "groups": [
+                {
+                  "id": "component_1",
+                  "any_terms": [
+                    "the garment's fabric texture or sheen is distinguishable"
+                  ]
+                },
+                {
+                  "id": "component_2",
+                  "any_terms": [
+                    "folds originate at a seam joint or pulling contact"
+                  ]
+                },
+                {
+                  "id": "component_3",
+                  "any_terms": [
+                    "fold direction agrees with the body's action or pose"
+                  ]
+                },
+                {
+                  "id": "component_4",
+                  "any_terms": [
+                    "folds preserve the garment silhouette and closure"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "component_1_phrase",
+                "component_2_phrase",
+                "component_3_phrase",
+                "component_4_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 4,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "component_1_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "the garment's fabric texture or sheen is distinguishable"
+                ]
+              },
+              "component_2_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "folds originate at a seam joint or pulling contact"
+                ]
+              },
+              "component_3_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "fold direction agrees with the body's action or pose"
+                ]
+              },
+              "component_4_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "folds preserve the garment silhouette and closure"
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_pr_fabric_tension_fold_attachment_1",
+                "review_scale": "native",
+                "description": "the garment's fabric texture or sheen is distinguishable. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+              },
+              {
+                "id": "vo_pr_fabric_tension_fold_attachment_2",
+                "review_scale": "native",
+                "description": "folds originate at a seam joint or pulling contact. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+              },
+              {
+                "id": "vo_pr_fabric_tension_fold_attachment_3",
+                "review_scale": "native",
+                "description": "fold direction agrees with the body's action or pose. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+              },
+              {
+                "id": "vo_pr_fabric_tension_fold_attachment_4",
+                "review_scale": "native",
+                "description": "folds preserve the garment silhouette and closure. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+              }
+            ],
+            "reject_substitutes": [
+              "임의로 찍힌 주름 패턴 오버레이",
+              "옷의 재질과 무관한 단일 플라스틱 광택",
+              "옷 표면의 lint가 허공에도 떠 있음"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:weather:autumn_mist",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/11",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:weather:autumn_mist",
+        "source_candidate_id": "slot:weather:autumn_mist",
+        "slot": "weather",
+        "entry_id": "autumn_mist",
+        "axis": "sensual",
+        "carrier": "weather",
+        "expression_scope": "portrayal_or_scene_relation",
+        "affected_dimensions": [
+          "atmosphere"
+        ],
+        "affected_properties": [],
+        "contextual_usage": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword",
+          "relation_concept:keyword",
+          "relation_concept:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "requires_any_tags": [
+            "street",
+            "urban",
+            "nature",
+            "travel",
+            "landscape",
+            "wildlife",
+            "vehicle",
+            "outdoor",
+            "night",
+            "rain",
+            "snow"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:weather:autumn_mist",
+          "raw_requirements": {
+            "requires_any_tags": [
+              "street",
+              "urban",
+              "nature",
+              "travel",
+              "landscape",
+              "wildlife",
+              "vehicle",
+              "outdoor",
+              "night",
+              "rain",
+              "snow"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:any",
+              "operator": "any",
+              "context": "scene",
+              "values": [
+                "landscape",
+                "nature",
+                "night",
+                "outdoor",
+                "rain",
+                "snow",
+                "street",
+                "travel",
+                "urban",
+                "vehicle",
+                "wildlife"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:weather:autumn_mist",
+                  "field": "requires_any_tags"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "df741c6f0ff52fc18b5546f1f038f1f40f1c4717a3971911109425f09c8edbb4"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "soft autumn mist near the ground"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "soft autumn mist near the ground"
+        ],
+        "relations": [],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/9",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+        "source_candidate_id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+        "slot": "wardrobe_style",
+        "entry_id": "fit_ff03_v2_candidate",
+        "axis": "sensual",
+        "carrier": "wardrobe_style",
+        "expression_scope": "whole_direction",
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.shoulder.extent"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.sleeve_width"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.body_clearance"
+          }
+        ],
+        "contextual_usage": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "relation_concept:keyword",
+          "relation_concept:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+          "raw_requirements": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "277b889849e9476c3018b80af6a3f7a436757802d2614afff210f0d8054e21c4"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "The jacket extends broadly across the shoulders.",
+          "its roomy sleeves and torso share the same enlarged proportions."
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "The jacket extends broadly across the shoulders.",
+          "its roomy sleeves and torso share the same enlarged proportions."
+        ],
+        "relations": [
+          {
+            "id": "fit_ff03_v2_owner_relation",
+            "type": "extend_beyond",
+            "subject": "jacket shoulder and sleeve edges",
+            "object": "same wearer's shoulder and torso contour"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:garment_detail:electric_static_cling_cloth",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/10",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:garment_detail:electric_static_cling_cloth",
+        "source_candidate_id": "slot:garment_detail:electric_static_cling_cloth",
+        "slot": "garment_detail",
+        "entry_id": "electric_static_cling_cloth",
+        "axis": "sensual",
+        "carrier": "garment_detail",
+        "expression_scope": "construction_or_material",
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "*",
+            "property": "wardrobe"
+          },
+          {
+            "dimension": "appearance",
+            "target": "*",
+            "property": "garment"
+          },
+          {
+            "dimension": "appearance",
+            "target": "*",
+            "property": "fabric.contact_state"
+          },
+          {
+            "dimension": "material",
+            "target": "*",
+            "property": "wardrobe"
+          },
+          {
+            "dimension": "material",
+            "target": "*",
+            "property": "garment"
+          },
+          {
+            "dimension": "material",
+            "target": "*",
+            "property": "fabric.contact_state"
+          }
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "electrical_observable_scope",
+              "definition": "천의 국소 달라붙음",
+              "observable_interpretation": "one cloth patch clings to a declared adjacent surface; free fabric hangs beyond that bounded contact; small folds converge toward the contact patch",
+              "claim_limits": [
+                "달라붙음은 시각 형태이며 마찰대전 증명이 아님;비침 자동 추가 금지",
+                "A visual resemblance is not proof of hidden voltage, current, polarity, temperature, material identity, safety, medical diagnosis, death, consent, purpose, or physical causation.",
+                "Still images cannot directly establish sound, onset direction, duration, repeated flicker, charge/discharge direction, measured speed, successful treatment, or before-after history."
+              ],
+              "activation_authority": "interpretation_only_not_required"
+            }
+          ]
+        },
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "relation_concept:keyword",
+          "relation_concept:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {},
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:garment_detail:electric_static_cling_cloth",
+          "raw_requirements": {},
+          "requirements": [],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "fd14548eb293db2e14edcbeac87d6d794eb1f34b211cdf39bc443b07b7562961"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "one cloth patch clings to a declared adjacent surface",
+          "free fabric hangs beyond that bounded contact",
+          "small folds converge toward the contact patch"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "one cloth patch clings to a declared adjacent surface",
+          "free fabric hangs beyond that bounded contact",
+          "small folds converge toward the contact patch"
+        ],
+        "relations": [
+          {
+            "id": "relation_1",
+            "subject": "cloth_patch",
+            "type": "clings_to",
+            "object": "adjacent_surface"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:expression:ae_smolder_attraction",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/5",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:expression:ae_smolder_attraction",
+        "source_candidate_id": "slot:expression:ae_smolder_attraction",
+        "slot": "expression",
+        "entry_id": "ae_smolder_attraction",
+        "axis": "sensual",
+        "carrier": "expression",
+        "expression_scope": "portrayal_or_scene_relation",
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.eyeline"
+          }
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "ae_smolder_attraction_portrayal_context",
+              "application_conditions": [
+                "Adult attraction must be explicit; duration remains unverified from the still."
+              ],
+              "limits": [
+                "actual gaze duration claimed from a still",
+                "restrained anger forced into adult attraction"
+              ],
+              "status": "optional_contextual_portrayal_not_hidden_state_inference"
+            }
+          ]
+        },
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword",
+          "relation_concept:keyword",
+          "relation_concept:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "requires_all_tags": [
+            "adult"
+          ],
+          "requires_primary_any_tags": [
+            "attraction",
+            "alluring",
+            "flirting",
+            "seductive",
+            "매혹",
+            "유혹"
+          ],
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:expression:ae_smolder_attraction",
+          "raw_requirements": {
+            "requires_all_tags": [
+              "adult"
+            ],
+            "requires_primary_any_tags": [
+              "attraction",
+              "alluring",
+              "flirting",
+              "seductive",
+              "매혹",
+              "유혹"
+            ],
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:all",
+              "operator": "all",
+              "context": "scene",
+              "values": [
+                "adult"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:expression:ae_smolder_attraction",
+                  "field": "requires_all_tags"
+                }
+              ]
+            },
+            {
+              "id": "entry:primary_any",
+              "operator": "any",
+              "context": "primary",
+              "values": [
+                "alluring",
+                "attraction",
+                "flirting",
+                "seductive",
+                "매혹",
+                "유혹"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:expression:ae_smolder_attraction",
+                  "field": "requires_primary_any_tags"
+                }
+              ]
+            },
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:expression:ae_smolder_attraction",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "f900946fa86cf25884a00ec3dae37f5e3c55aedefd1674fd6804f834c69beb92"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "the irises align with the already requested target",
+          "the eye opening retains the requested form"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "the irises align with the already requested target",
+          "the eye opening retains the requested form"
+        ],
+        "relations": [
+          {
+            "id": "actor_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the declared actor's stated local face and eye configuration"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    }
+  ],
+  "view_sha256": "bcbe5d999a6c3e2c0c88002693e7f333500ccd4663ca5633109155826fe0ac42"
+}

@@ -1,0 +1,74 @@
+{
+  "modules": [
+    "tests.test_photo_affect_visual_semantics",
+    "tests.test_photo_authorial_core_v6",
+    "tests.test_photo_authorship_policy",
+    "tests.test_photo_body_morphology_semantics",
+    "tests.test_photo_candidate_semantics",
+    "tests.test_photo_character_render_review",
+    "tests.test_photo_concept_candidate_expansion",
+    "tests.test_photo_convoy_route_alternative",
+    "tests.test_photo_cumulonimbus_anvil_alternative",
+    "tests.test_photo_current_boundary",
+    "tests.test_photo_electrical_relations",
+    "tests.test_photo_horror_main_boundary_history",
+    "tests.test_photo_instrument_semantics",
+    "tests.test_photo_kebaya_material_alternative",
+    "tests.test_photo_krummholz_korean_alias_data_cleanup",
+    "tests.test_photo_liminal_maintained_alternative",
+    "tests.test_photo_loading",
+    "tests.test_photo_lobe_boundary_history",
+    "tests.test_photo_narrative_unit_data_cleanup",
+    "tests.test_photo_neutral_expression_alternatives",
+    "tests.test_photo_ornament_boundary_history",
+    "tests.test_photo_palace_korean_relation_alignment",
+    "tests.test_photo_portrait_composition_semantics",
+    "tests.test_photo_positive_retrieval",
+    "tests.test_photo_receiver_material_response",
+    "tests.test_photo_robe_back_source_consistency",
+    "tests.test_photo_seduction_expression_integration",
+    "tests.test_photo_slang_boundary_history",
+    "tests.test_photo_soil_earth_relations",
+    "tests.test_photo_structure_maintenance",
+    "tests.test_photo_tactile_reality_semantics",
+    "tests.test_photo_traditional_clothing_semantics",
+    "tests.test_photo_v20_historical_fixture",
+    "tests.test_photo_visual_profile_shards",
+    "tests.test_photo_vocaloid_appearance_paraphrases",
+    "tests.test_photo_wuxia_visual_semantics",
+    "tests.test_subculture_illustration_contract_v1",
+    "tests.test_universal_scene_directional_substitution"
+  ],
+  "tests_run": 328,
+  "failures": [
+    {
+      "id": "tests.test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_historical_merged_state_and_current_ten_keeps_are_exact",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/test_photo_krummholz_korean_alias_data_cleanup.py\", line 77, in test_historical_merged_state_and_current_ten_keeps_are_exact\n    self.assertEqual(fixtures.bundle_meanings(fixtures.seduction_historical_bundles(self.current['candidate_bundles']), within=historical),\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                     fixtures.bundle_meanings(historical))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [{'id[532808 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[703605 chars]ly'}] != [{'id[532808 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[703586 chars]ly'}]\n\nFirst differing element 307:\n{'id'[817 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[87 chars]nly'}\n{'id'[817 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[68 chars]nly'}\n\nDiff is 2223582 characters long. Set self.maxDiff to None to see it.\n"
+    },
+    {
+      "id": "tests.test_photo_structure_maintenance.PhotoSourceManifestTests.test_registration_preserves_both_load_orders_and_required_policy",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/test_photo_structure_maintenance.py\", line 142, in test_registration_preserves_both_load_orders_and_required_policy\n    self.assertEqual(list(sources.extension_files(\"candidate\")), original[\"candidate\"])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: ['pho[3075 chars]json', 'photo_prompt_fashion_fit_extension.jso[87 chars]son'] != ['pho[3075 chars]json']\n\nFirst list contains 3 additional elements.\nFirst extra element 65:\n'photo_prompt_fashion_fit_extension.json'\n\nDiff is 3610 characters long. Set self.maxDiff to None to see it.\n"
+    }
+  ],
+  "errors": [
+    {
+      "id": "setUpClass (tests.test_photo_horror_main_boundary_history.HorrorMainBoundaryHistoryTests)",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/test_photo_horror_main_boundary_history.py\", line 207, in setUpClass\n    cls.original_validator = fixtures.archived_v31_validator(cls.original_root)\n                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/photo_prompt_fixtures.py\", line 2212, in archived_v31_validator\n    manifest = materialize_v31_parent_source(directory, source_root=source_root)\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/photo_prompt_fixtures.py\", line 2195, in materialize_v31_parent_source\n    _v24_verified_payload(source_root, row)\n    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/photo_prompt_fixtures.py\", line 856, in _v24_verified_payload\n    raise AssertionError(f'Frozen V24 historical source payload drift: {row[\"path\"]}')\nAssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/SKILL.md\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_ornament_boundary_history",
+      "traceback": "ImportError: Failed to import test module: test_photo_ornament_boundary_history\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/test_photo_ornament_boundary_history.py\", line 12, in <module>\n    import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'photo_prompt_fixtures'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_v20_historical_fixture",
+      "traceback": "ImportError: Failed to import test module: test_photo_v20_historical_fixture\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/test_photo_v20_historical_fixture.py\", line 9, in <module>\n    import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'photo_prompt_fixtures'\n\n"
+    },
+    {
+      "id": "tests.test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/test_subculture_illustration_contract_v1.py\", line 504, in test_aggregate_validator_does_not_hide_partial_pixel_qualification\n    summary = validate_all(ASSET_ROOT)\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 13956, in validate_all\n    photo_regression = validate_photo_regression_baseline(root)\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 8776, in validate_photo_regression_baseline\n    completed = subprocess.run(\n        actual_command,\n    ...<5 lines>...\n        timeout=60,\n    )\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py\", line 554, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py\", line 1038, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                        pass_fds, cwd, env,\n                        ^^^^^^^^^^^^^^^^^^^\n    ...<5 lines>...\n                        gid, gids, uid, umask,\n                        ^^^^^^^^^^^^^^^^^^^^^^\n                        start_new_session, process_group)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py\", line 1989, in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nFileNotFoundError: [Errno 2] No such file or directory: '.venv/bin/python'\n"
+    }
+  ],
+  "skips": [],
+  "seconds": 2060.83513712883,
+  "success": false
+}

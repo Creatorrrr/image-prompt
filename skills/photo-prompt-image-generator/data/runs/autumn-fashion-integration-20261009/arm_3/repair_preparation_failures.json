@@ -1,0 +1,39 @@
+{
+  "schema_version": "arm-repair-preparation-observation/v1",
+  "native_calls_before_repair": 1,
+  "additional_native_calls": 0,
+  "preparation_attempts": [
+    {
+      "path": "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/data/runs/autumn-fashion-integration-20261009/arm_3/repair_1",
+      "freeze_error": "child_preserved_lock_missing",
+      "subsequent_reentry_error": "freeze_requires_controls",
+      "workflow_phase": "retry_binding_failed"
+    },
+    {
+      "path": "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/data/runs/autumn-fashion-integration-20261009/arm_3/repair_1b",
+      "freeze_error": "child_preserved_lock_missing",
+      "workflow_phase": "retry_binding_failed",
+      "preserved_dimensions_fully_locked": [
+        "action",
+        "appearance",
+        "concept",
+        "event",
+        "material",
+        "reference_use",
+        "setting",
+        "subject"
+      ],
+      "open_dimensions": [
+        "body_geometry",
+        "camera",
+        "composition",
+        "framing",
+        "pose"
+      ]
+    }
+  ],
+  "binding_question": "The closed retry context preserves a target/property scoped reference_use anchor. Both child preparations retained its exact literal as a whole reference_use lock, because reference_use is absent from allowed_scope. Neutral authoring wire permits target/property anchors only in open dimensions. The coordinator has returned only child_preserved_lock_missing, so the scoped-anchor cause is an inference, not confirmed diagnostics.",
+  "scope_widened": false,
+  "private_source_or_diagnostics_read": false,
+  "status": "pending_representation_resolution"
+}

@@ -1,0 +1,78 @@
+{
+  "modules": [
+    "tests.test_makeup_layer_dictionary",
+    "tests.test_photo_acetate_distortion_alternative",
+    "tests.test_photo_authorial_core",
+    "tests.test_photo_bound_context_surfaces",
+    "tests.test_photo_boundary_transition_visual_semantics",
+    "tests.test_photo_capture_boundary_data",
+    "tests.test_photo_ct073_back_band_data",
+    "tests.test_photo_current_boundary_snapshot",
+    "tests.test_photo_editing_effects_semantics",
+    "tests.test_photo_environment_alternative_consistency",
+    "tests.test_photo_fantasy_visual_semantics",
+    "tests.test_photo_glass_inventory_boundary_history",
+    "tests.test_photo_historical_womenswear_semantics",
+    "tests.test_photo_horror_visual_semantics",
+    "tests.test_photo_humanlike_semantics",
+    "tests.test_photo_image_attempt_evidence",
+    "tests.test_photo_lighting_color_owner_data_cleanup",
+    "tests.test_photo_lighting_composition_boundary_data",
+    "tests.test_photo_makeup_visual_semantics",
+    "tests.test_photo_meaning_diagnostics",
+    "tests.test_photo_opening_era_semantics",
+    "tests.test_photo_palette_boundary_history",
+    "tests.test_photo_panning_direction_scope",
+    "tests.test_photo_pose_vocabulary_semantics",
+    "tests.test_photo_punk_aesthetic_semantics",
+    "tests.test_photo_reactorprompt_visual_relations",
+    "tests.test_photo_render_repair",
+    "tests.test_photo_research_integration",
+    "tests.test_photo_scene_data_cleanup",
+    "tests.test_photo_slot_query_fusion",
+    "tests.test_photo_space_visual_semantics",
+    "tests.test_photo_subculture_appearance_alternatives",
+    "tests.test_photo_v22_historical_fixture",
+    "tests.test_photo_visual_grammar_integration",
+    "tests.test_photo_visual_storage_boundary_history",
+    "tests.test_photo_wrap_skirt_side_alternative",
+    "tests.test_photo_y2k_visual_semantics",
+    "tests.test_subculture_illustration_universal_scene_v3"
+  ],
+  "tests_run": 299,
+  "failures": [
+    {
+      "id": "tests.test_photo_palette_boundary_history.OriginalBoundaryReplayTests.test_original_assertions_replay_without_revision",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/test_photo_palette_boundary_history.py\", line 12, in test_original_assertions_replay_without_revision\n    history.materialize_original(tree,source_root=ROOT,link_verified=True)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/photo_ethereal_history_v35.py\", line 92, in materialize_original\n    for row in parent['members']:exact_payload(source_root,row)\n                                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/photo_ethereal_history_v35.py\", line 47, in exact_payload\n    if path.stat().st_mode&0o7777!=int(row['mode'][-3:],8) or len(raw)!=row['bytes'] or digest(raw)!=row['sha256'] or blob!=row['git_blob']:raise AssertionError('Frozen V35 original source payload or mode drift: '+row['path'])\n                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Frozen V35 original source payload or mode drift: docs/research-evidence/photo-prompt/data-quality-links-20261007/history/README.md\n"
+    }
+  ],
+  "errors": [
+    {
+      "id": "setUpClass (tests.test_photo_ct073_back_band_data.CT073BackBandDataTests)",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/test_photo_ct073_back_band_data.py\", line 136, in setUpClass\n    fixtures.materialize_v25_parent_source(root, source_root=ROOT)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/photo_prompt_fixtures.py\", line 1408, in materialize_v25_parent_source\n    _v24_verified_payload(source_root, row)\n    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/photo_prompt_fixtures.py\", line 856, in _v24_verified_payload\n    raise AssertionError(f'Frozen V24 historical source payload drift: {row[\"path\"]}')\nAssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_glass_inventory_boundary_history",
+      "traceback": "ImportError: Failed to import test module: test_photo_glass_inventory_boundary_history\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/test_photo_glass_inventory_boundary_history.py\", line 12, in <module>\n    import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'photo_prompt_fixtures'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_v22_historical_fixture",
+      "traceback": "ImportError: Failed to import test module: test_photo_v22_historical_fixture\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/test_photo_v22_historical_fixture.py\", line 10, in <module>\n    import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'photo_prompt_fixtures'\n\n"
+    },
+    {
+      "id": "unittest.loader._FailedTest.test_photo_visual_storage_boundary_history",
+      "traceback": "ImportError: Failed to import test module: test_photo_visual_storage_boundary_history\nTraceback (most recent call last):\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/test_photo_visual_storage_boundary_history.py\", line 13, in <module>\n    import photo_prompt_fixtures as fixtures\nModuleNotFoundError: No module named 'photo_prompt_fixtures'\n\n"
+    },
+    {
+      "id": "tests.test_subculture_illustration_universal_scene_v3.UniversalSceneDataContractTests.test_existing_render_manifests_keep_historical_failure_labels",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/test_subculture_illustration_universal_scene_v3.py\", line 1712, in test_existing_render_manifests_keep_historical_failure_labels\n    result = validate_all(str(ASSET_ROOT), verify_local_images=False)\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 13956, in validate_all\n    photo_regression = validate_photo_regression_baseline(root)\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 8776, in validate_photo_regression_baseline\n    completed = subprocess.run(\n        actual_command,\n    ...<5 lines>...\n        timeout=60,\n    )\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py\", line 554, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py\", line 1038, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                        pass_fds, cwd, env,\n                        ^^^^^^^^^^^^^^^^^^^\n    ...<5 lines>...\n                        gid, gids, uid, umask,\n                        ^^^^^^^^^^^^^^^^^^^^^^\n                        start_new_session, process_group)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py\", line 1989, in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nFileNotFoundError: [Errno 2] No such file or directory: '.venv/bin/python'\n"
+    },
+    {
+      "id": "tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests.test_v1_v2_exact_replay_and_photo_baseline_remain_immutable",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/tests/test_subculture_illustration_universal_scene_v3.py\", line 4697, in test_v1_v2_exact_replay_and_photo_baseline_remain_immutable\n    photo = validate_photo_regression_baseline(ASSET_ROOT)\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 8829, in validate_photo_regression_baseline\n    _require(\n    ~~~~~~~~^\n        digest == baseline.get(\"sha256\"),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        \"current photo baseline candidate-pack bytes drift\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 1281, in _require\n    raise ValidationFailure(message)\nvalidate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift\n"
+    }
+  ],
+  "skips": [],
+  "seconds": 2512.7858748435974,
+  "success": false
+}

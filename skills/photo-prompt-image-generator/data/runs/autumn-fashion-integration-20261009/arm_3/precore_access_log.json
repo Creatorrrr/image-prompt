@@ -1,0 +1,139 @@
+{
+  "stage": "pre_core",
+  "generated_at_utc": "2026-10-08T19:41:30.645765+00:00",
+  "logging_scope": "Explicit model-directed filesystem reads and neutral commands; own current-run authored artifacts and neutral run state are included. This declaration does not claim an OS-level tracing audit of standard-library file access.",
+  "skill_path": "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/SKILL.md",
+  "skill_sha256": "9e9b87e6f0b2c1ec1c36bd8e9d55f90950d53529a0b873722b546924dfc7043b",
+  "external_reference": {
+    "path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+    "sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+    "operations": [
+      "view_image",
+      "read_bytes_for_sha256"
+    ]
+  },
+  "explicit_project_reads": [
+    {
+      "path": "skills/photo-prompt-image-generator/SKILL.md",
+      "operations": [
+        "cat entire file",
+        "wc -l",
+        "sha256",
+        "sed lines 140-310",
+        "sed lines 1-139 and 311-495",
+        "sed lines 120-139 and 311-365"
+      ],
+      "note": "Chunk rereads recovered truncated tool output; all 495 lines were reviewed."
+    },
+    {
+      "path": "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/data/runs/autumn-fashion-integration-20261009/arm_3/workflow.json",
+      "operations": [
+        "cat",
+        "read bound paths after controls",
+        "read envelope and control paths for authored core"
+      ]
+    },
+    {
+      "path": "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/data/runs/autumn-fashion-integration-20261009/arm_3/revisions/5e99d902af434472ac771842619f5f37/request_envelope_input.json",
+      "operations": [
+        "cat twice",
+        "read exact request_text and spans for core source binding",
+        "verify request_sha256"
+      ]
+    },
+    {
+      "path": "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/data/runs/autumn-fashion-integration-20261009/arm_3/revisions/5e99d902af434472ac771842619f5f37/authoring_shapes.json",
+      "operations": [
+        "cat current neutral run shapes"
+      ]
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/precore/creative_controls.json",
+      "operations": [
+        "cat twice",
+        "neutral controls resolution"
+      ]
+    },
+    {
+      "path": "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/data/runs/autumn-fashion-integration-20261009/arm_3/revisions/e7d3b1887aad4369bbed8cc854bf2496/creative_controls.json",
+      "operations": [
+        "read candidate-free authoring_brief and definitions.principle",
+        "read canonical_sha256 for binding"
+      ]
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+      "operations": [
+        "read schema and category names once; source_examples and added_examples not used"
+      ]
+    },
+    {
+      "path": "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/data/runs/autumn-fashion-integration-20261009/arm_3/test_case.json",
+      "operations": [
+        "read own independently authored case for theme and observational targets"
+      ]
+    },
+    {
+      "path": "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/data/runs/autumn-fashion-integration-20261009/arm_3/baseline_draft.txt",
+      "operations": [
+        "neutral canonicalize twice"
+      ]
+    },
+    {
+      "path": "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/data/runs/autumn-fashion-integration-20261009/arm_3/baseline_prompt_en.txt",
+      "operations": [
+        "read own canonical baseline for literal evidence and review"
+      ]
+    }
+  ],
+  "executed_neutral_entrypoint": "skills/photo-prompt-image-generator/precore/prepare_photo_run.py",
+  "neutral_commands": [
+    "controls --help",
+    "canonicalize --help",
+    "freeze --help",
+    "controls --run arm_3 --context creative_context.json --seed 2026100903",
+    "canonicalize --baseline baseline_draft.txt (stdout review)",
+    "canonicalize --baseline baseline_draft.txt (saved output)",
+    "freeze --run arm_3 --core core_input.json --selection selection_input.json --review review_input.json: pass on first attempt"
+  ],
+  "own_authored_files": [
+    "creative_context.json",
+    "test_case.json",
+    "selection_plan.json",
+    "baseline_draft.txt",
+    "baseline_prompt_en.txt",
+    "core_input.json",
+    "selection_input.json",
+    "review_input.json",
+    "precore_access_log.json"
+  ],
+  "candidate_pack_reads": [],
+  "research_reads": [],
+  "assets_reads": [],
+  "references_reads": [],
+  "scripts_reads": [],
+  "fixtures_reads": [],
+  "previous_run_reads": [],
+  "other_arm_reads": [],
+  "public_web_queries": [],
+  "boundary_statement": "No project-local candidate, profile, research, maintenance fixture, previous run or other arm was read before the independent core.",
+  "freeze_inputs": [
+    "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/data/runs/autumn-fashion-integration-20261009/arm_3/core_input.json",
+    "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/data/runs/autumn-fashion-integration-20261009/arm_3/selection_input.json",
+    "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/data/runs/autumn-fashion-integration-20261009/arm_3/review_input.json"
+  ],
+  "freeze_result": {
+    "phase": "core_frozen",
+    "receipt_path": "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/data/runs/autumn-fashion-integration-20261009/arm_3/revisions/1c9f1d73684148548e74b3f05dcf7794/freeze_receipt.json",
+    "receipt_sha256": "3be74845907290a2b7cd20cb71c2d21bf82514f1576e2eb4bb201ef92ed35b1e",
+    "feature_selection_valid": true,
+    "feature_selection_warnings": []
+  },
+  "post_freeze_neutral_inspection": [
+    "workflow.json",
+    "feature_selection_audit.json",
+    "authorial_core_normalized.json (keys and hash bindings only)",
+    "freeze_receipt.json",
+    "own precore_access_log.json"
+  ]
+}

@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 9283, in embed_texts_with_gemini
+    from google.genai import types
+ModuleNotFoundError: No module named 'google'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py", line 204, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py", line 158, in main
+    embedded = embed_texts_with_gemini(
+        texts,
+        model=args.model,
+        dimensions=args.dimensions,
+    )
+  File "/Users/chasoik/.codex/worktrees/autumn-fashion-20261009/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 9285, in embed_texts_with_gemini
+    raise RuntimeError(
+    ...<2 lines>...
+    ) from exc
+RuntimeError: google-genai is required for Gemini semantic embeddings. Install it with `python3 -m pip install -r requirements.txt`.
