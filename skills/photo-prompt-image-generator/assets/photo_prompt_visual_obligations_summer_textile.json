@@ -1,0 +1,1336 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "description": "Independent selected visible garment, surface, layer and accessory relations.",
+  "profiles": [
+    {
+      "id": "suf_sf093_v1",
+      "category": "summer_textile_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "small raised puckered bands alternate with flatter woven bands; the pattern repeats across the same fabric"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "small raised puckered bands alternate with flatter woven bands; the pattern repeats across the same fabric"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "small raised puckered bands alternate with flatter woven bands; the pattern repeats across the same fabric",
+        "paraphrase_examples": [
+          "평평한 띠와 번갈아 반복되는 시어서커 요철",
+          "the seersucker raised bands alternate with flatter woven bands",
+          "seersucker relief",
+          "시어서커"
+        ],
+        "visual_components": [
+          "small raised puckered bands alternate with flatter woven bands",
+          "the pattern repeats across the same fabric",
+          "the seersucker raised bands alternate with flatter woven bands"
+        ],
+        "contrast_examples": [
+          "가벼움=투명함 아님; seersucker의 반복 요철을 무작위 착용 구김이나 shirring 봉제 줄로 대체하지 않는다."
+        ],
+        "claim_limits": [
+          "매끈함/구멍/겹수/요철 각각 적절한 근접 해상도; 숨은 double layer는 미확인.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "small raised puckered bands alternate with flatter woven bands"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "small raised puckered bands alternate with flatter woven bands"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: small raised puckered bands alternate with flatter woven bands",
+            "render_gate": {
+              "id": "vo_suf_sf093_v1_1",
+              "review_scale": "native",
+              "description": "small raised puckered bands alternate with flatter woven bands The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the pattern repeats across the same fabric"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the pattern repeats across the same fabric"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the pattern repeats across the same fabric",
+            "render_gate": {
+              "id": "vo_suf_sf093_v1_2",
+              "review_scale": "native",
+              "description": "the pattern repeats across the same fabric The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the seersucker raised bands alternate with flatter woven bands"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the seersucker raised bands alternate with flatter woven bands"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the seersucker raised bands alternate with flatter woven bands",
+            "render_gate": {
+              "id": "vo_suf_sf093_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the seersucker raised bands alternate with flatter woven bands Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "평평한 띠와 번갈아 반복되는 시어서커 요철",
+          "small raised puckered bands alternate with flatter woven bands; the pattern repeats across the same fabric",
+          "seersucker relief",
+          "시어서커"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_relief"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.visible_weave"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_relief"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.visible_weave"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "가벼움=투명함 아님; seersucker의 반복 요철을 무작위 착용 구김이나 shirring 봉제 줄로 대체하지 않는다."
+      ]
+    },
+    {
+      "id": "suf_sf093_v2",
+      "category": "summer_textile_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a fine voile layer hangs in light folds; a faint inner garment outline is visible through the continuous weave"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "a fine voile layer hangs in light folds; a faint inner garment outline is visible through the continuous weave"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "a fine voile layer hangs in light folds; a faint inner garment outline is visible through the continuous weave",
+        "paraphrase_examples": [
+          "독립 이너 윤곽이 비치는 가벼운 보일 층",
+          "the fine voile layer transmits a faint inner garment outline",
+          "voile layer",
+          "보일"
+        ],
+        "visual_components": [
+          "a fine voile layer hangs in light folds",
+          "a faint inner garment outline is visible through the continuous weave",
+          "the fine voile layer transmits a faint inner garment outline"
+        ],
+        "contrast_examples": [
+          "가벼움=투명함 아님; seersucker의 반복 요철을 무작위 착용 구김이나 shirring 봉제 줄로 대체하지 않는다."
+        ],
+        "claim_limits": [
+          "매끈함/구멍/겹수/요철 각각 적절한 근접 해상도; 숨은 double layer는 미확인.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a fine voile layer hangs in light folds"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a fine voile layer hangs in light folds"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: a fine voile layer hangs in light folds",
+            "render_gate": {
+              "id": "vo_suf_sf093_v2_1",
+              "review_scale": "native",
+              "description": "a fine voile layer hangs in light folds The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a faint inner garment outline is visible through the continuous weave"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a faint inner garment outline is visible through the continuous weave"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: a faint inner garment outline is visible through the continuous weave",
+            "render_gate": {
+              "id": "vo_suf_sf093_v2_2",
+              "review_scale": "native",
+              "description": "a faint inner garment outline is visible through the continuous weave The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the fine voile layer transmits a faint inner garment outline"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the fine voile layer transmits a faint inner garment outline"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the fine voile layer transmits a faint inner garment outline",
+            "render_gate": {
+              "id": "vo_suf_sf093_v2_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the fine voile layer transmits a faint inner garment outline Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "독립 이너 윤곽이 비치는 가벼운 보일 층",
+          "a fine voile layer hangs in light folds; a faint inner garment outline is visible through the continuous weave",
+          "voile layer",
+          "보일"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.visible_weave"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.drape"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.transmission"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layers.inner_coverage"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layers.order"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.surface.sheer_opacity"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.visible_weave"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.drape"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.transmission"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "가벼움=투명함 아님; seersucker의 반복 요철을 무작위 착용 구김이나 shirring 봉제 줄로 대체하지 않는다."
+      ]
+    },
+    {
+      "id": "suf_sf094_v1",
+      "category": "summer_textile_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "fine diagonal yarn ridges cross the denim surface; the ridges continue through the fabric folds"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "fine diagonal yarn ridges cross the denim surface; the ridges continue through the fabric folds"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "fine diagonal yarn ridges cross the denim surface; the ridges continue through the fabric folds",
+        "paraphrase_examples": [
+          "원단 주름을 따라 이어지는 데님 사선 실 능선",
+          "the visible diagonal yarn ridges cross the denim fabric surface",
+          "denim diagonal weave"
+        ],
+        "visual_components": [
+          "fine diagonal yarn ridges cross the denim surface",
+          "the ridges continue through the fabric folds",
+          "the visible diagonal yarn ridges cross the denim fabric surface"
+        ],
+        "contrast_examples": [
+          "파란 색 하나로 denim을 확정하지 않으며 chambray를 모든 denim과 동일시하지 않는다."
+        ],
+        "claim_limits": [
+          "실 방향이 분해되는 원해상도 근접면.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "fine diagonal yarn ridges cross the denim surface"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "fine diagonal yarn ridges cross the denim surface"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: fine diagonal yarn ridges cross the denim surface",
+            "render_gate": {
+              "id": "vo_suf_sf094_v1_1",
+              "review_scale": "native",
+              "description": "fine diagonal yarn ridges cross the denim surface The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the ridges continue through the fabric folds"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the ridges continue through the fabric folds"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the ridges continue through the fabric folds",
+            "render_gate": {
+              "id": "vo_suf_sf094_v1_2",
+              "review_scale": "native",
+              "description": "the ridges continue through the fabric folds The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the visible diagonal yarn ridges cross the denim fabric surface"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the visible diagonal yarn ridges cross the denim fabric surface"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the visible diagonal yarn ridges cross the denim fabric surface",
+            "render_gate": {
+              "id": "vo_suf_sf094_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the visible diagonal yarn ridges cross the denim fabric surface Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "원단 주름을 따라 이어지는 데님 사선 실 능선",
+          "fine diagonal yarn ridges cross the denim surface; the ridges continue through the fabric folds",
+          "denim diagonal weave"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.visible_weave"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.visible_weave"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "파란 색 하나로 denim을 확정하지 않으며 chambray를 모든 denim과 동일시하지 않는다."
+      ]
+    },
+    {
+      "id": "suf_sf095_v1",
+      "category": "summer_textile_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "thin translucent folds hold away from the garment underneath; sharp fold edges maintain a light structured volume"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "thin translucent folds hold away from the garment underneath; sharp fold edges maintain a light structured volume"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "thin translucent folds hold away from the garment underneath; sharp fold edges maintain a light structured volume",
+        "paraphrase_examples": [
+          "속의 옷에서 떨어져 각을 유지하는 반투명 오간자 주름",
+          "the thin organza folds hold away from the covered garment underneath",
+          "organza structured folds",
+          "오간자"
+        ],
+        "visual_components": [
+          "thin translucent folds hold away from the garment underneath",
+          "sharp fold edges maintain a light structured volume",
+          "the thin organza folds hold away from the covered garment underneath"
+        ],
+        "contrast_examples": [
+          "세 판매명을 전부 동일한 흐르는 silk로 병합하지 않는다; 섬유 조성·정확 weave는 별도."
+        ],
+        "claim_limits": [
+          "처짐과 실제 주름 면·비침을 비교할 근접 사선.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "thin translucent folds hold away from the garment underneath"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "thin translucent folds hold away from the garment underneath"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: thin translucent folds hold away from the garment underneath",
+            "render_gate": {
+              "id": "vo_suf_sf095_v1_1",
+              "review_scale": "native",
+              "description": "thin translucent folds hold away from the garment underneath The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "sharp fold edges maintain a light structured volume"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "sharp fold edges maintain a light structured volume"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: sharp fold edges maintain a light structured volume",
+            "render_gate": {
+              "id": "vo_suf_sf095_v1_2",
+              "review_scale": "native",
+              "description": "sharp fold edges maintain a light structured volume The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the thin organza folds hold away from the covered garment underneath"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the thin organza folds hold away from the covered garment underneath"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the thin organza folds hold away from the covered garment underneath",
+            "render_gate": {
+              "id": "vo_suf_sf095_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the thin organza folds hold away from the covered garment underneath Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "속의 옷에서 떨어져 각을 유지하는 반투명 오간자 주름",
+          "thin translucent folds hold away from the garment underneath; sharp fold edges maintain a light structured volume",
+          "organza structured folds",
+          "오간자"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.drape"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.transmission"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_stiffness"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layers.order"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layers.inner_coverage"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.surface.sheer_opacity"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.drape"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.transmission"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_stiffness"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "세 판매명을 전부 동일한 흐르는 silk로 병합하지 않는다; 섬유 조성·정확 weave는 별도."
+      ]
+    },
+    {
+      "id": "suf_sf096_v1",
+      "category": "summer_textile_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "the smooth fabric face carries broad highlights; the highlights change gently across the soft folds"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "the smooth fabric face carries broad highlights; the highlights change gently across the soft folds"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the smooth fabric face carries broad highlights; the highlights change gently across the soft folds",
+        "paraphrase_examples": [
+          "부드러운 주름에 따라 달라지는 넓은 원단 광택",
+          "the smooth fabric face carries broad highlights along the folds",
+          "satin-like broad fabric highlights"
+        ],
+        "visual_components": [
+          "the smooth fabric face carries broad highlights",
+          "the highlights change gently across the soft folds",
+          "the smooth fabric face carries broad highlights along the folds"
+        ],
+        "contrast_examples": [
+          "satin=실크·젖음·vinyl이 아니며 광택만으로 새틴 조직을 확정하지 않는다. satin/sateen 용어 경계는 기술 문헌과 현대 판매 문맥마다 달라 별도 provenance가 필요하다."
+        ],
+        "claim_limits": [
+          "연속 하이라이트와 접힘 변화; exact weave는 근접 결 증거가 별도로 필요.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the smooth fabric face carries broad highlights"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the smooth fabric face carries broad highlights"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the smooth fabric face carries broad highlights",
+            "render_gate": {
+              "id": "vo_suf_sf096_v1_1",
+              "review_scale": "native",
+              "description": "the smooth fabric face carries broad highlights The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the highlights change gently across the soft folds"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the highlights change gently across the soft folds"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the highlights change gently across the soft folds",
+            "render_gate": {
+              "id": "vo_suf_sf096_v1_2",
+              "review_scale": "native",
+              "description": "the highlights change gently across the soft folds The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the smooth fabric face carries broad highlights along the folds"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the smooth fabric face carries broad highlights along the folds"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the smooth fabric face carries broad highlights along the folds",
+            "render_gate": {
+              "id": "vo_suf_sf096_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the smooth fabric face carries broad highlights along the folds Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "부드러운 주름에 따라 달라지는 넓은 원단 광택",
+          "the smooth fabric face carries broad highlights; the highlights change gently across the soft folds",
+          "satin-like broad fabric highlights"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_luster"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.drape"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_luster"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.drape"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "satin=실크·젖음·vinyl이 아니며 광택만으로 새틴 조직을 확정하지 않는다. satin/sateen 용어 경계는 기술 문헌과 현대 판매 문맥마다 달라 별도 provenance가 필요하다."
+      ]
+    },
+    {
+      "id": "suf_sf097_v1",
+      "category": "summer_textile_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "raised knit columns alternate with recessed columns; the vertical rib texture follows the same top folds"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "raised knit columns alternate with recessed columns; the vertical rib texture follows the same top folds"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "raised knit columns alternate with recessed columns; the vertical rib texture follows the same top folds",
+        "paraphrase_examples": [
+          "그림자로 구별되는 반복 리브 골",
+          "the rib knit raised columns alternate with recessed knitted columns",
+          "rib knit columns"
+        ],
+        "visual_components": [
+          "raised knit columns alternate with recessed columns",
+          "the vertical rib texture follows the same top folds",
+          "the rib knit raised columns alternate with recessed knitted columns"
+        ],
+        "contrast_examples": [
+          "rib의 줄무늬와 인쇄 stripe는 다르고 terry가 반드시 젖은 수건은 아니다."
+        ],
+        "claim_limits": [
+          "골·고리가 분해되는 근접 해상도.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "raised knit columns alternate with recessed columns"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "raised knit columns alternate with recessed columns"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: raised knit columns alternate with recessed columns",
+            "render_gate": {
+              "id": "vo_suf_sf097_v1_1",
+              "review_scale": "native",
+              "description": "raised knit columns alternate with recessed columns The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the vertical rib texture follows the same top folds"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the vertical rib texture follows the same top folds"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the vertical rib texture follows the same top folds",
+            "render_gate": {
+              "id": "vo_suf_sf097_v1_2",
+              "review_scale": "native",
+              "description": "the vertical rib texture follows the same top folds The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the rib knit raised columns alternate with recessed knitted columns"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the rib knit raised columns alternate with recessed knitted columns"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the rib knit raised columns alternate with recessed knitted columns",
+            "render_gate": {
+              "id": "vo_suf_sf097_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the rib knit raised columns alternate with recessed knitted columns Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "그림자로 구별되는 반복 리브 골",
+          "raised knit columns alternate with recessed columns; the vertical rib texture follows the same top folds",
+          "rib knit columns"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_relief"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_relief"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "rib의 줄무늬와 인쇄 stripe는 다르고 terry가 반드시 젖은 수건은 아니다."
+      ]
+    },
+    {
+      "id": "suf_sf097_v2",
+      "category": "summer_textile_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "small pile loops project from the fabric face; their repeated looped texture remains visible in the light"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "small pile loops project from the fabric face; their repeated looped texture remains visible in the light"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "small pile loops project from the fabric face; their repeated looped texture remains visible in the light",
+        "paraphrase_examples": [
+          "기저 조직 위에 올라온 작은 테리 고리",
+          "small pile loops project from the same terry fabric face",
+          "terry pile loops"
+        ],
+        "visual_components": [
+          "small pile loops project from the fabric face",
+          "their repeated looped texture remains visible in the light",
+          "small pile loops project from the same terry fabric face"
+        ],
+        "contrast_examples": [
+          "rib의 줄무늬와 인쇄 stripe는 다르고 terry가 반드시 젖은 수건은 아니다."
+        ],
+        "claim_limits": [
+          "골·고리가 분해되는 근접 해상도.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "small pile loops project from the fabric face"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "small pile loops project from the fabric face"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: small pile loops project from the fabric face",
+            "render_gate": {
+              "id": "vo_suf_sf097_v2_1",
+              "review_scale": "native",
+              "description": "small pile loops project from the fabric face The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "their repeated looped texture remains visible in the light"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "their repeated looped texture remains visible in the light"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: their repeated looped texture remains visible in the light",
+            "render_gate": {
+              "id": "vo_suf_sf097_v2_2",
+              "review_scale": "native",
+              "description": "their repeated looped texture remains visible in the light The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "small pile loops project from the same terry fabric face"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "small pile loops project from the same terry fabric face"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: small pile loops project from the same terry fabric face",
+            "render_gate": {
+              "id": "vo_suf_sf097_v2_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: small pile loops project from the same terry fabric face Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "기저 조직 위에 올라온 작은 테리 고리",
+          "small pile loops project from the fabric face; their repeated looped texture remains visible in the light",
+          "terry pile loops"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_relief"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_topology"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_relief"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_topology"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "rib의 줄무늬와 인쇄 stripe는 다르고 terry가 반드시 젖은 수건은 아니다."
+      ]
+    },
+    {
+      "id": "suf_sf098_v1",
+      "category": "summer_textile_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "embroidered edges surround small holes in a woven base cloth; intact fabric separates the openings"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "embroidered edges surround small holes in a woven base cloth; intact fabric separates the openings"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "embroidered edges surround small holes in a woven base cloth; intact fabric separates the openings",
+        "paraphrase_examples": [
+          "온전한 바탕천 사이 자수 테두리 구멍",
+          "the embroidered hole edges surround small openings in the woven base cloth",
+          "eyelet embroidery holes"
+        ],
+        "visual_components": [
+          "embroidered edges surround small holes in a woven base cloth",
+          "intact fabric separates the openings",
+          "the embroidered hole edges surround small openings in the woven base cloth"
+        ],
+        "contrast_examples": [
+          "eyelet은 hardware 고리도 될 수 있어 문맥 구분; tulle의 layer volume와 한겹 transmission은 별도."
+        ],
+        "claim_limits": [
+          "실·바탕천·구멍·마감 경계가 원해상도에서 구별돼야 함.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "embroidered edges surround small holes in a woven base cloth"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "embroidered edges surround small holes in a woven base cloth"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: embroidered edges surround small holes in a woven base cloth",
+            "render_gate": {
+              "id": "vo_suf_sf098_v1_1",
+              "review_scale": "native",
+              "description": "embroidered edges surround small holes in a woven base cloth The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "intact fabric separates the openings"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "intact fabric separates the openings"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: intact fabric separates the openings",
+            "render_gate": {
+              "id": "vo_suf_sf098_v1_2",
+              "review_scale": "native",
+              "description": "intact fabric separates the openings The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the embroidered hole edges surround small openings in the woven base cloth"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the embroidered hole edges surround small openings in the woven base cloth"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the embroidered hole edges surround small openings in the woven base cloth",
+            "render_gate": {
+              "id": "vo_suf_sf098_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the embroidered hole edges surround small openings in the woven base cloth Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "온전한 바탕천 사이 자수 테두리 구멍",
+          "embroidered edges surround small holes in a woven base cloth; intact fabric separates the openings",
+          "eyelet embroidery holes"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_topology"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.details.embroidery"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.details.applique_embroidery_cutwork"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_topology"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "eyelet은 hardware 고리도 될 수 있어 문맥 구분; tulle의 layer volume와 한겹 transmission은 별도."
+      ]
+    },
+    {
+      "id": "suf_sf098_v2",
+      "category": "summer_textile_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "fine net threads enclose repeated openings; an opaque inner garment remains behind the net layer"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "fine net threads enclose repeated openings; an opaque inner garment remains behind the net layer"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "fine net threads enclose repeated openings; an opaque inner garment remains behind the net layer",
+        "paraphrase_examples": [
+          "불투명 이너 앞에 놓인 실 그물 구멍",
+          "fine net threads enclose repeated mesh openings",
+          "net layer over opaque inner garment"
+        ],
+        "visual_components": [
+          "fine net threads enclose repeated openings",
+          "an opaque inner garment remains behind the net layer",
+          "fine net threads enclose repeated mesh openings"
+        ],
+        "contrast_examples": [
+          "eyelet은 hardware 고리도 될 수 있어 문맥 구분; tulle의 layer volume와 한겹 transmission은 별도."
+        ],
+        "claim_limits": [
+          "실·바탕천·구멍·마감 경계가 원해상도에서 구별돼야 함.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "fine net threads enclose repeated openings"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "fine net threads enclose repeated openings"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: fine net threads enclose repeated openings",
+            "render_gate": {
+              "id": "vo_suf_sf098_v2_1",
+              "review_scale": "native",
+              "description": "fine net threads enclose repeated openings The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "an opaque inner garment remains behind the net layer"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "an opaque inner garment remains behind the net layer"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: an opaque inner garment remains behind the net layer",
+            "render_gate": {
+              "id": "vo_suf_sf098_v2_2",
+              "review_scale": "native",
+              "description": "an opaque inner garment remains behind the net layer The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "fine net threads enclose repeated mesh openings"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "fine net threads enclose repeated mesh openings"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: fine net threads enclose repeated mesh openings",
+            "render_gate": {
+              "id": "vo_suf_sf098_v2_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: fine net threads enclose repeated mesh openings Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "불투명 이너 앞에 놓인 실 그물 구멍",
+          "fine net threads enclose repeated openings; an opaque inner garment remains behind the net layer",
+          "net layer over opaque inner garment"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_topology"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layers.order"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layers.inner_coverage"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.transmission"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.surface.sheer_opacity"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_topology"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.transmission"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "eyelet은 hardware 고리도 될 수 있어 문맥 구분; tulle의 layer volume와 한겹 transmission은 별도."
+      ]
+    }
+  ]
+}

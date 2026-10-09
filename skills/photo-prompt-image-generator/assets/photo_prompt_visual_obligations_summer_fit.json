@@ -1,0 +1,855 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "description": "Independent selected visible garment, surface, layer and accessory relations.",
+  "profiles": [
+    {
+      "id": "suf_sf038_v1",
+      "category": "summer_fit_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "the fabric lightly follows the torso; small loose spans hang between its contact areas"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "the fabric lightly follows the torso; small loose spans hang between its contact areas"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the fabric lightly follows the torso; small loose spans hang between its contact areas",
+        "paraphrase_examples": [
+          "접촉 부위 사이에 여유가 남는 바디스키밍 원단",
+          "the body-skimming fabric hangs between its local torso contact areas",
+          "body-skimming fabric",
+          "바디스키밍"
+        ],
+        "visual_components": [
+          "the fabric lightly follows the torso",
+          "small loose spans hang between its contact areas",
+          "the body-skimming fabric hangs between its local torso contact areas"
+        ],
+        "contrast_examples": [
+          "새 체형을 생성하지 않으며 tight/압박/정확 치수는 별도."
+        ],
+        "claim_limits": [
+          "몸통의 옷 경계·접촉 구간·처지는 구간이 보이는 사선.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the fabric lightly follows the torso"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the fabric lightly follows the torso"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the fabric lightly follows the torso",
+            "render_gate": {
+              "id": "vo_suf_sf038_v1_1",
+              "review_scale": "native",
+              "description": "the fabric lightly follows the torso The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "small loose spans hang between its contact areas"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "small loose spans hang between its contact areas"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: small loose spans hang between its contact areas",
+            "render_gate": {
+              "id": "vo_suf_sf038_v1_2",
+              "review_scale": "native",
+              "description": "small loose spans hang between its contact areas The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the body-skimming fabric hangs between its local torso contact areas"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the body-skimming fabric hangs between its local torso contact areas"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the body-skimming fabric hangs between its local torso contact areas",
+            "render_gate": {
+              "id": "vo_suf_sf038_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the body-skimming fabric hangs between its local torso contact areas Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "접촉 부위 사이에 여유가 남는 바디스키밍 원단",
+          "the fabric lightly follows the torso; small loose spans hang between its contact areas",
+          "body-skimming fabric",
+          "바디스키밍"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.local_ease"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.drape"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.drape"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "새 체형을 생성하지 않으며 tight/압박/정확 치수는 별도."
+      ]
+    },
+    {
+      "id": "suf_sf039_v1",
+      "category": "summer_fit_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "opaque close-fitting fabric follows the torso and hip contour; the garment edge remains continuous across the covered areas"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "opaque close-fitting fabric follows the torso and hip contour; the garment edge remains continuous across the covered areas"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "opaque close-fitting fabric follows the torso and hip contour; the garment edge remains continuous across the covered areas",
+        "paraphrase_examples": [
+          "몸통과 힙을 가까이 따르는 몸판",
+          "the close-fitting fabric follows the torso and hip contour",
+          "opaque bodycon dress"
+        ],
+        "visual_components": [
+          "opaque close-fitting fabric follows the torso and hip contour",
+          "the garment edge remains continuous across the covered areas",
+          "the close-fitting fabric follows the torso and hip contour"
+        ],
+        "contrast_examples": [
+          "붙음은 비침·피부 노출·가슴/힙 확대가 아니며 stretch 섬유 조성은 미확인."
+        ],
+        "claim_limits": [
+          "불투명 원단의 경계와 주름 상태를 확인.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "opaque close-fitting fabric follows the torso and hip contour"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "opaque close-fitting fabric follows the torso and hip contour"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: opaque close-fitting fabric follows the torso and hip contour",
+            "render_gate": {
+              "id": "vo_suf_sf039_v1_1",
+              "review_scale": "native",
+              "description": "opaque close-fitting fabric follows the torso and hip contour The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the garment edge remains continuous across the covered areas"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the garment edge remains continuous across the covered areas"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the garment edge remains continuous across the covered areas",
+            "render_gate": {
+              "id": "vo_suf_sf039_v1_2",
+              "review_scale": "native",
+              "description": "the garment edge remains continuous across the covered areas The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the close-fitting fabric follows the torso and hip contour"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the close-fitting fabric follows the torso and hip contour"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the close-fitting fabric follows the torso and hip contour",
+            "render_gate": {
+              "id": "vo_suf_sf039_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the close-fitting fabric follows the torso and hip contour Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "몸통과 힙을 가까이 따르는 몸판",
+          "opaque close-fitting fabric follows the torso and hip contour; the garment edge remains continuous across the covered areas",
+          "opaque bodycon dress"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.local_ease"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.silhouette.body_contour"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.transmission"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.surface.sheer_opacity"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.transmission"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "붙음은 비침·피부 노출·가슴/힙 확대가 아니며 stretch 섬유 조성은 미확인."
+      ]
+    },
+    {
+      "id": "suf_sf040_v1",
+      "category": "summer_fit_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "broad fabric bands wrap around the bodice; their joined edges form visible horizontal panel boundaries"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "broad fabric bands wrap around the bodice; their joined edges form visible horizontal panel boundaries"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "broad fabric bands wrap around the bodice; their joined edges form visible horizontal panel boundaries",
+        "paraphrase_examples": [
+          "몸통을 두른 반복 수평 밴드의 드레스",
+          "the broad fabric bands join along their edges around the same bodice",
+          "bandage bodice",
+          "밴디지"
+        ],
+        "visual_components": [
+          "broad fabric bands wrap around the bodice",
+          "their joined edges form visible horizontal panel boundaries",
+          "the broad fabric bands join along their edges around the same bodice"
+        ],
+        "contrast_examples": [
+          "진짜 압박·의료 붕대·로프 결박·무조건 가로줄 프린트로 합치지 않는다."
+        ],
+        "claim_limits": [
+          "패널 부착 경계·겹침과 질감이 식별되는 근접면.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "broad fabric bands wrap around the bodice"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "broad fabric bands wrap around the bodice"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: broad fabric bands wrap around the bodice",
+            "render_gate": {
+              "id": "vo_suf_sf040_v1_1",
+              "review_scale": "native",
+              "description": "broad fabric bands wrap around the bodice The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "their joined edges form visible horizontal panel boundaries"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "their joined edges form visible horizontal panel boundaries"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: their joined edges form visible horizontal panel boundaries",
+            "render_gate": {
+              "id": "vo_suf_sf040_v1_2",
+              "review_scale": "native",
+              "description": "their joined edges form visible horizontal panel boundaries The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the broad fabric bands join along their edges around the same bodice"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the broad fabric bands join along their edges around the same bodice"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the broad fabric bands join along their edges around the same bodice",
+            "render_gate": {
+              "id": "vo_suf_sf040_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the broad fabric bands join along their edges around the same bodice Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "몸통을 두른 반복 수평 밴드의 드레스",
+          "broad fabric bands wrap around the bodice; their joined edges form visible horizontal panel boundaries",
+          "bandage bodice",
+          "밴디지"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.structure.band_panels"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.local_ease"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.garment_type"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.type"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "진짜 압박·의료 붕대·로프 결박·무조건 가로줄 프린트로 합치지 않는다."
+      ]
+    },
+    {
+      "id": "suf_sf041_v1",
+      "category": "summer_fit_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "the bodice narrows at the garment waist; the skirt panels flare outward below that seam"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "the bodice narrows at the garment waist; the skirt panels flare outward below that seam"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the bodice narrows at the garment waist; the skirt panels flare outward below that seam",
+        "paraphrase_examples": [
+          "좁은 허리 아래로 퍼지는 스커트",
+          "the skirt panels flare below the fitted garment waist",
+          "fit-and-flare dress"
+        ],
+        "visual_components": [
+          "the bodice narrows at the garment waist",
+          "the skirt panels flare outward below that seam",
+          "the skirt panels flare below the fitted garment waist"
+        ],
+        "contrast_examples": [
+          "hourglass 의복을 신체 형태 변경으로 해석하지 않는다; 모든 허리강조가 flare 아님."
+        ],
+        "claim_limits": [
+          "의복 허리와 상하부 폭을 한 시점에서 봄.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the bodice narrows at the garment waist"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the bodice narrows at the garment waist"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the bodice narrows at the garment waist",
+            "render_gate": {
+              "id": "vo_suf_sf041_v1_1",
+              "review_scale": "native",
+              "description": "the bodice narrows at the garment waist The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the skirt panels flare outward below that seam"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the skirt panels flare outward below that seam"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the skirt panels flare outward below that seam",
+            "render_gate": {
+              "id": "vo_suf_sf041_v1_2",
+              "review_scale": "native",
+              "description": "the skirt panels flare outward below that seam The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the skirt panels flare below the fitted garment waist"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the skirt panels flare below the fitted garment waist"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the skirt panels flare below the fitted garment waist",
+            "render_gate": {
+              "id": "vo_suf_sf041_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the skirt panels flare below the fitted garment waist Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "좁은 허리 아래로 퍼지는 스커트",
+          "the bodice narrows at the garment waist; the skirt panels flare outward below that seam",
+          "fit-and-flare dress"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.waist"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.silhouette.waist_to_hem"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.garment_type"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.waist_contact"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.type"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "hourglass 의복을 신체 형태 변경으로 해석하지 않는다; 모든 허리강조가 flare 아님."
+      ]
+    },
+    {
+      "id": "suf_sf042_v1",
+      "category": "summer_fit_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "soft oblique folds settle around the hips; the skirt fabric falls in a continuous fluid sheet"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "soft oblique folds settle around the hips; the skirt fabric falls in a continuous fluid sheet"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "soft oblique folds settle around the hips; the skirt fabric falls in a continuous fluid sheet",
+        "paraphrase_examples": [
+          "몸통을 스치며 사선 주름이 생긴 드레스",
+          "the hanging skirt fabric forms oblique soft folds around the hips"
+        ],
+        "visual_components": [
+          "soft oblique folds settle around the hips",
+          "the skirt fabric falls in a continuous fluid sheet",
+          "the hanging skirt fabric forms oblique soft folds around the hips"
+        ],
+        "contrast_examples": [
+          "45도는 true bias 정의이지 사진의 주름각 측정치 아님; 새틴·silk·bodycon과 독립."
+        ],
+        "claim_limits": [
+          "직물 결이 보이지 않으면 drape만 관찰하고 제작 방식은 NOT_OBSERVABLE.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "soft oblique folds settle around the hips"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "soft oblique folds settle around the hips"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: soft oblique folds settle around the hips",
+            "render_gate": {
+              "id": "vo_suf_sf042_v1_1",
+              "review_scale": "native",
+              "description": "soft oblique folds settle around the hips The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the skirt fabric falls in a continuous fluid sheet"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the skirt fabric falls in a continuous fluid sheet"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the skirt fabric falls in a continuous fluid sheet",
+            "render_gate": {
+              "id": "vo_suf_sf042_v1_2",
+              "review_scale": "native",
+              "description": "the skirt fabric falls in a continuous fluid sheet The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the hanging skirt fabric forms oblique soft folds around the hips"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the hanging skirt fabric forms oblique soft folds around the hips"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the hanging skirt fabric forms oblique soft folds around the hips",
+            "render_gate": {
+              "id": "vo_suf_sf042_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the hanging skirt fabric forms oblique soft folds around the hips Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "몸통을 스치며 사선 주름이 생긴 드레스",
+          "soft oblique folds settle around the hips; the skirt fabric falls in a continuous fluid sheet"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.drape"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.local_ease"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.drape"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "45도는 true bias 정의이지 사진의 주름각 측정치 아님; 새틴·silk·bodycon과 독립."
+      ]
+    },
+    {
+      "id": "suf_sf043_v1",
+      "category": "summer_fit_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "the boxy shirt side edges descend to a straight hem; the bodice remains roomy through the waist"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "the boxy shirt side edges descend to a straight hem; the bodice remains roomy through the waist"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the boxy shirt side edges descend to a straight hem; the bodice remains roomy through the waist",
+        "paraphrase_examples": [
+          "허리에 여유가 있고 곧은 밑단으로 내려가는 박시 셔츠",
+          "the boxy shirt side edges descend without narrowing to the straight lower hem",
+          "boxy shirt",
+          "박시 셔츠"
+        ],
+        "visual_components": [
+          "the boxy shirt side edges descend to a straight hem",
+          "the bodice remains roomy through the waist",
+          "the boxy shirt side edges descend without narrowing to the straight lower hem"
+        ],
+        "contrast_examples": [
+          "boxy가 항상 oversized는 아니며 긴 길이만으로 전부 과대 사이즈라 확정 못함."
+        ],
+        "claim_limits": [
+          "옷과 몸의 간격·어깨선·밑단을 함께 본다.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the boxy shirt side edges descend to a straight hem"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the boxy shirt side edges descend to a straight hem"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the boxy shirt side edges descend to a straight hem",
+            "render_gate": {
+              "id": "vo_suf_sf043_v1_1",
+              "review_scale": "native",
+              "description": "the boxy shirt side edges descend to a straight hem The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the bodice remains roomy through the waist"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the bodice remains roomy through the waist"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the bodice remains roomy through the waist",
+            "render_gate": {
+              "id": "vo_suf_sf043_v1_2",
+              "review_scale": "native",
+              "description": "the bodice remains roomy through the waist The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the boxy shirt side edges descend without narrowing to the straight lower hem"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the boxy shirt side edges descend without narrowing to the straight lower hem"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the boxy shirt side edges descend without narrowing to the straight lower hem",
+            "render_gate": {
+              "id": "vo_suf_sf043_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the boxy shirt side edges descend without narrowing to the straight lower hem Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "허리에 여유가 있고 곧은 밑단으로 내려가는 박시 셔츠",
+          "the boxy shirt side edges descend to a straight hem; the bodice remains roomy through the waist",
+          "boxy shirt",
+          "박시 셔츠"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.local_ease"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.silhouette.waist_to_hem"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.length.hem_shape"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "boxy가 항상 oversized는 아니며 긴 길이만으로 전부 과대 사이즈라 확정 못함."
+      ]
+    }
+  ]
+}

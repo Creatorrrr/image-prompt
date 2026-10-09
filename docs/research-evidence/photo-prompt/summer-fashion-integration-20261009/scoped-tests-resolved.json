@@ -1,0 +1,40 @@
+{
+  "status": "pass_after_evidence_dependency_repair",
+  "distinct_tests_passed": 185,
+  "execution_count": 186,
+  "initial_run": {
+    "modules": [
+      "tests.test_photo_summer_fashion_semantics",
+      "tests.test_photo_fashion_fit_semantics",
+      "tests.test_photo_autumn_fashion_semantics",
+      "tests.test_photo_swimwear_semantics",
+      "tests.test_photo_clothing_terminology_semantics",
+      "tests.test_photo_ornament_structure",
+      "tests.test_photo_textile_opacity_effect_scope",
+      "tests.test_photo_candidate_semantics",
+      "tests.test_photo_visual_profile_retrieval",
+      "tests.test_photo_visual_obligations",
+      "tests.test_photo_semantic_index",
+      "tests.test_photo_bm25f_retrieval",
+      "tests.test_photo_visual_profile_shards",
+      "tests.test_photo_runtime_freshness"
+    ],
+    "tests_run": 185,
+    "failures": [],
+    "errors": [
+      "test_maintenance_provenance_and_all_347_term_dispositions (tests.test_photo_autumn_fashion_semantics.AutumnFashionSemanticsTests.test_maintenance_provenance_and_all_347_term_dispositions)"
+    ],
+    "skipped": [],
+    "status": "fail",
+    "scope": "Data/retrieval/gate/freshness contracts; not native-image or requesting-user acceptance proof."
+  },
+  "resolved_setup_error": {
+    "test": "test_maintenance_provenance_and_all_347_term_dispositions (tests.test_photo_autumn_fashion_semantics.AutumnFashionSemanticsTests.test_maintenance_provenance_and_all_347_term_dispositions)",
+    "cause": "Untracked external autumn research JSON files were absent only from the isolated copy.",
+    "repair": "Copied the actual primary term-runtime-map.json and runtime-integration.json into the isolated test context without editing them or any test assertion.",
+    "targeted_rerun": "1 test passed",
+    "log": "autumn-evidence-check-repair.log"
+  },
+  "outstanding_failures": [],
+  "scope": "14 modules; source/index/retrieval/gate/freshness regressions, separate from native image qualification."
+}

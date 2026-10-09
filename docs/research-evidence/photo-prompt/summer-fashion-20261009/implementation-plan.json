@@ -1,0 +1,123 @@
+{
+  "status": "research_complete_implementation_not_started",
+  "baseline_head": "f081ac7305210def8348cc76d3a8f9f48393b4de",
+  "preferred_strategy": "reuse_domain_owners_before_creating_any_summer_extension",
+  "phases": [
+    {
+      "id": "W0",
+      "purpose": "원본 의미 동등성 및 source 소유권 확정",
+      "deliverable": "299행에서 재사용/수정/신규/명세-only 최종 판정; 166 drafts 중 실제 승격 수 결정",
+      "checks": [
+        "source snapshot 최신성 재확인",
+        "monokini historical/modern split",
+        "현재 lexical 이웃을 단어 일치로 병합하지 않기"
+      ]
+    },
+    {
+      "id": "W1",
+      "purpose": "핵심 경계와 잘못된 의미 전이 방지",
+      "cards": [
+        "SF002",
+        "SF005",
+        "SF028",
+        "SF035",
+        "SF037",
+        "SF050",
+        "SF051",
+        "SF054",
+        "SF079",
+        "SF080",
+        "SF081",
+        "SF083",
+        "SF085",
+        "SF093",
+        "SF098",
+        "SF112",
+        "SF118"
+      ],
+      "deliverable": "형상·앞뒤·층·끈·커버리지 독립 축, broad label/negation/homonym 반례"
+    },
+    {
+      "id": "W2",
+      "purpose": "기존 후보/프로필 관계 및 effect scope 보강",
+      "source_targets": [
+        "photo_prompt_swimwear_extension.json",
+        "photo_prompt_visual_obligations_swimwear.json",
+        "photo_prompt_clothing_structure_extension.json",
+        "photo_prompt_visual_obligations_clothing_structure.json",
+        "photo_prompt_fashion_fit_extension.json",
+        "photo_prompt_visual_obligations_fashion_fit.json",
+        "photo_prompt_portrait_fashion_exposure_extension.json",
+        "photo_prompt_visual_obligations_portrait_fashion_exposure.json"
+      ],
+      "deliverable": "concrete same-owner nodes, single directed relation, separately selected variants, complete affected-properties"
+    },
+    {
+      "id": "W3",
+      "purpose": "표면·장신구·스타일의 선택 후보 보완",
+      "source_targets": [
+        "photo_prompt_textile_surface_extension.json",
+        "photo_prompt_visual_obligations_textile_surface.json",
+        "photo_prompt_ornament_structure_extension.json",
+        "photo_prompt_visual_obligations_ornament_structure.json",
+        "photo_prompt_tags.json",
+        "photo_prompt_visual_obligations.json",
+        "photo_prompt_y2k_extension.json"
+      ],
+      "deliverable": "seersucker/eyelet/mesh/satin visible atoms, footwear/chain endpoint, optional style bundles",
+      "note": "y2k 파일 이름은 manifest에서 실제 등록명 재확인 후 선택; 새 계절별 중복 파일은 비용/이득이 확인될 때만."
+    },
+    {
+      "id": "W4",
+      "purpose": "파생 인덱스와 current runtime publication",
+      "deliverable": "source_manifest/maintenance_ref → semantic/BM25F index → visual profile index → current runtime receipt",
+      "constraints": [
+        "새/변경 semantic text만 embedding batch size 1",
+        "동일 provider/model/dimensions/전체 입력 text의 벡터만 재사용",
+        "stale dictionary/registry hash와 source_revision_pending를 은폐하지 않기",
+        "runtime snapshot 및 historical pack 불변 유지"
+      ]
+    },
+    {
+      "id": "W5",
+      "purpose": "검색·선택·composition 및 회귀 검증",
+      "deliverable": "비교/동시성/mutation를 실제 새 revision에 실행하고 증거 분리"
+    },
+    {
+      "id": "W6",
+      "purpose": "요청 범위에 따라 픽셀과 사용자 선호 확인",
+      "deliverable": "선택한 18개 pixel group의 비용/범위·gates 확정 후 native full image와 crops 평가; 별도 사용자 acceptance",
+      "note": "이번 연구는 이미지 생성을 요청하지 않았으므로 생성·비용 지출은 실행하지 않음"
+    }
+  ],
+  "scoped_existing_tests": [
+    "tests/test_photo_fashion_fit_semantics.py",
+    "tests/test_photo_swimwear_semantics.py",
+    "tests/test_photo_clothing_terminology_semantics.py",
+    "tests/test_photo_ornament_structure.py",
+    "tests/test_photo_textile_opacity_effect_scope.py",
+    "tests/test_photo_womens_summer_trend_visual_semantics.py",
+    "tests/test_photo_candidate_semantics.py",
+    "tests/test_photo_visual_profile_retrieval.py",
+    "tests/test_photo_visual_profile_shards.py",
+    "tests/test_photo_runtime_freshness.py"
+  ],
+  "counts": {
+    "seed_rows": 299,
+    "semantic_cards": 118,
+    "candidate_drafts": 166,
+    "source_rows": 68,
+    "comparison_pairs": 57,
+    "allowed_combinations": 16,
+    "mutations": 15,
+    "pixel_groups": 18
+  },
+  "promotion_conditions": [
+    "term-plan의 related_family_draft_ids는 같은 가족의 검토 인벤토리다. 각 용어와 각 변형의 동등성·compatible 부분 속성을 별도로 확정한 뒤 직접 매핑한다.",
+    "새 profile은 bare term로 hard 활성화하지 않는다; 명시 requester 의미/complete selected variant 근거가 필요.",
+    "등록 후보는 연구 URL·출처 제목·연구 라벨·원문 bulk 어휘를 semantic fields에 넣지 않는다.",
+    "선택형 bundle은 모든 member와 허용된 전체 effects를 확보; candidate/profile label 자체는 hard 근거가 아님.",
+    "가림/작은 해상도/부분 성공은 all-of PASS가 아님; performance/hidden process를 픽셀 claim으로 만들지 않음.",
+    "runtime/검색/픽셀/미학/사용자 acceptance가 없으면 그 층의 성공을 주장하지 않는다."
+  ]
+}

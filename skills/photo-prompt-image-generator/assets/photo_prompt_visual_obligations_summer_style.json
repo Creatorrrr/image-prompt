@@ -1,0 +1,949 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "description": "Independent selected visible garment, surface, layer and accessory relations.",
+  "profiles": [
+    {
+      "id": "suf_sf107_v1",
+      "category": "summer_style_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a light roomy shirt layers over a simple sleeveless top; straight trousers continue below the shirt hem"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "a light roomy shirt layers over a simple sleeveless top; straight trousers continue below the shirt hem"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "a light roomy shirt layers over a simple sleeveless top; straight trousers continue below the shirt hem",
+        "paraphrase_examples": [
+          "민소매 상의 위의 여유 있는 독립 셔츠",
+          "the light outer shirt layers over the simple sleeveless top"
+        ],
+        "visual_components": [
+          "a light roomy shirt layers over a simple sleeveless top",
+          "straight trousers continue below the shirt hem",
+          "the light outer shirt layers over the simple sleeveless top"
+        ],
+        "contrast_examples": [
+          "grandmother는 나이·혈연이 아니며 resort/nautical이 해변·요트·계층을 강제하지 않는다."
+        ],
+        "claim_limits": [
+          "선택된 옷의 요소만 확인; 장소·연령·생활습관은 독립 요청.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a light roomy shirt layers over a simple sleeveless top"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a light roomy shirt layers over a simple sleeveless top"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: a light roomy shirt layers over a simple sleeveless top",
+            "render_gate": {
+              "id": "vo_suf_sf107_v1_1",
+              "review_scale": "native",
+              "description": "a light roomy shirt layers over a simple sleeveless top The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "straight trousers continue below the shirt hem"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "straight trousers continue below the shirt hem"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: straight trousers continue below the shirt hem",
+            "render_gate": {
+              "id": "vo_suf_sf107_v1_2",
+              "review_scale": "native",
+              "description": "straight trousers continue below the shirt hem The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the light outer shirt layers over the simple sleeveless top"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the light outer shirt layers over the simple sleeveless top"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the light outer shirt layers over the simple sleeveless top",
+            "render_gate": {
+              "id": "vo_suf_sf107_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the light outer shirt layers over the simple sleeveless top Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "민소매 상의 위의 여유 있는 독립 셔츠",
+          "a light roomy shirt layers over a simple sleeveless top; straight trousers continue below the shirt hem"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.garment_type"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layers.order"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.local_ease"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.structure.sleeve.length"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.silhouette.leg_width"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.type"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.length.sleeve"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.sleeves.sleeve_length"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "grandmother는 나이·혈연이 아니며 resort/nautical이 해변·요트·계층을 강제하지 않는다."
+      ]
+    },
+    {
+      "id": "suf_sf108_v1",
+      "category": "summer_style_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "small ribbon bows attach at the blouse neckline; a soft wrap skirt overlaps at the waist"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "small ribbon bows attach at the blouse neckline; a soft wrap skirt overlaps at the waist"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "small ribbon bows attach at the blouse neckline; a soft wrap skirt overlaps at the waist",
+        "paraphrase_examples": [
+          "목둘레 리본과 허리에서 겹치는 랩 스커트",
+          "small ribbon bows attach at the same blouse neckline"
+        ],
+        "visual_components": [
+          "small ribbon bows attach at the blouse neckline",
+          "a soft wrap skirt overlaps at the waist",
+          "small ribbon bows attach at the same blouse neckline"
+        ],
+        "contrast_examples": [
+          "style label이 나이·성적 의도·전원 장소·전부 pink/puff인 all-of 묶음을 만들지 않는다."
+        ],
+        "claim_limits": [
+          "실제로 선택한 장식의 의복 부착과 층 연결만 확인.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "small ribbon bows attach at the blouse neckline"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "small ribbon bows attach at the blouse neckline"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: small ribbon bows attach at the blouse neckline",
+            "render_gate": {
+              "id": "vo_suf_sf108_v1_1",
+              "review_scale": "native",
+              "description": "small ribbon bows attach at the blouse neckline The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a soft wrap skirt overlaps at the waist"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a soft wrap skirt overlaps at the waist"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: a soft wrap skirt overlaps at the waist",
+            "render_gate": {
+              "id": "vo_suf_sf108_v1_2",
+              "review_scale": "native",
+              "description": "a soft wrap skirt overlaps at the waist The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "small ribbon bows attach at the same blouse neckline"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "small ribbon bows attach at the same blouse neckline"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: small ribbon bows attach at the same blouse neckline",
+            "render_gate": {
+              "id": "vo_suf_sf108_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: small ribbon bows attach at the same blouse neckline Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "목둘레 리본과 허리에서 겹치는 랩 스커트",
+          "small ribbon bows attach at the blouse neckline; a soft wrap skirt overlaps at the waist"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.garment_type"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.details.ribbon_attachment"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layers.order"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.structure.panel_overlap"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.drape"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.type"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.structure.wrap_overlap"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.drape"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "style label이 나이·성적 의도·전원 장소·전부 pink/puff인 all-of 묶음을 만들지 않는다."
+      ]
+    },
+    {
+      "id": "suf_sf109_v1",
+      "category": "summer_style_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a western belt sits over the light dress waist; cowboy-style boots remain separate footwear below the hem"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "a western belt sits over the light dress waist; cowboy-style boots remain separate footwear below the hem"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "a western belt sits over the light dress waist; cowboy-style boots remain separate footwear below the hem",
+        "paraphrase_examples": [
+          "드레스 허리의 웨스턴 벨트와 독립 부츠",
+          "the western belt sits over the waist of the light summer dress",
+          "western belt and cowboy boots"
+        ],
+        "visual_components": [
+          "a western belt sits over the light dress waist",
+          "cowboy-style boots remain separate footwear below the hem",
+          "the western belt sits over the waist of the light summer dress"
+        ],
+        "contrast_examples": [
+          "Y2K=whale tail 필수 아님; mermaidcore=꼬리 아님; cowgirl 직업·tomato 실제 식물·girl 나이를 추론하지 않는다."
+        ],
+        "claim_limits": [
+          "선택한 신발/허리띠/색/장식만 이미지에서 확인.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a western belt sits over the light dress waist"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a western belt sits over the light dress waist"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: a western belt sits over the light dress waist",
+            "render_gate": {
+              "id": "vo_suf_sf109_v1_1",
+              "review_scale": "native",
+              "description": "a western belt sits over the light dress waist The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "cowboy-style boots remain separate footwear below the hem"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "cowboy-style boots remain separate footwear below the hem"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: cowboy-style boots remain separate footwear below the hem",
+            "render_gate": {
+              "id": "vo_suf_sf109_v1_2",
+              "review_scale": "native",
+              "description": "cowboy-style boots remain separate footwear below the hem The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the western belt sits over the waist of the light summer dress"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the western belt sits over the waist of the light summer dress"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the western belt sits over the waist of the light summer dress",
+            "render_gate": {
+              "id": "vo_suf_sf109_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the western belt sits over the waist of the light summer dress Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "드레스 허리의 웨스턴 벨트와 독립 부츠",
+          "a western belt sits over the light dress waist; cowboy-style boots remain separate footwear below the hem",
+          "western belt and cowboy boots"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "accessories.belt"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "footwear.type"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "Y2K=whale tail 필수 아님; mermaidcore=꼬리 아님; cowgirl 직업·tomato 실제 식물·girl 나이를 추론하지 않는다."
+      ]
+    },
+    {
+      "id": "suf_sf109_v2",
+      "category": "summer_style_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "pearl-like embellishments attach to sea-colored fabric; soft iridescent highlights follow the garment folds"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "pearl-like embellishments attach to sea-colored fabric; soft iridescent highlights follow the garment folds"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "pearl-like embellishments attach to sea-colored fabric; soft iridescent highlights follow the garment folds",
+        "paraphrase_examples": [
+          "물빛 직물에 붙인 진주형 장식",
+          "the pearl-like embellishments attach to the sea-colored fabric surface",
+          "pearl ornaments on sea-colored fabric"
+        ],
+        "visual_components": [
+          "pearl-like embellishments attach to sea-colored fabric",
+          "soft iridescent highlights follow the garment folds",
+          "the pearl-like embellishments attach to the sea-colored fabric surface"
+        ],
+        "contrast_examples": [
+          "Y2K=whale tail 필수 아님; mermaidcore=꼬리 아님; cowgirl 직업·tomato 실제 식물·girl 나이를 추론하지 않는다."
+        ],
+        "claim_limits": [
+          "선택한 신발/허리띠/색/장식만 이미지에서 확인.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "pearl-like embellishments attach to sea-colored fabric"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "pearl-like embellishments attach to sea-colored fabric"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: pearl-like embellishments attach to sea-colored fabric",
+            "render_gate": {
+              "id": "vo_suf_sf109_v2_1",
+              "review_scale": "native",
+              "description": "pearl-like embellishments attach to sea-colored fabric The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "soft iridescent highlights follow the garment folds"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "soft iridescent highlights follow the garment folds"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: soft iridescent highlights follow the garment folds",
+            "render_gate": {
+              "id": "vo_suf_sf109_v2_2",
+              "review_scale": "native",
+              "description": "soft iridescent highlights follow the garment folds The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the pearl-like embellishments attach to the sea-colored fabric surface"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the pearl-like embellishments attach to the sea-colored fabric surface"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the pearl-like embellishments attach to the sea-colored fabric surface",
+            "render_gate": {
+              "id": "vo_suf_sf109_v2_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the pearl-like embellishments attach to the sea-colored fabric surface Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "물빛 직물에 붙인 진주형 장식",
+          "pearl-like embellishments attach to sea-colored fabric; soft iridescent highlights follow the garment folds",
+          "pearl ornaments on sea-colored fabric"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material",
+          "color"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.details.embellishment"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_luster"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.color"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_luster"
+          },
+          {
+            "dimension": "color",
+            "target": "main_subject",
+            "property": "wardrobe.color"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "Y2K=whale tail 필수 아님; mermaidcore=꼬리 아님; cowgirl 직업·tomato 실제 식물·girl 나이를 추론하지 않는다."
+      ]
+    },
+    {
+      "id": "suf_sf110_v1",
+      "category": "summer_style_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "the sports jersey has a loose short-sleeved body; its hem rests above a separate denim waistband"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "the sports jersey has a loose short-sleeved body; its hem rests above a separate denim waistband"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "the sports jersey has a loose short-sleeved body; its hem rests above a separate denim waistband",
+        "paraphrase_examples": [
+          "데님 허리선 위로 떨어지는 짧은 소매 저지",
+          "the sports jersey hem rests above the separate denim waistband",
+          "loose sports jersey above denim waist"
+        ],
+        "visual_components": [
+          "the sports jersey has a loose short-sleeved body",
+          "its hem rests above a separate denim waistband",
+          "the sports jersey hem rests above the separate denim waistband"
+        ],
+        "contrast_examples": [
+          "실제 운동·팀 소속·성별·기능 성능·야외 배경을 이름만으로 강제하지 않는다."
+        ],
+        "claim_limits": [
+          "selected polo/pleated/skort/jersey/utility 등의 실제 형태만.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the sports jersey has a loose short-sleeved body"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the sports jersey has a loose short-sleeved body"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the sports jersey has a loose short-sleeved body",
+            "render_gate": {
+              "id": "vo_suf_sf110_v1_1",
+              "review_scale": "native",
+              "description": "the sports jersey has a loose short-sleeved body The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "its hem rests above a separate denim waistband"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "its hem rests above a separate denim waistband"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: its hem rests above a separate denim waistband",
+            "render_gate": {
+              "id": "vo_suf_sf110_v1_2",
+              "review_scale": "native",
+              "description": "its hem rests above a separate denim waistband The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the sports jersey hem rests above the separate denim waistband"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the sports jersey hem rests above the separate denim waistband"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the sports jersey hem rests above the separate denim waistband",
+            "render_gate": {
+              "id": "vo_suf_sf110_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the sports jersey hem rests above the separate denim waistband Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "데님 허리선 위로 떨어지는 짧은 소매 저지",
+          "the sports jersey has a loose short-sleeved body; its hem rests above a separate denim waistband",
+          "loose sports jersey above denim waist"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.garment_type"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.structure.sleeve.length"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.length.top_hem"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layers.order"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.waistline.height"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.local_ease"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.type"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.length.sleeve"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.sleeves.sleeve_length"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.top.hem_relative_to_waist"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.length.bodice_lower_edge"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.waistband_landmark"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "실제 운동·팀 소속·성별·기능 성능·야외 배경을 이름만으로 강제하지 않는다."
+      ]
+    },
+    {
+      "id": "suf_sf111_v1",
+      "category": "summer_style_selected_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a black openwork layer lies over an opaque inner dress; the airy outer holes reveal the covered inner layer"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "complete_selected_variant",
+              "any_terms": [
+                "a black openwork layer lies over an opaque inner dress; the airy outer holes reveal the covered inner layer"
+              ]
+            }
+          ]
+        }
+      },
+      "semantics": {
+        "definition": "a black openwork layer lies over an opaque inner dress; the airy outer holes reveal the covered inner layer",
+        "paraphrase_examples": [
+          "불투명 이너 드레스 위의 검정 오픈워크 층",
+          "the black openwork layer lies over the same opaque inner dress",
+          "black openwork over opaque dress"
+        ],
+        "visual_components": [
+          "a black openwork layer lies over an opaque inner dress",
+          "the airy outer holes reveal the covered inner layer",
+          "the black openwork layer lies over the same opaque inner dress"
+        ],
+        "contrast_examples": [
+          "quiet luxury가 실제 가격·재력·브랜드 보증을 뜻하지 않는다. black·mesh·chain은 공격성·강요·폭력 증거 아님."
+        ],
+        "claim_limits": [
+          "선택한 재단·표면·레이어를 관찰; 심리·경제 상태는 평가하지 않음.",
+          "One selected variant; alternatives never form a combined obligation.",
+          "Garment appearance does not establish identity, body dimensions, age, fiber composition, hidden construction, performance or change history."
+        ]
+      },
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a black openwork layer lies over an opaque inner dress"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a black openwork layer lies over an opaque inner dress"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: a black openwork layer lies over an opaque inner dress",
+            "render_gate": {
+              "id": "vo_suf_sf111_v1_1",
+              "review_scale": "native",
+              "description": "a black openwork layer lies over an opaque inner dress The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the airy outer holes reveal the covered inner layer"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the airy outer holes reveal the covered inner layer"
+            ],
+            "min_content_words": 3,
+            "instruction": "Realize this selected visible construction: the airy outer holes reveal the covered inner layer",
+            "render_gate": {
+              "id": "vo_suf_sf111_v1_2",
+              "review_scale": "native",
+              "description": "the airy outer holes reveal the covered inner layer The declared garment and boundary must be visible in this saved image; occluded or partial evidence is not a pass."
+            }
+          },
+          {
+            "id": "owner_relation",
+            "match_terms": [
+              "the black openwork layer lies over the same opaque inner dress"
+            ],
+            "evidence_field": "owner_relation_phrase",
+            "evidence_terms": [
+              "the black openwork layer lies over the same opaque inner dress"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the declared owner and both relationship endpoints visible: the black openwork layer lies over the same opaque inner dress",
+            "render_gate": {
+              "id": "vo_suf_sf111_v1_owner",
+              "review_scale": "native",
+              "description": "Read both endpoints and their connection on the same declared garment, layer or accessory: the black openwork layer lies over the same opaque inner dress Hidden endpoints or a different owner are not a pass."
+            }
+          }
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "불투명 이너 드레스 위의 검정 오픈워크 층",
+          "a black openwork layer lies over an opaque inner dress; the airy outer holes reveal the covered inner layer",
+          "black openwork over opaque dress"
+        ],
+        "core_assertion_discovery": true,
+        "affected_dimensions": [
+          "appearance",
+          "material",
+          "color"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.garment_type"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.color"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_topology"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layers.order"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layers.inner_coverage"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.type"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_topology"
+          },
+          {
+            "dimension": "color",
+            "target": "main_subject",
+            "property": "wardrobe.color"
+          }
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "quiet luxury가 실제 가격·재력·브랜드 보증을 뜻하지 않는다. black·mesh·chain은 공격성·강요·폭력 증거 아님."
+      ]
+    }
+  ]
+}
