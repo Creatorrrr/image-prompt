@@ -1,0 +1,261 @@
+{
+  "status": "pass",
+  "parent_audit": {
+    "composed_audit": {
+      "status": "pass",
+      "quality_status": "warn",
+      "pack_id": "b512e20ec4d187ef",
+      "chosen_candidate_count": 0,
+      "chosen_visual_concept_ids": [
+        "visual-concept:vg_face_hands_place_readability_profile"
+      ],
+      "effective_visual_contract_sha256": "bcfc815f0243ec8262b3a45971967d1955d4ab18f636f4ee8042fc4cc9749b6d",
+      "render_repair_contract_sha256": null,
+      "failures": [],
+      "warnings": [
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "autumn layering"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "a complex moment of visible cause and effect"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "a person guided by the supplied face and hair reference"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "The supplied image guides visible facial appearance and hairstyle"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "The face has the reference's rounded oval shape, brown eyes, small straight nose and softly shaped lips"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "Short black bobbed hair and fine forehead bangs follow the reference silhouette"
+        }
+      ]
+    },
+    "runtime_audit": {
+      "schema_version": "photo-image-render-request-audit/v1",
+      "pack_id": "b512e20ec4d187ef",
+      "status": "pass",
+      "runtime_prompt_id": "73112591ee282669",
+      "source_intent_lock_sha256": "8f651b65e57192be2c1f7f5731801c9b4c47b55bcce2455a851c8e32d26edfe2",
+      "render_repair_contract_sha256": null,
+      "negative_matches_pack": true,
+      "effective_visual_contract_sha256": "bcfc815f0243ec8262b3a45971967d1955d4ab18f636f4ee8042fc4cc9749b6d",
+      "selected_visual_concept_ids": [
+        "visual-concept:vg_face_hands_place_readability_profile"
+      ],
+      "reference_count": 1,
+      "failures": [],
+      "boundary": "This audit verifies exact text and reference bytes before generation. It does not inspect rendered pixels or establish user-perceived quality."
+    },
+    "effective_visual": {
+      "enabled": true,
+      "contract_version": "photo-visual-obligations/v1",
+      "scope": "request_only",
+      "strict_gate_set": true,
+      "obligations": [
+        {
+          "id": "vg_face_hands_place_readability_profile",
+          "category": "owner_bound_visual_relation",
+          "activation": {
+            "source": "composer_opt_in",
+            "scope": "request_only",
+            "source_intent_ids": []
+          },
+          "composition_instruction": "Keep this complete visible relation on its declared owner: the face remains readable within the selected crop. Keep this complete visible relation on its declared owner: the action-bearing hand and contact remain recognizable. Keep this complete visible relation on its declared owner: one existing place cue retains enough form to identify the setting.",
+          "component_semantics": {
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "component_1",
+              "component_2",
+              "component_3"
+            ],
+            "groups": [
+              {
+                "id": "component_1",
+                "any_terms": [
+                  "the face remains readable within the selected crop",
+                  "선택된 크롭 안에서 얼굴이 읽힌다",
+                  "face",
+                  "얼굴"
+                ]
+              },
+              {
+                "id": "component_2",
+                "any_terms": [
+                  "the action-bearing hand and contact remain recognizable",
+                  "행동을 담당하는 손과 접촉점이 알아보인다",
+                  "hand",
+                  "contact",
+                  "손"
+                ]
+              },
+              {
+                "id": "component_3",
+                "any_terms": [
+                  "one existing place cue retains enough form to identify the setting",
+                  "기존 장소 단서 하나가 장소를 읽을 만큼 형태를 유지한다",
+                  "place cue",
+                  "setting",
+                  "장소 단서"
+                ]
+              }
+            ]
+          },
+          "prompt_binding": {
+            "composed_field": "visual_obligation_evidence",
+            "required_evidence_fields": [
+              "component_1_phrase",
+              "component_2_phrase",
+              "component_3_phrase"
+            ],
+            "minimum_distinct_evidence_phrases": 3,
+            "prompt_evidence_must_be_literal": true,
+            "maximum_pairwise_content_token_overlap_ratio": 0.82,
+            "forbidden_filler_phrases": [
+              "visible evidence",
+              "visual evidence",
+              "required cue",
+              "prompt phrase"
+            ]
+          },
+          "evidence_requirements": {
+            "component_1_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "the face remains readable within the selected crop",
+                "선택된 크롭 안에서 얼굴이 읽힌다",
+                "face",
+                "얼굴"
+              ]
+            },
+            "component_2_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "the action-bearing hand and contact remain recognizable",
+                "행동을 담당하는 손과 접촉점이 알아보인다",
+                "hand",
+                "contact",
+                "손"
+              ]
+            },
+            "component_3_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "one existing place cue retains enough form to identify the setting",
+                "기존 장소 단서 하나가 장소를 읽을 만큼 형태를 유지한다",
+                "place cue",
+                "setting",
+                "장소 단서"
+              ]
+            }
+          },
+          "runtime_expression": {
+            "default_mode": "definition_with_optional_label",
+            "prompt_label_terms": [],
+            "forbidden_prompt_terms": [],
+            "runtime_forbidden_labels": []
+          },
+          "render_gates": [
+            {
+              "id": "vo_vg_face_hands_place_readability_1",
+              "review_scale": "both",
+              "description": "Inspect the saved pixels for the face remains readable within the selected crop. Occluded, disconnected or partial realization fails; naming an object alone does not prove this relation."
+            },
+            {
+              "id": "vo_vg_face_hands_place_readability_2",
+              "review_scale": "both",
+              "description": "Inspect the saved pixels for the action-bearing hand and contact remain recognizable. Occluded, disconnected or partial realization fails; naming an object alone does not prove this relation."
+            },
+            {
+              "id": "vo_vg_face_hands_place_readability_3",
+              "review_scale": "both",
+              "description": "Inspect the saved pixels for one existing place cue retains enough form to identify the setting. Occluded, disconnected or partial realization fails; naming an object alone does not prove this relation."
+            }
+          ],
+          "reject_substitutes": [
+            "a sharp face with a blurred contact point",
+            "a uniformly sharp inventory of the entire background"
+          ]
+        }
+      ],
+      "required_hard_gates": [
+        "vo_vg_face_hands_place_readability_1",
+        "vo_vg_face_hands_place_readability_2",
+        "vo_vg_face_hands_place_readability_3"
+      ],
+      "selected_visual_concept_ids": [
+        "visual-concept:vg_face_hands_place_readability_profile"
+      ]
+    },
+    "contract_failures": [],
+    "repair": null,
+    "character": null,
+    "character_gates": [],
+    "embodiment_gates": [
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "visual_review_audit": {
+      "schema_version": "moe-render-review/v1",
+      "pack_id": "b512e20ec4d187ef",
+      "contract_version": "photo-visual-obligations/v1",
+      "qualification_status": "failed_technical_hard_gates",
+      "technical_qualified": false,
+      "representative_eligible": false,
+      "required_hard_gate_count": 8,
+      "required_hard_gates": [
+        "vo_vg_face_hands_place_readability_1",
+        "vo_vg_face_hands_place_readability_2",
+        "vo_vg_face_hands_place_readability_3",
+        "embodiment_body_ownership",
+        "embodiment_joint_chain_and_reach",
+        "embodiment_support_and_balance",
+        "embodiment_contact_and_space",
+        "embodiment_visibility_and_projection"
+      ],
+      "source_character_response_contract_sha256": null,
+      "effective_visual_contract_sha256": "bcfc815f0243ec8262b3a45971967d1955d4ab18f636f4ee8042fc4cc9749b6d",
+      "selected_visual_concept_ids": [
+        "visual-concept:vg_face_hands_place_readability_profile"
+      ],
+      "failed_hard_gates": [
+        {
+          "gate": "embodiment_contact_and_space",
+          "status": "fail",
+          "evidence": "At native scale, the far left hand rests on or just behind the wooden heddle/frame rather than pinching a slack pale weft loop at the cloth edge. The near shuttle is held outside and above the warp region; its emergence through a clear open shed is not demonstrated. The specified simultaneous loop-and-receive contacts are therefore missing, despite a readable shuttle grip."
+        },
+        {
+          "gate": "embodiment_visibility_and_projection",
+          "status": "fail",
+          "evidence": "At native scale, the far thumb/forefinger and required slack-loop endpoint are hidden or missing behind the loom's top rail, and the shuttle passage cannot be traced through separated upper/lower warp layers. The projection does not permit assessment of the critical intended contacts. Partial visibility fails."
+        }
+      ],
+      "schema_failures": [],
+      "user_judgment": {
+        "baseline_available": false,
+        "genuinely_moe": "pending",
+        "better_than_baseline": "not_applicable",
+        "source": "not_yet_received",
+        "evidence": "The requesting user has not evaluated this generated result; agent observations are separate."
+      },
+      "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+    }
+  }
+}

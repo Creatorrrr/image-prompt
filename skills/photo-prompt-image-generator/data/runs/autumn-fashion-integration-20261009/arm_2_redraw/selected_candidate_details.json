@@ -1,0 +1,236 @@
+{
+  "contract_version": "photo-composer-view/v2",
+  "mode": "candidate_details",
+  "source_pack_id": "b512e20ec4d187ef",
+  "source_pack_sha256": "0766e0ccbe27a650bb112135e0f6e4e62a9d0cf2a9ee784a33b8852fcd7ae468",
+  "candidates": [
+    {
+      "id": "slot:wardrobe_style:autumn_afr006_v1_candidate",
+      "source_pointer": "/slots/wardrobe_style/candidates/0",
+      "candidate": {
+        "id": "slot:wardrobe_style:autumn_afr006_v1_candidate",
+        "slot": "wardrobe_style",
+        "entry_id": "autumn_afr006_v1_candidate",
+        "tags": [
+          "clothing"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "An open shell jacket reveals the fleece collar of the same wearer's inner layer."
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "An open shell jacket reveals the fleece collar of the same wearer's inner layer."
+        ],
+        "relations": [
+          {
+            "id": "autumn_afr006_v1_owner_relation",
+            "type": "reveal_inner_layer",
+            "subject": "open shell front",
+            "object": "same wearer's fleece collar"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance",
+          "material"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.garment_type"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.structure.front_fastener_state"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_relief"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.details.layer_order"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.surface_relief"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "visual-concept:vg_face_hands_place_readability_profile",
+      "source_pointer": "/visual_concept_candidates/candidates/8",
+      "candidate": {
+        "id": "visual-concept:vg_face_hands_place_readability_profile",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "행동을 담당하는 손과 접촉점이 알아보인다",
+          "선택된 크롭 안에서 얼굴이 읽힌다",
+          "one existing place cue retains enough form to identify the setting",
+          "the action-bearing hand and contact remain recognizable",
+          "기존 장소 단서 하나가 장소를 읽을 만큼 형태를 유지한다",
+          "얼굴·행동 손·장소 단서의 공동 가독성",
+          "the face remains readable within the selected crop"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "camera",
+            "target": "camera",
+            "property": "optical.focus"
+          }
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "vg_face_hands_place_readability_profile",
+            "category": "owner_bound_visual_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Keep this complete visible relation on its declared owner: the face remains readable within the selected crop. Keep this complete visible relation on its declared owner: the action-bearing hand and contact remain recognizable. Keep this complete visible relation on its declared owner: one existing place cue retains enough form to identify the setting.",
+            "component_semantics": {
+              "minimum_component_groups": 3,
+              "required_group_ids": [
+                "component_1",
+                "component_2",
+                "component_3"
+              ],
+              "groups": [
+                {
+                  "id": "component_1",
+                  "any_terms": [
+                    "the face remains readable within the selected crop",
+                    "선택된 크롭 안에서 얼굴이 읽힌다",
+                    "face",
+                    "얼굴"
+                  ]
+                },
+                {
+                  "id": "component_2",
+                  "any_terms": [
+                    "the action-bearing hand and contact remain recognizable",
+                    "행동을 담당하는 손과 접촉점이 알아보인다",
+                    "hand",
+                    "contact",
+                    "손"
+                  ]
+                },
+                {
+                  "id": "component_3",
+                  "any_terms": [
+                    "one existing place cue retains enough form to identify the setting",
+                    "기존 장소 단서 하나가 장소를 읽을 만큼 형태를 유지한다",
+                    "place cue",
+                    "setting",
+                    "장소 단서"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "component_1_phrase",
+                "component_2_phrase",
+                "component_3_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 3,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "component_1_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "the face remains readable within the selected crop",
+                  "선택된 크롭 안에서 얼굴이 읽힌다",
+                  "face",
+                  "얼굴"
+                ]
+              },
+              "component_2_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "the action-bearing hand and contact remain recognizable",
+                  "행동을 담당하는 손과 접촉점이 알아보인다",
+                  "hand",
+                  "contact",
+                  "손"
+                ]
+              },
+              "component_3_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "one existing place cue retains enough form to identify the setting",
+                  "기존 장소 단서 하나가 장소를 읽을 만큼 형태를 유지한다",
+                  "place cue",
+                  "setting",
+                  "장소 단서"
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_vg_face_hands_place_readability_1",
+                "review_scale": "both",
+                "description": "Inspect the saved pixels for the face remains readable within the selected crop. Occluded, disconnected or partial realization fails; naming an object alone does not prove this relation."
+              },
+              {
+                "id": "vo_vg_face_hands_place_readability_2",
+                "review_scale": "both",
+                "description": "Inspect the saved pixels for the action-bearing hand and contact remain recognizable. Occluded, disconnected or partial realization fails; naming an object alone does not prove this relation."
+              },
+              {
+                "id": "vo_vg_face_hands_place_readability_3",
+                "review_scale": "both",
+                "description": "Inspect the saved pixels for one existing place cue retains enough form to identify the setting. Occluded, disconnected or partial realization fails; naming an object alone does not prove this relation."
+              }
+            ],
+            "reject_substitutes": [
+              "a sharp face with a blurred contact point",
+              "a uniformly sharp inventory of the entire background"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "view_sha256": "97603aaeeed218f19d2969f03fd03d31ac05643db2c1871956a0acba26fe6173"
+}

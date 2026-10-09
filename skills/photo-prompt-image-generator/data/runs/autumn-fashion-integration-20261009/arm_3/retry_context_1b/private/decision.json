@@ -1,0 +1,73 @@
+{
+  "schema_version": "photo-repair-decision/v1",
+  "current_source_span_ids": [
+    "concept"
+  ],
+  "source_text": "각각 서로 다른 컨셉으로 이번에 반영한 주제가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+  "preserved_dimensions": [
+    "concept",
+    "subject",
+    "event",
+    "reference_use",
+    "appearance",
+    "material",
+    "action",
+    "setting"
+  ],
+  "allowed_changes": [
+    "pose",
+    "body_geometry",
+    "camera",
+    "framing",
+    "composition"
+  ],
+  "requester_corrected_dimensions": [],
+  "allowed_properties": [
+    {
+      "dimension": "pose",
+      "target": "main_subject",
+      "property": "pose.working_arm_orientation"
+    },
+    {
+      "dimension": "body_geometry",
+      "target": "main_subject",
+      "property": "hands.local_contact_geometry"
+    },
+    {
+      "dimension": "camera",
+      "target": "camera",
+      "property": "viewpoint.direction"
+    },
+    {
+      "dimension": "framing",
+      "target": "camera",
+      "property": "crop.contact_and_outfit_visibility"
+    },
+    {
+      "dimension": "composition",
+      "target": "main_subject",
+      "property": "occlusion.contact_and_waist_landmarks"
+    }
+  ],
+  "local_axes": [
+    "local_pose",
+    "contact_geometry",
+    "camera",
+    "framing",
+    "occlusion"
+  ],
+  "failed_gate_ids": [
+    "vo_pr_fabric_tension_fold_attachment_2",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ],
+  "failure_class": "unobservable_required_scale",
+  "additional_invocation_limit": 1,
+  "obligation_dimensions": {
+    "pr_fabric_tension_fold_attachment": [
+      "appearance",
+      "material",
+      "action"
+    ]
+  }
+}
