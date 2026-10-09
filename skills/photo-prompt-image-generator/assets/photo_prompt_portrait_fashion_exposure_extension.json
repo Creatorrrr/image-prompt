@@ -1153,6 +1153,132 @@
           "appearance",
           "material"
         ]
+      },
+      {
+        "id": "spf_sf039_02",
+        "ko": "상의 밑단 바로 아래의 작은 아래가슴 피부 영역",
+        "en": "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge. The visible textile edge belongs to that same top and remains distinct from the skin contour.",
+        "weight": 0.35,
+        "aliases": [
+          "상의 밑단 바로 아래의 작은 아래가슴 피부 영역"
+        ],
+        "keywords": [
+          "상의 밑단 바로 아래의 작은 아래가슴 피부 영역",
+          "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge. The visible textile edge belongs to that same top and remains distinct from the skin contour.",
+          "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge.",
+          "The visible textile edge belongs to that same top and remains distinct from the skin contour.",
+          "underside breast skin",
+          "same top lower edge",
+          "언더붑",
+          "Underboob"
+        ],
+        "embedding_text": "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge. The visible textile edge belongs to that same top and remains distinct from the skin contour. | 상의 밑단 바로 아래의 작은 아래가슴 피부 영역 | A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge. | The visible textile edge belongs to that same top and remains distinct from the skin contour. | Optional fashion term lookup for this visible variant: 언더붑 | Underboob",
+        "concept_units": [
+          "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge.",
+          "The visible textile edge belongs to that same top and remains distinct from the skin contour."
+        ],
+        "relations": [
+          {
+            "id": "sf039_02_edge_1",
+            "type": "visible_below",
+            "subject": "adult_wearer_A.lower_breast.skin_region",
+            "object": "top_A.lower_edge"
+          }
+        ],
+        "tags": [
+          "clothing",
+          "human"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.lower_breast"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "for_any": [
+          "human"
+        ],
+        "requires_all_tags": [
+          "human",
+          "adult"
+        ],
+        "requires_primary_any_tags": [
+          "human"
+        ]
+      },
+      {
+        "id": "spf_sf039_01",
+        "ko": "성인 상의 옆 경계 밖에 보이는 작은 측면 가슴 피부",
+        "en": "the adult wearer's top side edge ends beside a small lateral breast region; that lateral skin region is visibly outside the same top boundary.",
+        "weight": 0.35,
+        "tags": [
+          "clothing"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "성인 상의 옆 경계 밖에 보이는 작은 측면 가슴 피부",
+          "the adult wearer's top side edge ends beside a small lateral breast region; that lateral skin region is visibly outside the same top boundary."
+        ],
+        "keywords": [
+          "성인 상의 옆 경계 밖에 보이는 작은 측면 가슴 피부",
+          "the adult wearer's top side edge ends beside a small lateral breast region; that lateral skin region is visibly outside the same top boundary.",
+          "the adult wearer's top side edge ends beside a small lateral breast region",
+          "that lateral skin region is visibly outside the same top boundary",
+          "사이드붑",
+          "Sideboob"
+        ],
+        "embedding_text": "성인 상의 옆 경계 밖에 보이는 작은 측면 가슴 피부 | the adult wearer's top side edge ends beside a small lateral breast region; that lateral skin region is visibly outside the same top boundary. | the adult wearer's top side edge ends beside a small lateral breast region | that lateral skin region is visibly outside the same top boundary | Optional fashion term lookup for this visible variant: 사이드붑 | Sideboob",
+        "concept_units": [
+          "the adult wearer's top side edge ends beside a small lateral breast region",
+          "that lateral skin region is visibly outside the same top boundary"
+        ],
+        "relations": [
+          {
+            "id": "declared_owner",
+            "type": "declared_owner_scope",
+            "subject": "adult_top",
+            "object": "main_subject"
+          },
+          {
+            "id": "edge_01",
+            "type": "beside",
+            "subject": "top.side_edge",
+            "object": "adult_wearer.lateral_breast"
+          },
+          {
+            "id": "edge_02",
+            "type": "outside",
+            "subject": "adult_wearer.visible_lateral_skin",
+            "object": "top.side_boundary"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.coverage.side_breast"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.top.side_edge"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "requires_all_tags": [
+          "human",
+          "adult"
+        ]
       }
     ],
     "subject_framing": [
@@ -2698,11 +2824,119 @@
           "object": "all adopted component relations in one photograph"
         }
       ]
+    },
+    {
+      "id": "spf_sf039_02_bundle",
+      "primary_visual_proposition": "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge. The visible textile edge belongs to that same top and remains distinct from the skin contour.",
+      "hard_profile_ids": [
+        "spring_sf039_02"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge."
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "The visible textile edge belongs to that same top and remains distinct from the skin contour."
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "spf_sf039_02"
+      ],
+      "candidate_slots": {
+        "spf_sf039_02": "garment_detail"
+      },
+      "confusion_boundaries": [
+        "An underbust seam, corset worn over a blouse, midriff skin or a cup shadow does not supply underside-breast exposure."
+      ],
+      "source_keywords": [
+        "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge. The visible textile edge belongs to that same top and remains distinct from the skin contour.",
+        "상의 밑단 바로 아래의 작은 아래가슴 피부 영역",
+        "A small underside-breast skin region of the declared adult wearer is visible directly bethe low top's lower fabric edge.",
+        "The visible textile edge belongs to that same top and remains distinct from the skin contour.",
+        "underside breast skin",
+        "same top lower edge",
+        "언더붑",
+        "Underboob"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only",
+      "relations": [
+        {
+          "id": "sf039_02_edge_1",
+          "type": "visible_below",
+          "subject": "adult_wearer_A.lower_breast.skin_region",
+          "object": "top_A.lower_edge"
+        }
+      ]
+    },
+    {
+      "id": "spf_sf039_01_bundle",
+      "primary_visual_proposition": "the adult wearer's top side edge ends beside a small lateral breast region; that lateral skin region is visibly outside the same top boundary.",
+      "hard_profile_ids": [
+        "spring_sf039_01"
+      ],
+      "component_groups": [
+        {
+          "id": "component_01",
+          "visible_evidence": [
+            "the adult wearer's top side edge ends beside a small lateral breast region"
+          ]
+        },
+        {
+          "id": "component_02",
+          "visible_evidence": [
+            "that lateral skin region is visibly outside the same top boundary"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "spf_sf039_01"
+      ],
+      "candidate_slots": {
+        "spf_sf039_01": "garment_detail"
+      },
+      "confusion_boundaries": [
+        "An underbust seam, skin-colored lining or dark side shadow does not establish this skin location; the inner visible surface must be inspected."
+      ],
+      "source_keywords": [
+        "성인 상의 옆 경계 밖에 보이는 작은 측면 가슴 피부",
+        "the adult wearer's top side edge ends beside a small lateral breast region; that lateral skin region is visibly outside the same top boundary.",
+        "사이드붑",
+        "Sideboob"
+      ],
+      "candidate_only": true,
+      "activation_mode": "independent_component_request_evidence_only",
+      "relations": [
+        {
+          "id": "declared_owner",
+          "type": "declared_owner_scope",
+          "subject": "adult_top",
+          "object": "main_subject"
+        },
+        {
+          "id": "edge_01",
+          "type": "beside",
+          "subject": "top.side_edge",
+          "object": "adult_wearer.lateral_breast"
+        },
+        {
+          "id": "edge_02",
+          "type": "outside",
+          "subject": "adult_wearer.visible_lateral_skin",
+          "object": "top.side_boundary"
+        }
+      ]
     }
   ],
   "maintenance_ref": {
     "contract_version": "photo-extension-maintenance-ref/v1",
-    "record_id": "photo_prompt_portrait_fashion_exposure_extension",
-    "sha256": "06010b439942432fc1bcafe9088b4e64160858df44531854808e96a5c7340fc3"
+    "record_id": "photo_prompt_portrait_fashion_exposure_extension-spring-publication-20261009-v3",
+    "sha256": "4387af04229960ead8c79f4043740ac0bfb4a55b9886f26eb0c114996782d3e8"
   }
 }

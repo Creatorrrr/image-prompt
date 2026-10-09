@@ -1,0 +1,138 @@
+setUpClass (tests.test_photo_ct073_boundary_history.CT073BoundaryHistoryTests) ... ERROR
+test_exact_terms_activate_and_negations_or_confusers_fail_closed (tests.test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_exact_terms_activate_and_negations_or_confusers_fail_closed) ... ok
+test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract (tests.test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract) ... FAIL
+test_generated_index_is_registry_bound_for_new_profile (tests.test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_generated_index_is_registry_bound_for_new_profile) ... ok
+test_independent_makeup_axes_retain_reference_candidates (tests.test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_independent_makeup_axes_retain_reference_candidates) ... ok
+test_profile_is_an_eight_component_fail_closed_pixel_contract (tests.test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_profile_is_an_eight_component_fail_closed_pixel_contract) ... ok
+test_semantics_do_not_encode_demographic_or_value_inference (tests.test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_semantics_do_not_encode_demographic_or_value_inference) ... ok
+test_source_observation_is_hash_bound_and_identity_independent (tests.test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_source_observation_is_hash_bound_and_identity_independent) ... ERROR
+setUpClass (tests.test_photo_muted_color_boundary_history.MutedColorBoundaryHistoryTests) ... ERROR
+setUpClass (tests.test_photo_runtime_boundary_history.RuntimeBoundaryHistoryTests) ... ERROR
+test_registration_preserves_both_load_orders_and_required_policy (tests.test_photo_structure_maintenance.PhotoSourceManifestTests.test_registration_preserves_both_load_orders_and_required_policy) ... FAIL
+test_aggregate_validator_does_not_hide_partial_pixel_qualification (tests.test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification) ... ERROR
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_ct073_boundary_history.CT073BoundaryHistoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/test_photo_ct073_boundary_history.py", line 39, in setUpClass
+    archived = fixtures.archived_v25_validator(root, source_root=ROOT)
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_prompt_fixtures.py", line 1425, in archived_v25_validator
+    manifest = materialize_v25_parent_source(directory, source_root=source_root)
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_prompt_fixtures.py", line 1408, in materialize_v25_parent_source
+    _v24_verified_payload(source_root, row)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_prompt_fixtures.py", line 856, in _v24_verified_payload
+    raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json
+
+======================================================================
+ERROR: test_source_observation_is_hash_bound_and_identity_independent (tests.test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_source_observation_is_hash_bound_and_identity_independent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/test_photo_makeup_reference_balance.py", line 133, in test_source_observation_is_hash_bound_and_identity_independent
+    (RUN_ROOT / "shared" / "source_observation.json").read_text(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        encoding="utf-8"
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/artifacts/photo-runs/20260831-makeup-reference-five-arm-v1/shared/source_observation.json'
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_muted_color_boundary_history.MutedColorBoundaryHistoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/test_photo_muted_color_boundary_history.py", line 38, in setUpClass
+    cls.validator = fixtures.archived_v28_validator(cls.source_root)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_prompt_fixtures.py", line 2030, in archived_v28_validator
+    manifest = materialize_v28_parent_source(directory, source_root=source_root)
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_prompt_fixtures.py", line 2016, in materialize_v28_parent_source
+    _v24_verified_payload(source_root, row)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_prompt_fixtures.py", line 856, in _v24_verified_payload
+    raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/SKILL.md
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_runtime_boundary_history.RuntimeBoundaryHistoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/test_photo_runtime_boundary_history.py", line 27, in setUpClass
+    cls.original_validator = fixtures.archived_v29_validator(cls.original_root)
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_prompt_fixtures.py", line 1789, in archived_v29_validator
+    manifest = materialize_v29_parent_source(directory, source_root=source_root)
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_prompt_fixtures.py", line 1744, in materialize_v29_parent_source
+    _v24_verified_payload(source_root, row)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_prompt_fixtures.py", line 856, in _v24_verified_payload
+    raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json
+
+======================================================================
+ERROR: test_aggregate_validator_does_not_hide_partial_pixel_qualification (tests.test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/test_subculture_illustration_contract_v1.py", line 504, in test_aggregate_validator_does_not_hide_partial_pixel_qualification
+    summary = validate_all(ASSET_ROOT)
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 13956, in validate_all
+    photo_regression = validate_photo_regression_baseline(root)
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 8776, in validate_photo_regression_baseline
+    completed = subprocess.run(
+        actual_command,
+    ...<5 lines>...
+        timeout=60,
+    )
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 554, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1038, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1989, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: '.venv/bin/python'
+
+======================================================================
+FAIL: test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract (tests.test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/test_photo_makeup_reference_balance.py", line 150, in test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract
+    self.assertEqual(len(core_paths), 5)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 5
+
+======================================================================
+FAIL: test_registration_preserves_both_load_orders_and_required_policy (tests.test_photo_structure_maintenance.PhotoSourceManifestTests.test_registration_preserves_both_load_orders_and_required_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/test_photo_structure_maintenance.py", line 142, in test_registration_preserves_both_load_orders_and_required_policy
+    self.assertEqual(list(sources.extension_files("candidate")), original["candidate"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['pho[3022 chars]json', 'photo_prompt_selfie_pose_extension.jso[41 chars]son'] != ['pho[3022 chars]json']
+
+First list contains 2 additional elements.
+First extra element 64:
+'photo_prompt_selfie_pose_extension.json'
+
+Diff is 3505 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 9 tests in 48.391s
+
+FAILED (failures=2, errors=5)

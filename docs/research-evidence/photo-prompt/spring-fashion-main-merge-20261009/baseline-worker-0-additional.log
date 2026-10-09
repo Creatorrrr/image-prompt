@@ -1,0 +1,79 @@
+test_original_v34_assertions_replay_without_revision (tests.test_photo_data_scope_v34_boundary_history.OriginalV34BoundaryReplayTests.test_original_v34_assertions_replay_without_revision) ... FAIL
+test_acceptance_binds_lexical_gain_dense_cost_and_all_attempts (tests.test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_acceptance_binds_lexical_gain_dense_cost_and_all_attempts) ... ok
+test_bare_names_and_independent_probe_texts_remain_frozen (tests.test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_bare_names_and_independent_probe_texts_remain_frozen) ... ok
+test_complete_raw_extension_has_only_one_alias_append (tests.test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_complete_raw_extension_has_only_one_alias_append) ... ok
+test_current_semantic_surface_preserves_frozen_krummholz_meaning (tests.test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_current_semantic_surface_preserves_frozen_krummholz_meaning) ... ok
+test_exact_frozen_scope_queries_and_budget (tests.test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_exact_frozen_scope_queries_and_budget) ... ok
+test_historical_merged_state_and_current_ten_keeps_are_exact (tests.test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_historical_merged_state_and_current_ten_keeps_are_exact) ... FAIL
+test_previous_reef_correction_and_all_other_source_rows_remain_intact (tests.test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_previous_reef_correction_and_all_other_source_rows_remain_intact) ... ok
+test_specialization_existing_names_and_every_other_field_are_preserved (tests.test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_specialization_existing_names_and_every_other_field_are_preserved) ... ok
+setUpClass (tests.test_photo_scene_budget_boundary_history.SceneBudgetBoundaryHistoryTests) ... ERROR
+setUpClass (tests.test_photo_scene_budget_boundary_history.V25ArchivedSceneParentTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_scene_budget_boundary_history.SceneBudgetBoundaryHistoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/test_photo_scene_budget_boundary_history.py", line 33, in setUpClass
+    archived = fixtures.archived_v26_validator(root, source_root=ROOT)
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_prompt_fixtures.py", line 1523, in archived_v26_validator
+    manifest = materialize_v26_parent_source(directory, source_root=source_root)
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_prompt_fixtures.py", line 1506, in materialize_v26_parent_source
+    _v24_verified_payload(source_root, row)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_prompt_fixtures.py", line 856, in _v24_verified_payload
+    raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/SKILL.md
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_scene_budget_boundary_history.V25ArchivedSceneParentTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/test_photo_scene_budget_boundary_history.py", line 160, in setUpClass
+    cls.validator = fixtures.archived_v25_validator(cls.root, source_root=ROOT)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_prompt_fixtures.py", line 1425, in archived_v25_validator
+    manifest = materialize_v25_parent_source(directory, source_root=source_root)
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_prompt_fixtures.py", line 1408, in materialize_v25_parent_source
+    _v24_verified_payload(source_root, row)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_prompt_fixtures.py", line 856, in _v24_verified_payload
+    raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json
+
+======================================================================
+FAIL: test_original_v34_assertions_replay_without_revision (tests.test_photo_data_scope_v34_boundary_history.OriginalV34BoundaryReplayTests.test_original_v34_assertions_replay_without_revision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/test_photo_data_scope_v34_boundary_history.py", line 14, in test_original_v34_assertions_replay_without_revision
+    history.materialize_original(tree,source_root=ROOT,link_verified=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_ethereal_history_v35.py", line 92, in materialize_original
+    for row in parent['members']:exact_payload(source_root,row)
+                                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/photo_ethereal_history_v35.py", line 47, in exact_payload
+    if path.stat().st_mode&0o7777!=int(row['mode'][-3:],8) or len(raw)!=row['bytes'] or digest(raw)!=row['sha256'] or blob!=row['git_blob']:raise AssertionError('Frozen V35 original source payload or mode drift: '+row['path'])
+                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 original source payload or mode drift: skills/photo-prompt-image-generator/SKILL.md
+
+======================================================================
+FAIL: test_historical_merged_state_and_current_ten_keeps_are_exact (tests.test_photo_krummholz_korean_alias_data_cleanup.KrummholzKoreanAliasDataCleanupTests.test_historical_merged_state_and_current_ten_keeps_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.cache/image-prompt/spring-fashion-publication-20261009/origin-main-baseline/tests/test_photo_krummholz_korean_alias_data_cleanup.py", line 77, in test_historical_merged_state_and_current_ten_keeps_are_exact
+    self.assertEqual(fixtures.bundle_meanings(fixtures.seduction_historical_bundles(self.current['candidate_bundles']), within=historical),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     fixtures.bundle_meanings(historical))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [{'id[532808 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[703605 chars]ly'}] != [{'id[532808 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[703586 chars]ly'}]
+
+First differing element 307:
+{'id'[817 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[87 chars]nly'}
+{'id'[817 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[68 chars]nly'}
+
+Diff is 2223582 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 9 tests in 9.846s
+
+FAILED (failures=2, errors=2)

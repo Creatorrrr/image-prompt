@@ -4073,6 +4073,625 @@
           "자수",
           "옷"
         ]
+      },
+      {
+        "id": "spf_sf090_03",
+        "ko": "한 의복 경계의 반복 둥근 스캘럽",
+        "en": "The actual edge of the garment repeats a sequence of rounded scallops.",
+        "weight": 0.35,
+        "aliases": [
+          "한 의복 경계의 반복 둥근 스캘럽"
+        ],
+        "keywords": [
+          "한 의복 경계의 반복 둥근 스캘럽",
+          "The actual edge of the garment repeats a sequence of rounded scallops.",
+          "rounded scalloped edge",
+          "스캘럽 에지",
+          "Scalloped edge"
+        ],
+        "embedding_text": "The actual edge of the garment repeats a sequence of rounded scallops. | 한 의복 경계의 반복 둥근 스캘럽 | Optional fashion term lookup for this visible variant: 스캘럽 에지 | Scalloped edge",
+        "concept_units": [
+          "The actual edge of the garment repeats a sequence of rounded scallops."
+        ],
+        "relations": [
+          {
+            "id": "sf090_03_edge_1",
+            "type": "form",
+            "subject": "garment_A.rounded_scallops",
+            "object": "garment_A.free_edge"
+          }
+        ],
+        "tags": [
+          "clothing",
+          "human"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.edge.contour"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "spf_sf091_03",
+        "ko": "같은 앞판에 붙은 두 고리와 중앙 매듭의 리본",
+        "en": "Two ribbon loops of the bow meet at its central knot. That knot visibly attaches to the garment's front.",
+        "weight": 0.35,
+        "aliases": [
+          "같은 앞판에 붙은 두 고리와 중앙 매듭의 리본"
+        ],
+        "keywords": [
+          "같은 앞판에 붙은 두 고리와 중앙 매듭의 리본",
+          "Two ribbon loops of the bow meet at its central knot. That knot visibly attaches to the garment's front.",
+          "Two ribbon loops of the bow meet at its central knot.",
+          "That knot visibly attaches to the garment's front.",
+          "two ribbon loops",
+          "front bow attachment",
+          "보 디테일",
+          "Bow detail"
+        ],
+        "embedding_text": "Two ribbon loops of the bow meet at its central knot. That knot visibly attaches to the garment's front. | 같은 앞판에 붙은 두 고리와 중앙 매듭의 리본 | Two ribbon loops of the bow meet at its central knot. | That knot visibly attaches to the garment's front. | Optional fashion term lookup for this visible variant: 보 디테일 | Bow detail",
+        "concept_units": [
+          "Two ribbon loops of the bow meet at its central knot.",
+          "That knot visibly attaches to the garment's front."
+        ],
+        "relations": [
+          {
+            "id": "sf091_03_edge_1",
+            "type": "joins",
+            "subject": "bow_A.loop_left",
+            "object": "bow_A.central_knot"
+          },
+          {
+            "id": "sf091_03_edge_2",
+            "type": "joins",
+            "subject": "bow_A.loop_right",
+            "object": "bow_A.central_knot"
+          },
+          {
+            "id": "sf091_03_edge_3",
+            "type": "attaches_to",
+            "subject": "bow_A.central_knot",
+            "object": "garment_A.front"
+          }
+        ],
+        "tags": [
+          "clothing",
+          "human"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.ornament.bow_topology"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.ornament.attachment"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "spf_sf093_02",
+        "ko": "한 묶음 머리에서 이어져 내려오는 태슬 실",
+        "en": "A bundle of loose strands hangs from one tied head of the tassel. The head attaches at one point on its declared carrier.",
+        "weight": 0.35,
+        "aliases": [
+          "한 묶음 머리에서 이어져 내려오는 태슬 실"
+        ],
+        "keywords": [
+          "한 묶음 머리에서 이어져 내려오는 태슬 실",
+          "A bundle of loose strands hangs from one tied head of the tassel. The head attaches at one point on its declared carrier.",
+          "A bundle of loose strands hangs from one tied head of the tassel.",
+          "The head attaches at one point on its declared carrier.",
+          "strands tied tassel head",
+          "tassel carrier anchor",
+          "프린지·태슬",
+          "Fringe / Tassel"
+        ],
+        "embedding_text": "A bundle of loose strands hangs from one tied head of the tassel. The head attaches at one point on its declared carrier. | 한 묶음 머리에서 이어져 내려오는 태슬 실 | A bundle of loose strands hangs from one tied head of the tassel. | The head attaches at one point on its declared carrier. | Optional fashion term lookup for this visible variant: 프린지·태슬 | Fringe / Tassel",
+        "concept_units": [
+          "A bundle of loose strands hangs from one tied head of the tassel.",
+          "The head attaches at one point on its declared carrier."
+        ],
+        "relations": [
+          {
+            "id": "sf093_02_edge_1",
+            "type": "descend_from",
+            "subject": "tassel_A.strands",
+            "object": "tassel_A.tied_head"
+          },
+          {
+            "id": "sf093_02_edge_2",
+            "type": "attaches_to",
+            "subject": "tassel_A.tied_head",
+            "object": "declared_carrier_A"
+          }
+        ],
+        "tags": [
+          "clothing",
+          "human"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.trim.tassel_topology"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.trim.attachment"
+          }
+        ],
+        "core_assertion_discovery": true,
+        "for_any": [
+          "human"
+        ]
+      },
+      {
+        "id": "spf_sf090_1",
+        "ko": "같은 의복 밑단에 봉합 경계로 붙은 별도 레이스 띠",
+        "en": "A separate lace strip joins the same garment hem along a readable cloth attachment line; Its lace boundary remains distinct from the base garment cloth.",
+        "weight": 0.35,
+        "aliases": [
+          "같은 의복 밑단에 봉합 경계로 붙은 별도 레이스 띠",
+          "A separate lace strip joins the same garment hem along a readable cloth attachment line; Its lace boundary remains distinct from the base garment cloth."
+        ],
+        "keywords": [
+          "같은 의복 밑단에 봉합 경계로 붙은 별도 레이스 띠",
+          "A separate lace strip joins the same garment hem along a readable cloth attachment line",
+          "Its lace boundary remains distinct from the base garment cloth",
+          "레이스 트림",
+          "Lace trim"
+        ],
+        "embedding_text": "같은 의복 밑단에 봉합 경계로 붙은 별도 레이스 띠 | selected garment | A separate lace strip joins the same garment hem along a readable cloth attachment line | Its lace boundary remains distinct from the base garment cloth | Optional fashion term lookup for this visible variant: 레이스 트림 | Lace trim",
+        "concept_units": [
+          "A separate lace strip joins the same garment hem along a readable cloth attachment line",
+          "Its lace boundary remains distinct from the base garment cloth"
+        ],
+        "relations": [
+          {
+            "id": "existing_wearer_scope",
+            "type": "belongs_to_existing_wearer",
+            "subject": "selected garment",
+            "object": "main_subject"
+          },
+          {
+            "id": "sf090_1_relation_1",
+            "type": "attached_along",
+            "subject": "selected lace strip upper edge",
+            "object": "selected garment hem"
+          },
+          {
+            "id": "sf090_1_relation_2",
+            "type": "distinct_from",
+            "subject": "selected lace strip",
+            "object": "selected base garment cloth"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.trim.connection"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.trim.layer_boundary"
+          }
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "spf_sf091_1",
+        "ko": "같은 바탕 원단 위에 별도 가장자리가 있는 직물 모티프가 붙음",
+        "en": "A separate cloth motif lies attached over the selected base cloth; The motif has its own readable perimeter above that base surface.",
+        "weight": 0.35,
+        "aliases": [
+          "같은 바탕 원단 위에 별도 가장자리가 있는 직물 모티프가 붙음",
+          "A separate cloth motif lies attached over the selected base cloth; The motif has its own readable perimeter above that base surface."
+        ],
+        "keywords": [
+          "같은 바탕 원단 위에 별도 가장자리가 있는 직물 모티프가 붙음",
+          "A separate cloth motif lies attached over the selected base cloth",
+          "The motif has its own readable perimeter above that base surface",
+          "아플리케",
+          "Appliqué"
+        ],
+        "embedding_text": "같은 바탕 원단 위에 별도 가장자리가 있는 직물 모티프가 붙음 | selected garment ornament | A separate cloth motif lies attached over the selected base cloth | The motif has its own readable perimeter above that base surface | Optional fashion term lookup for this visible variant: 아플리케 | Appliqué",
+        "concept_units": [
+          "A separate cloth motif lies attached over the selected base cloth",
+          "The motif has its own readable perimeter above that base surface"
+        ],
+        "relations": [
+          {
+            "id": "existing_wearer_scope",
+            "type": "belongs_to_existing_wearer",
+            "subject": "selected garment ornament",
+            "object": "main_subject"
+          },
+          {
+            "id": "sf091_1_relation_1",
+            "type": "attached_over",
+            "subject": "selected separate cloth motif",
+            "object": "selected garment base cloth"
+          },
+          {
+            "id": "sf091_1_relation_2",
+            "type": "distinct_from",
+            "subject": "selected motif perimeter",
+            "object": "selected base cloth surface"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.ornament.attachment"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.ornament.layer_boundary"
+          }
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "spf_sf093_3",
+        "ko": "같은 의복 봉제선을 따라 붙은 좁게 솟은 파이핑",
+        "en": "A narrow raised piping ridge follows the same garment joining seam; That ridge remains attached along the seam path.",
+        "weight": 0.35,
+        "aliases": [
+          "같은 의복 봉제선을 따라 붙은 좁게 솟은 파이핑",
+          "A narrow raised piping ridge follows the same garment joining seam; That ridge remains attached along the seam path."
+        ],
+        "keywords": [
+          "같은 의복 봉제선을 따라 붙은 좁게 솟은 파이핑",
+          "A narrow raised piping ridge follows the same garment joining seam",
+          "That ridge remains attached along the seam path",
+          "파이핑",
+          "Piping"
+        ],
+        "embedding_text": "같은 의복 봉제선을 따라 붙은 좁게 솟은 파이핑 | selected garment seam | A narrow raised piping ridge follows the same garment joining seam | That ridge remains attached along the seam path | Optional fashion term lookup for this visible variant: 파이핑 | Piping",
+        "concept_units": [
+          "A narrow raised piping ridge follows the same garment joining seam",
+          "That ridge remains attached along the seam path"
+        ],
+        "relations": [
+          {
+            "id": "existing_wearer_scope",
+            "type": "belongs_to_existing_wearer",
+            "subject": "selected garment seam",
+            "object": "main_subject"
+          },
+          {
+            "id": "sf093_3_relation_1",
+            "type": "follows_and_attaches_to",
+            "subject": "selected piping ridge",
+            "object": "selected garment joining seam"
+          }
+        ],
+        "tags": [
+          "clothing"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.trim.seam_route"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.trim.raised_profile"
+          }
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "spf_sf090_02",
+        "ko": "작은 원단 구멍을 둘러싸는 보이는 자수 스티치",
+        "en": "small openings interrupt the same garment fabric surface; visible embroidery stitches surround the rims of those openings.",
+        "weight": 0.35,
+        "tags": [
+          "clothing"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "작은 원단 구멍을 둘러싸는 보이는 자수 스티치",
+          "small openings interrupt the same garment fabric surface; visible embroidery stitches surround the rims of those openings."
+        ],
+        "keywords": [
+          "작은 원단 구멍을 둘러싸는 보이는 자수 스티치",
+          "small openings interrupt the same garment fabric surface; visible embroidery stitches surround the rims of those openings.",
+          "small openings interrupt the same garment fabric surface",
+          "visible embroidery stitches surround the rims of those openings",
+          "아이렛·브로드리 앙글레즈",
+          "Eyelet / Broderie anglaise"
+        ],
+        "embedding_text": "작은 원단 구멍을 둘러싸는 보이는 자수 스티치 | small openings interrupt the same garment fabric surface; visible embroidery stitches surround the rims of those openings. | small openings interrupt the same garment fabric surface | visible embroidery stitches surround the rims of those openings | Optional fashion term lookup for this visible variant: 아이렛·브로드리 앙글레즈 | Eyelet / Broderie anglaise",
+        "concept_units": [
+          "small openings interrupt the same garment fabric surface",
+          "visible embroidery stitches surround the rims of those openings"
+        ],
+        "relations": [
+          {
+            "id": "declared_owner",
+            "type": "declared_owner_scope",
+            "subject": "garment_surface",
+            "object": "main_subject"
+          },
+          {
+            "id": "edge_01",
+            "type": "within",
+            "subject": "garment_surface.small_openings",
+            "object": "garment_surface.fabric"
+          },
+          {
+            "id": "edge_02",
+            "type": "surrounds",
+            "subject": "garment_surface.embroidery_stitches",
+            "object": "garment_surface.opening_rims"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.embroidery.hole_border"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.textile.open_space_pattern"
+          }
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "spf_sf091_02",
+        "ko": "목선에 부착된 작은 입체 직물 로제트",
+        "en": "rolled fabric folds form a small raised rosette; the rosette base attaches to the same garment neckline.",
+        "weight": 0.35,
+        "tags": [
+          "clothing"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "목선에 부착된 작은 입체 직물 로제트",
+          "rolled fabric folds form a small raised rosette; the rosette base attaches to the same garment neckline."
+        ],
+        "keywords": [
+          "목선에 부착된 작은 입체 직물 로제트",
+          "rolled fabric folds form a small raised rosette; the rosette base attaches to the same garment neckline.",
+          "rolled fabric folds form a small raised rosette",
+          "the rosette base attaches to the same garment neckline",
+          "로제트",
+          "Rosette"
+        ],
+        "embedding_text": "목선에 부착된 작은 입체 직물 로제트 | rolled fabric folds form a small raised rosette; the rosette base attaches to the same garment neckline. | rolled fabric folds form a small raised rosette | the rosette base attaches to the same garment neckline | Optional fashion term lookup for this visible variant: 로제트 | Rosette",
+        "concept_units": [
+          "rolled fabric folds form a small raised rosette",
+          "the rosette base attaches to the same garment neckline"
+        ],
+        "relations": [
+          {
+            "id": "declared_owner",
+            "type": "declared_owner_scope",
+            "subject": "garment",
+            "object": "main_subject"
+          },
+          {
+            "id": "edge_01",
+            "type": "forms",
+            "subject": "garment.rosette.rolled_folds",
+            "object": "garment.rosette.raised_volume"
+          },
+          {
+            "id": "edge_02",
+            "type": "attached_to",
+            "subject": "garment.rosette.base",
+            "object": "garment.neckline"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.ornament.attachment"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.ornament.structure"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.ornament.scale"
+          }
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "spf_sf093_01",
+        "ko": "의복 가장자리에서 각각 내려오는 연속 술 가닥",
+        "en": "separate fringe strands start continuously from the garment edge; the individual strands hang below that same attachment line.",
+        "weight": 0.35,
+        "tags": [
+          "clothing"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "의복 가장자리에서 각각 내려오는 연속 술 가닥",
+          "separate fringe strands start continuously from the garment edge; the individual strands hang below that same attachment line."
+        ],
+        "keywords": [
+          "의복 가장자리에서 각각 내려오는 연속 술 가닥",
+          "separate fringe strands start continuously from the garment edge; the individual strands hang below that same attachment line.",
+          "separate fringe strands start continuously from the garment edge",
+          "the individual strands hang below that same attachment line",
+          "프린지·태슬",
+          "Fringe / Tassel"
+        ],
+        "embedding_text": "의복 가장자리에서 각각 내려오는 연속 술 가닥 | separate fringe strands start continuously from the garment edge; the individual strands hang below that same attachment line. | separate fringe strands start continuously from the garment edge | the individual strands hang below that same attachment line | Optional fashion term lookup for this visible variant: 프린지·태슬 | Fringe / Tassel",
+        "concept_units": [
+          "separate fringe strands start continuously from the garment edge",
+          "the individual strands hang below that same attachment line"
+        ],
+        "relations": [
+          {
+            "id": "declared_owner",
+            "type": "declared_owner_scope",
+            "subject": "garment",
+            "object": "main_subject"
+          },
+          {
+            "id": "edge_01",
+            "type": "starts_at",
+            "subject": "garment.fringe_strands",
+            "object": "garment.edge"
+          },
+          {
+            "id": "edge_02",
+            "type": "hangs_below",
+            "subject": "garment.fringe_strands",
+            "object": "garment.fringe_attachment_line"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.trim.endpoint_topology"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.trim.strand_count"
+          }
+        ],
+        "core_assertion_discovery": true
+      },
+      {
+        "id": "spf_sf093_04",
+        "ko": "벨트 표면에 하나씩 부착된 금속성 스터드",
+        "en": "individual metal-looking studs sit on the belt surface; each visible stud has its own attachment footprint on that belt.",
+        "weight": 0.35,
+        "tags": [
+          "clothing"
+        ],
+        "for_any": [
+          "human"
+        ],
+        "aliases": [
+          "벨트 표면에 하나씩 부착된 금속성 스터드",
+          "individual metal-looking studs sit on the belt surface; each visible stud has its own attachment footprint on that belt."
+        ],
+        "keywords": [
+          "벨트 표면에 하나씩 부착된 금속성 스터드",
+          "individual metal-looking studs sit on the belt surface; each visible stud has its own attachment footprint on that belt.",
+          "individual metal-looking studs sit on the belt surface",
+          "each visible stud has its own attachment footprint on that belt",
+          "스터드·아일릿·체인",
+          "Studs / Eyelets / Chains"
+        ],
+        "embedding_text": "벨트 표면에 하나씩 부착된 금속성 스터드 | individual metal-looking studs sit on the belt surface; each visible stud has its own attachment footprint on that belt. | individual metal-looking studs sit on the belt surface | each visible stud has its own attachment footprint on that belt | Optional fashion term lookup for this visible variant: 스터드·아일릿·체인 | Studs / Eyelets / Chains",
+        "concept_units": [
+          "individual metal-looking studs sit on the belt surface",
+          "each visible stud has its own attachment footprint on that belt"
+        ],
+        "relations": [
+          {
+            "id": "declared_owner",
+            "type": "declared_owner_scope",
+            "subject": "belt",
+            "object": "main_subject"
+          },
+          {
+            "id": "edge_01",
+            "type": "attached_to",
+            "subject": "belt.individual_studs",
+            "object": "belt.surface"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.hardware.attachment"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.belt.surface_relief"
+          }
+        ],
+        "core_assertion_discovery": true
       }
     ],
     "location": [
@@ -8119,11 +8738,570 @@
           "object": "the declared object frame carrying curling acanthus-like relief on an object frame"
         }
       ]
+    },
+    {
+      "id": "spf_sf090_03_bundle",
+      "primary_visual_proposition": "The actual edge of the garment repeats a sequence of rounded scallops.",
+      "hard_profile_ids": [
+        "spring_sf090_03"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "The actual edge of the garment repeats a sequence of rounded scallops."
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "spf_sf090_03"
+      ],
+      "candidate_slots": {
+        "spf_sf090_03": "garment_detail"
+      },
+      "confusion_boundaries": [
+        "A scallop print inside a straight edge, embroidery holes or folds behind a straight hem is a different boundary."
+      ],
+      "source_keywords": [
+        "The actual edge of the garment repeats a sequence of rounded scallops.",
+        "한 의복 경계의 반복 둥근 스캘럽",
+        "rounded scalloped edge",
+        "스캘럽 에지",
+        "Scalloped edge"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only",
+      "relations": [
+        {
+          "id": "sf090_03_edge_1",
+          "type": "form",
+          "subject": "garment_A.rounded_scallops",
+          "object": "garment_A.free_edge"
+        }
+      ]
+    },
+    {
+      "id": "spf_sf091_03_bundle",
+      "primary_visual_proposition": "Two ribbon loops of the bow meet at its central knot. That knot visibly attaches to the garment's front.",
+      "hard_profile_ids": [
+        "spring_sf091_03"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "Two ribbon loops of the bow meet at its central knot."
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "That knot visibly attaches to the garment's front."
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "spf_sf091_03"
+      ],
+      "candidate_slots": {
+        "spf_sf091_03": "garment_detail"
+      },
+      "confusion_boundaries": [
+        "Printed bows, hair accessories, a flower rosette or detached loops do not establish this front-mounted bow."
+      ],
+      "source_keywords": [
+        "Two ribbon loops of the bow meet at its central knot. That knot visibly attaches to the garment's front.",
+        "같은 앞판에 붙은 두 고리와 중앙 매듭의 리본",
+        "Two ribbon loops of the bow meet at its central knot.",
+        "That knot visibly attaches to the garment's front.",
+        "two ribbon loops",
+        "front bow attachment",
+        "보 디테일",
+        "Bow detail"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only",
+      "relations": [
+        {
+          "id": "sf091_03_edge_1",
+          "type": "joins",
+          "subject": "bow_A.loop_left",
+          "object": "bow_A.central_knot"
+        },
+        {
+          "id": "sf091_03_edge_2",
+          "type": "joins",
+          "subject": "bow_A.loop_right",
+          "object": "bow_A.central_knot"
+        },
+        {
+          "id": "sf091_03_edge_3",
+          "type": "attaches_to",
+          "subject": "bow_A.central_knot",
+          "object": "garment_A.front"
+        }
+      ]
+    },
+    {
+      "id": "spf_sf093_02_bundle",
+      "primary_visual_proposition": "A bundle of loose strands hangs from one tied head of the tassel. The head attaches at one point on its declared carrier.",
+      "hard_profile_ids": [
+        "spring_sf093_02"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "A bundle of loose strands hangs from one tied head of the tassel."
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "The head attaches at one point on its declared carrier."
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "spf_sf093_02"
+      ],
+      "candidate_slots": {
+        "spf_sf093_02": "garment_detail"
+      },
+      "confusion_boundaries": [
+        "Fringe rooted along a long edge, loose hair or a printed tassel has different endpoint topology."
+      ],
+      "source_keywords": [
+        "A bundle of loose strands hangs from one tied head of the tassel. The head attaches at one point on its declared carrier.",
+        "한 묶음 머리에서 이어져 내려오는 태슬 실",
+        "A bundle of loose strands hangs from one tied head of the tassel.",
+        "The head attaches at one point on its declared carrier.",
+        "strands tied tassel head",
+        "tassel carrier anchor",
+        "프린지·태슬",
+        "Fringe / Tassel"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only",
+      "relations": [
+        {
+          "id": "sf093_02_edge_1",
+          "type": "descend_from",
+          "subject": "tassel_A.strands",
+          "object": "tassel_A.tied_head"
+        },
+        {
+          "id": "sf093_02_edge_2",
+          "type": "attaches_to",
+          "subject": "tassel_A.tied_head",
+          "object": "declared_carrier_A"
+        }
+      ]
+    },
+    {
+      "id": "spf_sf090_1_bundle",
+      "primary_visual_proposition": "A separate lace strip joins the same garment hem along a readable cloth attachment line; Its lace boundary remains distinct from the base garment cloth.",
+      "hard_profile_ids": [
+        "spring_sf090_1"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "A separate lace strip joins the same garment hem along a readable cloth attachment line"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "Its lace boundary remains distinct from the base garment cloth"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "spf_sf090_1"
+      ],
+      "candidate_slots": {
+        "spf_sf090_1": "garment_detail"
+      },
+      "confusion_boundaries": [
+        "Lace printed on the garment, a lace layer belonging to another item or an unrelated scalloped edge does not supply the attached separate strip."
+      ],
+      "source_keywords": [
+        "A separate lace strip joins the same garment hem along a readable cloth attachment line; Its lace boundary remains distinct from the base garment cloth.",
+        "같은 의복 밑단에 봉합 경계로 붙은 별도 레이스 띠",
+        "A separate lace strip joins the same garment hem along a readable cloth attachment line",
+        "Its lace boundary remains distinct from the base garment cloth",
+        "레이스 트림",
+        "Lace trim"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only",
+      "relations": [
+        {
+          "id": "existing_wearer_scope",
+          "type": "belongs_to_existing_wearer",
+          "subject": "selected garment",
+          "object": "main_subject"
+        },
+        {
+          "id": "sf090_1_relation_1",
+          "type": "attached_along",
+          "subject": "selected lace strip upper edge",
+          "object": "selected garment hem"
+        },
+        {
+          "id": "sf090_1_relation_2",
+          "type": "distinct_from",
+          "subject": "selected lace strip",
+          "object": "selected base garment cloth"
+        }
+      ]
+    },
+    {
+      "id": "spf_sf091_1_bundle",
+      "primary_visual_proposition": "A separate cloth motif lies attached over the selected base cloth; The motif has its own readable perimeter above that base surface.",
+      "hard_profile_ids": [
+        "spring_sf091_1"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "A separate cloth motif lies attached over the selected base cloth"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "The motif has its own readable perimeter above that base surface"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "spf_sf091_1"
+      ],
+      "candidate_slots": {
+        "spf_sf091_1": "garment_detail"
+      },
+      "confusion_boundaries": [
+        "A flat floral print, real loose flower or embroidery threads without a separate cloth-piece perimeter is a different surface construction."
+      ],
+      "source_keywords": [
+        "A separate cloth motif lies attached over the selected base cloth; The motif has its own readable perimeter above that base surface.",
+        "같은 바탕 원단 위에 별도 가장자리가 있는 직물 모티프가 붙음",
+        "A separate cloth motif lies attached over the selected base cloth",
+        "The motif has its own readable perimeter above that base surface",
+        "아플리케",
+        "Appliqué"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only",
+      "relations": [
+        {
+          "id": "existing_wearer_scope",
+          "type": "belongs_to_existing_wearer",
+          "subject": "selected garment ornament",
+          "object": "main_subject"
+        },
+        {
+          "id": "sf091_1_relation_1",
+          "type": "attached_over",
+          "subject": "selected separate cloth motif",
+          "object": "selected garment base cloth"
+        },
+        {
+          "id": "sf091_1_relation_2",
+          "type": "distinct_from",
+          "subject": "selected motif perimeter",
+          "object": "selected base cloth surface"
+        }
+      ]
+    },
+    {
+      "id": "spf_sf093_3_bundle",
+      "primary_visual_proposition": "A narrow raised piping ridge follows the same garment joining seam; That ridge remains attached along the seam path.",
+      "hard_profile_ids": [
+        "spring_sf093_3"
+      ],
+      "component_groups": [
+        {
+          "id": "component_1",
+          "visible_evidence": [
+            "A narrow raised piping ridge follows the same garment joining seam"
+          ]
+        },
+        {
+          "id": "component_2",
+          "visible_evidence": [
+            "That ridge remains attached along the seam path"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "spf_sf093_3"
+      ],
+      "candidate_slots": {
+        "spf_sf093_3": "garment_detail"
+      },
+      "confusion_boundaries": [
+        "A printed border, freestanding cord or distant stitch shadow is not an attached raised piping ridge following the cloth seam."
+      ],
+      "source_keywords": [
+        "A narrow raised piping ridge follows the same garment joining seam; That ridge remains attached along the seam path.",
+        "같은 의복 봉제선을 따라 붙은 좁게 솟은 파이핑",
+        "A narrow raised piping ridge follows the same garment joining seam",
+        "That ridge remains attached along the seam path",
+        "파이핑",
+        "Piping"
+      ],
+      "candidate_only": true,
+      "activation_mode": "component_complete_exact_only",
+      "relations": [
+        {
+          "id": "existing_wearer_scope",
+          "type": "belongs_to_existing_wearer",
+          "subject": "selected garment seam",
+          "object": "main_subject"
+        },
+        {
+          "id": "sf093_3_relation_1",
+          "type": "follows_and_attaches_to",
+          "subject": "selected piping ridge",
+          "object": "selected garment joining seam"
+        }
+      ]
+    },
+    {
+      "id": "spf_sf090_02_bundle",
+      "primary_visual_proposition": "small openings interrupt the same garment fabric surface; visible embroidery stitches surround the rims of those openings.",
+      "hard_profile_ids": [
+        "spring_sf090_02"
+      ],
+      "component_groups": [
+        {
+          "id": "component_01",
+          "visible_evidence": [
+            "small openings interrupt the same garment fabric surface"
+          ]
+        },
+        {
+          "id": "component_02",
+          "visible_evidence": [
+            "visible embroidery stitches surround the rims of those openings"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "spf_sf090_02"
+      ],
+      "candidate_slots": {
+        "spf_sf090_02": "garment_detail"
+      },
+      "confusion_boundaries": [
+        "Printed holes, translucent patches and metal eyelets lack the stitched fabric rims; actual cutting process is unproven."
+      ],
+      "source_keywords": [
+        "작은 원단 구멍을 둘러싸는 보이는 자수 스티치",
+        "small openings interrupt the same garment fabric surface; visible embroidery stitches surround the rims of those openings.",
+        "아이렛·브로드리 앙글레즈",
+        "Eyelet / Broderie anglaise"
+      ],
+      "candidate_only": true,
+      "activation_mode": "independent_component_request_evidence_only",
+      "relations": [
+        {
+          "id": "declared_owner",
+          "type": "declared_owner_scope",
+          "subject": "garment_surface",
+          "object": "main_subject"
+        },
+        {
+          "id": "edge_01",
+          "type": "within",
+          "subject": "garment_surface.small_openings",
+          "object": "garment_surface.fabric"
+        },
+        {
+          "id": "edge_02",
+          "type": "surrounds",
+          "subject": "garment_surface.embroidery_stitches",
+          "object": "garment_surface.opening_rims"
+        }
+      ]
+    },
+    {
+      "id": "spf_sf091_02_bundle",
+      "primary_visual_proposition": "rolled fabric folds form a small raised rosette; the rosette base attaches to the same garment neckline.",
+      "hard_profile_ids": [
+        "spring_sf091_02"
+      ],
+      "component_groups": [
+        {
+          "id": "component_01",
+          "visible_evidence": [
+            "rolled fabric folds form a small raised rosette"
+          ]
+        },
+        {
+          "id": "component_02",
+          "visible_evidence": [
+            "the rosette base attaches to the same garment neckline"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "spf_sf091_02"
+      ],
+      "candidate_slots": {
+        "spf_sf091_02": "garment_detail"
+      },
+      "confusion_boundaries": [
+        "A floral print, real cut flower or jewelry rosette on a different band is a different object; a decorative rosette is not a tie closure."
+      ],
+      "source_keywords": [
+        "목선에 부착된 작은 입체 직물 로제트",
+        "rolled fabric folds form a small raised rosette; the rosette base attaches to the same garment neckline.",
+        "로제트",
+        "Rosette"
+      ],
+      "candidate_only": true,
+      "activation_mode": "independent_component_request_evidence_only",
+      "relations": [
+        {
+          "id": "declared_owner",
+          "type": "declared_owner_scope",
+          "subject": "garment",
+          "object": "main_subject"
+        },
+        {
+          "id": "edge_01",
+          "type": "forms",
+          "subject": "garment.rosette.rolled_folds",
+          "object": "garment.rosette.raised_volume"
+        },
+        {
+          "id": "edge_02",
+          "type": "attached_to",
+          "subject": "garment.rosette.base",
+          "object": "garment.neckline"
+        }
+      ]
+    },
+    {
+      "id": "spf_sf093_01_bundle",
+      "primary_visual_proposition": "separate fringe strands start continuously from the garment edge; the individual strands hang below that same attachment line.",
+      "hard_profile_ids": [
+        "spring_sf093_01"
+      ],
+      "component_groups": [
+        {
+          "id": "component_01",
+          "visible_evidence": [
+            "separate fringe strands start continuously from the garment edge"
+          ]
+        },
+        {
+          "id": "component_02",
+          "visible_evidence": [
+            "the individual strands hang below that same attachment line"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "spf_sf093_01"
+      ],
+      "candidate_slots": {
+        "spf_sf093_01": "garment_detail"
+      },
+      "confusion_boundaries": [
+        "A hanging tassel bundle, loose background threads and a fringe print have a different endpoint topology."
+      ],
+      "source_keywords": [
+        "의복 가장자리에서 각각 내려오는 연속 술 가닥",
+        "separate fringe strands start continuously from the garment edge; the individual strands hang below that same attachment line.",
+        "프린지·태슬",
+        "Fringe / Tassel"
+      ],
+      "candidate_only": true,
+      "activation_mode": "independent_component_request_evidence_only",
+      "relations": [
+        {
+          "id": "declared_owner",
+          "type": "declared_owner_scope",
+          "subject": "garment",
+          "object": "main_subject"
+        },
+        {
+          "id": "edge_01",
+          "type": "starts_at",
+          "subject": "garment.fringe_strands",
+          "object": "garment.edge"
+        },
+        {
+          "id": "edge_02",
+          "type": "hangs_below",
+          "subject": "garment.fringe_strands",
+          "object": "garment.fringe_attachment_line"
+        }
+      ]
+    },
+    {
+      "id": "spf_sf093_04_bundle",
+      "primary_visual_proposition": "individual metal-looking studs sit on the belt surface; each visible stud has its own attachment footprint on that belt.",
+      "hard_profile_ids": [
+        "spring_sf093_04"
+      ],
+      "component_groups": [
+        {
+          "id": "component_01",
+          "visible_evidence": [
+            "individual metal-looking studs sit on the belt surface"
+          ]
+        },
+        {
+          "id": "component_02",
+          "visible_evidence": [
+            "each visible stud has its own attachment footprint on that belt"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "spf_sf093_04"
+      ],
+      "candidate_slots": {
+        "spf_sf093_04": "garment_detail"
+      },
+      "confusion_boundaries": [
+        "Printed dots or studs on another garment do not establish this belt attachment; visual metal appearance does not certify alloy or composition."
+      ],
+      "source_keywords": [
+        "벨트 표면에 하나씩 부착된 금속성 스터드",
+        "individual metal-looking studs sit on the belt surface; each visible stud has its own attachment footprint on that belt.",
+        "스터드·아일릿·체인",
+        "Studs / Eyelets / Chains"
+      ],
+      "candidate_only": true,
+      "activation_mode": "independent_component_request_evidence_only",
+      "relations": [
+        {
+          "id": "declared_owner",
+          "type": "declared_owner_scope",
+          "subject": "belt",
+          "object": "main_subject"
+        },
+        {
+          "id": "edge_01",
+          "type": "attached_to",
+          "subject": "belt.individual_studs",
+          "object": "belt.surface"
+        }
+      ]
     }
   ],
   "maintenance_ref": {
     "contract_version": "photo-extension-maintenance-ref/v1",
-    "record_id": "ornament-structure-20261005-v1",
-    "sha256": "4746d6dffcbbf24001a33c19099f35b87efcd7719fbdf824c42c4d788a9e9540"
+    "record_id": "photo_prompt_ornament_structure_extension-spring-publication-20261009-v3",
+    "sha256": "ad6f2411ef682c4dd2db0a2bd4a29b4e68acee2f39107bd68bc667c033906810"
   }
 }

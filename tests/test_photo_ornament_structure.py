@@ -160,7 +160,13 @@ class OrnamentStructureTests(unittest.TestCase):
                 self.assertIsNone(empty);self.assertEqual([],failures)
 
     def test_sources_and_nonvisual_claims_are_maintenance_only(self):
-        self.assertEqual(semantics.digest(self.maintenance),self.ext['maintenance_ref']['sha256'])
+        ref=self.ext['maintenance_ref']
+        record=json.loads((ROOT/'docs/research-evidence/photo-prompt/extension-maintenance'/(ref['record_id']+'.json')).read_text())
+        self.assertEqual(semantics.digest(record),ref['sha256'])
+        while record != self.maintenance:
+            ref=record['prior_maintenance_ref']
+            record=json.loads((ROOT/'docs/research-evidence/photo-prompt/extension-maintenance'/(ref['record_id']+'.json')).read_text())
+            self.assertEqual(semantics.digest(record),ref['sha256'])
         for slot,es in self.ext['slots'].items():
             for e in es:
                 text=g.semantic_text_for_entry(e,slot)
