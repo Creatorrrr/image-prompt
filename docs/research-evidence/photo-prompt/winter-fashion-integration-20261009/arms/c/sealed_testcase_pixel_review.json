@@ -1,0 +1,57 @@
+{
+  "schema_version": "sealed-independent-testcase-pixel-review/v1",
+  "source_testcase": "precore_testcase.json",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/winter-fashion-integration-20261009/arms/c/generated_image.native.png",
+  "result_sha256": "f625e762f5f5ed8f31664fa1fa419d489f67a53356357f4cbcd2fbd3bc5db9f5",
+  "reviewed_scales": [
+    "native"
+  ],
+  "goals": [
+    {
+      "goal_id": "hosiery_continuity",
+      "status": "fail",
+      "cause_lane": "authorial_postcore_change",
+      "evidence": "Dark opaque ribbed hosiery is continuous from skirt to boots, but the original frozen condition ended at gray wool sock cuffs. Those cuffs were removed from final composition. The original endpoint condition is not fulfilled; this is not charged to generation.",
+      "final_replacement_condition": "winter_wf78_v1_owner_relation is evaluated separately."
+    },
+    {
+      "goal_id": "sock_boot_boundary",
+      "status": "fail",
+      "cause_lane": "authorial_postcore_change",
+      "evidence": "No separate gray wool sock bands appear above the boot rims, matching their documented omission from the final prompt. The independent original cuff-above-rim goal was not executed."
+    },
+    {
+      "goal_id": "boot_form",
+      "status": "pass",
+      "cause_lane": "native_pixels",
+      "evidence": "The two chestnut-brown leather boots have continuous knee-high shafts, rounded almond toes, low block heels and visible dark outsole rims on the stone tread. This original low-heel form condition is distinct from the failed newly selected thick-sole condition."
+    },
+    {
+      "goal_id": "hand_wrist_layers",
+      "status": "pass",
+      "cause_lane": "native_pixels",
+      "evidence": "Burgundy full-finger gloves cover both acting hands. Each wrist shows a red glove cuff beneath a cream ribbed sweater cuff emerging from the gray coat sleeve. These three successive layers remain visible even with the right forearm across the body."
+    },
+    {
+      "goal_id": "neck_scarf_layers",
+      "status": "fail",
+      "cause_lane": "native_pixels",
+      "evidence": "The scarf has a neck loop and two separate fringed ends over the coat fronts, but its upper wrap reaches the chin and conceals any separately rising turtleneck collar top. The required separate cream collar boundary above the scarf cannot be assessed and is not a pass.",
+      "unmet_elements": [
+        "turtleneck collar top visibly above scarf"
+      ]
+    },
+    {
+      "goal_id": "open_coat_layers",
+      "status": "pass",
+      "cause_lane": "native_pixels",
+      "evidence": "The coat is visibly open. Its two fronts flank the cream knit torso, charcoal pleated above-knee skirt, dark hosiery and boot rims, with connected garment boundaries and one wearer."
+    }
+  ],
+  "strict_pass_count": 3,
+  "strict_fail_count": 3,
+  "failures_attributed_to_authored_omission": 2,
+  "failures_attributed_to_native_visibility": 1,
+  "original_goal_file_unchanged": true,
+  "note": "All six original conditions are retained and given strict pass/fail. Two failures result from an explicitly documented agent-owned composition change, and are not counted as image-model failures. Newly selected candidate relation outcomes are separate."
+}

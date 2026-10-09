@@ -1,0 +1,284 @@
+{
+  "schema_version": "winter-fashion-implementation-plan/v1",
+  "runtime_changes_executed": false,
+  "objective": "Owner-bound visible distinctions and optional candidates retained through lookup, selection, composition and appropriate evidence gates.",
+  "packages": [
+    {
+      "id": "WP1",
+      "name": "원료·니트·파일·충전·레그웨어 표면",
+      "cards": [
+        "WF04",
+        "WF05",
+        "WF06",
+        "WF07",
+        "WF08",
+        "WF09",
+        "WF10",
+        "WF11",
+        "WF12",
+        "WF13",
+        "WF14",
+        "WF15",
+        "WF16",
+        "WF17",
+        "WF18",
+        "WF19",
+        "WF20",
+        "WF21",
+        "WF22",
+        "WF58",
+        "WF59",
+        "WF60"
+      ],
+      "targets": [
+        "photo_prompt_textile_surface_extension.json",
+        "photo_prompt_visual_obligations_textile_surface.json"
+      ],
+      "rule": "기존 리브·케이블·퀼팅·시어 ID 동등성 검토 먼저; 배플·작은 구멍·뒷면·겹층 변형만 보강"
+    },
+    {
+      "id": "WP2",
+      "name": "코트·상의·핏·네크라인·개구·소매",
+      "cards": [
+        "WF23",
+        "WF24",
+        "WF25",
+        "WF26",
+        "WF27",
+        "WF28",
+        "WF29",
+        "WF30",
+        "WF31",
+        "WF32",
+        "WF33",
+        "WF34",
+        "WF35",
+        "WF36",
+        "WF37",
+        "WF38",
+        "WF39",
+        "WF40",
+        "WF41",
+        "WF42",
+        "WF43",
+        "WF44",
+        "WF45",
+        "WF46",
+        "WF47",
+        "WF48",
+        "WF49",
+        "WF50",
+        "WF51",
+        "WF52",
+        "WF53",
+        "WF54",
+        "WF55",
+        "WF56",
+        "WF57",
+        "WF70"
+      ],
+      "targets": [
+        "photo_prompt_clothing_structure_extension.json",
+        "photo_prompt_visual_obligations_clothing_structure.json",
+        "photo_prompt_fashion_fit_extension.json",
+        "photo_prompt_visual_obligations_fashion_fit.json",
+        "photo_prompt_portrait_fashion_exposure_extension.json",
+        "photo_prompt_visual_obligations_portrait_fashion_exposure.json"
+      ],
+      "rule": "핏 축·현재 가시 상태·여밈 보유·개방을 분리; 성인 범위와 기존 의미를 유지"
+    },
+    {
+      "id": "WP3",
+      "name": "레그웨어·부츠·겨울 액세서리·장식",
+      "cards": [
+        "WF61",
+        "WF62",
+        "WF63",
+        "WF64",
+        "WF65",
+        "WF66",
+        "WF67",
+        "WF68",
+        "WF69",
+        "WF71"
+      ],
+      "targets": [
+        "photo_prompt_accessory_structure_extension.json",
+        "photo_prompt_visual_obligations_accessory_structure.json",
+        "photo_prompt_ornament_structure_extension.json",
+        "photo_prompt_visual_obligations_ornament_structure.json"
+      ],
+      "rule": "독립 소유자와 지지·부착 경로; 썸홀·가터 기존 후보의 전체 효과 범위 검토"
+    },
+    {
+      "id": "WP4",
+      "name": "겨울 스타일 선택 조합",
+      "cards": [
+        "WF72",
+        "WF73",
+        "WF74",
+        "WF75",
+        "WF76",
+        "WF77"
+      ],
+      "targets": [
+        "photo_prompt_subculture_appearance_extension.json",
+        "photo_prompt_visual_obligations_subculture_appearance.json",
+        "photo_prompt_y2k_extension.json",
+        "photo_prompt_visual_obligations_y2k.json",
+        "photo_prompt_sensual_fetish_fashion_extension.json"
+      ],
+      "rule": "기존 하위 미감의 ID를 유지; 22 라벨을 고정 의상 또는 인물 정체성으로 복제하지 않음"
+    },
+    {
+      "id": "WP5",
+      "name": "층·노출 구간·복수 의복 조합",
+      "cards": [
+        "WF01",
+        "WF47",
+        "WF52",
+        "WF78",
+        "WF79"
+      ],
+      "targets": [
+        "existing candidate_bundles and owner-bound wardrobe relations",
+        "photo_prompt_winter_fashion_extension.json (conditional proposal)",
+        "photo_prompt_visual_obligations_winter_fashion.json (conditional proposal)"
+      ],
+      "rule": "기존 가족으로 표현이 충분하면 새 겨울 파일을 만들지 않음; 새 파일은 독립 겨울 관계가 남을 때만 manifest 등록"
+    }
+  ],
+  "phases": [
+    {
+      "id": "P0",
+      "name": "원본 재확인과 동등성 결정",
+      "depends_on": [],
+      "outputs": [
+        "fresh hashes and relevant dirty-work inventory",
+        "term by term semantic disposition",
+        "selected variant/effect inventory"
+      ],
+      "exit_criteria": [
+        "read original positive semantics, owner, relation ends and scope",
+        "classify reuse / equivalent alias / narrowed successor / new variant / specification / source follow-up",
+        "do not equate phrase absence with missing semantics"
+      ]
+    },
+    {
+      "id": "P1",
+      "name": "원본 데이터 작성",
+      "depends_on": [
+        "P0"
+      ],
+      "outputs": [
+        "selected extension entries",
+        "authored_components profiles",
+        "optional bundle clauses"
+      ],
+      "exit_criteria": [
+        "same garment endpoints and all effects explicit",
+        "existing IDs and historical baselines retained",
+        "valid current effect schema and optional post-core activation",
+        "authored_components v1 for single duties; v2 for coupled component evidence; no generated profile fields authored"
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "파생 인덱스와 원본 검증",
+      "depends_on": [
+        "P1"
+      ],
+      "outputs": [
+        "manifest updates only for new files",
+        "semantic BM25F/index",
+        "visual profile index",
+        "verified runtime generation"
+      ],
+      "exit_criteria": [
+        "vectors reused only for identical text/provider/model/dimensions",
+        "new or changed text vectors separately accounted",
+        "complete source, bundle and index validation before publication",
+        "keep old generation/receipts and avoid rewriting CURRENT by hand"
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "검색·선택·구성 회귀",
+      "depends_on": [
+        "P2"
+      ],
+      "outputs": [
+        "304 term coverage receipt",
+        "15 body query and 10 original outfit receipts",
+        "56 pair and 12 mutation results"
+      ],
+      "exit_criteria": [
+        "prove semantic lookup separately from slot exposure and explicit selection",
+        "native Korean/English and synonyms tested in actual requester context",
+        "same non-target intent locks and owner preserved",
+        "full clauses reviewed for camera, body and unselected wardrobe effects"
+      ]
+    },
+    {
+      "id": "P4",
+      "name": "별도 생성 단계의 픽셀 자격 확인",
+      "depends_on": [
+        "P3"
+      ],
+      "outputs": [
+        "16 diagnostic groups selected by need",
+        "native per-gate evidence",
+        "original-request coverage results",
+        "user acceptance status"
+      ],
+      "exit_criteria": [
+        "all activated visible gates on same owner pass",
+        "unobservable/partial evidence does not pass",
+        "hidden facts have separate evidence",
+        "moderation block has no scored pixels",
+        "diagnostic alternative never replaces original request proof"
+      ]
+    },
+    {
+      "id": "P5",
+      "name": "검토 가능한 반영 전달",
+      "depends_on": [
+        "P3",
+        "P4"
+      ],
+      "outputs": [
+        "scoped diff",
+        "validation matrix",
+        "adopted/deferred term map",
+        "publication receipts if later requested"
+      ],
+      "exit_criteria": [
+        "document authored/index/retrieval/selection/audit/pixel/user layers separately",
+        "preserve concurrent unrelated changes",
+        "do not label all data pixel-qualified if only some variants were tested"
+      ]
+    }
+  ],
+  "current_contract_references": [
+    "references/maintenance.md",
+    "scripts/photo_source_manifest.py",
+    "scripts/photo_candidate_semantics.py",
+    "scripts/visual_profile_contracts.py"
+  ],
+  "proposed_validation_targets": [
+    "tests/test_photo_clothing_terminology_semantics.py",
+    "tests/test_photo_textile_opacity_effect_scope.py",
+    "tests/test_photo_fashion_fit_semantics.py",
+    "tests/test_photo_portrait_fashion_exposure.py",
+    "tests/test_photo_visual_profile_retrieval.py",
+    "tests/test_photo_winter_fashion_semantics.py (new only for meaningful new behavior)"
+  ],
+  "deferred_source_checks": [
+    "Angora rabbit term-specific primary fibre reference",
+    "selected dolman/batwing and coat variant diagrams",
+    "sideboob/underboob direct terminology source",
+    "selected hold-up silicone or skort/bodysuit hidden topology",
+    "every selected historical or commercial variant before hard promotion"
+  ],
+  "change_boundary": "Research-only now. No runtime source, manifest, index, SKILL.md, controls, precore resolver, generation workflow or historical fixture edits in this request."
+}

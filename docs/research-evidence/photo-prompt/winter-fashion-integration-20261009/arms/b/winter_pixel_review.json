@@ -1,0 +1,139 @@
+{
+  "schema_version": "independent-winter-pixel-review/v1",
+  "arm": "b",
+  "reviewer": "independent agent B",
+  "method": "Direct inspection of the exact saved native PNG through view_image detail original, its unresampled garment crop, and a 256x384 full-frame thumbnail.",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/winter-fashion-integration-20261009/arms/b/generated_image.png",
+  "result_sha256": "9735f294ab6c7ca57bd00cc93099f029bef69ff1f533a9488d3d19763426b17c",
+  "result_dimensions": [
+    1024,
+    1536
+  ],
+  "source_testcase_seal_sha256": "1e661491314e9ca07bdbe3a7e8281b681c14373d36c62046e86de75b3cc5a16c",
+  "source_baseline_prompt_sha256": "180b4fd4d67261d98485191c661e1506bfc5ffcfcda8f3d7c23d907c57229c8b",
+  "source_final_prompt_sha256": "b08cf17cd3a5ef3b98886c288c8288f8441007e8fcacc30ff9704e10254c201f",
+  "new_candidate_relations": [
+    {
+      "candidate_id": "bundle:winter_wf25_v2_bundle",
+      "relation_id": "winter_wf25_v2_owner_relation",
+      "status": "pass",
+      "pixel_evidence": "The navy hood cloth joins the coat neckline and shoulder/front structure above the visible upper wooden toggle-and-rope fastening. The cream pile follows that same hood opening. This source relation does not certify the complete independent three-toggle system; the lower paired wooden rods remain unverified."
+    },
+    {
+      "candidate_id": "bundle:winter_wf33_v2_bundle",
+      "relation_id": "winter_wf33_v2_owner_relation",
+      "status": "pass",
+      "pixel_evidence": "An ochre layer with shallow diamond stitch relief, its own buttoned fronts and its own hem is visibly beneath the opened navy outer coat. This proves the separate shallow quilted liner relation without claiming hidden sleeves are absent."
+    }
+  ],
+  "selected_winter_visual_profile_ids": [],
+  "winter_profile_optin_path": "not_exercised_no_winter_profiles_exposed",
+  "checks": [
+    {
+      "gate_id": "winter_toggle_system",
+      "scope": "agent_owned_independent_testcase",
+      "sealed_objective": "Observe toggle closure as wooden rod crossing a rope loop attached to opposite coat fronts",
+      "expected_visible_state": "Three pairs are required by the sealed wardrobe direction and baseline: one upper wooden toggle connected across its opposing rope loop, with two lower wood toggles beside open loops.",
+      "status": "fail",
+      "pixel_evidence": "The upper wooden rod crosses the white rope connection and joins the two navy front panels. Both lower white rope loops are present on the viewer-right panel, but their opposing wooden rods cannot be identified on the viewer-left panel. A visible upper fastening is only part of the complete three-pair system.",
+      "observed_scale": "native garment crop and full frame"
+    },
+    {
+      "gate_id": "winter_hood_trim",
+      "scope": "agent_owned_independent_testcase",
+      "sealed_objective": "Observe hood pile trim attached along the same outer-coat hood edge",
+      "expected_visible_state": "The cream pile borders the opening of the navy outer-coat hood and remains attached to that same hood.",
+      "status": "pass",
+      "pixel_evidence": "A cream pile band follows the recessed navy hood opening around the back and sides of the neck. Navy cloth borders the pile and continues into the same coat shoulder and front, above the upper toggle. It reads as the coat hood edging rather than a separate scarf.",
+      "observed_scale": "native garment crop and full frame"
+    },
+    {
+      "gate_id": "winter_cuff_trim",
+      "scope": "agent_owned_independent_testcase",
+      "sealed_objective": "Observe sleeve-cuff pile trim attached to coat cuffs rather than sweater",
+      "expected_visible_state": "Cream pile is attached to each navy coat cuff, while the cream knit wrist sleeves remain a separate interior garment.",
+      "status": "pass",
+      "pixel_evidence": "Both cuffs show a dense pile strip ending on navy outer sleeves. Smooth vertical knit ribs project below the pile at each wrist, visibly separating the inner sweater cuff from the outer coat trim.",
+      "observed_scale": "native garment crop and full frame"
+    },
+    {
+      "gate_id": "winter_separate_quilted_vest",
+      "scope": "agent_owned_independent_testcase",
+      "sealed_objective": "Observe independently bounded ochre quilted vest inside the navy coat",
+      "expected_visible_state": "The ochre quilted garment is an independently bounded sleeveless vest inside the navy coat.",
+      "status": "fail",
+      "pixel_evidence": "The ochre diamond-stitched layer has its own buttons, front edges and lower hem, so a separate shallow quilted inner garment is supported. Its shoulder and armhole regions are covered by the navy coat, so the sleeveless vest component is not assessable and is not promoted to pass.",
+      "observed_scale": "native garment crop and full frame"
+    },
+    {
+      "gate_id": "winter_rollneck",
+      "scope": "agent_owned_independent_testcase",
+      "sealed_objective": "Observe cream ribbed roll-neck sweater below the vest, with a collar separate from outer hood",
+      "expected_visible_state": "A cream ribbed sweater tube folds into its own high collar, distinct from the outer hood and middle quilted garment.",
+      "status": "pass",
+      "pixel_evidence": "The cream collar has vertical ribs and a broad outward fold encircling the neck. Its smooth knit body extends into the open center between the ochre fronts, while curly hood pile stays outside; the three carriers remain distinct.",
+      "observed_scale": "native garment crop and full frame"
+    },
+    {
+      "gate_id": "winter_outer_inner_ownership",
+      "scope": "agent_owned_independent_testcase",
+      "sealed_objective": "Observe coat structure and the lower open front jointly without losing the garment ownership relations",
+      "expected_visible_state": "The lower open coat front exposes separately owned outer coat, middle quilted garment and inner sweater without losing their boundaries.",
+      "status": "pass",
+      "pixel_evidence": "The navy coat fronts and long hem are outside the ochre buttoned diamond layer and cream knit center. Each has a different edge and texture; cream ribbed cuffs below outer pile sleeves add a second visible layer boundary. The sweater hem ends above the vest hem, contrary to an incidental baseline hem-order clause, which is recorded separately.",
+      "observed_scale": "native garment crop and full frame"
+    }
+  ],
+  "counts": {
+    "pass": 4,
+    "fail": 2,
+    "total": 6
+  },
+  "overall_independent_winter_test": "fail",
+  "partial_is_fail": true,
+  "authored_fidelity_observations": [
+    {
+      "property": "full_three_toggle_pairs",
+      "status": "fail",
+      "evidence": "The two lower rope loops have no clearly identifiable opposing wood toggles; top closure success does not replace this missing count."
+    },
+    {
+      "property": "sleeveless_liner_vest",
+      "status": "fail",
+      "evidence": "The independent inner layer is clear, but both sleeve/armhole regions are hidden by the coat."
+    },
+    {
+      "property": "sweater_hem_below_vest",
+      "status": "fail",
+      "evidence": "The cream sweater hem ends above the ochre garment hem, reversing the authored hem-order clause."
+    },
+    {
+      "property": "acting_hand_laterality",
+      "status": "fail",
+      "evidence": "In this near-frontal image, the actor right hand at viewer left rests on the crate and the actor left arm hangs. The baseline specified the opposite laterality. The intended same-actor hand-to-rim contact and physically coherent support survive; generic embodiment geometry is judged separately."
+    }
+  ],
+  "overall_visual_impression": {
+    "initial_description_without_control_labels": "A softly alert woman in a substantial navy winter coat, cream pile framing and gold/cream interior layers pauses beside a plant crate on a snowy, wet ferry boarding threshold. The cool harbor and warm entry lights give the portrait an attractive sense of shelter and departure.",
+    "strengths": [
+      "Face and bob lead attention; wool-like cloth, curly pile and ribbed knit have distinct surfaces.",
+      "The upper closure and three outer-to-inner garment carriers read clearly.",
+      "The crate, plants, supported hand, wet snow and warm ferry entrance make a credible waiting situation."
+    ],
+    "limits": [
+      "The complete three-toggle system and sleeveless identity of the middle garment do not survive as fully visible evidence.",
+      "The source photograph supplies appearance guidance; exact same-person identity is not established.",
+      "The snow-squall history and newly relit lamp remain authorial context rather than independently observed temporal facts."
+    ],
+    "artistic_quality": "Convincing winter travel portrait with strong subject presence and material hierarchy; attractive overall appearance does not resolve the missing construction components."
+  },
+  "control_calibration": {
+    "technical_snapshot_binding": "c53193bf37259fe6dc940ff1f3d854f8246751e5f511f3188e4d0bd47dcec18b",
+    "perceived_expression": "Quiet everyday attraction supports the winter travel portrait; a specific erotic fixation or departure from ordinary reality is not apparent. This is an agent observation rather than a measured intensity score.",
+    "user_preference": "not_yet_received"
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}
