@@ -1,0 +1,85 @@
+{
+  "schema_version": "arm-c-supplemental-pixel-findings/v1",
+  "reviewer": "wardrobe_refine_c",
+  "image_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/wardrobe-keyword-refinement-20261010/arms/c/generated_images/native_01/original.png",
+  "image_sha256": "74f9a30a07e1d46b30f441d4dedb2d1494511025ad5a891b5f63ac0a7d2091dc",
+  "reviewed_views": [
+    "original native pixels",
+    "unresampled cuff crop",
+    "unresampled needle-route crop",
+    "unresampled needle-eye crop",
+    "512-pixel thumbnail"
+  ],
+  "reference_scope": "visible face and hair cues only; no actual identity, age or body similarity claim",
+  "reference_cues": {
+    "status": "pass",
+    "evidence": "Dark chin-length bob with wispy fringe, soft facial contour, dark eyes and natural pink lips visibly correspond to supplied reference cues in the actual native image."
+  },
+  "whole_image_scene": {
+    "status": "pass",
+    "evidence": "One seated woman holds a sewing needle in her anatomical right hand while her left fingertips pin the lifted ribbon on the supported brown hat. Loose ribbon fold and a short fresh gold stitch share the same hat. The chair, table edge, window light and connected working posture form a coherent everyday repair moment."
+  },
+  "required_assertions": [
+    {
+      "assertion_id": "retained_human_subject",
+      "status": "pass",
+      "evidence": "One coherent human woman is the acting subject."
+    },
+    {
+      "assertion_id": "needle_stitch_chain",
+      "status": "fail",
+      "visible_subrelations": [
+        "Right thumb/index grip the metallic needle shaft",
+        "Open needle eye near exposed shaft end with gold thread through it",
+        "Gold thread reaches the same fresh ribbon stitch beside the left pinning fingertips",
+        "Loose and newly secured ribbon portions belong to the same hat"
+      ],
+      "failed_component": "The pointed tip is concealed under the gripping fingers. The recognition phrase requires a visible shaft, pointed tip and exposed threaded eye; partial endpoint evidence is not a complete pass."
+    }
+  ],
+  "adopted_ordinary_ids": [],
+  "adopted_bundle_ids": [
+    "bundle:vg_face_hands_place_readability_bundle"
+  ],
+  "adopted_bundle_complete_semantics": {
+    "bundle_id": "bundle:vg_face_hands_place_readability_bundle",
+    "member_id": "slot:focus:vg_face_hands_place_readability",
+    "components": [
+      {
+        "component": "face readable in crop",
+        "status": "pass",
+        "evidence": "Face occupies upper central/right image; eyes/lips/fringe remain legible at native and thumbnail scales."
+      },
+      {
+        "component": "action-bearing hand and contact recognizable",
+        "status": "pass",
+        "evidence": "Needle-gripping right hand and left ribbon-pinning contact remain recognizable in original and thumbnail. Needle eye details are additionally inspected at native scale."
+      },
+      {
+        "component": "one existing place cue readable",
+        "status": "pass",
+        "evidence": "Chair back behind the nearer forearm and wood work-surface edge show enough form to identify the seated repair setting."
+      }
+    ],
+    "relations": [
+      {
+        "relation_id": "vg_face_hands_place_readability_r1",
+        "type": "preserves_readability_of",
+        "subject": "focus_distribution",
+        "object": "face_hand_and_place_cue",
+        "status": "pass",
+        "evidence": "The shared focus treatment preserves recognizable face and working contact, with the existing chair/work surface softly legible. The entire background does not become uniformly sharp."
+      }
+    ],
+    "outer_bundle_relations": [],
+    "optional_adoption_disclosure": "This child adopted the named current retrieval bundle independently. Parent optional inventory/prose was not inspected; no old optional feature is asserted as an inherited hard gate. The two hard profiles and body/interaction duties are retained from the verified closed parent scope."
+  },
+  "strict_cuff_observation": {
+    "profile_id": "wkr_wk047_selected_relation",
+    "status": "fail",
+    "owner": "same nearer turned jacket cuff beside the working right hand",
+    "evidence": "Exposed cuff shows chunky knitted loops and a rolled/ribbed border. Neither fine over-under yarn crossings nor a distinct row of sewing stitches is visible on the same cuff patch. Nearby ribbon ribbing and felt cannot substitute for this owner-bound evidence."
+  },
+  "user_acceptance": "not_yet_received",
+  "overall_complete_qualification": "fail"
+}

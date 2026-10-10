@@ -1,0 +1,18 @@
+{
+  "class": "local_metadata_inspection",
+  "errors": [
+    {
+      "exception_type": "TypeError",
+      "message": "list indices must be integers or slices, not str",
+      "stage": "post-success retrieval pack inspection",
+      "cause": "Official pack.json stores a one-element list; wrapper treated it as a dictionary."
+    },
+    {
+      "exception_type": "KeyError",
+      "message": "source_authorial_core_sha256",
+      "stage": "follow-up metadata assertion before any subsequent command",
+      "cause": "authorial_core exposes canonical_sha256, while source_authorial_core_sha256 belongs to linked contracts."
+    }
+  ],
+  "recovery": "Inspect actual one-element packet shape and canonical hash; corrected metadata validation. No new retrieval or image invocation."
+}

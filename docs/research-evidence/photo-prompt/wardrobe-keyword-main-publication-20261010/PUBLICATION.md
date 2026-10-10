@@ -1,0 +1,9 @@
+# Wardrobe research and native qualification publication
+
+This publication adds the completed wardrobe owner/relation research to the photographic prompt skill. Existing clothing candidates and profiles retain their identities, activation rules and authored hard components. Only the retained cowl and bishop-sleeve effect scopes change; unrelated local source edits are excluded. The 132 previously published manifest registrations are preserved, with two owned sources appended in contiguous per-kind order.
+
+The semantic and visual indexes are rebuilt from these reviewed authored sources using only identical complete texts in the same verified vector space. The scoped corpus contains 12,036 semantic entries, 3,791 visual profiles and 6,551 exact terms. No new embedding or image provider calls were made during publication. The dictionary validator, visual-index check, runtime publication and 14 focused tests passed before the first commit. Full unittest discovery is required on the final source after pulling origin/main; its separate report records the actual result.
+
+The three independent native qualification records remain historical evidence. One of three latest cases passes all mandatory pixel gates; two remain failures and user acceptance is pending. Publishing the implementation does not change these outcomes. Earlier integration and refinement logs, failed attempts, prompt lineage and saved image bytes are retained without rewriting their source bindings. Large regenerable management dumps, runtime caches, process locks and environments remain in the original checkout.
+
+The original main checkout contains concurrent local work. Its dirty and untracked files are protected by PRIMARY-BEFORE.json. Main integration and remote push are performed after this scoped commit and an actual origin/main pull. Push/ref equality, byte/mode preservation and worktree archival receive separate final records after those actions succeed.

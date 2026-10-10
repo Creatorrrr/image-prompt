@@ -1,0 +1,196 @@
+{
+  "pack_id": "550a5b8eee6fe659",
+  "generation_id": "9037716cffb61fc18147ed9936b8181bd632378e7ff823cdfbcab4706f0f1af7",
+  "retrieve_calls": 1,
+  "image_calls": 0,
+  "catalog_wkr_rows": 4,
+  "unique_wkr_ids": 4,
+  "ordinary_wkr_candidate_ids": [
+    "slot:body_pose:wkr_wk095_selected_relation_candidate",
+    "slot:composition:wkr_wk111_selected_relation_candidate"
+  ],
+  "wkr_bundle_ids": [
+    "bundle:wkr_wk111_selected_relation_bundle",
+    "bundle:wkr_wk095_selected_relation_bundle"
+  ],
+  "wkr_visual_concept_ids": [],
+  "wkr_semantic_clarification_ids": [],
+  "rows": [
+    {
+      "id": "bundle:wkr_wk111_selected_relation_bundle",
+      "source_pointer": "/candidate_bundles/candidates/0",
+      "concept_terms": [
+        "A foreground door edge overlaps part of the shoulder while the ribbon knot and its garment-seam junction remain visible beside it."
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "all_members_eligible_and_dimensions_open"
+      },
+      "conflicts_with": [],
+      "affected_dimensions": [
+        "appearance",
+        "composition",
+        "framing",
+        "setting"
+      ],
+      "concept_units": [
+        "A foreground door edge overlaps part of the shoulder while the ribbon knot and its garment-seam junction remain visible beside it."
+      ],
+      "relations": [
+        {
+          "id": "wkr_wk111_selected_relation_relation_1",
+          "type": "overlaps",
+          "subject": "foreground door edge",
+          "object": "part of same shoulder"
+        },
+        {
+          "id": "wkr_wk111_selected_relation_relation_2",
+          "type": "leaves_visible",
+          "subject": "same foreground door edge",
+          "object": "ribbon knot and seam junction"
+        }
+      ],
+      "adoption": "optional",
+      "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+    },
+    {
+      "id": "bundle:wkr_wk095_selected_relation_bundle",
+      "source_pointer": "/candidate_bundles/candidates/7",
+      "concept_terms": [
+        "The seated person's skirt gathers into compressed folds where the same skirt meets the chair seat."
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "all_members_eligible_and_dimensions_open"
+      },
+      "conflicts_with": [],
+      "affected_dimensions": [
+        "material",
+        "pose"
+      ],
+      "concept_units": [
+        "The seated person's skirt gathers into compressed folds where the same skirt meets the chair seat."
+      ],
+      "relations": [
+        {
+          "id": "wkr_wk095_selected_relation_relation_1",
+          "type": "gathers_at",
+          "subject": "same skirt compressed folds",
+          "object": "same chair-seat contact"
+        }
+      ],
+      "adoption": "optional",
+      "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+    },
+    {
+      "id": "slot:body_pose:wkr_wk095_selected_relation_candidate",
+      "source_pointer": "/slots/body_pose/candidates/0",
+      "concept_terms": [
+        "The seated person's skirt gathers into compressed folds where the same skirt meets the chair seat."
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "frozen_core_slot_contract",
+        "reason": null
+      },
+      "conflicts_with": [],
+      "affected_dimensions": [
+        "pose",
+        "material"
+      ],
+      "slot": "body_pose",
+      "concept_units": [
+        "The seated person's skirt gathers into compressed folds where the same skirt meets the chair seat."
+      ],
+      "relations": [
+        {
+          "id": "wkr_wk095_selected_relation_relation_1",
+          "type": "gathers_at",
+          "subject": "same skirt compressed folds",
+          "object": "same chair-seat contact"
+        }
+      ],
+      "adoption": "optional",
+      "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+      "affected_properties": [
+        {
+          "dimension": "pose",
+          "target": "main_subject",
+          "property": "body_support"
+        },
+        {
+          "dimension": "material",
+          "target": "main_subject",
+          "property": "wardrobe.compression"
+        },
+        {
+          "dimension": "pose",
+          "target": "main_subject",
+          "property": "posture.body_support"
+        }
+      ]
+    },
+    {
+      "id": "slot:composition:wkr_wk111_selected_relation_candidate",
+      "source_pointer": "/slots/composition/candidates/0",
+      "concept_terms": [
+        "A foreground door edge overlaps part of the shoulder while the ribbon knot and its garment-seam junction remain visible beside it."
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "frozen_core_slot_contract",
+        "reason": null
+      },
+      "conflicts_with": [],
+      "affected_dimensions": [
+        "composition",
+        "framing",
+        "setting",
+        "appearance"
+      ],
+      "slot": "composition",
+      "concept_units": [
+        "A foreground door edge overlaps part of the shoulder while the ribbon knot and its garment-seam junction remain visible beside it."
+      ],
+      "relations": [
+        {
+          "id": "wkr_wk111_selected_relation_relation_1",
+          "type": "overlaps",
+          "subject": "foreground door edge",
+          "object": "part of same shoulder"
+        },
+        {
+          "id": "wkr_wk111_selected_relation_relation_2",
+          "type": "leaves_visible",
+          "subject": "same foreground door edge",
+          "object": "ribbon knot and seam junction"
+        }
+      ],
+      "adoption": "optional",
+      "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+      "affected_properties": [
+        {
+          "dimension": "composition",
+          "target": "scene",
+          "property": "foreground_occlusion"
+        },
+        {
+          "dimension": "framing",
+          "target": "scene",
+          "property": "focal_relation_visibility"
+        },
+        {
+          "dimension": "setting",
+          "target": "scene",
+          "property": "props.foreground_door"
+        },
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.ribbon_seam_junction"
+        }
+      ]
+    }
+  ],
+  "status": "native invocation held at parent request"
+}

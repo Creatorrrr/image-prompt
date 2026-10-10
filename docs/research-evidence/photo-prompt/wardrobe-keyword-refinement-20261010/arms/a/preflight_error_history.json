@@ -1,0 +1,23 @@
+{
+  "image_call_count": 0,
+  "errors": [
+    {
+      "phase": "init",
+      "exit_code": 1,
+      "output": "{\"status\": \"error\", \"code\": \"explicit_span_offsets_required\", \"detail\": \"explicit_span_offsets_required\"}",
+      "resolution": "Rewrote spans to exact span_id/start/end keys; raw envelope bytes unchanged."
+    },
+    {
+      "phase": "read_current_controls",
+      "exit_code": 1,
+      "output": "cat: docs/research-evidence/photo-prompt/wardrobe-keyword-refinement-20261010/arms/a/run/artifacts/creative_controls.json: No such file or directory",
+      "resolution": "Resolved exact current controls path from own neutral workflow bindings."
+    },
+    {
+      "phase": "attach_after_premature_freeze",
+      "diagnostic_file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/wardrobe-keyword-refinement-20261010/arms/a/attach_retry_diagnostic.json",
+      "resolution": "Retained original run as invalid preflight-only evidence; created correctly attached run_bound and waited for actual completion."
+    }
+  ],
+  "timing_issue": "Early exec_command calls printed only output and did not retain session_id for attachment verification. This was corrected for every subsequent running process; no image call had occurred."
+}

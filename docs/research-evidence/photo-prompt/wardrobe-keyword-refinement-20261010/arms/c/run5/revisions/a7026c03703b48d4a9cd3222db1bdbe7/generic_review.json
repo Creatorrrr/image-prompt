@@ -1,0 +1,49 @@
+{
+  "schema_version": "photo-image-render-review/v1",
+  "pack_id": "7c9c8f16238572b7",
+  "source_render_repair_contract_sha256": "0c22d21e4b6e2c74ad174e0307cb8a643e586d6af8f6257ac2d1083b56bc75d3",
+  "result": {
+    "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/wardrobe-keyword-refinement-20261010/arms/c/generated_images/native_02/original.png",
+    "sha256": "741dd3bcfc023630f9ea391c0452a6eecd33452aa74dadaa6e0982e2845673e9"
+  },
+  "reviewer": {
+    "reviewer_id": "wardrobe_refine_c",
+    "method": "direct_pixel_inspection"
+  },
+  "gates": [
+    {
+      "gate_id": "rr_needle_stitch_contact_object_class_legible",
+      "status": "pass",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "At the original and 512-pixel thumbnail scales the horizontal silver shaft and threaded eye are recognizable as a sewing needle held by the acting right hand. This class recognition does not establish the missing opposite pointed end."
+    },
+    {
+      "gate_id": "rr_needle_stitch_contact_gross_structure_coherent",
+      "status": "fail",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "The original unresampled needle-grip crop shows the metallic shaft leaving the right gripping fingertips toward the exposed eye, but no pointed tip projects on the other side. The mandatory recognition phrase requires shaft, pointed tip and exposed threaded eye. The point is concealed, so this is partial/unobserved endpoint evidence and FAIL."
+    },
+    {
+      "gate_id": "rr_needle_stitch_contact_intended_interaction_matches",
+      "status": "pass",
+      "reviewed_scales": [
+        "native",
+        "thumbnail"
+      ],
+      "evidence": "In original and thumbnail, the right thumb/index grip the actual needle shaft while the left fingertips pin the lifted ribbon on the same hat. At native scale the gold thread passes through the exposed eye and follows one visible curve to the fresh gold stitch immediately beside the left pinning fingertips. The loose and newly secured ribbon portions occupy the same hat."
+    },
+    {
+      "gate_id": "rr_needle_stitch_contact_contact_anatomy_coherent",
+      "status": "pass",
+      "reviewed_scales": [
+        "native"
+      ],
+      "evidence": "The visible right thumb/index contact the actual silver shaft, and the left fingertips rest against the actual ribbon beside its stitch. The thin gold thread remains separate from the shaft and fingers. No visible fused contact, duplicated digit or object penetration is required to explain these local contacts; the concealed far-arm chain is assessed separately."
+    }
+  ]
+}

@@ -1,0 +1,844 @@
+{
+  "contract_version": "photo-composer-view/v2",
+  "mode": "candidate_details",
+  "source_pack_id": "550a5b8eee6fe659",
+  "source_pack_sha256": "31b9bef8c65c040f0ee4549ccae586883a99033fc77ac59ecd87392cc80ddfc7",
+  "candidates": [
+    {
+      "id": "bundle:vg_shared_airflow_hair_ribbon_bundle",
+      "source_pointer": "/candidate_bundles/candidates/1",
+      "candidate": {
+        "id": "bundle:vg_shared_airflow_hair_ribbon_bundle",
+        "source_sha256": "a1e62906a877de27fc995915d1597f0f16aca86051403254384fe9c1eff6f66f",
+        "associated_profile_ids": [
+          "vg_shared_airflow_hair_ribbon_profile"
+        ],
+        "components": [
+          {
+            "id": "component_1",
+            "concept_units": [
+              "loose hair strands remain rooted at the actor's head"
+            ],
+            "minimum_realizations": 1
+          },
+          {
+            "id": "component_2",
+            "concept_units": [
+              "the existing ribbon tail remains attached at its own anchor"
+            ],
+            "minimum_realizations": 1
+          },
+          {
+            "id": "component_3",
+            "concept_units": [
+              "hair and ribbon curve in a compatible local airflow with different shapes"
+            ],
+            "minimum_realizations": 1
+          }
+        ],
+        "member_candidates": [
+          {
+            "id": "slot:motion:vg_shared_airflow_hair_ribbon",
+            "slot": "motion",
+            "entry_id": "vg_shared_airflow_hair_ribbon",
+            "concept_units": [
+              "loose hair strands remain rooted at the actor's head",
+              "the existing ribbon tail remains attached at its own anchor",
+              "hair and ribbon curve in a compatible local airflow with different shapes"
+            ],
+            "relations": [
+              {
+                "id": "vg_shared_airflow_hair_ribbon_r1",
+                "type": "roots_at",
+                "subject": "loose_hair",
+                "object": "same_actor_head"
+              },
+              {
+                "id": "vg_shared_airflow_hair_ribbon_r2",
+                "type": "attaches_to",
+                "subject": "ribbon_tail",
+                "object": "own_anchor"
+              },
+              {
+                "id": "vg_shared_airflow_hair_ribbon_r3",
+                "type": "responds_to",
+                "subject": "hair_and_ribbon",
+                "object": "compatible_local_airflow"
+              }
+            ],
+            "affected_dimensions": [
+              "appearance",
+              "action"
+            ],
+            "adoption": "optional",
+            "affected_properties": [
+              {
+                "dimension": "appearance",
+                "target": "main_subject",
+                "property": "hair.style"
+              },
+              {
+                "dimension": "appearance",
+                "target": "main_subject",
+                "property": "wardrobe.details"
+              },
+              {
+                "dimension": "action",
+                "target": "existing_ribbon",
+                "property": "motion.configuration"
+              }
+            ]
+          }
+        ],
+        "confusion_boundaries": [
+          "identical parallel copied curves",
+          "hair detached from roots",
+          "a free-floating ribbon",
+          "opposing responses without a compatible local cause"
+        ],
+        "relations": [],
+        "adoption": "optional",
+        "profile_activation": "independent_request_evidence_only",
+        "source_contract_sha256": "b2ac41c642b1949532930da3c45810b16fdc4d4d0d5e17b57859289bd24d9239",
+        "content_form": "unordered_inspiration_terms",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+        "concept_units": [
+          "loose hair strands remain rooted at the actor's head",
+          "the existing ribbon tail remains attached at its own anchor",
+          "hair and ribbon curve in a compatible local airflow with different shapes"
+        ],
+        "concept_terms": [
+          "loose hair strands remain rooted at the actor's head",
+          "the existing ribbon tail remains attached at its own anchor",
+          "hair and ribbon curve in a compatible local airflow with different shapes"
+        ],
+        "affected_dimensions": [
+          "action",
+          "appearance"
+        ],
+        "conflicts_with": [],
+        "applicability": {
+          "status": "eligible",
+          "source": "all_members_eligible_and_dimensions_open"
+        },
+        "selection_contract": {
+          "component_evidence": "every_component_id_to_literal_final_prompt_phrase",
+          "relation_evidence": "every_relation_id_to_literal_final_prompt_phrase",
+          "scope": "one_coherent_realization",
+          "associated_profiles_are_not_promoted": true
+        }
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:contact_point:rb_support_compression_candidate",
+      "source_pointer": "/creative_augmentation/candidates/0",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:contact_point:rb_support_compression_candidate",
+        "slot": "contact_point",
+        "axis": "sensual",
+        "source_kind": "adult_appeal",
+        "concept_terms": [
+          "앉거나 기대는 지지 관계",
+          "soft cushion",
+          "seated contact",
+          "localized depression",
+          "the seated body meets a coherent support area on the soft cushion",
+          "a small cushion depression is localized beneath the load",
+          "the clothing folds follow the seated contact without penetrating the seat"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "source_candidate_id": "slot:contact_point:rb_support_compression_candidate",
+        "entry_id": "rb_support_compression_candidate",
+        "affected_dimensions": [
+          "material",
+          "pose"
+        ],
+        "context_requirements": {},
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:contact_point:rb_support_compression_candidate",
+          "raw_requirements": {},
+          "requirements": [],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "b0422f751179e853edfa85e4ad7ce41e2e1624f64abefc64856ff6c64bc00c58"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "affected_properties": [],
+        "expression_scope": "portrayal_or_scene_relation",
+        "contextual_usage": {},
+        "conflicts_with": [],
+        "semantic_band": "near",
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "앉거나 기대는 지지 관계",
+          "soft cushion",
+          "seated contact",
+          "localized depression",
+          "the seated body meets a coherent support area on the soft cushion",
+          "a small cushion depression is localized beneath the load",
+          "the clothing folds follow the seated contact without penetrating the seat"
+        ],
+        "relations": [
+          {
+            "id": "rb_support_compression_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "몸·좌면·의복",
+            "object": "the selected connected environment and its visible receiving surfaces"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:contact_point:rb_support_compression_candidate",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/11",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:contact_point:rb_support_compression_candidate",
+        "source_candidate_id": "slot:contact_point:rb_support_compression_candidate",
+        "slot": "contact_point",
+        "entry_id": "rb_support_compression_candidate",
+        "axis": "sensual",
+        "carrier": "contact_point",
+        "expression_scope": "portrayal_or_scene_relation",
+        "affected_dimensions": [
+          "material",
+          "pose"
+        ],
+        "affected_properties": [],
+        "contextual_usage": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword",
+          "coherence:keyword",
+          "coherence:keyword_scope",
+          "relation_concept:keyword"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {},
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:contact_point:rb_support_compression_candidate",
+          "raw_requirements": {},
+          "requirements": [],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "b0422f751179e853edfa85e4ad7ce41e2e1624f64abefc64856ff6c64bc00c58"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "앉거나 기대는 지지 관계",
+          "soft cushion",
+          "seated contact",
+          "localized depression",
+          "the seated body meets a coherent support area on the soft cushion",
+          "a small cushion depression is localized beneath the load",
+          "the clothing folds follow the seated contact without penetrating the seat"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "앉거나 기대는 지지 관계",
+          "soft cushion",
+          "seated contact",
+          "localized depression",
+          "the seated body meets a coherent support area on the soft cushion",
+          "a small cushion depression is localized beneath the load",
+          "the clothing folds follow the seated contact without penetrating the seat"
+        ],
+        "relations": [
+          {
+            "id": "rb_support_compression_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "몸·좌면·의복",
+            "object": "the selected connected environment and its visible receiving surfaces"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:aftermath_trace:hr_splatter_visible_aftermath",
+      "source_pointer": "/creative_augmentation/candidates/1",
+      "candidate": {
+        "id": "slot:aftermath_trace:hr_splatter_visible_aftermath",
+        "slot": "aftermath_trace",
+        "axis": null,
+        "source_kind": "slot",
+        "concept_terms": [
+          "a fictional injury scene includes localized blood and disrupted bodily continuity",
+          "the residue remains tied to its originating body region"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "entry_id": "hr_splatter_visible_aftermath",
+        "conflicts_with": [],
+        "semantic_band": "near",
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "a fictional injury scene includes localized blood and disrupted bodily continuity",
+          "the residue remains tied to its originating body region"
+        ],
+        "relations": [
+          {
+            "id": "relation_01",
+            "type": "jointly_visible_in_same_event",
+            "subject": "a fictional injury scene includes localized blood and disrupted bodily continuity",
+            "object": "the residue remains tied to its originating body region"
+          }
+        ],
+        "affected_dimensions": [
+          "material",
+          "setting"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "material",
+            "target": "*",
+            "property": "residue"
+          },
+          {
+            "dimension": "setting",
+            "target": "*",
+            "property": "objects"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:aftermath_trace:hr_splatter_visible_aftermath",
+      "source_pointer": "/slots/aftermath_trace/candidates/0",
+      "candidate": {
+        "id": "slot:aftermath_trace:hr_splatter_visible_aftermath",
+        "slot": "aftermath_trace",
+        "entry_id": "hr_splatter_visible_aftermath",
+        "tags": [
+          "observable_relation"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "a fictional injury scene includes localized blood and disrupted bodily continuity",
+          "the residue remains tied to its originating body region"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "a fictional injury scene includes localized blood and disrupted bodily continuity",
+          "the residue remains tied to its originating body region"
+        ],
+        "relations": [
+          {
+            "id": "relation_01",
+            "type": "jointly_visible_in_same_event",
+            "subject": "a fictional injury scene includes localized blood and disrupted bodily continuity",
+            "object": "the residue remains tied to its originating body region"
+          }
+        ],
+        "affected_dimensions": [
+          "material",
+          "setting"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "material",
+            "target": "*",
+            "property": "residue"
+          },
+          {
+            "dimension": "setting",
+            "target": "*",
+            "property": "objects"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:gaze_engagement:se_eye_visible_through_own_hair",
+      "source_pointer": "/creative_augmentation/candidates/2",
+      "candidate": {
+        "id": "slot:gaze_engagement:se_eye_visible_through_own_hair",
+        "slot": "gaze_engagement",
+        "axis": null,
+        "source_kind": "slot",
+        "concept_terms": [
+          "existing hair strands overlap part of the declared actor eye region",
+          "the specified eye aperture and iris-direction cue remain visible",
+          "the hair and eye belong to the same actor"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "entry_id": "se_eye_visible_through_own_hair",
+        "conflicts_with": [],
+        "semantic_band": "near",
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "existing hair strands overlap part of the declared actor eye region",
+          "the specified eye aperture and iris-direction cue remain visible",
+          "the hair and eye belong to the same actor"
+        ],
+        "relations": [
+          {
+            "id": "se_eye_visible_through_own_hair_r1",
+            "type": "partial_occlusion",
+            "subject": "main_subject.hair",
+            "object": "main_subject.eye_region"
+          },
+          {
+            "id": "se_eye_visible_through_own_hair_r2",
+            "type": "directed_gaze",
+            "subject": "main_subject.eyes",
+            "object": "the specified gaze target"
+          }
+        ],
+        "affected_dimensions": [
+          "expression",
+          "appearance"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.gaze_direction"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "hair"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:gaze_engagement:se_eye_visible_through_own_hair",
+      "source_pointer": "/slots/gaze_engagement/candidates/0",
+      "candidate": {
+        "id": "slot:gaze_engagement:se_eye_visible_through_own_hair",
+        "slot": "gaze_engagement",
+        "entry_id": "se_eye_visible_through_own_hair",
+        "tags": [
+          "human",
+          "gaze_engagement"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "existing hair strands overlap part of the declared actor eye region",
+          "the specified eye aperture and iris-direction cue remain visible",
+          "the hair and eye belong to the same actor"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "existing hair strands overlap part of the declared actor eye region",
+          "the specified eye aperture and iris-direction cue remain visible",
+          "the hair and eye belong to the same actor"
+        ],
+        "relations": [
+          {
+            "id": "se_eye_visible_through_own_hair_r1",
+            "type": "partial_occlusion",
+            "subject": "main_subject.hair",
+            "object": "main_subject.eye_region"
+          },
+          {
+            "id": "se_eye_visible_through_own_hair_r2",
+            "type": "directed_gaze",
+            "subject": "main_subject.eyes",
+            "object": "the specified gaze target"
+          }
+        ],
+        "affected_dimensions": [
+          "expression",
+          "appearance"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.gaze_direction"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "hair"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:expression:vel_small_lip_gap_concealed_teeth",
+      "source_pointer": "/creative_augmentation/candidates/3",
+      "candidate": {
+        "id": "slot:expression:vel_small_lip_gap_concealed_teeth",
+        "slot": "expression",
+        "axis": null,
+        "source_kind": "slot",
+        "concept_terms": [
+          "upper and lower lip edges leave one narrow visible gap",
+          "the jaw remains only slightly open",
+          "the teeth remain concealed behind the lips at this selected viewing angle"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "entry_id": "vel_small_lip_gap_concealed_teeth",
+        "conflicts_with": [],
+        "semantic_band": "near",
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "upper and lower lip edges leave one narrow visible gap",
+          "the jaw remains only slightly open",
+          "the teeth remain concealed behind the lips at this selected viewing angle"
+        ],
+        "relations": [
+          {
+            "id": "vel_small_lip_gap_concealed_teeth_r1",
+            "type": "separates_from",
+            "subject": "upper_lip",
+            "object": "lower_lip"
+          },
+          {
+            "id": "vel_small_lip_gap_concealed_teeth_r2",
+            "type": "occlude",
+            "subject": "lips",
+            "object": "teeth"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "mouth.aperture"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:expression:vel_small_lip_gap_concealed_teeth",
+      "source_pointer": "/slots/expression/candidates/0",
+      "candidate": {
+        "id": "slot:expression:vel_small_lip_gap_concealed_teeth",
+        "slot": "expression",
+        "entry_id": "vel_small_lip_gap_concealed_teeth",
+        "tags": [
+          "observable_relation"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "upper and lower lip edges leave one narrow visible gap",
+          "the jaw remains only slightly open",
+          "the teeth remain concealed behind the lips at this selected viewing angle"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "upper and lower lip edges leave one narrow visible gap",
+          "the jaw remains only slightly open",
+          "the teeth remain concealed behind the lips at this selected viewing angle"
+        ],
+        "relations": [
+          {
+            "id": "vel_small_lip_gap_concealed_teeth_r1",
+            "type": "separates_from",
+            "subject": "upper_lip",
+            "object": "lower_lip"
+          },
+          {
+            "id": "vel_small_lip_gap_concealed_teeth_r2",
+            "type": "occlude",
+            "subject": "lips",
+            "object": "teeth"
+          }
+        ],
+        "affected_dimensions": [
+          "expression"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "mouth.aperture"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:action:ia_close_read",
+      "source_pointer": "/creative_augmentation/candidates/4",
+      "candidate": {
+        "id": "slot:action:ia_close_read",
+        "slot": "action",
+        "axis": null,
+        "source_kind": "slot",
+        "concept_terms": [
+          "open book has coherent receiving support",
+          "eyes orient to one source line",
+          "annotation is anchored to that line",
+          "one hand holds page and other tool role is stated"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "entry_id": "ia_close_read",
+        "conflicts_with": [],
+        "semantic_band": "near",
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "open book has coherent receiving support",
+          "eyes orient to one source line",
+          "annotation is anchored to that line",
+          "one hand holds page and other tool role is stated"
+        ],
+        "relations": [
+          {
+            "id": "ia_close_read_r1",
+            "type": "supports",
+            "subject": "support",
+            "object": "book"
+          },
+          {
+            "id": "ia_close_read_r2",
+            "type": "looks_toward",
+            "subject": "eyes",
+            "object": "source_line"
+          },
+          {
+            "id": "ia_close_read_r3",
+            "type": "refers_to",
+            "subject": "annotation",
+            "object": "source_line"
+          },
+          {
+            "id": "ia_close_read_r4",
+            "type": "presses",
+            "subject": "holding_hand",
+            "object": "page_margin"
+          }
+        ],
+        "affected_dimensions": [
+          "action",
+          "pose",
+          "relationship",
+          "expression",
+          "setting",
+          "text"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "action",
+            "target": "main_subject",
+            "property": "body.action_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body"
+          },
+          {
+            "dimension": "relationship",
+            "target": "main_subject",
+            "property": "work_reference"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.gaze_direction"
+          },
+          {
+            "dimension": "setting",
+            "target": "scene",
+            "property": "props"
+          },
+          {
+            "dimension": "text",
+            "target": "scene",
+            "property": "text"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:action:ia_close_read",
+      "source_pointer": "/slots/action/candidates/0",
+      "candidate": {
+        "id": "slot:action:ia_close_read",
+        "slot": "action",
+        "entry_id": "ia_close_read",
+        "tags": [
+          "human",
+          "work_reference"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "open book has coherent receiving support",
+          "eyes orient to one source line",
+          "annotation is anchored to that line",
+          "one hand holds page and other tool role is stated"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "open book has coherent receiving support",
+          "eyes orient to one source line",
+          "annotation is anchored to that line",
+          "one hand holds page and other tool role is stated"
+        ],
+        "relations": [
+          {
+            "id": "ia_close_read_r1",
+            "type": "supports",
+            "subject": "support",
+            "object": "book"
+          },
+          {
+            "id": "ia_close_read_r2",
+            "type": "looks_toward",
+            "subject": "eyes",
+            "object": "source_line"
+          },
+          {
+            "id": "ia_close_read_r3",
+            "type": "refers_to",
+            "subject": "annotation",
+            "object": "source_line"
+          },
+          {
+            "id": "ia_close_read_r4",
+            "type": "presses",
+            "subject": "holding_hand",
+            "object": "page_margin"
+          }
+        ],
+        "affected_dimensions": [
+          "action",
+          "pose",
+          "relationship",
+          "expression",
+          "setting",
+          "text"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "action",
+            "target": "main_subject",
+            "property": "body.action_configuration"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "body"
+          },
+          {
+            "dimension": "relationship",
+            "target": "main_subject",
+            "property": "work_reference"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.gaze_direction"
+          },
+          {
+            "dimension": "setting",
+            "target": "scene",
+            "property": "props"
+          },
+          {
+            "dimension": "text",
+            "target": "scene",
+            "property": "text"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    }
+  ],
+  "view_sha256": "bcfd5ae22d308fba654f7320b407a3ae9d45f1ad79067f4ec4b773cfefd2c6b9"
+}

@@ -1,0 +1,142 @@
+--- before/skills/photo-prompt-image-generator/SKILL.md
++++ after/skills/photo-prompt-image-generator/SKILL.md
+@@ -130,6 +130,8 @@
+ For a requested interaction, state change, or component relationship, distinguish the participants, target or affected property, relevant starting state, action, visible result, and continuity where those roles exist. Connect requester-owned relations to literal evidence in the existing anchors and assertions. Check which roles each phrase actually proves; a general scene description cannot stand in for every endpoint. A static arrangement needs no invented action, history, or additional participant.
+ 
+ Before freezing, read the baseline as if the source keywords and scene synopsis were unavailable. Check what situation a viewer could infer, what makes the subjects' action or response understandable, and which visible connections carry the moment's significance. If the draft only names an emotion or shows an isolated gesture whose reason is missing, develop the authorial circumstances and their visible realization before retrieval. Literal evidence coverage and a longer prompt do not by themselves establish an engaging scene. This is an artistic review within existing intent and priorities, not a new machine-verifiable gate.
++
++Before freezing, plan the visibility of the photograph's consequential relations using only the permitted pre-core inputs. Identify the owners, connecting boundaries and distinguishing state that must read together at the shutter. Account for their projected size, contrast and depth as well as occlusion: extra prose does not give a small detail more pixels. Choose one coherent observable state for an action or fastening, with the acting grip and target contact connected when they carry the meaning. Revise unbound placement, framing or timing when simultaneous details compete for the same view; preserve requested relations and reference scope. Keep incidental authorial mechanics out of requester-owned evidence. Record material reasoning in the existing intent, priorities and applicable review reasons; this adds no schema, fixed crop, detail quota or universal pixel threshold.
+ 
+ Before freezing that draft, review any material bodily action, contact, load-bearing state, or consequentially hidden appendage using only the permitted pre-core inputs. Trace the acting body part to its owner, its connected articulation and target, the supporting surfaces and available space, and what the chosen viewpoint will reveal. Distinguish actor-relative directions from screen directions. Check simultaneous states together; a plausible action label does not establish a plausible way to perform it.
+ 
+@@ -419,6 +421,8 @@
+ 
+ Reconsider the whole frame before polishing clauses. Read the final scene without the source keywords or candidate labels and judge whether the situation, its connected responses, and a reason to care remain legible. Compare each viable realization by the requested meaning, subject appeal and whole-image effect; losing an agent-chosen motif can be a worthwhile trade when the alternative establishes a stronger relationship. If a chosen pose, distance, expression, or prop arrangement weakens the intended experience, revise the unbound staging while preserving every requester-owned anchor and effective hard obligation. Preserve context that gives the action its significance; simplification should remove distraction rather than the links that make the moment understandable. Record material refinements in the existing `authorial_decisions`, including scene development, subtraction or simplification. Do not change the frozen core in place or silently rewrite required evidence. If a needed change would alter a frozen anchor or assertion, rebuild through the existing request/core path; use clear existing user intent without another approval request.
+ 
++After considering the complete adopted contracts, check whether their evidence can coexist in the chosen photograph. Trace each required owner, endpoint and state in one planned view at its required review scale; distinguish a local visible connection from a complete route or endpoint count. Develop feasible unbound staging before polishing the wording. Decline an optional addition before adoption when it defeats the scene or cannot be made legible within scope. A preserved or already adopted hard duty remains complete: do not remove a component, demote a review, hide an endpoint or replace a difficult mechanism with its general impression. Use the existing rebuild or scoped retry path when necessary. Keep this planning in current authorial decisions and review reasons rather than adding a parallel qualification checklist.
++
+ When `embodiment_preflight` is present, read `references/embodiment-preflight.md`. Recheck the entire final prompt, including new camera, framing, clothing, and contact clauses; preserve the baseline review and bind a fresh `agent_postcomposition` review in `embodiment_review`. A changed prompt invalidates the previous review hash. Fix composition conflicts through unbound staging on open dimensions. Use the existing rebuild or repair lineage when required frozen evidence must change. General defect negatives cannot substitute for a coherent positive realization.
+ 
+ For every semantic clarification, record exactly one decision:
+
+--- before/skills/photo-prompt-image-generator/references/embodiment-preflight.md
++++ after/skills/photo-prompt-image-generator/references/embodiment-preflight.md
+@@ -34,6 +34,12 @@
+ 
+ If the core's meaning is clear but the proposed realization is inconsistent, repair agent-authored staging before the first freeze. After freeze, unbound staging on open dimensions may be refined, simplified, or replaced without changing the saved baseline. Preserve literal locked evidence and review the entire resulting prompt again; do not carry a stale postcomposition review forward. A required frozen change needs the existing lineage/rebuild path, preserving requester intent and the meaningful contact. Keep detailed support and articulation reasoning in the review record, using only consequential spatial relations in the photographic prose. Do not copy the motivating case's body part, target, direction, or numerical joint values into generic defaults.
+ 
++Check a consequential interaction as a connected state at the shutter. Identify the acting part and its grip or contact, the affected object's boundary, and any connecting path needed to distinguish the intended state. Several plausible clauses can still describe incompatible simultaneous states or assign the same tool to different hands. Choose observable geometry within the permitted scope and explain the ownership/contact decision in the existing reasons. A local attachment does not prove a complete route or multiple endpoints.
++
++Review the space taken by the entire required evidence set. A distant full figure may conceal a fine surface structure; a close crop may remove a consequential contact or contextual owner. Choose projection, arrangement, depth and timing for the actual photograph, with sufficient visible area and separation for its distinguishing details. There is no universal body crop, lens, minimum pixel count or preferred handedness. Harmless off-frame support remains permissible; an explicitly required contact, endpoint or visible state must remain assessable. Do not add an exact incidental stitch count or support posture to hard requester evidence merely because it helps an authorial explanation.
++
++At pixel review, inspect the original saved image and, where useful, unresampled crops. An enlarged unresolved texture, a nearby object's weave, a front opening in place of a side gap, or a single attachment in place of the requested complete route cannot establish the missing relation. Explain the observed limitation without diagnosing an unseen bodily defect. Required native evidence stays `fail` when partial or hidden; record validity, whole-image legibility and requesting-user preference remain separate.
++
+ ## Runtime boundary
+ 
+ Copy `source_embodiment_preflight_sha256` from the policy into `photo-image-render-request/v2`. With this policy, the runtime prompt is exactly `prompt_en`, optionally followed by `\n\nAvoid: ` and the unchanged nonempty `negative_en`. Additional positive runtime prose must first be incorporated into composition and reviewed. This closes the path where a reviewed prompt is embedded in a larger, unreviewed pose instruction.
+
+--- before/skills/photo-prompt-image-generator/references/image-runtime.md
++++ after/skills/photo-prompt-image-generator/references/image-runtime.md
+@@ -119,6 +119,8 @@
+ 
+ For an independent multi-arm qualification, keep one ledger and one `run_manifest.json` inside each arm. V6 arms use `photo-independent-run-manifest/v2` with the canonical authorial-core and intent-lock SHA-256 values. Call the recorder with `--arm-id`, `--worktree-id`, the frozen skill SHA-256, source snapshot identity, candidate-pack version, every reference SHA-256, the actual image-call count, `--independent-no-cross-arm-inputs`, and `--manifest <path>`. When repair is active, also preserve `--render-repair-contract-sha256` and every failed `--failed-repair-gate-id`. The manifest records exact pack/prompt/run IDs, image paths and hashes, tool, source, and the fact that no other arm output was used. Never claim independence from visual diversity alone, and never pass another arm's prompt, pack, message, or image into the current arm.
+ 
++Managed native arms can pass `--arm-id`, `--worktree-id`, `--skill-sha256`, `--source-ref`, `--independent-no-cross-arm-inputs` and `--manifest` directly to `photo_workflow.py native-result`. It forwards these declarations to the ordinary recorder while deriving the V6 pack/core/intent, references, selected IDs and native-plan bindings from the audited run. Pass the actual cumulative arm call count with `--image-call-count` when it exceeds the default of one, and repeat `--failed-repair-gate-id` when applicable. This path records an already observed result; it adds no image invocation or independent proof of the declaration.
++
+ For a text-only attempt, omit `--reference-sha256`; the independent manifest records `reference_sha256: []`. A blocked attempt still records its actual call and outcome with no delivered image paths. Neither case needs a fabricated reference hash or a second image call to complete the manifest.
+ 
+ Count actual tool invocations, keeping preparation/audit failures and unknown interruption outcomes separate. `image_call_count` is cumulative within an arm; do not sum successive cumulative values. Preserve failed outcomes and immediate `retry_of` links. A user-supplied successful image from ChatGPT or another surface has separate `origin: user_supplied` provenance, user-reported prompt/reference bindings and observed file hashes. It is not a new native retry or a revision of earlier failed outcomes. Record an unobserved external model, timestamp or attempt count as unknown; the prompt-authoring model is not an image-model identifier.
+
+--- before/skills/photo-prompt-image-generator/scripts/photo_workflow.py
++++ after/skills/photo-prompt-image-generator/scripts/photo_workflow.py
+@@ -372,8 +372,28 @@
+     return {"status": "pass", "payload": plan["payload"], "operation_id": op["operation_id"]}
+ 
+ 
++def native_manifest_flags(args):
++    """Forward declared arm provenance through the ordinary recorder contract."""
++    manifest = getattr(args, "manifest", None)
++    fields = ("arm_id", "worktree_id", "skill_sha256", "source_ref")
++    supplied = [getattr(args, field, None) for field in fields]
++    independent = getattr(args, "independent_no_cross_arm_inputs", False)
++    if not manifest:
++        if any(supplied) or independent:
++            raise WorkflowError("native_manifest_path_required")
++        return []
++    if not all(supplied) or not independent:
++        raise WorkflowError("native_manifest_provenance_required")
++    flags = ["--manifest", str(manifest), "--candidate-pack-version", "v6",
++             "--independent-no-cross-arm-inputs"]
++    for field, value_ in zip(fields, supplied):
++        flags += ["--" + field.replace("_", "-"), str(value_)]
++    return flags
++
++
+ def native_result(args):
+     state = load_state(args.run); ensure(state)
++    manifest_flags = native_manifest_flags(args)
+     plan = value(state, "native_plan")
+     op = next(op for op in state["operations"] if op["operation_id"] == plan["operation_id"])
+     if op["status"] not in {"invocation_started", "execution_unknown", "record_ready", "recorder_failed"}:
+@@ -393,11 +413,14 @@
+     flags = ["--ts", op["timestamp"], "--prompt-en", composed["prompt_en"], "--attempt", "1",
+         "--workflow-operation-id", op["operation_id"] + ":1", "--tool", "image_gen", "--generation-environment", "native_imagegen",
+         "--pack-id", pack["pack_id"], "--authorial-core-sha256", pack["authorial_core"]["canonical_sha256"],
+-        "--intent-lock-sha256", pack["authorial_core"]["intent_lock"]["canonical_sha256"], "--image-call-count", "1",
++        "--intent-lock-sha256", pack["authorial_core"]["intent_lock"]["canonical_sha256"], "--image-call-count", str(getattr(args, "image_call_count", 1)),
+         "--chosen-candidate-ids-json", json.dumps(composed["chosen_candidate_ids"]),
+         "--chosen-visual-concept-ids-json", json.dumps(composed["chosen_visual_concept_ids"]), "--composer", "agent", "--audit-status", "pass",
+         "--ledger", str(args.ledger), "--native-render-plan-json", str(bound_path(state, "native_plan")),
+         "--native-render-plan-sha256", state["artifacts"]["native_plan"]["sha256"]]
++    flags += manifest_flags
++    for gate_id in getattr(args, "failed_repair_gate_id", []):
++        flags += ["--failed-repair-gate-id", gate_id]
+     if pack.get("render_repair"):
+         flags += ["--render-repair-contract-sha256", pack["render_repair"]["canonical_sha256"]]
+     if composed["chosen_visual_concept_ids"]:
+@@ -494,7 +517,14 @@
+         if command == "render-api":
+             p.add_argument("--attempts", type=int, default=2); p.add_argument("--concept"); p.add_argument("--dry-run", action="store_true")
+         if command in {"render-api", "native-result", "retry-prepare"}: p.add_argument("--ledger", type=Path, required=True)
+-        if command == "native-result": p.add_argument("--result", type=Path, required=True)
++        if command == "native-result":
++            p.add_argument("--result", type=Path, required=True)
++            for name in ("arm-id", "worktree-id", "skill-sha256", "source-ref"):
++                p.add_argument("--" + name)
++            p.add_argument("--independent-no-cross-arm-inputs", action="store_true")
++            p.add_argument("--manifest", type=Path)
++            p.add_argument("--image-call-count", type=int, default=1)
++            p.add_argument("--failed-repair-gate-id", action="append", default=[])
+         if command in {"review-shape", "review-audit"}:
+             p.add_argument("--image", type=Path); p.add_argument("--generic-review", type=Path); p.add_argument("--visual-review", type=Path)
+         if command == "retry-prepare":
+
+--- before/tests/test_photo_wardrobe_owner_relations.py
++++ after/tests/test_photo_wardrobe_owner_relations.py
+@@ -156,5 +156,26 @@
+         profile_source=json.loads((ASSETS/'photo_prompt_visual_obligations_wardrobe_owner_relations.json').read_text())
+         self.assertEqual(record['profile_source_sha256'],digest(profile_source))
+ 
++    def test_retained_identities_have_bounded_complete_endpoint_contracts(self):
++        bundles = {row['id']: row for row in self.extension['visual_semantics']}
++        for number, existing in [('024','clt_ct037_v1'),('029','clt_ct047_v1')]:
++            pid = f'wkr_wk{number}_retained_relation'
++            with self.subTest(profile=pid):
++                self.assertEqual(bundles[pid+'_bundle']['candidate_ids'],[existing])
++                self.assertNotIn(existing,self.entries)
++                self.assertEqual(self.hard(self.profiles[pid]['activation']['exact_terms'][0]),{pid})
++        for family in ['cowl neckline','bishop sleeve']:
++            self.assertEqual(self.hard(family),set())
++
++    def test_retained_cowl_cannot_bypass_the_material_drape_owner(self):
++        source=json.loads((ASSETS/'photo_prompt_clothing_structure_extension.json').read_text())
++        entry=next(row for row in source['slots']['garment_detail'] if row['id']=='clt_ct037_v1')
++        lock={'contract_version':'photo-intent-lock/v2','semantic_anchors':[
++            {'dimension':'material','target':'main_subject','property':'wardrobe.drape'}]}
++        self.assertFalse(property_effects_allowed(lock,entry['affected_dimensions'],entry['affected_properties']))
++        unrelated={'contract_version':'photo-intent-lock/v2','semantic_anchors':[
++            {'dimension':'material','target':'background_wall','property':'surface.paint'}]}
++        self.assertTrue(property_effects_allowed(unrelated,entry['affected_dimensions'],entry['affected_properties']))
++
+ 
+ if __name__=='__main__': unittest.main()

@@ -1,0 +1,71 @@
+{
+  "generic": {
+    "schema_version": "photo-image-render-review-audit/v1",
+    "pack_id": "7c9c8f16238572b7",
+    "status": "pass",
+    "qualification_status": "fail",
+    "technical_qualified": false,
+    "source_render_repair_contract_sha256": "0c22d21e4b6e2c74ad174e0307cb8a643e586d6af8f6257ac2d1083b56bc75d3",
+    "reviewed_result_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/wardrobe-keyword-refinement-20261010/arms/c/generated_images/native_02/original.png",
+    "reviewed_result_sha256": "741dd3bcfc023630f9ea391c0452a6eecd33452aa74dadaa6e0982e2845673e9",
+    "failed_gate_ids": [
+      "rr_needle_stitch_contact_gross_structure_coherent"
+    ],
+    "failures": [],
+    "boundary": "This audit validates a named review record and its exact generic hard-gate set. The reviewer supplies pixel judgments; the audit does not infer pixels or user preference."
+  },
+  "visual": {
+    "schema_version": "moe-render-review/v1",
+    "pack_id": "7c9c8f16238572b7",
+    "contract_version": "photo-visual-obligations/v1",
+    "qualification_status": "failed_technical_hard_gates",
+    "technical_qualified": false,
+    "representative_eligible": false,
+    "required_hard_gate_count": 9,
+    "required_hard_gates": [
+      "vo_vg_face_hands_place_readability_1",
+      "vo_vg_face_hands_place_readability_2",
+      "vo_vg_face_hands_place_readability_3",
+      "vo_wkr_wk047_selected_relation_1",
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "source_character_response_contract_sha256": null,
+    "effective_visual_contract_sha256": "35a6df7d8e4ea0196d3b1613fae6ebb0f4dde142ea50c4437fd0dcefd2958f2f",
+    "selected_visual_concept_ids": [],
+    "failed_hard_gates": [
+      {
+        "gate": "embodiment_body_ownership",
+        "status": "fail",
+        "evidence": "The nearer shoulder-sleeve-forearm-wrist-hand chain is visible and owns the needle grip. The left ribbon-pinning hand is clear, but its wrist-to-forearm connection is concealed by the hat and right frame boundary. The frozen review promised two shoulder-to-forearm-wrist-hand chains; the farther ownership chain cannot be completely verified from these pixels. This is an unobserved connection, not a claim of malformed anatomy."
+      },
+      {
+        "gate": "embodiment_joint_chain_and_reach",
+        "status": "fail",
+        "evidence": "The hands are close together above the hat and the nearer bent arm is traceable. The farther wrist, forearm and elbow route is hidden behind the hat and right image boundary, so the reviewed two bent joint chains and their reachable contacts are only partially observable. A plausible gesture alone does not verify the complete promised farther chain."
+      },
+      {
+        "gate": "embodiment_contact_and_space",
+        "status": "fail",
+        "evidence": "Local needle grip and left ribbon pinning are visible, but the reviewed spatial condition was a midpoint pinch with free shaft on both sides and both pointed tip and threaded eye exposed. The actual point and leftward free shaft remain concealed beneath the gripping fingertips, so the complete reviewed contact-space condition is unobserved/partial."
+      },
+      {
+        "gate": "embodiment_visibility_and_projection",
+        "status": "fail",
+        "evidence": "Face, cuff crossings and sewing edge, active contacts, threaded eye and the whole gold curve resolve. The required pointed needle endpoint is still concealed, and the promised farther wrist/forearm/elbow chain is hidden by the hat/frame. These consequential visibility duties remain incomplete despite the improved cuff."
+      }
+    ],
+    "schema_failures": [],
+    "user_judgment": {
+      "baseline_available": false,
+      "genuinely_moe": "pending",
+      "better_than_baseline": "pending",
+      "source": "not_yet_received",
+      "evidence": "No requester acceptance or comparative preference judgment has been received. These are actual saved-pixel observations by the reviewer."
+    },
+    "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+  }
+}

@@ -1,0 +1,1894 @@
+{
+  "contract_version": "photo-composer-view/v2",
+  "mode": "candidate_details",
+  "source_pack_id": "60ba1eadbdebc7c2",
+  "source_pack_sha256": "5bb7852298fd4c80813b333948b4bbbc9b5099d6807d54fa10e011a471038ff4",
+  "candidates": [
+    {
+      "id": "visual-concept:wkr_wk074_selected_relation",
+      "source_pointer": "/visual_concept_candidates/candidates/0",
+      "candidate": {
+        "id": "visual-concept:wkr_wk074_selected_relation",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "The same garment has an opaque bodice and a distinct sheer sleeve with a readable joining boundary.",
+          "같은 의상의 불투명 몸판과 시어 소매 접합"
+        ],
+        "affected_dimensions": [
+          "material",
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.opacity.distribution"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.regions"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.appearance"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.material.transmission"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.opacity"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.transmission"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.opacity"
+          }
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "wkr_wk074_selected_relation",
+            "category": "wardrobe_owner_selected_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Keep the selected owner and complete visible relation together: The same garment has an opaque bodice and a distinct sheer sleeve with a readable joining boundary.",
+            "component_semantics": {
+              "minimum_component_groups": 1,
+              "required_group_ids": [
+                "component_1"
+              ],
+              "groups": [
+                {
+                  "id": "component_1",
+                  "any_terms": [
+                    "The same garment has an opaque bodice and a distinct sheer sleeve with a readable joining boundary.",
+                    "sheer sleeves",
+                    "organza sleeves",
+                    "opaque bodice",
+                    "velvet bodice"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "component_1_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 1,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "component_1_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "The same garment has an opaque bodice and a distinct sheer sleeve with a readable joining boundary."
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_wkr_wk074_selected_relation_1",
+                "review_scale": "native",
+                "description": "The same garment has an opaque bodice and a distinct sheer sleeve with a readable joining boundary. Inspect the declared owner, both endpoints and the connecting edge or distinguishing state in this same image. Hidden or partial evidence fails."
+              }
+            ],
+            "reject_substitutes": [
+              "소매 요구로 몸판도 투명",
+              "어깨 경계를 지워 한 레이어로 합침"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "visual-concept:wkr_wk025_selected_relation",
+      "source_pointer": "/visual_concept_candidates/candidates/5",
+      "candidate": {
+        "id": "visual-concept:wkr_wk025_selected_relation",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "목선 안쪽을 따라가는 좁은 스캘럽 레이스",
+          "A narrow scalloped trim follows the inside of the same garment's neckline edge."
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.neckline.trim"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layering"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.garment_type"
+          }
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "wkr_wk025_selected_relation",
+            "category": "wardrobe_owner_selected_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Keep the selected owner and complete visible relation together: A narrow scalloped trim follows the inside of the same garment's neckline edge.",
+            "component_semantics": {
+              "minimum_component_groups": 1,
+              "required_group_ids": [
+                "component_1"
+              ],
+              "groups": [
+                {
+                  "id": "component_1",
+                  "any_terms": [
+                    "A narrow scalloped trim follows the inside of the same garment's neckline edge.",
+                    "lace neckline",
+                    "scalloped lace",
+                    "lace inset"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "component_1_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 1,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "component_1_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "A narrow scalloped trim follows the inside of the same garment's neckline edge."
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_wkr_wk025_selected_relation_1",
+                "review_scale": "native",
+                "description": "A narrow scalloped trim follows the inside of the same garment's neckline edge. Inspect the declared owner, both endpoints and the connecting edge or distinguishing state in this same image. Hidden or partial evidence fails."
+              }
+            ],
+            "reject_substitutes": [
+              "인셋을 별도 속옷으로 변경",
+              "목선 배색을 전신 새 레이어로 확대"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "visual-concept:sheer_garment_optical_layering",
+      "source_pointer": "/visual_concept_candidates/candidates/7",
+      "candidate": {
+        "id": "visual-concept:sheer_garment_optical_layering",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "underlying body layer",
+          "garment fiber layer",
+          "opaque underlayer or background transmission",
+          "선택한 오간자 또는 시폰에 직물 결이 보인다; 빛이 선택한 원단 층을 통과한다; 이음선 경계와 접힌 주름이 같은 의복 층을 식별한다; 역광에서 같은 원단 층의 빛 투과가 더 뚜렷해진다",
+          "sheer sleeves yoke panel or overlay",
+          "the selected organza or chiffon has a visible textile weave; light is transmitted through the selected fabric layer; a seam boundary and fold identify the same garment layer; backlighting visibly strengthens transmission through that layer",
+          "backlight and layer-density relationship",
+          "overlap transmission",
+          "visible textile weave seam edge and fold",
+          "material study rather than automatic nudity",
+          "translucent organza chiffon tulle mesh or lace"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "sheer_garment_optical_layering",
+            "category": "material_optics",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Make the garment textile visibly present through its fibers or open-cell structure, seams, edges and folds. Let light reveal the requested underlying body, lower garment or background through that same textile, preserving the requested coverage and actual layer owner. Choose one material and one lighting relationship; retain coherent transmission and visible material boundaries.",
+            "component_semantics": {
+              "minimum_component_groups": 3,
+              "required_group_ids": [
+                "translucent_textile_surface",
+                "transmission_relationship",
+                "garment_boundary_and_layer"
+              ],
+              "groups": [
+                {
+                  "id": "translucent_textile_surface",
+                  "any_terms": [
+                    "visible organza or chiffon weave",
+                    "tulle mesh or lace textile surface",
+                    "보이는 오간자 또는 쉬폰 직조",
+                    "튤 메시 또는 레이스 표면",
+                    "the selected organza or chiffon has a visible textile weave",
+                    "선택한 오간자 또는 시폰에 직물 결이 보인다"
+                  ]
+                },
+                {
+                  "id": "transmission_relationship",
+                  "any_terms": [
+                    "light passes through the fabric",
+                    "opaque underlayer remains partly visible",
+                    "background tone transmits through the sleeve",
+                    "원단을 통과하는 빛",
+                    "부분적으로 비치는 불투명 안감",
+                    "light is transmitted through the selected fabric layer",
+                    "빛이 선택한 원단 층을 통과한다"
+                  ]
+                },
+                {
+                  "id": "garment_boundary_and_layer",
+                  "any_terms": [
+                    "visible seam edge and fold",
+                    "sheer overlay above an opaque base",
+                    "시어 가장자리와 봉제선",
+                    "불투명 베이스 위의 투명 레이어",
+                    "a seam boundary and fold identify the same garment layer",
+                    "이음선 경계와 접힌 주름이 같은 의복 층을 식별한다"
+                  ]
+                },
+                {
+                  "id": "illumination_and_material_behavior",
+                  "any_terms": [
+                    "backlight increases transmission",
+                    "folds become denser and less transparent",
+                    "stretch changes the visible openness",
+                    "역광에서 투과가 증가",
+                    "겹친 주름에서 투명도가 낮아짐",
+                    "backlighting visibly strengthens transmission through that layer",
+                    "역광에서 같은 원단 층의 빛 투과가 더 뚜렷해진다"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "translucent_textile_phrase",
+                "visible_weave_edge_phrase",
+                "transmitted_light_phrase",
+                "layer_contrast_phrase",
+                "material_behavior_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 5,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "translucent_textile_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "translucent organza layer",
+                  "sheer chiffon garment",
+                  "tulle mesh textile",
+                  "sheer lace panel",
+                  "a garment textile layer that partially transmits the view behind it",
+                  "the selected organza or chiffon has a visible textile weave"
+                ]
+              },
+              "visible_weave_edge_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "visible weave seam and edge",
+                  "textile surface and folded edge remain visible",
+                  "mesh structure and stitched boundary",
+                  "light is transmitted through the selected fabric layer"
+                ]
+              },
+              "transmitted_light_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "light passes through the fabric",
+                  "backlight transmits through the sleeve",
+                  "background tone passes through the panel",
+                  "a seam boundary and fold identify the same garment layer"
+                ]
+              },
+              "layer_contrast_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "opaque underlayer remains partly visible",
+                  "sheer overlay above an opaque base",
+                  "translucent panel contrasts with solid fabric",
+                  "underlying body contours remain partly visible beneath the readable garment fibers",
+                  "the requested lower garment remains partly visible beneath the transmitting textile",
+                  "the background remains partly visible through the same garment panel",
+                  "backlighting visibly strengthens transmission through that layer"
+                ]
+              },
+              "material_behavior_phrase": {
+                "min_content_words": 4,
+                "must_mention_any": [
+                  "folds become denser and less transparent",
+                  "stretch changes the visible openness",
+                  "illumination changes transmission without erasing the textile"
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [
+                "sheer layered garment"
+              ],
+              "forbidden_prompt_terms": [
+                "transparent body",
+                "invisible clothing",
+                "x-ray clothing"
+              ],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_sheer_textile_first_read",
+                "review_scale": "thumbnail",
+                "description": "A translucent garment layer is immediately readable rather than a vague bright or glossy region."
+              },
+              {
+                "id": "vo_sheer_weave_edge_legibility",
+                "review_scale": "native",
+                "description": "Weave, seam, stitched boundary, edge, or fold proves that the transmitting surface is textile."
+              },
+              {
+                "id": "vo_sheer_transmission_relationship",
+                "review_scale": "both",
+                "description": "Light and the requested underlying body, lower garment or background are partly transmitted through the same visible garment textile in a coherent direction. The transmitting layer and underlying owner must remain distinct; an unrequested opaque covering cannot replace the intended lower surface."
+              },
+              {
+                "id": "vo_sheer_layer_coherence",
+                "review_scale": "native",
+                "description": "Overlaps, folds, stretch, and lighting change transparency consistently across the same material."
+              },
+              {
+                "id": "vo_sheer_not_optical_or_generation_substitute",
+                "review_scale": "both",
+                "description": "Glass, wetness, overexposure, invisible clothing, or transparent-body artifacts do not carry the requested textile effect."
+              }
+            ],
+            "reject_substitutes": [
+              "clear_glass_or_plastic",
+              "wet_fabric_only",
+              "overexposure_or_bloom_only",
+              "transparent_body_or_missing_clothing_artifact",
+              "lace_pattern_without_transmission",
+              "thin_opaque_fabric_without_layer_contrast",
+              "see_through_bangs_or_hair"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "slot:garment_detail:clt_ct031_v1",
+      "source_pointer": "/slots/garment_detail/candidates/1",
+      "candidate": {
+        "id": "slot:garment_detail:clt_ct031_v1",
+        "slot": "garment_detail",
+        "entry_id": "clt_ct031_v1",
+        "tags": [
+          "clothing"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "a continuous curved seam joins two distinct bodice fabric panels"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "a continuous curved seam joins two distinct bodice fabric panels"
+        ],
+        "relations": [
+          {
+            "id": "princess_dart_panel_connection",
+            "type": "connected_to",
+            "subject": "princess seam",
+            "object": "front and side-front panels"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.details.princess_dart"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:focus:vg_face_hands_place_readability",
+      "source_pointer": "/slots/focus/candidates/0",
+      "candidate": {
+        "id": "slot:focus:vg_face_hands_place_readability",
+        "slot": "focus",
+        "entry_id": "vg_face_hands_place_readability",
+        "tags": [
+          "visual_relation"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "the face remains readable within the selected crop",
+          "the action-bearing hand and contact remain recognizable",
+          "one existing place cue retains enough form to identify the setting"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "the face remains readable within the selected crop",
+          "the action-bearing hand and contact remain recognizable",
+          "one existing place cue retains enough form to identify the setting"
+        ],
+        "relations": [
+          {
+            "id": "vg_face_hands_place_readability_r1",
+            "type": "preserves_readability_of",
+            "subject": "focus_distribution",
+            "object": "face_hand_and_place_cue"
+          }
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "camera",
+            "target": "camera",
+            "property": "optical.focus"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "integration:physical_contact",
+      "source_pointer": "/photographic_integration/category_candidates/7",
+      "candidate": {
+        "id": "integration:physical_contact",
+        "category": "physical_contact",
+        "concept_terms": [
+          "pressure",
+          "contact",
+          "그림자",
+          "눌림",
+          "compress",
+          "rests",
+          "손",
+          "접촉",
+          "무게",
+          "compressed",
+          "touches",
+          "leans",
+          "pressed",
+          "physical",
+          "shadow",
+          "weight",
+          "압력"
+        ],
+        "content_form": "unordered_inspiration_terms"
+      }
+    },
+    {
+      "id": "slot:concept_tension:polished_vs_imperfect_tension",
+      "source_pointer": "/visual_proposition/tension_candidates/1",
+      "candidate": {
+        "id": "slot:concept_tension:polished_vs_imperfect_tension",
+        "slot": "concept_tension",
+        "entry_id": "polished_vs_imperfect_tension",
+        "concept_terms": [
+          "polished versus imperfect concept tension"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "polished versus imperfect concept tension"
+        ],
+        "relations": [],
+        "affected_dimensions": [],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "craft:frame_hierarchy",
+      "source_pointer": "/photographic_craft/dimension_candidates/1",
+      "candidate": {
+        "id": "craft:frame_hierarchy",
+        "dimension": "frame_hierarchy",
+        "concept_terms": [
+          "order",
+          "letting",
+          "plane",
+          "clear",
+          "foreground",
+          "instead",
+          "hierarchy",
+          "정리되게",
+          "한다",
+          "every",
+          "분명한",
+          "viewer's",
+          "frame",
+          "읽는",
+          "reading",
+          "순서로",
+          "detail",
+          "subject",
+          "across",
+          "organize",
+          "배경이",
+          "compete",
+          "background",
+          "전경",
+          "equally",
+          "피사체면"
+        ],
+        "content_form": "unordered_inspiration_terms"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:expression:ae_smolder_attraction",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/3",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:expression:ae_smolder_attraction",
+        "source_candidate_id": "slot:expression:ae_smolder_attraction",
+        "slot": "expression",
+        "entry_id": "ae_smolder_attraction",
+        "axis": "sensual",
+        "carrier": "expression",
+        "expression_scope": "portrayal_or_scene_relation",
+        "affected_dimensions": [
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "face.expression"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.eyeline"
+          }
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "id": "ae_smolder_attraction_portrayal_context",
+              "application_conditions": [
+                "Adult attraction must be explicit; duration remains unverified from the still."
+              ],
+              "limits": [
+                "actual gaze duration claimed from a still",
+                "restrained anger forced into adult attraction"
+              ],
+              "status": "optional_contextual_portrayal_not_hidden_state_inference"
+            }
+          ]
+        },
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword",
+          "relation_concept:keyword",
+          "relation_concept:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "requires_all_tags": [
+            "adult"
+          ],
+          "requires_primary_any_tags": [
+            "attraction",
+            "alluring",
+            "flirting",
+            "seductive",
+            "매혹",
+            "유혹"
+          ],
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:expression:ae_smolder_attraction",
+          "raw_requirements": {
+            "requires_all_tags": [
+              "adult"
+            ],
+            "requires_primary_any_tags": [
+              "attraction",
+              "alluring",
+              "flirting",
+              "seductive",
+              "매혹",
+              "유혹"
+            ],
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:all",
+              "operator": "all",
+              "context": "scene",
+              "values": [
+                "adult"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:expression:ae_smolder_attraction",
+                  "field": "requires_all_tags"
+                }
+              ]
+            },
+            {
+              "id": "entry:primary_any",
+              "operator": "any",
+              "context": "primary",
+              "values": [
+                "alluring",
+                "attraction",
+                "flirting",
+                "seductive",
+                "매혹",
+                "유혹"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:expression:ae_smolder_attraction",
+                  "field": "requires_primary_any_tags"
+                }
+              ]
+            },
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:expression:ae_smolder_attraction",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "f900946fa86cf25884a00ec3dae37f5e3c55aedefd1674fd6804f834c69beb92"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "the irises align with the already requested target",
+          "the eye opening retains the requested form"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "the irises align with the already requested target",
+          "the eye opening retains the requested form"
+        ],
+        "relations": [
+          {
+            "id": "actor_owner",
+            "type": "declared_owner_scope",
+            "subject": "main_subject",
+            "object": "the declared actor's stated local face and eye configuration"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:garment_detail:unif_hood_belt_cape_layers",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/7",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:garment_detail:unif_hood_belt_cape_layers",
+        "source_candidate_id": "slot:garment_detail:unif_hood_belt_cape_layers",
+        "slot": "garment_detail",
+        "entry_id": "unif_hood_belt_cape_layers",
+        "axis": "sensual",
+        "carrier": "garment_detail",
+        "expression_scope": "construction_or_material",
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layers.hood_belt_cape"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.accessories.headwear"
+          }
+        ],
+        "contextual_usage": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword",
+          "alternatives:keyword_scope",
+          "coherence:keyword",
+          "coherence:keyword_scope",
+          "relation_concept:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": true,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:garment_detail:unif_hood_belt_cape_layers",
+          "raw_requirements": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:garment_detail:unif_hood_belt_cape_layers",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "d897a286656d91b7059fc77ef9e24f84c5c60478f43663a22c6643a835e3c124"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "a separate hood surrounds the head above the selected suit",
+          "a cape hangs from the same wearer's belt",
+          "the cape retains its own edge below that belt"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "a separate hood surrounds the head above the selected suit",
+          "a cape hangs from the same wearer's belt",
+          "the cape retains its own edge below that belt"
+        ],
+        "relations": [
+          {
+            "id": "declared_owner",
+            "type": "declared_owner_scope",
+            "subject": "wardrobe.layers.hood_belt_cape",
+            "object": "main_subject"
+          },
+          {
+            "id": "U72_assertion",
+            "type": "layered_over",
+            "subject": "the hood and belt-supported cape",
+            "object": "the selected insulated suit"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:wardrobe_style:winter_wf24_v1_candidate",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/5",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:wardrobe_style:winter_wf24_v1_candidate",
+        "source_candidate_id": "slot:wardrobe_style:winter_wf24_v1_candidate",
+        "slot": "wardrobe_style",
+        "entry_id": "winter_wf24_v1_candidate",
+        "axis": "sensual",
+        "carrier": "wardrobe_style",
+        "expression_scope": "whole_direction",
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.structure.front_overlap"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.closure.button_rows"
+          }
+        ],
+        "contextual_usage": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "relation_concept:keyword",
+          "relation_concept:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:wardrobe_style:winter_wf24_v1_candidate",
+          "raw_requirements": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:wardrobe_style:winter_wf24_v1_candidate",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "b2f0b31f2a2f1d6bbd7224b7b5ac2a8de43c227e0135821ab6beca3322c10a7c"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "The coat's front panels overlap broadly beneath two visible rows of buttons."
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "The coat's front panels overlap broadly beneath two visible rows of buttons."
+        ],
+        "relations": [
+          {
+            "id": "winter_wf24_v1_owner_relation",
+            "type": "overlap_beneath",
+            "subject": "two coat front panels",
+            "object": "same coat's two button rows"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/11",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:wardrobe_style:fit_ff03_v2_candidate",
+        "source_candidate_id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+        "slot": "wardrobe_style",
+        "entry_id": "fit_ff03_v2_candidate",
+        "axis": "sensual",
+        "carrier": "wardrobe_style",
+        "expression_scope": "whole_direction",
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.shoulder.extent"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.sleeve_width"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.body_clearance"
+          }
+        ],
+        "contextual_usage": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "relation_concept:keyword",
+          "relation_concept:keyword_scope",
+          "relation_event:keyword",
+          "relation_event:keyword_scope"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": false,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+          "raw_requirements": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:wardrobe_style:fit_ff03_v2_candidate",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "277b889849e9476c3018b80af6a3f7a436757802d2614afff210f0d8054e21c4"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "The jacket extends broadly across the shoulders.",
+          "its roomy sleeves and torso share the same enlarged proportions."
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "The jacket extends broadly across the shoulders.",
+          "its roomy sleeves and torso share the same enlarged proportions."
+        ],
+        "relations": [
+          {
+            "id": "fit_ff03_v2_owner_relation",
+            "type": "extend_beyond",
+            "subject": "jacket shoulder and sleeve edges",
+            "object": "same wearer's shoulder and torso contour"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:color:spf_sf104_2",
+      "source_pointer": "/creative_augmentation/candidates/0",
+      "candidate": {
+        "id": "slot:color:spf_sf104_2",
+        "slot": "color",
+        "axis": null,
+        "source_kind": "slot",
+        "concept_terms": [
+          "The selected blouse and skirt carry closely related muted warm tones",
+          "Their separate cloth boundaries remain readable between the two colors"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "entry_id": "spf_sf104_2",
+        "conflicts_with": [],
+        "semantic_band": "near",
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "The selected blouse and skirt carry closely related muted warm tones",
+          "Their separate cloth boundaries remain readable between the two colors"
+        ],
+        "relations": [
+          {
+            "id": "existing_wearer_scope",
+            "type": "belongs_to_existing_wearer",
+            "subject": "selected blouse and skirt",
+            "object": "main_subject"
+          },
+          {
+            "id": "sf104_2_relation_1",
+            "type": "closely_related_to",
+            "subject": "selected blouse muted warm tone",
+            "object": "selected skirt muted warm tone"
+          },
+          {
+            "id": "sf104_2_relation_2",
+            "type": "distinct_from",
+            "subject": "selected blouse cloth boundary",
+            "object": "selected skirt cloth boundary"
+          }
+        ],
+        "affected_dimensions": [
+          "color"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "color",
+            "target": "main_subject",
+            "property": "wardrobe.blouse.color"
+          },
+          {
+            "dimension": "color",
+            "target": "main_subject",
+            "property": "wardrobe.skirt.color"
+          },
+          {
+            "dimension": "color",
+            "target": "main_subject",
+            "property": "wardrobe.palette.item_relationship"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:color:spf_sf104_2",
+      "source_pointer": "/slots/color/candidates/0",
+      "candidate": {
+        "id": "slot:color:spf_sf104_2",
+        "slot": "color",
+        "entry_id": "spf_sf104_2",
+        "tags": [
+          "clothing"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "The selected blouse and skirt carry closely related muted warm tones",
+          "Their separate cloth boundaries remain readable between the two colors"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "The selected blouse and skirt carry closely related muted warm tones",
+          "Their separate cloth boundaries remain readable between the two colors"
+        ],
+        "relations": [
+          {
+            "id": "existing_wearer_scope",
+            "type": "belongs_to_existing_wearer",
+            "subject": "selected blouse and skirt",
+            "object": "main_subject"
+          },
+          {
+            "id": "sf104_2_relation_1",
+            "type": "closely_related_to",
+            "subject": "selected blouse muted warm tone",
+            "object": "selected skirt muted warm tone"
+          },
+          {
+            "id": "sf104_2_relation_2",
+            "type": "distinct_from",
+            "subject": "selected blouse cloth boundary",
+            "object": "selected skirt cloth boundary"
+          }
+        ],
+        "affected_dimensions": [
+          "color"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "color",
+            "target": "main_subject",
+            "property": "wardrobe.blouse.color"
+          },
+          {
+            "dimension": "color",
+            "target": "main_subject",
+            "property": "wardrobe.skirt.color"
+          },
+          {
+            "dimension": "color",
+            "target": "main_subject",
+            "property": "wardrobe.palette.item_relationship"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:gaze_target:head_eye_counterorientation_relation",
+      "source_pointer": "/creative_augmentation/candidates/1",
+      "candidate": {
+        "id": "slot:gaze_target:head_eye_counterorientation_relation",
+        "slot": "gaze_target",
+        "axis": null,
+        "source_kind": "slot",
+        "concept_terms": [
+          "the head turns toward one stated direction",
+          "the irises point toward a second specified target",
+          "both directions belong to the same connected head and eyes"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "entry_id": "head_eye_counterorientation_relation",
+        "conflicts_with": [],
+        "semantic_band": "near",
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "the head turns toward one stated direction",
+          "the irises point toward a second specified target",
+          "both directions belong to the same connected head and eyes"
+        ],
+        "relations": [
+          {
+            "id": "se_head_eye_direction_difference",
+            "type": "counterorientation",
+            "subject": "main_subject.head",
+            "object": "main_subject.eyes"
+          },
+          {
+            "id": "se_counteroriented_eye_target",
+            "type": "directed_gaze",
+            "subject": "main_subject.eyes",
+            "object": "the specified existing gaze target"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "expression"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "head.orientation"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.gaze_direction"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:gaze_target:head_eye_counterorientation_relation",
+      "source_pointer": "/slots/gaze_target/candidates/0",
+      "candidate": {
+        "id": "slot:gaze_target:head_eye_counterorientation_relation",
+        "slot": "gaze_target",
+        "entry_id": "head_eye_counterorientation_relation",
+        "tags": [
+          "human",
+          "gaze_relation",
+          "facial_display",
+          "reactorprompt_relation"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "the head turns toward one stated direction",
+          "the irises point toward a second specified target",
+          "both directions belong to the same connected head and eyes"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "the head turns toward one stated direction",
+          "the irises point toward a second specified target",
+          "both directions belong to the same connected head and eyes"
+        ],
+        "relations": [
+          {
+            "id": "se_head_eye_direction_difference",
+            "type": "counterorientation",
+            "subject": "main_subject.head",
+            "object": "main_subject.eyes"
+          },
+          {
+            "id": "se_counteroriented_eye_target",
+            "type": "directed_gaze",
+            "subject": "main_subject.eyes",
+            "object": "the specified existing gaze target"
+          }
+        ],
+        "affected_dimensions": [
+          "pose",
+          "expression"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "head.orientation"
+          },
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "eyes.gaze_direction"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:garment_detail:spf_sf101_02",
+      "source_pointer": "/creative_augmentation/candidates/2",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:garment_detail:spf_sf101_02",
+        "slot": "garment_detail",
+        "axis": "sensual",
+        "source_kind": "adult_appeal",
+        "concept_terms": [
+          "The same wearer's dark blouse contains visibly connected lace threads and open motif spaces.",
+          "The separate dark skirt holds a defined textile outline below the blouse."
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "source_candidate_id": "slot:garment_detail:spf_sf101_02",
+        "entry_id": "spf_sf101_02",
+        "affected_dimensions": [
+          "appearance",
+          "color"
+        ],
+        "context_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:garment_detail:spf_sf101_02",
+          "raw_requirements": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:garment_detail:spf_sf101_02",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "5c4fb65f17f967b0b9d1b540c0e81c57e6e1ef5fecf7ef67085ef8ddbc267329"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": true,
+        "retrieval_status": "returned",
+        "affected_properties": [
+          {
+            "dimension": "color",
+            "target": "main_subject",
+            "property": "wardrobe.color.blouse_a"
+          },
+          {
+            "dimension": "color",
+            "target": "main_subject",
+            "property": "wardrobe.color.skirt_a"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.textile.lace_openwork"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.skirt.contour"
+          }
+        ],
+        "expression_scope": "construction_or_material",
+        "contextual_usage": {},
+        "conflicts_with": [],
+        "semantic_band": "near",
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "The same wearer's dark blouse contains visibly connected lace threads and open motif spaces.",
+          "The separate dark skirt holds a defined textile outline below the blouse."
+        ],
+        "relations": [
+          {
+            "id": "sf101_02_edge_1",
+            "type": "bound",
+            "subject": "blouse_A.lace_threads",
+            "object": "blouse_A.open_motif_spaces"
+          },
+          {
+            "id": "sf101_02_edge_2",
+            "type": "worn_with",
+            "subject": "blouse_A",
+            "object": "skirt_A"
+          },
+          {
+            "id": "sf101_02_edge_3",
+            "type": "belongs_to",
+            "subject": "skirt_A.defined_outline",
+            "object": "skirt_A"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "augmentation:adult_appeal:sensual:garment_detail:spf_sf101_02",
+      "source_pointer": "/adult_appeal/axes/sensual/candidate_inventory/2",
+      "candidate": {
+        "id": "augmentation:adult_appeal:sensual:garment_detail:spf_sf101_02",
+        "source_candidate_id": "slot:garment_detail:spf_sf101_02",
+        "slot": "garment_detail",
+        "entry_id": "spf_sf101_02",
+        "axis": "sensual",
+        "carrier": "garment_detail",
+        "expression_scope": "construction_or_material",
+        "affected_dimensions": [
+          "appearance",
+          "color"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "color",
+            "target": "main_subject",
+            "property": "wardrobe.color.blouse_a"
+          },
+          {
+            "dimension": "color",
+            "target": "main_subject",
+            "property": "wardrobe.color.skirt_a"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.textile.lace_openwork"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.skirt.contour"
+          }
+        ],
+        "contextual_usage": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "contextual_corpus_retrieval",
+          "basis": "writable_scope",
+          "reason": "scope compatible; scene and aesthetic interpretation pending"
+        },
+        "risk_groups": [],
+        "conflicts_with": [],
+        "retrieval_evidence": [
+          "alternatives:keyword",
+          "alternatives:keyword_scope",
+          "coherence:keyword"
+        ],
+        "contextual_status": "unassessed",
+        "scene_retrieval_support": true,
+        "retrieval_status": "returned",
+        "context_requirements": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "context_prerequisites": {
+          "contract_version": "photo-candidate-context/v1",
+          "source_id": "slot:garment_detail:spf_sf101_02",
+          "raw_requirements": {
+            "for_any": [
+              "human"
+            ]
+          },
+          "requirements": [
+            {
+              "id": "entry:subject_any",
+              "operator": "any",
+              "context": "subject",
+              "values": [
+                "human"
+              ],
+              "sources": [
+                {
+                  "kind": "entry",
+                  "id": "slot:garment_detail:spf_sf101_02",
+                  "field": "for_any"
+                }
+              ]
+            }
+          ],
+          "quality_layer_sources": [],
+          "evaluation": "final_scene_literal_evidence_and_declared_scope",
+          "semantic_truth_owner": "composer_review",
+          "canonical_sha256": "5c4fb65f17f967b0b9d1b540c0e81c57e6e1ef5fecf7ef67085ef8ddbc267329"
+        },
+        "context_preflight": {
+          "status": "unassessed",
+          "evaluation": "final_scene"
+        },
+        "concept_terms": [
+          "The same wearer's dark blouse contains visibly connected lace threads and open motif spaces.",
+          "The separate dark skirt holds a defined textile outline below the blouse."
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "The same wearer's dark blouse contains visibly connected lace threads and open motif spaces.",
+          "The separate dark skirt holds a defined textile outline below the blouse."
+        ],
+        "relations": [
+          {
+            "id": "sf101_02_edge_1",
+            "type": "bound",
+            "subject": "blouse_A.lace_threads",
+            "object": "blouse_A.open_motif_spaces"
+          },
+          {
+            "id": "sf101_02_edge_2",
+            "type": "worn_with",
+            "subject": "blouse_A",
+            "object": "skirt_A"
+          },
+          {
+            "id": "sf101_02_edge_3",
+            "type": "belongs_to",
+            "subject": "skirt_A.defined_outline",
+            "object": "skirt_A"
+          }
+        ],
+        "adoption": "optional",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:lighting:sf_174_base",
+      "source_pointer": "/creative_augmentation/candidates/3",
+      "candidate": {
+        "id": "slot:lighting:sf_174_base",
+        "slot": "lighting",
+        "axis": null,
+        "source_kind": "slot",
+        "concept_terms": [
+          "source lies behind or rear oblique to the actor",
+          "hair edges receive bright rim or transmitted light",
+          "face exposure is independently selected"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "entry_id": "sf_174_base",
+        "conflicts_with": [],
+        "semantic_band": "near",
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "source lies behind or rear oblique to the actor",
+          "hair edges receive bright rim or transmitted light",
+          "face exposure is independently selected"
+        ],
+        "relations": [
+          {
+            "id": "visible_geometry",
+            "type": "illuminates_edges_of",
+            "subject": "rear_light_source",
+            "object": "main_subject.hair"
+          },
+          {
+            "id": "owner_1",
+            "type": "belongs_to",
+            "subject": "main_subject.hair",
+            "object": "main_subject"
+          },
+          {
+            "id": "owner_2",
+            "type": "belongs_to",
+            "subject": "main_subject.face",
+            "object": "main_subject"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "image",
+            "property": "source_target_relation"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:lighting:sf_174_base",
+      "source_pointer": "/slots/lighting/candidates/1",
+      "candidate": {
+        "id": "slot:lighting:sf_174_base",
+        "slot": "lighting",
+        "entry_id": "sf_174_base",
+        "tags": [
+          "human",
+          "selfie_visible_configuration",
+          "lighting"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "source lies behind or rear oblique to the actor",
+          "hair edges receive bright rim or transmitted light",
+          "face exposure is independently selected"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "source lies behind or rear oblique to the actor",
+          "hair edges receive bright rim or transmitted light",
+          "face exposure is independently selected"
+        ],
+        "relations": [
+          {
+            "id": "visible_geometry",
+            "type": "illuminates_edges_of",
+            "subject": "rear_light_source",
+            "object": "main_subject.hair"
+          },
+          {
+            "id": "owner_1",
+            "type": "belongs_to",
+            "subject": "main_subject.hair",
+            "object": "main_subject"
+          },
+          {
+            "id": "owner_2",
+            "type": "belongs_to",
+            "subject": "main_subject.face",
+            "object": "main_subject"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "lighting",
+            "target": "image",
+            "property": "source_target_relation"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:eye_detail:appearance_h050",
+      "source_pointer": "/creative_augmentation/candidates/4",
+      "candidate": {
+        "id": "slot:eye_detail:appearance_h050",
+        "slot": "eye_detail",
+        "axis": null,
+        "source_kind": "slot",
+        "concept_terms": [
+          "each eyeglass lens has a complete visible boundary",
+          "the eye image grows larger inside that lens area",
+          "the surrounding face beyond the lens keeps its separate scale"
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "entry_id": "appearance_h050",
+        "conflicts_with": [],
+        "semantic_band": "near",
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "each eyeglass lens has a complete visible boundary",
+          "the eye image grows larger inside that lens area",
+          "the surrounding face beyond the lens keeps its separate scale"
+        ],
+        "relations": [
+          {
+            "id": "h050_r1",
+            "type": "bounds",
+            "subject": "lens",
+            "object": "magnified_eye_projection"
+          },
+          {
+            "id": "h050_r2",
+            "type": "outside",
+            "subject": "adjacent_face",
+            "object": "lens_boundary"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "face.eyes.lens_bounded_magnification"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    },
+    {
+      "id": "slot:eye_detail:appearance_h050",
+      "source_pointer": "/slots/eye_detail/candidates/0",
+      "candidate": {
+        "id": "slot:eye_detail:appearance_h050",
+        "slot": "eye_detail",
+        "entry_id": "appearance_h050",
+        "tags": [
+          "human",
+          "observable_relation"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "each eyeglass lens has a complete visible boundary",
+          "the eye image grows larger inside that lens area",
+          "the surrounding face beyond the lens keeps its separate scale"
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "each eyeglass lens has a complete visible boundary",
+          "the eye image grows larger inside that lens area",
+          "the surrounding face beyond the lens keeps its separate scale"
+        ],
+        "relations": [
+          {
+            "id": "h050_r1",
+            "type": "bounds",
+            "subject": "lens",
+            "object": "magnified_eye_projection"
+          },
+          {
+            "id": "h050_r2",
+            "type": "outside",
+            "subject": "adjacent_face",
+            "object": "lens_boundary"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "face.eyes.lens_bounded_magnification"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    }
+  ],
+  "view_sha256": "d552383815e431a35f192e5bfd04515bad9a46ca56c119e59d355223ca67b4da"
+}

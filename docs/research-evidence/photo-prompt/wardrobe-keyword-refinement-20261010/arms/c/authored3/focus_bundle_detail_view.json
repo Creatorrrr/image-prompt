@@ -1,0 +1,108 @@
+{
+  "contract_version": "photo-composer-view/v2",
+  "mode": "candidate_details",
+  "source_pack_id": "d3092e9cd3f73b88",
+  "source_pack_sha256": "98f7e1d0acca3607f5ef4c3f3e8baa104c4636d51e5cc94b2a5926549f43afe3",
+  "candidates": [
+    {
+      "id": "bundle:vg_face_hands_place_readability_bundle",
+      "source_pointer": "/candidate_bundles/candidates/0",
+      "candidate": {
+        "id": "bundle:vg_face_hands_place_readability_bundle",
+        "source_sha256": "2d279b603aeace7f213fad96391b8ea369ced3e23d5286bffc8643b6a61c2ef7",
+        "associated_profile_ids": [
+          "vg_face_hands_place_readability_profile"
+        ],
+        "components": [
+          {
+            "id": "component_1",
+            "concept_units": [
+              "the face remains readable within the selected crop"
+            ],
+            "minimum_realizations": 1
+          },
+          {
+            "id": "component_2",
+            "concept_units": [
+              "the action-bearing hand and contact remain recognizable"
+            ],
+            "minimum_realizations": 1
+          },
+          {
+            "id": "component_3",
+            "concept_units": [
+              "one existing place cue retains enough form to identify the setting"
+            ],
+            "minimum_realizations": 1
+          }
+        ],
+        "member_candidates": [
+          {
+            "id": "slot:focus:vg_face_hands_place_readability",
+            "slot": "focus",
+            "entry_id": "vg_face_hands_place_readability",
+            "concept_units": [
+              "the face remains readable within the selected crop",
+              "the action-bearing hand and contact remain recognizable",
+              "one existing place cue retains enough form to identify the setting"
+            ],
+            "relations": [
+              {
+                "id": "vg_face_hands_place_readability_r1",
+                "type": "preserves_readability_of",
+                "subject": "focus_distribution",
+                "object": "face_hand_and_place_cue"
+              }
+            ],
+            "affected_dimensions": [
+              "camera"
+            ],
+            "adoption": "optional",
+            "affected_properties": [
+              {
+                "dimension": "camera",
+                "target": "camera",
+                "property": "optical.focus"
+              }
+            ]
+          }
+        ],
+        "confusion_boundaries": [
+          "a sharp face with a blurred contact point",
+          "a uniformly sharp inventory of the entire background"
+        ],
+        "relations": [],
+        "adoption": "optional",
+        "profile_activation": "independent_request_evidence_only",
+        "source_contract_sha256": "81bda986f591e3ec29937f4a1aecee58a0cffb4a8bacda7398c4e4e198e0daaf",
+        "content_form": "unordered_inspiration_terms",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+        "concept_units": [
+          "the face remains readable within the selected crop",
+          "the action-bearing hand and contact remain recognizable",
+          "one existing place cue retains enough form to identify the setting"
+        ],
+        "concept_terms": [
+          "the face remains readable within the selected crop",
+          "the action-bearing hand and contact remain recognizable",
+          "one existing place cue retains enough form to identify the setting"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "conflicts_with": [],
+        "applicability": {
+          "status": "eligible",
+          "source": "all_members_eligible_and_dimensions_open"
+        },
+        "selection_contract": {
+          "component_evidence": "every_component_id_to_literal_final_prompt_phrase",
+          "relation_evidence": "every_relation_id_to_literal_final_prompt_phrase",
+          "scope": "one_coherent_realization",
+          "associated_profiles_are_not_promoted": true
+        }
+      }
+    }
+  ],
+  "view_sha256": "95a5c1a29b589c137566454101375e2523d52ec7a1a06806b6b24174be89bfe1"
+}

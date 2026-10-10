@@ -1,0 +1,341 @@
+{
+  "enabled": true,
+  "contract_version": "photo-visual-obligations/v1",
+  "scope": "request_only",
+  "strict_gate_set": true,
+  "obligations": [
+    {
+      "id": "wkr_wk074_selected_relation",
+      "category": "wardrobe_owner_selected_relation",
+      "activation": {
+        "source": "composer_opt_in",
+        "scope": "request_only",
+        "source_intent_ids": []
+      },
+      "composition_instruction": "Keep the selected owner and complete visible relation together: The same garment has an opaque bodice and a distinct sheer sleeve with a readable joining boundary.",
+      "component_semantics": {
+        "minimum_component_groups": 1,
+        "required_group_ids": [
+          "component_1"
+        ],
+        "groups": [
+          {
+            "id": "component_1",
+            "any_terms": [
+              "The same garment has an opaque bodice and a distinct sheer sleeve with a readable joining boundary.",
+              "sheer sleeves",
+              "organza sleeves",
+              "opaque bodice",
+              "velvet bodice"
+            ]
+          }
+        ]
+      },
+      "prompt_binding": {
+        "composed_field": "visual_obligation_evidence",
+        "required_evidence_fields": [
+          "component_1_phrase"
+        ],
+        "minimum_distinct_evidence_phrases": 1,
+        "prompt_evidence_must_be_literal": true,
+        "maximum_pairwise_content_token_overlap_ratio": 0.82,
+        "forbidden_filler_phrases": [
+          "visible evidence",
+          "visual evidence",
+          "required cue",
+          "prompt phrase"
+        ]
+      },
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "The same garment has an opaque bodice and a distinct sheer sleeve with a readable joining boundary."
+          ]
+        }
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "render_gates": [
+        {
+          "id": "vo_wkr_wk074_selected_relation_1",
+          "review_scale": "native",
+          "description": "The same garment has an opaque bodice and a distinct sheer sleeve with a readable joining boundary. Inspect the declared owner, both endpoints and the connecting edge or distinguishing state in this same image. Hidden or partial evidence fails."
+        }
+      ],
+      "reject_substitutes": [
+        "소매 요구로 몸판도 투명",
+        "어깨 경계를 지워 한 레이어로 합침"
+      ]
+    },
+    {
+      "id": "wkr_wk025_selected_relation",
+      "category": "wardrobe_owner_selected_relation",
+      "activation": {
+        "source": "composer_opt_in",
+        "scope": "request_only",
+        "source_intent_ids": []
+      },
+      "composition_instruction": "Keep the selected owner and complete visible relation together: A narrow scalloped trim follows the inside of the same garment's neckline edge.",
+      "component_semantics": {
+        "minimum_component_groups": 1,
+        "required_group_ids": [
+          "component_1"
+        ],
+        "groups": [
+          {
+            "id": "component_1",
+            "any_terms": [
+              "A narrow scalloped trim follows the inside of the same garment's neckline edge.",
+              "lace neckline",
+              "scalloped lace",
+              "lace inset"
+            ]
+          }
+        ]
+      },
+      "prompt_binding": {
+        "composed_field": "visual_obligation_evidence",
+        "required_evidence_fields": [
+          "component_1_phrase"
+        ],
+        "minimum_distinct_evidence_phrases": 1,
+        "prompt_evidence_must_be_literal": true,
+        "maximum_pairwise_content_token_overlap_ratio": 0.82,
+        "forbidden_filler_phrases": [
+          "visible evidence",
+          "visual evidence",
+          "required cue",
+          "prompt phrase"
+        ]
+      },
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "A narrow scalloped trim follows the inside of the same garment's neckline edge."
+          ]
+        }
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "render_gates": [
+        {
+          "id": "vo_wkr_wk025_selected_relation_1",
+          "review_scale": "native",
+          "description": "A narrow scalloped trim follows the inside of the same garment's neckline edge. Inspect the declared owner, both endpoints and the connecting edge or distinguishing state in this same image. Hidden or partial evidence fails."
+        }
+      ],
+      "reject_substitutes": [
+        "인셋을 별도 속옷으로 변경",
+        "목선 배색을 전신 새 레이어로 확대"
+      ]
+    },
+    {
+      "id": "sheer_garment_optical_layering",
+      "category": "material_optics",
+      "activation": {
+        "source": "composer_opt_in",
+        "scope": "request_only",
+        "source_intent_ids": []
+      },
+      "composition_instruction": "Make the garment textile visibly present through its fibers or open-cell structure, seams, edges and folds. Let light reveal the requested underlying body, lower garment or background through that same textile, preserving the requested coverage and actual layer owner. Choose one material and one lighting relationship; retain coherent transmission and visible material boundaries.",
+      "component_semantics": {
+        "minimum_component_groups": 3,
+        "required_group_ids": [
+          "translucent_textile_surface",
+          "transmission_relationship",
+          "garment_boundary_and_layer"
+        ],
+        "groups": [
+          {
+            "id": "translucent_textile_surface",
+            "any_terms": [
+              "visible organza or chiffon weave",
+              "tulle mesh or lace textile surface",
+              "보이는 오간자 또는 쉬폰 직조",
+              "튤 메시 또는 레이스 표면",
+              "the selected organza or chiffon has a visible textile weave",
+              "선택한 오간자 또는 시폰에 직물 결이 보인다"
+            ]
+          },
+          {
+            "id": "transmission_relationship",
+            "any_terms": [
+              "light passes through the fabric",
+              "opaque underlayer remains partly visible",
+              "background tone transmits through the sleeve",
+              "원단을 통과하는 빛",
+              "부분적으로 비치는 불투명 안감",
+              "light is transmitted through the selected fabric layer",
+              "빛이 선택한 원단 층을 통과한다"
+            ]
+          },
+          {
+            "id": "garment_boundary_and_layer",
+            "any_terms": [
+              "visible seam edge and fold",
+              "sheer overlay above an opaque base",
+              "시어 가장자리와 봉제선",
+              "불투명 베이스 위의 투명 레이어",
+              "a seam boundary and fold identify the same garment layer",
+              "이음선 경계와 접힌 주름이 같은 의복 층을 식별한다"
+            ]
+          },
+          {
+            "id": "illumination_and_material_behavior",
+            "any_terms": [
+              "backlight increases transmission",
+              "folds become denser and less transparent",
+              "stretch changes the visible openness",
+              "역광에서 투과가 증가",
+              "겹친 주름에서 투명도가 낮아짐",
+              "backlighting visibly strengthens transmission through that layer",
+              "역광에서 같은 원단 층의 빛 투과가 더 뚜렷해진다"
+            ]
+          }
+        ]
+      },
+      "prompt_binding": {
+        "composed_field": "visual_obligation_evidence",
+        "required_evidence_fields": [
+          "translucent_textile_phrase",
+          "visible_weave_edge_phrase",
+          "transmitted_light_phrase",
+          "layer_contrast_phrase",
+          "material_behavior_phrase"
+        ],
+        "minimum_distinct_evidence_phrases": 5,
+        "prompt_evidence_must_be_literal": true,
+        "maximum_pairwise_content_token_overlap_ratio": 0.82,
+        "forbidden_filler_phrases": [
+          "visible evidence",
+          "visual evidence",
+          "required cue",
+          "prompt phrase"
+        ]
+      },
+      "evidence_requirements": {
+        "translucent_textile_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "translucent organza layer",
+            "sheer chiffon garment",
+            "tulle mesh textile",
+            "sheer lace panel",
+            "a garment textile layer that partially transmits the view behind it",
+            "the selected organza or chiffon has a visible textile weave"
+          ]
+        },
+        "visible_weave_edge_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "visible weave seam and edge",
+            "textile surface and folded edge remain visible",
+            "mesh structure and stitched boundary",
+            "light is transmitted through the selected fabric layer"
+          ]
+        },
+        "transmitted_light_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "light passes through the fabric",
+            "backlight transmits through the sleeve",
+            "background tone passes through the panel",
+            "a seam boundary and fold identify the same garment layer"
+          ]
+        },
+        "layer_contrast_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "opaque underlayer remains partly visible",
+            "sheer overlay above an opaque base",
+            "translucent panel contrasts with solid fabric",
+            "underlying body contours remain partly visible beneath the readable garment fibers",
+            "the requested lower garment remains partly visible beneath the transmitting textile",
+            "the background remains partly visible through the same garment panel",
+            "backlighting visibly strengthens transmission through that layer"
+          ]
+        },
+        "material_behavior_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "folds become denser and less transparent",
+            "stretch changes the visible openness",
+            "illumination changes transmission without erasing the textile"
+          ]
+        }
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "sheer layered garment"
+        ],
+        "forbidden_prompt_terms": [
+          "transparent body",
+          "invisible clothing",
+          "x-ray clothing"
+        ],
+        "runtime_forbidden_labels": []
+      },
+      "render_gates": [
+        {
+          "id": "vo_sheer_textile_first_read",
+          "review_scale": "thumbnail",
+          "description": "A translucent garment layer is immediately readable rather than a vague bright or glossy region."
+        },
+        {
+          "id": "vo_sheer_weave_edge_legibility",
+          "review_scale": "native",
+          "description": "Weave, seam, stitched boundary, edge, or fold proves that the transmitting surface is textile."
+        },
+        {
+          "id": "vo_sheer_transmission_relationship",
+          "review_scale": "both",
+          "description": "Light and the requested underlying body, lower garment or background are partly transmitted through the same visible garment textile in a coherent direction. The transmitting layer and underlying owner must remain distinct; an unrequested opaque covering cannot replace the intended lower surface."
+        },
+        {
+          "id": "vo_sheer_layer_coherence",
+          "review_scale": "native",
+          "description": "Overlaps, folds, stretch, and lighting change transparency consistently across the same material."
+        },
+        {
+          "id": "vo_sheer_not_optical_or_generation_substitute",
+          "review_scale": "both",
+          "description": "Glass, wetness, overexposure, invisible clothing, or transparent-body artifacts do not carry the requested textile effect."
+        }
+      ],
+      "reject_substitutes": [
+        "clear_glass_or_plastic",
+        "wet_fabric_only",
+        "overexposure_or_bloom_only",
+        "transparent_body_or_missing_clothing_artifact",
+        "lace_pattern_without_transmission",
+        "thin_opaque_fabric_without_layer_contrast",
+        "see_through_bangs_or_hair"
+      ]
+    }
+  ],
+  "required_hard_gates": [
+    "vo_wkr_wk074_selected_relation_1",
+    "vo_wkr_wk025_selected_relation_1",
+    "vo_sheer_textile_first_read",
+    "vo_sheer_weave_edge_legibility",
+    "vo_sheer_transmission_relationship",
+    "vo_sheer_layer_coherence",
+    "vo_sheer_not_optical_or_generation_substitute"
+  ],
+  "selected_visual_concept_ids": [
+    "visual-concept:wkr_wk074_selected_relation",
+    "visual-concept:wkr_wk025_selected_relation",
+    "visual-concept:sheer_garment_optical_layering"
+  ]
+}

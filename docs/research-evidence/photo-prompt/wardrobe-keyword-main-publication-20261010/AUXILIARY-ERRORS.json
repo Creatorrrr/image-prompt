@@ -1,0 +1,34 @@
+{
+  "schema_version": "wardrobe-publication-auxiliary-errors/v1",
+  "errors": [
+    {
+      "stage": "offline_visual_recipe_constant",
+      "failure": "Helper used the wrong public recipe constant name.",
+      "resolved": true,
+      "resolution": "Use VISUAL_PROFILE_TEXT_RECIPE_VERSION from the actual source.",
+      "source_or_index_written_before_error": false,
+      "embedding_calls": 0,
+      "image_calls": 0,
+      "log": "scoped-index-build.initial-error.log"
+    },
+    {
+      "stage": "scoped_manifest_registration",
+      "failure": "Copied primary load orders included an unrelated local source, leaving a gap in the scoped manifest.",
+      "resolved": true,
+      "resolution": "Append each owned source at the contiguous zero-based end of its kind; preserve all 132 published registrations exactly.",
+      "source_or_index_written_before_error": false,
+      "embedding_calls": 0,
+      "image_calls": 0,
+      "log": "scoped-index-build.registration-error.log"
+    },
+    {
+      "stage": "runtime_publication_report_parser",
+      "failure": "Auxiliary report assumed a status field instead of the canonical current-pointer schema.",
+      "resolved": true,
+      "resolution": "Read and validate photo-runtime-current/v1 with generation_id and source_fingerprint from the successful publisher output.",
+      "production_source_modified": false,
+      "embedding_calls": 0,
+      "image_calls": 0
+    }
+  ]
+}

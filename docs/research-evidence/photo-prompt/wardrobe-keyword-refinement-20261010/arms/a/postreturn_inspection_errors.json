@@ -1,0 +1,18 @@
+{
+  "image_call_count": 1,
+  "native_outcome": "returned_and_saved_at_exact_tool_returned_path",
+  "errors": [
+    {
+      "phase": "auxiliary_metadata_dependency_before_copy",
+      "output": "Traceback (most recent call last):\n  File \"<stdin>\", line 3, in <module>\nModuleNotFoundError: No module named 'PIL'\n",
+      "effect": "The helper aborted before attempting the workspace copy. The actual native image remained saved at its exact returned path.",
+      "recovery": "Copied the original unchanged via standard library shutil and read actual PNG header dimensions via struct; hashes match."
+    },
+    {
+      "phase": "view_before_workspace_copy",
+      "output": "unable to locate image at `/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/wardrobe-keyword-refinement-20261010/arms/a/images/attempt-01.png`: No such file or directory (os error 2)",
+      "recovery": "Workspace copy now exists with exact original hash."
+    }
+  ],
+  "native_result_command_was_started": "Pending command has the now saved concrete observation; any recorder failure will be preserved and reconciled without another image invocation."
+}

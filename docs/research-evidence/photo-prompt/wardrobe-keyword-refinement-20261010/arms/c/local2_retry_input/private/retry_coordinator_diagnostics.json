@@ -1,0 +1,445 @@
+{
+  "status": "pass",
+  "parent_audit": {
+    "composed_audit": {
+      "status": "pass",
+      "quality_status": "warn",
+      "pack_id": "d3092e9cd3f73b88",
+      "chosen_candidate_count": 1,
+      "chosen_visual_concept_ids": [],
+      "effective_visual_contract_sha256": "b48447535f1f0c20b3a46e62a247540e3121369243c2a6c72f742cd7ed0e55fa",
+      "render_repair_contract_sha256": "a55018ea28784d84cc076cf25cf637706b6d16675050f7f7234adea4ef1cf60e",
+      "failures": [],
+      "warnings": [
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "a coherent complex photographic scene"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "a woman whose visible face and hair follow the supplied reference image"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "one connected moment of everyday activity"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "Use the reference for facial contours, dark eyes, natural pink lips and the dark chin-length bob with wispy fringe."
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "The woman holds the sewing needle between her right thumb and index finger while her left fingertips pin the ribbon to the hat beside the fresh stitch."
+        }
+      ]
+    },
+    "runtime_audit": {
+      "schema_version": "photo-image-render-request-audit/v1",
+      "pack_id": "d3092e9cd3f73b88",
+      "status": "pass",
+      "runtime_prompt_id": "9b4143a579e74932",
+      "source_intent_lock_sha256": "1803b6e0587d3b2dd0976eef54be31d5a5f8529e7a31ace6284188a41ece49d1",
+      "render_repair_contract_sha256": "a55018ea28784d84cc076cf25cf637706b6d16675050f7f7234adea4ef1cf60e",
+      "negative_matches_pack": true,
+      "effective_visual_contract_sha256": "b48447535f1f0c20b3a46e62a247540e3121369243c2a6c72f742cd7ed0e55fa",
+      "selected_visual_concept_ids": [],
+      "reference_count": 1,
+      "failures": [],
+      "boundary": "This audit verifies exact text and reference bytes before generation. It does not inspect rendered pixels or establish user-perceived quality."
+    },
+    "effective_visual": {
+      "enabled": true,
+      "contract_version": "photo-visual-obligations/v1",
+      "scope": "request_only",
+      "strict_gate_set": true,
+      "obligations": [
+        {
+          "id": "vg_face_hands_place_readability_profile",
+          "category": "owner_bound_visual_relation",
+          "activation": {
+            "source": "agent_postcore_interpretation",
+            "scope": "request_only",
+            "source_intent_ids": [
+              "visual-intent:731812aacbc50d3d"
+            ]
+          },
+          "composition_instruction": "Keep this complete visible relation on its declared owner: the face remains readable within the selected crop. Keep this complete visible relation on its declared owner: the action-bearing hand and contact remain recognizable. Keep this complete visible relation on its declared owner: one existing place cue retains enough form to identify the setting.",
+          "component_semantics": {
+            "minimum_component_groups": 3,
+            "required_group_ids": [
+              "component_1",
+              "component_2",
+              "component_3"
+            ],
+            "groups": [
+              {
+                "id": "component_1",
+                "any_terms": [
+                  "the face remains readable within the selected crop",
+                  "선택된 크롭 안에서 얼굴이 읽힌다",
+                  "face",
+                  "얼굴"
+                ]
+              },
+              {
+                "id": "component_2",
+                "any_terms": [
+                  "the action-bearing hand and contact remain recognizable",
+                  "행동을 담당하는 손과 접촉점이 알아보인다",
+                  "hand",
+                  "contact",
+                  "손"
+                ]
+              },
+              {
+                "id": "component_3",
+                "any_terms": [
+                  "one existing place cue retains enough form to identify the setting",
+                  "기존 장소 단서 하나가 장소를 읽을 만큼 형태를 유지한다",
+                  "place cue",
+                  "setting",
+                  "장소 단서"
+                ]
+              }
+            ]
+          },
+          "prompt_binding": {
+            "composed_field": "visual_obligation_evidence",
+            "required_evidence_fields": [
+              "component_1_phrase",
+              "component_2_phrase",
+              "component_3_phrase"
+            ],
+            "minimum_distinct_evidence_phrases": 3,
+            "prompt_evidence_must_be_literal": true,
+            "maximum_pairwise_content_token_overlap_ratio": 0.82,
+            "forbidden_filler_phrases": [
+              "visible evidence",
+              "visual evidence",
+              "required cue",
+              "prompt phrase"
+            ]
+          },
+          "evidence_requirements": {
+            "component_1_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "the face remains readable within the selected crop",
+                "선택된 크롭 안에서 얼굴이 읽힌다",
+                "face",
+                "얼굴"
+              ]
+            },
+            "component_2_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "the action-bearing hand and contact remain recognizable",
+                "행동을 담당하는 손과 접촉점이 알아보인다",
+                "hand",
+                "contact",
+                "손"
+              ]
+            },
+            "component_3_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "one existing place cue retains enough form to identify the setting",
+                "기존 장소 단서 하나가 장소를 읽을 만큼 형태를 유지한다",
+                "place cue",
+                "setting",
+                "장소 단서"
+              ]
+            }
+          },
+          "runtime_expression": {
+            "default_mode": "definition_with_optional_label",
+            "prompt_label_terms": [],
+            "forbidden_prompt_terms": [],
+            "runtime_forbidden_labels": []
+          },
+          "render_gates": [
+            {
+              "id": "vo_vg_face_hands_place_readability_1",
+              "review_scale": "both",
+              "description": "Inspect the saved pixels for the face remains readable within the selected crop. Occluded, disconnected or partial realization fails; naming an object alone does not prove this relation."
+            },
+            {
+              "id": "vo_vg_face_hands_place_readability_2",
+              "review_scale": "both",
+              "description": "Inspect the saved pixels for the action-bearing hand and contact remain recognizable. Occluded, disconnected or partial realization fails; naming an object alone does not prove this relation."
+            },
+            {
+              "id": "vo_vg_face_hands_place_readability_3",
+              "review_scale": "both",
+              "description": "Inspect the saved pixels for one existing place cue retains enough form to identify the setting. Occluded, disconnected or partial realization fails; naming an object alone does not prove this relation."
+            }
+          ],
+          "reject_substitutes": [
+            "a sharp face with a blurred contact point",
+            "a uniformly sharp inventory of the entire background"
+          ]
+        },
+        {
+          "id": "wkr_wk047_selected_relation",
+          "category": "wardrobe_owner_selected_relation",
+          "activation": {
+            "source": "agent_postcore_interpretation",
+            "scope": "request_only",
+            "source_intent_ids": [
+              "visual-intent:731812aacbc50d3d"
+            ]
+          },
+          "composition_instruction": "Keep the selected owner and complete visible relation together: Fine interlaced yarns remain visible across the same textile surface beside its stitched edge.",
+          "component_semantics": {
+            "minimum_component_groups": 1,
+            "required_group_ids": [
+              "component_1"
+            ],
+            "groups": [
+              {
+                "id": "component_1",
+                "any_terms": [
+                  "Fine interlaced yarns remain visible across the same textile surface beside its stitched edge.",
+                  "visible weave",
+                  "woven cloth",
+                  "twill",
+                  "fine yarns"
+                ]
+              }
+            ]
+          },
+          "prompt_binding": {
+            "composed_field": "visual_obligation_evidence",
+            "required_evidence_fields": [
+              "component_1_phrase"
+            ],
+            "minimum_distinct_evidence_phrases": 1,
+            "prompt_evidence_must_be_literal": true,
+            "maximum_pairwise_content_token_overlap_ratio": 0.82,
+            "forbidden_filler_phrases": [
+              "visible evidence",
+              "visual evidence",
+              "required cue",
+              "prompt phrase"
+            ]
+          },
+          "evidence_requirements": {
+            "component_1_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "Fine interlaced yarns remain visible across the same textile surface beside its stitched edge."
+              ]
+            }
+          },
+          "runtime_expression": {
+            "default_mode": "definition_with_optional_label",
+            "prompt_label_terms": [],
+            "forbidden_prompt_terms": [],
+            "runtime_forbidden_labels": []
+          },
+          "render_gates": [
+            {
+              "id": "vo_wkr_wk047_selected_relation_1",
+              "review_scale": "native",
+              "description": "Fine interlaced yarns remain visible across the same textile surface beside its stitched edge. Inspect the declared owner, both endpoints and the connecting edge or distinguishing state in this same image. Hidden or partial evidence fails."
+            }
+          ],
+          "reject_substitutes": [
+            "리넨처럼 보임=실제 리넨",
+            "옷 표면으로 섬유 함량 측정"
+          ]
+        }
+      ],
+      "required_hard_gates": [
+        "vo_vg_face_hands_place_readability_1",
+        "vo_vg_face_hands_place_readability_2",
+        "vo_vg_face_hands_place_readability_3",
+        "vo_wkr_wk047_selected_relation_1"
+      ],
+      "selected_visual_concept_ids": [],
+      "precedence": [
+        "safety_and_adult_age",
+        "direct_requesting_user_definition",
+        "explicit_user_requirement",
+        "request_scoped_visual_profile",
+        "optional_candidate_inspiration"
+      ],
+      "retry_policy": {
+        "preserve_every_attempt": true,
+        "repair_only_failed_visual_obligations": true,
+        "preserve_passed_identity_and_mechanism_evidence": true,
+        "stop_at_first_all_hard_gates_pass": true,
+        "requesting_user_judgment_remains_separate": true
+      },
+      "source_visual_intent_sha256": "14bdc464cc961408a9b266713baced4b2a676b0c66db51877ed3c348dbf2156a"
+    },
+    "contract_failures": [],
+    "repair": {
+      "contract_version": "photo-render-repair/v1",
+      "enabled": true,
+      "source": "authorial_core_request_lineage",
+      "source_authorial_core_sha256": "c7b22c50be62c41d614835ac4309c62a0e4c682d9632ddca6d69b179ce11a7ac",
+      "source_intent_lock_sha256": "1803b6e0587d3b2dd0976eef54be31d5a5f8529e7a31ace6284188a41ece49d1",
+      "source_request_lineage_sha256": "25427c151971bff4aa5dfa4341d64917f62072e731890e459f4d849586b9f80a",
+      "composed_field": "render_repair_evidence",
+      "strict_gate_set": true,
+      "major_only": true,
+      "targets": [
+        {
+          "repair_id": "needle_stitch_contact",
+          "source_span_ids": [
+            "reference_and_complete_validation"
+          ],
+          "importance": "primary",
+          "relation_origin": "parent_preserved",
+          "actor_phrase": "woman",
+          "object_phrase": "sewing needle",
+          "interaction_state": "used",
+          "actor_object_contact": "required",
+          "protected_dimensions": [
+            "action"
+          ],
+          "allowed_repair_axes": [
+            "contact_geometry",
+            "camera",
+            "framing",
+            "lighting"
+          ],
+          "frozen_evidence": {
+            "interaction_phrase": "The woman holds the sewing needle between her right thumb and index finger while her left fingertips pin the ribbon to the hat beside the fresh stitch.",
+            "recognition_phrase": "The sewing needle has one metallic shaft, a pointed tip and a clearly exposed eye threaded with golden thread."
+          },
+          "prompt_binding": {
+            "required_evidence_fields": [
+              "interaction_phrase",
+              "recognition_phrase"
+            ],
+            "all_required_phrases_must_be_literal_in_final_prompt": true,
+            "evidence_must_remain_byte_identical": true,
+            "semantic_substitution_forbidden": true
+          },
+          "render_gates": [
+            {
+              "id": "rr_needle_stitch_contact_object_class_legible",
+              "review_scale": "both",
+              "criterion": "The target object is recognizable as the intended object class at thumbnail and native scale."
+            },
+            {
+              "id": "rr_needle_stitch_contact_gross_structure_coherent",
+              "review_scale": "native",
+              "criterion": "The target object's major parts form one coherent, non-grotesque structure; minor ornament differences are non-blocking."
+            },
+            {
+              "id": "rr_needle_stitch_contact_intended_interaction_matches",
+              "review_scale": "both",
+              "criterion": "The actor, object, and intended interaction state match the frozen relation; removal, relocation, concealment, or transfer is not a repair."
+            },
+            {
+              "id": "rr_needle_stitch_contact_contact_anatomy_coherent",
+              "review_scale": "native",
+              "criterion": "The event-critical actor-object contact and principal anatomy are coherent without severe fusion or impossible articulation."
+            }
+          ],
+          "required_hard_gates": [
+            "rr_needle_stitch_contact_object_class_legible",
+            "rr_needle_stitch_contact_gross_structure_coherent",
+            "rr_needle_stitch_contact_intended_interaction_matches",
+            "rr_needle_stitch_contact_contact_anatomy_coherent"
+          ]
+        }
+      ],
+      "required_hard_gates": [
+        "rr_needle_stitch_contact_object_class_legible",
+        "rr_needle_stitch_contact_gross_structure_coherent",
+        "rr_needle_stitch_contact_intended_interaction_matches",
+        "rr_needle_stitch_contact_contact_anatomy_coherent"
+      ],
+      "retry_policy": {
+        "preserve_interaction_relation": true,
+        "repair_smallest_failed_gate_set": true,
+        "removal_relocation_concealment_or_transfer_is_not_repair": true,
+        "minor_decorative_variation_is_non_blocking": true,
+        "maximum_additional_attempts": 1
+      },
+      "canonical_sha256": "a55018ea28784d84cc076cf25cf637706b6d16675050f7f7234adea4ef1cf60e"
+    },
+    "character": null,
+    "character_gates": [],
+    "embodiment_gates": [
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "generic_review_audit": {
+      "schema_version": "photo-image-render-review-audit/v1",
+      "pack_id": "d3092e9cd3f73b88",
+      "status": "pass",
+      "qualification_status": "fail",
+      "technical_qualified": false,
+      "source_render_repair_contract_sha256": "a55018ea28784d84cc076cf25cf637706b6d16675050f7f7234adea4ef1cf60e",
+      "reviewed_result_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/wardrobe-keyword-refinement-20261010/arms/c/generated_images/native_01/original.png",
+      "reviewed_result_sha256": "74f9a30a07e1d46b30f441d4dedb2d1494511025ad5a891b5f63ac0a7d2091dc",
+      "failed_gate_ids": [
+        "rr_needle_stitch_contact_gross_structure_coherent"
+      ],
+      "failures": [],
+      "boundary": "This audit validates a named review record and its exact generic hard-gate set. The reviewer supplies pixel judgments; the audit does not infer pixels or user preference."
+    },
+    "visual_review_audit": {
+      "schema_version": "moe-render-review/v1",
+      "pack_id": "d3092e9cd3f73b88",
+      "contract_version": "photo-visual-obligations/v1",
+      "qualification_status": "failed_technical_hard_gates",
+      "technical_qualified": false,
+      "representative_eligible": false,
+      "required_hard_gate_count": 9,
+      "required_hard_gates": [
+        "vo_vg_face_hands_place_readability_1",
+        "vo_vg_face_hands_place_readability_2",
+        "vo_vg_face_hands_place_readability_3",
+        "vo_wkr_wk047_selected_relation_1",
+        "embodiment_body_ownership",
+        "embodiment_joint_chain_and_reach",
+        "embodiment_support_and_balance",
+        "embodiment_contact_and_space",
+        "embodiment_visibility_and_projection"
+      ],
+      "source_character_response_contract_sha256": null,
+      "effective_visual_contract_sha256": "b48447535f1f0c20b3a46e62a247540e3121369243c2a6c72f742cd7ed0e55fa",
+      "selected_visual_concept_ids": [],
+      "failed_hard_gates": [
+        {
+          "gate": "vo_wkr_wk047_selected_relation_1",
+          "status": "fail",
+          "evidence": "Declared owner is the same nearer turned jacket cuff beside the working hand. Its native crop shows coarse knitted loops and a rolled/ribbed edge, not fine over-under interlaced yarn crossings beside a distinct sewn stitch row in the same cloth patch. Ribbon ribs or felt elsewhere cannot substitute."
+        },
+        {
+          "gate": "embodiment_contact_and_space",
+          "status": "fail",
+          "evidence": "Right fingers contact the shaft and left fingertips pin the ribbon, but the reviewed preflight requires a midpoint grip with point and eye exposed. The actual needle point is hidden under the fingers; that required endpoint condition is only partially realized."
+        },
+        {
+          "gate": "embodiment_visibility_and_projection",
+          "status": "fail",
+          "evidence": "Face, hand silhouettes, needle eye and eye-to-stitch thread route are visible, but the planned same-cuff yarn crossings beside seam do not resolve because the cuff is coarse knit; the pointed needle endpoint is additionally concealed. Full reviewed visibility is therefore incomplete."
+        }
+      ],
+      "schema_failures": [],
+      "user_judgment": {
+        "baseline_available": false,
+        "genuinely_moe": "pending",
+        "better_than_baseline": "pending",
+        "source": "not_yet_received",
+        "evidence": "No requester acceptance or comparison judgment received; these are reviewer pixel observations only."
+      },
+      "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+    }
+  }
+}

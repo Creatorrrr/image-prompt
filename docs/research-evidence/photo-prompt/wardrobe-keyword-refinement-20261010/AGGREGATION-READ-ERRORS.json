@@ -1,0 +1,20 @@
+{
+  "schema_version": "wardrobe-aggregation-read-errors/v1",
+  "errors": [
+    {
+      "stage": "diagnostic_pack_read",
+      "failure": "Initial diagnostic assumed a dictionary, but managed pack is a one-element JSON array.",
+      "resolved": true,
+      "image_calls": 0,
+      "arm_sources_or_reviews_modified": false
+    },
+    {
+      "stage": "final_reference_role_projection",
+      "failure": "Initial root aggregation allowed only visible_face_and_hair_guidance. C consistently binds visible_face_hair_guidance in both official plan and request.",
+      "resolution": "Require exact plan/request role equality and allow the two observed face/hair-only role spellings. Preserve the actual role; do not rewrite arm artifacts.",
+      "resolved": true,
+      "image_calls": 0,
+      "arm_sources_or_reviews_modified": false
+    }
+  ]
+}

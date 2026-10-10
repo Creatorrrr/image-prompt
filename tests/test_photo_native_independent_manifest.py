@@ -1,0 +1,46 @@
+"""The managed native lane must retain arm declarations without replacing audits."""
+import argparse
+from pathlib import Path
+import unittest
+
+from tests.test_photo_workflow_state import workflow
+from record_image_run import parse_args
+
+
+class NativeIndependentManifestTests(unittest.TestCase):
+    def declared(self, **changes):
+        values = dict(manifest=Path("arm/run_manifest.json"), arm_id="held-out-arm",
+                      worktree_id="isolated-evidence", skill_sha256="a" * 64,
+                      source_ref="generation:immutable", independent_no_cross_arm_inputs=True)
+        values.update(changes)
+        return argparse.Namespace(**values)
+
+    def test_declared_fields_reach_the_existing_recorder_parser(self):
+        flags = workflow.native_manifest_flags(self.declared())
+        recorded = parse_args(["--ts", "2026-10-10T01:00:00Z", "--attempt", "1",
+                               "--prompt-en", "One coherent photograph of connected cloth.",
+                               "--status", "success", *flags])
+        self.assertEqual(recorded.arm_id, "held-out-arm")
+        self.assertEqual(recorded.worktree_id, "isolated-evidence")
+        self.assertEqual(recorded.skill_sha256, "a" * 64)
+        self.assertEqual(recorded.source_ref, "generation:immutable")
+        self.assertEqual(recorded.candidate_pack_version, "v6")
+        self.assertTrue(recorded.independent_no_cross_arm_inputs)
+        self.assertEqual(recorded.manifest, Path("arm/run_manifest.json"))
+
+    def test_partial_provenance_or_missing_independence_is_not_silently_omitted(self):
+        for change in ({"arm_id": None}, {"skill_sha256": None},
+                       {"source_ref": None}, {"independent_no_cross_arm_inputs": False}):
+            with self.subTest(change=change), self.assertRaisesRegex(ValueError, "native_manifest_provenance_required"):
+                workflow.native_manifest_flags(self.declared(**change))
+
+    def test_a_declaration_requires_a_manifest_destination(self):
+        with self.assertRaisesRegex(ValueError, "native_manifest_path_required"):
+            workflow.native_manifest_flags(self.declared(manifest=None))
+
+    def test_ordinary_native_recording_still_needs_no_arm_declaration(self):
+        self.assertEqual(workflow.native_manifest_flags(argparse.Namespace()), [])
+
+
+if __name__ == "__main__":
+    unittest.main()

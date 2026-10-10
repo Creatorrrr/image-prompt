@@ -1,0 +1,110 @@
+{
+  "contract_version": "photo-composer-view/v2",
+  "mode": "candidate_details",
+  "source_pack_id": "5a9f1ef42bb597d4",
+  "source_pack_sha256": "b7d54be9ebaf323ebb11923b1626b6a4975f9262c757a13a11992c41c85a9fd2",
+  "candidates": [
+    {
+      "id": "visual-concept:wkr_wk117_selected_relation",
+      "source_pointer": "/visual_concept_candidates/candidates/9",
+      "candidate": {
+        "id": "visual-concept:wkr_wk117_selected_relation",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "The narrow dark sash wraps around the same garment's waist region and ends at its visible tie.",
+          "같은 허리를 감싸 매듭으로 끝나는 좁은 어두운 띠"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.waist_sash.attachment"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.garment_type"
+          }
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "wkr_wk117_selected_relation",
+            "category": "wardrobe_owner_selected_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Keep the selected owner and complete visible relation together: The narrow dark sash wraps around the same garment's waist region and ends at its visible tie.",
+            "component_semantics": {
+              "minimum_component_groups": 1,
+              "required_group_ids": [
+                "component_1"
+              ],
+              "groups": [
+                {
+                  "id": "component_1",
+                  "any_terms": [
+                    "The narrow dark sash wraps around the same garment's waist region and ends at its visible tie.",
+                    "dark sash",
+                    "waist sash"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "component_1_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 1,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "component_1_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "The narrow dark sash wraps around the same garment's waist region and ends at its visible tie."
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_wkr_wk117_selected_relation_1",
+                "review_scale": "native",
+                "description": "The narrow dark sash wraps around the same garment's waist region and ends at its visible tie. Inspect the declared owner, both endpoints and the connecting edge or distinguishing state in this same image. Hidden or partial evidence fails."
+              }
+            ],
+            "reject_substitutes": [
+              "목 리본으로 이동",
+              "허리띠를 몸판 검정 배색으로 합침"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "view_sha256": "5e481ede3233757da920f2a17474fd0672ca64f86f099ea83340aac3c0aa69ce"
+}

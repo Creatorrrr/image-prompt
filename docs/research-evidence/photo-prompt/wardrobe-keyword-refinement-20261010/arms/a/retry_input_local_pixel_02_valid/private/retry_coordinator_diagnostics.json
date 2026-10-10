@@ -1,0 +1,390 @@
+{
+  "status": "pass",
+  "parent_audit": {
+    "composed_audit": {
+      "status": "pass",
+      "quality_status": "warn",
+      "pack_id": "c1dbfe8a54aa5921",
+      "chosen_candidate_count": 0,
+      "chosen_visual_concept_ids": [],
+      "effective_visual_contract_sha256": "a8ac478a9e96f7a0e5fdbe603ef6cb591bd216bf3c4156a087d65b5468e5fc6f",
+      "render_repair_contract_sha256": "09720628af3fe76992739520d30095bf8a1490a7fd21c158c1fd15c8e8ded142",
+      "failures": [],
+      "warnings": [
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "A complex photographic scene"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "reference-guided main subject"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "several visible relationships unfold together"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "visible face and hair are guided by the attached reference"
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "The woman guides the rigid mating tongue of the black buckle into its housing while holding both parts."
+        },
+        {
+          "check": "uncovered_intent",
+          "reason": "uncovered candidate-pack intent was preserved by free description/assertion",
+          "intent": "The same bag's strap supports its body from two visible attachment fittings."
+        }
+      ]
+    },
+    "runtime_audit": {
+      "schema_version": "photo-image-render-request-audit/v1",
+      "pack_id": "c1dbfe8a54aa5921",
+      "status": "pass",
+      "runtime_prompt_id": "a66954295e7bab2d",
+      "source_intent_lock_sha256": "80ccb05d5efe9704af9ed5862477437dcc35f00f069af4e8ae45297b84f1d16d",
+      "render_repair_contract_sha256": "09720628af3fe76992739520d30095bf8a1490a7fd21c158c1fd15c8e8ded142",
+      "negative_matches_pack": true,
+      "effective_visual_contract_sha256": "a8ac478a9e96f7a0e5fdbe603ef6cb591bd216bf3c4156a087d65b5468e5fc6f",
+      "selected_visual_concept_ids": [],
+      "reference_count": 1,
+      "failures": [],
+      "boundary": "This audit verifies exact text and reference bytes before generation. It does not inspect rendered pixels or establish user-perceived quality."
+    },
+    "effective_visual": {
+      "enabled": true,
+      "contract_version": "photo-visual-obligations/v1",
+      "scope": "request_only",
+      "strict_gate_set": true,
+      "obligations": [
+        {
+          "id": "wkr_wk008_selected_relation",
+          "category": "wardrobe_owner_selected_relation",
+          "activation": {
+            "source": "agent_postcore_interpretation",
+            "scope": "request_only",
+            "source_intent_ids": [
+              "visual-intent:350b91e151887003"
+            ]
+          },
+          "composition_instruction": "Keep the selected owner and complete visible relation together: The long outer garment hangs away from the torso with a visible gap beside its side panel.",
+          "component_semantics": {
+            "minimum_component_groups": 1,
+            "required_group_ids": [
+              "component_1"
+            ],
+            "groups": [
+              {
+                "id": "component_1",
+                "any_terms": [
+                  "The long outer garment hangs away from the torso with a visible gap beside its side panel.",
+                  "loose coat",
+                  "long coat",
+                  "open coat",
+                  "robe"
+                ]
+              }
+            ]
+          },
+          "prompt_binding": {
+            "composed_field": "visual_obligation_evidence",
+            "required_evidence_fields": [
+              "component_1_phrase"
+            ],
+            "minimum_distinct_evidence_phrases": 1,
+            "prompt_evidence_must_be_literal": true,
+            "maximum_pairwise_content_token_overlap_ratio": 0.82,
+            "forbidden_filler_phrases": [
+              "visible evidence",
+              "visual evidence",
+              "required cue",
+              "prompt phrase"
+            ]
+          },
+          "evidence_requirements": {
+            "component_1_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "The long outer garment hangs away from the torso with a visible gap beside its side panel."
+              ]
+            }
+          },
+          "runtime_expression": {
+            "default_mode": "definition_with_optional_label",
+            "prompt_label_terms": [],
+            "forbidden_prompt_terms": [],
+            "runtime_forbidden_labels": []
+          },
+          "render_gates": [
+            {
+              "id": "vo_wkr_wk008_selected_relation_1",
+              "review_scale": "native",
+              "description": "The long outer garment hangs away from the torso with a visible gap beside its side panel. Inspect the declared owner, both endpoints and the connecting edge or distinguishing state in this same image. Hidden or partial evidence fails."
+            }
+          ],
+          "reject_substitutes": [
+            "두꺼운 소재와 여유핏 동일시",
+            "착용자 체형 변경"
+          ]
+        },
+        {
+          "id": "wkr_wk080_selected_relation",
+          "category": "wardrobe_owner_selected_relation",
+          "activation": {
+            "source": "agent_postcore_interpretation",
+            "scope": "request_only",
+            "source_intent_ids": [
+              "visual-intent:350b91e151887003"
+            ]
+          },
+          "composition_instruction": "Keep the selected owner and complete visible relation together: The same bag's strap supports its body from two visible attachment fittings.",
+          "component_semantics": {
+            "minimum_component_groups": 1,
+            "required_group_ids": [
+              "component_1"
+            ],
+            "groups": [
+              {
+                "id": "component_1",
+                "any_terms": [
+                  "The same bag's strap supports its body from two visible attachment fittings.",
+                  "bag strap",
+                  "bag handle",
+                  "crossbody bag",
+                  "canvas bag"
+                ]
+              }
+            ]
+          },
+          "prompt_binding": {
+            "composed_field": "visual_obligation_evidence",
+            "required_evidence_fields": [
+              "component_1_phrase"
+            ],
+            "minimum_distinct_evidence_phrases": 1,
+            "prompt_evidence_must_be_literal": true,
+            "maximum_pairwise_content_token_overlap_ratio": 0.82,
+            "forbidden_filler_phrases": [
+              "visible evidence",
+              "visual evidence",
+              "required cue",
+              "prompt phrase"
+            ]
+          },
+          "evidence_requirements": {
+            "component_1_phrase": {
+              "min_content_words": 3,
+              "must_mention_any": [
+                "The same bag's strap supports its body from two visible attachment fittings."
+              ]
+            }
+          },
+          "runtime_expression": {
+            "default_mode": "definition_with_optional_label",
+            "prompt_label_terms": [],
+            "forbidden_prompt_terms": [],
+            "runtime_forbidden_labels": []
+          },
+          "render_gates": [
+            {
+              "id": "vo_wkr_wk080_selected_relation_1",
+              "review_scale": "native",
+              "description": "The same bag's strap supports its body from two visible attachment fittings. Inspect the declared owner, both endpoints and the connecting edge or distinguishing state in this same image. Hidden or partial evidence fails."
+            }
+          ],
+          "reject_substitutes": [
+            "백팩을 소품 앞가방으로 변경",
+            "스트랩이 끝없이 이어짐"
+          ]
+        }
+      ],
+      "required_hard_gates": [
+        "vo_wkr_wk008_selected_relation_1",
+        "vo_wkr_wk080_selected_relation_1"
+      ],
+      "selected_visual_concept_ids": [],
+      "precedence": [
+        "safety_and_adult_age",
+        "direct_requesting_user_definition",
+        "explicit_user_requirement",
+        "request_scoped_visual_profile",
+        "optional_candidate_inspiration"
+      ],
+      "retry_policy": {
+        "preserve_every_attempt": true,
+        "repair_only_failed_visual_obligations": true,
+        "preserve_passed_identity_and_mechanism_evidence": true,
+        "stop_at_first_all_hard_gates_pass": true,
+        "requesting_user_judgment_remains_separate": true
+      },
+      "source_visual_intent_sha256": "ae8533a005b6e73e291f8336bf0d2363cfea99ca2275bf1695560932c4c384c7"
+    },
+    "contract_failures": [],
+    "repair": {
+      "contract_version": "photo-render-repair/v1",
+      "enabled": true,
+      "source": "authorial_core_request_lineage",
+      "source_authorial_core_sha256": "cadb86bf75ba15f55d9c4c0c96297a3aa82638a98c1becf0166615cdbd2ac57c",
+      "source_intent_lock_sha256": "80ccb05d5efe9704af9ed5862477437dcc35f00f069af4e8ae45297b84f1d16d",
+      "source_request_lineage_sha256": "957cc0ae1f6ae32b754b3c5b948982eafc506a989240159f6bcfab42673021c0",
+      "composed_field": "render_repair_evidence",
+      "strict_gate_set": true,
+      "major_only": true,
+      "targets": [
+        {
+          "repair_id": "buckle_joining_contact",
+          "source_span_ids": [
+            "reference_and_complete_validation"
+          ],
+          "importance": "primary",
+          "relation_origin": "parent_preserved",
+          "actor_phrase": "woman",
+          "object_phrase": "black buckle",
+          "interaction_state": "used",
+          "actor_object_contact": "transitional",
+          "protected_dimensions": [
+            "action"
+          ],
+          "allowed_repair_axes": [
+            "camera",
+            "contact_geometry",
+            "framing",
+            "lighting"
+          ],
+          "frozen_evidence": {
+            "interaction_phrase": "The woman guides the rigid mating tongue of the black buckle into its housing while holding both parts.",
+            "recognition_phrase": "The recognizable black buckle has a hollow rectangular housing and a distinct rigid mating tongue."
+          },
+          "prompt_binding": {
+            "required_evidence_fields": [
+              "interaction_phrase",
+              "recognition_phrase"
+            ],
+            "all_required_phrases_must_be_literal_in_final_prompt": true,
+            "evidence_must_remain_byte_identical": true,
+            "semantic_substitution_forbidden": true
+          },
+          "render_gates": [
+            {
+              "id": "rr_buckle_joining_contact_object_class_legible",
+              "review_scale": "both",
+              "criterion": "The target object is recognizable as the intended object class at thumbnail and native scale."
+            },
+            {
+              "id": "rr_buckle_joining_contact_gross_structure_coherent",
+              "review_scale": "native",
+              "criterion": "The target object's major parts form one coherent, non-grotesque structure; minor ornament differences are non-blocking."
+            },
+            {
+              "id": "rr_buckle_joining_contact_intended_interaction_matches",
+              "review_scale": "both",
+              "criterion": "The actor, object, and intended interaction state match the frozen relation; removal, relocation, concealment, or transfer is not a repair."
+            },
+            {
+              "id": "rr_buckle_joining_contact_contact_anatomy_coherent",
+              "review_scale": "native",
+              "criterion": "The event-critical actor-object contact and principal anatomy are coherent without severe fusion or impossible articulation."
+            }
+          ],
+          "required_hard_gates": [
+            "rr_buckle_joining_contact_object_class_legible",
+            "rr_buckle_joining_contact_gross_structure_coherent",
+            "rr_buckle_joining_contact_intended_interaction_matches",
+            "rr_buckle_joining_contact_contact_anatomy_coherent"
+          ]
+        }
+      ],
+      "required_hard_gates": [
+        "rr_buckle_joining_contact_object_class_legible",
+        "rr_buckle_joining_contact_gross_structure_coherent",
+        "rr_buckle_joining_contact_intended_interaction_matches",
+        "rr_buckle_joining_contact_contact_anatomy_coherent"
+      ],
+      "retry_policy": {
+        "preserve_interaction_relation": true,
+        "repair_smallest_failed_gate_set": true,
+        "removal_relocation_concealment_or_transfer_is_not_repair": true,
+        "minor_decorative_variation_is_non_blocking": true,
+        "maximum_additional_attempts": 1
+      },
+      "canonical_sha256": "09720628af3fe76992739520d30095bf8a1490a7fd21c158c1fd15c8e8ded142"
+    },
+    "character": null,
+    "character_gates": [],
+    "embodiment_gates": [
+      "embodiment_body_ownership",
+      "embodiment_joint_chain_and_reach",
+      "embodiment_support_and_balance",
+      "embodiment_contact_and_space",
+      "embodiment_visibility_and_projection"
+    ],
+    "generic_review_audit": {
+      "schema_version": "photo-image-render-review-audit/v1",
+      "pack_id": "c1dbfe8a54aa5921",
+      "status": "pass",
+      "qualification_status": "fail",
+      "technical_qualified": false,
+      "source_render_repair_contract_sha256": "09720628af3fe76992739520d30095bf8a1490a7fd21c158c1fd15c8e8ded142",
+      "reviewed_result_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/wardrobe-keyword-refinement-20261010/arms/a/images/attempt-01.png",
+      "reviewed_result_sha256": "8e30f82412b060df6b8c9816ecf02fa2b1f28fbb5358306175d28474bc67ff93",
+      "failed_gate_ids": [
+        "rr_buckle_joining_contact_intended_interaction_matches"
+      ],
+      "failures": [],
+      "boundary": "This audit validates a named review record and its exact generic hard-gate set. The reviewer supplies pixel judgments; the audit does not infer pixels or user preference."
+    },
+    "visual_review_audit": {
+      "schema_version": "moe-render-review/v1",
+      "pack_id": "c1dbfe8a54aa5921",
+      "contract_version": "photo-visual-obligations/v1",
+      "qualification_status": "failed_technical_hard_gates",
+      "technical_qualified": false,
+      "representative_eligible": false,
+      "required_hard_gate_count": 7,
+      "required_hard_gates": [
+        "vo_wkr_wk008_selected_relation_1",
+        "vo_wkr_wk080_selected_relation_1",
+        "embodiment_body_ownership",
+        "embodiment_joint_chain_and_reach",
+        "embodiment_support_and_balance",
+        "embodiment_contact_and_space",
+        "embodiment_visibility_and_projection"
+      ],
+      "source_character_response_contract_sha256": null,
+      "effective_visual_contract_sha256": "a8ac478a9e96f7a0e5fdbe603ef6cb591bd216bf3c4156a087d65b5468e5fc6f",
+      "selected_visual_concept_ids": [],
+      "failed_hard_gates": [
+        {
+          "gate": "vo_wkr_wk008_selected_relation_1",
+          "status": "fail",
+          "evidence": "The near waist/flank coat side panel is closed against or overlaps the knit-covered torso and working forearm. The front coat opening and loose lower hem are visible, but no separate torso-side contour and panel with a continuous visible gap at waist level can be traced. Native evidence is hidden/partial, which fails the complete relation."
+        },
+        {
+          "gate": "embodiment_contact_and_space",
+          "status": "fail",
+          "evidence": "The hands plausibly hold the buckle, but the required rigid fork tips entering an exposed housing mouth are absent: the buckle is already mated. The event-critical entering contact planned in the body review is not visible in this native image."
+        },
+        {
+          "gate": "embodiment_visibility_and_projection",
+          "status": "fail",
+          "evidence": "Both feet and bag fittings are framed, but the waist-level coat side gap is obscured/closed by fabric and working forearm and the entering tongue/fork tips are hidden in a mated buckle. The native view therefore cannot assess every consequential planned relation; partial visibility fails."
+        }
+      ],
+      "schema_failures": [],
+      "user_judgment": {
+        "baseline_available": true,
+        "genuinely_moe": "pending",
+        "better_than_baseline": "pending",
+        "source": "not_yet_received",
+        "evidence": "The requesting user has not judged this rendered image or comparison."
+      },
+      "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+    }
+  }
+}

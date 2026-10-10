@@ -1,0 +1,1576 @@
+# 시각 의미 리서치 카드
+
+이 문서는 연구 설계이다. 각 카드는 키워드의 특정 관찰 관계 또는 문맥 경계를 다룬다. 전체 보편 정의·런타임 데이터·이미지 검증 결과가 아니다.
+
+[조사 보고서](RESEARCH.md) · [반영 계획](IMPLEMENTATION-PLAN.md) · [원본 사전](inputs/wardrobe_keyword_catalog.md)
+
+## WK001 · garment · P1
+
+앞단추 여밈과 칼라 종류를 따로 보존한다.
+
+- 대상 키워드: K001, K002, K003, K006
+- 관찰 명제: A visible button row joins the two front panels of the same collared shirt.
+- 관계: `shirt_A.front_panels` → `fasten_with` → `shirt_A.button_row`
+- 혼동 경계: 앞 버튼만으로 버튼다운 칼라 확정; 타이·리본을 칼라 고정으로 해석
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S09, S30, S33, S39; 공개 일반 사실 W24
+
+## WK002 · annotation · P0
+
+K002의 button-down 표제어는 칼라 끝 버튼을 뜻할 수 있으나 원자료 설명은 앞여밈만 확인한다. 정규화 수정 대상으로 둔다.
+
+- 대상 키워드: K002
+- 관찰 명제: The original description establishes a front button shirt; collar-tip fastening remains unspecified.
+- 관계: `shirt_A.collar_points` → `status_unknown_without` → `visible_collar_buttons`
+- 혼동 경계: 정규화 번역을 원문 명시로 승격; 칼라 끝 버튼을 새로 추가
+- 반영 방식: annotation_only_no_runtime_candidate
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S33; 공개 일반 사실 W24
+
+## WK003 · garment · P1
+
+베이비 티의 짧은 소매·국소 핏·상의 기장을 분리한다. baby는 의상명 맥락으로 기록한다.
+
+- 대상 키워드: K008, K009, K126
+- 관찰 명제: The same fitted tee has short sleeves and a hem ending above the wearer's waist line.
+- 관계: `tee_A.hem` → `ends_above` → `tee_A.wearer_waist`
+- 혼동 경계: 탱크톱과 혼동; 용어로 인물 연령 추정; 크롭 길이만으로 전체 핏 확정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S08, S17, S21, S26; 공개 일반 사실 별도 사실 주장 없음
+
+## WK004 · garment · P1
+
+민소매 암홀·몸판·내층 귀속을 보존하며 캐미솔의 끈 구조는 별도로 구별한다.
+
+- 대상 키워드: K008, K083
+- 관찰 명제: Two armhole edges bound the same ribbed sleeveless top beneath its open outer shirt.
+- 관계: `tank_A.armholes` → `bound` → `tank_A.sleeveless_bodice`
+- 혼동 경계: 반도와 혼동; 위에 걸친 셔츠를 같은 몸판으로 합침
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S08, S32; 공개 일반 사실 W03
+
+## WK005 · garment · P1
+
+스트랩리스 몸판과 오프숄더 소매의 연결은 같은 단어로 합치지 않는다.
+
+- 대상 키워드: K010, K096, K097
+- 관찰 명제: The horizontal upper edge of the bandeau remains distinct from the separately attached low shoulder sleeves.
+- 관계: `bandeau_A.upper_edge` → `is_separate_from` → `sleeves_A.attachment`
+- 혼동 경계: 끈 없는 옷은 모두 동일; 오프숄더를 어깨끈으로 변경
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S26, S41; 공개 일반 사실 별도 사실 주장 없음
+
+## WK006 · garment · P1
+
+조끼의 민소매와 안쪽 니트의 소매 소유자를 구분한다.
+
+- 대상 키워드: K015, K016, K017, K018, K027
+- 관찰 명제: The open sleeveless vest frames the same wearer's sleeved knit top as a separate outer layer.
+- 관계: `vest_A.front_edges` → `frame` → `knit_A.sleeved_bodice`
+- 혼동 경계: 조끼에 안쪽 소매를 귀속; 패딩 충전재를 사진으로 확정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S09, S29, S31, S33; 공개 일반 사실 W03
+
+## WK007 · garment · P0
+
+열린 앞섶·내층·걷은 소매의 각 의상 귀속을 연결한다.
+
+- 대상 키워드: K023, K120
+- 관찰 명제: The outer shirt's two open front edges reveal the separate inner top; folded cuffs remain on the outer shirt.
+- 관계: `shirt_A.open_front` → `reveals` → `top_B.front`
+- 혼동 경계: 모든 흰 천을 하나로 합침; 걷은 소매를 짧은 재단으로 변경
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S08, S30; 공개 일반 사실 별도 사실 주장 없음
+
+## WK008 · garment · P1
+
+길이와 여유분을 구별하고 roomy를 모든 부위의 동일한 부피로 강제하지 않는다.
+
+- 대상 키워드: K027, K028, K125
+- 관찰 명제: The long outer garment hangs away from the torso with a visible gap beside its side panel.
+- 관계: `outer_A.side_panels` → `hang_away_from` → `wearer_A.torso`
+- 혼동 경계: 두꺼운 소재와 여유핏 동일시; 착용자 체형 변경
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S29, S31; 공개 일반 사실 W16
+
+## WK009 · garment · P0
+
+로브·겉드레스·속슬립을 독립한 레이어로 연결한다.
+
+- 대상 키워드: K029, K034, K041, K042
+- 관찰 명제: The robe's open edge reveals a separate dress; the dress's inner slip remains a distinct covered layer.
+- 관계: `robe_A.open_edge` → `reveals` → `dress_B.covered_bodice`
+- 혼동 경계: 비침을 모든 층에 적용; 속슬립을 피부로 해석
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S18, S37; 공개 일반 사실 W07
+
+## WK010 · garment · P1
+
+케이프의 고정점·길이·색을 드레스 몸판과 분리한다.
+
+- 대상 키워드: K030, K040, K263, K396
+- 관찰 명제: A short crimson cape hangs from its visible neckline attachment behind the black dress.
+- 관계: `cape_A.neck_attachment` → `supports` → `cape_A.short_back_panel`
+- 혼동 경계: 드레스 전체를 붉게 변경; 고정점 없이 떠 있는 케이프
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S27; 공개 일반 사실 별도 사실 주장 없음
+
+## WK011 · state · P0
+
+옆에 놓인 의상은 비착용 소품이며 착용 상의와 상태가 다르다.
+
+- 대상 키워드: K035, K394, K426
+- 관찰 명제: The black blazer rests on the bedside surface while the person's worn blouse remains separate.
+- 관계: `blazer_A` → `rests_on` → `bedside_surface_A`
+- 혼동 경계: 블레이저를 자동 착용; 소품 존재만으로 착용 상태 판정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S30; 공개 일반 사실 별도 사실 주장 없음
+
+## WK012 · garment · P1
+
+코르셋풍 몸판의 관찰은 패널·끈·아일릿으로 표현하고 숨은 보강이나 기능과 구분한다.
+
+- 대상 키워드: K011, K012, K013, K164
+- 관찰 명제: Lacing crosses between two visible eyelet rows on the same shaped bodice.
+- 관계: `bodice_A.lacing` → `crosses_between` → `bodice_A.eyelet_rows`
+- 혼동 경계: 레이싱만으로 실물 코르셋 기능 확정; 장식 그림자를 끈으로 판단
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S03, S04, S16, S37; 공개 일반 사실 W14
+
+## WK013 · garment · P1
+
+티어드는 패널 층과 이음 위치이며 소재·핏·러플 여부는 독립 축이다.
+
+- 대상 키워드: K041, K062, K225
+- 관찰 명제: Horizontal tier seams join successive gathered panels of the same long skirt.
+- 관계: `skirt_A.tier_seams` → `join` → `skirt_A.gathered_lower_panels`
+- 혼동 경계: 플리츠와 티어드 동일시; 일체형 프린트 줄을 레이어로 해석
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S02, S03, S37; 공개 일반 사실 별도 사실 주장 없음
+
+## WK014 · annotation · P0
+
+설명문 K049와 구조 모호 K050은 대안 해석을 보존한다. 합성된 단일 의상을 확정하지 않는다.
+
+- 대상 키워드: K048, K049, K050
+- 관찰 명제: The catalog retains an unresolved slip-or-camisole reading and a separate halter-versus-tube ambiguity.
+- 관계: `garment_A.type` → `remains_unresolved_between` → `slip_camisole_or_halter_readings`
+- 혼동 경계: 슬립과 캐미솔 동의어 처리; tube와 halter를 강제 결합
+- 반영 방식: annotation_only_no_runtime_candidate
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S20, S40, S42; 공개 일반 사실 별도 사실 주장 없음
+
+## WK015 · garment · P1
+
+원피스 수영복의 몸판 연결과 등판 개방 범위를 분리한다.
+
+- 대상 키워드: K078, K079, K082, K103
+- 관찰 명제: The swimsuit bodice continues into its lower section while the back opening remains a separate boundary.
+- 관계: `swimsuit_A.bodice` → `continues_into` → `swimsuit_A.lower_section`
+- 혼동 경계: 원피스와 비키니 혼동; 젖음으로 가림성을 자동 변경
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S06, S07; 공개 일반 사실 별도 사실 주장 없음
+
+## WK016 · annotation · P0
+
+수영 상의 종류와 색 범위의 추정은 독립된 불확실성으로 보관한다.
+
+- 대상 키워드: K080, K081, K260
+- 관찰 명제: The image-linked description leaves bikini-versus-tankini type and peach-versus-coral color unresolved.
+- 관계: `swim_top_A.type` → `remains_unresolved_between` → `bikini_or_tankini`
+- 혼동 경계: 추정 소재·색을 명시값으로 전환; 상이한 유형의 부품 전부 합침
+- 반영 방식: annotation_only_no_runtime_candidate
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S06; 공개 일반 사실 별도 사실 주장 없음
+
+## WK017 · silhouette · P1
+
+플리츠는 반복 접힘의 배열이며 체크·핀스트라이프와 별도 축이다.
+
+- 대상 키워드: K056, K059, K070, K072
+- 관찰 명제: Ordered pleat ridges extend from the same skirt's waistband toward its hem.
+- 관계: `skirt_A.pleat_ridges` → `repeat_from` → `skirt_A.waistband`
+- 혼동 경계: 인쇄 줄을 주름으로 판정; 펜슬 외곽선과 주름 구조 동일시
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S09, S30, S33, S38, S39; 공개 일반 사실 별도 사실 주장 없음
+
+## WK018 · silhouette · P1
+
+짧은 기장·겹러플·옆 조임 장치를 독립 변수로 기록한다.
+
+- 대상 키워드: K057, K058, K138, K157
+- 관찰 명제: Separate ruffle edges overlap below the same short skirt's waistband and side adjustment channel.
+- 관계: `skirt_A.ruffle_edges` → `overlap_below` → `skirt_A.waistband`
+- 혼동 경계: 길이만으로 러플 의무; 옆끈을 신체나 다른 의상에 연결
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S26, S34; 공개 일반 사실 별도 사실 주장 없음
+
+## WK019 · silhouette · P0
+
+하이로의 앞뒤 길이와 비대칭 패널 방향을 구별한다.
+
+- 대상 키워드: K060, K065, K139, K140, K150
+- 관찰 명제: The same skirt's front hem ends above its longer rear hem; diagonal panel edges remain distinct.
+- 관계: `skirt_A.front_hem` → `ends_higher_than` → `skirt_A.back_hem`
+- 혼동 경계: 카메라 원근만으로 하이로 판정; 좌우 길이 차이와 앞뒤 길이 차이 혼동
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S28; 공개 일반 사실 별도 사실 주장 없음
+
+## WK020 · silhouette · P0
+
+오버스커트와 쇼츠의 독립된 몸판·고정 위치·겹침을 보존한다.
+
+- 대상 키워드: K032, K069, K077, K152
+- 관찰 명제: A separate curved overskirt edge overlaps outside the same wearer's shorts.
+- 관계: `overskirt_A.open_edge` → `overlaps_outside` → `shorts_B`
+- 혼동 경계: 쇼츠를 치마로 바꿈; 두 층을 한 개의 슬릿으로 합침
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK021 · neckline · P1
+
+높은 깃·개더·별도 요크를 각각 관찰한다. 만다린 명칭만으로 치파오 전체를 강제하지 않는다.
+
+- 대상 키워드: K085, K086, K087, K105, K004, K005
+- 관찰 명제: The upright collar edge rises above its visible junction with the same bodice.
+- 관계: `collar_A.upper_edge` → `stands_above` → `bodice_A.neck_join`
+- 혼동 경계: 목 주름을 깃으로 해석; 하이넥과 요크 동일시
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S03, S04, S05, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK022 · neckline · P0
+
+랩 목선은 두 몸판의 겹침이며 단순 V자 재단과 다르다.
+
+- 대상 키워드: K088, K089
+- 관찰 명제: Two front panels overlap diagonally to form the same garment's V-shaped opening.
+- 관계: `front_panel_A.edge` → `overlaps` → `front_panel_B`
+- 혼동 경계: V넥 모양만으로 랩 여밈 확정; 착용자 좌우와 화면 좌우 혼동
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S21, S23, S24; 공개 일반 사실 W11, W13
+
+## WK023 · neckline · P1
+
+크루·스쿠프·스퀘어·바토는 경계 곡률·폭·높이로 대안을 구별한다. 서로 전부 결합하지 않는다.
+
+- 대상 키워드: K090, K091, K092, K093, K143
+- 관찰 명제: The same top's neckline edge has a clearly readable contour around its upper opening.
+- 관계: `top_A.neckline_edge` → `bounds` → `top_A.upper_opening`
+- 혼동 경계: 넥타이·목걸이 곡선을 목선으로 대체; 특정 깊이 자동 부여
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S16, S17, S27, S34, S44; 공개 일반 사실 별도 사실 주장 없음
+
+  - 선택 변형 `crew`: The neckline of the same top forms a shallow rounded edge close to the neck base.
+  - 선택 변형 `scoop`: The neckline of the same top forms a wider rounded opening below the neck base.
+  - 선택 변형 `square`: Two neckline corners connect the straighter side edges to the same horizontal lower edge.
+  - 선택 변형 `bateau`: The same garment has a broad, shallow neckline running laterally near the collarbones.
+  - 선택 변형 `asymmetric_bateau`: The broad neckline reaches a different height at the two shoulders of the same wearer.
+
+## WK024 · neckline · P1
+
+카울은 목선의 늘어진 천 주름이며 단순 깊은 U넥과 구분한다.
+
+- 대상 키워드: K094, K048, K124
+- 관찰 명제: Soft folds hang between the attachment edges of the same front neckline.
+- 관계: `top_A.front_neck_folds` → `hang_between` → `top_A.upper_attachment_edges`
+- 혼동 경계: 깊은 목선과 카울 동일시; 광택만으로 카울 확인
+- 반영 방식: reuse_existing_identity_first
+- 기존 항목: garment_detail:clt_ct037_v1
+- 근거: 원사전 S37, S42; 공개 일반 사실 별도 사실 주장 없음
+
+## WK025 · neckline · P0
+
+목선 인셋의 폭·위치·몸판 연결을 보존한다.
+
+- 대상 키워드: K095, K104, K228
+- 관찰 명제: A narrow scalloped trim follows the inside of the same garment's neckline edge.
+- 관계: `trim_A` → `follows_inside` → `garment_A.neckline_edge`
+- 혼동 경계: 인셋을 별도 속옷으로 변경; 목선 배색을 전신 새 레이어로 확대
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S10, S24; 공개 일반 사실 W19
+
+## WK026 · neckline · P0
+
+스트랩리스·오프숄더·가는 어깨끈·홀터를 지지 경로와 소매 위치로 나눈다. 선택한 한 형태만 의무화한다.
+
+- 대상 키워드: K096, K097, K098, K099, K020, K021
+- 관찰 명제: The selected support edges connect the same bodice to its declared shoulder or neck attachment points.
+- 관계: `neckline_A.support_edges` → `connect_to` → `garment_A.declared_attachment_points`
+- 혼동 경계: 홀터를 스파게티 스트랩으로 대체; 목끈을 목걸이로 대체
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S06, S26, S41, S42, S43, S44; 공개 일반 사실 별도 사실 주장 없음
+
+  - 선택 변형 `strapless`: The same bodice has a continuous upper edge across the torso, with support contained in the bodice.
+  - 선택 변형 `off_shoulder`: The garment and sleeve attachment edges sit below the same wearer’s shoulder tops.
+  - 선택 변형 `spaghetti`: Two narrow straps join the same front bodice to its back over the declared shoulders.
+  - 선택 변형 `halter`: The support straps of the same bodice rise toward the neck and join at the declared neck attachment.
+
+## WK027 · neckline · P1
+
+키홀의 닫힌 외곽과 상부 깃을 독립 구성요소로 보존한다.
+
+- 대상 키워드: K100, K101, K087
+- 관찰 명제: A continuous textile edge encloses the small opening below the same high neckline.
+- 관계: `bodice_A.keyhole_edge` → `encloses` → `bodice_A.local_opening`
+- 혼동 경계: 전체 목선을 넓혀 키홀 삭제; 원단 위 인쇄 타원을 개방부로 판정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK028 · neckline · P1
+
+오픈백·로백은 등판의 종료 위치와 연결이며 앞면 목선과 별도로 관리한다.
+
+- 대상 키워드: K102, K103, K079
+- 관찰 명제: The garment's back edges bound a local opening on the same wearer's back.
+- 관계: `garment_A.back_edge` → `bounds` → `wearer_A.back_region`
+- 혼동 경계: 뒷면이 안 보이는데 통과; 앞 컷아웃으로 등판 요구 대체
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S06, S07, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK029 · sleeve · P0
+
+비숍 소매의 넓은 하부와 좁은 손목 끝단 관계를 보존한다.
+
+- 대상 키워드: K106, K107, K116, K121
+- 관찰 명제: The full lower fabric of the same sleeve gathers into a narrow cuff at the wrist.
+- 관계: `sleeve_A.lower_fabric` → `gathers_into` → `sleeve_A.wrist_cuff`
+- 혼동 경계: 벨 소매의 열린 끝단; 어깨 퍼프만으로 비숍 판정
+- 반영 방식: reuse_existing_identity_first
+- 기존 항목: garment_detail:clt_ct047_v1
+- 근거: 원사전 S01, S03, S44; 공개 일반 사실 W09
+
+## WK030 · sleeve · P1
+
+퍼프의 부피 위치·길이·아랫단 모임을 구별한다. 긴 피티드 소매는 별도 대안이다.
+
+- 대상 키워드: K108, K109, K110
+- 관찰 명제: The same sleeve concentrates rounded volume above a narrower lower edge.
+- 관계: `sleeve_A.upper_volume` → `narrows_toward` → `sleeve_A.lower_edge`
+- 혼동 경계: 모든 풍성한 소매 동일시; 비숍·퍼프의 끝단을 전부 동시에 강제
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S04, S26, S39; 공개 일반 사실 W09
+
+  - 선택 변형 `short_puff`: The short sleeve gathers at its shoulder attachment and its narrower lower edge, enclosing a rounded upper volume.
+  - 선택 변형 `shoulder_puff_long`: The upper sleeve has a local shoulder puff while the lower sleeve remains narrow along the same arm.
+
+## WK031 · sleeve · P1
+
+7부·기둥형·팔꿈치 아래 드레이프는 길이·폭·직물 처짐의 독립 축이다.
+
+- 대상 키워드: K111, K112, K114
+- 관찰 명제: The same sleeve hem ends at the declared arm landmark while its lower fabric hangs in separate folds.
+- 관계: `sleeve_A.hem` → `ends_at` → `wearer_A.declared_arm_landmark`
+- 혼동 경계: 7부를 손목 소매로 변경; 가느다란 팔로 소매 폭을 표현
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S22, S24, S44; 공개 일반 사실 W09
+
+  - 선택 변형 `three_quarter`: The loose sleeve hem ends on the same forearm below the elbow and above the wrist.
+  - 선택 변형 `lower_drape`: Wide cloth hangs below the same elbow from the attached lower sleeve section.
+  - 선택 변형 `column`: Long folds run along the same sleeve from its upper attachment to the wrist edge.
+
+## WK032 · sleeve · P0
+
+분리 소매의 위팔 고정 밴드·몸판과의 분리·천 처짐을 연결한다.
+
+- 대상 키워드: K113, K115, K175
+- 관찰 명제: The separate translucent sleeve attaches to a visible upper-arm band with a gap from the bodice.
+- 관계: `sleeve_A.top_edge` → `attaches_to` → `armband_A`
+- 혼동 경계: 몸판 암홀에 봉합; 그냥 팔찌만 표시; 고정점 가림
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S18, S44; 공개 일반 사실 W07, W09
+
+## WK033 · sleeve · P1
+
+레이스 커프스·프렌치풍 끝단·걷은 소매·분리 커프스의 상태를 구분한다.
+
+- 대상 키워드: K117, K118, K119, K120, K121, K349
+- 관찰 명제: The folded or attached cuff edge remains visibly part of the same sleeve.
+- 관계: `cuff_A.folded_edge` → `belongs_to` → `sleeve_A`
+- 혼동 경계: 원단 접힘을 짧은 재단으로 변경; 흰 손목 장식을 독립 소매로 해석
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S04, S08, S30, S33, S35, S44; 공개 일반 사실 별도 사실 주장 없음
+
+  - 선택 변형 `lace_cuff`: A lace cuff joins the same opaque sleeve at its wrist edge.
+  - 선택 변형 `rolled`: Folded layers of the same shirt sleeve form a visible rolled edge on the forearm.
+  - 선택 변형 `detachable`: A separate white cuff closes around the wrist with an independent edge beside the garment sleeve.
+
+## WK034 · fit · P0
+
+fitted·structured·relaxed·roomy는 접촉·여유·형태 유지·드레이프 축으로 조합한다.
+
+- 대상 키워드: K122, K123, K124, K125, K131, K463
+- 관찰 명제: The same garment touches selected torso regions while separate folds hang between those contact regions.
+- 관계: `garment_A.contact_regions` → `alternate_with` → `garment_A.hanging_folds`
+- 혼동 경계: 피티드=전부 팽팽; 구조적=두꺼움; 옷 핏을 신체 크기로 변경
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S04, S07, S16, S17, S31, S34, S37; 공개 일반 사실 W16
+
+## WK035 · fit · P0
+
+기장을 신체 기준점으로 기록한다. 정상 저고리 길이는 요청 맥락·참조 범위로 정의한다.
+
+- 대상 키워드: K126, K127, K137, K138, K139, K140, K141, K142, K025, K063, K064
+- 관찰 명제: The garment hem ends at the declared body landmark of the same wearer.
+- 관계: `garment_A.hem` → `ends_at` → `wearer_A.declared_body_landmark`
+- 혼동 경계: 모든 저고리에 동일 cm 값; 짧은 치마로 저고리도 자동 크롭
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S04, S05, S12, S21, S23, S26, S34, S41; 공개 일반 사실 W11, W25
+
+## WK036 · fit · P1
+
+하이웨이스트·로라이즈·내추럴 웨이스트를 몸의 기준점과 비교한다. 후보들은 대안이다.
+
+- 대상 키워드: K128, K129, K130, K131, K158
+- 관찰 명제: The visible waistband sits above, at, or below the same wearer's natural waist according to the selected variant.
+- 관계: `garment_A.waistband` → `sits_relative_to` → `wearer_A.natural_waist`
+- 혼동 경계: 앉은 자세만으로 로라이즈; 카메라 기울기로 허리 높이 판정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S04, S07, S08, S21, S24, S30, S33, S44; 공개 일반 사실 별도 사실 주장 없음
+
+  - 선택 변형 `high`: The same waistband sits visibly above the wearer’s natural waist landmark.
+  - 선택 변형 `natural`: The same waistband follows the wearer’s declared natural waist landmark.
+  - 선택 변형 `low`: The same waistband sits visibly below the wearer’s natural waist landmark.
+
+## WK037 · silhouette · P1
+
+A라인·종형·좁은 레이어·하단 집중 부피를 외곽선과 부피 위치로 나눈다.
+
+- 대상 키워드: K132, K133, K134, K135, K136, K145
+- 관찰 명제: The same skirt widens below its waist while the upper bodice remains a separate volume region.
+- 관계: `skirt_A.outline` → `widens_below` → `skirt_A.waist_edge`
+- 혼동 경계: 모든 쿠튀르=볼가운; 넓은 소매를 치마 볼륨으로 대체
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S12, S16, S23, S24; 공개 일반 사실 W14, W17
+
+  - 선택 변형 `a_line`: The same skirt’s side outlines widen gradually from its waist toward the hem.
+  - 선택 변형 `bell`: The skirt rounds outward below its gathered waistband before returning toward its hem.
+  - 선택 변형 `narrow_layers`: Two distinct skirt layers hang within a comparatively narrow outer silhouette.
+  - 선택 변형 `lower_volume`: The gown’s upper bodice stays comparatively narrow while its lower skirt carries the outward volume.
+
+## WK038 · construction · P0
+
+프린세스 심은 두 패널의 연속 접합선으로 관찰한다. 다트·프린세스 콘셉트와 분리한다.
+
+- 대상 키워드: K146, K147, K149
+- 관찰 명제: A curved stitched seam joins the front and side-front fabric panels of the same bodice.
+- 관계: `bodice_A.front_panel` → `joins_via_curved_seam` → `bodice_A.side_front_panel`
+- 혼동 경계: 프린세스라는 이름만으로 심 확정; 프린트 선을 접합으로 판정
+- 반영 방식: reuse_existing_identity_first
+- 기존 항목: garment_detail:clt_ct031_v1
+- 근거: 원사전 S01, S04; 공개 일반 사실 W10
+
+## WK039 · construction · P1
+
+뾰족 밑단·대각·원호·덧패널은 형상과 겹침으로 세분한다. 선택한 도형만 적용한다.
+
+- 대상 키워드: K148, K150, K151, K152, K168
+- 관찰 명제: A distinct diagonal or curved textile panel edge overlaps another panel of the same garment.
+- 관계: `panel_A.edge` → `overlaps` → `panel_B.surface`
+- 혼동 경계: 금속 장식 곡선만으로 천 패널 확인; 겹침 방향 불명
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S44; 공개 일반 사실 별도 사실 주장 없음
+
+  - 선택 변형 `diagonal`: One diagonal textile panel edge visibly overlaps the adjacent panel of the same skirt.
+  - 선택 변형 `crescent`: The same textile panel has a bounded crescent-shaped edge at its declared attachment.
+  - 선택 변형 `curved_overlay`: A curved leather-like overlay follows the same boot’s surface with a visible separate edge.
+
+## WK040 · construction · P0
+
+겉 패널과 안감의 귀속·노출 부위·현재 열린 틈을 연결한다. 움직임의 전체 시간 경과는 미확정이다.
+
+- 대상 키워드: K153, K154, K061, K456
+- 관찰 명제: The moving outer panel edge reveals a distinct lining belonging to the same skirt.
+- 관계: `outer_panel_A.open_edge` → `reveals` → `lining_B`
+- 혼동 경계: 몸판 주색을 안감 색으로 변경; 배경색을 안감으로 해석; 안감 대신 별도 옷 추가
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S24, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK041 · construction · P1
+
+랩 겹침·독립 슬릿·조임 채널을 경계와 종료점으로 구분한다.
+
+- 대상 키워드: K155, K156, K157
+- 관찰 명제: The selected garment opening has readable textile edges and a defined upper endpoint.
+- 관계: `panel_A.open_edge` → `separates_from` → `panel_B.edge`
+- 혼동 경계: 트임을 파열로 변경; 주름 음영을 열린 구멍으로 판정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S12, S21, S22, S26; 공개 일반 사실 별도 사실 주장 없음
+
+  - 선택 변형 `slit`: A single opening separates two skirt edges from a visible upper endpoint to the hem.
+  - 선택 변형 `wrap_gap`: The visible gap lies between two overlapping panels of the same skirt.
+  - 선택 변형 `drawstring`: Two cord ends emerge from the same gathered side channel and join at its adjustment point.
+
+## WK042 · traditional · P0
+
+원본의 작은 오비와 짧은 꼬리·겉옷 길이 관계를 보존한다. 미니 변형을 역사적 기모노와 분리한다.
+
+- 대상 키워드: K159, K160, K031, K046
+- 관찰 명제: The compact sash wraps outside the same overlap bodice; its tied end remains shorter than the outer robe.
+- 관계: `obi_A` → `wraps_outside` → `wrap_bodice_B`
+- 혼동 경계: 큰 오비 매듭 자동 추가; 발목 로브 자동 확장; 한복 고름으로 치환
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S24; 공개 일반 사실 W13
+
+## WK043 · traditional · P0
+
+저고리·고름·치마의 각 소유자와 독립 기장을 보존한다. 매듭 종류는 미지정이면 열어 둔다.
+
+- 대상 키워드: K088, K127, K161, K162, K066, K067
+- 관찰 명제: The narrow goreum fastens the same jeogori's overlapping front above the separate chima.
+- 관계: `goreum_A` → `fastens` → `jeogori_B.overlapping_front`
+- 혼동 경계: 치마 허리끈으로 고름을 이동; 치마가 미니라 저고리도 크롭
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S21, S22, S23; 공개 일반 사실 W11, W12
+
+## WK044 · construction · P1
+
+에이프런 끈의 교차와 매듭·몸판 연결을 보존한다.
+
+- 대상 키워드: K163, K047, K450
+- 관찰 명제: The apron straps cross on the same back and join the apron at a visible tie point.
+- 관계: `apron_A.back_straps` → `cross_and_join_at` → `apron_A.back_tie`
+- 혼동 경계: 끈을 팔·가구에 연결; 메이드 정체성 자동 부여
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S32; 공개 일반 사실 별도 사실 주장 없음
+
+## WK045 · construction · P1
+
+레이싱·단추·매듭·지퍼·벨트고리는 각각 연결 대상을 갖는다. 숨은 지퍼는 기능 고증으로 승격하지 않는다.
+
+- 대상 키워드: K164, K165, K166, K167, K170
+- 관찰 명제: The selected fastener joins the intended two garment edges beside the same pocket or waistband structure.
+- 관계: `fastener_A` → `connects` → `garment_A.edge_pair`
+- 혼동 경계: 장식 단추를 여밈으로 확정; 주머니 입구를 슬릿으로 오인
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S03, S17, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK046 · construction · P0
+
+리본·접합점·계속되는 봉제선을 하나의 연결로 묶는다. 기존 vg_ribbon_to_garment_seam을 우선 검토한다.
+
+- 대상 키워드: K169, K226, K381
+- 관찰 명제: The same flat ribbon tail joins a visible garment seam junction; the seam continues from that junction.
+- 관계: `ribbon_A.tail` → `joins_at` → `garment_A.seam_junction`
+- 혼동 경계: 리본을 옷 위에 얹기만 함; 단일 장식을 반복 리본으로 확장; 환상 변형과 실제 접합 혼동
+- 반영 방식: reuse_existing_identity_first
+- 기존 항목: garment_detail:vg_ribbon_to_garment_seam
+- 근거: 원사전 S12, S16; 공개 일반 사실 W18
+
+## WK047 · textile · P1
+
+면·리넨풍·울풍·캔버스풍에서 명시 섬유와 외형 추정을 분리한다.
+
+- 대상 키워드: K171, K172, K173, K185, K192
+- 관찰 명제: Visible yarn texture remains on the cloth surface while its fiber identity stays separately annotated.
+- 관계: `cloth_A.yarns` → `form` → `cloth_A.visible_surface`
+- 혼동 경계: 리넨처럼 보임=실제 리넨; 옷 표면으로 섬유 함량 측정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S04, S06, S17, S31, S32, S37; 공개 일반 사실 W04
+
+## WK048 · textile · P0
+
+시폰·오간자는 비침과 처짐·형태 유지가 다른 축이다. 특정 선택 변형의 외형만 요구한다.
+
+- 대상 키워드: K174, K175, K203
+- 관찰 명제: The sheer layer transmits light while its edge and the distinct underlayer remain readable.
+- 관계: `sheer_layer_A.edge` → `transmits_light_over` → `underlayer_B`
+- 혼동 경계: 유리와 천 혼동; 모든 반투명 원단=실크; 겹침 경계 삭제
+- 반영 방식: reuse_existing_identity_first
+- 기존 항목: surface_material:sheer_organza_chiffon_transmission
+- 근거: 원사전 S01, S13, S18, S44; 공개 일반 사실 W07
+
+## WK049 · textile · P1
+
+튤·메시의 개구 구조와 겹층을 기록하며 모든 시어 소재를 동일 네팅으로 합치지 않는다.
+
+- 대상 키워드: K176, K203, K219
+- 관찰 명제: Small mesh openings repeat across a distinct textile layer beneath its attached decorations.
+- 관계: `net_A.openings` → `repeat_across` → `net_A.textile_layer`
+- 혼동 경계: 아일릿·레이스·튤 동일시; 설명되지 않은 전신 비침
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S13, S18, S41; 공개 일반 사실 별도 사실 주장 없음
+
+## WK050 · textile · P0
+
+실크는 섬유, 새틴·자카드는 조직, 파유는 가로 리브 외형이다. satin-like는 섬유 확인이 아니다.
+
+- 대상 키워드: K177, K178, K179, K180, K181, K204
+- 관찰 명제: Fine transverse ribs remain on the selected faille panel; smooth satin is retained as a separate surface alternative.
+- 관계: `fabric_A.surface_ribs` → `run_across` → `fabric_A.panel`
+- 혼동 경계: 실크=새틴; 파유=세로 골지; 파유 이름으로 고정 강성 추정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S12, S16, S21, S22, S27, S44; 공개 일반 사실 W01, W08
+
+  - 선택 변형 `faille_surface`: Fine transverse ribs remain visible across the same faille-like textile panel.
+  - 선택 변형 `satin_surface`: A broad smooth sheen follows the folds of the same satin-like panel.
+
+## WK051 · textile · P1
+
+같은 검정 안에서도 파일·평활 표면·스웨이드풍의 광택과 미세 질감을 구분한다.
+
+- 대상 키워드: K182, K193, K197, K501
+- 관찰 명제: The pile surface has a soft directional value change beside the separate smooth reflective panel.
+- 관계: `surface_A.pile` → `differs_from` → `surface_B.smooth_highlight`
+- 혼동 경계: 광택만으로 가죽·라텍스 확정; 전역 밝기 변경으로 재질 대비 대체
+- 반영 방식: reuse_existing_identity_first
+- 기존 항목: surface_material:velvet_pile_nap_direction_surface
+- 근거: 원사전 S01, S03, S14, S15, S19, S27; 공개 일반 사실 W02
+
+## WK052 · textile · P1
+
+크레이프의 자잘한 요철과 트위드풍의 혼합 실·직조 외형을 분리한다. 실제 공법은 미확정이다.
+
+- 대상 키워드: K183, K184, K186
+- 관찰 명제: Fine irregular surface grain covers the selected crepe-like panel without replacing its visible seams.
+- 관계: `cloth_A.microtexture` → `covers` → `cloth_A.panel`
+- 혼동 경계: 큰 프린트 알갱이를 조직으로 판정; 모든 울을 같은 거친 질감으로 강제
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S31, S44; 공개 일반 사실 W05
+
+## WK053 · textile · P1
+
+골지·케이블·포인텔을 선 방향·입체 교차·작은 개구 구조로 구분한다.
+
+- 대상 키워드: K187, K188, K189, K016, K018, K014
+- 관찰 명제: The selected knit panel shows repeated ribs, crossed cable relief, or ordered small openings as distinct alternatives.
+- 관계: `knit_A.ridges` → `repeat_along` → `knit_A.panel`
+- 혼동 경계: 세 조직을 전부 강제; 인쇄 줄을 골지로 판정; 양말과 상의 조직 소유자 혼동
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S08, S31, S33, S34, S37; 공개 일반 사실 W03, W26
+
+  - 선택 변형 `rib`: Parallel raised knit ribs remain visible along the same garment panel.
+  - 선택 변형 `cable`: Raised knit columns cross over each other along the same sweater panel.
+  - 선택 변형 `pointelle`: Ordered small openings remain within the same knitted sock panel.
+
+## WK054 · textile · P0
+
+생지·연청·위스커·페이딩은 현재 표면 상태와 명도 배치이며 실제 사용 시간과 다르다.
+
+- 대상 키워드: K190, K191, K271, K272, K465, K466, K074
+- 관찰 명제: Local lighter crease marks remain on the same denim panel beside its darker base regions.
+- 관계: `denim_A.crease_regions` → `have_local_value_difference_from` → `denim_A.base_regions`
+- 혼동 경계: 페이딩으로 착용 연수 추정; 물리 주름과 인쇄된 마감 무늬 혼동
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S17, S21, S29; 공개 일반 사실 W06
+
+## WK055 · textile · P0
+
+광택 가죽·에나멜풍·라텍스풍의 관찰은 하이라이트·색·표면 연속성으로 기록한다. 재료 추정은 유지한다.
+
+- 대상 키워드: K194, K195, K196, K202
+- 관찰 명제: The glossy highlight follows the same garment surface curvature while seams remain distinct.
+- 관계: `surface_A.highlight` → `follows` → `surface_A.curvature`
+- 혼동 경계: lacquer red를 래커 재료로 확정; 반사만으로 라텍스 확정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S04, S15, S33, S35, S36, S43; 공개 일반 사실 별도 사실 주장 없음
+
+## WK056 · textile · P0
+
+아일릿은 바탕 원단의 구멍·가장자리 자수로, 독립 레이스와 구분한다.
+
+- 대상 키워드: K198, K199, K207, K228
+- 관찰 명제: Small edged openings remain within the same ground fabric and end at its scalloped trim.
+- 관계: `eyelet_A.edged_holes` → `remain_in` → `eyelet_A.ground_fabric`
+- 혼동 경계: 인쇄 점을 구멍으로 판정; 원단 바탕을 모두 제거해 튤로 치환
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S02, S03, S24, S37; 공개 일반 사실 W19
+
+## WK057 · textile · P1
+
+스포츠 메시 외형·신축·핏을 분리한다. 스판덱스 함량과 실제 경기 역할은 미확정이다.
+
+- 대상 키워드: K200, K201, K022, K076
+- 관찰 명제: Mesh-like texture remains on the same sports panel beside its separate seam and fitted edge.
+- 관계: `sports_panel_A.mesh` → `remains_on` → `sports_panel_A.bodice`
+- 혼동 경계: 메시=모든 부위 투명; 운동복으로 직업 확정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S10; 공개 일반 사실 W03
+
+## WK058 · pattern · P1
+
+톤온톤 다마스크·자카드의 무늬 대비와 바탕의 관계를 기록한다. 전체 제조법은 보류한다.
+
+- 대상 키워드: K179, K205, K206
+- 관찰 명제: A low-contrast woven motif remains integrated in the same cloth surface rather than sitting above it.
+- 관계: `woven_motif_A` → `is_integrated_in` → `cloth_A.surface`
+- 혼동 경계: 고대비 꽃 프린트로 대체; 검정이면 무늬 생략
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S03, S44; 공개 일반 사실 W05
+
+## WK059 · pattern · P1
+
+모티프 종류·크기·반복·방향·배치 부위를 분리한다. 서로 다른 패턴은 대안으로 취급한다.
+
+- 대상 키워드: K208, K209, K210, K211, K213, K214, K215
+- 관찰 명제: The selected floral, grid, or stripe repeat follows the same garment panel and its fold orientation.
+- 관계: `motif_A.repeat` → `follows` → `garment_A.panel`
+- 혼동 경계: 배경 잎을 의상무늬로 이전; 주름이 바뀌는데 패턴이 계속 평면
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S24, S33, S37, S38, S39; 공개 일반 사실 별도 사실 주장 없음
+
+  - 선택 변형 `floral`: Small flower motifs repeat within the same garment panel and follow its folds.
+  - 선택 변형 `plaid`: Two intersecting stripe directions form repeated checks on the same skirt panel.
+  - 선택 변형 `pinstripe`: Thin parallel stripes repeat along the same skirt panel and follow its fold direction.
+
+## WK060 · pattern · P1
+
+자수·단추·프린트의 제작과 외형을 분리한다. 진주풍 단추는 실제 진주 확인이 아니다.
+
+- 대상 키워드: K212, K216, K220, K224, K231, K071
+- 관찰 명제: Raised thread paths remain on the same fabric ground beside separate buttons.
+- 관계: `embroidery_A.thread_paths` → `lie_on` → `garment_A.ground`
+- 혼동 경계: 장식 점을 단추로 판정; 자수를 다른 사람 의상에 이동
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S09, S33, S39, S41, S43; 공개 일반 사실 W19
+
+## WK061 · pattern · P0
+
+숫자의 값·개수·위치·의상 소유자를 보존한다.
+
+- 대상 키워드: K217, K218, K022
+- 관찰 명제: The number 10 is visibly printed on the same jersey's front panel and follows its fabric folds.
+- 관계: `jersey_A.front_number` → `appears_on` → `jersey_A.front_panel`
+- 혼동 경계: 가방·배경의 10으로 대체; 임의 등번호 변경; 번호로 실제 선수 신원 추정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S10; 공개 일반 사실 별도 사실 주장 없음
+
+## WK062 · pattern · P1
+
+입체 꽃·라인스톤·진주 점은 부피·부착·반사의 독립 축이다.
+
+- 대상 키워드: K219, K222, K223
+- 관찰 명제: Attached petal forms rise above the same garment surface with small local shadows.
+- 관계: `applique_A.petals` → `rise_from` → `garment_A.surface`
+- 혼동 경계: 꽃 인쇄로 입체 장식 대체; 반짝임으로 보석 종류 확정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S13, S41; 공개 일반 사실 별도 사실 주장 없음
+
+  - 선택 변형 `petal_relief`: Attached flower petals rise above the same fabric surface with small local shadows.
+  - 선택 변형 `rhinestone`: Small faceted reflective ornaments remain attached at distinct points on the same garment.
+  - 선택 변형 `pearl_like`: Small rounded pearl-like ornaments remain attached at distinct points on the same garment.
+
+## WK063 · pattern · P0
+
+리본의 수·크기·위치·꼬리·봉제선 연결을 분리한다. single은 한 개 매듭으로 평가한다.
+
+- 대상 키워드: K225, K226, K227, K169
+- 관찰 명제: One bow knot anchors its two tails at the declared side of the same garment.
+- 관계: `bow_A.single_knot` → `anchors` → `bow_A.two_tails`
+- 혼동 경계: 여러 작은 리본으로 한 조형 리본 대체; 두 꼬리를 두 리본으로 셈
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S02, S03, S16; 공개 일반 사실 별도 사실 주장 없음
+
+## WK064 · pattern · P0
+
+파이핑의 색은 경계선에 귀속하며 몸판 주색으로 퍼뜨리지 않는다.
+
+- 대상 키워드: K229, K230, K026
+- 관찰 명제: A thin contrasting piping follows the same panel boundary without filling the panel interior.
+- 관계: `piping_A` → `follows` → `garment_A.panel_boundary`
+- 혼동 경계: 몸판 전체를 옥스블러드로 변경; 목걸이 줄을 파이핑으로 해석
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S33, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK065 · pattern · P1
+
+수선 실·마모 프릴·작은 버슬을 국소 상태와 뒤쪽 부피로 분리한다. 정서적 소유 이력은 별도 해석이다.
+
+- 대상 키워드: K232, K233, K469
+- 관찰 명제: Visible repair stitches bridge the same frill's worn edge as a local surface trace.
+- 관계: `repair_A.stitches` → `bridge` → `frill_A.worn_edge`
+- 혼동 경계: 새 금색 장식과 수선 동일시; 파열·가난·과거 사건 자동 추정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S03; 공개 일반 사실 별도 사실 주장 없음
+
+## WK066 · pattern · P1
+
+모티프의 개체 종류와 접합점·의상/공중 상태를 따로 보존한다. 나비 장식과 살아 있는 나비는 대안이다.
+
+- 대상 키워드: K234, K235, K236, K237, K238, K368, K388
+- 관찰 명제: The selected butterfly or crescent ornament attaches at the same garment panel's visible origin.
+- 관계: `ornament_A` → `attaches_at` → `garment_A.panel_origin`
+- 혼동 경계: 공중 나비를 목걸이로 판정; 달 패널을 실제 달로 변경
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S13, S26, S36, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK067 · color · P0
+
+색 계열·명도·채도·색의 소유자·주색/보조/경계 역할을 분리한다. 임의 고정 HEX는 부여하지 않는다.
+
+- 대상 키워드: K239, K240, K241, K242, K243, K244, K245, K246, K247, K248, K249, K250, K251, K252, K253, K254, K255, K256, K257, K258, K270, K271, K272, K273, K274, K275, K276, K277, K278, K279, K280, K281, K282, K283, K284, K285, K286
+- 관찰 명제: The declared surface color belongs to the specified garment panel, with its edge separating it from the background.
+- 관계: `color_region_A` → `belongs_to` → `garment_A.declared_panel`
+- 혼동 경계: 배경 흰색을 흰 의상으로 이전; 원단 그림자를 새 배색으로 판정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S04, S05, S06, S07, S12, S13, S16, S17, S20, S21, S23, S24, S25, S26, S28, S29, S30, S31, S32, S33, S34, S37, S41, S43, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK068 · color · P1
+
+그라데이션의 시작·끝 색·방향·공간을 보존한다. 전역 필터와 분리한다.
+
+- 대상 키워드: K259, K258, K390
+- 관찰 명제: A white-to-pink surface gradient changes along the declared axis of the same garment.
+- 관계: `gradient_A` → `changes_along` → `garment_A.declared_axis`
+- 혼동 경계: 상하 조명차를 염색으로 확정; 모든 액세서리도 그라데이션
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S20, S41; 공개 일반 사실 별도 사실 주장 없음
+
+## WK069 · annotation · P0
+
+원자료 S07의 다섯 후보색은 동시에 쓰는 배색이 아니다. 선택 이력은 따로 저장한다.
+
+- 대상 키워드: K276, K277, K279, K280, K251, K400
+- 관찰 명제: Deep teal, muted sage, charcoal blue, soft ivory, and forest green remain alternative swimsuit color choices.
+- 관계: `palette_options_A` → `are_alternatives_for` → `swimsuit_A.color`
+- 혼동 경계: 다섯색 줄무늬 자동 생성; 후보 개수로 사용 빈도 추정
+- 반영 방식: annotation_only_no_runtime_candidate
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S06, S07, S31; 공개 일반 사실 별도 사실 주장 없음
+
+## WK070 · color · P0
+
+붉은 면의 수·시작점·끝점·반복 허용을 모델링한다. 단일 강조는 전체 단색과 다르다.
+
+- 대상 키워드: K261, K262, K263, K264, K265, K266, K267, K268, K226, K381, K500
+- 관찰 명제: One saturated red plane extends from the declared garment origin while other garment regions keep their assigned colors.
+- 관계: `red_plane_A` → `extends_from` → `garment_A.declared_origin`
+- 혼동 경계: 빨간 신발·리본·배경을 추가 반복; 빨간 스포트라이트로 천 대신 구현
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S09, S12, S16, S22, S23, S24, S27, S42, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK071 · annotation · P0
+
+인디핑크·문제이드·문그레이·래커레드·광택 색은 맥락적 이름으로 관리하고 섬유·재료·HEX와 분리한다.
+
+- 대상 키워드: K257, K262, K269, K281, K285
+- 관찰 명제: The descriptive color label stays separate from material identity and exact color coordinates.
+- 관계: `poetic_color_label_A` → `does_not_define` → `material_or_unique_color_coordinate`
+- 혼동 경계: lacquer red=실물 래커; moon jade=옥 원료; 고유 표준색이라고 단정
+- 반영 방식: annotation_only_no_runtime_candidate
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S03, S16, S23, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK072 · color · P1
+
+은색·오래된 은빛·변색·황동풍·흑철색은 색·반사·국소 상태의 축이다. 원소와 연령은 미확정이다.
+
+- 대상 키워드: K287, K288, K289, K290, K291, K292, K293, K294, K221, K374, K476
+- 관찰 명제: Localized darkened regions remain on the same reflective metal fitting beside its brighter edges.
+- 관계: `metal_A.darkened_regions` → `remain_on` → `metal_A.reflective_surface`
+- 혼동 경계: 은빛을 순은으로 확인; 모든 금속을 무광 검정으로 변경
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S03, S11, S14, S15, S16, S24, S26, S28, S41, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK073 · color · P0
+
+같은 검정 몸판·레이스·벨벳·리본의 재질 경계를 보존한다.
+
+- 대상 키워드: K501, K239, K182, K184, K198
+- 관찰 명제: Two black garment regions remain separable by their local texture and reflection rather than different hue families.
+- 관계: `black_panel_A` → `differs_in_reflection_from` → `black_panel_B`
+- 혼동 경계: 모든 검정을 하나의 플라스틱으로 처리; 배색을 추가해 재질 대비 대체
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S02, S03, S26, S27, S44; 공개 일반 사실 W01, W02
+
+## WK074 · color · P0
+
+가림성은 부위별 속성이다. 몸판과 소매의 서로 다른 투과성을 동시에 보존한다.
+
+- 대상 키워드: K502, K107, K110, K203
+- 관찰 명제: The same garment has an opaque bodice and a distinct sheer sleeve with a readable joining boundary.
+- 관계: `opaque_bodice_A` → `is_separate_from` → `sheer_sleeve_A`
+- 혼동 경계: 소매 요구로 몸판도 투명; 어깨 경계를 지워 한 레이어로 합침
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S03, S04, S13, S18, S44; 공개 일반 사실 W07
+
+## WK075 · accessory · P1
+
+스타킹·타이츠·니삭스·사이하이는 종료점·한쌍 연속성·투과성·조직으로 구별한다.
+
+- 대상 키워드: K295, K296, K297, K298, K299, K300, K301, K302, K303, K304, K305, K306, K307
+- 관찰 명제: The selected legwear has a visible top edge at the declared leg landmark with its own opacity and pattern.
+- 관계: `legwear_A.top_edge` → `ends_at` → `wearer_A.declared_leg_landmark`
+- 혼동 경계: 상단이 안 보이는데 사이하이 통과; 피시넷과 시어 스타킹 동일시
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S03, S04, S09, S23, S30, S33, S36, S37, S43, S44; 공개 일반 사실 별도 사실 주장 없음
+
+  - 선택 변형 `knee_sock`: The same knitted sock has a visible top edge below the knee.
+  - 선택 변형 `thigh_high`: The same legwear has a visible top band above the knee on the thigh.
+  - 선택 변형 `tights`: The legwear continues upward from both legs into the same covered hip section.
+
+## WK076 · accessory · P1
+
+양말 가장자리·손의 소유자·접촉·국소 늘어남을 연결한다.
+
+- 대상 키워드: K302, K303, K305, K306, K451
+- 관찰 명제: The same person's fingers touch the visible top edge of the sock on that person's leg.
+- 관계: `hand_A.fingers` → `touch` → `sock_A.top_edge`
+- 혼동 경계: 공중 손동작만으로 조절 인정; 다른 사람 양말에 손을 귀속
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S37, S43, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK077 · accessory · P1
+
+신발의 앞코·굽·플랫폼·끈·지지 경로를 독립 축으로 둔다. 메리제인의 발등 스트랩과 샌들 발목끈을 구별한다.
+
+- 대상 키워드: K308, K309, K310, K311, K312, K313, K314, K315, K316, K317, K318, K321, K322, K323
+- 관찰 명제: The selected shoe strap crosses the instep and joins the same shoe at its fastening point.
+- 관계: `shoe_A.strap` → `crosses_over` → `wearer_A.instep`
+- 혼동 경계: 모든 스트랩을 발목끈으로 합침; 평굽과 플랫폼 동일시
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S03, S04, S09, S20, S23, S26, S33, S42, S43, S44; 공개 일반 사실 별도 사실 주장 없음
+
+  - 선택 변형 `mary_jane`: A strap crosses the same shoe’s instep and joins the shoe at its fastening point.
+  - 선택 변형 `ankle_sandal`: A sandal strap wraps around the same ankle and joins the sandal’s supporting straps.
+  - 선택 변형 `knee_boot`: The same boot shaft ends near the knee and remains distinct from the legwear edge.
+
+## WK078 · accessory · P1
+
+타비풍 앞코의 갈림과 부츠 덧패널을 구별한다. 특정 브랜드의 굽은 자동 도입하지 않는다.
+
+- 대상 키워드: K319, K320
+- 관찰 명제: The same boot's toe outline splits between the big-toe region and the remaining toe region.
+- 관계: `boot_A.toe_edge` → `splits_between` → `wearer_A.big_toe_and_other_toes`
+- 혼동 경계: 색 선만으로 앞코 갈림 판정; 일반 부츠에 타비 이름만 붙임
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S24, S44; 공개 일반 사실 W20
+
+## WK079 · annotation · P0
+
+프레임 밖 신발 상태는 unknown으로 유지하며 부츠 제외가 맨발을 뜻하지 않는다.
+
+- 대상 키워드: K324, K477, K478, K479, K480
+- 관찰 명제: Feet outside the frame leave footwear state unobservable.
+- 관계: `footwear_A.state` → `is_unobservable_when` → `feet_outside_frame`
+- 혼동 경계: 신발 없음=맨발; 상반신 사진에서 신발 게이트 통과
+- 반영 방식: annotation_only_no_runtime_candidate
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S12, S13, S15, S16, S29, S32; 공개 일반 사실 별도 사실 주장 없음
+
+## WK080 · accessory · P1
+
+백팩·토트·미니백·새들 크로스바디는 가방 형태와 지지 경로로 구별한다.
+
+- 대상 키워드: K325, K326, K327, K328, K329, K330, K331, K170
+- 관찰 명제: The bag's handle or strap visibly supports its distinct body at the same attachment points.
+- 관계: `bag_A.handle_or_strap` → `supports` → `bag_A.body`
+- 혼동 경계: 백팩을 소품 앞가방으로 변경; 스트랩이 끝없이 이어짐
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S09, S17, S20, S26, S31, S33; 공개 일반 사실 별도 사실 주장 없음
+
+## WK081 · accessory · P1
+
+뿔·토끼귀·깃핀·머리리본은 착용 액세서리이며 해부학 구조나 종 정체성과 구별한다.
+
+- 대상 키워드: K332, K333, K334, K335, K336, K337, K338, K339, K340, K341, K342, K343, K344, K345, K346, K396
+- 관찰 명제: The visible headband supports the selected horns or ears as attached costume ornaments.
+- 관계: `headband_A` → `supports` → `ornament_A`
+- 혼동 경계: 머리띠 뿔을 실제 신체 뿔로 변경; 코스튬으로 인물 정체성 추정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S03, S09, S12, S13, S16, S27, S28, S32, S35, S41, S43; 공개 일반 사실 별도 사실 주장 없음
+
+  - 선택 변형 `horn_headband`: Two costume horns attach to the visible headband worn by the same person.
+  - 선택 변형 `bunny_headband`: Two long costume ears attach to the visible headband worn by the same person.
+  - 선택 변형 `hair_ribbon`: The hair ribbon’s knot and tails join the same declared hair fastening.
+
+## WK082 · accessory · P1
+
+장갑 기장·분리 커프스·소매끝을 각각 귀속시킨다.
+
+- 대상 키워드: K347, K348, K349, K350, K117
+- 관찰 명제: The selected glove ends at the declared arm landmark, separate from the garment's cuff.
+- 관계: `glove_A.edge` → `ends_at` → `wearer_A.declared_arm_landmark`
+- 혼동 경계: 소매와 장갑 연결을 하나로 합침; 파라솔을 손목 장식으로 분류
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S03, S04, S28, S35, S36; 공개 일반 사실 별도 사실 주장 없음
+
+## WK083 · accessory · P1
+
+초커·네크아머·펜던트·브로치·유리/보석풍 중심을 형태·위치·고정으로 구분한다.
+
+- 대상 키워드: K351, K352, K353, K354, K355, K356, K357, K358, K359, K360, K361, K362, K363, K364, K365, K371
+- 관찰 명제: A distinct pendant hangs from its chain at the declared position on the same wearer.
+- 관계: `pendant_A` → `hangs_from` → `chain_A`
+- 혼동 경계: 주황갈색으로 실제 보석 확인; 브로치를 목걸이로 대체
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S03, S04, S12, S14, S15, S16, S20, S24, S26, S33, S41; 공개 일반 사실 별도 사실 주장 없음
+
+  - 선택 변형 `pendant`: A distinct pendant hangs from its chain on the same wearer.
+  - 선택 변형 `brooch`: A brooch attaches at one visible point on the same garment surface.
+  - 선택 변형 `neck_armor`: A separate armor-like collar surrounds the same neck above the garment neckline.
+
+## WK084 · accessory · P1
+
+비대칭 귀걸이는 같은 착용자의 양쪽 귀·서로 다른 장식으로 연결한다.
+
+- 대상 키워드: K355, K356
+- 관찰 명제: One earring hangs longer than the separate stud on the other declared ear.
+- 관계: `earring_A` → `differs_in_length_from` → `earring_B`
+- 혼동 경계: 한쪽이 가려진 것으로 비대칭 확인; 두 착용자의 귀걸이를 한쌍으로 셈
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S12; 공개 일반 사실 별도 사실 주장 없음
+
+## WK085 · accessory · P0
+
+체인의 두 고정점·처짐·호 길이를 보존하며 동일/비대칭 호를 별도 변형으로 둔다.
+
+- 대상 키워드: K366, K367, K368, K369, K374, K475
+- 관찰 명제: A sagging chain span hangs between two visible attachment fittings on the same outfit.
+- 관계: `chain_A.sagging_span` → `hangs_between` → `fitting_A_and_fitting_B`
+- 혼동 경계: 한 끝이 떠 있음; 끈·프린트 사슬로 대체; 그림자로 중력 검증
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S14, S15, S28, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK086 · annotation · P2
+
+해군 정복의 부속 재현 요구와 실제 군복 고증을 구분한다. 읽을 수 없는 이름표는 실명 텍스트가 아니다.
+
+- 대상 키워드: K375, K376, K054
+- 관찰 명제: The declared insignia remains a reproduction requirement without independently verified rank or country.
+- 관계: `uniform_A.insignia` → `does_not_establish` → `verified_rank_or_country`
+- 혼동 경계: 문양으로 실제 계급·국가 확인; 이름표에 임의 실명 생성
+- 반영 방식: annotation_only_no_runtime_candidate
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S11; 공개 일반 사실 별도 사실 주장 없음
+
+## WK087 · action · P0
+
+팔 올림·몸통 비틀기·암홀·천 장력의 공간 관계를 연결한다. 힘의 수치·이전 동작은 추정하지 않는다.
+
+- 대상 키워드: K435, K436, K463
+- 관찰 명제: The same person's raised arm pulls the shirt near that armhole, with folds leading toward the local attachment.
+- 관계: `arm_A.raise` → `changes_local_pull_in` → `shirt_A.underarm_panel`
+- 혼동 경계: 주름을 반대팔에 귀속; 팔만 올리고 천은 무관한 방향; 모든 상의 자동 크롭
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S08, S17; 공개 일반 사실 W16
+
+## WK088 · action · P0
+
+피팅룸의 아래 당김은 손·밑단 접촉·국소 방향·시선 대상의 관계로 관찰한다. 부끄러움은 조합 해석이다.
+
+- 대상 키워드: K438, K439, K458, K402
+- 관찰 명제: The fingers pinch the same skirt's visible hem and draw its edge locally downward.
+- 관계: `hand_A.fingers` → `pinch_and_pull_down` → `skirt_A.hem`
+- 혼동 경계: 위를 들어 올림으로 반전; 공중 손만 배치; 수줍음으로 나이·성적 의도 추정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S34; 공개 일반 사실 별도 사실 주장 없음
+
+## WK089 · action · P1
+
+블라우스 정리 행동과 비착용 블레이저를 별개 객체로 보존한다.
+
+- 대상 키워드: K440, K394
+- 관찰 명제: The same person's fingers hold a local fold at the worn blouse hem.
+- 관계: `hand_A` → `adjusts` → `blouse_A.hem`
+- 혼동 경계: 블레이저까지 자동 착용; 손이 가려져 접촉 미확인
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S30; 공개 일반 사실 별도 사실 주장 없음
+
+## WK090 · action · P0
+
+치마 옆을 잡는 손·보행·안감의 현재 노출을 연결한다. 슬릿 자체와 안감 노출은 별개다.
+
+- 대상 키워드: K441, K456, K154
+- 관찰 명제: The hand holds the same skirt's side edge during a step, revealing a local lining boundary.
+- 관계: `hand_A` → `holds_side_edge_of` → `skirt_A`
+- 혼동 경계: 아무 손동작으로 치마 들기 인정; 안감을 다른 옷으로 대체
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S23, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK091 · action · P0
+
+주고받기에서 두 인물·각 손·트레이·접촉 단계·복장 귀속을 분리한다. 두 사람은 이미 요청에 있어야 한다.
+
+- 대상 키워드: K442, K415
+- 관찰 명제: The tray is supported between the giver's hands and the receiver's approaching hands at the handoff.
+- 관계: `tray_A` → `is_supported_between` → `giver_A.hands_and_receiver_B.hands`
+- 혼동 경계: 한 사람 네 손; 포옹으로 교환 대체; 옷 색을 두 인물 사이에 교환
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S06; 공개 일반 사실 별도 사실 주장 없음
+
+## WK092 · action · P1
+
+사탕 하나·포장·그릇·건네는 방향을 구분한다. 코스튬 이름만으로 장면은 완성되지 않는다.
+
+- 대상 키워드: K443, K421, K396
+- 관찰 명제: A hand offers one wrapped candy from beside the held bowl toward the declared recipient position.
+- 관계: `hand_A` → `offers` → `one_wrapped_candy_A`
+- 혼동 경계: 그릇만 들고 건넴 없음; 여러 사탕으로 수량 변경; 수신자를 임의 추가
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S27; 공개 일반 사실 별도 사실 주장 없음
+
+## WK093 · action · P1
+
+붕어빵 봉투의 위치·손·음식·야간 주변광을 연결한다. 냄새·온도는 직접 보이지 않는다.
+
+- 대상 키워드: K444, K422, K401
+- 관찰 명제: The same person holds the paper food bag near the face while its opening remains distinct.
+- 관계: `paper_bag_A` → `is_held_near` → `wearer_A.face`
+- 혼동 경계: 종이봉투를 머리 장식으로 변경; 김만으로 실제 뜨거움 측정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S29; 공개 일반 사실 별도 사실 주장 없음
+
+## WK094 · action · P1
+
+상부장 차 꺼내기는 손의 목표·가용 공간·발판 지지로 표현한다. 찻잔/논문 장면과 합치지 않는다.
+
+- 대상 키워드: K445, K450, K453
+- 관찰 명제: The person's connected arm reaches toward the open upper cabinet while the feet retain a support surface.
+- 관계: `hand_A` → `reaches_toward` → `cabinet_A.open_space`
+- 혼동 경계: 부유하는 발; 가려진 관절로 도달 가능하다고 확정; 소품을 자동 병합
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S04, S11, S32; 공개 일반 사실 W16
+
+## WK095 · action · P1
+
+앉음·기댐·피아노 위 자세의 지지면과 압축 주름을 연결한다. 프레이밍에 필요한 접촉만 평가한다.
+
+- 대상 키워드: K447, K455, K418
+- 관찰 명제: The skirt fabric gathers into compression folds at the person's visible contact with the support surface.
+- 관계: `skirt_A.contact_folds` → `gather_at` → `support_A.body_contact_region`
+- 혼동 경계: 지지면 없이 떠 있는 몸; 무관한 드레이프 주름으로 접촉 대체
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S37, S41; 공개 일반 사실 W16
+
+## WK096 · action · P1
+
+등을 대고 뜬 현재 모습은 수면 접촉·자세로 기록한다. 수영 숙련·안전·부력값은 확인하지 않는다.
+
+- 대상 키워드: K448, K416
+- 관찰 명제: The person's back meets the water surface with visible water contact around the supported torso.
+- 관계: `wearer_A.back` → `meets` → `water_surface_A`
+- 혼동 경계: 몸 아래 허공; 수면 위 서있는 자세로 대체; 의상 색 자동 다섯 배색
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S07; 공개 일반 사실 별도 사실 주장 없음
+
+## WK097 · action · P1
+
+인물·고양이·시선·거리·지지 자세를 연결한다. 고양이 존재는 의미 전제이다.
+
+- 대상 키워드: K449, K417
+- 관찰 명제: The crouching person looks toward the same cat across a visible gap at the seawall.
+- 관계: `wearer_A.gaze` → `is_directed_toward` → `cat_A`
+- 혼동 경계: 카메라 응시로 관계 대체; 고양이를 자수 모티프로 변경
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S18; 공개 일반 사실 별도 사실 주장 없음
+
+## WK098 · physical · P0
+
+같은 바람에 반응하는 자유 끝·고정점·현재 편향을 연결한다. 재료 무게가 다르면 움직임도 다를 수 있다.
+
+- 대상 키워드: K452, K453, K344
+- 관찰 명제: The ribbon's free end and the light skirt edge show compatible displacement while their attachment points remain stable.
+- 관계: `ribbon_A.free_end` → `aligns_with` → `skirt_A.free_edge_displacement`
+- 혼동 경계: 모든 천을 동일 각도로 강제; 끈 고정점까지 떠오름; 정지사진으로 풍속·동작 순서 확정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S02, S11, S41; 공개 일반 사실 W16
+
+## WK099 · physical · P0
+
+젖음은 접촉·국소 색 변화·방울·상태로 분해한다. 어두워짐과 투명화는 독립 속성이다.
+
+- 대상 키워드: K454, K203, K400
+- 관찰 명제: The water-contact region of the same cloth has a local darker value while its specified coverage remains readable.
+- 관계: `cloth_A.water_contact_region` → `differs_in_value_from` → `cloth_A.dry_region`
+- 혼동 경계: wet=전신 투명; 다른 천의 검정 배색을 젖음으로 판정; 원인·시간 확정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S07, S13, S18; 공개 일반 사실 W15
+
+## WK100 · physical · P1
+
+실밥·봉제선·주름·마모·수선은 서로 다른 현재 표면 단서다. 실제 생활 이력은 별도 주장이다.
+
+- 대상 키워드: K461, K462, K464, K467, K468, K469, K470
+- 관찰 명제: Visible stitches follow the same joined textile edge beside its local worn or repaired region.
+- 관계: `stitch_A` → `follows` → `garment_A.joined_edge`
+- 혼동 경계: 실밥을 섬유 함량으로 판정; 오래 소중히 입었다는 마음을 이미지에서 확인
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S03, S11, S17, S28, S30; 공개 일반 사실 별도 사실 주장 없음
+
+## WK101 · physical · P0
+
+해체 효과는 원단 조각의 출처·색·번호·패턴·끝단 연속성을 보존한다. 의상 가림 범위는 별도 유지 조건이다.
+
+- 대상 키워드: K471, K472, K473, K474, K498
+- 관찰 명제: The suspended textile fragment preserves a readable piece of the source garment's color and printed pattern.
+- 관계: `fragment_A.pattern` → `continues_from` → `source_garment_A.pattern`
+- 혼동 경계: 다른 재료 파편으로 치환; 번호·색 소실; 추가 신체 노출을 효과로 자동 부여
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S45; 공개 일반 사실 별도 사실 주장 없음
+
+## WK102 · annotation · P1
+
+시선·입꼬리·눈 모양·행동 문맥과 감정 해석을 분리한다. 같은 미소가 여러 상황에 쓰일 수 있다.
+
+- 대상 키워드: K457, K458, K459, K460, K402
+- 관찰 명제: The visible smile and gaze direction remain observations rather than proof of a private motive.
+- 관계: `expression_A` → `does_not_establish` → `private_motive_or_biography`
+- 혼동 경계: 표정 하나로 실제 성격·동의·욕망 확인; 모든 감정어에 동일 제스처 강제
+- 반영 방식: annotation_only_no_runtime_candidate
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S05, S15, S17, S34, S37, S39; 공개 일반 사실 별도 사실 주장 없음
+
+## WK103 · capture · P0
+
+프레이밍은 실제 요구 관계의 두 끝점·접합점이 읽히는 범위로 계획한다. 필요한 증거에 따라 크롭을 정한다.
+
+- 대상 키워드: K477, K478, K479, K480, K308, K142
+- 관찰 명제: The frame includes both visible endpoints of the focal garment relation at an assessable scale.
+- 관계: `frame_A.boundary` → `includes_or_excludes` → `declared_relation_A.endpoints`
+- 혼동 경계: 전신이면 모든 디테일 통과; 가려진 트레인·신발을 통과; 증거 위해 항상 전신 강제
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S12, S13, S15, S16, S29; 공개 일반 사실 W23
+
+## WK104 · capture · P1
+
+낮은 시점·바닥 시점·대각 상부 시점은 카메라 위치·축·원근 투영으로 분리한다.
+
+- 대상 키워드: K481, K482, K483
+- 관찰 명제: The selected viewpoint keeps the focal subject and its consequential support or garment relation readable.
+- 관계: `camera_A.viewpoint` → `projects` → `subject_A_and_support_A`
+- 혼동 경계: 피사체가 기울어진 것을 카메라 시점으로 확정; 착용자 방향과 화면 방향 혼동
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S07, S12, S18; 공개 일반 사실 별도 사실 주장 없음
+
+## WK105 · capture · P0
+
+50·55·85mm·중형 매체 태그를 실제 프레이밍·거리·센서·질감 인상과 분리한다. 렌즈 태그로 성공을 주장하지 않는다.
+
+- 대상 키워드: K484, K485, K486, K487
+- 관찰 명제: The declared camera distance and crop support the intended perspective; the lens label is recorded separately.
+- 관계: `camera_A.distance` → `governs_projection_of` → `subject_A`
+- 혼동 경계: 50mm=자연 원근 보장; 85mm=동일 얼굴 비율; 필름 룩=실제 필름 촬영
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S02, S13, S27, S38, S41; 공개 일반 사실 W23
+
+## WK106 · capture · P1
+
+휴대전화 스냅·기울기·플래시·주변광을 각각 기록한다. 항상 노이즈·블러를 강요하지 않는다.
+
+- 대상 키워드: K488, K489, K427
+- 관찰 명제: The direct flash lights the nearby subject against the darker scene while the handheld frame has a slight tilt.
+- 관계: `flash_A.light` → `illuminates` → `subject_A.near_surfaces`
+- 혼동 경계: 플래시=얼굴 과노출; 휴대전화=저화질; 기울기로 신체 오류 은폐
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S29, S35, S40; 공개 일반 사실 W21
+
+## WK107 · capture · P1
+
+역광·방향광·쿨 조명은 원단 경계·부조·금속 반사의 읽힘과 연결한다.
+
+- 대상 키워드: K490, K491, K492, K493, K494, K203, K476
+- 관찰 명제: The declared light direction reveals the same garment's edges, surface relief, and separate reflective fittings.
+- 관계: `light_A` → `reveals` → `garment_A.edges_and_surface_relief`
+- 혼동 경계: 모든 광택을 자체 발광으로 변경; 왼쪽 방향을 착용자와 화면 사이에 혼동
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S11, S12, S13, S14, S15, S18, S27, S37; 공개 일반 사실 W21
+
+## WK108 · capture · P0
+
+하이키는 흰 표면의 봉제선·주름·겹침이 남는 밝은 표현이다. 전부 흰색 무정보와 구분한다.
+
+- 대상 키워드: K495, K244, K245, K246, K247, K248, K249, K250, K251
+- 관찰 명제: The white garment's seams and folds remain readable against the bright background.
+- 관계: `white_garment_A.texture` → `remains_readable_against` → `bright_background_A`
+- 혼동 경계: 배경 흰색과 옷 경계 소실; 명도를 높여 디테일 요구를 삭제
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S06, S16, S17, S21, S23, S29, S31, S32, S37, S41, S43, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK109 · capture · P0
+
+웜 전경·쿨 배경의 광원 배치를 의상 고유 색과 분리한다.
+
+- 대상 키워드: K496, K493, K266, K267
+- 관찰 명제: Warm light falls on the foreground subject while separate cooler light remains in the background.
+- 관계: `warm_light_A` → `is_separate_from` → `cool_background_light_B`
+- 혼동 경계: 블루 배경광을 블루 의상으로 변경; 전체 필터로 두 영역을 동일색
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S09, S23, S24, S27, S42; 공개 일반 사실 W22
+
+## WK110 · capture · P1
+
+그레인은 이미지 평면의 표면 처리, 섬유는 특정 원단의 질감이다. 서로 교환하지 않는다.
+
+- 대상 키워드: K497, K461, K487
+- 관찰 명제: Restrained image grain remains distinct from the local textile fiber detail.
+- 관계: `image_plane_A.grain` → `is_separate_from` → `cloth_A.fiber_texture`
+- 혼동 경계: 그레인으로 천 조직 대체; 그레인만으로 필름·센서 실물 확인
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S02, S17, S29, S38, S41; 공개 일반 사실 별도 사실 주장 없음
+
+## WK111 · capture · P0
+
+전경 가림의 객체·깊이·영향 범위를 보존한다. 필수 관계의 접합점은 가림으로 통과할 수 없다.
+
+- 대상 키워드: K498, K499, K473
+- 관찰 명제: A foreground edge overlaps part of the subject while the required focal connection remains visible.
+- 관계: `foreground_A.edge` → `occludes_part_of` → `background_subject_A`
+- 혼동 경계: 소품 이름만으로 실제 가림 확인; 가린 요구 부위를 통과; 전경 블레이드를 천으로 치환
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S02, S45; 공개 일반 사실 별도 사실 주장 없음
+
+## WK112 · concept · P1
+
+고딕·아카데미아·프린세스·코티지·해적·미래 화보는 개념 경계와 선택적 표현 사례를 저장한다. 고정 의상 레시피로 만들지 않는다.
+
+- 대상 키워드: K377, K378, K379, K380, K381, K382, K383, K384, K385, K386, K387, K388, K389, K390, K391, K392, K393, K394, K395, K396, K397, K398, K399, K400, K401, K402, K036, K037, K038, K039, K040, K041, K042, K043, K044, K045, K046, K047, K048, K049, K050, K051, K052, K053, K054, K055
+- 관찰 명제: The style label remains open to multiple coherent garment and scene realizations within the request.
+- 관계: `concept_label_A` → `admits_multiple_realizations_of` → `requester_meaning_A`
+- 혼동 경계: 스타일명으로 전 소품·색·연령·노출 자동 강제; 학자=교복; 로리타 패션=인물 연령
+- 반영 방식: annotation_only_no_runtime_candidate
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S02, S03, S04, S07, S09, S11, S12, S13, S14, S15, S16, S18, S19, S20, S21, S22, S23, S24, S26, S27, S28, S29, S30, S32, S33, S34, S35, S36, S37, S38, S40, S41, S42, S43, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK113 · setting · P1
+
+도서관·장터·현관·미술관·선박·다이너·차량·학교 계단은 공간 기능과 행동 접점으로 관리한다.
+
+- 대상 키워드: K403, K404, K405, K406, K407, K408, K409, K410, K411, K412, K413, K414, K419, K420, K421, K422, K423, K424, K425, K426, K427, K428, K429, K430, K431, K432, K433, K434
+- 관찰 명제: The place's visible feature supports or constrains the declared action without replacing the garment meaning.
+- 관계: `place_A.feature` → `supports_or_constrains` → `declared_action_A`
+- 혼동 경계: 학교 건물로 실제 학생 신원 추정; 침실로 속옷 의무; 한옥으로 한복 자동 강제
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S02, S04, S05, S10, S11, S12, S13, S15, S16, S21, S22, S23, S25, S27, S28, S29, S30, S31, S32, S34, S35, S36, S38, S39, S40, S42, S43; 공개 일반 사실 별도 사실 주장 없음
+
+## WK114 · annotation · P0
+
+가변 템플릿의 허용 의상·소재·부속은 후보 범위이다. 모두 동시에 등장했다는 이력도 전체 강제 레시피도 아니다.
+
+- 대상 키워드: K055, K144, K382, K398
+- 관찰 명제: The permitted materials and garment options remain an inventory from which a compatible subset may be chosen.
+- 관계: `allowed_item_options_A` → `are_alternatives_within` → `requester_defined_scope`
+- 혼동 경계: 색 후보·허용 소재 전체를 일체형 의상으로 합침; 제외 조건을 다음 장면에 전역 전파
+- 반영 방식: annotation_only_no_runtime_candidate
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S15, S19; 공개 일반 사실 별도 사실 주장 없음
+
+## WK115 · garment · P1
+
+러플 셔츠와 가죽풍 베스트는 두 의상이다. 소재 종류·러플 위치·외층을 독립해 재조합한다.
+
+- 대상 키워드: K007, K019
+- 관찰 명제: The vest's open edges reveal a separate ruffled shirt front on the same wearer.
+- 관계: `vest_A.open_edges` → `reveal` → `shirt_B.ruffled_front`
+- 혼동 경계: 가죽 셔츠로 합침; 해적 콘셉트로 모든 소품 자동 추가
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S28; 공개 일반 사실 별도 사실 주장 없음
+
+## WK116 · garment · P1
+
+커버업의 반소매·열린 앞·안쪽 수영복 귀속을 구분한다. 안쪽 종류의 추정은 유지한다.
+
+- 대상 키워드: K024, K080, K081
+- 관찰 명제: The short-sleeve cover-up reveals a separate swim layer through its front opening.
+- 관계: `coverup_A.front_edges` → `reveal` → `swim_layer_B`
+- 혼동 경계: 커버업을 수영복 몸판으로 합침; 커버업 흰색을 수영복 전체로 이전
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S06; 공개 일반 사실 별도 사실 주장 없음
+
+## WK117 · construction · P1
+
+새시는 허리 부위의 별도 띠이며 몸판 봉제선·고름·오비와 구분한다.
+
+- 대상 키워드: K033, K162
+- 관찰 명제: The narrow dark sash wraps around the same garment's waist region and ends at its visible tie.
+- 관계: `sash_A` → `wraps_around` → `garment_B.waist_region`
+- 혼동 경계: 목 리본으로 이동; 허리띠를 몸판 검정 배색으로 합침
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S04, S21; 공개 일반 사실 별도 사실 주장 없음
+
+## WK118 · silhouette · P0
+
+원본의 연속 플레어 치마는 독립 오버스커트나 갈라진 앞 패널과 다르다. 비대칭과 연속성은 별도 변수다.
+
+- 대상 키워드: K068, K133, K143
+- 관찰 명제: The flared skirt section continues below its own waist attachment as one uninterrupted garment section.
+- 관계: `skirt_A.flared_section` → `continues_below` → `skirt_A.waist_attachment`
+- 혼동 경계: 오버스커트로 분리; 짧은 플레어를 좌우 트임으로 대체
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S16, S24, S44; 공개 일반 사실 별도 사실 주장 없음
+
+## WK119 · silhouette · P1
+
+와이드 데님은 두 바짓단·안쪽 경계·허리·재료를 분리해 관찰한다.
+
+- 대상 키워드: K073, K074, K075
+- 관찰 명제: Two wide trouser legs hang from the same hip section with their separate inner edges readable.
+- 관계: `trousers_A.two_legs` → `hang_from` → `trousers_A.hip_section`
+- 혼동 경계: 맥시 치마로 변경; 바지 폭을 다리 체형 변경으로 구현
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S08, S17, S29; 공개 일반 사실 별도 사실 주장 없음
+
+## WK120 · annotation · P0
+
+부분적으로 보이는 검정 띠는 보이는 위치만 보존한다. 전체 이너 종류·가림 상태를 추정해 추가하지 않는다.
+
+- 대상 키워드: K084
+- 관찰 명제: A narrow dark strip is visible above the jeans waistband while its full garment origin remains unspecified.
+- 관계: `dark_strip_A` → `is_visible_above` → `jeans_A.waistband`
+- 혼동 경계: 검정 띠로 특정 속옷 확정; 허리선 위의 그림자를 실제 끈으로 확인
+- 반영 방식: annotation_only_no_runtime_candidate
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S08; 공개 일반 사실 별도 사실 주장 없음
+
+## WK121 · accessory · P1
+
+타이바의 금속 막대·타이·셔츠의 고정 관계를 구별한다. 일반 브로치와 다른 대상이다.
+
+- 대상 키워드: K370
+- 관찰 명제: The narrow tie bar crosses the same tie and visibly holds it near the shirt front.
+- 관계: `tie_bar_A` → `crosses_and_holds` → `tie_B.front`
+- 혼동 경계: 목걸이 막대로 치환; 타이와 떨어진 금속선으로 고정 통과
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S33; 공개 일반 사실 별도 사실 주장 없음
+
+## WK122 · accessory · P1
+
+손목시계의 밴드·케이스와 팔찌를 독립 착용 부속으로 구별한다. 함께 있는 사례가 항상 둘을 요구하지 않는다.
+
+- 대상 키워드: K372, K373
+- 관찰 명제: The watch band encircles the same wrist beside a separate thin bangle.
+- 관계: `watch_A.band` → `encircles` → `wearer_A.wrist`
+- 혼동 경계: 시계와 팔찌를 한 물체로 합침; 손목 금빛으로 실제 금 확인
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S33; 공개 일반 사실 별도 사실 주장 없음
+
+## WK123 · action · P1
+
+뒤로 굽힌 다리의 골반·무릎·아랫다리 연결과 지지 다리를 검토한다. 착용자 뒤와 화면 방향을 분리한다.
+
+- 대상 키워드: K437
+- 관찰 명제: The same leg bends at its visible knee with the lower section moving behind the person.
+- 관계: `leg_A.lower_section` → `bends_behind` → `leg_A.knee`
+- 혼동 경계: 화면 한쪽을 뒤로 간주; 무릎 없이 떠 있는 부츠; 가린 관절을 무조건 정상
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S26; 공개 일반 사실 별도 사실 주장 없음
+
+## WK124 · action · P0
+
+선글라스 테·손 접촉·눈의 가시성·착용자의 연속성을 보존한다.
+
+- 대상 키워드: K446
+- 관찰 명제: The hand lowers the sunglasses frame below the same person's eyes while keeping contact with the frame.
+- 관계: `hand_A.fingers` → `lower` → `sunglasses_A.frame`
+- 혼동 경계: 안경만 내려놓고 접촉 없음; 다른 사람 눈으로 대체; 렌즈 위에 눈을 그려 넣음
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S15; 공개 일반 사실 별도 사실 주장 없음
+
+## WK125 · color · P0
+
+크림색 천과 어두운 금속풍 부속의 색·재질·위치·접합을 구분한다. 화면 전체 명도 대비와 다르다.
+
+- 대상 키워드: K503, K291, K293
+- 관찰 명제: A small dark metal-like fitting attaches to the cream textile at a visible junction.
+- 관계: `dark_metal_fitting_A` → `attaches_to` → `cream_textile_B`
+- 혼동 경계: 배경 검정으로 국소 금속 대체; 어두운 금속 그림자를 실제 부속으로 판정
+- 반영 방식: semantic_review_required_before_extend_or_add
+- 기존 항목: 의미 대조 후 결정
+- 근거: 원사전 S01, S16, S44; 공개 일반 사실 별도 사실 주장 없음
+

@@ -1,0 +1,384 @@
+{
+  "contract_version": "photo-composer-view/v2",
+  "mode": "candidate_details",
+  "source_pack_id": "469ddc92d7a24b77",
+  "source_pack_sha256": "4132a772bbb127de740d55c10f813037692770c267e282df45cbe1fd5fb07385",
+  "candidates": [
+    {
+      "id": "visual-concept:wkr_wk008_selected_relation",
+      "source_pointer": "/visual_concept_candidates/candidates/0",
+      "candidate": {
+        "id": "visual-concept:wkr_wk008_selected_relation",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "The long outer garment hangs away from the torso with a visible gap beside its side panel.",
+          "몸통에서 떨어져 늘어진 긴 겉옷"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.length"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.fit.local_ease"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.garment_type"
+          }
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "wkr_wk008_selected_relation",
+            "category": "wardrobe_owner_selected_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Keep the selected owner and complete visible relation together: The long outer garment hangs away from the torso with a visible gap beside its side panel.",
+            "component_semantics": {
+              "minimum_component_groups": 1,
+              "required_group_ids": [
+                "component_1"
+              ],
+              "groups": [
+                {
+                  "id": "component_1",
+                  "any_terms": [
+                    "The long outer garment hangs away from the torso with a visible gap beside its side panel.",
+                    "loose coat",
+                    "long coat",
+                    "open coat",
+                    "robe"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "component_1_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 1,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "component_1_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "The long outer garment hangs away from the torso with a visible gap beside its side panel."
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_wkr_wk008_selected_relation_1",
+                "review_scale": "native",
+                "description": "The long outer garment hangs away from the torso with a visible gap beside its side panel. Inspect the declared owner, both endpoints and the connecting edge or distinguishing state in this same image. Hidden or partial evidence fails."
+              }
+            ],
+            "reject_substitutes": [
+              "두꺼운 소재와 여유핏 동일시",
+              "착용자 체형 변경"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "visual-concept:wkr_wk080_selected_relation",
+      "source_pointer": "/visual_concept_candidates/candidates/2",
+      "candidate": {
+        "id": "visual-concept:wkr_wk080_selected_relation",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "The same bag's strap supports its body from two visible attachment fittings.",
+          "두 고정점에서 가방을 지지하는 스트랩"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "accessories.bag.form"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "accessories.bag.support"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "accessories"
+          }
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "wkr_wk080_selected_relation",
+            "category": "wardrobe_owner_selected_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Keep the selected owner and complete visible relation together: The same bag's strap supports its body from two visible attachment fittings.",
+            "component_semantics": {
+              "minimum_component_groups": 1,
+              "required_group_ids": [
+                "component_1"
+              ],
+              "groups": [
+                {
+                  "id": "component_1",
+                  "any_terms": [
+                    "The same bag's strap supports its body from two visible attachment fittings.",
+                    "bag strap",
+                    "bag handle",
+                    "crossbody bag",
+                    "canvas bag"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "component_1_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 1,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "component_1_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "The same bag's strap supports its body from two visible attachment fittings."
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_wkr_wk080_selected_relation_1",
+                "review_scale": "native",
+                "description": "The same bag's strap supports its body from two visible attachment fittings. Inspect the declared owner, both endpoints and the connecting edge or distinguishing state in this same image. Hidden or partial evidence fails."
+              }
+            ],
+            "reject_substitutes": [
+              "백팩을 소품 앞가방으로 변경",
+              "스트랩이 끝없이 이어짐"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "visual-concept:wkr_wk006_selected_relation",
+      "source_pointer": "/visual_concept_candidates/candidates/3",
+      "candidate": {
+        "id": "visual-concept:wkr_wk006_selected_relation",
+        "content_form": "unordered_inspiration_terms",
+        "concept_terms": [
+          "The open sleeveless vest frames the same wearer's sleeved knit top as a separate outer layer.",
+          "소매 있는 니트 위의 열린 조끼"
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layering"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.garment_type"
+          }
+        ],
+        "applicability": {
+          "status": "eligible",
+          "source": "hybrid_visual_profile_resolution"
+        },
+        "opt_in_contract": {
+          "effect": "promote_to_hard_visual_obligation",
+          "visual_obligations_contract_version": "photo-visual-obligations/v1",
+          "obligation": {
+            "id": "wkr_wk006_selected_relation",
+            "category": "wardrobe_owner_selected_relation",
+            "activation": {
+              "source": "composer_opt_in",
+              "scope": "request_only",
+              "source_intent_ids": []
+            },
+            "composition_instruction": "Keep the selected owner and complete visible relation together: The open sleeveless vest frames the same wearer's sleeved knit top as a separate outer layer.",
+            "component_semantics": {
+              "minimum_component_groups": 1,
+              "required_group_ids": [
+                "component_1"
+              ],
+              "groups": [
+                {
+                  "id": "component_1",
+                  "any_terms": [
+                    "The open sleeveless vest frames the same wearer's sleeved knit top as a separate outer layer.",
+                    "open vest",
+                    "knit top",
+                    "padded vest"
+                  ]
+                }
+              ]
+            },
+            "prompt_binding": {
+              "composed_field": "visual_obligation_evidence",
+              "required_evidence_fields": [
+                "component_1_phrase"
+              ],
+              "minimum_distinct_evidence_phrases": 1,
+              "prompt_evidence_must_be_literal": true,
+              "maximum_pairwise_content_token_overlap_ratio": 0.82,
+              "forbidden_filler_phrases": [
+                "visible evidence",
+                "visual evidence",
+                "required cue",
+                "prompt phrase"
+              ]
+            },
+            "evidence_requirements": {
+              "component_1_phrase": {
+                "min_content_words": 3,
+                "must_mention_any": [
+                  "The open sleeveless vest frames the same wearer's sleeved knit top as a separate outer layer."
+                ]
+              }
+            },
+            "runtime_expression": {
+              "default_mode": "definition_with_optional_label",
+              "prompt_label_terms": [],
+              "forbidden_prompt_terms": [],
+              "runtime_forbidden_labels": []
+            },
+            "render_gates": [
+              {
+                "id": "vo_wkr_wk006_selected_relation_1",
+                "review_scale": "native",
+                "description": "The open sleeveless vest frames the same wearer's sleeved knit top as a separate outer layer. Inspect the declared owner, both endpoints and the connecting edge or distinguishing state in this same image. Hidden or partial evidence fails."
+              }
+            ],
+            "reject_substitutes": [
+              "조끼에 안쪽 소매를 귀속",
+              "패딩 충전재를 사진으로 확정"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "slot:footwear:wkr_wk077_ankle_sandal_candidate",
+      "source_pointer": "/slots/footwear/candidates/0",
+      "candidate": {
+        "id": "slot:footwear:wkr_wk077_ankle_sandal_candidate",
+        "slot": "footwear",
+        "entry_id": "wkr_wk077_ankle_sandal_candidate",
+        "tags": [
+          "clothing"
+        ],
+        "kind": [],
+        "facets": {},
+        "applicability": {
+          "status": "eligible",
+          "source": "frozen_core_slot_contract",
+          "reason": null
+        },
+        "conflicts_with": [],
+        "concept_terms": [
+          "A sandal strap wraps around the same ankle and joins the sandal’s supporting straps."
+        ],
+        "content_form": "unordered_inspiration_terms",
+        "concept_units": [
+          "A sandal strap wraps around the same ankle and joins the sandal’s supporting straps."
+        ],
+        "relations": [
+          {
+            "id": "wkr_wk077_ankle_sandal_relation_1",
+            "type": "wraps_and_joins",
+            "subject": "same sandal ankle strap",
+            "object": "same sandal supporting straps"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ],
+        "adoption": "optional",
+        "affected_properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "footwear.toe"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "footwear.heel"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "footwear.fastening"
+          }
+        ],
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+      }
+    }
+  ],
+  "view_sha256": "49d85b75f8f50aaa2a18927a55411b210b19d3897a53418b5e160e32fd3402de"
+}
