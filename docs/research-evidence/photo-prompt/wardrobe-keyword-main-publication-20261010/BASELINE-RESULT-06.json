@@ -1,0 +1,20 @@
+{
+  "schema_version": "wardrobe-publication-clean-main-failure-replay/v1",
+  "source_root": "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt",
+  "source_commit": "a7c8f7fb0c09a989957b2d2e658df9b2d7aaf101",
+  "selections": [
+    "tests.test_subculture_illustration_universal_scene_v3.UniversalSceneDataContractTests.test_existing_render_manifests_keep_historical_failure_labels"
+  ],
+  "tests_run": 1,
+  "seconds": 2.583705790922977,
+  "status": "FAIL",
+  "failures": [],
+  "errors": [
+    {
+      "id": "tests.test_subculture_illustration_universal_scene_v3.UniversalSceneDataContractTests.test_existing_render_manifests_keep_historical_failure_labels",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_subculture_illustration_universal_scene_v3.py\", line 1712, in test_existing_render_manifests_keep_historical_failure_labels\n    result = validate_all(str(ASSET_ROOT), verify_local_images=False)\n  File \"/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 13956, in validate_all\n    photo_regression = validate_photo_regression_baseline(root)\n  File \"/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 8776, in validate_photo_regression_baseline\n    completed = subprocess.run(\n        actual_command,\n    ...<5 lines>...\n        timeout=60,\n    )\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py\", line 554, in run\n    with Popen(*popenargs, **kwargs) as process:\n         ~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py\", line 1038, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                        pass_fds, cwd, env,\n                        ^^^^^^^^^^^^^^^^^^^\n    ...<5 lines>...\n                        gid, gids, uid, umask,\n                        ^^^^^^^^^^^^^^^^^^^^^^\n                        start_new_session, process_group)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py\", line 1989, in _execute_child\n    raise child_exception_type(errno_num, err_msg, err_filename)\nFileNotFoundError: [Errno 2] No such file or directory: '.venv/bin/python'\n"
+    }
+  ],
+  "skipped": [],
+  "discovery_errors": []
+}

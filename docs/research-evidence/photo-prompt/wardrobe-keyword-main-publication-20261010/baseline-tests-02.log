@@ -1,0 +1,122 @@
+test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract (tests.test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract) ... FAIL
+test_source_observation_is_hash_bound_and_identity_independent (tests.test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_source_observation_is_hash_bound_and_identity_independent) ... ERROR
+test_photo_motion_inventory_boundary_history (unittest.loader._FailedTest.test_photo_motion_inventory_boundary_history) ... ERROR
+setUpClass (tests.test_photo_muted_color_boundary_history.MutedColorBoundaryHistoryTests) ... ERROR
+test_photo_ornament_boundary_history (unittest.loader._FailedTest.test_photo_ornament_boundary_history) ... ERROR
+test_original_assertions_replay_without_revision (tests.test_photo_palette_boundary_history.OriginalBoundaryReplayTests.test_original_assertions_replay_without_revision) ... FAIL
+test_added_projection_preserves_initial_profiles_candidates_and_source_links (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_added_projection_preserves_initial_profiles_candidates_and_source_links) ... FAIL
+test_original_assertions_replay_without_revision (tests.test_photo_robe_source_boundary_history.OriginalBoundaryReplayTests.test_original_assertions_replay_without_revision) ... FAIL
+
+======================================================================
+ERROR: test_source_observation_is_hash_bound_and_identity_independent (tests.test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_source_observation_is_hash_bound_and_identity_independent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_makeup_reference_balance.py", line 133, in test_source_observation_is_hash_bound_and_identity_independent
+    (RUN_ROOT / "shared" / "source_observation.json").read_text(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        encoding="utf-8"
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/artifacts/photo-runs/20260831-makeup-reference-five-arm-v1/shared/source_observation.json'
+
+======================================================================
+ERROR: test_photo_motion_inventory_boundary_history (unittest.loader._FailedTest.test_photo_motion_inventory_boundary_history)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_photo_motion_inventory_boundary_history
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_motion_inventory_boundary_history.py", line 19, in <module>
+    from photo_prompt_fixtures import pinned_v17_validator
+ModuleNotFoundError: No module named 'photo_prompt_fixtures'
+
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_muted_color_boundary_history.MutedColorBoundaryHistoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_muted_color_boundary_history.py", line 38, in setUpClass
+    cls.validator = fixtures.archived_v28_validator(cls.source_root)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/photo_prompt_fixtures.py", line 2030, in archived_v28_validator
+    manifest = materialize_v28_parent_source(directory, source_root=source_root)
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/photo_prompt_fixtures.py", line 2016, in materialize_v28_parent_source
+    _v24_verified_payload(source_root, row)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/photo_prompt_fixtures.py", line 856, in _v24_verified_payload
+    raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/SKILL.md
+
+======================================================================
+ERROR: test_photo_ornament_boundary_history (unittest.loader._FailedTest.test_photo_ornament_boundary_history)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_photo_ornament_boundary_history
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_ornament_boundary_history.py", line 12, in <module>
+    import photo_prompt_fixtures as fixtures
+ModuleNotFoundError: No module named 'photo_prompt_fixtures'
+
+
+======================================================================
+FAIL: test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract (tests.test_photo_makeup_reference_balance.PhotoMakeupReferenceBalanceTests.test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_makeup_reference_balance.py", line 150, in test_five_frozen_cores_are_distinct_and_share_only_the_makeup_contract
+    self.assertEqual(len(core_paths), 5)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 5
+
+======================================================================
+FAIL: test_original_assertions_replay_without_revision (tests.test_photo_palette_boundary_history.OriginalBoundaryReplayTests.test_original_assertions_replay_without_revision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_palette_boundary_history.py", line 12, in test_original_assertions_replay_without_revision
+    history.materialize_original(tree,source_root=ROOT,link_verified=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/photo_ethereal_history_v35.py", line 92, in materialize_original
+    for row in parent['members']:exact_payload(source_root,row)
+                                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/photo_ethereal_history_v35.py", line 47, in exact_payload
+    if path.stat().st_mode&0o7777!=int(row['mode'][-3:],8) or len(raw)!=row['bytes'] or digest(raw)!=row['sha256'] or blob!=row['git_blob']:raise AssertionError('Frozen V35 original source payload or mode drift: '+row['path'])
+                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 original source payload or mode drift: skills/photo-prompt-image-generator/SKILL.md
+
+======================================================================
+FAIL: test_added_projection_preserves_initial_profiles_candidates_and_source_links (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_added_projection_preserves_initial_profiles_candidates_and_source_links)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_portrait_fashion_exposure.py", line 204, in test_added_projection_preserves_initial_profiles_candidates_and_source_links
+    self.assertEqual(p, comparable)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: {'id'[1443 chars]uous']}, 'runtime_expression': {'default_mode'[2429 chars]}}]}} != {'id'[1443 chars]uous', '성인의 한 어깨에만 연결된 의복 지지가 있고 반대 어깨는 연속된 비대[2804 chars]}}]}}
+Diff is 15495 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_original_assertions_replay_without_revision (tests.test_photo_robe_source_boundary_history.OriginalBoundaryReplayTests.test_original_assertions_replay_without_revision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_robe_source_boundary_history.py", line 14, in test_original_assertions_replay_without_revision
+    history.materialize_original(tree, source_root=ROOT, link_verified=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/photo_ethereal_history_v35.py", line 92, in materialize_original
+    for row in parent['members']:exact_payload(source_root,row)
+                                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/photo_ethereal_history_v35.py", line 47, in exact_payload
+    if path.stat().st_mode&0o7777!=int(row['mode'][-3:],8) or len(raw)!=row['bytes'] or digest(raw)!=row['sha256'] or blob!=row['git_blob']:raise AssertionError('Frozen V35 original source payload or mode drift: '+row['path'])
+                                                                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Frozen V35 original source payload or mode drift: skills/photo-prompt-image-generator/SKILL.md
+
+----------------------------------------------------------------------
+Ran 7 tests in 10.161s
+
+FAILED (failures=4, errors=4)
+{"tests_run": 7, "failures": 4, "errors": 4, "seconds": 10.211536874994636}

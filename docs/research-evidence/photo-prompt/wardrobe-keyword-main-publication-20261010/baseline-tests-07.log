@@ -1,0 +1,115 @@
+test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (tests.test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed) ... 
+  test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (tests.test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed) (arm_id='arm-a-energy') ... FAIL
+  test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (tests.test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed) (arm_id='arm-b-working-income') ... FAIL
+  test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (tests.test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed) (arm_id='arm-c-transport') ... FAIL
+test_three_arm_fixture_is_frozen_and_reference_bound (tests.test_photo_rare_photo_visual_semantics.PhotoRarePhotoVisualSemanticsTests.test_three_arm_fixture_is_frozen_and_reference_bound) ... 
+  test_three_arm_fixture_is_frozen_and_reference_bound (tests.test_photo_rare_photo_visual_semantics.PhotoRarePhotoVisualSemanticsTests.test_three_arm_fixture_is_frozen_and_reference_bound) (arm_id='rare-photo-arm-1-camera-lcd') ... FAIL
+  test_three_arm_fixture_is_frozen_and_reference_bound (tests.test_photo_rare_photo_visual_semantics.PhotoRarePhotoVisualSemanticsTests.test_three_arm_fixture_is_frozen_and_reference_bound) (arm_id='rare-photo-arm-2-companion') ... FAIL
+  test_three_arm_fixture_is_frozen_and_reference_bound (tests.test_photo_rare_photo_visual_semantics.PhotoRarePhotoVisualSemanticsTests.test_three_arm_fixture_is_frozen_and_reference_bound) (arm_id='rare-photo-arm-3-fan-event') ... FAIL
+setUpClass (tests.test_photo_water_main_boundary_history.WaterMainBoundaryHistoryTests) ... ERROR
+test_v1_v2_exact_replay_and_photo_baseline_remain_immutable (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests.test_v1_v2_exact_replay_and_photo_baseline_remain_immutable) ... ERROR
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_water_main_boundary_history.WaterMainBoundaryHistoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_water_main_boundary_history.py", line 26, in setUpClass
+    cls.original_validator=fixtures.archived_v30_validator(cls.original_root)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/photo_prompt_fixtures.py", line 1914, in archived_v30_validator
+    manifest = materialize_v30_parent_source(directory, source_root=source_root)
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/photo_prompt_fixtures.py", line 1869, in materialize_v30_parent_source
+    _v24_verified_payload(source_root, row)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/photo_prompt_fixtures.py", line 856, in _v24_verified_payload
+    raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/SKILL.md
+
+======================================================================
+ERROR: test_v1_v2_exact_replay_and_photo_baseline_remain_immutable (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests.test_v1_v2_exact_replay_and_photo_baseline_remain_immutable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_subculture_illustration_universal_scene_v3.py", line 4697, in test_v1_v2_exact_replay_and_photo_baseline_remain_immutable
+    photo = validate_photo_regression_baseline(ASSET_ROOT)
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 8776, in validate_photo_regression_baseline
+    completed = subprocess.run(
+        actual_command,
+    ...<5 lines>...
+        timeout=60,
+    )
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 554, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1038, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1989, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: '.venv/bin/python'
+
+======================================================================
+FAIL: test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (tests.test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed) (arm_id='arm-a-energy')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_poverty_visual_semantics.py", line 385, in test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed
+    self.assertTrue(result_path.is_file())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (tests.test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed) (arm_id='arm-b-working-income')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_poverty_visual_semantics.py", line 385, in test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed
+    self.assertTrue(result_path.is_file())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (tests.test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed) (arm_id='arm-c-transport')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_poverty_visual_semantics.py", line 385, in test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed
+    self.assertTrue(result_path.is_file())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_three_arm_fixture_is_frozen_and_reference_bound (tests.test_photo_rare_photo_visual_semantics.PhotoRarePhotoVisualSemanticsTests.test_three_arm_fixture_is_frozen_and_reference_bound) (arm_id='rare-photo-arm-1-camera-lcd')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_rare_photo_visual_semantics.py", line 252, in test_three_arm_fixture_is_frozen_and_reference_bound
+    self.assertTrue(artifact.is_file())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_three_arm_fixture_is_frozen_and_reference_bound (tests.test_photo_rare_photo_visual_semantics.PhotoRarePhotoVisualSemanticsTests.test_three_arm_fixture_is_frozen_and_reference_bound) (arm_id='rare-photo-arm-2-companion')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_rare_photo_visual_semantics.py", line 252, in test_three_arm_fixture_is_frozen_and_reference_bound
+    self.assertTrue(artifact.is_file())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_three_arm_fixture_is_frozen_and_reference_bound (tests.test_photo_rare_photo_visual_semantics.PhotoRarePhotoVisualSemanticsTests.test_three_arm_fixture_is_frozen_and_reference_bound) (arm_id='rare-photo-arm-3-fan-event')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_rare_photo_visual_semantics.py", line 252, in test_three_arm_fixture_is_frozen_and_reference_bound
+    self.assertTrue(artifact.is_file())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 3 tests in 15.494s
+
+FAILED (failures=6, errors=2)
+{"tests_run": 3, "failures": 6, "errors": 2, "seconds": 15.515555083053187}

@@ -1,0 +1,41 @@
+test_historical_merged_state_and_current_nineteen_keeps_are_exact (tests.test_photo_protostar_korean_alias_data_cleanup.ProtostarKoreanAliasDataCleanupTests.test_historical_merged_state_and_current_nineteen_keeps_are_exact) ... FAIL
+setUpClass (tests.test_photo_runtime_boundary_history.RuntimeBoundaryHistoryTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_runtime_boundary_history.RuntimeBoundaryHistoryTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_runtime_boundary_history.py", line 27, in setUpClass
+    cls.original_validator = fixtures.archived_v29_validator(cls.original_root)
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/photo_prompt_fixtures.py", line 1789, in archived_v29_validator
+    manifest = materialize_v29_parent_source(directory, source_root=source_root)
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/photo_prompt_fixtures.py", line 1744, in materialize_v29_parent_source
+    _v24_verified_payload(source_root, row)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/photo_prompt_fixtures.py", line 856, in _v24_verified_payload
+    raise AssertionError(f'Frozen V24 historical source payload drift: {row["path"]}')
+AssertionError: Frozen V24 historical source payload drift: skills/photo-prompt-image-generator/assets/photo_prompt_accessory_structure_extension.json
+
+======================================================================
+FAIL: test_historical_merged_state_and_current_nineteen_keeps_are_exact (tests.test_photo_protostar_korean_alias_data_cleanup.ProtostarKoreanAliasDataCleanupTests.test_historical_merged_state_and_current_nineteen_keeps_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/.codex/worktrees/wardrobe-publication-baseline/image-prompt/tests/test_photo_protostar_korean_alias_data_cleanup.py", line 72, in test_historical_merged_state_and_current_nineteen_keeps_are_exact
+    self.assertEqual(fixtures.bundle_meanings(fixtures.seduction_historical_bundles(self.current['candidate_bundles']), within=historical),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     fixtures.bundle_meanings(historical))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [{'id[532808 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[703605 chars]ly'}] != [{'id[532808 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[703586 chars]ly'}]
+
+First differing element 307:
+{'id'[817 chars]인', '초점 영역의 채도가 주변만큼 높아져 채도 차이가 사라짐'], 'relati[87 chars]nly'}
+{'id'[817 chars]인', '배경도 함께 선명해짐'], 'relations': [], 'adoption[68 chars]nly'}
+
+Diff is 2223582 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 1 test in 5.322s
+
+FAILED (failures=1, errors=1)
+{"tests_run": 1, "failures": 1, "errors": 1, "seconds": 5.347024666960351}
