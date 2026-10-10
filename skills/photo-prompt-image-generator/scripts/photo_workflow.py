@@ -372,8 +372,28 @@ def native_started(args):
     return {"status": "pass", "payload": plan["payload"], "operation_id": op["operation_id"]}
 
 
+def native_manifest_flags(args):
+    """Forward declared arm provenance through the ordinary recorder contract."""
+    manifest = getattr(args, "manifest", None)
+    fields = ("arm_id", "worktree_id", "skill_sha256", "source_ref")
+    supplied = [getattr(args, field, None) for field in fields]
+    independent = getattr(args, "independent_no_cross_arm_inputs", False)
+    if not manifest:
+        if any(supplied) or independent:
+            raise WorkflowError("native_manifest_path_required")
+        return []
+    if not all(supplied) or not independent:
+        raise WorkflowError("native_manifest_provenance_required")
+    flags = ["--manifest", str(manifest), "--candidate-pack-version", "v6",
+             "--independent-no-cross-arm-inputs"]
+    for field, value_ in zip(fields, supplied):
+        flags += ["--" + field.replace("_", "-"), str(value_)]
+    return flags
+
+
 def native_result(args):
     state = load_state(args.run); ensure(state)
+    manifest_flags = native_manifest_flags(args)
     plan = value(state, "native_plan")
     op = next(op for op in state["operations"] if op["operation_id"] == plan["operation_id"])
     if op["status"] not in {"invocation_started", "execution_unknown", "record_ready", "recorder_failed"}:
@@ -393,11 +413,14 @@ def native_result(args):
     flags = ["--ts", op["timestamp"], "--prompt-en", composed["prompt_en"], "--attempt", "1",
         "--workflow-operation-id", op["operation_id"] + ":1", "--tool", "image_gen", "--generation-environment", "native_imagegen",
         "--pack-id", pack["pack_id"], "--authorial-core-sha256", pack["authorial_core"]["canonical_sha256"],
-        "--intent-lock-sha256", pack["authorial_core"]["intent_lock"]["canonical_sha256"], "--image-call-count", "1",
+        "--intent-lock-sha256", pack["authorial_core"]["intent_lock"]["canonical_sha256"], "--image-call-count", str(getattr(args, "image_call_count", 1)),
         "--chosen-candidate-ids-json", json.dumps(composed["chosen_candidate_ids"]),
         "--chosen-visual-concept-ids-json", json.dumps(composed["chosen_visual_concept_ids"]), "--composer", "agent", "--audit-status", "pass",
         "--ledger", str(args.ledger), "--native-render-plan-json", str(bound_path(state, "native_plan")),
         "--native-render-plan-sha256", state["artifacts"]["native_plan"]["sha256"]]
+    flags += manifest_flags
+    for gate_id in getattr(args, "failed_repair_gate_id", []):
+        flags += ["--failed-repair-gate-id", gate_id]
     if pack.get("render_repair"):
         flags += ["--render-repair-contract-sha256", pack["render_repair"]["canonical_sha256"]]
     if composed["chosen_visual_concept_ids"]:
@@ -494,7 +517,14 @@ def main(argv=None):
         if command == "render-api":
             p.add_argument("--attempts", type=int, default=2); p.add_argument("--concept"); p.add_argument("--dry-run", action="store_true")
         if command in {"render-api", "native-result", "retry-prepare"}: p.add_argument("--ledger", type=Path, required=True)
-        if command == "native-result": p.add_argument("--result", type=Path, required=True)
+        if command == "native-result":
+            p.add_argument("--result", type=Path, required=True)
+            for name in ("arm-id", "worktree-id", "skill-sha256", "source-ref"):
+                p.add_argument("--" + name)
+            p.add_argument("--independent-no-cross-arm-inputs", action="store_true")
+            p.add_argument("--manifest", type=Path)
+            p.add_argument("--image-call-count", type=int, default=1)
+            p.add_argument("--failed-repair-gate-id", action="append", default=[])
         if command in {"review-shape", "review-audit"}:
             p.add_argument("--image", type=Path); p.add_argument("--generic-review", type=Path); p.add_argument("--visual-review", type=Path)
         if command == "retry-prepare":
