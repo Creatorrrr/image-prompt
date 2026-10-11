@@ -1,0 +1,497 @@
+{
+  "request_envelope_input": {
+    "contract_version": "photo-request-envelope/v1",
+    "provenance": "requesting_user",
+    "request_id": "wardrobe-lock-positive-en",
+    "request_text": "Photograph an adult beastkin with long living ears wearing a fur-trimmed hood in a studio. Keep the hood fully worn, its green fabric and its fur trim. Show the trim and ears at their separate attachment points. Use a plain studio wall as the background.",
+    "request_sha256": "b9eb3911f1cf52d4cf5202671eec0b2567e2600712ba9cc693a88a1990b6aa93",
+    "active_spans": [
+      {
+        "span_id": "request",
+        "start": 0,
+        "end": 254,
+        "text": "Photograph an adult beastkin with long living ears wearing a fur-trimmed hood in a studio. Keep the hood fully worn, its green fabric and its fur trim. Show the trim and ears at their separate attachment points. Use a plain studio wall as the background."
+      }
+    ]
+  },
+  "creative_controls": {
+    "contract_version": "photo-creative-controls/v4",
+    "provenance": "resolved_precore",
+    "source_request_sha256": "b9eb3911f1cf52d4cf5202671eec0b2567e2600712ba9cc693a88a1990b6aa93",
+    "definitions": {
+      "contract_version": "photo-creative-control-definitions/v4",
+      "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content or artistic judgment. Expression levels describe prominence in the whole image; creativity levels describe interpretive freedom. Neither measures exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Creativity leaves style, extra props and surreal treatment open to the request and artistic judgment. Emphasis directs only active sensual and fetish axes without changing their intensities. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. Sensual and fetish may share the same expressive choice.",
+      "controls": {
+        "sensual": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+          "levels": {
+            "0": "No added sensual treatment; preserve explicitly requested content.",
+            "1": "This expression is a subtle supporting quality.",
+            "2": "This expression is clearly readable in the image.",
+            "3": "This expression leads the image's appeal and direction."
+          }
+        },
+        "fetish": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+          "levels": {
+            "0": "No added fetish treatment; preserve explicitly requested content.",
+            "1": "This focus is a subtle supporting quality.",
+            "2": "This focus is clearly readable in the image.",
+            "3": "This focus leads the image's appeal and direction."
+          }
+        },
+        "adult_appeal_emphasis": {
+          "type": "enum",
+          "choices": [
+            "auto",
+            "sensual_led",
+            "balanced",
+            "fetish_led"
+          ],
+          "default": "auto",
+          "definition": "Relative leadership of the active sensual and fetish axes within one coherent expression.",
+          "choice_descriptions": {
+            "auto": "Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.",
+            "sensual_led": "Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.",
+            "balanced": "Give both active axes comparable influence within one coherent expression; separate styling details are not required.",
+            "fetish_led": "Let the distinctive focus of attraction or fascination lead, with any active sensual expression supporting it."
+          }
+        },
+        "creativity": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Freedom to interpret unspecified choices and explore relationships within the request.",
+          "levels": {
+            "0": "Realize the request directly, filling only what is needed for a coherent image.",
+            "1": "Introduce restrained variations close to the requested direction.",
+            "2": "Actively reinterpret open choices into a coherent authorial direction.",
+            "3": "Boldly explore unexpected relationships and interpretations while preserving the request's core meaning."
+          }
+        },
+        "viewer_experience": {
+          "type": "boolean",
+          "default": false,
+          "definition": "Expose the detailed viewer-experience review when enabled. Always consider the intended impression in interpreted_intent, even when this additional review is off."
+        },
+        "reference_edit_mode": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "identity",
+            "younger_self",
+            "brand_board"
+          ],
+          "default": "off",
+          "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
+        },
+        "surreal": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.",
+          "levels": {
+            "0": "No added surreal treatment; preserve explicitly requested fantasy and impossible elements.",
+            "1": "Surreal qualities are a subtle supporting presence.",
+            "2": "Surreal qualities are clearly readable in the image.",
+            "3": "Surreal qualities lead the image's main impression and direction; a single coherent relationship may carry this prominence."
+          }
+        },
+        "trend_layer": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "scrapbook_collage",
+            "action_figure_packaging",
+            "retro_flash",
+            "clean_brand_portrait"
+          ],
+          "default": "off",
+          "definition": "Consider the chosen treatment from the initial composition. Refine it later without adding it twice. Off does not remove a treatment explicitly present in the request."
+        }
+      }
+    },
+    "definitions_sha256": "d044ade0f6af62c35b81d4b035b130a8819c4a15ca47a1409a59860a1928a3fa",
+    "overrides": {
+      "sensual": 0,
+      "fetish": 0,
+      "surreal": 0,
+      "creativity": 1
+    },
+    "context": {
+      "subject_category": "human",
+      "no_people": false,
+      "explicit_nonsexual": false
+    },
+    "seed": 17,
+    "controls": {
+      "sensual": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "fetish": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "adult_appeal_emphasis": {
+        "value": "auto",
+        "source": "saved_setting"
+      },
+      "creativity": {
+        "value": 1,
+        "source": "request_override"
+      },
+      "viewer_experience": {
+        "value": false,
+        "source": "saved_setting"
+      },
+      "reference_edit_mode": {
+        "value": "off",
+        "source": "saved_setting"
+      },
+      "surreal": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "trend_layer": {
+        "value": "off",
+        "source": "saved_setting"
+      }
+    },
+    "adult_appeal": {
+      "sensual": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      },
+      "fetish": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      }
+    },
+    "resolved_emphasis": "balanced",
+    "emphasis_resolution": {
+      "active": false,
+      "reason": "Both effective intensities are zero; no added emphasis is active."
+    },
+    "authoring_brief": "sensual: 0 (range: 0–3)\nMeaning: Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.\nLevel: No added sensual treatment; preserve explicitly requested content.\n\nfetish: 0 (range: 0–3)\nMeaning: Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.\nLevel: No added fetish treatment; preserve explicitly requested content.\n\nsurreal: 0 (range: 0–3)\nMeaning: Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.\nLevel: No added surreal treatment; preserve explicitly requested fantasy and impossible elements.\n\ncreativity: 1 (range: 0–3)\nMeaning: Freedom to interpret unspecified choices and explore relationships within the request.\nLevel: Introduce restrained variations close to the requested direction.\n\nadult_appeal_emphasis: auto (choices: auto, sensual_led, balanced, fetish_led)\nMeaning: Relative leadership of the active sensual and fetish axes within one coherent expression.\nSelected: Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.\nEffective: inactive\nResolution: Both effective intensities are zero; no added emphasis is active.\n\nChoose a coherent expression suited to this particular scene.\nSensual and fetish may share the same expressive choice.\nExpression levels describe prominence; creativity describes interpretive freedom. Neither requires a garment or detail count.\n\nOther resolved controls:\nviewer_experience: false\nreference_edit_mode: \"off\"\ntrend_layer: \"off\"",
+    "canonical_sha256": "275d6d02c0c5ff7ec7de705af4e95bde1b4f220b077a8ceb428e4eec1de0ee6b"
+  },
+  "authorial_core_input": {
+    "contract_version": "photo-authorial-core/v3",
+    "provenance": "agent_prepack",
+    "interpreted_intent": "Realize the requested adult subject and the stated clothing or body attachments in one coherent photograph.",
+    "subject": "An adult beastkin with long living ears wearing a fully worn green fur-trimmed hood",
+    "setting": "beside a plain studio wall",
+    "event": "stands for a studio portrait",
+    "visual_priorities": [
+      "The living ears rise from skin within the hood opening, while the short trim follows the sewn rim of the green hood.",
+      "The frame gives the requested body and clothing relationship priority around the standing figure."
+    ],
+    "baseline_prompt_en": "An adult beastkin with long living ears wearing a fully worn green fur-trimmed hood beside a plain studio wall stands for a studio portrait. The living ears rise from skin within the hood opening, while the short trim follows the sewn rim of the green hood. Both feet rest on the studio floor. Both arms hang relaxed beside the torso, with the elbows slightly bent. Soft side light traces the visible attachment edges and keeps the skin and fabric surfaces readable. The frame gives the requested body and clothing relationship priority around the standing figure.",
+    "user_definitions": [],
+    "interpretation_provenance": [
+      {
+        "term": "governing request",
+        "source_text": "Photograph an adult beastkin with long living ears wearing a fur-trimmed hood in a studio. Keep the hood fully worn, its green fabric and its fur trim. Show the trim and ears at their separate attachment points. Use a plain studio wall as the background.",
+        "basis": "request_context",
+        "resolution": "The actor, garment and body state preserve the literal requester meaning; lighting and framing remain authored.",
+        "sources": []
+      }
+    ],
+    "unresolved_ambiguities": [],
+    "user_exclusions": [],
+    "runtime_forbidden_labels": [],
+    "intent_lock": {
+      "contract_version": "photo-intent-lock/v2",
+      "priority": "requesting_user",
+      "semantic_anchors": [
+        {
+          "anchor_id": "anchor_concept",
+          "source_text": "Photograph an adult beastkin with long living ears wearing a fur-trimmed hood in a studio. Keep the hood fully worn, its green fabric and its fur trim. Show the trim and ears at their separate attachment points. Use a plain studio wall as the background.",
+          "dimension": "concept",
+          "prompt_evidence": "An adult beastkin with long living ears wearing a fully worn green fur-trimmed hood beside a plain studio wall stands for a studio portrait"
+        },
+        {
+          "anchor_id": "anchor_subject",
+          "source_text": "Photograph an adult beastkin with long living ears wearing a fur-trimmed hood in a studio. Keep the hood fully worn, its green fabric and its fur trim. Show the trim and ears at their separate attachment points. Use a plain studio wall as the background.",
+          "dimension": "subject",
+          "prompt_evidence": "An adult beastkin with long living ears wearing a fully worn green fur-trimmed hood"
+        },
+        {
+          "anchor_id": "anchor_setting",
+          "source_text": "Photograph an adult beastkin with long living ears wearing a fur-trimmed hood in a studio. Keep the hood fully worn, its green fabric and its fur trim. Show the trim and ears at their separate attachment points. Use a plain studio wall as the background.",
+          "dimension": "setting",
+          "prompt_evidence": "beside a plain studio wall"
+        },
+        {
+          "anchor_id": "anchor_event",
+          "source_text": "Photograph an adult beastkin with long living ears wearing a fur-trimmed hood in a studio. Keep the hood fully worn, its green fabric and its fur trim. Show the trim and ears at their separate attachment points. Use a plain studio wall as the background.",
+          "dimension": "event",
+          "prompt_evidence": "stands for a studio portrait"
+        },
+        {
+          "anchor_id": "wardrobe_0",
+          "source_text": "Photograph an adult beastkin with long living ears wearing a fur-trimmed hood in a studio. Keep the hood fully worn, its green fabric and its fur trim. Show the trim and ears at their separate attachment points. Use a plain studio wall as the background.",
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.hood.worn_state",
+          "prompt_evidence": "fully worn"
+        },
+        {
+          "anchor_id": "wardrobe_1",
+          "source_text": "Photograph an adult beastkin with long living ears wearing a fur-trimmed hood in a studio. Keep the hood fully worn, its green fabric and its fur trim. Show the trim and ears at their separate attachment points. Use a plain studio wall as the background.",
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.hood.color",
+          "prompt_evidence": "green fur-trimmed hood"
+        },
+        {
+          "anchor_id": "wardrobe_2",
+          "source_text": "Photograph an adult beastkin with long living ears wearing a fur-trimmed hood in a studio. Keep the hood fully worn, its green fabric and its fur trim. Show the trim and ears at their separate attachment points. Use a plain studio wall as the background.",
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.hood.trim.material_class",
+          "prompt_evidence": "fur-trimmed hood"
+        }
+      ],
+      "locked_dimensions": [
+        "concept",
+        "subject",
+        "setting",
+        "event"
+      ],
+      "open_dimensions": [
+        "appearance",
+        "timing",
+        "atmosphere",
+        "style",
+        "material",
+        "color",
+        "framing",
+        "composition",
+        "camera",
+        "lighting",
+        "pose",
+        "action",
+        "relationship",
+        "expression",
+        "body_geometry"
+      ]
+    },
+    "style": {
+      "domain": "general_photo",
+      "family": "scene-led photographic observation",
+      "evidence": [
+        "Soft side light traces the visible attachment edges and keeps the skin and fabric surfaces readable.",
+        "The frame gives the requested body and clothing relationship priority around the standing figure."
+      ]
+    },
+    "semantic_assertions": [
+      {
+        "assertion_id": "primary_subject",
+        "dimension": "subject",
+        "polarity": "required",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "subject"
+        ],
+        "axes": {
+          "subject_category": "human"
+        },
+        "evidence": {
+          "subject_phrase": "An adult beastkin with long living ears wearing a fully worn green fur-trimmed hood"
+        }
+      },
+      {
+        "assertion_id": "camera_review",
+        "dimension": "camera",
+        "polarity": "advisory",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "axes": {
+          "camera_axis_review": "camera_axis_review_v1",
+          "capture_owner": "unprescribed",
+          "direction_requirement": "open",
+          "height_requirement": "open"
+        },
+        "evidence": {}
+      }
+    ],
+    "request_lineage": null,
+    "variation_key": "wardrobe-lock-positive-en",
+    "source_request": "Photograph an adult beastkin with long living ears wearing a fur-trimmed hood in a studio. Keep the hood fully worn, its green fabric and its fur trim. Show the trim and ears at their separate attachment points. Use a plain studio wall as the background.",
+    "creative_controls_sha256": "275d6d02c0c5ff7ec7de705af4e95bde1b4f220b077a8ceb428e4eec1de0ee6b"
+  },
+  "embodiment_review": {
+    "contract_version": "photo-embodiment-review/v1",
+    "provenance": "agent_prepack",
+    "scope": "body_action",
+    "summary": "Reviewed this planned studio portrait: one grounded adult actor, supported feet, reachable arm pose, and the expressly requested visibility of clothing and body attachments.",
+    "checks": {
+      "body_ownership": {
+        "status": "supported",
+        "reason": "The visible torso, limbs and declared fictional anatomy belong to this one actor; garment attachments have separate carriers.",
+        "prompt_evidence": [
+          "An adult beastkin with long living ears wearing a fully worn green fur-trimmed hood"
+        ]
+      },
+      "joint_chain_and_reach": {
+        "status": "supported",
+        "reason": "The described elbow and hand pose can be reached close to the torso without an intersecting or unsupported limb.",
+        "prompt_evidence": [
+          "Both arms hang relaxed beside the torso, with the elbows slightly bent."
+        ]
+      },
+      "support_and_balance": {
+        "status": "supported",
+        "reason": "The standing load is carried by two feet on the named studio floor.",
+        "prompt_evidence": [
+          "Both feet rest on the studio floor."
+        ]
+      },
+      "contact_and_space": {
+        "status": "supported",
+        "reason": "The requested garment or accessory meets its named carrier at the stated edge; the neighboring skin surface belongs to the same actor.",
+        "prompt_evidence": [
+          "The living ears rise from skin within the hood opening, while the short trim follows the sewn rim of the green hood."
+        ]
+      },
+      "visibility_and_projection": {
+        "status": "supported",
+        "reason": "The studio view keeps the stated attachment edges readable without requiring an additional limb or actor.",
+        "prompt_evidence": [
+          "The living ears rise from skin within the hood opening, while the short trim follows the sewn rim of the green hood."
+        ]
+      }
+    },
+    "prompt_sha256": "b3465f0d7789ea7d0cb7dc033e2e2891be0de8831bf580126c5c1c1e3d812000"
+  },
+  "feature_selection": {
+    "selected": [
+      {
+        "category_id": "feature.subject",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal phrase: An adult beastkin with long living ears wearing a fully worn green fur-trimmed hood",
+        "reason": "Keep the requested actor and carriers.",
+        "baseline_evidence": "An adult beastkin with long living ears wearing a fully worn green fur-trimmed hood"
+      },
+      {
+        "category_id": "feature.location",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal phrase: beside a plain studio wall",
+        "reason": "Keep the requested studio setting.",
+        "baseline_evidence": "beside a plain studio wall"
+      },
+      {
+        "category_id": "feature.situation",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal phrase: stands for a studio portrait",
+        "reason": "Keep the requested standing portrait or selfie action.",
+        "baseline_evidence": "stands for a studio portrait"
+      },
+      {
+        "category_id": "feature.light_quality",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "Make the requested surfaces readable.",
+        "baseline_evidence": "Soft side light traces the visible attachment edges and keeps the skin and fabric surfaces readable."
+      },
+      {
+        "category_id": "feature.visual_hierarchy",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "Organize attention around the requested relationship.",
+        "baseline_evidence": "The frame gives the requested body and clothing relationship priority around the standing figure."
+      }
+    ],
+    "contract_version": "photo-precore-feature-selection/v1",
+    "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+    "catalog_schema_version": "photo-precore-feature-catalog/v1",
+    "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+    "request_id": "wardrobe-lock-positive-en",
+    "request_sha256": "b9eb3911f1cf52d4cf5202671eec0b2567e2600712ba9cc693a88a1990b6aa93",
+    "active_span_ids": [
+      "request"
+    ],
+    "baseline_prompt_sha256": "b3465f0d7789ea7d0cb7dc033e2e2891be0de8831bf580126c5c1c1e3d812000"
+  },
+  "feature_selection_audit": {
+    "valid": true,
+    "contract_version": "photo-precore-feature-selection/v1",
+    "request_id": "wardrobe-lock-positive-en",
+    "selected_category_ids": [
+      "feature.subject",
+      "feature.location",
+      "feature.situation",
+      "feature.light_quality",
+      "feature.visual_hierarchy"
+    ],
+    "selected_count": 5,
+    "warnings": []
+  },
+  "freeze_receipt": {
+    "schema_version": "photo-core-freeze/v1",
+    "files": {
+      "request_raw": "b9eb3911f1cf52d4cf5202671eec0b2567e2600712ba9cc693a88a1990b6aa93",
+      "request_envelope_input": "3553019ec8ebfdf98c418ef0e4cad5198eb1d15a33f2e278543eb3efb99985dd",
+      "creative_controls": "1fc53781260dc694a864dc598a04f38e6043cc4cafe3950a7cf13c01e8646825",
+      "authorial_core_input": "b33d4a4da57e64f8e2564a35865c2845425cc51f58d32c9e87db1f38b3c60bfe",
+      "authorial_core_normalized": "b4c0a61117595786ed191063073fdf654d434f62a7c8ddc3402d50a079491e67",
+      "request_envelope_normalized": "ab6702dc48ace52ee54e5e9325880c75a70b8ef05b65a9c7667be42db7e450a2",
+      "embodiment_review": "5332558a81738d20ae9d57c6fa343059ed35873af395ded6f21bfaa6dff0d6de",
+      "feature_selection": "8b910950fc119b38c31d0baaefb7f72b2fb9f526dbf59b248925176a391766e2",
+      "feature_selection_audit": "b8889cadf554f559764d2fe9ba76bbf7a686d812c9b31628e4b7dad474e6d486",
+      "catalog": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+      "baseline": "b3465f0d7789ea7d0cb7dc033e2e2891be0de8831bf580126c5c1c1e3d812000",
+      "freeze_author_input_hashes": "1c25c16d67c2a1bc4687237ec95ddad1fa2c20bb11536e22687e536403ecb42d"
+    },
+    "contracts": {
+      "envelope": "5a3e137c6393b124ba26014dd648a0ed92403106fe4a400ab1c8ff975530c19e",
+      "core": "621069e77ae27be411de93160d2da7ab2435ef39b10272dd4fd2010414e1c295",
+      "intent_lock": "035c002315f9a51d364c57640f21d3540c50639c404f1367bb8d49a8d998a747",
+      "controls": "275d6d02c0c5ff7ec7de705af4e95bde1b4f220b077a8ceb428e4eec1de0ee6b"
+    }
+  }
+}
