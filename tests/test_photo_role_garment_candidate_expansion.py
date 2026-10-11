@@ -66,7 +66,7 @@ class PhotoRoleGarmentCandidateExpansionTests(unittest.TestCase):
                 "sheer_opaque_overlay_garment",
                 "sheer_panel_tailored_garment",
             },
-            "adult_context": {
+            "genre": {
                 "adult_original_fantasy_character_context",
                 "adult_fashion_material_study_context",
             },
