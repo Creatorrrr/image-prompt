@@ -1,0 +1,464 @@
+{
+  "request_envelope_input": {
+    "contract_version": "photo-request-envelope/v1",
+    "provenance": "requesting_user",
+    "request_id": "holdout-07-cup-ko",
+    "request_text": "사람 없는 부엌 선반의 흰 도자기 컵 하나를 아침빛으로 찍어줘. 행사는 제외해줘.",
+    "request_sha256": "66b3e0cf7af6f41aa270d570438297034c02ab94cc86f512323a07cb8350ea9f",
+    "active_spans": [
+      {
+        "span_id": "request",
+        "start": 0,
+        "end": 45,
+        "text": "사람 없는 부엌 선반의 흰 도자기 컵 하나를 아침빛으로 찍어줘. 행사는 제외해줘."
+      }
+    ]
+  },
+  "creative_controls": {
+    "contract_version": "photo-creative-controls/v4",
+    "provenance": "resolved_precore",
+    "source_request_sha256": "66b3e0cf7af6f41aa270d570438297034c02ab94cc86f512323a07cb8350ea9f",
+    "definitions": {
+      "contract_version": "photo-creative-control-definitions/v4",
+      "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content or artistic judgment. Expression levels describe prominence in the whole image; creativity levels describe interpretive freedom. Neither measures exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Creativity leaves style, extra props and surreal treatment open to the request and artistic judgment. Emphasis directs only active sensual and fetish axes without changing their intensities. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. Sensual and fetish may share the same expressive choice.",
+      "controls": {
+        "sensual": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+          "levels": {
+            "0": "No added sensual treatment; preserve explicitly requested content.",
+            "1": "This expression is a subtle supporting quality.",
+            "2": "This expression is clearly readable in the image.",
+            "3": "This expression leads the image's appeal and direction."
+          }
+        },
+        "fetish": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+          "levels": {
+            "0": "No added fetish treatment; preserve explicitly requested content.",
+            "1": "This focus is a subtle supporting quality.",
+            "2": "This focus is clearly readable in the image.",
+            "3": "This focus leads the image's appeal and direction."
+          }
+        },
+        "adult_appeal_emphasis": {
+          "type": "enum",
+          "choices": [
+            "auto",
+            "sensual_led",
+            "balanced",
+            "fetish_led"
+          ],
+          "default": "auto",
+          "definition": "Relative leadership of the active sensual and fetish axes within one coherent expression.",
+          "choice_descriptions": {
+            "auto": "Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.",
+            "sensual_led": "Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.",
+            "balanced": "Give both active axes comparable influence within one coherent expression; separate styling details are not required.",
+            "fetish_led": "Let the distinctive focus of attraction or fascination lead, with any active sensual expression supporting it."
+          }
+        },
+        "creativity": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Freedom to interpret unspecified choices and explore relationships within the request.",
+          "levels": {
+            "0": "Realize the request directly, filling only what is needed for a coherent image.",
+            "1": "Introduce restrained variations close to the requested direction.",
+            "2": "Actively reinterpret open choices into a coherent authorial direction.",
+            "3": "Boldly explore unexpected relationships and interpretations while preserving the request's core meaning."
+          }
+        },
+        "viewer_experience": {
+          "type": "boolean",
+          "default": false,
+          "definition": "Expose the detailed viewer-experience review when enabled. Always consider the intended impression in interpreted_intent, even when this additional review is off."
+        },
+        "reference_edit_mode": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "identity",
+            "younger_self",
+            "brand_board"
+          ],
+          "default": "off",
+          "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
+        },
+        "surreal": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.",
+          "levels": {
+            "0": "No added surreal treatment; preserve explicitly requested fantasy and impossible elements.",
+            "1": "Surreal qualities are a subtle supporting presence.",
+            "2": "Surreal qualities are clearly readable in the image.",
+            "3": "Surreal qualities lead the image's main impression and direction; a single coherent relationship may carry this prominence."
+          }
+        },
+        "trend_layer": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "scrapbook_collage",
+            "action_figure_packaging",
+            "retro_flash",
+            "clean_brand_portrait"
+          ],
+          "default": "off",
+          "definition": "Consider the chosen treatment from the initial composition. Refine it later without adding it twice. Off does not remove a treatment explicitly present in the request."
+        }
+      }
+    },
+    "definitions_sha256": "d044ade0f6af62c35b81d4b035b130a8819c4a15ca47a1409a59860a1928a3fa",
+    "overrides": {
+      "sensual": 0,
+      "fetish": 0,
+      "surreal": 0,
+      "creativity": 1
+    },
+    "context": {
+      "subject_category": "nonhuman",
+      "no_people": true,
+      "explicit_nonsexual": false
+    },
+    "seed": 17,
+    "controls": {
+      "sensual": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "fetish": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "adult_appeal_emphasis": {
+        "value": "auto",
+        "source": "saved_setting"
+      },
+      "creativity": {
+        "value": 1,
+        "source": "request_override"
+      },
+      "viewer_experience": {
+        "value": false,
+        "source": "saved_setting"
+      },
+      "reference_edit_mode": {
+        "value": "off",
+        "source": "saved_setting"
+      },
+      "surreal": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "trend_layer": {
+        "value": "off",
+        "source": "saved_setting"
+      }
+    },
+    "adult_appeal": {
+      "sensual": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "explicit_no_people"
+      },
+      "fetish": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "explicit_no_people"
+      }
+    },
+    "resolved_emphasis": "balanced",
+    "emphasis_resolution": {
+      "active": false,
+      "reason": "Both effective intensities are zero; no added emphasis is active."
+    },
+    "authoring_brief": "sensual: 0 (range: 0–3)\nMeaning: Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.\nLevel: No added sensual treatment; preserve explicitly requested content.\n\nfetish: 0 (range: 0–3)\nMeaning: Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.\nLevel: No added fetish treatment; preserve explicitly requested content.\n\nsurreal: 0 (range: 0–3)\nMeaning: Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.\nLevel: No added surreal treatment; preserve explicitly requested fantasy and impossible elements.\n\ncreativity: 1 (range: 0–3)\nMeaning: Freedom to interpret unspecified choices and explore relationships within the request.\nLevel: Introduce restrained variations close to the requested direction.\n\nadult_appeal_emphasis: auto (choices: auto, sensual_led, balanced, fetish_led)\nMeaning: Relative leadership of the active sensual and fetish axes within one coherent expression.\nSelected: Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.\nEffective: inactive\nResolution: Both effective intensities are zero; no added emphasis is active.\n\nChoose a coherent expression suited to this particular scene.\nSensual and fetish may share the same expressive choice.\nExpression levels describe prominence; creativity describes interpretive freedom. Neither requires a garment or detail count.\n\nOther resolved controls:\nviewer_experience: false\nreference_edit_mode: \"off\"\ntrend_layer: \"off\"",
+    "canonical_sha256": "8d550001f8075e6fe8c1117a93b5914da81f3f2418b85a353c03ec7d6067f44b"
+  },
+  "authorial_core_input": {
+    "contract_version": "photo-authorial-core/v3",
+    "provenance": "agent_prepack",
+    "interpreted_intent": "A photographic realization of the requested subject, place and visible state.",
+    "subject": "One white porcelain cup",
+    "setting": "One white porcelain cup on a kitchen shelf",
+    "event": "rests in morning light",
+    "visual_priorities": [
+      "rests in morning light",
+      "The frame gives the single cup and its glazed surface priority along the shelf"
+    ],
+    "baseline_prompt_en": "One white porcelain cup on a kitchen shelf rests in morning light. Its handle forms a small open curve beside the smooth cup wall. Soft morning light from a nearby window reveals the rim and a pale reflection across the glaze. The shelf edge runs beneath the cup and the rear wall fades gently out of focus. The frame gives the single cup and its glazed surface priority along the shelf.",
+    "user_definitions": [],
+    "interpretation_provenance": [
+      {
+        "term": "governing request",
+        "source_text": "사람 없는 부엌 선반의 흰 도자기 컵 하나를 아침빛으로 찍어줘. 행사는 제외해줘.",
+        "basis": "request_context",
+        "resolution": "The primary subject, place and event follow the complete request; lighting and framing remain authorial where unprescribed.",
+        "sources": []
+      }
+    ],
+    "unresolved_ambiguities": [],
+    "user_exclusions": [
+      "사람",
+      "행사"
+    ],
+    "runtime_forbidden_labels": [],
+    "intent_lock": {
+      "contract_version": "photo-intent-lock/v2",
+      "priority": "requesting_user",
+      "semantic_anchors": [
+        {
+          "anchor_id": "anchor_concept",
+          "source_text": "사람 없는 부엌 선반의 흰 도자기 컵 하나를 아침빛으로 찍어줘. 행사는 제외해줘.",
+          "dimension": "concept",
+          "prompt_evidence": "One white porcelain cup on a kitchen shelf rests in morning light"
+        },
+        {
+          "anchor_id": "anchor_subject",
+          "source_text": "사람 없는 부엌 선반의 흰 도자기 컵 하나를 아침빛으로 찍어줘. 행사는 제외해줘.",
+          "dimension": "subject",
+          "prompt_evidence": "One white porcelain cup"
+        },
+        {
+          "anchor_id": "anchor_setting",
+          "source_text": "사람 없는 부엌 선반의 흰 도자기 컵 하나를 아침빛으로 찍어줘. 행사는 제외해줘.",
+          "dimension": "setting",
+          "prompt_evidence": "on a kitchen shelf"
+        },
+        {
+          "anchor_id": "anchor_event",
+          "source_text": "사람 없는 부엌 선반의 흰 도자기 컵 하나를 아침빛으로 찍어줘. 행사는 제외해줘.",
+          "dimension": "event",
+          "prompt_evidence": "rests in morning light"
+        },
+        {
+          "anchor_id": "property_0",
+          "source_text": "사람 없는 부엌 선반의 흰 도자기 컵 하나를 아침빛으로 찍어줘. 행사는 제외해줘.",
+          "dimension": "color",
+          "target": "main_subject",
+          "property": "surface.color",
+          "prompt_evidence": "white porcelain cup"
+        },
+        {
+          "anchor_id": "property_1",
+          "source_text": "사람 없는 부엌 선반의 흰 도자기 컵 하나를 아침빛으로 찍어줘. 행사는 제외해줘.",
+          "dimension": "material",
+          "target": "main_subject",
+          "property": "surface.material",
+          "prompt_evidence": "porcelain cup"
+        },
+        {
+          "anchor_id": "property_2",
+          "source_text": "사람 없는 부엌 선반의 흰 도자기 컵 하나를 아침빛으로 찍어줘. 행사는 제외해줘.",
+          "dimension": "timing",
+          "target": "scene",
+          "property": "time_of_day",
+          "prompt_evidence": "rests in morning light"
+        }
+      ],
+      "locked_dimensions": [
+        "concept",
+        "subject",
+        "setting",
+        "event"
+      ],
+      "open_dimensions": [
+        "appearance",
+        "timing",
+        "atmosphere",
+        "style",
+        "material",
+        "color",
+        "framing",
+        "composition",
+        "camera",
+        "lighting",
+        "pose",
+        "action",
+        "relationship",
+        "expression",
+        "body_geometry"
+      ]
+    },
+    "style": {
+      "domain": "general_photo",
+      "family": "scene-led photographic observation",
+      "evidence": [
+        "Soft morning light from a nearby window",
+        "The frame gives the single cup and its glazed surface priority along the shelf"
+      ]
+    },
+    "semantic_assertions": [
+      {
+        "assertion_id": "primary_subject",
+        "dimension": "subject",
+        "polarity": "required",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "subject"
+        ],
+        "axes": {
+          "subject_category": "object"
+        },
+        "evidence": {
+          "subject_phrase": "One white porcelain cup"
+        }
+      },
+      {
+        "assertion_id": "camera_review",
+        "dimension": "camera",
+        "polarity": "advisory",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "axes": {
+          "camera_axis_review": "camera_axis_review_v1",
+          "capture_owner": "unprescribed",
+          "direction_requirement": "open",
+          "height_requirement": "open"
+        },
+        "evidence": {}
+      }
+    ],
+    "request_lineage": null,
+    "variation_key": "holdout-07-cup-ko",
+    "source_request": "사람 없는 부엌 선반의 흰 도자기 컵 하나를 아침빛으로 찍어줘. 행사는 제외해줘.",
+    "creative_controls_sha256": "8d550001f8075e6fe8c1117a93b5914da81f3f2418b85a353c03ec7d6067f44b"
+  },
+  "embodiment_review": {
+    "contract_version": "photo-embodiment-review/v1",
+    "provenance": "agent_prepack",
+    "scope": "not_applicable",
+    "summary": "The frame contains a static object, plant or landscape; there is no articulated actor or body interaction to check.",
+    "checks": {},
+    "prompt_sha256": "622dcfec474b75a5d892a0a213df4a13e2c03a7d9e8fb2696b5f72cc37fbf32a"
+  },
+  "feature_selection": {
+    "selected": [
+      {
+        "category_id": "feature.primary_object",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: One white porcelain cup",
+        "reason": "The requested primary carrier remains recognizable.",
+        "baseline_evidence": "One white porcelain cup"
+      },
+      {
+        "category_id": "feature.location",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: on a kitchen shelf",
+        "reason": "The requested place or temporal setting grounds the visible state.",
+        "baseline_evidence": "on a kitchen shelf"
+      },
+      {
+        "category_id": "feature.situation",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: rests in morning light",
+        "reason": "The requested event or still state governs this frame.",
+        "baseline_evidence": "rests in morning light"
+      },
+      {
+        "category_id": "feature.light_quality",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The light makes the requested surface or action readable.",
+        "baseline_evidence": "Soft morning light from a nearby window"
+      },
+      {
+        "category_id": "feature.visual_hierarchy",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The frame organizes attention around the governing subject and state.",
+        "baseline_evidence": "The frame gives the single cup and its glazed surface priority along the shelf"
+      }
+    ],
+    "contract_version": "photo-precore-feature-selection/v1",
+    "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+    "catalog_schema_version": "photo-precore-feature-catalog/v1",
+    "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+    "request_id": "holdout-07-cup-ko",
+    "request_sha256": "66b3e0cf7af6f41aa270d570438297034c02ab94cc86f512323a07cb8350ea9f",
+    "active_span_ids": [
+      "request"
+    ],
+    "baseline_prompt_sha256": "622dcfec474b75a5d892a0a213df4a13e2c03a7d9e8fb2696b5f72cc37fbf32a"
+  },
+  "feature_selection_audit": {
+    "valid": true,
+    "contract_version": "photo-precore-feature-selection/v1",
+    "request_id": "holdout-07-cup-ko",
+    "selected_category_ids": [
+      "feature.primary_object",
+      "feature.location",
+      "feature.situation",
+      "feature.light_quality",
+      "feature.visual_hierarchy"
+    ],
+    "selected_count": 5,
+    "warnings": []
+  },
+  "freeze_receipt": {
+    "schema_version": "photo-core-freeze/v1",
+    "files": {
+      "request_raw": "66b3e0cf7af6f41aa270d570438297034c02ab94cc86f512323a07cb8350ea9f",
+      "request_envelope_input": "ea341679eea6436df9d294400a88bbdee38464c667e92b347a48f421e1155a24",
+      "creative_controls": "e957c37e82eefa6d375ee1e1c9fa0ae7284d12508bfa0929e2c6810f3fd3f4d0",
+      "authorial_core_input": "26a8c607c79945d014a52dd4f949222de5ff5cc9f479beafa5ce657fe9e421e7",
+      "authorial_core_normalized": "01721d930a87ed054b4530734093907d45b6ed5625a8a9dcf24f8451cdc34659",
+      "request_envelope_normalized": "af25287077a9c7517b1475482911db3a90c284743835b60e9382b1d91dcaebac",
+      "embodiment_review": "cfbd193d3b5485003eba4a232665852a6b09df0ecf07a740d1c8c2fa5bdd9460",
+      "feature_selection": "dd6725f93e1734acedd8038d5d8e62c23a51f3714470182daf488eb901f7c01b",
+      "feature_selection_audit": "f74153cadcd45adee21e6e2ed5b0f2426ab80e4776a11b6964b63347a9bd74c6",
+      "catalog": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+      "baseline": "622dcfec474b75a5d892a0a213df4a13e2c03a7d9e8fb2696b5f72cc37fbf32a",
+      "freeze_author_input_hashes": "0acb7d6e37971d1cd50d0939d26517c7d301368b6fe8d950396b9bfd8409e184"
+    },
+    "contracts": {
+      "envelope": "ad0d1dd3adf54c3e8ac3ff25021ce8e7a1d28a201e30f67bf6c61c2d309f5c08",
+      "core": "878a2596b6672b0ed0f55bb4d41b30350d7f2bb67a5d5b25869d1cc7540b1e67",
+      "intent_lock": "9807fd2f6c3585c3485d051c4cde79c883c6f9823e924e5a828e650395f0f344",
+      "controls": "8d550001f8075e6fe8c1117a93b5914da81f3f2418b85a353c03ec7d6067f44b"
+    }
+  }
+}

@@ -19,6 +19,7 @@ _SCRIPTS_IMPORT_DIR_ADDED = _SCRIPTS_IMPORT_DIR not in sys.path
 if _SCRIPTS_IMPORT_DIR_ADDED:
     sys.path.insert(0, _SCRIPTS_IMPORT_DIR)
 try:
+    import photo_candidate_context
     import photo_candidate_semantics
     import photo_contextual_appeal
     import photo_embodiment
@@ -2653,6 +2654,13 @@ def audit_core_retrieval(pack: dict[str, Any], source_data: dict[str, Any]) -> l
             != {row["id"] for row in payload["candidates"]}
             for slot, payload in slots.items() if slot in actual):
             fail("ordinary candidates differ from the complete guarded core retrieval")
+        for slot, payload in slots.items():
+            actual_by_id = {row["id"]: row for row in actual.get(slot, {}).get("candidates") or []}
+            for candidate in payload["candidates"]:
+                emitted = actual_by_id.get(candidate["id"], {})
+                if any(emitted.get(field) != candidate.get(field)
+                       for field in ("context_requirements", "context_prerequisites", "context_preflight")):
+                    fail("ordinary candidate context prerequisites differ from their source")
     except (KeyError, TypeError, ValueError) as exc:
         fail(f"core retrieval source recomputation failed: {exc}")
     return failures
@@ -2897,6 +2905,35 @@ def audit_candidate_semantic_contracts(
                     candidate_id,
                     f"{field} must cover the entire selected contract with literal final-prompt phrases",
                 )
+    failures.extend(audit_declared_candidate_contexts(
+        pack, prompt_en, chosen, candidates, interpretations
+    ))
+    return failures
+
+
+def audit_declared_candidate_contexts(
+    pack: dict, prompt_en: str, chosen: set[str], candidates: dict, interpretations: list[dict]
+) -> list[dict]:
+    """Keep source-authored context alternatives conditional on actual adoption."""
+    core = pack.get("authorial_core") or {}
+    controls = pack.get("creative_controls") or {}
+    subject_category = authored_subject_category(
+        core.get("semantic_assertions") or [], controls.get("context") or {}
+    ) or "unknown"
+    allowed = set((core.get("intent_lock") or {}).get("open_dimensions") or [])
+    by_id = {row.get("candidate_id"): row for row in interpretations}
+    failures = []
+    for candidate_id in sorted(chosen):
+        candidate = candidates.get(candidate_id, {})
+        contract = candidate.get("context_prerequisites")
+        if not isinstance(contract, dict) or contract.get("contract_version") != photo_candidate_context.ALTERNATIVE_VERSION:
+            continue
+        review = by_id.get(candidate_id, {}).get("context_review")
+        failures.extend(photo_candidate_context.audit_context(
+            candidate, review if isinstance(review, dict) else {},
+            prompt_en=prompt_en, core=core, brief={}, subject_category=subject_category,
+            allowed=allowed, scope_dimensions=allowed, check="candidate_context_prerequisites",
+        ))
     return failures
 
 

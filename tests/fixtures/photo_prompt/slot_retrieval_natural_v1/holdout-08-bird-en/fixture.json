@@ -1,0 +1,475 @@
+{
+  "request_envelope_input": {
+    "contract_version": "photo-request-envelope/v1",
+    "provenance": "requesting_user",
+    "request_id": "holdout-08-bird-en",
+    "request_text": "A small sparrow resting on a stone in a garden, with its folded wings visible. No festival or ceremony.",
+    "request_sha256": "9c46171a6929053cfd80587846017ba809a8240416fa3e3dd8a22c0c7f886139",
+    "active_spans": [
+      {
+        "span_id": "request",
+        "start": 0,
+        "end": 103,
+        "text": "A small sparrow resting on a stone in a garden, with its folded wings visible. No festival or ceremony."
+      }
+    ]
+  },
+  "creative_controls": {
+    "contract_version": "photo-creative-controls/v4",
+    "provenance": "resolved_precore",
+    "source_request_sha256": "9c46171a6929053cfd80587846017ba809a8240416fa3e3dd8a22c0c7f886139",
+    "definitions": {
+      "contract_version": "photo-creative-control-definitions/v4",
+      "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content or artistic judgment. Expression levels describe prominence in the whole image; creativity levels describe interpretive freedom. Neither measures exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Creativity leaves style, extra props and surreal treatment open to the request and artistic judgment. Emphasis directs only active sensual and fetish axes without changing their intensities. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. Sensual and fetish may share the same expressive choice.",
+      "controls": {
+        "sensual": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+          "levels": {
+            "0": "No added sensual treatment; preserve explicitly requested content.",
+            "1": "This expression is a subtle supporting quality.",
+            "2": "This expression is clearly readable in the image.",
+            "3": "This expression leads the image's appeal and direction."
+          }
+        },
+        "fetish": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+          "levels": {
+            "0": "No added fetish treatment; preserve explicitly requested content.",
+            "1": "This focus is a subtle supporting quality.",
+            "2": "This focus is clearly readable in the image.",
+            "3": "This focus leads the image's appeal and direction."
+          }
+        },
+        "adult_appeal_emphasis": {
+          "type": "enum",
+          "choices": [
+            "auto",
+            "sensual_led",
+            "balanced",
+            "fetish_led"
+          ],
+          "default": "auto",
+          "definition": "Relative leadership of the active sensual and fetish axes within one coherent expression.",
+          "choice_descriptions": {
+            "auto": "Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.",
+            "sensual_led": "Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.",
+            "balanced": "Give both active axes comparable influence within one coherent expression; separate styling details are not required.",
+            "fetish_led": "Let the distinctive focus of attraction or fascination lead, with any active sensual expression supporting it."
+          }
+        },
+        "creativity": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Freedom to interpret unspecified choices and explore relationships within the request.",
+          "levels": {
+            "0": "Realize the request directly, filling only what is needed for a coherent image.",
+            "1": "Introduce restrained variations close to the requested direction.",
+            "2": "Actively reinterpret open choices into a coherent authorial direction.",
+            "3": "Boldly explore unexpected relationships and interpretations while preserving the request's core meaning."
+          }
+        },
+        "viewer_experience": {
+          "type": "boolean",
+          "default": false,
+          "definition": "Expose the detailed viewer-experience review when enabled. Always consider the intended impression in interpreted_intent, even when this additional review is off."
+        },
+        "reference_edit_mode": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "identity",
+            "younger_self",
+            "brand_board"
+          ],
+          "default": "off",
+          "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
+        },
+        "surreal": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.",
+          "levels": {
+            "0": "No added surreal treatment; preserve explicitly requested fantasy and impossible elements.",
+            "1": "Surreal qualities are a subtle supporting presence.",
+            "2": "Surreal qualities are clearly readable in the image.",
+            "3": "Surreal qualities lead the image's main impression and direction; a single coherent relationship may carry this prominence."
+          }
+        },
+        "trend_layer": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "scrapbook_collage",
+            "action_figure_packaging",
+            "retro_flash",
+            "clean_brand_portrait"
+          ],
+          "default": "off",
+          "definition": "Consider the chosen treatment from the initial composition. Refine it later without adding it twice. Off does not remove a treatment explicitly present in the request."
+        }
+      }
+    },
+    "definitions_sha256": "d044ade0f6af62c35b81d4b035b130a8819c4a15ca47a1409a59860a1928a3fa",
+    "overrides": {
+      "sensual": 0,
+      "fetish": 0,
+      "surreal": 0,
+      "creativity": 1
+    },
+    "context": {
+      "subject_category": "nonhuman",
+      "no_people": false,
+      "explicit_nonsexual": false
+    },
+    "seed": 17,
+    "controls": {
+      "sensual": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "fetish": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "adult_appeal_emphasis": {
+        "value": "auto",
+        "source": "saved_setting"
+      },
+      "creativity": {
+        "value": 1,
+        "source": "request_override"
+      },
+      "viewer_experience": {
+        "value": false,
+        "source": "saved_setting"
+      },
+      "reference_edit_mode": {
+        "value": "off",
+        "source": "saved_setting"
+      },
+      "surreal": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "trend_layer": {
+        "value": "off",
+        "source": "saved_setting"
+      }
+    },
+    "adult_appeal": {
+      "sensual": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      },
+      "fetish": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      }
+    },
+    "resolved_emphasis": "balanced",
+    "emphasis_resolution": {
+      "active": false,
+      "reason": "Both effective intensities are zero; no added emphasis is active."
+    },
+    "authoring_brief": "sensual: 0 (range: 0–3)\nMeaning: Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.\nLevel: No added sensual treatment; preserve explicitly requested content.\n\nfetish: 0 (range: 0–3)\nMeaning: Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.\nLevel: No added fetish treatment; preserve explicitly requested content.\n\nsurreal: 0 (range: 0–3)\nMeaning: Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.\nLevel: No added surreal treatment; preserve explicitly requested fantasy and impossible elements.\n\ncreativity: 1 (range: 0–3)\nMeaning: Freedom to interpret unspecified choices and explore relationships within the request.\nLevel: Introduce restrained variations close to the requested direction.\n\nadult_appeal_emphasis: auto (choices: auto, sensual_led, balanced, fetish_led)\nMeaning: Relative leadership of the active sensual and fetish axes within one coherent expression.\nSelected: Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.\nEffective: inactive\nResolution: Both effective intensities are zero; no added emphasis is active.\n\nChoose a coherent expression suited to this particular scene.\nSensual and fetish may share the same expressive choice.\nExpression levels describe prominence; creativity describes interpretive freedom. Neither requires a garment or detail count.\n\nOther resolved controls:\nviewer_experience: false\nreference_edit_mode: \"off\"\ntrend_layer: \"off\"",
+    "canonical_sha256": "e9d9d58169fe04a8db51d59b04d3e1ad0bafbf04a175f7ba62b401de8ad4f390"
+  },
+  "authorial_core_input": {
+    "contract_version": "photo-authorial-core/v3",
+    "provenance": "agent_prepack",
+    "interpreted_intent": "A photographic realization of the requested subject, place and visible state.",
+    "subject": "A small sparrow",
+    "setting": "A small sparrow on a stone in a garden",
+    "event": "rests with its folded wings visible",
+    "visual_priorities": [
+      "rests with its folded wings visible",
+      "The frame gives the sparrow and its supported resting posture priority over the garden"
+    ],
+    "baseline_prompt_en": "A small sparrow on a stone in a garden rests with its folded wings visible. Both feet meet the upper stone surface under its body. Fine feather lines cross the folded wing while its tail extends clear of the stone edge. Soft garden light separates the feather markings from the mottled stone. The garden behind it falls into gentle blur. The frame gives the sparrow and its supported resting posture priority over the garden.",
+    "user_definitions": [],
+    "interpretation_provenance": [
+      {
+        "term": "governing request",
+        "source_text": "A small sparrow resting on a stone in a garden, with its folded wings visible. No festival or ceremony.",
+        "basis": "request_context",
+        "resolution": "The primary subject, place and event follow the complete request; lighting and framing remain authorial where unprescribed.",
+        "sources": []
+      }
+    ],
+    "unresolved_ambiguities": [],
+    "user_exclusions": [
+      "festival or ceremony"
+    ],
+    "runtime_forbidden_labels": [],
+    "intent_lock": {
+      "contract_version": "photo-intent-lock/v2",
+      "priority": "requesting_user",
+      "semantic_anchors": [
+        {
+          "anchor_id": "anchor_concept",
+          "source_text": "A small sparrow resting on a stone in a garden, with its folded wings visible. No festival or ceremony.",
+          "dimension": "concept",
+          "prompt_evidence": "A small sparrow on a stone in a garden rests with its folded wings visible"
+        },
+        {
+          "anchor_id": "anchor_subject",
+          "source_text": "A small sparrow resting on a stone in a garden, with its folded wings visible. No festival or ceremony.",
+          "dimension": "subject",
+          "prompt_evidence": "A small sparrow"
+        },
+        {
+          "anchor_id": "anchor_setting",
+          "source_text": "A small sparrow resting on a stone in a garden, with its folded wings visible. No festival or ceremony.",
+          "dimension": "setting",
+          "prompt_evidence": "on a stone in a garden"
+        },
+        {
+          "anchor_id": "anchor_event",
+          "source_text": "A small sparrow resting on a stone in a garden, with its folded wings visible. No festival or ceremony.",
+          "dimension": "event",
+          "prompt_evidence": "rests with its folded wings visible"
+        }
+      ],
+      "locked_dimensions": [
+        "concept",
+        "subject",
+        "setting",
+        "event"
+      ],
+      "open_dimensions": [
+        "appearance",
+        "timing",
+        "atmosphere",
+        "style",
+        "material",
+        "color",
+        "framing",
+        "composition",
+        "camera",
+        "lighting",
+        "pose",
+        "action",
+        "relationship",
+        "expression",
+        "body_geometry"
+      ]
+    },
+    "style": {
+      "domain": "general_photo",
+      "family": "scene-led photographic observation",
+      "evidence": [
+        "Soft garden light separates the feather markings",
+        "The frame gives the sparrow and its supported resting posture priority over the garden"
+      ]
+    },
+    "semantic_assertions": [
+      {
+        "assertion_id": "primary_subject",
+        "dimension": "subject",
+        "polarity": "required",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "subject"
+        ],
+        "axes": {
+          "subject_category": "animal"
+        },
+        "evidence": {
+          "subject_phrase": "A small sparrow"
+        }
+      },
+      {
+        "assertion_id": "camera_review",
+        "dimension": "camera",
+        "polarity": "advisory",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "axes": {
+          "camera_axis_review": "camera_axis_review_v1",
+          "capture_owner": "unprescribed",
+          "direction_requirement": "open",
+          "height_requirement": "open"
+        },
+        "evidence": {}
+      }
+    ],
+    "request_lineage": null,
+    "variation_key": "holdout-08-bird-en",
+    "source_request": "A small sparrow resting on a stone in a garden, with its folded wings visible. No festival or ceremony.",
+    "creative_controls_sha256": "e9d9d58169fe04a8db51d59b04d3e1ad0bafbf04a175f7ba62b401de8ad4f390"
+  },
+  "embodiment_review": {
+    "contract_version": "photo-embodiment-review/v1",
+    "provenance": "agent_prepack",
+    "scope": "body_action",
+    "summary": "Reviewed the planned actor ownership, support, reach, contacts and visibility: the resting bird has visible foot support and folded wings.",
+    "checks": {
+      "body_ownership": {
+        "status": "supported",
+        "reason": "Each visible body belongs to the requested primary actor or actors; the geometry adds no new actor.",
+        "prompt_evidence": [
+          "A small sparrow"
+        ]
+      },
+      "joint_chain_and_reach": {
+        "status": "supported",
+        "reason": "The planned motion or resting limb arrangement stays close to its carrier and does not require an unsupported long reach: the resting bird has visible foot support and folded wings.",
+        "prompt_evidence": [
+          "its tail extends clear of the stone edge"
+        ]
+      },
+      "support_and_balance": {
+        "status": "supported",
+        "reason": "The stated surface carries the planned body or seated load; this is a prose plausibility judgment.",
+        "prompt_evidence": [
+          "Both feet meet the upper stone surface under its body"
+        ]
+      },
+      "contact_and_space": {
+        "status": "supported",
+        "reason": "The contact endpoint and nearby free space are specified for this case: the resting bird has visible foot support and folded wings.",
+        "prompt_evidence": [
+          "its tail extends clear of the stone edge"
+        ]
+      },
+      "visibility_and_projection": {
+        "status": "supported",
+        "reason": "The framing preserves the action-bearing surface, contact or body outline rather than concealing the requested relation.",
+        "prompt_evidence": [
+          "The frame gives the sparrow and its supported resting posture priority over the garden"
+        ]
+      }
+    },
+    "prompt_sha256": "e9154911f50ad3719cb665e98b0ce4f49b623bd65b4e7b22e2d8ba674b002855"
+  },
+  "feature_selection": {
+    "selected": [
+      {
+        "category_id": "feature.primary_object",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: A small sparrow",
+        "reason": "The requested primary carrier remains recognizable.",
+        "baseline_evidence": "A small sparrow"
+      },
+      {
+        "category_id": "feature.location",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: on a stone in a garden",
+        "reason": "The requested place or temporal setting grounds the visible state.",
+        "baseline_evidence": "on a stone in a garden"
+      },
+      {
+        "category_id": "feature.situation",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: rests with its folded wings visible",
+        "reason": "The requested event or still state governs this frame.",
+        "baseline_evidence": "rests with its folded wings visible"
+      },
+      {
+        "category_id": "feature.light_quality",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The light makes the requested surface or action readable.",
+        "baseline_evidence": "Soft garden light separates the feather markings"
+      },
+      {
+        "category_id": "feature.visual_hierarchy",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The frame organizes attention around the governing subject and state.",
+        "baseline_evidence": "The frame gives the sparrow and its supported resting posture priority over the garden"
+      }
+    ],
+    "contract_version": "photo-precore-feature-selection/v1",
+    "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+    "catalog_schema_version": "photo-precore-feature-catalog/v1",
+    "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+    "request_id": "holdout-08-bird-en",
+    "request_sha256": "9c46171a6929053cfd80587846017ba809a8240416fa3e3dd8a22c0c7f886139",
+    "active_span_ids": [
+      "request"
+    ],
+    "baseline_prompt_sha256": "e9154911f50ad3719cb665e98b0ce4f49b623bd65b4e7b22e2d8ba674b002855"
+  },
+  "feature_selection_audit": {
+    "valid": true,
+    "contract_version": "photo-precore-feature-selection/v1",
+    "request_id": "holdout-08-bird-en",
+    "selected_category_ids": [
+      "feature.primary_object",
+      "feature.location",
+      "feature.situation",
+      "feature.light_quality",
+      "feature.visual_hierarchy"
+    ],
+    "selected_count": 5,
+    "warnings": []
+  },
+  "freeze_receipt": {
+    "schema_version": "photo-core-freeze/v1",
+    "files": {
+      "request_raw": "9c46171a6929053cfd80587846017ba809a8240416fa3e3dd8a22c0c7f886139",
+      "request_envelope_input": "6260e67c39f234e6df9ca2ebb3fa76f0cc9477017a85a1f4746b7537c4b8efd7",
+      "creative_controls": "165da19a4d5fa50f509d6dc23a0e6c18729056e83ce10ba215cb3231a028e329",
+      "authorial_core_input": "f01f047b69075da54a53ec6e7d883b9ca3d360db048e91ecab207d551af614a5",
+      "authorial_core_normalized": "aff8c7e41842790a15e7e07bbc526b8157efbd2051f0e23ffc7ab72d8c75305d",
+      "request_envelope_normalized": "e8600b85483747a9dc6bde87f4bc540537bd4f017ac8ecd0af6d4bf63e557fd3",
+      "embodiment_review": "565a6898534652019f3087f86d8cec34801c3f74b1ea215ab96613173b75e2df",
+      "feature_selection": "387a23d97228472d44f9bb17bb84ea56a80025ec740f3164ecb2960bcf0b7446",
+      "feature_selection_audit": "b944f184df859c602739c56403afff30bb0805d4ae53664597086e927c7bfcdb",
+      "catalog": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+      "baseline": "e9154911f50ad3719cb665e98b0ce4f49b623bd65b4e7b22e2d8ba674b002855",
+      "freeze_author_input_hashes": "e9d242174990d2b0828c00c6d3cb04df12ff637a9b7e1885f4793e46989a5025"
+    },
+    "contracts": {
+      "envelope": "cfde9414da24ddab27830d026cf5ae9dd0d57173f4fcf48785003106bbaf1ff7",
+      "core": "aff9b067de0c62e77f13f3209521f51af6552d040b91490bb5f2d3e02e4fd2df",
+      "intent_lock": "9bbaec3636f35304293d8ce60e69748f0409e90c0d277459acad399415200d32",
+      "controls": "e9d9d58169fe04a8db51d59b04d3e1ad0bafbf04a175f7ba62b401de8ad4f390"
+    }
+  }
+}

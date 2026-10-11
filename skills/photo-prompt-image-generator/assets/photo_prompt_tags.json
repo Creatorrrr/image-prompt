@@ -300,7 +300,10 @@
         "setting"
       ],
       "situation_context": [],
-      "occasion_context": [],
+      "occasion_context": [
+        "event",
+        "timing"
+      ],
       "body_pose": [
         "pose"
       ],
@@ -105687,18 +105690,17 @@
     "occasion_context": [
       {
         "id": "graduation_after_ceremony",
-        "ko": "졸업식 직후의 장면",
-        "en": "after a graduation ceremony with flowers and no readable banners",
-        "phrase_en": "after a graduation ceremony, with flowers and no readable banners",
-        "phrase_ko": "읽히는 현수막 없이 꽃다발이 보이는 졸업식 직후로",
+        "ko": "졸업식 직후 꽃이 보이는 장면",
+        "en": "after a graduation ceremony with flowers",
+        "phrase_en": "after a graduation ceremony with flowers",
+        "phrase_ko": "졸업식 직후 꽃이 보이는 장면",
         "tags": [
           "occasion",
           "graduation",
-          "flowers",
-          "no_text"
+          "flowers"
         ],
         "weight": 1.05,
-        "embedding_text": "after a graduation ceremony with flowers and no readable banners",
+        "embedding_text": "after a graduation ceremony with flowers",
         "aliases": [
           "graduation",
           "after",
@@ -105708,25 +105710,52 @@
           "occasion",
           "graduation",
           "flowers",
-          "no_text",
           "after",
           "ceremony"
+        ],
+        "requires_primary_any_tags": [
+          "graduation",
+          "graduate",
+          "graduates",
+          "졸업",
+          "졸업식"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "subject"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects"
+          }
         ]
       },
       {
         "id": "birthday_before_surprise",
-        "ko": "생일 서프라이즈 직전",
-        "en": "just before a birthday surprise with blank decorations and expectant energy",
-        "phrase_en": "just before a birthday surprise with blank decorations",
-        "phrase_ko": "문구 없는 장식과 기대감이 있는 생일 서프라이즈 직전으로",
+        "ko": "무지 장식과 기대하는 표정이 보이는 생일 서프라이즈 직전",
+        "en": "just before a birthday surprise with blank decorations and visible anticipation",
+        "phrase_en": "just before a birthday surprise with blank decorations and visible anticipation",
+        "phrase_ko": "무지 장식과 기대하는 표정이 보이는 생일 서프라이즈 직전",
         "tags": [
           "occasion",
           "birthday",
-          "celebration",
-          "no_text"
+          "celebration"
         ],
         "weight": 0.9,
-        "embedding_text": "just before a birthday surprise with blank decorations and expectant energy",
+        "embedding_text": "just before a birthday surprise with blank decorations and visible anticipation",
         "aliases": [
           "birthday",
           "before",
@@ -105736,25 +105765,61 @@
           "occasion",
           "birthday",
           "celebration",
-          "no_text",
           "before",
           "surprise"
+        ],
+        "requires_primary_any_tags": [
+          "birthday",
+          "생일"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "subject",
+          "text",
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects"
+          },
+          {
+            "dimension": "text",
+            "target": "scene",
+            "property": "text"
+          },
+          {
+            "dimension": "expression",
+            "target": "participants",
+            "property": "visible_affect"
+          }
         ]
       },
       {
         "id": "opening_day_setup",
-        "ko": "오픈 첫날 세팅 중",
-        "en": "opening day setup with arranged displays and no readable branding",
-        "phrase_en": "during opening day setup with no readable branding",
-        "phrase_ko": "읽히는 브랜드 문구 없이 진열을 정리하는 오픈 첫날로",
+        "ko": "진열을 정리하는 오픈 첫날 준비",
+        "en": "opening day setup with arranged displays",
+        "phrase_en": "opening day setup with arranged displays",
+        "phrase_ko": "진열을 정리하는 오픈 첫날 준비",
         "tags": [
           "occasion",
           "opening",
-          "commercial",
-          "no_text"
+          "commercial"
         ],
         "weight": 0.95,
-        "embedding_text": "opening day setup with arranged displays and no readable branding",
+        "embedding_text": "opening day setup with arranged displays",
         "aliases": [
           "opening",
           "day",
@@ -105764,16 +105829,57 @@
           "occasion",
           "opening",
           "commercial",
-          "no_text",
           "day",
           "setup"
+        ],
+        "requires_primary_any_tags": [
+          "shop",
+          "store",
+          "retail",
+          "commercial",
+          "오픈",
+          "개점"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "setting",
+          "subject",
+          "action"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "setting",
+            "target": "scene",
+            "property": "venue"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects"
+          },
+          {
+            "dimension": "action",
+            "target": "participants",
+            "property": "activity"
+          }
         ]
       },
       {
         "id": "closing_cleanup_after_hours",
-        "ko": "행사나 영업이 끝난 뒤 정리 시간",
+        "ko": "방문객이 떠난 뒤 영업 종료 후 정리",
         "en": "after-hours closing cleanup after visitors have left",
-        "phrase_en": "during after-hours closing cleanup after visitors have left",
+        "phrase_en": "after-hours closing cleanup after visitors have left",
         "phrase_ko": "방문객들이 떠난 뒤의 폐점 정리 시간으로",
         "tags": [
           "occasion",
@@ -105795,22 +105901,58 @@
           "cleanup",
           "after",
           "hours"
+        ],
+        "requires_primary_any_tags": [
+          "closing",
+          "cleanup",
+          "after-hours",
+          "after_hours",
+          "visitors",
+          "정리",
+          "폐점"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "action",
+          "count"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "action",
+            "target": "participants",
+            "property": "activity"
+          },
+          {
+            "dimension": "count",
+            "target": "scene",
+            "property": "people"
+          }
         ]
       },
       {
         "id": "holiday_family_gathering",
-        "ko": "명절 가족 모임",
-        "en": "holiday family gathering with shared table objects and no readable cards",
-        "phrase_en": "during a holiday family gathering with no readable cards",
-        "phrase_ko": "읽히는 카드 없이 식탁 물건이 놓인 명절 가족 모임으로",
+        "ko": "테이블 물건을 함께 사용하는 명절 가족 모임",
+        "en": "holiday family gathering with shared table objects",
+        "phrase_en": "holiday family gathering with shared table objects",
+        "phrase_ko": "테이블 물건을 함께 사용하는 명절 가족 모임",
         "tags": [
           "occasion",
           "holiday",
-          "family",
-          "no_text"
+          "family"
         ],
         "weight": 0.8,
-        "embedding_text": "holiday family gathering with shared table objects and no readable cards",
+        "embedding_text": "holiday family gathering with shared table objects",
         "aliases": [
           "holiday",
           "family",
@@ -105820,24 +105962,62 @@
           "occasion",
           "holiday",
           "family",
-          "no_text",
           "gathering"
+        ],
+        "requires_primary_any_tags": [
+          "holiday",
+          "family",
+          "명절",
+          "가족"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "relationship",
+          "subject",
+          "count"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "relationship",
+            "target": "participants",
+            "property": "social_relationship"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects_and_participants"
+          },
+          {
+            "dimension": "count",
+            "target": "scene",
+            "property": "people"
+          }
         ]
       },
       {
         "id": "local_festival_day",
-        "ko": "동네 축제 당일",
-        "en": "local festival day with crowd, stalls, and non-readable signage",
-        "phrase_en": "during a local festival day with non-readable signage",
-        "phrase_ko": "읽히지 않는 표지와 가판, 군중이 있는 동네 축제 당일로",
+        "ko": "군중과 좌판과 표지판이 보이는 지역 축제일",
+        "en": "local festival day with a crowd, stalls and signage",
+        "phrase_en": "local festival day with a crowd, stalls and signage",
+        "phrase_ko": "군중과 좌판과 표지판이 보이는 지역 축제일",
         "tags": [
           "occasion",
           "festival",
-          "crowd",
-          "no_text"
+          "crowd"
         ],
         "weight": 0.9,
-        "embedding_text": "local festival day with crowd, stalls, and non-readable signage",
+        "embedding_text": "local festival day with a crowd, stalls and signage",
         "aliases": [
           "local",
           "festival",
@@ -105847,25 +106027,67 @@
           "occasion",
           "festival",
           "crowd",
-          "no_text",
           "local",
           "day"
+        ],
+        "requires_primary_any_tags": [
+          "festival",
+          "축제"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "setting",
+          "subject",
+          "count",
+          "text"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "setting",
+            "target": "scene",
+            "property": "venue"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects_and_participants"
+          },
+          {
+            "dimension": "count",
+            "target": "scene",
+            "property": "people"
+          },
+          {
+            "dimension": "text",
+            "target": "scene",
+            "property": "text"
+          }
         ]
       },
       {
         "id": "exhibition_opening",
-        "ko": "전시 오프닝",
-        "en": "exhibition opening with gallery visitors and abstract wall labels kept unreadable",
-        "phrase_en": "during an exhibition opening with wall labels kept unreadable",
-        "phrase_ko": "벽 라벨이 읽히지 않는 전시 오프닝으로",
+        "ko": "관람객과 추상적인 벽 라벨이 보이는 전시 개막",
+        "en": "exhibition opening with gallery visitors and abstract wall labels",
+        "phrase_en": "exhibition opening with gallery visitors and abstract wall labels",
+        "phrase_ko": "관람객과 추상적인 벽 라벨이 보이는 전시 개막",
         "tags": [
           "occasion",
           "exhibition",
-          "gallery",
-          "no_text"
+          "gallery"
         ],
         "weight": 0.9,
-        "embedding_text": "exhibition opening with gallery visitors and abstract wall labels kept unreadable",
+        "embedding_text": "exhibition opening with gallery visitors and abstract wall labels",
         "aliases": [
           "exhibition",
           "opening"
@@ -105874,16 +106096,61 @@
           "occasion",
           "exhibition",
           "gallery",
-          "no_text",
           "opening"
+        ],
+        "requires_primary_any_tags": [
+          "exhibition",
+          "gallery",
+          "전시",
+          "갤러리"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "setting",
+          "subject",
+          "count",
+          "text"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "setting",
+            "target": "scene",
+            "property": "venue"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects_and_participants"
+          },
+          {
+            "dimension": "count",
+            "target": "scene",
+            "property": "people"
+          },
+          {
+            "dimension": "text",
+            "target": "scene",
+            "property": "text"
+          }
         ]
       },
       {
         "id": "workshop_class_session",
-        "ko": "워크숍 수업 중",
+        "ko": "공유 도구와 재료를 사용하는 공방 수업",
         "en": "workshop class session with shared tools and materials",
-        "phrase_en": "during a workshop class session with shared tools and materials",
-        "phrase_ko": "공유 도구와 재료가 놓인 워크숍 수업 중으로",
+        "phrase_en": "workshop class session with shared tools and materials",
+        "phrase_ko": "공유 도구와 재료를 사용하는 공방 수업",
         "tags": [
           "occasion",
           "workshop",
@@ -105903,14 +106170,62 @@
           "class",
           "craft",
           "session"
+        ],
+        "requires_primary_any_tags": [
+          "workshop",
+          "woodcraft",
+          "craft",
+          "class",
+          "공방",
+          "수업"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "action",
+          "relationship",
+          "subject",
+          "material"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "action",
+            "target": "participants",
+            "property": "activity"
+          },
+          {
+            "dimension": "relationship",
+            "target": "participants",
+            "property": "social_relationship"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects"
+          },
+          {
+            "dimension": "material",
+            "target": "scene",
+            "property": "objects.material"
+          }
         ]
       },
       {
         "id": "community_volunteer_break",
-        "ko": "커뮤니티 봉사 후 쉬는 시간",
+        "ko": "지역 공동 작업을 마친 자원봉사자들의 휴식",
         "en": "community volunteer break after shared local work",
-        "phrase_en": "during a community volunteer break after shared local work",
-        "phrase_ko": "지역 활동을 마친 뒤 커뮤니티 봉사 쉬는 시간으로",
+        "phrase_en": "community volunteer break after shared local work",
+        "phrase_ko": "지역 공동 작업을 마친 자원봉사자들의 휴식",
         "tags": [
           "occasion",
           "community",
@@ -105930,22 +106245,55 @@
           "volunteer",
           "local",
           "break"
+        ],
+        "requires_primary_any_tags": [
+          "volunteer",
+          "volunteers",
+          "봉사",
+          "자원봉사"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "relationship",
+          "count"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "relationship",
+            "target": "participants",
+            "property": "social_relationship"
+          },
+          {
+            "dimension": "count",
+            "target": "scene",
+            "property": "people"
+          }
         ]
       },
       {
         "id": "flea_market_bargain_day",
-        "ko": "벼룩시장 흥정이 오가는 날",
-        "en": "flea-market bargain day with tables of objects and no readable price tags",
-        "phrase_en": "during a flea-market bargain day with no readable price tags",
-        "phrase_ko": "읽히는 가격표 없이 물건 테이블이 놓인 벼룩시장 날로",
+        "ko": "물건이 놓인 테이블들이 보이는 벼룩시장 거래일",
+        "en": "flea-market bargain day with tables of objects",
+        "phrase_en": "flea-market bargain day with tables of objects",
+        "phrase_ko": "물건이 놓인 테이블들이 보이는 벼룩시장 거래일",
         "tags": [
           "occasion",
           "flea_market",
-          "shopping",
-          "no_text"
+          "shopping"
         ],
         "weight": 0.85,
-        "embedding_text": "flea-market bargain day with tables of objects and no readable price tags",
+        "embedding_text": "flea-market bargain day with tables of objects",
         "aliases": [
           "flea",
           "market",
@@ -105956,27 +106304,58 @@
           "occasion",
           "flea_market",
           "shopping",
-          "no_text",
           "flea",
           "market",
           "bargain",
           "day"
+        ],
+        "requires_primary_any_tags": [
+          "flea",
+          "bargain",
+          "벼룩시장"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "setting",
+          "subject"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "setting",
+            "target": "scene",
+            "property": "venue"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects"
+          }
         ]
       },
       {
         "id": "wedding_prep_waiting",
-        "ko": "결혼식 준비 중 대기 시간",
-        "en": "wedding preparation waiting moment with flowers and chairs, no readable programs",
-        "phrase_en": "during wedding preparation waiting, no readable programs",
-        "phrase_ko": "읽히는 식순 없이 꽃과 의자가 보이는 결혼식 준비 대기 시간으로",
+        "ko": "꽃과 의자가 보이는 결혼식 준비 중 대기",
+        "en": "wedding preparation waiting moment with flowers and chairs",
+        "phrase_en": "wedding preparation waiting moment with flowers and chairs",
+        "phrase_ko": "꽃과 의자가 보이는 결혼식 준비 중 대기",
         "tags": [
           "occasion",
           "wedding",
-          "waiting",
-          "no_text"
+          "waiting"
         ],
         "weight": 0.75,
-        "embedding_text": "wedding preparation waiting moment with flowers and chairs, no readable programs",
+        "embedding_text": "wedding preparation waiting moment with flowers and chairs",
         "aliases": [
           "wedding",
           "prep",
@@ -105986,24 +106365,55 @@
           "occasion",
           "wedding",
           "waiting",
-          "no_text",
           "prep"
+        ],
+        "requires_primary_any_tags": [
+          "wedding",
+          "bridal",
+          "결혼식"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "subject",
+          "setting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects"
+          },
+          {
+            "dimension": "setting",
+            "target": "scene",
+            "property": "venue"
+          }
         ]
       },
       {
         "id": "concert_queue_before_entry",
-        "ko": "공연 입장 전 대기줄",
-        "en": "concert queue before entry with wristbands and tickets kept unreadable",
-        "phrase_en": "in a concert queue before entry with tickets kept unreadable",
-        "phrase_ko": "티켓이 읽히지 않는 공연 입장 전 대기줄로",
+        "ko": "손목 밴드와 티켓이 보이는 공연 입장 전 대기열",
+        "en": "concert queue before entry with wristbands and tickets",
+        "phrase_en": "concert queue before entry with wristbands and tickets",
+        "phrase_ko": "손목 밴드와 티켓이 보이는 공연 입장 전 대기열",
         "tags": [
           "occasion",
           "concert",
-          "queue",
-          "no_text"
+          "queue"
         ],
         "weight": 0.85,
-        "embedding_text": "concert queue before entry with wristbands and tickets kept unreadable",
+        "embedding_text": "concert queue before entry with wristbands and tickets",
         "aliases": [
           "concert",
           "queue",
@@ -106014,24 +106424,61 @@
           "occasion",
           "concert",
           "queue",
-          "no_text",
           "before",
           "entry"
+        ],
+        "requires_primary_any_tags": [
+          "concert",
+          "공연"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "subject",
+          "appearance",
+          "count"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects_and_participants"
+          },
+          {
+            "dimension": "appearance",
+            "target": "participants",
+            "property": "accessories"
+          },
+          {
+            "dimension": "count",
+            "target": "scene",
+            "property": "people"
+          }
         ]
       },
       {
         "id": "performance_before_stage",
-        "ko": "무대에 오르기 전 순간",
-        "en": "before going on stage with backstage light and nerves",
-        "phrase_en": "just before going on stage with backstage light and nerves",
-        "phrase_ko": "백스테이지 조명과 긴장이 있는 무대 직전으로",
+        "ko": "무대에 오르기 전 대기 공간의 빛과 긴장된 기대 표정",
+        "en": "before going on stage with backstage light and visible nervous anticipation",
+        "phrase_en": "before going on stage with backstage light and visible nervous anticipation",
+        "phrase_ko": "무대에 오르기 전 대기 공간의 빛과 긴장된 기대 표정",
         "tags": [
           "occasion",
           "performance",
           "backstage"
         ],
         "weight": 0.8,
-        "embedding_text": "before going on stage with backstage light and nerves",
+        "embedding_text": "before going on stage with backstage light and visible nervous anticipation",
         "aliases": [
           "performance",
           "before",
@@ -106043,22 +106490,61 @@
           "backstage",
           "before",
           "stage"
+        ],
+        "requires_primary_any_tags": [
+          "performance",
+          "stage",
+          "backstage",
+          "무대"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "setting",
+          "lighting",
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "setting",
+            "target": "scene",
+            "property": "venue"
+          },
+          {
+            "dimension": "lighting",
+            "target": "scene",
+            "property": "source"
+          },
+          {
+            "dimension": "expression",
+            "target": "participants",
+            "property": "visible_affect"
+          }
         ]
       },
       {
         "id": "book_talk_gathering",
-        "ko": "북토크 모임",
-        "en": "book-talk gathering with books and chairs, no readable covers",
-        "phrase_en": "during a book-talk gathering with no readable covers",
-        "phrase_ko": "책 표지가 읽히지 않는 북토크 모임으로",
+        "ko": "책과 의자가 보이는 북토크 모임",
+        "en": "book-talk gathering with books and chairs",
+        "phrase_en": "book-talk gathering with books and chairs",
+        "phrase_ko": "책과 의자가 보이는 북토크 모임",
         "tags": [
           "occasion",
           "book",
-          "gathering",
-          "no_text"
+          "gathering"
         ],
         "weight": 0.75,
-        "embedding_text": "book-talk gathering with books and chairs, no readable covers",
+        "embedding_text": "book-talk gathering with books and chairs",
         "aliases": [
           "book",
           "talk",
@@ -106068,24 +106554,63 @@
           "occasion",
           "book",
           "gathering",
-          "no_text",
           "talk"
+        ],
+        "requires_primary_any_tags": [
+          "book",
+          "book-talk",
+          "book_talk",
+          "booktalk",
+          "북토크"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "subject",
+          "setting",
+          "count"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects_and_participants"
+          },
+          {
+            "dimension": "setting",
+            "target": "scene",
+            "property": "venue"
+          },
+          {
+            "dimension": "count",
+            "target": "scene",
+            "property": "people"
+          }
         ]
       },
       {
         "id": "hackathon_late_session",
-        "ko": "해커톤 후반부의 늦은 작업 시간",
-        "en": "late hackathon session with tired laptops and blurred screens",
-        "phrase_en": "during a late hackathon session with blurred screens",
-        "phrase_ko": "흐릿한 화면빛과 지친 노트북이 보이는 해커톤 후반 작업 시간으로",
+        "ko": "노트북과 흐릿한 화면이 보이는 늦은 해커톤 작업",
+        "en": "late hackathon session with laptops and blurred screens",
+        "phrase_en": "late hackathon session with laptops and blurred screens",
+        "phrase_ko": "노트북과 흐릿한 화면이 보이는 늦은 해커톤 작업",
         "tags": [
           "occasion",
           "hackathon",
-          "digital",
-          "no_text"
+          "digital"
         ],
         "weight": 0.8,
-        "embedding_text": "late hackathon session with tired laptops and blurred screens",
+        "embedding_text": "late hackathon session with laptops and blurred screens",
         "aliases": [
           "hackathon",
           "late",
@@ -106095,25 +106620,61 @@
           "occasion",
           "hackathon",
           "digital",
-          "no_text",
           "late",
           "session"
+        ],
+        "requires_primary_any_tags": [
+          "hackathon",
+          "해커톤"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "subject",
+          "camera",
+          "text"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects"
+          },
+          {
+            "dimension": "camera",
+            "target": "camera",
+            "property": "focus"
+          },
+          {
+            "dimension": "text",
+            "target": "scene",
+            "property": "text"
+          }
         ]
       },
       {
         "id": "neighborhood_meeting",
-        "ko": "동네 회의 모임",
-        "en": "neighborhood meeting with chairs in a circle and no readable papers",
-        "phrase_en": "during a neighborhood meeting with no readable papers",
-        "phrase_ko": "읽히는 문서 없이 의자가 원형으로 놓인 동네 회의로",
+        "ko": "의자를 원형으로 놓은 동네 회의",
+        "en": "neighborhood meeting with chairs in a circle",
+        "phrase_en": "neighborhood meeting with chairs in a circle",
+        "phrase_ko": "의자를 원형으로 놓은 동네 회의",
         "tags": [
           "occasion",
           "community",
-          "meeting",
-          "no_text"
+          "meeting"
         ],
         "weight": 0.75,
-        "embedding_text": "neighborhood meeting with chairs in a circle and no readable papers",
+        "embedding_text": "neighborhood meeting with chairs in a circle",
         "aliases": [
           "neighborhood",
           "meeting"
@@ -106122,16 +106683,61 @@
           "occasion",
           "community",
           "meeting",
-          "no_text",
           "neighborhood"
+        ],
+        "requires_primary_any_tags": [
+          "neighborhood",
+          "neighbourhood",
+          "동네",
+          "주민"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "setting",
+          "subject",
+          "count",
+          "relationship"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "setting",
+            "target": "scene",
+            "property": "venue"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects_and_participants"
+          },
+          {
+            "dimension": "count",
+            "target": "scene",
+            "property": "people"
+          },
+          {
+            "dimension": "relationship",
+            "target": "participants",
+            "property": "social_relationship"
+          }
         ]
       },
       {
         "id": "harvest_market_day",
-        "ko": "수확철 로컬 마켓 날",
+        "ko": "농산물 상자와 지역 사람들의 분주함이 보이는 수확철 시장",
         "en": "harvest-season local market day with produce crates and community bustle",
-        "phrase_en": "during a harvest-season local market day",
-        "phrase_ko": "농산물 상자와 동네 활기가 있는 수확철 로컬 마켓 날로",
+        "phrase_en": "harvest-season local market day with produce crates and community bustle",
+        "phrase_ko": "농산물 상자와 지역 사람들의 분주함이 보이는 수확철 시장",
         "tags": [
           "occasion",
           "harvest",
@@ -106151,22 +106757,70 @@
           "market",
           "local",
           "day"
+        ],
+        "requires_primary_any_tags": [
+          "harvest",
+          "수확"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "setting",
+          "subject",
+          "count",
+          "action"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "setting",
+            "target": "scene",
+            "property": "venue"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects_and_participants"
+          },
+          {
+            "dimension": "count",
+            "target": "scene",
+            "property": "people"
+          },
+          {
+            "dimension": "action",
+            "target": "participants",
+            "property": "activity"
+          },
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "season.phase"
+          }
         ]
       },
       {
         "id": "year_end_street_evening",
-        "ko": "연말 거리의 초저녁",
-        "en": "year-end street evening with seasonal lights and no readable signage",
-        "phrase_en": "on a year-end street evening with no readable signage",
-        "phrase_ko": "읽히는 간판 없이 계절 조명이 있는 연말 거리 초저녁으로",
+        "ko": "계절 장식 조명이 보이는 연말 거리의 저녁",
+        "en": "year-end street evening with seasonal lights",
+        "phrase_en": "year-end street evening with seasonal lights",
+        "phrase_ko": "계절 장식 조명이 보이는 연말 거리의 저녁",
         "tags": [
           "occasion",
           "year_end",
-          "street",
-          "no_text"
+          "street"
         ],
         "weight": 0.75,
-        "embedding_text": "year-end street evening with seasonal lights and no readable signage",
+        "embedding_text": "year-end street evening with seasonal lights",
         "aliases": [
           "year",
           "end",
@@ -106177,26 +106831,63 @@
           "occasion",
           "year_end",
           "street",
-          "no_text",
           "year",
           "end",
           "evening"
+        ],
+        "requires_primary_any_tags": [
+          "year-end",
+          "year_end",
+          "yearend",
+          "year",
+          "연말"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "setting",
+          "lighting"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "setting",
+            "target": "scene",
+            "property": "venue"
+          },
+          {
+            "dimension": "lighting",
+            "target": "scene",
+            "property": "source"
+          },
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "time_of_day"
+          },
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "season.phase"
+          }
         ]
       },
       {
         "id": "pop_up_launch_event",
-        "ko": "팝업 런칭 이벤트",
-        "en": "pop-up launch event with abstract displays and no readable branding",
-        "phrase_en": "during a pop-up launch event with no readable branding",
-        "phrase_ko": "읽히는 브랜드 문구 없이 추상 디스플레이가 놓인 팝업 런칭 이벤트로",
+        "ko": "추상적인 진열이 보이는 팝업 출시 행사",
+        "en": "pop-up launch event with abstract displays",
+        "phrase_en": "pop-up launch event with abstract displays",
+        "phrase_ko": "추상적인 진열이 보이는 팝업 출시 행사",
         "tags": [
           "occasion",
           "popup",
-          "launch",
-          "no_text"
+          "launch"
         ],
         "weight": 0.85,
-        "embedding_text": "pop-up launch event with abstract displays and no readable branding",
+        "embedding_text": "pop-up launch event with abstract displays",
         "aliases": [
           "pop",
           "launch",
@@ -106206,25 +106897,57 @@
           "occasion",
           "popup",
           "launch",
-          "no_text",
           "pop",
           "event"
+        ],
+        "requires_primary_any_tags": [
+          "popup",
+          "pop-up",
+          "launch",
+          "팝업"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "setting",
+          "subject"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "setting",
+            "target": "scene",
+            "property": "venue"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects"
+          }
         ]
       },
       {
         "id": "quiet_memorial_after_service",
-        "ko": "추모식 후 조용한 공간",
-        "en": "quiet memorial space after a service, respectful and non-graphic",
-        "phrase_en": "after a quiet memorial service, respectful and non-graphic",
-        "phrase_ko": "비그래픽이고 정중한 추모식 후 조용한 공간으로",
+        "ko": "추모 의식이 끝난 뒤 조용한 추모 공간",
+        "en": "quiet memorial space after a service",
+        "phrase_en": "quiet memorial space after a service",
+        "phrase_ko": "추모 의식이 끝난 뒤 조용한 추모 공간",
         "tags": [
           "occasion",
           "memorial",
-          "quiet",
-          "respectful"
+          "quiet"
         ],
         "weight": 0.55,
-        "embedding_text": "quiet memorial space after a service, respectful and non-graphic",
+        "embedding_text": "quiet memorial space after a service",
         "aliases": [
           "quiet",
           "memorial",
@@ -106235,15 +106958,48 @@
           "occasion",
           "memorial",
           "quiet",
-          "respectful",
           "after",
           "service"
+        ],
+        "requires_primary_any_tags": [
+          "memorial",
+          "funeral",
+          "추모",
+          "장례"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "setting",
+          "atmosphere"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "setting",
+            "target": "scene",
+            "property": "venue"
+          },
+          {
+            "dimension": "atmosphere",
+            "target": "scene",
+            "property": "ambient_state"
+          }
         ]
       },
       {
         "id": "afterparty_dawn_cleanup",
-        "ko": "애프터파티 새벽 정리 후의 맥락",
-        "en": "afterparty dawn cleanup context",
+        "ko": "컵과 의자가 정돈된 뒤풀이 새벽 정리 후의 조용한 맥락",
+        "en": "afterparty cleanup completed at dawn with cups and chairs arranged in a quiet afterglow",
         "weight": 0.56,
         "tags": [
           "occasion",
@@ -106260,12 +107016,57 @@
           "quiet afterglow",
           "cleanup"
         ],
-        "embedding_text": "afterparty dawn cleanup context, quiet afterglow, cups and chairs arranged without readable labels"
+        "embedding_text": "afterparty cleanup completed at dawn with cups and chairs arranged in a quiet afterglow",
+        "requires_primary_any_tags": [
+          "afterparty",
+          "after-party",
+          "뒤풀이",
+          "애프터파티"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "subject",
+          "setting",
+          "atmosphere"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects"
+          },
+          {
+            "dimension": "setting",
+            "target": "scene",
+            "property": "venue"
+          },
+          {
+            "dimension": "atmosphere",
+            "target": "scene",
+            "property": "ambient_state"
+          },
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "time_of_day"
+          }
+        ]
       },
       {
         "id": "last_summer_evening",
-        "ko": "마지막 여름 저녁 맥락",
-        "en": "last-summer evening context",
+        "ko": "계절의 여운과 따뜻하고 습한 빛이 있는 마지막 여름 저녁 맥락",
+        "en": "last-summer evening context with seasonal nostalgia and warm humid light",
         "weight": 0.54,
         "tags": [
           "occasion",
@@ -106282,12 +107083,48 @@
           "summer dusk",
           "nostalgia"
         ],
-        "embedding_text": "last-summer evening context, seasonal nostalgia, warm humid light"
+        "embedding_text": "last-summer evening context with seasonal nostalgia and warm humid light",
+        "requires_primary_any_tags": [
+          "summer",
+          "여름"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "lighting",
+          "atmosphere"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "lighting",
+            "target": "scene",
+            "property": "source"
+          },
+          {
+            "dimension": "atmosphere",
+            "target": "scene",
+            "property": "ambient_state"
+          },
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "time_of_day"
+          },
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "season.phase"
+          }
+        ]
       },
       {
         "id": "blackout_night_gathering",
-        "ko": "정전된 밤의 모임 맥락",
-        "en": "blackout night gathering context",
+        "ko": "정전된 밤에 촛불과 창빛으로 보이는 모임",
+        "en": "a night gathering during a power outage with candle and window light",
         "weight": 0.52,
         "tags": [
           "occasion",
@@ -106304,12 +107141,56 @@
           "candle gathering",
           "power outage"
         ],
-        "embedding_text": "blackout night gathering context, candle and window light, community stillness, no readable screens"
+        "embedding_text": "a night gathering during a power outage with candle and window light",
+        "requires_primary_any_tags": [
+          "blackout",
+          "outage",
+          "정전"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "lighting",
+          "count",
+          "subject"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "lighting",
+            "target": "scene",
+            "property": "source"
+          },
+          {
+            "dimension": "count",
+            "target": "scene",
+            "property": "people"
+          },
+          {
+            "dimension": "subject",
+            "target": "scene",
+            "property": "objects_and_participants"
+          },
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "time_of_day"
+          }
+        ]
       },
       {
         "id": "eclipse_evening_watch",
-        "ko": "일식/월식을 기다리는 저녁 맥락",
-        "en": "eclipse evening watch context",
+        "ko": "하늘을 함께 바라보며 일식이나 월식을 조용히 기다리는 저녁",
+        "en": "evening sky watching before an eclipse with a sky-facing group and quiet anticipation",
         "weight": 0.48,
         "tags": [
           "occasion",
@@ -106326,7 +107207,51 @@
           "sky watch",
           "event atmosphere"
         ],
-        "embedding_text": "eclipse evening watch context, sky-facing crowd arrangement and quiet anticipation without readable banners"
+        "embedding_text": "evening sky watching before an eclipse with a sky-facing group and quiet anticipation",
+        "requires_primary_any_tags": [
+          "eclipse",
+          "일식",
+          "월식"
+        ],
+        "affected_dimensions": [
+          "timing",
+          "event",
+          "count",
+          "action",
+          "expression"
+        ],
+        "affected_properties": [
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "occasion.phase"
+          },
+          {
+            "dimension": "event",
+            "target": "scene",
+            "property": "occasion.activity"
+          },
+          {
+            "dimension": "count",
+            "target": "scene",
+            "property": "people"
+          },
+          {
+            "dimension": "action",
+            "target": "participants",
+            "property": "activity"
+          },
+          {
+            "dimension": "expression",
+            "target": "participants",
+            "property": "visible_affect"
+          },
+          {
+            "dimension": "timing",
+            "target": "scene",
+            "property": "time_of_day"
+          }
+        ]
       }
     ],
     "body_pose": [

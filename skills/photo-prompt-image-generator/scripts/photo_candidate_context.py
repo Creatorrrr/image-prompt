@@ -15,10 +15,12 @@ from typing import Any
 from photo_contracts import property_effects_allowed
 
 VERSION = "photo-candidate-context/v1"
+ALTERNATIVE_VERSION = "photo-candidate-context/v2"
 RAW_FIELDS = (
     "requires_any_tags", "requires_any", "requires_all_tags", "requires_all",
     "requires_primary_any_tags", "exclude_any_tags", "exclude_any",
     "for_any", "for_all", "exclude_for_any", "not_for", "hard_guards",
+    "primary_context_alternatives",
 )
 PRESERVED_FIELDS = (
     "source_candidate_id", "entry_id", "affected_dimensions",
@@ -42,9 +44,33 @@ def strings(value: Any) -> list[str]:
                    if isinstance(item, str) and item.strip()})
 
 
+def primary_context_alternatives(value: Any) -> list[list[str]]:
+    """Source-authored OR alternatives; every term in a group is required."""
+    if value is None:
+        return []
+    if (not isinstance(value, list) or not 1 <= len(value) <= 8
+            or any(not isinstance(group, list) or not 1 <= len(group) <= 12
+                   or any(not isinstance(term, str) or not term.strip() for term in group)
+                   or len(strings(group)) != len(group) for group in value)):
+        raise ValueError("primary_context_alternatives requires bounded non-empty unique string groups")
+    groups = [strings(group) for group in value]
+    if len({tuple(group) for group in groups}) != len(groups):
+        raise ValueError("primary_context_alternatives contains duplicate groups")
+    return groups
+
+
+def primary_context_matches(entry: dict, context: set[str]) -> bool:
+    required = set(strings(entry.get("requires_primary_any_tags")))
+    alternatives = primary_context_alternatives(entry.get("primary_context_alternatives"))
+    return (not required and not alternatives) or bool(required & context) or any(
+        set(group) <= context for group in alternatives
+    )
+
+
 def compile_context(entry: dict, source_id: str, quality_sources: list[dict] | None = None) -> dict:
     """Preserve explicit prerequisites and derived guards without admission tags."""
     raw = {key: copy.deepcopy(entry[key]) for key in RAW_FIELDS if entry.get(key)}
+    alternatives = primary_context_alternatives(entry.get("primary_context_alternatives"))
     requirements = []
 
     def add(identifier, operator, context, values, sources):
@@ -66,7 +92,15 @@ def compile_context(entry: dict, source_id: str, quality_sources: list[dict] | N
         values = [value for field in fields for value in strings(raw.get(field))]
         sources = [{"kind": "entry", "id": source_id, "field": field}
                    for field in fields if raw.get(field)]
-        add("entry:" + name, operator, context, values, sources)
+        if name == "primary_any" and alternatives:
+            choices = [[value] for value in sorted(set(values))] + alternatives
+            sources.append({"kind": "entry", "id": source_id,
+                            "field": "primary_context_alternatives"})
+            requirements.append({"id": "entry:primary_any", "operator": "any_of_all",
+                                 "context": "primary", "values": sorted({value for group in choices for value in group}),
+                                 "alternatives": choices, "sources": sources})
+        else:
+            add("entry:" + name, operator, context, values, sources)
     hard = raw.get("hard_guards") or {}
     if not isinstance(hard, dict):
         hard = {}
@@ -84,7 +118,7 @@ def compile_context(entry: dict, source_id: str, quality_sources: list[dict] | N
         add("quality:primary_any", "any", "primary", quality_values,
             [{"kind": "quality_guard", "id": row["id"],
               "field": "requires_primary_any_tags"} for row in quality_sources])
-    material = {"contract_version": VERSION, "source_id": source_id,
+    material = {"contract_version": ALTERNATIVE_VERSION if alternatives else VERSION, "source_id": source_id,
                 "raw_requirements": raw, "requirements": requirements,
                 "quality_layer_sources": quality_sources,
                 "evaluation": "final_scene_literal_evidence_and_declared_scope",
@@ -99,7 +133,9 @@ def _contains(text: str, phrase: str) -> bool:
 
 
 def audit_context(candidate: dict, review: dict, *, prompt_en: str, core: dict,
-                  brief: dict, subject_category: str, allowed: set[str]) -> list[dict]:
+                  brief: dict, subject_category: str, allowed: set[str],
+                  scope_dimensions: set[str] | None = None,
+                  check: str = "adult_contextual_prerequisites") -> list[dict]:
     """Validate grounded declarations, not semantic truth or perceptual strength."""
     contract = candidate.get("context_prerequisites")
     if contract is None:
@@ -112,14 +148,14 @@ def audit_context(candidate: dict, review: dict, *, prompt_en: str, core: dict,
     cid = candidate.get("id")
 
     def fail(reason, requirement_id=None, status="unsupported"):
-        item = {"check": "adult_contextual_prerequisites", "candidate_id": cid,
+        item = {"check": check, "candidate_id": cid,
                 "status": status, "reason": reason}
         if requirement_id:
             item["requirement_id"] = requirement_id
         failures.append(item)
 
     source_id = str(candidate.get("source_candidate_id") or candidate.get("id") or "")
-    if (not isinstance(contract, dict) or contract.get("contract_version") != VERSION
+    if (not isinstance(contract, dict) or contract.get("contract_version") not in {VERSION, ALTERNATIVE_VERSION}
             or contract.get("source_id") != source_id
             or contract.get("canonical_sha256") != digest(
                 {key: value for key, value in contract.items() if key != "canonical_sha256"})
@@ -127,6 +163,11 @@ def audit_context(candidate: dict, review: dict, *, prompt_en: str, core: dict,
         fail("declared prerequisite contract must match its source-bound requirements")
         return failures
     raw = contract["raw_requirements"]
+    try:
+        primary_context_alternatives(raw.get("primary_context_alternatives"))
+    except (ValueError, AttributeError):
+        fail("primary context alternatives must retain their declared bounded groups")
+        return failures
     quality = contract.get("quality_layer_sources", [])
     def valid_values(value, allow_empty=False):
         return (isinstance(value, str) and bool(value.strip())) or (
@@ -137,7 +178,7 @@ def audit_context(candidate: dict, review: dict, *, prompt_en: str, core: dict,
                    or not row["id"].strip() or not valid_values(row.get("requires_primary_any_tags"))
                    for row in quality)
             or any(not valid_values(value)
-                   for key, value in raw.items() if key != "hard_guards")
+                   for key, value in raw.items() if key not in {"hard_guards", "primary_context_alternatives"})
             or ("hard_guards" in raw and (
                 not isinstance(raw["hard_guards"], dict)
                 or set(raw["hard_guards"]) - {"requires_facets", "exclude_facets"}
@@ -154,7 +195,7 @@ def audit_context(candidate: dict, review: dict, *, prompt_en: str, core: dict,
         return failures
     by_id = {row.get("id"): row for row in requirements if isinstance(row, dict)}
     if (len(by_id) != len(requirements) or any(
-            not isinstance(key, str) or row.get("operator") not in {"any", "all", "none"}
+            not isinstance(key, str) or row.get("operator") not in {"any", "all", "none", "any_of_all"}
             or not strings(row.get("values")) or strings(row.get("values")) != row.get("values")
             or not row.get("sources") for key, row in by_id.items())):
         fail("prerequisites require unique source-backed any/all/none conditions")
@@ -178,6 +219,8 @@ def audit_context(candidate: dict, review: dict, *, prompt_en: str, core: dict,
     seen = set()
     axis = (brief.get("axes") or {}).get(candidate.get("axis")) or {}
     axis_effects = {value for value in axis.get("affected_dimensions") or [] if isinstance(value, str)}
+    if scope_dimensions is not None:
+        axis_effects = set(scope_dimensions)
     for witness in evidence:
         if not isinstance(witness, dict):
             fail("each final-context witness must be an object")
@@ -245,6 +288,8 @@ def audit_context(candidate: dict, review: dict, *, prompt_en: str, core: dict,
             satisfied = bool(values & supported)
         elif operator == "all":
             satisfied = values <= supported
+        elif operator == "any_of_all":
+            satisfied = any(set(group) <= supported for group in requirement["alternatives"])
         else:
             satisfied = values <= absent.get(rid, set()) and not (values & all_present)
         if not satisfied:
