@@ -1,0 +1,478 @@
+{
+  "request_envelope_input": {
+    "contract_version": "photo-request-envelope/v1",
+    "provenance": "requesting_user",
+    "request_id": "devanagari-sari-excluded-ko",
+    "request_text": "성인 한 명이 평범한 셔츠를 입고 서 있는 중립적인 인물 사진을 촬영해줘. साड़ी 의상은 제외해줘. 배경은 무늬 없는 스튜디오 벽으로 해줘.",
+    "request_sha256": "bc1eab565fd43e9fd4f5e435fb3cb9736c6aba13d9187762873885701b31fd38",
+    "active_spans": [
+      {
+        "span_id": "request",
+        "start": 0,
+        "end": 80,
+        "text": "성인 한 명이 평범한 셔츠를 입고 서 있는 중립적인 인물 사진을 촬영해줘. साड़ी 의상은 제외해줘. 배경은 무늬 없는 스튜디오 벽으로 해줘."
+      }
+    ]
+  },
+  "creative_controls": {
+    "contract_version": "photo-creative-controls/v4",
+    "provenance": "resolved_precore",
+    "source_request_sha256": "bc1eab565fd43e9fd4f5e435fb3cb9736c6aba13d9187762873885701b31fd38",
+    "definitions": {
+      "contract_version": "photo-creative-control-definitions/v4",
+      "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content or artistic judgment. Expression levels describe prominence in the whole image; creativity levels describe interpretive freedom. Neither measures exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Creativity leaves style, extra props and surreal treatment open to the request and artistic judgment. Emphasis directs only active sensual and fetish axes without changing their intensities. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. Sensual and fetish may share the same expressive choice.",
+      "controls": {
+        "sensual": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+          "levels": {
+            "0": "No added sensual treatment; preserve explicitly requested content.",
+            "1": "This expression is a subtle supporting quality.",
+            "2": "This expression is clearly readable in the image.",
+            "3": "This expression leads the image's appeal and direction."
+          }
+        },
+        "fetish": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+          "levels": {
+            "0": "No added fetish treatment; preserve explicitly requested content.",
+            "1": "This focus is a subtle supporting quality.",
+            "2": "This focus is clearly readable in the image.",
+            "3": "This focus leads the image's appeal and direction."
+          }
+        },
+        "adult_appeal_emphasis": {
+          "type": "enum",
+          "choices": [
+            "auto",
+            "sensual_led",
+            "balanced",
+            "fetish_led"
+          ],
+          "default": "auto",
+          "definition": "Relative leadership of the active sensual and fetish axes within one coherent expression.",
+          "choice_descriptions": {
+            "auto": "Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.",
+            "sensual_led": "Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.",
+            "balanced": "Give both active axes comparable influence within one coherent expression; separate styling details are not required.",
+            "fetish_led": "Let the distinctive focus of attraction or fascination lead, with any active sensual expression supporting it."
+          }
+        },
+        "creativity": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Freedom to interpret unspecified choices and explore relationships within the request.",
+          "levels": {
+            "0": "Realize the request directly, filling only what is needed for a coherent image.",
+            "1": "Introduce restrained variations close to the requested direction.",
+            "2": "Actively reinterpret open choices into a coherent authorial direction.",
+            "3": "Boldly explore unexpected relationships and interpretations while preserving the request's core meaning."
+          }
+        },
+        "viewer_experience": {
+          "type": "boolean",
+          "default": false,
+          "definition": "Expose the detailed viewer-experience review when enabled. Always consider the intended impression in interpreted_intent, even when this additional review is off."
+        },
+        "reference_edit_mode": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "identity",
+            "younger_self",
+            "brand_board"
+          ],
+          "default": "off",
+          "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
+        },
+        "surreal": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.",
+          "levels": {
+            "0": "No added surreal treatment; preserve explicitly requested fantasy and impossible elements.",
+            "1": "Surreal qualities are a subtle supporting presence.",
+            "2": "Surreal qualities are clearly readable in the image.",
+            "3": "Surreal qualities lead the image's main impression and direction; a single coherent relationship may carry this prominence."
+          }
+        },
+        "trend_layer": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "scrapbook_collage",
+            "action_figure_packaging",
+            "retro_flash",
+            "clean_brand_portrait"
+          ],
+          "default": "off",
+          "definition": "Consider the chosen treatment from the initial composition. Refine it later without adding it twice. Off does not remove a treatment explicitly present in the request."
+        }
+      }
+    },
+    "definitions_sha256": "d044ade0f6af62c35b81d4b035b130a8819c4a15ca47a1409a59860a1928a3fa",
+    "overrides": {
+      "sensual": 0,
+      "fetish": 0,
+      "surreal": 0,
+      "creativity": 1
+    },
+    "context": {
+      "subject_category": "human",
+      "no_people": false,
+      "explicit_nonsexual": true
+    },
+    "seed": 17,
+    "controls": {
+      "sensual": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "fetish": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "adult_appeal_emphasis": {
+        "value": "auto",
+        "source": "saved_setting"
+      },
+      "creativity": {
+        "value": 1,
+        "source": "request_override"
+      },
+      "viewer_experience": {
+        "value": false,
+        "source": "saved_setting"
+      },
+      "reference_edit_mode": {
+        "value": "off",
+        "source": "saved_setting"
+      },
+      "surreal": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "trend_layer": {
+        "value": "off",
+        "source": "saved_setting"
+      }
+    },
+    "adult_appeal": {
+      "sensual": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "explicit_nonsexual_request"
+      },
+      "fetish": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "explicit_nonsexual_request"
+      }
+    },
+    "resolved_emphasis": "balanced",
+    "emphasis_resolution": {
+      "active": false,
+      "reason": "Both effective intensities are zero; no added emphasis is active."
+    },
+    "authoring_brief": "sensual: 0 (range: 0–3)\nMeaning: Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.\nLevel: No added sensual treatment; preserve explicitly requested content.\n\nfetish: 0 (range: 0–3)\nMeaning: Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.\nLevel: No added fetish treatment; preserve explicitly requested content.\n\nsurreal: 0 (range: 0–3)\nMeaning: Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.\nLevel: No added surreal treatment; preserve explicitly requested fantasy and impossible elements.\n\ncreativity: 1 (range: 0–3)\nMeaning: Freedom to interpret unspecified choices and explore relationships within the request.\nLevel: Introduce restrained variations close to the requested direction.\n\nadult_appeal_emphasis: auto (choices: auto, sensual_led, balanced, fetish_led)\nMeaning: Relative leadership of the active sensual and fetish axes within one coherent expression.\nSelected: Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.\nEffective: inactive\nResolution: Both effective intensities are zero; no added emphasis is active.\n\nChoose a coherent expression suited to this particular scene.\nSensual and fetish may share the same expressive choice.\nExpression levels describe prominence; creativity describes interpretive freedom. Neither requires a garment or detail count.\n\nOther resolved controls:\nviewer_experience: false\nreference_edit_mode: \"off\"\ntrend_layer: \"off\"",
+    "canonical_sha256": "e737b67cbb7aacfe210d9b961135d8765e21b1d640d9bcf8157efdfdd1c451b8"
+  },
+  "authorial_core_input": {
+    "contract_version": "photo-authorial-core/v3",
+    "provenance": "agent_prepack",
+    "interpreted_intent": "Preserve the literal requester meaning, its visible owner and the specified scene.",
+    "subject": "An adult person wearing an ordinary shirt",
+    "setting": "beside a plain studio wall",
+    "event": "stands for the requested photograph",
+    "visual_priorities": [
+      "The ordinary shirt remains fully worn on the person.",
+      "The frame gives the requested subject and its stated visible detail equal clarity."
+    ],
+    "baseline_prompt_en": "An adult person wearing an ordinary shirt beside a plain studio wall stands for the requested photograph. The ordinary shirt remains fully worn on the person. Both feet rest firmly on the studio floor. Both arms hang relaxed beside the torso with slightly bent elbows. Soft side light reveals the visible surface outlines. The frame gives the requested subject and its stated visible detail equal clarity.",
+    "user_definitions": [],
+    "interpretation_provenance": [
+      {
+        "term": "governing request",
+        "source_text": "성인 한 명이 평범한 셔츠를 입고 서 있는 중립적인 인물 사진을 촬영해줘. साड़ी 의상은 제외해줘. 배경은 무늬 없는 스튜디오 벽으로 해줘.",
+        "basis": "request_context",
+        "resolution": "The named garment is worn by the requested person; printed words belong to the card; exclusions stay outside the positive scene.",
+        "sources": []
+      }
+    ],
+    "unresolved_ambiguities": [],
+    "user_exclusions": [
+      "साड़ी"
+    ],
+    "runtime_forbidden_labels": [],
+    "intent_lock": {
+      "contract_version": "photo-intent-lock/v2",
+      "priority": "requesting_user",
+      "semantic_anchors": [
+        {
+          "anchor_id": "anchor_concept",
+          "source_text": "성인 한 명이 평범한 셔츠를 입고 서 있는 중립적인 인물 사진을 촬영해줘. साड़ी 의상은 제외해줘. 배경은 무늬 없는 스튜디오 벽으로 해줘.",
+          "dimension": "concept",
+          "prompt_evidence": "An adult person wearing an ordinary shirt beside a plain studio wall stands for the requested photograph"
+        },
+        {
+          "anchor_id": "anchor_subject",
+          "source_text": "성인 한 명이 평범한 셔츠를 입고 서 있는 중립적인 인물 사진을 촬영해줘. साड़ी 의상은 제외해줘. 배경은 무늬 없는 스튜디오 벽으로 해줘.",
+          "dimension": "subject",
+          "prompt_evidence": "An adult person wearing an ordinary shirt"
+        },
+        {
+          "anchor_id": "anchor_setting",
+          "source_text": "성인 한 명이 평범한 셔츠를 입고 서 있는 중립적인 인물 사진을 촬영해줘. साड़ी 의상은 제외해줘. 배경은 무늬 없는 스튜디오 벽으로 해줘.",
+          "dimension": "setting",
+          "prompt_evidence": "beside a plain studio wall"
+        },
+        {
+          "anchor_id": "anchor_event",
+          "source_text": "성인 한 명이 평범한 셔츠를 입고 서 있는 중립적인 인물 사진을 촬영해줘. साड़ी 의상은 제외해줘. 배경은 무늬 없는 스튜디오 벽으로 해줘.",
+          "dimension": "event",
+          "prompt_evidence": "stands for the requested photograph"
+        }
+      ],
+      "locked_dimensions": [
+        "concept",
+        "subject",
+        "setting",
+        "event"
+      ],
+      "open_dimensions": [
+        "appearance",
+        "timing",
+        "atmosphere",
+        "style",
+        "material",
+        "color",
+        "framing",
+        "composition",
+        "camera",
+        "lighting",
+        "pose",
+        "action",
+        "relationship",
+        "expression",
+        "body_geometry"
+      ]
+    },
+    "style": {
+      "domain": "general_photo",
+      "family": "scene-led photographic observation",
+      "evidence": [
+        "The ordinary shirt remains fully worn on the person.",
+        "Soft side light reveals the visible surface outlines.",
+        "The frame gives the requested subject and its stated visible detail equal clarity."
+      ]
+    },
+    "semantic_assertions": [
+      {
+        "assertion_id": "primary_subject",
+        "dimension": "subject",
+        "polarity": "required",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "subject"
+        ],
+        "axes": {
+          "subject_category": "human"
+        },
+        "evidence": {
+          "subject_phrase": "An adult person wearing an ordinary shirt"
+        }
+      },
+      {
+        "assertion_id": "camera_review",
+        "dimension": "camera",
+        "polarity": "advisory",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "axes": {
+          "camera_axis_review": "camera_axis_review_v1",
+          "capture_owner": "unprescribed",
+          "direction_requirement": "open",
+          "height_requirement": "open"
+        },
+        "evidence": {}
+      }
+    ],
+    "request_lineage": null,
+    "variation_key": "devanagari-sari-excluded-ko",
+    "source_request": "성인 한 명이 평범한 셔츠를 입고 서 있는 중립적인 인물 사진을 촬영해줘. साड़ी 의상은 제외해줘. 배경은 무늬 없는 스튜디오 벽으로 해줘.",
+    "creative_controls_sha256": "e737b67cbb7aacfe210d9b961135d8765e21b1d640d9bcf8157efdfdd1c451b8"
+  },
+  "embodiment_review": {
+    "contract_version": "photo-embodiment-review/v1",
+    "provenance": "agent_prepack",
+    "scope": "body_action",
+    "summary": "The standing person has one connected body, relaxed arms and visible floor support. This authored review does not claim rendered pixels.",
+    "checks": {
+      "body_ownership": {
+        "status": "supported",
+        "reason": "The literal evidence accounts for this body relation in the frozen scene.",
+        "prompt_evidence": [
+          "An adult person wearing an ordinary shirt"
+        ]
+      },
+      "joint_chain_and_reach": {
+        "status": "supported",
+        "reason": "The literal evidence accounts for this body relation in the frozen scene.",
+        "prompt_evidence": [
+          "Both arms hang relaxed beside the torso with slightly bent elbows."
+        ]
+      },
+      "support_and_balance": {
+        "status": "supported",
+        "reason": "The literal evidence accounts for this body relation in the frozen scene.",
+        "prompt_evidence": [
+          "Both feet rest firmly on the studio floor."
+        ]
+      },
+      "contact_and_space": {
+        "status": "supported",
+        "reason": "The literal evidence accounts for this body relation in the frozen scene.",
+        "prompt_evidence": [
+          "The ordinary shirt remains fully worn on the person."
+        ]
+      },
+      "visibility_and_projection": {
+        "status": "supported",
+        "reason": "The literal evidence accounts for this body relation in the frozen scene.",
+        "prompt_evidence": [
+          "The ordinary shirt remains fully worn on the person."
+        ]
+      }
+    },
+    "prompt_sha256": "fc50b053d2fbdfa9dcf21322fbfaa871fb8f6d3ef747ff6faaf332387b3d30ed"
+  },
+  "feature_selection": {
+    "selected": [
+      {
+        "category_id": "feature.subject",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The whole request is realized by: An adult person wearing an ordinary shirt",
+        "reason": "Preserve requester meaning.",
+        "baseline_evidence": "An adult person wearing an ordinary shirt"
+      },
+      {
+        "category_id": "feature.location",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The whole request is realized by: beside a plain studio wall",
+        "reason": "Preserve requester meaning.",
+        "baseline_evidence": "beside a plain studio wall"
+      },
+      {
+        "category_id": "feature.situation",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The whole request is realized by: stands for the requested photograph",
+        "reason": "Preserve requester meaning.",
+        "baseline_evidence": "stands for the requested photograph"
+      },
+      {
+        "category_id": "feature.light_quality",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "Make the requested scene legible.",
+        "baseline_evidence": "Soft side light reveals the visible surface outlines."
+      },
+      {
+        "category_id": "feature.visual_hierarchy",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "Make the requested scene legible.",
+        "baseline_evidence": "The frame gives the requested subject and its stated visible detail equal clarity."
+      }
+    ],
+    "contract_version": "photo-precore-feature-selection/v1",
+    "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+    "catalog_schema_version": "photo-precore-feature-catalog/v1",
+    "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+    "request_id": "devanagari-sari-excluded-ko",
+    "request_sha256": "bc1eab565fd43e9fd4f5e435fb3cb9736c6aba13d9187762873885701b31fd38",
+    "active_span_ids": [
+      "request"
+    ],
+    "baseline_prompt_sha256": "fc50b053d2fbdfa9dcf21322fbfaa871fb8f6d3ef747ff6faaf332387b3d30ed"
+  },
+  "feature_selection_audit": {
+    "valid": true,
+    "contract_version": "photo-precore-feature-selection/v1",
+    "request_id": "devanagari-sari-excluded-ko",
+    "selected_category_ids": [
+      "feature.subject",
+      "feature.location",
+      "feature.situation",
+      "feature.light_quality",
+      "feature.visual_hierarchy"
+    ],
+    "selected_count": 5,
+    "warnings": [
+      "repeated_reason"
+    ]
+  },
+  "freeze_receipt": {
+    "schema_version": "photo-core-freeze/v1",
+    "files": {
+      "request_raw": "bc1eab565fd43e9fd4f5e435fb3cb9736c6aba13d9187762873885701b31fd38",
+      "request_envelope_input": "2f95143e40c97390af2e86364b22a9efc63e5abfc575ceaf01808dbd6073015e",
+      "creative_controls": "8eff7ab33ed9a05d8edebc3cb6d7baa0d2c7cc8b09e9bdd639f6e98ff9e77d06",
+      "authorial_core_input": "691cb7f02119e22ed033328ef53f384d8fffe931645beb84ff78d97bf34388d1",
+      "authorial_core_normalized": "5649264448eedef9d0d053e08e66228b4cfa6b7ea256bac0af7e548379554a8c",
+      "request_envelope_normalized": "aae9ca67ffc234847dc384bf7e7aee1d7cb39f3a3ca3e6dd3a34e06743eb9213",
+      "embodiment_review": "17a9a9ed7a5c7e5fac6c15ea7ce98256ff5aa6f6676596f524b144bb8115fcc9",
+      "feature_selection": "87694438f67a8354725ce5d2bc88dfb77bc3ddbd4c550173155a74382e1fb244",
+      "feature_selection_audit": "e1e413c4fd9868ce07d755530d305f2597b7013b348152e58b4d61a18725ff7c",
+      "catalog": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+      "baseline": "fc50b053d2fbdfa9dcf21322fbfaa871fb8f6d3ef747ff6faaf332387b3d30ed",
+      "freeze_author_input_hashes": "6ebf973f4a1b92c9dd1c9981d1d4be3b738ae339f6ba07098b7d73cb02523d16"
+    },
+    "contracts": {
+      "envelope": "20e20a815fd8d4f33cfad1e820191189b0e97a20294e5ea7999aaf83b295e3a2",
+      "core": "a8cbd4e1eab306c4ef991696ccd6feb0a8597fde92c8477dd8cb7a4d2f677958",
+      "intent_lock": "0816b216c9f4f4fe05acdc6453ed0a9c1b03d0b1cc388e7a1285e1a1582c594d",
+      "controls": "e737b67cbb7aacfe210d9b961135d8765e21b1d640d9bcf8157efdfdd1c451b8"
+    }
+  }
+}

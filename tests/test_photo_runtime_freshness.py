@@ -6,7 +6,10 @@ called; structural index refreshes below change only source metadata, not texts.
 from __future__ import annotations
 
 import contextlib
+import builtins
 import copy
+import hashlib
+import importlib.util
 import io
 import json
 import os
@@ -14,6 +17,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import types
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -31,7 +35,37 @@ class SlotCacheTests(unittest.TestCase):
     def test_v28_frozen_original_statistics_and_unicode_scope(self):
         path = Path(__file__).parent / "fixtures/photo_prompt/runtime_freshness_v1.json"
         expected = decode(path.read_bytes())
-        self.assertEqual(pg.build_core_slot_index(canonical_bytes(expected["slot_corpus"]).decode()), expected["full_expected_index"])
+        root = Path(__file__).resolve().parents[1]
+        _, parent = fixtures._v29_transition(root)
+        row = next(row for row in parent['members']
+                   if row['path'] == 'skills/photo-prompt-image-generator/scripts/prompt_generator.py')
+        source = fixtures._v24_verified_payload(root, row)
+        self.assertEqual(hashlib.sha256(source).hexdigest(), expected['original_builder_sha256'])
+        tokenizer_path = fixtures.v28_source_path('skills/photo-prompt-image-generator/scripts/bm25f_retrieval.py')
+        spec = importlib.util.spec_from_file_location('_v28_original_tokenizer', tokenizer_path)
+        tokenizer = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(tokenizer)
+        original = types.ModuleType('_v28_original_slot_builder')
+        original.__file__ = str(root / row['source_path'])
+        def historical_import(name, globals=None, locals=None, fromlist=(), level=0):
+            if level == 0 and name == 'bm25f_retrieval':
+                return tokenizer
+            return builtins.__import__(name, globals, locals, fromlist, level)
+        original.__dict__['__builtins__'] = dict(vars(builtins), __import__=historical_import)
+        with mock.patch.dict(sys.modules, {original.__name__: original}):
+            exec(compile(source, original.__file__, 'exec'), original.__dict__)
+            self.assertEqual(original._core_slot_index(canonical_bytes(expected['slot_corpus']).decode()),
+                             expected['full_expected_index'])
+
+    def test_current_statistics_preserve_frozen_projection_and_reject_previous_recipe(self):
+        expected = decode((Path(__file__).parent / 'fixtures/photo_prompt/runtime_freshness_v1.json').read_bytes())
+        current = pg.build_core_slot_index(canonical_bytes(expected['slot_corpus']).decode())
+        previous = expected['full_expected_index']
+        self.assertNotEqual(current['tokenizer_recipe'], previous['tokenizer_recipe'])
+        self.assertEqual({key: value for key, value in current.items() if key != 'tokenizer_recipe'},
+                         {key: value for key, value in previous.items() if key != 'tokenizer_recipe'})
+        with self.assertRaisesRegex(ValueError, 'tokenizer recipe'):
+            pg.rank_bm25f(previous, {'slot_focus': 'blue cup'})
 
     def setUp(self):
         temporary = tempfile.TemporaryDirectory(prefix="photo-slot-cache-")

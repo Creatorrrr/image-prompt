@@ -16,14 +16,9 @@ from functools import lru_cache
 from typing import Any, Iterable, Mapping, Optional, Sequence
 
 
-BM25F_TOKENIZER_RECIPE_VERSION = "photo-bm25f-tokenizer/v3"
+BM25F_TOKENIZER_RECIPE_VERSION = "photo-bm25f-tokenizer/v4"
 BM25F_INDEX_RECIPE_VERSION = "photo-bm25f-index/v1"
 
-_SEGMENT_RE = re.compile(
-    r"[a-z0-9]+(?:[_+.-][a-z0-9]+)*|[\uac00-\ud7a3]+|"
-    r"[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff]+",
-    flags=re.IGNORECASE,
-)
 _HANGUL_RE = re.compile(r"^[\uac00-\ud7a3]+$")
 _JAPANESE_OR_HAN_RE = re.compile(
     r"^[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff]+$"
@@ -99,6 +94,66 @@ def normalize_bm25f_text(value: Any) -> str:
     )
 
 
+@lru_cache(maxsize=4096)
+def _character_group(character: str) -> tuple[Optional[str], bool]:
+    """Keep legacy word groups and recognize other Unicode letters/marks.
+
+    Unicode names provide conservative alphabet boundaries without adding a
+    runtime dependency or prompt-domain vocabulary. Combining accents inherit
+    the preceding alphabet; alphabet-specific vowel marks stay with it.
+    """
+    point = ord(character)
+    if character.isascii():
+        return ("latin", False) if character.isalnum() else (None, False)
+    if 0xAC00 <= point <= 0xD7A3:
+        return "hangul_syllables", False
+    if (0x3040 <= point <= 0x30FF or 0x3400 <= point <= 0x4DBF
+            or 0x4E00 <= point <= 0x9FFF):
+        return "japanese_han", False
+    category = unicodedata.category(character)
+    mark = category.startswith("M")
+    if not (category.startswith("L") or category == "Nd" or mark):
+        return None, False
+    name = unicodedata.name(character, "")
+    group = name.split(" ", 1)[0]
+    # Some alphabets have two-word names; do not fuse unrelated OLD scripts
+    # or TAI scripts merely because their names share the first word.
+    if group in {"OLD", "NEW", "TAI", "IMPERIAL", "PAHAWH", "MEETEI"}:
+        group = " ".join(name.split()[:2])
+    if group == "LATIN":
+        group = "latin"
+    return group or None, mark
+
+
+def _text_segments(text: str) -> Iterable[str]:
+    """Yield words without dropping Indic/Thai marks or joining alphabets."""
+    word: list[str] = []
+    group = None
+    for position, character in enumerate(text):
+        if (character in "_+.-" and group == "latin" and word
+                and word[-1].isascii() and word[-1].isalnum()
+                and position + 1 < len(text)
+                and text[position + 1].isascii() and text[position + 1].isalnum()):
+            word.append(character)
+            continue
+        next_group, mark = _character_group(character)
+        if mark:
+            if (word and group not in {"hangul_syllables", "japanese_han"}
+                    and next_group in {group, "COMBINING"}):
+                word.append(character)
+                continue
+            # An unattached or unrelated mark is a boundary, never a word.
+            next_group = None
+        if word and (next_group is None or next_group != group):
+            yield "".join(word)
+            word = []
+        group = next_group
+        if group is not None:
+            word.append(character)
+    if word:
+        yield "".join(word)
+
+
 @lru_cache(maxsize=16)
 def _normalized_lexicon_cached(terms: tuple[str, ...]) -> tuple[str, ...]:
     normalized = {
@@ -113,9 +168,8 @@ def _normalized_lexicon_cached(terms: tuple[str, ...]) -> tuple[str, ...]:
     expanded = set(normalized)
     for term in normalized:
         expanded.update(
-            match.group(0)
-            for match in _SEGMENT_RE.finditer(term)
-            if _JAPANESE_OR_HAN_RE.fullmatch(match.group(0))
+            token for token in _text_segments(term)
+            if _JAPANESE_OR_HAN_RE.fullmatch(token)
         )
     return tuple(sorted(expanded, key=lambda value: (-len(value), value)))
 
@@ -192,7 +246,8 @@ def tokenize_bm25f_text(
 
     Korean eojeols remain whole and may emit one conservative suffix-stripped
     stem.  Japanese/Han compounds may additionally be segmented only by the
-    supplied authored lexicon.  The behavior is deterministic and versioned.
+    supplied authored lexicon. Other Unicode letters retain their combining
+    marks and alphabet boundaries. The behavior is deterministic and versioned.
     """
 
     return _tokenize_bm25f_text(value, lexicon=lexicon)
@@ -206,8 +261,7 @@ def _tokenize_bm25f_text(
     normalized = normalize_bm25f_text(value)
     tokens: list[str] = []
     prepared_lexicon = None
-    for match in _SEGMENT_RE.finditer(normalized):
-        token = match.group(0)
+    for token in _text_segments(normalized):
         tokens.append(token)
         if _HANGUL_RE.fullmatch(token):
             stem = _korean_stem(token)

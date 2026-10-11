@@ -841,7 +841,9 @@ def _v24_verified_payload(source_root: Path, row: dict) -> bytes:
     blob = hashlib.sha1(f'blob {len(raw)}\0'.encode('ascii') + raw).hexdigest()
     if (len(raw) != row['bytes'] or hashlib.sha256(raw).hexdigest() != row['sha256']
             or blob != row['git_blob']):
-        preserved = _v32_preserved_retained_payload(source_root, row, raw)
+        preserved = _native_alias_preserved_tokenizer_payload(source_root, row, raw)
+        if preserved is None:
+            preserved = _v32_preserved_retained_payload(source_root, row, raw)
         if preserved is None:
             preserved = _v31_preserved_retained_payload(source_root, row, raw)
         if preserved is None:
@@ -1769,6 +1771,9 @@ def v29_source_path(name: str, *, source_root: Path = ROOT) -> Path:
             return current
         # Religion DATA was retained by V30 but overwritten by the sealed V32
         # edit. Its 6b backing must have the exact requested V29 identity.
+        tokenizer = _native_alias_previous_tokenizer(source_root, before, current.read_bytes())
+        if tokenizer is not None:
+            return tokenizer
         if _v32_preserved_retained_payload(source_root, before, current.read_bytes()) is None:
             raise AssertionError('Unqualified retained V29 historical source drift')
         _, original = _v32_transition(source_root)
@@ -1963,6 +1968,42 @@ def _v29_transition(source_root: Path = ROOT) -> tuple[dict, dict]:
     for row in rows:
         _v17_safe_path(row['path']); _v17_safe_path(row['source_path'])
     return proof, parent
+
+
+NATIVE_ALIAS_TOKENIZER_PROOF = Path('tests/fixtures/photo_prompt/native_alias_v1/history/tokenizer-transition.json')
+NATIVE_ALIAS_TOKENIZER_PROOF_SHA256 = '26449e0cdeb0b8de7f710c9462a4edbea8d67006c72cee5aaa240e67efd868e6'
+
+
+def _native_alias_previous_tokenizer(source_root: Path, row: dict, current: bytes) -> Path | None:
+    """Recover only the pinned v3 tokenizer after its qualified v4 transition."""
+    name = 'skills/photo-prompt-image-generator/scripts/bm25f_retrieval.py'
+    if row['path'] != name or row['source_path'] != name:
+        return None
+    proof_path = source_root / NATIVE_ALIAS_TOKENIZER_PROOF
+    if not proof_path.is_file():
+        return None
+    proof_bytes = _v24_regular_path(source_root, str(NATIVE_ALIAS_TOKENIZER_PROOF)).read_bytes()
+    if hashlib.sha256(proof_bytes).hexdigest() != NATIVE_ALIAS_TOKENIZER_PROOF_SHA256:
+        raise AssertionError('Frozen native-alias tokenizer transition proof drift')
+    proof = json.loads(proof_bytes)
+    if (proof['schema'] != 'photo-native-alias-tokenizer-transition/v1'
+            or proof['source_path'] != name
+            or hashlib.sha256(current).hexdigest() != proof['current_sha256']
+            or row['sha256'] != proof['previous_sha256']):
+        return None
+    archive = _v24_regular_path(source_root, proof['archive_path'])
+    raw = archive.read_bytes()
+    blob = hashlib.sha1(f'blob {len(raw)}\0'.encode('ascii') + raw).hexdigest()
+    if (len(raw) != row['bytes'] or hashlib.sha256(raw).hexdigest() != row['sha256']
+            or blob != row['git_blob']
+            or archive.stat().st_mode & 0o7777 != int(row['mode'][-3:], 8)):
+        raise AssertionError('Frozen prior tokenizer archive identity drift')
+    return archive
+
+
+def _native_alias_preserved_tokenizer_payload(source_root: Path, row: dict, current: bytes) -> bytes | None:
+    archive = _native_alias_previous_tokenizer(source_root, row, current)
+    return archive.read_bytes() if archive is not None else None
 
 
 def _v29_preserved_retained_payload(source_root: Path, row: dict, current: bytes) -> bytes | None:
