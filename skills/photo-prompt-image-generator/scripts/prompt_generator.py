@@ -34,6 +34,7 @@ try:
     import photo_source_manifest
     import photo_runtime_sources
     import photo_candidate_semantics
+    import photo_candidate_context
     import photo_contextual_appeal
     import photo_embodiment
     import photo_creative_controls as creative_controls
@@ -2061,6 +2062,9 @@ def candidate_pack_summarize_slot_candidate(
         },
         "conflicts_with": [],
     }
+    if entry.get("primary_context_alternatives"):
+        candidate.update(photo_candidate_context.compile_context(entry, candidate["id"],
+            quality_layer_primary_context_requirement_sources(data, slot, entry)))
     return candidate, entry
 
 
@@ -9767,9 +9771,7 @@ def compatible_with_slot_context(
         values_as_set(item, "requires_any_tags", "requires_any") & context
     ):
         return False
-    if values_as_set(item, "requires_primary_any_tags") and not (
-        values_as_set(item, "requires_primary_any_tags") & primary_context
-    ):
+    if not photo_candidate_context.primary_context_matches(item, primary_context):
         return False
     if source is not None:
         quality_primary_requirements = quality_layer_primary_context_requirements(source, slot, item)

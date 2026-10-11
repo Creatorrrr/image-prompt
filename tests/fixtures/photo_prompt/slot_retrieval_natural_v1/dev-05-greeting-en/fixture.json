@@ -1,0 +1,481 @@
+{
+  "request_envelope_input": {
+    "contract_version": "photo-request-envelope/v1",
+    "provenance": "requesting_user",
+    "request_id": "dev-05-greeting-en",
+    "request_text": "Two adult friends greeting each other with a brief hand clasp on a rainy station platform, a candid photograph showing both faces and the contact.",
+    "request_sha256": "520a104cb15b75ab8c5d4da023be500a0156e839805f7063dd21c92256b2bc1b",
+    "active_spans": [
+      {
+        "span_id": "request",
+        "start": 0,
+        "end": 146,
+        "text": "Two adult friends greeting each other with a brief hand clasp on a rainy station platform, a candid photograph showing both faces and the contact."
+      }
+    ]
+  },
+  "creative_controls": {
+    "contract_version": "photo-creative-controls/v4",
+    "provenance": "resolved_precore",
+    "source_request_sha256": "520a104cb15b75ab8c5d4da023be500a0156e839805f7063dd21c92256b2bc1b",
+    "definitions": {
+      "contract_version": "photo-creative-control-definitions/v4",
+      "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content or artistic judgment. Expression levels describe prominence in the whole image; creativity levels describe interpretive freedom. Neither measures exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Creativity leaves style, extra props and surreal treatment open to the request and artistic judgment. Emphasis directs only active sensual and fetish axes without changing their intensities. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. Sensual and fetish may share the same expressive choice.",
+      "controls": {
+        "sensual": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+          "levels": {
+            "0": "No added sensual treatment; preserve explicitly requested content.",
+            "1": "This expression is a subtle supporting quality.",
+            "2": "This expression is clearly readable in the image.",
+            "3": "This expression leads the image's appeal and direction."
+          }
+        },
+        "fetish": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+          "levels": {
+            "0": "No added fetish treatment; preserve explicitly requested content.",
+            "1": "This focus is a subtle supporting quality.",
+            "2": "This focus is clearly readable in the image.",
+            "3": "This focus leads the image's appeal and direction."
+          }
+        },
+        "adult_appeal_emphasis": {
+          "type": "enum",
+          "choices": [
+            "auto",
+            "sensual_led",
+            "balanced",
+            "fetish_led"
+          ],
+          "default": "auto",
+          "definition": "Relative leadership of the active sensual and fetish axes within one coherent expression.",
+          "choice_descriptions": {
+            "auto": "Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.",
+            "sensual_led": "Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.",
+            "balanced": "Give both active axes comparable influence within one coherent expression; separate styling details are not required.",
+            "fetish_led": "Let the distinctive focus of attraction or fascination lead, with any active sensual expression supporting it."
+          }
+        },
+        "creativity": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Freedom to interpret unspecified choices and explore relationships within the request.",
+          "levels": {
+            "0": "Realize the request directly, filling only what is needed for a coherent image.",
+            "1": "Introduce restrained variations close to the requested direction.",
+            "2": "Actively reinterpret open choices into a coherent authorial direction.",
+            "3": "Boldly explore unexpected relationships and interpretations while preserving the request's core meaning."
+          }
+        },
+        "viewer_experience": {
+          "type": "boolean",
+          "default": false,
+          "definition": "Expose the detailed viewer-experience review when enabled. Always consider the intended impression in interpreted_intent, even when this additional review is off."
+        },
+        "reference_edit_mode": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "identity",
+            "younger_self",
+            "brand_board"
+          ],
+          "default": "off",
+          "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
+        },
+        "surreal": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.",
+          "levels": {
+            "0": "No added surreal treatment; preserve explicitly requested fantasy and impossible elements.",
+            "1": "Surreal qualities are a subtle supporting presence.",
+            "2": "Surreal qualities are clearly readable in the image.",
+            "3": "Surreal qualities lead the image's main impression and direction; a single coherent relationship may carry this prominence."
+          }
+        },
+        "trend_layer": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "scrapbook_collage",
+            "action_figure_packaging",
+            "retro_flash",
+            "clean_brand_portrait"
+          ],
+          "default": "off",
+          "definition": "Consider the chosen treatment from the initial composition. Refine it later without adding it twice. Off does not remove a treatment explicitly present in the request."
+        }
+      }
+    },
+    "definitions_sha256": "d044ade0f6af62c35b81d4b035b130a8819c4a15ca47a1409a59860a1928a3fa",
+    "overrides": {
+      "sensual": 0,
+      "fetish": 0,
+      "surreal": 0,
+      "creativity": 1
+    },
+    "context": {
+      "subject_category": "human",
+      "no_people": false,
+      "explicit_nonsexual": false
+    },
+    "seed": 17,
+    "controls": {
+      "sensual": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "fetish": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "adult_appeal_emphasis": {
+        "value": "auto",
+        "source": "saved_setting"
+      },
+      "creativity": {
+        "value": 1,
+        "source": "request_override"
+      },
+      "viewer_experience": {
+        "value": false,
+        "source": "saved_setting"
+      },
+      "reference_edit_mode": {
+        "value": "off",
+        "source": "saved_setting"
+      },
+      "surreal": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "trend_layer": {
+        "value": "off",
+        "source": "saved_setting"
+      }
+    },
+    "adult_appeal": {
+      "sensual": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      },
+      "fetish": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      }
+    },
+    "resolved_emphasis": "balanced",
+    "emphasis_resolution": {
+      "active": false,
+      "reason": "Both effective intensities are zero; no added emphasis is active."
+    },
+    "authoring_brief": "sensual: 0 (range: 0–3)\nMeaning: Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.\nLevel: No added sensual treatment; preserve explicitly requested content.\n\nfetish: 0 (range: 0–3)\nMeaning: Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.\nLevel: No added fetish treatment; preserve explicitly requested content.\n\nsurreal: 0 (range: 0–3)\nMeaning: Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.\nLevel: No added surreal treatment; preserve explicitly requested fantasy and impossible elements.\n\ncreativity: 1 (range: 0–3)\nMeaning: Freedom to interpret unspecified choices and explore relationships within the request.\nLevel: Introduce restrained variations close to the requested direction.\n\nadult_appeal_emphasis: auto (choices: auto, sensual_led, balanced, fetish_led)\nMeaning: Relative leadership of the active sensual and fetish axes within one coherent expression.\nSelected: Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.\nEffective: inactive\nResolution: Both effective intensities are zero; no added emphasis is active.\n\nChoose a coherent expression suited to this particular scene.\nSensual and fetish may share the same expressive choice.\nExpression levels describe prominence; creativity describes interpretive freedom. Neither requires a garment or detail count.\n\nOther resolved controls:\nviewer_experience: false\nreference_edit_mode: \"off\"\ntrend_layer: \"off\"",
+    "canonical_sha256": "2fe81dcbf6f7f51fb2ef3803dde9b4ea6eb55cb8b056ae215365c6a0b601ee42"
+  },
+  "authorial_core_input": {
+    "contract_version": "photo-authorial-core/v3",
+    "provenance": "agent_prepack",
+    "interpreted_intent": "A photographic realization of the requested subject, place and visible state.",
+    "subject": "Two adult friends",
+    "setting": "on a rainy station platform",
+    "event": "greet each other with a brief hand clasp",
+    "visual_priorities": [
+      "greet each other with a brief hand clasp",
+      "The frame gives the greeting contact priority over the receding platform"
+    ],
+    "baseline_prompt_en": "Two adult friends on a rainy station platform greet each other with a brief hand clasp. Each extends one arm into the gap between them, and their joined hands sit between the two torsos. Both faces and the hand contact remain visible in the candid frame. Their feet rest on the platform beside a thin sheet of rainwater. Soft overcast light keeps faces and fingers distinct. The frame gives the greeting contact priority over the receding platform.",
+    "user_definitions": [],
+    "interpretation_provenance": [
+      {
+        "term": "governing request",
+        "source_text": "Two adult friends greeting each other with a brief hand clasp on a rainy station platform, a candid photograph showing both faces and the contact.",
+        "basis": "request_context",
+        "resolution": "The primary subject, place and event follow the complete request; lighting and framing remain authorial where unprescribed.",
+        "sources": []
+      }
+    ],
+    "unresolved_ambiguities": [],
+    "user_exclusions": [],
+    "runtime_forbidden_labels": [],
+    "intent_lock": {
+      "contract_version": "photo-intent-lock/v2",
+      "priority": "requesting_user",
+      "semantic_anchors": [
+        {
+          "anchor_id": "anchor_concept",
+          "source_text": "Two adult friends greeting each other with a brief hand clasp on a rainy station platform, a candid photograph showing both faces and the contact.",
+          "dimension": "concept",
+          "prompt_evidence": "Two adult friends on a rainy station platform greet each other with a brief hand clasp"
+        },
+        {
+          "anchor_id": "anchor_subject",
+          "source_text": "Two adult friends greeting each other with a brief hand clasp on a rainy station platform, a candid photograph showing both faces and the contact.",
+          "dimension": "subject",
+          "prompt_evidence": "Two adult friends"
+        },
+        {
+          "anchor_id": "anchor_setting",
+          "source_text": "Two adult friends greeting each other with a brief hand clasp on a rainy station platform, a candid photograph showing both faces and the contact.",
+          "dimension": "setting",
+          "prompt_evidence": "on a rainy station platform"
+        },
+        {
+          "anchor_id": "anchor_event",
+          "source_text": "Two adult friends greeting each other with a brief hand clasp on a rainy station platform, a candid photograph showing both faces and the contact.",
+          "dimension": "event",
+          "prompt_evidence": "greet each other with a brief hand clasp"
+        },
+        {
+          "anchor_id": "property_0",
+          "source_text": "Two adult friends greeting each other with a brief hand clasp on a rainy station platform, a candid photograph showing both faces and the contact.",
+          "dimension": "framing",
+          "target": "camera",
+          "property": "visibility.people_and_contact",
+          "prompt_evidence": "Both faces and the hand contact remain visible"
+        }
+      ],
+      "locked_dimensions": [
+        "concept",
+        "subject",
+        "setting",
+        "event"
+      ],
+      "open_dimensions": [
+        "appearance",
+        "timing",
+        "atmosphere",
+        "style",
+        "material",
+        "color",
+        "framing",
+        "composition",
+        "camera",
+        "lighting",
+        "pose",
+        "action",
+        "relationship",
+        "expression",
+        "body_geometry"
+      ]
+    },
+    "style": {
+      "domain": "general_photo",
+      "family": "scene-led photographic observation",
+      "evidence": [
+        "Soft overcast light keeps faces and fingers distinct",
+        "The frame gives the greeting contact priority over the receding platform"
+      ]
+    },
+    "semantic_assertions": [
+      {
+        "assertion_id": "primary_subject",
+        "dimension": "subject",
+        "polarity": "required",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "subject"
+        ],
+        "axes": {
+          "subject_category": "human"
+        },
+        "evidence": {
+          "subject_phrase": "Two adult friends"
+        }
+      },
+      {
+        "assertion_id": "camera_review",
+        "dimension": "camera",
+        "polarity": "advisory",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "axes": {
+          "camera_axis_review": "camera_axis_review_v1",
+          "capture_owner": "unprescribed",
+          "direction_requirement": "open",
+          "height_requirement": "open"
+        },
+        "evidence": {}
+      }
+    ],
+    "request_lineage": null,
+    "variation_key": "dev-05-greeting-en",
+    "source_request": "Two adult friends greeting each other with a brief hand clasp on a rainy station platform, a candid photograph showing both faces and the contact.",
+    "creative_controls_sha256": "2fe81dcbf6f7f51fb2ef3803dde9b4ea6eb55cb8b056ae215365c6a0b601ee42"
+  },
+  "embodiment_review": {
+    "contract_version": "photo-embodiment-review/v1",
+    "provenance": "agent_prepack",
+    "scope": "body_action",
+    "summary": "Reviewed the planned actor ownership, support, reach, contacts and visibility: each person reaches into their shared gap while both faces remain visible.",
+    "checks": {
+      "body_ownership": {
+        "status": "supported",
+        "reason": "Each visible body belongs to the requested primary actor or actors; the geometry adds no new actor.",
+        "prompt_evidence": [
+          "Two adult friends"
+        ]
+      },
+      "joint_chain_and_reach": {
+        "status": "supported",
+        "reason": "The planned motion or resting limb arrangement stays close to its carrier and does not require an unsupported long reach: each person reaches into their shared gap while both faces remain visible.",
+        "prompt_evidence": [
+          "their joined hands sit between the two torsos"
+        ]
+      },
+      "support_and_balance": {
+        "status": "supported",
+        "reason": "The stated surface carries the planned body or seated load; this is a prose plausibility judgment.",
+        "prompt_evidence": [
+          "Their feet rest on the platform"
+        ]
+      },
+      "contact_and_space": {
+        "status": "supported",
+        "reason": "The contact endpoint and nearby free space are specified for this case: each person reaches into their shared gap while both faces remain visible.",
+        "prompt_evidence": [
+          "their joined hands sit between the two torsos"
+        ]
+      },
+      "visibility_and_projection": {
+        "status": "supported",
+        "reason": "The framing preserves the action-bearing surface, contact or body outline rather than concealing the requested relation.",
+        "prompt_evidence": [
+          "The frame gives the greeting contact priority over the receding platform"
+        ]
+      }
+    },
+    "prompt_sha256": "0f77a181c1b40c7637d4fff0761c75727ef4e0f8613c2e2d4a3f5d6063aa672f"
+  },
+  "feature_selection": {
+    "selected": [
+      {
+        "category_id": "feature.subject",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: Two adult friends",
+        "reason": "The requested primary carrier remains recognizable.",
+        "baseline_evidence": "Two adult friends"
+      },
+      {
+        "category_id": "feature.location",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: on a rainy station platform",
+        "reason": "The requested place or temporal setting grounds the visible state.",
+        "baseline_evidence": "on a rainy station platform"
+      },
+      {
+        "category_id": "feature.situation",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: greet each other with a brief hand clasp",
+        "reason": "The requested event or still state governs this frame.",
+        "baseline_evidence": "greet each other with a brief hand clasp"
+      },
+      {
+        "category_id": "feature.light_quality",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The light makes the requested surface or action readable.",
+        "baseline_evidence": "Soft overcast light keeps faces and fingers distinct"
+      },
+      {
+        "category_id": "feature.visual_hierarchy",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The frame organizes attention around the governing subject and state.",
+        "baseline_evidence": "The frame gives the greeting contact priority over the receding platform"
+      }
+    ],
+    "contract_version": "photo-precore-feature-selection/v1",
+    "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+    "catalog_schema_version": "photo-precore-feature-catalog/v1",
+    "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+    "request_id": "dev-05-greeting-en",
+    "request_sha256": "520a104cb15b75ab8c5d4da023be500a0156e839805f7063dd21c92256b2bc1b",
+    "active_span_ids": [
+      "request"
+    ],
+    "baseline_prompt_sha256": "0f77a181c1b40c7637d4fff0761c75727ef4e0f8613c2e2d4a3f5d6063aa672f"
+  },
+  "feature_selection_audit": {
+    "valid": true,
+    "contract_version": "photo-precore-feature-selection/v1",
+    "request_id": "dev-05-greeting-en",
+    "selected_category_ids": [
+      "feature.subject",
+      "feature.location",
+      "feature.situation",
+      "feature.light_quality",
+      "feature.visual_hierarchy"
+    ],
+    "selected_count": 5,
+    "warnings": []
+  },
+  "freeze_receipt": {
+    "schema_version": "photo-core-freeze/v1",
+    "files": {
+      "request_raw": "520a104cb15b75ab8c5d4da023be500a0156e839805f7063dd21c92256b2bc1b",
+      "request_envelope_input": "8d40c15e78f969abd6683845cce122ed7b38a20ba604826fe461b2d5b11e5b32",
+      "creative_controls": "5fe80b6df85f575de7e61b1ec8eb412cb7bbabcc80b67c4a82af74ea45402742",
+      "authorial_core_input": "790ed5ad809513679b63bfc971371c82db529c3df9a3e7ba963e610c3930b8d0",
+      "authorial_core_normalized": "c2adc15c549fd640a85e1b6f83b199d1fa9f94943ea9c7258905bb908bbdc51d",
+      "request_envelope_normalized": "0818601f95b01bf14a67a45d53c6623bc21fd845c8a79df188fc32d9d5dbc1aa",
+      "embodiment_review": "cb5bf32235602a0c129c7541c262ee83daf9543771f4631b29b748f6904e495c",
+      "feature_selection": "401f5da113cf5f359862cb917cfffcc556c7e76218fb9ae36e929434f7beb6d3",
+      "feature_selection_audit": "f6e128f05b43bee8903436652a296bbcd445c54f43ef3d2c4ca8dafb67f46776",
+      "catalog": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+      "baseline": "0f77a181c1b40c7637d4fff0761c75727ef4e0f8613c2e2d4a3f5d6063aa672f",
+      "freeze_author_input_hashes": "623d3eb82017e42b76696883534b22ca167d849af1e24900eab4d246031c71ab"
+    },
+    "contracts": {
+      "envelope": "8425196eb42b121b75e515b2bed688e2ee8f38b6eee755cdeb3f7f5f730aa070",
+      "core": "7c617e59c768a4272e2c5f6eaa02d29a1db7002b705c57f3fe3887375af179ee",
+      "intent_lock": "7c8011cfd6987445101593f245f9281268cfb5ef6c1b3e2d45ffacd4af9efc9c",
+      "controls": "2fe81dcbf6f7f51fb2ef3803dde9b4ea6eb55cb8b056ae215365c6a0b601ee42"
+    }
+  }
+}

@@ -13,6 +13,7 @@ import re
 from typing import Any
 
 from photo_contracts import property_effects_allowed
+from photo_candidate_context import primary_context_alternatives
 
 SURFACE_VERSION = "photo-candidate-semantic-surface/v1"
 BUNDLE_VERSION = "photo-candidate-bundles/v1"
@@ -166,6 +167,7 @@ def validate_candidate_entries(data: dict[str, Any], allowed_dimensions: set[str
     for slot, entries in (data.get("slots") or {}).items():
         by_id = {entry["id"]: entry for entry in entries}
         for entry in entries:
+            primary_context_alternatives(entry.get("primary_context_alternatives"))
             if "core_assertion_discovery" in entry and type(entry["core_assertion_discovery"]) is not bool:
                 raise ValueError(f"{slot}.{entry['id']} discovery opt-in must be boolean")
             if entry.get("core_assertion_discovery") and (

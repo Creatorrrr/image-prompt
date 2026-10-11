@@ -1,0 +1,465 @@
+{
+  "request_envelope_input": {
+    "contract_version": "photo-request-envelope/v1",
+    "provenance": "requesting_user",
+    "request_id": "dev-02-blue-cup-en",
+    "request_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+    "request_sha256": "653dcfc236d8a51ef18183645517693e34a31c9c4d1cddd1843afa5b711eb634",
+    "active_spans": [
+      {
+        "span_id": "request",
+        "start": 0,
+        "end": 137,
+        "text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people."
+      }
+    ]
+  },
+  "creative_controls": {
+    "contract_version": "photo-creative-controls/v4",
+    "provenance": "resolved_precore",
+    "source_request_sha256": "653dcfc236d8a51ef18183645517693e34a31c9c4d1cddd1843afa5b711eb634",
+    "definitions": {
+      "contract_version": "photo-creative-control-definitions/v4",
+      "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content or artistic judgment. Expression levels describe prominence in the whole image; creativity levels describe interpretive freedom. Neither measures exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Creativity leaves style, extra props and surreal treatment open to the request and artistic judgment. Emphasis directs only active sensual and fetish axes without changing their intensities. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. Sensual and fetish may share the same expressive choice.",
+      "controls": {
+        "sensual": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+          "levels": {
+            "0": "No added sensual treatment; preserve explicitly requested content.",
+            "1": "This expression is a subtle supporting quality.",
+            "2": "This expression is clearly readable in the image.",
+            "3": "This expression leads the image's appeal and direction."
+          }
+        },
+        "fetish": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+          "levels": {
+            "0": "No added fetish treatment; preserve explicitly requested content.",
+            "1": "This focus is a subtle supporting quality.",
+            "2": "This focus is clearly readable in the image.",
+            "3": "This focus leads the image's appeal and direction."
+          }
+        },
+        "adult_appeal_emphasis": {
+          "type": "enum",
+          "choices": [
+            "auto",
+            "sensual_led",
+            "balanced",
+            "fetish_led"
+          ],
+          "default": "auto",
+          "definition": "Relative leadership of the active sensual and fetish axes within one coherent expression.",
+          "choice_descriptions": {
+            "auto": "Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.",
+            "sensual_led": "Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.",
+            "balanced": "Give both active axes comparable influence within one coherent expression; separate styling details are not required.",
+            "fetish_led": "Let the distinctive focus of attraction or fascination lead, with any active sensual expression supporting it."
+          }
+        },
+        "creativity": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Freedom to interpret unspecified choices and explore relationships within the request.",
+          "levels": {
+            "0": "Realize the request directly, filling only what is needed for a coherent image.",
+            "1": "Introduce restrained variations close to the requested direction.",
+            "2": "Actively reinterpret open choices into a coherent authorial direction.",
+            "3": "Boldly explore unexpected relationships and interpretations while preserving the request's core meaning."
+          }
+        },
+        "viewer_experience": {
+          "type": "boolean",
+          "default": false,
+          "definition": "Expose the detailed viewer-experience review when enabled. Always consider the intended impression in interpreted_intent, even when this additional review is off."
+        },
+        "reference_edit_mode": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "identity",
+            "younger_self",
+            "brand_board"
+          ],
+          "default": "off",
+          "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
+        },
+        "surreal": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.",
+          "levels": {
+            "0": "No added surreal treatment; preserve explicitly requested fantasy and impossible elements.",
+            "1": "Surreal qualities are a subtle supporting presence.",
+            "2": "Surreal qualities are clearly readable in the image.",
+            "3": "Surreal qualities lead the image's main impression and direction; a single coherent relationship may carry this prominence."
+          }
+        },
+        "trend_layer": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "scrapbook_collage",
+            "action_figure_packaging",
+            "retro_flash",
+            "clean_brand_portrait"
+          ],
+          "default": "off",
+          "definition": "Consider the chosen treatment from the initial composition. Refine it later without adding it twice. Off does not remove a treatment explicitly present in the request."
+        }
+      }
+    },
+    "definitions_sha256": "d044ade0f6af62c35b81d4b035b130a8819c4a15ca47a1409a59860a1928a3fa",
+    "overrides": {
+      "sensual": 0,
+      "fetish": 0,
+      "surreal": 0,
+      "creativity": 1
+    },
+    "context": {
+      "subject_category": "nonhuman",
+      "no_people": true,
+      "explicit_nonsexual": false
+    },
+    "seed": 17,
+    "controls": {
+      "sensual": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "fetish": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "adult_appeal_emphasis": {
+        "value": "auto",
+        "source": "saved_setting"
+      },
+      "creativity": {
+        "value": 1,
+        "source": "request_override"
+      },
+      "viewer_experience": {
+        "value": false,
+        "source": "saved_setting"
+      },
+      "reference_edit_mode": {
+        "value": "off",
+        "source": "saved_setting"
+      },
+      "surreal": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "trend_layer": {
+        "value": "off",
+        "source": "saved_setting"
+      }
+    },
+    "adult_appeal": {
+      "sensual": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "explicit_no_people"
+      },
+      "fetish": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "explicit_no_people"
+      }
+    },
+    "resolved_emphasis": "balanced",
+    "emphasis_resolution": {
+      "active": false,
+      "reason": "Both effective intensities are zero; no added emphasis is active."
+    },
+    "authoring_brief": "sensual: 0 (range: 0–3)\nMeaning: Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.\nLevel: No added sensual treatment; preserve explicitly requested content.\n\nfetish: 0 (range: 0–3)\nMeaning: Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.\nLevel: No added fetish treatment; preserve explicitly requested content.\n\nsurreal: 0 (range: 0–3)\nMeaning: Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.\nLevel: No added surreal treatment; preserve explicitly requested fantasy and impossible elements.\n\ncreativity: 1 (range: 0–3)\nMeaning: Freedom to interpret unspecified choices and explore relationships within the request.\nLevel: Introduce restrained variations close to the requested direction.\n\nadult_appeal_emphasis: auto (choices: auto, sensual_led, balanced, fetish_led)\nMeaning: Relative leadership of the active sensual and fetish axes within one coherent expression.\nSelected: Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.\nEffective: inactive\nResolution: Both effective intensities are zero; no added emphasis is active.\n\nChoose a coherent expression suited to this particular scene.\nSensual and fetish may share the same expressive choice.\nExpression levels describe prominence; creativity describes interpretive freedom. Neither requires a garment or detail count.\n\nOther resolved controls:\nviewer_experience: false\nreference_edit_mode: \"off\"\ntrend_layer: \"off\"",
+    "canonical_sha256": "35017b45ff62bf58fdfc83aa83ea7a102eb7c1e472d32641fc1e4bd745dee698"
+  },
+  "authorial_core_input": {
+    "contract_version": "photo-authorial-core/v3",
+    "provenance": "agent_prepack",
+    "interpreted_intent": "A photographic realization of the requested subject, place and visible state.",
+    "subject": "A single blue porcelain teacup",
+    "setting": "on a dark kitchen counter",
+    "event": "shows clearly visible glaze reflections",
+    "visual_priorities": [
+      "shows clearly visible glaze reflections",
+      "The frame gives the cup surface priority over surrounding counter space"
+    ],
+    "baseline_prompt_en": "A single blue porcelain teacup on a dark kitchen counter shows clearly visible glaze reflections. Soft side lighting from a window travels across the curved glaze and separates its rim from the counter. Its handle and circular mouth remain legible within the same quiet still life. A gradual falloff leaves the rear counter subdued. The frame gives the cup surface priority over surrounding counter space.",
+    "user_definitions": [],
+    "interpretation_provenance": [
+      {
+        "term": "governing request",
+        "source_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+        "basis": "request_context",
+        "resolution": "The primary subject, place and event follow the complete request; lighting and framing remain authorial where unprescribed.",
+        "sources": []
+      }
+    ],
+    "unresolved_ambiguities": [],
+    "user_exclusions": [
+      "people"
+    ],
+    "runtime_forbidden_labels": [],
+    "intent_lock": {
+      "contract_version": "photo-intent-lock/v2",
+      "priority": "requesting_user",
+      "semantic_anchors": [
+        {
+          "anchor_id": "anchor_concept",
+          "source_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+          "dimension": "concept",
+          "prompt_evidence": "A single blue porcelain teacup on a dark kitchen counter shows clearly visible glaze reflections"
+        },
+        {
+          "anchor_id": "anchor_subject",
+          "source_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+          "dimension": "subject",
+          "prompt_evidence": "A single blue porcelain teacup"
+        },
+        {
+          "anchor_id": "anchor_setting",
+          "source_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+          "dimension": "setting",
+          "prompt_evidence": "on a dark kitchen counter"
+        },
+        {
+          "anchor_id": "anchor_event",
+          "source_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+          "dimension": "event",
+          "prompt_evidence": "shows clearly visible glaze reflections"
+        },
+        {
+          "anchor_id": "property_0",
+          "source_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+          "dimension": "color",
+          "target": "main_subject",
+          "property": "surface.color",
+          "prompt_evidence": "blue porcelain teacup"
+        },
+        {
+          "anchor_id": "property_1",
+          "source_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+          "dimension": "material",
+          "target": "main_subject",
+          "property": "surface.material",
+          "prompt_evidence": "porcelain teacup"
+        },
+        {
+          "anchor_id": "property_2",
+          "source_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+          "dimension": "lighting",
+          "target": "scene",
+          "property": "source.direction",
+          "prompt_evidence": "Soft side lighting from a window"
+        }
+      ],
+      "locked_dimensions": [
+        "concept",
+        "subject",
+        "setting",
+        "event"
+      ],
+      "open_dimensions": [
+        "appearance",
+        "timing",
+        "atmosphere",
+        "style",
+        "material",
+        "color",
+        "framing",
+        "composition",
+        "camera",
+        "lighting",
+        "pose",
+        "action",
+        "relationship",
+        "expression",
+        "body_geometry"
+      ]
+    },
+    "style": {
+      "domain": "general_photo",
+      "family": "scene-led photographic observation",
+      "evidence": [
+        "Soft side lighting from a window",
+        "The frame gives the cup surface priority over surrounding counter space"
+      ]
+    },
+    "semantic_assertions": [
+      {
+        "assertion_id": "primary_subject",
+        "dimension": "subject",
+        "polarity": "required",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "subject"
+        ],
+        "axes": {
+          "subject_category": "object"
+        },
+        "evidence": {
+          "subject_phrase": "A single blue porcelain teacup"
+        }
+      },
+      {
+        "assertion_id": "camera_review",
+        "dimension": "camera",
+        "polarity": "advisory",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "axes": {
+          "camera_axis_review": "camera_axis_review_v1",
+          "capture_owner": "unprescribed",
+          "direction_requirement": "open",
+          "height_requirement": "open"
+        },
+        "evidence": {}
+      }
+    ],
+    "request_lineage": null,
+    "variation_key": "dev-02-blue-cup-en",
+    "source_request": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+    "creative_controls_sha256": "35017b45ff62bf58fdfc83aa83ea7a102eb7c1e472d32641fc1e4bd745dee698"
+  },
+  "embodiment_review": {
+    "contract_version": "photo-embodiment-review/v1",
+    "provenance": "agent_prepack",
+    "scope": "not_applicable",
+    "summary": "The frame contains a static object, plant or landscape; there is no articulated actor or body interaction to check.",
+    "checks": {},
+    "prompt_sha256": "0e58d40172a6b0dc41bcc3b1be1ba66cdbe657151c852a469d3f061243ae2a5e"
+  },
+  "feature_selection": {
+    "selected": [
+      {
+        "category_id": "feature.primary_object",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: A single blue porcelain teacup",
+        "reason": "The requested primary carrier remains recognizable.",
+        "baseline_evidence": "A single blue porcelain teacup"
+      },
+      {
+        "category_id": "feature.location",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: on a dark kitchen counter",
+        "reason": "The requested place or temporal setting grounds the visible state.",
+        "baseline_evidence": "on a dark kitchen counter"
+      },
+      {
+        "category_id": "feature.situation",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: shows clearly visible glaze reflections",
+        "reason": "The requested event or still state governs this frame.",
+        "baseline_evidence": "shows clearly visible glaze reflections"
+      },
+      {
+        "category_id": "feature.light_quality",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The specified light is shown on its actual carrier.",
+        "reason": "The light makes the requested surface or action readable.",
+        "baseline_evidence": "Soft side lighting from a window"
+      },
+      {
+        "category_id": "feature.visual_hierarchy",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The frame organizes attention around the governing subject and state.",
+        "baseline_evidence": "The frame gives the cup surface priority over surrounding counter space"
+      }
+    ],
+    "contract_version": "photo-precore-feature-selection/v1",
+    "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+    "catalog_schema_version": "photo-precore-feature-catalog/v1",
+    "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+    "request_id": "dev-02-blue-cup-en",
+    "request_sha256": "653dcfc236d8a51ef18183645517693e34a31c9c4d1cddd1843afa5b711eb634",
+    "active_span_ids": [
+      "request"
+    ],
+    "baseline_prompt_sha256": "0e58d40172a6b0dc41bcc3b1be1ba66cdbe657151c852a469d3f061243ae2a5e"
+  },
+  "feature_selection_audit": {
+    "valid": true,
+    "contract_version": "photo-precore-feature-selection/v1",
+    "request_id": "dev-02-blue-cup-en",
+    "selected_category_ids": [
+      "feature.primary_object",
+      "feature.location",
+      "feature.situation",
+      "feature.light_quality",
+      "feature.visual_hierarchy"
+    ],
+    "selected_count": 5,
+    "warnings": []
+  },
+  "freeze_receipt": {
+    "schema_version": "photo-core-freeze/v1",
+    "files": {
+      "request_raw": "653dcfc236d8a51ef18183645517693e34a31c9c4d1cddd1843afa5b711eb634",
+      "request_envelope_input": "2ddb406fa4c59126f74e7271e6361396dcaa8f41aa8b7cc8564e90c6a65e83f7",
+      "creative_controls": "6ca52074e245488688cb3da0853653828549fd18a4965f3ca685ce4d9998976e",
+      "authorial_core_input": "4d5ba2e15e6ea9c1059faf6f15f30dfbce6df2bff853d243b2bdc76d7bf88fda",
+      "authorial_core_normalized": "275fbfed5a4c87063e3d0fe68aaa1014b0846dd58c713b2a42923d140fd37dc0",
+      "request_envelope_normalized": "50a1e317759770adef409775ceb37e91a6caca7cea244c89318fcbd2fbc6d7ae",
+      "embodiment_review": "054470a953986fed0f10bcaf99210df8f1bbbfcc5d9c3b97eaf0f09e503d608b",
+      "feature_selection": "f818493f828315b4542198ad483446367cfb89b8592c5195132ece1617501391",
+      "feature_selection_audit": "36aa599ca9abf69380b20ecd9d915bbbfce25e781785c8f825ec12811dc6de02",
+      "catalog": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+      "baseline": "0e58d40172a6b0dc41bcc3b1be1ba66cdbe657151c852a469d3f061243ae2a5e",
+      "freeze_author_input_hashes": "7c5d0986d4dab498bd086b8a022013441ef77846d904db2aa712b13fbad057a1"
+    },
+    "contracts": {
+      "envelope": "83c70210bd486bfeec1b405a9ea911c924e22ae0eeb76330aea91d8a0df603d3",
+      "core": "7af30ec4733f9ad9c4f8a87247cb0cede7bbd0b91e044a535e7a754af36d6430",
+      "intent_lock": "88ff2fea551830051555013e5435b76f13ef7bfb58e09e286660ca817ed61bc4",
+      "controls": "35017b45ff62bf58fdfc83aa83ea7a102eb7c1e472d32641fc1e4bd745dee698"
+    }
+  }
+}
