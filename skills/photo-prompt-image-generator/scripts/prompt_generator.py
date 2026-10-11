@@ -2684,6 +2684,13 @@ def resolve_request_intent_constraints(
     seen_texts: Set[str] = set()
     for value in values:
         normalized = typed_core_routing_text(value) if typed_v3 else clean_spaces(value)
+        if typed_v3:
+            # Use the same positive projection as retrieval: excluded meaning
+            # cannot become a domain merely because it appears in a core field.
+            normalized, _ = authorial_core_retrieval_text({
+                "user_exclusions": authorial_core.get("user_exclusions") or [],
+                "baseline_prompt_en": normalized,
+            })
         dedupe_key = normalized.lower()
         if normalized and dedupe_key not in seen_texts:
             texts.append(normalized)
@@ -2790,6 +2797,15 @@ def resolve_request_intent_constraints(
                 or (row.get("axis") == "subject_entry" and row.get("category") == "human")
             )
         ]
+    typed_category = (
+        authored_subject_category(authorial_core.get("semantic_assertions") or [], {})
+        if typed_v3 else None
+    )
+    adult_subject = typed_category == "human" if typed_category is not None else categories == {"human"}
+    if no_people or not adult_subject:
+        domains.discard("adult")
+        matched = [row for row in matched
+                   if not (row.get("axis") == "domain" and row.get("value") == "adult")]
     resolved = {
         "no_people": no_people,
         **({"subject_entry_ids": sorted(subject_entry_ids)} if subject_entry_ids else {}),
@@ -3597,11 +3613,13 @@ def candidate_pack_contextual_adult_appeal(
     prompt_id = str((result.get("provenance") or {}).get("prompt_id") or "")
     cached = (data.get(photo_contextual_appeal.QUERY_CACHE) or {}).get(prompt_id) or {}
     vectors = cached.get("vectors", {}) if cached.get("queries") == queries else {}
+    frozen_contract, _ = frozen_core_context(data, core, snapshot)
     constraints = {
-        "subject_category": snapshot["context"]["subject_category"],
-        "domains": [],
-        "adult_allowed": contract["eligibility"]["status"] == "eligible",
-        "intent_constraints": authorial_core_generation_constraints(core, creative_control_snapshot=snapshot),
+        **frozen_contract,
+        "adult_allowed": (
+            frozen_contract["adult_allowed"]
+            and contract["eligibility"]["status"] == "eligible"
+        ),
     }
     exclusions = [
         candidate_pack_relevance_tokens(value) for value in core.get("user_exclusions") or []
@@ -9929,13 +9947,26 @@ def frozen_core_context(data: dict, core: dict, controls: dict) -> tuple[dict, d
             raise ValueError("typed human subject conflicts with the requester no-people constraint")
         categories.discard("human")
     constraints["subject_categories"] = sorted(categories)
-    domains = sorted(constraints.get("domains") or [])
+    domains = set(constraints.get("domains") or [])
+    human_context = categories == {"human"} and not constraints["no_people"]
+    nonsexual_context = controls["context"].get("explicit_nonsexual", False)
+    if not human_context or nonsexual_context:
+        domains.discard("adult")
+        constraints["matched"] = [row for row in constraints.get("matched") or []
+                                  if not (row.get("axis") == "domain" and row.get("value") == "adult")]
+    domains = sorted(domains)
+    constraints["domains"] = domains
     contract = {
         "subject_category": next(iter(categories)) if len(categories) == 1 else "generic",
         "domains": domains, "intent_constraints": constraints,
         "no_people": constraints["no_people"],
-        "adult_allowed": any(controls["adult_appeal"][axis]["effective_intensity"] > 0
-                             for axis in CANDIDATE_PACK_ADULT_APPEAL_AXES),
+        # Request meaning survives zero added appeal. Conversely, an axis
+        # intensity can authorize optional treatment without creating a domain.
+        "adult_allowed": human_context and not nonsexual_context and (
+            "adult" in domains
+            or any(controls["adult_appeal"][axis]["effective_intensity"] > 0
+                   for axis in CANDIDATE_PACK_ADULT_APPEAL_AXES)
+        ),
         "authorial_core_constraints": explicit, "_authorial_core": core,
         "concept_locks": [row["text"] for row in core["request_binding"]["active_spans"]],
         "candidate_pool_trace": {},

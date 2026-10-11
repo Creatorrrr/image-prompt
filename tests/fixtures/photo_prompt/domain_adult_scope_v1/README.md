@@ -1,0 +1,1 @@
+Targeted authored stage-3 maintenance cases, frozen through the candidate-free public preparer before source modification. These are not blind evaluation data. Candidate expectations live in the post-core evidence record; the fixed envelopes, controls, cores, embodiment and selection bindings are reused before and after.
