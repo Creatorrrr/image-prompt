@@ -1,4 +1,4 @@
-"""Distant lens focus preserves requested camera viewpoint properties."""
+"""Distant lens focus preserves viewpoint independence and protects the focus family."""
 import copy
 from pathlib import Path
 import sys
@@ -41,11 +41,21 @@ class PhotoInfinityFocusEffectScopeTests(unittest.TestCase):
                 self.assertTrue(self.allowed(path))
 
     def test_requested_lens_focus_and_parent_properties_stay_protected(self):
-        for path in ('focus.distance', 'focus', '*'):
+        for path in ('focus.distance', 'focus.sharpness', 'focus.depth_of_field', 'focus', '*'):
             with self.subTest(protected_property=path):
                 self.assertFalse(self.allowed(path))
         self.assertFalse(self.allowed('focus.distance', dimension='style'))
         self.assertTrue(self.allowed('focus.distance', target='secondary_camera'))
+
+    def test_distance_only_effect_reproduces_sibling_focus_lock_regression(self):
+        distance_only = copy.deepcopy(self.source)
+        distance_only['affected_properties'] = [
+            {'dimension': 'camera', 'target': 'camera', 'property': 'focus.distance'},
+        ]
+        for path in ('focus.sharpness', 'focus.depth_of_field'):
+            with self.subTest(protected_property=path):
+                self.assertTrue(self.allowed(path, source=distance_only))
+                self.assertFalse(self.allowed(path))
 
     def test_removing_the_authored_effect_reproduces_unrelated_viewpoint_rejection(self):
         prior_entry = copy.deepcopy(self.entry)
