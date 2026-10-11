@@ -1,0 +1,473 @@
+{
+  "request_envelope_input": {
+    "contract_version": "photo-request-envelope/v1",
+    "provenance": "requesting_user",
+    "request_id": "context-witch-positive-ko",
+    "request_text": "다음 주체와 장소·동작을 사진으로 보여줘: One adult fictional witch practitioner; inside a broad stone workshop; directs a visible magical light toward a nearby stone bowl. 관찰 가능한 연결은 Both feet stand on the floor. The extended arm stays connected through the shoulder and elbow, and the light links the palm to the nearby bowl.",
+    "request_sha256": "ad591778eb1a97cacf200e404a16e21954436e6c5dfe64f930c43e252b3e6471",
+    "active_spans": [
+      {
+        "span_id": "request",
+        "start": 0,
+        "end": 309,
+        "text": "다음 주체와 장소·동작을 사진으로 보여줘: One adult fictional witch practitioner; inside a broad stone workshop; directs a visible magical light toward a nearby stone bowl. 관찰 가능한 연결은 Both feet stand on the floor. The extended arm stays connected through the shoulder and elbow, and the light links the palm to the nearby bowl."
+      }
+    ]
+  },
+  "creative_controls": {
+    "contract_version": "photo-creative-controls/v4",
+    "provenance": "resolved_precore",
+    "source_request_sha256": "ad591778eb1a97cacf200e404a16e21954436e6c5dfe64f930c43e252b3e6471",
+    "definitions": {
+      "contract_version": "photo-creative-control-definitions/v4",
+      "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content or artistic judgment. Expression levels describe prominence in the whole image; creativity levels describe interpretive freedom. Neither measures exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Creativity leaves style, extra props and surreal treatment open to the request and artistic judgment. Emphasis directs only active sensual and fetish axes without changing their intensities. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. Sensual and fetish may share the same expressive choice.",
+      "controls": {
+        "sensual": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+          "levels": {
+            "0": "No added sensual treatment; preserve explicitly requested content.",
+            "1": "This expression is a subtle supporting quality.",
+            "2": "This expression is clearly readable in the image.",
+            "3": "This expression leads the image's appeal and direction."
+          }
+        },
+        "fetish": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+          "levels": {
+            "0": "No added fetish treatment; preserve explicitly requested content.",
+            "1": "This focus is a subtle supporting quality.",
+            "2": "This focus is clearly readable in the image.",
+            "3": "This focus leads the image's appeal and direction."
+          }
+        },
+        "adult_appeal_emphasis": {
+          "type": "enum",
+          "choices": [
+            "auto",
+            "sensual_led",
+            "balanced",
+            "fetish_led"
+          ],
+          "default": "auto",
+          "definition": "Relative leadership of the active sensual and fetish axes within one coherent expression.",
+          "choice_descriptions": {
+            "auto": "Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.",
+            "sensual_led": "Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.",
+            "balanced": "Give both active axes comparable influence within one coherent expression; separate styling details are not required.",
+            "fetish_led": "Let the distinctive focus of attraction or fascination lead, with any active sensual expression supporting it."
+          }
+        },
+        "creativity": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Freedom to interpret unspecified choices and explore relationships within the request.",
+          "levels": {
+            "0": "Realize the request directly, filling only what is needed for a coherent image.",
+            "1": "Introduce restrained variations close to the requested direction.",
+            "2": "Actively reinterpret open choices into a coherent authorial direction.",
+            "3": "Boldly explore unexpected relationships and interpretations while preserving the request's core meaning."
+          }
+        },
+        "viewer_experience": {
+          "type": "boolean",
+          "default": false,
+          "definition": "Expose the detailed viewer-experience review when enabled. Always consider the intended impression in interpreted_intent, even when this additional review is off."
+        },
+        "reference_edit_mode": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "identity",
+            "younger_self",
+            "brand_board"
+          ],
+          "default": "off",
+          "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
+        },
+        "surreal": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.",
+          "levels": {
+            "0": "No added surreal treatment; preserve explicitly requested fantasy and impossible elements.",
+            "1": "Surreal qualities are a subtle supporting presence.",
+            "2": "Surreal qualities are clearly readable in the image.",
+            "3": "Surreal qualities lead the image's main impression and direction; a single coherent relationship may carry this prominence."
+          }
+        },
+        "trend_layer": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "scrapbook_collage",
+            "action_figure_packaging",
+            "retro_flash",
+            "clean_brand_portrait"
+          ],
+          "default": "off",
+          "definition": "Consider the chosen treatment from the initial composition. Refine it later without adding it twice. Off does not remove a treatment explicitly present in the request."
+        }
+      }
+    },
+    "definitions_sha256": "d044ade0f6af62c35b81d4b035b130a8819c4a15ca47a1409a59860a1928a3fa",
+    "overrides": {
+      "sensual": 0,
+      "fetish": 0,
+      "surreal": 0,
+      "creativity": 1
+    },
+    "context": {
+      "subject_category": "human",
+      "no_people": false,
+      "explicit_nonsexual": false
+    },
+    "seed": 17,
+    "controls": {
+      "sensual": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "fetish": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "adult_appeal_emphasis": {
+        "value": "auto",
+        "source": "saved_setting"
+      },
+      "creativity": {
+        "value": 1,
+        "source": "request_override"
+      },
+      "viewer_experience": {
+        "value": false,
+        "source": "saved_setting"
+      },
+      "reference_edit_mode": {
+        "value": "off",
+        "source": "saved_setting"
+      },
+      "surreal": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "trend_layer": {
+        "value": "off",
+        "source": "saved_setting"
+      }
+    },
+    "adult_appeal": {
+      "sensual": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      },
+      "fetish": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      }
+    },
+    "resolved_emphasis": "balanced",
+    "emphasis_resolution": {
+      "active": false,
+      "reason": "Both effective intensities are zero; no added emphasis is active."
+    },
+    "authoring_brief": "sensual: 0 (range: 0–3)\nMeaning: Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.\nLevel: No added sensual treatment; preserve explicitly requested content.\n\nfetish: 0 (range: 0–3)\nMeaning: Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.\nLevel: No added fetish treatment; preserve explicitly requested content.\n\nsurreal: 0 (range: 0–3)\nMeaning: Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.\nLevel: No added surreal treatment; preserve explicitly requested fantasy and impossible elements.\n\ncreativity: 1 (range: 0–3)\nMeaning: Freedom to interpret unspecified choices and explore relationships within the request.\nLevel: Introduce restrained variations close to the requested direction.\n\nadult_appeal_emphasis: auto (choices: auto, sensual_led, balanced, fetish_led)\nMeaning: Relative leadership of the active sensual and fetish axes within one coherent expression.\nSelected: Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.\nEffective: inactive\nResolution: Both effective intensities are zero; no added emphasis is active.\n\nChoose a coherent expression suited to this particular scene.\nSensual and fetish may share the same expressive choice.\nExpression levels describe prominence; creativity describes interpretive freedom. Neither requires a garment or detail count.\n\nOther resolved controls:\nviewer_experience: false\nreference_edit_mode: \"off\"\ntrend_layer: \"off\"",
+    "canonical_sha256": "df313f35e8a0ff4170e83fba2ea7ce1e73a97b89bf3ba0a818f96ab1d6e3f941"
+  },
+  "authorial_core_input": {
+    "contract_version": "photo-authorial-core/v3",
+    "provenance": "agent_prepack",
+    "interpreted_intent": "A photographic realization of the requested subject, place and visible state.",
+    "subject": "One adult fictional witch practitioner",
+    "setting": "inside a broad stone workshop",
+    "event": "directs a visible magical light toward a nearby stone bowl",
+    "visual_priorities": [
+      "directs a visible magical light toward a nearby stone bowl",
+      "The frame gives the specified subject and its visible relation priority"
+    ],
+    "baseline_prompt_en": "One adult fictional witch practitioner inside a broad stone workshop directs a visible magical light toward a nearby stone bowl. Both feet stand on the floor. The extended arm stays connected through the shoulder and elbow, and the light links the palm to the nearby bowl. Gentle side light keeps the visible outlines distinct. The frame gives the specified subject and its visible relation priority.",
+    "user_definitions": [],
+    "interpretation_provenance": [
+      {
+        "term": "governing request",
+        "source_text": "다음 주체와 장소·동작을 사진으로 보여줘: One adult fictional witch practitioner; inside a broad stone workshop; directs a visible magical light toward a nearby stone bowl. 관찰 가능한 연결은 Both feet stand on the floor. The extended arm stays connected through the shoulder and elbow, and the light links the palm to the nearby bowl.",
+        "basis": "request_context",
+        "resolution": "The primary subject, place and event follow the complete request; lighting and framing remain authorial where unprescribed.",
+        "sources": []
+      }
+    ],
+    "unresolved_ambiguities": [],
+    "user_exclusions": [],
+    "runtime_forbidden_labels": [],
+    "intent_lock": {
+      "contract_version": "photo-intent-lock/v2",
+      "priority": "requesting_user",
+      "semantic_anchors": [
+        {
+          "anchor_id": "anchor_concept",
+          "source_text": "다음 주체와 장소·동작을 사진으로 보여줘: One adult fictional witch practitioner; inside a broad stone workshop; directs a visible magical light toward a nearby stone bowl. 관찰 가능한 연결은 Both feet stand on the floor. The extended arm stays connected through the shoulder and elbow, and the light links the palm to the nearby bowl.",
+          "dimension": "concept",
+          "prompt_evidence": "One adult fictional witch practitioner inside a broad stone workshop directs a visible magical light toward a nearby stone bowl"
+        },
+        {
+          "anchor_id": "anchor_subject",
+          "source_text": "다음 주체와 장소·동작을 사진으로 보여줘: One adult fictional witch practitioner; inside a broad stone workshop; directs a visible magical light toward a nearby stone bowl. 관찰 가능한 연결은 Both feet stand on the floor. The extended arm stays connected through the shoulder and elbow, and the light links the palm to the nearby bowl.",
+          "dimension": "subject",
+          "prompt_evidence": "One adult fictional witch practitioner"
+        },
+        {
+          "anchor_id": "anchor_setting",
+          "source_text": "다음 주체와 장소·동작을 사진으로 보여줘: One adult fictional witch practitioner; inside a broad stone workshop; directs a visible magical light toward a nearby stone bowl. 관찰 가능한 연결은 Both feet stand on the floor. The extended arm stays connected through the shoulder and elbow, and the light links the palm to the nearby bowl.",
+          "dimension": "setting",
+          "prompt_evidence": "inside a broad stone workshop"
+        },
+        {
+          "anchor_id": "anchor_event",
+          "source_text": "다음 주체와 장소·동작을 사진으로 보여줘: One adult fictional witch practitioner; inside a broad stone workshop; directs a visible magical light toward a nearby stone bowl. 관찰 가능한 연결은 Both feet stand on the floor. The extended arm stays connected through the shoulder and elbow, and the light links the palm to the nearby bowl.",
+          "dimension": "event",
+          "prompt_evidence": "directs a visible magical light toward a nearby stone bowl"
+        }
+      ],
+      "locked_dimensions": [
+        "concept",
+        "subject",
+        "setting",
+        "event"
+      ],
+      "open_dimensions": [
+        "appearance",
+        "timing",
+        "atmosphere",
+        "style",
+        "material",
+        "color",
+        "framing",
+        "composition",
+        "camera",
+        "lighting",
+        "pose",
+        "action",
+        "relationship",
+        "expression",
+        "body_geometry"
+      ]
+    },
+    "style": {
+      "domain": "general_photo",
+      "family": "scene-led photographic observation",
+      "evidence": [
+        "Gentle side light keeps the visible outlines distinct",
+        "The frame gives the specified subject and its visible relation priority"
+      ]
+    },
+    "semantic_assertions": [
+      {
+        "assertion_id": "primary_subject",
+        "dimension": "subject",
+        "polarity": "required",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "subject"
+        ],
+        "axes": {
+          "subject_category": "human"
+        },
+        "evidence": {
+          "subject_phrase": "One adult fictional witch practitioner"
+        }
+      },
+      {
+        "assertion_id": "camera_review",
+        "dimension": "camera",
+        "polarity": "advisory",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "axes": {
+          "camera_axis_review": "camera_axis_review_v1",
+          "capture_owner": "unprescribed",
+          "direction_requirement": "open",
+          "height_requirement": "open"
+        },
+        "evidence": {}
+      }
+    ],
+    "request_lineage": null,
+    "variation_key": "context-witch-positive-ko",
+    "source_request": "다음 주체와 장소·동작을 사진으로 보여줘: One adult fictional witch practitioner; inside a broad stone workshop; directs a visible magical light toward a nearby stone bowl. 관찰 가능한 연결은 Both feet stand on the floor. The extended arm stays connected through the shoulder and elbow, and the light links the palm to the nearby bowl.",
+    "creative_controls_sha256": "df313f35e8a0ff4170e83fba2ea7ce1e73a97b89bf3ba0a818f96ab1d6e3f941"
+  },
+  "embodiment_review": {
+    "contract_version": "photo-embodiment-review/v1",
+    "provenance": "agent_prepack",
+    "scope": "body_action",
+    "summary": "Reviewed the planned actor ownership, support, reach, contacts and visibility: the bowl is near the supported actor and the arm remains within an ordinary reach.",
+    "checks": {
+      "body_ownership": {
+        "status": "supported",
+        "reason": "Each visible body belongs to the requested primary actor or actors; the geometry adds no new actor.",
+        "prompt_evidence": [
+          "One adult fictional witch practitioner"
+        ]
+      },
+      "joint_chain_and_reach": {
+        "status": "supported",
+        "reason": "The planned motion or resting limb arrangement stays close to its carrier and does not require an unsupported long reach: the bowl is near the supported actor and the arm remains within an ordinary reach.",
+        "prompt_evidence": [
+          "the light links the palm to the nearby bowl"
+        ]
+      },
+      "support_and_balance": {
+        "status": "supported",
+        "reason": "The stated surface carries the planned body or seated load; this is a prose plausibility judgment.",
+        "prompt_evidence": [
+          "Both feet stand on the floor"
+        ]
+      },
+      "contact_and_space": {
+        "status": "supported",
+        "reason": "The contact endpoint and nearby free space are specified for this case: the bowl is near the supported actor and the arm remains within an ordinary reach.",
+        "prompt_evidence": [
+          "the light links the palm to the nearby bowl"
+        ]
+      },
+      "visibility_and_projection": {
+        "status": "supported",
+        "reason": "The framing preserves the action-bearing surface, contact or body outline rather than concealing the requested relation.",
+        "prompt_evidence": [
+          "The frame gives the specified subject and its visible relation priority"
+        ]
+      }
+    },
+    "prompt_sha256": "3c35fd78da4e7b93ef1adc714b7cc46bdcac159a8a82ccfed54c13bf4179028f"
+  },
+  "feature_selection": {
+    "selected": [
+      {
+        "category_id": "feature.subject",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: One adult fictional witch practitioner",
+        "reason": "The requested primary carrier remains recognizable.",
+        "baseline_evidence": "One adult fictional witch practitioner"
+      },
+      {
+        "category_id": "feature.location",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: inside a broad stone workshop",
+        "reason": "The requested place or temporal setting grounds the visible state.",
+        "baseline_evidence": "inside a broad stone workshop"
+      },
+      {
+        "category_id": "feature.situation",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: directs a visible magical light toward a nearby stone bowl",
+        "reason": "The requested event or still state governs this frame.",
+        "baseline_evidence": "directs a visible magical light toward a nearby stone bowl"
+      },
+      {
+        "category_id": "feature.light_quality",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The light makes the requested surface or action readable.",
+        "baseline_evidence": "Gentle side light keeps the visible outlines distinct"
+      },
+      {
+        "category_id": "feature.visual_hierarchy",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The frame organizes attention around the governing subject and state.",
+        "baseline_evidence": "The frame gives the specified subject and its visible relation priority"
+      }
+    ],
+    "contract_version": "photo-precore-feature-selection/v1",
+    "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+    "catalog_schema_version": "photo-precore-feature-catalog/v1",
+    "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+    "request_id": "context-witch-positive-ko",
+    "request_sha256": "ad591778eb1a97cacf200e404a16e21954436e6c5dfe64f930c43e252b3e6471",
+    "active_span_ids": [
+      "request"
+    ],
+    "baseline_prompt_sha256": "3c35fd78da4e7b93ef1adc714b7cc46bdcac159a8a82ccfed54c13bf4179028f"
+  },
+  "feature_selection_audit": {
+    "valid": true,
+    "contract_version": "photo-precore-feature-selection/v1",
+    "request_id": "context-witch-positive-ko",
+    "selected_category_ids": [
+      "feature.subject",
+      "feature.location",
+      "feature.situation",
+      "feature.light_quality",
+      "feature.visual_hierarchy"
+    ],
+    "selected_count": 5,
+    "warnings": []
+  },
+  "freeze_receipt": {
+    "schema_version": "photo-core-freeze/v1",
+    "files": {
+      "request_raw": "ad591778eb1a97cacf200e404a16e21954436e6c5dfe64f930c43e252b3e6471",
+      "request_envelope_input": "5cb54931fd65301957dfe54819f0a93b2c95e68eea9f08fbad67fcc1137b35a2",
+      "creative_controls": "f5857e63b0d391d53fb7fb192d181e5226aca8d5b8a641e17abc5301f56fee82",
+      "authorial_core_input": "0aaf2b51006584987816b30aff6f15c6d76304feebfca3937a18d38519658001",
+      "authorial_core_normalized": "534897f0500206107b8028ef1f36d0d2569e4a0ac0ee0a16074ee7e8c3a794f3",
+      "request_envelope_normalized": "d8877251e80c5c286b14f5869ed756a3bea86107177e7faa85483c35982ff1bd",
+      "embodiment_review": "3e026ce20a853f201387b7b8ba5e907c9babb5e12c5a687abd73f0742a56c5c1",
+      "feature_selection": "ade7a1f6c3718164eac231cfdee039001819ba0a6d31c6da8759a6cea3dfc519",
+      "feature_selection_audit": "877bb259e2299a6460adf779f9ea467fe449c37724df2f469cbd12659a87d5ef",
+      "catalog": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+      "baseline": "3c35fd78da4e7b93ef1adc714b7cc46bdcac159a8a82ccfed54c13bf4179028f",
+      "freeze_author_input_hashes": "c0feff5c0ad68cb13ea9d5402c1ecef624ff2510fa1fc09aa3cb0ad12e344850"
+    },
+    "contracts": {
+      "envelope": "1e336837c0e8df62ce320d63ac896ce3a70af876d98ed09dd80cbc947c42e9f4",
+      "core": "aae892d1b669617a814fa34aa56a1ff26246ff0b842472f4735c7d850fc5a275",
+      "intent_lock": "81842bdaacdcef8c45e2e66f9a3384f0f678f4cb650f069f77d33ed0802ac803",
+      "controls": "df313f35e8a0ff4170e83fba2ea7ce1e73a97b89bf3ba0a818f96ab1d6e3f941"
+    }
+  }
+}

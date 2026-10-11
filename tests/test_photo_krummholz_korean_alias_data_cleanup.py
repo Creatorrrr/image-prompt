@@ -7,6 +7,7 @@ import importlib.util
 import json
 import unittest
 from tests import photo_prompt_fixtures as fixtures
+from tests.photo_source_history import before_stage05_subject_context
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'skills/photo-prompt-image-generator/assets'
@@ -67,7 +68,8 @@ class KrummholzKoreanAliasDataCleanupTests(unittest.TestCase):
         row = next(r for r in expected['slots'][self.target['slot']] if r['id'] == self.target['id'])
         self.assertEqual(row, self.target['before'])
         row['aliases'].append('왜성변형수 바람형 패치')
-        current = json.loads((ROOT / self.frozen['source_file']).read_text())
+        current = before_stage05_subject_context(
+            json.loads((ROOT / self.frozen['source_file']).read_text()), self.frozen['source_file'])
         self.assertEqual(current['slots'], expected['slots'])
         self.assertEqual(current['maintenance_ref'], before['maintenance_ref'])
 
@@ -116,7 +118,8 @@ class KrummholzKoreanAliasDataCleanupTests(unittest.TestCase):
 
     def test_previous_reef_correction_and_all_other_source_rows_remain_intact(self):
         before = json.loads((E / 'baseline-raw-extension.json').read_text())
-        current = json.loads((ROOT / self.frozen['source_file']).read_text())
+        current = before_stage05_subject_context(
+            json.loads((ROOT / self.frozen['source_file']).read_text()), self.frozen['source_file'])
         for slot, rows in before['slots'].items():
             for row in rows:
                 if slot == self.target['slot'] and row['id'] == self.target['id']:

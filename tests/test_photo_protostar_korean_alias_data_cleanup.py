@@ -8,6 +8,7 @@ import json
 import sys
 import unittest
 from tests import photo_prompt_fixtures as fixtures
+from tests.photo_source_history import before_stage05_subject_context
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -63,7 +64,9 @@ class ProtostarKoreanAliasDataCleanupTests(unittest.TestCase):
         row = next(r for r in expected['slots']['subject'] if r['id'] == self.target['id'])
         self.assertEqual(row, self.target['before'])
         row['aliases'].append('원시성 원반 분출계')
-        self.assertEqual(json.loads((ROOT / self.frozen['source_file']).read_text())['slots'], expected['slots'])
+        current = before_stage05_subject_context(
+            json.loads((ROOT / self.frozen['source_file']).read_text()), self.frozen['source_file'])
+        self.assertEqual(current['slots'], expected['slots'])
         self.assertEqual(expected['maintenance_ref'], before['maintenance_ref'])
 
     def test_historical_merged_state_and_current_nineteen_keeps_are_exact(self):

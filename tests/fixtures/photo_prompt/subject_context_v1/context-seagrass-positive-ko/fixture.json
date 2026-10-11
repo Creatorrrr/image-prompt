@@ -1,0 +1,437 @@
+{
+  "request_envelope_input": {
+    "contract_version": "photo-request-envelope/v1",
+    "provenance": "requesting_user",
+    "request_id": "context-seagrass-positive-ko",
+    "request_text": "다음 주체와 장소·동작을 사진으로 보여줘: One rooted seagrass meadow; in clear shallow coastal water; shows leaf blades rising from the seafloor. 관찰 가능한 연결은 The blade bases join the rooted seabed. Open water separates neighboring blades in the same underwater view.",
+    "request_sha256": "33675ee16b93f36cbccfbe648285052f396bf268c3a1f3f562abe9df923161f3",
+    "active_spans": [
+      {
+        "span_id": "request",
+        "start": 0,
+        "end": 247,
+        "text": "다음 주체와 장소·동작을 사진으로 보여줘: One rooted seagrass meadow; in clear shallow coastal water; shows leaf blades rising from the seafloor. 관찰 가능한 연결은 The blade bases join the rooted seabed. Open water separates neighboring blades in the same underwater view."
+      }
+    ]
+  },
+  "creative_controls": {
+    "contract_version": "photo-creative-controls/v4",
+    "provenance": "resolved_precore",
+    "source_request_sha256": "33675ee16b93f36cbccfbe648285052f396bf268c3a1f3f562abe9df923161f3",
+    "definitions": {
+      "contract_version": "photo-creative-control-definitions/v4",
+      "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content or artistic judgment. Expression levels describe prominence in the whole image; creativity levels describe interpretive freedom. Neither measures exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Creativity leaves style, extra props and surreal treatment open to the request and artistic judgment. Emphasis directs only active sensual and fetish axes without changing their intensities. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. Sensual and fetish may share the same expressive choice.",
+      "controls": {
+        "sensual": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+          "levels": {
+            "0": "No added sensual treatment; preserve explicitly requested content.",
+            "1": "This expression is a subtle supporting quality.",
+            "2": "This expression is clearly readable in the image.",
+            "3": "This expression leads the image's appeal and direction."
+          }
+        },
+        "fetish": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+          "levels": {
+            "0": "No added fetish treatment; preserve explicitly requested content.",
+            "1": "This focus is a subtle supporting quality.",
+            "2": "This focus is clearly readable in the image.",
+            "3": "This focus leads the image's appeal and direction."
+          }
+        },
+        "adult_appeal_emphasis": {
+          "type": "enum",
+          "choices": [
+            "auto",
+            "sensual_led",
+            "balanced",
+            "fetish_led"
+          ],
+          "default": "auto",
+          "definition": "Relative leadership of the active sensual and fetish axes within one coherent expression.",
+          "choice_descriptions": {
+            "auto": "Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.",
+            "sensual_led": "Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.",
+            "balanced": "Give both active axes comparable influence within one coherent expression; separate styling details are not required.",
+            "fetish_led": "Let the distinctive focus of attraction or fascination lead, with any active sensual expression supporting it."
+          }
+        },
+        "creativity": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Freedom to interpret unspecified choices and explore relationships within the request.",
+          "levels": {
+            "0": "Realize the request directly, filling only what is needed for a coherent image.",
+            "1": "Introduce restrained variations close to the requested direction.",
+            "2": "Actively reinterpret open choices into a coherent authorial direction.",
+            "3": "Boldly explore unexpected relationships and interpretations while preserving the request's core meaning."
+          }
+        },
+        "viewer_experience": {
+          "type": "boolean",
+          "default": false,
+          "definition": "Expose the detailed viewer-experience review when enabled. Always consider the intended impression in interpreted_intent, even when this additional review is off."
+        },
+        "reference_edit_mode": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "identity",
+            "younger_self",
+            "brand_board"
+          ],
+          "default": "off",
+          "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
+        },
+        "surreal": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.",
+          "levels": {
+            "0": "No added surreal treatment; preserve explicitly requested fantasy and impossible elements.",
+            "1": "Surreal qualities are a subtle supporting presence.",
+            "2": "Surreal qualities are clearly readable in the image.",
+            "3": "Surreal qualities lead the image's main impression and direction; a single coherent relationship may carry this prominence."
+          }
+        },
+        "trend_layer": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "scrapbook_collage",
+            "action_figure_packaging",
+            "retro_flash",
+            "clean_brand_portrait"
+          ],
+          "default": "off",
+          "definition": "Consider the chosen treatment from the initial composition. Refine it later without adding it twice. Off does not remove a treatment explicitly present in the request."
+        }
+      }
+    },
+    "definitions_sha256": "d044ade0f6af62c35b81d4b035b130a8819c4a15ca47a1409a59860a1928a3fa",
+    "overrides": {
+      "sensual": 0,
+      "fetish": 0,
+      "surreal": 0,
+      "creativity": 1
+    },
+    "context": {
+      "subject_category": "nonhuman",
+      "no_people": false,
+      "explicit_nonsexual": false
+    },
+    "seed": 17,
+    "controls": {
+      "sensual": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "fetish": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "adult_appeal_emphasis": {
+        "value": "auto",
+        "source": "saved_setting"
+      },
+      "creativity": {
+        "value": 1,
+        "source": "request_override"
+      },
+      "viewer_experience": {
+        "value": false,
+        "source": "saved_setting"
+      },
+      "reference_edit_mode": {
+        "value": "off",
+        "source": "saved_setting"
+      },
+      "surreal": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "trend_layer": {
+        "value": "off",
+        "source": "saved_setting"
+      }
+    },
+    "adult_appeal": {
+      "sensual": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      },
+      "fetish": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      }
+    },
+    "resolved_emphasis": "balanced",
+    "emphasis_resolution": {
+      "active": false,
+      "reason": "Both effective intensities are zero; no added emphasis is active."
+    },
+    "authoring_brief": "sensual: 0 (range: 0–3)\nMeaning: Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.\nLevel: No added sensual treatment; preserve explicitly requested content.\n\nfetish: 0 (range: 0–3)\nMeaning: Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.\nLevel: No added fetish treatment; preserve explicitly requested content.\n\nsurreal: 0 (range: 0–3)\nMeaning: Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.\nLevel: No added surreal treatment; preserve explicitly requested fantasy and impossible elements.\n\ncreativity: 1 (range: 0–3)\nMeaning: Freedom to interpret unspecified choices and explore relationships within the request.\nLevel: Introduce restrained variations close to the requested direction.\n\nadult_appeal_emphasis: auto (choices: auto, sensual_led, balanced, fetish_led)\nMeaning: Relative leadership of the active sensual and fetish axes within one coherent expression.\nSelected: Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.\nEffective: inactive\nResolution: Both effective intensities are zero; no added emphasis is active.\n\nChoose a coherent expression suited to this particular scene.\nSensual and fetish may share the same expressive choice.\nExpression levels describe prominence; creativity describes interpretive freedom. Neither requires a garment or detail count.\n\nOther resolved controls:\nviewer_experience: false\nreference_edit_mode: \"off\"\ntrend_layer: \"off\"",
+    "canonical_sha256": "81ad7e9596c033a2e391b47124e040b2b0a3c4b65b29c1934a37ea9014a264a2"
+  },
+  "authorial_core_input": {
+    "contract_version": "photo-authorial-core/v3",
+    "provenance": "agent_prepack",
+    "interpreted_intent": "A photographic realization of the requested subject, place and visible state.",
+    "subject": "One rooted seagrass meadow",
+    "setting": "in clear shallow coastal water",
+    "event": "shows leaf blades rising from the seafloor",
+    "visual_priorities": [
+      "shows leaf blades rising from the seafloor",
+      "The frame gives the specified subject and its visible relation priority"
+    ],
+    "baseline_prompt_en": "One rooted seagrass meadow in clear shallow coastal water shows leaf blades rising from the seafloor. The blade bases join the rooted seabed. Open water separates neighboring blades in the same underwater view. Gentle side light keeps the visible outlines distinct. The frame gives the specified subject and its visible relation priority.",
+    "user_definitions": [],
+    "interpretation_provenance": [
+      {
+        "term": "governing request",
+        "source_text": "다음 주체와 장소·동작을 사진으로 보여줘: One rooted seagrass meadow; in clear shallow coastal water; shows leaf blades rising from the seafloor. 관찰 가능한 연결은 The blade bases join the rooted seabed. Open water separates neighboring blades in the same underwater view.",
+        "basis": "request_context",
+        "resolution": "The primary subject, place and event follow the complete request; lighting and framing remain authorial where unprescribed.",
+        "sources": []
+      }
+    ],
+    "unresolved_ambiguities": [],
+    "user_exclusions": [],
+    "runtime_forbidden_labels": [],
+    "intent_lock": {
+      "contract_version": "photo-intent-lock/v2",
+      "priority": "requesting_user",
+      "semantic_anchors": [
+        {
+          "anchor_id": "anchor_concept",
+          "source_text": "다음 주체와 장소·동작을 사진으로 보여줘: One rooted seagrass meadow; in clear shallow coastal water; shows leaf blades rising from the seafloor. 관찰 가능한 연결은 The blade bases join the rooted seabed. Open water separates neighboring blades in the same underwater view.",
+          "dimension": "concept",
+          "prompt_evidence": "One rooted seagrass meadow in clear shallow coastal water shows leaf blades rising from the seafloor"
+        },
+        {
+          "anchor_id": "anchor_subject",
+          "source_text": "다음 주체와 장소·동작을 사진으로 보여줘: One rooted seagrass meadow; in clear shallow coastal water; shows leaf blades rising from the seafloor. 관찰 가능한 연결은 The blade bases join the rooted seabed. Open water separates neighboring blades in the same underwater view.",
+          "dimension": "subject",
+          "prompt_evidence": "One rooted seagrass meadow"
+        },
+        {
+          "anchor_id": "anchor_setting",
+          "source_text": "다음 주체와 장소·동작을 사진으로 보여줘: One rooted seagrass meadow; in clear shallow coastal water; shows leaf blades rising from the seafloor. 관찰 가능한 연결은 The blade bases join the rooted seabed. Open water separates neighboring blades in the same underwater view.",
+          "dimension": "setting",
+          "prompt_evidence": "in clear shallow coastal water"
+        },
+        {
+          "anchor_id": "anchor_event",
+          "source_text": "다음 주체와 장소·동작을 사진으로 보여줘: One rooted seagrass meadow; in clear shallow coastal water; shows leaf blades rising from the seafloor. 관찰 가능한 연결은 The blade bases join the rooted seabed. Open water separates neighboring blades in the same underwater view.",
+          "dimension": "event",
+          "prompt_evidence": "shows leaf blades rising from the seafloor"
+        }
+      ],
+      "locked_dimensions": [
+        "concept",
+        "subject",
+        "setting",
+        "event"
+      ],
+      "open_dimensions": [
+        "appearance",
+        "timing",
+        "atmosphere",
+        "style",
+        "material",
+        "color",
+        "framing",
+        "composition",
+        "camera",
+        "lighting",
+        "pose",
+        "action",
+        "relationship",
+        "expression",
+        "body_geometry"
+      ]
+    },
+    "style": {
+      "domain": "general_photo",
+      "family": "scene-led photographic observation",
+      "evidence": [
+        "Gentle side light keeps the visible outlines distinct",
+        "The frame gives the specified subject and its visible relation priority"
+      ]
+    },
+    "semantic_assertions": [
+      {
+        "assertion_id": "primary_subject",
+        "dimension": "subject",
+        "polarity": "required",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "subject"
+        ],
+        "axes": {
+          "subject_category": "plant"
+        },
+        "evidence": {
+          "subject_phrase": "One rooted seagrass meadow"
+        }
+      },
+      {
+        "assertion_id": "camera_review",
+        "dimension": "camera",
+        "polarity": "advisory",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "axes": {
+          "camera_axis_review": "camera_axis_review_v1",
+          "capture_owner": "unprescribed",
+          "direction_requirement": "open",
+          "height_requirement": "open"
+        },
+        "evidence": {}
+      }
+    ],
+    "request_lineage": null,
+    "variation_key": "context-seagrass-positive-ko",
+    "source_request": "다음 주체와 장소·동작을 사진으로 보여줘: One rooted seagrass meadow; in clear shallow coastal water; shows leaf blades rising from the seafloor. 관찰 가능한 연결은 The blade bases join the rooted seabed. Open water separates neighboring blades in the same underwater view.",
+    "creative_controls_sha256": "81ad7e9596c033a2e391b47124e040b2b0a3c4b65b29c1934a37ea9014a264a2"
+  },
+  "embodiment_review": {
+    "contract_version": "photo-embodiment-review/v1",
+    "provenance": "agent_prepack",
+    "scope": "not_applicable",
+    "summary": "The frame contains a static object, plant or landscape; there is no articulated actor or body interaction to check.",
+    "checks": {},
+    "prompt_sha256": "cea6f167c7e6b2c6b330ef90610b53d47cb333ebdac2e3e764213ef7e0acb37d"
+  },
+  "feature_selection": {
+    "selected": [
+      {
+        "category_id": "feature.primary_object",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: One rooted seagrass meadow",
+        "reason": "The requested primary carrier remains recognizable.",
+        "baseline_evidence": "One rooted seagrass meadow"
+      },
+      {
+        "category_id": "feature.location",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: in clear shallow coastal water",
+        "reason": "The requested place or temporal setting grounds the visible state.",
+        "baseline_evidence": "in clear shallow coastal water"
+      },
+      {
+        "category_id": "feature.situation",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: shows leaf blades rising from the seafloor",
+        "reason": "The requested event or still state governs this frame.",
+        "baseline_evidence": "shows leaf blades rising from the seafloor"
+      },
+      {
+        "category_id": "feature.light_quality",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The light makes the requested surface or action readable.",
+        "baseline_evidence": "Gentle side light keeps the visible outlines distinct"
+      },
+      {
+        "category_id": "feature.visual_hierarchy",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The frame organizes attention around the governing subject and state.",
+        "baseline_evidence": "The frame gives the specified subject and its visible relation priority"
+      }
+    ],
+    "contract_version": "photo-precore-feature-selection/v1",
+    "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+    "catalog_schema_version": "photo-precore-feature-catalog/v1",
+    "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+    "request_id": "context-seagrass-positive-ko",
+    "request_sha256": "33675ee16b93f36cbccfbe648285052f396bf268c3a1f3f562abe9df923161f3",
+    "active_span_ids": [
+      "request"
+    ],
+    "baseline_prompt_sha256": "cea6f167c7e6b2c6b330ef90610b53d47cb333ebdac2e3e764213ef7e0acb37d"
+  },
+  "feature_selection_audit": {
+    "valid": true,
+    "contract_version": "photo-precore-feature-selection/v1",
+    "request_id": "context-seagrass-positive-ko",
+    "selected_category_ids": [
+      "feature.primary_object",
+      "feature.location",
+      "feature.situation",
+      "feature.light_quality",
+      "feature.visual_hierarchy"
+    ],
+    "selected_count": 5,
+    "warnings": []
+  },
+  "freeze_receipt": {
+    "schema_version": "photo-core-freeze/v1",
+    "files": {
+      "request_raw": "33675ee16b93f36cbccfbe648285052f396bf268c3a1f3f562abe9df923161f3",
+      "request_envelope_input": "1fd03793f896a3e4bd6e046432ed65eb87b7811e73c0530191b5f2b63de6eac9",
+      "creative_controls": "45e47b206f4c6b0363d63f19d83501932d8b5353f103d331c005a7a3e169fc42",
+      "authorial_core_input": "09af7eb1a7103555d64de8044d9da272312c2da2e63e4535cda4eee16a2a386b",
+      "authorial_core_normalized": "3ec3c69e421349f889421f79068308ded7c0ac5f215e93457e635056c245c444",
+      "request_envelope_normalized": "f8a82f925bc94c4f6f313b07a8097de433af86c646112cb792915051ab4ce87e",
+      "embodiment_review": "53a05809e32b341bd089cf025551bb84c58a3f9669ccd7cd4a881cfec1d90af5",
+      "feature_selection": "bd0292754988a16a55ddc3309c421814e5747cee3647e9b7a46c6c9aa19ad729",
+      "feature_selection_audit": "6ce4cfd5239a251f1d2edb47214eecedb19c5de19f12ea833486ee3c94cf4c47",
+      "catalog": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+      "baseline": "cea6f167c7e6b2c6b330ef90610b53d47cb333ebdac2e3e764213ef7e0acb37d",
+      "freeze_author_input_hashes": "09aecd29dc642eb07203c26246e2be9465d37f8522f27f58291544c5a65de6ba"
+    },
+    "contracts": {
+      "envelope": "8d123cb276069156ca4f620280c31807d6f15714d314c24335722b53fe83bba6",
+      "core": "1a63e384b87ff4f2909a1d458d2e9f5bf6aed9585b7b250aa91fcbe18dd159d3",
+      "intent_lock": "c1b4e1f6d2f2b590a61661378970972e3f143d31e4b915fc40ee96797b5b3d27",
+      "controls": "81ad7e9596c033a2e391b47124e040b2b0a3c4b65b29c1934a37ea9014a264a2"
+    }
+  }
+}

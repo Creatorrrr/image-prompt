@@ -1,0 +1,473 @@
+{
+  "request_envelope_input": {
+    "contract_version": "photo-request-envelope/v1",
+    "provenance": "requesting_user",
+    "request_id": "context-karaoke-positive-en",
+    "request_text": "Photograph Two adult friends inside a small coin-karaoke room as it stand beside each other holding separate microphones. Show this visible structure: Their feet stand on the room floor. Each microphone rests in its own wearer's hand beside the torso, and both faces remain visible.",
+    "request_sha256": "647ffe611fac257aa1cb3e008bc8be33b4b161f366ce44e9807aefd322c6685b",
+    "active_spans": [
+      {
+        "span_id": "request",
+        "start": 0,
+        "end": 282,
+        "text": "Photograph Two adult friends inside a small coin-karaoke room as it stand beside each other holding separate microphones. Show this visible structure: Their feet stand on the room floor. Each microphone rests in its own wearer's hand beside the torso, and both faces remain visible."
+      }
+    ]
+  },
+  "creative_controls": {
+    "contract_version": "photo-creative-controls/v4",
+    "provenance": "resolved_precore",
+    "source_request_sha256": "647ffe611fac257aa1cb3e008bc8be33b4b161f366ce44e9807aefd322c6685b",
+    "definitions": {
+      "contract_version": "photo-creative-control-definitions/v4",
+      "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content or artistic judgment. Expression levels describe prominence in the whole image; creativity levels describe interpretive freedom. Neither measures exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Creativity leaves style, extra props and surreal treatment open to the request and artistic judgment. Emphasis directs only active sensual and fetish axes without changing their intensities. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. Sensual and fetish may share the same expressive choice.",
+      "controls": {
+        "sensual": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+          "levels": {
+            "0": "No added sensual treatment; preserve explicitly requested content.",
+            "1": "This expression is a subtle supporting quality.",
+            "2": "This expression is clearly readable in the image.",
+            "3": "This expression leads the image's appeal and direction."
+          }
+        },
+        "fetish": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+          "levels": {
+            "0": "No added fetish treatment; preserve explicitly requested content.",
+            "1": "This focus is a subtle supporting quality.",
+            "2": "This focus is clearly readable in the image.",
+            "3": "This focus leads the image's appeal and direction."
+          }
+        },
+        "adult_appeal_emphasis": {
+          "type": "enum",
+          "choices": [
+            "auto",
+            "sensual_led",
+            "balanced",
+            "fetish_led"
+          ],
+          "default": "auto",
+          "definition": "Relative leadership of the active sensual and fetish axes within one coherent expression.",
+          "choice_descriptions": {
+            "auto": "Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.",
+            "sensual_led": "Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.",
+            "balanced": "Give both active axes comparable influence within one coherent expression; separate styling details are not required.",
+            "fetish_led": "Let the distinctive focus of attraction or fascination lead, with any active sensual expression supporting it."
+          }
+        },
+        "creativity": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Freedom to interpret unspecified choices and explore relationships within the request.",
+          "levels": {
+            "0": "Realize the request directly, filling only what is needed for a coherent image.",
+            "1": "Introduce restrained variations close to the requested direction.",
+            "2": "Actively reinterpret open choices into a coherent authorial direction.",
+            "3": "Boldly explore unexpected relationships and interpretations while preserving the request's core meaning."
+          }
+        },
+        "viewer_experience": {
+          "type": "boolean",
+          "default": false,
+          "definition": "Expose the detailed viewer-experience review when enabled. Always consider the intended impression in interpreted_intent, even when this additional review is off."
+        },
+        "reference_edit_mode": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "identity",
+            "younger_self",
+            "brand_board"
+          ],
+          "default": "off",
+          "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
+        },
+        "surreal": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.",
+          "levels": {
+            "0": "No added surreal treatment; preserve explicitly requested fantasy and impossible elements.",
+            "1": "Surreal qualities are a subtle supporting presence.",
+            "2": "Surreal qualities are clearly readable in the image.",
+            "3": "Surreal qualities lead the image's main impression and direction; a single coherent relationship may carry this prominence."
+          }
+        },
+        "trend_layer": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "scrapbook_collage",
+            "action_figure_packaging",
+            "retro_flash",
+            "clean_brand_portrait"
+          ],
+          "default": "off",
+          "definition": "Consider the chosen treatment from the initial composition. Refine it later without adding it twice. Off does not remove a treatment explicitly present in the request."
+        }
+      }
+    },
+    "definitions_sha256": "d044ade0f6af62c35b81d4b035b130a8819c4a15ca47a1409a59860a1928a3fa",
+    "overrides": {
+      "sensual": 0,
+      "fetish": 0,
+      "surreal": 0,
+      "creativity": 1
+    },
+    "context": {
+      "subject_category": "human",
+      "no_people": false,
+      "explicit_nonsexual": false
+    },
+    "seed": 17,
+    "controls": {
+      "sensual": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "fetish": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "adult_appeal_emphasis": {
+        "value": "auto",
+        "source": "saved_setting"
+      },
+      "creativity": {
+        "value": 1,
+        "source": "request_override"
+      },
+      "viewer_experience": {
+        "value": false,
+        "source": "saved_setting"
+      },
+      "reference_edit_mode": {
+        "value": "off",
+        "source": "saved_setting"
+      },
+      "surreal": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "trend_layer": {
+        "value": "off",
+        "source": "saved_setting"
+      }
+    },
+    "adult_appeal": {
+      "sensual": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      },
+      "fetish": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      }
+    },
+    "resolved_emphasis": "balanced",
+    "emphasis_resolution": {
+      "active": false,
+      "reason": "Both effective intensities are zero; no added emphasis is active."
+    },
+    "authoring_brief": "sensual: 0 (range: 0–3)\nMeaning: Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.\nLevel: No added sensual treatment; preserve explicitly requested content.\n\nfetish: 0 (range: 0–3)\nMeaning: Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.\nLevel: No added fetish treatment; preserve explicitly requested content.\n\nsurreal: 0 (range: 0–3)\nMeaning: Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.\nLevel: No added surreal treatment; preserve explicitly requested fantasy and impossible elements.\n\ncreativity: 1 (range: 0–3)\nMeaning: Freedom to interpret unspecified choices and explore relationships within the request.\nLevel: Introduce restrained variations close to the requested direction.\n\nadult_appeal_emphasis: auto (choices: auto, sensual_led, balanced, fetish_led)\nMeaning: Relative leadership of the active sensual and fetish axes within one coherent expression.\nSelected: Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.\nEffective: inactive\nResolution: Both effective intensities are zero; no added emphasis is active.\n\nChoose a coherent expression suited to this particular scene.\nSensual and fetish may share the same expressive choice.\nExpression levels describe prominence; creativity describes interpretive freedom. Neither requires a garment or detail count.\n\nOther resolved controls:\nviewer_experience: false\nreference_edit_mode: \"off\"\ntrend_layer: \"off\"",
+    "canonical_sha256": "59f000fabdf2cd3838d3cadadc5ddd8ba075caaf819346a1ca1b6c66ba8fefeb"
+  },
+  "authorial_core_input": {
+    "contract_version": "photo-authorial-core/v3",
+    "provenance": "agent_prepack",
+    "interpreted_intent": "A photographic realization of the requested subject, place and visible state.",
+    "subject": "Two adult friends",
+    "setting": "inside a small coin-karaoke room",
+    "event": "stand beside each other holding separate microphones",
+    "visual_priorities": [
+      "stand beside each other holding separate microphones",
+      "The frame gives the specified subject and its visible relation priority"
+    ],
+    "baseline_prompt_en": "Two adult friends inside a small coin-karaoke room stand beside each other holding separate microphones. Their feet stand on the room floor. Each microphone rests in its own wearer's hand beside the torso, and both faces remain visible. Gentle side light keeps the visible outlines distinct. The frame gives the specified subject and its visible relation priority.",
+    "user_definitions": [],
+    "interpretation_provenance": [
+      {
+        "term": "governing request",
+        "source_text": "Photograph Two adult friends inside a small coin-karaoke room as it stand beside each other holding separate microphones. Show this visible structure: Their feet stand on the room floor. Each microphone rests in its own wearer's hand beside the torso, and both faces remain visible.",
+        "basis": "request_context",
+        "resolution": "The primary subject, place and event follow the complete request; lighting and framing remain authorial where unprescribed.",
+        "sources": []
+      }
+    ],
+    "unresolved_ambiguities": [],
+    "user_exclusions": [],
+    "runtime_forbidden_labels": [],
+    "intent_lock": {
+      "contract_version": "photo-intent-lock/v2",
+      "priority": "requesting_user",
+      "semantic_anchors": [
+        {
+          "anchor_id": "anchor_concept",
+          "source_text": "Photograph Two adult friends inside a small coin-karaoke room as it stand beside each other holding separate microphones. Show this visible structure: Their feet stand on the room floor. Each microphone rests in its own wearer's hand beside the torso, and both faces remain visible.",
+          "dimension": "concept",
+          "prompt_evidence": "Two adult friends inside a small coin-karaoke room stand beside each other holding separate microphones"
+        },
+        {
+          "anchor_id": "anchor_subject",
+          "source_text": "Photograph Two adult friends inside a small coin-karaoke room as it stand beside each other holding separate microphones. Show this visible structure: Their feet stand on the room floor. Each microphone rests in its own wearer's hand beside the torso, and both faces remain visible.",
+          "dimension": "subject",
+          "prompt_evidence": "Two adult friends"
+        },
+        {
+          "anchor_id": "anchor_setting",
+          "source_text": "Photograph Two adult friends inside a small coin-karaoke room as it stand beside each other holding separate microphones. Show this visible structure: Their feet stand on the room floor. Each microphone rests in its own wearer's hand beside the torso, and both faces remain visible.",
+          "dimension": "setting",
+          "prompt_evidence": "inside a small coin-karaoke room"
+        },
+        {
+          "anchor_id": "anchor_event",
+          "source_text": "Photograph Two adult friends inside a small coin-karaoke room as it stand beside each other holding separate microphones. Show this visible structure: Their feet stand on the room floor. Each microphone rests in its own wearer's hand beside the torso, and both faces remain visible.",
+          "dimension": "event",
+          "prompt_evidence": "stand beside each other holding separate microphones"
+        }
+      ],
+      "locked_dimensions": [
+        "concept",
+        "subject",
+        "setting",
+        "event"
+      ],
+      "open_dimensions": [
+        "appearance",
+        "timing",
+        "atmosphere",
+        "style",
+        "material",
+        "color",
+        "framing",
+        "composition",
+        "camera",
+        "lighting",
+        "pose",
+        "action",
+        "relationship",
+        "expression",
+        "body_geometry"
+      ]
+    },
+    "style": {
+      "domain": "general_photo",
+      "family": "scene-led photographic observation",
+      "evidence": [
+        "Gentle side light keeps the visible outlines distinct",
+        "The frame gives the specified subject and its visible relation priority"
+      ]
+    },
+    "semantic_assertions": [
+      {
+        "assertion_id": "primary_subject",
+        "dimension": "subject",
+        "polarity": "required",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "subject"
+        ],
+        "axes": {
+          "subject_category": "human"
+        },
+        "evidence": {
+          "subject_phrase": "Two adult friends"
+        }
+      },
+      {
+        "assertion_id": "camera_review",
+        "dimension": "camera",
+        "polarity": "advisory",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "axes": {
+          "camera_axis_review": "camera_axis_review_v1",
+          "capture_owner": "unprescribed",
+          "direction_requirement": "open",
+          "height_requirement": "open"
+        },
+        "evidence": {}
+      }
+    ],
+    "request_lineage": null,
+    "variation_key": "context-karaoke-positive-en",
+    "source_request": "Photograph Two adult friends inside a small coin-karaoke room as it stand beside each other holding separate microphones. Show this visible structure: Their feet stand on the room floor. Each microphone rests in its own wearer's hand beside the torso, and both faces remain visible.",
+    "creative_controls_sha256": "59f000fabdf2cd3838d3cadadc5ddd8ba075caaf819346a1ca1b6c66ba8fefeb"
+  },
+  "embodiment_review": {
+    "contract_version": "photo-embodiment-review/v1",
+    "provenance": "agent_prepack",
+    "scope": "body_action",
+    "summary": "Reviewed the planned actor ownership, support, reach, contacts and visibility: each hand supports its own microphone close to its torso.",
+    "checks": {
+      "body_ownership": {
+        "status": "supported",
+        "reason": "Each visible body belongs to the requested primary actor or actors; the geometry adds no new actor.",
+        "prompt_evidence": [
+          "Two adult friends"
+        ]
+      },
+      "joint_chain_and_reach": {
+        "status": "supported",
+        "reason": "The planned motion or resting limb arrangement stays close to its carrier and does not require an unsupported long reach: each hand supports its own microphone close to its torso.",
+        "prompt_evidence": [
+          "holding separate microphones"
+        ]
+      },
+      "support_and_balance": {
+        "status": "supported",
+        "reason": "The stated surface carries the planned body or seated load; this is a prose plausibility judgment.",
+        "prompt_evidence": [
+          "Their feet stand on the room floor"
+        ]
+      },
+      "contact_and_space": {
+        "status": "supported",
+        "reason": "The contact endpoint and nearby free space are specified for this case: each hand supports its own microphone close to its torso.",
+        "prompt_evidence": [
+          "holding separate microphones"
+        ]
+      },
+      "visibility_and_projection": {
+        "status": "supported",
+        "reason": "The framing preserves the action-bearing surface, contact or body outline rather than concealing the requested relation.",
+        "prompt_evidence": [
+          "The frame gives the specified subject and its visible relation priority"
+        ]
+      }
+    },
+    "prompt_sha256": "82b03c869deb896151ad2b0e0da8898f4fd07c3dca04b6188592f629b2be748f"
+  },
+  "feature_selection": {
+    "selected": [
+      {
+        "category_id": "feature.subject",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: Two adult friends",
+        "reason": "The requested primary carrier remains recognizable.",
+        "baseline_evidence": "Two adult friends"
+      },
+      {
+        "category_id": "feature.location",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: inside a small coin-karaoke room",
+        "reason": "The requested place or temporal setting grounds the visible state.",
+        "baseline_evidence": "inside a small coin-karaoke room"
+      },
+      {
+        "category_id": "feature.situation",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: stand beside each other holding separate microphones",
+        "reason": "The requested event or still state governs this frame.",
+        "baseline_evidence": "stand beside each other holding separate microphones"
+      },
+      {
+        "category_id": "feature.light_quality",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The light makes the requested surface or action readable.",
+        "baseline_evidence": "Gentle side light keeps the visible outlines distinct"
+      },
+      {
+        "category_id": "feature.visual_hierarchy",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The frame organizes attention around the governing subject and state.",
+        "baseline_evidence": "The frame gives the specified subject and its visible relation priority"
+      }
+    ],
+    "contract_version": "photo-precore-feature-selection/v1",
+    "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+    "catalog_schema_version": "photo-precore-feature-catalog/v1",
+    "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+    "request_id": "context-karaoke-positive-en",
+    "request_sha256": "647ffe611fac257aa1cb3e008bc8be33b4b161f366ce44e9807aefd322c6685b",
+    "active_span_ids": [
+      "request"
+    ],
+    "baseline_prompt_sha256": "82b03c869deb896151ad2b0e0da8898f4fd07c3dca04b6188592f629b2be748f"
+  },
+  "feature_selection_audit": {
+    "valid": true,
+    "contract_version": "photo-precore-feature-selection/v1",
+    "request_id": "context-karaoke-positive-en",
+    "selected_category_ids": [
+      "feature.subject",
+      "feature.location",
+      "feature.situation",
+      "feature.light_quality",
+      "feature.visual_hierarchy"
+    ],
+    "selected_count": 5,
+    "warnings": []
+  },
+  "freeze_receipt": {
+    "schema_version": "photo-core-freeze/v1",
+    "files": {
+      "request_raw": "647ffe611fac257aa1cb3e008bc8be33b4b161f366ce44e9807aefd322c6685b",
+      "request_envelope_input": "9b58a4f0cc2d0f612c3e58571474ada2cb37dbf2b9098157b076344d9cb33039",
+      "creative_controls": "a3caee3c01b3e5087f9163ea906e09ef79c124fe7565b300452b7d8420ade073",
+      "authorial_core_input": "efcd427b283efa561e190d75a0634e547f003ad174f7bdd580c3073a2316b855",
+      "authorial_core_normalized": "ec41d9a093320cc7bc7f7d622153a216ddd82b3e8f18eb6b1be64c824f77ec31",
+      "request_envelope_normalized": "002893efd466c5e21a3a4f1b7c3320fa68cf053e625257903338881f849d7c1c",
+      "embodiment_review": "e235586d6cf95ad2b56d6f3b0b351383eb9291ecf2b2c8ed6b4ecc6819b99b11",
+      "feature_selection": "c31058283300c175c68f2f8c82ccbd52be9d0a66ede2c2350c42bece3234ceae",
+      "feature_selection_audit": "a27e22d907166da6846094790555082af7013c9c23afd63d68f20e60bc8b5f6c",
+      "catalog": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+      "baseline": "82b03c869deb896151ad2b0e0da8898f4fd07c3dca04b6188592f629b2be748f",
+      "freeze_author_input_hashes": "5c0c035aa8b123ab1753cbeb36991ff7e25aaf59733e0dc0dfa836709c657984"
+    },
+    "contracts": {
+      "envelope": "5cf9f56a8dfb0153e5e618a621dd3c6d652a50a8c9fb392b11ba34380cbcb8ac",
+      "core": "21d74032e9fbe929faa7af86273a5c8a04997b99ff3aff8f99ec37f33b53d166",
+      "intent_lock": "11ea40f5bdbb0df6211fef3b5172a32af5651259312561e7ae8e1148b18e59e5",
+      "controls": "59f000fabdf2cd3838d3cadadc5ddd8ba075caaf819346a1ca1b6c66ba8fefeb"
+    }
+  }
+}
