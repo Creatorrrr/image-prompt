@@ -1,0 +1,437 @@
+{
+  "request_envelope_input": {
+    "contract_version": "photo-request-envelope/v1",
+    "provenance": "requesting_user",
+    "request_id": "context-mycelium-positive-en",
+    "request_text": "Photograph A patch of mycelium and small fungi on a damp forest floor as it emerges through loose leaf litter. Show this visible structure: Fine threads cross the exposed litter while small fungal caps rise beside them. The patch and its supporting ground remain visible together.",
+    "request_sha256": "a9730b65b3436c2bdd9b5e85df22ef5d7b35f9fac3e02a00323bd344bd427493",
+    "active_spans": [
+      {
+        "span_id": "request",
+        "start": 0,
+        "end": 280,
+        "text": "Photograph A patch of mycelium and small fungi on a damp forest floor as it emerges through loose leaf litter. Show this visible structure: Fine threads cross the exposed litter while small fungal caps rise beside them. The patch and its supporting ground remain visible together."
+      }
+    ]
+  },
+  "creative_controls": {
+    "contract_version": "photo-creative-controls/v4",
+    "provenance": "resolved_precore",
+    "source_request_sha256": "a9730b65b3436c2bdd9b5e85df22ef5d7b35f9fac3e02a00323bd344bd427493",
+    "definitions": {
+      "contract_version": "photo-creative-control-definitions/v4",
+      "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content or artistic judgment. Expression levels describe prominence in the whole image; creativity levels describe interpretive freedom. Neither measures exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Creativity leaves style, extra props and surreal treatment open to the request and artistic judgment. Emphasis directs only active sensual and fetish axes without changing their intensities. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. Sensual and fetish may share the same expressive choice.",
+      "controls": {
+        "sensual": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+          "levels": {
+            "0": "No added sensual treatment; preserve explicitly requested content.",
+            "1": "This expression is a subtle supporting quality.",
+            "2": "This expression is clearly readable in the image.",
+            "3": "This expression leads the image's appeal and direction."
+          }
+        },
+        "fetish": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+          "levels": {
+            "0": "No added fetish treatment; preserve explicitly requested content.",
+            "1": "This focus is a subtle supporting quality.",
+            "2": "This focus is clearly readable in the image.",
+            "3": "This focus leads the image's appeal and direction."
+          }
+        },
+        "adult_appeal_emphasis": {
+          "type": "enum",
+          "choices": [
+            "auto",
+            "sensual_led",
+            "balanced",
+            "fetish_led"
+          ],
+          "default": "auto",
+          "definition": "Relative leadership of the active sensual and fetish axes within one coherent expression.",
+          "choice_descriptions": {
+            "auto": "Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.",
+            "sensual_led": "Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.",
+            "balanced": "Give both active axes comparable influence within one coherent expression; separate styling details are not required.",
+            "fetish_led": "Let the distinctive focus of attraction or fascination lead, with any active sensual expression supporting it."
+          }
+        },
+        "creativity": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Freedom to interpret unspecified choices and explore relationships within the request.",
+          "levels": {
+            "0": "Realize the request directly, filling only what is needed for a coherent image.",
+            "1": "Introduce restrained variations close to the requested direction.",
+            "2": "Actively reinterpret open choices into a coherent authorial direction.",
+            "3": "Boldly explore unexpected relationships and interpretations while preserving the request's core meaning."
+          }
+        },
+        "viewer_experience": {
+          "type": "boolean",
+          "default": false,
+          "definition": "Expose the detailed viewer-experience review when enabled. Always consider the intended impression in interpreted_intent, even when this additional review is off."
+        },
+        "reference_edit_mode": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "identity",
+            "younger_self",
+            "brand_board"
+          ],
+          "default": "off",
+          "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
+        },
+        "surreal": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.",
+          "levels": {
+            "0": "No added surreal treatment; preserve explicitly requested fantasy and impossible elements.",
+            "1": "Surreal qualities are a subtle supporting presence.",
+            "2": "Surreal qualities are clearly readable in the image.",
+            "3": "Surreal qualities lead the image's main impression and direction; a single coherent relationship may carry this prominence."
+          }
+        },
+        "trend_layer": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "scrapbook_collage",
+            "action_figure_packaging",
+            "retro_flash",
+            "clean_brand_portrait"
+          ],
+          "default": "off",
+          "definition": "Consider the chosen treatment from the initial composition. Refine it later without adding it twice. Off does not remove a treatment explicitly present in the request."
+        }
+      }
+    },
+    "definitions_sha256": "d044ade0f6af62c35b81d4b035b130a8819c4a15ca47a1409a59860a1928a3fa",
+    "overrides": {
+      "sensual": 0,
+      "fetish": 0,
+      "surreal": 0,
+      "creativity": 1
+    },
+    "context": {
+      "subject_category": "nonhuman",
+      "no_people": false,
+      "explicit_nonsexual": false
+    },
+    "seed": 17,
+    "controls": {
+      "sensual": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "fetish": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "adult_appeal_emphasis": {
+        "value": "auto",
+        "source": "saved_setting"
+      },
+      "creativity": {
+        "value": 1,
+        "source": "request_override"
+      },
+      "viewer_experience": {
+        "value": false,
+        "source": "saved_setting"
+      },
+      "reference_edit_mode": {
+        "value": "off",
+        "source": "saved_setting"
+      },
+      "surreal": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "trend_layer": {
+        "value": "off",
+        "source": "saved_setting"
+      }
+    },
+    "adult_appeal": {
+      "sensual": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      },
+      "fetish": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      }
+    },
+    "resolved_emphasis": "balanced",
+    "emphasis_resolution": {
+      "active": false,
+      "reason": "Both effective intensities are zero; no added emphasis is active."
+    },
+    "authoring_brief": "sensual: 0 (range: 0–3)\nMeaning: Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.\nLevel: No added sensual treatment; preserve explicitly requested content.\n\nfetish: 0 (range: 0–3)\nMeaning: Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.\nLevel: No added fetish treatment; preserve explicitly requested content.\n\nsurreal: 0 (range: 0–3)\nMeaning: Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.\nLevel: No added surreal treatment; preserve explicitly requested fantasy and impossible elements.\n\ncreativity: 1 (range: 0–3)\nMeaning: Freedom to interpret unspecified choices and explore relationships within the request.\nLevel: Introduce restrained variations close to the requested direction.\n\nadult_appeal_emphasis: auto (choices: auto, sensual_led, balanced, fetish_led)\nMeaning: Relative leadership of the active sensual and fetish axes within one coherent expression.\nSelected: Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.\nEffective: inactive\nResolution: Both effective intensities are zero; no added emphasis is active.\n\nChoose a coherent expression suited to this particular scene.\nSensual and fetish may share the same expressive choice.\nExpression levels describe prominence; creativity describes interpretive freedom. Neither requires a garment or detail count.\n\nOther resolved controls:\nviewer_experience: false\nreference_edit_mode: \"off\"\ntrend_layer: \"off\"",
+    "canonical_sha256": "fe358bc9ef7622cf8f6bed92d6b8c7b9e4b93c95ff393f8a926d211d497e5e58"
+  },
+  "authorial_core_input": {
+    "contract_version": "photo-authorial-core/v3",
+    "provenance": "agent_prepack",
+    "interpreted_intent": "A photographic realization of the requested subject, place and visible state.",
+    "subject": "A patch of mycelium and small fungi",
+    "setting": "on a damp forest floor",
+    "event": "emerges through loose leaf litter",
+    "visual_priorities": [
+      "emerges through loose leaf litter",
+      "The frame gives the specified subject and its visible relation priority"
+    ],
+    "baseline_prompt_en": "A patch of mycelium and small fungi on a damp forest floor emerges through loose leaf litter. Fine threads cross the exposed litter while small fungal caps rise beside them. The patch and its supporting ground remain visible together. Gentle side light keeps the visible outlines distinct. The frame gives the specified subject and its visible relation priority.",
+    "user_definitions": [],
+    "interpretation_provenance": [
+      {
+        "term": "governing request",
+        "source_text": "Photograph A patch of mycelium and small fungi on a damp forest floor as it emerges through loose leaf litter. Show this visible structure: Fine threads cross the exposed litter while small fungal caps rise beside them. The patch and its supporting ground remain visible together.",
+        "basis": "request_context",
+        "resolution": "The primary subject, place and event follow the complete request; lighting and framing remain authorial where unprescribed.",
+        "sources": []
+      }
+    ],
+    "unresolved_ambiguities": [],
+    "user_exclusions": [],
+    "runtime_forbidden_labels": [],
+    "intent_lock": {
+      "contract_version": "photo-intent-lock/v2",
+      "priority": "requesting_user",
+      "semantic_anchors": [
+        {
+          "anchor_id": "anchor_concept",
+          "source_text": "Photograph A patch of mycelium and small fungi on a damp forest floor as it emerges through loose leaf litter. Show this visible structure: Fine threads cross the exposed litter while small fungal caps rise beside them. The patch and its supporting ground remain visible together.",
+          "dimension": "concept",
+          "prompt_evidence": "A patch of mycelium and small fungi on a damp forest floor emerges through loose leaf litter"
+        },
+        {
+          "anchor_id": "anchor_subject",
+          "source_text": "Photograph A patch of mycelium and small fungi on a damp forest floor as it emerges through loose leaf litter. Show this visible structure: Fine threads cross the exposed litter while small fungal caps rise beside them. The patch and its supporting ground remain visible together.",
+          "dimension": "subject",
+          "prompt_evidence": "A patch of mycelium and small fungi"
+        },
+        {
+          "anchor_id": "anchor_setting",
+          "source_text": "Photograph A patch of mycelium and small fungi on a damp forest floor as it emerges through loose leaf litter. Show this visible structure: Fine threads cross the exposed litter while small fungal caps rise beside them. The patch and its supporting ground remain visible together.",
+          "dimension": "setting",
+          "prompt_evidence": "on a damp forest floor"
+        },
+        {
+          "anchor_id": "anchor_event",
+          "source_text": "Photograph A patch of mycelium and small fungi on a damp forest floor as it emerges through loose leaf litter. Show this visible structure: Fine threads cross the exposed litter while small fungal caps rise beside them. The patch and its supporting ground remain visible together.",
+          "dimension": "event",
+          "prompt_evidence": "emerges through loose leaf litter"
+        }
+      ],
+      "locked_dimensions": [
+        "concept",
+        "subject",
+        "setting",
+        "event"
+      ],
+      "open_dimensions": [
+        "appearance",
+        "timing",
+        "atmosphere",
+        "style",
+        "material",
+        "color",
+        "framing",
+        "composition",
+        "camera",
+        "lighting",
+        "pose",
+        "action",
+        "relationship",
+        "expression",
+        "body_geometry"
+      ]
+    },
+    "style": {
+      "domain": "general_photo",
+      "family": "scene-led photographic observation",
+      "evidence": [
+        "Gentle side light keeps the visible outlines distinct",
+        "The frame gives the specified subject and its visible relation priority"
+      ]
+    },
+    "semantic_assertions": [
+      {
+        "assertion_id": "primary_subject",
+        "dimension": "subject",
+        "polarity": "required",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "subject"
+        ],
+        "axes": {
+          "subject_category": "plant"
+        },
+        "evidence": {
+          "subject_phrase": "A patch of mycelium and small fungi"
+        }
+      },
+      {
+        "assertion_id": "camera_review",
+        "dimension": "camera",
+        "polarity": "advisory",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "axes": {
+          "camera_axis_review": "camera_axis_review_v1",
+          "capture_owner": "unprescribed",
+          "direction_requirement": "open",
+          "height_requirement": "open"
+        },
+        "evidence": {}
+      }
+    ],
+    "request_lineage": null,
+    "variation_key": "context-mycelium-positive-en",
+    "source_request": "Photograph A patch of mycelium and small fungi on a damp forest floor as it emerges through loose leaf litter. Show this visible structure: Fine threads cross the exposed litter while small fungal caps rise beside them. The patch and its supporting ground remain visible together.",
+    "creative_controls_sha256": "fe358bc9ef7622cf8f6bed92d6b8c7b9e4b93c95ff393f8a926d211d497e5e58"
+  },
+  "embodiment_review": {
+    "contract_version": "photo-embodiment-review/v1",
+    "provenance": "agent_prepack",
+    "scope": "not_applicable",
+    "summary": "The frame contains a static object, plant or landscape; there is no articulated actor or body interaction to check.",
+    "checks": {},
+    "prompt_sha256": "a095988da91a9de05d19b0b0063851c5e3c09c4f8c3c781077219e3d99bcc920"
+  },
+  "feature_selection": {
+    "selected": [
+      {
+        "category_id": "feature.primary_object",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: A patch of mycelium and small fungi",
+        "reason": "The requested primary carrier remains recognizable.",
+        "baseline_evidence": "A patch of mycelium and small fungi"
+      },
+      {
+        "category_id": "feature.location",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: on a damp forest floor",
+        "reason": "The requested place or temporal setting grounds the visible state.",
+        "baseline_evidence": "on a damp forest floor"
+      },
+      {
+        "category_id": "feature.situation",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: emerges through loose leaf litter",
+        "reason": "The requested event or still state governs this frame.",
+        "baseline_evidence": "emerges through loose leaf litter"
+      },
+      {
+        "category_id": "feature.light_quality",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The light makes the requested surface or action readable.",
+        "baseline_evidence": "Gentle side light keeps the visible outlines distinct"
+      },
+      {
+        "category_id": "feature.visual_hierarchy",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The frame organizes attention around the governing subject and state.",
+        "baseline_evidence": "The frame gives the specified subject and its visible relation priority"
+      }
+    ],
+    "contract_version": "photo-precore-feature-selection/v1",
+    "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+    "catalog_schema_version": "photo-precore-feature-catalog/v1",
+    "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+    "request_id": "context-mycelium-positive-en",
+    "request_sha256": "a9730b65b3436c2bdd9b5e85df22ef5d7b35f9fac3e02a00323bd344bd427493",
+    "active_span_ids": [
+      "request"
+    ],
+    "baseline_prompt_sha256": "a095988da91a9de05d19b0b0063851c5e3c09c4f8c3c781077219e3d99bcc920"
+  },
+  "feature_selection_audit": {
+    "valid": true,
+    "contract_version": "photo-precore-feature-selection/v1",
+    "request_id": "context-mycelium-positive-en",
+    "selected_category_ids": [
+      "feature.primary_object",
+      "feature.location",
+      "feature.situation",
+      "feature.light_quality",
+      "feature.visual_hierarchy"
+    ],
+    "selected_count": 5,
+    "warnings": []
+  },
+  "freeze_receipt": {
+    "schema_version": "photo-core-freeze/v1",
+    "files": {
+      "request_raw": "a9730b65b3436c2bdd9b5e85df22ef5d7b35f9fac3e02a00323bd344bd427493",
+      "request_envelope_input": "3f7a7d4ae8a381926a939a2638404cb099c80f70a8c4c16ae35e2f3b178391d7",
+      "creative_controls": "368fcff091da9944edff138505c5b581d5ee5dfaded57dd78f9a88c808e2cd28",
+      "authorial_core_input": "44b17b77d6b87ae347a60b72a961a793b0b46645a78af224fd7b6dabe36aed86",
+      "authorial_core_normalized": "4bc37087f0608e90ffc1cca4ba2654a8ff180a58788e71665ae61a2fde9160aa",
+      "request_envelope_normalized": "0c0ebd50ed6095779b876c5f7dfb543431da83cc9e42bf856763c950ef731f34",
+      "embodiment_review": "1ee07cf5e711212236bec27c8d47ebaa3d00b5f2283793c0651b831461372e85",
+      "feature_selection": "c0ac762958b205f4e85b2669685e3b239a7adeea8b7dfe83a11447d02f09896a",
+      "feature_selection_audit": "6ff68fa930d59ee382e79dbcc7c76b13864471612ae919f369cce90f8aa4061f",
+      "catalog": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+      "baseline": "a095988da91a9de05d19b0b0063851c5e3c09c4f8c3c781077219e3d99bcc920",
+      "freeze_author_input_hashes": "69c7beee2c9fe68947b64d81cec5a7767d4c23b29133c5a49cba3ce53960fd69"
+    },
+    "contracts": {
+      "envelope": "f165e7abf8f42dd71cfb848c57f03bbb45a8628339d01cd6e463b1301fd1f5dd",
+      "core": "64fcf191a3cc27a40c117980a24c8379d6b2528fd8c27b7a31b3acf25a1e80ef",
+      "intent_lock": "07945b7ec0f1e749f836df17cb5feb32fb89f0d0b6ca5a45b136856c8218b07c",
+      "controls": "fe358bc9ef7622cf8f6bed92d6b8c7b9e4b93c95ff393f8a926d211d497e5e58"
+    }
+  }
+}

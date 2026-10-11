@@ -5,6 +5,7 @@ import importlib.util
 import json
 import unittest
 from tests import photo_prompt_fixtures as fixtures
+from tests.photo_source_history import before_stage05_subject_context
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'skills/photo-prompt-image-generator/assets'
@@ -51,7 +52,7 @@ class LiminalActiveUseKoreanDataCleanupTests(unittest.TestCase):
         row['ko'] = '이동 기능과 도착 기능 사이에서 예상된 이용 활동 없이 머무는'
         expected['maintenance_ref'] = self.frozen['maintenance_revision']['new_reference']
         source = ROOT / self.frozen['source_file']
-        current = json.loads(source.read_text())
+        current = before_stage05_subject_context(json.loads(source.read_text()), self.frozen['source_file'])
         self.assertEqual(current['slots'], expected['slots'])
         self.assertNotIn('auto_optional_policy', current)
         self.assertNotIn('presets', current)

@@ -1,0 +1,473 @@
+{
+  "request_envelope_input": {
+    "contract_version": "photo-request-envelope/v1",
+    "provenance": "requesting_user",
+    "request_id": "context-legend-teller-positive-ko",
+    "request_text": "다음 주체와 장소·동작을 사진으로 보여줘: One adult local storyteller; at a weathered stone site; points to a stone trace while two listeners attend nearby. 관찰 가능한 연결은 All three people stand on the ground. The storyteller points at waist-height stone without crossing either listener's body, and both listeners face the trace.",
+    "request_sha256": "448afe5dba22c5a16ba8fe3f5b845b2c531c7096096afe5e6be1d5fd7a090090",
+    "active_spans": [
+      {
+        "span_id": "request",
+        "start": 0,
+        "end": 308,
+        "text": "다음 주체와 장소·동작을 사진으로 보여줘: One adult local storyteller; at a weathered stone site; points to a stone trace while two listeners attend nearby. 관찰 가능한 연결은 All three people stand on the ground. The storyteller points at waist-height stone without crossing either listener's body, and both listeners face the trace."
+      }
+    ]
+  },
+  "creative_controls": {
+    "contract_version": "photo-creative-controls/v4",
+    "provenance": "resolved_precore",
+    "source_request_sha256": "448afe5dba22c5a16ba8fe3f5b845b2c531c7096096afe5e6be1d5fd7a090090",
+    "definitions": {
+      "contract_version": "photo-creative-control-definitions/v4",
+      "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content or artistic judgment. Expression levels describe prominence in the whole image; creativity levels describe interpretive freedom. Neither measures exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Creativity leaves style, extra props and surreal treatment open to the request and artistic judgment. Emphasis directs only active sensual and fetish axes without changing their intensities. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. Sensual and fetish may share the same expressive choice.",
+      "controls": {
+        "sensual": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+          "levels": {
+            "0": "No added sensual treatment; preserve explicitly requested content.",
+            "1": "This expression is a subtle supporting quality.",
+            "2": "This expression is clearly readable in the image.",
+            "3": "This expression leads the image's appeal and direction."
+          }
+        },
+        "fetish": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.",
+          "levels": {
+            "0": "No added fetish treatment; preserve explicitly requested content.",
+            "1": "This focus is a subtle supporting quality.",
+            "2": "This focus is clearly readable in the image.",
+            "3": "This focus leads the image's appeal and direction."
+          }
+        },
+        "adult_appeal_emphasis": {
+          "type": "enum",
+          "choices": [
+            "auto",
+            "sensual_led",
+            "balanced",
+            "fetish_led"
+          ],
+          "default": "auto",
+          "definition": "Relative leadership of the active sensual and fetish axes within one coherent expression.",
+          "choice_descriptions": {
+            "auto": "Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.",
+            "sensual_led": "Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.",
+            "balanced": "Give both active axes comparable influence within one coherent expression; separate styling details are not required.",
+            "fetish_led": "Let the distinctive focus of attraction or fascination lead, with any active sensual expression supporting it."
+          }
+        },
+        "creativity": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 1,
+          "definition": "Freedom to interpret unspecified choices and explore relationships within the request.",
+          "levels": {
+            "0": "Realize the request directly, filling only what is needed for a coherent image.",
+            "1": "Introduce restrained variations close to the requested direction.",
+            "2": "Actively reinterpret open choices into a coherent authorial direction.",
+            "3": "Boldly explore unexpected relationships and interpretations while preserving the request's core meaning."
+          }
+        },
+        "viewer_experience": {
+          "type": "boolean",
+          "default": false,
+          "definition": "Expose the detailed viewer-experience review when enabled. Always consider the intended impression in interpreted_intent, even when this additional review is off."
+        },
+        "reference_edit_mode": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "identity",
+            "younger_self",
+            "brand_board"
+          ],
+          "default": "off",
+          "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
+        },
+        "surreal": {
+          "type": "integer",
+          "range": [
+            0,
+            3
+          ],
+          "default": 0,
+          "definition": "Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.",
+          "levels": {
+            "0": "No added surreal treatment; preserve explicitly requested fantasy and impossible elements.",
+            "1": "Surreal qualities are a subtle supporting presence.",
+            "2": "Surreal qualities are clearly readable in the image.",
+            "3": "Surreal qualities lead the image's main impression and direction; a single coherent relationship may carry this prominence."
+          }
+        },
+        "trend_layer": {
+          "type": "enum",
+          "choices": [
+            "off",
+            "scrapbook_collage",
+            "action_figure_packaging",
+            "retro_flash",
+            "clean_brand_portrait"
+          ],
+          "default": "off",
+          "definition": "Consider the chosen treatment from the initial composition. Refine it later without adding it twice. Off does not remove a treatment explicitly present in the request."
+        }
+      }
+    },
+    "definitions_sha256": "d044ade0f6af62c35b81d4b035b130a8819c4a15ca47a1409a59860a1928a3fa",
+    "overrides": {
+      "sensual": 0,
+      "fetish": 0,
+      "surreal": 0,
+      "creativity": 1
+    },
+    "context": {
+      "subject_category": "human",
+      "no_people": false,
+      "explicit_nonsexual": false
+    },
+    "seed": 17,
+    "controls": {
+      "sensual": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "fetish": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "adult_appeal_emphasis": {
+        "value": "auto",
+        "source": "saved_setting"
+      },
+      "creativity": {
+        "value": 1,
+        "source": "request_override"
+      },
+      "viewer_experience": {
+        "value": false,
+        "source": "saved_setting"
+      },
+      "reference_edit_mode": {
+        "value": "off",
+        "source": "saved_setting"
+      },
+      "surreal": {
+        "value": 0,
+        "source": "request_override"
+      },
+      "trend_layer": {
+        "value": "off",
+        "source": "saved_setting"
+      }
+    },
+    "adult_appeal": {
+      "sensual": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      },
+      "fetish": {
+        "requested_intensity": 0,
+        "effective_intensity": 0,
+        "reason": "eligible"
+      }
+    },
+    "resolved_emphasis": "balanced",
+    "emphasis_resolution": {
+      "active": false,
+      "reason": "Both effective intensities are zero; no added emphasis is active."
+    },
+    "authoring_brief": "sensual: 0 (range: 0–3)\nMeaning: Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.\nLevel: No added sensual treatment; preserve explicitly requested content.\n\nfetish: 0 (range: 0–3)\nMeaning: Sexual attraction or arousal focused on particular objects, bodily features, clothing, materials, roles, situations, behaviors, or sensory qualities that carry special erotic significance, interpreted broadly beyond conventional fetish aesthetics.\nLevel: No added fetish treatment; preserve explicitly requested content.\n\nsurreal: 0 (range: 0–3)\nMeaning: Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.\nLevel: No added surreal treatment; preserve explicitly requested fantasy and impossible elements.\n\ncreativity: 1 (range: 0–3)\nMeaning: Freedom to interpret unspecified choices and explore relationships within the request.\nLevel: Introduce restrained variations close to the requested direction.\n\nadult_appeal_emphasis: auto (choices: auto, sensual_led, balanced, fetish_led)\nMeaning: Relative leadership of the active sensual and fetish axes within one coherent expression.\nSelected: Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.\nEffective: inactive\nResolution: Both effective intensities are zero; no added emphasis is active.\n\nChoose a coherent expression suited to this particular scene.\nSensual and fetish may share the same expressive choice.\nExpression levels describe prominence; creativity describes interpretive freedom. Neither requires a garment or detail count.\n\nOther resolved controls:\nviewer_experience: false\nreference_edit_mode: \"off\"\ntrend_layer: \"off\"",
+    "canonical_sha256": "3b8de96380f79c6b7d5a1975f2aebe9c6bbf4eb1ce36c8e475878c926acc5cdf"
+  },
+  "authorial_core_input": {
+    "contract_version": "photo-authorial-core/v3",
+    "provenance": "agent_prepack",
+    "interpreted_intent": "A photographic realization of the requested subject, place and visible state.",
+    "subject": "One adult local storyteller",
+    "setting": "at a weathered stone site",
+    "event": "points to a stone trace while two listeners attend nearby",
+    "visual_priorities": [
+      "points to a stone trace while two listeners attend nearby",
+      "The frame gives the specified subject and its visible relation priority"
+    ],
+    "baseline_prompt_en": "One adult local storyteller at a weathered stone site points to a stone trace while two listeners attend nearby. All three people stand on the ground. The storyteller points at waist-height stone without crossing either listener's body, and both listeners face the trace. Gentle side light keeps the visible outlines distinct. The frame gives the specified subject and its visible relation priority.",
+    "user_definitions": [],
+    "interpretation_provenance": [
+      {
+        "term": "governing request",
+        "source_text": "다음 주체와 장소·동작을 사진으로 보여줘: One adult local storyteller; at a weathered stone site; points to a stone trace while two listeners attend nearby. 관찰 가능한 연결은 All three people stand on the ground. The storyteller points at waist-height stone without crossing either listener's body, and both listeners face the trace.",
+        "basis": "request_context",
+        "resolution": "The primary subject, place and event follow the complete request; lighting and framing remain authorial where unprescribed.",
+        "sources": []
+      }
+    ],
+    "unresolved_ambiguities": [],
+    "user_exclusions": [],
+    "runtime_forbidden_labels": [],
+    "intent_lock": {
+      "contract_version": "photo-intent-lock/v2",
+      "priority": "requesting_user",
+      "semantic_anchors": [
+        {
+          "anchor_id": "anchor_concept",
+          "source_text": "다음 주체와 장소·동작을 사진으로 보여줘: One adult local storyteller; at a weathered stone site; points to a stone trace while two listeners attend nearby. 관찰 가능한 연결은 All three people stand on the ground. The storyteller points at waist-height stone without crossing either listener's body, and both listeners face the trace.",
+          "dimension": "concept",
+          "prompt_evidence": "One adult local storyteller at a weathered stone site points to a stone trace while two listeners attend nearby"
+        },
+        {
+          "anchor_id": "anchor_subject",
+          "source_text": "다음 주체와 장소·동작을 사진으로 보여줘: One adult local storyteller; at a weathered stone site; points to a stone trace while two listeners attend nearby. 관찰 가능한 연결은 All three people stand on the ground. The storyteller points at waist-height stone without crossing either listener's body, and both listeners face the trace.",
+          "dimension": "subject",
+          "prompt_evidence": "One adult local storyteller"
+        },
+        {
+          "anchor_id": "anchor_setting",
+          "source_text": "다음 주체와 장소·동작을 사진으로 보여줘: One adult local storyteller; at a weathered stone site; points to a stone trace while two listeners attend nearby. 관찰 가능한 연결은 All three people stand on the ground. The storyteller points at waist-height stone without crossing either listener's body, and both listeners face the trace.",
+          "dimension": "setting",
+          "prompt_evidence": "at a weathered stone site"
+        },
+        {
+          "anchor_id": "anchor_event",
+          "source_text": "다음 주체와 장소·동작을 사진으로 보여줘: One adult local storyteller; at a weathered stone site; points to a stone trace while two listeners attend nearby. 관찰 가능한 연결은 All three people stand on the ground. The storyteller points at waist-height stone without crossing either listener's body, and both listeners face the trace.",
+          "dimension": "event",
+          "prompt_evidence": "points to a stone trace while two listeners attend nearby"
+        }
+      ],
+      "locked_dimensions": [
+        "concept",
+        "subject",
+        "setting",
+        "event"
+      ],
+      "open_dimensions": [
+        "appearance",
+        "timing",
+        "atmosphere",
+        "style",
+        "material",
+        "color",
+        "framing",
+        "composition",
+        "camera",
+        "lighting",
+        "pose",
+        "action",
+        "relationship",
+        "expression",
+        "body_geometry"
+      ]
+    },
+    "style": {
+      "domain": "general_photo",
+      "family": "scene-led photographic observation",
+      "evidence": [
+        "Gentle side light keeps the visible outlines distinct",
+        "The frame gives the specified subject and its visible relation priority"
+      ]
+    },
+    "semantic_assertions": [
+      {
+        "assertion_id": "primary_subject",
+        "dimension": "subject",
+        "polarity": "required",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "subject"
+        ],
+        "axes": {
+          "subject_category": "human"
+        },
+        "evidence": {
+          "subject_phrase": "One adult local storyteller"
+        }
+      },
+      {
+        "assertion_id": "camera_review",
+        "dimension": "camera",
+        "polarity": "advisory",
+        "source_span_ids": [
+          "request"
+        ],
+        "affected_dimensions": [
+          "camera"
+        ],
+        "axes": {
+          "camera_axis_review": "camera_axis_review_v1",
+          "capture_owner": "unprescribed",
+          "direction_requirement": "open",
+          "height_requirement": "open"
+        },
+        "evidence": {}
+      }
+    ],
+    "request_lineage": null,
+    "variation_key": "context-legend-teller-positive-ko",
+    "source_request": "다음 주체와 장소·동작을 사진으로 보여줘: One adult local storyteller; at a weathered stone site; points to a stone trace while two listeners attend nearby. 관찰 가능한 연결은 All three people stand on the ground. The storyteller points at waist-height stone without crossing either listener's body, and both listeners face the trace.",
+    "creative_controls_sha256": "3b8de96380f79c6b7d5a1975f2aebe9c6bbf4eb1ce36c8e475878c926acc5cdf"
+  },
+  "embodiment_review": {
+    "contract_version": "photo-embodiment-review/v1",
+    "provenance": "agent_prepack",
+    "scope": "body_action",
+    "summary": "Reviewed the planned actor ownership, support, reach, contacts and visibility: the gesture reaches the nearby trace while listeners retain separate bodies.",
+    "checks": {
+      "body_ownership": {
+        "status": "supported",
+        "reason": "Each visible body belongs to the requested primary actor or actors; the geometry adds no new actor.",
+        "prompt_evidence": [
+          "One adult local storyteller"
+        ]
+      },
+      "joint_chain_and_reach": {
+        "status": "supported",
+        "reason": "The planned motion or resting limb arrangement stays close to its carrier and does not require an unsupported long reach: the gesture reaches the nearby trace while listeners retain separate bodies.",
+        "prompt_evidence": [
+          "points to a stone trace while two listeners attend nearby"
+        ]
+      },
+      "support_and_balance": {
+        "status": "supported",
+        "reason": "The stated surface carries the planned body or seated load; this is a prose plausibility judgment.",
+        "prompt_evidence": [
+          "All three people stand on the ground"
+        ]
+      },
+      "contact_and_space": {
+        "status": "supported",
+        "reason": "The contact endpoint and nearby free space are specified for this case: the gesture reaches the nearby trace while listeners retain separate bodies.",
+        "prompt_evidence": [
+          "points to a stone trace while two listeners attend nearby"
+        ]
+      },
+      "visibility_and_projection": {
+        "status": "supported",
+        "reason": "The framing preserves the action-bearing surface, contact or body outline rather than concealing the requested relation.",
+        "prompt_evidence": [
+          "The frame gives the specified subject and its visible relation priority"
+        ]
+      }
+    },
+    "prompt_sha256": "b532d6f9161a3588893e3b883fc257a811760cb8eb17387c1574915a2b1c26a8"
+  },
+  "feature_selection": {
+    "selected": [
+      {
+        "category_id": "feature.subject",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: One adult local storyteller",
+        "reason": "The requested primary carrier remains recognizable.",
+        "baseline_evidence": "One adult local storyteller"
+      },
+      {
+        "category_id": "feature.location",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: at a weathered stone site",
+        "reason": "The requested place or temporal setting grounds the visible state.",
+        "baseline_evidence": "at a weathered stone site"
+      },
+      {
+        "category_id": "feature.situation",
+        "basis": "request_derived",
+        "source_span_ids": [
+          "request"
+        ],
+        "source_text": null,
+        "derivation": "The full request is realized by the literal scene phrase: points to a stone trace while two listeners attend nearby",
+        "reason": "The requested event or still state governs this frame.",
+        "baseline_evidence": "points to a stone trace while two listeners attend nearby"
+      },
+      {
+        "category_id": "feature.light_quality",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The light makes the requested surface or action readable.",
+        "baseline_evidence": "Gentle side light keeps the visible outlines distinct"
+      },
+      {
+        "category_id": "feature.visual_hierarchy",
+        "basis": "agent_visual_choice",
+        "source_span_ids": [],
+        "source_text": null,
+        "derivation": null,
+        "reason": "The frame organizes attention around the governing subject and state.",
+        "baseline_evidence": "The frame gives the specified subject and its visible relation priority"
+      }
+    ],
+    "contract_version": "photo-precore-feature-selection/v1",
+    "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+    "catalog_schema_version": "photo-precore-feature-catalog/v1",
+    "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+    "request_id": "context-legend-teller-positive-ko",
+    "request_sha256": "448afe5dba22c5a16ba8fe3f5b845b2c531c7096096afe5e6be1d5fd7a090090",
+    "active_span_ids": [
+      "request"
+    ],
+    "baseline_prompt_sha256": "b532d6f9161a3588893e3b883fc257a811760cb8eb17387c1574915a2b1c26a8"
+  },
+  "feature_selection_audit": {
+    "valid": true,
+    "contract_version": "photo-precore-feature-selection/v1",
+    "request_id": "context-legend-teller-positive-ko",
+    "selected_category_ids": [
+      "feature.subject",
+      "feature.location",
+      "feature.situation",
+      "feature.light_quality",
+      "feature.visual_hierarchy"
+    ],
+    "selected_count": 5,
+    "warnings": []
+  },
+  "freeze_receipt": {
+    "schema_version": "photo-core-freeze/v1",
+    "files": {
+      "request_raw": "448afe5dba22c5a16ba8fe3f5b845b2c531c7096096afe5e6be1d5fd7a090090",
+      "request_envelope_input": "69f2b7e1bd24005367b053c5c74d5cc01b67539400b73086470288722539382c",
+      "creative_controls": "9d48123c986bd5b0b5ec0487d637314a36cc08a508f3f664093a654e215d7d00",
+      "authorial_core_input": "8e304c4de1359521358fede1cf5c25c8e64e2be1a2ed2f78dff7e394f0cd3c5d",
+      "authorial_core_normalized": "98421d0cedd1ef0ae5b86bba4e8c83a5e0318a4b9718c32052e92d8dd6249380",
+      "request_envelope_normalized": "d60e88e0cbbc2e97d5d27193df0264aaa7b83c921b760a5503a575d3f584ca29",
+      "embodiment_review": "e9910ff129d89b4d9b9c7e55a3285ef2df01e7c95c54866bd04386185718f538",
+      "feature_selection": "bf8682a12f6f9ab658fde1e443c2a8549293e55e47ac8a4acc6095bda79a170a",
+      "feature_selection_audit": "035f71c6724e66696539ce0a39dd63cacef454a5961367dc11fb698d2802228b",
+      "catalog": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+      "baseline": "b532d6f9161a3588893e3b883fc257a811760cb8eb17387c1574915a2b1c26a8",
+      "freeze_author_input_hashes": "a5c1f2a4e510d48e7afa972340117d668592292c95d17793934fd5bfb9a960fa"
+    },
+    "contracts": {
+      "envelope": "73c65477d1be028f91ebe93c6b916f0aa69c80e2383120ee56e7bc4207a1a5e9",
+      "core": "a590114bfdda056f7203c2d7be30790845da3b533fa00ea38ebf41c4d4ee8e93",
+      "intent_lock": "fbbb3102d76af166a88fd87a955024b946857638ac7ae792c7665af121d81b6a",
+      "controls": "3b8de96380f79c6b7d5a1975f2aebe9c6bbf4eb1ce36c8e475878c926acc5cdf"
+    }
+  }
+}

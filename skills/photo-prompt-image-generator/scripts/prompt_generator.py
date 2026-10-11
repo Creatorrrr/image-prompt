@@ -1776,6 +1776,13 @@ def subject_category(picked: Dict[str, Entry], source: Optional[JsonDict] = None
     if override in VALID_SUBJECT_CATEGORIES:
         return override
 
+    declared_categories = entry_kinds(subject) & (VALID_SUBJECT_CATEGORIES - {"generic"})
+    if len(declared_categories) == 1:
+        # A declared display/plant/object is not reclassified by incidental
+        # words such as ring, camera or science. Ambiguous kinds still use
+        # the authored override or the existing fallback below.
+        return next(iter(declared_categories))
+
     tokens = entry_context_tokens(subject) | facet_tokens(subject)
     subject_id = str(subject.get("id", ""))
     blob = " ".join(
@@ -9833,8 +9840,8 @@ DIMENSION_FIELDS = {
 }
 
 def core_slot_focus_queries(data: dict, core: dict, slot: str) -> tuple[list[str], list[str]]:
-    ownership = photo_candidate_semantics.slot_dimensions(slot, data.get("candidate_semantic_policy"))
-    ownership = ownership or list(dict.fromkeys(
+    declared_ownership = photo_candidate_semantics.slot_dimensions(slot, data.get("candidate_semantic_policy"))
+    ownership = declared_ownership or list(dict.fromkeys(
         dimension for entry in data.get("slots", {}).get(slot, [])
         for dimension in normalize_list(entry.get("affected_dimensions"))
     ))
@@ -9863,20 +9870,40 @@ def core_slot_focus_queries(data: dict, core: dict, slot: str) -> tuple[list[str
     # Keep the same owner's related evidence together (for example source
     # direction and its front/edge response), without borrowing focus evidence
     # for viewpoint or another object's property.
+    property_anchors = [a for a in anchors if "property" in a]
     property_scopes = {(a["dimension"], a["target"], a["property"].split(".")[0])
                        for a in anchors if "property" in a
-                       and slot_parts & set(re.findall(r"[a-z]+", a["property"]))}
+                       and (slot == a["dimension"]
+                            or slot_parts & set(re.findall(r"[a-z]+", a["property"]))
+                            or (slot == "camera_direction" and a["target"] == "camera"
+                                and a["property"].startswith("viewpoint.")
+                                and "orientation" in re.findall(r"[a-z]+", a["property"])))}
     for anchor in anchors:
+        if (property_scopes or (declared_ownership and property_anchors)) and "property" not in anchor:
+            continue
         if "property" in anchor and (anchor["dimension"], anchor["target"], anchor["property"].split(".")[0]) not in property_scopes:
             continue
         evidence.append(anchor["prompt_evidence"])
         evidence_fields.append("intent_lock.semantic_anchors")
     for assertion in core.get("semantic_assertions") or []:
-        if "camera_axis_review" in (assertion.get("axes") or {}):
+        axes = assertion.get("axes") or {}
+        if "camera_axis_review" in axes:
             continue
         if assertion.get("dimension") in ownership and assertion.get("polarity") in {"required", "advisory"}:
-            evidence.extend((assertion.get("evidence") or {}).values())
-            evidence_fields.append("semantic_assertions")
+            phrases = list((assertion.get("evidence") or {}).values())
+            if property_anchors:
+                # A dimension alone does not bind an assertion to the selected
+                # property owner. Repeated literal evidence is safe; otherwise
+                # require the same explicit owner and property family.
+                target, property_path = axes.get("target"), axes.get("property")
+                scope = ((assertion["dimension"], target, property_path.split(".")[0])
+                         if isinstance(target, str) and isinstance(property_path, str)
+                         else None)
+                if scope not in property_scopes:
+                    phrases = [phrase for phrase in phrases if phrase in evidence]
+            if phrases:
+                evidence.extend(phrases)
+                evidence_fields.append("semantic_assertions")
     if evidence:
         queries = []
         for phrase in dict.fromkeys(evidence):
@@ -9884,9 +9911,13 @@ def core_slot_focus_queries(data: dict, core: dict, slot: str) -> tuple[list[str
                 "contract_version": core["contract_version"], "request_binding": {"active_spans": []},
                 "user_exclusions": core.get("user_exclusions") or [], "baseline_prompt_en": phrase,
             })
-            if text and text not in queries:
+            if text and (not property_anchors or text == phrase) and text not in queries:
                 queries.append(text)
         return queries, list(dict.fromkeys(evidence_fields)) if queries else []
+    if property_anchors:
+        # A typed but unrelated/excluded property cannot fall back to a long
+        # scene field and acquire a different owner's words as its witness.
+        return [], []
     if slot in {"camera_direction", "camera_height"}:
         clauses = photo_camera_evidence.legacy_camera_clauses(core, slot.removeprefix("camera_"))
         queries = []
@@ -9973,8 +10004,42 @@ def frozen_core_context(data: dict, core: dict, controls: dict) -> tuple[dict, d
     }
     picked = {}
     for slot, field in (("subject", "subject"), ("location", "setting"), ("action", "event")):
-        tokens = candidate_pack_relevance_tokens(str(core[field]))
-        picked[slot] = {"en": core[field], "tags": sorted(tokens | set(domains)),
+        text, _ = authorial_core_retrieval_text({
+            "contract_version": core["contract_version"],
+            "request_binding": {"active_spans": []},
+            "user_exclusions": core.get("user_exclusions") or [],
+            field: core[field],
+        })
+        tokens = candidate_pack_relevance_tokens(text)
+        # These are frozen field witnesses, not optional picked candidates.
+        # Authored prerequisites can distinguish the primary actor's subtype
+        # from the same word on another object elsewhere in the photograph.
+        owned_text = text
+        if slot == "subject":
+            primary_phrases = [
+                str((assertion.get("evidence") or {}).get("subject_phrase") or "")
+                for assertion in core.get("semantic_assertions") or []
+                if assertion.get("dimension") == "subject"
+                and assertion.get("polarity") == "required"
+                and "subject_category" in (assertion.get("axes") or {})
+            ]
+            if primary_phrases:
+                # The typed primary-carrier witness can be narrower than a
+                # descriptive field containing a printed/decorative actor.
+                # Never turn that secondary actor into a subtype prerequisite.
+                owned_phrases = []
+                for phrase in primary_phrases:
+                    positive, _ = authorial_core_retrieval_text({
+                        "contract_version": core["contract_version"],
+                        "request_binding": {"active_spans": []},
+                        "user_exclusions": core.get("user_exclusions") or [],
+                        "baseline_prompt_en": phrase,
+                    })
+                    if positive == phrase:
+                        owned_phrases.append(phrase)
+                owned_text = " ".join(owned_phrases)
+        owned_tokens = {f"{slot}:{token}" for token in candidate_pack_relevance_tokens(owned_text)}
+        picked[slot] = {"en": text, "tags": sorted(tokens | owned_tokens | set(domains)),
                         "kind": sorted(categories) if slot == "subject" else []}
     # Resolve only declared facet vocabulary against frozen text. Candidate
     # tags or another optional candidate never satisfy a prerequisite.
@@ -9983,6 +10048,16 @@ def frozen_core_context(data: dict, core: dict, controls: dict) -> tuple[dict, d
         facets, candidate_pack_quality_facet_vocab(data), data,
         [{"text": authorial_core_retrieval_text(core)[0]}],
     )
+    vocab = candidate_pack_quality_facet_vocab(data)
+    candidate_pack_quality_add_facet(facets, vocab, "subject_kind", sorted(categories))
+    for assertion in core.get("semantic_assertions") or []:
+        axes = assertion.get("axes") or {}
+        if (assertion.get("dimension") != "subject"
+                or assertion.get("polarity") not in {"required", "advisory"}
+                or axes.get("target") not in (None, "main_subject")):
+            continue
+        for key, values in axes.items():
+            candidate_pack_quality_add_facet(facets, vocab, key, values)
     picked["subject"]["facets"] = {key: sorted(values) for key, values in facets.items()}
     return contract, picked
 
@@ -9993,11 +10068,17 @@ def core_slot_entry_eligible(data: dict, core: dict, contract: dict, picked: dic
     if reason and not (reason == "adult_not_allowed"
                        and candidate_pack_age_only_subject_match(entry, slot, core)):
         return False
-    subject_tokens = (entry_tags(picked["subject"])
-                      | entry_kinds(picked["subject"]))
+    subject_tokens = entry_tags(picked["subject"]) | entry_kinds(picked["subject"])
+    if slot == "subject":
+        subject_tokens = ({token.removeprefix("subject:")
+                           for token in entry_tags(picked["subject"])
+                           if token.startswith("subject:")}
+                          | entry_kinds(picked["subject"]))
     if entry.get("for_any") and not set(entry["for_any"]) & subject_tokens:
         return False
-    if set(entry.get("exclude_for_any") or []) & subject_tokens:
+    if not set(entry.get("for_all") or []).issubset(subject_tokens):
+        return False
+    if (set(entry.get("exclude_for_any") or []) | set(entry.get("not_for") or [])) & subject_tokens:
         return False
     if slot == "subject":
         categories = set(contract["intent_constraints"].get("subject_categories") or [])
@@ -10007,10 +10088,14 @@ def core_slot_entry_eligible(data: dict, core: dict, contract: dict, picked: dic
                if tag in (entry_tags(entry) | entry_kinds(entry))}
     if domains and not domains & set(contract["intent_constraints"].get("domains") or []):
         return False
-    others = {key: value for key, value in picked.items() if key != slot}
-    if not compatible_with_facet_guards(entry, others):
+    # All three entries are independently frozen witnesses. Removing the
+    # same-slot witness loses the real subject/action/place; the candidate's
+    # own tags are never added to this context.
+    frozen_facets = set().union(*(facet_tokens(value) for value in picked.values()))
+    if (not guard_values(entry, "requires_facets").issubset(frozen_facets)
+            or guard_values(entry, "exclude_facets") & frozen_facets):
         return False
-    if not compatible_with_slot_context(slot, entry, others, data):
+    if not compatible_with_slot_context(slot, entry, picked, data):
         return False
     blob = candidate_pack_entry_blob(entry, extra=[str(entry.get("embedding_text") or "")])
     return not any(intent_alias_matches(blob, exclusion)
@@ -10152,7 +10237,7 @@ def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, d
         "source_authorial_core_sha256": core["canonical_sha256"],
         "slot_corpus_sha256": hashlib.sha256(corpus_json.encode()).hexdigest(),
         "slot_ownership_sha256": canonical_json_sha256(data.get("candidate_semantic_policy") or {}),
-        "slot_applicability_sha256": canonical_json_sha256(slot_applicability_from_source(data)["slots"]),
+        "slot_applicability_sha256": canonical_json_sha256(slot_applicability_from_source(data)),
         "whole_scene_query_sha256": hashlib.sha256(global_query.encode()).hexdigest(),
         "active_slots": active, "retrieval": "same_slot_core_focus_and_frozen_observation_bm25f_rrf",
         "candidate_allocation": "one_supported_hit_per_slot_per_round",
