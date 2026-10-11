@@ -40,6 +40,11 @@ class PhotoDeathAfterlifeSemanticsTests(unittest.TestCase):
             slot: {row["id"]: row for row in rows}
             for slot, rows in cls.tags["slots"].items()
         }
+        review = json.loads((ROOT / "tests/fixtures/photo_prompt/slot_guard_roles_v1/ROLE-DECISIONS.json").read_text())
+        cls.retired_controls = {
+            row["entry_id"]: row["original_entry"] for row in review["rows"]
+            if row["decision"] == "retire_control_candidate"
+        }
 
     def hard_matches(self, text: str) -> set[str]:
         rows = [
@@ -173,16 +178,21 @@ class PhotoDeathAfterlifeSemanticsTests(unittest.TestCase):
                 "reflection_only_apparition_wide_capture",
                 "respectful_forensic_documentation_distance",
             },
-            "safety_profile": {
-                "non_instructional_necromancy_fiction",
-                "culture_bounded_afterlife_original_mechanism",
-                "human_remains_dignity_high_sensitivity",
-            },
         }
         for slot, expected_ids in expected_by_slot.items():
             with self.subTest(slot=slot):
                 self.assertTrue(expected_ids <= set(self.candidates[slot]))
 
+    def test_legacy_death_control_profiles_are_archived_without_live_candidate_authority(self):
+        expected = {
+            "non_instructional_necromancy_fiction",
+            "culture_bounded_afterlife_original_mechanism",
+            "human_remains_dignity_high_sensitivity",
+        }
+        current = {identifier for candidates in self.candidates.values() for identifier in candidates}
+        self.assertTrue(expected <= set(self.retired_controls))
+        self.assertFalse(expected & current)
+        self.assertNotIn("safety_profile", self.candidates)
 
     def test_research_evidence_is_approved_and_candidate_bound(self):
         rows = [
@@ -205,7 +215,9 @@ class PhotoDeathAfterlifeSemanticsTests(unittest.TestCase):
                 self.assertEqual(row["status"], "approved")
                 self.assertEqual(row["domain"], "death_and_afterlife_visual_semantics")
                 self.assertTrue(row["source_url"].startswith("https://"))
-                self.assertTrue(set(row["candidate_ids"]) <= known_candidates)
+                # Historical approved evidence may reference a preserved original
+                # control entry; that reference does not reactivate it at runtime.
+                self.assertTrue(set(row["candidate_ids"]) <= known_candidates | set(self.retired_controls))
                 self.assertTrue(row["abstracted_dimensions"])
                 self.assertTrue(row["research_limitations"])
                 self.assertTrue(row["reuse_note"])
