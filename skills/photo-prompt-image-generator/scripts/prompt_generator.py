@@ -9288,10 +9288,10 @@ def embed_texts_with_gemini(
         ) from exc
 
     client = cached_gemini_client(key)
-    config = types.EmbedContentConfig(
-        output_dimensionality=dims,
-        task_type="SEMANTIC_SIMILARITY",
-    )
+    config_options = {"output_dimensionality": dims}
+    if model not in {"gemini-embedding-2", "models/gemini-embedding-2"}:
+        config_options["task_type"] = "SEMANTIC_SIMILARITY"
+    config = types.EmbedContentConfig(**config_options)
     response = None
     attempts = max(1, int(retry_attempts) + 1)
     for attempt in range(attempts):
