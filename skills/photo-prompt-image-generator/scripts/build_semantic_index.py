@@ -168,7 +168,13 @@ def write_sharded_payload(
         bucket = int(hashlib.sha256(str(key).encode("utf-8")).hexdigest(), 16) % count
         buckets[bucket][key] = value
 
-    generation = str(payload.get("dictionary_hash") or "unversioned")[:16]
+    # The dictionary can stay unchanged while its tokenizer, vector space, or
+    # shard count changes. Bind the directory to the complete derived payload
+    # so a rebuild cannot overwrite shards referenced by an older manifest.
+    generation = hashlib.sha256(json.dumps(
+        {"payload": payload, "shard_count": count}, ensure_ascii=False,
+        separators=(",", ":"), allow_nan=False,
+    ).encode("utf-8")).hexdigest()
     shard_root = path.with_name(f"{path.stem}_shards") / generation
     width = max(3, len(str(count - 1)))
     shard_rows = []

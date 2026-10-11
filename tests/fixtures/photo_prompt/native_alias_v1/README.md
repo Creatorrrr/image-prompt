@@ -1,0 +1,1 @@
+Targeted native-script maintenance requests, frozen with the candidate-free public preparer before tokenizer changes. These are not blind evaluation cases. Candidate identities are assigned only in the post-core evidence record.

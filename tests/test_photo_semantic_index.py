@@ -256,20 +256,70 @@ class PhotoSemanticIndexTests(unittest.TestCase):
         }
         with tempfile.TemporaryDirectory() as tmp:
             output = Path(tmp) / "semantic_index.json"
-            builder.write_sharded_payload(output, payload, shard_count=2)
+            first_manifest = builder.write_sharded_payload(output, payload, shard_count=2)
             shard_parent = output.with_name("semantic_index_shards")
-            first_generation = shard_parent / ("a" * 16)
+            first_generation = output.parent / Path(first_manifest["shards"][0]["path"]).parent
             marker = shard_parent / "README.keep"
             marker.write_text("not a generation directory", encoding="utf-8")
 
             updated_payload = json.loads(json.dumps(payload))
             updated_payload["dictionary_hash"] = "b" * 64
-            builder.write_sharded_payload(output, updated_payload, shard_count=2)
+            updated_manifest = builder.write_sharded_payload(output, updated_payload, shard_count=2)
 
             self.assertFalse(first_generation.exists())
-            self.assertTrue((shard_parent / ("b" * 16)).is_dir())
+            self.assertTrue((output.parent / Path(updated_manifest["shards"][0]["path"]).parent).is_dir())
             self.assertEqual(marker.read_text(encoding="utf-8"), "not a generation directory")
 
+    def test_tokenizer_rebuild_preserves_shards_with_the_same_authored_dictionary(self):
+        builder = load_index_builder()
+        payload = {"dictionary_hash": "a" * 64, "bm25f": {"tokenizer_recipe": "v3"},
+            "entries": {"slot:costume_style:native": {"id": "native", "text": "ثوب",
+                "vector": [1.0, 0.0], "bm25f": {"aliases": []}}}}
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / "index.json"
+            first = builder.write_sharded_payload(output, payload, shard_count=2, keep_stale_generations=True)
+            historical = output.with_name("historical.json")
+            historical.write_bytes(output.read_bytes())
+            old_shards = {row["path"]: (output.parent / row["path"]).read_bytes() for row in first["shards"]}
+            updated = copy.deepcopy(payload)
+            updated["bm25f"]["tokenizer_recipe"] = "v4"
+            updated["entries"]["slot:costume_style:native"]["bm25f"]["aliases"] = ["ثوب"]
+            second = builder.write_sharded_payload(output, updated, shard_count=2, keep_stale_generations=True)
+            self.assertTrue(set(old_shards).isdisjoint(row["path"] for row in second["shards"]))
+            for relative, raw in old_shards.items():
+                self.assertEqual((output.parent / relative).read_bytes(), raw)
+            historical_payload = self.generator.load_semantic_index_payload(historical)
+            self.assertEqual({key: historical_payload[key] for key in payload}, payload)
+            repeated = builder.write_sharded_payload(output, updated, shard_count=2, keep_stale_generations=True)
+            self.assertEqual(second, repeated)
+            # A vector change requires a different directory even when the
+            # authored text and tokenizer metadata remain identical.
+            updated["entries"]["slot:costume_style:native"]["vector"] = [0.0, 1.0]
+            third = builder.write_sharded_payload(output, updated, shard_count=2, keep_stale_generations=True)
+            self.assertTrue({row["path"] for row in second["shards"]}.isdisjoint(row["path"] for row in third["shards"]))
+
+
+    def test_shard_generation_preserves_previous_entry_and_field_order(self):
+        builder = load_index_builder()
+        first_row = {"id": "first", "text": "first", "vector": [1.0, 0.0]}
+        second_row = {"id": "second", "text": "second", "vector": [0.0, 1.0]}
+        payload = {"dictionary_hash": "a" * 64,
+            "entries": {"slot:subject:first": first_row, "slot:subject:second": second_row}}
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / "index.json"
+            first = builder.write_sharded_payload(output, payload, shard_count=1, keep_stale_generations=True)
+            historical = output.with_name("historical.json")
+            historical.write_bytes(output.read_bytes())
+            old_bytes = (output.parent / first["shards"][0]["path"]).read_bytes()
+            reordered = copy.deepcopy(payload)
+            reordered["entries"] = dict(reversed(list(reordered["entries"].items())))
+            reordered["entries"]["slot:subject:first"] = dict(reversed(list(first_row.items())))
+            second = builder.write_sharded_payload(output, reordered, shard_count=1, keep_stale_generations=True)
+            self.assertNotEqual(first["shards"][0]["path"], second["shards"][0]["path"])
+            self.assertEqual((output.parent / first["shards"][0]["path"]).read_bytes(), old_bytes)
+            loaded = self.generator.load_semantic_index_payload(historical)
+            self.assertEqual(list(loaded["entries"]), list(payload["entries"]))
+            self.assertEqual(loaded["entries"], payload["entries"])
 
     def test_semantic_index_builder_requires_api_key_for_real_build(self):
         builder = load_index_builder()

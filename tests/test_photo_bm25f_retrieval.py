@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import sys
 import unittest
+import unicodedata
 from pathlib import Path
 
 
@@ -33,6 +34,45 @@ POLICY = {
 
 
 class PhotoBm25fRetrievalTests(unittest.TestCase):
+    def test_native_letters_keep_their_combining_marks_and_boundaries(self):
+        for alias in ("साड़ी", "धोती", "ชุดไทย", "ثوب", "عباية"):
+            with self.subTest(alias=alias):
+                expected = [unicodedata.normalize("NFKC", alias)]
+                for spelling in (alias, unicodedata.normalize("NFC", alias),
+                                 unicodedata.normalize("NFD", alias)):
+                    self.assertEqual(bm25f_retrieval.tokenize_bm25f_text(spelling), expected)
+                self.assertEqual(
+                    bm25f_retrieval.tokenize_bm25f_text(f"shirt({alias}),wall"),
+                    ["shirt", *expected, "wall"],
+                )
+        self.assertNotEqual(
+            bm25f_retrieval.tokenize_bm25f_text("साड़ी"),
+            bm25f_retrieval.tokenize_bm25f_text("साडी"),
+        )
+        self.assertEqual(bm25f_retrieval.tokenize_bm25f_text("\u093e \u093c \u0e38 \u0301"), [])
+
+    def test_unicode_words_do_not_merge_unrelated_scripts(self):
+        self.assertEqual(
+            bm25f_retrieval.tokenize_bm25f_text("shirtधोती셔츠ثوبชุดไทยツンデレ"),
+            ["shirt", "धोती", "셔츠", "ثوب", "ชุดไทย", "ツンデレ"],
+        )
+        self.assertEqual(
+            bm25f_retrieval.tokenize_bm25f_text("café CAFÉ cafe\u0301 Αλφα альфа"),
+            ["café", "café", "café", "αλφα", "альфа"],
+        )
+        self.assertEqual(
+            bm25f_retrieval.tokenize_bm25f_text("gpt-4 a+b f_2 f/2 x.y a--b"),
+            ["gpt-4", "a+b", "f_2", "f", "2", "x.y", "a", "b"],
+        )
+
+    def test_previous_tokenizer_recipe_is_rejected_before_ranking(self):
+        index = bm25f_retrieval.build_bm25f_index(
+            {"direct": {"aliases": ["ثوب"]}}, policy=POLICY,
+        )
+        index["tokenizer_recipe"] = "photo-bm25f-tokenizer/v3"
+        with self.assertRaisesRegex(ValueError, "tokenizer recipe"):
+            bm25f_retrieval.rank_bm25f(index, {"request": "ثوب"})
+
     def test_korean_boundaries_do_not_turn_appearance_into_moe(self):
         lexicon = ["모에", "츤데레"]
         self.assertNotIn(
