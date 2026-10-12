@@ -90,6 +90,12 @@ try:
         positive_visual_profile_fields,
         positive_visual_profile_text,
     )
+    import photo_candidate_corpus
+    import photo_shared_views
+    import photo_native_pack
+    import photo_global_index
+    import photo_global_retrieval
+    import photo_frozen_query
     from bm25f_retrieval import (
         build_bm25f_index,
         normalize_bm25f_text,
@@ -159,16 +165,16 @@ CHARACTER_CONCEPT_EVIDENCE_ROLES = {
     "continuity",
 }
 QUALITY_LAYERS_DATA_KEY = "_quality_layers"
-VISUAL_OBLIGATIONS_DATA_KEY = "_visual_obligations"
-VISUAL_PROFILE_INDEX_DATA_KEY = "_visual_profile_index"
+VISUAL_OBLIGATIONS_DATA_KEY = "_visual_meaning"
+VISUAL_PROFILE_INDEX_DATA_KEY = "_visual_meaning_lookup"
 VISUAL_PROFILE_QUERY_VECTORS_DATA_KEY = "_visual_profile_query_vectors"
 SEMANTIC_INDEX_DATA_KEY = "_semantic_index"
 
 CANDIDATE_PACK_CORE_SLOT_LIMIT = 4
 CANDIDATE_PACK_SUPPORT_SLOT_LIMIT = 2
 CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT = 64
-CANDIDATE_PACK_CONTRACT_V6 = "photo-candidate-pack/v6"
-DEFAULT_CANDIDATE_PACK_VERSION = "v6"
+CANDIDATE_PACK_CONTRACT_V7 = "photo-candidate-pack/v7"
+DEFAULT_CANDIDATE_PACK_VERSION = "v7"
 CANDIDATE_PACK_CREATIVE_EXPLORATION_FLOOR = 3
 CANDIDATE_PACK_CREATIVE_EXPLORATION_MIN_DISTANCE = 0.45
 CANDIDATE_PACK_CREATIVE_EXPLORATION_LIMIT = 6
@@ -748,7 +754,7 @@ def merge_research_extension(data: JsonDict, extension: JsonDict) -> JsonDict:
     if extension_character_graph is not None:
         if not isinstance(extension_character_graph, dict):
             raise ValueError("character_mechanism_graph must be an object")
-        if data.get("character_mechanism_graph"):
+        if data.get("relationship_graph"):
             raise ValueError("character_mechanism_graph may be declared by only one extension")
         data["character_mechanism_graph"] = copy.deepcopy(extension_character_graph)
 
@@ -806,7 +812,7 @@ def character_runtime_node_family_ids(node: JsonDict) -> Set[str]:
 def character_axis_vocabularies(data: JsonDict) -> Dict[str, JsonDict]:
     """Return authored semantic-axis vocabularies keyed by generic axis name."""
 
-    graph = data.get("character_mechanism_graph")
+    graph = data.get("relationship_graph")
     rows = graph.get("axis_vocabularies") if isinstance(graph, dict) else []
     return {
         str(row.get("id") or ""): row
@@ -865,7 +871,7 @@ def validate_character_mechanism_graph(data: JsonDict) -> None:
     primary visual atom plus at most two compatible support atoms.  Router and
     guard nodes may guide routing, but cannot masquerade as visual evidence.
     """
-    graph = data.get("character_mechanism_graph")
+    graph = data.get("relationship_graph")
     if not graph:
         return
     if not isinstance(graph, dict):
@@ -1715,7 +1721,7 @@ def picked_context_tokens(picked: Dict[str, Entry]) -> Set[str]:
         tokens.add(f"slot:{slot}")
         tokens |= entry_context_tokens(entry)
         if entry.get("id"):
-            tokens.add(f"{slot}:{entry['id']}")
+            tokens.add(entry["id"])
     return tokens
 
 
@@ -1737,27 +1743,11 @@ def picked_scene_context_tokens(picked: Dict[str, Entry]) -> Set[str]:
     return tokens
 
 
-def slot_applicability_from_source(source: Optional[JsonDict]) -> JsonDict:
-    configured = (source or {}).get("slot_applicability", {}) or {}
-    merged: JsonDict = {
-        "subject_category_overrides": dict(DEFAULT_SLOT_APPLICABILITY["subject_category_overrides"]),
-        "slots": {
-            slot: dict(policy)
-            for slot, policy in DEFAULT_SLOT_APPLICABILITY["slots"].items()
-        },
-    }
-    if not isinstance(configured, dict):
-        return merged
-    for key in ("subject_category_overrides",):
-        if isinstance(configured.get(key), dict):
-            merged[key].update(configured[key])
-    if isinstance(configured.get("slots"), dict):
-        for slot, policy in configured["slots"].items():
-            if isinstance(policy, dict):
-                current = dict(merged["slots"].get(slot, {}))
-                current.update(policy)
-                merged["slots"][slot] = current
-    return merged
+def slot_applicability_from_source(source):
+    source=source or {}
+    return {'subject_category_overrides':dict((source.get('slot_applicability') or {}).get('subject_category_overrides') or {}),
+            'slots':{tag:row['applicability'] for tag,row in source.get('slot_catalog',{}).items()}}
+
 
 
 def subject_category_overrides(source: Optional[JsonDict]) -> Dict[str, str]:
@@ -1946,19 +1936,19 @@ def candidate_pack_float(value: Any, digits: int = 6) -> Optional[float]:
         return None
 
 
-def candidate_pack_candidate_id(scope: str, raw_id: str, slot: Optional[str] = None) -> str:
-    return f"slot:{slot}:{raw_id}"
+def candidate_pack_candidate_id(scope, raw_id, slot=None):
+    if not photo_candidate_corpus.ID.fullmatch(raw_id):raise ValueError('native global candidate identity required')
+    return raw_id
+
 
 
 def candidate_pack_slot_limit(slot: str) -> int:
     return CANDIDATE_PACK_CORE_SLOT_LIMIT if slot in CANDIDATE_PACK_CORE_SLOTS else CANDIDATE_PACK_SUPPORT_SLOT_LIMIT
 
 
-def candidate_pack_slot_entry_by_id(data: JsonDict, slot: str, entry_id: str) -> Optional[Entry]:
-    for entry in data.get("slots", {}).get(slot, []) or []:
-        if str(entry.get("id")) == entry_id:
-            return entry
-    return None
+def candidate_pack_slot_entry_by_id(data, slot, entry_id):
+    return photo_shared_views.entry_for_role(data,slot,entry_id)
+
 
 
 def candidate_pack_score_payload(row: JsonDict) -> JsonDict:
@@ -2008,7 +1998,7 @@ def candidate_pack_public_facets(entry: JsonDict) -> JsonDict:
 
 def candidate_pack_control_only_tags(data: JsonDict) -> Set[str]:
     private = set(CANDIDATE_PACK_ALWAYS_PRIVATE_TAGS)
-    graph = data.get("character_mechanism_graph")
+    graph = data.get("relationship_graph")
     if not isinstance(graph, dict):
         return private
     domain = str(graph.get("domain") or "")
@@ -2716,7 +2706,7 @@ def resolve_request_intent_constraints(
     matched: List[JsonDict] = []
     catalog_subject_ids = {
         str(entry.get('id') or '')
-        for entry in (data.get("slots") or {}).get("subject") or []
+        for entry in list(photo_shared_views.role_entries(data, "subject"))
         if isinstance(entry, dict) and str(entry.get('id') or '')
     }
     for rule in policy.get("subject_routes") or []:
@@ -3657,11 +3647,11 @@ def candidate_pack_contextual_adult_appeal(
             continue
         rows = []
         sources = {}
-        for slot, entries in data.get("slots", {}).items():
+        for slot, entries in photo_shared_views.roles(data).items():
             if slot in excluded_identity_slots or slot_block_reason(data, slot, constraints):
                 continue
             for entry in entries:
-                source_key = f"{slot}:{entry['id']}"
+                source_key = entry["id"]
                 dimensions = sorted(
                     set(entry.get("affected_dimensions") or [])
                     | set((policy.get("entry_dimensions") or {}).get(source_key) or [])
@@ -3686,12 +3676,12 @@ def candidate_pack_contextual_adult_appeal(
                 tokens = candidate_pack_relevance_tokens(" ".join(text))
                 if any(group and group <= tokens for group in exclusions):
                     continue
-                candidate_id = f"augmentation:adult_appeal:{axis}:{source_key}"
+                candidate_id = entry["id"]
                 sources[candidate_id] = ("slot", slot, entry)
                 rows.append(
                     {
                         "id": candidate_id,
-                        "source_candidate_id": f"slot:{source_key}",
+                        "source_candidate_id": entry["id"],
                         "slot": slot,
                         "entry_id": entry["id"],
                         "axis": axis,
@@ -3715,7 +3705,7 @@ def candidate_pack_contextual_adult_appeal(
                         "conflicts_with": [],
                         "search_fields": fields,
                         "visual_text": text,
-                        "_v6_semantic_source": photo_candidate_semantics.semantic_source(
+                        "_v7_semantic_source": photo_candidate_semantics.semantic_source(
                             dict(entry, affected_dimensions=dimensions),
                             slot,
                             data.get("candidate_semantic_policy"),
@@ -4278,149 +4268,18 @@ def evaluate_character_response_profile(
     }
 
 
-def retrieve_character_response_behavior_candidates(
-    data: JsonDict,
-    core: JsonDict,
-    *,
-    semantic_index: Optional[JsonDict],
-    limit: int = 6,
-) -> JsonDict:
-    """Retrieve bounded advisory behavior nodes after the core is frozen."""
+def retrieve_character_response_behavior_candidates(data,core,*,semantic_index=None,limit=6):
+    ids=getattr(data,'admitted_ids',frozenset());rows=[]
+    for cid in sorted(ids):
+        record=data['candidates'][cid]
+        if record['record_kind'] not in {'relationship_concept','relationship_mechanism'}:continue
+        entry=photo_candidate_corpus.entry(data,cid)
+        rows.append({'candidate_id':cid,'candidate_type':'concept_profile' if record['record_kind']=='relationship_concept' else 'behavior_support',
+            'kind':record['record_kind'],'slot':None,'concept_terms':list(dict.fromkeys(normalize_list(entry.get('aliases'))+normalize_list(entry.get('definition')))),
+            'applicability':'advisory_only','hard_eligible':False})
+    return {'evaluated':True,'method':'global_hybrid_post_core','candidate_order':'deterministically_shuffled_non_preferential',
+        'hardening_policy':'retrieval_hits_never_create_required_evidence','candidates':rows[:limit]}
 
-    if not isinstance(semantic_index, dict) or not isinstance(
-        semantic_index.get("bm25f"), dict
-    ):
-        return {
-            "evaluated": False,
-            "reason": "bm25f_index_unavailable",
-            "candidates": [],
-        }
-    concept_ids = semantic_character_response_concept_document_ids(data)
-    behavior_ids = semantic_character_response_document_ids(data)
-    if not concept_ids and not behavior_ids:
-        return {
-            "evaluated": False,
-            "reason": "no_authored_behavior_documents",
-            "candidates": [],
-        }
-    query_fields = authorial_core_bm25f_query_fields(core)
-    bm25f_payload = semantic_bm25f_payload_from_index(semantic_index)
-    concept_rows = rank_character_response_concept_candidates(
-        data,
-        bm25f_payload,
-        query_fields,
-        limit=min(3, max(1, int(limit))),
-    )
-    entries_by_key = {
-        key: (kind, entry, slot)
-        for key, kind, entry, slot in iter_semantic_entries(data)
-    }
-    linked_behavior_ids: Set[str] = set()
-    concept_consistency_by_id: Dict[str, JsonDict] = {}
-    for row in concept_rows:
-        document_id = str(row.get("document_id") or "")
-        source = entries_by_key.get(document_id)
-        if source is None:
-            continue
-        _kind, profile, _slot = source
-        consistency = evaluate_character_response_profile(core, data, profile)
-        concept_consistency_by_id[document_id] = consistency
-        if consistency.get("status") in {
-            "conflicting",
-            "superseded_by_requester_definition",
-        }:
-            continue
-        linked_behavior_ids.update(
-            f"character_mechanism_node:{runtime_id}"
-            for runtime_id in normalize_list(profile.get("optional_runtime_node_ids"))
-        )
-    unlinked_behavior_ids = {
-        key
-        for key in behavior_ids
-        if (entries_by_key.get(key) or (None, None, None))[0]
-        != "character_mechanism_node"
-    }
-    ranked_behavior_ids = linked_behavior_ids if concept_rows else unlinked_behavior_ids
-    remaining = max(0, int(limit) - len(concept_rows))
-    behavior_rows = (
-        rank_bm25f(
-            bm25f_payload,
-            query_fields,
-            allowed_ids=ranked_behavior_ids,
-            limit=remaining,
-        )
-        if remaining and ranked_behavior_ids
-        else []
-    )
-    rows = [*concept_rows, *behavior_rows]
-    candidates: List[JsonDict] = []
-    for row in rows:
-        key = str(row.get("document_id") or "")
-        source = entries_by_key.get(key)
-        if source is None:
-            continue
-        kind, entry, slot = source
-        terms = [
-            clean_spaces(str(value))
-            for value in (
-                *normalize_list(entry.get("aliases")),
-                *normalize_list(entry.get("embedding_text")),
-                str(entry.get("en") or ""),
-                str(entry.get("ko") or ""),
-                str(entry.get("ja") or ""),
-            )
-            if clean_spaces(str(value))
-        ]
-        candidate: JsonDict = {
-            "candidate_id": key,
-            "candidate_type": (
-                "concept_profile"
-                if kind == "character_response_concept"
-                else "behavior_support"
-            ),
-            "kind": kind,
-            "slot": slot,
-            "concept_terms": list(dict.fromkeys(terms))[:12],
-            "applicability": "advisory_only",
-            "hard_eligible": False,
-        }
-        if kind == "character_response_concept":
-            consistency = concept_consistency_by_id.get(key) or (
-                evaluate_character_response_profile(core, data, entry)
-            )
-            candidate["semantic_consistency"] = consistency
-            if consistency.get("status") in {
-                "conflicting",
-                "superseded_by_requester_definition",
-            }:
-                candidate["applicability"] = "diagnostic_only"
-        candidates.append(candidate)
-    seed = int.from_bytes(
-        hashlib.sha256(
-            f"character-response-bm25f|{core.get('canonical_sha256') or ''}".encode(
-                "utf-8"
-            )
-        ).digest()[:8],
-        "big",
-    )
-    random.Random(seed).shuffle(candidates)
-    return {
-        "evaluated": True,
-        "method": "bm25f_post_core",
-        "query_fields_sha256": canonical_json_sha256(query_fields),
-        "candidate_order": "deterministically_shuffled_non_preferential",
-        "hardening_policy": "retrieval_hits_never_create_required_evidence",
-        "concept_profile_matches": len(concept_rows),
-        "concept_profile_support_matches": sum(
-            1
-            for consistency in concept_consistency_by_id.values()
-            if consistency.get("status") not in {
-                "conflicting",
-                "superseded_by_requester_definition",
-            }
-        ),
-        "candidates": candidates,
-    }
 
 
 def compile_character_response_contract(
@@ -4898,7 +4757,7 @@ def resolve_visual_profile_hits(
     frozen core; exact-only diagnostic calls need no fielded query.
     """
 
-    index = visual_profile_index or build_visual_profile_index_payload(registry)
+    index = visual_profile_index or {"exact_lookup": visual_profile_exact_term_rows(registry)}
     lookup = [row for row in index.get("exact_lookup") or [] if isinstance(row, dict)]
     profiles = {
         str(profile.get("id") or ""): profile
@@ -5043,189 +4902,8 @@ def resolve_visual_profile_hits(
             }
         )
 
-    semantic_candidates: List[JsonDict] = []
-    entries = index.get("entries") if isinstance(index.get("entries"), dict) else {}
-    retrieval_policy = (
-        index.get("retrieval_policy")
-        if isinstance(index.get("retrieval_policy"), dict)
-        else registry.get("retrieval_policy") or {}
-    )
-    try:
-        minimum_similarity = float(retrieval_policy.get("minimum_similarity", 0.5))
-        best_score_margin = float(retrieval_policy.get("best_score_margin", 0.08))
-        candidate_limit = max(1, int(retrieval_policy.get("candidate_limit", 2)))
-    except (TypeError, ValueError):
-        minimum_similarity = 0.5
-        best_score_margin = 0.08
-        candidate_limit = 2
-    blocked_by_exact = exact_evidence_ids | exact_negated_ids | user_override_ids
-    # Some profiles encode a multi-part relation whose participants, action,
-    # and consequence must not be invented from a nearby portrait embedding.
-    # Those profiles may require their existing component semantics as
-    # positive context proof while leaving ordinary embedding discovery intact.
-    semantically_applicable_ids = {
-        profile_id
-        for profile_id, profile in profiles.items()
-        if visual_profile_context_applicability(
-            profile,
-            context_text,
-            has_authorial_core_context=has_authorial_core_context,
-            require_positive_context_terms=False,
-        )[0]
-        and (
-            (profile.get("activation") or {}).get(
-                "semantic_discovery_requires_component_evidence"
-            )
-            is not True
-            or candidate_pack_visual_component_match(profile, context_text)
-            is not None
-        )
-    }
+    return {"contract_version": VISUAL_PROFILE_RESOLUTION_CONTRACT_VERSION, "hits": hits}
 
-    bm25f_rows: List[JsonDict] = []
-    bm25f_payload = index.get("bm25f") if isinstance(index.get("bm25f"), dict) else {}
-    bm25f_ready = bool(query_fields and bm25f_payload)
-    if bm25f_ready:
-        bm25f_rows = rank_bm25f(
-            bm25f_payload,
-            query_fields or {},
-            limit=max(candidate_limit, int((bm25f_payload.get("policy") or {}).get("candidate_limit", candidate_limit))),
-            allowed_ids=semantically_applicable_ids,
-            blocked_ids=blocked_by_exact,
-        )
-
-    dimensions = int(index.get("embedding_dimensions", 0) or 0)
-    vector_ready = bool(
-        query_vector
-        and dimensions > 0
-        and len(query_vector or []) == dimensions
-    )
-    if vector_ready:
-        reference_scores: List[float] = []
-        for profile_id, profile in profiles.items():
-            if profile_id not in semantically_applicable_ids:
-                continue
-            vector = (entries.get(profile_id) or {}).get("vector")
-            if not isinstance(vector, list) or len(vector) != dimensions:
-                continue
-            score = cosine_similarity(query_vector or [], vector)
-            reference_scores.append(float(score))
-            if profile_id in blocked_by_exact:
-                continue
-            if score < minimum_similarity:
-                continue
-            requires_adult = (
-                (profile.get("activation") or {}).get("requires_adult_character")
-                is True
-            )
-            semantic_candidates.append(
-                {
-                    "profile_id": profile_id,
-                    "match_basis": "embedding",
-                    "applicability_status": (
-                        "eligible"
-                        if not requires_adult or adult_context
-                        else "requires_existing_adult_context"
-                    ),
-                    "hard_eligible": False,
-                    "optional_eligible": bool(
-                        not requires_adult or adult_context
-                    ),
-                    "source_intent_ids": [],
-                    "semantic_score": round(float(score), 6),
-                }
-            )
-        semantic_candidates.sort(
-            key=lambda item: (
-                -float(item.get("semantic_score", 0.0)),
-                str(item.get("profile_id") or ""),
-            )
-        )
-        if semantic_candidates:
-            best_score = max(reference_scores) if reference_scores else float(
-                semantic_candidates[0]["semantic_score"]
-            )
-            semantic_candidates = [
-                item
-                for item in semantic_candidates
-                if float(item.get("semantic_score", 0.0))
-                >= best_score - best_score_margin
-            ][: max(candidate_limit, len(bm25f_rows))]
-
-    bm25f_by_id = {
-        str(row.get("document_id") or ""): row
-        for row in bm25f_rows
-        if str(row.get("document_id") or "")
-    }
-    embedding_by_id = {
-        str(row.get("profile_id") or ""): row
-        for row in semantic_candidates
-        if str(row.get("profile_id") or "")
-    }
-    if bm25f_by_id or embedding_by_id:
-        rrf_k = int((bm25f_payload.get("policy") or {}).get("rrf_k", 60) or 60)
-        fused = reciprocal_rank_fusion(
-            [list(bm25f_by_id), list(embedding_by_id)],
-            k=rrf_k,
-            limit=candidate_limit,
-        )
-        for fused_row in fused:
-            profile_id = str(fused_row.get("document_id") or "")
-            profile = profiles.get(profile_id)
-            if profile is None:
-                continue
-            requires_adult = (
-                (profile.get("activation") or {}).get("requires_adult_character")
-                is True
-            )
-            bm25f_row = bm25f_by_id.get(profile_id)
-            embedding_row = embedding_by_id.get(profile_id)
-            if bm25f_row is not None and embedding_row is not None:
-                match_basis = "bm25f+embedding"
-            elif bm25f_row is not None:
-                match_basis = "bm25f"
-            else:
-                match_basis = "embedding"
-            hits.append(
-                {
-                    "profile_id": profile_id,
-                    "match_basis": match_basis,
-                    "applicability_status": (
-                        "eligible"
-                        if not requires_adult or adult_context
-                        else "requires_existing_adult_context"
-                    ),
-                    "hard_eligible": False,
-                    "optional_eligible": bool(
-                        not requires_adult or adult_context
-                    ),
-                    "source_intent_ids": [],
-                    **(
-                        {"bm25f_score": float(bm25f_row.get("score", 0.0))}
-                        if bm25f_row is not None
-                        else {}
-                    ),
-                    **(
-                        {"semantic_score": float(embedding_row.get("semantic_score", 0.0))}
-                        if embedding_row is not None
-                        else {}
-                    ),
-                    "fusion_score": float(fused_row.get("score", 0.0)),
-                }
-            )
-
-    return {
-        "contract_version": VISUAL_PROFILE_RESOLUTION_CONTRACT_VERSION,
-        "registry_sha256": visual_profile_registry_sha256(registry),
-        "index_registry_sha256": str(index.get("registry_sha256") or ""),
-        "query_sha256": hashlib.sha256(
-            clean_spaces(query_text).encode("utf-8")
-        ).hexdigest(),
-        "bm25f_evaluated": bm25f_ready,
-        "embedding_evaluated": vector_ready,
-        "adult_context": bool(adult_context),
-        "hits": hits,
-    }
 
 
 def visual_obligation_profile_by_id(registry: JsonDict, profile_id: str) -> Optional[JsonDict]:
@@ -5807,123 +5485,19 @@ def candidate_pack_visual_obligation_adult_context(
     )
 
 
-def candidate_pack_resolve_visual_profiles(
-    data: JsonDict,
-    result: JsonDict,
-    trace: JsonDict,
-    moe_response: Optional[JsonDict],
-) -> JsonDict:
-    """Resolve the private visual-profile match set exactly once per pack."""
-
-    registry = (
-        data.get(VISUAL_OBLIGATIONS_DATA_KEY)
-        if isinstance(data.get(VISUAL_OBLIGATIONS_DATA_KEY), dict)
-        else {}
-    )
-    if not registry:
-        return {
-            "contract_version": VISUAL_PROFILE_RESOLUTION_CONTRACT_VERSION,
-            "hits": [],
-        }
-    visual_profile_index = (
-        data.get(VISUAL_PROFILE_INDEX_DATA_KEY)
-        if isinstance(data.get(VISUAL_PROFILE_INDEX_DATA_KEY), dict)
-        else build_visual_profile_index_payload(registry)
-    )
-    source_rows = candidate_pack_visual_obligation_request_sources(result, trace)
-    provenance = (
-        result.get("provenance")
-        if isinstance(result.get("provenance"), dict)
-        else {}
-    )
-    core = (
-        provenance.get("authorial_core")
-        if isinstance(provenance.get("authorial_core"), dict)
-        else {}
-    )
-    if core:
-        query_text, _query_provenance = authorial_core_retrieval_text(core)
-    else:
-        query_text = " | ".join(
-            clean_spaces(str(row.get("text") or ""))
-            for row in source_rows
-            if clean_spaces(str(row.get("text") or ""))
-        )
-    prompt_id = str(provenance.get("prompt_id") or "")
-    query_vectors = (
-        data.get(VISUAL_PROFILE_QUERY_VECTORS_DATA_KEY)
-        if isinstance(data.get(VISUAL_PROFILE_QUERY_VECTORS_DATA_KEY), dict)
-        else {}
-    )
-    query_vector = query_vectors.get(prompt_id)
-    resolution = resolve_visual_profile_hits(
-        registry,
-        source_rows,
-        visual_profile_index=visual_profile_index,
-        query_text=query_text,
-        query_fields=(
-            authorial_core_bm25f_query_fields(core)
-            if core.get("contract_version") == AUTHORIAL_CORE_V3_CONTRACT_VERSION
-            else None
-        ),
-        query_vector=(query_vector if isinstance(query_vector, list) else None),
-        user_definitions=[
-            item
-            for item in core.get("user_definitions") or []
-            if isinstance(item, dict)
-        ],
-        adult_context=candidate_pack_visual_obligation_adult_context(
-            source_rows,
-            moe_response,
-        ),
-    )
-    existing_ids = {hit["profile_id"] for hit in resolution.get("hits") or []}
-    context_text = authorial_core_retrieval_text(core)[0] if core else ""
-    adult_context = candidate_pack_visual_obligation_adult_context(source_rows, moe_response)
-    documents: JsonDict = {}
-    for profile in registry.get("profiles") or []:
-        candidate = profile.get("concept_candidate") or {}
-        if (candidate.get("core_assertion_discovery") is not True
-                or profile["id"] in existing_ids
-                or ((profile.get("activation") or {}).get("requires_adult_character") and not adult_context)
-                or not visual_profile_context_applicability(
-                    profile, context_text, has_authorial_core_context=bool(core),
-                    require_positive_context_terms=False,
-                )[0]):
-            continue
-        documents[profile["id"]] = {**candidate, "en": (profile.get("semantics") or {}).get("definition") or ""}
-    for profile_id in candidate_pack_assertion_discovery(
-        data, core, documents, visual_profile_index.get("bm25f") or {},
-    ):
-        resolution.setdefault("hits", []).append({
-            "profile_id": profile_id, "match_basis": "bm25f_frozen_assertion",
-            "applicability_status": "eligible", "hard_eligible": False,
-            "optional_eligible": True, "source_intent_ids": [],
-        })
-    # A fully observed, source-opted-in relation can be drowned out by a
-    # long scene's broad similarity hits. Rank this narrow lane separately;
-    # preserve the same effect, lock, exclusion and optionality guards.
-    observed_text = " ".join(str(row.get("text") or "") for row in source_rows)
-    component_documents = {
-        profile["id"]: documents[profile["id"]]
-        for profile in registry.get("profiles") or []
-        if profile["id"] in documents
-        and (profile.get("activation") or {}).get(
-            "semantic_discovery_requires_component_evidence") is True
-        and candidate_pack_visual_component_match(profile, observed_text) is not None
-    }
-    existing_ids = {hit["profile_id"] for hit in resolution.get("hits") or []}
-    for profile_id in candidate_pack_assertion_discovery(
-        data, core, component_documents, visual_profile_index.get("bm25f") or {},
-        include_frozen_baseline=True,
-    ):
-        if profile_id not in existing_ids:
-            resolution.setdefault("hits", []).append({
-                "profile_id": profile_id, "match_basis": "bm25f_frozen_components",
-                "applicability_status": "eligible", "hard_eligible": False,
-                "optional_eligible": True, "source_intent_ids": [],
-            })
+def candidate_pack_resolve_visual_profiles(data,result,trace,moe_response):
+    registry=data[VISUAL_OBLIGATIONS_DATA_KEY];rows=candidate_pack_visual_obligation_request_sources(result,trace)
+    core=result['provenance']['authorial_core'];selected=set(result['provenance']['global_candidate_ids'])
+    resolution=resolve_visual_profile_hits(registry,rows,visual_profile_index=data[VISUAL_PROFILE_INDEX_DATA_KEY],
+        user_definitions=core.get('user_definitions') or [],adult_context=candidate_pack_visual_obligation_adult_context(rows,moe_response))
+    existing={r['profile_id'] for r in resolution['hits']}
+    for hit in resolution['hits']:
+        if not hit['hard_eligible']:hit['optional_eligible']=bool(hit.get('optional_eligible') and hit['profile_id'] in selected)
+    for cid in selected:
+        if cid not in existing and data['candidates'][cid]['record_kind']=='visual_profile':
+            resolution['hits'].append({'profile_id':cid,'match_basis':'global_bm25f+embedding','applicability_status':'eligible','hard_eligible':False,'optional_eligible':True,'source_intent_ids':[]})
     return resolution
+
 
 
 def candidate_pack_visual_profile_obligation(
@@ -6288,7 +5862,7 @@ def candidate_pack_visual_concept_candidates(
         )
         candidates.append(
             {
-                "id": f"visual-concept:{profile_id}",
+                "id": profile_id,
                 "content_form": "unordered_inspiration_terms",
                 "concept_terms": concept_terms,
                 **scope,
@@ -6823,7 +6397,7 @@ def candidate_pack_quality_add_literal_subject_entity_facets(
     "styling" must not turn a portrait into a food profile merely because it
     appears in an unrelated subject entry's retrieval metadata.
     """
-    subject_entries = ((data.get("slots") or {}).get("subject") or [])
+    subject_entries = (list(photo_shared_views.role_entries(data, "subject")))
     routing_policy = candidate_pack_intent_routing_policy(data)
     stop_terms = {
         str(value).strip().lower()
@@ -7522,7 +7096,7 @@ def candidate_pack_visual_candidates_for_slot(
     policy: JsonDict,
     candidate_limit: int,
 ) -> List[JsonDict]:
-    entries = [entry for entry in data.get("slots", {}).get(slot, []) or [] if isinstance(entry, dict)]
+    entries = [entry for entry in list(photo_shared_views.role_entries(data, slot)) or [] if isinstance(entry, dict)]
     if not entries:
         return []
     selected_id = ""
@@ -7618,9 +7192,9 @@ def candidate_pack_visual_proposition(
 
 
 def candidate_pack_contract_version(version: str) -> str:
-    if version not in {"v6", CANDIDATE_PACK_CONTRACT_V6}:
+    if version not in {"v7", CANDIDATE_PACK_CONTRACT_V7}:
         raise ValueError(f"unsupported candidate-pack version: {version!r}; expected v6")
-    return CANDIDATE_PACK_CONTRACT_V6
+    return CANDIDATE_PACK_CONTRACT_V7
 
 
 def candidate_pack_recompute_id(pack: JsonDict) -> JsonDict:
@@ -7737,7 +7311,7 @@ def candidate_pack_project_candidate(candidate: JsonDict, *, salt: str) -> None:
 
 
 def candidate_pack_project_candidate_surfaces(projected: JsonDict) -> None:
-    slots = projected.get("slots") if isinstance(projected.get("slots"), dict) else {}
+    slots = photo_native_pack.role_cards(projected) if isinstance(photo_native_pack.role_cards(projected), dict) else {}
     for slot_payload in slots.values():
         if not isinstance(slot_payload, dict):
             continue
@@ -8073,7 +7647,7 @@ def candidate_pack_remove_selection_answer_keys(value: Any) -> None:
 
 
 def candidate_pack_shuffle_candidate_surfaces(projected: JsonDict, *, seed: str) -> None:
-    slots = projected.get('slots') if isinstance(projected.get('slots'), dict) else {}
+    slots = photo_native_pack.role_cards(projected) if isinstance(photo_native_pack.role_cards(projected), dict) else {}
     for slot, payload in slots.items():
         if not isinstance(payload, dict) or not isinstance(payload.get('candidates'), list):
             continue
@@ -8161,7 +7735,7 @@ def candidate_pack_prepare_authorial_surfaces(projected: JsonDict) -> JsonDict:
 def candidate_pack_private_relevance(pack: JsonDict) -> JsonDict:
     """Capture private ranking evidence before applying the public privacy boundary."""
     rows: List[JsonDict] = []
-    slots = pack.get('slots') if isinstance(pack.get('slots'), dict) else {}
+    slots = photo_native_pack.role_cards(pack) if isinstance(photo_native_pack.role_cards(pack), dict) else {}
     for payload in slots.values():
         if isinstance(payload, dict):
             rows.extend((candidate for candidate in payload.get('candidates') or [] if isinstance(candidate, dict)))
@@ -8307,8 +7881,8 @@ def candidate_pack_creative_augmentation(
         )
 
     slots = (
-        projected.get("slots")
-        if isinstance(projected.get("slots"), dict)
+        photo_native_pack.role_cards(projected)
+        if isinstance(photo_native_pack.role_cards(projected), dict)
         else {}
     )
     for payload in slots.values():
@@ -8613,7 +8187,7 @@ def candidate_pack_compose_current(
         else {}
     )
     if core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
-        raise ValueError("v6 candidate pack requires photo-authorial-core/v3")
+        raise ValueError("v7 candidate pack requires photo-authorial-core/v3")
     semantic_sources: Dict[str, JsonDict] = {}
 
     def capture_semantic_sources(value: Any) -> None:
@@ -8622,7 +8196,7 @@ def candidate_pack_compose_current(
                 capture_semantic_sources(item)
         elif isinstance(value, dict):
             candidate_id = str(value.get("id") or value.get("candidate_id") or "")
-            source = value.pop("_v6_semantic_source", None)
+            source = value.pop("_v7_semantic_source", None)
             if source is None and candidate_id and value.get("label_en"):
                 source = photo_candidate_semantics.semantic_source(value, str(value.get("slot") or ""))
                 if source:
@@ -8633,6 +8207,7 @@ def candidate_pack_compose_current(
                 capture_semantic_sources(item)
 
     capture_semantic_sources(projected)
+    capture_semantic_sources(photo_native_pack.role_cards(projected))
     projected = candidate_pack_bind_authorial_core(projected, private_relevance)
     photo_candidate_semantics.apply_public_semantics(projected, semantic_sources)
     intent_lock = core["intent_lock"]
@@ -8671,11 +8246,11 @@ def candidate_pack_compose_current(
     return projected
 
 
-def candidate_pack_project(pack: JsonDict, version: str = "v6") -> JsonDict:
+def candidate_pack_project(pack: JsonDict, version: str = "v7") -> JsonDict:
     candidate_pack_contract_version(version)
     projected = copy.deepcopy(pack)
     private_relevance = projected.pop("_candidate_relevance", {})
-    projected["contract_version"] = CANDIDATE_PACK_CONTRACT_V6
+    projected["contract_version"] = CANDIDATE_PACK_CONTRACT_V7
     candidate_pack_remove_quality_profile_sources(projected)
     for field in ("photographic_craft", "artistic_final_touch"):
         if isinstance(projected.get(field), dict):
@@ -8707,6 +8282,7 @@ def candidate_pack_candidate_bundles(data: JsonDict, pack: JsonDict) -> JsonDict
     }
     admissions: JsonDict = {}
     for bundle in data.get("candidate_bundles") or []:
+        if bundle["id"] not in getattr(data,"admitted_ids",set()):continue
         members = bundle["member_candidates"]
         dimensions = {dimension for member in members for dimension in member.get("affected_dimensions") or []}
         if (len(members) > policy["maximum_members_per_bundle"]
@@ -8775,7 +8351,11 @@ def build_candidate_pack(
         if isinstance(trace.get("generation_contract"), dict)
         else {}
     )
-    slots, core_retrieval, contract = retrieve_core_slots(data, authorial_core, provenance["creative_controls"])
+    query_context=provenance['_query_context']
+    slots, global_retrieval, contract = retrieve_global_candidates(data,authorial_core,provenance['creative_controls'],query_context,provenance['retrieval_mode'])
+    selected_ids=global_retrieval['selected_candidate_ids']
+    provenance['global_candidate_ids']=selected_ids
+    data=photo_shared_views.RequestCandidates(data,selected_ids)
     trace = {**trace, "generation_contract": contract}
     candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]] = {}
     for slot, payload in slots.items():
@@ -8833,13 +8413,12 @@ def build_candidate_pack(
             )
         ):
             intent_constraints.pop("character_response", None)
-    pack: JsonDict = {
-        "contract_version": "photo-candidate-pack/v6",
+    pack: JsonDict = photo_native_pack.WorkingPack({
+        "contract_version": "photo-candidate-pack/v7",
         "pack_id": "",
         "intent_contract": intent_contract,
         "mandatory_intents": mandatory_intents,
         "uncovered_intents": uncovered_intents,
-        "slots": slots,
         "quality_profile": quality_profile,
         "photographic_integration": candidate_pack_photographic_integration(
             data, result, trace, slots, mandatory_intents, quality_profile
@@ -8894,7 +8473,7 @@ def build_candidate_pack(
             "safety": provenance.get("safety", contract.get("safety", {})),
             "argv": provenance.get("argv", []),
         },
-    }
+    }, slots)
     if creative_exploration is not None:
         pack["creative_exploration"] = creative_exploration
     if isinstance(provenance.get("creative_controls"), dict):
@@ -8905,7 +8484,7 @@ def build_candidate_pack(
     if authorial_core is not None:
         pack["authorial_core"] = copy.deepcopy(authorial_core)
     if authorial_core is None:
-        raise ValueError("v6 candidate pack requires a pre-pack authorial core")
+        raise ValueError("v7 candidate pack requires a pre-pack authorial core")
     pack["provenance"]["creativity"] = provenance.get("creativity", CREATIVE_CONTROL_DEFAULTS["creativity"])
     pack["provenance"]["candidate_pool_creativity"] = provenance.get("candidate_pool_creativity")
     pack["provenance"]["retrieval_query"] = copy.deepcopy(provenance.get("retrieval_query", {}))
@@ -8919,7 +8498,7 @@ def build_candidate_pack(
             else None
         )
         if negative_intent_guard is None:
-            raise ValueError("modern v6 candidate pack requires the negative-intent guard")
+            raise ValueError("modern v7 candidate pack requires the negative-intent guard")
         pack["negative_intent_guard"] = copy.deepcopy(negative_intent_guard)
     visual_intent = (
         provenance.get("visual_intent")
@@ -8945,7 +8524,7 @@ def build_candidate_pack(
     if "embodiment_preflight" in provenance:
         pack["embodiment_preflight"] = copy.deepcopy(provenance["embodiment_preflight"])
         pack["provenance"]["embodiment_preflight_required"] = True
-        photo_embodiment.policy_from_pack({**pack, "contract_version": "photo-candidate-pack/v6"})
+        photo_embodiment.policy_from_pack({**pack, "contract_version": "photo-candidate-pack/v7"})
     if viewer_experience is not None:
         pack["viewer_experience"] = viewer_experience
     if adult_appeal is not None:
@@ -8969,16 +8548,16 @@ def build_candidate_pack(
             "blend": {"emphasis": ((adult_appeal or {}).get("blend") or {}).get("emphasis")},
         }
         pack["adult_appeal"] = adult_appeal
-    pack["core_retrieval"] = core_retrieval
+    pack["global_retrieval"] = global_retrieval
     pack["_candidate_relevance"] = candidate_pack_private_relevance(pack)
-    for slot, payload in (pack.get("slots") or {}).items():
+    for slot, payload in (photo_native_pack.role_cards(pack) or {}).items():
         for candidate in payload.get("candidates") or []:
             entry = candidate_pack_slot_entry_by_id(data, slot, str(candidate.get('entry_id') or ''))
             if entry:
-                candidate["_v6_semantic_source"] = photo_candidate_semantics.semantic_source(
+                candidate["_v7_semantic_source"] = photo_candidate_semantics.semantic_source(
                     entry, slot, data.get("candidate_semantic_policy")
                 )
-                source = candidate["_v6_semantic_source"]
+                source = candidate["_v7_semantic_source"]
                 if not property_effects_allowed(
                     authorial_core.get("intent_lock") or {}, source.get("affected_dimensions") or [],
                     source.get("affected_properties", [])
@@ -8989,7 +8568,9 @@ def build_candidate_pack(
                     }
     pack["candidate_bundles"] = candidate_pack_candidate_bundles(data, pack)
     candidate_pack_recompute_id(pack)
-    return candidate_pack_project(pack, candidate_pack_version)
+    projected=candidate_pack_project(pack,candidate_pack_version)
+    projected=photo_native_pack.finalize(projected,data,selected_ids,query_context)
+    return candidate_pack_recompute_id(projected)
 
 
 def semantic_description_for_entry(entry: Entry) -> str:
@@ -9013,17 +8594,9 @@ def semantic_caption_for_entry(entry: Entry, slot: Optional[str] = None) -> str:
     raise ValueError("slot captions require an authored slot name")
 
 
-def dictionary_hash(data: JsonDict) -> str:
-    material = {
-        "version": data.get("version"),
-        "slots": data.get("slots", {}),
-        "facet_vocab": data.get("facet_vocab", {}),
-        "character_mechanism_graph": data.get("character_mechanism_graph", {}),
-        "candidate_bundles": data.get("candidate_bundles", []),
-        "candidate_semantic_policy": data.get("candidate_semantic_policy", {}),
-    }
-    payload = json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+def dictionary_hash(data):
+    return photo_candidate_corpus.digest(photo_shared_views.source(data))
+
 
 
 def semantic_relation_texts(entry: Entry) -> List[str]:
@@ -9398,7 +8971,7 @@ def iter_semantic_entries(data: JsonDict) -> List[tuple[str, str, Entry, Optiona
         for entry in slot_entries:
             key = semantic_entry_key("slot", entry, slot)
             entries.append((key, "slot", entry, slot))
-    graph = data.get("character_mechanism_graph")
+    graph = data.get("relationship_graph")
     if isinstance(graph, dict):
         nodes_by_id = {
             str(node.get("id") or ""): node
@@ -9867,7 +9440,7 @@ DIMENSION_FIELDS = {
 def core_slot_focus_queries(data: dict, core: dict, slot: str) -> tuple[list[str], list[str]]:
     declared_ownership = photo_candidate_semantics.slot_dimensions(slot, data.get("candidate_semantic_policy"))
     ownership = declared_ownership or list(dict.fromkeys(
-        dimension for entry in data.get("slots", {}).get(slot, [])
+        dimension for entry in list(photo_shared_views.role_entries(data, slot))
         for dimension in normalize_list(entry.get("affected_dimensions"))
     ))
     if not ownership:
@@ -10086,9 +9659,7 @@ def frozen_core_context(data: dict, core: dict, controls: dict) -> tuple[dict, d
     picked["subject"]["facets"] = {key: sorted(values) for key, values in facets.items()}
     return contract, picked
 
-def core_slot_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, slot: str, entry: dict) -> bool:
-    if slot_block_reason(data, slot, contract):
-        return False
+def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, slot: str, entry: dict) -> bool:
     reason = entry_block_reason(entry, slot, contract)
     if reason and not (reason == "adult_not_allowed"
                        and candidate_pack_age_only_subject_match(entry, slot, core)):
@@ -10126,6 +9697,7 @@ def core_slot_entry_eligible(data: dict, core: dict, contract: dict, picked: dic
     return not any(intent_alias_matches(blob, exclusion)
                    for exclusion in core.get("user_exclusions") or [])
 
+
 def build_core_slot_index(corpus_json: str, *, policy: Optional[dict] = None) -> dict:
     """Pure slot-only derivation; global graph documents never contribute."""
     corpus = json.loads(corpus_json)
@@ -10155,143 +9727,9 @@ _core_slot_index.cache_clear = _policy_core_slot_index.cache_clear
 _core_slot_index.cache_info = _policy_core_slot_index.cache_info
 
 
-def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, dict, dict]:
-    """Rank same-slot corpus only; never pad empty queries with default slots."""
-    contract, picked = frozen_core_context(data, core, controls)
-    global_query, _ = authorial_core_retrieval_text(core)
-    corpus_json = json.dumps(data["slots"], ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-    # Runtime-bound data carries a private verified derivation. Ordinary dicts
-    # (including explicit synthetic corpora) retain independent calculation.
-    bm25f = data.slot_index(corpus_json) if isinstance(data, photo_runtime_sources.BoundRuntimeData) else _core_slot_index(corpus_json)
-    eligible = {
-        slot: {entry["id"]: entry for entry in entries
-               if core_slot_entry_eligible(data, core, contract, picked, slot, entry)}
-        for slot, entries in data["slots"].items()
-    }
-    discovery = candidate_pack_assertion_discovery(data, core, {
-        f"slot:{slot}:{entry_id}": entry
-        for slot, entries in eligible.items() for entry_id, entry in entries.items()
-    }, bm25f, include_visual_priorities=True)
-    observation_fields = [field for field in ("semantic_assertions", "visual_priorities")
-                          if core.get(field)]
-    discovery_slots = list(dict.fromkeys(document_id.split(":", 2)[1] for document_id in discovery))
-    discovery_order = {slot: i for i, slot in enumerate(discovery_slots)}
-    slots, active = {}, {}
-    ranked_slots = {}
-    # Rank every grounded slot before admission. Authored observations retain
-    # priority within each round, but an early slot cannot spend the entire cap
-    # before a later, successfully retrieved observation gets its first option.
-    slot_order = sorted(data["slots"], key=lambda value: (
-        value not in discovery_order, discovery_order.get(value, len(discovery_order)),
-        value not in CANDIDATE_PACK_CORE_SLOTS, value,
-    ))
-    for slot in slot_order:
-        queries, fields = core_slot_focus_queries(data, core, slot)
-        query = " | ".join(queries)
-        if not queries or slot_block_reason(data, slot, contract):
-            continue
-        entries = eligible[slot]
-        ids = [f"slot:{slot}:{entry_id}" for entry_id in entries]
-        limit = candidate_pack_slot_limit(slot)
-        broad = rank_bm25f(bm25f, {"global_context": global_query}, allowed_ids=ids, limit=max(12, limit * 6))
-        focal_lists = []
-        for focus_query in queries:
-            hits = rank_bm25f(bm25f, {"slot_focus": focus_query}, allowed_ids=ids, limit=max(12, limit * 6))
-            query_terms = set(tokenize_bm25f_text(focus_query, lexicon=bm25f.get("lexicon") or [])) - CANDIDATE_PACK_CONCEPT_STOPWORDS
-            focal_lists.append([row for row in hits if core_focal_hit_supported(bm25f, query_terms, row["document_id"])])
-        focal = [row for hits in focal_lists for row in hits]
-        observed = [document_id for document_id in discovery if document_id in ids]
-        if (not broad or not focal) and not observed:
-            continue
-        broad_ids = {row["document_id"] for row in broad}
-        focal_ids = {row["document_id"] for row in focal}
-        intersection = broad_ids & focal_ids
-        fused = reciprocal_rank_fusion(
-            [[row["document_id"] for row in hits] for hits in [broad, *focal_lists]], k=30,
-        )
-        # Equal RRF evidence must not give an incidental option priority merely
-        # because its ID sorts first. A positive authored alias in this slot's
-        # own frozen focus can resolve the tie. Other ties keep the existing ID
-        # order; no broad-only hit, eligibility guard or owner query is bypassed.
-        tie_counts = Counter((row["score"], row["lane_count"]) for row in fused)
-        named_focus_ids = set()
-        for row in fused:
-            document_id = row["document_id"]
-            if document_id not in intersection or tie_counts[(row["score"], row["lane_count"])] < 2:
-                continue
-            entry = entries[document_id.split(":", 2)[2]]
-            if any(intent_alias_matches(focus_query, alias)
-                   for alias in entry.get("aliases", [])
-                   if isinstance(alias, str) and alias.strip()
-                   and set(tokenize_bm25f_text(alias)) - CANDIDATE_PACK_CONCEPT_STOPWORDS
-                   for focus_query in queries):
-                named_focus_ids.add(document_id)
-        fused.sort(key=lambda row: (
-            -float(row["score"]), -int(row["lane_count"]),
-            row["document_id"] not in named_focus_ids, str(row["document_id"]),
-        ))
-        ranked = [row["document_id"] for row in fused if row["document_id"] in intersection]
-        ranked = ranked or ([focal[0]["document_id"]] if focal else [])
-        # Separate scoped statements can describe a source and its visible
-        # consequence. Give each supported owner query a representative before
-        # consensus fusion, so repeated incidental words cannot erase a cause.
-        representatives = []
-        if {"intent_lock.semantic_anchors", "semantic_assertions"} & set(fields):
-            representatives = [next((row["document_id"] for row in hits if row["document_id"] in broad_ids), "")
-                               for hits in focal_lists]
-        ranked = list(dict.fromkeys(observed + [value for value in representatives if value] + ranked))
-        if ranked:
-            ranked_slots[slot] = (ranked[:limit], fields, observed, query)
-    admitted = {slot: [] for slot in ranked_slots}
-    total = 0
-    # A frozen observation can independently support more than one candidate
-    # in its slot. Preserve those bounded discoveries before generic options
-    # consume the first round; optional adoption and every slot limit remain.
-    for document_id in discovery:
-        slot = document_id.split(":", 2)[1]
-        if total >= CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT:
-            break
-        if slot in ranked_slots and document_id in ranked_slots[slot][0] and document_id not in admitted[slot]:
-            admitted[slot].append(document_id)
-            total += 1
-    for position in range(max((len(rows[0]) for rows in ranked_slots.values()), default=0)):
-        for slot, (ranked, _, _, _) in ranked_slots.items():
-            if total >= CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT:
-                break
-            if position < len(ranked) and ranked[position] not in admitted[slot]:
-                admitted[slot].append(ranked[position])
-                total += 1
-    for slot, document_ids in admitted.items():
-        if not document_ids:
-            continue
-        _, fields, observed, query = ranked_slots[slot]
-        candidates = []
-        for document_id in document_ids:
-            entry_id = document_id.split(":", 2)[2]
-            candidate, _ = candidate_pack_summarize_slot_candidate(data, slot, {
-                "id": entry_id, "applicability_status": "eligible",
-                "applicability_source": "frozen_core_slot_contract",
-            })
-            candidates.append(candidate)
-        active[slot] = {"source_fields": list(dict.fromkeys(fields + (observation_fields if observed else []))),
-                        "focus_query_sha256": hashlib.sha256(query.encode()).hexdigest()}
-        slots[slot] = {"slot": slot, "role": "core" if slot in CANDIDATE_PACK_CORE_SLOTS else "support",
-                       "selected": None, "candidates": candidates, "candidate_count": len(eligible[slot]),
-                       "candidate_limit": candidate_pack_slot_limit(slot)}
-    binding = {
-        "contract_version": "photo-core-retrieval/v1",
-        "source_authorial_core_sha256": core["canonical_sha256"],
-        "slot_corpus_sha256": hashlib.sha256(corpus_json.encode()).hexdigest(),
-        "slot_ownership_sha256": canonical_json_sha256(data.get("candidate_semantic_policy") or {}),
-        "slot_applicability_sha256": canonical_json_sha256(slot_applicability_from_source(data)),
-        "whole_scene_query_sha256": hashlib.sha256(global_query.encode()).hexdigest(),
-        "active_slots": active, "retrieval": "same_slot_core_focus_and_frozen_observation_bm25f_rrf",
-        "candidate_allocation": "one_supported_hit_per_slot_per_round",
-        "observation_priority": "bounded_frozen_evidence_before_slot_rounds",
-        "candidate_adoption": "optional",
-    }
-    binding["canonical_sha256"] = canonical_json_sha256(binding)
-    return slots, binding, contract
+def retrieve_global_candidates(data,core,controls,query_context=None,retrieval_mode='hybrid_required'):
+    return photo_global_retrieval.retrieve(data,core,controls,query_context,retrieval_mode)
+
 
 def prepare_candidate_source(data: JsonDict, core: JsonDict, controls: JsonDict,
                              embodiment: JsonDict, *, seed: int = 0,
@@ -10327,30 +9765,26 @@ def prepare_candidate_source(data: JsonDict, core: JsonDict, controls: JsonDict,
     }
 
 
-def generate_candidate_pack(data: JsonDict, core: JsonDict, controls: JsonDict,
-                            embodiment: JsonDict, *, seed: int = 0,
-                            visual_intent: Optional[JsonDict] = None) -> JsonDict:
-    result = prepare_candidate_source(data, core, controls, embodiment, seed=seed,
-                                      visual_intent=visual_intent)
-    return build_candidate_pack(result, data)
+def generate_candidate_pack(data,core,controls,embodiment,*,seed=0,visual_intent=None,query_context=None,retrieval_mode='hybrid_required',query_cache=None):
+    if retrieval_mode not in photo_global_retrieval.MODES:raise ValueError('native global retrieval mode required')
+    result=prepare_candidate_source(data,core,controls,embodiment,seed=seed,visual_intent=visual_intent)
+    if retrieval_mode=='hybrid_required' and query_context is None:
+        from photo_embedding_provider import load_env
+        load_env(Path(__file__).resolve().parents[3]/'.env')
+        text,_=authorial_core_retrieval_text(core)
+        query_context=photo_frozen_query.prepare(text,core['canonical_sha256'],controls['canonical_sha256'],query_cache or photo_runtime_sources.default_store()/'query-embeddings')
+    result['provenance'].update({'_query_context':query_context,'retrieval_mode':retrieval_mode,'selection_mode':'global_hybrid' if retrieval_mode=='hybrid_required' else 'global_keyword_diagnostic'})
+    return build_candidate_pack(result,data)
 
 
-def load_runtime_data(tags_path: Optional[str | Path] = None, *,
-                      inventory: Optional[photo_source_manifest.SourceInventory] = None) -> JsonDict:
-    """Load and validate the authored corpus and its generated indexes."""
-    path = Path(tags_path) if tags_path is not None else Path(__file__).resolve().parents[1] / "assets/photo_prompt_tags.json"
-    assets = path.parent
-    inventory = inventory or photo_source_manifest.SourceInventory.load(assets)
-    inventory.check_root(path)
-    inventory.validate()
-    data = load_json(path, inventory=inventory)
-    data[QUALITY_LAYERS_DATA_KEY] = load_quality_layers(assets / QUALITY_LAYERS_FILENAME)
-    registry = load_visual_obligation_registry(assets / VISUAL_OBLIGATION_REGISTRY_FILENAME, inventory=inventory)
-    data[VISUAL_OBLIGATIONS_DATA_KEY] = registry
-    data[VISUAL_PROFILE_INDEX_DATA_KEY] = load_visual_profile_index(assets / VISUAL_PROFILE_INDEX_FILENAME, registry)
-    data[SEMANTIC_INDEX_DATA_KEY] = load_semantic_index_payload(assets / "photo_prompt_semantic_index.json")
-    validate_semantic_index_metadata(data[SEMANTIC_INDEX_DATA_KEY], data)
-    return data
+
+def load_runtime_data(tags_path=None,*,inventory=None):
+    assets=Path(__file__).resolve().parents[1]/'assets' if tags_path is None else Path(tags_path)
+    if not assets.is_dir():
+        if assets.name!=photo_candidate_corpus.MANIFEST_NAME:raise ValueError('native shared source manifest required')
+        assets=assets.parent
+    return photo_shared_views.load(assets)
+
 
 
 def filter_authorial_negative_entries(
@@ -10407,7 +9841,7 @@ def authorial_negative_term_allowed(
 def character_response_concept_profiles(data: JsonDict) -> List[JsonDict]:
     """Return data-authored character-response meanings without scene recipes."""
 
-    graph = data.get("character_mechanism_graph")
+    graph = data.get("relationship_graph")
     rows = graph.get("concept_profiles") if isinstance(graph, dict) else []
     return [copy.deepcopy(row) for row in rows or [] if isinstance(row, dict)]
 
@@ -10489,3 +9923,7 @@ def prepare_contextual_appeal_queries(data, result, core, snapshot, semantic_con
         data.setdefault(photo_contextual_appeal.QUERY_CACHE, {})[result["provenance"]["prompt_id"]] = {
             "queries": queries, "vectors": by_axis,
         }
+
+
+def build_global_index(corpus_json):
+    return photo_global_index.lexical(photo_candidate_corpus.decode(corpus_json))

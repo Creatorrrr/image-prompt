@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create a lossless, on-demand composition view of an immutable v6 pack.
+"""Create a lossless, on-demand composition view of an immutable native v7 pack.
 
 Only known optional candidate inventories are deferred. Every other field,
 including unknown future requirements, remains visible. This is a reading aid;
@@ -14,7 +14,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-VERSION = "photo-composer-view/v2"
+VERSION = "photo-composer-view/v3"
 OPTIONAL_PATHS = (
     ("photographic_integration", "category_candidates"),
     ("visual_proposition", "core_candidates"),
@@ -46,8 +46,8 @@ def digest(value: Any) -> str:
 def source_pack(payload: Any) -> dict[str, Any]:
     if isinstance(payload, list) and len(payload) == 1:
         payload = payload[0]
-    if not isinstance(payload, dict) or payload.get("contract_version") != "photo-candidate-pack/v6":
-        raise ValueError("composer view requires exactly one original v6 candidate pack")
+    if not isinstance(payload, dict) or payload.get("contract_version") != "photo-candidate-pack/v7":
+        raise ValueError("composer view requires exactly one original v7 candidate pack")
     hashable = dict(payload, pack_id=None)
     if payload.get("pack_id") != digest(hashable)[:16]:
         raise ValueError("source pack_id does not match the immutable pack content")
@@ -58,88 +58,26 @@ def pointer(path: tuple[str, ...]) -> str:
     return "/" + "/".join(part.replace("~", "~0").replace("/", "~1") for part in path)
 
 
-def inventory_paths(pack: dict[str, Any], version: str = VERSION) -> list[tuple[str, ...]]:
-    paths = list(OPTIONAL_PATHS)
-    if isinstance(pack.get("slots"), dict):
-        paths.extend(("slots", slot, "candidates") for slot in pack["slots"])
-    paths.extend(("adult_appeal", "axes", axis, "candidate_inventory")
-                 for axis in (pack.get("adult_appeal") or {}).get("axes", {}))
-    return paths
-
-
-def locate(root: dict[str, Any], path: tuple[str, ...]) -> tuple[dict[str, Any], str] | None:
-    parent = root
-    for key in path[:-1]:
-        parent = parent.get(key)
-        if not isinstance(parent, dict):
-            return None
-    return (parent, path[-1]) if path[-1] in parent else None
-
-
-def deferable(rows: Any) -> bool:
-    if not isinstance(rows, list) or not rows:
-        return False
-    for row in rows:
-        if not isinstance(row, dict) or not (row.get("id") or row.get("candidate_id")):
-            return False
-        applicability = row.get("applicability") or {}
-        if not isinstance(applicability, dict):
-            return False
-        if row.get("required_in_final_prompt") or row.get("required") or applicability.get("status") == "required":
-            return False
-    return True
-
-
-def build_view(payload: Any, candidate_ids: list[str] | None = None, *, version: str = VERSION) -> dict[str, Any]:
-    if version != VERSION:
-        raise ValueError("unsupported composer view version")
-    pack = source_pack(payload)
-    projection = copy.deepcopy(pack)
-    catalog: list[dict[str, Any]] = []
-    records: dict[str, list[dict[str, Any]]] = {}
-    for path in inventory_paths(pack, version):
-        found = locate(projection, path)
-        if found is None:
-            continue
-        parent, key = found
-        rows = parent[key]
-        if not deferable(rows):
-            continue
-        ids = []
-        for index, row in enumerate(rows):
-            candidate_id = str(row.get("id") or row["candidate_id"])
-            ids.append(candidate_id)
-            source_pointer = pointer((*path, str(index)))
-            record = {"id": candidate_id, "source_pointer": source_pointer, "candidate": copy.deepcopy(row)}
-            records.setdefault(candidate_id, []).append(record)
-            summary = {"id": candidate_id, "source_pointer": source_pointer}
-            fields = SUMMARY_FIELDS
-            summary.update({field: copy.deepcopy(row[field]) for field in fields if field in row})
-            catalog.append(summary)
-        parent[key] = {"deferred_candidate_ids": ids, "read_details_before_selection": True}
-
-    binding = {"source_pack_id": pack["pack_id"], "source_pack_sha256": digest(pack)}
+def build_view(payload, candidate_ids=None, *, version=VERSION):
+    if version != VERSION:raise ValueError('unsupported native composer view version')
+    pack=source_pack(payload)
+    import photo_native_pack
+    photo_native_pack.validate(pack)
+    pool=pack['candidate_pool'];binding={'source_pack_id':pack['pack_id'],'source_pack_sha256':digest(pack)}
     if candidate_ids:
-        missing = sorted(set(candidate_ids) - records.keys())
-        if missing:
-            raise ValueError("unknown deferred candidate IDs: " + ", ".join(missing))
-        result = {
-            "contract_version": version,
-            "mode": "candidate_details",
-            **binding,
-            "candidates": [record for candidate_id in dict.fromkeys(candidate_ids) for record in records[candidate_id]],
-        }
+        ids=list(dict.fromkeys(candidate_ids));missing=set(ids)-set(pool)
+        if missing:raise ValueError('unknown native candidate IDs: '+', '.join(sorted(missing)))
+        result={'contract_version':version,'mode':'candidate_details',**binding,
+            'candidates':[{'id':cid,'source_pointer':pointer(('candidate_pool',cid)),'candidate':copy.deepcopy(pool[cid]),
+                'role_bindings':[copy.deepcopy(row) for row in pack['candidate_bindings'].values() if row['candidate_id']==cid]} for cid in ids]}
     else:
-        result = {
-            "contract_version": version,
-            "mode": "composition_overview",
-            **binding,
-            "audit_input": "original_candidate_pack_only",
-            "selection_rule": "Read full details before selecting a deferred candidate. Every selected visual concept brings its entire opt-in obligation and render gates." + (" A selected bundle requires all component and relation evidence; associated profile IDs remain advisory." if pack.get("candidate_bundles") else ""),
-            "requirements": projection,
-            "candidate_catalog": catalog,
-        }
-    result["view_sha256"] = digest(result)
+        projection=copy.deepcopy(pack)
+        projection['candidate_pool']={cid:{'deferred_candidate_id':cid,'read_details_before_selection':True} for cid in pool}
+        catalog=[{'id':cid,'source_pointer':pointer(('candidate_pool',cid)),
+            **{field:copy.deepcopy(row[field]) for field in ('label_en','label_ko','record_kind','applicability','affected_dimensions','adoption') if field in row},
+            'role_tags':sorted({b['slot_id'] for b in pack['candidate_bindings'].values() if b['candidate_id']==cid})} for cid,row in pool.items()]
+        result={'contract_version':version,'mode':'composition_overview',**binding,'required_and_active_contracts':projection,'candidate_catalog':catalog}
+    result['view_sha256']=digest(result)
     return result
 
 

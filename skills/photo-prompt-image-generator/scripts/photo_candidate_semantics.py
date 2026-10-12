@@ -5,6 +5,7 @@ another authored meaning registry; associated visual profiles never activate
 merely because a bundle is discoverable or selected.
 """
 from __future__ import annotations
+import photo_native_pack
 
 import copy
 import hashlib
@@ -192,7 +193,7 @@ def validate_candidate_entries(data: dict[str, Any], allowed_dimensions: set[str
                         or len({(row["dimension"], row["target"], row["property"]) for row in effects}) != len(effects)):
                     raise ValueError(f"{slot}.{entry['id']} has malformed affected properties")
             seen = {entry["id"]}
-            target = entry.get("canonical_concept_id")
+            target = entry.get("canonical_candidate_ref")
             while target:
                 if target not in by_id or target in seen:
                     raise ValueError(f"{slot}.{entry['id']} has a missing or cyclic canonical concept reference")
@@ -225,11 +226,11 @@ def semantic_source(entry: dict[str, Any], slot: str = "", policy: dict[str, Any
     result: dict[str, Any] = {
         "concept_units": units,
         "relations": copy.deepcopy(entry.get("relations") or []),
-        "affected_dimensions": strings(entry.get("affected_dimensions")) or slot_dimensions(slot, policy),
+        "affected_dimensions": strings(entry.get("affected_dimensions")),
         "adoption": "optional",
     }
-    if entry.get("canonical_concept_id"):
-        result["canonical_concept_id"] = str(entry["canonical_concept_id"])
+    if entry.get("canonical_candidate_ref"):
+        result["canonical_candidate_ref"] = str(entry["canonical_concept_id"])
     if "affected_properties" in entry:
         result["affected_properties"] = copy.deepcopy(entry["affected_properties"])
     return result
@@ -313,12 +314,13 @@ def validate_bundle_references(data: dict[str, Any], profiles: list[dict[str, An
 def public_bundles(data: dict[str, Any], pack: dict[str, Any], joint_admissions: dict[str, Any] | None = None) -> dict[str, Any]:
     visible = {
         str(candidate.get("id") or ""): candidate
-        for payload in (pack.get("slots") or {}).values()
+        for payload in photo_native_pack.role_cards(pack).values()
         for candidate in payload.get("candidates") or []
     }
     open_dimensions = set(((pack.get("authorial_core") or {}).get("intent_lock") or {}).get("open_dimensions") or [])
     result = []
     for bundle in data.get("candidate_bundles") or []:
+        if bundle["id"] not in getattr(data,"admitted_ids",set()):continue
         member_ids = {member["id"] for member in bundle["member_candidates"]}
         dimensions = {dimension for member in bundle["member_candidates"]
                       for dimension in member.get("affected_dimensions") or []}
@@ -339,7 +341,7 @@ def public_bundles(data: dict[str, Any], pack: dict[str, Any], joint_admissions:
         if joint_admission:
             row["joint_admission"] = copy.deepcopy(joint_admission)
             row["member_selection"] = "bundle_only_unless_already_eligible_standalone"
-        row["id"] = "bundle:" + row["id"]
+        row["id"] = row["id"]
         row["content_form"] = "unordered_inspiration_terms"
         row["semantic_surface_version"] = SURFACE_VERSION
         row["concept_units"] = [unit for component in row["components"] for unit in component["concept_units"]]
@@ -383,4 +385,5 @@ def apply_public_semantics(pack: dict[str, Any], sources: dict[str, dict[str, An
             for item in value.values():
                 visit(item)
     visit(pack)
+    if isinstance(pack,photo_native_pack.WorkingPack):visit(photo_native_pack.role_cards(pack))
     pack["candidate_semantic_surface_version"] = SURFACE_VERSION

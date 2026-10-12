@@ -73,7 +73,7 @@ finally:
         sys.path.remove(_SCRIPTS_IMPORT_DIR)
 
 
-SUPPORTED_CANDIDATE_PACK_VERSIONS = {"photo-candidate-pack/v6"}
+SUPPORTED_CANDIDATE_PACK_VERSIONS = {"photo-candidate-pack/v7"}
 MOE_PROMPT_DEFAULT_RECOMMENDED_MIN_WORDS = 100
 MOE_PROMPT_DEFAULT_RECOMMENDED_MAX_WORDS = 240
 VISUAL_OBLIGATIONS_CONTRACT_VERSION = "photo-visual-obligations/v1"
@@ -810,7 +810,7 @@ def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any
 
 
 def audit_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
-    if str(pack.get("contract_version") or "") not in {"photo-candidate-pack/v6"}:
+    if str(pack.get("contract_version") or "") not in {"photo-candidate-pack/v7"}:
         return []
     failures: list[dict[str, Any]] = []
     contract = (
@@ -2700,7 +2700,7 @@ def audit_candidate_semantic_contracts(
         )
 
     if (
-        pack.get("contract_version") != "photo-candidate-pack/v6"
+        pack.get("contract_version") != "photo-candidate-pack/v7"
         or version != photo_candidate_semantics.SURFACE_VERSION
     ):
         fail("", "semantic-unit candidates require the declared modern v6 surface version")
@@ -2948,12 +2948,12 @@ def audit_candidate_interpretations(
 
     contract_version = str(pack.get("contract_version") or "")
     if contract_version not in {
-        "photo-candidate-pack/v6",
+        "photo-candidate-pack/v7",
     }:
         return []
     brief_field = (
         "creative_augmentation_brief"
-        if contract_version in {"photo-candidate-pack/v6"}
+        if contract_version in {"photo-candidate-pack/v7"}
         else "augmentation_brief"
     )
     augmentation_brief = (
@@ -3939,7 +3939,7 @@ def audit_authorial_authorship_policy(
         "source_authorship_policy_sha256": expected_policy["canonical_sha256"],
     }
     if (
-        pack.get("contract_version") != "photo-candidate-pack/v6"
+        pack.get("contract_version") != "photo-candidate-pack/v7"
         or core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION
         or authorial.get("authorship_policy") != expected_policy
         or binding != expected_binding
@@ -4709,7 +4709,7 @@ def audit_creative_controls(pack: dict[str, Any]) -> list[dict[str, Any]]:
     bound_sha = core.get("creative_controls_sha256")
     try:
         creative_controls.validate(snapshot, core.get("source_request"))
-        if pack.get("contract_version") != "photo-candidate-pack/v6" or bound_sha != snapshot["canonical_sha256"]:
+        if pack.get("contract_version") != "photo-candidate-pack/v7" or bound_sha != snapshot["canonical_sha256"]:
             raise ValueError("creative controls must be bound into the governing v3 core")
         runtime = creative_controls.runtime_values(snapshot)
         provenance = pack.get("provenance") or {}
@@ -4766,7 +4766,7 @@ def audit_adult_appeal_dimension_scope(
     }
     expected["protected_properties"] = intent_property_locks(intent_lock)
     if (
-        pack.get("contract_version") != "photo-candidate-pack/v6"
+        pack.get("contract_version") != "photo-candidate-pack/v7"
         or core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION
         or scope != expected
     ):
@@ -5699,7 +5699,7 @@ def _audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> di
     chosen = normalize_chosen_candidate_ids(composed.get("chosen_candidate_ids"))
     valid_ids = candidate_ids_from_pack(pack)
     if not chosen and contract_version not in {
-        "photo-candidate-pack/v6",
+        "photo-candidate-pack/v7",
     }:
         failures.append({"check": "chosen_candidate_ids", "reason": "no chosen_candidate_ids supplied"})
     invalid = sorted(candidate_id for candidate_id in chosen if candidate_id not in valid_ids)
