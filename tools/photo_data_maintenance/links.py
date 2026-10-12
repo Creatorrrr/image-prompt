@@ -18,18 +18,18 @@ def build_links(inventory: dict) -> dict:
         if node["kind"] != "bundle":
             continue
         record = node["record"]
-        if "member_candidates" not in record or "associated_profile_ids" not in record:
+        if "member_candidates" not in record:
             raise MaintenanceError("reference_invalid", "only compiled validated bundles can publish links")
         for member in record["member_candidates"]:
-            add(member["id"], node["id"], "member_of")
-        for profile in record["associated_profile_ids"]:
-            add(node["id"], "profile:" + profile, "associated_with")
+            add(member["candidate_id"], node["id"], "member_of")
+        for profile in record.get("hard_profile_ids", []) + ([record["hard_profile_id"]] if record.get("hard_profile_id") else []):
+            add(node["id"], profile, "associated_with")
     rows = [edges[key] for key in sorted(edges)]
     outgoing, incoming = {node: [] for node in sorted(nodes)}, {node: [] for node in sorted(nodes)}
     for edge in rows:
         outgoing[edge["source"]].append(edge["id"])
         incoming[edge["target"]].append(edge["id"])
-    return {"schema": "photo-data-links/v1", "edges": rows, "outgoing": outgoing, "incoming": incoming,
+    return {"schema": "photo-data-links/v2", "edges": rows, "outgoing": outgoing, "incoming": incoming,
             "unlinked": sorted(node for node in nodes if not outgoing[node] and not incoming[node])}
 
 

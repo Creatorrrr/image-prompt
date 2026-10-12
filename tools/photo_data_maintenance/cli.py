@@ -69,7 +69,7 @@ def main(argv=None) -> int:
             if args.source_root is None or args.runtime_store is None:
                 parser.error("--require-current needs --source-root and --runtime-store")
             require_current(report, args.source_root, args.runtime_store)
-        node = args.candidate or ("profile:" + args.profile if args.profile else "bundle:" + args.bundle)
+        node = args.candidate or (args.profile if args.profile else args.bundle)
         result = query(report["inventory"], report["links"], node, report["reviews"])
         result["generation_id"] = report["manifest"]["binding"]["generation_id"]
         result["source_fingerprint"] = report["manifest"]["binding"]["source_fingerprint"]

@@ -9,8 +9,8 @@ import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 
-RECIPES = {"tool": "photo-data-maintenance/v1", "normalization": "nfc-casefold-whitespace/v1",
-           "entity": "complete-compiled-record/v1", "links": "explicit-bundle-paths/v1"}
+RECIPES = {"tool": "photo-data-maintenance/v2", "normalization": "nfc-casefold-whitespace/v1",
+           "entity": "complete-native-record/v1", "links": "explicit-bundle-paths/v1"}
 
 
 class MaintenanceError(ValueError):

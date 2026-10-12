@@ -21,17 +21,17 @@ python -m tools.photo_data_maintenance.cli build \
 
 python -m tools.photo_data_maintenance.cli query \
   --report-store "$REPORTS" --source-root "$ROOT" --runtime-store "$RUNTIME" \
-  --candidate slot:light_shape:lit_clean_vertical_catchlight_pair
+  --candidate cand_<32hex>
 
 python -m tools.photo_data_maintenance.cli query \
   --report /ABSOLUTE/PATH/generation-report \
-  --profile clamshell_dual_source_portrait_light
+  --profile cand_<32hex>
 
 python -m tools.photo_data_maintenance.cli diff \
   --before /ABSOLUTE/PATH/previous-report --after /ABSOLUTE/PATH/new-report
 ```
 
-`--candidate`에는 슬롯까지 포함한 식별자를 쓴다. `--profile`, `--bundle`에는 원본 ID를 쓴다. 하나의 후보가 여러 번들을 경유하면 모든 경로를 보존한다. 정상 종료는 0, 구조·무결성·현재성 오류는 1이다. 명령 사용 오류는 argparse의 2이다.
+모든 조회 인수는 공통 풀의 `cand_<32hex>` ID를 받는다. 슬롯 연결은 후보 원본을 복제하지 않는다. 하나의 후보가 여러 번들을 경유하면 모든 경로를 보존한다. 정상 종료는 0, 구조·무결성·현재성 오류는 1이다. 명령 사용 오류는 argparse의 2이다.
 
 ## 점검과 정상 조회
 
@@ -58,8 +58,8 @@ python -m tools.photo_data_maintenance.cli diff \
 ## 검증
 
 ```bash
-python -m unittest tests.test_photo_data_maintenance -v
-python -m unittest tests.test_photo_data_quality_scopes tests.test_photo_instrument_semantics -v
+python -m unittest tests.test_photo_native_maintenance -v
+python -m unittest tests.test_photo_candidate_corpus tests.test_photo_global_retrieval -v
 ```
 
 도구 코드나 레시피가 바뀌면 이전 버전 보고서는 현재 도구의 무결성 검사를 통과하지 않는다. 해당 불변 세대에서 새 보고서를 만들거나, 과거 도구 버전과 함께 과거 보고서를 재현한다. 보고서와 점검 통과는 이미지 픽셀 품질이나 사용자 수용의 증거가 아니다.

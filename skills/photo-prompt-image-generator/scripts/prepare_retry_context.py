@@ -22,54 +22,16 @@ def one(raw):
     return raw
 
 
-def import_parent_manifest(path, directory):
-    """Verify original legacy inputs with their worker; author no parent meaning."""
-    manifest = read_json(path)
-    if not isinstance(manifest, dict) or set(manifest) != {"schema_version", "artifacts", "runtime_store"} or manifest["schema_version"] != "photo-retry-parent-artifacts/v1":
-        raise WorkflowError("invalid_parent_artifact_manifest")
-    required = {"request_envelope_input", "authorial_core_input", "creative_controls", "pack", "runtime_receipt", "composed", "render_request"}
-    optional = {"embodiment_review", "generic_review", "visual_review", "feature_selection", "catalog"}
-    rows = manifest["artifacts"]
-    if not isinstance(rows, dict) or not required <= rows.keys() or set(rows) - required - optional:
-        raise WorkflowError("invalid_parent_artifact_roles")
-    artifacts = {}
-    for role, row in rows.items():
-        if isinstance(row, str): row = {"path": row}
-        if not isinstance(row, dict) or set(row) - {"path", "sha256"} or not isinstance(row.get("path"), str):
-            raise WorkflowError("invalid_parent_artifact_path")
-        source = Path(row["path"])
-        source = source if source.is_absolute() else Path(path).resolve().parent / source
-        sha = digest(source.read_bytes())
-        if "sha256" in row and row["sha256"] != sha:
-            raise WorkflowError("stale_parent_artifact")
-        artifacts[role] = {"path": str(source.resolve()), "sha256": sha}
-    state = {"schema_version": "photo-workflow-run/v1", "historical_parent_import": True, "artifacts": artifacts,
-             "operations": [], "source_binding": {"runtime_store": str(Path(manifest["runtime_store"]).resolve())}}
-    actual = audit_bound(state, runtime=True, reviews=True)
-    if actual["composed_audit"]["status"] != "pass" or actual["runtime_audit"]["status"] != "pass":
-        raise WorkflowError("historical_parent_audit_failed")
-    for role, key in (("authorial_core_normalized", "source_core"), ("request_envelope_normalized", "source_envelope")):
-        target = Path(directory) / (role + ".json")
-        atomic_write(target, encode(actual[key]))
-        artifacts[role] = {"path": str(target.resolve()), "sha256": digest(target.read_bytes())}
-    target = Path(directory) / "imported_parent_state.json"
-    atomic_write(target, encode(state))
-    return state, {"path": str(target.resolve()), "sha256": digest(target.read_bytes())}
 
 
 def parent_inputs(parent_state, attempt_path, ledger_path):
     from record_image_run import stable_text_id
     from photo_workflow_reviews import gates, validate_visual_scales
-    if parent_state.get("historical_parent_import"):
-        core, controls = value(parent_state, "authorial_core_normalized"), value(parent_state, "creative_controls")
-    else:
-        _, core, controls = verify_freeze(parent_state)
+    _, core, controls = verify_freeze(parent_state)
     pack, receipt, composed, runtime = (one(value(parent_state, k)) for k in ("pack", "runtime_receipt", "composed", "render_request"))
     if pack.get("contract_version") != "photo-candidate-pack/v7" or pack["authorial_core"] != core or pack["creative_controls"] != controls:
         raise WorkflowError("parent_core_pack_mismatch")
     audit = audit_bound(parent_state, runtime=True, reviews=True)
-    if parent_state.get("historical_parent_import") and (audit.get("source_core") != core or audit.get("source_controls") != controls):
-        raise WorkflowError("historical_authored_input_mismatch")
     if audit["composed_audit"]["status"] != "pass" or audit["runtime_audit"]["status"] != "pass" or audit.get("contract_failures"):
         raise WorkflowError("parent_audit_failed")
     attempt = one(read_json(attempt_path))
@@ -161,15 +123,9 @@ def parent_inputs(parent_state, attempt_path, ledger_path):
 
 
 def recompute(proof):
-    if proof.get("schema_version") != "photo-retry-proof/v1":
+    if proof.get("schema_version") != "photo-retry-proof/v2":
         raise WorkflowError("invalid_retry_proof")
-    if proof.get("imported_parent_state"):
-        row = proof["imported_parent_state"]
-        if digest(Path(row["path"]).read_bytes()) != row["sha256"]:
-            raise WorkflowError("stale_imported_parent_state")
-        state = read_json(row["path"])
-    else:
-        state = load_state(proof["parent_run"])
+    state = load_state(proof["parent_run"])
     for role, row in proof["inputs"].items():
         if digest(Path(row["path"]).read_bytes()) != row["sha256"]:
             raise WorkflowError("stale_retry_parent_or_decision")
@@ -192,20 +148,13 @@ def prepare(args):
         if proof["parent_run"] != str(args.run.resolve()) or proof["ledger"] != str(args.ledger.resolve()) or any(
             digest(path.read_bytes()) != proof["inputs"][role]["sha256"] for role, path in (("decision", args.decision), ("current_envelope", args.current_envelope), ("attempt", args.attempt))):
             raise WorkflowError("retry_reentry_input_conflict")
-        manifest = getattr(args, "parent_manifest", None)
-        if bool(manifest) != ("parent_manifest" in proof["inputs"]) or manifest and digest(manifest.read_bytes()) != proof["inputs"]["parent_manifest"]["sha256"]:
-            raise WorkflowError("retry_reentry_input_conflict")
         context, _ = recompute(proof)
         if context != read_json(output / "retry_context.json"):
             raise WorkflowError("retry_projection_mismatch")
         return {"status": "pass", "context": str(output / "retry_context.json"), "reused": True}
     output.mkdir(parents=True, exist_ok=True)
-    imported = None
-    if getattr(args, "parent_manifest", None):
-        state, imported = import_parent_manifest(args.parent_manifest, output / "private")
-    else:
-        state = load_state(args.run)
-    roles = list(state["artifacts"]) if imported else ["request_raw", "request_envelope_input", "request_envelope_normalized", "creative_controls", "authorial_core_input",
+    state = load_state(args.run)
+    roles = ["request_raw", "request_envelope_input", "request_envelope_normalized", "creative_controls", "authorial_core_input",
         "authorial_core_normalized", "embodiment_review", "catalog", "feature_selection", "freeze_receipt", "freeze_author_input_hashes", "baseline",
         "pack", "runtime_receipt", "composed", "render_request"]
     roles += [k for k in ("generic_review", "visual_review", "review_audit") if k in state["artifacts"]]
@@ -215,13 +164,8 @@ def prepare(args):
         raw = path.read_bytes(); target = output / "private" / (role + ".json")
         atomic_write(target, raw)
         inputs[role] = {"path": str(target), "sha256": digest(raw)}
-    proof = {"schema_version": "photo-retry-proof/v1", "parent_run": str(args.run.resolve()), "inputs": inputs,
+    proof = {"schema_version": "photo-retry-proof/v2", "parent_run": str(args.run.resolve()), "inputs": inputs,
              "ledger": str(args.ledger.resolve())}
-    if imported:
-        target = output / "private/parent_manifest.json"
-        atomic_write(target, args.parent_manifest.read_bytes())
-        inputs["parent_manifest"] = {"path": str(target), "sha256": digest(target.read_bytes())}
-        proof["imported_parent_state"] = imported
     try:
         context, parent = recompute(proof)
         if parent["image_sha256"] is not None:
@@ -334,7 +278,6 @@ def main(argv=None):
     p = sub.add_parser("prepare"); p.add_argument("--run", type=Path, required=True)
     for name in ("decision", "current-envelope", "attempt", "ledger", "output"):
         p.add_argument("--" + name, type=Path, required=True)
-    p.add_argument("--parent-manifest", type=Path, help="Exact legacy authored inputs and private receipt, validated in their immutable generation.")
     p = sub.add_parser("verify-child"); p.add_argument("--run", type=Path, required=True)
     args = parser.parse_args(argv)
     try:

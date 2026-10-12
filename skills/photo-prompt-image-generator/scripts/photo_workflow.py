@@ -384,7 +384,7 @@ def native_manifest_flags(args):
         return []
     if not all(supplied) or not independent:
         raise WorkflowError("native_manifest_provenance_required")
-    flags = ["--manifest", str(manifest), "--candidate-pack-version", "v6",
+    flags = ["--manifest", str(manifest), "--candidate-pack-version", "v7",
              "--independent-no-cross-arm-inputs"]
     for field, value_ in zip(fields, supplied):
         flags += ["--" + field.replace("_", "-"), str(value_)]
