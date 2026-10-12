@@ -1,1 +1,0 @@
-Targeted authored stage-2 maintenance pairs, frozen with prepare_photo_run before source modification. These are not blind evaluation data. Request, controls, core, embodiment review and feature selection are frozen together. Expected migration IDs live only in the post-core evidence record.

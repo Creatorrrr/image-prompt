@@ -112,7 +112,7 @@ def derive_character_response_render_gates(
         failures.append(
             {
                 "check": "character_response_contract",
-                "reason": "typed character-response render review requires an original v6 pack and v3 core",
+                "reason": "typed character-response render review requires an original v7 pack and v3 core",
             }
         )
     if not isinstance(composed, dict):
@@ -472,11 +472,13 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--composed",
         help=(
-            "Audited composed-prompt JSON; required for typed v6 character response "
+            "Audited composed-prompt JSON; required for typed v7 character response "
             "or when the pack exposes optional visual concept candidates"
         ),
     )
     parser.add_argument("--review", required=True, help="Render-review JSON path or inline JSON")
+    parser.add_argument("--runtime-store")
+    parser.add_argument("--runtime-receipt")
     parser.add_argument("--output", help="Optional path for the audit JSON")
     return parser.parse_args(argv)
 
@@ -495,12 +497,17 @@ def main(argv: list[str] | None = None) -> int:
         raw_review_path = Path(args.review).expanduser()
         if not args.review.strip().startswith(("{", "[")) and raw_review_path.is_file():
             review_path = raw_review_path.resolve()
-        summary = audit_moe_render_review(
-            pack,
-            review,
-            composed=composed,
-            review_path=review_path,
-        )
+        import audit_composed_prompt as ca
+        from photo_runtime_sources import RuntimeSnapshotProvider
+        receipt=load_json_arg(args.runtime_receipt) if args.runtime_receipt else None
+        snapshot=RuntimeSnapshotProvider(store=args.runtime_store).from_receipt(pack,receipt)
+        with ca.bound_native_source(snapshot.data,snapshot.query_context):
+            summary = audit_moe_render_review(
+                pack,
+                review,
+                composed=composed,
+                review_path=review_path,
+            )
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         print(json.dumps({"status": "error", "reason": str(exc)}, ensure_ascii=False, indent=2))
         return 2

@@ -123,7 +123,7 @@ def parent_inputs(parent_state, attempt_path, ledger_path):
 
 
 def recompute(proof):
-    if proof.get("schema_version") != "photo-retry-proof/v2":
+    if proof.get("schema_version") != "photo-retry-proof/v2" or set(proof)-{"schema_version","parent_run","inputs","ledger","projection_sha256"}:
         raise WorkflowError("invalid_retry_proof")
     state = load_state(proof["parent_run"])
     for role, row in proof["inputs"].items():

@@ -9,25 +9,14 @@ from common import TARGET_SKILL_DIR, default_data_dir, load_json, read_records, 
 
 
 def existing_index() -> dict[str, Any]:
-    tags = load_json(TARGET_SKILL_DIR / "assets" / "photo_prompt_tags.json")
-    slot_ids: dict[str, set[str]] = {}
-    slot_text: dict[str, set[str]] = {}
-    for slot, values in tags.get("slots", {}).items():
-        ids: set[str] = set()
-        text_values: set[str] = set()
-        for item in values if isinstance(values, list) else []:
-            if isinstance(item, dict):
-                ids.add(str(item.get("id", "")))
-                text_values.add(str(item.get("en", "")).lower())
-                text_values.add(str(item.get("ko", "")).lower())
-        slot_ids[slot] = ids
-        slot_text[slot] = {v for v in text_values if v}
-    facet_values = {
-        facet: {str(value) for value in values}
-        for facet, values in tags.get("facet_vocab", {}).items()
-        if isinstance(values, list)
-    }
-    return {"slot_ids": slot_ids, "slot_text": slot_text, "facet_values": facet_values}
+    import sys
+    sys.path.insert(0,str(TARGET_SKILL_DIR/'scripts'))
+    import photo_candidate_corpus as c
+    source=c.load(TARGET_SKILL_DIR/'assets')
+    candidate_ids=set(source['candidates'])
+    texts={str(r['content'].get(lang,'')).casefold() for r in source['candidates'].values() for lang in ('en','ko')}
+    return {'candidate_ids':candidate_ids,'candidate_texts':texts-{' '},'slot_tags':set(source['slot_catalog']),
+            'facet_values':{k:set(v) for k,v in source['policies'].get('facet_vocab',{}).items()}}
 
 
 def diff_candidates(input_path: str, *, output: str | None = None, data_dir: str | None = None) -> dict[str, Any]:
@@ -43,13 +32,13 @@ def diff_candidates(input_path: str, *, output: str | None = None, data_dir: str
             slot = proposed.get("slot", "")
             value = proposed.get("value") or proposed.get("id")
             en = str(proposed.get("en", "")).lower()
-            if value in index["slot_ids"].get(slot, set()):
+            if value in index["candidate_ids"]:
                 novelty = "reinforce"
                 overlaps.append(f"{slot}.{value}")
-            elif en and en in index["slot_text"].get(slot, set()):
+            elif en and en in index["candidate_texts"]:
                 novelty = "reinforce"
                 overlaps.append(f"{slot}.text:{en}")
-            elif slot not in index["slot_ids"]:
+            elif slot not in index["slot_tags"]:
                 novelty = "conflict"
                 overlaps.append(f"unknown_slot:{slot}")
         elif candidate["kind"] == "facet_value":

@@ -40,7 +40,7 @@ def make_unknown_rule(element: str) -> dict[str, Any]:
     return {
         "id": element,
         "kind": "tag",
-        "target_asset": "photo_prompt_tags.json",
+        "target_asset": "photo_candidate_corpus_manifest.json",
         "slot": "mood",
         "en": phrase,
         "ko": phrase,

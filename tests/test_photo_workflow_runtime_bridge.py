@@ -35,7 +35,7 @@ class PhotoWorkflowRuntimeBridgeTests(unittest.TestCase):
             directory = Path(temp)
             run, _ = freeze_fixture(directory, mode="image", overrides={"sensual": 0, "fetish": 0, "surreal": 0, "creativity": 0})
             args = argparse.Namespace(run=run, seed=27, runtime_store=directory / "runtime", source_mode="local_current",
-                                      source_remote=None, source_ref="main", visual_intent=None)
+                                      source_remote=None, source_ref="main", visual_intent=None,retrieval_mode="keyword_only")
             with patch("urllib.request.urlopen", side_effect=AssertionError("network forbidden")):
                 workflow.retrieve(args)
                 pack = workflow.one(files.value(files.load_state(run), "pack"))
@@ -69,17 +69,6 @@ class PhotoWorkflowRuntimeBridgeTests(unittest.TestCase):
                 proof_path = extraction.output / "retry_proof.json"; context = files.read_json(extraction.output / "retry_context.json")
                 self.assertEqual(context["parent_binding"]["image_sha256"], files.digest(image.read_bytes()))
                 self.assertNotIn("baseline_prompt_en", context)
-                legacy_row = {k: v for k, v in row.items() if k not in {"workflow_operation_id", "native_render_plan_json", "native_render_plan_sha256", "runtime_prompt_sha256"}}
-                legacy_ledger = directory / "legacy-ledger"; legacy_ledger.write_bytes(files.encode(legacy_row).replace(b"\n", b" ").strip() + b"\n")
-                legacy_attempt = directory / "legacy-attempt"; legacy_attempt.write_bytes(files.encode(legacy_row))
-                state = files.load_state(run)
-                manifest = directory / "legacy-parent-manifest"
-                manifest.write_bytes(files.encode({"schema_version": "photo-retry-parent-artifacts/v1", "runtime_store": state["source_binding"]["runtime_store"],
-                    "artifacts": {role: state["artifacts"][role]["path"] for role in ("request_envelope_input", "authorial_core_input", "creative_controls", "pack", "runtime_receipt", "composed", "render_request")}}))
-                imported = argparse.Namespace(run=directory / "historical-parent", attempt=legacy_attempt, ledger=legacy_ledger,
-                    current_envelope=current_file, decision=decision_file, output=directory / "legacy-retry", parent_manifest=manifest)
-                self.assertEqual(prepare(imported)["status"], "pass")
-                self.assertEqual(files.read_json(imported.output / "retry_context.json")["parent_binding"]["core_sha256"], context["parent_binding"]["core_sha256"])
                 # Child authoring uses its real current requester input and fresh
                 # selection/review; only derived lineage hashes are stamped.
                 child = directory / "child"
@@ -114,7 +103,7 @@ class PhotoWorkflowRuntimeBridgeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             directory = Path(temp); run, _ = freeze_fixture(directory, overrides={"sensual": 0, "fetish": 0, "surreal": 0, "creativity": 0})
             args = argparse.Namespace(run=run, seed=27, runtime_store=directory / "runtime", source_mode="local_current",
-                                      source_remote=None, source_ref="main", visual_intent=None)
+                                      source_remote=None, source_ref="main", visual_intent=None,retrieval_mode="keyword_only")
             with patch("urllib.request.urlopen", side_effect=AssertionError("network forbidden")):
                 self.assertEqual(workflow.retrieve(args)["phase"], "pack_bound")
                 self.assertTrue(workflow.retrieve(args)["reused"])

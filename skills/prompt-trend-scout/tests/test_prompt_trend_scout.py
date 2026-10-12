@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 SKILL_DIR = ROOT / "skills" / "prompt-trend-scout"
 SCRIPTS_DIR = SKILL_DIR / "scripts"
-TARGET_TAGS = ROOT / "skills" / "photo-prompt-image-generator" / "assets" / "photo_prompt_tags.json"
+TARGET_TAGS = ROOT / "skills" / "photo-prompt-image-generator" / "assets" / "photo_candidate_corpus_manifest.json"
 
 sys.path.insert(0, str(SCRIPTS_DIR))
 sys.path.insert(0, str(SKILL_DIR))
@@ -140,7 +140,7 @@ def test_diff_against_photo_prompt_marks_existing_and_new(tmp_path):
                 {
                     "candidate_id": "existing",
                     "kind": "tag",
-                    "target_asset": "photo_prompt_tags.json",
+                    "target_asset": "photo_candidate_corpus_manifest.json",
                     "proposed": {"slot": "lighting", "value": "soft_window", "en": "soft window light", "ko": "soft window light"},
                     "abstracted_from": ["s1"],
                     "frequency": 1,
@@ -155,7 +155,7 @@ def test_diff_against_photo_prompt_marks_existing_and_new(tmp_path):
                 {
                     "candidate_id": "new",
                     "kind": "tag",
-                    "target_asset": "photo_prompt_tags.json",
+                    "target_asset": "photo_candidate_corpus_manifest.json",
                     "proposed": {"slot": "lighting", "value": "trend_scout_new_light", "en": "trend scout new light", "ko": "trend scout new light"},
                     "abstracted_from": ["s2"],
                     "frequency": 1,
@@ -213,7 +213,7 @@ def test_apply_reflection_requires_approval_and_defaults_to_dry_run(tmp_path):
             {
                 "candidate_id": "c1",
                 "kind": "tag",
-                "target_asset": "photo_prompt_tags.json",
+                "target_asset": "photo_candidate_corpus_manifest.json",
                 "proposed": {"slot": "lighting", "value": "trend_scout_test", "en": "trend scout test", "ko": "trend scout test"},
                 "abstracted_from": ["s1"],
                 "frequency": 1,

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import json
 import sys
 import unittest
 import unicodedata
@@ -34,6 +35,23 @@ POLICY = {
 
 
 class PhotoBm25fRetrievalTests(unittest.TestCase):
+    def test_wire_reload_and_mapping_order_preserve_exact_ranking_evidence(self):
+        documents = {
+            "stone": {"aliases": ["stone joint stone"], "definition": ["rough stone seams"],
+                      "visible_actions": ["stationary joint"], "support_cues": ["stone ground joint"]},
+            "wood": {"aliases": ["wood joint"], "definition": ["dry wood seams"],
+                     "visible_actions": ["stationary wood"], "support_cues": ["ground joint"]},
+        }
+        original = bm25f_retrieval.build_bm25f_index(documents, policy=POLICY)
+        reloaded = json.loads(json.dumps(original, sort_keys=True))
+        reversed_fields = copy.deepcopy(original)
+        reversed_fields["policy"]["fields"] = dict(reversed(list(original["policy"]["fields"].items())))
+        query = {"request": "stone joint ground", "event": "stationary seams"}
+        expected = bm25f_retrieval.rank_bm25f(original, query)
+        for index in (reloaded, reversed_fields):
+            for fields in (query, dict(reversed(list(query.items())))):
+                self.assertEqual(bm25f_retrieval.rank_bm25f(index, fields), expected)
+
     def test_native_letters_keep_their_combining_marks_and_boundaries(self):
         for alias in ("साड़ी", "धोती", "ชุดไทย", "ثوب", "عباية"):
             with self.subTest(alias=alias):

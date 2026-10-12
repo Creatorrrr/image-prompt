@@ -1,6 +1,6 @@
 """Authored optional candidate semantics, independent of sampler ranking.
 
-The extension source remains the owner. Compiled bundles are a projection, not
+The native canonical candidate remains the only authored owner. Compiled bundles are a projection, not
 another authored meaning registry; associated visual profiles never activate
 merely because a bundle is discoverable or selected.
 """
@@ -14,7 +14,6 @@ import re
 from typing import Any
 
 from photo_contracts import property_effects_allowed
-from photo_candidate_context import primary_context_alternatives
 
 SURFACE_VERSION = "photo-candidate-semantic-surface/v1"
 BUNDLE_VERSION = "photo-candidate-bundles/v1"
@@ -22,17 +21,6 @@ COMPILED_BUNDLE_FIELDS = (
     "id", "source_sha256", "associated_profile_ids", "components", "member_candidates",
     "confusion_boundaries", "relations", "adoption", "profile_activation",
 )
-MAINTENANCE_VERSION = "photo-extension-maintenance-ref/v1"
-RUNTIME_EXTENSION_KEYS = frozenset({
-    "schema_version", "facet_vocab",
-    "slots", "coherence_rules", "character_mechanism_graph", "slot_applicability",
-    "visual_semantics", "maintenance_ref", "existing_slot_context_extensions",
-})
-BUNDLE_SOURCE_KEYS = frozenset({
-    "id", "primary_visual_proposition", "hard_profile_id", "hard_profile_ids",
-    "component_groups", "candidate_ids", "confusion_boundaries", "source_keywords",
-    "activation_mode", "establishment",  "terms", "relations", "candidate_only", "candidate_slots",
-})
 
 
 def digest(value: Any) -> str:
@@ -55,100 +43,10 @@ def strings(value: Any) -> list[str]:
     return [item.strip() for item in value]
 
 
-def validate_extension_keys(extension: dict[str, Any]) -> None:
-    unknown = set(extension) - RUNTIME_EXTENSION_KEYS
-    if unknown:
-        raise ValueError(f"research extension has unsupported runtime keys: {sorted(unknown)}")
-    reference = extension.get("maintenance_ref")
-    if reference is not None and (
-        not isinstance(reference, dict)
-        or set(reference) != {"contract_version", "record_id", "sha256"}
-        or reference.get("contract_version") != MAINTENANCE_VERSION
-        or not str(reference.get("record_id") or "").strip()
-        or not re.fullmatch(r"[0-9a-f]{64}", str(reference.get("sha256") or ""))
-    ):
-        raise ValueError("extension maintenance_ref requires its declared schema, record id and SHA-256")
 
 
-def extend_slot_contexts(slots: dict[str, Any], updates: Any) -> None:
-    """Append reviewed equivalent paraphrases and optional interpretation context.
-
-    This surface cannot replace an entry, broaden its effects, or remove guards.
-    A different object, owner or action needs its own authored candidate.
-    Interpretation notes are deliberately excluded from search projections.
-    """
-    if updates is None:
-        return
-    if not isinstance(updates, dict):
-        raise ValueError("existing_slot_context_extensions must be an object")
-    for slot, entries in updates.items():
-        if slot not in slots or not isinstance(entries, dict):
-            raise ValueError(f"context extension references unknown slot {slot}")
-        targets = {row["id"]: row for row in slots[slot]}
-        for entry_id, addition in entries.items():
-            if entry_id not in targets:
-                raise ValueError(f"context extension references unknown entry {slot}.{entry_id}")
-            if (not isinstance(addition, dict) or not addition
-                    or set(addition) - {"paraphrases", "contexts"}):
-                raise ValueError("context extension allows only paraphrases and contexts")
-            paraphrases = strings(addition.get("paraphrases"))
-            contexts = addition.get("contexts", [])
-            if (not isinstance(contexts, list) or any(
-                    not isinstance(row, dict) or not str(row.get("id") or "").strip()
-                    for row in contexts)):
-                raise ValueError("context extension contexts need non-empty IDs")
-            target = targets[entry_id]
-            if paraphrases:
-                target["paraphrases"] = list(dict.fromkeys(
-                    strings(target.get("paraphrases")) + paraphrases))
-            if contexts:
-                usage = target.setdefault("contextual_usage", {})
-                if not isinstance(usage, dict):
-                    raise ValueError("contextual_usage target must be an object")
-                existing = usage.setdefault("contexts", [])
-                if not isinstance(existing, list):
-                    raise ValueError("contextual_usage.contexts must be an array")
-                ids = {row["id"] for row in existing}
-                for row in contexts:
-                    if row["id"] in ids:
-                        raise ValueError(f"duplicate contextual usage ID {row['id']}")
-                    existing.append(copy.deepcopy(row))
-                    ids.add(row["id"])
 
 
-def validate_semantic_policy(policy: dict[str, Any], allowed_dimensions: set[str]) -> None:
-    if not policy:
-        return  # Older dictionaries remain readable without opting into v1.
-    if (not isinstance(policy, dict)
-            or not {"contract_version", "unknown_scope", "slot_dimensions", "required_extensions", "joint_adoption"} <= set(policy)
-            or set(policy) - {"contract_version", "unknown_scope", "slot_dimensions", "required_extensions", "joint_adoption", "core_assertion_discovery"}
-            or policy.get("contract_version") != "photo-candidate-semantic-policy/v1"
-            or policy.get("unknown_scope") != "not_eligible_for_bundle_adoption"
-            or not isinstance(policy.get("slot_dimensions"), dict)):
-        raise ValueError("candidate_semantic_policy requires its explicit dimension ownership schema")
-    for slot, dimensions in policy["slot_dimensions"].items():
-        if (not isinstance(dimensions, list) or len(strings(dimensions)) != len(dimensions)
-                or not set(dimensions).issubset(allowed_dimensions)):
-            raise ValueError(f"candidate semantic scope {slot} contains unknown dimensions")
-    extensions = policy.get("required_extensions")
-    if (not isinstance(extensions, list) or not extensions
-            or any(not isinstance(name, str) or "/" in name or "\\" in name or not name.endswith(".json") for name in extensions)):
-        raise ValueError("required candidate extensions must be JSON basenames")
-    joint = policy.get("joint_adoption")
-    if (not isinstance(joint, dict) or set(joint) != {"maximum_bundles", "maximum_members_per_bundle", "minimum_shared_content_words", "context_policy"}
-            or joint.get("context_policy") != "self_contained_bundle_guards_only"
-            or any(type(joint.get(key)) is not int or joint[key] < 1 for key in ("maximum_bundles", "maximum_members_per_bundle", "minimum_shared_content_words"))):
-        raise ValueError("joint candidate adoption needs bounded positive integer limits and its declared context policy")
-    discovery = policy.get("core_assertion_discovery")
-    if discovery is not None and (
-        not isinstance(discovery, dict)
-        or set(discovery) != {"maximum_candidates", "maximum_per_assertion", "minimum_shared_content_words"}
-        or any(type(discovery.get(key)) is not int or discovery[key] < 1 for key in discovery)
-        or discovery["maximum_candidates"] > 24
-        or discovery["maximum_per_assertion"] > 4
-        or discovery["minimum_shared_content_words"] < 3
-    ):
-        raise ValueError("core assertion discovery requires bounded limits and at least three shared content words")
 
 
 def validate_relations(relations: Any, label: str) -> None:
@@ -164,46 +62,8 @@ def validate_relations(relations: Any, label: str) -> None:
         raise ValueError(f"{label}.relations have duplicate IDs")
 
 
-def validate_candidate_entries(data: dict[str, Any], allowed_dimensions: set[str]) -> None:
-    for slot, entries in (data.get("slots") or {}).items():
-        by_id = {entry["id"]: entry for entry in entries}
-        for entry in entries:
-            primary_context_alternatives(entry.get("primary_context_alternatives"))
-            if "core_assertion_discovery" in entry and type(entry["core_assertion_discovery"]) is not bool:
-                raise ValueError(f"{slot}.{entry['id']} discovery opt-in must be boolean")
-            if entry.get("core_assertion_discovery") and (
-                not strings(entry.get("affected_dimensions"))
-                or not entry.get("affected_properties")
-                or not strings(entry.get("concept_units"))
-            ):
-                raise ValueError(f"{slot}.{entry['id']} discovery needs authored units and explicit property scope")
-            if "concept_units" in entry and not strings(entry["concept_units"]):
-                raise ValueError(f"{slot}.{entry['id']} concept_units must be non-empty")
-            if "relations" in entry:
-                validate_relations(entry["relations"], f"{slot}.{entry['id']}")
-            if "affected_dimensions" in entry and not set(strings(entry["affected_dimensions"])).issubset(allowed_dimensions):
-                raise ValueError(f"{slot}.{entry['id']} has unknown affected dimensions")
-            if "affected_properties" in entry:
-                effects = entry["affected_properties"]
-                dimensions = strings(entry.get("affected_dimensions")) or slot_dimensions(slot, data.get("candidate_semantic_policy"))
-                if (not isinstance(effects, list)
-                        or any(not isinstance(row, dict) or set(row) != {"dimension", "target", "property"}
-                               or any(not isinstance(value, str) or not value.strip() for value in row.values())
-                               or row["dimension"] not in dimensions for row in effects)
-                        or len({(row["dimension"], row["target"], row["property"]) for row in effects}) != len(effects)):
-                    raise ValueError(f"{slot}.{entry['id']} has malformed affected properties")
-            seen = {entry["id"]}
-            target = entry.get("canonical_candidate_ref")
-            while target:
-                if target not in by_id or target in seen:
-                    raise ValueError(f"{slot}.{entry['id']} has a missing or cyclic canonical concept reference")
-                seen.add(target)
-                target = by_id[target].get("canonical_concept_id")
 
 
-def slot_dimensions(slot: str, policy: dict[str, Any] | None = None) -> list[str]:
-    """Use the authored slot ownership table; unknown scopes stay unadoptable."""
-    return strings(((policy or {}).get("slot_dimensions") or {}).get(slot))
 
 
 def concept_units(entry: dict[str, Any]) -> list[str]:
@@ -230,85 +90,14 @@ def semantic_source(entry: dict[str, Any], slot: str = "", policy: dict[str, Any
         "adoption": "optional",
     }
     if entry.get("canonical_candidate_ref"):
-        result["canonical_candidate_ref"] = str(entry["canonical_concept_id"])
+        result["canonical_candidate_ref"] = str(entry["canonical_candidate_ref"])
     if "affected_properties" in entry:
         result["affected_properties"] = copy.deepcopy(entry["affected_properties"])
     return result
 
 
-def compile_extension_bundles(data: dict[str, Any], extension: dict[str, Any]) -> None:
-    rows = extension.get("visual_semantics")
-    if rows is None:
-        return
-    if not isinstance(rows, list):
-        raise ValueError("visual_semantics must be an array of authored optional bundles")
-    entries: dict[str, list[tuple[str, dict[str, Any]]]] = {}
-    for slot, values in (data.get("slots") or {}).items():
-        for entry in values:
-            entries.setdefault(str(entry.get("id") or ""), []).append((slot, entry))
-    target = data.setdefault("candidate_bundles", [])
-    existing = {row["id"] for row in target}
-    for row in rows:
-        if not isinstance(row, dict) or not row.get("id"):
-            raise ValueError("visual_semantics entries require an id")
-        unknown = set(row) - BUNDLE_SOURCE_KEYS
-        if unknown:
-            raise ValueError(f"visual_semantics.{row['id']} has unsupported keys: {sorted(unknown)}")
-        validate_relations(row.get("relations", []), f"visual_semantics.{row['id']}")
-        if row["id"] in existing:
-            raise ValueError(f"duplicate candidate bundle id: {row['id']}")
-        components = []
-        for index, component in enumerate(row.get("component_groups") or []):
-            if isinstance(component, str) and component.strip():
-                components.append({"id": f"component_{index + 1}", "concept_units": [component.strip()], "minimum_realizations": 1})
-            elif isinstance(component, dict) and component.get("id") and strings(component.get("visible_evidence")):
-                if set(component) - {"id", "visible_evidence"}:
-                    raise ValueError(f"candidate bundle {row['id']} has unsupported component fields")
-                components.append({"id": str(component["id"]), "concept_units": strings(component["visible_evidence"]), "minimum_realizations": 1})
-            else:
-                raise ValueError(f"candidate bundle {row['id']} has an invalid component")
-        members = strings(row.get("candidate_ids"))
-        if not components or not members or len(members) != len(set(members)):
-            raise ValueError(f"candidate bundle {row['id']} requires components and unique member IDs")
-        scopes = row.get("candidate_slots") or {}
-        if not isinstance(scopes, dict) or set(scopes) - set(members):
-            raise ValueError(f"candidate bundle {row['id']} has invalid candidate slot scopes")
-        resolved = {
-            member: [pair for pair in entries.get(member, [])
-                     if member not in scopes or pair[0] == scopes[member]]
-            for member in members
-        }
-        missing = [member for member in members if len(resolved[member]) != 1]
-        if missing:
-            raise ValueError(f"candidate bundle {row['id']} has missing or ambiguous candidate references: {missing}")
-        associated = strings(row.get("hard_profile_ids"))
-        if row.get("hard_profile_id"):
-            associated.append(str(row["hard_profile_id"]))
-        compiled = {
-            "id": str(row["id"]),
-            "source_sha256": digest(row),
-            "associated_profile_ids": list(dict.fromkeys(associated)),
-            "components": components,
-            "member_candidates": [
-                {"id": f"slot:{resolved[member][0][0]}:{member}", "slot": resolved[member][0][0],
-                 "entry_id": member, **semantic_source(resolved[member][0][1], resolved[member][0][0], data.get("candidate_semantic_policy"))}
-                for member in members
-            ],
-            "confusion_boundaries": strings(row.get("confusion_boundaries")),
-            "relations": copy.deepcopy(row.get("relations") or []),
-            "adoption": "optional",
-            "profile_activation": "independent_request_evidence_only",
-        }
-        target.append(compiled)
-        existing.add(row["id"])
 
 
-def validate_bundle_references(data: dict[str, Any], profiles: list[dict[str, Any]]) -> None:
-    known = {str(row.get("id") or "") for row in profiles}
-    for bundle in data.get("candidate_bundles") or []:
-        unknown = set(bundle["associated_profile_ids"]) - known
-        if unknown:
-            raise ValueError(f"candidate bundle {bundle['id']} references unknown visual profiles: {sorted(unknown)}")
 
 
 def public_bundles(data: dict[str, Any], pack: dict[str, Any], joint_admissions: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -366,7 +155,7 @@ def public_bundles(data: dict[str, Any], pack: dict[str, Any], joint_admissions:
 
 def bundle_source_material(bundle: dict[str, Any]) -> dict[str, Any]:
     material = {key: copy.deepcopy(bundle[key]) for key in COMPILED_BUNDLE_FIELDS if key in bundle}
-    material["id"] = str(material.get("id") or "").removeprefix("bundle:")
+    material["id"] = str(material.get("id") or "")
     return material
 
 

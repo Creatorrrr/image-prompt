@@ -33,7 +33,7 @@ The pipeline is:
 1. `collect_sources.py`: fetch enabled read-only sources from `assets/source_registry.json`.
 2. `sanitize_examples.py`: remove signatures/promos and attach reuse flags.
 3. `analyze_corpus.py`: convert sanitized examples into abstract candidates.
-4. `diff_against_photo_prompt.py`: compare candidates against `photo_prompt_tags.json` in read-only mode.
+4. `diff_against_photo_prompt.py`: compare candidates against `photo_candidate_corpus_manifest.json` in read-only mode.
 5. `build_reflection_report.py`: write `data/reports/<report_id>.md` and `.json`.
 6. `validate_harvest_schema.py`: validate every emitted record and leakage gate.
 
@@ -72,11 +72,12 @@ python3 skills/prompt-trend-scout/scripts/apply_reflection.py \
   --dry-run
 ```
 
-Only after reviewing the dry-run should a user rerun with `--no-dry-run`. After any approved dictionary change, validate through the target skill:
+A tag lead must first be authored as a complete `native_record` with explicit effects, provenance and optional `native_bindings`. Shorthand leads remain manual review items. Only after reviewing the dry-run should a user rerun with `--no-dry-run`. After any approved dictionary change, validate through the target skill:
 
 ```bash
+python3 skills/photo-prompt-image-generator/scripts/build_shared_candidate_index.py --env-file /ABSOLUTE/PATH/.env
 python3 skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py
-python3 skills/photo-prompt-image-generator/scripts/build_semantic_index.py --progress
+python3 skills/photo-prompt-image-generator/scripts/publish_photo_runtime_snapshot.py --complete-update
 ```
 
 ## References

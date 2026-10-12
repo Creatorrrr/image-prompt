@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from tests import photo_prompt_fixtures as current_fixtures
+from tests import photo_native_runtime as current_fixtures
 
 import copy
 import hashlib
@@ -9,7 +9,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tests import test_photo_authorial_core_v6 as fixtures
+from tests import test_photo_native_authorial_meaning as fixtures
 from tests import test_photo_authorship_policy as authorship_fixtures
 
 import audit_moe_render_review as auditor
@@ -22,11 +22,12 @@ prompt_auditor = fixtures.audit_composed_prompt
 class PhotoCharacterRenderReviewTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        fixture = fixtures.PhotoAuthorialCoreV6Tests()
-        core = fixture.normalize(fixtures.core())
-        data = fixture.runtime_data()
-        result = current_fixtures.candidate_source(data, core, seed=9501, overrides={'creativity': 0})
-        cls.pack = generator.build_candidate_pack(result, data, "v6")
+        raw=fixtures.core()
+        controls=generator.creative_controls.resolve(raw['source_request'],overrides={'creativity':0,'sensual':0,'fetish':0,'surreal':0},seed=9501)
+        raw['creative_controls_sha256']=controls['canonical_sha256']
+        core=generator.normalize_authorial_core(raw,request_envelope=generator.normalize_request_envelope(fixtures.envelope()),creative_control_snapshot=controls)
+        cls.data=generator.load_runtime_data()
+        cls.pack=generator.generate_candidate_pack(cls.data,core,controls,current_fixtures.review(core['baseline_prompt_en']),seed=9501,retrieval_mode='keyword_only')
         cls.composed = authorship_fixtures.PhotoAuthorshipPolicyTests.composed(cls.pack)
         contract = cls.pack["character_response"]
         evidence = contract["frozen_evidence"]
@@ -75,11 +76,13 @@ class PhotoCharacterRenderReviewTests(unittest.TestCase):
         }
         if cls.pack.get("visual_concept_candidates", {}).get("enabled"):
             cls.composed["chosen_visual_concept_ids"] = []
-        preflight = prompt_auditor.audit_composed_prompt(cls.pack, cls.composed)
+        preflight = prompt_auditor.audit_composed_prompt(cls.pack, cls.composed,source_data=cls.data)
         if preflight["status"] != "pass":
             raise AssertionError(preflight["failures"])
 
     def setUp(self):
+        token=prompt_auditor._BOUND_AUDIT_SOURCE.set(self.data)
+        self.addCleanup(prompt_auditor._BOUND_AUDIT_SOURCE.reset,token)
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.image_path = Path(self.temp.name) / "recorded-image.bin"
@@ -197,7 +200,7 @@ class PhotoCharacterRenderReviewTests(unittest.TestCase):
         self.assertIn("composed_prompt.character_response_contract", {row["check"] for row in result["schema_failures"]})
         self.assertEqual(result["required_hard_gate_count"], 9)
 
-    def test_visual_obligations_and_only_selected_optional_gates_join_typed_gates(self):
+    def test_unregistered_optional_contract_fails_without_shrinking_typed_gate_union(self):
         pack = copy.deepcopy(self.pack)
         composed = copy.deepcopy(self.composed)
         phrase = pack["character_response"]["frozen_evidence"]["actor_phrase"]
@@ -225,7 +228,7 @@ class PhotoCharacterRenderReviewTests(unittest.TestCase):
                 "matched_terms_scores_and_routing_reasons_not_exposed",
             )},
             "candidates": [{
-                "id": "visual-concept:optional_actor_visibility",
+                "id": "not_a_native_candidate",
                 "content_form": "unordered_inspiration_terms", "concept_terms": ["actor", "visibility"],
                 "applicability": {"status": "eligible"},
                 "opt_in_contract": {
@@ -239,13 +242,14 @@ class PhotoCharacterRenderReviewTests(unittest.TestCase):
         composed["pack_id"] = pack["pack_id"]
         for selected in (False, True):
             with self.subTest(selected=selected):
-                composed["chosen_visual_concept_ids"] = ["visual-concept:optional_actor_visibility"] if selected else []
+                composed["chosen_visual_concept_ids"] = ["not_a_native_candidate"] if selected else []
                 composed["visual_obligation_evidence"] = {obligation["id"]: {"actor_phrase": phrase}}
                 if selected:
                     composed["visual_obligation_evidence"][optional["id"]] = {"actor_phrase": phrase}
                 review = self.review(pack, composed)
                 result = self.audit(review, pack, composed)
-                self.assertTrue(result["technical_qualified"], result)
+                self.assertFalse(result["technical_qualified"], result)
+                self.assertIn("composed_prompt.visual_concept_candidate_contract", {row["check"] for row in result["schema_failures"]})
                 self.assertEqual(result["required_hard_gate_count"], 11 if selected else 10)
                 self.assertEqual("vo_selected_actor_visibility" in result["required_hard_gates"], selected)
                 del review["hard_gates"]["vo_recorded_actor_visibility"]

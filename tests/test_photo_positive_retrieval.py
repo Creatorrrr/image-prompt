@@ -11,6 +11,7 @@ if str(SCRIPTS) not in sys.path:
 
 from photo_visual_retrieval import positive_visual_profile_fields, positive_visual_profile_text
 import prompt_generator
+import photo_global_index as idx
 
 
 class PositiveVisualRetrievalTests(unittest.TestCase):
@@ -76,15 +77,15 @@ class PositiveVisualRetrievalTests(unittest.TestCase):
                 "subject": "lower fill", "object": "upper soft key",
             }],
         }
-        before = prompt_generator.semantic_text_for_entry(entry, "lighting")
-        fields = prompt_generator.semantic_bm25f_fields_for_entry(entry, "lighting")
-        self.assertIn("lower fill weaker than upper soft key", before)
-        self.assertEqual(fields["semantic_relations"], ["lower fill weaker than upper soft key"])
+        before = idx.text({'record_kind':'visual_option','content':entry})[1]
+        fields = idx.fields({'record_kind':'visual_option','content':entry})
+        self.assertIn("lower fill weaker_than upper soft key", before)
+        self.assertEqual(fields["semantic_relations"], ["lower fill weaker_than upper soft key"])
         self.assertEqual(fields["concept_units"], ["upper soft key", "lower fill"])
         self.assertNotIn("private_relation_id", before)
         entry["relations"][0].update(subject="upper soft key", object="lower fill")
-        self.assertNotEqual(before, prompt_generator.semantic_text_for_entry(entry, "lighting"))
-        self.assertNotEqual(fields, prompt_generator.semantic_bm25f_fields_for_entry(entry, "lighting"))
+        self.assertNotEqual(before, idx.text({'record_kind':'visual_option','content':entry})[1])
+        self.assertNotEqual(fields, idx.fields({'record_kind':'visual_option','content':entry}))
 
 
 if __name__ == "__main__":

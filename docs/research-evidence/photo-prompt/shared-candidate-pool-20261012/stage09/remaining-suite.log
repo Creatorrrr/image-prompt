@@ -1,0 +1,69 @@
+EEETraceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/__main__.py", line 18, in <module>
+    main(module=None)
+    ~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/main.py", line 104, in __init__
+    self.runTests()
+    ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/main.py", line 270, in runTests
+    self.result = testRunner.run(self.test)
+                  ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/runner.py", line 257, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 725, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 665, in run
+    self._callSetUp()
+    ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 612, in _callSetUp
+    self.setUp()
+    ~~~~~~~~~~^^
+  File "/Users/chasoik/.codex/worktrees/shared-candidate-pool/image-prompt/tests/test_photo_api_render_preflight.py", line 24, in setUp
+    self.paths = fixtures.write_valid_inputs(self.directory)
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/shared-candidate-pool/image-prompt/tests/photo_api_fixtures.py", line 26, in write_valid_inputs
+    snapshot = provider.acquire()
+  File "/Users/chasoik/.codex/worktrees/shared-candidate-pool/image-prompt/skills/photo-prompt-image-generator/scripts/photo_runtime_sources.py", line 399, in acquire
+    snapshot = self.load_generation(pointer["generation_id"])
+  File "/Users/chasoik/.codex/worktrees/shared-candidate-pool/image-prompt/skills/photo-prompt-image-generator/scripts/photo_runtime_sources.py", line 423, in load_generation
+    data = generator.load_runtime_data(root / "assets")
+  File "/Users/chasoik/.codex/worktrees/shared-candidate-pool/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 8561, in load_runtime_data
+    return photo_shared_views.load(assets)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/shared-candidate-pool/image-prompt/skills/photo-prompt-image-generator/scripts/photo_shared_views.py", line 49, in load
+    corpus=c.load(assets);return assemble(corpus,index.load(assets,corpus))
+                                                 ~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/shared-candidate-pool/image-prompt/skills/photo-prompt-image-generator/scripts/photo_global_index.py", line 84, in load
+    return validate(result,c)
+  File "/Users/chasoik/.codex/worktrees/shared-candidate-pool/image-prompt/skills/photo-prompt-image-generator/scripts/photo_global_index.py", line 68, in validate
+    validate_vector(row.get('vector'),SPACE['dimensions'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/.codex/worktrees/shared-candidate-pool/image-prompt/skills/photo-prompt-image-generator/scripts/photo_embedding_provider.py", line 20, in validate_vector
+    or any(type(x) not in (int,float) or not math.isfinite(x) for x in vector)
+       ^^^
+  File "/Users/chasoik/.codex/worktrees/shared-candidate-pool/image-prompt/skills/photo-prompt-image-generator/scripts/photo_embedding_provider.py", line 20, in <genexpr>
+    or any(type(x) not in (int,float) or not math.isfinite(x) for x in vector)
+                                             ~~~~~~~~~~~~~^^^
+KeyboardInterrupt

@@ -7,6 +7,7 @@ import photo_shared_views
 import audit_global_retrieval as global_audit
 
 import argparse
+import contextlib
 import contextvars
 import copy
 import hashlib
@@ -397,7 +398,7 @@ def audit_negative_intent_guard(
             {
                 "check": "negative_intent_guard_contract",
                 "reason": (
-                    "v6 pack must expose the exact recomputable requester-first negative-intent boundary"
+                    "v7 pack must expose the exact recomputable requester-first negative-intent boundary"
                 ),
                 "expected": expected,
                 "actual": actual,
@@ -2698,7 +2699,7 @@ def audit_candidate_semantic_contracts(
         pack.get("contract_version") != "photo-candidate-pack/v7"
         or version != photo_candidate_semantics.SURFACE_VERSION
     ):
-        fail("", "semantic-unit candidates require the declared modern v6 surface version")
+        fail("", "semantic-unit candidates require the declared modern v7 surface version")
         return failures
     if (
         not isinstance(bundles, dict)
@@ -3945,7 +3946,7 @@ def audit_authorial_authorship_policy(
         return [
             {
                 "check": "authorial_authorship_policy_contract",
-                "reason": "the v6 authorship policy and core binding must match the frozen open dimensions and hashes",
+                "reason": "the v7 authorship policy and core binding must match the frozen open dimensions and hashes",
             }
         ], 0, 0, 0
     return [], minimum_decisions, 0, minimum_evidence
@@ -3998,7 +3999,7 @@ def audit_authorial_core(
         failures.append(
             {
                 "check": "authorial_core_prompt_budget",
-                "reason": "v6 prompt_en exceeds the absolute photographic prompt bounds",
+                "reason": "v7 prompt_en exceeds the absolute photographic prompt bounds",
                 "minimum_words": minimum_words,
                 "recommended_maximum_words": recommended_maximum_words,
                 "absolute_maximum_words": absolute_maximum_words,
@@ -4126,7 +4127,7 @@ def audit_authorial_core(
         failures.append(
             {
                 "check": "authorial_core_integrity",
-                "reason": "v6 pack is not bound to one valid versioned pre-pack authorial core and retrieval query",
+                "reason": "v7 pack is not bound to one valid versioned pre-pack authorial core and retrieval query",
             }
         )
     binding = (
@@ -4234,7 +4235,7 @@ def audit_authorial_core(
             failures.append(
                 {
                     "check": "intent_preservation_contract",
-                    "reason": "v6 pack does not preserve the canonical requester-priority intent boundary",
+                    "reason": "v7 pack does not preserve the canonical requester-priority intent boundary",
                 }
             )
     raw_evidence = binding.get("preserved_evidence")
@@ -5041,7 +5042,7 @@ def audit_adult_appeal(
     return failures, warnings
 
 
-def audit_character_response_v6(
+def audit_character_response_v7(
     pack: dict[str, Any],
     composed: dict[str, Any],
     prompt_en: str,
@@ -5119,7 +5120,7 @@ def audit_character_response_v6(
         failures.append(
             {
                 "check": "character_response_contract",
-                "reason": "v6 character response is not bound to one typed assertion and its frozen generic evidence",
+                "reason": "v7 character response is not bound to one typed assertion and its frozen generic evidence",
             }
         )
     contract_material = copy.deepcopy(contract)
@@ -5246,7 +5247,7 @@ def expected_semantic_assertion_obligations(
     return expected
 
 
-def audit_semantic_assertion_obligations_v6(
+def audit_semantic_assertion_obligations_v7(
     pack: dict[str, Any],
     composed: dict[str, Any],
     prompt_en: str,
@@ -5470,7 +5471,7 @@ def expected_render_repair_contract(
     return expected
 
 
-def audit_render_repair_v6(
+def audit_render_repair_v7(
     pack: dict[str, Any],
     composed: dict[str, Any],
     prompt_en: str,
@@ -5567,11 +5568,22 @@ def audit_render_repair_v6(
     return failures
 
 
+@contextlib.contextmanager
+def bound_native_source(source_data, query_context=None):
+    """Delegate exactly the already validated native request source to sub-audits."""
+    if source_data is None:raise ValueError('native pinned generation source is required')
+    token=_BOUND_AUDIT_SOURCE.set(source_data);query_token=_BOUND_QUERY_CONTEXT.set(query_context)
+    try:yield
+    finally:_BOUND_AUDIT_SOURCE.reset(token);_BOUND_QUERY_CONTEXT.reset(query_token)
+
+
 def audit_composed_prompt(pack,composed,*,source_data=None,runtime_receipt=None,runtime_store=None,query_context=None):
     if runtime_receipt is not None:
         from photo_runtime_sources import RuntimeSnapshotProvider
         snapshot=RuntimeSnapshotProvider(store=runtime_store).from_receipt(pack,runtime_receipt)
         source_data=snapshot.data;query_context=snapshot.query_context
+    if source_data is None:
+        source_data=_BOUND_AUDIT_SOURCE.get();query_context=_BOUND_QUERY_CONTEXT.get()
     if source_data is None:raise ValueError('native pinned generation source is required')
     token=_BOUND_AUDIT_SOURCE.set(source_data);query_token=_BOUND_QUERY_CONTEXT.set(query_context)
     try:return _audit_composed_prompt(photo_native_pack.read_view(pack),composed)
@@ -5608,7 +5620,7 @@ def _audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> di
         failures.append({"check": "global_retrieval_contract", "reason": f"source recomputation failed: {exc}"})
     expected_retrieval_sha = (pack.get("global_retrieval") or {}).get("canonical_sha256")
     if not expected_retrieval_sha or composed.get("global_retrieval_sha256") != expected_retrieval_sha:
-        failures.append({"check": "core_retrieval_binding", "reason": "composed prompt must bind the exact core retrieval contract"})
+        failures.append({"check": "global_retrieval_binding", "reason": "composed prompt must bind the exact core retrieval contract"})
 
     required_fields = ("pack_id", "prompt_en", "negative_en", "chosen_candidate_ids", "composer")
     missing_fields = [field for field in required_fields if field not in composed]
@@ -5640,11 +5652,11 @@ def _audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> di
     failures.extend(audit_negative_intent_guard(pack, prompt_en))
 
     failures.extend(audit_creative_direction(pack, composed, prompt_en))
-    failures.extend(audit_character_response_v6(pack, composed, prompt_en))
+    failures.extend(audit_character_response_v7(pack, composed, prompt_en))
     failures.extend(
-        audit_semantic_assertion_obligations_v6(pack, composed, prompt_en)
+        audit_semantic_assertion_obligations_v7(pack, composed, prompt_en)
     )
-    failures.extend(audit_render_repair_v6(pack, composed, prompt_en))
+    failures.extend(audit_render_repair_v7(pack, composed, prompt_en))
     failures.extend(photo_embodiment.audit_composed(pack, composed))
     failures.extend(audit_visual_obligations(pack, composed, prompt_en))
     failures.extend(audit_viewer_experience(pack, composed, prompt_en))

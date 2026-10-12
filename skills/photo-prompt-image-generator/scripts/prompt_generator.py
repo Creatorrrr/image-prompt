@@ -30,9 +30,7 @@ _SCRIPTS_IMPORT_DIR_ADDED = _SCRIPTS_IMPORT_DIR not in sys.path
 if _SCRIPTS_IMPORT_DIR_ADDED:
     sys.path.insert(0, _SCRIPTS_IMPORT_DIR)
 try:
-    from visual_profile_index_storage import load_visual_profile_index_payload
     import photo_camera_evidence
-    import photo_source_manifest
     import photo_runtime_sources
     import photo_candidate_semantics
     import photo_candidate_context
@@ -129,24 +127,8 @@ Entry = Dict[str, Any]
 
 # Internal candidate breadth only; the pre-core definition owns visual prominence.
 
-SEMANTIC_PROVIDER = "gemini"
-DEFAULT_SEMANTIC_DIMENSIONS = 768
-SEMANTIC_MODEL_ID = "gemini-embedding-2"
-SEMANTIC_TEXT_RECIPE_VERSION = "semantic-text-v5"
-SEMANTIC_BM25F_POLICY_VERSION = "photo-semantic-bm25f-policy/v3"
-VISUAL_PROFILE_BM25F_POLICY_VERSION = "photo-visual-profile-bm25f-policy/v2"
 GENERATOR_VERSION = "2026.10.1"
-QUALITY_LAYERS_FILENAME = "photo_prompt_quality_layers.json"
-VISUAL_OBLIGATION_REGISTRY_FILENAME = "photo_prompt_visual_obligations.json"
-VISUAL_PROFILE_INDEX_FILENAME = "photo_prompt_visual_profile_index.json"
-VISUAL_OBLIGATION_EXTENSION_FILENAMES = photo_source_manifest.SourceFiles("visual_profile")
-VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
-    "photo-visual-obligation-registry-extension/v1"
-)
 VISUAL_RELATION_CONTRACT_VERSION = "photo-visual-relation/v1"
-RESEARCH_EXTENSION_FILENAME = "photo_prompt_research_extension.json"
-RESEARCH_EXTENSION_FILENAMES = photo_source_manifest.SourceFiles("candidate")
-RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v2"
 CHARACTER_RESPONSE_RELATION_FIELDS = {
     "contrasts": {"operator", "left", "right"},
@@ -167,8 +149,6 @@ CHARACTER_CONCEPT_EVIDENCE_ROLES = {
 QUALITY_LAYERS_DATA_KEY = "_quality_layers"
 VISUAL_OBLIGATIONS_DATA_KEY = "_visual_meaning"
 VISUAL_PROFILE_INDEX_DATA_KEY = "_visual_meaning_lookup"
-VISUAL_PROFILE_QUERY_VECTORS_DATA_KEY = "_visual_profile_query_vectors"
-SEMANTIC_INDEX_DATA_KEY = "_semantic_index"
 
 CANDIDATE_PACK_CORE_SLOT_LIMIT = 4
 CANDIDATE_PACK_SUPPORT_SLOT_LIMIT = 2
@@ -189,62 +169,13 @@ SEMANTIC_CLARIFICATION_CONTRACT_VERSION = "photo-semantic-clarification/v2"
 CREATIVE_AUGMENTATION_CONTRACT_VERSION = "photo-creative-augmentation/v1"
 VISUAL_INTENT_CONTRACT_VERSION = "photo-visual-intent/v1"
 VISUAL_OBLIGATION_REGISTRY_SCHEMA_VERSION = "photo-visual-obligation-registry/v3"
-VISUAL_PROFILE_INDEX_SCHEMA_VERSION = "photo-visual-profile-index/v2"
-VISUAL_PROFILE_TEXT_RECIPE_VERSION = "photo-visual-profile-text/v2"
 VISUAL_PROFILE_RESOLUTION_CONTRACT_VERSION = "photo-visual-profile-resolution/v1"
 VISUAL_OBLIGATIONS_CONTRACT_VERSION = "photo-visual-obligations/v1"
 VISUAL_CONCEPTS_CONTRACT_VERSION = "photo-visual-concepts/v1"
 
 # Generic lexical retrieval policy.  The values govern fields rather than
 # named concepts and are copied into the generated, hash-bound indexes.
-SEMANTIC_BM25F_POLICY: JsonDict = {
-    "policy_version": SEMANTIC_BM25F_POLICY_VERSION,
-    "k1": 1.2,
-    "fields": {
-        "aliases": {"weight": 4.0, "b": 0.2},
-        "labels": {"weight": 3.0, "b": 0.35},
-        "semantic_caption": {"weight": 2.5, "b": 0.7},
-        "definition": {"weight": 3.0, "b": 0.65},
-        "paraphrases": {"weight": 2.25, "b": 0.7},
-        "semantic_relations": {"weight": 2.5, "b": 0.55},
-        "concept_units": {"weight": 2.0, "b": 0.55},
-        "manifestations": {"weight": 0.75, "b": 0.7},
-        "keywords": {"weight": 1.5, "b": 0.6},
-        "slot_context": {"weight": 0.35, "b": 0.2},
-    },
-    "query_fields": {
-        "active_request": 3.0,
-        "interpreted_intent": 2.5,
-        "event": 2.25,
-        "subject": 1.5,
-        "visual_priorities": 1.5,
-        "baseline_prompt": 0.75,
-    },
-    "rrf_k": 60,
-    "candidate_limit": 12,
-}
 
-VISUAL_PROFILE_BM25F_POLICY: JsonDict = {
-    "policy_version": VISUAL_PROFILE_BM25F_POLICY_VERSION,
-    "k1": 1.2,
-    "fields": {
-        "aliases": {"weight": 4.0, "b": 0.2},
-        "definition": {"weight": 2.75, "b": 0.65},
-        "paraphrases": {"weight": 2.25, "b": 0.7},
-        "visual_components": {"weight": 2.0, "b": 0.65},
-        "support_cues": {"weight": 0.75, "b": 0.75},
-    },
-    "query_fields": {
-        "active_request": 3.0,
-        "interpreted_intent": 2.5,
-        "event": 2.25,
-        "subject": 1.5,
-        "visual_priorities": 1.5,
-        "baseline_prompt": 0.75,
-    },
-    "rrf_k": 60,
-    "candidate_limit": 8,
-}
 CANDIDATE_PACK_AUTHORIAL_LENSES = (
     "gesture_and_interruption",
     "material_and_contact",
@@ -466,31 +397,6 @@ CANDIDATE_PACK_ALWAYS_PRIVATE_TAGS = {
 }
 
 
-SEMANTIC_SLOT_CAPTION_TEMPLATES: Dict[str, str] = {
-    "subject": "Photo subject concept: {description}. It should retrieve visual subjects by identity, role, species, object type, and scene relevance.",
-    "location": "Photographic location concept: {description}. It should retrieve places by setting, environment, city or nature context, interior or exterior space, and atmosphere.",
-    "lighting": "Photographic lighting concept: {description}. It should retrieve light by source, mood, shadow behavior, color temperature, and photographic realism.",
-    "light_type": "Specific light-source concept: {description}. It should retrieve lamps, neon, flash, sun, screens, strobes, and practical light sources.",
-    "light_shape": "Light-shape concept: {description}. It should retrieve visible beam shapes, shadow patterns, edge light, caustics, diffusion, and photographic light geometry.",
-    "hair_color": "Hair-color concept: {description}. It should retrieve natural hair color, cosplay wig color, character hair color, and photographic hair-color cues.",
-    "footwear": "Footwear concept: {description}. It should retrieve shoes, sandals, boots, heels, sneakers, loafers, and how they fit fashion dailywear context.",
-    "silhouette_proportion": "Fashion silhouette and proportion concept: {description}. It should retrieve waistline, shoulder shape, layering, volume, body-con, oversized, and garment proportion cues.",
-    "capture_context": "Capture-context concept: {description}. It should retrieve social-photo capture grammar, selfie viewpoint, POV interaction, screen overlay tricks, mirror capture, and passenger-seat observation.",
-    "mood": "Image mood concept: {description}. It should retrieve emotional tone, genre feeling, tension, romance, nostalgia, horror, calm, or surreal atmosphere.",
-    "film_emulation": "Film and camera-emulation concept: {description}. It should retrieve analog film stocks, halation, grain, color cast, instant film, disposable camera, or CCD looks.",
-    "weather": "Weather and atmosphere concept: {description}. It should retrieve rain, fog, snow, humidity, frost, sea spray, heat haze, and environmental air effects.",
-    "space_condition": "Space and environment condition concept: {description}. It should retrieve cleanliness, clutter, construction, decay, flooding, renovation, power outage, and lived-in state of a photographed place.",
-    "crowd_density": "Crowd density and social arrangement concept: {description}. It should retrieve empty, sparse, solo, small-group, queue, packed commute, festival crowd, bystander-ring, and stage-facing crowd layouts.",
-    "situation_context": "Everyday situation and routine concept: {description}. It should retrieve commute, errands, cafe work, room reset, laundry day, moving day, small-business packing, behind-the-scenes, and social routine grammar without readable text.",
-    "occasion_context": "Occasion and event context concept: {description}. It should retrieve graduation, birthday, opening day, closing cleanup, holiday gathering, festival, exhibition opening, workshop, volunteer, and community event atmosphere using non-readable set dressing.",
-    "narrative_core": "Narrative-core concept: {description}. It should retrieve poetic story anchors such as quiet rebellion, analog diary memory, urban solitude, ordinary magic, digital privacy, AI companion, romantic decay, broken luxury, and community ritual without relying on readable text.",
-    "concept_tension": "Concept-tension concept: {description}. It should retrieve visual contrast pairs such as organic versus synthetic, analog versus AI, luxury versus decay, public versus private, documentary versus staged, and realistic versus dreamlike through material, light, setting, and composition.",
-    "body_pose": "Clean human body-pose concept: {description}. It should retrieve standing, seated, leaning, crouching, walking, turning, group layering, and editorial posture without adult body-first framing.",
-    "shot_scale": "Photographic shot-scale concept: {description}. It should retrieve extreme wide, wide, full-length, medium-long, medium, medium close-up, close-up, and extreme close-up framing.",
-    "platform_framing": "Platform-safe framing concept: {description}. It should retrieve vertical social crops, UI-safe blank space, thumbnail-safe face placement, feed-safe composition, and no readable text or hashtags.",
-    "surreal_concept": "Photoreal surreal event concept: {description}. It should retrieve impossible events that still look like real photographed scenes.",
-    "surreal_anchor": "Physical anchor for a photoreal surreal scene: {description}. It should retrieve the real object or surface where the impossible event is grounded.",
-}
 
 DEFAULT_FACET_VOCAB: JsonDict = {
     "subject_kind": ["human", "animal", "object", "food", "environment", "plant", "sign"],
@@ -691,108 +597,6 @@ DEFAULT_SLOT_APPLICABILITY: JsonDict = {
 # Basic helpers
 # -----------------------------------------------------------------------------
 
-def merge_research_extension(data: JsonDict, extension: JsonDict) -> JsonDict:
-    """Merge the optional research taxonomy pack without rewriting the base dictionary.
-
-    The extension is intentionally append-only for ID-bearing collections and
-    additive for facet vocabularies.  Duplicate IDs fail at load time so a
-    research batch cannot silently shadow established behavior.
-    """
-    if extension.get("schema_version") != RESEARCH_EXTENSION_SCHEMA:
-        raise ValueError(
-            f"Unsupported research extension schema: {extension.get('schema_version')!r}"
-        )
-    photo_candidate_semantics.validate_extension_keys(extension)
-
-    def append_unique_id_entries(target: list[Any], additions: Any, label: str) -> None:
-        incoming = additions if isinstance(additions, list) else []
-        existing_ids = {
-            str(item.get("id"))
-            for item in target
-            if isinstance(item, dict) and str(item.get("id") or "")
-        }
-        for item in incoming:
-            if not isinstance(item, dict) or not str(item.get("id") or ""):
-                raise ValueError(f"{label}: extension entries require a non-empty id")
-            item_id = str(item["id"])
-            if item_id in existing_ids:
-                raise ValueError(f"{label}: duplicate extension id {item_id}")
-            target.append(item)
-            existing_ids.add(item_id)
-
-    facet_vocab = data.setdefault("facet_vocab", {})
-    for facet_key, values in (extension.get("facet_vocab") or {}).items():
-        target_values = facet_vocab.setdefault(str(facet_key), [])
-        for value in normalize_list(values):
-            if value not in target_values:
-                target_values.append(value)
-
-    slots = data.setdefault("slots", {})
-    for slot, entries in (extension.get("slots") or {}).items():
-        append_unique_id_entries(slots.setdefault(str(slot), []), entries, f"slots.{slot}")
-
-    photo_candidate_semantics.extend_slot_contexts(
-        slots, extension.get("existing_slot_context_extensions"))
-
-    extension_coherence = extension.get("coherence_rules") or {}
-    if not isinstance(extension_coherence, dict):
-        raise ValueError("coherence_rules must be an object")
-    unknown = set(extension_coherence) - {"slot_conflicts", "slot_context_rules"}
-    if unknown:
-        raise ValueError(f"unsupported coherence rules: {sorted(unknown)}")
-    coherence = data.setdefault("coherence_rules", {})
-    if not isinstance(coherence, dict):
-        raise ValueError("coherence_rules target must be an object")
-    for collection in ("slot_conflicts", "slot_context_rules"):
-        append_unique_id_entries(
-            coherence.setdefault(collection, []),
-            extension_coherence.get(collection),
-            f"coherence_rules.{collection}",
-        )
-
-    extension_character_graph = extension.get("character_mechanism_graph")
-    if extension_character_graph is not None:
-        if not isinstance(extension_character_graph, dict):
-            raise ValueError("character_mechanism_graph must be an object")
-        if data.get("relationship_graph"):
-            raise ValueError("character_mechanism_graph may be declared by only one extension")
-        data["character_mechanism_graph"] = copy.deepcopy(extension_character_graph)
-
-    applicability = data.setdefault("slot_applicability", {})
-    extension_applicability = extension.get("slot_applicability") or {}
-    for mapping_key in ("subject_category_overrides",):
-        target_mapping = applicability.setdefault(mapping_key, {})
-        for key, value in (extension_applicability.get(mapping_key) or {}).items():
-            if key in target_mapping:
-                raise ValueError(f"slot_applicability.{mapping_key}: duplicate extension key {key}")
-            target_mapping[key] = value
-
-    applicability_slots = applicability.setdefault("slots", {})
-    for slot, policy_updates in (extension_applicability.get("slots") or {}).items():
-        if not isinstance(policy_updates, dict):
-            raise ValueError(f"slot_applicability.slots.{slot}: policy must be an object")
-        target_policy = applicability_slots.setdefault(str(slot), {})
-        if not isinstance(target_policy, dict):
-            raise ValueError(f"slot_applicability.slots.{slot}: target policy must be an object")
-        for key, value in policy_updates.items():
-            if isinstance(value, list):
-                target_values = target_policy.setdefault(str(key), [])
-                if not isinstance(target_values, list):
-                    raise ValueError(
-                        f"slot_applicability.slots.{slot}.{key}: target must be a list"
-                    )
-                for item in value:
-                    if item not in target_values:
-                        target_values.append(item)
-                continue
-            if key in target_policy and target_policy[key] != value:
-                raise ValueError(
-                    f"slot_applicability.slots.{slot}.{key}: extension cannot replace scalar"
-                )
-            target_policy[str(key)] = value
-
-    photo_candidate_semantics.compile_extension_bundles(data, extension)
-    return data
 
 
 def character_runtime_node_topic_ids(node: JsonDict) -> Set[str]:
@@ -1235,161 +1039,16 @@ def validate_character_mechanism_graph(data: JsonDict) -> None:
             raise ValueError(f"character policy {policy_id} requires a definition")
 
 
-def load_json(path: str | Path, *, inventory: Optional[photo_source_manifest.SourceInventory] = None) -> JsonDict:
-    p = Path(path)
-    if not p.exists():
-        raise FileNotFoundError(f"Tag JSON not found: {p}")
-    with p.open("r", encoding="utf-8") as f:
-        data = json.load(f)
-    if p.name == "photo_prompt_tags.json":
-        allowed_keys = {
-            "candidate_semantic_policy", "version", "description", "facet_vocab", "slots",
-            "negative_prompt", "negative_prompt_pools", "coherence_rules", "slot_applicability",
-        }
-        unknown = set(data) - allowed_keys
-        if unknown:
-            raise ValueError(f"unsupported photo corpus fields: {sorted(unknown)}")
-        coherence = data.get("coherence_rules") or {}
-        if not isinstance(coherence, dict) or set(coherence) - {"slot_conflicts", "slot_context_rules"}:
-            raise ValueError("unsupported coherence rules")
-        candidate_policy = data.get("candidate_semantic_policy") or {}
-        if candidate_policy:
-            if not isinstance(candidate_policy, dict):
-                raise ValueError("candidate_semantic_policy must be an object")
-            if "required_extensions" in candidate_policy:
-                raise ValueError("required_extensions is generated from photo_prompt_source_manifest.json")
-            if inventory is None and not p.with_name("photo_prompt_source_manifest.json").is_file():
-                raise ValueError("required candidate extensions are missing: source manifest not found")
-            inventory = inventory or photo_source_manifest.SourceInventory.load(p.parent)
-            inventory.check_root(p)
-            candidate_policy["required_extensions"] = inventory.required("candidate")
-        photo_candidate_semantics.validate_semantic_policy(candidate_policy, AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS)
-        required_extensions = candidate_policy.get("required_extensions") or []
-        missing_extensions = [name for name in required_extensions if not p.with_name(name).is_file()]
-        if missing_extensions:
-            raise ValueError(f"required candidate extensions are missing: {missing_extensions}")
-        inventory = inventory or photo_source_manifest.SourceInventory.load(p.parent)
-        inventory.check_root(p)
-        for extension_filename in inventory.files("candidate"):
-            extension_path = p.with_name(extension_filename)
-            if not extension_path.exists():
-                continue
-            with extension_path.open("r", encoding="utf-8") as f:
-                extension = json.load(f)
-            data = merge_research_extension(data, extension)
-        validate_character_mechanism_graph(data)
-        photo_candidate_semantics.validate_candidate_entries(data, AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS)
-        if data.get("candidate_bundles"):
-            registry = load_visual_obligation_registry(p.parent / VISUAL_OBLIGATION_REGISTRY_FILENAME, inventory=inventory)
-            photo_candidate_semantics.validate_bundle_references(data, registry.get("profiles") or [])
-    return data
-
-
-def load_quality_layers(path: str | Path) -> JsonDict:
-    return load_json(path)
-
-
-def default_visual_obligation_registry_path(tags_path: str | Path) -> Path:
-    tags = Path(tags_path)
-    sibling = tags.parent / VISUAL_OBLIGATION_REGISTRY_FILENAME
-    if sibling.exists():
-        return sibling
-    return Path(__file__).resolve().parents[1] / "assets" / VISUAL_OBLIGATION_REGISTRY_FILENAME
-
-
-def load_visual_obligation_registry(path: str | Path, *, inventory: Optional[photo_source_manifest.SourceInventory] = None) -> JsonDict:
-    registry_path = Path(path)
-    payload = load_json(registry_path)
-    if payload.get("schema_version") != VISUAL_OBLIGATION_REGISTRY_SCHEMA_VERSION:
-        raise ValueError(
-            "visual obligation registry schema_version must be "
-            f"{VISUAL_OBLIGATION_REGISTRY_SCHEMA_VERSION!r}"
-        )
-    if payload.get("contract_version") != VISUAL_OBLIGATIONS_CONTRACT_VERSION:
-        raise ValueError(
-            "visual obligation registry contract_version must be "
-            f"{VISUAL_OBLIGATIONS_CONTRACT_VERSION!r}"
-        )
-    if payload.get("visual_intent_contract_version") != VISUAL_INTENT_CONTRACT_VERSION:
-        raise ValueError(
-            "visual obligation registry visual_intent_contract_version must be "
-            f"{VISUAL_INTENT_CONTRACT_VERSION!r}"
-        )
-    if payload.get("concept_contract_version") != VISUAL_CONCEPTS_CONTRACT_VERSION:
-        raise ValueError(
-            "visual obligation registry concept_contract_version must be "
-            f"{VISUAL_CONCEPTS_CONTRACT_VERSION!r}"
-        )
-    profiles = payload.get("profiles")
-    if not isinstance(profiles, list) or not profiles:
-        raise ValueError("visual obligation registry requires a non-empty profiles list")
-    inventory = inventory or photo_source_manifest.SourceInventory.load(registry_path.parent)
-    inventory.check_root(registry_path)
-    missing_extensions = [name for name in inventory.required("visual_profile")
-                          if not registry_path.with_name(name).is_file()]
-    if missing_extensions:
-        raise ValueError(f"required visual-profile extensions are missing: {missing_extensions}")
-    existing_ids = {
-        str(profile.get("id") or "")
-        for profile in profiles
-        if isinstance(profile, dict)
-    }
-    for extension_filename in inventory.files("visual_profile"):
-        extension_path = registry_path.with_name(extension_filename)
-        if not extension_path.exists():
-            continue
-        extension = load_json(extension_path)
-        if (
-            extension.get("schema_version")
-            != VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION
-        ):
-            raise ValueError(
-                "visual obligation extension schema_version must be "
-                f"{VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION!r}"
-            )
-        if (
-            extension.get("relation_contract_version")
-            != VISUAL_RELATION_CONTRACT_VERSION
-        ):
-            raise ValueError(
-                "visual obligation extension relation_contract_version must be "
-                f"{VISUAL_RELATION_CONTRACT_VERSION!r}"
-            )
-        extension_profiles = extension.get("profiles")
-        if not isinstance(extension_profiles, list) or not extension_profiles:
-            raise ValueError(
-                f"visual obligation extension {extension_filename} requires profiles"
-            )
-        for profile in extension_profiles:
-            if not isinstance(profile, dict) or not str(profile.get("id") or ""):
-                raise ValueError(
-                    f"visual obligation extension {extension_filename} has invalid profile"
-                )
-            profile_id = str(profile["id"])
-            if profile_id in existing_ids:
-                raise ValueError(
-                    f"visual obligation extension duplicate profile id {profile_id}"
-                )
-            profiles.append(copy.deepcopy(profile))
-            existing_ids.add(profile_id)
-        payload["relation_contract_version"] = VISUAL_RELATION_CONTRACT_VERSION
-    payload["profiles"] = [compile_visual_profile(profile) for profile in profiles]
-    for profile in payload["profiles"]:
-        candidate = profile.get("concept_candidate") or {}
-        if "core_assertion_discovery" in candidate:
-            photo_candidate_semantics.validate_candidate_entries({"slots": {"profile": [{
-                **candidate, "id": profile["id"],
-                "concept_units": (profile.get("semantics") or {}).get("visual_components") or [],
-            }]}}, AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS)
-    return payload
 
 
 
 
-def visual_profile_registry_sha256(registry: JsonDict) -> str:
-    """Bind every generated visual-profile index to its single authored source."""
 
-    return canonical_json_sha256(registry)
+
+
+
+
+
 
 
 def visual_profile_exact_term_rows(registry: JsonDict) -> List[JsonDict]:
@@ -1431,22 +1090,10 @@ def visual_profile_exact_term_rows(registry: JsonDict) -> List[JsonDict]:
     return rows
 
 
-def visual_profile_semantic_text(profile: JsonDict) -> str:
-    """Create a positive prototype from the shared authored-field allowlist."""
-    return positive_visual_profile_text(profile)
 
 
-def visual_profile_bm25f_fields(profile: JsonDict) -> JsonDict:
-    """Use the same positive meaning fields as vector retrieval."""
-    return positive_visual_profile_fields(profile)
 
 
-def visual_profile_bm25f_documents(registry: JsonDict) -> Dict[str, JsonDict]:
-    return {
-        str(profile.get("id")): visual_profile_bm25f_fields(profile)
-        for profile in registry.get("profiles") or []
-        if isinstance(profile, dict) and str(profile.get("id") or "").strip()
-    }
 
 
 def _bm25f_lexicon_from_documents(
@@ -1465,167 +1112,12 @@ def _bm25f_lexicon_from_documents(
     )
 
 
-def build_visual_profile_bm25f_payload(registry: JsonDict) -> JsonDict:
-    documents = visual_profile_bm25f_documents(registry)
-    payload = build_bm25f_index(
-        documents,
-        policy=VISUAL_PROFILE_BM25F_POLICY,
-        lexicon=_bm25f_lexicon_from_documents(documents),
-    )
-    payload["policy_version"] = VISUAL_PROFILE_BM25F_POLICY_VERSION
-    payload["policy_sha256"] = canonical_json_sha256(VISUAL_PROFILE_BM25F_POLICY)
-    return payload
 
 
-def build_visual_profile_index_payload(
-    registry: JsonDict,
-    *,
-    vectors: Optional[Dict[str, Sequence[float]]] = None,
-    provider: str = SEMANTIC_PROVIDER,
-    model: str = SEMANTIC_MODEL_ID,
-    dimensions: int = DEFAULT_SEMANTIC_DIMENSIONS,
-) -> JsonDict:
-    """Materialize the generated exact+vector sidecar from one registry."""
-
-    supplied_vectors = vectors or {}
-    entries: JsonDict = {}
-    for profile in registry.get("profiles") or []:
-        if not isinstance(profile, dict):
-            continue
-        profile_id = str(profile.get("id") or "").strip()
-        if not profile_id:
-            continue
-        text = visual_profile_semantic_text(profile)
-        entries[profile_id] = {
-            "text": text,
-            "text_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
-            "vector": [float(value) for value in supplied_vectors.get(profile_id, [])],
-        }
-    return {
-        "schema_version": VISUAL_PROFILE_INDEX_SCHEMA_VERSION,
-        "registry_schema_version": registry.get("schema_version"),
-        "registry_sha256": visual_profile_registry_sha256(registry),
-        "semantic_text_recipe": VISUAL_PROFILE_TEXT_RECIPE_VERSION,
-        "provider": provider,
-        "embedding_model": model,
-        "embedding_dimensions": int(dimensions),
-        "retrieval_policy": copy.deepcopy(registry.get("retrieval_policy") or {}),
-        "exact_lookup": visual_profile_exact_term_rows(registry),
-        "bm25f": build_visual_profile_bm25f_payload(registry),
-        "entries": entries,
-    }
 
 
-def validate_visual_profile_index_metadata(
-    payload: JsonDict,
-    registry: JsonDict,
-    *,
-    provider: str = SEMANTIC_PROVIDER,
-    model: str = SEMANTIC_MODEL_ID,
-    dimensions: int = DEFAULT_SEMANTIC_DIMENSIONS,
-) -> None:
-    if payload.get("schema_version") != VISUAL_PROFILE_INDEX_SCHEMA_VERSION:
-        raise ValueError(
-            "visual profile index schema_version must be "
-            f"{VISUAL_PROFILE_INDEX_SCHEMA_VERSION!r}"
-        )
-    if payload.get("registry_sha256") != visual_profile_registry_sha256(registry):
-        raise ValueError(
-            "visual profile index registry_sha256 does not match the visual registry; "
-            "regenerate it with build_visual_profile_index.py"
-        )
-    if payload.get("semantic_text_recipe") != VISUAL_PROFILE_TEXT_RECIPE_VERSION:
-        raise ValueError(
-            "visual profile index semantic_text_recipe is stale; regenerate the index"
-        )
-    if payload.get("provider") != provider:
-        raise ValueError(
-            f"visual profile index provider is {payload.get('provider')!r}, expected {provider!r}"
-        )
-    if payload.get("embedding_model") != model:
-        raise ValueError(
-            "visual profile index embedding_model is "
-            f"{payload.get('embedding_model')!r}, expected {model!r}"
-        )
-    expected_dimensions = int(dimensions)
-    if int(payload.get("embedding_dimensions", -1)) != expected_dimensions:
-        raise ValueError(
-            "visual profile index embedding_dimensions is "
-            f"{payload.get('embedding_dimensions')!r}, expected {expected_dimensions}"
-        )
-    expected_lookup = visual_profile_exact_term_rows(registry)
-    if payload.get("exact_lookup") != expected_lookup:
-        raise ValueError(
-            "visual profile index exact_lookup is stale; regenerate the index"
-        )
-    bm25f_payload = payload.get("bm25f")
-    if not isinstance(bm25f_payload, dict):
-        raise ValueError("visual profile index is missing its BM25F payload")
-    if bm25f_payload.get("policy_version") != VISUAL_PROFILE_BM25F_POLICY_VERSION:
-        raise ValueError("visual profile index BM25F policy_version is stale")
-    if bm25f_payload.get("policy_sha256") != canonical_json_sha256(
-        VISUAL_PROFILE_BM25F_POLICY
-    ):
-        raise ValueError("visual profile index BM25F policy hash is stale")
-    bm25f_material = {
-        key: value
-        for key, value in bm25f_payload.items()
-        if key not in {"policy_version", "policy_sha256"}
-    }
-    documents = visual_profile_bm25f_documents(registry)
-    validate_bm25f_index(
-        bm25f_material,
-        documents,
-        policy=VISUAL_PROFILE_BM25F_POLICY,
-        lexicon=_bm25f_lexicon_from_documents(documents),
-    )
-    expected_entries = {
-        str(profile.get("id") or ""): visual_profile_semantic_text(profile)
-        for profile in registry.get("profiles") or []
-        if isinstance(profile, dict) and str(profile.get("id") or "").strip()
-    }
-    entries = payload.get("entries")
-    if not isinstance(entries, dict) or set(entries) != set(expected_entries):
-        raise ValueError("visual profile index entries do not match registry profiles")
-    for profile_id, expected_text in expected_entries.items():
-        entry = entries.get(profile_id)
-        if not isinstance(entry, dict) or entry.get("text") != expected_text:
-            raise ValueError(
-                f"visual profile index text is stale for profile {profile_id!r}"
-            )
-        expected_text_hash = hashlib.sha256(expected_text.encode("utf-8")).hexdigest()
-        if entry.get("text_sha256") != expected_text_hash:
-            raise ValueError(
-                f"visual profile index text_sha256 is stale for profile {profile_id!r}"
-            )
-        vector = entry.get("vector")
-        if not isinstance(vector, list) or len(vector) != expected_dimensions:
-            raise ValueError(
-                f"visual profile index vector for {profile_id!r} must have "
-                f"{expected_dimensions} dimensions"
-            )
 
 
-def load_visual_profile_index(
-    path: str | Path,
-    registry: JsonDict,
-    *,
-    provider: str = SEMANTIC_PROVIDER,
-    model: str = SEMANTIC_MODEL_ID,
-    dimensions: int = DEFAULT_SEMANTIC_DIMENSIONS,
-) -> JsonDict:
-    index_path = Path(path)
-    if not index_path.exists():
-        raise FileNotFoundError(f"visual profile index not found: {index_path}")
-    payload = load_visual_profile_index_payload(index_path)
-    validate_visual_profile_index_metadata(
-        payload,
-        registry,
-        provider=provider,
-        model=model,
-        dimensions=dimensions,
-    )
-    return payload
 
 
 def localize(item: JsonDict, lang: str) -> str:
@@ -1661,7 +1153,7 @@ def build_negative_intent_guard(
     *,
     identity_preservation_enabled: bool,
 ) -> JsonDict:
-    """Build the public, recomputable v6 negative-intent boundary."""
+    """Build the public, recomputable v7 negative-intent boundary."""
 
     guard: JsonDict = {
         "contract_version": NEGATIVE_INTENT_GUARD_CONTRACT_VERSION,
@@ -3609,8 +3101,6 @@ def candidate_pack_contextual_adult_appeal(
         }
     )
     prompt_id = str((result.get("provenance") or {}).get("prompt_id") or "")
-    cached = (data.get(photo_contextual_appeal.QUERY_CACHE) or {}).get(prompt_id) or {}
-    vectors = cached.get("vectors", {}) if cached.get("queries") == queries else {}
     frozen_contract, _ = frozen_core_context(data, core, snapshot)
     constraints = {
         **frozen_contract,
@@ -3648,30 +3138,28 @@ def candidate_pack_contextual_adult_appeal(
         rows = []
         sources = {}
         for slot, entries in photo_shared_views.roles(data).items():
-            if slot in excluded_identity_slots or slot_block_reason(data, slot, constraints):
-                continue
             for entry in entries:
+                if entry.get("guard_role", slot) in excluded_identity_slots:
+                    continue
                 source_key = entry["id"]
                 dimensions = sorted(
                     set(entry.get("affected_dimensions") or [])
                     | set((policy.get("entry_dimensions") or {}).get(source_key) or [])
                 )
-                dimensions = dimensions or photo_candidate_semantics.slot_dimensions(
-                    slot, data.get("candidate_semantic_policy")
-                )
+                dimensions = dimensions or list(data['slot_catalog'][slot]['dimensions'])
                 if (
                     not dimensions
                     or not set(dimensions).issubset(allowed)
                     or not property_effects_allowed(
                         lock, dimensions, entry.get("affected_properties", [])
                     )
-                    or entry_block_reason(entry, slot, constraints)
+                    or entry_block_reason(entry, entry.get("guard_role", slot), constraints)
                     or not compatible_with_facet_guards(entry, {})
                 ):
                     continue
                 # Requirements that need other garments or scene objects are
                 # supplied as context, never silently presumed to be satisfied.
-                fields = semantic_bm25f_fields_for_entry(entry, slot, kind="slot")
+                fields = photo_global_index.fields({'record_kind': entry['record_kind'], 'content': entry})
                 text = [str(value) for values in fields.values() for value in values]
                 tokens = candidate_pack_relevance_tokens(" ".join(text))
                 if any(group and group <= tokens for group in exclusions):
@@ -3715,9 +3203,7 @@ def candidate_pack_contextual_adult_appeal(
         inventory, traces[axis] = photo_contextual_appeal.rank_candidates(
             rows,
             queries[axis],
-            policy=SEMANTIC_BM25F_POLICY,
-            query_vectors=vectors.get(axis),
-            index=data.get(SEMANTIC_INDEX_DATA_KEY),
+            policy=photo_global_index.POLICY,
             limit=int(retrieval_policy.get("candidate_limit_per_axis", 12)),
             scene_query=scene_query,
         )
@@ -4071,107 +3557,12 @@ def resolve_character_response_intent(core: Any) -> JsonDict:
     return resolution
 
 
-def semantic_character_response_concept_document_ids(data: JsonDict) -> Set[str]:
-    return {
-        key
-        for key, kind, _entry, _slot in iter_semantic_entries(data)
-        if kind == "character_response_concept"
-    }
 
 
-def semantic_character_response_confounder_document_ids(
-    data: JsonDict,
-    *,
-    profile_id: Optional[str] = None,
-) -> Set[str]:
-    """Return data-authored contrast documents for one or all concept profiles."""
-
-    expected_profile_id = str(profile_id or "")
-    return {
-        key
-        for key, kind, entry, _slot in iter_semantic_entries(data)
-        if kind == "character_response_confounder"
-        and (
-            not expected_profile_id
-            or str(entry.get("concept_profile_id") or "") == expected_profile_id
-        )
-    }
 
 
-def rank_character_response_concept_candidates(
-    data: JsonDict,
-    bm25f_payload: JsonDict,
-    query_fields: JsonDict,
-    *,
-    limit: int = 3,
-) -> List[JsonDict]:
-    """Rank concept meanings contrastively against their authored confounders.
-
-    Scores and matched terms remain private retrieval evidence. A concept is
-    eligible only when its BM25F document outranks every matching confounder
-    declared by that same profile. This supplies a data-driven negative class
-    without concept-specific regular expressions or a second meaning store.
-    """
-
-    concept_ids = semantic_character_response_concept_document_ids(data)
-    confounder_ids = semantic_character_response_confounder_document_ids(data)
-    allowed_ids = concept_ids | confounder_ids
-    if not concept_ids or not allowed_ids or int(limit) <= 0:
-        return []
-    ranked = rank_bm25f(
-        bm25f_payload,
-        query_fields,
-        allowed_ids=allowed_ids,
-        limit=len(allowed_ids),
-    )
-    entries_by_key = {
-        key: (kind, entry)
-        for key, kind, entry, _slot in iter_semantic_entries(data)
-    }
-    rows_by_id = {
-        str(row.get("document_id") or ""): row
-        for row in ranked
-        if str(row.get("document_id") or "")
-    }
-    accepted: List[JsonDict] = []
-    for row in ranked:
-        document_id = str(row.get("document_id") or "")
-        source = entries_by_key.get(document_id)
-        if source is None or source[0] != "character_response_concept":
-            continue
-        profile_id = str(source[1].get("id") or "")
-        matching_confounders = [
-            rows_by_id[confounder_id]
-            for confounder_id in semantic_character_response_confounder_document_ids(
-                data,
-                profile_id=profile_id,
-            )
-            if confounder_id in rows_by_id
-        ]
-        concept_score = float(row.get("score", 0.0) or 0.0)
-        best_confounder_score = max(
-            (float(candidate.get("score", 0.0) or 0.0) for candidate in matching_confounders),
-            default=0.0,
-        )
-        if concept_score > best_confounder_score:
-            accepted.append(row)
-        if len(accepted) >= int(limit):
-            break
-    return accepted
 
 
-def semantic_character_response_document_ids(data: JsonDict) -> Set[str]:
-    """Select generic behavior support by typed kind or authored membership."""
-
-    allowed: Set[str] = set()
-    for key, kind, entry, _slot in iter_semantic_entries(data):
-        if kind == "character_mechanism_node":
-            allowed.add(key)
-            continue
-        tags = {str(value) for value in normalize_list(entry.get("tags"))}
-        if tags & {"character_scene_grammar", "character_scene_grammar"}:
-            allowed.add(key)
-    return allowed
 
 
 def character_profile_requester_definition_override(
@@ -4268,14 +3659,15 @@ def evaluate_character_response_profile(
     }
 
 
-def retrieve_character_response_behavior_candidates(data,core,*,semantic_index=None,limit=6):
+def retrieve_character_response_behavior_candidates(data,core,*,limit=6):
     ids=getattr(data,'admitted_ids',frozenset());rows=[]
     for cid in sorted(ids):
         record=data['candidates'][cid]
         if record['record_kind'] not in {'relationship_concept','relationship_mechanism'}:continue
         entry=photo_candidate_corpus.entry(data,cid)
         rows.append({'candidate_id':cid,'candidate_type':'concept_profile' if record['record_kind']=='relationship_concept' else 'behavior_support',
-            'kind':record['record_kind'],'slot':None,'concept_terms':list(dict.fromkeys(normalize_list(entry.get('aliases'))+normalize_list(entry.get('definition')))),
+            'kind':record['record_kind'],'slot':None,'content_form':'unordered_inspiration_terms',
+            'concept_terms':candidate_pack_concept_terms([entry.get('aliases'),entry.get('definition'),entry.get('concept_units')],salt=cid),
             'applicability':'advisory_only','hard_eligible':False})
     return {'evaluated':True,'method':'global_hybrid_post_core','candidate_order':'deterministically_shuffled_non_preferential',
         'hardening_policy':'retrieval_hits_never_create_required_evidence','candidates':rows[:limit]}
@@ -4286,7 +3678,6 @@ def compile_character_response_contract(
     core: Any,
     *,
     data: Optional[JsonDict] = None,
-    semantic_index: Optional[JsonDict] = None,
 ) -> Optional[JsonDict]:
     """Compile a generic visible-response contract from frozen typed evidence."""
 
@@ -4310,7 +3701,6 @@ def compile_character_response_contract(
     advisory_retrieval = retrieve_character_response_behavior_candidates(
         data or {},
         core,
-        semantic_index=semantic_index,
     )
     contract: JsonDict = {
         "contract_version": CHARACTER_RESPONSE_CONTRACT_VERSION,
@@ -5211,11 +4601,7 @@ def load_visual_intent_arg(
 
 
 def candidate_pack_slot_selected_entry_id(slot_payload: JsonDict) -> str:
-    selected = str(slot_payload.get("selected") or "")
-    parts = selected.split(":", 2)
-    if len(parts) == 3 and parts[0] == "slot":
-        return parts[2]
-    return ""
+    return str(slot_payload.get("selected") or "")
 
 
 def candidate_pack_selected_choice_entry(result: JsonDict, slot: str, entry_id: str) -> JsonDict:
@@ -7193,7 +6579,7 @@ def candidate_pack_visual_proposition(
 
 def candidate_pack_contract_version(version: str) -> str:
     if version not in {"v7", CANDIDATE_PACK_CONTRACT_V7}:
-        raise ValueError(f"unsupported candidate-pack version: {version!r}; expected v6")
+        raise ValueError(f"unsupported candidate-pack version: {version!r}; expected v7")
     return CANDIDATE_PACK_CONTRACT_V7
 
 
@@ -8375,11 +7761,7 @@ def build_candidate_pack(
     character_response = compile_character_response_contract(
         authorial_core,
         data=data,
-        semantic_index=(
-            data.get(SEMANTIC_INDEX_DATA_KEY)
-            if isinstance(data.get(SEMANTIC_INDEX_DATA_KEY), dict)
-            else None
-        ),
+
     )
     semantic_assertion_obligations = compile_semantic_assertion_obligations(authorial_core)
     render_repair = compile_render_repair_contract(authorial_core)
@@ -8573,25 +7955,8 @@ def build_candidate_pack(
     return candidate_pack_recompute_id(projected)
 
 
-def semantic_description_for_entry(entry: Entry) -> str:
-    if entry.get("embedding_text"):
-        return " ".join(normalize_list(entry.get("embedding_text")))
-    if entry.get("en"):
-        return str(entry["en"])
-    if entry.get("ko"):
-        return str(entry["ko"])
-    return "photo prompt concept"
 
 
-def semantic_caption_for_entry(entry: Entry, slot: Optional[str] = None) -> str:
-    description = semantic_description_for_entry(entry)
-    if slot:
-        template = SEMANTIC_SLOT_CAPTION_TEMPLATES.get(
-            slot,
-            "Photo prompt slot concept for {slot}: {description}. It should retrieve visually compatible photographic details for this slot.",
-        )
-        return template.format(slot=slot, description=description)
-    raise ValueError("slot captions require an authored slot name")
 
 
 def dictionary_hash(data):
@@ -8599,207 +7964,16 @@ def dictionary_hash(data):
 
 
 
-def semantic_relation_texts(entry: Entry) -> List[str]:
-    texts: List[str] = []
-    for relation in entry.get("relations") or []:
-        if not isinstance(relation, dict):
-            continue
-        subject = clean_spaces(str(relation.get("subject") or ""))
-        relation_type = clean_spaces(str(relation.get("type") or "").replace("_", " "))
-        target = clean_spaces(str(relation.get("object") or ""))
-        if subject and relation_type and target:
-            texts.append(f"{subject} {relation_type} {target}")
-    for relation in entry.get("required_relations") or []:
-        if not isinstance(relation, dict):
-            continue
-        operator = clean_spaces(str(relation.get("operator") or ""))
-        if operator == "contrasts":
-            texts.append(
-                f"{relation.get('left')} contrasts with {relation.get('right')}"
-            )
-        elif operator == "same_target":
-            texts.append(
-                "same relationship target for "
-                + ", ".join(normalize_list(relation.get("members")))
-            )
-        elif operator == "temporal_order":
-            texts.append(
-                f"{relation.get('first')} precedes or coexists before {relation.get('then')}"
-            )
-        else:
-            texts.append(" ".join(str(value) for value in relation.values()))
-    return [clean_spaces(value) for value in texts if clean_spaces(value)]
 
 
-def semantic_text_for_entry(
-    entry: Entry,
-    slot: Optional[str] = None,
-    *,
-    kind: Optional[str] = None,
-) -> str:
-    """Build embedding input from public visual-language fields only.
-
-    Stable IDs, tags, kinds, facets, routing metadata, and validation notes are
-    control-plane data. Including them makes retrieval learn how an entry was
-    developed instead of what should be visible in the photograph.
-    """
-    if kind == "character_response_concept":
-        parts: List[str] = [
-            "Character-response concept meaning: "
-            + clean_spaces(str(entry.get("definition") or ""))
-        ]
-    elif kind == "character_response_confounder":
-        parts = [
-            "Character-response confounder meaning: "
-            + clean_spaces(str(entry.get("definition") or ""))
-        ]
-    elif kind == "character_mechanism_node":
-        parts = [
-            "Optional character-response mechanism: "
-            + clean_spaces(str(entry.get("definition") or ""))
-        ]
-    else:
-        parts = [semantic_caption_for_entry(entry, slot)]
-    for key in ("en", "ko", "ja"):
-        if entry.get(key):
-            parts.append(f"{key} label: {entry[key]}.")
-    for key in ("aliases", "keywords", "terms"):
-        values = normalize_list(entry.get(key))
-        if values:
-            parts.append(f"{key}: {', '.join(values)}.")
-    if slot:
-        parts.append(f"slot: {slot}.")
-    concept_units = normalize_list(entry.get("concept_units"))
-    if concept_units:
-        parts.append("visual concepts: " + "; ".join(concept_units) + ".")
-    relations = semantic_relation_texts(entry)
-    if relations:
-        parts.append("semantic relations: " + "; ".join(relations) + ".")
-    manifestations = normalize_list(entry.get("manifestations"))
-    if manifestations:
-        parts.append("optional manifestations: " + "; ".join(manifestations) + ".")
-    paraphrases = normalize_list(entry.get("paraphrases"))
-    if paraphrases:
-        parts.append("paraphrases: " + "; ".join(paraphrases) + ".")
-    return " ".join(parts)
 
 
-def semantic_bm25f_fields_for_entry(
-    entry: Entry,
-    slot: Optional[str] = None,
-    *,
-    kind: Optional[str] = None,
-) -> JsonDict:
-    """Project public visual-language fields into one generic BM25F document."""
-
-    return {
-        "aliases": [
-            clean_spaces(str(value))
-            for value in normalize_list(entry.get("aliases"))
-            if clean_spaces(str(value))
-        ],
-        "labels": [
-            clean_spaces(str(entry.get(key) or ""))
-            for key in ("en", "ko", "ja")
-            if clean_spaces(str(entry.get(key) or ""))
-        ],
-        "semantic_caption": [
-            semantic_caption_for_entry(entry, slot)
-            if kind
-            not in {
-                "character_response_concept",
-                "character_response_confounder",
-                "character_mechanism_node",
-            }
-            else (
-                "Character-response concept meaning"
-                if kind == "character_response_concept"
-                else (
-                    "Character-response confounder meaning"
-                    if kind == "character_response_confounder"
-                    else "Optional character-response mechanism"
-                )
-            )
-        ],
-        "definition": [clean_spaces(str(entry.get("definition") or ""))]
-        if clean_spaces(str(entry.get("definition") or ""))
-        else [],
-        "paraphrases": [
-            clean_spaces(str(value))
-            for value in normalize_list(entry.get("paraphrases"))
-            if clean_spaces(str(value))
-        ],
-        "semantic_relations": semantic_relation_texts(entry),
-        "concept_units": [
-            clean_spaces(str(value))
-            for value in normalize_list(entry.get("concept_units"))
-            if clean_spaces(str(value))
-        ],
-        "manifestations": [
-            clean_spaces(str(value))
-            for value in normalize_list(entry.get("manifestations"))
-            if clean_spaces(str(value))
-        ],
-        "keywords": [
-            clean_spaces(str(value))
-            for key in ("keywords", "terms", "embedding_text")
-            for value in normalize_list(entry.get(key))
-            if clean_spaces(str(value))
-        ],
-        "slot_context": [
-            clean_spaces(str(slot or kind or ""))
-        ]
-        if slot
-        or kind
-        in {
-            "character_response_concept",
-            "character_response_confounder",
-            "character_mechanism_node",
-        }
-        else [],
-    }
 
 
-def semantic_bm25f_documents(data: JsonDict) -> Dict[str, JsonDict]:
-    return {
-        key: semantic_bm25f_fields_for_entry(entry, slot, kind=kind)
-        for key, kind, entry, slot in iter_semantic_entries(data)
-    }
 
 
-def build_semantic_bm25f_payload(data: JsonDict) -> JsonDict:
-    documents = semantic_bm25f_documents(data)
-    payload = build_bm25f_index(
-        documents,
-        policy=SEMANTIC_BM25F_POLICY,
-        lexicon=_bm25f_lexicon_from_documents(
-            documents, ("aliases", "labels", "paraphrases")
-        ),
-    )
-    payload["policy_version"] = SEMANTIC_BM25F_POLICY_VERSION
-    payload["policy_sha256"] = canonical_json_sha256(SEMANTIC_BM25F_POLICY)
-    return payload
 
 
-def semantic_bm25f_payload_from_index(
-    index: JsonDict, *, copy_values: bool = True
-) -> JsonDict:
-    """Project BM25F fields; allow read-only validation to avoid corpus copies."""
-    metadata = (
-        (copy.deepcopy(index["bm25f"]) if copy_values else dict(index["bm25f"]))
-        if isinstance(index.get("bm25f"), dict)
-        else {}
-    )
-    metadata["documents"] = {
-        str(key): (
-            copy.deepcopy(entry.get("bm25f_document") or {})
-            if copy_values
-            else entry.get("bm25f_document") or {}
-        )
-        for key, entry in (index.get("entries") or {}).items()
-        if isinstance(entry, dict)
-    }
-    return metadata
 
 
 def cosine_similarity(a: Sequence[float], b: Sequence[float]) -> float:
@@ -8813,14 +7987,6 @@ def cosine_similarity(a: Sequence[float], b: Sequence[float]) -> float:
     return numerator / (norm_a * norm_b)
 
 
-def semantic_dimensions_value(dimensions: int) -> int:
-    try:
-        dims = int(dimensions)
-    except (TypeError, ValueError) as exc:
-        raise ValueError("embedding dimensions must be an integer") from exc
-    if dims < 1:
-        raise ValueError("embedding dimensions must be at least 1")
-    return dims
 
 
 def get_gemini_api_key(api_key: Optional[str] = None) -> str:
@@ -8869,280 +8035,16 @@ def round_embedding_vector(vector: Sequence[float], dimensions: int) -> List[flo
     return [round(float(value), 6) for value in vector]
 
 
-def embed_texts_with_gemini(
-    texts: Sequence[str],
-    model: str = SEMANTIC_MODEL_ID,
-    dimensions: int = DEFAULT_SEMANTIC_DIMENSIONS,
-    api_key: Optional[str] = None,
-    retry_attempts: int = 4,
-    retry_initial_delay: float = 15.0,
-    raw_response_callback: Optional[Callable[[int, bytes], None]] = None,
-) -> List[List[float]]:
-    if not texts:
-        return []
-    dims = semantic_dimensions_value(dimensions)
-    if raw_response_callback is not None and retry_attempts != 0:
-        raise ValueError("Raw-recorded embedding requests require retry_attempts=0")
-    key = get_gemini_api_key(api_key)
-
-    try:
-        from google.genai import types
-    except ImportError as exc:
-        raise RuntimeError(
-            "google-genai is required for Gemini semantic embeddings. "
-            "Install it with `python3 -m pip install -r requirements.txt`."
-        ) from exc
-
-    if raw_response_callback is None:
-        client = cached_gemini_client(key)
-    else:
-        from google import genai
-        sent = False
-        def before_send(request):
-            nonlocal sent
-            if sent:
-                raise RuntimeError("Raw-recorded embedding permits one transport send")
-            sent = True
-        def save_response(response):
-            response.read()
-            raw_response_callback(response.status_code, response.content)
-        client = genai.Client(api_key=key, vertexai=False, http_options=types.HttpOptions(
-            retry_options=types.HttpRetryOptions(attempts=1),
-            client_args={"follow_redirects": False,
-                         "event_hooks": {"request": [before_send], "response": [save_response]}},
-        ))
-    config_options = {"output_dimensionality": dims}
-    if model not in {"gemini-embedding-2", "models/gemini-embedding-2"}:
-        config_options["task_type"] = "SEMANTIC_SIMILARITY"
-    config = types.EmbedContentConfig(**config_options)
-    response = None
-    attempts = max(1, int(retry_attempts) + 1)
-    for attempt in range(attempts):
-        try:
-            try:
-                response = client.models.embed_content(
-                    model=model,
-                    contents=[str(text) for text in texts],
-                    config=config,
-                )
-            finally:
-                if raw_response_callback is not None:
-                    client.close()
-            break
-        except Exception as exc:
-            message = str(exc)
-            retryable = (
-                "429" in message
-                or "503" in message
-                or "RESOURCE_EXHAUSTED" in message
-                or "UNAVAILABLE" in message
-            )
-            if not retryable or attempt >= attempts - 1:
-                raise
-            delay = max(0.0, float(retry_initial_delay)) * (2 ** attempt)
-            if delay > 0:
-                time.sleep(delay)
-    if response is None:
-        raise RuntimeError("Gemini embedding request did not return a response.")
-    vectors = extract_embedding_values(response)
-    if len(vectors) != len(texts):
-        raise RuntimeError(
-            f"Gemini returned {len(vectors)} embeddings for {len(texts)} input texts."
-        )
-    return [round_embedding_vector(vector, dims) for vector in vectors]
 
 
-def semantic_entry_key(kind: str, entry: Entry, slot: Optional[str] = None) -> str:
-    if kind == "character_response_concept":
-        return f"character_response_concept:{entry.get('id')}"
-    if kind == "character_response_confounder":
-        return (
-            "character_response_confounder:"
-            f"{entry.get('concept_profile_id')}:{entry.get('id')}"
-        )
-    if kind == "character_mechanism_node":
-        return f"character_mechanism_node:{entry.get('id')}"
-    return f"slot:{slot}:{entry.get('id')}"
 
 
-def iter_semantic_entries(data: JsonDict) -> List[tuple[str, str, Entry, Optional[str]]]:
-    entries: List[tuple[str, str, Entry, Optional[str]]] = []
-    for slot, slot_entries in data.get("slots", {}).items():
-        for entry in slot_entries:
-            key = semantic_entry_key("slot", entry, slot)
-            entries.append((key, "slot", entry, slot))
-    graph = data.get("relationship_graph")
-    if isinstance(graph, dict):
-        nodes_by_id = {
-            str(node.get("id") or ""): node
-            for node in graph.get("runtime_nodes") or []
-            if isinstance(node, dict) and str(node.get("id") or "")
-        }
-        referenced_runtime_ids: Set[str] = set()
-        for raw_profile in graph.get("concept_profiles") or []:
-            if not isinstance(raw_profile, dict):
-                continue
-            profile = copy.deepcopy(raw_profile)
-            runtime_ids = normalize_list(profile.get("optional_runtime_node_ids"))
-            referenced_runtime_ids.update(runtime_ids)
-            profile["manifestations"] = [
-                clean_spaces(str((nodes_by_id.get(runtime_id) or {}).get("definition") or ""))
-                for runtime_id in runtime_ids
-                if clean_spaces(
-                    str((nodes_by_id.get(runtime_id) or {}).get("definition") or "")
-                )
-            ]
-            key = semantic_entry_key("character_response_concept", profile)
-            entries.append((key, "character_response_concept", profile, None))
-            for raw_confounder in profile.get("confounders") or []:
-                if not isinstance(raw_confounder, dict):
-                    continue
-                confounder = copy.deepcopy(raw_confounder)
-                confounder["concept_profile_id"] = str(profile.get("id") or "")
-                key = semantic_entry_key(
-                    "character_response_confounder",
-                    confounder,
-                )
-                entries.append(
-                    (key, "character_response_confounder", confounder, None)
-                )
-        for runtime_id in sorted(referenced_runtime_ids):
-            node = nodes_by_id.get(runtime_id)
-            if node is None:
-                continue
-            key = semantic_entry_key("character_mechanism_node", node)
-            entries.append((key, "character_mechanism_node", node, None))
-    return entries
 
 
-SEMANTIC_INDEX_SHARDED_FORMAT = "sharded-json-v1"
 
 
-def load_semantic_index_payload(path: str | Path) -> JsonDict:
-    """Load the sharded final index with its exact logical entry order.
-
-    Sharding is a storage concern only. Callers continue to receive the same
-    materialized ``entries`` mapping used by scoring, tie-breaking, and audit
-    code, so a storage migration cannot alter retrieval behavior.
-    """
-    index_path = Path(path)
-    payload = json.loads(index_path.read_text(encoding="utf-8"))
-    storage = payload.get("storage") if isinstance(payload.get("storage"), dict) else {}
-    if storage.get("format") != SEMANTIC_INDEX_SHARDED_FORMAT:
-        raise ValueError("final semantic index must use the sharded manifest format")
-
-    entry_order = payload.get("entry_order")
-    shard_rows = payload.get("shards")
-    if not isinstance(entry_order, list) or any(not isinstance(key, str) for key in entry_order):
-        raise ValueError(f"Invalid sharded semantic index entry_order: {index_path}")
-    if len(entry_order) != len(set(entry_order)):
-        raise ValueError(f"Duplicate keys in sharded semantic index entry_order: {index_path}")
-    if not isinstance(shard_rows, list) or not shard_rows:
-        raise ValueError(f"Invalid sharded semantic index shard list: {index_path}")
-
-    unordered_entries: JsonDict = {}
-    root = index_path.parent.resolve()
-    for shard_row in shard_rows:
-        if not isinstance(shard_row, dict) or not str(shard_row.get("path") or "").strip():
-            raise ValueError(f"Invalid shard descriptor in semantic index: {index_path}")
-        shard_path = (index_path.parent / str(shard_row["path"])).resolve()
-        if root not in shard_path.parents:
-            raise ValueError(f"Semantic index shard escapes index directory: {shard_path}")
-        raw = shard_path.read_bytes()
-        expected_hash = str(shard_row.get("sha256") or "")
-        if expected_hash and hashlib.sha256(raw).hexdigest() != expected_hash:
-            raise ValueError(f"Semantic index shard checksum mismatch: {shard_path}")
-        shard_payload = json.loads(raw.decode("utf-8"))
-        shard_entries = shard_payload.get("entries") if isinstance(shard_payload, dict) else None
-        if not isinstance(shard_entries, dict):
-            raise ValueError(f"Semantic index shard has no entries object: {shard_path}")
-        expected_count = shard_row.get("entry_count")
-        if expected_count is not None and int(expected_count) != len(shard_entries):
-            raise ValueError(f"Semantic index shard entry count mismatch: {shard_path}")
-        duplicate_keys = set(unordered_entries) & set(shard_entries)
-        if duplicate_keys:
-            raise ValueError(f"Duplicate semantic index entry across shards: {sorted(duplicate_keys)[0]}")
-        unordered_entries.update(shard_entries)
-
-    ordered_keys = set(entry_order)
-    if ordered_keys != set(unordered_entries):
-        missing = sorted(ordered_keys - set(unordered_entries))
-        unexpected = sorted(set(unordered_entries) - ordered_keys)
-        raise ValueError(
-            "Sharded semantic index manifest does not match shard entries "
-            f"(missing={missing[:3]}, unexpected={unexpected[:3]})."
-        )
-    expected_total = payload.get("entry_count")
-    if expected_total is not None and int(expected_total) != len(entry_order):
-        raise ValueError(f"Semantic index manifest entry count mismatch: {index_path}")
-
-    materialized = dict(payload)
-    materialized["entries"] = {key: unordered_entries[key] for key in entry_order}
-    return materialized
 
 
-def validate_semantic_index_metadata(
-    payload: JsonDict,
-    data: JsonDict,
-    provider: str = SEMANTIC_PROVIDER,
-    model: str = SEMANTIC_MODEL_ID,
-    dimensions: int = DEFAULT_SEMANTIC_DIMENSIONS,
-    *,
-    require_bm25f: bool = True,
-) -> None:
-    expected = dictionary_hash(data)
-    if payload.get("dictionary_hash") != expected:
-        raise ValueError(
-            "Semantic index dictionary_hash does not match the tag dictionary. "
-            "Regenerate it with build_semantic_index.py."
-        )
-    if payload.get("semantic_text_recipe") != SEMANTIC_TEXT_RECIPE_VERSION:
-        raise ValueError(
-            f"Semantic index semantic_text_recipe is {payload.get('semantic_text_recipe')!r}, "
-            f"expected {SEMANTIC_TEXT_RECIPE_VERSION!r}. Regenerate it with build_semantic_index.py."
-        )
-    if payload.get("provider", SEMANTIC_PROVIDER) != provider:
-        raise ValueError(
-            f"Semantic index provider is {payload.get('provider')!r}, expected {provider!r}."
-        )
-    if payload.get("embedding_model") != model:
-        raise ValueError(
-            f"Semantic index embedding_model is {payload.get('embedding_model')!r}, expected {model!r}."
-        )
-    expected_dims = semantic_dimensions_value(dimensions)
-    if int(payload.get("embedding_dimensions", -1)) != expected_dims:
-        raise ValueError(
-            f"Semantic index embedding_dimensions is {payload.get('embedding_dimensions')!r}, "
-            f"expected {expected_dims}."
-        )
-    if not isinstance(payload.get("bm25f"), dict):
-        if require_bm25f:
-            raise ValueError(
-                "Semantic index has no BM25F metadata. Regenerate it with "
-                "build_semantic_index.py."
-            )
-        return
-    bm25f_payload = semantic_bm25f_payload_from_index(payload, copy_values=False)
-    if bm25f_payload.get("policy_version") != SEMANTIC_BM25F_POLICY_VERSION:
-        raise ValueError("Semantic index BM25F policy_version is stale")
-    if bm25f_payload.get("policy_sha256") != canonical_json_sha256(
-        SEMANTIC_BM25F_POLICY
-    ):
-        raise ValueError("Semantic index BM25F policy hash is stale")
-    bm25f_material = {
-        key: value
-        for key, value in bm25f_payload.items()
-        if key not in {"policy_version", "policy_sha256"}
-    }
-    documents = semantic_bm25f_documents(data)
-    validate_bm25f_index(
-        bm25f_material,
-        documents,
-        policy=SEMANTIC_BM25F_POLICY,
-        lexicon=_bm25f_lexicon_from_documents(
-            documents, ("aliases", "labels", "paraphrases")
-        ),
-    )
 
 
 def facet_tokens(entry: Entry, *, include_control: bool = True) -> Set[str]:
@@ -9437,119 +8339,8 @@ DIMENSION_FIELDS = {
     "viewer_outcome": ["visual_priorities"], "sexual_tone": ["subject", "style"],
 }
 
-def core_slot_focus_queries(data: dict, core: dict, slot: str) -> tuple[list[str], list[str]]:
-    declared_ownership = photo_candidate_semantics.slot_dimensions(slot, data.get("candidate_semantic_policy"))
-    ownership = declared_ownership or list(dict.fromkeys(
-        dimension for entry in list(photo_shared_views.role_entries(data, slot))
-        for dimension in normalize_list(entry.get("affected_dimensions"))
-    ))
-    if not ownership:
-        return [], []
-    if slot in {"camera_direction", "camera_height"}:
-        authored = photo_camera_evidence.authored_camera_query(core, slot.removeprefix("camera_"))
-        if authored is not None:
-            phrases, fields = authored
-            queries = []
-            for phrase in phrases:
-                text, _ = authorial_core_retrieval_text({
-                    "contract_version": core["contract_version"], "request_binding": {"active_spans": []},
-                    "user_exclusions": core.get("user_exclusions") or [], "baseline_prompt_en": phrase,
-                })
-                if text == phrase:
-                    queries.append(text)
-            return queries, fields if queries or not phrases else []
-    # Prefer literal, typed owner evidence to a generic field projection. The
-    # property path distinguishes direction, height, focus, etc. within one
-    # dimension; another owner's left/right words cannot supply this evidence.
-    slot_parts = set(slot.split("_")) - {"camera", "light", "subject", "surface", "body"}
-    evidence, evidence_fields = [], []
-    anchors = [a for a in (core.get("intent_lock") or {}).get("semantic_anchors") or []
-               if a.get("dimension") in ownership]
-    # Keep the same owner's related evidence together (for example source
-    # direction and its front/edge response), without borrowing focus evidence
-    # for viewpoint or another object's property.
-    property_anchors = [a for a in anchors if "property" in a]
-    property_scopes = {(a["dimension"], a["target"], a["property"].split(".")[0])
-                       for a in anchors if "property" in a
-                       and (slot == a["dimension"]
-                            or slot_parts & set(re.findall(r"[a-z]+", a["property"]))
-                            or (slot == "camera_direction" and a["target"] == "camera"
-                                and a["property"].startswith("viewpoint.")
-                                and "orientation" in re.findall(r"[a-z]+", a["property"])))}
-    for anchor in anchors:
-        if (property_scopes or (declared_ownership and property_anchors)) and "property" not in anchor:
-            continue
-        if "property" in anchor and (anchor["dimension"], anchor["target"], anchor["property"].split(".")[0]) not in property_scopes:
-            continue
-        evidence.append(anchor["prompt_evidence"])
-        evidence_fields.append("intent_lock.semantic_anchors")
-    for assertion in core.get("semantic_assertions") or []:
-        axes = assertion.get("axes") or {}
-        if "camera_axis_review" in axes:
-            continue
-        if assertion.get("dimension") in ownership and assertion.get("polarity") in {"required", "advisory"}:
-            phrases = list((assertion.get("evidence") or {}).values())
-            if property_anchors:
-                # A dimension alone does not bind an assertion to the selected
-                # property owner. Repeated literal evidence is safe; otherwise
-                # require the same explicit owner and property family.
-                target, property_path = axes.get("target"), axes.get("property")
-                scope = ((assertion["dimension"], target, property_path.split(".")[0])
-                         if isinstance(target, str) and isinstance(property_path, str)
-                         else None)
-                if scope not in property_scopes:
-                    phrases = [phrase for phrase in phrases if phrase in evidence]
-            if phrases:
-                evidence.extend(phrases)
-                evidence_fields.append("semantic_assertions")
-    if evidence:
-        queries = []
-        for phrase in dict.fromkeys(evidence):
-            text, _ = authorial_core_retrieval_text({
-                "contract_version": core["contract_version"], "request_binding": {"active_spans": []},
-                "user_exclusions": core.get("user_exclusions") or [], "baseline_prompt_en": phrase,
-            })
-            if text and (not property_anchors or text == phrase) and text not in queries:
-                queries.append(text)
-        return queries, list(dict.fromkeys(evidence_fields)) if queries else []
-    if property_anchors:
-        # A typed but unrelated/excluded property cannot fall back to a long
-        # scene field and acquire a different owner's words as its witness.
-        return [], []
-    if slot in {"camera_direction", "camera_height"}:
-        clauses = photo_camera_evidence.legacy_camera_clauses(core, slot.removeprefix("camera_"))
-        queries = []
-        for clause in clauses:
-            text, _ = authorial_core_retrieval_text({
-                "contract_version": core["contract_version"], "request_binding": {"active_spans": []},
-                "user_exclusions": core.get("user_exclusions") or [], "baseline_prompt_en": clause,
-            })
-            # Redaction may remove an excluded owner or verb. Do not turn its
-            # remaining fragments into a positive camera clause.
-            if text == clause:
-                queries.append(text)
-        if queries:
-            return queries, ["baseline_prompt_en.camera_clause"]
-    text, fields = candidate_pack_slot_focus_text(core, slot)
-    if text:
-        return [text], fields
-    fields = list(dict.fromkeys(
-        field for dimension in ownership for field in DIMENSION_FIELDS.get(dimension, [])
-        if core.get(field)
-    ))
-    projection = {
-        "contract_version": core["contract_version"],
-        "request_binding": {"active_spans": []},
-        "user_exclusions": core.get("user_exclusions") or [],
-        **{field: core[field] for field in fields},
-    }
-    text, _ = authorial_core_retrieval_text(projection)
-    return [text] if text else [], fields if text else []
 
 
-def core_slot_focus_text(data: dict, core: dict, slot: str) -> tuple[str, list[str]]:
-    queries, fields = core_slot_focus_queries(data, core, slot)
-    return " | ".join(queries), fields
 
 
 def core_focal_hit_supported(index: dict, query_terms: set[str], document_id: str) -> bool:
@@ -9698,33 +8489,12 @@ def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, sl
                    for exclusion in core.get("user_exclusions") or [])
 
 
-def build_core_slot_index(corpus_json: str, *, policy: Optional[dict] = None) -> dict:
-    """Pure slot-only derivation; global graph documents never contribute."""
-    corpus = json.loads(corpus_json)
-    documents = {
-        f"slot:{slot}:{entry['id']}": semantic_bm25f_fields_for_entry(entry, slot, kind="slot")
-        for slot, entries in corpus.items() for entry in entries
-    }
-    # Only the authored slot corpus contributes lexical retrieval statistics.
-    return build_bm25f_index(
-        documents, policy=SEMANTIC_BM25F_POLICY if policy is None else policy,
-        lexicon=_bm25f_lexicon_from_documents(documents, ("aliases", "labels", "paraphrases")),
-    )
 
 
-@functools.lru_cache(maxsize=2)
-def _policy_core_slot_index(corpus_json: str, policy_json: str, algorithm_key: str) -> dict:
-    return build_core_slot_index(corpus_json, policy=json.loads(policy_json))
 
 
-def _core_slot_index(corpus_json: str) -> dict:
-    """Compatibility entrypoint with policy-aware memory reuse."""
-    return _policy_core_slot_index(corpus_json, json.dumps(SEMANTIC_BM25F_POLICY, sort_keys=True, separators=(",", ":")),
-                                   photo_runtime_sources.algorithm_hash(globals()))
 
 
-_core_slot_index.cache_clear = _policy_core_slot_index.cache_clear
-_core_slot_index.cache_info = _policy_core_slot_index.cache_info
 
 
 def retrieve_global_candidates(data,core,controls,query_context=None,retrieval_mode='hybrid_required'):
@@ -9778,8 +8548,8 @@ def generate_candidate_pack(data,core,controls,embodiment,*,seed=0,visual_intent
 
 
 
-def load_runtime_data(tags_path=None,*,inventory=None):
-    assets=Path(__file__).resolve().parents[1]/'assets' if tags_path is None else Path(tags_path)
+def load_runtime_data(source_path=None,*,inventory=None):
+    assets=Path(__file__).resolve().parents[1]/'assets' if source_path is None else Path(source_path)
     if not assets.is_dir():
         if assets.name!=photo_candidate_corpus.MANIFEST_NAME:raise ValueError('native shared source manifest required')
         assets=assets.parent
@@ -9816,7 +8586,7 @@ def authorial_negative_term_allowed(
     *,
     identity_preservation_enabled: bool,
 ) -> bool:
-    """Return whether a v6 runtime-negative item is intent-safe.
+    """Return whether a v7 runtime-negative item is intent-safe.
 
     Generic safety, taste, count, action, relationship, expression, wardrobe,
     and genre suppressions are intentionally absent from the automatic lane.
@@ -9884,45 +8654,9 @@ def negative_term_matches_requester_exclusion(
     return False
 
 
-def embed_single_semantic_text(
-    text: str,
-    model: str,
-    dimensions: int,
-    api_key: Optional[str],
-) -> List[float]:
-    return embed_texts_with_gemini(
-        [text],
-        model=model,
-        dimensions=dimensions,
-        api_key=api_key,
-    )[0]
 
 
 
-def prepare_contextual_appeal_queries(data, result, core, snapshot, semantic_context, api_key=None):
-    """Bind private query vectors to the exact post-core lanes and run ID."""
-    retrieval = (candidate_pack_adult_policy(data)).get("contextual_retrieval") or {}
-    if (semantic_context is None or not core or not snapshot
-            or retrieval.get("contract_version") != photo_contextual_appeal.VERSION):
-        return
-    queries = photo_contextual_appeal.queries(
-        core, snapshot["definitions"],
-        {axis: snapshot["adult_appeal"][axis]["effective_intensity"] for axis in photo_contextual_appeal.AXES},
-        authorial_core_retrieval_text,
-    )
-    by_axis: JsonDict = {}
-    for axis, lanes in queries.items():
-        for lane, text in lanes.items():
-            # Match the existing single-query path. This provider can treat a
-            # list of strings as one multimodal content rather than a batch.
-            by_axis.setdefault(axis, {})[lane] = embed_single_semantic_text(
-                text, model=semantic_context["embedding_model"],
-                dimensions=semantic_context["embedding_dimensions"], api_key=api_key,
-            )
-    if queries:
-        data.setdefault(photo_contextual_appeal.QUERY_CACHE, {})[result["provenance"]["prompt_id"]] = {
-            "queries": queries, "vectors": by_axis,
-        }
 
 
 def build_global_index(corpus_json):

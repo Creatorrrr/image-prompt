@@ -13,7 +13,7 @@ Every sampled row requires a decision under `creative_augmentation_brief.decisio
   "creative_augmentation_brief": {
     "decisions": [
       {
-        "candidate_id": "slot:texture:example",
+        "candidate_id": "cand_00000000000000000000000000000001",
         "decision": "transformed",
         "rationale": "Why this material strengthens the frozen core.",
         "artistic_interpretation": "The new role it plays in this scene.",
@@ -21,7 +21,7 @@ Every sampled row requires a decision under `creative_augmentation_brief.decisio
         "prompt_evidence": "newly authored literal visible phrase with a relation or consequence"
       },
       {
-        "candidate_id": "slot:mood:example",
+        "candidate_id": "cand_00000000000000000000000000000002",
         "decision": "rejected",
         "rationale": "Why it weakens or confuses the core."
       }
@@ -30,7 +30,7 @@ Every sampled row requires a decision under `creative_augmentation_brief.decisio
 }
 ```
 
-Rejecting all sampled rows is valid. Transform at most three; include transformed IDs in `chosen_candidate_ids`, keep rejected IDs out, and do not duplicate transformed rows in `candidate_interpretations`. Candidate `concept_terms` are unordered material. Evidence needs at least four content words and two newly authored words beyond those terms.
+The IDs above illustrate the native ID format. Use IDs actually present in the current pack. Rejecting all sampled rows is valid. Transform at most three; include transformed IDs in `chosen_candidate_ids`, keep rejected IDs out, and do not duplicate transformed rows in `candidate_interpretations`. Candidate `concept_terms` are unordered material. Evidence needs at least four content words and two newly authored words beyond those terms.
 
 V7 keeps an active adult-fashion contract at top-level `adult_appeal` rather than inside a hybrid route. Record its composed interpretation in `adult_appeal_brief`. Candidate adoption is optional, but exact axis intensities, blend, agency, and the existing combination audit remain mandatory. A literal `adult` subject phrase is required only when the effective `sensual` intensity is 2 or 3; `fetish` intensity alone does not trigger it. The controls snapshot and contextual appeal contract govern each axis.
 
@@ -46,9 +46,9 @@ Whole-look candidates with unknown property effects are rejected when they may
 replace a protected property. Keep the full affected scope; independently author
 a compatible choice rather than silently narrowing a candidate's effects.
 
-Old run artifacts remain unchanged. Previous control names and v1 control
-snapshots are not accepted by the current resolver; use the retained historical
-implementation for old runs. No input aliases or artifact migration are provided.
+Old images and frozen artifacts remain historical evidence. Previous control
+names and v1 control snapshots are rejected. Recreate a request with current
+native inputs and new audits before continuing it.
 
 Candidate adoption is optional. For each active axis, the existing `adult_appeal_brief` explains how the direction serves this scene. A baseline realization may be retained without inventing a new detail:
 

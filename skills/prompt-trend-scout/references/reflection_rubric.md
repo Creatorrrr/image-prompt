@@ -14,12 +14,12 @@ Use this rubric when reviewing generated candidates.
 - Prefer visual grammar over vibe labels.
 - Prefer reusable prompt structure over one-off scene nouns.
 - Prefer slot/facet/coherence changes over long prose additions.
-- Do not copy source prompts into `SKILL.md`, `photo_prompt_tags.json`, or reports.
+- Do not copy source prompts into `SKILL.md`, `photo_candidate_corpus_manifest.json`, or reports.
 - If a trend is mainly a creator signature, watermark, hashtag, or branded workflow, reject it.
 
 ## Mapping Priorities
 
-1. Existing `photo_prompt_tags.json` slot ids and `facet_vocab`.
+1. Existing `photo_candidate_corpus_manifest.json` slot ids and `facet_vocab`.
 2. Existing optional candidate bundles and visual-profile meanings.
 3. New tag or facet candidate only when existing coverage is weak.
 4. Drift gate or coherence rule when the issue is selection quality rather than a missing tag.

@@ -61,7 +61,7 @@ def algorithm_binding(generator) -> dict:
     get = generator.get if isinstance(generator, dict) else lambda key: getattr(generator, key)
     return {"code": LOADED_CODE, "environment": LOADED_ENVIRONMENT,
             "policy": canonical_bm25f_policy(photo_global_index.POLICY),
-            "policy_version": get("SEMANTIC_BM25F_POLICY_VERSION"),
+            "policy_version": "photo-global-bm25f-policy/v1",
             "tokenizer_recipe": BM25F_TOKENIZER_RECIPE_VERSION,
             "index_recipe": BM25F_INDEX_RECIPE_VERSION,
             "corpus_recipe": "native-global-candidates/v1",
@@ -108,6 +108,18 @@ def capture_sources(root: Path) -> tuple[dict, SourceInventory]:
             if name in BASE_ASSETS and not path.is_file():
                 raise ValueError(f"required runtime source is missing: {name}")
             files[f"assets/{name}"] = digest(_regular(root, f"assets/{name}").read_bytes()) if path.exists() else None
+        # A live manifest must own an intact closure even when a generation is cached.
+        manifest = decode(_regular(root, 'assets/' + photo_global_index.MANIFEST).read_bytes())
+        seen = set()
+        for shard in manifest['shards']:
+            relative = 'assets/' + shard['path']
+            if relative in seen:
+                raise ValueError('duplicate native shard owner')
+            seen.add(relative)
+            raw = _regular(root, relative).read_bytes()
+            if digest(raw) != shard['sha256']:
+                raise ValueError('live native shard hash mismatch: ' + relative)
+            files[relative] = shard['sha256']
         for path in sorted((root / "precore").glob("*.json")):
             files[str(path.relative_to(root))] = digest(_regular(root, str(path.relative_to(root))).read_bytes())
         value = {"files": files, "code": code_inventory(root), "environment": environment_binding()}

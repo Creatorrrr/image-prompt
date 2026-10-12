@@ -60,7 +60,9 @@ def retrieve(args):
             intent = {"seed": args.seed if args.seed is not None else secrets.randbits(63),
                       "runtime_store": str(args.runtime_store.resolve()) if args.runtime_store else None,
                       "source_mode": args.source_mode, "source_remote": args.source_remote, "source_ref": args.source_ref,
-                      "started": False}
+                      "retrieval_mode": getattr(args,"retrieval_mode","hybrid_required"),
+                      "embedding_env_file": str(args.embedding_env_file.resolve()) if getattr(args,"embedding_env_file",None) else None,
+                      "query_cache": str(args.query_cache.resolve()) if getattr(args,"query_cache",None) else None, "started": False}
             atomic_write(transaction, encode(intent))
         from photo_runtime_sources import RuntimeSnapshotProvider, default_store, SKILL_ROOT
         pack_path, receipt_path = staging / "pack.json", staging / "receipt.json"
@@ -78,7 +80,9 @@ def retrieve(args):
                 "--embodiment-review-json", str(bound_path(state, "embodiment_review")),
                 "--new-author-camera-evidence", "--seed", str(intent["seed"]),
                 "--output-file", str(pack_path), "--runtime-receipt", str(receipt_path),
-                "--source-mode", intent["source_mode"], "--source-ref", intent["source_ref"]]
+                "--source-mode", intent["source_mode"], "--source-ref", intent["source_ref"], "--retrieval-mode", intent["retrieval_mode"]]
+            for flag in ("embedding_env_file", "query_cache"):
+                if intent.get(flag):command += ["--"+flag.replace("_","-"), intent[flag]]
             if intent["runtime_store"]:
                 command += ["--runtime-store", intent["runtime_store"]]
             if intent["source_remote"]:
@@ -508,6 +512,8 @@ def main(argv=None):
             p.add_argument("--seed", type=int); p.add_argument("--runtime-store", type=Path)
             p.add_argument("--source-mode", choices=("local_current", "remote_before_retrieval"), default="local_current")
             p.add_argument("--source-remote"); p.add_argument("--source-ref", default="main"); p.add_argument("--visual-intent", type=Path)
+            p.add_argument("--retrieval-mode", choices=("hybrid_required","keyword_only"),default="hybrid_required")
+            p.add_argument("--embedding-env-file",type=Path); p.add_argument("--query-cache",type=Path)
         if command == "view": p.add_argument("--candidate-id", action="append")
         if command == "compose-audit": p.add_argument("--composed", type=Path, required=True)
         if command == "prepare-render":
