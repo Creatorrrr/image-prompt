@@ -475,6 +475,10 @@ class RuntimeSnapshotProvider:
                 receipt = _read(self.publisher.store / "receipts" / f"{request}.json")
         if not isinstance(receipt, dict):
             raise FreshnessError("source_invalid", "missing runtime receipt; a native v7 request receipt is required")
+        request_id=receipt.get('request_id','')
+        if not re.fullmatch(r'[0-9a-f]{32}',request_id):raise FreshnessError('source_invalid','invalid native receipt identity')
+        stored=_read(self.publisher.store/'receipts'/f'{request_id}.json')
+        if stored!=receipt:raise FreshnessError('source_invalid','receipt is not the original runtime-issued request evidence')
         body = {key: value for key, value in receipt.items() if key != "canonical_sha256"}
         if (receipt.get("schema") != RECEIPT_SCHEMA or receipt.get("canonical_sha256") != json_digest(body)
                 or receipt.get("pack_sha256") != json_digest(pack) or receipt.get("bindings") != pack_bindings(pack)):
@@ -497,6 +501,13 @@ def pack_bindings(pack: dict) -> dict:
 
 def verify_pack_bindings(pack: dict, snapshot: RuntimeSnapshot, generator, *, recompute_visual=False, query_context=None) -> None:
     photo_native_pack.validate(pack)
+    import photo_frozen_query
+    mode=pack['global_retrieval']['mode']
+    if mode=='hybrid_required':
+        text,_=generator.authorial_core_retrieval_text(pack['authorial_core'])
+        photo_frozen_query.validate(query_context,text,pack['authorial_core']['canonical_sha256'],pack['creative_controls']['canonical_sha256'])
+        if pack['global_retrieval']['query_context_sha256']!=query_context['canonical_sha256']:raise FreshnessError('source_invalid','receipt query context mismatch')
+    elif mode!='keyword_only' or query_context is not None:raise FreshnessError('source_invalid','invalid query execution mode')
     if ((pack.get("provenance") or {}).get("tags_hash") != generator.dictionary_hash(snapshot.data)
             or (pack.get("global_retrieval") or {}).get("corpus_sha256") != snapshot.manifest["global_cache"]["corpus_sha256"]):
         raise FreshnessError("source_invalid", "pack shared corpus source binding mismatch")

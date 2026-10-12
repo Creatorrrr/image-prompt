@@ -2,6 +2,9 @@
 """Audit an agent-composed photo prompt against a candidate pack."""
 
 from __future__ import annotations
+import photo_native_pack
+import photo_shared_views
+import audit_global_retrieval as global_audit
 
 import argparse
 import contextvars
@@ -341,6 +344,7 @@ def find_blanket_negative_directives(text: str) -> list[str]:
 
 
 def expected_negative_intent_guard(pack: dict[str, Any]) -> dict[str, Any] | None:
+    pack = photo_native_pack.read_view(pack)
     core = pack.get("authorial_core") if isinstance(pack.get("authorial_core"), dict) else {}
     if core.get("contract_version") not in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
         return None
@@ -378,6 +382,7 @@ def audit_negative_intent_guard(
     pack: dict[str, Any],
     prompt_en: str,
 ) -> list[dict[str, Any]]:
+    pack = photo_native_pack.read_view(pack)
     expected = expected_negative_intent_guard(pack)
     if expected is None:
         return []
@@ -514,6 +519,7 @@ def authorial_required_prompt_evidence(
     baseline_only: bool = False,
 ) -> list[str]:
     """Collect literal hard-evidence phrases without treating optional ideas as duties."""
+    pack = photo_native_pack.read_view(pack)
 
     phrases: list[str] = []
     core = pack.get("authorial_core") if isinstance(pack.get("authorial_core"), dict) else {}
@@ -584,6 +590,7 @@ def authorial_prompt_budget_metrics(
     baseline_only: bool = False,
     budget_contract: dict[str, Any] | None = None,
 ) -> dict[str, int]:
+    pack = photo_native_pack.read_view(pack)
     active_budget = budget_contract or expected_authorial_prompt_budget_contract()
     recommended_maximum_words = int(active_budget["recommended_maximum_words"])
     absolute_maximum_words = int(active_budget["absolute_maximum_words"])
@@ -686,6 +693,7 @@ def composed_search_text(composed: dict[str, Any]) -> str:
 
 
 def computed_pack_id(pack: dict[str, Any]) -> str:
+    pack = photo_native_pack.read_view(pack)
     hashable = dict(pack)
     hashable["pack_id"] = None
     payload = json.dumps(hashable, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
@@ -703,8 +711,9 @@ def assertion_values(raw: Any) -> list[str]:
 
 
 def candidate_ids_from_pack(pack: dict[str, Any]) -> set[str]:
-    ids: set[str] = set()
-    slots = pack.get("slots") or {}
+    pack = photo_native_pack.read_view(pack)
+    ids: set[str] = set(pack["candidate_pool"])
+    slots = photo_native_pack.role_cards(pack) or {}
     if isinstance(slots, dict):
         slot_values = slots.values()
     else:
@@ -744,6 +753,7 @@ def candidate_ids_from_pack(pack: dict[str, Any]) -> set[str]:
 
 
 def adult_appeal_candidates_from_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
+    pack = photo_native_pack.read_view(pack)
     adult = pack.get("adult_appeal") or {}
     return [row for axis in (adult.get("axes") or {}).values() if isinstance(axis, dict)
             for row in axis.get("candidate_inventory") or [] if isinstance(row, dict)]
@@ -752,6 +762,7 @@ def adult_appeal_candidates_from_pack(pack: dict[str, Any]) -> list[dict[str, An
 def creative_augmentation_candidates_from_pack(
     pack: dict[str, Any],
 ) -> list[dict[str, Any]]:
+    pack = photo_native_pack.read_view(pack)
     contract = (
         pack.get("creative_augmentation")
         if isinstance(pack.get("creative_augmentation"), dict)
@@ -765,8 +776,9 @@ def creative_augmentation_candidates_from_pack(
 
 
 def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    candidates: dict[str, dict[str, Any]] = {}
-    slots = pack.get("slots") or {}
+    pack = photo_native_pack.read_view(pack)
+    candidates: dict[str, dict[str, Any]] = {cid:dict(row) for cid,row in pack["candidate_pool"].items()}
+    slots = photo_native_pack.role_cards(pack) or {}
     slot_values = slots.values() if isinstance(slots, dict) else slots
     for slot_payload in slot_values:
         if not isinstance(slot_payload, dict):
@@ -810,6 +822,7 @@ def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any
 
 
 def audit_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
+    pack = photo_native_pack.read_view(pack)
     if str(pack.get("contract_version") or "") not in {"photo-candidate-pack/v7"}:
         return []
     failures: list[dict[str, Any]] = []
@@ -976,7 +989,7 @@ def audit_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
             or (visual_concepts.get("selection_field") != "chosen_visual_concept_ids")
             or (not candidate_ids)
             or any(
-                (not candidate_id.startswith("visual-concept:") for candidate_id in candidate_ids)
+                (not candidate_semantics_generator.photo_candidate_corpus.ID.fullmatch(candidate_id) for candidate_id in candidate_ids)
             )
             or (len(candidate_ids) != len(set(candidate_ids)))
             or any(
@@ -1038,7 +1051,7 @@ def audit_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
                 "candidate_ids": sorted(set(copyable)),
             }
         )
-    slots = pack.get("slots") if isinstance(pack.get("slots"), dict) else {}
+    slots = photo_native_pack.role_cards(pack) if isinstance(photo_native_pack.role_cards(pack), dict) else {}
     ranked_slots = [
         str(slot)
         for slot, payload in slots.items()
@@ -1150,6 +1163,7 @@ def photographic_integration_category_terms(integration: dict[str, Any], categor
 
 
 def audit_photographic_integration(pack: dict[str, Any], search_text: str) -> dict[str, Any] | None:
+    pack = photo_native_pack.read_view(pack)
     integration = pack.get("photographic_integration")
     if not isinstance(integration, dict) or not integration.get("enabled", True):
         return None
@@ -1260,6 +1274,7 @@ def photographic_craft_dimension_terms(craft: dict[str, Any], dimension_id: str)
 
 
 def audit_photographic_craft(pack: dict[str, Any], search_text: str) -> dict[str, Any] | None:
+    pack = photo_native_pack.read_view(pack)
     craft = pack.get("photographic_craft")
     if not isinstance(craft, dict) or not craft.get("enabled", True):
         return None
@@ -1311,6 +1326,7 @@ def audit_photographic_craft(pack: dict[str, Any], search_text: str) -> dict[str
 
 
 def audit_visual_proposition(pack: dict[str, Any], search_text: str) -> dict[str, Any] | None:
+    pack = photo_native_pack.read_view(pack)
     proposition = pack.get("visual_proposition")
     if not isinstance(proposition, dict) or not proposition.get("enabled", True):
         return None
@@ -1354,6 +1370,7 @@ def audit_visual_proposition(pack: dict[str, Any], search_text: str) -> dict[str
 
 
 def audit_artistic_final_touch(pack: dict[str, Any], prompt_en: str) -> dict[str, Any] | None:
+    pack = photo_native_pack.read_view(pack)
     touch = pack.get("artistic_final_touch")
     if not isinstance(touch, dict) or not touch.get("enabled", True):
         return None
@@ -1392,6 +1409,7 @@ def derive_effective_visual_obligation_contract(
     nothing until their IDs occur in the composed selection list; a selected
     concept promotes its immutable opt-in obligation to the same hard contract.
     """
+    pack = photo_native_pack.read_view(pack)
 
     failures: list[dict[str, Any]] = []
     hard_contract = (
@@ -1555,6 +1573,7 @@ def audit_visual_obligations(
     prompt_en: str,
 ) -> list[dict[str, Any]]:
     """Bind active request-scoped visual obligations to literal prompt evidence."""
+    pack = photo_native_pack.read_view(pack)
 
     contract, selection_failures = derive_effective_visual_obligation_contract(
         pack,
@@ -1940,6 +1959,7 @@ def audit_viewer_experience(
     composed: dict[str, Any],
     prompt_en: str,
 ) -> list[dict[str, Any]]:
+    pack = photo_native_pack.read_view(pack)
     contract = pack.get("viewer_experience")
     if not isinstance(contract, dict) or not contract.get("enabled"):
         return []
@@ -2252,6 +2272,7 @@ def audit_creative_direction(
     composed: dict[str, Any],
     prompt_en: str,
 ) -> list[dict[str, Any]]:
+    pack = photo_native_pack.read_view(pack)
     contract = pack.get("creative_direction")
     if not isinstance(contract, dict) or not contract.get("enabled"):
         return []
@@ -2639,47 +2660,20 @@ def audit_creative_direction(
     return failures
 
 
-def audit_core_retrieval(pack: dict[str, Any], source_data: dict[str, Any]) -> list[dict[str, Any]]:
-    failures: list[dict[str, Any]] = []
-    def fail(reason: str) -> None:
-        failures.append({"check": "core_retrieval_contract", "reason": reason})
-    try:
-        slots, expected, _ = candidate_semantics_generator.retrieve_core_slots(
-            source_data, pack["authorial_core"], pack["creative_controls"])
-        if pack.get("core_retrieval") != expected:
-            fail("retrieval binding differs from the source corpus and frozen core")
-        actual = pack.get("slots") or {}
-        if set(actual) != set(slots) or any(
-            {row["id"] for row in actual[slot].get("candidates") or []}
-            != {row["id"] for row in payload["candidates"]}
-            for slot, payload in slots.items() if slot in actual):
-            fail("ordinary candidates differ from the complete guarded core retrieval")
-        for slot, payload in slots.items():
-            actual_by_id = {row["id"]: row for row in actual.get(slot, {}).get("candidates") or []}
-            for candidate in payload["candidates"]:
-                emitted = actual_by_id.get(candidate["id"], {})
-                if any(emitted.get(field) != candidate.get(field)
-                       for field in ("context_requirements", "context_prerequisites", "context_preflight")):
-                    fail("ordinary candidate context prerequisites differ from their source")
-    except (KeyError, TypeError, ValueError) as exc:
-        fail(f"core retrieval source recomputation failed: {exc}")
-    return failures
+def audit_global_retrieval(pack,source_data,query_context=None):
+    return global_audit.audit(pack,source_data,query_context if query_context is not None else _BOUND_QUERY_CONTEXT.get())
+
 
 
 _BOUND_AUDIT_SOURCE = contextvars.ContextVar("photo_audit_source", default=None)
+_BOUND_QUERY_CONTEXT = contextvars.ContextVar("photo_audit_query", default=None)
 
 
-def _audit_source_data() -> dict:
-    bound = _BOUND_AUDIT_SOURCE.get()
-    if bound is not None:
-        return bound
-    assets = Path(__file__).resolve().parents[1] / "assets"
-    data = candidate_semantics_generator.load_json(assets / "photo_prompt_tags.json")
-    data[candidate_semantics_generator.QUALITY_LAYERS_DATA_KEY] = candidate_semantics_generator.load_quality_layers(
-        assets / "photo_prompt_quality_layers.json")
-    data[candidate_semantics_generator.VISUAL_OBLIGATIONS_DATA_KEY] = candidate_semantics_generator.load_visual_obligation_registry(
-        assets / "photo_prompt_visual_obligations.json")
-    return data
+def _audit_source_data():
+    bound=_BOUND_AUDIT_SOURCE.get()
+    if bound is None:raise ValueError('native bound generation/source required')
+    return bound
+
 
 
 def audit_candidate_semantic_contracts(
@@ -2690,6 +2684,7 @@ def audit_candidate_semantic_contracts(
     interpretations: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
     """Bind optional semantic units to full adopted component/relationship evidence."""
+    pack = photo_native_pack.read_view(pack)
     version = pack.get("candidate_semantic_surface_version")
     bundles = pack.get("candidate_bundles")
     failures: list[dict[str, Any]] = []
@@ -2733,7 +2728,7 @@ def audit_candidate_semantic_contracts(
     )
     ordinary = {
         str(row.get("id") or ""): row
-        for payload in (pack.get("slots") or {}).values()
+        for payload in (photo_native_pack.role_cards(pack) or {}).values()
         for row in payload.get("candidates") or []
         if isinstance(row, dict)
     }
@@ -2866,7 +2861,7 @@ def audit_candidate_semantic_contracts(
             )
         if candidate_id not in chosen:
             continue
-        if candidate_id.startswith("slot:") and source_data:
+        if candidate_id in source_data["candidates"] and source_data:
             source_entry = candidate_semantics_generator.candidate_pack_slot_entry_by_id(
                 source_data, str(candidate.get("slot") or ""), str(candidate.get("entry_id") or "")
             )
@@ -2915,6 +2910,7 @@ def audit_declared_candidate_contexts(
     pack: dict, prompt_en: str, chosen: set[str], candidates: dict, interpretations: list[dict]
 ) -> list[dict]:
     """Keep source-authored context alternatives conditional on actual adoption."""
+    pack = photo_native_pack.read_view(pack)
     core = pack.get("authorial_core") or {}
     controls = pack.get("creative_controls") or {}
     subject_category = authored_subject_category(
@@ -2945,6 +2941,7 @@ def audit_candidate_interpretations(
     candidate_objects: dict[str, dict[str, Any]],
 ) -> list[dict[str, Any]]:
     """Require authorship evidence for every ordinary current candidate choice."""
+    pack = photo_native_pack.read_view(pack)
 
     contract_version = str(pack.get("contract_version") or "")
     if contract_version not in {
@@ -3899,6 +3896,7 @@ def audit_authorial_authorship_policy(
     pack: dict[str, Any],
 ) -> tuple[list[dict[str, Any]], int, int, int]:
     """Recompute current authored-refinement policy; optional work has no quota."""
+    pack = photo_native_pack.read_view(pack)
 
     authorial = pack.get("authorial_composition")
     authorial = authorial if isinstance(authorial, dict) else {}
@@ -3959,6 +3957,7 @@ def audit_authorial_core(
     prompt_en: str,
     warnings: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
+    pack = photo_native_pack.read_view(pack)
     pack_version = str(pack.get('contract_version') or '')
     failures, minimum_decisions, minimum_open_dimensions, minimum_evidence = (
         audit_authorial_authorship_policy(pack)
@@ -4375,6 +4374,7 @@ def audit_semantic_clarification(
     composed: dict[str, Any],
     prompt_en: str,
 ) -> list[dict[str, Any]]:
+    pack = photo_native_pack.read_view(pack)
     contract = (
         pack.get("semantic_clarification")
         if isinstance(pack.get("semantic_clarification"), dict)
@@ -4537,6 +4537,7 @@ def audit_creative_augmentation(
     prompt_en: str,
     chosen: set[str],
 ) -> list[dict[str, Any]]:
+    pack = photo_native_pack.read_view(pack)
     contract = (
         pack.get("creative_augmentation")
         if isinstance(pack.get("creative_augmentation"), dict)
@@ -4704,6 +4705,7 @@ def audit_creative_augmentation(
 
 
 def audit_creative_controls(pack: dict[str, Any]) -> list[dict[str, Any]]:
+    pack = photo_native_pack.read_view(pack)
     core = pack.get("authorial_core") or {}
     snapshot = pack.get("creative_controls")
     bound_sha = core.get("creative_controls_sha256")
@@ -4739,6 +4741,7 @@ def audit_adult_appeal_dimension_scope(
     contract: dict[str, Any],
 ) -> list[dict[str, Any]]:
     """Recompute the current contextual scope from the frozen intent lock."""
+    pack = photo_native_pack.read_view(pack)
     scope = contract.get("dimension_scope")
     core = pack.get("authorial_core") or {}
     intent_lock = core.get("intent_lock") or {}
@@ -4840,6 +4843,7 @@ def audit_adult_appeal(
     chosen: set[str],
     candidate_objects: dict[str, dict[str, Any]],
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    pack = photo_native_pack.read_view(pack)
     contract = pack.get("adult_appeal") if isinstance(pack.get("adult_appeal"), dict) else {}
     if not contract.get("enabled"):
         return [], []
@@ -5042,6 +5046,7 @@ def audit_character_response_v6(
     composed: dict[str, Any],
     prompt_en: str,
 ) -> list[dict[str, Any]]:
+    pack = photo_native_pack.read_view(pack)
     core = (
         pack.get("authorial_core")
         if isinstance(pack.get("authorial_core"), dict)
@@ -5246,6 +5251,7 @@ def audit_semantic_assertion_obligations_v6(
     composed: dict[str, Any],
     prompt_en: str,
 ) -> list[dict[str, Any]]:
+    pack = photo_native_pack.read_view(pack)
     core = (
         pack.get("authorial_core")
         if isinstance(pack.get("authorial_core"), dict)
@@ -5469,6 +5475,7 @@ def audit_render_repair_v6(
     composed: dict[str, Any],
     prompt_en: str,
 ) -> list[dict[str, Any]]:
+    pack = photo_native_pack.read_view(pack)
     core = (
         pack.get("authorial_core")
         if isinstance(pack.get("authorial_core"), dict)
@@ -5560,24 +5567,20 @@ def audit_render_repair_v6(
     return failures
 
 
-def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any], *, source_data=None,
-                          runtime_receipt=None, runtime_store=None) -> dict[str, Any]:
-    """Bound runtime audit, or the explicit legacy in-memory fixture API.
-
-    The public CLI requires a receipt. Historical implementations and synthetic
-    tests retain the two-argument API; they do not claim live source freshness.
-    """
+def audit_composed_prompt(pack,composed,*,source_data=None,runtime_receipt=None,runtime_store=None,query_context=None):
     if runtime_receipt is not None:
         from photo_runtime_sources import RuntimeSnapshotProvider
-        source_data = RuntimeSnapshotProvider(store=runtime_store).from_receipt(pack, runtime_receipt).data
-    token = _BOUND_AUDIT_SOURCE.set(source_data)
-    try:
-        return _audit_composed_prompt(pack, composed)
-    finally:
-        _BOUND_AUDIT_SOURCE.reset(token)
+        snapshot=RuntimeSnapshotProvider(store=runtime_store).from_receipt(pack,runtime_receipt)
+        source_data=snapshot.data;query_context=snapshot.query_context
+    if source_data is None:raise ValueError('native pinned generation source is required')
+    token=_BOUND_AUDIT_SOURCE.set(source_data);query_token=_BOUND_QUERY_CONTEXT.set(query_context)
+    try:return _audit_composed_prompt(photo_native_pack.read_view(pack),composed)
+    finally:_BOUND_AUDIT_SOURCE.reset(token);_BOUND_QUERY_CONTEXT.reset(query_token)
+
 
 
 def _audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dict[str, Any]:
+    pack = photo_native_pack.read_view(pack)
     failures: list[dict[str, Any]] = []
     retired_fields = {"authorial_request", "hybrid_augmentation", "moe_response"} & set(pack)
     if retired_fields:
@@ -5600,11 +5603,11 @@ def _audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> di
     failures.extend(audit_authorial_pack(pack))
     try:
         source_data = _audit_source_data()
-        failures.extend(audit_core_retrieval(pack, source_data))
+        failures.extend(audit_global_retrieval(pack, source_data))
     except (OSError, KeyError, TypeError, ValueError) as exc:
-        failures.append({"check": "core_retrieval_contract", "reason": f"source recomputation failed: {exc}"})
-    expected_retrieval_sha = (pack.get("core_retrieval") or {}).get("canonical_sha256")
-    if not expected_retrieval_sha or composed.get("core_retrieval_sha256") != expected_retrieval_sha:
+        failures.append({"check": "global_retrieval_contract", "reason": f"source recomputation failed: {exc}"})
+    expected_retrieval_sha = (pack.get("global_retrieval") or {}).get("canonical_sha256")
+    if not expected_retrieval_sha or composed.get("global_retrieval_sha256") != expected_retrieval_sha:
         failures.append({"check": "core_retrieval_binding", "reason": "composed prompt must bind the exact core retrieval contract"})
 
     required_fields = ("pack_id", "prompt_en", "negative_en", "chosen_candidate_ids", "composer")
@@ -5897,7 +5900,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             receipt_path = str(args.pack) + ".runtime-receipt.json"
         receipt = load_json_arg(receipt_path) if receipt_path else None
         snapshot = RuntimeSnapshotProvider(store=Path(args.runtime_store) if args.runtime_store else None).from_receipt(pack, receipt)
-        result = audit_composed_prompt(pack, composed, source_data=snapshot.data)
+        result = audit_composed_prompt(pack, composed, source_data=snapshot.data,query_context=snapshot.query_context)
     except Exception as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 2

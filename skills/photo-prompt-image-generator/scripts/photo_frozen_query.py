@@ -17,6 +17,7 @@ def prepare(text,core_sha256,controls_sha256,cache):
     return context
 
 def validate(context,text,core_sha256,controls_sha256):
+    if not isinstance(context,dict):raise ValueError('hybrid retrieval requires an exact recorded query context')
     material={k:v for k,v in context.items() if k!='canonical_sha256'}
     if context.get('schema')!='photo-frozen-query-vector/v1' or context.get('canonical_sha256')!=digest(material):
         raise ValueError('query vector context checksum/schema mismatch')

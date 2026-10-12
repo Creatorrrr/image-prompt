@@ -117,7 +117,7 @@ def compose_audit(args):
             if key not in composed:
                 raise WorkflowError("explicit_candidate_decision_required")
         stamp(composed, "pack_id", pack["pack_id"])
-        stamp(composed, "core_retrieval_sha256", pack["core_retrieval"]["canonical_sha256"])
+        stamp(composed, "global_retrieval_sha256", pack["global_retrieval"]["canonical_sha256"])
         binding = composed.get("authorial_core_binding")
         if not isinstance(binding, dict):
             raise WorkflowError("authored_core_binding_required")
@@ -157,7 +157,7 @@ def prepare_render(args):
             raise WorkflowError("explicit_transport_parameters_required")
         prompt = composed["prompt_en"] + ("\n\nAvoid: " + composed["negative_en"] if composed.get("negative_en") is not None else "")
         request = {"schema_version": "photo-image-render-request/v2", "pack_id": pack["pack_id"],
-            "core_retrieval_sha256": pack["core_retrieval"]["canonical_sha256"],
+            "global_retrieval_sha256": pack["global_retrieval"]["canonical_sha256"],
             "source_intent_lock_sha256": pack["authorial_core"]["intent_lock"]["canonical_sha256"],
             "source_embodiment_preflight_sha256": pack["embodiment_preflight"]["canonical_sha256"],
             "runtime_prompt_en": prompt, "runtime_negative_en": composed.get("negative_en"),
