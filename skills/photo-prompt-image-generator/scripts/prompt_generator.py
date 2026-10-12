@@ -21,6 +21,7 @@ import re
 import secrets
 import sys
 import time
+from collections import Counter
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence, Set
 
@@ -10184,6 +10185,27 @@ def retrieve_core_slots(data: dict, core: dict, controls: dict) -> tuple[dict, d
         fused = reciprocal_rank_fusion(
             [[row["document_id"] for row in hits] for hits in [broad, *focal_lists]], k=30,
         )
+        # Equal RRF evidence must not give an incidental option priority merely
+        # because its ID sorts first. A positive authored alias in this slot's
+        # own frozen focus can resolve the tie. Other ties keep the existing ID
+        # order; no broad-only hit, eligibility guard or owner query is bypassed.
+        tie_counts = Counter((row["score"], row["lane_count"]) for row in fused)
+        named_focus_ids = set()
+        for row in fused:
+            document_id = row["document_id"]
+            if document_id not in intersection or tie_counts[(row["score"], row["lane_count"])] < 2:
+                continue
+            entry = entries[document_id.split(":", 2)[2]]
+            if any(intent_alias_matches(focus_query, alias)
+                   for alias in entry.get("aliases", [])
+                   if isinstance(alias, str) and alias.strip()
+                   and set(tokenize_bm25f_text(alias)) - CANDIDATE_PACK_CONCEPT_STOPWORDS
+                   for focus_query in queries):
+                named_focus_ids.add(document_id)
+        fused.sort(key=lambda row: (
+            -float(row["score"]), -int(row["lane_count"]),
+            row["document_id"] not in named_focus_ids, str(row["document_id"]),
+        ))
         ranked = [row["document_id"] for row in fused if row["document_id"] in intersection]
         ranked = ranked or ([focal[0]["document_id"]] if focal else [])
         # Separate scoped statements can describe a source and its visible
