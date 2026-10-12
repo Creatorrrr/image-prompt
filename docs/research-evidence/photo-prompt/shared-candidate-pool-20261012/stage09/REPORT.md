@@ -17,3 +17,5 @@
 이 커밋은 격리 구현 checkout의 삭제와 검증을 기록한다. 마지막 `main` 통합 및 primary 소유 구 workflow/cache의 정확한 제거, 기본 native namespace에서의 공개 조회 증거는 `PRIMARY-LEGACY-RETIREMENT.json`과 최종 실행 리포트에 추가한다. 관련 없는 dirty 문서와 기존 이미지·동결 artifact는 보존한다. 다른 checkout의 runtime namespace와 공유된 cache closure는 이 작업의 삭제 대상에 넣지 않는다.
 
 최종 동결 요청 20건: 필수 의미·core·두 lane 실행 실패 0건, warm 요청 p50 15.1035초/p95 17.115초. 골렘 새 namespace cold 공개 CLI 57.235초, 기본 blue-cup fresh CLI 31.354초다. 최종 generation은 `b2355b41f513205671335936e88470aa99d4d2d3d3298fa8d0f0e75a6b2892a2`다.
+
+Primary main 통합도 완료했다. 구 상태 33건 및 primary 소유 generation 22개를 백업·해시 검증 후 제거하고, 기본 native v2 namespace에 같은 generation을 게시했다. 공개 CLI 54.112초, BM25F/embedding 각각 384건, unique 64건, query provider cache hit. view/compose/transport·새 worker 2개·API 사전 감사 통과, 이미지 호출 0회다. 보호 artifact 7,518개·5,094,747,664바이트와 unrelated dirty 문서 2개의 SHA가 동일하다.
