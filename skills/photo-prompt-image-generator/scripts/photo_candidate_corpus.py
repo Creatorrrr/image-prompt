@@ -131,8 +131,18 @@ def validate(corpus):
         validate_effects(row['effects'], binding_id)
     # Candidate refs are explicit, qualified native IDs, never bare label aliases.
     def references(value):
+        if isinstance(value, str):
+            if ID.fullmatch(value) and value not in candidates:
+                raise ValueError(f'dangling candidate reference: {value}')
+            if BINDING_ID.fullmatch(value) and value not in bindings:
+                raise ValueError(f'dangling binding reference: {value}')
         if isinstance(value, dict):
+            if 'candidate_id' in value and 'binding_id' in value:
+                binding = bindings.get(value['binding_id'])
+                if binding is None or binding['candidate_id'] != value['candidate_id']:
+                    raise ValueError('referenced binding belongs to another candidate')
             for key, nested in value.items():
+                references(key)
                 if key in {'candidate_id', 'candidate_ref', 'canonical_candidate_ref'} and isinstance(nested, str) and nested not in candidates:
                     raise ValueError(f'dangling candidate reference: {nested}')
                 if key == 'candidate_refs':
