@@ -31894,16 +31894,13 @@
           "human",
           "clinical",
           "emt",
-          "field",
+          "emergency_transport",
           "transport",
           "patient_linked",
           "procedure"
         ],
         "for_any": [
           "human",
-          "clinical"
-        ],
-        "requires_primary_any_tags": [
           "clinical"
         ],
         "aliases": [
@@ -31916,7 +31913,36 @@
           "transport monitor",
           "ambulance loading"
         ],
-        "embedding_text": "an adult emergency medical technician assesses one visible patient then secures stretcher restraints and transport-monitor contact so a safe ready-for-loading state and ambulance handover direction are visible"
+        "embedding_text": "an adult emergency medical technician assesses one visible patient then secures stretcher restraints and transport-monitor contact so a safe ready-for-loading state and ambulance handover direction are visible",
+        "primary_context_alternatives": [
+          [
+            "subject:clinical",
+            "action:patient",
+            "action:transport"
+          ],
+          [
+            "subject:emt",
+            "action:patient",
+            "action:transport"
+          ],
+          [
+            "subject:paramedic",
+            "action:patient",
+            "action:transport"
+          ],
+          [
+            "subject:emergency",
+            "subject:medical",
+            "subject:technician",
+            "action:patient",
+            "action:transport"
+          ],
+          [
+            "action:patient",
+            "action:stretcher",
+            "action:monitor"
+          ]
+        ]
       },
       {
         "id": "coast_guard_rescue_line_recovery",
