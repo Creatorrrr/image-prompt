@@ -1,0 +1,447 @@
+{
+  "runtime": {
+    "generation_id": "5ef4af21887c41b6e890a84ed99da85b0ea5a10f7811202b0ad28656bb91f9ff",
+    "source_fingerprint": "6835109e7f26f634e9946faa540c4f67cc85431449c8a477394c319320fa815f",
+    "store": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-retrieval-stage07-20261012/main-publication/repaired-runtime-store",
+    "sealed_root": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-retrieval-stage07-20261012/main-publication/repaired-runtime-store/generations/5ef4af21887c41b6e890a84ed99da85b0ea5a10f7811202b0ad28656bb91f9ff",
+    "code_sha256": "08c314ced4cb3802f08d74752ae627d4fa61a73228fda7b13e63dedeab08b980"
+  },
+  "public_entrypoint_cases": 40,
+  "cli_view_recomputation_errors": 0,
+  "native_hits": 10,
+  "native_false_hits": 0,
+  "required_target_exposures": [
+    {
+      "case": "holdout-07-cup-ko",
+      "id": "slot:subject:teacup_vessel_subject",
+      "applicability": "eligible"
+    },
+    {
+      "case": "dev-07-dew-leaf-ko",
+      "id": "slot:subject:veined_leaf_subject",
+      "applicability": "eligible"
+    },
+    {
+      "case": "dev-07-dew-leaf-ko",
+      "id": "slot:light_direction:backlight",
+      "applicability": "ineligible"
+    },
+    {
+      "case": "dev-03-coast-fog-ko",
+      "id": "slot:location:rocky_coast",
+      "applicability": "eligible"
+    },
+    {
+      "case": "dev-01-rain-portrait-ko",
+      "id": "slot:location:rainy_bus_stop_shelter",
+      "applicability": "eligible"
+    },
+    {
+      "case": "dev-06-circuit-en",
+      "id": "slot:subject:terminal_gap_circuit_subject",
+      "applicability": "eligible"
+    },
+    {
+      "case": "dev-06-circuit-en",
+      "id": "slot:light_shape:electric_short_spark_gap",
+      "applicability": "eligible"
+    },
+    {
+      "case": "holdout-08-bird-en",
+      "id": "slot:subject:bird_connected_body_subject",
+      "applicability": "eligible"
+    },
+    {
+      "case": "dev-08-fashion-en",
+      "id": "slot:footwear:spf_sf108_04",
+      "applicability": "eligible"
+    },
+    {
+      "case": "dev-04-small-bird-ko",
+      "id": "slot:subject:bird_connected_body_subject",
+      "applicability": "eligible"
+    },
+    {
+      "case": "holdout-10-fantasy-ko",
+      "id": "slot:subject:constructed_golem_subject",
+      "applicability": "eligible"
+    },
+    {
+      "case": "dev-02-blue-cup-en",
+      "id": "slot:prop:porcelain_teacup_saucer_prop",
+      "applicability": "eligible"
+    },
+    {
+      "case": "dev-02-blue-cup-en",
+      "id": "slot:subject:teacup_vessel_subject",
+      "applicability": "eligible"
+    }
+  ],
+  "adoption_eligible_targets": 12,
+  "changed_candidate_sets": [],
+  "original_subject_meaning_preserved": true,
+  "current_full_composed_runtime_audits": 9,
+  "all_current_critical_audits_pass": true,
+  "final_prose_negative_choices_unchanged": 48,
+  "original_full_48_audits": "Sealed stage07 history, not 48 current-source reaudits.",
+  "tests_unique": 60,
+  "all_latest_selectors_pass": true,
+  "harness_error": "One new bird negative fixture initially had only two setting content words. Expanded its new setting, then reran that selector; raw failed result retained. Frozen benchmark/holdout unchanged.",
+  "exact": {
+    "queries": 40380,
+    "top1": 39347,
+    "within_slot_cap": 40148,
+    "top24": 40339,
+    "retrievable": 40380
+  },
+  "exact_reuse": {
+    "baseline": "b86c6a3fc5414fe47ccbe60a0c322ed5ba6b974d20d1663a07f9b1e7f5188168",
+    "current": "5ef4af21887c41b6e890a84ed99da85b0ea5a10f7811202b0ad28656bb91f9ff",
+    "indexes": [
+      {
+        "index": "photo_prompt_semantic_index.json",
+        "entries": 12013,
+        "all_positive_documents_vectors_and_query_metadata_identical": true
+      },
+      {
+        "index": "photo_prompt_visual_profile_index.json",
+        "entries": 3791,
+        "all_positive_documents_vectors_and_query_metadata_identical": true
+      }
+    ],
+    "all_script_bytes_identical": true,
+    "exact_sweep_reuse": "All 40380 positive queries and production index documents/recipes/code unchanged; only three primary context eligibility prerequisites added."
+  },
+  "animal_scope_repair": {
+    "trigger": "Incoming main coarse animal classification surfaced earthworm as primary subject in both frozen bird cases.",
+    "scope": "Three source-only primary-owner prerequisites via existing matcher; keep incoming animal categories, visual descriptions and live-animal positives.",
+    "changes": [
+      {
+        "source": "photo_prompt_soil_earth_extension.json",
+        "id": "soil_e077",
+        "before": {
+          "id": "soil_e077",
+          "ko": "지렁이·굴 입구·분변토",
+          "en": "a segmented earthworm on a moist soil patch; a small burrow opening beside that same animal; small coiled soil casts adjoining the opening",
+          "weight": 0.45,
+          "tags": [
+            "earth_material"
+          ],
+          "aliases": [],
+          "keywords": [
+            "지렁이·굴 입구·분변토",
+            "한 젖은 흙 표면의 마디 있는 지렁이",
+            "같은 동물 옆의 작은 굴 입구",
+            "그 입구 가까이의 작은 구불구불한 분변토",
+            "a segmented earthworm on a moist soil patch",
+            "a small burrow opening beside that same animal",
+            "small coiled soil casts adjoining the opening"
+          ],
+          "paraphrases": [
+            "한 젖은 흙 표면의 마디 있는 지렁이; 같은 동물 옆의 작은 굴 입구; 그 입구 가까이의 작은 구불구불한 분변토",
+            "a segmented earthworm on a moist soil patch; a small burrow opening beside that same animal; small coiled soil casts adjoining the opening."
+          ],
+          "embedding_text": "지렁이·굴 입구·분변토; 한 젖은 흙 표면의 마디 있는 지렁이; 같은 동물 옆의 작은 굴 입구; 그 입구 가까이의 작은 구불구불한 분변토; a segmented earthworm on a moist soil patch; a small burrow opening beside that same animal; small coiled soil casts adjoining the opening.",
+          "concept_terms": [
+            "a segmented earthworm on a moist soil patch",
+            "a small burrow opening beside that same animal",
+            "small coiled soil casts adjoining the opening"
+          ],
+          "concept_units": [
+            "a segmented earthworm on a moist soil patch",
+            "a small burrow opening beside that same animal",
+            "small coiled soil casts adjoining the opening"
+          ],
+          "relations": [
+            {
+              "id": "e077_relation_1",
+              "subject": "cast",
+              "type": "adjoins",
+              "object": "burrow"
+            }
+          ],
+          "affected_dimensions": [
+            "subject",
+            "setting"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "subject",
+              "target": "selected_subject",
+              "property": "physical_category_and_structure"
+            },
+            {
+              "dimension": "setting",
+              "target": "selected_terrain",
+              "property": "burrow_and_casts"
+            }
+          ],
+          "core_assertion_discovery": true,
+          "contextual_usage": {
+            "contexts": [
+              {
+                "id": "soil_e077_boundary",
+                "definition": "일반 흙덩이를 자동 분변토로 분류하지 않는다. 몸 마디가 없는 끈으로 지렁이를 대체하지 않는다.",
+                "observable_interpretation": "a segmented earthworm on a moist soil patch; a small burrow opening beside that same animal; small coiled soil casts adjoining the opening",
+                "claim_limits": [
+                  "A selected physical realization is optional and preserves the frozen requester meaning and owner-specific property locks.",
+                  "Still pixels do not establish classification, chemical identity, origin, duration, fertility, smell, sound, cultural identity, intent, consent or desire.",
+                  "A name or approximate retrieval hit does not activate this complete realization as a hard duty."
+                ],
+                "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+              }
+            ]
+          }
+        },
+        "added_primary_context_alternatives": [
+          [
+            "subject:earthworm"
+          ],
+          [
+            "subject:지렁이"
+          ]
+        ],
+        "positive_semantic_text_unchanged": true
+      },
+      {
+        "source": "photo_prompt_soil_earth_extension.json",
+        "id": "soil_e078",
+        "before": {
+          "id": "soil_e078",
+          "ko": "개미와 흙 둥지 입구",
+          "en": "a resolved ant beside a soil nest opening; a bounded opening with loose grains around its rim; grains carried or displaced near that same opening",
+          "weight": 0.45,
+          "tags": [
+            "earth_material"
+          ],
+          "aliases": [],
+          "keywords": [
+            "개미와 흙 둥지 입구",
+            "흙 둥지 입구 옆에서 구분되는 개미",
+            "주변에 느슨한 알갱이가 있는 한 입구",
+            "그 입구 가까이 옮겨지거나 밀려난 알갱이",
+            "a resolved ant beside a soil nest opening",
+            "a bounded opening with loose grains around its rim",
+            "grains carried or displaced near that same opening"
+          ],
+          "paraphrases": [
+            "흙 둥지 입구 옆에서 구분되는 개미; 주변에 느슨한 알갱이가 있는 한 입구; 그 입구 가까이 옮겨지거나 밀려난 알갱이",
+            "a resolved ant beside a soil nest opening; a bounded opening with loose grains around its rim; grains carried or displaced near that same opening."
+          ],
+          "embedding_text": "개미와 흙 둥지 입구; 흙 둥지 입구 옆에서 구분되는 개미; 주변에 느슨한 알갱이가 있는 한 입구; 그 입구 가까이 옮겨지거나 밀려난 알갱이; a resolved ant beside a soil nest opening; a bounded opening with loose grains around its rim; grains carried or displaced near that same opening.",
+          "concept_terms": [
+            "a resolved ant beside a soil nest opening",
+            "a bounded opening with loose grains around its rim",
+            "grains carried or displaced near that same opening"
+          ],
+          "concept_units": [
+            "a resolved ant beside a soil nest opening",
+            "a bounded opening with loose grains around its rim",
+            "grains carried or displaced near that same opening"
+          ],
+          "relations": [
+            {
+              "id": "e078_relation_1",
+              "subject": "ant",
+              "type": "adjoins",
+              "object": "nest_opening"
+            }
+          ],
+          "affected_dimensions": [
+            "subject",
+            "setting"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "subject",
+              "target": "selected_subject",
+              "property": "physical_category_and_structure"
+            },
+            {
+              "dimension": "setting",
+              "target": "selected_terrain",
+              "property": "nest_opening"
+            }
+          ],
+          "core_assertion_discovery": true,
+          "contextual_usage": {
+            "contexts": [
+              {
+                "id": "soil_e078_boundary",
+                "definition": "모든 흙무더기를 흰개미집으로 부르지 않는다. 흰개미 변형은 몸 구조와 출처를 별도로 조사한다.",
+                "observable_interpretation": "a resolved ant beside a soil nest opening; a bounded opening with loose grains around its rim; grains carried or displaced near that same opening",
+                "claim_limits": [
+                  "A selected physical realization is optional and preserves the frozen requester meaning and owner-specific property locks.",
+                  "Still pixels do not establish classification, chemical identity, origin, duration, fertility, smell, sound, cultural identity, intent, consent or desire.",
+                  "A name or approximate retrieval hit does not activate this complete realization as a hard duty."
+                ],
+                "activation_authority": "interpretation_only_not_a_required_visual_recipe"
+              }
+            ]
+          }
+        },
+        "added_primary_context_alternatives": [
+          [
+            "subject:ant"
+          ],
+          [
+            "subject:개미"
+          ]
+        ],
+        "positive_semantic_text_unchanged": true
+      },
+      {
+        "source": "photo_prompt_electrical_relations_extension.json",
+        "id": "electric_eel_freshwater_visible_form",
+        "before": {
+          "id": "electric_eel_freshwater_visible_form",
+          "ko": "담수 환경의 전기뱀장어 형태",
+          "en": "a long scaleless fish has a flattened head; one elongated anal fin runs along the underside; the fish occupies a freshwater habitat",
+          "weight": 0.42,
+          "tags": [
+            "electricity"
+          ],
+          "aliases": [
+            "발전기관",
+            "Electric organ",
+            "전기세포",
+            "Electrocyte",
+            "전기뱀장어",
+            "Electric eel"
+          ],
+          "keywords": [
+            "a long scaleless fish has a flattened head",
+            "one elongated anal fin runs along the underside",
+            "the fish occupies a freshwater habitat"
+          ],
+          "paraphrases": [
+            "a long scaleless fish has a flattened head; one elongated anal fin runs along the underside; the fish occupies a freshwater habitat"
+          ],
+          "embedding_text": "a long scaleless fish has a flattened head; one elongated anal fin runs along the underside; the fish occupies a freshwater habitat",
+          "concept_terms": [
+            "담수 환경의 전기뱀장어 형태",
+            "a long scaleless fish has a flattened head",
+            "one elongated anal fin runs along the underside",
+            "the fish occupies a freshwater habitat"
+          ],
+          "concept_units": [
+            "a long scaleless fish has a flattened head",
+            "one elongated anal fin runs along the underside",
+            "the fish occupies a freshwater habitat"
+          ],
+          "relations": [
+            {
+              "id": "relation_1",
+              "subject": "anal_fin",
+              "type": "along",
+              "object": "underside"
+            },
+            {
+              "id": "relation_2",
+              "subject": "fish",
+              "type": "situated_in",
+              "object": "freshwater_habitat"
+            }
+          ],
+          "affected_dimensions": [
+            "subject",
+            "appearance",
+            "setting"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "subject",
+              "target": "*",
+              "property": "subject"
+            },
+            {
+              "dimension": "subject",
+              "target": "*",
+              "property": "species"
+            },
+            {
+              "dimension": "subject",
+              "target": "*",
+              "property": "identity"
+            },
+            {
+              "dimension": "appearance",
+              "target": "*",
+              "property": "body.surface"
+            },
+            {
+              "dimension": "appearance",
+              "target": "*",
+              "property": "skin"
+            },
+            {
+              "dimension": "appearance",
+              "target": "*",
+              "property": "wardrobe"
+            },
+            {
+              "dimension": "setting",
+              "target": "*",
+              "property": "apparatus"
+            },
+            {
+              "dimension": "setting",
+              "target": "*",
+              "property": "scene.object_inventory"
+            },
+            {
+              "dimension": "setting",
+              "target": "*",
+              "property": "object_inventory"
+            },
+            {
+              "dimension": "setting",
+              "target": "*",
+              "property": "spatial_structure"
+            },
+            {
+              "dimension": "setting",
+              "target": "*",
+              "property": "topology"
+            }
+          ],
+          "core_assertion_discovery": true,
+          "contextual_usage": {
+            "contexts": [
+              {
+                "id": "electrical_observable_scope",
+                "definition": "담수 환경의 전기뱀장어 형태",
+                "observable_interpretation": "a long scaleless fish has a flattened head; one elongated anal fin runs along the underside; the fish occupies a freshwater habitat",
+                "claim_limits": [
+                  "발전기관은외형에서보이지않음;전기방전은센서/설명모형으로분리",
+                  "A visual resemblance is not proof of hidden voltage, current, polarity, temperature, material identity, safety, medical diagnosis, death, consent, purpose, or physical causation.",
+                  "Still images cannot directly establish sound, onset direction, duration, repeated flicker, charge/discharge direction, measured speed, successful treatment, or before-after history."
+                ],
+                "activation_authority": "interpretation_only_not_required"
+              }
+            ]
+          }
+        },
+        "added_primary_context_alternatives": [
+          [
+            "subject:electric",
+            "subject:eel"
+          ],
+          [
+            "subject:전기뱀장어"
+          ],
+          [
+            "subject:scaleless",
+            "subject:fish"
+          ]
+        ],
+        "positive_semantic_text_unchanged": true
+      }
+    ],
+    "runtime_code_change": false
+  },
+  "embedding_api_calls": 0,
+  "image_calls": 0,
+  "whole_suite": "Not rerun; no full-suite green claim.",
+  "core_controls_negative_and_caps_preserved": true
+}
