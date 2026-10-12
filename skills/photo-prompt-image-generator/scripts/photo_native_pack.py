@@ -73,11 +73,18 @@ def finalize(pack,data,selected_ids,query_context):
             entry=c.entry(data,cid);record=data['candidates'][cid]
             own({'id':cid,'label_en':entry.get('en') or entry.get('definition') or (entry.get('semantics') or {}).get('definition') or 'optional visual meaning','label_ko':entry.get('ko') or entry.get('en') or '',
                  'concept_units':entry.get('concept_units') or [],'relations':entry.get('relations') or [],'affected_dimensions':record['effects']['dimensions'],'affected_properties':record['effects']['properties'],
+                 'content_form':'unordered_inspiration_terms','concept_terms':list(dict.fromkeys((entry.get('concept_units') or [])+((entry.get('concept_candidate') or {}).get('concept_terms') or [])+[entry.get('en') or entry.get('definition') or (entry.get('semantics') or {}).get('definition') or 'optional visual meaning'])),
                  'adoption':'optional','applicability':{'status':'review_required' if not record['effects']['dimensions'] else 'eligible','source':'global_shared_corpus'},'conflicts_with':[]})
+    for row in pool.values():
+        if row.get('content_form')=='unordered_inspiration_terms':
+            row.pop('label_en',None);row.pop('label_ko',None)
     if not set(pool)<=set(selected_ids):raise ValueError('optional presentation expanded beyond globally retrieved unique candidate budget')
     result['candidate_pool']=pool;result['candidate_bindings']=bindings;result['role_views']=views
     result['unbound_candidate_refs']=[cid for cid in selected_ids if not any(row['candidate_id']==cid for row in bindings.values())]
     result['contract_version']=CONTRACT
+    for field in ('character_response','adult_appeal','candidate_bundles','visual_concept_candidates'):
+        if isinstance(result.get(field),dict) and 'canonical_sha256' in result[field]:
+            result[field]['canonical_sha256']=c.digest({k:v for k,v in result[field].items() if k!='canonical_sha256'})
     return CandidatePack(result,query_context)
 
 def validate(pack):
@@ -87,3 +94,33 @@ def validate(pack):
         if not c.ID.fullmatch(cid) or row.get('id')!=cid or row['authored_record']['id']!=cid:raise ValueError('invalid native candidate identity')
     role_cards(pack)
     return pack
+
+class _Section(dict):
+    """Read-only native reference dereferencing, preserving original wire bytes."""
+    def __init__(self,value,pack):dict.__init__(self,value);self._pack=pack
+    def _resolve(self,value):
+        if isinstance(value,dict):return _Section(value,self._pack)
+        if isinstance(value,list):
+            result=[]
+            for row in value:
+                if isinstance(row,dict) and set(row)<={'candidate_id','view_context'} and 'candidate_id' in row:
+                    cid=row['candidate_id']
+                    if cid not in dict.__getitem__(self._pack,'candidate_pool'):raise ValueError('dangling native presentation reference')
+                    resolved=copy.deepcopy(dict.__getitem__(self._pack,'candidate_pool')[cid]);resolved.update(copy.deepcopy(row.get('view_context') or {}));result.append(resolved)
+                else:result.append(row)
+            return result
+        return value
+    def __getitem__(self,key):return self._resolve(dict.__getitem__(self,key))
+    def get(self,key,default=None):return self._resolve(dict.get(self,key,default))
+    def values(self):return [self[key] for key in dict.keys(self)]
+    def __deepcopy__(self,memo):return {key:copy.deepcopy(value,memo) for key,value in dict.items(self)}
+    def __setitem__(self,*args):raise TypeError('native dereference views are read-only')
+    def update(self,*args,**kwargs):raise TypeError('native dereference views are read-only')
+
+class _ReadPack(_Section):
+    def __init__(self,value):dict.__init__(self,value);self._pack=self
+
+def read_view(pack):
+    if isinstance(pack,_ReadPack):return pack
+    validate(pack)
+    return _ReadPack(pack)
