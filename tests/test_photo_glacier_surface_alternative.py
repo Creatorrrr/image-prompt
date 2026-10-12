@@ -8,10 +8,11 @@ sys.path.insert(0, str(SKILL / 'scripts'))
 import prompt_generator as pg
 
 class GlacierSurfaceAlternativeTests(unittest.TestCase):
+
     @classmethod
     def setUpClass(cls):
-        cls.registry = pg.load_visual_obligation_registry(SKILL / 'assets/photo_prompt_visual_obligations.json')
-        cls.profile = next(p for p in cls.registry['profiles'] if p['id'] == 'active_glacier_flow_valley_moraine_system')
+        cls.registry = native_profile_registry()
+        cls.profile = next((p for p in cls.registry['profiles'] if p['id'] == 'cand_8be0b3cbc81a594ea942afd270a31bcc'))
 
     def test_three_surface_alternatives_materialize_without_losing_connected_geometry(self):
         obligation = pg.candidate_pack_visual_profile_obligation(self.profile, self.registry, activation_source='test', source_intent_ids=[])
@@ -27,4 +28,5 @@ class GlacierSurfaceAlternativeTests(unittest.TestCase):
         parts = [g['any_terms'][0] for g in c['groups']]
         self.assertEqual(pg.candidate_pack_visual_component_match(p, '; '.join(parts)), 'component_semantics')
         for missing in range(4):
-            self.assertIsNone(pg.candidate_pack_visual_component_match(p, '; '.join(v for i, v in enumerate(parts) if i != missing)))
+            self.assertIsNone(pg.candidate_pack_visual_component_match(p, '; '.join((v for i, v in enumerate(parts) if i != missing))))
+from tests.photo_native_runtime import native_profile_registry

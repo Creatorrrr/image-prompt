@@ -60,7 +60,7 @@ class PhotoApiRenderPreflightTests(unittest.TestCase):
         self.assertEqual(key.call_count, 0); self.assertEqual(call.call_count, 0)
 
     def test_pack_and_runtime_binding_tampering(self):
-        for field in ["pack_id", "core_retrieval_sha256", "source_intent_lock_sha256", "source_embodiment_preflight_sha256", "render_repair_contract_sha256"]:
+        for field in ["pack_id", "global_retrieval_sha256", "source_intent_lock_sha256", "source_embodiment_preflight_sha256", "render_repair_contract_sha256"]:
             self.paths = fixtures.write_valid_inputs(self.directory)
             self.mutate("request", lambda r: r.update({field: "0" * 64}))
             with self.subTest(field=field), mock.patch.object(api, "call_api") as call:

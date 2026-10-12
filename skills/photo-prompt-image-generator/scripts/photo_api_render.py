@@ -43,12 +43,13 @@ def audit_inputs(inputs: dict, *, model: str, size: str, runtime_store=None) -> 
         snapshot = RuntimeSnapshotProvider(store=Path(runtime_store) if runtime_store else None).from_receipt(pack, receipt)
     except (ValueError, OSError, KeyError, TypeError) as error:
         raise PreflightError("runtime_receipt", str(error)) from error
-    first = composed_audit.audit_composed_prompt(pack, composed, source_data=snapshot.data)
-    if first["status"] != "pass" or first["failures"]:
-        raise PreflightError("composed_audit", first)
-    second = runtime_audit.audit_image_render_request(pack, composed, request, request_path=Path(inputs["request"]["path"]))
-    if second["status"] != "pass" or second["failures"]:
-        raise PreflightError("runtime_audit", second)
+    with composed_audit.bound_native_source(snapshot.data,snapshot.query_context):
+        first = composed_audit.audit_composed_prompt(pack, composed, source_data=snapshot.data,query_context=snapshot.query_context)
+        if first["status"] != "pass" or first["failures"]:
+            raise PreflightError("composed_audit", first)
+        second = runtime_audit.audit_image_render_request(pack, composed, request, request_path=Path(inputs["request"]["path"]))
+        if second["status"] != "pass" or second["failures"]:
+            raise PreflightError("runtime_audit", second)
     reference_mode = (((pack.get("creative_controls") or {}).get("controls") or {}).get("reference_edit_mode") or {}).get("value", "off")
     if request["references"] or reference_mode != "off":
         raise PreflightError("unsupported_reference_transport", {"references": len(request["references"]), "reference_edit_mode": reference_mode})

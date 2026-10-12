@@ -15,7 +15,6 @@ from photo_candidate_context import (
 
 VERSION = "photo-contextual-appeal/v2"
 SCOPE_VERSION = "photo-adult-appeal-dimension-scope/v4"
-QUERY_CACHE = "_contextual_appeal_query_vectors"
 AXES = ("sensual", "fetish")
 DIMENSIONS = frozenset({
     "sexual_tone", "style", "appearance", "material", "action", "pose",
@@ -87,44 +86,26 @@ def expression_scope(slot: str) -> str:
     return "portrayal_or_scene_relation"
 
 
-def _cosine(left, right):
-    if not left or len(left) != len(right):
-        return 0.0
-    scale = math.sqrt(sum(v * v for v in left) * sum(v * v for v in right))
-    return sum(a * b for a, b in zip(left, right)) / scale if scale else 0.0
-
-
 def rank_candidates(rows: list[dict], lane_queries: dict, *, policy: dict,
-                    query_vectors: dict | None = None, index: dict | None = None,
                     limit: int = 12, scene_query: str = "") -> tuple[list[dict], dict]:
-    """BM25F + available embedding ranks, with bounded soft diversity.
+    """Refine presentation of already admitted global hybrid candidates.
 
-    Stable IDs break ties; source order, preset membership, aesthetic tags and
-    intensity thresholds never do. Missing embedding coverage is explicit.
+    This lexical ranking cannot discover new source records or activate meaning.
     """
     documents = {row["source_candidate_id"]: row["search_fields"] for row in rows}
     lexical_index = build_bm25f_index(documents, policy=policy)
     by_id = {row["source_candidate_id"]: row for row in rows}
     scores: dict[str, float] = {}
     evidence: dict[str, set[str]] = {}
-    entries = (index or {}).get("entries") or {}
     lane_modes = {}
     semantic_coverage = {}
     for lane, query in lane_queries.items():
         # One scoring pass suffices: filtering these ranks by expression scope
         # is identical to scoring each subset against this same corpus index.
         lexical = rank_bm25f(lexical_index, {"global_context": query}, limit=max(1, len(rows)))
-        vector = (query_vectors or {}).get(lane)
         semantic = []
-        if vector:
-            semantic = sorted(
-                ((key, _cosine(vector, entries[key].get("vector", [])))
-                 for key in by_id if key in entries and len(entries[key].get("vector", [])) == len(vector)),
-                key=lambda item: (-item[1], item[0]),
-            )
-            semantic = [(key, score) for key, score in semantic if score > 0]
-        lane_modes[lane] = "hybrid" if semantic else "keyword"
-        semantic_coverage[lane] = len(semantic)
+        lane_modes[lane] = "lexical_presentation_of_global_hybrid"
+        semantic_coverage[lane] = 0
         # A long tail of zero-evidence candidates never pads the public pack.
         for source, ordered in (("keyword", [row["document_id"] for row in lexical]),
                                 ("semantic", [key for key, _ in semantic])):
@@ -142,10 +123,6 @@ def rank_candidates(rows: list[dict], lane_queries: dict, *, policy: dict,
                 key = hit["document_id"]
                 scores[key] = scores.get(key, 0.0) + 0.6 / (30 + rank)
                 evidence.setdefault(key, set()).add(lane + ":keyword_scope")
-            if semantic:
-                for rank, (key, _) in enumerate([hit for hit in semantic if hit[0] in group_ids][:limit]):
-                    scores[key] = scores.get(key, 0.0) + 0.6 / (30 + rank)
-                    evidence.setdefault(key, set()).add(lane + ":semantic_scope")
     tokens = {key: set(tokenize_bm25f_text(" ".join(row["visual_text"]))) for key, row in by_id.items()}
     scene_ranks = rank_bm25f(lexical_index, {"global_context": scene_query}, limit=max(1, len(rows))) if scene_query else []
     scene_support = {hit["document_id"]: 1.0 / (1 + rank) for rank, hit in enumerate(scene_ranks)}

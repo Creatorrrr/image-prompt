@@ -5,8 +5,8 @@ import json
 from pathlib import Path
 import tempfile
 
-from tests import photo_prompt_fixtures as fixtures
-from tests.test_photo_authorship_policy import PhotoAuthorshipPolicyTests
+from tests import photo_native_runtime as fixtures
+from tests import test_photo_native_runtime_freshness as native_fixture
 import prompt_generator as pg
 from photo_runtime_sources import RuntimeSnapshotProvider
 
@@ -19,21 +19,22 @@ _original_from_receipt = RuntimeSnapshotProvider.from_receipt
 def write_valid_inputs(directory: Path) -> dict:
     global _temporary, _template, _verified
     if _template is None:
-        _temporary = tempfile.TemporaryDirectory(prefix="photo-api-source-")
-        atexit.register(_temporary.cleanup)
-        store = Path(_temporary.name) / "runtime"
-        provider = RuntimeSnapshotProvider(store=store)
-        snapshot = provider.acquire()
+        _temporary = native_fixture.NativeRuntimeFreshnessTests()
+        _temporary.setUp()
+        atexit.register(_temporary.temp.cleanup)
+        store = _temporary.store
+        provider = _temporary.provider
+        snapshot = _temporary.snapshot
         raw = fixtures.core("A blue porcelain teacup on a rainlit kitchen counter.")
         controls = pg.creative_controls.resolve(raw["source_request"],
             overrides={"sensual": 0, "fetish": 0, "surreal": 0, "creativity": 0}, seed=7)
         raw["creative_controls_sha256"] = controls["canonical_sha256"]
         core = pg.normalize_authorial_core(raw, request_envelope=pg.normalize_request_envelope(fixtures.envelope(raw["source_request"])),
             creative_control_snapshot=controls)
-        pack = pg.generate_candidate_pack(snapshot.data, core, controls, fixtures.review(core["baseline_prompt_en"]), seed=7)
-        composed = PhotoAuthorshipPolicyTests.composed(pack)
+        pack = pg.generate_candidate_pack(snapshot.data, core, controls, fixtures.review(core["baseline_prompt_en"]), seed=7, query_context=fixtures.integrity_query_context(core,controls))
+        composed = fixtures.compose_native(pack)
         request = {"schema_version": "photo-image-render-request/v2", "pack_id": pack["pack_id"],
-            "core_retrieval_sha256": pack["core_retrieval"]["canonical_sha256"],
+            "global_retrieval_sha256": pack["global_retrieval"]["canonical_sha256"],
             "source_intent_lock_sha256": core["intent_lock"]["canonical_sha256"],
             "source_embodiment_preflight_sha256": pack["embodiment_preflight"]["canonical_sha256"],
             "runtime_prompt_en": composed["prompt_en"] + ("\n\nAvoid: " + pack["negative_en"] if pack["negative_en"] is not None else ""),

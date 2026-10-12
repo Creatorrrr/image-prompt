@@ -304,6 +304,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--pack", required=True)
     parser.add_argument("--composed", required=True)
     parser.add_argument("--review", required=True)
+    parser.add_argument("--runtime-store")
+    parser.add_argument("--runtime-receipt")
     parser.add_argument("--output")
     return parser.parse_args(argv)
 
@@ -318,12 +320,17 @@ def main(argv: list[str] | None = None) -> int:
         raw_review_path = Path(args.review).expanduser()
         if not args.review.strip().startswith(("{", "[")) and raw_review_path.is_file():
             review_path = raw_review_path.resolve()
-        result = audit_image_render_review(
-            pack,
-            composed,
-            review,
-            review_path=review_path,
-        )
+        import audit_composed_prompt as ca
+        from photo_runtime_sources import RuntimeSnapshotProvider
+        receipt=load_json_arg(args.runtime_receipt) if args.runtime_receipt else None
+        snapshot=RuntimeSnapshotProvider(store=args.runtime_store).from_receipt(pack,receipt)
+        with ca.bound_native_source(snapshot.data,snapshot.query_context):
+            result = audit_image_render_review(
+                pack,
+                composed,
+                review,
+                review_path=review_path,
+            )
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         print(
             json.dumps(

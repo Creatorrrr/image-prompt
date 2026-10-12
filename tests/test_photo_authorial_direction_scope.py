@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 import unittest
 
-from tests import photo_prompt_fixtures as fixtures
+from tests import photo_native_runtime as fixtures
 
 generator = fixtures.prompt_generator
 auditor = fixtures.audit_composed_prompt
@@ -43,7 +43,7 @@ def fixture():
         {}, {"provenance": {"authorial_core": core}}, {}, None, None,
         visual_profile_resolution={"hits": []},
     )
-    pack = {"authorial_core": core, "semantic_clarification": contract}
+    pack = {"contract_version":"photo-candidate-pack/v7", "candidate_pool":{}, "candidate_bindings":{}, "role_views":{}, "authorial_core": core, "semantic_clarification": contract}
     composed = {"semantic_clarification_decisions": [{
         "clarification_id": row["id"], "decision": "applied",
         "rationale": "The same requested exchange remains visible.",
@@ -53,6 +53,11 @@ def fixture():
 
 
 class PhotoAuthorialDirectionScopeTests(unittest.TestCase):
+    def setUp(self):
+        from tests import test_photo_global_retrieval as fixtures
+        token=auditor._BOUND_AUDIT_SOURCE.set(fixtures.GlobalDiscoveryTests().data())
+        self.addCleanup(auditor._BOUND_AUDIT_SOURCE.reset,token)
+
     def test_required_projection_contains_meaning_not_incidental_direction(self):
         pack, _ = fixture()
         contract = pack["semantic_clarification"]

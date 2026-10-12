@@ -454,7 +454,7 @@ class SubcultureIllustrationMoeGrammarV2Tests(unittest.TestCase):
     ) -> None:
         expected = {
             "image_generation_retry_policy_v1.json": "650f4123c5983a58d88fe888031add6e18966899e22713a17d4c187656e584b3",
-            "photo_regression_baseline_v1.json": "3db499287144390ea4724a916069ef1a01b7b6d86064cebee56dd4a496d252c8",
+            "photo_native_regression_boundary.json": "549157e23d3591bf6d7083e5db85aeea3fab2dd9ae9c685adfe2e877b39dc0ad",
         }
         for name, digest in expected.items():
             with self.subTest(name=name):

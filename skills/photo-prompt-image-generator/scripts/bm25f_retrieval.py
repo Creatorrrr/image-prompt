@@ -405,7 +405,7 @@ def _query_term_weights(
     weights: Counter[str] = Counter()
     configured = policy.get("query_fields")
     query_weights = configured if isinstance(configured, Mapping) else {}
-    for field, raw_value in query_fields.items():
+    for field, raw_value in sorted(query_fields.items()):
         field_weight = float(query_weights.get(field, 1.0))
         if field_weight <= 0:
             continue
@@ -439,6 +439,10 @@ def rank_bm25f(
     )
     if not query_terms:
         return []
+    # Persisted JSON may reorder mappings. Fix accumulation order so exact
+    # receipt replay cannot differ by a floating-point rounding unit.
+    ordered_terms = sorted(query_terms.items())
+    ordered_fields = sorted(field_configs.items())
 
     allowed = {str(value) for value in allowed_ids} if allowed_ids is not None else None
     blocked = {str(value) for value in blocked_ids}
@@ -460,9 +464,9 @@ def rank_bm25f(
         indexed_fields = document.get("fields") or {}
         score = 0.0
         matched_terms: list[str] = []
-        for term, query_weight in query_terms.items():
+        for term, query_weight in ordered_terms:
             weighted_tf = 0.0
-            for field, config in field_configs.items():
+            for field, config in ordered_fields:
                 field_data = indexed_fields.get(field) or {}
                 term_frequency = float(
                     (field_data.get("term_frequencies") or {}).get(term, 0)

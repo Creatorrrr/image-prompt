@@ -8,10 +8,11 @@ sys.path.insert(0, str(SKILL / 'scripts'))
 import prompt_generator as pg
 
 class KebayaMaterialAlternativeTests(unittest.TestCase):
+
     @classmethod
     def setUpClass(cls):
-        registry = pg.load_visual_obligation_registry(SKILL / 'assets/photo_prompt_visual_obligations.json')
-        cls.profile = next(p for p in registry['profiles'] if p['id'] == 'kebaya_front_open_blouse_sarong_system')
+        registry = native_profile_registry()
+        cls.profile = next((p for p in registry['profiles'] if p['id'] == 'cand_97724398d4f852bfbf62083844cd1606'))
 
     def test_plain_and_embroidered_material_preserve_required_components(self):
         profile = self.profile
@@ -31,12 +32,8 @@ class KebayaMaterialAlternativeTests(unittest.TestCase):
     def test_material_evidence_retains_original_anchors_and_floor(self):
         requirements = self.profile['evidence_requirements']
         self.assertEqual(len(requirements), 5)
-        self.assertTrue(all(r['min_content_words'] == 4 for r in requirements.values()))
-        self.assertEqual(requirements['embroidered_surface_phrase']['must_mention_any'], [
-            'fine embroidered voile with finished scalloped edges',
-            'lightweight lace or embroidered cloth retains visible weave',
-            'fine lightweight cloth retains visible weave and finished front edges',
-        ])
+        self.assertTrue(all((r['min_content_words'] == 4 for r in requirements.values())))
+        self.assertEqual(requirements['embroidered_surface_phrase']['must_mention_any'], ['fine embroidered voile with finished scalloped edges', 'lightweight lace or embroidered cloth retains visible weave', 'fine lightweight cloth retains visible weave and finished front edges'])
         self.assertEqual(len(self.profile['render_gates']), 5)
 
     def test_plain_cloth_does_not_override_exclusions(self):
@@ -45,3 +42,4 @@ class KebayaMaterialAlternativeTests(unittest.TestCase):
         parts = [g['any_terms'][-1 if i == 1 else 0] for i, g in enumerate(groups[:4])]
         for excluded in p['activation'].get('exclude_if_any_terms', []):
             self.assertIsNone(pg.candidate_pack_visual_component_match(p, '; '.join(parts + [excluded])))
+from tests.photo_native_runtime import native_profile_registry

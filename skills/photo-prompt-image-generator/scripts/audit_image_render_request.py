@@ -108,7 +108,7 @@ def audit_image_render_request(
         failures.append(
             {
                 "check": "source_intent_lock_sha256",
-                "reason": "an intent-locked v6 render request must bind the exact requesting-user-priority intent lock",
+                "reason": "an intent-locked v7 render request must bind the exact requesting-user-priority intent lock",
                 "expected": expected_intent_lock_sha256,
                 "actual": request.get("source_intent_lock_sha256"),
             }
@@ -412,6 +412,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--pack", required=True)
     parser.add_argument("--composed", required=True)
     parser.add_argument("--request", required=True)
+    parser.add_argument("--runtime-store")
+    parser.add_argument("--runtime-receipt")
     parser.add_argument("--output")
     return parser.parse_args(argv)
 
@@ -426,9 +428,16 @@ def main(argv: list[str] | None = None) -> int:
         raw_request_path = Path(args.request).expanduser()
         if not args.request.strip().startswith(("{", "[")) and raw_request_path.is_file():
             request_path = raw_request_path.resolve()
-        result = audit_image_render_request(
-            pack, composed, request, request_path=request_path
-        )
+        import audit_composed_prompt as ca
+        from photo_runtime_sources import RuntimeSnapshotProvider
+        receipt=load_json_arg(args.runtime_receipt) if args.runtime_receipt else None
+        snapshot=RuntimeSnapshotProvider(store=args.runtime_store).from_receipt(pack,receipt)
+        with ca.bound_native_source(snapshot.data,snapshot.query_context):
+            composed_check=ca.audit_composed_prompt(pack,composed)
+            if composed_check['status']!='pass':raise ValueError('native composed audit failed: '+str(composed_check['failures']))
+            result = audit_image_render_request(
+                pack, composed, request, request_path=request_path
+            )
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         print(json.dumps({"status": "error", "reason": str(exc)}, ensure_ascii=False, indent=2))
         return 2

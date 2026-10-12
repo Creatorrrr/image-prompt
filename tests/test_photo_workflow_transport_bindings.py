@@ -16,7 +16,7 @@ import photo_native_bridge
 class TransportBindingTests(unittest.TestCase):
     def prepare_selected(self, directory, *, stored_hash='a'*64, extra=None):
         run,_=freeze_fixture(directory,mode='image')
-        pack={'pack_id':'selected-case','core_retrieval':{'canonical_sha256':'b'*64},
+        pack={'pack_id':'selected-case','global_retrieval':{'canonical_sha256':'b'*64},
               'authorial_core':{'intent_lock':{'canonical_sha256':'c'*64}},
               'embodiment_preflight':{'canonical_sha256':'d'*64}}
         composed={'prompt_en':'A connected fire remains on its own fuel surface.',

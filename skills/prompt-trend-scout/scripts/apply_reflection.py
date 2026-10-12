@@ -35,43 +35,42 @@ def dry_run_lines(candidates: list[dict[str, Any]]) -> list[str]:
 
 
 def apply_candidates(candidates: list[dict[str, Any]]) -> list[str]:
-    tags_path = TARGET_SKILL_DIR / "assets" / "photo_prompt_tags.json"
-    tags = load_json(tags_path)
-    changed: list[str] = []
-    for candidate in candidates:
-        proposed = candidate.get("proposed", {})
-        if candidate["kind"] == "tag":
-            slot = proposed.get("slot")
-            value = proposed.get("value") or proposed.get("id")
-            if not slot or slot not in tags.get("slots", {}):
-                changed.append(f"SKIP {candidate['candidate_id']}: unknown slot {slot}")
-                continue
-            if any(item.get("id") == value for item in tags["slots"][slot]):
-                changed.append(f"SKIP {candidate['candidate_id']}: already exists")
-                continue
-            tags["slots"][slot].append(
-                {
-                    "id": value,
-                    "ko": proposed.get("ko", proposed.get("en", value)),
-                    "en": proposed.get("en", value),
-                    "weight": 0.8,
-                    "tags": ["trend_scout"],
-                }
-            )
-            changed.append(f"ADD tag {slot}.{value}")
-        elif candidate["kind"] == "facet_value":
-            facet_name = proposed.get("facet_name")
-            value = proposed.get("value") or proposed.get("id")
-            if not facet_name or facet_name not in tags.get("facet_vocab", {}):
-                changed.append(f"SKIP {candidate['candidate_id']}: unknown facet {facet_name}")
-                continue
-            if value not in tags["facet_vocab"][facet_name]:
-                tags["facet_vocab"][facet_name].append(value)
-                changed.append(f"ADD facet {facet_name}.{value}")
-        else:
-            changed.append(f"MANUAL {candidate['candidate_id']}: {candidate['kind']} requires hand edit")
-    if any(line.startswith("ADD ") for line in changed):
-        write_json(tags_path, tags)
+    """Apply only complete reviewed native records; shorthand leads need authorship."""
+    import copy,sys,uuid
+    sys.path.insert(0,str(TARGET_SKILL_DIR/'scripts'))
+    import photo_candidate_corpus as c
+    from photo_embedding_provider import atomic
+    from photo_runtime_sources import source_update
+    source=c.load(TARGET_SKILL_DIR/'assets'); manifest=load_json(TARGET_SKILL_DIR/'assets'/c.MANIFEST_NAME)
+    owners={field:next(row['file'] for row in manifest['modules'] if row['kind']==field) for field in ('candidates','slot_bindings','policies')}
+    changed=[];edited=copy.deepcopy(source)
+    for lead in candidates:
+        proposal=lead.get('proposed',{});record=proposal.get('native_record');bindings=proposal.get('native_bindings',[])
+        if lead['kind']=='tag' and record:
+            cid=record['id']
+            if cid in edited['candidates']:
+                changed.append(f"SKIP {lead['candidate_id']}: native candidate already exists");continue
+            edited['candidates'][cid]=record
+            for row in bindings:
+                if row['id'] in edited['slot_bindings']:raise ValueError('duplicate native role binding')
+                edited['slot_bindings'][row['id']]=row
+            changed.append(f"ADD native candidate {cid}")
+        elif lead['kind']=='facet_value':
+            facet=proposal.get('facet_name');value=proposal.get('value') or proposal.get('id')
+            vocabulary=edited['policies'].get('facet_vocab',{})
+            if facet not in vocabulary:changed.append(f"SKIP {lead['candidate_id']}: unknown facet")
+            elif value not in vocabulary[facet]:vocabulary[facet].append(value);changed.append(f"ADD facet {facet}.{value}")
+        else:changed.append(f"MANUAL {lead['candidate_id']}: author a complete native record, effects, provenance and role bindings")
+    c.validate(edited)
+    if edited==source:return changed
+    # The epoch remains pending until explicit index rebuild and publication.
+    with source_update(TARGET_SKILL_DIR):
+        for field,filename in owners.items():
+            module=load_json(TARGET_SKILL_DIR/'assets'/filename)
+            if field=='policies':module[field]=edited[field]
+            else:
+                for identifier in edited[field].keys()-source[field].keys():module[field][identifier]=edited[field][identifier]
+            atomic(TARGET_SKILL_DIR/'assets'/filename,module)
     return changed
 
 

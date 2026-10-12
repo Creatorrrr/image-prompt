@@ -8,10 +8,11 @@ sys.path.insert(0, str(SKILL / 'scripts'))
 import prompt_generator as pg
 
 class WetHairWeightAlternativeTests(unittest.TestCase):
+
     @classmethod
     def setUpClass(cls):
-        registry = pg.load_visual_obligation_registry(SKILL / 'assets/photo_prompt_visual_obligations.json')
-        cls.profile = next(p for p in registry['profiles'] if p['id'] == 'wet_damp_clumped_hair_state')
+        registry = native_profile_registry()
+        cls.profile = next((p for p in registry['profiles'] if p['id'] == 'cand_c82fd6aeea8e5baabdea8c42d6de092e'))
 
     def test_contact_and_noncontact_keep_all_five_required_components(self):
         p = self.profile
@@ -24,20 +25,12 @@ class WetHairWeightAlternativeTests(unittest.TestCase):
             parts[2] = weight
             self.assertEqual(pg.candidate_pack_visual_component_match(p, '; '.join(parts)), 'component_semantics')
             for missing in range(5):
-                self.assertIsNone(pg.candidate_pack_visual_component_match(p, '; '.join(v for i, v in enumerate(parts) if i != missing)))
+                self.assertIsNone(pg.candidate_pack_visual_component_match(p, '; '.join((v for i, v in enumerate(parts) if i != missing))))
 
     def test_evidence_floor_and_original_contact_anchors_stay(self):
         req = self.profile['evidence_requirements']
-        self.assertEqual({k: v['min_content_words'] for k, v in req.items()}, {
-            'reduced_volume_phrase': 8, 'strand_bundling_phrase': 8,
-            'weighted_adherence_phrase': 9, 'moisture_coherence_phrase': 9,
-            'gloss_confound_phrase': 9,
-        })
-        self.assertEqual(req['weighted_adherence_phrase']['must_mention_any'], [
-            'weighted damp sections adhere locally to the face neck or garment',
-            'moisture pulls selected bundles downward against nearby surfaces',
-            'moisture pulls selected damp bundles downward into weighted sections',
-        ])
+        self.assertEqual({k: v['min_content_words'] for k, v in req.items()}, {'reduced_volume_phrase': 8, 'strand_bundling_phrase': 8, 'weighted_adherence_phrase': 9, 'moisture_coherence_phrase': 9, 'gloss_confound_phrase': 9})
+        self.assertEqual(req['weighted_adherence_phrase']['must_mention_any'], ['weighted damp sections adhere locally to the face neck or garment', 'moisture pulls selected bundles downward against nearby surfaces', 'moisture pulls selected damp bundles downward into weighted sections'])
         self.assertEqual(len(self.profile['render_gates']), 5)
 
     def test_generic_gravity_gloss_or_gel_does_not_replace_moisture_weight(self):
@@ -47,3 +40,4 @@ class WetHairWeightAlternativeTests(unittest.TestCase):
         for wrong in ['dry hair hangs down under gravity', 'bright glossy hair highlights', 'sleek gel styling', 'wet hair label alone']:
             parts[2] = wrong
             self.assertIsNone(pg.candidate_pack_visual_component_match(p, '; '.join(parts)))
+from tests.photo_native_runtime import native_profile_registry

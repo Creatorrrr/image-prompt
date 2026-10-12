@@ -21,7 +21,7 @@ if str(VALIDATOR_PATH.parent) not in sys.path:
 
 import prompt_generator  # noqa: E402
 import validate_precore_feature_selection as feature_selection  # noqa: E402
-from tests import photo_prompt_fixtures  # noqa: E402
+from tests import photo_native_runtime as photo_prompt_fixtures  # noqa: E402
 
 
 SOURCE_CATEGORIES_SHA256 = "2ba9349110a52be0decff94f0efcb57502db3e7c5846a3a46f4a5b9475b5aecd"
@@ -623,7 +623,7 @@ class PhotoPrecoreFeatureSelectionTests(unittest.TestCase):
         # Inspect the existing literal anchor check without claiming a complete pack audit.
         def anchor_failures(prompt: str) -> list[dict]:
             return [row for row in photo_prompt_fixtures.audit_composed_prompt.audit_authorial_core(
-                {"authorial_core": normalized}, {}, prompt
+                {"contract_version":"photo-candidate-pack/v7", "candidate_pool":{}, "candidate_bindings":{}, "role_views":{}, "authorial_core": normalized}, {}, prompt
             ) if row["check"] == "intent_lock_prompt_evidence"]
 
         baseline = normalized["baseline_prompt_en"]
@@ -718,8 +718,8 @@ class PhotoPrecoreFeatureSelectionTests(unittest.TestCase):
 
     def test_catalog_is_not_an_index_input(self) -> None:
         for name in (
-            "build_visual_profile_index.py",
-            "build_semantic_index.py",
+            "build_shared_candidate_index.py",
+            "photo_global_index.py",
             "bm25f_retrieval.py",
             "photo_visual_retrieval.py",
         ):

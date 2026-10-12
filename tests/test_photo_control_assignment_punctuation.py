@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from tests import photo_prompt_fixtures as fixtures
+from tests import photo_native_runtime as fixtures
 import photo_creative_controls as controls
 
 
