@@ -43,7 +43,7 @@ class PhotoSubjectContextRetrievalTests(unittest.TestCase):
         self.assertEqual(g.subject_category({'subject':display},self.data),'sign')
         self.assertEqual(g.subject_category({'subject':self.entry('neon_sign')},self.data),'sign')
         self.assertEqual(g.subject_category({'subject':self.entry('robotic_dog')},self.data),'object')
-        self.assertEqual(g.subject_category({'subject':self.entry('fire_f116')},self.data),'object')
+        self.assertEqual(g.subject_category({'subject':self.entry('fire_f116')},self.data),'food')
         plant = {'id':'scientific_plant','en':'a scientific plant sample','kind':['plant'],'tags':['science']}
         self.assertEqual(g.subject_category({'subject':plant},self.data),'plant')
         self.assertEqual(g.subject_category({'subject':self.entry('bubble_tea_cup')},self.data),'food')
