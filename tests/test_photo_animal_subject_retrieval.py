@@ -78,6 +78,17 @@ class PhotoAnimalSubjectRetrievalTests(unittest.TestCase):
                     "the paper card rests on a flat surface", "object")
                 self.assertNotIn("slot:subject:" + entry_id, candidates)
 
+    def test_other_primary_animal_does_not_admit_specialized_animal_targets(self):
+        for subject, request in (
+            ("one small sparrow", "Photograph one small sparrow resting on a garden stone."),
+            ("한 마리의 작은 참새", "정원의 돌 위에서 쉬는 작은 참새 한 마리를 촬영해줘."),
+        ):
+            with self.subTest(subject=subject):
+                candidates = self.retrieve(request, subject, "a grassy garden beside a stone path",
+                    "the bird rests on a stone with folded wings", "animal")
+                for entry_id, *_ in ANIMALS:
+                    self.assertNotIn("slot:subject:" + entry_id, candidates)
+
 
 if __name__ == "__main__":
     unittest.main()
