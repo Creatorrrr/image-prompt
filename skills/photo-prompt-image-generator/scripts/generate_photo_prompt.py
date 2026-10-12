@@ -21,6 +21,9 @@ def main(argv: list[str] | None = None) -> int:
                         help="New authoring: verify each requester-owned camera axis has explicit frozen evidence.")
     parser.add_argument("--new-author-camera-evidence", action="store_true",
                         help="Require owner and separate direction/height declarations when camera is an open or locked dimension.")
+    parser.add_argument('--retrieval-mode',choices=('hybrid_required','keyword_only'),default='hybrid_required',help='keyword_only is explicit diagnostic retrieval.')
+    parser.add_argument('--embedding-env-file',type=Path)
+    parser.add_argument('--query-cache',type=Path)
     parser.add_argument("--seed", type=int)
     parser.add_argument("--output-file")
     parser.add_argument("--runtime-store", help="Runtime-owned generation/cache directory.")
@@ -53,10 +56,13 @@ def main(argv: list[str] | None = None) -> int:
     visual_intent = generator.load_visual_intent_arg(
         args.visual_intent_json, data[generator.VISUAL_OBLIGATIONS_DATA_KEY],
         data[generator.VISUAL_PROFILE_INDEX_DATA_KEY])
+    if args.embedding_env_file:
+        from photo_embedding_provider import load_env
+        load_env(args.embedding_env_file)
     pack = generator.generate_candidate_pack(
         data, core, controls, embodiment,
         seed=args.seed if args.seed is not None else secrets.randbits(63),
-        visual_intent=visual_intent)
+        visual_intent=visual_intent,retrieval_mode=args.retrieval_mode,query_cache=args.query_cache or provider.publisher.store/"query-embeddings")
     receipt = provider.receipt(snapshot, pack)
     receipt_path = args.runtime_receipt or (str(args.output_file) + ".runtime-receipt.json" if args.output_file else None)
     if receipt_path:
