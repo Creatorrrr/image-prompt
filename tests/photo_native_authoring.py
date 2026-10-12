@@ -168,5 +168,3 @@ def review(prompt: str, provenance: str = "agent_prepack") -> dict:
         "summary": "Synthetic contract fixture; physical review is tested in the dedicated embodiment suite.",
         "checks": {},
     }
-
-

@@ -14,7 +14,7 @@ import photo_feature_selection as features
 import photo_embodiment_review as embodiment
 import photo_camera_authoring as camera
 
-VERSION = "photo-workflow-run/v1"
+VERSION = "photo-workflow-run/v2"
 
 
 class WorkflowError(ValueError):
