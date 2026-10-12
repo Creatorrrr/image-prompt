@@ -9303,10 +9303,13 @@ def embed_texts_with_gemini(
     api_key: Optional[str] = None,
     retry_attempts: int = 4,
     retry_initial_delay: float = 15.0,
+    raw_response_callback: Optional[Callable[[int, bytes], None]] = None,
 ) -> List[List[float]]:
     if not texts:
         return []
     dims = semantic_dimensions_value(dimensions)
+    if raw_response_callback is not None and retry_attempts != 0:
+        raise ValueError("Raw-recorded embedding requests require retry_attempts=0")
     key = get_gemini_api_key(api_key)
 
     try:
@@ -9317,7 +9320,24 @@ def embed_texts_with_gemini(
             "Install it with `python3 -m pip install -r requirements.txt`."
         ) from exc
 
-    client = cached_gemini_client(key)
+    if raw_response_callback is None:
+        client = cached_gemini_client(key)
+    else:
+        from google import genai
+        sent = False
+        def before_send(request):
+            nonlocal sent
+            if sent:
+                raise RuntimeError("Raw-recorded embedding permits one transport send")
+            sent = True
+        def save_response(response):
+            response.read()
+            raw_response_callback(response.status_code, response.content)
+        client = genai.Client(api_key=key, vertexai=False, http_options=types.HttpOptions(
+            retry_options=types.HttpRetryOptions(attempts=1),
+            client_args={"follow_redirects": False,
+                         "event_hooks": {"request": [before_send], "response": [save_response]}},
+        ))
     config_options = {"output_dimensionality": dims}
     if model not in {"gemini-embedding-2", "models/gemini-embedding-2"}:
         config_options["task_type"] = "SEMANTIC_SIMILARITY"
@@ -9326,11 +9346,15 @@ def embed_texts_with_gemini(
     attempts = max(1, int(retry_attempts) + 1)
     for attempt in range(attempts):
         try:
-            response = client.models.embed_content(
-                model=model,
-                contents=[str(text) for text in texts],
-                config=config,
-            )
+            try:
+                response = client.models.embed_content(
+                    model=model,
+                    contents=[str(text) for text in texts],
+                    config=config,
+                )
+            finally:
+                if raw_response_callback is not None:
+                    client.close()
             break
         except Exception as exc:
             message = str(exc)
