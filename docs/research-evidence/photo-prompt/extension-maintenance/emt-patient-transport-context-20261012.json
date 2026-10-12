@@ -1,0 +1,100 @@
+{
+  "contract_version": "photo-source-metadata-transition/v1",
+  "base_commit": "747f1da4751f7498e85c6cd3213ee772ce3cd59d",
+  "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+  "before_authored_canonical_sha256": "9c4c0ff4773c4e375bc2ba240e6e3096ebb222e5beb30be119c49e37571dc65d",
+  "after_authored_canonical_sha256": "f8a636104f963226b7737e29b6b89cd0bcefc5ab05545d0adf9abac7efdcf88d",
+  "before_entry_canonical_sha256": "263eaef7b6d0d38b6e1ac8924ec588b995a79c80b7d608f33f15ed0383437393",
+  "after_entry_canonical_sha256": "001f5ba130062f0da610eca0ac5d98a61b520d9d35f59d511ee28802c62b15b4",
+  "updates": [
+    {
+      "slot": "action",
+      "id": "emt_assess_secure_transport_patient",
+      "fields": {
+        "tags": {
+          "before": {
+            "present": true,
+            "value": [
+              "human",
+              "clinical",
+              "emt",
+              "field",
+              "transport",
+              "patient_linked",
+              "procedure"
+            ]
+          },
+          "after": {
+            "present": true,
+            "value": [
+              "human",
+              "clinical",
+              "emt",
+              "emergency_transport",
+              "transport",
+              "patient_linked",
+              "procedure"
+            ]
+          }
+        },
+        "requires_primary_any_tags": {
+          "before": {
+            "present": true,
+            "value": [
+              "clinical"
+            ]
+          },
+          "after": {
+            "present": false,
+            "value": null
+          }
+        },
+        "primary_context_alternatives": {
+          "before": {
+            "present": false,
+            "value": null
+          },
+          "after": {
+            "present": true,
+            "value": [
+              [
+                "subject:clinical",
+                "action:patient",
+                "action:transport"
+              ],
+              [
+                "subject:emt",
+                "action:patient",
+                "action:transport"
+              ],
+              [
+                "subject:paramedic",
+                "action:patient",
+                "action:transport"
+              ],
+              [
+                "subject:emergency",
+                "subject:medical",
+                "subject:technician",
+                "action:patient",
+                "action:transport"
+              ],
+              [
+                "action:patient",
+                "action:stretcher",
+                "action:monitor"
+              ]
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "reason": "Use emergency transport taxonomy rather than botanical/outdoor field taxonomy, and require foreground patient transport witnesses rather than background clinical text.",
+  "canonical_embedding_inputs_changed": 0,
+  "deferred": {
+    "emt_high_visibility_transport_uniform": "A typed primary actor witness can omit worn costume terms; the scoped prototype excludes a valid uniform-only request. No unsafe unscoped shortcut is promoted.",
+    "emt_stretcher_monitor_medical_pack_set": "No actual candidate admission gain demonstrated in the frozen experiment."
+  },
+  "evaluation_scope": "Source-informed development cases; no heldout, adoption or rendered-quality claim."
+}
