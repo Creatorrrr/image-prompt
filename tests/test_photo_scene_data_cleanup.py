@@ -127,6 +127,7 @@ class ScenePreservationTests(DataCase):
                                         'photo_prompt_subculture_appearance_extension.json',
                                         'photo_prompt_seduction_expression_extension.json',
                                         'photo_prompt_cute_visual_forms_extension.json',
+                                        'photo_prompt_intellectual_activity_extension.json',
                                         'photo_prompt_character_appearance_extension.json',
                                         'photo_prompt_visual_grammar_extension.json',
                                         'photo_prompt_character_hair_extension.json',

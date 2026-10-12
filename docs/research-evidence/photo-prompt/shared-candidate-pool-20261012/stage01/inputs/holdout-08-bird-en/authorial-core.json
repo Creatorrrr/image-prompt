@@ -1,0 +1,130 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "interpreted_intent": "A photographic realization of the requested subject, place and visible state.",
+  "subject": "A small sparrow",
+  "setting": "A small sparrow on a stone in a garden",
+  "event": "rests with its folded wings visible",
+  "visual_priorities": [
+    "rests with its folded wings visible",
+    "The frame gives the sparrow and its supported resting posture priority over the garden"
+  ],
+  "baseline_prompt_en": "A small sparrow on a stone in a garden rests with its folded wings visible. Both feet meet the upper stone surface under its body. Fine feather lines cross the folded wing while its tail extends clear of the stone edge. Soft garden light separates the feather markings from the mottled stone. The garden behind it falls into gentle blur. The frame gives the sparrow and its supported resting posture priority over the garden.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "governing request",
+      "source_text": "A small sparrow resting on a stone in a garden, with its folded wings visible. No festival or ceremony.",
+      "basis": "request_context",
+      "resolution": "The primary subject, place and event follow the complete request; lighting and framing remain authorial where unprescribed.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [
+    "festival or ceremony"
+  ],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "anchor_concept",
+        "source_text": "A small sparrow resting on a stone in a garden, with its folded wings visible. No festival or ceremony.",
+        "dimension": "concept",
+        "prompt_evidence": "A small sparrow on a stone in a garden rests with its folded wings visible"
+      },
+      {
+        "anchor_id": "anchor_subject",
+        "source_text": "A small sparrow resting on a stone in a garden, with its folded wings visible. No festival or ceremony.",
+        "dimension": "subject",
+        "prompt_evidence": "A small sparrow"
+      },
+      {
+        "anchor_id": "anchor_setting",
+        "source_text": "A small sparrow resting on a stone in a garden, with its folded wings visible. No festival or ceremony.",
+        "dimension": "setting",
+        "prompt_evidence": "on a stone in a garden"
+      },
+      {
+        "anchor_id": "anchor_event",
+        "source_text": "A small sparrow resting on a stone in a garden, with its folded wings visible. No festival or ceremony.",
+        "dimension": "event",
+        "prompt_evidence": "rests with its folded wings visible"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "setting",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "timing",
+      "atmosphere",
+      "style",
+      "material",
+      "color",
+      "framing",
+      "composition",
+      "camera",
+      "lighting",
+      "pose",
+      "action",
+      "relationship",
+      "expression",
+      "body_geometry"
+    ]
+  },
+  "style": {
+    "domain": "general_photo",
+    "family": "scene-led photographic observation",
+    "evidence": [
+      "Soft garden light separates the feather markings",
+      "The frame gives the sparrow and its supported resting posture priority over the garden"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "animal"
+      },
+      "evidence": {
+        "subject_phrase": "A small sparrow"
+      }
+    },
+    {
+      "assertion_id": "camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "variation_key": "holdout-08-bird-en",
+  "source_request": "A small sparrow resting on a stone in a garden, with its folded wings visible. No festival or ceremony.",
+  "creative_controls_sha256": "e9d9d58169fe04a8db51d59b04d3e1ad0bafbf04a175f7ba62b401de8ad4f390"
+}

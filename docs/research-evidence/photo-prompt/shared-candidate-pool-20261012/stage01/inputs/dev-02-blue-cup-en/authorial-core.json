@@ -1,0 +1,154 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "interpreted_intent": "A photographic realization of the requested subject, place and visible state.",
+  "subject": "A single blue porcelain teacup",
+  "setting": "on a dark kitchen counter",
+  "event": "shows clearly visible glaze reflections",
+  "visual_priorities": [
+    "shows clearly visible glaze reflections",
+    "The frame gives the cup surface priority over surrounding counter space"
+  ],
+  "baseline_prompt_en": "A single blue porcelain teacup on a dark kitchen counter shows clearly visible glaze reflections. Soft side lighting from a window travels across the curved glaze and separates its rim from the counter. Its handle and circular mouth remain legible within the same quiet still life. A gradual falloff leaves the rear counter subdued. The frame gives the cup surface priority over surrounding counter space.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "governing request",
+      "source_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+      "basis": "request_context",
+      "resolution": "The primary subject, place and event follow the complete request; lighting and framing remain authorial where unprescribed.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [
+    "people"
+  ],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "anchor_concept",
+        "source_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+        "dimension": "concept",
+        "prompt_evidence": "A single blue porcelain teacup on a dark kitchen counter shows clearly visible glaze reflections"
+      },
+      {
+        "anchor_id": "anchor_subject",
+        "source_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+        "dimension": "subject",
+        "prompt_evidence": "A single blue porcelain teacup"
+      },
+      {
+        "anchor_id": "anchor_setting",
+        "source_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+        "dimension": "setting",
+        "prompt_evidence": "on a dark kitchen counter"
+      },
+      {
+        "anchor_id": "anchor_event",
+        "source_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+        "dimension": "event",
+        "prompt_evidence": "shows clearly visible glaze reflections"
+      },
+      {
+        "anchor_id": "property_0",
+        "source_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+        "dimension": "color",
+        "target": "main_subject",
+        "property": "surface.color",
+        "prompt_evidence": "blue porcelain teacup"
+      },
+      {
+        "anchor_id": "property_1",
+        "source_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+        "dimension": "material",
+        "target": "main_subject",
+        "property": "surface.material",
+        "prompt_evidence": "porcelain teacup"
+      },
+      {
+        "anchor_id": "property_2",
+        "source_text": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+        "dimension": "lighting",
+        "target": "scene",
+        "property": "source.direction",
+        "prompt_evidence": "Soft side lighting from a window"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "setting",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "timing",
+      "atmosphere",
+      "style",
+      "material",
+      "color",
+      "framing",
+      "composition",
+      "camera",
+      "lighting",
+      "pose",
+      "action",
+      "relationship",
+      "expression",
+      "body_geometry"
+    ]
+  },
+  "style": {
+    "domain": "general_photo",
+    "family": "scene-led photographic observation",
+    "evidence": [
+      "Soft side lighting from a window",
+      "The frame gives the cup surface priority over surrounding counter space"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "object"
+      },
+      "evidence": {
+        "subject_phrase": "A single blue porcelain teacup"
+      }
+    },
+    {
+      "assertion_id": "camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "variation_key": "dev-02-blue-cup-en",
+  "source_request": "A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No people.",
+  "creative_controls_sha256": "35017b45ff62bf58fdfc83aa83ea7a102eb7c1e472d32641fc1e4bd745dee698"
+}

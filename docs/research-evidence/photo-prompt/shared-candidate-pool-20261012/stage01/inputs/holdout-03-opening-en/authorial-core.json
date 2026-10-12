@@ -1,0 +1,128 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "interpreted_intent": "A photographic realization of the requested subject, place and visible state.",
+  "subject": "An adult arranges display objects on its first opening day before customers arrive",
+  "setting": "An adult inside a shop",
+  "event": "arranges display objects on its first opening day before customers arrive",
+  "visual_priorities": [
+    "arranges display objects on its first opening day before customers arrive",
+    "The frame gives the last adjustments to the display priority over the farther entrance"
+  ],
+  "baseline_prompt_en": "An adult inside a shop arranges display objects on its first opening day before customers arrive. The person stands beside a low shelf and uses both hands to settle a small object on the shelf surface. The entrance remains visible farther back. Broad window light defines the separated display objects and the open walking space. The frame gives the last adjustments to the display priority over the farther entrance.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "governing request",
+      "source_text": "An adult arranging display objects inside a shop on its first opening day, just before customers arrive.",
+      "basis": "request_context",
+      "resolution": "The primary subject, place and event follow the complete request; lighting and framing remain authorial where unprescribed.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "anchor_concept",
+        "source_text": "An adult arranging display objects inside a shop on its first opening day, just before customers arrive.",
+        "dimension": "concept",
+        "prompt_evidence": "An adult inside a shop arranges display objects on its first opening day before customers arrive"
+      },
+      {
+        "anchor_id": "anchor_subject",
+        "source_text": "An adult arranging display objects inside a shop on its first opening day, just before customers arrive.",
+        "dimension": "subject",
+        "prompt_evidence": "An adult inside a shop"
+      },
+      {
+        "anchor_id": "anchor_setting",
+        "source_text": "An adult arranging display objects inside a shop on its first opening day, just before customers arrive.",
+        "dimension": "setting",
+        "prompt_evidence": "inside a shop"
+      },
+      {
+        "anchor_id": "anchor_event",
+        "source_text": "An adult arranging display objects inside a shop on its first opening day, just before customers arrive.",
+        "dimension": "event",
+        "prompt_evidence": "arranges display objects on its first opening day before customers arrive"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "setting",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "timing",
+      "atmosphere",
+      "style",
+      "material",
+      "color",
+      "framing",
+      "composition",
+      "camera",
+      "lighting",
+      "pose",
+      "action",
+      "relationship",
+      "expression",
+      "body_geometry"
+    ]
+  },
+  "style": {
+    "domain": "general_photo",
+    "family": "scene-led photographic observation",
+    "evidence": [
+      "Broad window light defines the separated display objects",
+      "The frame gives the last adjustments to the display priority over the farther entrance"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "An adult inside a shop"
+      }
+    },
+    {
+      "assertion_id": "camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "variation_key": "holdout-03-opening-en",
+  "source_request": "An adult arranging display objects inside a shop on its first opening day, just before customers arrive.",
+  "creative_controls_sha256": "db8d3f63263bd36732286b15ad047fae0141b72fcaedb282c3c18bbf5199019a"
+}

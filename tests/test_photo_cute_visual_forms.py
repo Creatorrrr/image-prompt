@@ -41,7 +41,15 @@ class CuteVisualFormsTests(unittest.TestCase):
                     old_usage=old[eid].get('contextual_usage',{})
                     new_usage=new[eid].get('contextual_usage',{})
                     old_contexts=old_usage.get('contexts',[])
-                    self.assertEqual(new_usage.get('contexts',[])[:len(old_contexts)],old_contexts)
+                    # Independent later extensions can insert their contexts
+                    # after this extension. Removing only this extension must
+                    # retain every other context's value and relative order;
+                    # it does not make those later contexts a leading prefix.
+                    new_contexts=new_usage.get('contexts',[])
+                    old_ids={c['id'] for c in old_contexts}
+                    self.assertEqual(len(old_ids),len(old_contexts))
+                    self.assertEqual(len({c['id'] for c in new_contexts}),len(new_contexts))
+                    self.assertEqual([c for c in new_contexts if c['id'] in old_ids],old_contexts)
                     self.assertEqual({k:new_usage[k] for k in old_usage if k!='contexts'},
                                      {k:v for k,v in old_usage.items() if k!='contexts'})
                     self.assertTrue(set(old[eid].get('paraphrases',[]))<=set(new[eid]['paraphrases']))

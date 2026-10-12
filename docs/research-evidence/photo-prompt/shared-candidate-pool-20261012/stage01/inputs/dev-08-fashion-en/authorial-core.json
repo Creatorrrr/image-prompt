@@ -1,0 +1,160 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "interpreted_intent": "A photographic realization of the requested subject, place and visible state.",
+  "subject": "An adult fashion model",
+  "setting": "An adult fashion model at a studio window",
+  "event": "sits with dress folds and boot shape visible",
+  "visual_priorities": [
+    "sits with dress folds and boot shape visible",
+    "The frame gives the dress folds and ankle boots priority around her seated posture"
+  ],
+  "baseline_prompt_en": "An adult fashion model in a black satin dress and ankle boots sits with dress folds and boot shape visible at a studio window. Her hips rest on a chair and both boot soles touch the floor. The satin falls over her thighs into clear folds beside the chair edge. Quiet window light separates the glossy fold ridges from darker fabric planes. Her assured expression and nearby framing carry the intimate fashion mood. The frame gives the dress folds and ankle boots priority around her seated posture.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "governing request",
+      "source_text": "An adult fashion model in a black satin dress and ankle boots, seated at a studio window, with the dress folds and boot shape visible. A confident, intimate fashion photograph.",
+      "basis": "request_context",
+      "resolution": "The primary subject, place and event follow the complete request; lighting and framing remain authorial where unprescribed.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "anchor_concept",
+        "source_text": "An adult fashion model in a black satin dress and ankle boots, seated at a studio window, with the dress folds and boot shape visible. A confident, intimate fashion photograph.",
+        "dimension": "concept",
+        "prompt_evidence": "An adult fashion model in a black satin dress and ankle boots sits with dress folds and boot shape visible at a studio window"
+      },
+      {
+        "anchor_id": "anchor_subject",
+        "source_text": "An adult fashion model in a black satin dress and ankle boots, seated at a studio window, with the dress folds and boot shape visible. A confident, intimate fashion photograph.",
+        "dimension": "subject",
+        "prompt_evidence": "An adult fashion model"
+      },
+      {
+        "anchor_id": "anchor_setting",
+        "source_text": "An adult fashion model in a black satin dress and ankle boots, seated at a studio window, with the dress folds and boot shape visible. A confident, intimate fashion photograph.",
+        "dimension": "setting",
+        "prompt_evidence": "at a studio window"
+      },
+      {
+        "anchor_id": "anchor_event",
+        "source_text": "An adult fashion model in a black satin dress and ankle boots, seated at a studio window, with the dress folds and boot shape visible. A confident, intimate fashion photograph.",
+        "dimension": "event",
+        "prompt_evidence": "sits with dress folds and boot shape visible"
+      },
+      {
+        "anchor_id": "property_0",
+        "source_text": "An adult fashion model in a black satin dress and ankle boots, seated at a studio window, with the dress folds and boot shape visible. A confident, intimate fashion photograph.",
+        "dimension": "appearance",
+        "target": "main_subject",
+        "property": "wardrobe.garment_type",
+        "prompt_evidence": "a black satin dress"
+      },
+      {
+        "anchor_id": "property_1",
+        "source_text": "An adult fashion model in a black satin dress and ankle boots, seated at a studio window, with the dress folds and boot shape visible. A confident, intimate fashion photograph.",
+        "dimension": "appearance",
+        "target": "main_subject",
+        "property": "wardrobe.color",
+        "prompt_evidence": "black satin dress"
+      },
+      {
+        "anchor_id": "property_2",
+        "source_text": "An adult fashion model in a black satin dress and ankle boots, seated at a studio window, with the dress folds and boot shape visible. A confident, intimate fashion photograph.",
+        "dimension": "material",
+        "target": "main_subject",
+        "property": "wardrobe.material",
+        "prompt_evidence": "satin dress"
+      },
+      {
+        "anchor_id": "property_3",
+        "source_text": "An adult fashion model in a black satin dress and ankle boots, seated at a studio window, with the dress folds and boot shape visible. A confident, intimate fashion photograph.",
+        "dimension": "appearance",
+        "target": "main_subject",
+        "property": "footwear.type",
+        "prompt_evidence": "ankle boots"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "setting",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "timing",
+      "atmosphere",
+      "style",
+      "material",
+      "color",
+      "framing",
+      "composition",
+      "camera",
+      "lighting",
+      "pose",
+      "action",
+      "relationship",
+      "expression",
+      "body_geometry"
+    ]
+  },
+  "style": {
+    "domain": "general_photo",
+    "family": "scene-led photographic observation",
+    "evidence": [
+      "Quiet window light separates the glossy fold ridges",
+      "The frame gives the dress folds and ankle boots priority around her seated posture"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "primary_subject",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "subject"
+      ],
+      "axes": {
+        "subject_category": "human"
+      },
+      "evidence": {
+        "subject_phrase": "An adult fashion model"
+      }
+    },
+    {
+      "assertion_id": "camera_review",
+      "dimension": "camera",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "camera"
+      ],
+      "axes": {
+        "camera_axis_review": "camera_axis_review_v1",
+        "capture_owner": "unprescribed",
+        "direction_requirement": "open",
+        "height_requirement": "open"
+      },
+      "evidence": {}
+    }
+  ],
+  "request_lineage": null,
+  "variation_key": "dev-08-fashion-en",
+  "source_request": "An adult fashion model in a black satin dress and ankle boots, seated at a studio window, with the dress folds and boot shape visible. A confident, intimate fashion photograph.",
+  "creative_controls_sha256": "cbe8d1e1f88a3ffae0e71457f951165f1fac05a758cc1e53c4fd02bc1e678697"
+}
