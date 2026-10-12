@@ -163,6 +163,8 @@ GEMINI_API_KEY=... .venv/bin/python \
 
 Do not print or commit API keys.
 
+For durable raw-response recovery without resending an attempted input, opt in with `--record-embedding-attempts --batch-size 1 --retry-attempts 0`. Use private output and checkpoint paths, or require every writer sharing those paths to opt in before any build starts. An already running legacy writer is outside this protection. Keep the same checkpoint, provider, model spelling, dimensions and exact input for recovery; stopped or invalid attempt evidence requires review and must not be deleted to trigger another send. Default builds retain their existing batch and retry behavior. Attempt records and raw responses stay outside commits.
+
 ## Promotion Boundary
 
 Local contract and retrieval checks do not establish rendered-image quality. Keep saved images, exact runtime bytes, prompt/runtime audits, strict native-pixel reviews and requesting-user judgment as separate evidence. Image/API generation is not part of ordinary maintenance validation.
