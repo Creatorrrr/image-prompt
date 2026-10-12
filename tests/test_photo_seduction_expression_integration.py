@@ -26,10 +26,11 @@ class SeductionExpressionIntegrationTests(unittest.TestCase):
 
     def test_existing_candidate_labels_and_real_prerequisites_survive(self):
         # Compare this frozen integration oracle before the later cute context
-        # overlay. Current merged guards are exercised by the tests below and
-        # cute overlay source invariants by test_photo_cute_visual_forms.
+        # overlays. Current merged guards are exercised by the tests below;
+        # live overlays are separately checked for unchanged prior meaning.
         filenames = tuple(name for name in pg.RESEARCH_EXTENSION_FILENAMES
                           if name not in {'photo_prompt_cute_visual_forms_extension.json',
+                                          'photo_prompt_intellectual_activity_extension.json',
                                           'photo_prompt_visual_grammar_extension.json',
                                           'photo_prompt_vel_appearance_relations_extension.json'})
         inventory = pg.photo_source_manifest.SourceInventory.for_test(ASSETS, candidate_files=filenames)
