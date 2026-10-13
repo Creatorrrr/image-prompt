@@ -1,5 +1,5 @@
 {
-  "schema": "photo-candidate-module/v2",
+  "schema": "photo-candidate-module/v3",
   "candidates": {
     "cand_03f19e48b756585c95ad89a3c6b20fba": {
       "content": {
@@ -31679,8 +31679,28 @@
         "properties": [
           {
             "dimension": "appearance",
-            "property": "wardrobe",
-            "target": "main_subject"
+            "target": "main_subject",
+            "property": "wardrobe"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layer_boundary"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.inner_layer.color"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "surface.material"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.inner_layer"
           }
         ]
       },
@@ -89530,7 +89550,7 @@
           "source": "character_mechanism_node:character_moe_sd_identity_anchor"
         }
       ],
-      "record_kind": "relationship_mechanism",
+      "record_kind": "diagnostic",
       "conditions": {}
     },
     "cand_1ecd85364d565f2597173472063ee1a4": {

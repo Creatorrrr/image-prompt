@@ -1,0 +1,1368 @@
+{
+  "ids": [
+    "cand_0a5643fab47c5c7bb1ac07eb79c33a58",
+    "cand_0a5a10732a595a9cbf4f72731bd34be1",
+    "cand_0a5adc1dcc4d5f8392ceacf79f509aef",
+    "cand_0a5c00c2b8155d0fad658cf6535f627d",
+    "cand_0a5ee5a8576f5bf2af14d3d0a64cd271",
+    "cand_0a65bb41da8952f4bef57756a359a5a1",
+    "cand_0a667a4bf2bc591394ae8c15a2760a3e",
+    "cand_0a673677309350f2beb5c17bd111f6de",
+    "cand_0a6b23e4f8b85fa2bbb00fc1e861a983",
+    "cand_0a6d747db3bc56879d458a6f29ba3d38",
+    "cand_0a6ecb476ac951718c89053e524fffbf",
+    "cand_0a76b0ec038d5d6e9a2cbd43b2d027c8"
+  ],
+  "source_sha256": "85f89a6689f95b4b3aa11712179e5e4a909e4f910a4dd459448a124511ed23c4",
+  "rows": [
+    {
+      "review": {
+        "all_roles_considered": true,
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "subject",
+            "pointer": "/content/embedding_text",
+            "property": "subject.entity",
+            "quote": "one advisor in a private salon presents a restrained sequence of carefully spaced objects to one client",
+            "realization_id": "base",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "count",
+            "pointer": "/content/embedding_text",
+            "property": "subject.count",
+            "quote": "one advisor",
+            "realization_id": "base",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "count",
+            "pointer": "/content/embedding_text",
+            "property": "subject.count",
+            "quote": "one client",
+            "realization_id": "base",
+            "target": "client"
+          },
+          {
+            "dimension": "setting",
+            "pointer": "/content/embedding_text",
+            "property": "setting.location",
+            "quote": "private salon",
+            "realization_id": "base",
+            "target": "environment"
+          },
+          {
+            "dimension": "subject",
+            "pointer": "/content/embedding_text",
+            "property": "props.item",
+            "quote": "carefully spaced objects",
+            "realization_id": "base",
+            "target": "object"
+          },
+          {
+            "dimension": "subject",
+            "pointer": "/content/embedding_text",
+            "property": "props.item",
+            "quote": "handling cloth fit check or aftercare material visible",
+            "realization_id": "base",
+            "target": "object"
+          },
+          {
+            "dimension": "action",
+            "pointer": "/content/embedding_text",
+            "property": "relation.action",
+            "quote": "presents a restrained sequence of carefully spaced objects to one client, responds to the client's focus",
+            "realization_id": "base",
+            "target": "main_subject"
+          }
+        ],
+        "id": "cand_0a5643fab47c5c7bb1ac07eb79c33a58",
+        "meaning_summary": "In a private salon setting, a private advisor presents a paced, carefully spaced sequence of objects to a single client while responding to their focus and keeping fit check or aftercare handling materials visible.",
+        "recommended_kind": "visual_option",
+        "rejected_boundaries": [
+          "procedure_step: The record specifies an ongoing interactive curation rhythm rather than a discrete single milestone step in a fixed procedure.",
+          "gaze_direction: Client focus is declared as an interactive communicative focus rather than an explicit eye/iris viewing vector.",
+          "crowd_density: The scene explicitly restricts occupancy to two isolated individuals rather than a group or crowd."
+        ],
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "subject",
+                "pointer": "/content/embedding_text",
+                "property": "subject.entity",
+                "quote": "one advisor in a private salon presents a restrained sequence of carefully spaced objects to one client",
+                "target": "main_subject"
+              }
+            ],
+            "rationale": "Explicitly names the primary human subjects present in the interaction: an advisor and a client.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "subject"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "count",
+                "pointer": "/content/embedding_text",
+                "property": "subject.count",
+                "quote": "one advisor",
+                "target": "main_subject"
+              },
+              {
+                "dimension": "count",
+                "pointer": "/content/embedding_text",
+                "property": "subject.count",
+                "quote": "one client",
+                "target": "client"
+              }
+            ],
+            "rationale": "Specifies exact participant counts for both individuals (one advisor and one client).",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "subject_count"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "role",
+                "pointer": "/content/keywords/0",
+                "property": "participant.role",
+                "quote": "one advisor",
+                "target": "context"
+              },
+              {
+                "dimension": "role",
+                "pointer": "/content/keywords/1",
+                "property": "participant.role",
+                "quote": "one client",
+                "target": "context"
+              }
+            ],
+            "rationale": "Defines the explicit professional and service roles of the participants.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "participant_role"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "action",
+                "pointer": "/content/embedding_text",
+                "property": "relation.action",
+                "quote": "presents a restrained sequence of carefully spaced objects to one client, responds to the client's focus",
+                "target": "main_subject"
+              }
+            ],
+            "rationale": "The advisor actively curates and presents items to the client and responds directly to client interest.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "relational_action"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "setting",
+                "pointer": "/content/embedding_text",
+                "property": "setting.location",
+                "quote": "private salon",
+                "target": "environment"
+              }
+            ],
+            "rationale": "Identifies the physical venue where the presentation takes place.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "location"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "subject",
+                "pointer": "/content/embedding_text",
+                "property": "props.item",
+                "quote": "carefully spaced objects",
+                "target": "object"
+              },
+              {
+                "dimension": "subject",
+                "pointer": "/content/embedding_text",
+                "property": "props.item",
+                "quote": "handling cloth fit check or aftercare material visible",
+                "target": "object"
+              }
+            ],
+            "rationale": "Identifies physical props being presented as well as handling cloth/aftercare utility materials.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "prop"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "composition",
+                "pointer": "/content/embedding_text",
+                "property": "props.placement",
+                "quote": "carefully spaced objects",
+                "target": "object"
+              }
+            ],
+            "rationale": "Specifies that the presented objects are deliberately spaced in a restrained sequence.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "prop_placement"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "event",
+                "pointer": "/content/aliases/0",
+                "property": "situation.context",
+                "quote": "private client presentation",
+                "target": "context"
+              }
+            ],
+            "rationale": "Designates the event context as a private client presentation appointment.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "situation_context"
+          }
+        ],
+        "uncertainties": []
+      },
+      "original_response_file": "model-reviews/01354.json",
+      "representation_repairs": [],
+      "metadata_suggestions": [],
+      "mechanical_errors": [],
+      "mechanical_validation": "pass",
+      "independent_semantic_review": false
+    },
+    {
+      "review": {
+        "all_roles_considered": true,
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "subject",
+            "pointer": "/content/en",
+            "property": "prop.weapon",
+            "quote": "a real round shield",
+            "realization_id": "base",
+            "target": "object"
+          },
+          {
+            "dimension": "material",
+            "pointer": "/content/embedding_text",
+            "property": "surface.material",
+            "quote": "metal boss, rim",
+            "realization_id": "base",
+            "target": "object"
+          },
+          {
+            "dimension": "role",
+            "pointer": "/content/embedding_text",
+            "property": "props.state",
+            "quote": "worn surface",
+            "realization_id": "base",
+            "target": "object"
+          }
+        ],
+        "id": "cand_0a5a10732a595a9cbf4f72731bd34be1",
+        "meaning_summary": "A real round shield or buckler defensive prop featuring a metal boss and rim, and showing a worn surface state.",
+        "recommended_kind": "visual_option",
+        "rejected_boundaries": [
+          "historical_period: Tagged with 'historical', but no specific era, date, or chronological period is named in the content.",
+          "texture: 'worn surface' describes physical usage wear state rather than a calibrated repetitive surface roughness pattern.",
+          "action: 'defensive weapon' names the object class rather than an in-progress combat activity."
+        ],
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "subject",
+                "pointer": "/content/en",
+                "property": "prop.weapon",
+                "quote": "a real round shield",
+                "target": "object"
+              }
+            ],
+            "rationale": "Defines the photographed defensive weapon object as a round shield or buckler.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "prop"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "material",
+                "pointer": "/content/embedding_text",
+                "property": "surface.material",
+                "quote": "metal boss, rim",
+                "target": "object"
+              }
+            ],
+            "rationale": "Declares metal as the material for the boss and rim.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "surface_material"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "role",
+                "pointer": "/content/embedding_text",
+                "property": "props.state",
+                "quote": "worn surface",
+                "target": "object"
+              }
+            ],
+            "rationale": "Specifies that the shield has a worn surface finish indicative of usage.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "prop_state"
+          }
+        ],
+        "uncertainties": [
+          {
+            "detail": "Historical combat authenticity of the round shield configuration is asserted via tags but unverified against specific museum/archaeological periods.",
+            "kind": "external_fact_not_verified"
+          }
+        ]
+      },
+      "original_response_file": "model-reviews/01354.json",
+      "representation_repairs": [],
+      "metadata_suggestions": [],
+      "mechanical_errors": [],
+      "mechanical_validation": "pass",
+      "independent_semantic_review": false
+    },
+    {
+      "review": {
+        "all_roles_considered": true,
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "action",
+            "pointer": "/content/en",
+            "property": "action.activity",
+            "quote": "grazing quietly",
+            "realization_id": "base",
+            "target": "main_subject"
+          }
+        ],
+        "id": "cand_0a5adc1dcc4d5f8392ceacf79f509aef",
+        "meaning_summary": "An animal actor performing the quiet, subdued action of grazing.",
+        "recommended_kind": "visual_option",
+        "rejected_boundaries": [
+          "species_marker: The specific animal species is not authored in content text; 'herbivore' exists solely as a condition facet guard.",
+          "location: 'nature' is a keyword tag, but no terrain structure or landscape setting is described.",
+          "mood: 'quietly' qualifies the physical motion and pacing of grazing, not an authored scene-wide emotional affect."
+        ],
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "action",
+                "pointer": "/content/en",
+                "property": "action.activity",
+                "quote": "grazing quietly",
+                "target": "main_subject"
+              }
+            ],
+            "rationale": "Specifies the concrete physical activity being performed at the instant of capture.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "action"
+          }
+        ],
+        "uncertainties": []
+      },
+      "original_response_file": "model-reviews/01354.json",
+      "representation_repairs": [],
+      "metadata_suggestions": [],
+      "mechanical_errors": [],
+      "mechanical_validation": "pass",
+      "independent_semantic_review": false
+    },
+    {
+      "review": {
+        "all_roles_considered": true,
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "setting",
+            "pointer": "/content/embedding_text",
+            "property": "setting.location",
+            "quote": "a domestic hanok room threshold, raised timber maru, bounded madang surface, columns, and eaves",
+            "realization_id": "base",
+            "target": "environment"
+          },
+          {
+            "dimension": "material",
+            "pointer": "/content/embedding_text",
+            "property": "surface.material",
+            "quote": "timber",
+            "realization_id": "base",
+            "target": "maru"
+          },
+          {
+            "dimension": "composition",
+            "pointer": "/content/en",
+            "property": "layout.axis",
+            "quote": "a hanok sightline axis connecting a room threshold, raised maru and bounded madang",
+            "realization_id": "base",
+            "target": "image"
+          },
+          {
+            "dimension": "composition",
+            "pointer": "/content/embedding_text",
+            "property": "composition.depth",
+            "quote": "remain connected along one legible inside-to-outside sightline",
+            "realization_id": "base",
+            "target": "image"
+          }
+        ],
+        "id": "cand_0a5c00c2b8155d0fad658cf6535f627d",
+        "meaning_summary": "An architectural sightline composition in a domestic hanok connecting the room threshold, raised timber maru, and bounded madang along a continuous inside-to-outside depth axis.",
+        "recommended_kind": "visual_option",
+        "rejected_boundaries": [
+          "gaze_direction: Sightline here designates an architectural compositional axis connecting rooms, not a human actor's iris orientation.",
+          "space_condition: 'daily use' is referenced in context, but no specific clutter, wear, or preparation state is declared.",
+          "camera_direction: The composition requires sightline legibility, but does not fix camera tilt, roll, or azimuth angles."
+        ],
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "setting",
+                "pointer": "/content/embedding_text",
+                "property": "setting.location",
+                "quote": "a domestic hanok room threshold, raised timber maru, bounded madang surface, columns, and eaves",
+                "target": "environment"
+              }
+            ],
+            "rationale": "Specifies the physical setting and architectural elements of a traditional domestic hanok.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "location"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "material",
+                "pointer": "/content/embedding_text",
+                "property": "surface.material",
+                "quote": "timber",
+                "target": "maru"
+              }
+            ],
+            "rationale": "Specifies timber as the material of the elevated maru floor.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "surface_material"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "composition",
+                "pointer": "/content/en",
+                "property": "layout.axis",
+                "quote": "a hanok sightline axis connecting a room threshold, raised maru and bounded madang",
+                "target": "image"
+              }
+            ],
+            "rationale": "Defines an intentional sightline axis tying together threshold, maru, and madang within the photographic frame.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "composition"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "composition",
+                "pointer": "/content/embedding_text",
+                "property": "composition.depth",
+                "quote": "remain connected along one legible inside-to-outside sightline",
+                "target": "image"
+              }
+            ],
+            "rationale": "Establishes a depth gradient along the inside-to-outside perspective transition across architectural thresholds.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "spatial_depth"
+          }
+        ],
+        "uncertainties": []
+      },
+      "original_response_file": "model-reviews/01354.json",
+      "representation_repairs": [],
+      "metadata_suggestions": [],
+      "mechanical_errors": [],
+      "mechanical_validation": "pass",
+      "independent_semantic_review": false
+    },
+    {
+      "review": {
+        "all_roles_considered": true,
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "appearance",
+            "pointer": "/content/concept_units/0",
+            "property": "surface.texture",
+            "quote": "opposing diagonal yarn ridges reverse direction in neighboring bands",
+            "realization_id": "base",
+            "target": "surface"
+          },
+          {
+            "dimension": "appearance",
+            "pointer": "/content/concept_units/1",
+            "property": "surface.weave",
+            "quote": "the direction change contains a visible offset rather than a continuous chevron apex",
+            "realization_id": "base",
+            "target": "surface"
+          },
+          {
+            "dimension": "material",
+            "pointer": "/content/embedding_text",
+            "property": "surface.material",
+            "quote": "fabric weave",
+            "realization_id": "base",
+            "target": "surface"
+          }
+        ],
+        "id": "cand_0a5ee5a8576f5bf2af14d3d0a64cd271",
+        "meaning_summary": "A textile weave structure where opposing diagonal herringbone yarn ridges reverse direction across adjacent bands with a visible offset rather than forming a continuous apex.",
+        "recommended_kind": "visual_option",
+        "rejected_boundaries": [
+          "garment_detail: While tagged clothing, the core assertion specifies a textile weave texture rather than a specific garment collar, hem, or cuff.",
+          "image_detail: Acuity and edge rendering of the sensor are distinct from physical raised diagonal yarn ridges.",
+          "grain_profile: Woven ridges are tactile macroscopic material structures, not photographic emulsion grain or digital sensor noise."
+        ],
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "material",
+                "pointer": "/content/concept_units/0",
+                "property": "surface.texture",
+                "quote": "opposing diagonal yarn ridges reverse direction in neighboring bands",
+                "target": "surface"
+              },
+              {
+                "dimension": "material",
+                "pointer": "/content/concept_units/1",
+                "property": "surface.weave",
+                "quote": "the direction change contains a visible offset rather than a continuous chevron apex",
+                "target": "surface"
+              }
+            ],
+            "rationale": "Specifies physical repetitive yarn ridges reversing direction with a noticeable offset across bands.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "texture"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "material",
+                "pointer": "/content/embedding_text",
+                "property": "surface.material",
+                "quote": "fabric weave",
+                "target": "surface"
+              }
+            ],
+            "rationale": "Explicitly identifies the surface structure as a woven fabric herringbone weave.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "surface_material"
+          }
+        ],
+        "uncertainties": []
+      },
+      "original_response_file": "model-reviews/01354.json",
+      "representation_repairs": [
+        {
+          "type": "catalog_contract_dimension",
+          "slot": "texture",
+          "property": "surface.texture",
+          "before": "appearance",
+          "after": "material"
+        },
+        {
+          "type": "catalog_contract_dimension",
+          "slot": "texture",
+          "property": "surface.weave",
+          "before": "appearance",
+          "after": "material"
+        }
+      ],
+      "metadata_suggestions": [],
+      "mechanical_errors": [],
+      "mechanical_validation": "pass",
+      "independent_semantic_review": false
+    },
+    {
+      "review": {
+        "all_roles_considered": true,
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "appearance",
+            "pointer": "/content/embedding_text",
+            "property": "wardrobe.cultural",
+            "quote": "West African grand boubou",
+            "realization_id": "base",
+            "target": "context"
+          },
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "wardrobe.ensemble",
+            "quote": "a West African grand boubou with an expansive robe body, broad sleeve openings, and a coordinated inner layer",
+            "realization_id": "base",
+            "target": "garment"
+          },
+          {
+            "dimension": "appearance",
+            "pointer": "/content/embedding_text",
+            "property": "garment.trim",
+            "quote": "broad open sleeves, a concentrated embroidered neckline or center panel",
+            "realization_id": "base",
+            "target": "garment"
+          },
+          {
+            "dimension": "appearance",
+            "pointer": "/content/embedding_text",
+            "property": "wardrobe.layers",
+            "quote": "coordinated inner wrapper or garment layer",
+            "realization_id": "base",
+            "target": "garment"
+          },
+          {
+            "dimension": "appearance",
+            "pointer": "/content/embedding_text",
+            "property": "garment.fit",
+            "quote": "expansive near-rectangular outer body",
+            "realization_id": "base",
+            "target": "garment"
+          }
+        ],
+        "id": "cand_0a65bb41da8952f4bef57756a359a5a1",
+        "meaning_summary": "A traditional West African grand boubou featuring an expansive rectangular robe body, broad sleeve openings, an embroidered neckline or center panel, and a coordinated inner wrapper layer.",
+        "recommended_kind": "visual_option",
+        "rejected_boundaries": [
+          "declared_person_background: Cultural dress naming provides context for the attire, but does not declare the model's biographical ancestry or citizenship.",
+          "body_form: The expansive geometric silhouette is an attribute of the garment's cut, not the wearer's physical anatomy.",
+          "surface_material: Embroidery and cloth layers are indicated, but specific fabric yarns (e.g., damask bazin) are not chemically identified."
+        ],
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/embedding_text",
+                "property": "wardrobe.cultural",
+                "quote": "West African grand boubou",
+                "target": "context"
+              }
+            ],
+            "rationale": "Specifies the traditional West African cultural context defining this ceremonial attire.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "attire_context"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "wardrobe.ensemble",
+                "quote": "a West African grand boubou with an expansive robe body, broad sleeve openings, and a coordinated inner layer",
+                "target": "garment"
+              }
+            ],
+            "rationale": "Specifies the complete ensemble of the grand boubou robe coordinated with an inner layer.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "wardrobe_style"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/embedding_text",
+                "property": "garment.trim",
+                "quote": "broad open sleeves, a concentrated embroidered neckline or center panel",
+                "target": "garment"
+              }
+            ],
+            "rationale": "Specifies structural elements of the boubou, including broad sleeve openings and an embroidered neckline or center panel.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "garment_detail"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/embedding_text",
+                "property": "wardrobe.layers",
+                "quote": "coordinated inner wrapper or garment layer",
+                "target": "garment"
+              }
+            ],
+            "rationale": "Specifies the visible multi-layered relationship between outer voluminous boubou and inner wrapper.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "wardrobe_layering"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/embedding_text",
+                "property": "garment.fit",
+                "quote": "expansive near-rectangular outer body",
+                "target": "garment"
+              }
+            ],
+            "rationale": "Describes the voluminous, expansive rectangular drape and proportion of the boubou body.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "garment_fit"
+          }
+        ],
+        "uncertainties": []
+      },
+      "original_response_file": "model-reviews/01354.json",
+      "representation_repairs": [],
+      "metadata_suggestions": [],
+      "mechanical_errors": [],
+      "mechanical_validation": "pass",
+      "independent_semantic_review": false
+    },
+    {
+      "review": {
+        "all_roles_considered": true,
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "timing",
+            "pointer": "/content/en",
+            "property": "timing.time_of_day",
+            "quote": "noon",
+            "realization_id": "base",
+            "target": "context"
+          },
+          {
+            "dimension": "lighting",
+            "pointer": "/content/en",
+            "property": "lighting.source",
+            "quote": "sun",
+            "realization_id": "base",
+            "target": "light"
+          },
+          {
+            "dimension": "lighting",
+            "pointer": "/content/en",
+            "property": "lighting.quality",
+            "quote": "harsh",
+            "realization_id": "base",
+            "target": "light"
+          },
+          {
+            "dimension": "lighting",
+            "pointer": "/content/en",
+            "property": "shadow.boundary",
+            "quote": "short shadows",
+            "realization_id": "base",
+            "target": "light"
+          }
+        ],
+        "id": "cand_0a667a4bf2bc591394ae8c15a2760a3e",
+        "meaning_summary": "Direct overhead solar lighting at noon characterized by harsh light quality and short cast shadows.",
+        "recommended_kind": "visual_option",
+        "rejected_boundaries": [
+          "shadow_relation: Neither specific casting objects nor receiving ground geometries are identified as correspondence pairs.",
+          "light_direction: The overhead angle is implied by noon sun and short shadows, but no explicit directional coordinate vector is declared.",
+          "weather: Sun implies clear conditions, but no explicit cloud cover or meteorological state is described."
+        ],
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "timing",
+                "pointer": "/content/en",
+                "property": "timing.time_of_day",
+                "quote": "noon",
+                "target": "context"
+              }
+            ],
+            "rationale": "Specifies noon as the phase within the natural daylight cycle.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "time_of_day"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "lighting",
+                "pointer": "/content/en",
+                "property": "lighting.source",
+                "quote": "sun",
+                "target": "light"
+              }
+            ],
+            "rationale": "Names the natural sun as the primary source of illumination.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "light_type"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "lighting",
+                "pointer": "/content/en",
+                "property": "lighting.quality",
+                "quote": "harsh",
+                "target": "light"
+              }
+            ],
+            "rationale": "Characterizes the incident illumination as harsh.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "light_quality"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "lighting",
+                "pointer": "/content/en",
+                "property": "shadow.boundary",
+                "quote": "short shadows",
+                "target": "light"
+              }
+            ],
+            "rationale": "Defines the shadow pattern on ground surfaces as short shadows produced by the high solar angle.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "light_shape"
+          }
+        ],
+        "uncertainties": []
+      },
+      "original_response_file": "model-reviews/01354.json",
+      "representation_repairs": [],
+      "metadata_suggestions": [],
+      "mechanical_errors": [],
+      "mechanical_validation": "pass",
+      "independent_semantic_review": false
+    },
+    {
+      "review": {
+        "all_roles_considered": true,
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "pose",
+            "pointer": "/content/en",
+            "property": "body.pose",
+            "quote": "seated forward lean",
+            "realization_id": "base",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "style",
+            "pointer": "/content/embedding_text",
+            "property": "genre.",
+            "quote": "portrait",
+            "realization_id": "base",
+            "target": "context"
+          },
+          {
+            "dimension": "style",
+            "pointer": "/content/embedding_text",
+            "property": "capture.staging",
+            "quote": "candid",
+            "realization_id": "base",
+            "target": "context"
+          }
+        ],
+        "id": "cand_0a673677309350f2beb5c17bd111f6de",
+        "meaning_summary": "A candid portrait showing a subject seated and leaning forward.",
+        "recommended_kind": "visual_option",
+        "rejected_boundaries": [
+          "body_orientation: Torso leans forward, but no explicit rotation of body axes relative to camera azimuth is declared.",
+          "gaze_direction: No iris orientation or focal target is provided for the subject.",
+          "shot_scale: 'portrait' identifies the genre practice, not a defined shot framing scale like medium close-up or wide."
+        ],
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "pose",
+                "pointer": "/content/en",
+                "property": "body.pose",
+                "quote": "seated forward lean",
+                "target": "main_subject"
+              }
+            ],
+            "rationale": "Specifies full-body posture: seated with a forward lean.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "body_pose"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "style",
+                "pointer": "/content/embedding_text",
+                "property": "genre.",
+                "quote": "portrait",
+                "target": "context"
+              }
+            ],
+            "rationale": "Specifies portraiture as the genre.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "genre"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "style",
+                "pointer": "/content/embedding_text",
+                "property": "capture.staging",
+                "quote": "candid",
+                "target": "context"
+              }
+            ],
+            "rationale": "Declares candid capture staging rather than a directed pose.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "contextual",
+            "slot_id": "staging_degree"
+          }
+        ],
+        "uncertainties": []
+      },
+      "original_response_file": "model-reviews/01354.json",
+      "representation_repairs": [],
+      "metadata_suggestions": [],
+      "mechanical_errors": [
+        "role genre: unspecific owned property",
+        "fact: unspecific owned property"
+      ],
+      "mechanical_validation": "fail",
+      "independent_semantic_review": false
+    },
+    {
+      "review": {
+        "all_roles_considered": true,
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "appearance",
+            "pointer": "/content/components/0/concept_units/0",
+            "property": "wardrobe.layers",
+            "quote": "The robe's open edge reveals a separate dress",
+            "realization_id": "base",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "appearance",
+            "pointer": "/content/components/1/concept_units/0",
+            "property": "wardrobe.layers",
+            "quote": "the dress's inner slip remains a distinct covered layer.",
+            "realization_id": "base",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "appearance",
+            "pointer": "/content/components/0/concept_units/0",
+            "property": "wardrobe.state",
+            "quote": "robe's open edge",
+            "realization_id": "base",
+            "target": "garment"
+          }
+        ],
+        "id": "cand_0a6b23e4f8b85fa2bbb00fc1e861a983",
+        "meaning_summary": "A layered garment bundle where an unfastened robe's open edge reveals a separate dress, with the dress's inner slip remaining a distinct covered underlayer.",
+        "recommended_kind": "visual_bundle",
+        "rejected_boundaries": [
+          "skin_tone: The inner slip is an opaque or covered textile layer, guarded against being interpreted as bare skin.",
+          "adult_presentation_context: Slip undergarments and robes do not represent adult or erotic styling without explicit declaration.",
+          "surface_material: Layer opacity and coverage are discussed, but specific fiber weave identities are omitted."
+        ],
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/components/0/concept_units/0",
+                "property": "wardrobe.layers",
+                "quote": "The robe's open edge reveals a separate dress",
+                "target": "main_subject"
+              },
+              {
+                "dimension": "appearance",
+                "pointer": "/content/components/1/concept_units/0",
+                "property": "wardrobe.layers",
+                "quote": "the dress's inner slip remains a distinct covered layer.",
+                "target": "main_subject"
+              }
+            ],
+            "rationale": "Specifies multi-tier garment layering with an open robe uncovering a separate dress which in turn overlays an inner slip.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "wardrobe_layering"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/components/0/concept_units/0",
+                "property": "wardrobe.state",
+                "quote": "robe's open edge",
+                "target": "garment"
+              }
+            ],
+            "rationale": "Specifies that the robe is unfastened and held in an open front state.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "garment_state"
+          }
+        ],
+        "uncertainties": []
+      },
+      "original_response_file": "model-reviews/01354.json",
+      "representation_repairs": [],
+      "metadata_suggestions": [],
+      "mechanical_errors": [],
+      "mechanical_validation": "pass",
+      "independent_semantic_review": false
+    },
+    {
+      "review": {
+        "all_roles_considered": true,
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "material",
+            "pointer": "/content/en",
+            "property": "surface.material",
+            "quote": "brass",
+            "realization_id": "base",
+            "target": "surface"
+          },
+          {
+            "dimension": "material",
+            "pointer": "/content/en",
+            "property": "surface.texture",
+            "quote": "hand-hammered",
+            "realization_id": "base",
+            "target": "surface"
+          },
+          {
+            "dimension": "material",
+            "pointer": "/content/en",
+            "property": "reflection.surface",
+            "quote": "dimpled reflections",
+            "realization_id": "base",
+            "target": "surface"
+          },
+          {
+            "dimension": "material",
+            "pointer": "/content/embedding_text",
+            "property": "props.item",
+            "quote": "instruments, seals or scales",
+            "realization_id": "base",
+            "target": "object"
+          }
+        ],
+        "id": "cand_0a6d747db3bc56879d458a6f29ba3d38",
+        "meaning_summary": "A hand-hammered brass surface finish with dimpled specular reflections, applied across objects like instruments, seals, or scales.",
+        "recommended_kind": "visual_option",
+        "rejected_boundaries": [
+          "aftermath_trace: Hammered dimples reflect manufacturing craftsmanship, not physical residue of an authored scene event.",
+          "light_shape: 'dimpled reflections' are optical specular highlights from surface geometry, not projected lighting patterns.",
+          "image_artifact: The dimples belong to the physical metal surface, not digital sensor noise or lens aberrations."
+        ],
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "material",
+                "pointer": "/content/en",
+                "property": "surface.material",
+                "quote": "brass",
+                "target": "surface"
+              }
+            ],
+            "rationale": "Specifies brass as the physical metallic surface material.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "surface_material"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "material",
+                "pointer": "/content/en",
+                "property": "surface.texture",
+                "quote": "hand-hammered",
+                "target": "surface"
+              }
+            ],
+            "rationale": "Specifies the physical hand-hammered tactile surface treatment.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "texture"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "composition",
+                "pointer": "/content/en",
+                "property": "reflection.surface",
+                "quote": "dimpled reflections",
+                "target": "surface"
+              }
+            ],
+            "rationale": "Specifies dimpled reflections produced across the hammered metal facets.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "reflection_logic"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "material",
+                "pointer": "/content/embedding_text",
+                "property": "props.item",
+                "quote": "instruments, seals or scales",
+                "target": "object"
+              }
+            ],
+            "rationale": "Applies conditionally across optional functional object carriers (instruments, seals, or scales).",
+            "realization_ids": null,
+            "scope": "positive_alternative",
+            "semantic_role": "direct",
+            "slot_id": "prop"
+          }
+        ],
+        "uncertainties": []
+      },
+      "original_response_file": "model-reviews/01354.json",
+      "representation_repairs": [
+        {
+          "type": "catalog_contract_dimension",
+          "slot": "reflection_logic",
+          "property": "reflection.surface",
+          "before": "material",
+          "after": "composition"
+        }
+      ],
+      "metadata_suggestions": [],
+      "mechanical_errors": [
+        "role prop: property outside role dimensions"
+      ],
+      "mechanical_validation": "fail",
+      "independent_semantic_review": false
+    },
+    {
+      "review": {
+        "all_roles_considered": true,
+        "corrections": [
+          {
+            "after": "서커스 무대 뒤 텐트",
+            "before": "a circus backstage tent",
+            "pointer": "/content/ko",
+            "reason": "The 'ko' field contains untranslated English text identical to 'en'."
+          },
+          {
+            "after": "서커스 무대 뒤 텐트에서",
+            "before": "in a circus backstage tent",
+            "pointer": "/content/phrase_ko",
+            "reason": "The 'phrase_ko' field contains untranslated English text identical to 'phrase_en'."
+          }
+        ],
+        "facts": [
+          {
+            "dimension": "setting",
+            "pointer": "/content/en",
+            "property": "setting.location",
+            "quote": "a circus backstage tent",
+            "realization_id": "base",
+            "target": "environment"
+          }
+        ],
+        "id": "cand_0a6ecb476ac951718c89053e524fffbf",
+        "meaning_summary": "The scene location is set inside a circus backstage tent.",
+        "recommended_kind": "visual_option",
+        "rejected_boundaries": [
+          "occasion_context: While backstage at a circus implies performance, no specific ceremony, show, or scheduled event is declared in text.",
+          "participant_role: Tagged with 'clown', but no actor or performer is authored in the visual text.",
+          "space_condition: No specific state of mess, prep, or maintenance within the tent is described."
+        ],
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "setting",
+                "pointer": "/content/en",
+                "property": "setting.location",
+                "quote": "a circus backstage tent",
+                "target": "environment"
+              }
+            ],
+            "rationale": "Directly names the physical architectural place and venue setting as a circus backstage tent.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "location"
+          }
+        ],
+        "uncertainties": []
+      },
+      "original_response_file": "model-reviews/01354.json",
+      "representation_repairs": [],
+      "metadata_suggestions": [],
+      "mechanical_errors": [],
+      "mechanical_validation": "pass",
+      "independent_semantic_review": false
+    },
+    {
+      "review": {
+        "all_roles_considered": true,
+        "corrections": [],
+        "facts": [
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "wardrobe.layers",
+            "quote": "The open coat leaves the selected knit neckline visible without changing either garment.",
+            "realization_id": "base",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "appearance",
+            "pointer": "/content/embedding_text",
+            "property": "wardrobe.state",
+            "quote": "open coat panels",
+            "realization_id": "base",
+            "target": "garment"
+          },
+          {
+            "dimension": "appearance",
+            "pointer": "/content/en",
+            "property": "garment.trim",
+            "quote": "knit neckline",
+            "realization_id": "base",
+            "target": "garment"
+          }
+        ],
+        "id": "cand_0a76b0ec038d5d6e9a2cbd43b2d027c8",
+        "meaning_summary": "An open coat reveals the wearer's separate knit neckline without altering the construction of either garment.",
+        "recommended_kind": "visual_option",
+        "rejected_boundaries": [
+          "surface_material: 'knit' specifies the neckline construction, but the specific fiber identity (e.g. wool, cashmere) is not declared.",
+          "body_region: The open panels reveal an inner garment's neckline rather than exposing bare neck anatomy.",
+          "season: Outer coat and knitwear may correlate with winter, but no specific seasonal or climatic conditions are declared."
+        ],
+        "roles": [
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "wardrobe.layers",
+                "quote": "The open coat leaves the selected knit neckline visible without changing either garment.",
+                "target": "main_subject"
+              }
+            ],
+            "rationale": "Specifies layering order where an open outer coat panels reveal an underlayer garment's knit neckline.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "wardrobe_layering"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/embedding_text",
+                "property": "wardrobe.state",
+                "quote": "open coat panels",
+                "target": "garment"
+              }
+            ],
+            "rationale": "Specifies that the coat front panels are in an unfastened, open state.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "garment_state"
+          },
+          {
+            "evidence": [
+              {
+                "dimension": "appearance",
+                "pointer": "/content/en",
+                "property": "garment.trim",
+                "quote": "knit neckline",
+                "target": "garment"
+              }
+            ],
+            "rationale": "Specifies the knit neckline as an exposed component of the separate undergarment.",
+            "realization_ids": null,
+            "scope": "whole_record",
+            "semantic_role": "direct",
+            "slot_id": "garment_detail"
+          }
+        ],
+        "uncertainties": []
+      },
+      "original_response_file": "model-reviews/01354.json",
+      "representation_repairs": [],
+      "metadata_suggestions": [],
+      "mechanical_errors": [],
+      "mechanical_validation": "pass",
+      "independent_semantic_review": false
+    }
+  ]
+}

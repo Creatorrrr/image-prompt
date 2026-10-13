@@ -29,7 +29,7 @@ def parent_inputs(parent_state, attempt_path, ledger_path):
     from photo_workflow_reviews import gates, validate_visual_scales
     _, core, controls = verify_freeze(parent_state)
     pack, receipt, composed, runtime = (one(value(parent_state, k)) for k in ("pack", "runtime_receipt", "composed", "render_request"))
-    if pack.get("contract_version") != "photo-candidate-pack/v9" or pack["authorial_core"] != core or pack["creative_controls"] != controls:
+    if pack.get("contract_version") != "photo-candidate-pack/v10" or pack["authorial_core"] != core or pack["creative_controls"] != controls:
         raise WorkflowError("parent_core_pack_mismatch")
     audit = audit_bound(parent_state, runtime=True, reviews=True)
     if audit["composed_audit"]["status"] != "pass" or audit["runtime_audit"]["status"] != "pass" or audit.get("contract_failures"):

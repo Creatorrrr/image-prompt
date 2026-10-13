@@ -77,7 +77,7 @@ finally:
         sys.path.remove(_SCRIPTS_IMPORT_DIR)
 
 
-SUPPORTED_CANDIDATE_PACK_VERSIONS = {"photo-candidate-pack/v9"}
+SUPPORTED_CANDIDATE_PACK_VERSIONS = {"photo-candidate-pack/v10"}
 MOE_PROMPT_DEFAULT_RECOMMENDED_MIN_WORDS = 100
 MOE_PROMPT_DEFAULT_RECOMMENDED_MAX_WORDS = 240
 VISUAL_OBLIGATIONS_CONTRACT_VERSION = "photo-visual-obligations/v1"
@@ -824,7 +824,7 @@ def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any
 
 def audit_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
     pack = photo_native_pack.read_view(pack)
-    if str(pack.get("contract_version") or "") not in {"photo-candidate-pack/v9"}:
+    if str(pack.get("contract_version") or "") not in {"photo-candidate-pack/v10"}:
         return []
     failures: list[dict[str, Any]] = []
     contract = (
@@ -2696,10 +2696,10 @@ def audit_candidate_semantic_contracts(
         )
 
     if (
-        pack.get("contract_version") != "photo-candidate-pack/v9"
+        pack.get("contract_version") != "photo-candidate-pack/v10"
         or version != photo_candidate_semantics.SURFACE_VERSION
     ):
-        fail("", "semantic-unit candidates require the declared modern v9 surface version")
+        fail("", "semantic-unit candidates require the declared modern v10 surface version")
         return failures
     if (
         not isinstance(bundles, dict)
@@ -2756,6 +2756,24 @@ def audit_candidate_semantic_contracts(
                 "bundle source contract changed or associated profiles acquired automatic authority",
             )
         members = bundle.get("member_candidates") or []
+        if bundle.get('realization_choices'):
+            # Each full alternative is source-recomputed above. Never union
+            # member effects or conflicts across mutually exclusive choices.
+            choices=bundle['realization_choices']
+            realization_ids=[row.get('realization_id') for row in choices]
+            if len(realization_ids)!=len(set(realization_ids)) or not all(realization_ids):
+                fail(candidate_id,'conditional bundle requires unique complete realizations')
+            for choice in choices:
+                selected_members=choice.get('member_candidates') or []
+                dims={d for member in selected_members for d in member.get('affected_dimensions') or []}
+                if (not selected_members or dims!=set(choice.get('affected_dimensions') or [])
+                        or not dims<=open_dimensions
+                        or any(not property_effects_allowed((pack.get('authorial_core') or {}).get('intent_lock') or {},
+                                    member.get('affected_dimensions') or [],member.get('affected_properties',[]))
+                               for member in selected_members)
+                        or choice.get('source_contract_sha256')!=photo_candidate_semantics.digest(photo_candidate_semantics.bundle_source_material(choice))):
+                    fail(candidate_id,'conditional bundle choice has altered or closed member effects')
+            continue
         member_ids = {str(member.get("id") or "") for member in members if isinstance(member, dict)}
         dimensions = {
             dimension
@@ -2866,6 +2884,9 @@ def audit_candidate_semantic_contracts(
             source_entry = candidate_semantics_generator.candidate_pack_slot_entry_by_id(
                 source_data, str(candidate.get("slot") or ""), str(candidate.get("entry_id") or "")
             )
+            if (source_data['candidates'][candidate_id]['effects'].get('realizations')):
+                import photo_candidate_corpus as corpus
+                source_entry=corpus.entry(source_data,candidate_id,realization_id=candidate.get('realization_id'))
             if source_entry:
                 trusted = photo_candidate_semantics.semantic_source(
                     source_entry, str(candidate.get("slot") or ""), source_data.get("candidate_semantic_policy")
@@ -2946,12 +2967,12 @@ def audit_candidate_interpretations(
 
     contract_version = str(pack.get("contract_version") or "")
     if contract_version not in {
-        "photo-candidate-pack/v9",
+        "photo-candidate-pack/v10",
     }:
         return []
     brief_field = (
         "creative_augmentation_brief"
-        if contract_version in {"photo-candidate-pack/v9"}
+        if contract_version in {"photo-candidate-pack/v10"}
         else "augmentation_brief"
     )
     augmentation_brief = (
@@ -2976,6 +2997,14 @@ def audit_candidate_interpretations(
     failures: list[dict[str, Any]] = []
     semantic_evidence_rows = rows + [row for row in augmentation_brief.get("decisions") or []
                                      if isinstance(row, dict) and row.get("decision") == "transformed"]
+    import photo_candidate_realizations as realizations
+    by_id={row.get('candidate_id'):row for row in semantic_evidence_rows}
+    candidate_objects=copy.deepcopy(candidate_objects)
+    for cid in chosen:
+        try:
+            candidate_objects[cid]=realizations.selected_view(candidate_objects.get(cid,{}),by_id.get(cid,{}))
+        except ValueError as error:
+            failures.append({'check':'candidate_realization','candidate_id':cid,'reason':str(error)})
     failures.extend(audit_candidate_semantic_contracts(pack, prompt_en, chosen, candidate_objects, semantic_evidence_rows))
     if len(row_ids) != len(set(row_ids)):
         failures.append(
@@ -3938,7 +3967,7 @@ def audit_authorial_authorship_policy(
         "source_authorship_policy_sha256": expected_policy["canonical_sha256"],
     }
     if (
-        pack.get("contract_version") != "photo-candidate-pack/v9"
+        pack.get("contract_version") != "photo-candidate-pack/v10"
         or core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION
         or authorial.get("authorship_policy") != expected_policy
         or binding != expected_binding
@@ -4712,7 +4741,7 @@ def audit_creative_controls(pack: dict[str, Any]) -> list[dict[str, Any]]:
     bound_sha = core.get("creative_controls_sha256")
     try:
         creative_controls.validate(snapshot, core.get("source_request"))
-        if pack.get("contract_version") != "photo-candidate-pack/v9" or bound_sha != snapshot["canonical_sha256"]:
+        if pack.get("contract_version") != "photo-candidate-pack/v10" or bound_sha != snapshot["canonical_sha256"]:
             raise ValueError("creative controls must be bound into the governing v3 core")
         runtime = creative_controls.runtime_values(snapshot)
         provenance = pack.get("provenance") or {}
@@ -4770,7 +4799,7 @@ def audit_adult_appeal_dimension_scope(
     }
     expected["protected_properties"] = intent_property_locks(intent_lock)
     if (
-        pack.get("contract_version") != "photo-candidate-pack/v9"
+        pack.get("contract_version") != "photo-candidate-pack/v10"
         or core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION
         or scope != expected
     ):
@@ -5720,7 +5749,7 @@ def _audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> di
     chosen = normalize_chosen_candidate_ids(composed.get("chosen_candidate_ids"))
     valid_ids = candidate_ids_from_pack(pack)
     if not chosen and contract_version not in {
-        "photo-candidate-pack/v9",
+        "photo-candidate-pack/v10",
     }:
         failures.append({"check": "chosen_candidate_ids", "reason": "no chosen_candidate_ids supplied"})
     invalid = sorted(candidate_id for candidate_id in chosen if candidate_id not in valid_ids)

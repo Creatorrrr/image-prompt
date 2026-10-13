@@ -1,7 +1,7 @@
 """Single native candidate payload, with bounded many-to-many presentation refs."""
 import copy
 import photo_candidate_corpus as c
-CONTRACT='photo-candidate-pack/v9'
+CONTRACT='photo-candidate-pack/v10'
 
 class WorkingPack(dict):
     def __init__(self,value,roles):super().__init__(value);self.working_roles=roles;self.query_context=None
@@ -11,17 +11,19 @@ class CandidatePack(dict):
 
 def role_cards(pack):
     if isinstance(pack,WorkingPack):return pack.working_roles
-    if pack.get('contract_version')!=CONTRACT:raise ValueError('native v9 pack required')
+    if pack.get('contract_version')!=CONTRACT:raise ValueError('native v10 pack required')
     result={}
     for tag,view in pack['role_views'].items():
         rows=[]
         for ref in view['candidate_refs']:
             cid,pid=ref['candidate_id'],ref['proposal_id'];row=copy.deepcopy(pack['candidate_pool'][cid]);proposal=pack['role_proposals'][pid]
+            row.update(copy.deepcopy(row.get('realization_views',{}).get(proposal['realization_id'],{})))
             if proposal['candidate_id']!=cid or proposal['target_slot_id']!=tag:raise ValueError('foreign role proposal')
             row.update({'slot':tag,'entry_id':cid,'proposal_id':pid,'binding_id':proposal['source_binding_id'],
                         'affected_dimensions':proposal['effects']['dimensions'],'affected_properties':proposal['effects']['properties'],
                         'source_conditions':proposal['conditions'],
                         'role_conditions':proposal['role_conditions'],
+                        'realization_id':proposal['realization_id'],
                         'semantic_role':proposal['semantic_role'],
                         'applicability':{'status':proposal['applicability_status'],
                                          'source':'native_owned_role_fit',
@@ -35,7 +37,10 @@ def resolve_rows(pack,section,key='candidates'):
     result=[]
     for ref in refs:
         if 'candidate_id' in ref and ref['candidate_id'] in pack['candidate_pool']:
-            row=copy.deepcopy(pack['candidate_pool'][ref['candidate_id']]);row.update(copy.deepcopy(ref.get('view_context') or {}));result.append(row)
+            row=copy.deepcopy(pack['candidate_pool'][ref['candidate_id']])
+            context=copy.deepcopy(ref.get('view_context') or {})
+            if context.pop('_native_view',None)=='bundle':row.update(copy.deepcopy(row['bundle_view']))
+            row.update(context);result.append(row)
         else:result.append(ref)  # Policy-authored guidance is not a corpus candidate.
     return result
 
@@ -47,8 +52,17 @@ def finalize(pack,data,selected_ids,query_context):
         value={k:copy.deepcopy(v) for k,v in row.items() if k not in {'slot','entry_id','binding_id','proposal_id','axis','carrier'}}
         value['id']=cid;value['record_kind']=data['candidates'][cid]['record_kind']
         value['authored_record']=copy.deepcopy(data['candidates'][cid])
+        conditional=data['candidates'][cid]['effects'].get('realizations')
+        if not conditional:value.pop('realization_id',None)
+        rid=value.get('realization_id') if conditional else None
+        if rid is not None:
+            view={k:copy.deepcopy(v) for k,v in value.items() if k not in {'authored_record','realization_views','id','record_kind'}}
+            value['realization_views']={rid:view}
         if cid in pool:
             for k,v in value.items():
+                if k=='realization_views':
+                    for rid,view in v.items():pool[cid].setdefault(k,{}).setdefault(rid,{}).update(view)
+                    continue
                 if k not in pool[cid]:pool[cid][k]=v
         else:pool[cid]=value
         return cid
@@ -65,6 +79,9 @@ def finalize(pack,data,selected_ids,query_context):
             cid=own(row)
             if cid:
                 context={k:copy.deepcopy(row[k]) for k in ('axis','carrier','slot','expression_scope') if k in row}
+                if 'member_candidates' in row and 'components' in row:
+                    pool[cid]['bundle_view']=copy.deepcopy(row)
+                    context={'_native_view':'bundle'}
                 # Eligibility is specific to this presentation, even when a
                 # role card for the same source record requires later review.
                 for key in ('applicability','adoption','opt_in_contract'):
@@ -102,7 +119,7 @@ def finalize(pack,data,selected_ids,query_context):
     return CandidatePack(result,query_context)
 
 def validate(pack):
-    if pack.get('contract_version')!=CONTRACT or 'slots' in pack:raise ValueError('native v9 pack required')
+    if pack.get('contract_version')!=CONTRACT or 'slots' in pack:raise ValueError('native v10 pack required')
     if len(pack.get('candidate_pool',{}))>64:raise ValueError('global unique candidate budget exceeded')
     for cid,row in pack['candidate_pool'].items():
         if not c.ID.fullmatch(cid) or row.get('id')!=cid or row['authored_record']['id']!=cid:raise ValueError('invalid native candidate identity')
@@ -123,7 +140,10 @@ class _Section(dict):
                 if isinstance(row,dict) and set(row)<={'candidate_id','view_context'} and 'candidate_id' in row:
                     cid=row['candidate_id']
                     if cid not in dict.__getitem__(self._pack,'candidate_pool'):raise ValueError('dangling native presentation reference')
-                    resolved=copy.deepcopy(dict.__getitem__(self._pack,'candidate_pool')[cid]);resolved.update(copy.deepcopy(row.get('view_context') or {}));result.append(resolved)
+                    resolved=copy.deepcopy(dict.__getitem__(self._pack,'candidate_pool')[cid])
+                    context=copy.deepcopy(row.get('view_context') or {})
+                    if context.pop('_native_view',None)=='bundle':resolved.update(copy.deepcopy(resolved['bundle_view']))
+                    resolved.update(context);result.append(resolved)
                 else:result.append(row)
             return result
         return value

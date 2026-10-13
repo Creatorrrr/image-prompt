@@ -105,7 +105,7 @@ def derive_character_response_render_gates(
     contract = raw_contract if isinstance(raw_contract, dict) else {}
     failures: list[dict[str, Any]] = []
     if (
-        pack.get("contract_version") != "photo-candidate-pack/v9"
+        pack.get("contract_version") != "photo-candidate-pack/v10"
         or core.get("contract_version")
         != audit_composed_prompt.AUTHORIAL_CORE_V3_CONTRACT_VERSION
     ):

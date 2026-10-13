@@ -152,7 +152,7 @@ VISUAL_PROFILE_INDEX_DATA_KEY = "_visual_meaning_lookup"
 CANDIDATE_PACK_CORE_SLOT_LIMIT = 4
 CANDIDATE_PACK_SUPPORT_SLOT_LIMIT = 2
 CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT = 64
-NATIVE_CANDIDATE_PACK_CONTRACT = "photo-candidate-pack/v9"
+NATIVE_CANDIDATE_PACK_CONTRACT = "photo-candidate-pack/v10"
 DEFAULT_CANDIDATE_PACK_VERSION = "v9"
 CANDIDATE_PACK_CREATIVE_EXPLORATION_FLOOR = 3
 CANDIDATE_PACK_CREATIVE_EXPLORATION_MIN_DISTANCE = 0.45
@@ -7421,13 +7421,12 @@ def candidate_pack_candidate_bundles(data: JsonDict, pack: JsonDict) -> JsonDict
     query_tokens = candidate_pack_relevance_tokens(query)
     exclusions = [candidate_pack_relevance_tokens(value) for value in core.get("user_exclusions") or []]
     opened = set((core.get("intent_lock") or {}).get("open_dimensions") or [])
-    constraints = {
-        "subject_category": "generic", "domains": [],
-        "adult_allowed": candidate_pack_visual_obligation_adult_context([{"text": query}], None),
-        "intent_constraints": authorial_core_generation_constraints(core, creative_control_snapshot=pack.get("creative_controls")),
-    }
+    # Joint members use the same typed frozen subject/appeal context as whole-
+    # pool discovery. Adult age alone never grants sexual-treatment authority.
+    constraints, _ = frozen_core_context(data,core,pack.get('creative_controls'))
     admissions: JsonDict = {}
-    for bundle in data.get("candidate_bundles") or []:
+    for bundle in [variant for source_bundle in data.get("candidate_bundles") or []
+                   for variant in photo_candidate_semantics.bundle_variants(data,source_bundle,pack)]:
         if bundle["id"] not in getattr(data,"admitted_ids",set()):continue
         members = bundle["member_candidates"]
         dimensions = {dimension for member in members for dimension in member.get("affected_dimensions") or []}
@@ -7457,7 +7456,7 @@ def candidate_pack_candidate_bundles(data: JsonDict, pack: JsonDict) -> JsonDict
             for slot, entry in picked.items()
         ):
             continue
-        admissions[bundle["id"]] = {
+        admissions[(bundle["id"],bundle.get('realization_id','base'))] = {
             "contract_version": "photo-candidate-joint-admission/v1",
             "context_policy": policy["context_policy"],
             "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
@@ -7556,7 +7555,7 @@ def build_candidate_pack(
         ):
             intent_constraints.pop("character_response", None)
     pack: JsonDict = photo_native_pack.WorkingPack({
-        "contract_version": "photo-candidate-pack/v9",
+        "contract_version": "photo-candidate-pack/v10",
         "pack_id": "",
         "intent_contract": intent_contract,
         "mandatory_intents": mandatory_intents,
@@ -7640,7 +7639,7 @@ def build_candidate_pack(
             else None
         )
         if negative_intent_guard is None:
-            raise ValueError("modern v9 candidate pack requires the negative-intent guard")
+            raise ValueError("modern v10 candidate pack requires the negative-intent guard")
         pack["negative_intent_guard"] = copy.deepcopy(negative_intent_guard)
     visual_intent = (
         provenance.get("visual_intent")
@@ -7666,7 +7665,7 @@ def build_candidate_pack(
     if "embodiment_preflight" in provenance:
         pack["embodiment_preflight"] = copy.deepcopy(provenance["embodiment_preflight"])
         pack["provenance"]["embodiment_preflight_required"] = True
-        photo_embodiment.policy_from_pack({**pack, "contract_version": "photo-candidate-pack/v9"})
+        photo_embodiment.policy_from_pack({**pack, "contract_version": "photo-candidate-pack/v10"})
     if viewer_experience is not None:
         pack["viewer_experience"] = viewer_experience
     if adult_appeal is not None:
