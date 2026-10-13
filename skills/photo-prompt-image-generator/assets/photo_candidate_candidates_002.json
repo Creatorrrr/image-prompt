@@ -1,5 +1,5 @@
 {
-  "schema": "photo-candidate-module/v2",
+  "schema": "photo-candidate-module/v3",
   "candidates": {
     "cand_9e0deda9a6305a6fa2bbe634f052db26": {
       "content": {
@@ -91575,14 +91575,14 @@
         "components": [
           {
             "concept_units": [
-              "a small handled cup rests on its own matching saucer"
+              "a small handled cup has just reached its own matching saucer at the end of lowering"
             ],
             "id": "component_1",
             "minimum_realizations": 1
           },
           {
             "concept_units": [
-              "the subject lowers the cup toward the saucer"
+              "the subject completes lowering the cup as its base reaches the matching saucer"
             ],
             "id": "component_2",
             "minimum_realizations": 1
@@ -91651,7 +91651,28 @@
           "relationship",
           "setting"
         ],
-        "properties": []
+        "properties": [
+          {
+            "dimension": "action",
+            "target": "main_subject",
+            "property": "action.lowering.endpoint"
+          },
+          {
+            "dimension": "relationship",
+            "target": "cup_and_matching_saucer",
+            "property": "relation.contact.support"
+          },
+          {
+            "dimension": "relationship",
+            "target": "main_subject_hand_and_cup_handle",
+            "property": "relation.contact.grip"
+          },
+          {
+            "dimension": "setting",
+            "target": "reception_room_table_and_seating",
+            "property": "setting.spatial_arrangement"
+          }
+        ]
       },
       "id": "cand_c4d6b55142e9537a9a59007ec6313a53",
       "provenance": [

@@ -229,7 +229,7 @@ class EvidenceBindingTests(unittest.TestCase):
                 self.assertEqual(manifest[key], row[key])
 
 
-@unittest.skipUnless(shutil.which("node"), "Node is required to exercise the native V9 helper offline")
+@unittest.skipUnless(shutil.which("node"), "Node is required to exercise the native V10 helper offline")
 class NativeCaptureTests(unittest.TestCase):
     def native(self, code):
         script = "const fs=require('fs'),vm=require('vm');const capture=vm.runInNewContext(fs.readFileSync(" + json.dumps(str(SCRIPTS / "capture_image_tool_error.js")) + ",'utf8'));const context={tool:'image_gen.imagegen',generation_environment:'codex_native',attempt:1,prompt_en:" + json.dumps(PROMPT) + ",negative_en:" + json.dumps(NEGATIVE) + ",runtime_prompt_en:" + json.dumps(RUNTIME) + "};" + code

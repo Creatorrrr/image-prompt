@@ -1,5 +1,5 @@
 {
-  "schema": "photo-candidate-module/v2",
+  "schema": "photo-candidate-module/v3",
   "candidates": {
     "cand_5958f24b3fb259c0b1b7fbfcf363ace5": {
       "content": {
@@ -2102,16 +2102,14 @@
     "cand_7e3ae8f77d2356f883ea968dccc142d7": {
       "content": {
         "aliases": [
-          "androgynous cool",
-          "boyish cool"
+          "androgynous cool"
         ],
         "en": "androgynous cool presence",
         "keywords": [
           "androgynous",
-          "boyish",
           "cool"
         ],
-        "ko": "보이시하고 차가운 존재감",
+        "ko": "중성적이고 차가운 분위기의 표현",
         "tags": [
           "human",
           "appearance",
@@ -20261,11 +20259,11 @@
     "cand_aceaa5a1d9465f5a9e9ded075cefeac0": {
       "content": {
         "aliases": [
-          "테이프 늘어짐·dropout·정전기 방지 포장·구별 색 탭이 남은 혼합 매체 표면",
-          "mixed-media surfaces showing tape stretch, dropout, antistatic packaging, and distinct custody tabs"
+          "physical mixed-media carriers show tape stretch, antistatic packaging, and distinct colored custody tabs; only when an already-declared recorded playback is visible, signal dropout appears in that playback image rather than on the physical tape surface",
+          "물리 혼합 매체 지지체의 테이프 늘어짐·정전기 방지 포장·구별 색 보관 탭; 이미 선언된 기록 재생 영상이 보이는 경우에만 신호 dropout을 재생 영상 면에 두고 테이프 표면 결함으로 표현하지 않는다"
         ],
-        "embedding_text": "mixed-media surfaces showing tape stretch, dropout, antistatic packaging, and distinct custody tabs",
-        "en": "mixed-media surfaces showing tape stretch, dropout, antistatic packaging, and distinct custody tabs",
+        "embedding_text": "physical mixed-media carriers show tape stretch, antistatic packaging, and distinct colored custody tabs; only when an already-declared recorded playback is visible, signal dropout appears in that playback image rather than on the physical tape surface",
+        "en": "physical mixed-media carriers show tape stretch, antistatic packaging, and distinct colored custody tabs; only when an already-declared recorded playback is visible, signal dropout appears in that playback image rather than on the physical tape surface",
         "facets": {
           "manifestation_mode": [
             "diegetic_world_system"
@@ -20275,17 +20273,69 @@
             "evidence_reliability"
           ]
         },
-        "ko": "테이프 늘어짐·dropout·정전기 방지 포장·구별 색 탭이 남은 혼합 매체 표면",
+        "ko": "물리 혼합 매체 지지체의 테이프 늘어짐·정전기 방지 포장·구별 색 보관 탭; 이미 선언된 기록 재생 영상이 보이는 경우에만 신호 dropout을 재생 영상 면에 두고 테이프 표면 결함으로 표현하지 않는다",
         "tags": [
           "worldbuilding_system",
           "anomalous_archive_world"
+        ],
+        "concept_units": [
+          "Physical mixed-media carriers show tape stretch, antistatic packaging and distinct colored custody tabs."
         ]
       },
       "effects": {
         "dimensions": [
-          "material"
+          "material",
+          "appearance"
         ],
-        "properties": []
+        "properties": [
+          {
+            "dimension": "material",
+            "target": "physical_tape_carrier",
+            "property": "surface.state.stretch"
+          },
+          {
+            "dimension": "material",
+            "target": "antistatic_packaging",
+            "property": "surface.material"
+          },
+          {
+            "dimension": "appearance",
+            "target": "custody_tabs",
+            "property": "surface.color"
+          }
+        ],
+        "realizations": {
+          "mode": "optional",
+          "branches": [
+            {
+              "id": "visible_recorded_playback",
+              "conditions": {},
+              "context_terms": [
+                "recorded playback",
+                "video playback",
+                "recorded footage",
+                "재생 영상",
+                "기록 영상"
+              ],
+              "effects": {
+                "dimensions": [
+                  "style"
+                ],
+                "properties": [
+                  {
+                    "dimension": "style",
+                    "target": "recorded_playback_image",
+                    "property": "image.artifact.signal_dropout"
+                  }
+                ]
+              },
+              "concept_units": [
+                "Physical mixed-media carriers show tape stretch, antistatic packaging and distinct colored custody tabs.",
+                "Signal dropout appears only in the already declared recorded playback image."
+              ]
+            }
+          ]
+        }
       },
       "id": "cand_aceaa5a1d9465f5a9e9ded075cefeac0",
       "provenance": [

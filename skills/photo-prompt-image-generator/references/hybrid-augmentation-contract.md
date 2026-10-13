@@ -2,7 +2,7 @@
 
 ## Current Creative Augmentation
 
-The `photo-candidate-pack/v9` path exposes `photo-creative-augmentation/v1` only after one request-envelope-bound `photo-authorial-core/v3` and `photo-intent-lock/v2` have established the standalone baseline and locked requester meaning. Every transformed candidate declares affected dimensions and may touch only open dimensions.
+The `photo-candidate-pack/v10` path exposes `photo-creative-augmentation/v1` only after one request-envelope-bound `photo-authorial-core/v3` and `photo-intent-lock/v2` have established the standalone baseline and locked requester meaning. Every transformed candidate declares affected dimensions and may touch only open dimensions.
 
 The generator forms advisory material from independent per-slot searches only after existing applicability, conflict, identity/species/no-people, negative, safety, and explicit user-exclusion guards. Each operating slot uses the frozen global context and its slot focus for global BM25F and actual query embedding; exact cosine and RRF determine discovery. Explicit keyword-only mode supports offline diagnostics without claiming embedding execution. Scores remain private. Relative rank partitions exposed creative material into `near`, `adjacent`, and `lateral`; creativity changes only the allowed bands, while seed performs weighted sampling without replacement inside them.
 
@@ -32,7 +32,7 @@ Every sampled row requires a decision under `creative_augmentation_brief.decisio
 
 The IDs above illustrate the native ID format. Use IDs actually present in the current pack. Rejecting all sampled rows is valid. Transform at most three; include transformed IDs in `chosen_candidate_ids`, keep rejected IDs out, and do not duplicate transformed rows in `candidate_interpretations`. Candidate `concept_terms` are unordered material. Evidence needs at least four content words and two newly authored words beyond those terms.
 
-V9 keeps an active adult-fashion contract at top-level `adult_appeal` rather than inside a hybrid route. Record its composed interpretation in `adult_appeal_brief`. Candidate adoption is optional, but exact axis intensities, blend, agency, and the existing combination audit remain mandatory. A literal `adult` subject phrase is required only when the effective `sensual` intensity is 2 or 3; `fetish` intensity alone does not trigger it. The controls snapshot and contextual appeal contract govern each axis.
+V10 keeps an active adult-fashion contract at top-level `adult_appeal` rather than inside a hybrid route. Record its composed interpretation in `adult_appeal_brief`. Candidate adoption is optional, but exact axis intensities, blend, agency, and the existing combination audit remain mandatory. A literal `adult` subject phrase is required only when the effective `sensual` intensity is 2 or 3; `fetish` intensity alone does not trigger it. The controls snapshot and contextual appeal contract govern each axis.
 
 
 ## Contextual adult appeal

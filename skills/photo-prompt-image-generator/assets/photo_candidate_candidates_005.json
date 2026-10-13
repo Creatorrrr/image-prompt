@@ -1,5 +1,5 @@
 {
-  "schema": "photo-candidate-module/v2",
+  "schema": "photo-candidate-module/v3",
   "candidates": {
     "cand_1c9ec7b3e81f5bbf852d9de7f7dd9235": {
       "content": {
@@ -32938,8 +32938,28 @@
         "properties": [
           {
             "dimension": "appearance",
-            "property": "wardrobe",
-            "target": "main_subject"
+            "target": "main_subject",
+            "property": "wardrobe"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.layer_boundary"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.inner_layer.color"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "surface.material"
+          },
+          {
+            "dimension": "material",
+            "target": "main_subject",
+            "property": "wardrobe.material.inner_layer"
           }
         ]
       },
@@ -85353,7 +85373,7 @@
           "source": "character_mechanism_node:culture_neutral_scene_anchor"
         }
       ],
-      "record_kind": "relationship_mechanism",
+      "record_kind": "diagnostic",
       "conditions": {}
     },
     "cand_afa8bf3607c656d3bdc87aa267e297fe": {
@@ -85559,7 +85579,7 @@
           "source": "character_mechanism_node:virtual_performer_privacy_divider"
         }
       ],
-      "record_kind": "relationship_mechanism",
+      "record_kind": "diagnostic",
       "conditions": {}
     },
     "cand_74b16ebe59fe54df8d3def39da2e37e0": {

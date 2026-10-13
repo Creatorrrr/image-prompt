@@ -16,10 +16,11 @@ from typing import Any
 from photo_contracts import property_effects_allowed
 
 SURFACE_VERSION = "photo-candidate-semantic-surface/v1"
-BUNDLE_VERSION = "photo-candidate-bundles/v1"
+BUNDLE_VERSION = "photo-candidate-bundles/v2"
 COMPILED_BUNDLE_FIELDS = (
     "id", "source_sha256", "associated_profile_ids", "components", "member_candidates",
     "confusion_boundaries", "relations", "adoption", "profile_activation",
+    "realization_id", "source_record_sha256",
 )
 
 
@@ -100,6 +101,25 @@ def semantic_source(entry: dict[str, Any], slot: str = "", policy: dict[str, Any
 
 
 
+def bundle_variants(data, bundle, pack):
+    import photo_candidate_corpus as c
+    import photo_candidate_realizations as realizations
+    import prompt_generator as g
+    cid=bundle['id'];record=data['candidates'][cid]
+    if not record['effects'].get('realizations'):
+        return [bundle]
+    core=pack['authorial_core']
+    contract,picked=g.frozen_core_context(data,core,pack['creative_controls'])
+    result=[]
+    for rid in realizations.eligible_ids(data,cid,core,contract,picked):
+        row={**copy.deepcopy(bundle),**c.entry(data,cid,realization_id=rid)}
+        wanted=realizations.member_ids(record,rid)
+        row['member_candidates']=[copy.deepcopy(member) for member in bundle['member_candidates'] if member['id'] in wanted]
+        row['realization_id']=rid;row['source_record_sha256']=c.digest(record)
+        result.append(row)
+    return result
+
+
 def public_bundles(data: dict[str, Any], pack: dict[str, Any], joint_admissions: dict[str, Any] | None = None) -> dict[str, Any]:
     visible = {
         str(candidate.get("id") or ""): candidate
@@ -108,12 +128,15 @@ def public_bundles(data: dict[str, Any], pack: dict[str, Any], joint_admissions:
     }
     open_dimensions = set(((pack.get("authorial_core") or {}).get("intent_lock") or {}).get("open_dimensions") or [])
     result = []
-    for bundle in data.get("candidate_bundles") or []:
+    originals={row['id']:row for row in data.get('candidate_bundles') or []}
+    variants=[row for bundle in originals.values() for row in bundle_variants(data,bundle,pack)]
+    for bundle in variants:
         if bundle["id"] not in getattr(data,"admitted_ids",set()):continue
         member_ids = {member["id"] for member in bundle["member_candidates"]}
         dimensions = {dimension for member in bundle["member_candidates"]
                       for dimension in member.get("affected_dimensions") or []}
-        joint_admission = (joint_admissions or {}).get(bundle["id"])
+        key=(bundle['id'],bundle.get('realization_id','base'))
+        joint_admission = (joint_admissions or {}).get(key)
         lock = (pack.get("authorial_core") or {}).get("intent_lock") or {}
         if any(not property_effects_allowed(lock, member.get("affected_dimensions") or [],
                                            member.get("affected_properties", []))
@@ -126,7 +149,8 @@ def public_bundles(data: dict[str, Any], pack: dict[str, Any], joint_admissions:
                 or any(member_ids.intersection(visible[member_id].get("conflicts_with") or []) for member_id in member_ids)):
             continue
         row = copy.deepcopy(bundle)
-        row["source_contract_sha256"] = digest(bundle)
+        row['source_record_sha256']=digest(data['candidates'][bundle['id']])
+        row["source_contract_sha256"] = digest(bundle_source_material(row))
         if joint_admission:
             row["joint_admission"] = copy.deepcopy(joint_admission)
             row["member_selection"] = "bundle_only_unless_already_eligible_standalone"
@@ -145,6 +169,25 @@ def public_bundles(data: dict[str, Any], pack: dict[str, Any], joint_admissions:
             "associated_profiles_are_not_promoted": True,
         }
         result.append(row)
+    grouped={}
+    for row in result:grouped.setdefault(row['id'],[]).append(row)
+    result=[]
+    for cid,choices in grouped.items():
+        if 'realization_id' not in choices[0]:
+            result.extend(choices);continue
+        master=copy.deepcopy(originals[cid])
+        master.update(content_form='unordered_inspiration_terms',semantic_surface_version=SURFACE_VERSION,
+                      source_record_sha256=digest(data['candidates'][cid]),
+                      realization_choices=sorted(choices,key=lambda row:row['realization_id']),
+                      applicability={'status':'eligible','source':'one_source_recomputed_realization_required'},
+                      conflicts_with=[],concept_units=[unit for component in master['components'] for unit in component['concept_units']])
+        master['concept_terms']=list(master['concept_units'])
+        master['source_contract_sha256']=digest(bundle_source_material(master))
+        master['selection_contract']={'realization_id':'one_presented_realization_required',
+            'component_evidence':'selected_realization_components_only',
+            'relation_evidence':'selected_realization_relations_only',
+            'scope':'one_coherent_realization','associated_profiles_are_not_promoted':True}
+        result.append(master)
     seed = str((pack.get("provenance") or {}).get("seed") or "")
     result.sort(key=lambda row: digest([seed, row["id"]]))
     limit = ((data.get("candidate_semantic_policy") or {}).get("joint_adoption") or {}).get("maximum_bundles", len(result))

@@ -12,15 +12,15 @@ import math
 import re
 from pathlib import Path
 
-SCHEMA = 'photo-candidate-corpus/v2'
-MANIFEST_SCHEMA = 'photo-candidate-corpus-source/v2'
+SCHEMA = 'photo-candidate-corpus/v3'
+MANIFEST_SCHEMA = 'photo-candidate-corpus-source/v3'
 MANIFEST_NAME = 'photo_candidate_corpus_manifest.json'
 KINDS = frozenset({'visual_option', 'visual_profile', 'relationship_concept',
                    'relationship_mechanism', 'visual_bundle', 'diagnostic'})
 MODULE_SCHEMAS = {
-    'candidates': 'photo-candidate-module/v2',
+    'candidates': 'photo-candidate-module/v3',
     'slot_catalog': 'photo-slot-catalog/v2',
-    'slot_bindings': 'photo-candidate-slot-bindings/v2',
+    'slot_bindings': 'photo-candidate-slot-bindings/v3',
     'policies': 'photo-candidate-policy/v1',
 }
 CORPUS_FIELDS = frozenset({'schema', 'candidates', 'slot_catalog', 'slot_bindings', 'policies'})
@@ -61,9 +61,11 @@ def strings(value, field):
     return value
 
 
-def validate_effects(value, field):
+def validate_effects(value, field, *, branches=True):
     from photo_contracts import AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
-    if not isinstance(value, dict) or set(value) != {'dimensions', 'properties'}:
+    if (not isinstance(value, dict) or not {'dimensions', 'properties'} <= set(value)
+            or set(value) - {'dimensions', 'properties', 'realizations'}
+            or (not branches and 'realizations' in value)):
         raise ValueError(f'{field}: dimensions and properties are required')
     dimensions = strings(value['dimensions'], field + '.dimensions')
     if not set(dimensions) <= AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS:
@@ -81,6 +83,47 @@ def validate_effects(value, field):
         if key in seen:
             raise ValueError(f'{field}: duplicate property effect')
         seen.add(key)
+    if 'realizations' in value:
+        contract = value['realizations']
+        if (not isinstance(contract, dict) or set(contract) != {'mode', 'branches'}
+                or contract['mode'] not in {'one', 'optional'}
+                or not isinstance(contract['branches'], list) or not contract['branches']):
+            raise ValueError(f'{field}: invalid conditional effect contract')
+        seen_ids = set()
+        for row in contract['branches']:
+            if (not isinstance(row, dict) or not {'id', 'conditions', 'effects', 'context_terms'} <= set(row)
+                    or set(row) - {'id', 'conditions', 'effects', 'context_terms', 'member_candidate_ids', 'component_units', 'concept_units'}
+                    or not isinstance(row['id'], str) or not TAG_ID.fullmatch(row['id'])
+                    or row['id'] == 'base' or row['id'] in seen_ids):
+                raise ValueError(f'{field}: invalid or duplicate realization')
+            seen_ids.add(row['id'])
+            validate_conditions(row['conditions'], field + '.' + row['id'])
+            strings(row['context_terms'], field + '.context_terms')
+            if 'concept_units' in row:
+                strings(row['concept_units'], field + '.concept_units')
+            validate_effects(row['effects'], field + '.' + row['id'], branches=False)
+            if 'member_candidate_ids' in row:
+                strings(row['member_candidate_ids'], field + '.members')
+            if 'component_units' in row:
+                if not isinstance(row['component_units'], dict):
+                    raise ValueError(f'{field}: component realizations must be an object')
+                for key, units in row['component_units'].items():
+                    if not isinstance(key, str) or not strings(units, field + '.component_units'):
+                        raise ValueError(f'{field}: empty component realization')
+
+
+def validate_conditions(conditions, field):
+    if not isinstance(conditions, dict) or not set(conditions) <= INTRINSIC_CONDITION_FIELDS:
+        raise ValueError(f'{field}: invalid intrinsic condition contract')
+    for key, value in conditions.items():
+        if key == 'requires_adult_context':
+            if type(value) is not bool:
+                raise ValueError(f'{field}: adult condition must be boolean')
+        elif key == 'subject_applicability':
+            if not isinstance(value, dict):
+                raise ValueError(f'{field}: subject policy must be an object')
+        else:
+            strings(value, field + '.' + key)
 
 
 def validate(corpus):
@@ -102,19 +145,15 @@ def validate(corpus):
             raise ValueError(f'{candidate_id}: effects have one canonical owner')
         if INTRINSIC_CONDITION_FIELDS & set(row['content']):
             raise ValueError(f'{candidate_id}: intrinsic conditions have one canonical owner')
-        conditions = row['conditions']
-        if not isinstance(conditions, dict) or not set(conditions) <= INTRINSIC_CONDITION_FIELDS:
-            raise ValueError(f'{candidate_id}: invalid intrinsic condition contract')
-        for key, value in conditions.items():
-            if key == 'requires_adult_context':
-                if type(value) is not bool:
-                    raise ValueError(f'{candidate_id}: adult condition must be boolean')
-            elif key == 'subject_applicability':
-                if not isinstance(value, dict):
-                    raise ValueError(f'{candidate_id}: subject policy must be an object')
-            else:
-                strings(value, candidate_id + '.' + key)
+        validate_conditions(row['conditions'], candidate_id)
         validate_effects(row['effects'], candidate_id)
+        for branch in row['effects'].get('realizations', {}).get('branches', []):
+            available = {p['candidate_id'] for p in row['content'].get('member_candidates', [])}
+            if not set(branch.get('member_candidate_ids', [])) <= available:
+                raise ValueError(f'{candidate_id}: realization references a foreign bundle member')
+            component_ids = {p['id'] for p in row['content'].get('components', [])}
+            if not set(branch.get('component_units', {})) <= component_ids:
+                raise ValueError(f'{candidate_id}: realization references a foreign component')
         if not isinstance(row['provenance'], list) or not row['provenance']:
             raise ValueError(f'{candidate_id}: source provenance required')
         for origin in row['provenance']:
@@ -173,6 +212,16 @@ def validate(corpus):
             for nested in value:
                 references(nested)
     references(corpus)
+    visiting,visited=set(),set()
+    def bundle_members(candidate_id):
+        if candidate_id in visiting:
+            raise ValueError('cyclic bundle member reference: '+candidate_id)
+        if candidate_id in visited:return
+        visiting.add(candidate_id)
+        for member in candidates[candidate_id]['content'].get('member_candidates',[]):
+            bundle_members(member['candidate_id'])
+        visiting.remove(candidate_id);visited.add(candidate_id)
+    for candidate_id in candidates:bundle_members(candidate_id)
     for candidate_id, row in candidates.items():
         seen_refs = {candidate_id}
         target = row['content'].get('canonical_candidate_ref')
@@ -213,7 +262,7 @@ def load(assets, manifest_name=MANIFEST_NAME):
     return validate(corpus)
 
 
-def entry(corpus, candidate_id, binding_id=None):
+def entry(corpus, candidate_id, binding_id=None, *, realization_id=None):
     """Native semantic record, optionally with an explicitly selected role."""
     record = corpus['candidates'][candidate_id]
     result = copy.deepcopy(record['content'])
@@ -221,6 +270,20 @@ def entry(corpus, candidate_id, binding_id=None):
     result['record_kind'] = record['record_kind']
     result.update(copy.deepcopy(record['conditions']))
     effects = record['effects']
+    if realization_id is not None:
+        import photo_candidate_realizations as realizations
+        effects = realizations.effects(record, realization_id)
+        selected = realizations.branch(record, realization_id)
+        result['_realization_id'] = realization_id
+        if selected:
+            if 'concept_units' in selected:
+                result['concept_units'] = copy.deepcopy(selected['concept_units'])
+            wanted = realizations.member_ids(record, realization_id)
+            if 'member_candidates' in result:
+                result['member_candidates'] = [p for p in result['member_candidates'] if p['candidate_id'] in wanted]
+            for component in result.get('components', []):
+                if component['id'] in selected.get('component_units', {}):
+                    component['concept_units'] = copy.deepcopy(selected['component_units'][component['id']])
     if binding_id is not None:
         binding = corpus['slot_bindings'][binding_id]
         if binding['candidate_id'] != candidate_id:

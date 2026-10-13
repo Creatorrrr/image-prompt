@@ -90,7 +90,7 @@ class NativeAuthorialMeaningTests(unittest.TestCase):
     def test_authorial_budget_expands_advisory_ceiling_for_required_evidence(self):
         required_phrase = ' '.join((f'required{index}' for index in range(600)))
         prompt = required_phrase + ' ' + ' '.join((f'optional{index}' for index in range(240)))
-        pack = {'contract_version':'photo-candidate-pack/v9','candidate_pool':{},'role_views':{},'role_proposals':{},'candidate_bindings':{},'authorial_core': {'intent_lock': {'semantic_anchors': [{'prompt_evidence': required_phrase}]}}}
+        pack = {'contract_version':'photo-candidate-pack/v10','candidate_pool':{},'role_views':{},'role_proposals':{},'candidate_bindings':{},'authorial_core': {'intent_lock': {'semantic_anchors': [{'prompt_evidence': required_phrase}]}}}
         metrics = audit_composed_prompt.authorial_prompt_budget_metrics(pack, {}, prompt)
         self.assertEqual(metrics['actual_words'], 840)
         self.assertEqual(metrics['required_evidence_words'], 600)

@@ -41,7 +41,7 @@ class NativeSlotWorkflowTests(unittest.TestCase):
         return g.generate_candidate_pack(self.snapshot.data,self.core,self.controls,self.embodiment,seed=5,query_context=self.context,requested_slots=['lighting','light_type','color'])
 
     def test_pack_receipt_fresh_worker_and_independent_audit(self):
-        pack=self.pack();self.assertEqual(pack['contract_version'],'photo-candidate-pack/v9')
+        pack=self.pack();self.assertEqual(pack['contract_version'],'photo-candidate-pack/v10')
         receipt=self.provider.receipt(self.snapshot,pack)
         new=runtime.RuntimeSnapshotProvider(self.root,self.store);snap=new.from_receipt(pack,receipt)
         self.assertEqual(audit.audit(pack,snap.data,snap.query_context),[])

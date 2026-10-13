@@ -58,7 +58,7 @@ Profiles expose composition fields and pixel gates, not a sampled answer or fini
 
 ## Route Hybrid Detail and Adult Fashion Appeal
 
-The V9 workflow uses `creative_augmentation`. Creativity permits near, adjacent, then lateral relevance bands; seed samples within the permitted range after the hard-eligible pool is fixed for that core and generation seed. Treat every sampled row as optional material, transform no more than three, and reject any item that weakens the frozen core.
+The V10 workflow uses `creative_augmentation`. Creativity permits near, adjacent, then lateral relevance bands; seed samples within the permitted range after the hard-eligible pool is fixed for that core and generation seed. Treat every sampled row as optional material, transform no more than three, and reject any item that weakens the frozen core.
 
 Eligible human creative-control snapshots normally resolve sensual to `1` and fetish to `0`, with sensual-led emphasis. The axes remain independent; choose sensual `0` before core freeze to disable that configured addition. Suppress the configured defaults for explicit nonsexual moe, no-people, and non-human requests. Do not map either axis from inferred gender, body, ethnicity, occupation, market, or predicted popularity.
 

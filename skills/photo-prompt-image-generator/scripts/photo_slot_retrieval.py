@@ -5,9 +5,10 @@ import photo_global_retrieval as guards
 import photo_slot_queries as queries
 import photo_role_proposals as roles
 import photo_sharded_search as search
+import photo_candidate_realizations as realizations
 from bm25f_retrieval import reciprocal_rank_fusion
 
-VERSION='photo-slot-retrieval/v3'
+VERSION='photo-slot-retrieval/v4'
 MODES={'hybrid_required','keyword_only'}
 
 
@@ -56,7 +57,12 @@ def retrieve(data,core,controls,context=None,mode='hybrid_required',*,requested_
                 rejected.update(hit['document_id'] for hit in fused)
                 break
             for hit in fused:
-                cid=hit['document_id'];proposal=roles.propose(data,slot,cid,source_roles[cid],bindings_by_candidate.get(cid,[]));entry=roles.entry(guard_data,proposal)
+                cid=hit['document_id']
+                possible=realizations.eligible_ids(guard_data,cid,core,contract,picked,slot)
+                if not possible:
+                    rejected.add(cid);continue
+                proposal=roles.propose(data,slot,cid,source_roles[cid],bindings_by_candidate.get(cid,[]),realization_ids=possible)
+                entry=roles.entry(guard_data,proposal)
                 if (blocked or proposal['applicability_status']=='incompatible'
                         or not g.core_entry_eligible(data,core,contract,picked,slot,entry)):
                     rejected.add(cid);continue
@@ -89,7 +95,9 @@ def retrieve(data,core,controls,context=None,mode='hybrid_required',*,requested_
         for cid,pid,hit in admitted[slot]:
             proposal=proposals[pid]
             candidate,_=g.candidate_pack_summarize_slot_candidate(presented,slot,{'id':cid,'applicability_status':proposal['applicability_status'],'applicability_source':'independent_full_pool_hybrid'})
-            candidate.update(proposal_id=pid,binding_id=proposal['source_binding_id'],retrieval_evidence={'rrf_score':hit['score'],'lane_count':hit['lane_count']})
+            candidate.update(proposal_id=pid,binding_id=proposal['source_binding_id'],
+                             realization_id=proposal['realization_id'],
+                             retrieval_evidence={'rrf_score':hit['score'],'lane_count':hit['lane_count']})
             candidate['_native_semantic_source']=g.photo_candidate_semantics.semantic_source(roles.entry(data,proposal));rows.append(candidate)
         state='blocked' if traces[slot]['role_block_reason'] else ('no_hits' if not desired[slot] else ('budget_excluded' if not rows else ('budget_partial' if len(rows)<len(desired[slot]) else 'available')))
         cards[slot]={'slot':slot,'role':data['slot_catalog'][slot]['priority'],'selected':None,'candidates':rows,
@@ -100,7 +108,7 @@ def retrieve(data,core,controls,context=None,mode='hybrid_required',*,requested_
             'index_sha256':data['_global_index_sha256'],'query_context_sha256':context['canonical_sha256'] if context else None,
             'mode':mode,'query_language':language,'requested_slot_ids':sorted(set(requested_slots)) if requested_slots is not None else None,
             'active_slot_ids':slots,'inactive_slot_ids':sorted(set(data['slot_catalog'])-set(slots)),
-            'algorithm':'independent_global_bm25f_certified_cosine_rrf/v2','rrf_k':30,'minimum_similarity':.30,
+            'algorithm':'independent_global_bm25f_certified_cosine_rrf/v3','rrf_k':30,'minimum_similarity':.30,
             'lanes':{'bm25f':{'state':'executed' if slots else 'not_requested','slot_count':len(slots)},
                      'embedding':{'state':'executed' if mode=='hybrid_required' and slots else 'not_requested','slot_count':len(slots) if mode=='hybrid_required' else 0}},
             'slot_searches':traces,'role_proposals':retained,'eligible_candidates':len(allowed),'selected_candidate_ids':selected,

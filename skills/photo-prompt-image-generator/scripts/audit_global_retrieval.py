@@ -7,6 +7,7 @@ import photo_global_retrieval as guards
 import photo_role_proposals as roles
 import photo_slot_queries as queries
 import photo_slot_retrieval as rules
+import photo_candidate_realizations as realizations
 import photo_sharded_search as search
 from bm25f_retrieval import _query_term_weights
 
@@ -45,7 +46,7 @@ def audit(pack,data,context):
         if record['contract_version']!=rules.VERSION or mode not in rules.MODES or record['canonical_sha256']!=c.digest({k:v for k,v in record.items() if k!='canonical_sha256'}):raise ValueError('slot retrieval schema/checksum mismatch')
         expected={'corpus_sha256':reader.meta['corpus_sha256'],'binding_sha256':c.digest(data['slot_bindings']),'catalog_sha256':c.digest(data['slot_catalog']),'index_sha256':data['_global_index_sha256'],
                   'source_authorial_core_sha256':core['canonical_sha256'],'creative_controls_sha256':controls['canonical_sha256'],'active_slot_ids':slots,'inactive_slot_ids':sorted(set(data['slot_catalog'])-set(slots)),
-                  'unique_candidate_limit':64,'role_limits':{'core':4,'support':2},'minimum_similarity':.30,'rrf_k':30,'tag_admission_filter':False,'candidate_adoption':'optional','algorithm':'independent_global_bm25f_certified_cosine_rrf/v2',
+                  'unique_candidate_limit':64,'role_limits':{'core':4,'support':2},'minimum_similarity':.30,'rrf_k':30,'tag_admission_filter':False,'candidate_adoption':'optional','algorithm':'independent_global_bm25f_certified_cosine_rrf/v3',
                   'lanes':{'bm25f':{'state':'executed' if slots else 'not_requested','slot_count':len(slots)},'embedding':{'state':'executed' if mode=='hybrid_required' and slots else 'not_requested','slot_count':len(slots) if mode=='hybrid_required' else 0}}}
         if any(record.get(k)!=v for k,v in expected.items()):raise ValueError('slot source/query/policy binding mismatch')
         if mode=='hybrid_required':fields=queries.validate_set(context,core,controls,data['slot_catalog'],slots)
@@ -79,7 +80,12 @@ def audit(pack,data,context):
             if blocked:rejected.update(r['document_id'] for r in combined)
             else:
                 for hit in combined:
-                    cid=hit['document_id'];p=roles.propose(data,slot,cid,source_roles[cid],declared.get(cid,[]));entry=roles.entry(gd,p)
+                    cid=hit['document_id']
+                    possible=realizations.eligible_ids(gd,cid,core,contract,picked,slot)
+                    if not possible:
+                        rejected.add(cid);continue
+                    p=roles.propose(data,slot,cid,source_roles[cid],declared.get(cid,[]),realization_ids=possible)
+                    entry=roles.entry(gd,p)
                     if p['applicability_status']=='incompatible' or not g.core_entry_eligible(data,core,contract,picked,slot,entry):rejected.add(cid);continue
                     expected_proposals[p['proposal_id']]=p;chosen.append((cid,p['proposal_id']))
                     if len(chosen)>=limits[slot]:break
