@@ -35,7 +35,8 @@ def _owner_fit(owners, target):
     words = set(re.findall(r"[a-z]+", target.casefold()))
     if "actor" in owners:
         actor = {"actor", "subject", "person", "wearer", "hair", "wig", "face", "skin", "body",
-                 "eye", "eyes", "lip", "lips", "head", "hand", "hands", "brow", "lashes", "torso"}
+                 "eye", "eyes", "lip", "lips", "head", "hand", "hands", "brow", "lashes", "torso",
+                 "nail", "nails", "fingernail", "fingernails", "toenail", "toenails"}
         if words & actor:
             return "compatible"
         if words & {"image", "frame", "camera", "lens", "background", "environment", "garment", "object"}:
