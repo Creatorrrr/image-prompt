@@ -293,71 +293,6 @@ MOE_NONSEXUAL_PATTERNS = (
     r"性的な演出(?:は|が)?(?:ない|なし)",
     r"露出(?:は|が)?(?:ない|なし)",
 )
-CANDIDATE_PACK_CORE_SLOTS = {
-    "subject",
-    "appearance_type",
-    "costume_style",
-    "anatomical_connection",
-    "body_evidence_region",
-    "body_pose",
-    "species_marker",
-    "surface_material",
-    "wardrobe_style",
-    "footwear",
-    "silhouette_proportion",
-    "prop",
-    "location",
-    "space_condition",
-    "crowd_density",
-    "situation_context",
-    "occasion_context",
-    "narrative_core",
-    "concept_tension",
-    "action",
-    "mood",
-    "lighting",
-    "light_type",
-    "light_shape",
-    "composition",
-    "shot_scale",
-    "platform_framing",
-    "subject_framing",
-    "camera_direction",
-}
-CANDIDATE_PACK_CREATIVE_EXPLORATION_SLOTS = {
-    "action",
-    "aftermath_trace",
-    "ambient_particle",
-    "camera_direction",
-    "camera_height",
-    "camera_type",
-    "composition",
-    "concept_tension",
-    "crowd_density",
-    "duty_prop_state",
-    "frame_anchor_medium",
-    "lens",
-    "light_direction",
-    "light_intensity",
-    "light_shape",
-    "light_type",
-    "lighting",
-    "location",
-    "mood",
-    "narrative_core",
-    "occasion_context",
-    "procedure_step",
-    "prop",
-    "relational_action",
-    "sensory_focus",
-    "shot_scale",
-    "situation_context",
-    "space_condition",
-    "subject_framing",
-    "time_of_day",
-    "viewer_position",
-    "weather",
-}
 CANDIDATE_PACK_INTENT_STOPWORDS = {
     "달린",
     "있는",
@@ -468,135 +403,6 @@ VALID_INTENT_DOMAINS = {
     "surreal",
     "adult",
 }
-
-DEFAULT_SLOT_APPLICABILITY: JsonDict = {
-    "subject_category_overrides": {},
-    "slots": {
-        "person_origin": {
-            "subject_categories": ["human"],
-            "deny_domains": ["product", "jewelry", "food", "wildlife"],
-        },
-        "appearance_type": {
-            "subject_categories": ["human"],
-            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
-        },
-        "hair_style": {
-            "subject_categories": ["human"],
-            "deny_domains": ["product", "jewelry", "food", "wildlife"],
-        },
-        "hair_color": {
-            "subject_categories": ["human"],
-            "deny_domains": ["product", "jewelry", "food", "wildlife"],
-        },
-        "makeup_style": {
-            "subject_categories": ["human"],
-            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
-        },
-        "facial_hair": {
-            "subject_categories": ["human"],
-            "deny_domains": ["product", "jewelry", "food", "wildlife"],
-        },
-        "wardrobe_style": {
-            "subject_categories": ["human"],
-            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
-        },
-        "footwear": {
-            "subject_categories": ["human"],
-            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
-        },
-        "silhouette_proportion": {
-            "subject_categories": ["human"],
-            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
-        },
-        "costume_style": {
-            "subject_categories": ["human"],
-            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
-        },
-        "body_framing": {
-            "subject_categories": ["human"],
-            "deny_domains": ["product", "jewelry", "food", "wildlife"],
-        },
-        "body_pose": {
-            "subject_categories": ["human"],
-            "deny_domains": ["product", "jewelry", "food", "wildlife"],
-        },
-        "hand_pose": {
-            "subject_categories": ["human"],
-            "deny_domains": ["product", "jewelry", "food", "wildlife"],
-        },
-        "body_orientation": {
-            "subject_categories": ["human"],
-            "deny_domains": ["product", "jewelry", "food", "wildlife"],
-        },
-        "gaze_engagement": {
-            "subject_categories": ["human"],
-            "deny_domains": ["product", "jewelry", "food"],
-        },
-        "gaze_target": {
-            "subject_categories": ["human", "animal"],
-            "deny_domains": ["product", "jewelry", "food"],
-        },
-        "shot_scale": {
-            "deny_domains": [],
-        },
-        "platform_framing": {
-            "deny_domains": ["wildlife", "food"],
-        },
-        "fetish_styling": {
-            "subject_categories": ["human"],
-            "allow_domains": ["adult"],
-            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
-            "require_domain_match": True,
-        },
-        "adult_context": {
-            "subject_categories": ["human"],
-            "allow_domains": ["adult"],
-            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food"],
-            "require_domain_match": True,
-        },
-        "capture_context": {
-            "subject_categories": ["human", "animal", "food", "object", "plant", "environment"],
-            "allow_domains": ["portrait", "fashion", "beauty", "social", "adult", "science_inspection", "mobility_logistics", "climate_adaptation", "biodiversity_monitoring", "agriculture_food_systems", "circular_materials", "heritage_documentation", "health_access", "sports_motion", "education_training", "disaster_risk_operations", "natural_process", "longitudinal_place_state"],
-            "deny_domains": ["documentary", "craft", "wildlife", "product", "jewelry", "food", "architecture"],
-            "require_domain_match": True,
-        },
-        "expression": {
-            "subject_categories": ["human", "animal"],
-        },
-        "aesthetic_trend": {
-            "deny_domains": ["documentary", "craft", "wildlife"],
-        },
-        "surface_material": {
-            "subject_categories": ["object", "food", "plant", "environment", "sign"],
-            "allow_domains": ["product", "jewelry", "food", "architecture"],
-        },
-        "space_condition": {
-            "deny_domains": ["product", "jewelry", "food", "wildlife", "adult"],
-        },
-        "crowd_density": {
-            "deny_domains": ["product", "jewelry", "food", "wildlife", "adult"],
-        },
-        "situation_context": {
-            "deny_domains": ["product", "jewelry", "food", "wildlife", "adult"],
-        },
-        "occasion_context": {
-            "deny_domains": ["product", "jewelry", "food", "wildlife", "adult"],
-        },
-        "narrative_core": {
-            "deny_domains": ["food", "wildlife", "adult"],
-        },
-        "concept_tension": {
-            "deny_domains": ["food", "wildlife", "adult"],
-        },
-    },
-}
-
-
-# -----------------------------------------------------------------------------
-# Basic helpers
-# -----------------------------------------------------------------------------
-
-
 
 def character_runtime_node_topic_ids(node: JsonDict) -> Set[str]:
     values = normalize_list(node.get("topic_ids"))
@@ -1350,6 +1156,7 @@ def entry_block_reason(
     slot: str,
     generation_contract: Optional[JsonDict],
     forced: bool = False,
+    *, catalog=None,
 ) -> Optional[str]:
     if forced or generation_contract is None:
         return None
@@ -1362,19 +1169,13 @@ def entry_block_reason(
         for value in normalize_list(intent_constraints.get("subject_categories"))
         if str(value) in VALID_SUBJECT_CATEGORIES
     } if isinstance(intent_constraints, dict) else set()
-    typed_nonhuman_person_slots = {
-        "appearance_type", "body_framing", "body_orientation", "body_pose", "brow_style",
-        "cheek_makeup", "complexion_coverage", "costume_style", "eye_detail", "eye_makeup_line",
-        "eyeshadow_style", "face_sculpting", "facial_hair", "footwear",
-        "gaze_engagement", "hair_color", "hair_style", "hand_pose", "lip_finish",
-        "lash_style", "lip_color_placement", "makeup_decoration", "makeup_style", "makeup_wear_state",
-        "person_origin", "silhouette_proportion", "skin_finish", "wardrobe_style",
-    }
+    spec = (catalog or {}).get(slot, {})
+    typed_person_role = "actor" in spec.get("owners", []) or spec.get("applicability", {}).get("subject_categories") == ["human"]
     if (
         requested_categories
         and "human" not in requested_categories
         and str(generation_contract.get("subject_category") or "generic") != "human"
-        and slot in typed_nonhuman_person_slots
+        and typed_person_role
     ):
         if "human" in (entry_kinds(item) | entry_tags(item)):
             return "typed_nonhuman_request"
@@ -1382,7 +1183,7 @@ def entry_block_reason(
         tokens = adult_semantic_tokens(item)
         if tokens & {"adult", "fetish", "suggestive"}:
             return "adult_not_allowed"
-        if slot in {"adult_context", "fetish_styling"}:
+        if slot in {"adult_presentation_context", "fetish_styling"}:
             return "adult_slot_not_allowed"
     subject_cat = str(generation_contract.get("subject_category", "generic"))
     if subject_cat in {"object", "food", "plant", "environment", "sign"} and slot in {"genre", "texture", "focus", "color"}:
@@ -1431,10 +1232,6 @@ def candidate_pack_candidate_id(scope, raw_id, slot=None):
     if not photo_candidate_corpus.ID.fullmatch(raw_id):raise ValueError('native global candidate identity required')
     return raw_id
 
-
-
-def candidate_pack_slot_limit(slot: str) -> int:
-    return CANDIDATE_PACK_CORE_SLOT_LIMIT if slot in CANDIDATE_PACK_CORE_SLOTS else CANDIDATE_PACK_SUPPORT_SLOT_LIMIT
 
 
 def candidate_pack_slot_entry_by_id(data, slot, entry_id):
@@ -1557,48 +1354,10 @@ def candidate_pack_summarize_slot_candidate(
     return candidate, entry
 
 
-SLOT_FOCUS_SUBJECT_SLOTS = {
-    "subject", "appearance_type", "anatomical_connection", "body_evidence_region",
-    "costume_style", "species_marker", "surface_material", "wardrobe_style",
-    "footwear", "silhouette_proportion",
-}
-SLOT_FOCUS_SETTING_SLOTS = {
-    "location", "space_condition", "crowd_density", "situation_context",
-    "occasion_context", "ambient_particle", "weather", "time_of_day",
-}
-SLOT_FOCUS_EVENT_SLOTS = {
-    "action", "body_pose", "prop", "narrative_core", "concept_tension",
-    "relational_action", "aftermath_trace", "duty_prop_state", "procedure_step",
-}
-SLOT_FOCUS_AFFECT_SLOTS = {"expression", "mood", "sensory_focus"}
-SLOT_FOCUS_LIGHT_SLOTS = {
-    "lighting", "light_type", "light_shape", "light_direction", "light_intensity",
-}
-SLOT_FOCUS_STYLE_SLOTS = {
-    "aesthetic_trend", "composition", "shot_scale", "platform_framing",
-    "subject_framing", "camera_direction", "camera_height", "camera_type",
-    "lens", "format", "medium", "genre",
-}
-
-
-def candidate_pack_slot_focus_text(core: JsonDict, slot: str, catalog=None) -> tuple[str, List[str]]:
+def candidate_pack_slot_focus_text(core: JsonDict, slot: str, catalog) -> tuple[str, List[str]]:
     """Project only relevant frozen-core fields into one advisory slot query."""
 
-    fields: List[str] = []
-    if catalog is not None:
-        fields = list(catalog[slot]["core_fields"])
-    elif slot in SLOT_FOCUS_SUBJECT_SLOTS:
-        fields = ["subject"]
-    elif slot in SLOT_FOCUS_SETTING_SLOTS:
-        fields = ["setting", "event"] if slot == "situation_context" else ["setting"]
-    elif slot in SLOT_FOCUS_EVENT_SLOTS:
-        fields = ["event", "subject"] if slot in {"body_pose", "prop"} else ["event"]
-    elif slot in SLOT_FOCUS_AFFECT_SLOTS:
-        fields = ["event", "visual_priorities"]
-    elif slot in SLOT_FOCUS_LIGHT_SLOTS:
-        fields = ["setting", "visual_priorities"]
-    elif slot in SLOT_FOCUS_STYLE_SLOTS:
-        fields = ["style", "visual_priorities"]
+    fields = list(catalog[slot]["core_fields"])
     if not fields:
         return "", []
     projection: JsonDict = {
@@ -2578,7 +2337,7 @@ def candidate_pack_creative_exploration(
         if isinstance(slot_payload, dict) and str(slot_payload.get("selected") or "")
     }
     contrast_rows: List[JsonDict] = []
-    for slot in sorted(CANDIDATE_PACK_CREATIVE_EXPLORATION_SLOTS):
+    for slot in sorted(slots):
         slot_payload = slots.get(slot)
         if not isinstance(slot_payload, dict):
             continue
@@ -3115,13 +2874,13 @@ def candidate_pack_contextual_adult_appeal(
     ]
     excluded_identity_slots = {
         "subject",
-        "appearance_type",
-        "age",
-        "species",
-        "species_morphology",
-        "face",
-        "body_type",
-        "person_origin",
+        "presentation_style",
+        "age_presentation",
+        "subject_count",
+        "gender_presentation",
+        "species_marker",
+        "declared_person_background",
+        "declared_person_background",
     }
     review_ids = []
     traces = {}
@@ -3140,7 +2899,7 @@ def candidate_pack_contextual_adult_appeal(
         sources = {}
         for slot, entries in photo_shared_views.roles(data).items():
             for entry in entries:
-                if entry.get("guard_role", slot) in excluded_identity_slots:
+                if slot in excluded_identity_slots:
                     continue
                 source_key = entry["id"]
                 dimensions = sorted(
@@ -3154,7 +2913,7 @@ def candidate_pack_contextual_adult_appeal(
                     or not property_effects_allowed(
                         lock, dimensions, entry.get("affected_properties", [])
                     )
-                    or entry_block_reason(entry, entry.get("guard_role", slot), constraints)
+                    or entry_block_reason(entry, slot, constraints, catalog=data["slot_catalog"])
                     or not compatible_with_facet_guards(entry, {})
                 ):
                     continue
@@ -5602,23 +5361,23 @@ QUALITY_TAG_FACET_SOURCE_SLOTS: Dict[str, Set[str]] = {
     "weather": {"weather", "location"},
     "lighting_family": {"lighting"},
     "mood_family": {"mood", "genre"},
-    "camera_register": {"medium", "camera_type", "capture_context"},
+    "camera_register": {"medium", "camera_type", "capture_context", "capture_configuration"},
     "shot_scale": {"shot_scale", "composition"},
     "camera_angle": {"camera_direction", "composition"},
     "placement": {"composition", "platform_framing"},
     "platform_frame": {"composition", "platform_framing"},
-    "relation_type": {"action", "relational_action", "procedure_step", "motion"},
+    "relation_type": {"action", "relational_action", "procedure_step", "physical_motion", "motion_rendering"},
     "event_phase": {"action", "procedure_step", "capture_context"},
     "process_stage": {"action", "procedure_step", "capture_context", "prop"},
-    "capture_modality": {"medium", "camera_type", "capture_context"},
-    "weather_effect": {"weather", "motion", "location"},
-    "movement_type": {"action", "motion"},
+    "capture_modality": {"medium", "camera_type", "capture_context", "capture_configuration"},
+    "weather_effect": {"weather", "physical_motion", "motion_rendering", "location"},
+    "movement_type": {"action", "physical_motion", "motion_rendering"},
     "acquisition_structure": {"capture_context", "procedure_step", "composition"},
     "record_basis": {"subject", "capture_context", "procedure_step"},
-    "movement_phase": {"action", "motion", "procedure_step"},
-    "contact_state": {"action", "contact_point", "motion", "prop"},
-    "effort_state": {"action", "body_pose", "motion"},
-    "material_response": {"surface_material", "texture", "motion", "prop"},
+    "movement_phase": {"action", "physical_motion", "motion_rendering", "procedure_step"},
+    "contact_state": {"action", "contact_point", "physical_motion", "motion_rendering", "prop"},
+    "effort_state": {"action", "body_pose", "physical_motion", "motion_rendering"},
+    "material_response": {"surface_material", "texture", "physical_motion", "motion_rendering", "prop"},
     "learning_stage": {"action", "procedure_step", "relational_action", "capture_context"},
     "material_lifecycle_stage": {"subject", "action", "procedure_step", "capture_context"},
     "material_state_evidence": {"subject", "surface_material", "prop", "capture_context"},
@@ -6347,11 +6106,11 @@ def candidate_pack_visual_entry_terms(entry: JsonDict) -> List[str]:
 def candidate_pack_visual_subject_blob(result: JsonDict, slots: JsonDict) -> str:
     values: List[str] = []
     choices = result.get("choices") if isinstance(result.get("choices"), dict) else {}
-    for slot in ("subject", "appearance_type", "costume_style", "wardrobe_style", "prop", "location", "medium", "genre"):
+    for slot in ("subject", "presentation_style", "attire_context", "wardrobe_style", "prop", "location", "medium", "genre"):
         choice = choices.get(slot)
         if isinstance(choice, dict):
             values.extend(candidate_pack_visual_entry_terms(choice))
-    for slot in ("subject", "appearance_type", "costume_style", "wardrobe_style", "prop", "location"):
+    for slot in ("subject", "presentation_style", "attire_context", "wardrobe_style", "prop", "location"):
         slot_payload = slots.get(slot) if isinstance(slots, dict) else None
         if not isinstance(slot_payload, dict):
             continue
@@ -7187,12 +6946,12 @@ def candidate_pack_creative_augmentation(
     ]
     excluded_identity_slots = {
         "subject",
-        "appearance_type",
-        "age",
-        "species",
-        "species_morphology",
-        "face",
-        "body_type",
+        "presentation_style",
+        "age_presentation",
+        "subject_count",
+        "gender_presentation",
+        "species_marker",
+        "declared_person_background",
     }
     rows: List[JsonDict] = []
     excluded_by_user_filter: List[str] = []
@@ -7692,7 +7451,7 @@ def candidate_pack_candidate_bundles(data: JsonDict, pack: JsonDict) -> JsonDict
             continue
         if any(
             slot_block_reason(data, slot, constraints)
-            or entry_block_reason(entry, slot, constraints)
+            or entry_block_reason(entry, slot, constraints, catalog=data["slot_catalog"])
             or not compatible_with_facet_guards(entry, picked)
             or not compatible_with_slot_context(slot, entry, picked, data)
             for slot, entry in picked.items()
@@ -8466,7 +8225,7 @@ def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, sl
     if (check_effect_scope and properties and all("*" not in row["property"] and row["target"] != "*" for row in properties)
             and not property_effects_allowed(lock, dimensions, properties)):
         return False
-    reason = entry_block_reason(entry, slot, contract)
+    reason = entry_block_reason(entry, slot, contract, catalog=data["slot_catalog"])
     if reason and not (reason == "adult_not_allowed"
                        and candidate_pack_age_only_subject_match(entry, slot, core)):
         return False

@@ -210,7 +210,12 @@
         }
       ],
       "record_kind": "visual_option",
-      "conditions": {}
+      "conditions": {
+        "requires_adult_context": true,
+        "for_any": [
+          "human"
+        ]
+      }
     },
     "cand_28a68e06d76657019c6ce04d0a3cd77f": {
       "content": {
@@ -18304,7 +18309,13 @@
         "dimensions": [
           "style"
         ],
-        "properties": []
+        "properties": [
+          {
+            "dimension": "style",
+            "property": "image.detail",
+            "target": "image_plane"
+          }
+        ]
       },
       "id": "cand_1d79eebeaf835f2495d705adace98306",
       "provenance": [
@@ -18330,9 +18341,16 @@
       },
       "effects": {
         "dimensions": [
+          "camera",
           "style"
         ],
-        "properties": []
+        "properties": [
+          {
+            "dimension": "camera",
+            "property": "capture.context",
+            "target": "declared_capture"
+          }
+        ]
       },
       "id": "cand_80194aa51f7d54fe966289f4141f9bfb",
       "provenance": [
@@ -18377,7 +18395,7 @@
         "properties": [
           {
             "dimension": "style",
-            "property": "rendering.quality",
+            "property": "image.detail",
             "target": "image_plane"
           }
         ]

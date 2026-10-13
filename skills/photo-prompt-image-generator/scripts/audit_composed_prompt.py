@@ -5787,36 +5787,6 @@ def _audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> di
         for intent in pack.get("intent_contract") or []
     )
     if no_people:
-        person_only_slots = {
-            "appearance_type",
-            "body_framing",
-            "body_orientation",
-            "body_pose",
-            "brow_style",
-            "cheek_makeup",
-            "complexion_coverage",
-            "costume_style",
-            "eye_detail",
-            "eye_makeup_line",
-            "eyeshadow_style",
-            "face_sculpting",
-            "facial_hair",
-            "footwear",
-            "gaze_engagement",
-            "hair_color",
-            "hair_style",
-            "hand_pose",
-            "lash_style",
-            "lip_color_placement",
-            "lip_finish",
-            "makeup_style",
-            "makeup_decoration",
-            "makeup_wear_state",
-            "person_origin",
-            "silhouette_proportion",
-            "skin_finish",
-            "wardrobe_style",
-        }
         violations: list[dict[str, Any]] = []
         for candidate_id in sorted(chosen):
             candidate = candidate_objects.get(candidate_id)
@@ -5827,7 +5797,9 @@ def _audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> di
                 str(item).lower()
                 for item in [*(candidate.get("kind") or []), *(candidate.get("tags") or [])]
             }
-            if slot in person_only_slots or "human" in tokens:
+            conditions = candidate.get("source_conditions") or (candidate.get("authored_record") or {}).get("conditions") or {}
+            categories = set(conditions.get("for_any") or [])
+            if "human" in tokens or categories == {"human"}:
                 violations.append({"id": candidate_id, "slot": slot, "tokens": sorted(tokens)[:12]})
         if violations:
             failures.append(

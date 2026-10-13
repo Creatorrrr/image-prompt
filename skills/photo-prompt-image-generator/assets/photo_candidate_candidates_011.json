@@ -127,7 +127,12 @@
         }
       ],
       "record_kind": "visual_option",
-      "conditions": {}
+      "conditions": {
+        "requires_adult_context": true,
+        "for_any": [
+          "human"
+        ]
+      }
     },
     "cand_8564a63e98f25ff7834e90310b17abff": {
       "content": {
@@ -22055,9 +22060,16 @@
       },
       "effects": {
         "dimensions": [
+          "role",
           "style"
         ],
-        "properties": []
+        "properties": [
+          {
+            "dimension": "role",
+            "property": "capture.staging",
+            "target": "declared_scene"
+          }
+        ]
       },
       "id": "cand_720aeacf9129564dbf0a0b36bb8e1f63",
       "provenance": [
@@ -22095,7 +22107,13 @@
         "dimensions": [
           "style"
         ],
-        "properties": []
+        "properties": [
+          {
+            "dimension": "style",
+            "property": "image.detail",
+            "target": "image_plane"
+          }
+        ]
       },
       "id": "cand_ec2ce988a6b4520391379c5c22b38a64",
       "provenance": [
@@ -22140,7 +22158,7 @@
         "properties": [
           {
             "dimension": "style",
-            "property": "rendering.quality",
+            "property": "image.detail",
             "target": "image_plane"
           }
         ]
@@ -22192,7 +22210,7 @@
         "properties": [
           {
             "dimension": "style",
-            "property": "rendering.quality",
+            "property": "image.detail",
             "target": "image_plane"
           }
         ]
@@ -22240,7 +22258,7 @@
         "properties": [
           {
             "dimension": "style",
-            "property": "rendering.quality",
+            "property": "image.artifact",
             "target": "image_plane"
           }
         ]
@@ -22298,7 +22316,7 @@
         "properties": [
           {
             "dimension": "style",
-            "property": "rendering.quality",
+            "property": "image.detail",
             "target": "image_plane"
           }
         ]
