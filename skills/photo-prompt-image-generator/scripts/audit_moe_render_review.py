@@ -105,14 +105,14 @@ def derive_character_response_render_gates(
     contract = raw_contract if isinstance(raw_contract, dict) else {}
     failures: list[dict[str, Any]] = []
     if (
-        pack.get("contract_version") != "photo-candidate-pack/v8"
+        pack.get("contract_version") != "photo-candidate-pack/v9"
         or core.get("contract_version")
         != audit_composed_prompt.AUTHORIAL_CORE_V3_CONTRACT_VERSION
     ):
         failures.append(
             {
                 "check": "character_response_contract",
-                "reason": "typed character-response render review requires an original v8 pack and v3 core",
+                "reason": "typed character-response render review requires an original v9 pack and v3 core",
             }
         )
     if not isinstance(composed, dict):
@@ -472,7 +472,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--composed",
         help=(
-            "Audited composed-prompt JSON; required for typed v8 character response "
+            "Audited composed-prompt JSON; required for typed v9 character response "
             "or when the pack exposes optional visual concept candidates"
         ),
     )

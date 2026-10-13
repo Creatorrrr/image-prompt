@@ -4,6 +4,7 @@ ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'skills/phot
 import prompt_generator as g
 import photo_candidate_corpus as c,photo_global_index as idx,photo_global_retrieval as search,photo_shared_views as views,photo_slot_queries as query,photo_search_layout as layout,photo_slot_retrieval as slot_search
 from photo_search_reader import SearchReader,LazyRuntimeData
+from tests.photo_native_schema import slot
 
 class GlobalDiscoveryTests(unittest.TestCase):
  @classmethod
@@ -11,11 +12,11 @@ class GlobalDiscoveryTests(unittest.TestCase):
   path=ROOT/'docs/research-evidence/photo-prompt/shared-candidate-pool-20261012/stage01/inputs/dev-02-blue-cup-en'
   cls.controls=json.loads((path/'creative-controls.json').read_text());cls.core=g.load_authorial_core_arg(path/'authorial-core.json',request_envelope=g.load_request_envelope_arg(path/'request-envelope.json'),creative_control_snapshot=cls.controls)
  def data(self):
-  pool={};bindings={};catalog={tag:{'id':tag,'description':tag,'dimensions':['lighting'],'applicability':{}} for tag in ['lighting','light_type','color']}
+  pool={};bindings={};catalog={tag:slot(tag,['lighting']) for tag in ['lighting','light_type','color']}
   for letter,label in [('a','light from camera left on a blue ceramic cup'),('b','left edge illumination of a blue ceramic cup'),('c','right light on a human portrait')]:
-   cid='cand_'+letter*32;pool[cid]={'id':cid,'record_kind':'visual_option','content':{'en':label,**({'for_any':['human']} if letter=='c' else {})},'effects':{'dimensions':['lighting'],'properties':[]},'provenance':[{'source':'authored-test','sha256':'a'*64}]}
+   cid='cand_'+letter*32;pool[cid]={'id':cid,'record_kind':'visual_option','content':{'en':label},'conditions':{'for_any':['human']} if letter=='c' else {},'effects':{'dimensions':['lighting'],'properties':[]},'provenance':[{'source':'authored-test','sha256':'a'*64}]}
   for letter,tag in [('d','lighting'),('e','light_type')]:
-   bid='bind_'+letter*32;bindings[bid]={'id':bid,'candidate_id':'cand_'+'a'*32,'slot_id':tag,'role':'optional','conditions':{'subject_applicability':{'subject_categories':['object']},'guard_role':'lighting'},'effects':{'dimensions':['lighting'],'properties':[]},'weight':1}
+   bid='bind_'+letter*32;bindings[bid]={'id':bid,'candidate_id':'cand_'+'a'*32,'slot_id':tag,'role':'optional','semantic_role':'direct','conditions':{'subject_applicability':{'subject_categories':['object']}},'weight':1}
   policies={'visual_meaning_contract':{'schema_version':'photo-native-visual-meaning-contract/v1'},'visual_profile_refs':[],'bundle_refs':[],'relationship_graph':{'runtime_node_refs':[],'concept_profile_refs':[]},'candidate_semantic_policy':{},'_quality_layers':{}}
   source={'schema':c.SCHEMA,'candidates':pool,'slot_catalog':catalog,'slot_bindings':bindings,'policies':policies};entries={}
   for cid,row in pool.items():
@@ -43,9 +44,10 @@ class GlobalDiscoveryTests(unittest.TestCase):
   data['slot_bindings'].pop('bind_'+'e'*32)
   after=slot_search.retrieve(self.lazy(data),self.core,self.controls,self.context())[1]
   self.assertEqual(before['lanes'],after['lanes'])
- def test_binding_guard_cannot_be_bypassed_by_good_vector(self):
+ def test_intrinsic_guard_cannot_be_bypassed_by_good_vector_or_neutral_binding(self):
   data=self.data()
-  for b in data['slot_bindings'].values():b['conditions']['subject_applicability']={'subject_categories':['human']}
+  data['candidates']['cand_'+'a'*32]['conditions']['subject_applicability']={'subject_categories':['human']}
+  for b in data['slot_bindings'].values():b['conditions']['subject_applicability']={}
   rows=slot_search.retrieve(self.lazy(data),self.core,self.controls,self.context())[1]['selected_candidate_ids'];self.assertNotIn('cand_'+'a'*32,rows)
  def test_keyword_only_is_explicit_nonhybrid(self):
   roles,binding,_=slot_search.retrieve(self.lazy(),self.core,self.controls,mode='keyword_only');self.assertEqual(binding['lanes']['embedding']['state'],'not_requested');self.assertIsNone(binding['query_context_sha256'])

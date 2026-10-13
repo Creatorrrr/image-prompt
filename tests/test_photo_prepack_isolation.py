@@ -114,7 +114,7 @@ class PhotoPrepackIsolationTests(unittest.TestCase):
         self.assertEqual(prompt_generator.candidate_pack_auto_visual_obligation_matches(self.registry, rows), {})
 
     def test_frozen_core_revision_decisions_are_rejected(self):
-        pack = {'contract_version':'photo-candidate-pack/v8','candidate_pool':{},'role_proposals':{},'candidate_bindings':{},'role_views':{},'semantic_clarification': {'candidates': [{'id': 'core', 'source': 'agent_prepack_interpretation', 'revisable': False, 'required_in_final_prompt': True, 'applicability': {'status': 'required'}}]}}
+        pack = {'contract_version':'photo-candidate-pack/v9','candidate_pool':{},'role_proposals':{},'candidate_bindings':{},'role_views':{},'semantic_clarification': {'candidates': [{'id': 'core', 'source': 'agent_prepack_interpretation', 'revisable': False, 'required_in_final_prompt': True, 'applicability': {'status': 'required'}}]}}
         composed = {'semantic_clarification_decisions': [{'clarification_id': 'core', 'decision': 'superseded_by_revision', 'rationale': 'replace frozen meaning', 'prompt_evidence': 'bread'}]}
         self.assertTrue(audit_composed_prompt.audit_semantic_clarification(pack, composed, 'bread'))
 if __name__ == '__main__':

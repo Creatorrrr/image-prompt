@@ -23,7 +23,7 @@ DEFAULT_LEDGER = PROJECT_ROOT / "runs" / "image_runs.ndjson"
 VALID_STATUSES = {"success", "safety_block", "error"}
 VALID_COMPOSERS = {"agent", "auto"}
 VALID_AUDIT_STATUSES = {"pass", "warn", "fail", "not_run"}
-VALID_CANDIDATE_PACK_VERSIONS = {"v8"}
+VALID_CANDIDATE_PACK_VERSIONS = {"v9"}
 MODERN_INDEPENDENT_RUN_MANIFEST_VERSION = "photo-independent-run-manifest/v2"
 
 
@@ -260,8 +260,8 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
 
 
 def build_independent_manifest(entry: dict[str, object], args: argparse.Namespace) -> dict[str, object]:
-    if args.candidate_pack_version != 'v8':
-        raise ValueError('independent manifests require candidate-pack version v8')
+    if args.candidate_pack_version != 'v9':
+        raise ValueError('independent manifests require candidate-pack version v9')
     common_required_values = {'arm_id': args.arm_id, 'worktree_id': args.worktree_id, 'skill_sha256': args.skill_sha256, 'source_ref': args.source_ref, 'candidate_pack_version': args.candidate_pack_version, 'image_call_count': args.image_call_count}
     contract_version = MODERN_INDEPENDENT_RUN_MANIFEST_VERSION
     required_values = {**common_required_values, **{'authorial_core_sha256': args.authorial_core_sha256, 'intent_lock_sha256': args.intent_lock_sha256}}
@@ -358,8 +358,8 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--skill-sha256", default=None, help="SHA-256 of the frozen skill snapshot used by the arm.")
     parser.add_argument("--source-ref", default=None, help="Commit or source-snapshot identity used by the arm.")
     parser.add_argument("--candidate-pack-version", choices=sorted(VALID_CANDIDATE_PACK_VERSIONS), default=None, help="Candidate-pack version used by the arm.")
-    parser.add_argument("--authorial-core-sha256", default=None, help="Canonical pre-pack authorial core SHA-256 for v8.")
-    parser.add_argument("--intent-lock-sha256", default=None, help="Canonical requesting-user intent-lock SHA-256 for v8.")
+    parser.add_argument("--authorial-core-sha256", default=None, help="Canonical pre-pack authorial core SHA-256 for v9.")
+    parser.add_argument("--intent-lock-sha256", default=None, help="Canonical requesting-user intent-lock SHA-256 for v9.")
     parser.add_argument("--render-repair-contract-sha256", default=None, help="Canonical generic render-repair contract SHA-256, when enabled.")
     parser.add_argument("--failed-repair-gate-id", action="append", default=[], help="Failed generic repair hard-gate ID. Repeatable.")
     parser.add_argument("--reference-sha256", action="append", default=[], help="SHA-256 for an attached reference input. Repeatable.")

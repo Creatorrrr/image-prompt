@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create a lossless, on-demand composition view of an immutable native v8 pack.
+"""Create a lossless, on-demand composition view of an immutable native v9 pack.
 
 Only known optional candidate inventories are deferred. Every other field,
 including unknown future requirements, remains visible. This is a reading aid;
@@ -46,8 +46,8 @@ def digest(value: Any) -> str:
 def source_pack(payload: Any) -> dict[str, Any]:
     if isinstance(payload, list) and len(payload) == 1:
         payload = payload[0]
-    if not isinstance(payload, dict) or payload.get("contract_version") != "photo-candidate-pack/v8":
-        raise ValueError("composer view requires exactly one original v8 candidate pack")
+    if not isinstance(payload, dict) or payload.get("contract_version") != "photo-candidate-pack/v9":
+        raise ValueError("composer view requires exactly one original v9 candidate pack")
     hashable = dict(payload, pack_id=None)
     if payload.get("pack_id") != digest(hashable)[:16]:
         raise ValueError("source pack_id does not match the immutable pack content")

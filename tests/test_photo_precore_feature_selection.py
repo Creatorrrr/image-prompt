@@ -623,7 +623,7 @@ class PhotoPrecoreFeatureSelectionTests(unittest.TestCase):
         # Inspect the existing literal anchor check without claiming a complete pack audit.
         def anchor_failures(prompt: str) -> list[dict]:
             return [row for row in photo_prompt_fixtures.audit_composed_prompt.audit_authorial_core(
-                {"contract_version":"photo-candidate-pack/v8", "candidate_pool":{}, "role_proposals":{}, "candidate_bindings":{}, "role_views":{}, "authorial_core": normalized}, {}, prompt
+                {"contract_version":"photo-candidate-pack/v9", "candidate_pool":{}, "role_proposals":{}, "candidate_bindings":{}, "role_views":{}, "authorial_core": normalized}, {}, prompt
             ) if row["check"] == "intent_lock_prompt_evidence"]
 
         baseline = normalized["baseline_prompt_en"]

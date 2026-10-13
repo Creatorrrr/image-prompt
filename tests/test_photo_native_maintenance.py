@@ -8,7 +8,7 @@ class NativeMaintenanceTests(unittest.TestCase):
     def setUp(self):
         self.a='cand_'+'a'*32;self.b='cand_'+'b'*32;self.p='cand_'+'c'*32
         def record(kind, content):
-            return {'id':self.a,'record_kind':kind,'content':content,'effects':{'dimensions':[], 'properties':[]},'provenance':[]}
+            return {'id':self.a,'record_kind':kind,'content':content,'conditions':{},'effects':{'dimensions':[], 'properties':[]},'provenance':[]}
         candidates={self.a:record('visual_option',{'en':'window on camera left'}),
                     self.p:record('visual_profile',{'semantics':{'definition':'visible separate eye and hair owners'}}),
                     self.b:record('visual_bundle',{'member_candidates':[{'candidate_id':self.a,'binding_id':None}], 'hard_profile_ids':[self.p]})}
@@ -33,4 +33,11 @@ class NativeMaintenanceTests(unittest.TestCase):
     def test_unknown_native_reference_cannot_publish_links(self):
         self.source['candidates'][self.b]['content']['hard_profile_ids']=['cand_'+'f'*32]
         self.assertRaises(ValueError,build_links,make_inventory(self.source,self.raw))
+    def test_intrinsic_condition_change_invalidates_the_single_owned_entity(self):
+        before=make_inventory(self.source,self.raw)
+        self.source['candidates'][self.a]['conditions']={'for_any':['human']}
+        after=make_inventory(self.source,self.raw)
+        hashes=lambda inv:{r['id']:r['entity_sha256'] for r in inv['nodes']}
+        self.assertNotEqual(hashes(before)[self.a],hashes(after)[self.a])
+        self.assertEqual(hashes(before)[self.p],hashes(after)[self.p])
 if __name__=='__main__':unittest.main()

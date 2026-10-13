@@ -142,4 +142,4 @@ python skills/photo-prompt-image-generator/scripts/photo_workflow.py attach-retr
   --run CHILD_RUN --proof RETRY_DIR/retry_proof.json
 ```
 
-Retries require a current `photo-workflow-run/v2` parent, its native v8 pack and issued runtime receipt v3. Archived runs retain their evidence; create and audit a fresh native run before retrying. No parent-manifest import or historical worker is supported.
+Retries require a current `photo-workflow-run/v2` parent, its native v9 pack and issued runtime receipt v3. Archived runs retain their evidence; create and audit a fresh native run before retrying. No parent-manifest import or historical worker is supported.

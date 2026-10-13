@@ -1,7 +1,7 @@
 """Single native candidate payload, with bounded many-to-many presentation refs."""
 import copy
 import photo_candidate_corpus as c
-CONTRACT='photo-candidate-pack/v8'
+CONTRACT='photo-candidate-pack/v9'
 
 class WorkingPack(dict):
     def __init__(self,value,roles):super().__init__(value);self.working_roles=roles;self.query_context=None
@@ -11,7 +11,7 @@ class CandidatePack(dict):
 
 def role_cards(pack):
     if isinstance(pack,WorkingPack):return pack.working_roles
-    if pack.get('contract_version')!=CONTRACT:raise ValueError('native v8 pack required')
+    if pack.get('contract_version')!=CONTRACT:raise ValueError('native v9 pack required')
     result={}
     for tag,view in pack['role_views'].items():
         rows=[]
@@ -20,7 +20,12 @@ def role_cards(pack):
             if proposal['candidate_id']!=cid or proposal['target_slot_id']!=tag:raise ValueError('foreign role proposal')
             row.update({'slot':tag,'entry_id':cid,'proposal_id':pid,'binding_id':proposal['source_binding_id'],
                         'affected_dimensions':proposal['effects']['dimensions'],'affected_properties':proposal['effects']['properties'],
-                        'source_conditions':proposal['conditions']});rows.append(row)
+                        'source_conditions':proposal['conditions'],
+                        'role_conditions':proposal['role_conditions'],
+                        'semantic_role':proposal['semantic_role'],
+                        'applicability':{'status':proposal['applicability_status'],
+                                         'source':'native_owned_role_fit',
+                                         'reason':proposal['semantic_fit']['reason']}});rows.append(row)
         result[tag]={**{k:v for k,v in view.items() if k!='candidate_refs'},'candidates':rows}
     return result
 
@@ -97,7 +102,7 @@ def finalize(pack,data,selected_ids,query_context):
     return CandidatePack(result,query_context)
 
 def validate(pack):
-    if pack.get('contract_version')!=CONTRACT or 'slots' in pack:raise ValueError('native v8 pack required')
+    if pack.get('contract_version')!=CONTRACT or 'slots' in pack:raise ValueError('native v9 pack required')
     if len(pack.get('candidate_pool',{}))>64:raise ValueError('global unique candidate budget exceeded')
     for cid,row in pack['candidate_pool'].items():
         if not c.ID.fullmatch(cid) or row.get('id')!=cid or row['authored_record']['id']!=cid:raise ValueError('invalid native candidate identity')

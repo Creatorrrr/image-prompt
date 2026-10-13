@@ -21,7 +21,7 @@ class ShardedSearchTests(unittest.TestCase):
         self.source=views.source(GlobalDiscoveryTests().data());self.source['candidates']={};self.source['slot_bindings']={}
         entries={};rng=random.Random(302)
         for n in range(48):
-            cid='cand_'+f'{n:032x}';record={'id':cid,'record_kind':'visual_option','content':{'en':('left lighting blue' if n%2 else 'right red light'),'ko':'빛 조명'},'effects':{'dimensions':['lighting'],'properties':[]},'provenance':[{'source':'test','sha256':'a'*64}]}
+            cid='cand_'+f'{n:032x}';record={'id':cid,'record_kind':'visual_option','content':{'en':('left lighting blue' if n%2 else 'right red light'),'ko':'빛 조명'},'conditions':{},'effects':{'dimensions':['lighting'],'properties':[]},'provenance':[{'source':'test','sha256':'a'*64}]}
             self.source['candidates'][cid]=record;recipe,text=idx.text(record)
             v=[1. if n<24 else -1.,rng.uniform(-.03,.03),rng.uniform(-.03,.03)]+[0.]*765
             entries[cid]={'id':cid,'recipe':recipe,'text':text,'text_sha256':hashlib.sha256(text.encode()).hexdigest(),'vector':v}

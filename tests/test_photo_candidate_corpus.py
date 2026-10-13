@@ -4,6 +4,7 @@ from pathlib import Path
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'skills/photo-prompt-image-generator/scripts'))
 import photo_candidate_corpus as c
+from tests.photo_native_schema import slot
 
 A='cand_'+'a'*32
 B='cand_'+'b'*32
@@ -14,12 +15,12 @@ E={'dimensions':['style'],'properties':[]}
 
 def fixture():
     return {'schema':c.SCHEMA,'candidates':{A:{'id':A,'record_kind':'visual_option',
-        'content':{'en':'a glossy fabric surface'},'effects':copy.deepcopy(E),
+        'content':{'en':'a glossy fabric surface'},'conditions':{},'effects':copy.deepcopy(E),
         'provenance':[{'source':'authored test','sha256':'a'*64}]}},
-        'slot_catalog':{tag:{'id':tag,'description':tag,'dimensions':['style'],'applicability':{}}
+        'slot_catalog':{tag:slot(tag,['style'])
                         for tag in ['wardrobe_style','garment_detail']},
         'slot_bindings':{X:{'id':X,'candidate_id':A,'slot_id':'wardrobe_style',
-            'role':'optional','conditions':{},'effects':copy.deepcopy(E),'weight':1}},'policies':{}}
+            'role':'optional','semantic_role':'direct','conditions':{'subject_applicability':{}},'weight':1}},'policies':{}}
 
 
 class SharedCorpusTests(unittest.TestCase):
@@ -62,9 +63,9 @@ class SharedCorpusTests(unittest.TestCase):
         with self.assertRaises(ValueError):c.validate(d)
 
     def test_role_condition_isolation_and_foreign_role_rejection(self):
-        d=fixture();d['slot_bindings'][X]['conditions']={'requires_all_tags':['studio']}
-        self.assertNotIn('requires_all_tags',c.entry(d,A))
-        self.assertEqual(c.entry(d,A,X)['requires_all_tags'],['studio'])
+        d=fixture();d['slot_bindings'][X]['conditions']={'subject_applicability':{'deny_domains':['studio']}}
+        self.assertNotIn('_role_conditions',c.entry(d,A))
+        self.assertEqual(c.entry(d,A,X)['_role_conditions']['subject_applicability']['deny_domains'],['studio'])
         d['candidates'][B]={**copy.deepcopy(d['candidates'][A]),'id':B}
         with self.assertRaises(ValueError):c.entry(d,B,X)
 
