@@ -79,7 +79,7 @@ def queries(core: dict, definitions: dict, intensities: dict, retrieval_text) ->
 
 
 def expression_scope(slot: str) -> str:
-    if slot in {"wardrobe_style", "costume_style", "fetish_styling"}:
+    if slot in {"wardrobe_style", "attire_context", "fetish_styling"}:
         return "whole_direction"
     if slot in {"garment_detail", "surface_material", "wearable_accessory", "footwear"}:
         return "construction_or_material"

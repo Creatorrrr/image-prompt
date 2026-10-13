@@ -95,11 +95,15 @@ def main():
                     "vector_leaves_read": len(trace["cosine_proof"]["visited_leaves"]),
                     "vector_leaves_total": len(reader.meta["vector_shards"]),
                     "presented_candidates": len(cards[slot]["candidates"])})
+            print(case, language, len(slots), "independent hybrid queries and full-scan oracles passed", flush=True)
             calls += sum(not row["cache_hit"] for row in context["slots"].values())
             cache_hits += sum(row["cache_hit"] for row in context["slots"].values())
             if case == "object" and language == "en":
+                smoke_slots=slots if args.stage=='02' else ['lighting','composition','color','texture']
+                smoke_context={'schema':queries.SCHEMA,'slots':{slot:context['slots'][slot] for slot in smoke_slots}}
+                smoke_context['canonical_sha256']=c.digest(smoke_context)
                 pack = g.generate_candidate_pack(snapshot.data, core, controls, embodiment, seed=5,
-                    query_context=context, requested_slots=slots)
+                    query_context=smoke_context, requested_slots=smoke_slots)
                 receipt = provider.receipt(snapshot, pack)
                 replay = runtime.RuntimeSnapshotProvider(ROOT / "skills/photo-prompt-image-generator").from_receipt(pack, receipt)
                 assert audit.audit(pack, replay.data, replay.query_context) == []
@@ -109,8 +113,7 @@ def main():
                 atomic(HERE / ("stage" + args.stage + "-native-pack.json"), pack)
                 atomic(HERE / ("stage" + args.stage + "-native-receipt.json"), receipt)
                 rows.append({"native_pack_version": pack["contract_version"], "receipt_replay_audit": "pass",
-                    "decline_optional_composition_audit": result["status"]})
-            print(case, language, len(slots), "independent hybrid queries and full-scan oracles passed", flush=True)
+                    "decline_optional_composition_audit": result["status"],"smoke_slot_ids":smoke_slots})
         report = {"verified": True, "stage": args.stage, "corpus_sha256": c.digest(source),
             "generation_id": snapshot.generation_id, "query_count": len(proofs), "provider_calls": calls,
             "exact_context_cache_hits": cache_hits, "reader_initial_metrics": initial_metrics,

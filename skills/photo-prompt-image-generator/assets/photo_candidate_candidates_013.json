@@ -2021,7 +2021,8 @@
       "conditions": {
         "for_any": [
           "human"
-        ]
+        ],
+        "requires_adult_context": true
       }
     },
     "cand_f302fb5230c859cc9fe747b490f2f44b": {
@@ -20184,9 +20185,16 @@
       },
       "effects": {
         "dimensions": [
+          "role",
           "style"
         ],
-        "properties": []
+        "properties": [
+          {
+            "dimension": "role",
+            "property": "capture.staging",
+            "target": "declared_scene"
+          }
+        ]
       },
       "id": "cand_e7b59808b35f502dae511194ac15316a",
       "provenance": [
@@ -20231,7 +20239,7 @@
         "properties": [
           {
             "dimension": "style",
-            "property": "rendering.quality",
+            "property": "image.detail",
             "target": "image_plane"
           }
         ]

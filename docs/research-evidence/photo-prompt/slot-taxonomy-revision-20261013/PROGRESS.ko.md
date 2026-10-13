@@ -4,8 +4,8 @@
 
 - 0단계 완료: `5f13934c` — 136개 목표 역할, 기존 112개 대응, 참고 대화 45개 분류 대응을 검증하고 커밋했다.
 - 1단계 완료: `162c3305` — 18,250개 전체 후보와 12,020개 연결의 원본·조건·효과·본문 hash·payload owner·참조를 고정했다. 단계 시작 HEAD는 `5f13934c`다. 기준 테스트 61개가 통과했다.
-- 2단계 완료: canonical 조건·효과를 V2로 분리하고 의미 계약·독립 질의 V2·팩 V9·재검산 경로를 구현했다. 검증 내용은 STAGE02-REPORT.ko.md에 기록한다.
-- 3단계 진행 예정: 기존 연결의 정제·개명·분해와 소비자·참조 갱신, 검색·shard·publication 검증.
+- 2단계 완료: `52dfda72` — canonical 조건·효과를 V2로 분리하고 의미 계약·독립 질의 V2·팩 V9·재검산 경로를 구현했다. 검증 내용은 STAGE02-REPORT.ko.md에 기록한다.
+- 3단계 완료: 기존 연결 전체를 136개 평면 역할로 이관했고, 최종 회귀 123개·실제 질의 286개의 전체 스캔 일치·shard·영수증·native publication을 검증했다. REPORT.ko.md에 전체 증거와 범위를 기록한다.
 
 고정 원본은 CORPUS-BEFORE.json.gz이며 역사 증빙에만 존재한다. 운영 reader가 이 파일이나 이전 계약을 fallback으로 읽지 않는다. INVENTORY-BEFORE.jsonl은 전체 canonical ID와 1:1로 대응한다. 두 개의 기존 미커밋 문서는 STAGE01-VERIFICATION.json에 hash를 기록하고 변경하지 않는다.
 

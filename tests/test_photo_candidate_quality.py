@@ -58,10 +58,10 @@ class CandidateQualityTests(unittest.TestCase):
             self.assertFalse(generator.core_entry_eligible(self.source, {"user_exclusions": []}, contract,
                 {"subject": {"en": "a ceramic cup", "tags": ["object"]}}, "prop", entry))
         for binding in self.source["slot_bindings"].values():
-            if binding["slot_id"] != "adult_context":
+            if binding["slot_id"] != "adult_presentation_context":
                 continue
             entry = corpus.entry(self.source, binding["candidate_id"], binding["id"])
-            self.assertEqual(generator.entry_block_reason(entry, "adult_context",
+            self.assertEqual(generator.entry_block_reason(entry, "adult_presentation_context",
                 {"adult_allowed": False, "intent_constraints": {}}), "adult_not_allowed")
 
 

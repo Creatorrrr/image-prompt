@@ -6567,7 +6567,7 @@
               "deconstructed_mummy_wrap_dress",
               "sci_fi_rebirth_bandage_wrap_costume"
             ],
-            "slot": "costume_style"
+            "slot": "attire_context"
           },
           "penalty": 0.42,
           "right": {
@@ -6607,7 +6607,7 @@
               "deconstructed_mummy_wrap_dress",
               "sci_fi_rebirth_bandage_wrap_costume"
             ],
-            "slot": "costume_style"
+            "slot": "attire_context"
           },
           "right": {
             "ids": [
@@ -6850,7 +6850,115 @@
               "commercial_crisp",
               "object_catalog_realism"
             ],
-            "slot": "quality"
+            "slot": "image_detail"
+          },
+          "penalty": 0.35,
+          "right": {
+            "ids": [
+              "water_droplets_on_lens",
+              "greasy_fingerprint_smudge",
+              "dust_specks_on_lens",
+              "fogged_breath_on_lens",
+              "circular_sun_flare",
+              "anamorphic_horizontal_flare",
+              "veiling_glare_haze",
+              "chromatic_fringe_edges",
+              "light_leak_streak",
+              "rain_streaks_on_glass"
+            ],
+            "slot": "lens_artifact"
+          },
+          "severity": "soft"
+        },
+        {
+          "id": "clean_quality_vs_lens_artifact",
+          "left": {
+            "ids": [
+              "commercial_crisp",
+              "object_catalog_realism"
+            ],
+            "slot": "skin_finish"
+          },
+          "penalty": 0.35,
+          "right": {
+            "ids": [
+              "water_droplets_on_lens",
+              "greasy_fingerprint_smudge",
+              "dust_specks_on_lens",
+              "fogged_breath_on_lens",
+              "circular_sun_flare",
+              "anamorphic_horizontal_flare",
+              "veiling_glare_haze",
+              "chromatic_fringe_edges",
+              "light_leak_streak",
+              "rain_streaks_on_glass"
+            ],
+            "slot": "lens_artifact"
+          },
+          "severity": "soft"
+        },
+        {
+          "id": "clean_quality_vs_lens_artifact",
+          "left": {
+            "ids": [
+              "commercial_crisp",
+              "object_catalog_realism"
+            ],
+            "slot": "image_artifact"
+          },
+          "penalty": 0.35,
+          "right": {
+            "ids": [
+              "water_droplets_on_lens",
+              "greasy_fingerprint_smudge",
+              "dust_specks_on_lens",
+              "fogged_breath_on_lens",
+              "circular_sun_flare",
+              "anamorphic_horizontal_flare",
+              "veiling_glare_haze",
+              "chromatic_fringe_edges",
+              "light_leak_streak",
+              "rain_streaks_on_glass"
+            ],
+            "slot": "lens_artifact"
+          },
+          "severity": "soft"
+        },
+        {
+          "id": "clean_quality_vs_lens_artifact",
+          "left": {
+            "ids": [
+              "commercial_crisp",
+              "object_catalog_realism"
+            ],
+            "slot": "color_grading"
+          },
+          "penalty": 0.35,
+          "right": {
+            "ids": [
+              "water_droplets_on_lens",
+              "greasy_fingerprint_smudge",
+              "dust_specks_on_lens",
+              "fogged_breath_on_lens",
+              "circular_sun_flare",
+              "anamorphic_horizontal_flare",
+              "veiling_glare_haze",
+              "chromatic_fringe_edges",
+              "light_leak_streak",
+              "rain_streaks_on_glass"
+            ],
+            "slot": "lens_artifact"
+          },
+          "severity": "soft"
+        },
+        {
+          "id": "clean_quality_vs_lens_artifact",
+          "left": {
+            "ids": [
+              "commercial_crisp",
+              "object_catalog_realism"
+            ],
+            "slot": "staging_degree"
           },
           "penalty": 0.35,
           "right": {
@@ -7494,7 +7602,7 @@
               "surface_pixel_mosaic_dissolve",
               "particle_disperse_to_black"
             ],
-            "slot": "transition_stage"
+            "slot": "transformation_stage"
           },
           "penalty": 0.28,
           "right": {
@@ -7602,7 +7710,7 @@
             "ids": [
               "character_moe_off_duty_relaxed_prop_state"
             ],
-            "slot": "duty_prop_state"
+            "slot": "prop_state"
           },
           "severity": "hard"
         },
@@ -7618,7 +7726,7 @@
             "ids": [
               "character_moe_on_duty_fastened_prop_state"
             ],
-            "slot": "duty_prop_state"
+            "slot": "prop_state"
           },
           "severity": "hard"
         }
@@ -7638,10 +7746,12 @@
           ],
           "severity": "hard",
           "slots": [
+            "camera_movement",
             "camera_type",
             "composition",
             "lens",
-            "motion"
+            "motion_rendering",
+            "physical_motion"
           ]
         },
         {
@@ -7658,10 +7768,12 @@
           ],
           "severity": "hard",
           "slots": [
+            "camera_movement",
             "camera_type",
             "composition",
             "lens",
-            "motion"
+            "motion_rendering",
+            "physical_motion"
           ]
         },
         {
@@ -7699,8 +7811,8 @@
           ],
           "severity": "hard",
           "slots": [
-            "lighting",
-            "light_type"
+            "light_type",
+            "lighting"
           ]
         },
         {
@@ -7718,8 +7830,8 @@
           ],
           "severity": "hard",
           "slots": [
-            "lighting",
-            "light_type"
+            "light_type",
+            "lighting"
           ]
         },
         {
@@ -7737,8 +7849,8 @@
           ],
           "severity": "hard",
           "slots": [
-            "lighting",
-            "light_type"
+            "light_type",
+            "lighting"
           ]
         },
         {
@@ -7755,8 +7867,8 @@
           ],
           "severity": "hard",
           "slots": [
-            "lighting",
-            "light_type"
+            "light_type",
+            "lighting"
           ]
         },
         {
@@ -7775,8 +7887,8 @@
           ],
           "severity": "hard",
           "slots": [
-            "lighting",
-            "light_type"
+            "light_type",
+            "lighting"
           ]
         },
         {
@@ -7797,8 +7909,8 @@
           ],
           "severity": "hard",
           "slots": [
-            "lighting",
-            "light_type"
+            "light_type",
+            "lighting"
           ]
         },
         {
@@ -7821,8 +7933,8 @@
           ],
           "severity": "hard",
           "slots": [
-            "lighting",
-            "light_type"
+            "light_type",
+            "lighting"
           ]
         },
         {
@@ -7874,7 +7986,7 @@
           ],
           "severity": "hard",
           "slots": [
-            "body_framing"
+            "subject_framing"
           ]
         },
         {
@@ -7937,10 +8049,10 @@
           ],
           "severity": "hard",
           "slots": [
+            "ambient_particle",
             "lens_artifact",
             "skin_condition",
-            "skin_finish",
-            "ambient_particle"
+            "skin_finish"
           ]
         },
         {
@@ -7983,9 +8095,9 @@
           ],
           "severity": "hard",
           "slots": [
+            "action",
             "hand_pose",
-            "prop",
-            "action"
+            "prop"
           ]
         },
         {
@@ -8116,10 +8228,10 @@
           ],
           "severity": "hard",
           "slots": [
-            "situation_context",
             "capture_context",
+            "location",
             "prop",
-            "location"
+            "situation_context"
           ]
         },
         {
@@ -8158,11 +8270,11 @@
           ],
           "severity": "hard",
           "slots": [
-            "subject",
-            "prop",
-            "location",
             "capture_context",
-            "composition"
+            "composition",
+            "location",
+            "prop",
+            "subject"
           ]
         },
         {
@@ -8191,10 +8303,10 @@
           ],
           "severity": "hard",
           "slots": [
-            "platform_framing",
-            "format",
             "capture_context",
-            "composition"
+            "composition",
+            "format",
+            "platform_framing"
           ]
         },
         {
@@ -8228,9 +8340,9 @@
           ],
           "severity": "hard",
           "slots": [
+            "capture_context",
             "narrative_core",
             "prop",
-            "capture_context",
             "situation_context"
           ]
         },
@@ -8258,10 +8370,10 @@
           ],
           "severity": "hard",
           "slots": [
+            "capture_context",
             "concept_tension",
             "narrative_core",
             "prop",
-            "capture_context",
             "world"
           ]
         },
@@ -8287,9 +8399,9 @@
           "severity": "hard",
           "slots": [
             "concept_tension",
+            "mood",
             "narrative_core",
-            "occasion_context",
-            "mood"
+            "occasion_context"
           ]
         },
         {
@@ -8306,7 +8418,7 @@
           ],
           "severity": "hard",
           "slots": [
-            "transition_stage"
+            "transformation_stage"
           ]
         },
         {
@@ -8321,7 +8433,7 @@
           ],
           "severity": "hard",
           "slots": [
-            "intent_state"
+            "character_intent"
           ]
         },
         {
@@ -8407,7 +8519,7 @@
           ],
           "severity": "hard",
           "slots": [
-            "intent_state"
+            "character_intent"
           ]
         },
         {
@@ -8421,7 +8533,7 @@
           ],
           "severity": "hard",
           "slots": [
-            "intent_state"
+            "character_intent"
           ]
         }
       ]

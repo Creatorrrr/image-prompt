@@ -11,6 +11,10 @@ sys.path.insert(0, str(ROOT / "skills/photo-prompt-image-generator/scripts"))
 import photo_candidate_corpus as c
 import prompt_generator as g
 
+# Historical priority is frozen audit data, never a runtime slot fallback.
+AUDIT_INVENTORY = json.loads((OUT.parent / "slot-taxonomy-audit-20261013/INVENTORY.json").read_text())
+FROZEN_CORE_SLOTS = {row["slot_id"] for row in AUDIT_INVENTORY if row["presentation_priority"] == "core"}
+
 # A family is a display aid, never a parent search node. Definition and scope
 # are authored here; positive corpus documents never include these tag texts.
 DEFINITIONS = """
@@ -188,7 +192,7 @@ def make_row(name, description, owner, dims, paths, terms, ko, boundary):
         "owners": [owner], "property_prefixes": paths.split(","),
         "evidence_terms": terms.split(","),
         "includes": [description], "excludes": [boundary], "neighbors": [],
-        "core_fields": fields, "priority": "core" if name in g.CANDIDATE_PACK_CORE_SLOTS else "support",
+        "core_fields": fields, "priority": "core" if name in FROZEN_CORE_SLOTS else "support",
     }
 
 def build():
@@ -208,7 +212,7 @@ def build():
         row = make_row(name, description, owner, dims, paths, terms,
                        review["role_definition_draft"], review["boundary_or_problem"])
         row["applicability"] = old[origin]["applicability"]
-        row["priority"] = "core" if origin in g.CANDIDATE_PACK_CORE_SLOTS else "support"
+        row["priority"] = "core" if origin in FROZEN_CORE_SLOTS else "support"
         catalog[name] = row
     for line in NEW.strip().splitlines():
         name, ko, description, owner, dims, paths, terms = line.split("|")

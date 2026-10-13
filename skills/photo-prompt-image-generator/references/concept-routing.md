@@ -78,8 +78,8 @@ Curated literal subject aliases and subject categories read only the frozen subj
 
 ## Slot Mapping
 
-- Subject identity: `subject`, `appearance_type`, `person_origin` only when requested.
-- Clothes: `wardrobe_style`, `costume_style`, `footwear`, `silhouette_proportion`, `garment_detail`.
+- Declared subject: `subject`. Personal presentation uses `presentation_style`; explicitly supplied background uses contextual `declared_person_background` and is never inferred from appearance.
+- Clothes: `wardrobe_style`, `attire_context`, `footwear`, `silhouette_proportion`, `garment_detail`.
 - Makeup: `skin_finish`, `brow_style`, `lip_finish`, `eye_makeup_line`, `eye_detail`; use `makeup_style` for full-look shorthand.
 - Hair: `hair_style`, `hair_color`; preserve unsupported length, part, texture, finish, and cultural grammar as explicit requirements.
 - Pose: `body_pose`, `hand_pose`, `gaze_engagement`, `shot_scale`, `camera_direction`, `composition`, `platform_framing`.
