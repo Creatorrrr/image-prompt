@@ -14,11 +14,13 @@ def native_profile_registry():
     source=native_corpus.load(SCRIPT_DIR.parent/'assets')
     return {**source['policies']['visual_meaning_contract'], 'profiles':[native_corpus.entry(source,cid) for cid,r in source['candidates'].items() if r['record_kind']=='visual_profile']}
 
-def integrity_query_context(core,controls):
+def integrity_query_context(core,controls,data=None):
     # Synthetic response for unit integrity tests only, never a real-query claim.
-    from tests import test_photo_global_retrieval as f
-    helper=f.GlobalDiscoveryTests();helper.core=core;helper.controls=controls
-    return helper.context()
+    from tests.test_photo_slot_queries import synthetic_set
+    import photo_slot_retrieval
+    from photo_search_reader import SearchReader,LazyRuntimeData
+    data=(data if data is not None else LazyRuntimeData(SearchReader(SCRIPT_DIR.parent/'assets'))).for_core(core)
+    return synthetic_set(core,controls,data['slot_catalog'],photo_slot_retrieval.active_slots(data,core,controls))
 
 def compose_native(pack):
     core=pack['authorial_core'];lock=core['intent_lock'];prompt=core['baseline_prompt_en']

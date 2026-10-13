@@ -5585,6 +5585,10 @@ def audit_composed_prompt(pack,composed,*,source_data=None,runtime_receipt=None,
     if source_data is None:
         source_data=_BOUND_AUDIT_SOURCE.get();query_context=_BOUND_QUERY_CONTEXT.get()
     if source_data is None:raise ValueError('native pinned generation source is required')
+    try:photo_native_pack.validate(pack)
+    except (KeyError,TypeError,ValueError) as error:
+        return {'status':'fail','quality_status':'not_run','pack_id':pack.get('pack_id'),
+                'failures':[{'check':'native_candidate_pack','reason':str(error)}],'warnings':[]}
     if hasattr(source_data,'for_core'):
         source_data=photo_shared_views.RequestCandidates(source_data.for_core(pack['authorial_core']),pack['candidate_pool'],pack['role_proposals'])
     token=_BOUND_AUDIT_SOURCE.set(source_data);query_token=_BOUND_QUERY_CONTEXT.set(query_context)

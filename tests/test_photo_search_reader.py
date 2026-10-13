@@ -42,3 +42,13 @@ class SearchReaderTests(unittest.TestCase):
     def test_layout_metadata_corruption_is_not_ignored(self):
         p=self.root/self.reader.manifest['metadata']['path'];p.write_bytes(b'broken')
         self.assertRaises(ValueError,SearchReader,self.root)
+
+    def test_leaf_reads_one_extent_and_reuses_bounded_pinned_descriptors(self):
+        first=self.reader.meta['vector_shards'][0];second=self.reader.meta['vector_shards'][1]
+        self.assertEqual(first['path'],second['path'])
+        full_size=(self.root/first['path']).stat().st_size;before=self.reader.metrics['vector_bytes']
+        self.reader.block('vector',0)
+        self.assertEqual(self.reader.metrics['vector_bytes']-before,first['bytes'])
+        self.assertLess(first['bytes'],full_size);self.assertEqual(len(self.reader.descriptors),1)
+        self.reader.block('vector',1);self.assertEqual(len(self.reader.descriptors),1)
+        self.reader.close();self.assertEqual(len(self.reader.descriptors),0)

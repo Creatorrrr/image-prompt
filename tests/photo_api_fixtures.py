@@ -31,7 +31,7 @@ def write_valid_inputs(directory: Path) -> dict:
         raw["creative_controls_sha256"] = controls["canonical_sha256"]
         core = pg.normalize_authorial_core(raw, request_envelope=pg.normalize_request_envelope(fixtures.envelope(raw["source_request"])),
             creative_control_snapshot=controls)
-        pack = pg.generate_candidate_pack(snapshot.data, core, controls, fixtures.review(core["baseline_prompt_en"]), seed=7, query_context=fixtures.integrity_query_context(core,controls))
+        pack = pg.generate_candidate_pack(snapshot.data, core, controls, fixtures.review(core["baseline_prompt_en"]), seed=7, query_context=fixtures.integrity_query_context(core,controls,snapshot.data))
         composed = fixtures.compose_native(pack)
         request = {"schema_version": "photo-image-render-request/v2", "pack_id": pack["pack_id"],
             "global_retrieval_sha256": pack["global_retrieval"]["canonical_sha256"],

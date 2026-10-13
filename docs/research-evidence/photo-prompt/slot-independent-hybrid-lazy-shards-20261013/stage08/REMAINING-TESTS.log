@@ -1,0 +1,126 @@
+.F............................. [ 58%]
+.................FF...                                         [100%]
+=================================== FAILURES ===================================
+_ PhotoAuthorshipPolicyTests.test_hash_rewritten_foreign_candidate_cannot_replace_authored_owner _
+
+self = <tests.test_photo_authorship_policy.PhotoAuthorshipPolicyTests testMethod=test_hash_rewritten_foreign_candidate_cannot_replace_authored_owner>
+
+    def test_hash_rewritten_foreign_candidate_cannot_replace_authored_owner(self):
+        altered=copy.deepcopy(self.pack);row=next(iter(altered['candidate_pool'].values()))
+        row['authored_record']['content']['en']='the opposite owner at camera right'
+>       self.assertEqual(self.audit(altered,self.composed)['status'],'fail')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_photo_authorship_policy.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_photo_authorship_policy.py:18: in audit
+    return ca.audit_composed_prompt(pack,composed,source_data=self.snapshot.data,query_context=self.snapshot.query_context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py:5591: in audit_composed_prompt
+    try:return _audit_composed_prompt(photo_native_pack.read_view(pack),composed)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+skills/photo-prompt-image-generator/scripts/photo_native_pack.py:137: in read_view
+    validate(pack)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pack = {'contract_version': 'photo-candidate-pack/v8', 'pack_id': '6f4da528fd7b039f', 'intent_contract': [{'id': 'intent:7ca6...bbbbbbbbbbbbbbbbbbbbbbbbbbb', 'proposal_id': 'role_20032947e1886effbd1a63b9f1878c35'}]}}, 'unbound_candidate_refs': []}
+
+    def validate(pack):
+        if pack.get('contract_version')!=CONTRACT or 'slots' in pack:raise ValueError('native v8 pack required')
+        if len(pack.get('candidate_pool',{}))>64:raise ValueError('global unique candidate budget exceeded')
+        for cid,row in pack['candidate_pool'].items():
+            if not c.ID.fullmatch(cid) or row.get('id')!=cid or row['authored_record']['id']!=cid:raise ValueError('invalid native candidate identity')
+        for pid,proposal in pack['role_proposals'].items():
+            cid=proposal['candidate_id']
+>           if pid!=proposal['proposal_id'] or cid not in pack['candidate_pool'] or proposal['source_record_sha256']!=c.digest(pack['candidate_pool'][cid]['authored_record']):raise ValueError('role source mismatch')
+                                                                                                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           ValueError: role source mismatch
+
+skills/photo-prompt-image-generator/scripts/photo_native_pack.py:106: ValueError
+_ PhotoWorkflowRuntimeBridgeTests.test_native_observed_file_parent_coordinator_and_child_freeze _
+
+self = <tests.test_photo_workflow_runtime_bridge.PhotoWorkflowRuntimeBridgeTests testMethod=test_native_observed_file_parent_coordinator_and_child_freeze>
+
+    def test_native_observed_file_parent_coordinator_and_child_freeze(self):
+        from prepare_retry_context import prepare, recompute, attach_child
+        from tests.test_photo_workflow_precore import preparation
+        from photo_retry_projection import DECISION_FIELDS
+        from photo_workflow_worker import audit_bound
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            run, _ = freeze_fixture(directory, mode="image", overrides={"sensual": 0, "fetish": 0, "surreal": 0, "creativity": 0})
+            args = argparse.Namespace(run=run, seed=27, runtime_store=directory / "runtime", source_mode="local_current",
+                                      source_remote=None, source_ref="main", visual_intent=None,retrieval_mode="keyword_only")
+            with patch("urllib.request.urlopen", side_effect=AssertionError("network forbidden")):
+                self.publish(args.runtime_store)
+                workflow.retrieve(args)
+                pack = workflow.one(files.value(files.load_state(run), "pack"))
+                composed = directory / "composed.json"; composed.write_text(json.dumps(authorship.PhotoAuthorshipPolicyTests.composed(pack)))
+                self.assertEqual(workflow.compose_audit(argparse.Namespace(run=run, composed=composed))["status"], "pass")
+                parameters = directory / "parameters"; parameters.write_text('{"references":[]}')
+                self.assertEqual(workflow.prepare_render(argparse.Namespace(run=run, parameters=parameters, lane="native", model="offline", size="1024x1536"))["status"], "pass")
+                scope = directory / "scope"; scope.write_text('{"lanes":["native"],"invocation_limit":1,"authorization_source":"offline test only"}')
+                workflow.authorize(argparse.Namespace(run=run, scope=scope))
+                plan = workflow.native_plan(argparse.Namespace(run=run)); started = workflow.native_started(argparse.Namespace(run=run))
+                self.assertEqual(started["payload"], files.value(files.load_state(run), "native_plan")["payload"])
+                with self.assertRaisesRegex(ValueError, "not_ready"): workflow.native_started(argparse.Namespace(run=run))
+                image = directory / "observed-native.png"; image.write_bytes(b"observed offline native tool bytes")
+                result = directory / "result.json"; result.write_text(json.dumps({"operation_id": plan["operation_id"], "outcome": "returned", "image_path": str(image)}))
+                ledger = directory / "ledger"
+>               recorded = workflow.native_result(argparse.Namespace(run=run, result=result, ledger=ledger))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_photo_workflow_runtime_bridge.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+skills/photo-prompt-image-generator/scripts/photo_workflow.py:454: in native_result
+    recorded = record(flags)
+               ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args_list = ['--ts', '2026-10-13T03:20:28.494395+00:00', '--prompt-en', 'A neatly folded linen blanket rests on a wicker bench in ... clear area around the bench keep the arrangement dominant and its material surfaces distinct.', '--attempt', '1', ...]
+
+    def record(args_list: list[str]) -> dict[str, str]:
+        completed = subprocess.run(
+            [sys.executable, str(RECORD), *args_list], capture_output=True, text=True
+        )
+        if completed.returncode != 0:
+            detail = completed.stderr.strip()[-400:] or "recorder returned no error detail"
+>           raise RuntimeError(f"ledger record failed: {detail}")
+E           RuntimeError: ledger record failed: Error: runtime_restart_required: source code/environment differs from this imported implementation; start its CLI worker
+
+skills/photo-prompt-image-generator/scripts/generate_images_via_api.py:98: RuntimeError
+_ PhotoWorkflowRuntimeBridgeTests.test_prompt_only_retrieve_pair_real_audits_and_current_publication _
+
+self = <tests.test_photo_workflow_runtime_bridge.PhotoWorkflowRuntimeBridgeTests testMethod=test_prompt_only_retrieve_pair_real_audits_and_current_publication>
+
+    def test_prompt_only_retrieve_pair_real_audits_and_current_publication(self):
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp); run, _ = freeze_fixture(directory, overrides={"sensual": 0, "fetish": 0, "surreal": 0, "creativity": 0})
+            args = argparse.Namespace(run=run, seed=27, runtime_store=directory / "runtime", source_mode="local_current",
+                                      source_remote=None, source_ref="main", visual_intent=None,retrieval_mode="keyword_only")
+            with patch("urllib.request.urlopen", side_effect=AssertionError("network forbidden")):
+>               self.publish(args.runtime_store)
+
+tests/test_photo_workflow_runtime_bridge.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_photo_workflow_runtime_bridge.py:31: in publish
+    RuntimeSnapshotProvider(store=store).publisher.publish()
+skills/photo-prompt-image-generator/scripts/photo_runtime_sources.py:209: in publish
+    source,_=capture_sources(self.root,full=True);_require_implementation(source,generator)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+source = {'code': {'precore/creative_controls.py': 'a2207e0925f9257153af6f07f41c0efd1e5208644f1044bc06c77c5850b7877c', 'precore...'assets/photo_candidate_candidates_003.json': 'fb4e5b00f5be9d1d85a3b473c2d4d685beb56d20736e7a4d888990a094f7c46a', ...}}
+generator = <module 'prompt_generator' from '/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py'>
+
+    def _require_implementation(source: dict, generator) -> None:
+        if source["code"] != LOADED_CODE or source["environment"] != LOADED_ENVIRONMENT:
+>           raise FreshnessError("runtime_restart_required", "source code/environment differs from this imported implementation; start its CLI worker")
+E           photo_runtime_sources.FreshnessError: runtime_restart_required: source code/environment differs from this imported implementation; start its CLI worker
+
+skills/photo-prompt-image-generator/scripts/photo_runtime_sources.py:196: FreshnessError
+=========================== short test summary info ============================
+FAILED tests/test_photo_authorship_policy.py::PhotoAuthorshipPolicyTests::test_hash_rewritten_foreign_candidate_cannot_replace_authored_owner
+FAILED tests/test_photo_workflow_runtime_bridge.py::PhotoWorkflowRuntimeBridgeTests::test_native_observed_file_parent_coordinator_and_child_freeze
+FAILED tests/test_photo_workflow_runtime_bridge.py::PhotoWorkflowRuntimeBridgeTests::test_prompt_only_retrieve_pair_real_audits_and_current_publication
+3 failed, 50 passed, 51 subtests passed in 253.65s (0:04:13)

@@ -52,3 +52,13 @@ class ShardedSearchTests(unittest.TestCase):
         self.assertRaises(ValueError,search.audit_cosine,self.reader,vector,allowed,[],changed)
         changed=copy.deepcopy(hits);changed[0]['score']=.5
         self.assertRaises(ValueError,search.audit_cosine,self.reader,vector,allowed,changed,proof)
+
+    def test_worst_case_streams_every_extent_with_bounded_cache(self):
+        reader=SearchReader(self.temp.name,cache_limit=30000);self.addCleanup(reader.close)
+        allowed=set(self.source['candidates']);vector=[1.]+[0.]*767
+        expected=full_scan(self.lexical,self.index['entries'],{'slot_focus':'light'},vector,allowed,limit=48,minimum=-1.)
+        hits,proof=search.cosine_rank(reader,vector,allowed,48,minimum=-1.)
+        self.assertEqual(hits,expected['embedding']);self.assertEqual(len(proof['visited_leaves']),len(reader.meta['vector_shards']))
+        self.assertEqual(reader.metrics['vector_bytes'],sum(row['bytes'] for row in reader.meta['vector_shards']))
+        self.assertLessEqual(reader.metrics['cache_peak_bytes'],30000)
+        self.assertTrue(search.audit_cosine(reader,vector,allowed,hits,proof))

@@ -1,0 +1,102 @@
+F...FF..F..........................                                  [100%]
+=================================== FAILURES ===================================
+__ GlobalDiscoveryTests.test_binding_guard_cannot_be_bypassed_by_good_vector ___
+
+self = <tests.test_photo_global_retrieval.GlobalDiscoveryTests testMethod=test_binding_guard_cannot_be_bypassed_by_good_vector>
+
+    def test_binding_guard_cannot_be_bypassed_by_good_vector(self):
+     data=self.data()
+     for b in data['slot_bindings'].values():b['conditions']['subject_applicability']={'subject_categories':['human']}
+>    rows=slot_search.retrieve(self.lazy(data),self.core,self.controls,self.context())[1]['selected_candidate_ids'];self.assertNotIn('cand_'+'a'*32,rows)
+                               ^^^^^^^^^^^^^^^
+
+tests/test_photo_global_retrieval.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_photo_global_retrieval.py:26: in lazy
+    layout.build(Path(temp.name),views.source(data),data['_global_index'],activate=True)
+skills/photo-prompt-image-generator/scripts/photo_search_layout.py:99: in build
+    old_index.validate(vectors, corpus)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+index = {'corpus_sha256': '4bf11cd5e888649ae192a046bd24d40c6f97f3873f0dd6d4587c4b2fdc40d948', 'entries': {'cand_aaaaaaaaaaaaaa...f05eeca9436be3', ...}}, 'query_recipe': 'photo-frozen-core-query/v1', 'schema': 'photo-global-candidate-index/v1', ...}
+c = {'candidates': {'cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa': {'content': {'en': 'light from camera left on a blue ceramic ..., 'effects': {'dimensions': ['lighting'], 'properties': []}, 'id': 'bind_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', ...}}, ...}
+
+    def validate(index,c):
+        expected={cid:r for cid,r in c['candidates'].items() if r['record_kind'] in POSITIVE_KINDS}
+        if index.get('schema')!=SCHEMA or index.get('space')!=SPACE or index.get('query_recipe')!=QUERY_RECIPE or index.get('corpus_sha256')!=corpus.digest(c):
+>           raise ValueError('native shared index schema/space/source mismatch')
+E           ValueError: native shared index schema/space/source mismatch
+
+skills/photo-prompt-image-generator/scripts/photo_global_index.py:62: ValueError
+____ GlobalDiscoveryTests.test_retagging_does_not_change_discovery_or_guard ____
+
+self = <tests.test_photo_global_retrieval.GlobalDiscoveryTests testMethod=test_retagging_does_not_change_discovery_or_guard>
+
+    def test_retagging_does_not_change_discovery_or_guard(self):
+     data=self.data();before=slot_search.retrieve(self.lazy(data),self.core,self.controls,self.context())[1]
+     data['slot_bindings']['bind_'+'d'*32]['slot_id']='color'
+>    after=slot_search.retrieve(self.lazy(data),self.core,self.controls,self.context())[1]
+                                ^^^^^^^^^^^^^^^
+
+tests/test_photo_global_retrieval.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_photo_global_retrieval.py:26: in lazy
+    layout.build(Path(temp.name),views.source(data),data['_global_index'],activate=True)
+skills/photo-prompt-image-generator/scripts/photo_search_layout.py:99: in build
+    old_index.validate(vectors, corpus)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+index = {'corpus_sha256': '4bf11cd5e888649ae192a046bd24d40c6f97f3873f0dd6d4587c4b2fdc40d948', 'entries': {'cand_aaaaaaaaaaaaaa...f05eeca9436be3', ...}}, 'query_recipe': 'photo-frozen-core-query/v1', 'schema': 'photo-global-candidate-index/v1', ...}
+c = {'candidates': {'cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa': {'content': {'en': 'light from camera left on a blue ceramic ..., 'effects': {'dimensions': ['lighting'], 'properties': []}, 'id': 'bind_eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', ...}}, ...}
+
+    def validate(index,c):
+        expected={cid:r for cid,r in c['candidates'].items() if r['record_kind'] in POSITIVE_KINDS}
+        if index.get('schema')!=SCHEMA or index.get('space')!=SPACE or index.get('query_recipe')!=QUERY_RECIPE or index.get('corpus_sha256')!=corpus.digest(c):
+>           raise ValueError('native shared index schema/space/source mismatch')
+E           ValueError: native shared index schema/space/source mismatch
+
+skills/photo-prompt-image-generator/scripts/photo_global_index.py:62: ValueError
+______________ GlobalDiscoveryTests.test_role_does_not_add_votes _______________
+
+self = <tests.test_photo_global_retrieval.GlobalDiscoveryTests testMethod=test_role_does_not_add_votes>
+
+    def test_role_does_not_add_votes(self):
+     data=self.data();before=slot_search.retrieve(self.lazy(data),self.core,self.controls,self.context())[1]
+     data['slot_bindings'].pop('bind_'+'e'*32)
+>    after=slot_search.retrieve(self.lazy(data),self.core,self.controls,self.context())[1]
+                                ^^^^^^^^^^^^^^^
+
+tests/test_photo_global_retrieval.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_photo_global_retrieval.py:26: in lazy
+    layout.build(Path(temp.name),views.source(data),data['_global_index'],activate=True)
+skills/photo-prompt-image-generator/scripts/photo_search_layout.py:99: in build
+    old_index.validate(vectors, corpus)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+index = {'corpus_sha256': '4bf11cd5e888649ae192a046bd24d40c6f97f3873f0dd6d4587c4b2fdc40d948', 'entries': {'cand_aaaaaaaaaaaaaa...f05eeca9436be3', ...}}, 'query_recipe': 'photo-frozen-core-query/v1', 'schema': 'photo-global-candidate-index/v1', ...}
+c = {'candidates': {'cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa': {'content': {'en': 'light from camera left on a blue ceramic ..., 'effects': {'dimensions': ['lighting'], 'properties': []}, 'id': 'bind_dddddddddddddddddddddddddddddddd', ...}}, ...}
+
+    def validate(index,c):
+        expected={cid:r for cid,r in c['candidates'].items() if r['record_kind'] in POSITIVE_KINDS}
+        if index.get('schema')!=SCHEMA or index.get('space')!=SPACE or index.get('query_recipe')!=QUERY_RECIPE or index.get('corpus_sha256')!=corpus.digest(c):
+>           raise ValueError('native shared index schema/space/source mismatch')
+E           ValueError: native shared index schema/space/source mismatch
+
+skills/photo-prompt-image-generator/scripts/photo_global_index.py:62: ValueError
+____________ IndependentReplayTests.test_false_hybrid_flag_rejected ____________
+
+self = <tests.test_photo_global_retrieval_audit.IndependentReplayTests testMethod=test_false_hybrid_flag_rejected>
+
+    def test_false_hybrid_flag_rejected(self):
+>    self.pack['global_retrieval']['lanes']['embedding']['state']='not_requested';self.rehash();self.assertTrue(self.failures())
+                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E    AssertionError: [] is not true
+
+tests/test_photo_global_retrieval_audit.py:26: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_photo_global_retrieval.py::GlobalDiscoveryTests::test_binding_guard_cannot_be_bypassed_by_good_vector
+FAILED tests/test_photo_global_retrieval.py::GlobalDiscoveryTests::test_retagging_does_not_change_discovery_or_guard
+FAILED tests/test_photo_global_retrieval.py::GlobalDiscoveryTests::test_role_does_not_add_votes
+FAILED tests/test_photo_global_retrieval_audit.py::IndependentReplayTests::test_false_hybrid_flag_rejected
+4 failed, 31 passed, 4 subtests passed in 28.09s

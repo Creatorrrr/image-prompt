@@ -14,7 +14,7 @@ RECORDER = ROOT / "skills/photo-prompt-image-generator/scripts/record_image_run.
 
 
 class PhotoRunManifestTests(unittest.TestCase):
-    def run_recorder(self, directory, version="v7", status="success", extra=(), omit=()):
+    def run_recorder(self, directory, version="v8", status="success", extra=(), omit=()):
         directory = Path(directory)
         values = {
             "--ts": "2026-09-05T12:00:00+09:00",
@@ -48,7 +48,7 @@ class PhotoRunManifestTests(unittest.TestCase):
         return subprocess.run(argv, cwd=ROOT, capture_output=True, text=True)
 
     def test_text_only_success_and_blocked_attempts_write_one_manifest_and_ledger_row(self):
-        for version in ("v7",):
+        for version in ("v8",):
             for status in ("success", "safety_block"):
                 with self.subTest(version=version, status=status), tempfile.TemporaryDirectory() as tmp:
                     result = self.run_recorder(tmp, version=version, status=status)

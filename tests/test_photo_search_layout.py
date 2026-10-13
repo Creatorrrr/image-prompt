@@ -1,6 +1,7 @@
 import gzip
 import math
 import tempfile
+import zlib
 import unittest
 from pathlib import Path
 from tests.test_photo_global_retrieval import GlobalDiscoveryTests
@@ -10,6 +11,14 @@ import photo_shared_views as views
 
 
 class SearchLayoutTests(unittest.TestCase):
+    def test_binary_postings_preserve_exact_tf_and_reject_foreign_ordinals(self):
+        ids=['cand_a','cand_b'];rows={'x':[['cand_b',1.234567890123],['cand_a',2.0]],'y':[['cand_b',3.0]]}
+        raw=layout.posting_bytes(rows,{cid:i for i,cid in enumerate(ids)})
+        page=layout.PostingPage(zlib.decompress(raw),ids)
+        self.assertEqual(dict((term,list(page[term])) for term in page),{term:[tuple(r) for r in sorted(values)] for term,values in rows.items()})
+        self.assertEqual(page['x'][-1],('cand_b',1.234567890123))
+        with self.assertRaises(ValueError):layout.PostingPage(zlib.decompress(raw),ids[:1])
+
     def test_layout_covers_source_once_and_never_activates_by_default(self):
         data=GlobalDiscoveryTests().data();source=views.source(data)
         with tempfile.TemporaryDirectory() as d:

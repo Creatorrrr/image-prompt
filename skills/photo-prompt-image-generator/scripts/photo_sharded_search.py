@@ -1,6 +1,7 @@
 """Exact global BM25F/cosine over only provably necessary shard bodies."""
 import heapq
 import math
+import operator
 from bm25f_retrieval import _query_term_weights
 from photo_embedding_provider import validate_vector
 
@@ -16,7 +17,7 @@ def routing_bounds(reader,query_unit,allowed):
     for pos,cid in enumerate(reader.meta['positive_ids']):
         if cid in allowed:
             row=codes[pos*384:(pos+1)*384]
-            points[cid]=min(1.0,math.fsum(table[code] for table,code in zip(tables,row))+quant['errors'][pos]+1e-10)
+            points[cid]=min(1.0,math.fsum(map(operator.getitem,tables,row))+quant['errors'][pos]+1e-10)
     bounds=[-2.0]*len(reader.meta['nodes'])
     for pos in range(len(bounds)-1,-1,-1):
         node=reader.meta['nodes'][pos]

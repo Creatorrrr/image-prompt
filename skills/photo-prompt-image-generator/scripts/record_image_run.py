@@ -260,8 +260,8 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
 
 
 def build_independent_manifest(entry: dict[str, object], args: argparse.Namespace) -> dict[str, object]:
-    if args.candidate_pack_version != 'v7':
-        raise ValueError('independent manifests require candidate-pack version v7')
+    if args.candidate_pack_version != 'v8':
+        raise ValueError('independent manifests require candidate-pack version v8')
     common_required_values = {'arm_id': args.arm_id, 'worktree_id': args.worktree_id, 'skill_sha256': args.skill_sha256, 'source_ref': args.source_ref, 'candidate_pack_version': args.candidate_pack_version, 'image_call_count': args.image_call_count}
     contract_version = MODERN_INDEPENDENT_RUN_MANIFEST_VERSION
     required_values = {**common_required_values, **{'authorial_core_sha256': args.authorial_core_sha256, 'intent_lock_sha256': args.intent_lock_sha256}}

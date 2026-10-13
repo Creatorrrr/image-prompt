@@ -45,7 +45,8 @@ def audit(pack,data,context):
         if record['contract_version']!=rules.VERSION or mode not in rules.MODES or record['canonical_sha256']!=c.digest({k:v for k,v in record.items() if k!='canonical_sha256'}):raise ValueError('slot retrieval schema/checksum mismatch')
         expected={'corpus_sha256':reader.meta['corpus_sha256'],'binding_sha256':c.digest(data['slot_bindings']),'catalog_sha256':c.digest(data['slot_catalog']),'index_sha256':data['_global_index_sha256'],
                   'source_authorial_core_sha256':core['canonical_sha256'],'creative_controls_sha256':controls['canonical_sha256'],'active_slot_ids':slots,'inactive_slot_ids':sorted(set(data['slot_catalog'])-set(slots)),
-                  'unique_candidate_limit':64,'role_limits':{'core':4,'support':2},'minimum_similarity':.30,'rrf_k':30,'tag_admission_filter':False,'candidate_adoption':'optional','algorithm':'independent_global_bm25f_certified_cosine_rrf/v2'}
+                  'unique_candidate_limit':64,'role_limits':{'core':4,'support':2},'minimum_similarity':.30,'rrf_k':30,'tag_admission_filter':False,'candidate_adoption':'optional','algorithm':'independent_global_bm25f_certified_cosine_rrf/v2',
+                  'lanes':{'bm25f':{'state':'executed' if slots else 'not_requested','slot_count':len(slots)},'embedding':{'state':'executed' if mode=='hybrid_required' and slots else 'not_requested','slot_count':len(slots) if mode=='hybrid_required' else 0}}}
         if any(record.get(k)!=v for k,v in expected.items()):raise ValueError('slot source/query/policy binding mismatch')
         if mode=='hybrid_required':fields=queries.validate_set(context,core,controls,data['slot_catalog'],slots)
         elif context is not None:raise ValueError('keyword diagnostic claims query vectors')
