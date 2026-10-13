@@ -3,6 +3,7 @@ from array import array
 from collections import OrderedDict
 from collections.abc import Mapping
 import copy
+import base64
 import gzip
 import hashlib
 from pathlib import Path
@@ -55,6 +56,9 @@ class SearchReader:
         from photo_runtime_sources import freeze
         self.meta=freeze(c.decode(gzip.decompress(raw)))
         if self.meta['corpus_sha256']!=self.manifest['corpus_sha256']: raise ValueError('metadata corpus mismatch')
+        if self.manifest.get('routing_recipe')!=layout.ROUTING_RECIPE:raise ValueError('current certified routing recipe required')
+        self.quant_codes=base64.b64decode(self.meta['quantization']['codes_base64'],validate=True)
+        if len(self.quant_codes)!=len(self.meta['positive_ids'])*384:raise ValueError('quantization code coverage mismatch')
         self.candidates=LazyCandidates(self)
 
     def check_presence(self):
@@ -81,9 +85,7 @@ class SearchReader:
                 value,size=self.cache.pop(key);self.cache[key]=(value,size);self.metrics['cache_hits']+=1;return value
             raw=self._read(row,kind)
             if kind=='vector':
-                body=zlib.decompress(raw)
-                if sys.byteorder!='little':
-                    values=array('d');values.frombytes(body);values.byteswap();body=values.tobytes()
+                body=layout.vector_body(raw,row)
                 value=memoryview(body).cast('d')
                 if len(value)!=row['count']*SPACE['dimensions']: raise ValueError('vector block length mismatch')
             else:
