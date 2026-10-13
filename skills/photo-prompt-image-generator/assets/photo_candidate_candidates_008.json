@@ -14974,9 +14974,9 @@
           "experimental"
         ],
         "aliases": [
-          "worms",
-          "eye",
-          "view"
+          "worm's-eye view",
+          "worm’s-eye view",
+          "지면 가까이에서 올려다보는 벌레 시점"
         ],
         "keywords": [
           "low_angle",
@@ -14987,14 +14987,30 @@
       },
       "effects": {
         "dimensions": [
-          "composition"
+          "composition",
+          "camera"
         ],
-        "properties": []
+        "properties": [
+          {
+            "dimension": "camera",
+            "target": "image_plane",
+            "property": "height"
+          },
+          {
+            "dimension": "camera",
+            "target": "image_plane",
+            "property": "view_direction"
+          }
+        ]
       },
       "provenance": [
         {
           "source": "slot:composition:worms_eye_view",
           "sha256": "95df147a5b5410f7ddd5473cdb11b9f83d9862928d04095335fd3632b53cb6cf"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_d40987e2fc1d5c0397001afb7d76eb54",
+          "sha256": "02f575733c3e746e9b4ec8788473825c285e0fb01fd2d4e44c2061662390337c"
         }
       ]
     },
@@ -23843,8 +23859,9 @@
           "fashion"
         ],
         "aliases": [
+          "balletcore rehearsal styling",
           "balletcore",
-          "aesthetic"
+          "발레코어 리허설 스타일"
         ],
         "keywords": [
           "aesthetic",
@@ -23864,6 +23881,10 @@
         {
           "source": "slot:aesthetic_trend:balletcore_aesthetic",
           "sha256": "6a8faccbbc70033420af41127b3e444ccb3d92e32bba9975eedaf33f0d41b3e1"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_5943d839d7c858fc8c6e9beb031f9fef",
+          "sha256": "2ae7a6d78189b1dd1bb66d479cd99da450796b4392ff9a8e630efd1f24cc8db2"
         }
       ]
     },
@@ -25295,11 +25316,12 @@
       ]
     },
     "cand_82ef94a28a745be9a0b6d953352989df": {
-      "id": "cand_82ef94a28a745be9a0b6d953352989df",
-      "record_kind": "visual_option",
       "content": {
-        "ko": "차가운 얼굴과 따뜻한 손",
-        "en": "cold face with warm hands",
+        "en": "a reserved facial expression contrasts with hands gently supporting another adult's forearm",
+        "for_any": [
+          "human"
+        ],
+        "ko": "무덤덤한 얼굴과 다른 성인의 전완을 부드럽게 받쳐 주는 손이 대비되는 모습",
         "tags": [
           "human",
           "relationship",
@@ -25307,22 +25329,58 @@
           "narrative_safe",
           "tsundere"
         ],
-        "for_any": [
-          "human"
+        "claim_limits": [
+          "Cold and warm describe this expressive contrast; the image does not establish skin temperature or private feelings."
         ]
       },
       "effects": {
         "dimensions": [
-          "character_response"
+          "expression",
+          "pose",
+          "character_response",
+          "count",
+          "relationship"
         ],
-        "properties": []
+        "properties": [
+          {
+            "dimension": "expression",
+            "target": "main_subject",
+            "property": "facial_expression"
+          },
+          {
+            "dimension": "pose",
+            "target": "main_subject",
+            "property": "hands"
+          },
+          {
+            "dimension": "character_response",
+            "target": "main_subject",
+            "property": "supporting_gesture"
+          },
+          {
+            "dimension": "count",
+            "target": "scene",
+            "property": "adult_actor_count"
+          },
+          {
+            "dimension": "relationship",
+            "target": "main_subject",
+            "property": "support_recipient"
+          }
+        ]
       },
+      "id": "cand_82ef94a28a745be9a0b6d953352989df",
       "provenance": [
         {
-          "source": "slot:emotional_contradiction:cold_face_warm_hands",
-          "sha256": "b90fe069d722662c717477b570cb5ad56de68f84a7a6940471ea664a5eba6ca7"
+          "sha256": "b90fe069d722662c717477b570cb5ad56de68f84a7a6940471ea664a5eba6ca7",
+          "source": "slot:emotional_contradiction:cold_face_warm_hands"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_82ef94a28a745be9a0b6d953352989df",
+          "sha256": "590edca962409baaaa50fed0d7fac7325f3ea8a40c905661cf46cb7513ea001e"
         }
-      ]
+      ],
+      "record_kind": "visual_option"
     },
     "cand_061dc9f1d5e65309bb2f2d4b194972d5": {
       "id": "cand_061dc9f1d5e65309bb2f2d4b194972d5",
@@ -27917,13 +27975,6 @@
           }
         ],
         "core_assertion_discovery": true,
-        "requires_any_tags": [
-          "tripod",
-          "timer",
-          "remote",
-          "fixed_camera",
-          "photographer"
-        ],
         "contextual_usage": {
           "contexts": [
             {
@@ -27953,6 +28004,10 @@
         {
           "source": "slot:hand_pose:sf_161_base",
           "sha256": "4c1b807ed9c925751e54476cef1b6a852722f45d31906825a72b48639e334614"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_d76e98e91f7b54f1b70d7f53dc7d8a43",
+          "sha256": "44b9d688bee35e61b058f585b2061b164de2544b6c830026fb71f813d9045020"
         }
       ]
     },
@@ -32120,7 +32175,7 @@
       "id": "cand_6c8fba429e1b5a6dac668a0e0cece949",
       "record_kind": "visual_option",
       "content": {
-        "ko": "same blouse's neck ties → bow loops below its collar",
+        "ko": "블라우스의 긴 목 끈으로 칼라 바로 아래에 만든 두 리본 고리",
         "en": "The blouse's long neck ties form two bow loops just below its collar.",
         "tags": [
           "clothing"
@@ -32176,6 +32231,10 @@
         {
           "source": "slot:garment_detail:autumn_afr033_v1_candidate",
           "sha256": "dd2484d5c9c58d5abf022bc96a5484496999ba56cbec8d7a8f9cde5de6796f46"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_6c8fba429e1b5a6dac668a0e0cece949",
+          "sha256": "00d0133741a007b1211c7a800ddb552e1a4a6a22d054d5bcdd5e9f87247eb218"
         }
       ]
     },
@@ -38117,15 +38176,15 @@
         "category": "astronomy_compact_object_scientific_visualization",
         "activation": {
           "exact_terms": [
-            "relativistic accretion-disk visualization",
-            "lensed far-side accretion disk around black hole",
-            "상대론적 강착원반 중력렌즈 시각화"
+            "nearly edge-on relativistic accretion-disk visualization",
+            "nearly edge-on lensed far-side accretion disk around black hole",
+            "거의 옆에서 본 상대론적 강착원반 중력렌즈 시각화"
           ],
           "requires_adult_character": false,
           "semantic_discovery_requires_component_evidence": true
         },
         "semantics": {
-          "definition": "A relativistic black-hole accretion-disk visualization requires a luminous disk, a dark central shadow, the far side gravitationally lensed above and below the shadow, and Doppler-like brightness asymmetry; a planetary ring or generic fire vortex is not equivalent.",
+          "definition": "This selected nearly edge-on relativistic black-hole accretion-disk visualization shows a luminous disk, a dark central shadow, far-side light bent above and below the shadow, and side-to-side Doppler-like brightness asymmetry. These visible arcs and brightness asymmetry are view-dependent; this profile does not define a face-on view or every accretion-disk visualization.",
           "paraphrase_examples": [
             "the far rim of a luminous accretion disk bends into upper and lower arcs around a dark shadow while the approaching side burns brighter",
             "빛나는 원반의 먼 쪽이 블랙홀 그림자 위아래로 휘어 보이고 한쪽 가장자리가 상대적으로 밝다"
@@ -38137,12 +38196,13 @@
             "an ordinary edge-on protoplanetary disk"
           ],
           "component_semantics": {
-            "minimum_component_groups": 4,
+            "minimum_component_groups": 5,
             "required_group_ids": [
               "accretion_disk",
               "central_shadow",
               "lensed_far_side",
-              "brightness_asymmetry"
+              "brightness_asymmetry",
+              "viewing_angle"
             ],
             "groups": [
               {
@@ -38168,9 +38228,21 @@
                 "any_terms": [
                   "one orbital side is visibly brighter than the receding opposite side"
                 ]
+              },
+              {
+                "id": "viewing_angle",
+                "any_terms": [
+                  "the accretion disk is viewed nearly edge-on rather than directly face-on"
+                ]
               }
             ]
-          }
+          },
+          "claim_limits": [
+            "At a directly face-on view, side-to-side Doppler brightness asymmetry disappears; other viewing angles require their own selected components."
+          ],
+          "visual_components": [
+            "the accretion disk is viewed nearly edge-on rather than directly face-on"
+          ]
         },
         "concept_candidate": {
           "concept_terms": [
@@ -38220,15 +38292,22 @@
               "match_terms": [
                 "one orbital side is visibly brighter than the receding opposite side"
               ]
+            },
+            {
+              "id": "viewing_angle",
+              "match_terms": [
+                "the accretion disk is viewed nearly edge-on rather than directly face-on"
+              ]
             }
           ],
           "discovery": {
-            "minimum_component_groups": 4,
+            "minimum_component_groups": 5,
             "required_group_ids": [
               "accretion_disk",
               "central_shadow",
               "lensed_far_side",
-              "brightness_asymmetry"
+              "brightness_asymmetry",
+              "viewing_angle"
             ]
           },
           "obligations": [
@@ -38237,7 +38316,8 @@
                 "accretion_disk",
                 "central_shadow",
                 "lensed_far_side",
-                "brightness_asymmetry"
+                "brightness_asymmetry",
+                "viewing_angle"
               ],
               "evidence": [
                 {
@@ -38275,9 +38355,18 @@
                       "one orbital side is visibly brighter than the receding opposite side"
                     ]
                   }
+                },
+                {
+                  "field": "viewing_angle_phrase",
+                  "requirement": {
+                    "min_content_words": 7,
+                    "must_mention_any": [
+                      "the accretion disk is viewed nearly edge-on rather than directly face-on"
+                    ]
+                  }
                 }
               ],
-              "instruction": "Show the complete disk and shadow with far-side lensing and side-to-side brightness difference in one scientific visualization.",
+              "instruction": "Show this selected nearly edge-on disk view with its shadow, far-side lensing and side-to-side brightness difference.",
               "render_gates": [
                 {
                   "id": "vo_space_accretion_disk",
@@ -38298,6 +38387,11 @@
                   "id": "vo_space_accretion_brightness",
                   "review_scale": "both",
                   "description": "Opposing orbital sides show a readable brightness asymmetry."
+                },
+                {
+                  "id": "vo_space_accretion_viewing_angle",
+                  "review_scale": "both",
+                  "description": "the accretion disk is viewed nearly edge-on rather than directly face-on"
                 }
               ]
             }
@@ -38307,7 +38401,8 @@
           "disk_phrase",
           "shadow_phrase",
           "lensing_phrase",
-          "brightness_phrase"
+          "brightness_phrase",
+          "viewing_angle_phrase"
         ],
         "evidence_requirements": {
           "disk_phrase": {
@@ -38333,6 +38428,12 @@
             "must_mention_any": [
               "one orbital side is visibly brighter than the receding opposite side"
             ]
+          },
+          "viewing_angle_phrase": {
+            "min_content_words": 7,
+            "must_mention_any": [
+              "the accretion disk is viewed nearly edge-on rather than directly face-on"
+            ]
           }
         },
         "render_gates": [
@@ -38355,9 +38456,14 @@
             "id": "vo_space_accretion_brightness",
             "review_scale": "both",
             "description": "Opposing orbital sides show a readable brightness asymmetry."
+          },
+          {
+            "id": "vo_space_accretion_viewing_angle",
+            "review_scale": "both",
+            "description": "the accretion disk is viewed nearly edge-on rather than directly face-on"
           }
         ],
-        "composition_instruction": "Show the complete disk and shadow with far-side lensing and side-to-side brightness difference in one scientific visualization."
+        "composition_instruction": "Show this selected nearly edge-on disk view with its shadow, far-side lensing and side-to-side brightness difference."
       },
       "effects": {
         "dimensions": [],
@@ -38367,6 +38473,10 @@
         {
           "source": "visual_profile:relativistic_accretion_disk_visualization",
           "sha256": "46c79cf913adf310116bdecd2e9aa5c8b3cf1993c94414be9c6ddf594467369d"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_a7db8bc14e2952988d4ebf7978016ce9",
+          "sha256": "5e9c2f69fe5d49af6627989ec466e3dddd9e84f7fbdf6f17ea2ecf14364d0a6c"
         }
       ]
     },
@@ -49216,10 +49326,10 @@
         "semantics": {
           "definition": "hook-and-eye rows aligned across the back band opening",
           "paraphrase_examples": [
-            "observable bra strap detail showing hook-and-eye rows aligned across the back band opening"
+            "observable bra back-band closure showing hook-and-eye rows aligned across the back band opening"
           ],
           "contrast_examples": [
-            "링은 떠 있는 장식이 아니며 끈 조절 상태로 실제 지지력을 판단하지 않는다"
+            "훅앤아이는 같은 브라 뒷밴드 개구의 양쪽을 잇는다. 어깨끈 길이 조절 링·슬라이더와 구분한다."
           ],
           "claim_limits": [
             "This is one explicitly selected visible variant, not the universal definition of every related research term.",
@@ -49259,7 +49369,7 @@
             {
               "dimension": "appearance",
               "target": "main_subject",
-              "property": "wardrobe.details.bra_strap_adjust"
+              "property": "wardrobe.details.bra_back_band_closure"
             }
           ]
         },
@@ -49270,7 +49380,7 @@
           "runtime_forbidden_labels": []
         },
         "reject_substitutes": [
-          "링은 떠 있는 장식이 아니며 끈 조절 상태로 실제 지지력을 판단하지 않는다"
+          "훅앤아이는 같은 브라 뒷밴드 개구의 양쪽을 잇는다. 어깨끈 길이 조절 링·슬라이더와 구분한다."
         ],
         "required_evidence_fields": [
           "visible_relation_phrase"
@@ -49293,13 +49403,25 @@
         "composition_instruction": "Realize this selected visible construction on its stated owner: hook-and-eye rows aligned across the back band opening"
       },
       "effects": {
-        "dimensions": [],
-        "properties": []
+        "dimensions": [
+          "appearance"
+        ],
+        "properties": [
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "wardrobe.details.bra_back_band_closure"
+          }
+        ]
       },
       "provenance": [
         {
           "source": "visual_profile:clothing_ct073_v2",
           "sha256": "60725dee943826ca4b2c64cf0dd85bce5f2ca403a1e8db39de67a47a565a95d8"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_59b5c41707a756039e2814364d7e5366",
+          "sha256": "db36650d309a9ff48d61570cf6cb41db3f71f75d38519ca32cfda4cf6b5c53ab"
         }
       ]
     },
@@ -61057,8 +61179,7 @@
             "lenses and temple arms retain connections"
           ],
           "contrast_examples": [
-            "disconnected document and pointer",
-            "unrelated source and record anchors"
+            "손가락이 착용 중인 같은 안경의 브리지에 실제로 닿는다. 떠 있는 안경·렌즈를 가리키기만 하는 손·별도 문서 포인터와 구분한다."
           ],
           "claim_limits": [
             "안경 재질·색·형태와 손 위치의 효과를 분리.",
@@ -61157,8 +61278,7 @@
           "runtime_forbidden_labels": []
         },
         "reject_substitutes": [
-          "unrelated source and record anchors",
-          "hidden required contact"
+          "손가락이 착용 중인 같은 안경의 브리지에 실제로 닿는다. 떠 있는 안경·렌즈를 가리키기만 하는 손·별도 문서 포인터와 구분한다."
         ],
         "authored_components": {
           "contract_version": "photo-authored-visual-components/v1",
@@ -61295,6 +61415,10 @@
         {
           "source": "visual_profile:ia_profile_glasses_bridge",
           "sha256": "c3da58cfacec477e0ce190509f6b5f5eb4c2f6c71d3ec39528f8560e75c01d9a"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_1ed14d16a2fd5eee9d4248c8588ca300",
+          "sha256": "45b9adfd7edce0090634259aa336d2ddf66174ed46b7191fb2f220773643bb84"
         }
       ]
     },
@@ -66123,13 +66247,19 @@
           ],
           "core_assertion_discovery": true,
           "affected_dimensions": [
-            "action"
+            "lighting",
+            "setting"
           ],
           "affected_properties": [
             {
-              "dimension": "action",
+              "dimension": "lighting",
+              "target": "burner_flame",
+              "property": "shape"
+            },
+            {
+              "dimension": "setting",
               "target": "burner",
-              "property": "source_target_connection"
+              "property": "outlet_geometry"
             }
           ]
         },
@@ -66192,13 +66322,31 @@
         "composition_instruction": "Retain the complete selected realization on the stated owners: a bounded metal burner outlet; a small blue conical region immediately above the outlet; a larger flame envelope around the inner cone. Metadata remains declared context; invisible attributes are not pixel evidence."
       },
       "effects": {
-        "dimensions": [],
-        "properties": []
+        "dimensions": [
+          "lighting",
+          "setting"
+        ],
+        "properties": [
+          {
+            "dimension": "lighting",
+            "target": "burner_flame",
+            "property": "shape"
+          },
+          {
+            "dimension": "setting",
+            "target": "burner",
+            "property": "outlet_geometry"
+          }
+        ]
       },
       "provenance": [
         {
           "source": "visual_profile:fire_rel_f011",
           "sha256": "500738f334c86d9f2127b3364226b198300807952c413459f32c1b26836751fc"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_cf6bf405ca5c541f88f431f4b83e57bb",
+          "sha256": "67f55fb71bb4067dce824154a3b4fef2a79af5b168618691b821f63a2e9dd53b"
         }
       ]
     },
