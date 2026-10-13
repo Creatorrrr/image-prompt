@@ -1,0 +1,313 @@
+{
+  "schema": "photo-slot-pilot-catalog-changes/v1",
+  "before_corpus_sha256": "fbc108f6fa97380a56a6f26542931ec18e1f7ef2888ea0e1e00350cf1bc3dc29",
+  "after_corpus_sha256": "cbfd49941c968c48fee9f7e92838891812313b0eb642c680b47806bcaadc6f2a",
+  "before_count": 136,
+  "after_count": 139,
+  "changes": [
+    {
+      "slot_id": "gaze_direction",
+      "action": "add",
+      "before": null,
+      "after": {
+        "id": "gaze_direction",
+        "description": "Owned eye or iris orientation toward a direction in the selected frame, independent of head orientation, a named gaze target and viewer engagement.",
+        "description_ko": "같은 주체 눈·홍채의 선택 프레임 내 방향. 머리 방향·시선의 명명 대상·눈맞춤 여부와 독립하며 감은 눈이나 동공 모양으로 방향을 추정하지 않는다.",
+        "dimensions": [
+          "expression"
+        ],
+        "applicability": {},
+        "semantic_role": "direct",
+        "owners": [
+          "actor"
+        ],
+        "property_prefixes": [
+          "gaze.direction",
+          "eyes.direction",
+          "eyes.eyeline"
+        ],
+        "evidence_terms": [
+          "iris",
+          "irises",
+          "eye direction",
+          "eyeline",
+          "looking back",
+          "시선 방향",
+          "홍채"
+        ],
+        "includes": [
+          "Upward iris direction without a named target.",
+          "An authored over-shoulder eye direction when that branch is selected."
+        ],
+        "excludes": [
+          "Head or body turn alone.",
+          "Eye closure, pupil shape or private intent.",
+          "Named gaze target or engagement alone."
+        ],
+        "neighbors": [
+          "body_orientation",
+          "eye_detail",
+          "expression",
+          "gaze_engagement",
+          "gaze_target"
+        ],
+        "core_fields": [
+          "subject",
+          "event",
+          "visual_priorities"
+        ],
+        "priority": "support"
+      },
+      "pilot_cases": [
+        113,
+        418
+      ]
+    },
+    {
+      "slot_id": "nail_appearance",
+      "action": "add",
+      "before": null,
+      "after": {
+        "id": "nail_appearance",
+        "description": "Visible shape, length, color, finish or decoration of an owned fingernail or toenail plate, separate from skin marks and joint pose.",
+        "description_ko": "소유자가 명시된 손톱·발톱 판의 보이는 모양·길이·색·마감·장식. 피부의 문양·손 관절 자세·손가락 길이와 구별하며 건강이나 정체성을 진단하지 않는다.",
+        "dimensions": [
+          "appearance",
+          "color",
+          "material"
+        ],
+        "applicability": {},
+        "semantic_role": "direct",
+        "owners": [
+          "actor"
+        ],
+        "property_prefixes": [
+          "nails.",
+          "nail.",
+          "makeup.nails"
+        ],
+        "evidence_terms": [
+          "nail",
+          "nails",
+          "manicure",
+          "pedicure",
+          "손톱",
+          "발톱"
+        ],
+        "includes": [
+          "Light free-edge band distinct from a nail's base color.",
+          "Named nail plate shape, length or finish."
+        ],
+        "excludes": [
+          "Skin pigment or a tattoo on a finger.",
+          "Hand pose or finger proportions.",
+          "Clinical diagnosis, ancestry or age inferred from nails."
+        ],
+        "neighbors": [
+          "body_marking",
+          "body_region",
+          "color",
+          "hand_pose",
+          "makeup_decoration",
+          "skin_finish",
+          "texture"
+        ],
+        "core_fields": [
+          "subject",
+          "event",
+          "visual_priorities"
+        ],
+        "priority": "support"
+      },
+      "pilot_cases": [
+        354
+      ]
+    },
+    {
+      "slot_id": "body_form",
+      "action": "add",
+      "before": null,
+      "after": {
+        "id": "body_form",
+        "description": "Owned non-facial anatomical contour, regional volume or visible muscle and tendon form, independent of connection topology, relative proportions, pose and garment fit.",
+        "description_ko": "같은 주체의 얼굴 이외 신체에서 보이는 해부학적 윤곽·국소 부피·근육·힘줄 형태. 부위 이름·연결 구조·상대 비율·자세·의복 부피와 독립하며 체중·건강·능력·정체성을 추정하지 않는다.",
+        "dimensions": [
+          "body_geometry",
+          "appearance"
+        ],
+        "applicability": {},
+        "semantic_role": "direct",
+        "owners": [
+          "actor"
+        ],
+        "property_prefixes": [
+          "body.form",
+          "body.contour",
+          "body.morphology",
+          "body.muscle",
+          "body.tendon",
+          "body.build",
+          "body.gluteal_thigh_boundary"
+        ],
+        "evidence_terms": [
+          "muscle",
+          "tendon",
+          "contour",
+          "body build",
+          "body form",
+          "vein contour",
+          "근육",
+          "힘줄",
+          "윤곽"
+        ],
+        "includes": [
+          "Restrained visible muscle planes on the declared subject.",
+          "A localized neck vein contour or gluteal-thigh surface fold.",
+          "Depicted anatomy remains owned by its declared representation."
+        ],
+        "excludes": [
+          "Body region names or skeletal connectivity alone.",
+          "Relative body proportions, garment fit, pose or facial geometry alone.",
+          "Body weight, health, strength, age or origin inferred from contour.",
+          "An artifact's depicted body does not alter a live actor's body."
+        ],
+        "neighbors": [
+          "anatomical_connection",
+          "body_pose",
+          "body_region",
+          "facial_geometry",
+          "garment_fit",
+          "silhouette_proportion",
+          "skin_finish",
+          "texture"
+        ],
+        "core_fields": [
+          "subject",
+          "event",
+          "visual_priorities"
+        ],
+        "priority": "support"
+      },
+      "pilot_cases": [
+        26,
+        27,
+        371
+      ]
+    },
+    {
+      "slot_id": "skin_tone",
+      "action": "refine",
+      "before": {
+        "id": "skin_tone",
+        "description": "Owned skin color and local color variation, distinct from illumination, cosmetics and image grading.",
+        "description_ko": "피부 고유색: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+        "dimensions": [
+          "appearance",
+          "color"
+        ],
+        "applicability": {},
+        "semantic_role": "direct",
+        "owners": [
+          "actor"
+        ],
+        "property_prefixes": [
+          "skin.color",
+          "skin.tone",
+          "complexion.color"
+        ],
+        "evidence_terms": [
+          "skin tone",
+          "skin color",
+          "complexion",
+          "pigment",
+          "피부톤"
+        ],
+        "includes": [
+          "Owned skin color and local color variation, distinct from illumination, cosmetics and image grading."
+        ],
+        "excludes": [
+          "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다."
+        ],
+        "neighbors": [
+          "body_hair",
+          "body_marking",
+          "color",
+          "color_grading",
+          "hair_color",
+          "light_color",
+          "lip_color_placement",
+          "makeup_decoration",
+          "skin_condition",
+          "skin_finish"
+        ],
+        "core_fields": [
+          "subject",
+          "style",
+          "visual_priorities"
+        ],
+        "priority": "support"
+      },
+      "after": {
+        "id": "skin_tone",
+        "description": "Owned skin color and local color variation under declared illumination and white balance, distinct from cosmetics and image grading; apparent color does not prove intrinsic pigment or identity.",
+        "description_ko": "같은 피부 부위의 색과 국소 색 변이. 조명·화이트밸런스 기준이 명시된 보이는 색도 포함하되, 그 색으로 고유 색소·민족·정체성을 역추정하지 않으며 화장·그레이딩과 구별한다.",
+        "dimensions": [
+          "appearance",
+          "color"
+        ],
+        "applicability": {},
+        "semantic_role": "direct",
+        "owners": [
+          "actor"
+        ],
+        "property_prefixes": [
+          "skin.color",
+          "skin.tone",
+          "complexion.color",
+          "body.skin.color",
+          "body.skin.tone",
+          "body.skin.apparent_color"
+        ],
+        "evidence_terms": [
+          "skin tone",
+          "skin color",
+          "complexion",
+          "pigment",
+          "피부톤",
+          "피부색",
+          "피부의 보이는 색"
+        ],
+        "includes": [
+          "Owned skin color or local variation.",
+          "Apparent color of a named skin region with capture illumination and white balance declared."
+        ],
+        "excludes": [
+          "Light color, cosmetic pigment, textile lining color or image grading alone.",
+          "Apparent skin color without its observation conditions cannot establish intrinsic pigment, ancestry or identity."
+        ],
+        "neighbors": [
+          "body_hair",
+          "body_marking",
+          "color",
+          "color_grading",
+          "hair_color",
+          "light_color",
+          "lip_color_placement",
+          "makeup_decoration",
+          "skin_condition",
+          "skin_finish"
+        ],
+        "core_fields": [
+          "subject",
+          "style",
+          "visual_priorities"
+        ],
+        "priority": "support"
+      },
+      "pilot_cases": [
+        607
+      ]
+    }
+  ],
+  "unchanged_native_payloads_conditions_effects_bindings_policies": true
+}
