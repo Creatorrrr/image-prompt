@@ -20,7 +20,7 @@ from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from pathlib import Path
 
-from photo_global_index_storage import GlobalCandidateIndexStore, atomic_write, canonical_bytes, decode, digest, json_digest
+from photo_global_index_storage import atomic_write, canonical_bytes, decode, digest, json_digest
 from photo_candidate_sources import SourceInventory
 import photo_candidate_corpus
 import photo_global_index

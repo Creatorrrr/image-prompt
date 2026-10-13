@@ -11,7 +11,7 @@ import struct
 import sys
 import zlib
 import photo_candidate_corpus as c
-import photo_global_index as old_index
+import photo_global_index as documents
 from photo_embedding_provider import SPACE, atomic
 
 SCHEMA = 'photo-candidate-search-layout/v1'
@@ -96,10 +96,10 @@ def _tf(document, term, lexical):
 def build(assets, corpus, vectors, *, leaf_size=8, activate=False):
     """Never invokes a provider. Default output cannot replace the live manifest."""
     assets = Path(assets)
-    old_index.validate(vectors, corpus)
-    lexical = old_index.lexical(corpus)
+    documents.validate(vectors, corpus)
+    lexical = documents.lexical(corpus)
     identity = c.digest({'schema': SCHEMA, 'routing_recipe': ROUTING_RECIPE, 'vector_codec': VECTOR_CODEC, 'posting_codec':POSTING_CODEC, 'source': c.digest(corpus), 'vectors': c.digest(vectors),
-                         'leaf_size': leaf_size, 'lexical_policy': old_index.POLICY})
+                         'leaf_size': leaf_size, 'lexical_policy': documents.POLICY})
     directory = assets / DIRECTORY / identity
     directory.mkdir(parents=True, exist_ok=True)
     members = {}
@@ -160,7 +160,7 @@ def build(assets, corpus, vectors, *, leaf_size=8, activate=False):
         for cid in keys:
             record = corpus['candidates'][cid]; locators[cid] = block; guards[cid] = guard_record(record)
             record_hashes[cid] = c.digest(record)
-            blobs[cid] = ' '.join(v for values in old_index.fields(record).values() for v in values)
+            blobs[cid] = ' '.join(v for values in documents.fields(record).values() for v in values)
             if record['record_kind'] == 'visual_profile':
                 for field in ('exact_terms', 'project_glossary_aliases'):
                     for term in record['content'].get('activation', {}).get(field, []):
@@ -217,20 +217,11 @@ def scalar_quantization(ids,units):
             'errors':[math.sqrt(v)+1e-10 for v in errors],'codes_base64':base64.b64encode(codes).decode()}
 
 
-def upper_bound(node, query_unit):
-    """Spherical-cap maximum; outward rounding protects score/tie boundaries."""
-    a = max(-1.0, min(1.0, math.sumprod(node['center'], query_unit)))
-    b = node['radius_cos']
-    if b <= -1 or a >= b: return 1.0
-    return min(1.0, a*b + math.sqrt(max(0.0, 1-a*a))*math.sqrt(max(0.0, 1-b*b)) + 1e-11)
-
-
 def vector_body(raw,row):
     encoding=row.get('encoding')
-    if encoding not in {'scaled_i32_le','f64_le'}:raise ValueError('unsupported lossless vector encoding')
-    values=array('i' if encoding=='scaled_i32_le' else 'd');values.frombytes(zlib.decompress(raw))
+    if encoding!='f64_le':raise ValueError('unsupported lossless vector encoding')
+    values=array('d');values.frombytes(zlib.decompress(raw))
     if sys.byteorder!='little':values.byteswap()
-    if encoding=='scaled_i32_le':values=array('d',(v/1000000 for v in values))
     return values.tobytes()
 
 
@@ -260,7 +251,7 @@ def verify(assets, corpus, manifest, vectors=None):
             if row['offset']!=end or row['bytes']<1:raise ValueError('overlapping or missing vector extent')
             end+=row['bytes']
         if end!=members[path]['bytes'] or sum(r['count'] for r in rows)!=members[path]['count']:raise ValueError('vector pack coverage mismatch')
-    expected={cid for cid,r in corpus['candidates'].items() if r['record_kind'] in old_index.POSITIVE_KINDS}
+    expected={cid for cid,r in corpus['candidates'].items() if r['record_kind'] in documents.POSITIVE_KINDS}
     if set(meta['positive_ids'])!=expected or len(meta['positive_ids'])!=len(expected): raise ValueError('positive coverage mismatch')
     if meta['slot_catalog']!=corpus['slot_catalog'] or meta['slot_bindings']!=corpus['slot_bindings'] or meta['policies']!=corpus['policies']: raise ValueError('role/policy preservation mismatch')
     seen=set()
@@ -291,16 +282,16 @@ def verify(assets, corpus, manifest, vectors=None):
         if len(values)!=row['count']*SPACE['dimensions'] or len(row['ids'])!=row['count'] or seen&set(row['ids']): raise ValueError('vector owner/count mismatch')
         seen.update(row['ids'])
         for offset,cid in enumerate(row['ids']):
-            vector=values[offset*768:(offset+1)*768].tolist(); old_index.validate_vector(vector)
+            vector=values[offset*768:(offset+1)*768].tolist(); documents.validate_vector(vector)
             if vectors is not None and vector!=vectors['entries'][cid]['vector']: raise ValueError('vector precision loss')
-            recipe,text=old_index.text(corpus['candidates'][cid]);ref=meta.get('vector_recipes',{}).get(cid)
+            recipe,text=documents.text(corpus['candidates'][cid]);ref=meta.get('vector_recipes',{}).get(cid)
             if not ref or ref['recipe']!=recipe or ref['text_sha256']!=hashlib.sha256(text.encode()).hexdigest(): raise ValueError('vector text/recipe mismatch')
             norm=math.sqrt(math.sumprod(vector,vector));unit=[v/norm for v in vector]
             pos=positions[cid];approx=[quant['centers'][d][(codes[pos*384+d//2]>>(4*(d%2)))&15] for d in range(768)]
             residual=math.sqrt(math.fsum((a-b)**2 for a,b in zip(unit,approx)))
             if not math.isfinite(quant['errors'][pos]) or quant['errors'][pos]<residual:raise ValueError('unsafe quantization error bound')
     if seen!=expected: raise ValueError('vector coverage mismatch')
-    lexical=old_index.lexical(corpus)
+    lexical=documents.lexical(corpus)
     if meta['statistics']!={k:v for k,v in lexical.items() if k!='documents'}: raise ValueError('global lexical statistics mismatch')
     seen_terms=set()
     for block,row in enumerate(meta['posting_shards']):

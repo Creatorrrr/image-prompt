@@ -39,6 +39,7 @@ class RequestCandidates(dict):
             for proposal in proposals.values():self['_request_role_proposals'][proposal['target_slot_id']][proposal['candidate_id']]=proposal
 
 def assemble(corpus,vectors):
+    """Offline fixture/evaluation projection; production always uses SearchReader."""
     data=dict(corpus);data.update(corpus['policies']);data['_global_index']=vectors;data['_global_index_sha256']=c.digest(vectors)
     data['_binding_tags']={tag:[] for tag in corpus['slot_catalog']}
     for bid,binding in corpus['slot_bindings'].items():data['_binding_tags'][binding['slot_id']].append(bid)
@@ -58,6 +59,3 @@ def assemble(corpus,vectors):
         row['member_candidates']=members;bundles.append(row)
     data['candidate_bundles']=bundles
     return data
-
-def load(assets):
-    corpus=c.load(assets);return assemble(corpus,index.load(assets,corpus))

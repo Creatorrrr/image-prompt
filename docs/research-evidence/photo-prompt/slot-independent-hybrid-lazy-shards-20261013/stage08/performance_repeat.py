@@ -6,7 +6,7 @@ import photo_candidate_corpus as c,photo_global_index as idx,photo_global_retrie
 from photo_search_reader import SearchReader,LazyRuntimeData
 from tests.photo_slot_oracle import full_scan
 R=Path(__file__).parent;A=ROOT/'skills/photo-prompt-image-generator/assets';I=ROOT/'docs/research-evidence/photo-prompt/shared-candidate-pool-20261012/stage01/inputs/dev-02-blue-cup-en'
-source=c.load(A);vectors=idx.load(A,source);lexical=idx.lexical(source);controls=json.loads((I/'creative-controls.json').read_text());core=g.load_authorial_core_arg(I/'authorial-core.json',request_envelope=g.load_request_envelope_arg(I/'request-envelope.json'),creative_control_snapshot=controls)
+source=c.load(A);vectors=__import__('build_shared_candidate_index').offline_vector_map(SearchReader(A),source);lexical=idx.lexical(source);controls=json.loads((I/'creative-controls.json').read_text());core=g.load_authorial_core_arg(I/'authorial-core.json',request_envelope=g.load_request_envelope_arg(I/'request-envelope.json'),creative_control_snapshot=controls)
 base=SearchReader(A);allowed=guard.eligible(LazyRuntimeData(base).for_core(core),core,controls)[0];contexts={lang:json.loads((R/f'QUERY-SET-{lang}.json').read_text()) for lang in ('en','ko')};report=[]
 for slot,lang in [('lighting','en'),('light_direction','ko'),('material','en'),('occasion_context','ko'),('color','en'),('body_pose','ko')]:
  row=contexts[lang]['slots'][slot];fields=row['binding']['query_fields'];trials=[]

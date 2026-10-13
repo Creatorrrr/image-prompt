@@ -2,7 +2,7 @@
 
 Use this contract only when the candidate pack contains `viewer_experience.enabled: true`. It is a composition and local image-review procedure, not a score predicting human emotion, purchase, virality, or long-term attachment.
 
-When the pack also contains a typed v7 `character_response`, read `moe-response-contract.md` and bind the viewer promise to that frozen event and its relations. The viewer promise and affect evidence must describe the same baseline, event phase, visible response, and consequence without adding a second emotional scene.
+When the pack also contains a typed v8 `character_response`, read `moe-response-contract.md` and bind the viewer promise to that frozen event and its relations. The viewer promise and affect evidence must describe the same baseline, event phase, visible response, and consequence without adding a second emotional scene.
 
 Preserve an aesthetic entry condition only when the frozen core or an active pack requirement declares one. Configured defaults are subject to intent precedence and cannot add pretty/cute casting, facial treatment, styling, or warmth to a closed dimension. An appearance cue never replaces required actor/action/target/consequence evidence.
 

@@ -22,7 +22,7 @@ def load_case(path):
 
 def write(name,value):(R/name).write_bytes(c.canonical_bytes(value))
 
-start=time.perf_counter();source=c.load(A);vectors=idx.load(A,source);lexical=idx.lexical(source);oracle=PreparedFullScan(lexical,vectors['entries'])
+start=time.perf_counter();source=c.load(A);vectors=__import__('build_shared_candidate_index').offline_vector_map(SearchReader(A),source);lexical=idx.lexical(source);oracle=PreparedFullScan(lexical,vectors['entries'])
 reader=SearchReader(A);core,controls,emb=load_case(INPUTS/'dev-02-blue-cup-en');data=LazyRuntimeData(reader).for_core(core)
 allowed,bindings,contract=guard.eligible(data,core,controls);reports=[]
 full_bytes=sum(row['bytes'] for row in reader.meta['vector_shards']);queries={}

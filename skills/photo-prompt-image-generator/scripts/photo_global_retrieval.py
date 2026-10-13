@@ -1,12 +1,7 @@
-"""Frozen-core global hybrid discovery. Role tags are presentation metadata."""
+"""Whole-pool source applicability, independent of requested presentation tags."""
 from __future__ import annotations
-import copy,hashlib
 import photo_candidate_corpus as c
-import photo_shared_views as views
 import photo_global_index as index
-import photo_frozen_query as query
-from bm25f_retrieval import rank_bm25f,reciprocal_rank_fusion
-VERSION='photo-global-retrieval/v1'
 MODES={'hybrid_required','keyword_only'}
 
 def guard_policy(policy,contract):
@@ -49,36 +44,3 @@ def eligible(data,core,controls):
         if any(g.intent_alias_matches(blob,e) for e in core.get('user_exclusions') or []):continue
         allowed[cid]=entry;role_ids[cid]=candidates
     return allowed,role_ids,contract
-
-def retrieve(data,core,controls,context=None,mode='hybrid_required'):
-    import prompt_generator as g
-    if mode not in MODES:raise ValueError('unknown global retrieval mode')
-    text,_=g.authorial_core_retrieval_text(core)
-    if mode=='hybrid_required':query.validate(context,text,core['canonical_sha256'],controls['canonical_sha256'])
-    allowed,roles,contract=eligible(data,core,controls)
-    lexical=data.lexical_index() if hasattr(data,'lexical_index') else index.lexical(views.source(data))
-    lexical_hits=rank_bm25f(lexical,{'frozen_core':text},allowed_ids=allowed,limit=384)
-    vector_hits=index.cosine_rank(data['_global_index'],context['vector'],allowed_ids=allowed,limit=384) if mode=='hybrid_required' else []
-    fused=reciprocal_rank_fusion([[r['document_id'] for r in lexical_hits],*[([r['document_id'] for r in vector_hits]) for _ in range(mode=='hybrid_required')]],k=30)
-    admitted=[];role_counts={};cards={}
-    for row in fused:
-        cid=row['document_id'];eligible_bindings=[]
-        for bid in roles[cid]:
-            tag=data['slot_bindings'][bid]['slot_id']
-            if role_counts.get(tag,0)<g.candidate_pack_slot_limit(tag):eligible_bindings.append(bid)
-        if roles[cid] and not eligible_bindings:continue
-        admitted.append(cid)
-        for bid in eligible_bindings:
-            tag=data['slot_bindings'][bid]['slot_id'];role_counts[tag]=role_counts.get(tag,0)+1
-            candidate,_=g.candidate_pack_summarize_slot_candidate(data,tag,{'id':cid,'applicability_status':'eligible','applicability_source':'global_shared_hybrid'})
-            candidate['binding_id']=bid;candidate['retrieval_evidence']={'rrf_score':row['score'],'lane_count':row['lane_count']};candidate['_v7_semantic_source']=g.photo_candidate_semantics.semantic_source(c.entry(data,cid,bid))
-            cards.setdefault(tag,{'slot':tag,'role':'core' if tag in g.CANDIDATE_PACK_CORE_SLOTS else 'support','selected':None,'candidates':[],'candidate_count':sum(tag==data['slot_bindings'][b]['slot_id'] for bs in roles.values() for b in bs),'candidate_limit':g.candidate_pack_slot_limit(tag)})['candidates'].append(candidate)
-        if len(admitted)>=64:break
-    binding={'contract_version':VERSION,'source_authorial_core_sha256':core['canonical_sha256'],'creative_controls_sha256':controls['canonical_sha256'],
-        'corpus_sha256':c.digest(views.source(data)),'binding_sha256':c.digest(data['slot_bindings']),'catalog_sha256':c.digest(data['slot_catalog']),
-        'index_sha256':data['_global_index_sha256'],'query_context_sha256':context['canonical_sha256'] if context else None,
-        'mode':mode,'query_sha256':hashlib.sha256(text.encode()).hexdigest(),'algorithm':'global_bm25f_exact_cosine_rrf/v1','rrf_k':30,'minimum_similarity':0.30,
-        'lanes':{'bm25f':{'state':'executed','positive_hits':len(lexical_hits),'ranks':lexical_hits},'embedding':{'state':'executed' if mode=='hybrid_required' else 'not_requested','positive_hits':len(vector_hits),'ranks':vector_hits}},
-        'eligible_candidates':len(allowed),'selected_candidate_ids':admitted,'unique_candidate_limit':64,'role_limits':{'core':4,'support':2},'tag_admission_filter':False,'candidate_adoption':'optional'}
-    binding['canonical_sha256']=c.digest(binding)
-    return cards,binding,contract

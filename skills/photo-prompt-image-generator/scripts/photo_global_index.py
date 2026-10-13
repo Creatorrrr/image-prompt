@@ -1,17 +1,19 @@
-"""One positive search document per global candidate, independent of role tags."""
+"""Pure positive-document projection and offline full-scan vector qualification.
+
+No filesystem index loader, writer, runtime cache, or query execution path.
+"""
 from __future__ import annotations
-import gzip, hashlib, math
+import hashlib, math
 from pathlib import Path
 import photo_candidate_corpus as corpus
 from photo_embedding_provider import SPACE, validate_vector, atomic
 from photo_visual_retrieval import positive_visual_profile_fields, positive_visual_profile_text
 from bm25f_retrieval import build_bm25f_index
 
-SCHEMA='photo-global-candidate-index/v1'
-MANIFEST='photo_candidate_index.json'
+SCHEMA='photo-offline-vector-map/v1'
 RECIPE='photo-global-visual-text/v1'
 PROFILE_RECIPE='photo-visual-profile-text/v2'
-QUERY_RECIPE='photo-frozen-core-query/v1'
+QUERY_RECIPE='photo-independent-slot-query/v1'
 POSITIVE_KINDS=corpus.KINDS-{'diagnostic'}
 POLICY={'k1':1.2,'rrf_k':30,'candidate_limit':64,
  'query_fields':{'frozen_core':1.0,'global_context':1.0,'slot_focus':1.0},
@@ -58,7 +60,7 @@ def lexical(c):
 
 def validate(index,c):
     expected={cid:r for cid,r in c['candidates'].items() if r['record_kind'] in POSITIVE_KINDS}
-    if index.get('schema')!=SCHEMA or index.get('space')!=SPACE or index.get('query_recipe')!=QUERY_RECIPE or index.get('corpus_sha256')!=corpus.digest(c):
+    if index.get('schema')!=SCHEMA or index.get('space')!=SPACE or index.get('corpus_sha256')!=corpus.digest(c):
         raise ValueError('native shared index schema/space/source mismatch')
     if set(index.get('entries',{}))!=set(expected):raise ValueError('native shared index coverage mismatch')
     for cid,record in expected.items():
@@ -67,31 +69,6 @@ def validate(index,c):
             raise ValueError('native shared index identity/text/recipe mismatch: '+cid)
         validate_vector(row.get('vector'),SPACE['dimensions'])
     return index
-
-def load(assets,c):
-    assets=Path(assets).resolve();manifest=corpus.decode((assets/MANIFEST).read_bytes())
-    if manifest.get('schema')!=SCHEMA:raise ValueError('native shared index required')
-    entries={};seen=set()
-    for shard in manifest['shards']:
-        path=(assets/shard['path']).resolve()
-        if assets not in path.parents or path in seen or path.is_symlink():raise ValueError('escaping/duplicate index shard')
-        seen.add(path);raw=path.read_bytes()
-        if hashlib.sha256(raw).hexdigest()!=shard['sha256']:raise ValueError('shared index shard hash mismatch')
-        rows=corpus.decode(gzip.decompress(raw))
-        if len(rows)!=shard['count'] or set(entries)&set(rows):raise ValueError('shared index duplicate owner/count mismatch')
-        entries.update(rows)
-    result={k:v for k,v in manifest.items() if k!='shards'};result['entries']=entries
-    return validate(result,c)
-
-def write(assets,index):
-    assets=Path(assets);identity=corpus.digest(index);directory=assets/'photo_candidate_index_shards'/identity;directory.mkdir(parents=True,exist_ok=True)
-    keys=sorted(index['entries']);shards=[]
-    for offset in range(0,len(keys),128):
-        rows={key:index['entries'][key] for key in keys[offset:offset+128]}
-        path=directory/f'{offset//128:04d}.json.gz';raw=gzip.compress(corpus.canonical_bytes(rows),mtime=0);path.write_bytes(raw)
-        shards.append({'path':str(path.relative_to(assets)),'sha256':hashlib.sha256(raw).hexdigest(),'count':len(rows)})
-    atomic(assets/MANIFEST,{k:v for k,v in index.items() if k!='entries'}|{'shards':shards})
-    return identity
 
 def cosine_rank(index, vector, allowed_ids=None, limit=384, minimum_similarity=0.30):
     """Exact cosine over the entire allowed shared corpus, no role selection."""

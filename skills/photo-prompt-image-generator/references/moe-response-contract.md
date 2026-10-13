@@ -1,8 +1,8 @@
 # Moe Response Contract
 
-For the normal v7 workflow, use `character_response` when the candidate pack contains `photo-character-response/v1`. Its semantics were authored and frozen in `photo-authorial-core/v3`; use its typed axes and frozen evidence directly. The removed raw-text router supplies no runtime interpretation.
+For the normal v8 workflow, use `character_response` when the candidate pack contains `photo-character-response/v1`. Its semantics were authored and frozen in `photo-authorial-core/v3`; use its typed axes and frozen evidence directly. The removed raw-text router supplies no runtime interpretation.
 
-## Typed V7 Character Response
+## Typed V8 Character Response
 
 Copy the contract's nine `frozen_evidence` phrases into the final prompt exactly: actor, baseline, trigger, target, primary action, affect leak, visible response, immediate consequence, and continuity. Keep the declared semantic axes intact, use one primary action and exactly one primary affect-leak channel, and do not invent a relationship, emotion, gaze geometry, face landmark, pose, or story endpoint. `advisory_retrieval.candidates` are optional unordered support; they may all be rejected and can never replace or harden frozen evidence.
 

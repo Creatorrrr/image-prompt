@@ -1,56 +1,83 @@
 #!/usr/bin/env python3
-"""Build/verify only the native shared index, with durable resumable embeddings."""
+"""Build/verify the lazy shared layout; reuse only current verified vector text."""
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor,as_completed
 import argparse,hashlib,json,time
 import photo_candidate_corpus as c
-import photo_global_index as index
+import photo_global_index as documents
+import photo_search_layout as layout
+from photo_search_reader import SearchReader
 from photo_embedding_provider import embed,atomic,load_env,SPACE
 
-def build(assets,cache,workers=12,repair_unknown=False):
-    corpus=c.load(assets);records={cid:r for cid,r in corpus['candidates'].items() if r['record_kind'] in index.POSITIVE_KINDS}
-    reused={}
-    if (assets/index.MANIFEST).is_file():
-        # Source binding may change; only same native ID, space, full text and recipe can be reused.
-        manifest=c.decode((assets/index.MANIFEST).read_bytes())
-        if manifest.get('space')==SPACE and manifest.get('schema')==index.SCHEMA:
-            import gzip
-            for shard in manifest['shards']:
-                raw=(assets/shard['path']).read_bytes()
-                if hashlib.sha256(raw).hexdigest()!=shard['sha256']:raise ValueError('corrupt reuse shard')
-                reused.update(c.decode(gzip.decompress(raw)))
-    seed=cache/'VERIFIED-SEED.json'
-    if seed.is_file():
-        seed_value=c.decode(seed.read_bytes())
-        if seed_value.get('schema')!='photo-native-index-seed/v1' or seed_value.get('space')!=SPACE:raise ValueError('invalid native seed')
-        reused.update(seed_value['entries'])
+
+def offline_vector_map(reader,corpus):
+    """Explicit offline all-vector materialization, never called by retrieval."""
+    entries={}
+    for number,row in enumerate(reader.meta['vector_shards']):
+        values=reader.block('vector',number)
+        for offset,cid in enumerate(row['ids']):
+            if cid not in corpus['candidates']:continue
+            recipe,text=documents.text(corpus['candidates'][cid]);old=reader.meta['vector_recipes'][cid]
+            if old['recipe']!=recipe or old['text_sha256']!=hashlib.sha256(text.encode()).hexdigest():continue
+            entry={'id':cid,'recipe':recipe,'text':text,'text_sha256':old['text_sha256'],'vector':values[offset*768:(offset+1)*768].tolist()}
+            if 'embedding_execution' in old:entry['embedding_execution']=c.decode(c.canonical_bytes(old['embedding_execution']))
+            entries[cid]=entry
+    return {'schema':documents.SCHEMA,'space':SPACE,'corpus_sha256':c.digest(corpus),'entries':entries}
+
+
+def build(assets,cache,workers=4,repair_unknown=False):
+    assets=Path(assets);cache=Path(cache);corpus=c.load(assets)
+    records={cid:r for cid,r in corpus['candidates'].items() if r['record_kind'] in documents.POSITIVE_KINDS};reused={}
+    if (assets/layout.MANIFEST).is_file():
+        reader=SearchReader(assets)
+        try:reused=offline_vector_map(reader,corpus)['entries']
+        finally:reader.close()
     def one(cid,record):
-        recipe,text=index.text(record);old=reused.get(cid)
-        if old and old.get('id')==cid and old.get('text')==text and old.get('recipe')==recipe:
-            index.validate_vector(old['vector']);return cid,old,True
+        recipe,text=documents.text(record);old=reused.get(cid)
+        if old is not None:
+            documents.validate_vector(old['vector']);return cid,old,'reused'
         result=embed(text,{'candidate_id':cid,'recipe':recipe},cache/'requests',repair_unknown=repair_unknown)
         return cid,{'id':cid,'text':text,'text_sha256':hashlib.sha256(text.encode()).hexdigest(),'recipe':recipe,
-            'vector':result['vector'],'embedding_execution':result['execution']},result['cache_hit']
-    entries={};hits=0;start=time.monotonic();failed=[]
-    with ThreadPoolExecutor(max_workers=workers) as pool:
+                    'vector':result['vector'],'embedding_execution':result['execution']},'cache' if result['cache_hit'] else 'provider'
+    entries={};counts={'reused':0,'cache':0,'provider':0};start=time.monotonic();failed=[]
+    with ThreadPoolExecutor(max_workers=max(1,min(8,workers))) as pool:
         futures=[pool.submit(one,cid,r) for cid,r in records.items()]
         for future in as_completed(futures):
-            try:cid,row,hit=future.result();entries[cid]=row;hits+=hit
-            except Exception as e:failed.append(str(e))
-            completed=len(entries)+len(failed)
-            if completed%250==0:print(json.dumps({'complete':completed,'total':len(records),'cache':hits,'failed':len(failed),'seconds':round(time.monotonic()-start)}),flush=True)
+            try:cid,row,state=future.result();entries[cid]=row;counts[state]+=1
+            except Exception as error:failed.append(type(error).__name__)
             if len(failed)>=12:
                 for pending in futures:pending.cancel()
-                raise RuntimeError('build stopped after repeated provider failures; durable records preserved')
-    if failed:raise RuntimeError(f'{len(failed)} embedding requests failed; inspect cache before resuming')
-    payload={'schema':index.SCHEMA,'space':SPACE,'corpus_sha256':c.digest(corpus),'query_recipe':index.QUERY_RECIPE,'entries':entries}
-    index.validate(payload,corpus);identity=index.write(assets,payload)
-    report={'index_sha256':identity,'records':len(records),'cache_hits':hits,'provider_calls':len(records)-hits,'elapsed_seconds':round(time.monotonic()-start,3)}
+                raise RuntimeError('repeated provider failures; durable attempts preserved')
+    if failed:raise RuntimeError(f'{len(failed)} embedding requests failed; inspect durable attempts before resuming')
+    if c.digest(c.load(assets))!=c.digest(corpus):raise ValueError('source changed during offline build')
+    vectors={'schema':documents.SCHEMA,'space':SPACE,'corpus_sha256':c.digest(corpus),'entries':entries}
+    documents.validate(vectors,corpus)
+    staged=layout.build(assets,corpus,vectors);verification=layout.verify(assets,corpus,staged,vectors)
+    # Source and complete derived closure must verify before the active pointer moves.
+    if c.digest(c.load(assets))!=c.digest(corpus):raise ValueError('source changed before layout activation')
+    atomic(assets/layout.MANIFEST,staged)
+    staging=assets/'photo_candidate_search.staging.json'
+    if staging.exists():staging.unlink()
+    report={'layout_id':staged['layout_id'],'records':len(records),'vector_reuse':counts['reused'],'provider_cache_hits':counts['cache'],
+            'provider_calls':counts['provider'],'elapsed_seconds':round(time.monotonic()-start,3),'verification':verification}
     atomic(cache/'BUILD-REPORT.json',report);return report
 
+
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--assets',type=Path,default=Path(__file__).resolve().parents[1]/'assets');p.add_argument('--cache',type=Path);p.add_argument('--env-file',type=Path);p.add_argument('--workers',type=int,default=12);p.add_argument('--verify',action='store_true');p.add_argument('--repair-unknown',action='store_true',help='Explicit maintenance retry with possible duplicate provider cost; keep original attempt evidence.');a=p.parse_args()
-    if a.verify:print(json.dumps({'verified':True,'entries':len(index.load(a.assets,c.load(a.assets))['entries'])}));return
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--assets',type=Path,default=Path(__file__).resolve().parents[1]/'assets');p.add_argument('--cache',type=Path)
+    p.add_argument('--env-file',type=Path);p.add_argument('--workers',type=int,default=4);p.add_argument('--verify',action='store_true')
+    p.add_argument('--publish',action='store_true');p.add_argument('--runtime-store',type=Path)
+    p.add_argument('--repair-unknown',action='store_true',help='Explicit maintenance retry preserving possible duplicate-cost attempt evidence.')
+    a=p.parse_args();root=a.assets.resolve().parent
     if a.env_file:load_env(a.env_file)
-    print(json.dumps(build(a.assets,a.cache or Path.home()/'.cache/image-prompt/shared-embedding-build',a.workers,a.repair_unknown)))
+    if a.verify:
+        result=layout.verify(a.assets,c.load(a.assets),c.decode((a.assets/layout.MANIFEST).read_bytes()))
+    else:
+        from photo_runtime_sources import source_update
+        with source_update(root,a.runtime_store):result=build(a.assets,a.cache or Path.home()/'.cache/image-prompt/shared-embedding-build',a.workers,a.repair_unknown)
+    if a.publish:
+        from photo_runtime_sources import SnapshotPublisher
+        published=SnapshotPublisher(root,a.runtime_store).publish();result['publication']=published
+    print(json.dumps(result,ensure_ascii=False))
 if __name__=='__main__':main()

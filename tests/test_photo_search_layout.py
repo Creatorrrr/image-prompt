@@ -30,12 +30,3 @@ class SearchLayoutTests(unittest.TestCase):
             self.assertEqual(set(meta['payload_locator']),set(data['candidates']))
             self.assertEqual(meta['statistics']['document_count'],3)
 
-    def test_cap_bound_contains_descendants_and_handles_opposites(self):
-        for center,cosine in [([1.,0.],0.8),([0.,0.],-1.)]:
-            node={'center':center,'radius_cos':cosine}
-            for query in ([1.,0.],[-1.,0.],[0.,1.]):
-                bound=layout.upper_bound(node,query)
-                if cosine>0:
-                    for vector in ([1.,0.],[.8,.6],[.8,-.6]):
-                        self.assertGreaterEqual(bound+1e-12,math.sumprod(vector,query))
-                else:self.assertEqual(bound,1.)

@@ -93,7 +93,6 @@ try:
     import photo_native_pack
     import photo_global_index
     import photo_global_retrieval
-    import photo_frozen_query
     from bm25f_retrieval import (
         build_bm25f_index,
         normalize_bm25f_text,
@@ -153,7 +152,7 @@ VISUAL_PROFILE_INDEX_DATA_KEY = "_visual_meaning_lookup"
 CANDIDATE_PACK_CORE_SLOT_LIMIT = 4
 CANDIDATE_PACK_SUPPORT_SLOT_LIMIT = 2
 CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT = 64
-CANDIDATE_PACK_CONTRACT_V7 = "photo-candidate-pack/v8"
+NATIVE_CANDIDATE_PACK_CONTRACT = "photo-candidate-pack/v8"
 DEFAULT_CANDIDATE_PACK_VERSION = "v8"
 CANDIDATE_PACK_CREATIVE_EXPLORATION_FLOOR = 3
 CANDIDATE_PACK_CREATIVE_EXPLORATION_MIN_DISTANCE = 0.45
@@ -1153,7 +1152,7 @@ def build_negative_intent_guard(
     *,
     identity_preservation_enabled: bool,
 ) -> JsonDict:
-    """Build the public, recomputable v7 negative-intent boundary."""
+    """Build the public, recomputable v8 negative-intent boundary."""
 
     guard: JsonDict = {
         "contract_version": NEGATIVE_INTENT_GUARD_CONTRACT_VERSION,
@@ -3193,7 +3192,7 @@ def candidate_pack_contextual_adult_appeal(
                         "conflicts_with": [],
                         "search_fields": fields,
                         "visual_text": text,
-                        "_v7_semantic_source": photo_candidate_semantics.semantic_source(
+                        "_native_semantic_source": photo_candidate_semantics.semantic_source(
                             dict(entry, affected_dimensions=dimensions),
                             slot,
                             data.get("candidate_semantic_policy"),
@@ -6578,9 +6577,9 @@ def candidate_pack_visual_proposition(
 
 
 def candidate_pack_contract_version(version: str) -> str:
-    if version not in {"v8", CANDIDATE_PACK_CONTRACT_V7}:
-        raise ValueError(f"unsupported candidate-pack version: {version!r}; expected v7")
-    return CANDIDATE_PACK_CONTRACT_V7
+    if version not in {"v8", NATIVE_CANDIDATE_PACK_CONTRACT}:
+        raise ValueError(f"unsupported candidate-pack version: {version!r}; expected v8")
+    return NATIVE_CANDIDATE_PACK_CONTRACT
 
 
 def candidate_pack_recompute_id(pack: JsonDict) -> JsonDict:
@@ -7573,7 +7572,7 @@ def candidate_pack_compose_current(
         else {}
     )
     if core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
-        raise ValueError("v7 candidate pack requires photo-authorial-core/v3")
+        raise ValueError("v8 candidate pack requires photo-authorial-core/v3")
     semantic_sources: Dict[str, JsonDict] = {}
 
     def capture_semantic_sources(value: Any) -> None:
@@ -7582,7 +7581,7 @@ def candidate_pack_compose_current(
                 capture_semantic_sources(item)
         elif isinstance(value, dict):
             candidate_id = str(value.get("id") or value.get("candidate_id") or "")
-            source = value.pop("_v7_semantic_source", None)
+            source = value.pop("_native_semantic_source", None)
             if source is None and candidate_id and value.get("label_en"):
                 source = photo_candidate_semantics.semantic_source(value, str(value.get("slot") or ""))
                 if source:
@@ -7636,7 +7635,7 @@ def candidate_pack_project(pack: JsonDict, version: str = "v8") -> JsonDict:
     candidate_pack_contract_version(version)
     projected = copy.deepcopy(pack)
     private_relevance = projected.pop("_candidate_relevance", {})
-    projected["contract_version"] = CANDIDATE_PACK_CONTRACT_V7
+    projected["contract_version"] = NATIVE_CANDIDATE_PACK_CONTRACT
     candidate_pack_remove_quality_profile_sources(projected)
     for field in ("photographic_craft", "artistic_final_touch"):
         if isinstance(projected.get(field), dict):
@@ -7866,7 +7865,7 @@ def build_candidate_pack(
     if authorial_core is not None:
         pack["authorial_core"] = copy.deepcopy(authorial_core)
     if authorial_core is None:
-        raise ValueError("v7 candidate pack requires a pre-pack authorial core")
+        raise ValueError("v8 candidate pack requires a pre-pack authorial core")
     pack["provenance"]["creativity"] = provenance.get("creativity", CREATIVE_CONTROL_DEFAULTS["creativity"])
     pack["provenance"]["candidate_pool_creativity"] = provenance.get("candidate_pool_creativity")
     pack["provenance"]["retrieval_query"] = copy.deepcopy(provenance.get("retrieval_query", {}))
@@ -7880,7 +7879,7 @@ def build_candidate_pack(
             else None
         )
         if negative_intent_guard is None:
-            raise ValueError("modern v7 candidate pack requires the negative-intent guard")
+            raise ValueError("modern v8 candidate pack requires the negative-intent guard")
         pack["negative_intent_guard"] = copy.deepcopy(negative_intent_guard)
     visual_intent = (
         provenance.get("visual_intent")
@@ -7936,10 +7935,10 @@ def build_candidate_pack(
         for candidate in payload.get("candidates") or []:
             entry = candidate_pack_slot_entry_by_id(data, slot, str(candidate.get('entry_id') or ''))
             if entry:
-                candidate["_v7_semantic_source"] = photo_candidate_semantics.semantic_source(
+                candidate["_native_semantic_source"] = photo_candidate_semantics.semantic_source(
                     entry, slot, data.get("candidate_semantic_policy")
                 )
-                source = candidate["_v7_semantic_source"]
+                source = candidate["_native_semantic_source"]
                 if not property_effects_allowed(
                     authorial_core.get("intent_lock") or {}, source.get("affected_dimensions") or [],
                     source.get("affected_properties", [])
@@ -8592,7 +8591,7 @@ def authorial_negative_term_allowed(
     *,
     identity_preservation_enabled: bool,
 ) -> bool:
-    """Return whether a v7 runtime-negative item is intent-safe.
+    """Return whether a v8 runtime-negative item is intent-safe.
 
     Generic safety, taste, count, action, relationship, expression, wardrobe,
     and genre suppressions are intentionally absent from the automatic lane.
@@ -8665,5 +8664,3 @@ def negative_term_matches_requester_exclusion(
 
 
 
-def build_global_index(corpus_json):
-    return photo_global_index.lexical(photo_candidate_corpus.decode(corpus_json))

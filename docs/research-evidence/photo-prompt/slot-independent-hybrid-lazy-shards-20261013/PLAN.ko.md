@@ -1,7 +1,7 @@
 # 슬롯별 독립 하이브리드 검색과 필요한 shard 적재 계획
 
 작성일: 2026-10-13. 기준 커밋: `642b33241de31000411a88702b38103050f50d9c`.
-상태: **계획 작성 완료, 구현 미착수**. 이전 공통 후보풀 전환 1–9단계의 후속 계획이며, 아래 단계 번호는 새 작업에 해당한다.
+상태: **1–9단계 구현·검증 완료**. 이전 공통 후보풀 전환 1–9단계의 후속 계획이며, 아래 단계 번호는 새 작업에 해당한다. 단계별 증거는 `stage01/`–`stage09/`, 최종 결과와 한계는 [FINAL-REPORT.ko.md](FINAL-REPORT.ko.md)에 기록했다. 아래 현재 기준 표는 착수 당시의 기준이다.
 
 ## 목표와 현재 기준
 
@@ -146,20 +146,20 @@
 
 ## 주요 수정 위치
 
-| 범위 | 현재 파일 |
+| 범위 | 최종 파일 |
 |---|---|
-| 슬롯 실행·RRF·예산 | [photo_global_retrieval.py](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_global_retrieval.py) |
-| 슬롯 query와 provider/cache 결합 | [photo_frozen_query.py](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_frozen_query.py) |
-| shard 생성·경계·reader·전역 lexical | [photo_global_index.py](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_global_index.py), [photo_global_index_storage.py](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_global_index_storage.py), [bm25f_retrieval.py](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/bm25f_retrieval.py) |
+| 슬롯 실행·RRF·예산 | [photo_slot_retrieval.py](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_slot_retrieval.py) |
+| 슬롯 query와 provider/cache 결합 | [photo_slot_queries.py](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_slot_queries.py) |
+| shard 생성·경계·reader·전역 lexical | [photo_search_layout.py](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_search_layout.py), [photo_search_reader.py](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_search_reader.py), [photo_sharded_search.py](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_sharded_search.py) |
 | 원본 projection·역할 view·payload | [photo_shared_views.py](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_shared_views.py), [photo_native_pack.py](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_native_pack.py) |
 | generation·freshness·receipt | [photo_runtime_sources.py](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_runtime_sources.py) |
 | 독립 감사·공개 흐름 | [audit_global_retrieval.py](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/audit_global_retrieval.py), [photo_workflow.py](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_workflow.py), [generate_photo_prompt.py](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py) |
 
-필요한 repository/router/slot executor 구현을 별도 모듈로 분리할 수 있다. 위 파일의 명칭을 바꾸는 것만으로 lazy loading이나 독립 검색이 구현됐다고 판단하지 않는다.
+오프라인 전체 스캔·벡터 materialization은 별도 build/qualification 경로에 남겼으며 운영 lookup이나 감사 fallback으로 호출하지 않는다. 최종 실행·I/O·순위 증거로 독립 검색과 lazy loading을 검증했다.
 
 ## 실행·커밋 규칙
 
-- 실제 구현을 시작할 때 작업 트리와 최신 `origin/main`을 확인하고 다른 변경의 의도를 보존한다. authored source를 먼저 통합하고 파생 인덱스를 재생성한다. 현재 계획 작성으로 runtime·index·query 계약을 바꾸지는 않았다.
+- 실제 구현을 시작할 때 작업 트리와 최신 `origin/main`을 확인하고 다른 변경의 의도를 보존한다. authored source를 먼저 통합하고 파생 인덱스를 재생성한다. 착수 전 `pull` 결과와 보존 증거는 `SYNC.json`에 기록했다.
 - **각 단계 구현 → 해당 검증 → evidence/리포트 → 변경 경로만 커밋 → 다음 단계** 순서로 진행한다. 전체 원본/경계 검증, 필요한 회귀 및 실제 provider 검증을 단계별로 구분한다. 미통과 단계는 완료 커밋으로 보고하지 않는다.
 - 실행 evidence는 이 디렉터리의 `stage01/`부터 `stage09/`에 저장한다. 코드/원본/index SHA, query 입력/응답 근거, 두 lane·slot 결과, 읽기 범위와 실패 항목을 연결한다. 비밀 키를 저장하지 않는다.
 - 운영 교체는 8단계 자격 검증 이후에 진행한다. 이전 호환 경로를 남기는 대신 새 운영 계약을 검증하며, 요청된 경우에만 merge/push 상태를 별도로 처리·보고한다.

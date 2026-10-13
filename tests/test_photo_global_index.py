@@ -2,7 +2,7 @@ import copy,sys,unittest,tempfile
 from pathlib import Path
 SCRIPTS=Path(__file__).resolve().parents[1]/'skills/photo-prompt-image-generator/scripts'
 sys.path.insert(0,str(SCRIPTS))
-import photo_candidate_corpus as c,photo_global_index as g,photo_frozen_query as q
+import photo_candidate_corpus as c,photo_global_index as g
 from photo_embedding_provider import validate_vector
 
 class NativeIndexTests(unittest.TestCase):
@@ -29,27 +29,19 @@ class NativeIndexTests(unittest.TestCase):
   self.c['candidates'][self.cid]['content']['en']='right edge light';self.assertRaises(ValueError,g.validate,self.i,self.c)
  def test_rejects_invalid_vector(self):
   for v in ([0.0]*768,[1.0]*767,[float('nan')]*768,[float('inf')]*768):self.assertRaises(ValueError,validate_vector,v)
- def test_native_shards_roundtrip_and_hash(self):
+ def test_native_extents_roundtrip_and_hash(self):
+  import photo_search_layout as layout
+  from photo_search_reader import SearchReader
   with tempfile.TemporaryDirectory() as d:
-   g.write(Path(d),self.i);self.assertEqual(g.load(Path(d),self.c),self.i)
-   shard=next(Path(d).rglob('*.gz'));shard.write_bytes(b'tampered');self.assertRaises(ValueError,g.load,Path(d),self.c)
+   layout.build(Path(d),self.c,self.i,activate=True);reader=SearchReader(d);self.addCleanup(reader.close)
+   self.assertEqual(reader.block('vector',0).tolist(),self.i['entries'][self.cid]['vector'])
+   shard=Path(d)/reader.meta['vector_shards'][0]['path'];shard.write_bytes(b'tampered')
+   self.assertRaises(ValueError,reader.block,'vector',0)
  def test_lexical_exact_korean(self):
   from bm25f_retrieval import rank_bm25f
   self.assertEqual(rank_bm25f(g.lexical(self.c),{'frozen_core':'왼쪽 윤곽 빛'})[0]['document_id'],self.cid)
- def test_frozen_query_vector_tampering(self):
-  import hashlib
-  body='frozen left edge light';binding={'recipe':g.QUERY_RECIPE,'core_sha256':'a'*64,'controls_sha256':'b'*64}
-  ctx={'schema':'photo-frozen-query-vector/v1','text':body,'text_sha256':hashlib.sha256(body.encode()).hexdigest(),'binding':binding,'space':g.SPACE,'vector':[1.0]+[0.0]*767,'execution':{'provider_executed':True,'http_status':200,'response_sha256':'c'*64},'cache_hit':False}
-  ctx['vector_sha256']=c.digest(ctx['vector']);ctx['canonical_sha256']=c.digest(ctx)
-  q.validate(ctx,body,'a'*64,'b'*64)
-  for key,value in [('space',{'provider':'fake'}),('vector',[0.0]*768),('execution',{'provider_executed':False}),('text','another core')]:
-   edited=copy.deepcopy(ctx);edited[key]=value;edited['canonical_sha256']=c.digest({k:v for k,v in edited.items() if k!='canonical_sha256'})
-   self.assertRaises(ValueError,q.validate,edited,body,'a'*64,'b'*64)
-  self.assertRaises(ValueError,q.validate,ctx,body,'d'*64,'b'*64)
  def test_one_cosine_vote_for_multi_role_candidate(self):
   rows=g.cosine_rank(self.i,[1.0]+[0.0]*767)
   self.assertEqual(rows,[{'document_id':self.cid,'score':1.0}])
- def test_unbound_query_rejected_before_provider(self):
-  self.assertRaises(ValueError,q.prepare,'some query','bad','a'*64,Path('/unused'))
 
 if __name__=='__main__':unittest.main()

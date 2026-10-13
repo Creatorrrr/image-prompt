@@ -1,4 +1,4 @@
-"""Run current native auditors against the exact pinned v7 generation."""
+"""Run current native auditors against the exact pinned v8 generation."""
 from pathlib import Path
 from photo_workflow_state import WorkflowError,bound_path,read_json
 

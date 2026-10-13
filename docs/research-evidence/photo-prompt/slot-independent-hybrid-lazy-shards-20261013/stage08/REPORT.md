@@ -9,7 +9,7 @@
 - MATRIX.json: 224개 언어/슬롯의 쿼리 SHA, 두 lane/RRF SHA, top5, 실제 읽기, 생략 증명과 source oracle 대조.
 - ALL-SLOTS-en.json / ALL-SLOTS-ko.json: 112개 실제 검색 후 배분한 전체 pack과 source audit. 찻잔 맥락의 영어 결과는 본문 11개, 역할 참조 172개, available 63개와 blocked 49개다. blocked도 두 검색 lane을 실행했다. 등록 tag나 이전 global top64로 검색 대상을 제한하지 않았다.
 - NATURAL.json / SEMANTIC-EXPECTATIONS.json: 동결한 자연 요청 20건의 새 슬롯 쿼리, source oracle, 기존 필수 의무·hard gate 보존. 기대 자료는 이전 동결 core/필수 계약이며 신규 검색의 tag나 순위를 정답으로 쓰지 않는다.
-- STABLE-REGRESSION.log: 사진 관련 333개 검사, subtest 309개 통과. 추가 WORST-CASE.log와 FINAL-SEARCH-TESTS.log는 전 영역 streaming 및 최종 검색 구현을 확인한다.
+- STABLE-REGRESSION.log.gz: 사진 관련 333개 검사, subtest 309개 통과. 추가 WORST-CASE.log.gz와 FINAL-SEARCH-TESTS.log.gz는 전 영역 streaming 및 최종 검색 구현을 확인한다.
 - EXTENT-REBUILD.json: 원본 벡터를 변경하지 않은 lossless 재분할 및 완전 source/통계/경계 검증.
 
 ## I/O와 시간

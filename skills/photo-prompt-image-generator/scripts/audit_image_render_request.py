@@ -108,7 +108,7 @@ def audit_image_render_request(
         failures.append(
             {
                 "check": "source_intent_lock_sha256",
-                "reason": "an intent-locked v7 render request must bind the exact requesting-user-priority intent lock",
+                "reason": "an intent-locked v8 render request must bind the exact requesting-user-priority intent lock",
                 "expected": expected_intent_lock_sha256,
                 "actual": request.get("source_intent_lock_sha256"),
             }

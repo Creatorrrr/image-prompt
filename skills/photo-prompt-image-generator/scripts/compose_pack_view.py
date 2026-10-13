@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create a lossless, on-demand composition view of an immutable native v7 pack.
+"""Create a lossless, on-demand composition view of an immutable native v8 pack.
 
 Only known optional candidate inventories are deferred. Every other field,
 including unknown future requirements, remains visible. This is a reading aid;
@@ -14,7 +14,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-VERSION = "photo-composer-view/v3"
+VERSION = "photo-composer-view/v4"
 OPTIONAL_PATHS = (
     ("photographic_integration", "category_candidates"),
     ("visual_proposition", "core_candidates"),
@@ -47,7 +47,7 @@ def source_pack(payload: Any) -> dict[str, Any]:
     if isinstance(payload, list) and len(payload) == 1:
         payload = payload[0]
     if not isinstance(payload, dict) or payload.get("contract_version") != "photo-candidate-pack/v8":
-        raise ValueError("composer view requires exactly one original v7 candidate pack")
+        raise ValueError("composer view requires exactly one original v8 candidate pack")
     hashable = dict(payload, pack_id=None)
     if payload.get("pack_id") != digest(hashable)[:16]:
         raise ValueError("source pack_id does not match the immutable pack content")
@@ -69,13 +69,14 @@ def build_view(payload, candidate_ids=None, *, version=VERSION):
         if missing:raise ValueError('unknown native candidate IDs: '+', '.join(sorted(missing)))
         result={'contract_version':version,'mode':'candidate_details',**binding,
             'candidates':[{'id':cid,'source_pointer':pointer(('candidate_pool',cid)),'candidate':copy.deepcopy(pool[cid]),
-                'role_bindings':[copy.deepcopy(row) for row in pack['candidate_bindings'].values() if row['candidate_id']==cid]} for cid in ids]}
+                'role_bindings':[copy.deepcopy(row) for row in pack['candidate_bindings'].values() if row['candidate_id']==cid],
+                'role_proposals':[copy.deepcopy(row) for row in pack['role_proposals'].values() if row['candidate_id']==cid]} for cid in ids]}
     else:
         projection=copy.deepcopy(pack)
         projection['candidate_pool']={cid:{'deferred_candidate_id':cid,'read_details_before_selection':True} for cid in pool}
         catalog=[{'id':cid,'source_pointer':pointer(('candidate_pool',cid)),
             **{field:copy.deepcopy(row[field]) for field in ('label_en','label_ko','record_kind','applicability','affected_dimensions','adoption') if field in row},
-            'role_tags':sorted({b['slot_id'] for b in pack['candidate_bindings'].values() if b['candidate_id']==cid})} for cid,row in pool.items()]
+            'role_tags':sorted({p['target_slot_id'] for p in pack['role_proposals'].values() if p['candidate_id']==cid})} for cid,row in pool.items()]
         result={'contract_version':version,'mode':'composition_overview',**binding,'required_and_active_contracts':projection,'candidate_catalog':catalog}
     result['view_sha256']=digest(result)
     return result
