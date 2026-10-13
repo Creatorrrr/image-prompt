@@ -26,6 +26,11 @@ def eligible(data,core,controls):
     for cid,record in data['candidates'].items():
         if record['record_kind'] not in index.POSITIVE_KINDS:continue
         entry=c.entry(data,cid)
+        # Canonical conditions and effects govern every presentation role.
+        # A new empty binding cannot bypass this independent source check.
+        if (not guard_policy(entry.get('subject_applicability') or {},contract)
+                or not g.core_entry_eligible(data,core,contract,picked,'',entry,check_effect_scope=False)):
+            continue
         if record['record_kind']=='visual_profile':
             if (entry.get('activation') or {}).get('requires_adult_character') is True and not adult:continue
             if not g.visual_profile_context_applicability(entry,text,has_authorial_core_context=True)[0]:continue
@@ -34,12 +39,11 @@ def eligible(data,core,controls):
         candidates=[]
         for bid,b in bindings:
             bound=c.entry(data,cid,bid)
-            if guard_policy(bound.get('subject_applicability') or {},contract) and g.core_entry_eligible(data,core,contract,picked,bound.get('guard_role',''),bound):candidates.append(bid)
-        if bindings and not candidates:continue
-        if not bindings and record['record_kind'] not in {'visual_profile','visual_bundle'}:
-            if not g.core_entry_eligible(data,core,contract,picked,'',entry):continue
+            if (guard_policy(b['conditions']['subject_applicability'],contract)
+                    and g.core_entry_eligible(data,core,contract,picked,b['slot_id'],bound)):
+                candidates.append(bid)
         if record['record_kind']=='visual_bundle':
-            if any(not guard_policy(c.entry(data,p['candidate_id'],p['binding_id']).get('subject_applicability') or {},contract) or not g.core_entry_eligible(data,core,contract,picked,c.entry(data,p['candidate_id'],p['binding_id']).get('guard_role',''),c.entry(data,p['candidate_id'],p['binding_id'])) for p in record['content']['member_candidates']):continue
+            if any(not guard_policy(data['slot_bindings'][p['binding_id']]['conditions']['subject_applicability'],contract) or not g.core_entry_eligible(data,core,contract,picked,data['slot_bindings'][p['binding_id']]['slot_id'],c.entry(data,p['candidate_id'],p['binding_id'])) for p in record['content']['member_candidates']):continue
         blob=reader.meta['positive_blobs'][cid] if reader is not None else ' '.join(v for field in index.fields(record).values() for v in field)
         if any(g.intent_alias_matches(blob,e) for e in core.get('user_exclusions') or []):continue
         allowed[cid]=entry;role_ids[cid]=candidates

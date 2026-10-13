@@ -13,7 +13,7 @@ from bm25f_retrieval import build_bm25f_index
 SCHEMA='photo-offline-vector-map/v1'
 RECIPE='photo-global-visual-text/v1'
 PROFILE_RECIPE='photo-visual-profile-text/v2'
-QUERY_RECIPE='photo-independent-slot-query/v1'
+QUERY_RECIPE='photo-independent-slot-query/v2'
 POSITIVE_KINDS=corpus.KINDS-{'diagnostic'}
 POLICY={'k1':1.2,'rrf_k':30,'candidate_limit':64,
  'query_fields':{'frozen_core':1.0,'global_context':1.0,'slot_focus':1.0},

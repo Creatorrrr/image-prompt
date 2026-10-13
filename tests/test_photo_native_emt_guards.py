@@ -311,5 +311,11 @@ class NativeEMTGuardTests(unittest.TestCase):
    for language in ('EN','KO'):
     with self.subTest(scene=scene['name'],language=language):
      inputs=freeze_inputs(scene,language)
-     allowed,_,_=global_search.eligible(self.data,inputs['core'],inputs['controls'])
+     allowed,_,contract=global_search.eligible(self.data,inputs['core'],inputs['controls'])
      self.assertEqual(TARGET in allowed,scene['expected_action'])
+     if scene['expected_action']:
+      # Matching a frozen action remains discoverable, but presenting it in
+      # another open role cannot authorize an edit of that locked action.
+      _,picked=g.frozen_core_context(self.data,inputs['core'],inputs['controls'])
+      self.assertFalse(g.core_entry_eligible(self.data,inputs['core'],contract,picked,
+          'composition',allowed[TARGET]))

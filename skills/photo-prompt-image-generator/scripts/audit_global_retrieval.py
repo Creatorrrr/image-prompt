@@ -52,7 +52,10 @@ def audit(pack,data,context):
         elif context is not None:raise ValueError('keyword diagnostic claims query vectors')
         if record['query_context_sha256']!=(context['canonical_sha256'] if context else None):raise ValueError('foreign slot query set')
         allowed,source_roles,contract=guards.eligible(data,core,controls);_,picked=g.frozen_core_context(data,core,controls)
-        gd=dict(data);gd['candidates']=reader.meta['guards'];wanted={};expected_proposals={};limits={s:g.candidate_pack_slot_limit(s) for s in slots}
+        gd=dict(data);gd['candidates']=reader.meta['guards'];wanted={};expected_proposals={}
+        limits={s:4 if data['slot_catalog'][s]['priority']=='core' else 2 for s in slots}
+        declared={}
+        for bid,b in data['slot_bindings'].items():declared.setdefault(b['candidate_id'],[]).append(bid)
         if set(record['slot_searches'])!=set(slots) or record['eligible_candidates']!=len(allowed):raise ValueError('missing independent slot search')
         for slot in slots:
             trace=record['slot_searches'][slot];limit=trace['lane_limit']
@@ -76,15 +79,15 @@ def audit(pack,data,context):
             if blocked:rejected.update(r['document_id'] for r in combined)
             else:
                 for hit in combined:
-                    cid=hit['document_id'];p=roles.propose(data,slot,cid,source_roles[cid]);entry=roles.entry(gd,p)
-                    if not g.core_entry_eligible(data,core,contract,picked,slot,entry):rejected.add(cid);continue
+                    cid=hit['document_id'];p=roles.propose(data,slot,cid,source_roles[cid],declared.get(cid,[]));entry=roles.entry(gd,p)
+                    if p['applicability_status']=='incompatible' or not g.core_entry_eligible(data,core,contract,picked,slot,entry):rejected.add(cid);continue
                     expected_proposals[p['proposal_id']]=p;chosen.append((cid,p['proposal_id']))
                     if len(chosen)>=limits[slot]:break
             if trace['desired_proposal_ids']!=[p for _,p in chosen] or trace['role_rejected_candidate_ids']!=sorted(rejected) or trace['role_block_reason']!=blocked:raise ValueError('role guard/adoption projection changed')
             wanted[slot]=chosen
         selected=[];refs={s:[] for s in slots}
         for position in range(max(limits.values(),default=0)):
-            for slot in sorted(slots,key=lambda s:(s not in g.CANDIDATE_PACK_CORE_SLOTS,s)):
+            for slot in sorted(slots,key=lambda s:(data['slot_catalog'][s]['priority']!='core',s)):
                 if position>=len(wanted[slot]):continue
                 cid,pid=wanted[slot][position]
                 if cid not in selected:

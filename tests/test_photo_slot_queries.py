@@ -11,7 +11,7 @@ def synthetic_set(core, controls, catalog, slots, language='en'):
     rows = {}
     for slot in slots:
         text, _, binding = q.inputs(core, controls, catalog, slot, language)
-        row = {'schema': 'photo-slot-query-vector/v1', 'text': text, 'text_sha256': hashlib.sha256(text.encode()).hexdigest(),
+        row = {'schema': q.CONTEXT_SCHEMA, 'text': text, 'text_sha256': hashlib.sha256(text.encode()).hexdigest(),
                'binding': binding, 'space': q.SPACE, 'vector': [1.0] + [0.0] * 767,
                'execution': {'provider_executed': True, 'http_status': 200, 'response_sha256': 'a'*64}, 'cache_hit': False}
         row['vector_sha256'] = c.digest(row['vector']); row['canonical_sha256'] = c.digest(row); rows[slot] = row
@@ -55,5 +55,5 @@ class SlotQueryTests(unittest.TestCase):
         self.assertEqual(other['target_slot_id'],'color');self.assertFalse(other['persistent_tag_write'])
         self.assertEqual(c.digest(data),before)
         roles.validate(data,other,list(data['slot_bindings']))
-        edited=copy.deepcopy(other);edited['conditions']={}
+        edited=copy.deepcopy(other);edited['conditions']={'for_any':['human']}
         self.assertRaises(ValueError,roles.validate,data,edited,list(data['slot_bindings']))

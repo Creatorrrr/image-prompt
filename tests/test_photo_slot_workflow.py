@@ -41,7 +41,7 @@ class NativeSlotWorkflowTests(unittest.TestCase):
         return g.generate_candidate_pack(self.snapshot.data,self.core,self.controls,self.embodiment,seed=5,query_context=self.context,requested_slots=['lighting','light_type','color'])
 
     def test_pack_receipt_fresh_worker_and_independent_audit(self):
-        pack=self.pack();self.assertEqual(pack['contract_version'],'photo-candidate-pack/v8')
+        pack=self.pack();self.assertEqual(pack['contract_version'],'photo-candidate-pack/v9')
         receipt=self.provider.receipt(self.snapshot,pack)
         new=runtime.RuntimeSnapshotProvider(self.root,self.store);snap=new.from_receipt(pack,receipt)
         self.assertEqual(audit.audit(pack,snap.data,snap.query_context),[])
@@ -49,7 +49,7 @@ class NativeSlotWorkflowTests(unittest.TestCase):
         self.assertEqual(report['status'],'pass',report)
 
     def test_foreign_proposal_and_old_pack_are_rejected(self):
-        pack=self.pack();p=copy.deepcopy(pack);pid=next(iter(p['role_proposals']));p['role_proposals'][pid]['conditions']={}
+        pack=self.pack();p=copy.deepcopy(pack);pid=next(iter(p['role_proposals']));p['role_proposals'][pid]['conditions']={'for_any':['human']}
         self.assertTrue(audit.audit(p,self.snapshot.data,self.context))
         p=copy.deepcopy(pack);p['contract_version']='photo-candidate-pack/v7'
         self.assertRaises(ValueError,runtime.photo_native_pack.validate,p)

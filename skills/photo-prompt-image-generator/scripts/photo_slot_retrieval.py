@@ -7,7 +7,7 @@ import photo_role_proposals as roles
 import photo_sharded_search as search
 from bm25f_retrieval import reciprocal_rank_fusion
 
-VERSION='photo-slot-retrieval/v2'
+VERSION='photo-slot-retrieval/v3'
 MODES={'hybrid_required','keyword_only'}
 
 
@@ -36,7 +36,10 @@ def retrieve(data,core,controls,context=None,mode='hybrid_required',*,requested_
     allowed,source_roles,contract=guards.eligible(data,core,controls)
     _,picked=g.frozen_core_context(data,core,controls)
     guard_data=dict(data);guard_data['candidates']=reader.meta['guards']
-    traces={};desired={};proposals={};counts={};limits={slot:g.candidate_pack_slot_limit(slot) for slot in slots}
+    bindings_by_candidate={}
+    for bid,source_binding in data['slot_bindings'].items():
+        bindings_by_candidate.setdefault(source_binding['candidate_id'],[]).append(bid)
+    traces={};desired={};proposals={};counts={};limits={slot:4 if data['slot_catalog'][slot]['priority']=='core' else 2 for slot in slots}
     for slot in slots:
         text,lexical,binding=queries.inputs(core,controls,data['slot_catalog'],slot,language)
         if mode=='hybrid_required':
@@ -53,8 +56,10 @@ def retrieve(data,core,controls,context=None,mode='hybrid_required',*,requested_
                 rejected.update(hit['document_id'] for hit in fused)
                 break
             for hit in fused:
-                cid=hit['document_id'];proposal=roles.propose(data,slot,cid,source_roles[cid]);entry=roles.entry(guard_data,proposal)
-                if blocked or not g.core_entry_eligible(data,core,contract,picked,slot,entry):rejected.add(cid);continue
+                cid=hit['document_id'];proposal=roles.propose(data,slot,cid,source_roles[cid],bindings_by_candidate.get(cid,[]));entry=roles.entry(guard_data,proposal)
+                if (blocked or proposal['applicability_status']=='incompatible'
+                        or not g.core_entry_eligible(data,core,contract,picked,slot,entry)):
+                    rejected.add(cid);continue
                 proposals[proposal['proposal_id']]=proposal
                 chosen.append((cid,proposal['proposal_id'],hit))
                 if len(chosen)>=limits[slot]:break
@@ -69,7 +74,7 @@ def retrieve(data,core,controls,context=None,mode='hybrid_required',*,requested_
                       'lanes':{'bm25f':{'state':'executed','positive_hits':len(lh),'ranks':lh},
                                'embedding':{'state':'executed' if mode=='hybrid_required' else 'not_requested','positive_hits':len(vh),'ranks':vh}},
                       'cosine_proof':proof,'rrf':fused,'desired_proposal_ids':[p for _,p,_ in chosen]}
-    selected=[];cards={};admitted={slot:[] for slot in slots};priority=sorted(slots,key=lambda s:(s not in g.CANDIDATE_PACK_CORE_SLOTS,s))
+    selected=[];cards={};admitted={slot:[] for slot in slots};priority=sorted(slots,key=lambda s:(data['slot_catalog'][s]['priority']!='core',s))
     for position in range(max(limits.values(),default=0)):
         for slot in priority:
             if position>=len(desired[slot]):continue
@@ -87,7 +92,7 @@ def retrieve(data,core,controls,context=None,mode='hybrid_required',*,requested_
             candidate.update(proposal_id=pid,binding_id=proposal['source_binding_id'],retrieval_evidence={'rrf_score':hit['score'],'lane_count':hit['lane_count']})
             candidate['_native_semantic_source']=g.photo_candidate_semantics.semantic_source(roles.entry(data,proposal));rows.append(candidate)
         state='blocked' if traces[slot]['role_block_reason'] else ('no_hits' if not desired[slot] else ('budget_excluded' if not rows else ('budget_partial' if len(rows)<len(desired[slot]) else 'available')))
-        cards[slot]={'slot':slot,'role':'core' if slot in g.CANDIDATE_PACK_CORE_SLOTS else 'support','selected':None,'candidates':rows,
+        cards[slot]={'slot':slot,'role':data['slot_catalog'][slot]['priority'],'selected':None,'candidates':rows,
                      'candidate_count':len(allowed),'retrieved_candidate_count':counts[slot],'candidate_limit':limits[slot],'status':state}
     retained={pid:proposals[pid] for rows in admitted.values() for _,pid,_ in rows}
     record={'contract_version':VERSION,'source_authorial_core_sha256':core['canonical_sha256'],'creative_controls_sha256':controls['canonical_sha256'],

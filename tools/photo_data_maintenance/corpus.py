@@ -52,7 +52,7 @@ def make_inventory(corpus, raw):
     nodes = []
     kinds = {'visual_option': 'candidate', 'visual_profile': 'profile', 'visual_bundle': 'bundle'}
     for identifier, authored in sorted(corpus['candidates'].items()):
-        record = {'id': identifier, **authored['content'], 'effects': authored['effects'],
+        record = {'id': identifier, **authored['content'], 'conditions': authored['conditions'], 'effects': authored['effects'],
                   'record_kind': authored['record_kind'], 'provenance': authored['provenance'],
                   'role_bindings': sorted(bindings.get(identifier, []), key=lambda r: r['id'])}
         node = {'id': identifier, 'kind': kinds.get(authored['record_kind'], authored['record_kind']),

@@ -385,7 +385,7 @@ class RuntimeSnapshotProvider:
                     raise FreshnessError("source_invalid", "invalid runtime receipt request ID")
                 receipt = _read(self.publisher.store / "receipts" / f"{request}.json")
         if not isinstance(receipt, dict):
-            raise FreshnessError("source_invalid", "missing runtime receipt; a native v8 request receipt is required")
+            raise FreshnessError("source_invalid", "missing runtime receipt; a native v9 request receipt is required")
         request_id=receipt.get('request_id','')
         if not re.fullmatch(r'[0-9a-f]{32}',request_id):raise FreshnessError('source_invalid','invalid native receipt identity')
         stored=_read(self.publisher.store/'receipts'/f'{request_id}.json')

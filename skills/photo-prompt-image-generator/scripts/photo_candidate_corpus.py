@@ -12,21 +12,25 @@ import math
 import re
 from pathlib import Path
 
-SCHEMA = 'photo-candidate-corpus/v1'
-MANIFEST_SCHEMA = 'photo-candidate-corpus-source/v1'
+SCHEMA = 'photo-candidate-corpus/v2'
+MANIFEST_SCHEMA = 'photo-candidate-corpus-source/v2'
 MANIFEST_NAME = 'photo_candidate_corpus_manifest.json'
 KINDS = frozenset({'visual_option', 'visual_profile', 'relationship_concept',
                    'relationship_mechanism', 'visual_bundle', 'diagnostic'})
 MODULE_SCHEMAS = {
-    'candidates': 'photo-candidate-module/v1',
-    'slot_catalog': 'photo-slot-catalog/v1',
-    'slot_bindings': 'photo-candidate-slot-bindings/v1',
+    'candidates': 'photo-candidate-module/v2',
+    'slot_catalog': 'photo-slot-catalog/v2',
+    'slot_bindings': 'photo-candidate-slot-bindings/v2',
     'policies': 'photo-candidate-policy/v1',
 }
 CORPUS_FIELDS = frozenset({'schema', 'candidates', 'slot_catalog', 'slot_bindings', 'policies'})
 ID = re.compile(r'cand_[0-9a-f]{32}\Z')
 BINDING_ID = re.compile(r'bind_[0-9a-f]{32}\Z')
 TAG_ID = re.compile(r'[a-z][a-z0-9_]*\Z')
+INTRINSIC_CONDITION_FIELDS = frozenset({'for_any', 'for_all', 'exclude_for_any', 'not_for',
+    'requires_any_tags', 'requires_any', 'requires_all_tags', 'requires_all',
+    'exclude_any_tags', 'exclude_any', 'requires_primary_any_tags', 'requires_facets', 'exclude_facets',
+    'subject_applicability', 'requires_adult_context'})
 
 
 def canonical_bytes(value):
@@ -89,13 +93,27 @@ def validate(corpus):
     candidates, catalog, bindings = (corpus[k] for k in ('candidates', 'slot_catalog', 'slot_bindings'))
     for candidate_id, row in candidates.items():
         if (not isinstance(candidate_id, str) or not ID.fullmatch(candidate_id) or not isinstance(row, dict)
-                or set(row) != {'id', 'record_kind', 'content', 'effects', 'provenance'}
+                or set(row) != {'id', 'record_kind', 'content', 'conditions', 'effects', 'provenance'}
                 or row.get('id') != candidate_id or row.get('record_kind') not in KINDS):
             raise ValueError(f'invalid global candidate identity: {candidate_id}')
         if not isinstance(row['content'], dict) or 'id' in row['content']:
             raise ValueError(f'{candidate_id}: content must not own a second identity')
         if {'affected_dimensions', 'affected_properties'} & set(row['content']):
             raise ValueError(f'{candidate_id}: effects have one canonical owner')
+        if INTRINSIC_CONDITION_FIELDS & set(row['content']):
+            raise ValueError(f'{candidate_id}: intrinsic conditions have one canonical owner')
+        conditions = row['conditions']
+        if not isinstance(conditions, dict) or not set(conditions) <= INTRINSIC_CONDITION_FIELDS:
+            raise ValueError(f'{candidate_id}: invalid intrinsic condition contract')
+        for key, value in conditions.items():
+            if key == 'requires_adult_context':
+                if type(value) is not bool:
+                    raise ValueError(f'{candidate_id}: adult condition must be boolean')
+            elif key == 'subject_applicability':
+                if not isinstance(value, dict):
+                    raise ValueError(f'{candidate_id}: subject policy must be an object')
+            else:
+                strings(value, candidate_id + '.' + key)
         validate_effects(row['effects'], candidate_id)
         if not isinstance(row['provenance'], list) or not row['provenance']:
             raise ValueError(f'{candidate_id}: source provenance required')
@@ -103,32 +121,33 @@ def validate(corpus):
             if (not isinstance(origin, dict) or not isinstance(origin.get('source'), str)
                     or not origin['source'] or not re.fullmatch(r'[0-9a-f]{64}', str(origin.get('sha256', '')))):
                 raise ValueError(f'{candidate_id}: invalid source provenance')
+    import photo_slot_semantics
     for tag, row in catalog.items():
         if (not isinstance(tag, str) or not TAG_ID.fullmatch(tag) or not isinstance(row, dict) or row.get('id') != tag
-                or set(row) != {'id', 'description', 'dimensions', 'applicability'}
                 or not isinstance(row['description'], str) or not isinstance(row['applicability'], dict)):
             raise ValueError(f'invalid role tag: {tag}')
+        photo_slot_semantics.validate(tag, row, set(catalog), strings)
         strings(row['dimensions'], tag + '.dimensions')
         validate_effects({'dimensions':row['dimensions'],'properties':[]}, tag)
     seen = set()
     for binding_id, row in bindings.items():
         if (not isinstance(binding_id, str) or not BINDING_ID.fullmatch(binding_id) or not isinstance(row, dict)
-                or set(row) != {'id', 'candidate_id', 'slot_id', 'role', 'conditions', 'effects', 'weight'}
+                or set(row) != {'id', 'candidate_id', 'slot_id', 'role', 'semantic_role', 'conditions', 'weight'}
                 or row['id'] != binding_id or row['candidate_id'] not in candidates
                 or row['slot_id'] not in catalog or not isinstance(row['role'], str) or not row['role']
-                or not isinstance(row['conditions'], dict)):
+                or not isinstance(row['conditions'], dict)
+                or row['semantic_role'] != catalog[row['slot_id']]['semantic_role']):
             raise ValueError(f'invalid/dangling binding: {binding_id}')
         if (type(row['weight']) not in (int, float) or not math.isfinite(row['weight'])
                 or not 0 < row['weight'] <= 5):
             raise ValueError(f'{binding_id}: invalid weight')
-        key = (row['candidate_id'], row['slot_id'], row['role'])
+        key = (row['candidate_id'], row['slot_id'])
         if key in seen:
-            raise ValueError(f'duplicate candidate/tag/role relationship: {key}')
+            raise ValueError(f'duplicate candidate/tag relationship: {key}')
         seen.add(key)
-        if {'id', 'candidate_id', 'slot_id', 'binding_id', 'record_kind', 'effects',
-                'affected_dimensions', 'affected_properties', 'content', 'provenance'} & set(row['conditions']):
-            raise ValueError(f'{binding_id}: conditions cannot overwrite identity or effects')
-        validate_effects(row['effects'], binding_id)
+        if (set(row['conditions']) != {'subject_applicability'}
+                or not isinstance(row['conditions']['subject_applicability'], dict)):
+            raise ValueError(f'{binding_id}: role conditions cannot override intrinsic meaning')
     # Candidate refs are explicit, qualified native IDs, never bare label aliases.
     def references(value):
         if isinstance(value, str):
@@ -200,15 +219,17 @@ def entry(corpus, candidate_id, binding_id=None):
     result = copy.deepcopy(record['content'])
     result['id'] = candidate_id
     result['record_kind'] = record['record_kind']
+    result.update(copy.deepcopy(record['conditions']))
     effects = record['effects']
     if binding_id is not None:
         binding = corpus['slot_bindings'][binding_id]
         if binding['candidate_id'] != candidate_id:
             raise ValueError('role belongs to a different candidate')
-        result.update(copy.deepcopy(binding['conditions']))
+        result['_role_conditions'] = copy.deepcopy(binding['conditions'])
+        result['_presentation_role'] = binding['slot_id']
+        result['_semantic_role'] = binding['semantic_role']
         result['binding_id'] = binding_id
         result['weight'] = binding['weight']
-        effects = binding['effects']
     result['affected_dimensions'] = list(effects['dimensions'])
     result['affected_properties'] = copy.deepcopy(effects['properties'])
     return result

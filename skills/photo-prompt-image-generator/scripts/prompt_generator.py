@@ -152,8 +152,8 @@ VISUAL_PROFILE_INDEX_DATA_KEY = "_visual_meaning_lookup"
 CANDIDATE_PACK_CORE_SLOT_LIMIT = 4
 CANDIDATE_PACK_SUPPORT_SLOT_LIMIT = 2
 CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT = 64
-NATIVE_CANDIDATE_PACK_CONTRACT = "photo-candidate-pack/v8"
-DEFAULT_CANDIDATE_PACK_VERSION = "v8"
+NATIVE_CANDIDATE_PACK_CONTRACT = "photo-candidate-pack/v9"
+DEFAULT_CANDIDATE_PACK_VERSION = "v9"
 CANDIDATE_PACK_CREATIVE_EXPLORATION_FLOOR = 3
 CANDIDATE_PACK_CREATIVE_EXPLORATION_MIN_DISTANCE = 0.45
 CANDIDATE_PACK_CREATIVE_EXPLORATION_LIMIT = 6
@@ -1152,7 +1152,7 @@ def build_negative_intent_guard(
     *,
     identity_preservation_enabled: bool,
 ) -> JsonDict:
-    """Build the public, recomputable v8 negative-intent boundary."""
+    """Build the public, recomputable v9 negative-intent boundary."""
 
     guard: JsonDict = {
         "contract_version": NEGATIVE_INTENT_GUARD_CONTRACT_VERSION,
@@ -1581,11 +1581,13 @@ SLOT_FOCUS_STYLE_SLOTS = {
 }
 
 
-def candidate_pack_slot_focus_text(core: JsonDict, slot: str) -> tuple[str, List[str]]:
+def candidate_pack_slot_focus_text(core: JsonDict, slot: str, catalog=None) -> tuple[str, List[str]]:
     """Project only relevant frozen-core fields into one advisory slot query."""
 
     fields: List[str] = []
-    if slot in SLOT_FOCUS_SUBJECT_SLOTS:
+    if catalog is not None:
+        fields = list(catalog[slot]["core_fields"])
+    elif slot in SLOT_FOCUS_SUBJECT_SLOTS:
         fields = ["subject"]
     elif slot in SLOT_FOCUS_SETTING_SLOTS:
         fields = ["setting", "event"] if slot == "situation_context" else ["setting"]
@@ -6577,8 +6579,8 @@ def candidate_pack_visual_proposition(
 
 
 def candidate_pack_contract_version(version: str) -> str:
-    if version not in {"v8", NATIVE_CANDIDATE_PACK_CONTRACT}:
-        raise ValueError(f"unsupported candidate-pack version: {version!r}; expected v8")
+    if version not in {"v9", NATIVE_CANDIDATE_PACK_CONTRACT}:
+        raise ValueError(f"unsupported candidate-pack version: {version!r}; expected v9")
     return NATIVE_CANDIDATE_PACK_CONTRACT
 
 
@@ -7572,7 +7574,7 @@ def candidate_pack_compose_current(
         else {}
     )
     if core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
-        raise ValueError("v8 candidate pack requires photo-authorial-core/v3")
+        raise ValueError("v9 candidate pack requires photo-authorial-core/v3")
     semantic_sources: Dict[str, JsonDict] = {}
 
     def capture_semantic_sources(value: Any) -> None:
@@ -7631,7 +7633,7 @@ def candidate_pack_compose_current(
     return projected
 
 
-def candidate_pack_project(pack: JsonDict, version: str = "v8") -> JsonDict:
+def candidate_pack_project(pack: JsonDict, version: str = "v9") -> JsonDict:
     candidate_pack_contract_version(version)
     projected = copy.deepcopy(pack)
     private_relevance = projected.pop("_candidate_relevance", {})
@@ -7795,7 +7797,7 @@ def build_candidate_pack(
         ):
             intent_constraints.pop("character_response", None)
     pack: JsonDict = photo_native_pack.WorkingPack({
-        "contract_version": "photo-candidate-pack/v8",
+        "contract_version": "photo-candidate-pack/v9",
         "pack_id": "",
         "intent_contract": intent_contract,
         "mandatory_intents": mandatory_intents,
@@ -7865,7 +7867,7 @@ def build_candidate_pack(
     if authorial_core is not None:
         pack["authorial_core"] = copy.deepcopy(authorial_core)
     if authorial_core is None:
-        raise ValueError("v8 candidate pack requires a pre-pack authorial core")
+        raise ValueError("v9 candidate pack requires a pre-pack authorial core")
     pack["provenance"]["creativity"] = provenance.get("creativity", CREATIVE_CONTROL_DEFAULTS["creativity"])
     pack["provenance"]["candidate_pool_creativity"] = provenance.get("candidate_pool_creativity")
     pack["provenance"]["retrieval_query"] = copy.deepcopy(provenance.get("retrieval_query", {}))
@@ -7879,7 +7881,7 @@ def build_candidate_pack(
             else None
         )
         if negative_intent_guard is None:
-            raise ValueError("modern v8 candidate pack requires the negative-intent guard")
+            raise ValueError("modern v9 candidate pack requires the negative-intent guard")
         pack["negative_intent_guard"] = copy.deepcopy(negative_intent_guard)
     visual_intent = (
         provenance.get("visual_intent")
@@ -7905,7 +7907,7 @@ def build_candidate_pack(
     if "embodiment_preflight" in provenance:
         pack["embodiment_preflight"] = copy.deepcopy(provenance["embodiment_preflight"])
         pack["provenance"]["embodiment_preflight_required"] = True
-        photo_embodiment.policy_from_pack({**pack, "contract_version": "photo-candidate-pack/v8"})
+        photo_embodiment.policy_from_pack({**pack, "contract_version": "photo-candidate-pack/v9"})
     if viewer_experience is not None:
         pack["viewer_experience"] = viewer_experience
     if adult_appeal is not None:
@@ -8449,7 +8451,21 @@ def frozen_core_context(data: dict, core: dict, controls: dict) -> tuple[dict, d
     picked["subject"]["facets"] = {key: sorted(values) for key, values in facets.items()}
     return contract, picked
 
-def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, slot: str, entry: dict) -> bool:
+def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, slot: str, entry: dict, *, check_effect_scope=True) -> bool:
+    if entry.get("requires_adult_context") and not contract.get("adult_allowed"):
+        return False
+    if not photo_global_retrieval.guard_policy(entry.get("subject_applicability") or {}, contract):
+        return False
+    if not photo_global_retrieval.guard_policy((entry.get("_role_conditions") or {}).get("subject_applicability") or {}, contract):
+        return False
+    dimensions = entry.get("affected_dimensions") or []
+    lock = core.get("intent_lock") or {}
+    properties = entry.get("affected_properties") or []
+    if check_effect_scope and dimensions and not set(dimensions) <= set(lock.get("open_dimensions") or []):
+        return False
+    if (check_effect_scope and properties and all("*" not in row["property"] and row["target"] != "*" for row in properties)
+            and not property_effects_allowed(lock, dimensions, properties)):
+        return False
     reason = entry_block_reason(entry, slot, contract)
     if reason and not (reason == "adult_not_allowed"
                        and candidate_pack_age_only_subject_match(entry, slot, core)):
@@ -8591,7 +8607,7 @@ def authorial_negative_term_allowed(
     *,
     identity_preservation_enabled: bool,
 ) -> bool:
-    """Return whether a v8 runtime-negative item is intent-safe.
+    """Return whether a v9 runtime-negative item is intent-safe.
 
     Generic safety, taste, count, action, relationship, expression, wardrobe,
     and genre suppressions are intentionally absent from the automatic lane.

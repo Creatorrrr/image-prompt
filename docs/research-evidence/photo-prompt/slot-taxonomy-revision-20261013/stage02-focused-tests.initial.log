@@ -1,0 +1,76 @@
+..........................F.....F....F.....F...F..F..F.......
+======================================================================
+FAIL: test_many_roles_and_untagged_found_from_whole_pool (tests.test_photo_global_retrieval.GlobalDiscoveryTests.test_many_roles_and_untagged_found_from_whole_pool)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_global_retrieval.py", line 35, in test_many_roles_and_untagged_found_from_whole_pool
+    self.assertEqual(set(binding['selected_candidate_ids']),{'cand_'+'a'*32,'cand_'+'b'*32});self.assertEqual(set(roles),{'lighting','light_type','color'});self.assertFalse(binding['tag_admission_filter'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the second set but not the first:
+'cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+'cand_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'
+
+======================================================================
+FAIL: test_many_roles_and_untagged_found_from_whole_pool (tests.test_photo_global_retrieval.GlobalDiscoveryTests.test_many_roles_and_untagged_found_from_whole_pool)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_global_retrieval.py", line 35, in test_many_roles_and_untagged_found_from_whole_pool
+    self.assertEqual(set(binding['selected_candidate_ids']),{'cand_'+'a'*32,'cand_'+'b'*32});self.assertEqual(set(roles),{'lighting','light_type','color'});self.assertFalse(binding['tag_admission_filter'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the second set but not the first:
+'cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+'cand_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'
+
+======================================================================
+FAIL: test_korean_role_is_distinct_and_unknown_slot_fails (tests.test_photo_slot_queries.SlotQueryTests.test_korean_role_is_distinct_and_unknown_slot_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_slot_queries.py", line 47, in test_korean_role_is_distinct_and_unknown_slot_fails
+    self.assertNotEqual(en,ko);self.assertIn('조명',ko)
+                               ~~~~~~~~~~~~~^^^^^^^^^^^
+AssertionError: '조명' not found in 'A single blue porcelain teacup on a dark kitchen counter, soft side lighting from a window, clearly visible glaze reflections. No. | A photographic realization of the requested subject, place and visible state. | A single blue porcelain teacup | on a dark kitchen counter | shows clearly visible glaze reflections | The frame gives the cup surface priority over surrounding counter space | A single blue porcelain teacup on a dark kitchen counter shows clearly visible glaze reflections. Soft side lighting from a window travels across the curved glaze and separates its rim from the counter. Its handle and circular mouth remain legible within the same quiet still life. A gradual falloff leaves the rear counter subdued. The frame gives the cup surface priority over surrounding counter space. | The primary subject, place and event follow the complete request; lighting and framing remain authorial where unprescribed. | general_photo | scene-led photographic observation | Soft side lighting from a window\nPhotographic role: 검증용 역할 lighting: shows clearly visible glaze reflections | The frame gives the cup surface priority over surrounding counter space | general_photo | scene-led photographic observation | Soft side lighting from a window'
+
+======================================================================
+FAIL: test_many_roles_and_untagged_found_from_whole_pool (tests.test_photo_global_retrieval.GlobalDiscoveryTests.test_many_roles_and_untagged_found_from_whole_pool)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_global_retrieval.py", line 35, in test_many_roles_and_untagged_found_from_whole_pool
+    self.assertEqual(set(binding['selected_candidate_ids']),{'cand_'+'a'*32,'cand_'+'b'*32});self.assertEqual(set(roles),{'lighting','light_type','color'});self.assertFalse(binding['tag_admission_filter'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the second set but not the first:
+'cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+'cand_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'
+
+======================================================================
+FAIL: test_all_slots_search_whole_pool_before_unique_allocation (tests.test_photo_slot_retrieval.SlotExecutionTests.test_all_slots_search_whole_pool_before_unique_allocation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_slot_retrieval.py", line 25, in test_all_slots_search_whole_pool_before_unique_allocation
+    self.assertEqual(set(cards),set(self.requested));self.assertEqual(record['eligible_candidates'],2)
+                                                     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 2
+
+======================================================================
+FAIL: test_slot_order_is_irrelevant_and_budget_does_not_skip_search (tests.test_photo_slot_retrieval.SlotExecutionTests.test_slot_order_is_irrelevant_and_budget_does_not_skip_search)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_slot_retrieval.py", line 36, in test_slot_order_is_irrelevant_and_budget_does_not_skip_search
+    self.assertEqual(a,b);self.assertEqual(len(a[1]['selected_candidate_ids']),1)
+                          ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_many_roles_and_untagged_found_from_whole_pool (tests.test_photo_global_retrieval.GlobalDiscoveryTests.test_many_roles_and_untagged_found_from_whole_pool)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_global_retrieval.py", line 35, in test_many_roles_and_untagged_found_from_whole_pool
+    self.assertEqual(set(binding['selected_candidate_ids']),{'cand_'+'a'*32,'cand_'+'b'*32});self.assertEqual(set(roles),{'lighting','light_type','color'});self.assertFalse(binding['tag_admission_filter'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the second set but not the first:
+'cand_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+'cand_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'
+
+----------------------------------------------------------------------
+Ran 61 tests in 7.549s
+
+FAILED (failures=7)
