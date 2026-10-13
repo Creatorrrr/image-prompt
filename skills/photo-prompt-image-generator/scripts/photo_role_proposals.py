@@ -8,13 +8,15 @@ def propose(data, slot, cid, eligible_bindings):
     preferred = [bid for bid in compatible if data['slot_bindings'][bid]['slot_id'] == slot]
     bid = (preferred or compatible or [None])[0]
     original = data['slot_bindings'][bid] if bid else None
-    effects = copy.deepcopy(original['effects'] if original else data['candidates'][cid]['effects'])
+    reader=data.get('_search_reader')
+    record=reader.meta['guards'][cid] if reader is not None else data['candidates'][cid]
+    effects = copy.deepcopy(original['effects'] if original else record['effects'])
     target = set(data['slot_catalog'][slot]['dimensions'])
     fit = bool(target and target & set(effects['dimensions']))
     value = {'schema': 'photo-request-role-proposal/v1', 'target_slot_id': slot, 'candidate_id': cid,
              'source_binding_id': bid, 'eligible_source_binding_ids': compatible,
              'effects': effects, 'conditions': copy.deepcopy(original['conditions'] if original else {}),
-             'source_record_sha256': c.digest(data['candidates'][cid]),
+             'source_record_sha256': reader.meta['record_sha256'][cid] if reader is not None else c.digest(record),
              'applicability_status': 'eligible' if fit else 'review_required',
              'adoption': 'optional', 'scope': 'request', 'persistent_tag_write': False}
     value['proposal_id'] = 'role_' + c.digest(value)[:32]

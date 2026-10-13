@@ -8,6 +8,11 @@ def source(data):return {key:data[key] for key in c.CORPUS_FIELDS}
 
 def role_entries(data,tag):
     allowed=getattr(data,'admitted_ids',None)
+    if '_request_role_proposals' in data:
+        import photo_role_proposals
+        for cid,proposal in data['_request_role_proposals'].get(tag,{}).items():
+            if allowed is None or cid in allowed:yield photo_role_proposals.entry(data,proposal)
+        return
     for bid in data.get('_binding_tags',{}).get(tag,[]):
         row=data['slot_bindings'][bid]
         if allowed is None or row['candidate_id'] in allowed:yield c.entry(data,row['candidate_id'],bid)
@@ -16,6 +21,10 @@ def roles(data):return {tag:list(role_entries(data,tag)) for tag in data['slot_c
 
 def entry_for_role(data,tag,cid):
     if cid not in data['candidates']:return None
+    if '_request_role_proposals' in data:
+        import photo_role_proposals
+        proposal=data['_request_role_proposals'].get(tag,{}).get(cid)
+        return photo_role_proposals.entry(data,proposal) if proposal else None
     for bid in data.get('_binding_tags',{}).get(tag,[]):
         if data['slot_bindings'][bid]['candidate_id']==cid:return c.entry(data,cid,bid)
     return None
