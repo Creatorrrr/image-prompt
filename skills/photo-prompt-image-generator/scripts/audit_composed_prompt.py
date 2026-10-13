@@ -398,7 +398,7 @@ def audit_negative_intent_guard(
             {
                 "check": "negative_intent_guard_contract",
                 "reason": (
-                    "v7 pack must expose the exact recomputable requester-first negative-intent boundary"
+                    "v8 pack must expose the exact recomputable requester-first negative-intent boundary"
                 ),
                 "expected": expected,
                 "actual": actual,
@@ -2699,7 +2699,7 @@ def audit_candidate_semantic_contracts(
         pack.get("contract_version") != "photo-candidate-pack/v8"
         or version != photo_candidate_semantics.SURFACE_VERSION
     ):
-        fail("", "semantic-unit candidates require the declared modern v7 surface version")
+        fail("", "semantic-unit candidates require the declared modern v8 surface version")
         return failures
     if (
         not isinstance(bundles, dict)
@@ -3946,7 +3946,7 @@ def audit_authorial_authorship_policy(
         return [
             {
                 "check": "authorial_authorship_policy_contract",
-                "reason": "the v7 authorship policy and core binding must match the frozen open dimensions and hashes",
+                "reason": "the v8 authorship policy and core binding must match the frozen open dimensions and hashes",
             }
         ], 0, 0, 0
     return [], minimum_decisions, 0, minimum_evidence
@@ -3999,7 +3999,7 @@ def audit_authorial_core(
         failures.append(
             {
                 "check": "authorial_core_prompt_budget",
-                "reason": "v7 prompt_en exceeds the absolute photographic prompt bounds",
+                "reason": "v8 prompt_en exceeds the absolute photographic prompt bounds",
                 "minimum_words": minimum_words,
                 "recommended_maximum_words": recommended_maximum_words,
                 "absolute_maximum_words": absolute_maximum_words,
@@ -4127,7 +4127,7 @@ def audit_authorial_core(
         failures.append(
             {
                 "check": "authorial_core_integrity",
-                "reason": "v7 pack is not bound to one valid versioned pre-pack authorial core and retrieval query",
+                "reason": "v8 pack is not bound to one valid versioned pre-pack authorial core and retrieval query",
             }
         )
     binding = (
@@ -4235,7 +4235,7 @@ def audit_authorial_core(
             failures.append(
                 {
                     "check": "intent_preservation_contract",
-                    "reason": "v7 pack does not preserve the canonical requester-priority intent boundary",
+                    "reason": "v8 pack does not preserve the canonical requester-priority intent boundary",
                 }
             )
     raw_evidence = binding.get("preserved_evidence")
@@ -5042,7 +5042,7 @@ def audit_adult_appeal(
     return failures, warnings
 
 
-def audit_character_response_v7(
+def audit_character_response_v8(
     pack: dict[str, Any],
     composed: dict[str, Any],
     prompt_en: str,
@@ -5120,7 +5120,7 @@ def audit_character_response_v7(
         failures.append(
             {
                 "check": "character_response_contract",
-                "reason": "v7 character response is not bound to one typed assertion and its frozen generic evidence",
+                "reason": "v8 character response is not bound to one typed assertion and its frozen generic evidence",
             }
         )
     contract_material = copy.deepcopy(contract)
@@ -5247,7 +5247,7 @@ def expected_semantic_assertion_obligations(
     return expected
 
 
-def audit_semantic_assertion_obligations_v7(
+def audit_semantic_assertion_obligations_v8(
     pack: dict[str, Any],
     composed: dict[str, Any],
     prompt_en: str,
@@ -5471,7 +5471,7 @@ def expected_render_repair_contract(
     return expected
 
 
-def audit_render_repair_v7(
+def audit_render_repair_v8(
     pack: dict[str, Any],
     composed: dict[str, Any],
     prompt_en: str,
@@ -5658,11 +5658,11 @@ def _audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> di
     failures.extend(audit_negative_intent_guard(pack, prompt_en))
 
     failures.extend(audit_creative_direction(pack, composed, prompt_en))
-    failures.extend(audit_character_response_v7(pack, composed, prompt_en))
+    failures.extend(audit_character_response_v8(pack, composed, prompt_en))
     failures.extend(
-        audit_semantic_assertion_obligations_v7(pack, composed, prompt_en)
+        audit_semantic_assertion_obligations_v8(pack, composed, prompt_en)
     )
-    failures.extend(audit_render_repair_v7(pack, composed, prompt_en))
+    failures.extend(audit_render_repair_v8(pack, composed, prompt_en))
     failures.extend(photo_embodiment.audit_composed(pack, composed))
     failures.extend(audit_visual_obligations(pack, composed, prompt_en))
     failures.extend(audit_viewer_experience(pack, composed, prompt_en))

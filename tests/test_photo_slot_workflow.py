@@ -57,3 +57,14 @@ class NativeSlotWorkflowTests(unittest.TestCase):
     def test_unpublished_source_is_blocked_without_eager_bootstrap(self):
         other=runtime.RuntimeSnapshotProvider(self.root,self.store/'empty')
         self.assertRaises(runtime.FreshnessError,other.acquire)
+
+    def test_composer_view_exposes_request_roles_for_untagged_candidates(self):
+        import compose_pack_view as view
+        pack=self.pack();overview=view.build_view(pack)
+        self.assertEqual(overview['contract_version'],'photo-composer-view/v4')
+        cid='cand_'+'b'*32
+        row=next(r for r in overview['candidate_catalog'] if r['id']==cid)
+        self.assertEqual(row['role_tags'],['color','light_type','lighting'])
+        detail=view.build_view(pack,[cid])['candidates'][0]
+        self.assertEqual(detail['role_bindings'],[])
+        self.assertEqual({r['target_slot_id'] for r in detail['role_proposals']},set(row['role_tags']))

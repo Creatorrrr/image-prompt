@@ -46,7 +46,7 @@ AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v3"
 ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION = "photo-adult-appeal-dimension-scope/v4"
 
 # These are possible carriers, not a requirement to change every dimension.
-# New v7 adult-axis additions preserve explicit locks; other augmentation
+# New v8 adult-axis additions preserve explicit locks; other augmentation
 # contracts continue to require explicitly open dimensions.
 ADULT_APPEAL_AXIS_DIMENSIONS = {
     "sensual": frozenset({

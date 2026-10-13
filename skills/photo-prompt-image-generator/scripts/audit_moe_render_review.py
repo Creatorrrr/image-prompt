@@ -112,7 +112,7 @@ def derive_character_response_render_gates(
         failures.append(
             {
                 "check": "character_response_contract",
-                "reason": "typed character-response render review requires an original v7 pack and v3 core",
+                "reason": "typed character-response render review requires an original v8 pack and v3 core",
             }
         )
     if not isinstance(composed, dict):
@@ -472,7 +472,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--composed",
         help=(
-            "Audited composed-prompt JSON; required for typed v7 character response "
+            "Audited composed-prompt JSON; required for typed v8 character response "
             "or when the pack exposes optional visual concept candidates"
         ),
     )

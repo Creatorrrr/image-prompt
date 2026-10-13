@@ -3,7 +3,8 @@ from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import photo_candidate_corpus as c
 from photo_embedding_provider import embed, SPACE, validate_vector
-from photo_frozen_query import HASH
+import re
+HASH=re.compile(r'[0-9a-f]{64}\Z')
 
 RECIPE = 'photo-independent-slot-query/v1'
 SCHEMA = 'photo-slot-query-set/v1'

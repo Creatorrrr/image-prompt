@@ -85,7 +85,7 @@ def retrieve(data,core,controls,context=None,mode='hybrid_required',*,requested_
             proposal=proposals[pid]
             candidate,_=g.candidate_pack_summarize_slot_candidate(presented,slot,{'id':cid,'applicability_status':proposal['applicability_status'],'applicability_source':'independent_full_pool_hybrid'})
             candidate.update(proposal_id=pid,binding_id=proposal['source_binding_id'],retrieval_evidence={'rrf_score':hit['score'],'lane_count':hit['lane_count']})
-            candidate['_v7_semantic_source']=g.photo_candidate_semantics.semantic_source(roles.entry(data,proposal));rows.append(candidate)
+            candidate['_native_semantic_source']=g.photo_candidate_semantics.semantic_source(roles.entry(data,proposal));rows.append(candidate)
         state='blocked' if traces[slot]['role_block_reason'] else ('no_hits' if not desired[slot] else ('budget_excluded' if not rows else ('budget_partial' if len(rows)<len(desired[slot]) else 'available')))
         cards[slot]={'slot':slot,'role':'core' if slot in g.CANDIDATE_PACK_CORE_SLOTS else 'support','selected':None,'candidates':rows,
                      'candidate_count':len(allowed),'retrieved_candidate_count':counts[slot],'candidate_limit':limits[slot],'status':state}

@@ -269,10 +269,11 @@ def authoring_brief(snapshot):
                   "Sensual and fetish may share the same expressive choice.",
                   "Expression levels describe prominence; creativity describes interpretive freedom. Neither requires a garment or detail count.",
                   "", "Other resolved controls:"])
-    for name, row in snapshot["controls"].items():
-        if name not in (*LEVEL_CONTROLS, "adult_appeal_emphasis"):
-            value = row["value"]
-            lines.append(f"{name}: {json.dumps(value, ensure_ascii=False)}")
+    # JSON objects are unordered. Preserve the managed writer-facing order
+    # after canonical receipt serialization, without changing resolved values.
+    for name in ("viewer_experience", "reference_edit_mode", "trend_layer"):
+        value = snapshot["controls"][name]["value"]
+        lines.append(f"{name}: {json.dumps(value, ensure_ascii=False)}")
     return "\n".join(lines)
 
 
