@@ -59,7 +59,12 @@ def finalize(pack,data,selected_ids,query_context):
         for row in rows:
             cid=own(row)
             if cid:
-                result.append({'candidate_id':cid,'view_context':{k:copy.deepcopy(row[k]) for k in ('axis','carrier','slot','expression_scope') if k in row}})
+                context={k:copy.deepcopy(row[k]) for k in ('axis','carrier','slot','expression_scope') if k in row}
+                # Eligibility is specific to this presentation, even when a
+                # role card for the same source record requires later review.
+                for key in ('applicability','adoption','opt_in_contract'):
+                    if key in row and pool[cid].get(key)!=row[key]:context[key]=copy.deepcopy(row[key])
+                result.append({'candidate_id':cid,'view_context':context})
             else:result.append(copy.deepcopy(row))
         return result
     result=dict(pack)

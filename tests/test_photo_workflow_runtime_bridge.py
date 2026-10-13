@@ -26,6 +26,9 @@ def inline_record(flags):
 
 
 class PhotoWorkflowRuntimeBridgeTests(unittest.TestCase):
+    def publish(self,store):
+        from photo_runtime_sources import RuntimeSnapshotProvider
+        RuntimeSnapshotProvider(store=store).publisher.publish()
     def test_native_observed_file_parent_coordinator_and_child_freeze(self):
         from prepare_retry_context import prepare, recompute, attach_child
         from tests.test_photo_workflow_precore import preparation
@@ -37,6 +40,7 @@ class PhotoWorkflowRuntimeBridgeTests(unittest.TestCase):
             args = argparse.Namespace(run=run, seed=27, runtime_store=directory / "runtime", source_mode="local_current",
                                       source_remote=None, source_ref="main", visual_intent=None,retrieval_mode="keyword_only")
             with patch("urllib.request.urlopen", side_effect=AssertionError("network forbidden")):
+                self.publish(args.runtime_store)
                 workflow.retrieve(args)
                 pack = workflow.one(files.value(files.load_state(run), "pack"))
                 composed = directory / "composed.json"; composed.write_text(json.dumps(authorship.PhotoAuthorshipPolicyTests.composed(pack)))
@@ -105,6 +109,7 @@ class PhotoWorkflowRuntimeBridgeTests(unittest.TestCase):
             args = argparse.Namespace(run=run, seed=27, runtime_store=directory / "runtime", source_mode="local_current",
                                       source_remote=None, source_ref="main", visual_intent=None,retrieval_mode="keyword_only")
             with patch("urllib.request.urlopen", side_effect=AssertionError("network forbidden")):
+                self.publish(args.runtime_store)
                 self.assertEqual(workflow.retrieve(args)["phase"], "pack_bound")
                 self.assertTrue(workflow.retrieve(args)["reused"])
                 state = files.load_state(run); pack = workflow.one(files.value(state, "pack"))

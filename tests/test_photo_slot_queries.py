@@ -39,7 +39,7 @@ class SlotQueryTests(unittest.TestCase):
     def test_missing_slot_and_old_query_are_rejected(self):
         value=synthetic_set(self.core,self.controls,self.catalog,['lighting'])
         self.assertRaises(ValueError,q.validate_set,value,self.core,self.controls,self.catalog,['lighting','color'])
-        self.assertRaises(ValueError,q.validate_set,GlobalDiscoveryTests().context(),self.core,self.controls,self.catalog,['lighting'])
+        self.assertRaises(ValueError,q.validate_set,{'schema':'photo-frozen-query-vector/v1'},self.core,self.controls,self.catalog,['lighting'])
 
     def test_korean_role_is_distinct_and_unknown_slot_fails(self):
         en=q.inputs(self.core,self.controls,self.catalog,'lighting')[0]

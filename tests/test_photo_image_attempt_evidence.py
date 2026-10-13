@@ -222,7 +222,7 @@ class EvidenceBindingTests(unittest.TestCase):
             path = Path(directory) / "attempt.json"
             record = evidence.capture_api_error(RuntimeError("fixture"), context())
             evidence.write_evidence(path, record)
-            args = recorder.parse_args(["--ts", "2026-09-30T00:00:00Z", "--prompt-en", PROMPT, "--negative-en", NEGATIVE, "--attempt", "1", "--status", "error", "--tool", "openai_images_api", "--attempt-evidence-json", str(path), "--arm-id", "arm", "--worktree-id", "fixture", "--skill-sha256", "a" * 64, "--source-ref", "fixture", "--candidate-pack-version", "v7", "--authorial-core-sha256", "b" * 64, "--intent-lock-sha256", "c" * 64, "--image-call-count", "1", "--independent-no-cross-arm-inputs"])
+            args = recorder.parse_args(["--ts", "2026-09-30T00:00:00Z", "--prompt-en", PROMPT, "--negative-en", NEGATIVE, "--attempt", "1", "--status", "error", "--tool", "openai_images_api", "--attempt-evidence-json", str(path), "--arm-id", "arm", "--worktree-id", "fixture", "--skill-sha256", "a" * 64, "--source-ref", "fixture", "--candidate-pack-version", "v8", "--authorial-core-sha256", "b" * 64, "--intent-lock-sha256", "c" * 64, "--image-call-count", "1", "--independent-no-cross-arm-inputs"])
             row = recorder.build_entry(args)
             manifest = recorder.build_independent_manifest(row, args)
             for key in ("attempt_evidence_path", "attempt_evidence_sha256", "error_capture_fidelity", "error_details", "generation_environment"):

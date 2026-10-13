@@ -43,7 +43,7 @@ def fixture():
         {}, {"provenance": {"authorial_core": core}}, {}, None, None,
         visual_profile_resolution={"hits": []},
     )
-    pack = {"contract_version":"photo-candidate-pack/v7", "candidate_pool":{}, "candidate_bindings":{}, "role_views":{}, "authorial_core": core, "semantic_clarification": contract}
+    pack = {"contract_version":"photo-candidate-pack/v8", "candidate_pool":{}, "role_proposals":{}, "candidate_bindings":{}, "role_views":{}, "authorial_core": core, "semantic_clarification": contract}
     composed = {"semantic_clarification_decisions": [{
         "clarification_id": row["id"], "decision": "applied",
         "rationale": "The same requested exchange remains visible.",

@@ -6,6 +6,7 @@ import copy
 import base64
 import gzip
 import hashlib
+import os
 from pathlib import Path
 import sys
 import threading
@@ -32,6 +33,7 @@ def regular(assets, relative):
 
 
 def weight(value, seen=None):
+    if isinstance(value,layout.PostingPage):return value.cache_weight
     seen=set() if seen is None else seen
     if id(value) in seen: return 0
     seen.add(id(value));result=sys.getsizeof(value)
@@ -43,11 +45,12 @@ def weight(value, seen=None):
 
 class SearchReader:
     def __init__(self, assets, *, manifest_name=layout.MANIFEST, cache_limit=64*1024*1024):
-        self.assets=Path(assets).resolve();self.lock=threading.RLock();self.cache=OrderedDict();self.cache_bytes=0;self.cache_limit=cache_limit
+        self.assets=Path(assets).resolve();self.lock=threading.RLock();self.cache=OrderedDict();self.cache_bytes=0;self.cache_limit=cache_limit;self.descriptors=OrderedDict()
         self.metrics={'reads':0,'read_bytes':0,'vector_reads':0,'vector_bytes':0,'payload_reads':0,'posting_reads':0,'cache_hits':0,'cache_peak_bytes':0}
         path=regular(self.assets,manifest_name);self.manifest=c.decode(path.read_bytes())
         if (self.manifest.get('schema')!=layout.SCHEMA or self.manifest.get('space')!=SPACE
-                or self.manifest.get('vector_type')!='float64' or self.manifest.get('endianness')!='little'):
+                or self.manifest.get('vector_type')!='float64' or self.manifest.get('endianness')!='little'
+                or self.manifest.get('posting_codec')!=layout.POSTING_CODEC or self.manifest.get('vector_codec')!=layout.VECTOR_CODEC):
             raise ValueError('native search layout required')
         rows=self.manifest['shards']+[self.manifest['metadata']]
         if len({r['path'] for r in rows})!=len(rows): raise ValueError('duplicate search member')
@@ -68,7 +71,15 @@ class SearchReader:
     def _read(self,row,kind):
         p=regular(self.assets,row['path'])
         if identity(p)!=self.identities[row['path']]: raise ValueError('search shard changed before read')
-        raw=p.read_bytes()
+        if 'offset' in row:
+            key=row['path'];fd=self.descriptors.pop(key,None)
+            if fd is None:fd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW)
+            self.descriptors[key]=fd
+            while len(self.descriptors)>64:os.close(self.descriptors.popitem(last=False)[1])
+            st=os.fstat(fd)
+            if (st.st_dev,st.st_ino,st.st_size,st.st_mtime_ns,st.st_ctime_ns)!=self.identities[key]:raise ValueError('pinned vector descriptor changed')
+            raw=os.pread(fd,row['bytes'],row['offset'])
+        else:raw=p.read_bytes()
         if identity(p)!=self.identities[row['path']] or len(raw)!=row['bytes'] or hashlib.sha256(raw).hexdigest()!=row['sha256']:
             raise ValueError('search shard checksum/identity mismatch')
         self.metrics['reads']+=1;self.metrics['read_bytes']+=len(raw)
@@ -80,14 +91,17 @@ class SearchReader:
         with self.lock:
             collection={'vector':'vector_shards','payload':'payload_shards','posting':'posting_shards'}[kind]
             row=self.meta[collection][number];key=(kind,row['sha256'])
-            if identity(regular(self.assets,row['path']))!=self.identities[row['path']]: raise ValueError('cached shard identity changed')
             if key in self.cache:
+                if identity(regular(self.assets,row['path']))!=self.identities[row['path']]: raise ValueError('cached shard identity changed')
                 value,size=self.cache.pop(key);self.cache[key]=(value,size);self.metrics['cache_hits']+=1;return value
             raw=self._read(row,kind)
             if kind=='vector':
                 body=layout.vector_body(raw,row)
                 value=memoryview(body).cast('d')
                 if len(value)!=row['count']*SPACE['dimensions']: raise ValueError('vector block length mismatch')
+            elif kind=='posting':
+                value=layout.PostingPage(zlib.decompress(raw),self.meta['positive_ids'])
+                if len(value)!=row['count']:raise ValueError('posting block count mismatch')
             else:
                 from photo_runtime_sources import freeze
                 value=freeze(c.decode(gzip.decompress(raw)))
@@ -99,6 +113,16 @@ class SearchReader:
                 self.cache[key]=(value,size);self.cache_bytes+=size
                 self.metrics['cache_peak_bytes']=max(self.metrics['cache_peak_bytes'],self.cache_bytes)
             return value
+
+    def close(self):
+        with self.lock:
+            while self.descriptors:os.close(self.descriptors.popitem()[1])
+
+    def __del__(self):
+        if hasattr(self,'descriptors'):
+            for fd in self.descriptors.values():
+                try:os.close(fd)
+                except OSError:pass
 
     def record(self,cid):
         block=self.meta['payload_locator'][cid];row=self.block('payload',block)[cid]

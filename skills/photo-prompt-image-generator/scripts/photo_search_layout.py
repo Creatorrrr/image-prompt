@@ -6,6 +6,8 @@ import gzip
 import hashlib
 import math
 from pathlib import Path
+from collections.abc import Mapping, Sequence
+import struct
 import sys
 import zlib
 import photo_candidate_corpus as c
@@ -16,7 +18,54 @@ SCHEMA = 'photo-candidate-search-layout/v1'
 MANIFEST = 'photo_candidate_search.json'
 DIRECTORY = 'photo_candidate_search_shards'
 ROUTING_RECIPE = 'photo-scalar-error-bounds/v2'
-VECTOR_CODEC = 'photo-lossless-vector-codec/v1'
+VECTOR_CODEC = 'photo-lossless-vector-extents/v2'
+POSTING_CODEC = 'photo-ordinal-tf-postings/v1'
+POSTING_ROW = struct.Struct('<Id')
+
+
+class PostingRows(Sequence):
+    def __init__(self, body, ids): self.body=body;self.ids=ids
+    def __len__(self): return len(self.body)//POSTING_ROW.size
+    def __iter__(self):
+        for ordinal,tf in POSTING_ROW.iter_unpack(self.body): yield self.ids[ordinal],tf
+    def __getitem__(self, pos):
+        if isinstance(pos,slice): return tuple(self)[pos]
+        if pos<0:pos+=len(self)
+        if not 0<=pos<len(self):raise IndexError(pos)
+        ordinal,tf=POSTING_ROW.unpack_from(self.body,pos*POSTING_ROW.size)
+        return self.ids[ordinal],tf
+
+
+class PostingPage(Mapping):
+    """Immutable decoded bytes; candidate identities are shared metadata ordinals."""
+    def __init__(self, raw, ids):
+        if len(raw)<4:raise ValueError('truncated posting header')
+        length=struct.unpack_from('<I',raw)[0]
+        if length>len(raw)-4:raise ValueError('truncated posting header')
+        header=c.decode(raw[4:4+length]);self.body=memoryview(raw)[4+length:];self.ids=ids
+        self.ranges={};end=0
+        for term,offset,count in header:
+            if term in self.ranges or offset!=end or count<1:raise ValueError('invalid posting range')
+            end=offset+count*POSTING_ROW.size
+            self.ranges[term]=(offset,end)
+        if end!=len(self.body):raise ValueError('posting body coverage mismatch')
+        for ordinal,tf in POSTING_ROW.iter_unpack(self.body):
+            if ordinal>=len(ids) or not math.isfinite(tf) or tf<=0:raise ValueError('invalid posting value')
+        self.cache_weight=len(raw)+sys.getsizeof(self)+sys.getsizeof(self.body)+sys.getsizeof(self.ranges)+sum(sys.getsizeof(k)+sys.getsizeof(v)+sum(sys.getsizeof(n) for n in v) for k,v in self.ranges.items())
+    def __len__(self):return len(self.ranges)
+    def __iter__(self):return iter(self.ranges)
+    def __getitem__(self,term):
+        start,end=self.ranges[term]
+        return PostingRows(self.body[start:end],self.ids)
+
+
+def posting_bytes(postings, ordinals):
+    header=[];body=bytearray()
+    for term,rows in sorted(postings.items()):
+        header.append([term,len(body),len(rows)])
+        for cid,tf in sorted(rows):body.extend(POSTING_ROW.pack(ordinals[cid],tf))
+    raw=c.canonical_bytes(header)
+    return zlib.compress(struct.pack('<I',len(raw))+raw+body)
 
 
 def guard_record(record):
@@ -49,7 +98,7 @@ def build(assets, corpus, vectors, *, leaf_size=8, activate=False):
     assets = Path(assets)
     old_index.validate(vectors, corpus)
     lexical = old_index.lexical(corpus)
-    identity = c.digest({'schema': SCHEMA, 'routing_recipe': ROUTING_RECIPE, 'vector_codec': VECTOR_CODEC, 'source': c.digest(corpus), 'vectors': c.digest(vectors),
+    identity = c.digest({'schema': SCHEMA, 'routing_recipe': ROUTING_RECIPE, 'vector_codec': VECTOR_CODEC, 'posting_codec':POSTING_CODEC, 'source': c.digest(corpus), 'vectors': c.digest(vectors),
                          'leaf_size': leaf_size, 'lexical_policy': old_index.POLICY})
     directory = assets / DIRECTORY / identity
     directory.mkdir(parents=True, exist_ok=True)
@@ -72,7 +121,7 @@ def build(assets, corpus, vectors, *, leaf_size=8, activate=False):
     for cid, values in raw_vectors.items():
         norm = math.sqrt(math.sumprod(values, values))
         units[cid] = [x / norm for x in values]
-    leaves = []; nodes = []
+    leaves = []; nodes = [];vector_parts=[]
 
     def partition(keys):
         pos = len(nodes); nodes.append(None)
@@ -80,13 +129,9 @@ def build(assets, corpus, vectors, *, leaf_size=8, activate=False):
         if len(keys) <= leaf_size:
             leaf = len(leaves)
             values = array('d', (value for cid in keys for value in raw_vectors[cid]))
-            integers=[int(round(v*1000000)) for v in values]
-            scaled=all(-2147483648<=n<=2147483647 and n/1000000==v for n,v in zip(integers,values))
-            encoding='scaled_i32_le' if scaled else 'f64_le'
-            if scaled: values=array('i',integers)
             if sys.byteorder != 'little': values.byteswap()
-            shard = write(f'vector-{leaf:05d}.vector.z', zlib.compress(values.tobytes()), len(keys))
-            leaves.append({**shard, 'ids': keys, 'encoding':encoding})
+            raw=zlib.compress(values.tobytes());vector_parts.append(raw)
+            leaves.append({'sha256':hashlib.sha256(raw).hexdigest(),'bytes':len(raw),'count':len(keys),'ids':keys,'encoding':'f64_le'})
             node['leaf'] = leaf
         else:
             first = units[keys[0]]
@@ -100,6 +145,12 @@ def build(assets, corpus, vectors, *, leaf_size=8, activate=False):
         return pos
 
     partition(ids)
+    # Each leaf is a seekable, independently checksummed compressed extent.
+    for first in range(0,len(leaves),64):
+        pack=write(f'vector-pack-{first//64:05d}.bin',b''.join(vector_parts[first:first+64]),sum(r['count'] for r in leaves[first:first+64]))
+        offset=0
+        for row in leaves[first:first+64]:row.update(path=pack['path'],offset=offset);offset+=row['bytes']
+    del vector_parts
     quantization = scalar_quantization(ids, units)
     payloads = []; locators = {}; guards = {}; record_hashes = {}; blobs = {}; profile_terms = []
     all_ids = sorted(corpus['candidates'])
@@ -121,10 +172,11 @@ def build(assets, corpus, vectors, *, leaf_size=8, activate=False):
         terms = set().union(*(set(row['term_frequencies']) for row in document['fields'].values()))
         for term in terms: postings.setdefault(term, []).append([cid, _tf(document, term, lexical)])
     posting_shards = []; posting_locator = {}
+    ordinals={cid:i for i,cid in enumerate(ids)}
     terms = sorted(postings)
     for offset in range(0, len(terms), 128):
         keys = terms[offset:offset+128]; block = len(posting_shards)
-        posting_shards.append(json_file(f'postings-{block:05d}.json.gz', {term:sorted(postings[term]) for term in keys}, len(keys)))
+        posting_shards.append(write(f'postings-{block:05d}.posting.z',posting_bytes({term:postings[term] for term in keys},ordinals),len(keys)))
         posting_locator.update({term:block for term in keys})
     stats = {key:value for key,value in lexical.items() if key != 'documents'}
     metadata = {'corpus_sha256': c.digest(corpus), 'guards': guards, 'positive_blobs': blobs,
@@ -136,7 +188,7 @@ def build(assets, corpus, vectors, *, leaf_size=8, activate=False):
                 'profile_lookup': profile_terms, 'slot_catalog': corpus['slot_catalog'],
                 'slot_bindings': corpus['slot_bindings'], 'policies': corpus['policies']}
     metadata_member = json_file('metadata.json.gz', metadata, len(ids))
-    manifest = {'schema': SCHEMA, 'routing_recipe': ROUTING_RECIPE, 'vector_codec': VECTOR_CODEC, 'space': SPACE, 'corpus_sha256': c.digest(corpus),
+    manifest = {'schema': SCHEMA, 'routing_recipe': ROUTING_RECIPE, 'vector_codec': VECTOR_CODEC, 'posting_codec':POSTING_CODEC, 'space': SPACE, 'corpus_sha256': c.digest(corpus),
                 'index_source_sha256': c.digest(vectors), 'layout_id': identity, 'metadata': metadata_member,
                 'shards': [row for name,row in sorted(members.items()) if name != 'metadata.json.gz'],
                 'lexical_recipe': lexical['recipe_version'], 'endianness': 'little', 'vector_type': 'float64'}
@@ -185,16 +237,29 @@ def vector_body(raw,row):
 def verify(assets, corpus, manifest, vectors=None):
     """Offline complete source/statistics/boundary verification, not a request path."""
     assets=Path(assets)
-    if manifest.get('schema')!=SCHEMA or manifest.get('space')!=SPACE or manifest.get('routing_recipe')!=ROUTING_RECIPE or manifest.get('corpus_sha256')!=c.digest(corpus):
+    if manifest.get('schema')!=SCHEMA or manifest.get('space')!=SPACE or manifest.get('routing_recipe')!=ROUTING_RECIPE or manifest.get('posting_codec')!=POSTING_CODEC or manifest.get('vector_codec')!=VECTOR_CODEC or manifest.get('corpus_sha256')!=c.digest(corpus):
         raise ValueError('layout source/space mismatch')
     def read(row):
         p=assets/row['path']
         if p.is_symlink() or assets.resolve() not in p.resolve().parents: raise ValueError('unsafe layout member')
-        raw=p.read_bytes()
+        if 'offset' in row:
+            with p.open('rb',buffering=0) as stream:stream.seek(row['offset']);raw=stream.read(row['bytes'])
+        else:raw=p.read_bytes()
         if len(raw)!=row['bytes'] or hashlib.sha256(raw).hexdigest()!=row['sha256']: raise ValueError('layout member checksum mismatch')
         return raw
     for row in manifest['shards']: read(row)
     meta=c.decode(gzip.decompress(read(manifest['metadata'])))
+    members={row['path']:row for row in manifest['shards']}
+    extents={}
+    for row in meta['vector_shards']:extents.setdefault(row['path'],[]).append(row)
+    needed=set(extents)|{row['path'] for row in meta['payload_shards']+meta['posting_shards']}
+    if set(members)!=needed or len(members)!=len(manifest['shards']):raise ValueError('physical shard closure mismatch')
+    for path,rows in extents.items():
+        end=0
+        for row in sorted(rows,key=lambda r:r['offset']):
+            if row['offset']!=end or row['bytes']<1:raise ValueError('overlapping or missing vector extent')
+            end+=row['bytes']
+        if end!=members[path]['bytes'] or sum(r['count'] for r in rows)!=members[path]['count']:raise ValueError('vector pack coverage mismatch')
     expected={cid for cid,r in corpus['candidates'].items() if r['record_kind'] in old_index.POSITIVE_KINDS}
     if set(meta['positive_ids'])!=expected or len(meta['positive_ids'])!=len(expected): raise ValueError('positive coverage mismatch')
     if meta['slot_catalog']!=corpus['slot_catalog'] or meta['slot_bindings']!=corpus['slot_bindings'] or meta['policies']!=corpus['policies']: raise ValueError('role/policy preservation mismatch')
@@ -239,7 +304,7 @@ def verify(assets, corpus, manifest, vectors=None):
     if meta['statistics']!={k:v for k,v in lexical.items() if k!='documents'}: raise ValueError('global lexical statistics mismatch')
     seen_terms=set()
     for block,row in enumerate(meta['posting_shards']):
-        postings=c.decode(gzip.decompress(read(row)))
+        postings=PostingPage(zlib.decompress(read(row)),meta['positive_ids'])
         if seen_terms&set(postings) or len(postings)!=row['count']: raise ValueError('duplicate posting owner/count')
         seen_terms.update(postings)
         for term,rows in postings.items():
