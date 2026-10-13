@@ -1,0 +1,16 @@
+...F..................................................................
+======================================================================
+FAIL: test_role_fixes_preserve_explicit_no_people_and_adult_exclusions (tests.test_photo_candidate_quality.CandidateQualityTests.test_role_fixes_preserve_explicit_no_people_and_adult_exclusions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_candidate_quality.py", line 56, in test_role_fixes_preserve_explicit_no_people_and_adult_exclusions
+    self.assertEqual(generator.entry_block_reason(entry, "prop",
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        {"adult_allowed": True, "intent_constraints": {"no_people": True}}), "explicit_no_people")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 'explicit_no_people'
+
+----------------------------------------------------------------------
+Ran 70 tests in 13.433s
+
+FAILED (failures=1)

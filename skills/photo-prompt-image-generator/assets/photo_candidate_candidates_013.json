@@ -1639,11 +1639,11 @@
       "id": "cand_82b56aebbc94527790c45a4560f4866f",
       "record_kind": "visual_option",
       "content": {
-        "ko": "유능함과 취약성의 교차을 보여 주는 분명한 성인 오리지널 주체",
+        "ko": "숙련된 성인 제작자와 성인 동료",
         "en": "an experienced adult fabricator and an adult coworker",
         "embedding_text": "an experienced adult fabricator and an adult coworker",
         "aliases": [
-          "유능함과 취약성의 교차을 보여 주는 분명한 성인 오리지널 주체",
+          "숙련된 성인 제작자와 성인 동료",
           "an experienced adult fabricator and an adult coworker"
         ],
         "tags": [
@@ -1664,14 +1664,25 @@
       },
       "effects": {
         "dimensions": [
-          "subject"
+          "subject",
+          "count"
         ],
-        "properties": []
+        "properties": [
+          {
+            "dimension": "count",
+            "target": "scene",
+            "property": "adult_actor_count"
+          }
+        ]
       },
       "provenance": [
         {
           "source": "slot:subject:character_competence_vulnerability_scene_subject",
           "sha256": "7b0d46a452a5456d004fcc65d31c07719074dd6d9248622a0c77d6864db00123"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_82b56aebbc94527790c45a4560f4866f",
+          "sha256": "6c56a2b479ed8ce4a207fafcc0d7ecaf0e4468f3bc8ee3aec0d275c0a16c48aa"
         }
       ]
     },
@@ -3730,8 +3741,8 @@
       "id": "cand_a3e683ec141e57819c0c8878719a0f65",
       "record_kind": "visual_option",
       "content": {
-        "ko": "ritual goddess drape costume",
-        "en": "ritual goddess drape costume",
+        "ko": "한쪽 어깨를 가로지르는 겹천과 길게 드리운 주름을 가진 창작 의례 의상",
+        "en": "an original fictional ceremonial costume with layered cloth crossing one shoulder and long hanging drape folds",
         "tags": [
           "costume",
           "mythic",
@@ -3739,6 +3750,9 @@
         ],
         "for_any": [
           "human"
+        ],
+        "claim_limits": [
+          "This is an original fictional draped-costume variant; it makes no claim of cultural authenticity or deity identity."
         ]
       },
       "effects": {
@@ -3751,6 +3765,10 @@
         {
           "source": "slot:costume_style:ritual_goddess_drape_costume",
           "sha256": "32ca40f274adae488ca91006269882812ee027fd7827d2aae0c3502f58af254b"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_a3e683ec141e57819c0c8878719a0f65",
+          "sha256": "110fd044d6df4e5fa9cee3821fa2d6d241978e089a0e4aec1a738b2827c4bce3"
         }
       ]
     },
@@ -6090,7 +6108,7 @@
       "record_kind": "visual_option",
       "content": {
         "ko": "스포터 신호에 맞춰 하역 경계를 통과하는",
-        "en": "moving the pallet only while a spotter maintains the marked loading boundary",
+        "en": "moving the pallet in response to a spotter's signal only while the spotter maintains the marked loading boundary",
         "tags": [
           "mobility_logistics",
           "loading_dock_transfer"
@@ -6121,6 +6139,10 @@
         {
           "source": "slot:action:spotter_guided_forklift_loading",
           "sha256": "aa7737fbf69fadafe36ec29bdb00b7c358d9fa5d829cc475bdb4b7030d5e0266"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_25f96432ea1254c6b24e39576e0d2d5d",
+          "sha256": "9c865b117d12e14539b0c55bde272dcba227ab88b07eb9bf00030a800df9be5d"
         }
       ]
     },
@@ -6656,7 +6678,7 @@
       "id": "cand_69c6472004f15570b18969730cc4d223",
       "record_kind": "visual_option",
       "content": {
-        "ko": "유능함과 취약성이 함께 보이되 선택권이 사라지지 않는 성인 캐릭터, 부상한 장비 기술자가 수리를 지휘하면서 도움을 받아들이는 결정적 순간",
+        "ko": "정밀 수리를 지휘하다 피로가 드러나 잠시 멈추고 다음 작업의 선택권을 유지하며 도움을 받아들이는 동작",
         "en": "controlling a precision repair, pausing when fatigue becomes visible, and accepting support while retaining the next task choice",
         "embedding_text": "controlling a precision repair, pausing when fatigue becomes visible, and accepting support while retaining the next task choice",
         "aliases": [
@@ -6685,6 +6707,10 @@
         {
           "source": "slot:action:character_competence_vulnerability_scene_action",
           "sha256": "fc9d950eef7d07c723c5cfbd27c4a98c4955a812925017e4a599eedb06fc1896"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_69c6472004f15570b18969730cc4d223",
+          "sha256": "4278da6186f598dd160fec7f7c5f08f83c8b8a1844de3187777d240d10504b2e"
         }
       ]
     },
@@ -6886,15 +6912,19 @@
       },
       "effects": {
         "dimensions": [
-          "action",
           "appearance",
-          "pose"
+          "action"
         ],
         "properties": [
           {
             "dimension": "appearance",
             "target": "main_subject",
-            "property": "wardrobe.wearing_state"
+            "property": "wardrobe.sleeves"
+          },
+          {
+            "dimension": "action",
+            "target": "main_subject",
+            "property": "rolling_sleeves"
           }
         ]
       },
@@ -6902,6 +6932,10 @@
         {
           "source": "slot:action:ctx_rolled_sleeve_task",
           "sha256": "6f06059ef290e6083a2b84e6f361c1d24a4e17c3b67329b142e9c03cec03b1f8"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_c89f33f8b8405643bb9866985961c453",
+          "sha256": "30687440eae9a8c596366fcc32d5cf8bc400aac44405c3d887a3945b1e74ee2b"
         }
       ]
     },
@@ -8126,8 +8160,8 @@
       "id": "cand_b1e38157d669520a9d1237f870d46d55",
       "record_kind": "visual_option",
       "content": {
-        "ko": "single real scene photograph, not a diagram",
-        "en": "single real scene photograph, not a diagram",
+        "ko": "도표 형식 없이 한 장면을 사진처럼 표현한 이미지",
+        "en": "one scene with photographic appearance rather than a diagram",
         "tags": [
           "photo",
           "anti_diagram_context"
@@ -8141,6 +8175,10 @@
         {
           "source": "slot:capture_context:single_photo_not_diagram_context",
           "sha256": "ded3b3a12efe8730aa993d18de26c64f04d54a508a1e2af894c30f18599fc237"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_b1e38157d669520a9d1237f870d46d55",
+          "sha256": "60971c3d55bace075bf4083820575652c8e9dfeae0aa3713441204165666c367"
         }
       ]
     },
@@ -8200,22 +8238,16 @@
         "ko": "방 투어처럼 넓게 훑는 스마트폰 촬영 맥락",
         "en": "wide phone room-tour capture context with no visible captions",
         "tags": [
-          "human",
           "social",
           "room_tour",
           "phone",
           "no_text"
         ],
-        "for_any": [
-          "human"
-        ],
         "embedding_text": "wide phone room-tour capture context with no visible captions",
         "aliases": [
-          "room",
-          "tour",
-          "wide",
-          "phone",
-          "context"
+          "wide phone room-tour capture",
+          "smartphone room tour",
+          "스마트폰 방 투어 촬영"
         ],
         "keywords": [
           "human",
@@ -8237,6 +8269,10 @@
         {
           "source": "slot:capture_context:room_tour_wide_phone_context",
           "sha256": "d35ca9cc02f76e320d7b4a2c0280e8e5e61af4a46ddad880946c0f86abedd8ca"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_f65d8b8bfd1f5dcaad9d06775e6e65e9",
+          "sha256": "53bf2e47fe41eb9ad6a442e7219305970d5cb6e9b8be98618c7ac9f79d4789c1"
         }
       ]
     },
@@ -9501,7 +9537,7 @@
       "id": "cand_8b5350d5388f5928bb75a8f828193853",
       "record_kind": "visual_option",
       "content": {
-        "ko": "a stack of MP3 player, blank CD, and stickers without readable text",
+        "ko": "읽을 수 있는 글자 없이 쌓인 MP3 플레이어·빈 CD·스티커",
         "en": "a stack of MP3 player, blank CD, and stickers without readable text",
         "tags": [
           "y2k",
@@ -9535,6 +9571,10 @@
         {
           "source": "slot:prop:mp3_cd_sticker_stack_prop",
           "sha256": "435fec1964333be4bc47d4ea91959c09417473b2f4549a64b8404b6a8d74b8b1"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_8b5350d5388f5928bb75a8f828193853",
+          "sha256": "dece31ddc555752aa08307605e6ce670e975da3366a24f7af53dc051e3caecd4"
         }
       ]
     },
@@ -14861,7 +14901,7 @@
       "id": "cand_5f3b146d75ca55c98a759b9d692f38cd",
       "record_kind": "visual_option",
       "content": {
-        "ko": "soft prop-shadow falloff",
+        "ko": "부드럽게 옅어지는 소품 그림자",
         "en": "soft prop-shadow falloff",
         "tags": [
           "shadow",
@@ -14881,6 +14921,10 @@
         {
           "source": "slot:light_shape:soft_prop_shadow_falloff",
           "sha256": "40a78bb04d1b0c3a5a9f09d748f74be4f1ecbeaca12875db3f19b6675eb12d07"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_5f3b146d75ca55c98a759b9d692f38cd",
+          "sha256": "78cb1e1d1639f9b116c70ec96bac260e9e14bfa9f28822b67839af9079c28893"
         }
       ]
     },
@@ -24266,12 +24310,12 @@
         "properties": [
           {
             "dimension": "composition",
-            "target": "*",
-            "property": "reflection"
+            "target": "cast_shadow",
+            "property": "placement"
           },
           {
             "dimension": "pose",
-            "target": "reflected_subject",
+            "target": "cast_shadow",
             "property": "gesture"
           },
           {
@@ -24281,7 +24325,7 @@
           },
           {
             "dimension": "lighting",
-            "target": "*",
+            "target": "scene",
             "property": "shadow"
           }
         ]
@@ -24290,6 +24334,10 @@
         {
           "source": "slot:reflection_logic:hr_shadow_independent_pose",
           "sha256": "a08056a1c6a80f07b297cd4577004d9dbe425dadf951f0c65eec0cc59202664f"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_4c56c15224f3593cbf624777523d06a5",
+          "sha256": "00e5f08f25c88517b9115638444fa36be0df08c3f5609d6ba2c95fbab0a1ead5"
         }
       ]
     },
@@ -93826,7 +93874,7 @@
         "relations": [
           {
             "id": "sff_relation_pro_r34_same_owner",
-            "type": "co_realized_with_same_subject_and_garment",
+            "type": "co_realized_with_same_subject_and_eye_region",
             "subject": "같은 성인 눈",
             "object": "눈꺼풀 반사; 매트 접힘; 눈 윤곽 연속"
           }
@@ -93844,6 +93892,10 @@
         {
           "source": "bundle:sff_relation_pro_r34",
           "sha256": "34899513e342cea4c8fd68f58848fbb106cb9dee63933f22126eb411ce2503cf"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_ef23711d54b65df2aebb5ba4a6e7caa5",
+          "sha256": "b6fe8a053d420beed8916ba0afe05d344b0b54026ed07a58045c54739b985a9e"
         }
       ]
     },
@@ -94125,6 +94177,11 @@
             "dimension": "appearance",
             "target": "main_subject",
             "property": "accessories.jewelry"
+          },
+          {
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "hair.arrangement"
           }
         ]
       },
@@ -94132,6 +94189,10 @@
         {
           "source": "bundle:sff_pack_pro_q11",
           "sha256": "2e6e6a5d615d4005fb414a3eee83982ed9531f288fdcfe9ce5d15c6768238b52"
+        },
+        {
+          "source": "quality-remediation:20261013:cand_ba7b0181ddb55bf3a048ba1c0f3d7dbc",
+          "sha256": "e59f836bd65d399c27786bee32b33af772271a391ab740a554959da25a446f89"
         }
       ]
     },
