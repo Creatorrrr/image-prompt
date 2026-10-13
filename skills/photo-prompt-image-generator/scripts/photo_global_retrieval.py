@@ -20,10 +20,13 @@ def guard_policy(policy,contract):
 
 def eligible(data,core,controls):
     import prompt_generator as g
+    reader=data.get('_search_reader')
+    if reader is not None:
+        data=dict(data);data['candidates']=reader.meta['guards']
     contract,picked=g.frozen_core_context(data,core,controls);allowed={};role_ids={};text,_=g.authorial_core_retrieval_text(core)
     adult=g.candidate_pack_visual_obligation_adult_context([{'text':text}],None)
     by_candidate={}
-    for bid,b in data['slot_bindings'].items():by_candidate.setdefault(b['candidate_id'],[]).append((bid,b))
+    for bid,b in sorted(data['slot_bindings'].items()):by_candidate.setdefault(b['candidate_id'],[]).append((bid,b))
     overridden=g.visual_profile_user_definition_override_ids(data[g.VISUAL_OBLIGATIONS_DATA_KEY],data[g.VISUAL_PROFILE_INDEX_DATA_KEY],core.get('user_definitions') or [])
     for cid,record in data['candidates'].items():
         if record['record_kind'] not in index.POSITIVE_KINDS:continue
@@ -42,7 +45,7 @@ def eligible(data,core,controls):
             if not g.core_entry_eligible(data,core,contract,picked,'',entry):continue
         if record['record_kind']=='visual_bundle':
             if any(not guard_policy(c.entry(data,p['candidate_id'],p['binding_id']).get('subject_applicability') or {},contract) or not g.core_entry_eligible(data,core,contract,picked,c.entry(data,p['candidate_id'],p['binding_id']).get('guard_role',''),c.entry(data,p['candidate_id'],p['binding_id'])) for p in record['content']['member_candidates']):continue
-        blob=' '.join(v for field in index.fields(record).values() for v in field)
+        blob=reader.meta['positive_blobs'][cid] if reader is not None else ' '.join(v for field in index.fields(record).values() for v in field)
         if any(g.intent_alias_matches(blob,e) for e in core.get('user_exclusions') or []):continue
         allowed[cid]=entry;role_ids[cid]=candidates
     return allowed,role_ids,contract
