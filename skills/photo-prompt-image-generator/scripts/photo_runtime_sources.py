@@ -26,12 +26,14 @@ import photo_candidate_corpus
 import photo_global_index
 import photo_shared_views
 import photo_native_pack
+import photo_search_layout
+from photo_search_reader import SearchReader, LazyRuntimeData, identity
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]
-GENERATION_SCHEMA = "photo-runtime-generation/v2"
-RECEIPT_SCHEMA = "photo-runtime-receipt/v2"
+GENERATION_SCHEMA = "photo-runtime-generation/v3"
+RECEIPT_SCHEMA = "photo-runtime-receipt/v3"
 HASH = re.compile(r"[0-9a-f]{64}\Z")
-BASE_ASSETS = (photo_candidate_corpus.MANIFEST_NAME, photo_global_index.MANIFEST)
+BASE_ASSETS = (photo_candidate_corpus.MANIFEST_NAME, photo_search_layout.MANIFEST)
 
 
 class FreshnessError(ValueError):
@@ -78,7 +80,7 @@ def default_store() -> Path:
 
 
 def namespace(root: Path, mode: str, remote: str = "") -> str:
-    return json_digest({"schema":"photo-native-runtime-namespace/v1","root": str(Path(root).resolve()), "mode": mode, "remote": remote})
+    return json_digest({"schema":"photo-native-runtime-namespace/v3","root": str(Path(root).resolve()), "mode": mode, "remote": remote})
 
 
 def _regular(root: Path, relative: str) -> Path:
@@ -95,39 +97,36 @@ def _regular(root: Path, relative: str) -> Path:
     return path
 
 
-def capture_sources(root: Path) -> tuple[dict, SourceInventory]:
-    """Hash mutable authored files and manifests, not vector bodies per request."""
-    root = Path(root).resolve()
+_SOURCE_HASH_CACHE = {}
+
+def capture_sources(root: Path, *, pinned=None, full=False) -> tuple[dict, SourceInventory]:
+    """Reuse publication-sealed identities; checksum changed bytes."""
+    root=Path(root).resolve()
     try:
-        inventory = SourceInventory.load(root / "assets")
-        inventory.validate()
-        names = set(BASE_ASSETS) | {row[0] for row in inventory.rows}
-        files = {}
+        inventory=SourceInventory.load(root/'assets')
+        names=set(BASE_ASSETS)|{row[0] for row in inventory.rows}
+        layout=decode(_regular(root,'assets/'+photo_search_layout.MANIFEST).read_bytes())
+        if layout.get('schema')!=photo_search_layout.SCHEMA:raise ValueError('native lazy layout required')
+        rows=layout['shards']+[layout['metadata']]
+        if len({r['path'] for r in rows})!=len(rows):raise ValueError('duplicate search shard owner')
+        declared={'assets/'+r['path']:r['sha256'] for r in rows}
+        names={'assets/'+name for name in names}|set(declared)
+        names|={str(p.relative_to(root)) for p in (root/'precore').glob('*.json')}
+        files={};sealed=(pinned or {}).get('origin_identity',{});known=(pinned or {}).get('source',{}).get('files',{})
         for name in sorted(names):
-            path = root / "assets" / name
-            if name in BASE_ASSETS and not path.is_file():
-                raise ValueError(f"required runtime source is missing: {name}")
-            files[f"assets/{name}"] = digest(_regular(root, f"assets/{name}").read_bytes()) if path.exists() else None
-        # A live manifest must own an intact closure even when a generation is cached.
-        manifest = decode(_regular(root, 'assets/' + photo_global_index.MANIFEST).read_bytes())
-        seen = set()
-        for shard in manifest['shards']:
-            relative = 'assets/' + shard['path']
-            if relative in seen:
-                raise ValueError('duplicate native shard owner')
-            seen.add(relative)
-            raw = _regular(root, relative).read_bytes()
-            if digest(raw) != shard['sha256']:
-                raise ValueError('live native shard hash mismatch: ' + relative)
-            files[relative] = shard['sha256']
-        for path in sorted((root / "precore").glob("*.json")):
-            files[str(path.relative_to(root))] = digest(_regular(root, str(path.relative_to(root))).read_bytes())
-        value = {"files": files, "code": code_inventory(root), "environment": environment_binding()}
-        return value, inventory
-    except (OSError, ValueError) as exc:
-        if isinstance(exc, FreshnessError):
-            raise
-        raise FreshnessError("source_invalid", str(exc)) from exc
+            path=_regular(root,name);current=identity(path);key=str(path);cached=_SOURCE_HASH_CACHE.get(key)
+            if not full and list(current)==sealed.get(name) and name in known:sha=known[name]
+            elif not full and cached and cached[0]==current:sha=cached[1]
+            else:
+                sha=digest(path.read_bytes())
+                if identity(path)!=current:raise ValueError('source changed while hashing: '+name)
+                _SOURCE_HASH_CACHE[key]=(current,sha)
+            if name in declared and sha!=declared[name]:raise ValueError('live search shard checksum mismatch: '+name)
+            files[name]=sha
+        return {'files':files,'code':code_inventory(root),'environment':environment_binding()},inventory
+    except (OSError,ValueError) as exc:
+        if isinstance(exc,FreshnessError):raise
+        raise FreshnessError('source_invalid',str(exc)) from exc
 
 
 @contextlib.contextmanager
@@ -148,7 +147,7 @@ def _read(path: Path, default=None):
 def _read_current(directory: Path):
     pointer = _read(directory / "CURRENT.json")
     if pointer is not None and (not isinstance(pointer, dict)
-            or pointer.get("schema") != "photo-runtime-current/v2"
+            or pointer.get("schema") != "photo-runtime-current/v3"
             or not isinstance(pointer.get("generation_id"), str)
             or not HASH.fullmatch(pointer["generation_id"])
             or not isinstance(pointer.get("source_fingerprint"), str)
@@ -204,94 +203,53 @@ class SnapshotPublisher:
         self.mode, self.remote = mode, remote
         self.directory = _pointer_directory(self.store, self.root, mode, remote)
 
-    def publish(self, *, observation: dict | None = None, proposed_global_index=None, before_publish=None) -> dict:
+    def publish(self, *, observation=None, before_publish=None) -> dict:
         import prompt_generator as generator
-        with file_lock(self.directory / "LOCK"):
-            source, _ = capture_sources(self.root)
-            _require_implementation(source, generator)
-            revision = _read(self.directory / "SOURCE.json", {"epoch": 0, "editing": None})
-            if revision.get("editing"):
-                raise FreshnessError("source_revision_pending", "maintenance revision is unfinished")
-            previous = _read_current(self.directory)
-            algorithm = algorithm_hash(generator)
-        self.store.mkdir(parents=True, exist_ok=True)
-        with tempfile.TemporaryDirectory(prefix=".generation-", dir=self.store) as temporary:
-            staging = Path(temporary)
-            members = {}
-            paths = {name: sha for name, sha in source["files"].items() if sha is not None} | source["code"]
-            # Include only referenced vector shards. They stay inside this
-            # generation's assets boundary, independent of the mutable checkout.
-            for name in (photo_global_index.MANIFEST,):
-                manifest = decode(_regular(self.root, f"assets/{name}").read_bytes())
-                for row in manifest.get("shards") or []:
-                    relative = "assets/" + row["path"]
-                    paths[relative] = row["sha256"]
-            for relative, sha in sorted(paths.items()):
-                raw = _regular(self.root, relative).read_bytes()
-                if digest(raw) != sha:
-                    raise FreshnessError("source_revision_pending", f"source changed during capture: {relative}")
-                target = staging / relative
-                target.parent.mkdir(parents=True, exist_ok=True)
-                # Shares only runtime-owned, independently copied, immutable
-                # bytes. Never links back to the user's mutable source files.
-                content = self.store / "source-data" / sha
-                if not content.exists() or content.is_symlink() or content.read_bytes() != raw:
-                    atomic_write(content, raw)
-                    content.chmod(0o444)
-                os.link(content, target)
-                members[relative] = {"sha256": sha, "bytes": len(raw)}
+        with file_lock(self.directory/'LOCK'):
+            source,_=capture_sources(self.root,full=True);_require_implementation(source,generator)
+            revision=_read(self.directory/'SOURCE.json',{'epoch':0,'editing':None})
+            if revision.get('editing'):raise FreshnessError('source_revision_pending','maintenance revision unfinished')
+            previous=_read_current(self.directory);algorithm=algorithm_hash(generator)
+            origin_identity={rel:list(identity(_regular(self.root,rel))) for rel in source['files']}
+        self.store.mkdir(parents=True,exist_ok=True)
+        with tempfile.TemporaryDirectory(prefix='.generation-',dir=self.store) as temporary:
+            staging=Path(temporary);members={}
+            paths=source['files']|source['code']
+            for relative,sha in sorted(paths.items()):
+                raw=_regular(self.root,relative).read_bytes()
+                if digest(raw)!=sha:raise FreshnessError('source_revision_pending','source changed during copy: '+relative)
+                target=staging/relative;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(raw);target.chmod(0o444)
+                members[relative]={'sha256':sha,'bytes':len(raw),'identity':list(identity(target))}
             try:
-                inventory = SourceInventory.load(staging / "assets")
-                data = generator.load_runtime_data(staging / "assets", inventory=inventory)
-                from validate_photo_prompt_dictionary import validate_source_corpus
-                errors = validate_source_corpus(staging, data, inventory)
-                if errors:
-                    raise ValueError("; ".join(errors))
-                corpus = canonical_bytes(photo_shared_views.source(data)).decode("utf-8")
-                cache = GlobalCandidateIndexStore(self.store).create(corpus, algorithm,
-                    generator.build_global_index, proposed=proposed_global_index)
-            except (OSError, ValueError, KeyError, TypeError) as exc:
-                raise FreshnessError("source_invalid", f"snapshot validation failed: {exc}") from exc
-            manifest = {"schema": GENERATION_SCHEMA, "source": source, "source_fingerprint": json_digest(source),
-                        "members": members, "algorithm_sha256": algorithm, "global_cache": cache}
-            generation = json_digest(manifest)
-            atomic_write(staging / "manifest.json", canonical_bytes(manifest))
-            if before_publish:
-                before_publish()
-            with file_lock(self.directory / "LOCK"):
-                current_source, _ = capture_sources(self.root)
-                if algorithm_hash(generator) != algorithm:
-                    raise FreshnessError("runtime_restart_required", "algorithm changed during publication")
-                if (current_source != source or _read(self.directory / "SOURCE.json", {"epoch": 0, "editing": None}) != revision
-                        or _read_current(self.directory) != previous):
-                    raise FreshnessError("source_revision_pending", "source/pointer revision changed before publication")
-                target = self.store / "generations" / generation
-                target.parent.mkdir(parents=True, exist_ok=True)
-                if target.exists():
-                    self._verify_generation(target, generation)
-                else:
-                    os.rename(staging, target)
-                pointer = {"schema": "photo-runtime-current/v2", "generation_id": generation,
-                           "source_fingerprint": manifest["source_fingerprint"],
-                           "revision": (previous or {}).get("revision", 0) + 1,
-                           "observation": observation or {"mode": self.mode, "root": str(self.root),
-                               "observed_at": datetime.now(timezone.utc).isoformat(), "local_epoch": revision["epoch"]}}
-                atomic_write(self.directory / "CURRENT.json", canonical_bytes(pointer))
-                return pointer
+                corpus=photo_candidate_corpus.load(staging/'assets');layout=decode((staging/'assets'/photo_search_layout.MANIFEST).read_bytes())
+                qualification=photo_search_layout.verify(staging/'assets',corpus,layout)
+            except (OSError,ValueError,KeyError,TypeError) as exc:raise FreshnessError('source_invalid','complete publication verification failed: '+str(exc)) from exc
+            manifest={'schema':GENERATION_SCHEMA,'source':source,'source_fingerprint':json_digest(source),'origin_identity':origin_identity,
+                      'members':members,'algorithm_sha256':algorithm,'search_layout':{'corpus_sha256':layout['corpus_sha256'],'layout_sha256':json_digest(layout),'layout_id':layout['layout_id'],'qualification':qualification}}
+            generation=json_digest(manifest);atomic_write(staging/'manifest.json',canonical_bytes(manifest))
+            if before_publish:before_publish()
+            with file_lock(self.directory/'LOCK'):
+                checked,_=capture_sources(self.root,full=True)
+                if checked!=source or _read(self.directory/'SOURCE.json',{'epoch':0,'editing':None})!=revision or _read_current(self.directory)!=previous:
+                    raise FreshnessError('source_revision_pending','source/pointer changed before publication')
+                target=self.store/'generations'/generation;target.parent.mkdir(parents=True,exist_ok=True)
+                if target.exists():self._verify_generation(target,generation,full=True)
+                else:os.rename(staging,target)
+                pointer={'schema':'photo-runtime-current/v3','generation_id':generation,'source_fingerprint':manifest['source_fingerprint'],'revision':int((previous or {}).get('revision',0))+1,
+                         'observation':observation or {'mode':self.mode,'root':str(self.root),'observed_at':datetime.now(timezone.utc).isoformat(),'local_epoch':revision['epoch']}}
+                atomic_write(self.directory/'CURRENT.json',canonical_bytes(pointer));return pointer
 
     @staticmethod
-    def _verify_generation(root: Path, generation: str) -> dict:
-        if not HASH.fullmatch(generation):
-            raise FreshnessError("source_invalid", "invalid generation ID")
-        manifest = decode(_regular(root, "manifest.json").read_bytes())
-        if manifest.get("schema") != GENERATION_SCHEMA or json_digest(manifest) != generation:
-            raise FreshnessError("source_invalid", "generation manifest checksum mismatch")
-        if manifest.get("source_fingerprint") != json_digest(manifest.get("source")):
-            raise FreshnessError("source_invalid", "generation source fingerprint mismatch")
-        for relative, expected in manifest["members"].items():
-            raw = _regular(root, relative).read_bytes()
-            if digest(raw) != expected["sha256"] or len(raw) != expected["bytes"]:
-                raise FreshnessError("source_invalid", f"generation member checksum mismatch: {relative}")
+    def _verify_generation(root: Path, generation: str, *, full=False) -> dict:
+        if not HASH.fullmatch(generation):raise FreshnessError('source_invalid','invalid generation ID')
+        manifest=decode(_regular(root,'manifest.json').read_bytes())
+        if manifest.get('schema')!=GENERATION_SCHEMA or json_digest(manifest)!=generation or manifest.get('source_fingerprint')!=json_digest(manifest.get('source')):
+            raise FreshnessError('source_invalid','generation manifest checksum/schema mismatch')
+        for relative,row in manifest['members'].items():
+            path=_regular(root,relative)
+            if full or list(identity(path))!=row['identity']:
+                raw=path.read_bytes()
+                if digest(raw)!=row['sha256'] or len(raw)!=row['bytes']:raise FreshnessError('source_invalid','generation member checksum mismatch: '+relative)
         return manifest
 
 
@@ -318,6 +276,7 @@ class FrozenList(list):
 
 
 def freeze(value):
+    if isinstance(value,(FrozenDict,FrozenList)):return value
     if isinstance(value, dict):
         return FrozenDict({key: freeze(item) for key, item in value.items()})
     if isinstance(value, list):
@@ -326,23 +285,11 @@ def freeze(value):
 
 
 class BoundRuntimeData(FrozenDict):
-    __slots__ = ("__index", "__corpus_hash", "__algorithm")
-    def __init__(self, data: dict, index: dict, corpus_hash: str, algorithm: str):
-        dict.__init__(self, freeze(data))
-        object.__setattr__(self, "_BoundRuntimeData__index", freeze(index))
-        object.__setattr__(self, "_BoundRuntimeData__corpus_hash", corpus_hash)
-        object.__setattr__(self, "_BoundRuntimeData__algorithm", algorithm)
-
-    def __setattr__(self, *args):
-        raise FreshnessError("source_invalid", "bound snapshot object mutation")
-
-    def lexical_index(self, corpus_json: str | None = None):
-        import prompt_generator as generator
-        if corpus_json is not None and digest(corpus_json.encode("utf-8")) != self.__corpus_hash:
-            raise FreshnessError("source_invalid", "bound snapshot shared corpus changed")
-        if algorithm_hash(generator) != self.__algorithm:
-            raise FreshnessError("runtime_restart_required", "bound snapshot algorithm changed")
-        return self.__index
+    __slots__=('reader',)
+    def __init__(self,data):
+        dict.__init__(self,freeze(dict(data)));object.__setattr__(self,'reader',data.reader)
+    def __setattr__(self,*args):raise FreshnessError('source_invalid','bound snapshot object mutation')
+    def for_core(self,core):return LazyRuntimeData(self.reader).for_core(core)
 
 
 @dataclass(frozen=True)
@@ -366,108 +313,60 @@ class RuntimeSnapshotProvider:
         self._lock = threading.RLock()
         self.last_observation = None
 
-    def acquire(self, *, bootstrap=True) -> RuntimeSnapshot:
-        """Call only after validating the request's frozen authorial inputs."""
+    def acquire(self, *, bootstrap=False) -> RuntimeSnapshot:
         import prompt_generator as generator
         with self._lock:
-            if self.mode == "remote_before_retrieval":
-                if not self.remote:
-                    raise ValueError("remote_before_retrieval requires an explicit remote URL")
-                root, observation = RemoteSourceUpdater(self.publisher.store, self.remote, self.ref).fetch()
-                self.publisher = SnapshotPublisher(root, self.publisher.store, mode=self.mode, remote=self.remote)
-                source, _ = capture_sources(root)
-                _require_implementation(source, generator)
-                pointer = _read_current(self.publisher.directory)
-                if not pointer or pointer["source_fingerprint"] != json_digest(source):
-                    self.publisher.publish(observation=observation)
-                self.last_observation = observation
-            source, _ = capture_sources(self.publisher.root)
-            _require_implementation(source, generator)
-            with file_lock(self.publisher.directory / "LOCK"):
-                revision = _read(self.publisher.directory / "SOURCE.json", {"epoch": 0, "editing": None})
-                pointer = _read_current(self.publisher.directory)
-            if revision.get("editing"):
-                raise FreshnessError("source_revision_pending", "maintenance revision is unfinished")
-            if pointer is None and bootstrap:
-                pointer = self.publisher.publish()
-            elif pointer is not None and pointer["source_fingerprint"] != json_digest(source) and bootstrap:
-                # A new matching worker can bootstrap a changed implementation.
-                # Data-only revisions still require maintenance publication.
-                previous_manifest = SnapshotPublisher._verify_generation(self.publisher.store / "generations" / pointer["generation_id"], pointer["generation_id"])
-                if previous_manifest["source"]["code"] != LOADED_CODE or previous_manifest["source"]["environment"] != LOADED_ENVIRONMENT:
-                    pointer = self.publisher.publish()
-            if pointer is None or pointer["source_fingerprint"] != json_digest(source):
-                raise FreshnessError("source_revision_pending", "current source has no completed validated publication; finish maintenance and publish")
-            # Capture is optimistic; validate the source/pointer pair again
-            # immediately before admitting a new request.
-            checked, _ = capture_sources(self.publisher.root)
-            with file_lock(self.publisher.directory / "LOCK"):
-                if (checked != source or _read_current(self.publisher.directory) != pointer
-                        or _read(self.publisher.directory / "SOURCE.json", {"epoch": 0, "editing": None}) != revision):
-                    raise FreshnessError("source_revision_pending", "source changed while acquiring request snapshot")
-            self.last_observation = self.last_observation if self.mode == "remote_before_retrieval" else {
-                "mode": self.mode, "root": str(self.publisher.root), "local_epoch": revision["epoch"],
-                "observed_at": datetime.now(timezone.utc).isoformat()}
-            snapshot = self.load_generation(pointer["generation_id"])
-            if (snapshot.manifest["source"] != source
-                    or snapshot.manifest["source_fingerprint"] != pointer["source_fingerprint"]):
-                raise FreshnessError("source_invalid", "CURRENT generation differs from the observed source binding")
-            return replace(snapshot, observation=freeze(self.last_observation))
+            if self.mode=='remote_before_retrieval':
+                root,observation=RemoteSourceUpdater(self.publisher.store,self.remote,self.ref).fetch()
+                self.publisher=SnapshotPublisher(root,self.publisher.store,mode=self.mode,remote=self.remote);self.last_observation=observation
+            with file_lock(self.publisher.directory/'LOCK'):
+                revision=_read(self.publisher.directory/'SOURCE.json',{'epoch':0,'editing':None});pointer=_read_current(self.publisher.directory)
+            if revision.get('editing'):raise FreshnessError('source_revision_pending','maintenance revision unfinished')
+            if pointer is None:raise FreshnessError('source_revision_pending','publish the fully verified search generation before retrieval')
+            manifest=SnapshotPublisher._verify_generation(self.publisher.store/'generations'/pointer['generation_id'],pointer['generation_id'])
+            source,_=capture_sources(self.publisher.root,pinned=manifest);_require_implementation(source,generator)
+            if pointer['source_fingerprint']!=json_digest(source):raise FreshnessError('source_revision_pending','source changed; complete maintenance publication')
+            checked,_=capture_sources(self.publisher.root,pinned=manifest)
+            with file_lock(self.publisher.directory/'LOCK'):
+                if checked!=source or _read_current(self.publisher.directory)!=pointer or _read(self.publisher.directory/'SOURCE.json',{'epoch':0,'editing':None})!=revision:
+                    raise FreshnessError('source_revision_pending','source changed during acquisition')
+            self.last_observation=self.last_observation if self.mode=='remote_before_retrieval' else {'mode':self.mode,'root':str(self.publisher.root),'local_epoch':revision['epoch'],'observed_at':datetime.now(timezone.utc).isoformat()}
+            snapshot=self.load_generation(pointer['generation_id']);snapshot.data.reader.check_presence()
+            return replace(snapshot,observation=freeze(self.last_observation))
 
-    def load_generation(self, generation: str, *, independent_audit=False) -> RuntimeSnapshot:
+    def load_generation(self,generation:str,*,independent_audit=False)->RuntimeSnapshot:
         import prompt_generator as generator
         with self._lock:
-            if not HASH.fullmatch(generation):
-                raise FreshnessError("source_invalid", "invalid generation ID")
-            if generation in self._snapshots and not independent_audit:
-                if self._snapshots[generation].manifest["algorithm_sha256"] != algorithm_hash(generator):
-                    raise FreshnessError("runtime_restart_required", "bound snapshot algorithm changed")
-                return self._snapshots[generation]
-            root = self.publisher.store / "generations" / generation
-            manifest = SnapshotPublisher._verify_generation(root, generation)
-            _require_implementation(manifest["source"], generator)
-            captured, _ = capture_sources(root)
-            if captured != manifest["source"]:
-                raise FreshnessError("source_invalid", "generation source inventory/presence changed")
-            if manifest["algorithm_sha256"] != algorithm_hash(generator):
-                raise FreshnessError("runtime_restart_required", "generation BM25F policy/environment differs from loaded worker")
+            root=self.publisher.store/'generations'/generation;manifest=SnapshotPublisher._verify_generation(root,generation)
+            _require_implementation(manifest['source'],generator)
+            if manifest['algorithm_sha256']!=algorithm_hash(generator):raise FreshnessError('runtime_restart_required','bound snapshot algorithm changed')
+            if generation in self._snapshots:
+                snapshot=self._snapshots[generation];snapshot.data.reader.check_presence();return snapshot
             try:
-                data = generator.load_runtime_data(root / "assets")
-                corpus = canonical_bytes(photo_shared_views.source(data)).decode("utf-8")
-                if independent_audit:
-                    index, status = generator.build_global_index(corpus), "independent_audit"
-                else:
-                    index, status = GlobalCandidateIndexStore(self.publisher.store).load(manifest["global_cache"], corpus,
-                        algorithm_hash(generator), generator.build_global_index)
-                bound = BoundRuntimeData(data, index, digest(corpus.encode()), algorithm_hash(generator))
-            except (OSError, ValueError, KeyError, TypeError) as exc:
-                if isinstance(exc, FreshnessError):
-                    raise
-                raise FreshnessError("source_invalid", f"generation deep validation failed: {exc}") from exc
-            snapshot = RuntimeSnapshot(generation, root, freeze(manifest), bound, status)
-            if not independent_audit:
-                self._snapshots[generation] = snapshot
-                while len(self._snapshots) > 2:
-                    self._snapshots.pop(next(iter(self._snapshots)))
+                data=generator.load_runtime_data(root/'assets');bound=BoundRuntimeData(data)
+                if bound['_corpus_sha256']!=manifest['search_layout']['corpus_sha256'] or bound['_global_index_sha256']!=manifest['search_layout']['layout_sha256']:raise ValueError('generation layout binding mismatch')
+            except (OSError,ValueError,KeyError,TypeError) as exc:raise FreshnessError('source_invalid','lazy generation load failed: '+str(exc)) from exc
+            snapshot=RuntimeSnapshot(generation,root,freeze(manifest),bound,'lazy_verified');self._snapshots[generation]=snapshot
+            while len(self._snapshots)>2:self._snapshots.pop(next(iter(self._snapshots)))
             return snapshot
 
     def receipt(self, snapshot: RuntimeSnapshot, pack: dict) -> dict:
         import prompt_generator as generator
         pack_hash = json_digest(pack)
-        if pack.get("global_retrieval", {}).get("corpus_sha256") != snapshot.manifest["global_cache"]["corpus_sha256"]:
+        if pack.get("global_retrieval", {}).get("corpus_sha256") != snapshot.manifest["search_layout"]["corpus_sha256"]:
             raise FreshnessError("source_invalid", "pack corpus binding differs from acquired generation")
         value = {"schema": RECEIPT_SCHEMA, "query_context": getattr(pack,"query_context",None), "request_id": uuid.uuid4().hex, "generation_id": snapshot.generation_id,
                  "pack_sha256": pack_hash, "observation": snapshot.observation,
                  "source_fingerprint": snapshot.manifest["source_fingerprint"],
                  "algorithm_sha256": snapshot.manifest["algorithm_sha256"],
-                 "global_cache_key": snapshot.manifest["global_cache"]["global_cache_key"],
+                 "search_layout_sha256": snapshot.manifest["search_layout"]["layout_sha256"],
                  "cache_status": snapshot.cache_status, "bindings": pack_bindings(pack)}
         verify_pack_bindings(pack, snapshot, generator, query_context=getattr(pack,"query_context",None))
         value["canonical_sha256"] = json_digest(value)
         atomic_write(self.publisher.store / "receipts" / f"{value['request_id']}.json", canonical_bytes(value))
         with file_lock(self.publisher.store / "receipts/LOCK"):
             target = self.publisher.store / "receipt-index" / f"{pack_hash}.json"
-            previous = _read(target, {"schema": "photo-runtime-receipt-index/v2", "generations": {}})
+            previous = _read(target, {"schema": "photo-runtime-receipt-index/v3", "generations": {}})
             previous["generations"][snapshot.generation_id] = value["request_id"]
             atomic_write(target, canonical_bytes(previous))
         return value
@@ -477,7 +376,7 @@ class RuntimeSnapshotProvider:
         if receipt is None:
             index = _read(self.publisher.store / "receipt-index" / f"{json_digest(pack)}.json")
             if index is not None:
-                if index.get("schema") != "photo-runtime-receipt-index/v2" or not isinstance(index.get("generations"), dict):
+                if index.get("schema") != "photo-runtime-receipt-index/v3" or not isinstance(index.get("generations"), dict):
                     raise FreshnessError("source_invalid", "invalid runtime receipt index")
                 if len(index["generations"]) != 1:
                     raise FreshnessError("source_invalid", "ambiguous runtime receipt: supply the exact request receipt")
@@ -486,7 +385,7 @@ class RuntimeSnapshotProvider:
                     raise FreshnessError("source_invalid", "invalid runtime receipt request ID")
                 receipt = _read(self.publisher.store / "receipts" / f"{request}.json")
         if not isinstance(receipt, dict):
-            raise FreshnessError("source_invalid", "missing runtime receipt; a native v7 request receipt is required")
+            raise FreshnessError("source_invalid", "missing runtime receipt; a native v8 request receipt is required")
         request_id=receipt.get('request_id','')
         if not re.fullmatch(r'[0-9a-f]{32}',request_id):raise FreshnessError('source_invalid','invalid native receipt identity')
         stored=_read(self.publisher.store/'receipts'/f'{request_id}.json')
@@ -498,7 +397,7 @@ class RuntimeSnapshotProvider:
         snapshot = self.load_generation(receipt["generation_id"], independent_audit=True)
         if (receipt["source_fingerprint"] != snapshot.manifest["source_fingerprint"]
                 or receipt["algorithm_sha256"] != snapshot.manifest["algorithm_sha256"]
-                or receipt["global_cache_key"] != snapshot.manifest["global_cache"]["global_cache_key"]):
+                or receipt["search_layout_sha256"] != snapshot.manifest["search_layout"]["layout_sha256"]):
             raise FreshnessError("source_invalid", "receipt generation binding mismatch")
         verify_pack_bindings(pack, snapshot, generator, recompute_visual=True, query_context=receipt.get("query_context"))
         return replace(snapshot,query_context=freeze(receipt.get("query_context")))
@@ -513,20 +412,20 @@ def pack_bindings(pack: dict) -> dict:
 
 def verify_pack_bindings(pack: dict, snapshot: RuntimeSnapshot, generator, *, recompute_visual=False, query_context=None) -> None:
     photo_native_pack.validate(pack)
-    import photo_frozen_query
-    mode=pack['global_retrieval']['mode']
+    import photo_slot_queries,photo_slot_retrieval
+    record=pack['global_retrieval'];mode=record['mode'];data=snapshot.data.for_core(pack['authorial_core'])
+    slots=photo_slot_retrieval.active_slots(data,pack['authorial_core'],pack['creative_controls'],record['requested_slot_ids'])
     if mode=='hybrid_required':
-        text,_=generator.authorial_core_retrieval_text(pack['authorial_core'])
-        photo_frozen_query.validate(query_context,text,pack['authorial_core']['canonical_sha256'],pack['creative_controls']['canonical_sha256'])
-        if pack['global_retrieval']['query_context_sha256']!=query_context['canonical_sha256']:raise FreshnessError('source_invalid','receipt query context mismatch')
+        photo_slot_queries.validate_set(query_context,pack['authorial_core'],pack['creative_controls'],data['slot_catalog'],slots)
+        if record['query_context_sha256']!=query_context['canonical_sha256']:raise FreshnessError('source_invalid','receipt slot context mismatch')
     elif mode!='keyword_only' or query_context is not None:raise FreshnessError('source_invalid','invalid query execution mode')
     if ((pack.get("provenance") or {}).get("tags_hash") != generator.dictionary_hash(snapshot.data)
-            or (pack.get("global_retrieval") or {}).get("corpus_sha256") != snapshot.manifest["global_cache"]["corpus_sha256"]):
+            or (pack.get("global_retrieval") or {}).get("corpus_sha256") != snapshot.manifest["search_layout"]["corpus_sha256"]):
         raise FreshnessError("source_invalid", "pack shared corpus source binding mismatch")
     if recompute_visual:
         expected = generator.generate_candidate_pack(snapshot.data, pack["authorial_core"], pack["creative_controls"],
             pack["embodiment_preflight"]["baseline_review"], seed=pack["provenance"]["seed"],
-            visual_intent=pack.get("visual_intent"),query_context=query_context,retrieval_mode=pack["global_retrieval"]["mode"])
+            visual_intent=pack.get("visual_intent"),query_context=query_context,retrieval_mode=pack["global_retrieval"]["mode"],requested_slots=record["requested_slot_ids"],query_language=record["query_language"])
         if pack != expected:
             raise FreshnessError("source_invalid", "full candidate pack differs from pinned generation recomputation")
 

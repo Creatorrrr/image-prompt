@@ -31,7 +31,12 @@ def entry_for_role(data,tag,cid):
 
 class RequestCandidates(dict):
     """An explicit bounded view of already retrieved IDs, not a new source."""
-    def __init__(self,data,ids):super().__init__(data);self.admitted_ids=frozenset(ids)
+    def __init__(self,data,ids,proposals=None):
+        presented=data.presentations(ids) if hasattr(data,'presentations') else data
+        super().__init__(presented);self.admitted_ids=frozenset(ids)
+        if proposals is not None:
+            self['_request_role_proposals']={tag:{} for tag in self['slot_catalog']}
+            for proposal in proposals.values():self['_request_role_proposals'][proposal['target_slot_id']][proposal['candidate_id']]=proposal
 
 def assemble(corpus,vectors):
     data=dict(corpus);data.update(corpus['policies']);data['_global_index']=vectors;data['_global_index_sha256']=c.digest(vectors)

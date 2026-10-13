@@ -24,6 +24,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument('--retrieval-mode',choices=('hybrid_required','keyword_only'),default='hybrid_required',help='keyword_only is explicit diagnostic retrieval.')
     parser.add_argument('--embedding-env-file',type=Path)
     parser.add_argument('--query-cache',type=Path)
+    parser.add_argument('--slot',action='append',help='Explicit managed slot; every requested slot searches the entire positive pool.')
+    parser.add_argument('--query-language',choices=('en','ko'),default='en')
     parser.add_argument("--seed", type=int)
     parser.add_argument("--output-file")
     parser.add_argument("--runtime-store", help="Runtime-owned generation/cache directory.")
@@ -52,7 +54,7 @@ def main(argv: list[str] | None = None) -> int:
         Path(args.runtime_store) if args.runtime_store else None,
         mode=args.source_mode, remote=args.source_remote or "", ref=args.source_ref)
     snapshot = provider.acquire()
-    data = snapshot.data
+    data = snapshot.data.for_core(core)
     visual_intent = generator.load_visual_intent_arg(
         args.visual_intent_json, data[generator.VISUAL_OBLIGATIONS_DATA_KEY],
         data[generator.VISUAL_PROFILE_INDEX_DATA_KEY])
@@ -62,7 +64,7 @@ def main(argv: list[str] | None = None) -> int:
     pack = generator.generate_candidate_pack(
         data, core, controls, embodiment,
         seed=args.seed if args.seed is not None else secrets.randbits(63),
-        visual_intent=visual_intent,retrieval_mode=args.retrieval_mode,query_cache=args.query_cache or provider.publisher.store/"query-embeddings")
+        visual_intent=visual_intent,retrieval_mode=args.retrieval_mode,query_cache=args.query_cache or provider.publisher.store/"query-embeddings",requested_slots=args.slot,query_language=args.query_language)
     receipt = provider.receipt(snapshot, pack)
     receipt_path = args.runtime_receipt or (str(args.output_file) + ".runtime-receipt.json" if args.output_file else None)
     if receipt_path:

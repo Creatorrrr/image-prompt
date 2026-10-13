@@ -1,66 +1,103 @@
-"""Independent rank/allocation replay using immutable source and recorded vectors."""
-import hashlib,math
+"""Bounded independent proof/rank/allocation audit for native slot queries."""
+import hashlib
+import math
 import photo_candidate_corpus as c
-import photo_global_index as idx
-import photo_global_retrieval as rules
-import photo_shared_views as views
-import photo_frozen_query as query
 import photo_native_pack as packs
-from bm25f_retrieval import rank_bm25f
+import photo_global_retrieval as guards
+import photo_role_proposals as roles
+import photo_slot_queries as queries
+import photo_slot_retrieval as rules
+import photo_sharded_search as search
+from bm25f_retrieval import _query_term_weights
+
+
+def lexical_replay(reader,fields,allowed,limit):
+    stats=reader.meta['statistics'];policy=stats['policy'];values={};matched={}
+    for term,weight in sorted(_query_term_weights(fields,policy=policy,lexicon=stats['lexicon']).items()):
+        block=reader.meta['posting_locator'].get(term)
+        if block is None:continue
+        df=stats['document_frequencies'][term]
+        idf=math.log(1+(stats['document_count']-df+.5)/max(df+.5,1e-12))
+        for cid,tf in reader.block('posting',block)[term]:
+            if cid in allowed:
+                values[cid]=values.get(cid,0.)+float(weight)*idf*((tf*(policy['k1']+1))/(policy['k1']+tf))
+                matched.setdefault(cid,[]).append(term)
+    rows=[{'document_id':cid,'score':round(score,12),'matched_terms':matched[cid]} for cid,score in values.items() if score>0]
+    return sorted(rows,key=lambda r:(-r['score'],r['document_id']))[:limit]
+
+
+def fusion(lanes):
+    sums={};counts={}
+    for hits in lanes:
+        for position,row in enumerate(hits,1):
+            cid=row['document_id'];sums[cid]=sums.get(cid,0.)+1/(30+position);counts[cid]=counts.get(cid,0)+1
+    rows=[{'document_id':cid,'score':round(v,12),'lane_count':counts[cid]} for cid,v in sums.items()]
+    return sorted(rows,key=lambda r:(-r['score'],-r['lane_count'],r['document_id']))
 
 
 def audit(pack,data,context):
     import prompt_generator as g
     failures=[]
-    def fail(reason):failures.append({'check':'global_retrieval_contract','reason':reason})
     try:
-        packs.validate(pack);record=pack['global_retrieval'];core=pack['authorial_core'];controls=pack['creative_controls'];text,_=g.authorial_core_retrieval_text(core)
-        if record.get('contract_version')!=rules.VERSION or record.get('mode') not in rules.MODES:raise ValueError('native global retrieval contract required')
-        if record['mode']=='hybrid_required':query.validate(context,text,core['canonical_sha256'],controls['canonical_sha256'])
-        elif context is not None:raise ValueError('keyword diagnostic cannot claim query vector execution')
-        expected_bindings={'corpus_sha256':c.digest(views.source(data)),'binding_sha256':c.digest(data['slot_bindings']),
-            'catalog_sha256':c.digest(data['slot_catalog']),'index_sha256':data['_global_index_sha256'],
-            'query_context_sha256':context['canonical_sha256'] if context else None,'source_authorial_core_sha256':core['canonical_sha256'],'creative_controls_sha256':controls['canonical_sha256'],
-            'query_sha256':hashlib.sha256(text.encode()).hexdigest(),'algorithm':'global_bm25f_exact_cosine_rrf/v1','rrf_k':30,'minimum_similarity':0.30,
-            'unique_candidate_limit':64,'role_limits':{'core':4,'support':2},'tag_admission_filter':False,'candidate_adoption':'optional'}
-        if any(record.get(key)!=value for key,value in expected_bindings.items()):fail('source/index/query/algorithm binding mismatch')
-        if record.get('canonical_sha256')!=c.digest({k:v for k,v in record.items() if k!='canonical_sha256'}):fail('retrieval checksum mismatch')
-        allowed,role_ids,_=rules.eligible(data,core,controls)
-        # Do not consume the publisher's index cache, lane ranks, selected IDs or budgets.
-        lexical=idx.lexical(views.source(data));lh=rank_bm25f(lexical,{'frozen_core':text},allowed_ids=allowed,limit=384)
-        vh=[]
-        if record['mode']=='hybrid_required':
-            vector=context['vector'];norm=math.sqrt(math.sumprod(vector,vector));scored=[]
-            for cid in sorted(allowed):
-                reference=data['_global_index']['entries'][cid]['vector'];score=math.sumprod(reference,vector)/(math.sqrt(math.sumprod(reference,reference))*norm)
-                if score>=0.30:scored.append((cid,score))
-            scored.sort(key=lambda row:(-row[1],row[0]));vh=[{'document_id':cid,'score':round(score,9)} for cid,score in scored[:384]]
-        lanes={'bm25f':{'state':'executed','positive_hits':len(lh),'ranks':lh},'embedding':{'state':'executed' if record['mode']=='hybrid_required' else 'not_requested','positive_hits':len(vh),'ranks':vh}}
-        if record.get('lanes')!=lanes:fail('lane execution/ranks differ from full-corpus replay')
-        sums={};counts={}
-        for hits in ([lh,vh] if record['mode']=='hybrid_required' else [lh]):
-            for position,row in enumerate(hits,1):
-                cid=row['document_id'];sums[cid]=sums.get(cid,0.0)+1.0/(30+position);counts[cid]=counts.get(cid,0)+1
-        # The pure RRF implementation rounds to its declared wire score before sorting.
-        ranked=sorted(sums,key=lambda cid:(-round(sums[cid],12),-counts[cid],cid))
-        selected=[];usage={};expected_refs={};expected_binding_ids=set()
-        for cid in ranked:
-            bindings=[]
-            for bid in role_ids[cid]:
-                tag=data['slot_bindings'][bid]['slot_id']
-                if usage.get(tag,0)<g.candidate_pack_slot_limit(tag):bindings.append(bid)
-            if role_ids[cid] and not bindings:continue
-            selected.append(cid)
-            for bid in bindings:
-                tag=data['slot_bindings'][bid]['slot_id'];usage[tag]=usage.get(tag,0)+1;expected_binding_ids.add(bid);expected_refs.setdefault(tag,[]).append({'candidate_id':cid,'binding_id':bid})
-            if len(selected)>=64:break
-        if record.get('selected_candidate_ids')!=selected or record.get('eligible_candidates')!=len(allowed):fail('candidate omission/substitution or global unique allocation changed')
-        if set(pack['candidate_pool'])!=set(selected):fail('pack pool differs from globally retrieved unique candidates')
-        actual_refs={tag:row['candidate_refs'] for tag,row in pack['role_views'].items()}
-        canonical_refs=lambda rows:{tag:sorted((r['candidate_id'],r['binding_id']) for r in refs) for tag,refs in rows.items()}
-        if canonical_refs(actual_refs)!=canonical_refs(expected_refs):fail('role/tag/guard presentation mismatch')
-        if set(pack['candidate_bindings'])!=expected_binding_ids or any(pack['candidate_bindings'].get(bid)!=data['slot_bindings'][bid] for bid in expected_binding_ids):fail('declared role effect/weight/condition mismatch')
+        packs.validate(pack);record=pack['global_retrieval'];core=pack['authorial_core'];controls=pack['creative_controls']
+        if hasattr(data,'for_core'):data=data.for_core(core)
+        reader=data['_search_reader'];reader.check_presence();slots=rules.active_slots(data,core,controls,record['requested_slot_ids']);mode=record['mode']
+        if record['contract_version']!=rules.VERSION or mode not in rules.MODES or record['canonical_sha256']!=c.digest({k:v for k,v in record.items() if k!='canonical_sha256'}):raise ValueError('slot retrieval schema/checksum mismatch')
+        expected={'corpus_sha256':reader.meta['corpus_sha256'],'binding_sha256':c.digest(data['slot_bindings']),'catalog_sha256':c.digest(data['slot_catalog']),'index_sha256':data['_global_index_sha256'],
+                  'source_authorial_core_sha256':core['canonical_sha256'],'creative_controls_sha256':controls['canonical_sha256'],'active_slot_ids':slots,'inactive_slot_ids':sorted(set(data['slot_catalog'])-set(slots)),
+                  'unique_candidate_limit':64,'role_limits':{'core':4,'support':2},'minimum_similarity':.30,'rrf_k':30,'tag_admission_filter':False,'candidate_adoption':'optional','algorithm':'independent_global_bm25f_certified_cosine_rrf/v2'}
+        if any(record.get(k)!=v for k,v in expected.items()):raise ValueError('slot source/query/policy binding mismatch')
+        if mode=='hybrid_required':fields=queries.validate_set(context,core,controls,data['slot_catalog'],slots)
+        elif context is not None:raise ValueError('keyword diagnostic claims query vectors')
+        if record['query_context_sha256']!=(context['canonical_sha256'] if context else None):raise ValueError('foreign slot query set')
+        allowed,source_roles,contract=guards.eligible(data,core,controls);_,picked=g.frozen_core_context(data,core,controls)
+        gd=dict(data);gd['candidates']=reader.meta['guards'];wanted={};expected_proposals={};limits={s:g.candidate_pack_slot_limit(s) for s in slots}
+        if set(record['slot_searches'])!=set(slots) or record['eligible_candidates']!=len(allowed):raise ValueError('missing independent slot search')
+        for slot in slots:
+            trace=record['slot_searches'][slot];limit=trace['lane_limit']
+            text,lexical,binding=queries.inputs(core,controls,data['slot_catalog'],slot,record['query_language'])
+            if mode=='hybrid_required':
+                row=context['slots'][slot]
+                if row['binding']['language']!=record['query_language']:raise ValueError('slot language changed')
+                text=row['text'];lexical=fields[slot];binding=row['binding']
+            if limit<384 or trace['state']!='executed' or trace['search_scope']!='whole_shared_positive_corpus' or trace['tag_admission_filter'] is not False or trace['query_sha256']!=hashlib.sha256(text.encode()).hexdigest() or trace['slot_spec_sha256']!=binding['slot_spec_sha256'] or trace['eligible_candidates']!=len(allowed):raise ValueError('slot execution binding mismatch')
+            lh=lexical_replay(reader,lexical,allowed,limit);vh=trace['lanes']['embedding']['ranks']
+            if trace['lanes']['bm25f']!={'state':'executed','positive_hits':len(lh),'ranks':lh}:raise ValueError('global posting BM25F ranks differ')
+            if mode=='hybrid_required':
+                proof=trace['cosine_proof']
+                if proof['limit']!=limit or proof['minimum']!=.30:raise ValueError('cosine search scope/cutoff changed')
+                search.audit_cosine(reader,row['vector'],allowed,vh,proof)
+            elif vh or trace['cosine_proof'] is not None:raise ValueError('keyword search claims cosine ranks')
+            if trace['lanes']['embedding']!={'state':'executed' if mode=='hybrid_required' else 'not_requested','positive_hits':len(vh),'ranks':vh}:raise ValueError('embedding lane execution mismatch')
+            combined=fusion([lh,vh] if mode=='hybrid_required' else [lh])
+            if trace['rrf']!=combined:raise ValueError('slot RRF changed')
+            chosen=[];rejected=set();blocked=g.slot_block_reason(data,slot,contract)
+            if blocked:rejected.update(r['document_id'] for r in combined)
+            else:
+                for hit in combined:
+                    cid=hit['document_id'];p=roles.propose(data,slot,cid,source_roles[cid]);entry=roles.entry(gd,p)
+                    if not g.core_entry_eligible(data,core,contract,picked,slot,entry):rejected.add(cid);continue
+                    expected_proposals[p['proposal_id']]=p;chosen.append((cid,p['proposal_id']))
+                    if len(chosen)>=limits[slot]:break
+            if trace['desired_proposal_ids']!=[p for _,p in chosen] or trace['role_rejected_candidate_ids']!=sorted(rejected) or trace['role_block_reason']!=blocked:raise ValueError('role guard/adoption projection changed')
+            wanted[slot]=chosen
+        selected=[];refs={s:[] for s in slots}
+        for position in range(max(limits.values(),default=0)):
+            for slot in sorted(slots,key=lambda s:(s not in g.CANDIDATE_PACK_CORE_SLOTS,s)):
+                if position>=len(wanted[slot]):continue
+                cid,pid=wanted[slot][position]
+                if cid not in selected:
+                    if len(selected)>=64:continue
+                    selected.append(cid)
+                refs[slot].append({'candidate_id':cid,'proposal_id':pid})
+        retained={r['proposal_id']:expected_proposals[r['proposal_id']] for rows in refs.values() for r in rows}
+        if selected!=record['selected_candidate_ids'] or set(pack['candidate_pool'])!=set(selected):raise ValueError('global unique allocation changed')
+        if pack['role_proposals']!=retained or record['role_proposals']!=retained:raise ValueError('role source effect/condition altered')
+        canonical_refs=lambda values:{slot:sorted((r['candidate_id'],r['proposal_id']) for r in rows) for slot,rows in values.items()}
+        if canonical_refs({s:v['candidate_refs'] for s,v in pack['role_views'].items()})!=canonical_refs(refs):raise ValueError('role reference allocation changed')
+        bids={p['source_binding_id'] for p in retained.values() if p['source_binding_id'] is not None}
+        if pack['candidate_bindings']!={bid:data['slot_bindings'][bid] for bid in bids}:raise ValueError('persistent source binding altered')
         for cid,row in pack['candidate_pool'].items():
-            if row['authored_record']!=data['candidates'][cid]:fail('candidate authored meaning/owner/effects changed')
-    except (KeyError,TypeError,ValueError,AttributeError) as error:fail(str(error))
+            if row['authored_record']!=data['candidates'][cid]:raise ValueError('candidate authored meaning altered')
+    except (KeyError,TypeError,ValueError,AttributeError) as error:failures.append({'check':'global_retrieval_contract','reason':str(error)})
     return failures

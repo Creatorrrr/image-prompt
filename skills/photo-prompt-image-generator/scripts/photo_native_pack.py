@@ -1,7 +1,7 @@
 """Single native candidate payload, with bounded many-to-many presentation refs."""
 import copy
 import photo_candidate_corpus as c
-CONTRACT='photo-candidate-pack/v7'
+CONTRACT='photo-candidate-pack/v8'
 
 class WorkingPack(dict):
     def __init__(self,value,roles):super().__init__(value);self.working_roles=roles;self.query_context=None
@@ -11,14 +11,16 @@ class CandidatePack(dict):
 
 def role_cards(pack):
     if isinstance(pack,WorkingPack):return pack.working_roles
-    if pack.get('contract_version')!=CONTRACT:raise ValueError('native v7 pack required')
+    if pack.get('contract_version')!=CONTRACT:raise ValueError('native v8 pack required')
     result={}
     for tag,view in pack['role_views'].items():
         rows=[]
         for ref in view['candidate_refs']:
-            cid,bid=ref['candidate_id'],ref['binding_id'];row=copy.deepcopy(pack['candidate_pool'][cid]);binding=pack['candidate_bindings'][bid]
-            if binding['candidate_id']!=cid or binding['slot_id']!=tag:raise ValueError('foreign role view binding')
-            row.update({'slot':tag,'entry_id':cid,'binding_id':bid,'affected_dimensions':binding['effects']['dimensions'],'affected_properties':binding['effects']['properties']});rows.append(row)
+            cid,pid=ref['candidate_id'],ref['proposal_id'];row=copy.deepcopy(pack['candidate_pool'][cid]);proposal=pack['role_proposals'][pid]
+            if proposal['candidate_id']!=cid or proposal['target_slot_id']!=tag:raise ValueError('foreign role proposal')
+            row.update({'slot':tag,'entry_id':cid,'proposal_id':pid,'binding_id':proposal['source_binding_id'],
+                        'affected_dimensions':proposal['effects']['dimensions'],'affected_properties':proposal['effects']['properties'],
+                        'source_conditions':proposal['conditions']});rows.append(row)
         result[tag]={**{k:v for k,v in view.items() if k!='candidate_refs'},'candidates':rows}
     return result
 
@@ -33,11 +35,11 @@ def resolve_rows(pack,section,key='candidates'):
     return result
 
 def finalize(pack,data,selected_ids,query_context):
-    pool={};bindings={};views={}
+    pool={};bindings={};views={};proposals=pack['global_retrieval']['role_proposals']
     def own(row):
         cid=str(row.get('source_candidate_id') or row.get('candidate_id') or row.get('id') or '')
         if cid not in data['candidates']:return None
-        value={k:copy.deepcopy(v) for k,v in row.items() if k not in {'slot','entry_id','binding_id','axis','carrier'}}
+        value={k:copy.deepcopy(v) for k,v in row.items() if k not in {'slot','entry_id','binding_id','proposal_id','axis','carrier'}}
         value['id']=cid;value['record_kind']=data['candidates'][cid]['record_kind']
         value['authored_record']=copy.deepcopy(data['candidates'][cid])
         if cid in pool:
@@ -48,7 +50,9 @@ def finalize(pack,data,selected_ids,query_context):
     for tag,role in pack.working_roles.items():
         refs=[]
         for row in role['candidates']:
-            cid=own(row);bid=row['binding_id'];bindings[bid]=copy.deepcopy(data['slot_bindings'][bid]);refs.append({'candidate_id':cid,'binding_id':bid})
+            cid=own(row);pid=row['proposal_id'];bid=proposals[pid]['source_binding_id']
+            if bid is not None:bindings[bid]=copy.deepcopy(data['slot_bindings'][bid])
+            refs.append({'candidate_id':cid,'proposal_id':pid})
         views[tag]={**{k:copy.deepcopy(v) for k,v in role.items() if k!='candidates'},'candidate_refs':refs}
     def intern(rows):
         result=[]
@@ -79,8 +83,8 @@ def finalize(pack,data,selected_ids,query_context):
         if row.get('content_form')=='unordered_inspiration_terms':
             row.pop('label_en',None);row.pop('label_ko',None)
     if not set(pool)<=set(selected_ids):raise ValueError('optional presentation expanded beyond globally retrieved unique candidate budget')
-    result['candidate_pool']=pool;result['candidate_bindings']=bindings;result['role_views']=views
-    result['unbound_candidate_refs']=[cid for cid in selected_ids if not any(row['candidate_id']==cid for row in bindings.values())]
+    result['candidate_pool']=pool;result['candidate_bindings']=bindings;result['role_proposals']=copy.deepcopy(proposals);result['role_views']=views
+    result['unbound_candidate_refs']=[cid for cid in selected_ids if not any(row['candidate_id']==cid for row in proposals.values())]
     result['contract_version']=CONTRACT
     for field in ('character_response','adult_appeal','candidate_bundles','visual_concept_candidates'):
         if isinstance(result.get(field),dict) and 'canonical_sha256' in result[field]:
@@ -88,10 +92,13 @@ def finalize(pack,data,selected_ids,query_context):
     return CandidatePack(result,query_context)
 
 def validate(pack):
-    if pack.get('contract_version')!=CONTRACT or 'slots' in pack:raise ValueError('native v7 pack required')
+    if pack.get('contract_version')!=CONTRACT or 'slots' in pack:raise ValueError('native v8 pack required')
     if len(pack.get('candidate_pool',{}))>64:raise ValueError('global unique candidate budget exceeded')
     for cid,row in pack['candidate_pool'].items():
         if not c.ID.fullmatch(cid) or row.get('id')!=cid or row['authored_record']['id']!=cid:raise ValueError('invalid native candidate identity')
+    for pid,proposal in pack['role_proposals'].items():
+        cid=proposal['candidate_id']
+        if pid!=proposal['proposal_id'] or cid not in pack['candidate_pool'] or proposal['source_record_sha256']!=c.digest(pack['candidate_pool'][cid]['authored_record']):raise ValueError('role source mismatch')
     role_cards(pack)
     return pack
 
