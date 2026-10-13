@@ -153,8 +153,8 @@ VISUAL_PROFILE_INDEX_DATA_KEY = "_visual_meaning_lookup"
 CANDIDATE_PACK_CORE_SLOT_LIMIT = 4
 CANDIDATE_PACK_SUPPORT_SLOT_LIMIT = 2
 CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT = 64
-CANDIDATE_PACK_CONTRACT_V7 = "photo-candidate-pack/v7"
-DEFAULT_CANDIDATE_PACK_VERSION = "v7"
+CANDIDATE_PACK_CONTRACT_V7 = "photo-candidate-pack/v8"
+DEFAULT_CANDIDATE_PACK_VERSION = "v8"
 CANDIDATE_PACK_CREATIVE_EXPLORATION_FLOOR = 3
 CANDIDATE_PACK_CREATIVE_EXPLORATION_MIN_DISTANCE = 0.45
 CANDIDATE_PACK_CREATIVE_EXPLORATION_LIMIT = 6
@@ -6578,7 +6578,7 @@ def candidate_pack_visual_proposition(
 
 
 def candidate_pack_contract_version(version: str) -> str:
-    if version not in {"v7", CANDIDATE_PACK_CONTRACT_V7}:
+    if version not in {"v8", CANDIDATE_PACK_CONTRACT_V7}:
         raise ValueError(f"unsupported candidate-pack version: {version!r}; expected v7")
     return CANDIDATE_PACK_CONTRACT_V7
 
@@ -7632,7 +7632,7 @@ def candidate_pack_compose_current(
     return projected
 
 
-def candidate_pack_project(pack: JsonDict, version: str = "v7") -> JsonDict:
+def candidate_pack_project(pack: JsonDict, version: str = "v8") -> JsonDict:
     candidate_pack_contract_version(version)
     projected = copy.deepcopy(pack)
     private_relevance = projected.pop("_candidate_relevance", {})
@@ -7741,7 +7741,7 @@ def build_candidate_pack(
     slots, global_retrieval, contract = retrieve_global_candidates(data,authorial_core,provenance['creative_controls'],query_context,provenance['retrieval_mode'])
     selected_ids=global_retrieval['selected_candidate_ids']
     provenance['global_candidate_ids']=selected_ids
-    data=photo_shared_views.RequestCandidates(data,selected_ids)
+    data=photo_shared_views.RequestCandidates(data,selected_ids,global_retrieval.get('role_proposals'))
     trace = {**trace, "generation_contract": contract}
     candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]] = {}
     for slot, payload in slots.items():
@@ -7796,7 +7796,7 @@ def build_candidate_pack(
         ):
             intent_constraints.pop("character_response", None)
     pack: JsonDict = photo_native_pack.WorkingPack({
-        "contract_version": "photo-candidate-pack/v7",
+        "contract_version": "photo-candidate-pack/v8",
         "pack_id": "",
         "intent_contract": intent_contract,
         "mandatory_intents": mandatory_intents,
@@ -7906,7 +7906,7 @@ def build_candidate_pack(
     if "embodiment_preflight" in provenance:
         pack["embodiment_preflight"] = copy.deepcopy(provenance["embodiment_preflight"])
         pack["provenance"]["embodiment_preflight_required"] = True
-        photo_embodiment.policy_from_pack({**pack, "contract_version": "photo-candidate-pack/v7"})
+        photo_embodiment.policy_from_pack({**pack, "contract_version": "photo-candidate-pack/v8"})
     if viewer_experience is not None:
         pack["viewer_experience"] = viewer_experience
     if adult_appeal is not None:
@@ -7960,7 +7960,7 @@ def build_candidate_pack(
 
 
 def dictionary_hash(data):
-    return photo_candidate_corpus.digest(photo_shared_views.source(data))
+    return data.get('_corpus_sha256') or photo_candidate_corpus.digest(photo_shared_views.source(data))
 
 
 
@@ -8498,7 +8498,9 @@ def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, sl
 
 
 def retrieve_global_candidates(data,core,controls,query_context=None,retrieval_mode='hybrid_required'):
-    return photo_global_retrieval.retrieve(data,core,controls,query_context,retrieval_mode)
+    import photo_slot_retrieval
+    return photo_slot_retrieval.retrieve(data,core,controls,query_context,retrieval_mode,
+        requested_slots=getattr(data,'requested_slots',None),language=getattr(data,'query_language','en'))
 
 
 def prepare_candidate_source(data: JsonDict, core: JsonDict, controls: JsonDict,
@@ -8535,14 +8537,17 @@ def prepare_candidate_source(data: JsonDict, core: JsonDict, controls: JsonDict,
     }
 
 
-def generate_candidate_pack(data,core,controls,embodiment,*,seed=0,visual_intent=None,query_context=None,retrieval_mode='hybrid_required',query_cache=None):
+def generate_candidate_pack(data,core,controls,embodiment,*,seed=0,visual_intent=None,query_context=None,retrieval_mode='hybrid_required',query_cache=None,requested_slots=None,query_language='en'):
     if retrieval_mode not in photo_global_retrieval.MODES:raise ValueError('native global retrieval mode required')
+    import photo_slot_queries,photo_slot_retrieval
+    if hasattr(data,'for_core'):data=data.for_core(core)
+    data.requested_slots=requested_slots;data.query_language=query_language
     result=prepare_candidate_source(data,core,controls,embodiment,seed=seed,visual_intent=visual_intent)
     if retrieval_mode=='hybrid_required' and query_context is None:
         from photo_embedding_provider import load_env
         load_env(Path(__file__).resolve().parents[3]/'.env')
-        text,_=authorial_core_retrieval_text(core)
-        query_context=photo_frozen_query.prepare(text,core['canonical_sha256'],controls['canonical_sha256'],query_cache or photo_runtime_sources.default_store()/'query-embeddings')
+        active=photo_slot_retrieval.active_slots(data,core,controls,requested_slots)
+        query_context=photo_slot_queries.prepare(core,controls,data['slot_catalog'],active,query_cache or photo_runtime_sources.default_store()/'query-embeddings',language=query_language)
     result['provenance'].update({'_query_context':query_context,'retrieval_mode':retrieval_mode,'selection_mode':'global_hybrid' if retrieval_mode=='hybrid_required' else 'global_keyword_diagnostic'})
     return build_candidate_pack(result,data)
 
@@ -8553,7 +8558,8 @@ def load_runtime_data(source_path=None,*,inventory=None):
     if not assets.is_dir():
         if assets.name!=photo_candidate_corpus.MANIFEST_NAME:raise ValueError('native shared source manifest required')
         assets=assets.parent
-    return photo_shared_views.load(assets)
+    from photo_search_reader import SearchReader,LazyRuntimeData
+    return LazyRuntimeData(SearchReader(assets))
 
 
 

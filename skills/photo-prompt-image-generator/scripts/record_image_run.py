@@ -23,7 +23,7 @@ DEFAULT_LEDGER = PROJECT_ROOT / "runs" / "image_runs.ndjson"
 VALID_STATUSES = {"success", "safety_block", "error"}
 VALID_COMPOSERS = {"agent", "auto"}
 VALID_AUDIT_STATUSES = {"pass", "warn", "fail", "not_run"}
-VALID_CANDIDATE_PACK_VERSIONS = {"v7"}
+VALID_CANDIDATE_PACK_VERSIONS = {"v8"}
 MODERN_INDEPENDENT_RUN_MANIFEST_VERSION = "photo-independent-run-manifest/v2"
 
 
