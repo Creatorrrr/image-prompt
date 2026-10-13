@@ -1,5 +1,7 @@
 """Offline derived layout: global postings, lossless vectors and source locators."""
 from array import array
+import base64
+from bisect import bisect_right, bisect_left
 import gzip
 import hashlib
 import math
@@ -13,6 +15,8 @@ from photo_embedding_provider import SPACE, atomic
 SCHEMA = 'photo-candidate-search-layout/v1'
 MANIFEST = 'photo_candidate_search.json'
 DIRECTORY = 'photo_candidate_search_shards'
+ROUTING_RECIPE = 'photo-scalar-error-bounds/v2'
+VECTOR_CODEC = 'photo-lossless-vector-codec/v1'
 
 
 def guard_record(record):
@@ -40,12 +44,12 @@ def _tf(document, term, lexical):
     return value
 
 
-def build(assets, corpus, vectors, *, leaf_size=32, activate=False):
+def build(assets, corpus, vectors, *, leaf_size=8, activate=False):
     """Never invokes a provider. Default output cannot replace the live manifest."""
     assets = Path(assets)
     old_index.validate(vectors, corpus)
     lexical = old_index.lexical(corpus)
-    identity = c.digest({'schema': SCHEMA, 'source': c.digest(corpus), 'vectors': c.digest(vectors),
+    identity = c.digest({'schema': SCHEMA, 'routing_recipe': ROUTING_RECIPE, 'vector_codec': VECTOR_CODEC, 'source': c.digest(corpus), 'vectors': c.digest(vectors),
                          'leaf_size': leaf_size, 'lexical_policy': old_index.POLICY})
     directory = assets / DIRECTORY / identity
     directory.mkdir(parents=True, exist_ok=True)
@@ -72,20 +76,17 @@ def build(assets, corpus, vectors, *, leaf_size=32, activate=False):
 
     def partition(keys):
         pos = len(nodes); nodes.append(None)
-        center = [math.fsum(units[cid][d] for cid in keys) / len(keys) for d in range(SPACE['dimensions'])]
-        norm = math.sqrt(math.sumprod(center, center))
-        if norm:
-            center = [x/norm for x in center]
-            radius_cos = min(math.sumprod(center, units[cid]) for cid in keys) - 1e-12
-        else:
-            radius_cos = -1.0
-        node = {'center': center, 'radius_cos': max(-1.0, radius_cos), 'count': len(keys)}
+        node = {'count': len(keys)}
         if len(keys) <= leaf_size:
             leaf = len(leaves)
             values = array('d', (value for cid in keys for value in raw_vectors[cid]))
+            integers=[int(round(v*1000000)) for v in values]
+            scaled=all(-2147483648<=n<=2147483647 and n/1000000==v for n,v in zip(integers,values))
+            encoding='scaled_i32_le' if scaled else 'f64_le'
+            if scaled: values=array('i',integers)
             if sys.byteorder != 'little': values.byteswap()
-            shard = write(f'vector-{leaf:05d}.f64.z', zlib.compress(values.tobytes()), len(keys))
-            leaves.append({**shard, 'ids': keys})
+            shard = write(f'vector-{leaf:05d}.vector.z', zlib.compress(values.tobytes()), len(keys))
+            leaves.append({**shard, 'ids': keys, 'encoding':encoding})
             node['leaf'] = leaf
         else:
             first = units[keys[0]]
@@ -99,6 +100,7 @@ def build(assets, corpus, vectors, *, leaf_size=32, activate=False):
         return pos
 
     partition(ids)
+    quantization = scalar_quantization(ids, units)
     payloads = []; locators = {}; guards = {}; record_hashes = {}; blobs = {}; profile_terms = []
     all_ids = sorted(corpus['candidates'])
     for offset in range(0, len(all_ids), 64):
@@ -129,18 +131,38 @@ def build(assets, corpus, vectors, *, leaf_size=32, activate=False):
                 'vector_recipes': {cid:{key:row[key] for key in ('recipe','text_sha256','embedding_execution') if key in row}
                                    for cid,row in vectors['entries'].items()},
                 'record_sha256': record_hashes, 'payload_locator': locators, 'payload_shards': payloads,
-                'nodes': nodes, 'vector_shards': leaves, 'positive_ids': ids,
+                'nodes': nodes, 'vector_shards': leaves, 'positive_ids': ids, 'quantization': quantization,
                 'statistics': stats, 'posting_locator': posting_locator, 'posting_shards': posting_shards,
                 'profile_lookup': profile_terms, 'slot_catalog': corpus['slot_catalog'],
                 'slot_bindings': corpus['slot_bindings'], 'policies': corpus['policies']}
     metadata_member = json_file('metadata.json.gz', metadata, len(ids))
-    manifest = {'schema': SCHEMA, 'space': SPACE, 'corpus_sha256': c.digest(corpus),
+    manifest = {'schema': SCHEMA, 'routing_recipe': ROUTING_RECIPE, 'vector_codec': VECTOR_CODEC, 'space': SPACE, 'corpus_sha256': c.digest(corpus),
                 'index_source_sha256': c.digest(vectors), 'layout_id': identity, 'metadata': metadata_member,
                 'shards': [row for name,row in sorted(members.items()) if name != 'metadata.json.gz'],
                 'lexical_recipe': lexical['recipe_version'], 'endianness': 'little', 'vector_type': 'float64'}
     target = assets / (MANIFEST if activate else 'photo_candidate_search.staging.json')
     atomic(target, manifest)
     return manifest
+
+
+def scalar_quantization(ids,units):
+    """4-bit coordinates plus exact residual norms, not full-precision vectors."""
+    stride=SPACE['dimensions']//2;codes=bytearray(len(ids)*stride);centers=[];errors=[0.0]*len(ids)
+    for d in range(SPACE['dimensions']):
+        ordered=sorted(units[cid][d] for cid in ids);n=len(ordered)
+        row=[math.fsum(ordered[i*n//16:max(i*n//16+1,(i+1)*n//16)])/len(ordered[i*n//16:max(i*n//16+1,(i+1)*n//16)]) for i in range(16)]
+        # Deterministic one-dimensional Lloyd refinement reduces the residual
+        # certificate without ever changing a stored exact document vector.
+        for _ in range(12):
+            cuts=[(a+b)/2 for a,b in zip(row,row[1:])]
+            borders=[0]+[bisect_left(ordered,cut) for cut in cuts]+[n]
+            row=[math.fsum(ordered[a:b])/(b-a) if b>a else row[i] for i,(a,b) in enumerate(zip(borders,borders[1:]))]
+        centers.append(row);cuts=[(a+b)/2 for a,b in zip(row,row[1:])]
+        for pos,cid in enumerate(ids):
+            code=bisect_right(cuts,units[cid][d]);codes[pos*stride+d//2]|=code<<(4*(d%2))
+            errors[pos]+=(units[cid][d]-row[code])**2
+    return {'recipe':ROUTING_RECIPE,'levels':16,'stride':stride,'centers':centers,
+            'errors':[math.sqrt(v)+1e-10 for v in errors],'codes_base64':base64.b64encode(codes).decode()}
 
 
 def upper_bound(node, query_unit):
@@ -151,10 +173,19 @@ def upper_bound(node, query_unit):
     return min(1.0, a*b + math.sqrt(max(0.0, 1-a*a))*math.sqrt(max(0.0, 1-b*b)) + 1e-11)
 
 
+def vector_body(raw,row):
+    encoding=row.get('encoding')
+    if encoding not in {'scaled_i32_le','f64_le'}:raise ValueError('unsupported lossless vector encoding')
+    values=array('i' if encoding=='scaled_i32_le' else 'd');values.frombytes(zlib.decompress(raw))
+    if sys.byteorder!='little':values.byteswap()
+    if encoding=='scaled_i32_le':values=array('d',(v/1000000 for v in values))
+    return values.tobytes()
+
+
 def verify(assets, corpus, manifest, vectors=None):
     """Offline complete source/statistics/boundary verification, not a request path."""
     assets=Path(assets)
-    if manifest.get('schema')!=SCHEMA or manifest.get('space')!=SPACE or manifest.get('corpus_sha256')!=c.digest(corpus):
+    if manifest.get('schema')!=SCHEMA or manifest.get('space')!=SPACE or manifest.get('routing_recipe')!=ROUTING_RECIPE or manifest.get('corpus_sha256')!=c.digest(corpus):
         raise ValueError('layout source/space mismatch')
     def read(row):
         p=assets/row['path']
@@ -177,9 +208,10 @@ def verify(assets, corpus, manifest, vectors=None):
             if meta['guards'][cid]!=guard_record(record): raise ValueError('guard projection changed')
     if seen!=set(corpus['candidates']): raise ValueError('payload coverage mismatch')
     leaf_paths={}
+    quant=meta['quantization'];codes=base64.b64decode(quant['codes_base64'],validate=True);positions={cid:i for i,cid in enumerate(meta['positive_ids'])}
+    if quant['recipe']!=ROUTING_RECIPE or quant['levels']!=16 or quant['stride']!=384 or len(codes)!=len(expected)*384 or len(quant['centers'])!=768 or any(len(row)!=16 or not all(math.isfinite(v) for v in row) for row in quant['centers']) or len(quant['errors'])!=len(expected):raise ValueError('invalid routing quantization')
     def walk(pos,parents):
         node=meta['nodes'][pos]
-        if len(node['center'])!=SPACE['dimensions'] or not all(math.isfinite(v) for v in node['center']) or not -1<=node['radius_cos']<=1: raise ValueError('invalid cap')
         if 'leaf' in node:
             if node['leaf'] in leaf_paths: raise ValueError('duplicate leaf owner')
             leaf_paths[node['leaf']]=parents+[pos]
@@ -190,8 +222,7 @@ def verify(assets, corpus, manifest, vectors=None):
             for p in node['children']: walk(p,parents+[pos])
     walk(0,[]);seen=set()
     for leaf,row in enumerate(meta['vector_shards']):
-        values=array('d'); values.frombytes(zlib.decompress(read(row)))
-        if sys.byteorder!='little': values.byteswap()
+        values=memoryview(vector_body(read(row),row)).cast('d')
         if len(values)!=row['count']*SPACE['dimensions'] or len(row['ids'])!=row['count'] or seen&set(row['ids']): raise ValueError('vector owner/count mismatch')
         seen.update(row['ids'])
         for offset,cid in enumerate(row['ids']):
@@ -200,9 +231,9 @@ def verify(assets, corpus, manifest, vectors=None):
             recipe,text=old_index.text(corpus['candidates'][cid]);ref=meta.get('vector_recipes',{}).get(cid)
             if not ref or ref['recipe']!=recipe or ref['text_sha256']!=hashlib.sha256(text.encode()).hexdigest(): raise ValueError('vector text/recipe mismatch')
             norm=math.sqrt(math.sumprod(vector,vector));unit=[v/norm for v in vector]
-            for pos in leaf_paths[leaf]:
-                node=meta['nodes'][pos]
-                if node['radius_cos']>-1 and math.sumprod(node['center'],unit)<node['radius_cos']-1e-13: raise ValueError('unsafe routing cap')
+            pos=positions[cid];approx=[quant['centers'][d][(codes[pos*384+d//2]>>(4*(d%2)))&15] for d in range(768)]
+            residual=math.sqrt(math.fsum((a-b)**2 for a,b in zip(unit,approx)))
+            if not math.isfinite(quant['errors'][pos]) or quant['errors'][pos]<residual:raise ValueError('unsafe quantization error bound')
     if seen!=expected: raise ValueError('vector coverage mismatch')
     lexical=old_index.lexical(corpus)
     if meta['statistics']!={k:v for k,v in lexical.items() if k!='documents'}: raise ValueError('global lexical statistics mismatch')
