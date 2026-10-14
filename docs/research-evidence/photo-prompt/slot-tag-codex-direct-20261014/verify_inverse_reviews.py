@@ -3,7 +3,7 @@
 No discovery, inference, verdict conversion, source editing or publication occurs.
 A successful result certifies mechanical bindings and declared coverage only.
 See worker-notes/inverse-review-verifier-contract-20261014.md for the manifest,
-and its contract-supplement-v2-20261014 note for the bounded wire revision.
+and its contract-supplement-v3-20261014 note for the bounded wire revision.
 """
 from __future__ import annotations
 
@@ -17,7 +17,8 @@ from pathlib import Path
 import re
 
 SCHEMA = 'photo-direct-inverse-review-selection/v1'
-CONTRACT_REVISION = 'bounded-wire-2'
+CONTRACT_REVISION = 'bounded-wire-3'
+PROPERTY_FIELDS = ('dimension', 'target', 'property')
 BRANCH_CONCEPT_UNIT = re.compile(
     r'/effects/realizations/branches/(0|[1-9][0-9]*)/concept_units/(0|[1-9][0-9]*)')
 FORMATS = {
@@ -179,6 +180,12 @@ def closure(source, cid):
 
 
 def realization_effects(record):
+    """Native root + selected branch + explicitly consumed concept projection.
+
+    Mirrors photo_candidate_realizations.effects followed by
+    photo_semantic_evidence.with_projection for the hash-bound source record.
+    Reference closure, role tags and discovery prose never supply effects.
+    """
     effects = record['effects']
     branches = effects.get('realizations', [])
     if isinstance(branches, dict):
@@ -189,15 +196,41 @@ def realization_effects(record):
     if not branches or mode == 'optional':
         result['base'] = {k: copy.deepcopy(effects.get(k, [])) for k in ['dimensions', 'properties']}
     for branch in branches:
-        selected = {}
         branch_effects = branch['effects']
-        for key in ['dimensions', 'properties']:
-            selected[key] = []
-            for value in effects.get(key, []) + branch_effects.get(key, []):
-                if value not in selected[key]:
-                    selected[key].append(copy.deepcopy(value))
-        selected['dimensions'] = sorted(selected['dimensions'])
+        selected = {'dimensions': sorted(set(effects['dimensions']) | set(branch_effects['dimensions'])),
+                    'properties': copy.deepcopy(effects['properties'])}
+        for row in branch_effects['properties']:
+            if row not in selected['properties']:
+                selected['properties'].append(copy.deepcopy(row))
         result[branch['id']] = selected
+    projection = record['content'].get('concept_candidate') or {}
+    projected = 'affected_dimensions' in projection or 'affected_properties' in projection
+    if projected:
+        dimensions, properties = projection.get('affected_dimensions'), projection.get('affected_properties')
+        # Native with_projection requires both lists and validates their literal
+        # ownership shape before composition. No metadata-to-fact inference.
+        if (not isinstance(dimensions, list)
+                or any(not isinstance(x, str) or not x.strip() for x in dimensions)
+                or len(dimensions) != len(set(dimensions)) or not isinstance(properties, list)):
+            raise ValueError('invalid concept projection effects')
+        keys = []
+        for row in properties:
+            if (not isinstance(row, dict) or set(row) != set(PROPERTY_FIELDS)
+                    or any(not isinstance(x, str) or not x.strip() for x in row.values())
+                    or row['dimension'] not in dimensions):
+                raise ValueError('invalid concept projection property')
+            keys.append(tuple(row[k] for k in PROPERTY_FIELDS))
+        if len(keys) != len(set(keys)):
+            raise ValueError('duplicate concept projection property')
+    for selected in result.values():
+        if projected:
+            selected['dimensions'] = sorted(set(selected['dimensions']) | set(dimensions))
+            keys = dict.fromkeys(tuple(row[k] for k in PROPERTY_FIELDS)
+                                 for row in selected['properties'] + properties)
+            selected['properties'] = [dict(zip(PROPERTY_FIELDS, key)) for key in keys]
+        selected['dimensions'] = sorted(selected['dimensions'])
+        selected['properties'] = sorted(selected['properties'],
+                                        key=lambda row: tuple(row[k] for k in PROPERTY_FIELDS))
     return result
 
 
@@ -857,6 +890,12 @@ class Verifier:
                 self.parse(selected)
             except (KeyError, ValueError, TypeError, IndexError) as exc:
                 self.check(False, 'invalid_worker_contract', selected.get('artifact', ''), detail=str(exc))
+        # A malformed slot summary can abort parse before its local pair check.
+        # The input-bound catalog/search still requires every slot's top3 union;
+        # selected ranges and summary claims cannot narrow that requirement.
+        expected_pairs = {(i, cid) for i, slot in enumerate(self.slots)
+                          for cid in set(sum(_top3(self.searches[slot]).values(), []))}
+        self.equal(set(self.actual_pairs), expected_pairs, 'global_top3_pair_coverage')
         self.equal(len(self.actual_pairs), len(set(self.actual_pairs)), 'overlapping_selected_review_pairs')
         reuse = self.reuse()
         parent_ids = {x['cid'] for x in self.rows}

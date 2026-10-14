@@ -24,7 +24,8 @@ TASKS = ['/root/review_09250_10500', '/root/review_11870_12250', '/root/review_0
 
 
 class Fixture:
-    def __init__(self, root, *, binding=False, branch_units=False, realization_mode='one'):
+    def __init__(self, root, *, binding=False, branch_units=False, realization_mode='one',
+                 concept_projection=False):
         self.root = Path(root)
         self.objects, self.encodings = {}, {}
         self.binding = binding
@@ -53,6 +54,13 @@ class Fixture:
                     branch['conditions'] = {'gate': 'This is a prerequisite, not a positive clause.'}
                     branch['context_terms'] = ['declared garment']
                     branch['evidence_terms'] = ['white garment alias']
+            if n == 2 and concept_projection:
+                content['concept_candidate'] = {
+                    'affected_dimensions': ['pose', 'appearance'],
+                    'affected_properties': [
+                        {'dimension': 'pose', 'target': '한양 주인공', 'property': 'pose.standing'},
+                        {'dimension': 'appearance', 'target': '한양 주인공', 'property': 'wardrobe.neckline'},
+                        {'dimension': 'appearance', 'target': '한양 주인공', 'property': 'wardrobe.color'}]}
             self.source['candidates'][cid] = {'id': cid, 'record_kind': 'visual_option', 'content': content,
                                              'conditions': {'for_any': ['human']}, 'effects': effects,
                                              'provenance': [{'source': 'isolated-authored-' + str(n), 'sha256': 'f' * 64}]}
@@ -298,7 +306,7 @@ class DirectInverseReviewTests(unittest.TestCase):
         (self.f.root / 'inverse_999_all_complete.json').write_text('{invalid JSON')
         self.f.manifest['reviews'] = self.f.manifest['reviews'][:1]
         self.f.seal(); result = self.f.run()
-        self.assertEqual(result['failures'], [])
+        self.assertEqual(self.codes(result), {'global_top3_pair_coverage'})
         self.assertEqual(result['counts']['actual_claimed_slot_candidate_pairs'], 3)
         self.assertEqual(result['counts']['actual_claimed_slots'], 1)
 
@@ -543,7 +551,7 @@ class DirectInverseReviewTests(unittest.TestCase):
         slot['query_sha256'] = slot.pop('baseline_query_sha256')
         self.f.seal(); result = self.f.run()
         self.assertEqual(result['failures'], [])
-        self.assertEqual(result['contract_revision'], 'bounded-wire-2')
+        self.assertEqual(result['contract_revision'], 'bounded-wire-3')
         self.assertNotIn('baseline_query_sha256', result['selected_reviews'][0]['raw_artifact']['slot_reviews'][0])
         slot['baseline_query_sha256'] = '0' * 64
         self.f.seal(); self.assertIn('conflicting_compatibility_fields', self.codes(self.f.run()))
@@ -681,6 +689,149 @@ class DirectInverseReviewTests(unittest.TestCase):
                 self.assertIn('metadata_only_primary_fit', codes)
                 self.assertIn('evidence_source_body_pointer', codes)
 
+    def test_revision3_native_projection_root_branch_dedup_and_sort_are_literal(self):
+        # Expected properties are authored here, never calculated by the verifier.
+        record = {'content': {'member_candidate_ids': [CIDS[1]], 'concept_candidate': {
+            'affected_dimensions': ['count', 'appearance', 'pose'],
+            'affected_properties': [
+                {'dimension': 'pose', 'target': 'actor', 'property': 'body.angle'},
+                {'dimension': 'count', 'target': 'scene', 'property': 'subject_count'},
+                {'dimension': 'appearance', 'target': 'actor', 'property': 'wardrobe.color'}]}},
+            'effects': {'dimensions': ['pose', 'appearance'], 'properties': [
+                {'dimension': 'pose', 'target': 'actor', 'property': 'body.angle'},
+                {'dimension': 'appearance', 'target': 'actor', 'property': 'wardrobe.color'}],
+                'realizations': {'mode': 'one', 'branches': [
+                    {'id': 'short', 'effects': {'dimensions': ['lighting', 'appearance'], 'properties': [
+                        {'dimension': 'lighting', 'target': 'scene', 'property': 'source'},
+                        {'dimension': 'appearance', 'target': 'actor', 'property': 'wardrobe.color'},
+                        {'dimension': 'appearance', 'target': 'actor', 'property': 'wardrobe.neckline'},
+                        {'dimension': 'appearance', 'target': 'another actor', 'property': 'wardrobe.color'}]}},
+                    {'id': 'long', 'effects': {'dimensions': ['material'], 'properties': [
+                        {'dimension': 'material', 'target': 'garment', 'property': 'surface'}]}}]}}}
+        common = [
+            {'dimension': 'appearance', 'target': 'actor', 'property': 'wardrobe.color'},
+            {'dimension': 'count', 'target': 'scene', 'property': 'subject_count'},
+            {'dimension': 'pose', 'target': 'actor', 'property': 'body.angle'}]
+        expected = {'short': {'dimensions': ['appearance', 'count', 'lighting', 'pose'], 'properties': [
+            {'dimension': 'appearance', 'target': 'actor', 'property': 'wardrobe.color'},
+            {'dimension': 'appearance', 'target': 'actor', 'property': 'wardrobe.neckline'},
+            {'dimension': 'appearance', 'target': 'another actor', 'property': 'wardrobe.color'},
+            {'dimension': 'count', 'target': 'scene', 'property': 'subject_count'},
+            {'dimension': 'lighting', 'target': 'scene', 'property': 'source'},
+            {'dimension': 'pose', 'target': 'actor', 'property': 'body.angle'}]},
+            'long': {'dimensions': ['appearance', 'count', 'material', 'pose'], 'properties': [
+                {'dimension': 'appearance', 'target': 'actor', 'property': 'wardrobe.color'},
+                {'dimension': 'count', 'target': 'scene', 'property': 'subject_count'},
+                {'dimension': 'material', 'target': 'garment', 'property': 'surface'},
+                {'dimension': 'pose', 'target': 'actor', 'property': 'body.angle'}]}}
+        for mode in ['one', 'optional']:
+            with self.subTest(mode=mode):
+                record['effects']['realizations']['mode'] = mode
+                wanted = copy.deepcopy(expected)
+                if mode == 'optional':
+                    wanted = {'base': {'dimensions': ['appearance', 'count', 'pose'],
+                                       'properties': copy.deepcopy(common)}, **wanted}
+                saved = copy.deepcopy(record)
+                self.assertEqual(v.realization_effects(record), wanted)
+                self.assertEqual(record, saved)
+        # Sorting applies even without a projection and without a branch.
+        root_only = {'content': {}, 'effects': {'dimensions': ['pose', 'appearance'], 'properties': [
+            {'dimension': 'pose', 'target': 'actor', 'property': 'body.angle'},
+            {'dimension': 'appearance', 'target': 'actor', 'property': 'wardrobe.color'}]}}
+        self.assertEqual(v.realization_effects(root_only), {'base': {
+            'dimensions': ['appearance', 'pose'], 'properties': [
+                {'dimension': 'appearance', 'target': 'actor', 'property': 'wardrobe.color'},
+                {'dimension': 'pose', 'target': 'actor', 'property': 'body.angle'}]}})
+
+    def test_revision3_projection_wire_matches_manual_expected_and_preserves_raw(self):
+        f = Fixture(self.f.root, concept_projection=True)
+        expected = {'dimensions': ['appearance', 'pose'], 'properties': [
+            {'dimension': 'appearance', 'target': '한양 주인공', 'property': 'wardrobe.color'},
+            {'dimension': 'appearance', 'target': '한양 주인공', 'property': 'wardrobe.neckline'},
+            {'dimension': 'pose', 'target': '한양 주인공', 'property': 'pose.standing'}]}
+        # The short branch duplicates projection pose; long receives that same
+        # pose only because it is explicitly projected, never from short.
+        f.c['rows'][2]['actual_effects_by_realization'] = {
+            'short': copy.deepcopy(expected), 'long': copy.deepcopy(expected)}
+        saved = copy.deepcopy(f.c['rows'][2])
+        f.impact['adjudication_sha256'] = v.digest(f.c)
+        f.seal(); result = f.run()
+        self.assertEqual(result['failures'], [])
+        self.assertEqual(result['contract_revision'], 'bounded-wire-3')
+        self.assertEqual(result['normalized_rows_preserving_raw'][8]['raw'], saved)
+        self.assertEqual(saved['actual_root_effects'], f.source['candidates'][CIDS[2]]['effects'])
+
+    def test_revision3_forged_extra_closure_and_projection_properties_fail(self):
+        expected = {'long': {'dimensions': ['appearance'], 'properties': [
+            {'dimension': 'appearance', 'target': 'actor', 'property': 'wardrobe.color'},
+            {'dimension': 'appearance', 'target': 'actor', 'property': 'wardrobe.neckline'}]}}
+        variants = []
+        for label, dim, prop in [('unselected branch', 'pose', 'body.angle'),
+                                 ('child closure', 'material', 'surface'),
+                                 ('invented projection', 'count', 'subject_count')]:
+            forged = copy.deepcopy(expected)
+            forged['long']['dimensions'].append(dim)
+            forged['long']['properties'].append({'dimension': dim, 'target': 'actor', 'property': prop})
+            variants.append((label, forged))
+        reordered = copy.deepcopy(expected); reordered['long']['properties'].reverse()
+        variants.append(('worker property order', reordered))
+        duplicate = copy.deepcopy(expected)
+        duplicate['long']['properties'].append(copy.deepcopy(duplicate['long']['properties'][0]))
+        variants.append(('worker duplicate', duplicate))
+        owner = copy.deepcopy(expected); owner['long']['properties'][0]['target'] = 'another actor'
+        variants.append(('foreign owner', owner))
+        for label, actual in variants:
+            with self.subTest(label=label):
+                checker = v.Verifier(self.f.root, self.f.path, self.f.manifest_sha)
+                checker.validate_per_rid_effects(actual, expected, label)
+                self.assertIn('per_rid_effects', self.codes(checker.report({})))
+        # A referenced child's footprint never enters its parent's expectation.
+        parent = {'content': {'member_candidate_ids': [CIDS[1]], 'slot_tags': ['material']},
+                  'effects': {'dimensions': [], 'properties': []}}
+        self.assertEqual(v.realization_effects(parent), {'base': {'dimensions': [], 'properties': []}})
+
+    def test_revision3_projection_metadata_never_becomes_positive_fit_evidence(self):
+        f = Fixture(self.f.root, concept_projection=True)
+        row = f.c['rows'][2]
+        row['evidence'] = [{'pointer': '/content/concept_candidate/affected_properties/2/property',
+            'quote': 'wardrobe.color', 'dimension': 'appearance', 'owner': '한양 주인공',
+            'property': 'wardrobe.color'}]
+        f.impact['adjudication_sha256'] = v.digest(f.c)
+        f.seal(); result = f.run()
+        self.assertIn('metadata_only_primary_fit', self.codes(result))
+        self.assertNotIn('per_rid_effects', self.codes(result))
+        self.assertEqual(result['normalized_rows_preserving_raw'][8]['raw'], row)
+
+    def test_revision3_broken_summary_cannot_skip_global_missing_pair_check(self):
+        missing = self.f.a['individual_reviews'].pop()['candidate_id']
+        del self.f.a['slot_reviews'][0]['candidate_ids']
+        self.f.seal(); result = self.f.run()
+        self.assertIn('invalid_worker_contract', self.codes(result))
+        # parse aborts before its local coverage check, but global comparison runs.
+        self.assertNotIn('top3_pair_coverage', self.codes(result))
+        coverage = next(x for x in result['failures'] if x['code'] == 'global_top3_pair_coverage')
+        self.assertIn([0, missing], coverage['expected'])
+        self.assertNotIn([0, missing], coverage['actual'])
+        self.assertEqual(result['counts']['actual_claimed_slot_candidate_pairs'], 8)
+        self.assertNotIn('candidate_ids', self.f.a['slot_reviews'][0])
+
+    def test_revision3_incomplete_or_duplicate_projection_is_rejected(self):
+        record = {'content': {'concept_candidate': {'affected_dimensions': ['appearance'],
+            'affected_properties': [{'dimension': 'appearance', 'target': 'actor', 'property': 'wardrobe.color'}]}},
+            'effects': {'dimensions': [], 'properties': []}}
+        for variation in ['missing dimensions', 'missing properties', 'duplicate dimensions',
+                          'duplicate properties', 'foreign dimension', 'extra property field']:
+            with self.subTest(variation=variation):
+                bad = copy.deepcopy(record)
+                projection = bad['content']['concept_candidate']
+                if variation == 'missing dimensions': del projection['affected_dimensions']
+                elif variation == 'missing properties': del projection['affected_properties']
+                elif variation == 'duplicate dimensions': projection['affected_dimensions'] *= 2
+                elif variation == 'duplicate properties': projection['affected_properties'] *= 2
+                elif variation == 'foreign dimension': projection['affected_properties'][0]['dimension'] = 'pose'
+                elif variation == 'extra property field': projection['affected_properties'][0]['role'] = 'fit'
+                with self.assertRaises(ValueError): v.realization_effects(bad)
+
     def test_no_directory_discovery_api_is_used(self):
         with mock.patch.object(Path, 'iterdir', side_effect=AssertionError('directory scan')), \
              mock.patch.object(Path, 'glob', side_effect=AssertionError('glob scan')), \
@@ -694,7 +845,7 @@ class DirectInverseReviewTests(unittest.TestCase):
         self.f.b['assigned_sorted139_range'] = [1, 3]
         self.f.manifest['reviews'] = self.f.manifest['reviews'][:2]
         self.f.seal(); result = self.f.run()
-        self.assertEqual(result['failures'], [])
+        self.assertEqual(self.codes(result), {'global_top3_pair_coverage'})
         summary = result['selected_reviews'][1]
         self.assertEqual(summary['prepared_assignment_pairs_from_search'], 6)
         self.assertEqual(summary['actual_claimed_slot_candidate_pairs'], 3)
