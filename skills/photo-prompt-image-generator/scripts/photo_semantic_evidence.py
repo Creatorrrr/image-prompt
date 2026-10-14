@@ -8,6 +8,7 @@ import copy
 import contextlib
 import contextvars
 import photo_native_owner_resolution as owner_resolver
+import photo_semantic_role_views as manual_views
 import photo_candidate_corpus as c
 import photo_candidate_realizations as realizations
 from photo_precore_bridge import load
@@ -62,7 +63,7 @@ REFERENCE_RELATIONS = frozenset({'partial_restatement', 'selected_output_constra
 
 
 def _proof_fields_valid(proof):
-    return set(proof) in (PROOF_FIELDS, PROOF_FIELDS | {'guard_supports'})
+    return PROOF_FIELDS <= set(proof) <= PROOF_FIELDS | {'guard_supports','manual_role_views'}
 
 
 def _guard_support_rows(proof):
@@ -592,6 +593,92 @@ def validate_requirement_binding(record, parent_rid, member_index, dependency, c
             raise ValueError('every positive member requirement needs explicit fact-mode and actual-effect coverage')
 
 
+def _compile_manual_role_views(record,catalog):
+    """Structural output only, called after the native whole-source checks.
+
+    This is not a capability or a public caller-authored source context. Full
+    qualification/publication must independently supply the actual record.
+    """
+    proof=record['content']['role_evidence']
+    if 'manual_role_views' not in proof:return None
+    rows=proof['manual_role_views']
+    if not isinstance(rows,list) or not 1<=len(rows)<=manual_views.MAX_VIEWS:
+        raise ValueError('bounded nonempty explicit manual role views required')
+    ids=sorted(realizations.ids(record))
+    context={'candidate_id':record['id'],'actual_realization_ids':ids,
+        'meaning_sha256':meaning_sha256(record),'catalog_by_id':catalog,
+        'facts':proof['facts'],'source_units':proof['source_units'],
+        'positive_fields':[{'realization_id':rid,'pointer':pointer,
+            'text':positive_string(record,pointer,realization_id=rid)}
+            for rid in ids for pointer in sorted(primary_paths(record,rid))],
+        'closure_snapshot':{key:proof[key] for key in manual_views.CLOSURE_FIELDS}}
+    validated=manual_views.validate_full_views(rows,context=context)
+    expected=manual_views.compact_views(validated,authoritative_contract_sha256=c.digest(context))
+    return validated,expected
+
+
+def _ordinary_role_fact(spec,fact):
+    return (fact['dimension'] in spec['dimensions'] and any(
+        fact['property']==prefix.rstrip('.') or fact['property'].startswith(
+            prefix if prefix.endswith('.') else prefix+'.') for prefix in spec['property_prefixes']))
+
+
+def _role_fact_support(spec,role,fact,*,view_authority=None):
+    # A semantic view changes only the explicit role support decision. The
+    # complete canonical value/mode/property/owner/operation/Rx stays original.
+    if (fact['realization_id'] not in role['realization_ids'] or fact['mode'] not in role['support_modes']
+            or fact['mode']=='context' and spec['semantic_role']!='contextual'):
+        raise ValueError('role fact is outside its reviewed spec/mode/actual RID')
+    if _ordinary_role_fact(spec,fact):return None
+    if view_authority is None or not role.get('view_refs'):
+        raise ValueError('out-of-prefix role fact requires its explicit source-qualified manual view')
+    actual,expected=view_authority
+    support=manual_views.selected_support(actual,expected_binding=expected,
+        role_id=spec['id'],realization_id=fact['realization_id'],fact_id=fact['id'])
+    original={key:value for key,value in fact.items() if key not in {'pointer','quote'}}
+    if (support is None or not set(support['view_ids'])<=set(role['view_refs'])
+            or support['fact']!=original):
+        raise ValueError('manual view does not support this unchanged canonical role fact')
+    return support
+
+
+def _validate_manual_view_usage(proof):
+    rows={row['id']:row for row in proof.get('manual_role_views',[])};used=set()
+    for tag,role in proof['roles'].items():
+        refs=role.get('view_refs',[])
+        if 'view_refs' in role:_strings(refs,'explicit role manual views')
+        for ref in refs:
+            view=rows.get(ref)
+            if (view is None or view['role_id']!=tag or view['realization_id'] not in role['realization_ids']
+                    or not {row['fact_id'] for row in view['canonical_fact_refs']}<=set(role['fact_refs'])):
+                raise ValueError('manual view must bind its exact same-source role/facts/actual RID')
+            used.add(ref)
+    if used!=set(rows):raise ValueError('unused or foreign manual role view')
+
+
+def _lookup_manual_view_authority(record,source_data):
+    """Rebuild expected support from the independently pinned full source.
+
+    Never take an expected binding from the compact/public receipt under test.
+    Lazy source_data.candidates loads the existing hash-verified payload. The
+    runtime/final auditor owns its independently acquired source generation.
+    """
+    if source_data is None:raise ValueError('manual role view requires independent full-source authority')
+    cid=record['id'];source=source_data['candidates'][cid]
+    if '_semantic_evidence_guard' in source:
+        raise ValueError('compact metadata is not full-source role-view authority')
+    expected_guard=compact(source,source_data)  # All native whole-source checks.
+    if expected_guard is None or 'manual_role_view_bindings' not in expected_guard:
+        raise ValueError('actual full source has no qualified manual role views')
+    if '_semantic_evidence_guard' in record:
+        if proof_of(record)!=expected_guard:raise ValueError('manual role compact differs from full-source qualification')
+        actual=proof_of(record)['manual_role_view_bindings']
+    else:
+        if record!=source:raise ValueError('manual role full source differs from pinned source')
+        actual=_compile_manual_role_views(record,source_data['slot_catalog'])[0]
+    return actual,expected_guard['manual_role_view_bindings']
+
+
 def validate(record, catalog, *, catalog_sha256=None, corpus=None, _stack=()):
     if '_semantic_evidence_guard' in record:
         raise ValueError('native source validation requires full positive source, not a compact guard')
@@ -726,14 +813,16 @@ def validate(record, catalog, *, catalog_sha256=None, corpus=None, _stack=()):
         raise ValueError('source unit names a foreign RID')
     if record['record_kind'] == 'diagnostic' and (proof['roles'] or proof['facts'] or supports):
         raise ValueError('diagnostic cannot certify positive semantic facts')
+    view_authority=_compile_manual_role_views(record,catalog)
     for tag, role in proof['roles'].items():
-        if (tag not in catalog or not isinstance(role, dict) or set(role) not in (
-                {'spec_sha256', 'scope', 'realization_ids', 'fact_refs', 'support_modes'},
-                {'spec_sha256', 'scope', 'realization_ids', 'fact_refs', 'support_modes','guard_refs'})):
+        if (tag not in catalog or not isinstance(role, dict)
+                or not {'spec_sha256','scope','realization_ids','fact_refs','support_modes'} <= set(role)
+                or not set(role) <= {'spec_sha256','scope','realization_ids','fact_refs','support_modes','guard_refs','view_refs'}):
             raise ValueError('unknown role or native role contract')
         spec = catalog[tag]
         guard_refs=role.get('guard_refs',[])
         if 'guard_refs' in role:_strings(guard_refs,'role guard supports')
+        if 'view_refs' in role:_strings(role['view_refs'],'explicit role manual views')
         _strings(role['realization_ids'], 'role RIDs'); _strings(role['fact_refs'], 'role facts',empty=bool(guard_refs))
         _strings(role['support_modes'], 'role modes')
         if (role['spec_sha256'] != c.digest(spec) or role['scope'] not in {'whole_record', 'positive_alternative'}
@@ -743,12 +832,8 @@ def validate(record, catalog, *, catalog_sha256=None, corpus=None, _stack=()):
         covered = set()
         for ref in role['fact_refs']:
             fact = facts.get(ref)
-            if (fact is None or fact['realization_id'] not in role['realization_ids']
-                    or fact['mode'] not in role['support_modes'] or fact['dimension'] not in spec['dimensions']
-                    or not any(fact['property'] == prefix.rstrip('.') or fact['property'].startswith(
-                        prefix if prefix.endswith('.') else prefix+'.') for prefix in spec['property_prefixes'])
-                    or fact['mode'] == 'context' and spec['semantic_role'] != 'contextual'):
-                raise ValueError('role fact is outside its reviewed spec/mode/actual RID')
+            if fact is None:raise ValueError('role fact is outside its reviewed spec/mode/actual RID')
+            _role_fact_support(spec,role,fact,view_authority=view_authority)
             covered.add(fact['realization_id'])
         for ref in guard_refs:
             support=supports.get(ref)
@@ -764,6 +849,7 @@ def validate(record, catalog, *, catalog_sha256=None, corpus=None, _stack=()):
             raise ValueError('role needs source support on every qualified RID')
         if guard_refs and set(role['support_modes'])!={facts[ref]['mode'] for ref in role['fact_refs']}|{supports[ref]['mode'] for ref in guard_refs}:
             raise ValueError('guard-backed role modes must match its actual direct support union')
+    _validate_manual_view_usage(proof)
 
 
 def compact(record, corpus=None, _stack=()):
@@ -777,6 +863,9 @@ def compact(record, corpus=None, _stack=()):
             raise ValueError('native compact seal requires the full current source/catalog')
         validate(record,corpus['slot_catalog'],corpus=corpus)
     result = copy.deepcopy(proof)
+    if 'manual_role_views' in proof:
+        result.pop('manual_role_views')
+        result['manual_role_view_bindings']=_compile_manual_role_views(record,corpus['slot_catalog'])[1]
     result.pop('source_units'); result.pop('review')
     for fact in result['facts']:
         fact.pop('pointer'); fact.pop('quote')
@@ -804,7 +893,7 @@ def compact(record, corpus=None, _stack=()):
     return result
 
 
-def qualification(spec, record, realization_id='base'):
+def qualification(spec, record, realization_id='base', *, source_data=None):
     result = {'status': 'review_required', 'reason': 'native_source_unqualified_stage05c',
               'native_qualification': native_status(record), 'matched_properties': [],
               'meaning_terms': [], 'fact_refs': [], 'support_modes': []}
@@ -836,8 +925,20 @@ def qualification(spec, record, realization_id='base'):
         return {**result, 'reason': 'qualified_actual_effect_set_changed'}
     if not selected and not selected_guards:
         return {**result, 'reason': 'role_has_no_selected_fact'}
+    view_supports=[]
+    try:
+        view_authority=None
+        if 'manual_role_views' in proof or 'manual_role_view_bindings' in proof or 'view_refs' in role:
+            if source_data is None:return {**result,'reason':'manual_role_view_full_source_authority_required'}
+            view_authority=_lookup_manual_view_authority(record,source_data)
+        for fact in selected:
+            support=_role_fact_support(spec,role,fact,view_authority=view_authority)
+            if support is not None:view_supports.append(support)
+    except (ValueError,KeyError,TypeError,IndexError):
+        return {**result,'native_qualification':'invalid','reason':'manual_role_view_or_original_role_binding_changed'}
+    optional_views=({'matched_manual_role_views':view_supports} if view_supports else {})
     if selected_guards:
-        return {**result,'status':'eligible','reason':'source_reviewed_guard_evidence_requires_admission',
+        return {**result,**optional_views,'status':'eligible','reason':'source_reviewed_guard_evidence_requires_admission',
             'fact_refs':[fact['id'] for fact in selected],
             'guard_refs':[row['id'] for row in selected_guards],
             'guard_admission_required':True,
@@ -846,7 +947,7 @@ def qualification(spec, record, realization_id='base'):
                 for row in selected_guards],
             'support_modes':sorted({fact['mode'] for fact in selected}|{row['mode'] for row in selected_guards}),
             'matched_properties':[dict(zip(PROPERTY_FIELDS,key)) for key in dict.fromkeys(property_key(fact) for fact in selected)]}
-    return {**result, 'status': 'eligible', 'reason': 'source_reviewed_mode_specific_evidence',
+    return {**result, **optional_views, 'status': 'eligible', 'reason': 'source_reviewed_mode_specific_evidence',
             'fact_refs': [fact['id'] for fact in selected], 'support_modes': sorted({fact['mode'] for fact in selected}),
             'matched_properties': [dict(zip(PROPERTY_FIELDS, key)) for key in dict.fromkeys(property_key(fact) for fact in selected)]}
 
