@@ -1,0 +1,4511 @@
+{
+  "schema": "photo-catalog-scope-refinement-source-packet/v1",
+  "task_name": "/root/review_07250_08250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "method": "codex_direct_source_read_manual_literal_scope_proposals",
+  "status": "frozen_proposal_only_not_operational",
+  "source_sha256": "125d3527c728fbdee9ebdc915dc21ae0d84c8e379dd928e0012ff9df039e701b",
+  "catalog_sha256": "08f9fa28c10711f602279a5b86a73a76c4c97b5dc70b38c031a958a2ff69bde3",
+  "canonical_mutation": false,
+  "source_mutation": false,
+  "operational_native_qualified_count": 0,
+  "records": {
+    "cand_8c29324de5c85f2488b6b60597fe8f71": {
+      "conditions": {},
+      "content": {
+        "activation": {
+          "exact_terms": [
+            "신체 털의 굵기·색과 피부에 붙는 관계",
+            "body-hair fiber thickness and pigmentation on its skin region"
+          ],
+          "requires_adult_character": true,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "authored_components": {
+          "components": [
+            {
+              "id": "component_1",
+              "match_terms": [
+                "skin attachment"
+              ]
+            },
+            {
+              "id": "component_2",
+              "match_terms": [
+                "fiber thickness"
+              ]
+            },
+            {
+              "id": "component_3",
+              "match_terms": [
+                "fiber pigmentation"
+              ]
+            },
+            {
+              "id": "owner_state",
+              "match_terms": [
+                "the stated contours belong to the same adult subject and specified body region",
+                "the named body region remains connected to the same adult subject"
+              ]
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v2",
+          "discovery": {
+            "minimum_component_groups": 4,
+            "required_group_ids": [
+              "component_1",
+              "component_2",
+              "component_3",
+              "owner_state"
+            ]
+          },
+          "obligations": [
+            {
+              "component_ids": [
+                "component_1",
+                "component_2",
+                "component_3",
+                "owner_state"
+              ],
+              "evidence": [
+                {
+                  "field": "component_1_phrase",
+                  "requirement": {
+                    "min_content_words": 2,
+                    "must_mention_any": [
+                      "skin attachment"
+                    ]
+                  }
+                },
+                {
+                  "field": "component_2_phrase",
+                  "requirement": {
+                    "min_content_words": 2,
+                    "must_mention_any": [
+                      "fiber thickness"
+                    ]
+                  }
+                },
+                {
+                  "field": "component_3_phrase",
+                  "requirement": {
+                    "min_content_words": 2,
+                    "must_mention_any": [
+                      "fiber pigmentation"
+                    ]
+                  }
+                },
+                {
+                  "field": "owner_state_phrase",
+                  "requirement": {
+                    "min_content_words": 2,
+                    "must_mention_any": [
+                      "the stated contours belong to the same adult subject and specified body region",
+                      "the named body region remains connected to the same adult subject"
+                    ]
+                  }
+                }
+              ],
+              "instruction": "Bind each visible component to the same adult subject and specified body region; show skin attachment; fiber thickness; fiber pigmentation; retain the current garment boundary, pose state and requester property locks.",
+              "render_gates": [
+                {
+                  "description": "The same adult subject and specified region visibly establish skin attachment.",
+                  "id": "vo_bm_body_hair_fiber_component_1",
+                  "review_scale": "native"
+                },
+                {
+                  "description": "The same adult subject and specified region visibly establish fiber thickness.",
+                  "id": "vo_bm_body_hair_fiber_component_2",
+                  "review_scale": "native"
+                },
+                {
+                  "description": "The same adult subject and specified region visibly establish fiber pigmentation.",
+                  "id": "vo_bm_body_hair_fiber_component_3",
+                  "review_scale": "native"
+                },
+                {
+                  "description": "The same adult subject and specified region visibly establish the stated contours belong to the same adult subject and specified body region.",
+                  "id": "vo_bm_body_hair_fiber_owner_state",
+                  "review_scale": "native"
+                }
+              ]
+            }
+          ]
+        },
+        "category": "adult_local_morphology_relation",
+        "composition_instruction": "Bind each visible component to the same adult subject and specified body region; show skin attachment; fiber thickness; fiber pigmentation; retain the current garment boundary, pose state and requester property locks.",
+        "concept_candidate": {
+          "affected_dimensions": [
+            "appearance"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "appearance",
+              "property": "body.body_hair.fiber_thickness_color",
+              "target": "main_subject"
+            }
+          ],
+          "concept_terms": [
+            "신체 털의 굵기·색과 피부에 붙는 관계",
+            "body-hair fiber thickness and pigmentation on its skin region",
+            "skin attachment",
+            "fiber thickness",
+            "fiber pigmentation"
+          ],
+          "core_assertion_discovery": true
+        },
+        "evidence_requirements": {
+          "component_1_phrase": {
+            "min_content_words": 2,
+            "must_mention_any": [
+              "skin attachment"
+            ]
+          },
+          "component_2_phrase": {
+            "min_content_words": 2,
+            "must_mention_any": [
+              "fiber thickness"
+            ]
+          },
+          "component_3_phrase": {
+            "min_content_words": 2,
+            "must_mention_any": [
+              "fiber pigmentation"
+            ]
+          },
+          "owner_state_phrase": {
+            "min_content_words": 2,
+            "must_mention_any": [
+              "the stated contours belong to the same adult subject and specified body region",
+              "the named body region remains connected to the same adult subject"
+            ]
+          }
+        },
+        "reject_substitutes": [
+          "wrong_owner_or_body_region",
+          "garment_or_shadow_substitute",
+          "occluded_required_component",
+          "unsupported_history_or_quantity_inference"
+        ],
+        "render_gates": [
+          {
+            "description": "The same adult subject and specified region visibly establish skin attachment.",
+            "id": "vo_bm_body_hair_fiber_component_1",
+            "review_scale": "native"
+          },
+          {
+            "description": "The same adult subject and specified region visibly establish fiber thickness.",
+            "id": "vo_bm_body_hair_fiber_component_2",
+            "review_scale": "native"
+          },
+          {
+            "description": "The same adult subject and specified region visibly establish fiber pigmentation.",
+            "id": "vo_bm_body_hair_fiber_component_3",
+            "review_scale": "native"
+          },
+          {
+            "description": "The same adult subject and specified region visibly establish the stated contours belong to the same adult subject and specified body region.",
+            "id": "vo_bm_body_hair_fiber_owner_state",
+            "review_scale": "native"
+          }
+        ],
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase",
+          "component_3_phrase",
+          "owner_state_phrase"
+        ],
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "forbidden_prompt_terms": [],
+          "prompt_label_terms": [
+            "body-hair fiber thickness and pigmentation on its skin region"
+          ],
+          "runtime_forbidden_labels": []
+        },
+        "semantics": {
+          "claim_limits": [
+            "Observe the named adult body region in the specified view and current state; an occluded required component is unassessable.",
+            "Visible surface geometry does not establish numerical composition, health, strength, attractiveness or personal history.",
+            "Preserve the requester-defined property and reference scope; adjacent regions and garment geometry are separate owners.",
+            "Partial evidence fails complete qualification; retrieval alone creates no hard obligation."
+          ],
+          "component_semantics": {
+            "groups": [
+              {
+                "any_terms": [
+                  "skin attachment"
+                ],
+                "id": "component_1"
+              },
+              {
+                "any_terms": [
+                  "fiber thickness"
+                ],
+                "id": "component_2"
+              },
+              {
+                "any_terms": [
+                  "fiber pigmentation"
+                ],
+                "id": "component_3"
+              },
+              {
+                "any_terms": [
+                  "the stated contours belong to the same adult subject and specified body region",
+                  "the named body region remains connected to the same adult subject"
+                ],
+                "id": "owner_state"
+              }
+            ],
+            "minimum_component_groups": 4,
+            "required_group_ids": [
+              "component_1",
+              "component_2",
+              "component_3",
+              "owner_state"
+            ]
+          },
+          "contrast_examples": [
+            "털의 굵기만으로 나이·성별·호르몬을 판단"
+          ],
+          "definition": "body-hair fiber thickness and pigmentation on its skin region; the same adult region visibly establishes skin attachment; fiber thickness; fiber pigmentation.",
+          "paraphrase_examples": [
+            "같은 성인 인물에서 신체 털의 굵기·색과 피부에 붙는 관계를 부위별로 읽는 형태",
+            "An adult region showing skin attachment; fiber thickness; fiber pigmentation.",
+            "fine short lightly pigmented vellus body hair",
+            "coarse longer pigmented terminal body hair",
+            "body-hair strands visibly rooted in the skin",
+            "가늘고 짧은 솜털",
+            "굵고 길며 색이 짙은 국소 체모"
+          ],
+          "visual_components": [
+            "skin attachment",
+            "fiber thickness",
+            "fiber pigmentation"
+          ]
+        }
+      },
+      "effects": {
+        "dimensions": [],
+        "properties": []
+      },
+      "id": "cand_8c29324de5c85f2488b6b60597fe8f71",
+      "provenance": [
+        {
+          "sha256": "27b74604f064115d86012c91ecb3619b163c042d4ee698a691f12ac84ac1d6b6",
+          "source": "visual_profile:bm_body_hair_fiber"
+        }
+      ],
+      "record_kind": "visual_profile"
+    },
+    "cand_f6a59c81e96e561dad0b6fa266dc170d": {
+      "conditions": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "content": {
+        "aliases": [
+          "신체 털의 굵기·색과 피부에 붙는 관계"
+        ],
+        "concept_units": [
+          "skin attachment",
+          "fiber thickness",
+          "fiber pigmentation"
+        ],
+        "core_assertion_discovery": true,
+        "embedding_text": "body-hair fiber thickness and pigmentation on its skin region; skin attachment; fiber thickness; fiber pigmentation",
+        "en": "body-hair fiber thickness and pigmentation on its skin region",
+        "keywords": [
+          "skin attachment",
+          "fiber thickness",
+          "fiber pigmentation"
+        ],
+        "ko": "신체 털의 굵기·색과 피부에 붙는 관계",
+        "paraphrases": [
+          "신체 털의 굵기·색과 피부에 붙는 관계",
+          "body-hair fiber thickness and pigmentation on its skin region",
+          "fine short lightly pigmented vellus body hair",
+          "coarse longer pigmented terminal body hair",
+          "body-hair strands visibly rooted in the skin",
+          "가늘고 짧은 솜털",
+          "굵고 길며 색이 짙은 국소 체모"
+        ],
+        "relations": [
+          {
+            "id": "owner_property",
+            "object": "body-hair fiber thickness and pigmentation on its skin region",
+            "subject": "main_subject",
+            "type": "has_visible_property"
+          }
+        ],
+        "tags": [
+          "human",
+          "body_hair"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "appearance"
+        ],
+        "properties": [
+          {
+            "dimension": "appearance",
+            "property": "body.body_hair.fiber_thickness_color",
+            "target": "main_subject"
+          }
+        ]
+      },
+      "id": "cand_f6a59c81e96e561dad0b6fa266dc170d",
+      "provenance": [
+        {
+          "sha256": "f3b0a08175618ddb7ac870165877173b0512940dae2bc123feca8202402bc0ea",
+          "source": "slot:skin_finish:bm_body_hair_fiber"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_8b78b7b93dc559d5b292b4a319266708": {
+      "conditions": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "content": {
+        "aliases": [
+          "부위별 털 밀도·길이·분포",
+          "regional body-hair distribution",
+          "부위별 체모 분포"
+        ],
+        "concept_units": [
+          "specified body region",
+          "fiber density",
+          "fiber length distribution"
+        ],
+        "core_assertion_discovery": true,
+        "embedding_text": "regional body-hair density length and distribution; specified body region; fiber density; fiber length distribution",
+        "en": "regional body-hair density length and distribution",
+        "keywords": [
+          "specified body region",
+          "fiber density",
+          "fiber length distribution"
+        ],
+        "ko": "부위별 털 밀도·길이·분포",
+        "paraphrases": [
+          "부위별 털 밀도·길이·분포",
+          "regional body-hair density length and distribution",
+          "localized forearm hair distribution",
+          "a sparse patch of body hair on an upper arm",
+          "팔 피부 위 국소 체모의 분포"
+        ],
+        "relations": [
+          {
+            "id": "owner_property",
+            "object": "regional body-hair density length and distribution",
+            "subject": "main_subject",
+            "type": "has_visible_property"
+          }
+        ],
+        "tags": [
+          "human",
+          "body_hair"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "appearance"
+        ],
+        "properties": [
+          {
+            "dimension": "appearance",
+            "property": "body.body_hair.density_length_distribution",
+            "target": "main_subject"
+          }
+        ]
+      },
+      "id": "cand_8b78b7b93dc559d5b292b4a319266708",
+      "provenance": [
+        {
+          "sha256": "a53f813e7718b84046c9f509dabd891a47ecd2484ed1d3a72575594775748026",
+          "source": "slot:skin_finish:bm_body_hair_distribution"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_cbb28db80b385ba7a7e8a938d455187f": {
+      "conditions": {},
+      "content": {
+        "adoption": "optional",
+        "associated_profile_ids": [
+          "cand_b16d68719a805797a14455d8675457b6"
+        ],
+        "components": [
+          {
+            "concept_units": [
+              "one continuous hair length extends from the scalp toward the neck"
+            ],
+            "id": "component_1",
+            "minimum_realizations": 1
+          },
+          {
+            "concept_units": [
+              "that same hair length curves around the neck"
+            ],
+            "id": "component_2",
+            "minimum_realizations": 1
+          }
+        ],
+        "confusion_boundaries": [
+          "천 스카프 H397 제외",
+          "접촉 형태는 독립적 의지·움직임의 증거가 아님"
+        ],
+        "member_candidates": [
+          {
+            "adoption": "optional",
+            "binding_id": "bind_8cec642e21e05d48b757772952614477",
+            "candidate_id": "cand_8cec642e21e05d48b757772952614477",
+            "requirements": {}
+          }
+        ],
+        "profile_activation": "independent_request_evidence_only",
+        "relations": [
+          {
+            "id": "hair_main_hair_neck_wrap_owner",
+            "object": "main_subject",
+            "subject": "the selected hair arrangement",
+            "type": "declared_owner_scope"
+          },
+          {
+            "id": "hair_main_hair_neck_wrap_r1",
+            "object": "subject_scalp",
+            "subject": "hair_length",
+            "type": "continuous_from"
+          },
+          {
+            "id": "hair_main_hair_neck_wrap_r2",
+            "object": "subject_neck",
+            "subject": "hair_length",
+            "type": "wraps"
+          }
+        ],
+        "source_sha256": "5276924f7e6c906096f1d42264b44e0bc3a344545d09c8f8d6b9ba01d56e1d1e"
+      },
+      "effects": {
+        "dimensions": [
+          "appearance"
+        ],
+        "properties": [
+          {
+            "dimension": "appearance",
+            "property": "hair.style.hair_neck_wrap",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "appearance",
+            "property": "hair.style",
+            "target": "main_subject"
+          }
+        ]
+      },
+      "id": "cand_cbb28db80b385ba7a7e8a938d455187f",
+      "provenance": [
+        {
+          "sha256": "fb3ec3ffb8f366ae2c660d819289e1368b8f26e9f5b85ad2d7574410ba86413b",
+          "source": "bundle:chrh_bundle_chrh_hair_main_hair_neck_wrap"
+        }
+      ],
+      "record_kind": "visual_bundle"
+    },
+    "cand_8cec642e21e05d48b757772952614477": {
+      "conditions": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "content": {
+        "aliases": [],
+        "concept_units": [
+          "one continuous hair length extends from the scalp toward the neck",
+          "that same hair length curves around the neck"
+        ],
+        "core_assertion_discovery": true,
+        "embedding_text": "one continuous hair length extends from the scalp toward the neck; that same hair length curves around the neck",
+        "en": "one continuous hair length extends from the scalp toward the neck; that same hair length curves around the neck",
+        "keywords": [
+          "one continuous hair length extends from the scalp toward the neck",
+          "that same hair length curves around the neck"
+        ],
+        "ko": "목을 감싸는 모발",
+        "paraphrases": [
+          "one continuous hair length extends from the scalp toward the neck; that same hair length curves around the neck",
+          "목을 감싸는 모발"
+        ],
+        "relations": [
+          {
+            "id": "hair_main_hair_neck_wrap_owner",
+            "object": "main_subject",
+            "subject": "the selected hair arrangement",
+            "type": "declared_owner_scope"
+          },
+          {
+            "id": "hair_main_hair_neck_wrap_r1",
+            "object": "subject_scalp",
+            "subject": "hair_length",
+            "type": "continuous_from"
+          },
+          {
+            "id": "hair_main_hair_neck_wrap_r2",
+            "object": "subject_neck",
+            "subject": "hair_length",
+            "type": "wraps"
+          }
+        ],
+        "tags": [
+          "human",
+          "hair",
+          "observable_relation"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "appearance"
+        ],
+        "properties": [
+          {
+            "dimension": "appearance",
+            "property": "hair.style.hair_neck_wrap",
+            "target": "main_subject"
+          },
+          {
+            "dimension": "appearance",
+            "property": "hair.style",
+            "target": "main_subject"
+          }
+        ]
+      },
+      "id": "cand_8cec642e21e05d48b757772952614477",
+      "provenance": [
+        {
+          "sha256": "b991ae5372a57c58f3637f86ed17b8e2773c162f63bda51716635b163fa04736",
+          "source": "slot:hair_style:chrh_hair_main_hair_neck_wrap"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_b16d68719a805797a14455d8675457b6": {
+      "conditions": {},
+      "content": {
+        "activation": {
+          "exact_terms": [
+            "one continuous hair length extends from the scalp toward the neck; that same hair length curves around the neck"
+          ],
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "any_terms": [
+                  "one continuous hair length extends from the scalp toward the neck; that same hair length curves around the neck"
+                ],
+                "id": "complete_owned_proposition"
+              }
+            ]
+          },
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "authored_components": {
+          "components": [
+            {
+              "id": "owned_arrangement",
+              "match_terms": [
+                "one continuous hair length extends from the scalp toward the neck; that same hair length curves around the neck",
+                "one continuous hair length extends from the scalp toward the neck",
+                "that same hair length curves around the neck",
+                "목을 감싸는 모발"
+              ]
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v2",
+          "discovery": {
+            "minimum_component_groups": 1,
+            "required_group_ids": [
+              "owned_arrangement"
+            ]
+          },
+          "obligations": [
+            {
+              "component_ids": [
+                "owned_arrangement"
+              ],
+              "evidence": [
+                {
+                  "field": "owned_arrangement_phrase",
+                  "requirement": {
+                    "min_content_words": 3,
+                    "must_mention_any": [
+                      "one continuous hair length extends from the scalp toward the neck; that same hair length curves around the neck",
+                      "one continuous hair length extends from the scalp toward the neck",
+                      "that same hair length curves around the neck"
+                    ]
+                  }
+                }
+              ],
+              "instruction": "Preserve every selected relation on this same hair owner and region: one continuous hair length extends from the scalp toward the neck; that same hair length curves around the neck.",
+              "render_gates": [
+                {
+                  "description": "Inspect the same declared hair owner in original pixels: one continuous hair length extends from the scalp toward the neck; that same hair length curves around the neck. Every selected relation must be visible together; a cropped or occluded endpoint is unobservable, not a pass.",
+                  "id": "vo_hair_main_hair_neck_wrap_all",
+                  "review_scale": "native"
+                },
+                {
+                  "description": "Inspect this selected minimum relation on the same visible owner and region: 두피에서 이어지는 모발 길이. Partial or substituted evidence fails; hidden evidence is unobservable.",
+                  "id": "vo_hair_main_hair_neck_wrap_sig_1",
+                  "review_scale": "native"
+                },
+                {
+                  "description": "Inspect this selected minimum relation on the same visible owner and region: 그 길이가 목 주위를 둘러 지나감. Partial or substituted evidence fails; hidden evidence is unobservable.",
+                  "id": "vo_hair_main_hair_neck_wrap_sig_2",
+                  "review_scale": "native"
+                }
+              ]
+            }
+          ]
+        },
+        "category": "character_hair_owned_relation",
+        "composition_instruction": "Preserve every selected relation on this same hair owner and region: one continuous hair length extends from the scalp toward the neck; that same hair length curves around the neck.",
+        "concept_candidate": {
+          "affected_dimensions": [
+            "appearance"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "appearance",
+              "property": "hair.style.hair_neck_wrap",
+              "target": "main_subject"
+            },
+            {
+              "dimension": "appearance",
+              "property": "hair.style",
+              "target": "main_subject"
+            }
+          ],
+          "concept_terms": [
+            "one continuous hair length extends from the scalp toward the neck",
+            "that same hair length curves around the neck",
+            "목을 감싸는 모발"
+          ],
+          "core_assertion_discovery": true
+        },
+        "evidence_requirements": {
+          "owned_arrangement_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "one continuous hair length extends from the scalp toward the neck; that same hair length curves around the neck",
+              "one continuous hair length extends from the scalp toward the neck",
+              "that same hair length curves around the neck"
+            ]
+          }
+        },
+        "reject_substitutes": [
+          "천 스카프 H397 제외",
+          "접촉 형태는 독립적 의지·움직임의 증거가 아님"
+        ],
+        "render_gates": [
+          {
+            "description": "Inspect the same declared hair owner in original pixels: one continuous hair length extends from the scalp toward the neck; that same hair length curves around the neck. Every selected relation must be visible together; a cropped or occluded endpoint is unobservable, not a pass.",
+            "id": "vo_hair_main_hair_neck_wrap_all",
+            "review_scale": "native"
+          },
+          {
+            "description": "Inspect this selected minimum relation on the same visible owner and region: 두피에서 이어지는 모발 길이. Partial or substituted evidence fails; hidden evidence is unobservable.",
+            "id": "vo_hair_main_hair_neck_wrap_sig_1",
+            "review_scale": "native"
+          },
+          {
+            "description": "Inspect this selected minimum relation on the same visible owner and region: 그 길이가 목 주위를 둘러 지나감. Partial or substituted evidence fails; hidden evidence is unobservable.",
+            "id": "vo_hair_main_hair_neck_wrap_sig_2",
+            "review_scale": "native"
+          }
+        ],
+        "required_evidence_fields": [
+          "owned_arrangement_phrase"
+        ],
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "forbidden_prompt_terms": [],
+          "prompt_label_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "semantics": {
+          "claim_limits": [
+            "This selected visible arrangement preserves the declared owner, region and property locks.",
+            "Names and approximate retrieval do not prove process, origin, identity, age, personality or medical cause."
+          ],
+          "component_semantics": {
+            "groups": [
+              {
+                "any_terms": [
+                  "one continuous hair length extends from the scalp toward the neck; that same hair length curves around the neck",
+                  "one continuous hair length extends from the scalp toward the neck",
+                  "that same hair length curves around the neck",
+                  "목을 감싸는 모발"
+                ],
+                "id": "owned_arrangement"
+              }
+            ],
+            "minimum_component_groups": 1,
+            "required_group_ids": [
+              "owned_arrangement"
+            ]
+          },
+          "contrast_examples": [
+            "천 스카프 H397 제외",
+            "접촉 형태는 독립적 의지·움직임의 증거가 아님"
+          ],
+          "definition": "On the selected hair owner and visible region, one continuous hair length extends from the scalp toward the neck; that same hair length curves around the neck.",
+          "paraphrase_examples": [
+            "Visible hair relation: one continuous hair length extends from the scalp toward the neck; that same hair length curves around the neck",
+            "목을 감싸는 모발"
+          ],
+          "visual_components": [
+            "one continuous hair length extends from the scalp toward the neck",
+            "that same hair length curves around the neck"
+          ]
+        }
+      },
+      "effects": {
+        "dimensions": [],
+        "properties": []
+      },
+      "id": "cand_b16d68719a805797a14455d8675457b6",
+      "provenance": [
+        {
+          "sha256": "68bfc3baeef2771d803f430e3a86742e1694d49187e3c2d3ad51fab9ec78f3f0",
+          "source": "visual_profile:chrh_rel_hair_main_hair_neck_wrap"
+        }
+      ],
+      "record_kind": "visual_profile"
+    },
+    "cand_34621f1dfc4957c5b8ad5516f71ac250": {
+      "conditions": {},
+      "content": {
+        "activation": {
+          "exact_terms": [
+            "closed contrasting rings on a creature surface",
+            "생물 표면의 닫힌 대비 고리 무늬"
+          ],
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "any_terms": [
+                  "nonhuman",
+                  "creature",
+                  "robot",
+                  "machine",
+                  "animal design",
+                  "비인간",
+                  "생물",
+                  "로봇",
+                  "기계",
+                  "동물 디자인"
+                ],
+                "id": "declared_carrier"
+              }
+            ]
+          },
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "authored_components": {
+          "components": [
+            {
+              "evidence_field": "component_1_phrase",
+              "evidence_terms": [
+                "closed contrasting rings lie on the declared creature surface",
+                "a selected nonhuman body bears bounded ring-shaped color marks",
+                "지정한 생물 표면 위에 닫힌 대비 색 고리가 놓인다"
+              ],
+              "id": "component_1",
+              "instruction": "Keep the selected carrier and owner explicit: closed contrasting rings lie on the declared creature surface.",
+              "match_terms": [
+                "closed contrasting rings lie on the declared creature surface",
+                "a selected nonhuman body bears bounded ring-shaped color marks",
+                "지정한 생물 표면 위에 닫힌 대비 색 고리가 놓인다"
+              ],
+              "min_content_words": 3,
+              "render_gate": {
+                "description": "closed contrasting rings lie on the declared creature surface. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable.",
+                "id": "vo_ca_closed_body_rings_1",
+                "review_scale": "native"
+              }
+            },
+            {
+              "evidence_field": "component_2_phrase",
+              "evidence_terms": [
+                "the center of each ring retains the surrounding body ground color",
+                "each ring encloses a region of the same underlying body color",
+                "각 고리 안의 중심은 주변 몸 바탕색을 유지한다"
+              ],
+              "id": "component_2",
+              "instruction": "Keep the selected carrier and owner explicit: the center of each ring retains the surrounding body ground color.",
+              "match_terms": [
+                "the center of each ring retains the surrounding body ground color",
+                "each ring encloses a region of the same underlying body color",
+                "각 고리 안의 중심은 주변 몸 바탕색을 유지한다"
+              ],
+              "min_content_words": 3,
+              "render_gate": {
+                "description": "the center of each ring retains the surrounding body ground color. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable.",
+                "id": "vo_ca_closed_body_rings_2",
+                "review_scale": "native"
+              }
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v1"
+        },
+        "category": "selected_character_appearance_relation",
+        "composition_instruction": "Keep the selected carrier and owner explicit: closed contrasting rings lie on the declared creature surface. Keep the selected carrier and owner explicit: the center of each ring retains the surrounding body ground color.",
+        "concept_candidate": {
+          "affected_dimensions": [
+            "appearance"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "appearance",
+              "property": "body.skin_region.closed_ring_markings",
+              "target": "main_subject"
+            }
+          ],
+          "concept_terms": [
+            "closed contrasting rings on a creature surface",
+            "생물 표면의 닫힌 대비 고리 무늬",
+            "closed contrasting rings lie on the declared creature surface; the center of each ring retains the surrounding body ground color",
+            "a selected nonhuman body bears bounded ring-shaped color marks; each ring encloses a region of the same underlying body color",
+            "지정한 생물 표면 위에 닫힌 대비 색 고리가 놓인다; 각 고리 안의 중심은 주변 몸 바탕색을 유지한다"
+          ],
+          "core_assertion_discovery": true
+        },
+        "evidence_requirements": {
+          "component_1_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "closed contrasting rings lie on the declared creature surface",
+              "a selected nonhuman body bears bounded ring-shaped color marks",
+              "지정한 생물 표면 위에 닫힌 대비 색 고리가 놓인다"
+            ]
+          },
+          "component_2_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "the center of each ring retains the surrounding body ground color",
+              "each ring encloses a region of the same underlying body color",
+              "각 고리 안의 중심은 주변 몸 바탕색을 유지한다"
+            ]
+          }
+        },
+        "reject_substitutes": [
+          "bracelets around limbs",
+          "actual emitted light inferred from bright pigment"
+        ],
+        "render_gates": [
+          {
+            "description": "closed contrasting rings lie on the declared creature surface. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable.",
+            "id": "vo_ca_closed_body_rings_1",
+            "review_scale": "native"
+          },
+          {
+            "description": "the center of each ring retains the surrounding body ground color. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable.",
+            "id": "vo_ca_closed_body_rings_2",
+            "review_scale": "native"
+          }
+        ],
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase"
+        ],
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "forbidden_prompt_terms": [],
+          "prompt_label_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "semantics": {
+          "claim_limits": [
+            "Preserve the declared subject, owner, medium, age, count and all dimension and property locks.",
+            "Character names are research provenance and do not activate this relation.",
+            "This profile describes a selected visible relation; color, material, function and narrative cause require independent selection.",
+            "Every component is required on the same declared carrier; missing parts fail and hidden parts are unobservable.",
+            "Use only an already declared nonhuman creature or machine design. Do not convert a referenced human into this carrier.",
+            "Hidden attachment roots do not prove biological origin, a costume fastener, a residual limb socket or a material type."
+          ],
+          "component_semantics": {
+            "groups": [
+              {
+                "any_terms": [
+                  "closed contrasting rings lie on the declared creature surface",
+                  "a selected nonhuman body bears bounded ring-shaped color marks",
+                  "지정한 생물 표면 위에 닫힌 대비 색 고리가 놓인다"
+                ],
+                "id": "component_1"
+              },
+              {
+                "any_terms": [
+                  "the center of each ring retains the surrounding body ground color",
+                  "each ring encloses a region of the same underlying body color",
+                  "각 고리 안의 중심은 주변 몸 바탕색을 유지한다"
+                ],
+                "id": "component_2"
+              }
+            ],
+            "minimum_component_groups": 2,
+            "required_group_ids": [
+              "component_1",
+              "component_2"
+            ]
+          },
+          "contrast_examples": [
+            "bracelets around limbs",
+            "actual emitted light inferred from bright pigment"
+          ],
+          "definition": "closed contrasting rings lie on the declared creature surface; the center of each ring retains the surrounding body ground color",
+          "paraphrase_examples": [
+            "closed contrasting rings lie on the declared creature surface; the center of each ring retains the surrounding body ground color",
+            "a selected nonhuman body bears bounded ring-shaped color marks; each ring encloses a region of the same underlying body color",
+            "지정한 생물 표면 위에 닫힌 대비 색 고리가 놓인다; 각 고리 안의 중심은 주변 몸 바탕색을 유지한다"
+          ],
+          "visual_components": [
+            "closed contrasting rings lie on the declared creature surface",
+            "the center of each ring retains the surrounding body ground color"
+          ]
+        }
+      },
+      "effects": {
+        "dimensions": [],
+        "properties": []
+      },
+      "id": "cand_34621f1dfc4957c5b8ad5516f71ac250",
+      "provenance": [
+        {
+          "sha256": "b8c9d9c16bc6703214a60f705e6ac3d01ce79b2ab558fe5edaca3f5540dadd73",
+          "source": "visual_profile:ca_closed_body_rings"
+        }
+      ],
+      "record_kind": "visual_profile"
+    },
+    "cand_4d0ffacd405e55dcb3de7a2b0127b8c6": {
+      "conditions": {},
+      "content": {
+        "activation": {
+          "exact_terms": [
+            "bounded contrasting color patches on a body surface",
+            "몸 표면의 경계 있는 대비 색 패치"
+          ],
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "any_terms": [
+                  "skin",
+                  "body surface",
+                  "face surface",
+                  "피부",
+                  "몸 표면",
+                  "얼굴 표면"
+                ],
+                "id": "declared_carrier"
+              }
+            ]
+          },
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "authored_components": {
+          "components": [
+            {
+              "evidence_field": "component_1_phrase",
+              "evidence_terms": [
+                "one or more contrasting color patches occupy selected body surface regions",
+                "a body surface carries separately bounded contrasting color areas",
+                "몸 표면의 지정 영역들에 대비되는 색 패치가 하나 이상 놓인다",
+                "distinct contrasting color areas lie in the selected body surface zones",
+                "구분되는 대비 색 영역들이 선택한 신체 표면 구역들에 놓인다"
+              ],
+              "id": "component_1",
+              "instruction": "Keep the selected carrier and owner explicit: one or more contrasting color patches occupy selected body surface regions.",
+              "match_terms": [
+                "one or more contrasting color patches occupy selected body surface regions",
+                "a body surface carries separately bounded contrasting color areas",
+                "몸 표면의 지정 영역들에 대비되는 색 패치가 하나 이상 놓인다",
+                "distinct contrasting color areas lie in the selected body surface zones",
+                "구분되는 대비 색 영역들이 선택한 신체 표면 구역들에 놓인다"
+              ],
+              "min_content_words": 3,
+              "render_gate": {
+                "description": "one or more contrasting color patches occupy selected body surface regions. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable.",
+                "id": "vo_ca_bounded_body_patches_1",
+                "review_scale": "native"
+              }
+            },
+            {
+              "evidence_field": "component_2_phrase",
+              "evidence_terms": [
+                "each patch keeps a readable boundary within its own body-surface carrier",
+                "the edges of those areas remain inside the same body surface",
+                "각 패치가 같은 몸 표면 안에서 읽히는 고유 경계를 유지한다",
+                "each colored area ends at its own readable surface boundary",
+                "각 색 영역이 자체의 읽히는 표면 경계에서 끝난다"
+              ],
+              "id": "component_2",
+              "instruction": "Keep the selected carrier and owner explicit: each patch keeps a readable boundary within its own body-surface carrier.",
+              "match_terms": [
+                "each patch keeps a readable boundary within its own body-surface carrier",
+                "the edges of those areas remain inside the same body surface",
+                "각 패치가 같은 몸 표면 안에서 읽히는 고유 경계를 유지한다",
+                "each colored area ends at its own readable surface boundary",
+                "각 색 영역이 자체의 읽히는 표면 경계에서 끝난다"
+              ],
+              "min_content_words": 3,
+              "render_gate": {
+                "description": "each patch keeps a readable boundary within its own body-surface carrier. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable.",
+                "id": "vo_ca_bounded_body_patches_2",
+                "review_scale": "native"
+              }
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v1"
+        },
+        "category": "selected_character_appearance_relation",
+        "composition_instruction": "Keep the selected carrier and owner explicit: one or more contrasting color patches occupy selected body surface regions. Keep the selected carrier and owner explicit: each patch keeps a readable boundary within its own body-surface carrier.",
+        "concept_candidate": {
+          "affected_dimensions": [
+            "appearance"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "appearance",
+              "property": "body.skin_region.color_patch_distribution",
+              "target": "main_subject"
+            }
+          ],
+          "concept_terms": [
+            "bounded contrasting color patches on a body surface",
+            "몸 표면의 경계 있는 대비 색 패치",
+            "one or more contrasting color patches occupy selected body surface regions; each patch keeps a readable boundary within its own body-surface carrier",
+            "a body surface carries separately bounded contrasting color areas; the edges of those areas remain inside the same body surface",
+            "몸 표면의 지정 영역들에 대비되는 색 패치가 하나 이상 놓인다; 각 패치가 같은 몸 표면 안에서 읽히는 고유 경계를 유지한다",
+            "distinct contrasting color areas lie in the selected body surface zones; each colored area ends at its own readable surface boundary",
+            "구분되는 대비 색 영역들이 선택한 신체 표면 구역들에 놓인다; 각 색 영역이 자체의 읽히는 표면 경계에서 끝난다",
+            "a bounded filled-color cheek mark stays inside its declared facial skin region",
+            "경계가 있는 채워진 뺨 색 표시가 지정한 얼굴 피부 영역 안에 머문다"
+          ],
+          "core_assertion_discovery": true
+        },
+        "evidence_requirements": {
+          "component_1_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "one or more contrasting color patches occupy selected body surface regions",
+              "a body surface carries separately bounded contrasting color areas",
+              "몸 표면의 지정 영역들에 대비되는 색 패치가 하나 이상 놓인다",
+              "distinct contrasting color areas lie in the selected body surface zones",
+              "구분되는 대비 색 영역들이 선택한 신체 표면 구역들에 놓인다"
+            ]
+          },
+          "component_2_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "each patch keeps a readable boundary within its own body-surface carrier",
+              "the edges of those areas remain inside the same body surface",
+              "각 패치가 같은 몸 표면 안에서 읽히는 고유 경계를 유지한다",
+              "each colored area ends at its own readable surface boundary",
+              "각 색 영역이 자체의 읽히는 표면 경계에서 끝난다"
+            ]
+          }
+        },
+        "reject_substitutes": [
+          "a separate colored garment covering the body",
+          "cast shadow substituted for a selected pigment boundary"
+        ],
+        "render_gates": [
+          {
+            "description": "one or more contrasting color patches occupy selected body surface regions. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable.",
+            "id": "vo_ca_bounded_body_patches_1",
+            "review_scale": "native"
+          },
+          {
+            "description": "each patch keeps a readable boundary within its own body-surface carrier. Inspect the selected same owner in original pixels. Every component is required; partial evidence fails and hidden components are unobservable.",
+            "id": "vo_ca_bounded_body_patches_2",
+            "review_scale": "native"
+          }
+        ],
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase"
+        ],
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "forbidden_prompt_terms": [],
+          "prompt_label_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "semantics": {
+          "claim_limits": [
+            "Preserve the declared subject, owner, medium, age, count and all dimension and property locks.",
+            "Character names are research provenance and do not activate this relation.",
+            "This profile describes a selected visible relation; color, material, function and narrative cause require independent selection.",
+            "Every component is required on the same declared carrier; missing parts fail and hidden parts are unobservable.",
+            "Visible surface marks do not establish injury history, disease, diagnosis or biological cause."
+          ],
+          "component_semantics": {
+            "groups": [
+              {
+                "any_terms": [
+                  "one or more contrasting color patches occupy selected body surface regions",
+                  "a body surface carries separately bounded contrasting color areas",
+                  "몸 표면의 지정 영역들에 대비되는 색 패치가 하나 이상 놓인다",
+                  "distinct contrasting color areas lie in the selected body surface zones",
+                  "구분되는 대비 색 영역들이 선택한 신체 표면 구역들에 놓인다"
+                ],
+                "id": "component_1"
+              },
+              {
+                "any_terms": [
+                  "each patch keeps a readable boundary within its own body-surface carrier",
+                  "the edges of those areas remain inside the same body surface",
+                  "각 패치가 같은 몸 표면 안에서 읽히는 고유 경계를 유지한다",
+                  "each colored area ends at its own readable surface boundary",
+                  "각 색 영역이 자체의 읽히는 표면 경계에서 끝난다"
+                ],
+                "id": "component_2"
+              }
+            ],
+            "minimum_component_groups": 2,
+            "required_group_ids": [
+              "component_1",
+              "component_2"
+            ]
+          },
+          "contrast_examples": [
+            "a separate colored garment covering the body",
+            "cast shadow substituted for a selected pigment boundary"
+          ],
+          "definition": "one or more contrasting color patches occupy selected body surface regions; each patch keeps a readable boundary within its own body-surface carrier",
+          "paraphrase_examples": [
+            "one or more contrasting color patches occupy selected body surface regions; each patch keeps a readable boundary within its own body-surface carrier",
+            "a body surface carries separately bounded contrasting color areas; the edges of those areas remain inside the same body surface",
+            "몸 표면의 지정 영역들에 대비되는 색 패치가 하나 이상 놓인다; 각 패치가 같은 몸 표면 안에서 읽히는 고유 경계를 유지한다",
+            "distinct contrasting color areas lie in the selected body surface zones; each colored area ends at its own readable surface boundary",
+            "구분되는 대비 색 영역들이 선택한 신체 표면 구역들에 놓인다; 각 색 영역이 자체의 읽히는 표면 경계에서 끝난다",
+            "a bounded filled-color cheek mark stays inside its declared facial skin region",
+            "경계가 있는 채워진 뺨 색 표시가 지정한 얼굴 피부 영역 안에 머문다"
+          ],
+          "visual_components": [
+            "one or more contrasting color patches occupy selected body surface regions",
+            "each patch keeps a readable boundary within its own body-surface carrier"
+          ]
+        }
+      },
+      "effects": {
+        "dimensions": [],
+        "properties": []
+      },
+      "id": "cand_4d0ffacd405e55dcb3de7a2b0127b8c6",
+      "provenance": [
+        {
+          "sha256": "2f84edf6be0edabf742edc8ef91c55ede03ff000270273d25f7afc2894ee296f",
+          "source": "visual_profile:ca_bounded_body_patches"
+        }
+      ],
+      "record_kind": "visual_profile"
+    },
+    "cand_d2c9484a5b455525a6af89014a45133a": {
+      "conditions": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "content": {
+        "aliases": [],
+        "concept_units": [
+          "the selected foot dorsum and toes are visible without footwear or socks",
+          "the foot remains continuously connected to its ankle"
+        ],
+        "core_assertion_discovery": true,
+        "embedding_text": "the selected foot dorsum and toes are visible without footwear or socks; the foot remains continuously connected to its ankle | 선택한 발의 발등과 발가락이 신발·양말 밖에서 보인다; 발과 발목의 연결이 유지된다 | the top of the selected bare foot and its toes are fully uncovered; the uncovered foot connects directly into its own ankle | 지정한 맨발의 발등과 발가락이 완전히 드러나 있다; 드러난 발이 자신의 발목으로 직접 이어진다",
+        "en": "the selected foot dorsum and toes are visible without footwear or socks; the foot remains continuously connected to its ankle",
+        "keywords": [
+          "the selected foot dorsum and toes are visible without footwear or socks",
+          "the foot remains continuously connected to its ankle",
+          "선택한 발의 발등과 발가락이 신발·양말 밖에서 보인다",
+          "발과 발목의 연결이 유지된다",
+          "the top of the selected bare foot and its toes are fully uncovered; the uncovered foot connects directly into its own ankle",
+          "지정한 맨발의 발등과 발가락이 완전히 드러나 있다; 드러난 발이 자신의 발목으로 직접 이어진다"
+        ],
+        "ko": "선택한 발의 발등과 발가락이 신발·양말 밖에서 보인다; 발과 발목의 연결이 유지된다",
+        "paraphrases": [
+          "the selected foot dorsum and toes are visible without footwear or socks; the foot remains continuously connected to its ankle",
+          "선택한 발의 발등과 발가락이 신발·양말 밖에서 보인다; 발과 발목의 연결이 유지된다",
+          "the top of the selected bare foot and its toes are fully uncovered; the uncovered foot connects directly into its own ankle",
+          "지정한 맨발의 발등과 발가락이 완전히 드러나 있다; 드러난 발이 자신의 발목으로 직접 이어진다"
+        ],
+        "relations": [
+          {
+            "id": "declared_owner",
+            "object": "main_subject",
+            "subject": "main_subject.feet",
+            "type": "declared_owner_scope"
+          },
+          {
+            "id": "k26_r1",
+            "object": "same ankle",
+            "subject": "uncovered foot",
+            "type": "connected_to"
+          }
+        ],
+        "tags": [
+          "human",
+          "observable_relation"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "appearance"
+        ],
+        "properties": [
+          {
+            "dimension": "appearance",
+            "property": "wardrobe.footwear.coverage.none",
+            "target": "main_subject"
+          }
+        ]
+      },
+      "id": "cand_d2c9484a5b455525a6af89014a45133a",
+      "provenance": [
+        {
+          "sha256": "e178969a593b99165f01ae370ead21c74f14a1699c43a8eadb5d647e0f8f4eb0",
+          "source": "slot:footwear:vr_uncovered_foot"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_76f8a4393f8e57b5abecd21d27b3eeb2": {
+      "conditions": {},
+      "content": {
+        "activation": {
+          "exact_terms": [
+            "the selected foot dorsum and toes are visible without footwear or socks; the foot remains continuously connected to its ankle",
+            "선택한 발의 발등과 발가락이 신발·양말 밖에서 보인다; 발과 발목의 연결이 유지된다"
+          ],
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "any_terms": [
+                  "foot",
+                  "feet",
+                  "ankle",
+                  "barefoot",
+                  "발",
+                  "발목",
+                  "맨발"
+                ],
+                "id": "declared_carrier"
+              }
+            ]
+          },
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "authored_components": {
+          "components": [
+            {
+              "evidence_field": "component_1_phrase",
+              "evidence_terms": [
+                "the selected foot dorsum and toes are visible without footwear or socks",
+                "선택한 발의 발등과 발가락이 신발·양말 밖에서 보인다",
+                "the top of the selected bare foot and its toes are fully uncovered",
+                "지정한 맨발의 발등과 발가락이 완전히 드러나 있다"
+              ],
+              "id": "component_1",
+              "instruction": "Keep this selected relation literal on its declared carrier: the selected foot dorsum and toes are visible without footwear or socks.",
+              "match_terms": [
+                "the selected foot dorsum and toes are visible without footwear or socks",
+                "선택한 발의 발등과 발가락이 신발·양말 밖에서 보인다",
+                "the top of the selected bare foot and its toes are fully uncovered",
+                "지정한 맨발의 발등과 발가락이 완전히 드러나 있다"
+              ],
+              "min_content_words": 3,
+              "render_gate": {
+                "description": "the selected foot dorsum and toes are visible without footwear or socks. Inspect this same-carrier relation in the original image; missing components fail and hidden components are unobservable.",
+                "id": "vo_accessory_uncovered_foot_1",
+                "review_scale": "native"
+              }
+            },
+            {
+              "evidence_field": "component_2_phrase",
+              "evidence_terms": [
+                "the foot remains continuously connected to its ankle",
+                "발과 발목의 연결이 유지된다",
+                "the uncovered foot connects directly into its own ankle",
+                "드러난 발이 자신의 발목으로 직접 이어진다"
+              ],
+              "id": "component_2",
+              "instruction": "Keep this selected relation literal on its declared carrier: the foot remains continuously connected to its ankle.",
+              "match_terms": [
+                "the foot remains continuously connected to its ankle",
+                "발과 발목의 연결이 유지된다",
+                "the uncovered foot connects directly into its own ankle",
+                "드러난 발이 자신의 발목으로 직접 이어진다"
+              ],
+              "min_content_words": 3,
+              "render_gate": {
+                "description": "the foot remains continuously connected to its ankle. Inspect this same-carrier relation in the original image; missing components fail and hidden components are unobservable.",
+                "id": "vo_accessory_uncovered_foot_2",
+                "review_scale": "native"
+              }
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v1"
+        },
+        "category": "selected_local_appearance_relation",
+        "composition_instruction": "Keep this selected relation literal on its declared carrier: the selected foot dorsum and toes are visible without footwear or socks. Keep this selected relation literal on its declared carrier: the foot remains continuously connected to its ankle.",
+        "concept_candidate": {
+          "affected_dimensions": [
+            "appearance"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "appearance",
+              "property": "wardrobe.footwear.coverage.none",
+              "target": "main_subject"
+            }
+          ],
+          "concept_terms": [
+            "the selected foot dorsum and toes are visible without footwear or socks; the foot remains continuously connected to its ankle",
+            "선택한 발의 발등과 발가락이 신발·양말 밖에서 보인다; 발과 발목의 연결이 유지된다",
+            "the top of the selected bare foot and its toes are fully uncovered; the uncovered foot connects directly into its own ankle",
+            "지정한 맨발의 발등과 발가락이 완전히 드러나 있다; 드러난 발이 자신의 발목으로 직접 이어진다",
+            "the selected foot dorsum and toes are visible without footwear or socks",
+            "the foot remains continuously connected to its ankle"
+          ],
+          "core_assertion_discovery": true
+        },
+        "evidence_requirements": {
+          "component_1_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "the selected foot dorsum and toes are visible without footwear or socks",
+              "선택한 발의 발등과 발가락이 신발·양말 밖에서 보인다",
+              "the top of the selected bare foot and its toes are fully uncovered",
+              "지정한 맨발의 발등과 발가락이 완전히 드러나 있다"
+            ]
+          },
+          "component_2_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "the foot remains continuously connected to its ankle",
+              "발과 발목의 연결이 유지된다",
+              "the uncovered foot connects directly into its own ankle",
+              "드러난 발이 자신의 발목으로 직접 이어진다"
+            ]
+          }
+        },
+        "reject_substitutes": [
+          "피부색 신발",
+          "끝부분만 열린 신발"
+        ],
+        "render_gates": [
+          {
+            "description": "the selected foot dorsum and toes are visible without footwear or socks. Inspect this same-carrier relation in the original image; missing components fail and hidden components are unobservable.",
+            "id": "vo_accessory_uncovered_foot_1",
+            "review_scale": "native"
+          },
+          {
+            "description": "the foot remains continuously connected to its ankle. Inspect this same-carrier relation in the original image; missing components fail and hidden components are unobservable.",
+            "id": "vo_accessory_uncovered_foot_2",
+            "review_scale": "native"
+          }
+        ],
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase"
+        ],
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "forbidden_prompt_terms": [],
+          "prompt_label_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "semantics": {
+          "claim_limits": [
+            "발뒤꿈치가 프레임 밖이면 전신 맨발의 완전 판정은 보류한다. 미성년·성인 여부나 성적 의미를 추가하지 않는다.",
+            "Preserve all requester-owned subject, reference, age, count, dimension and property locks.",
+            "This selected visible form does not establish character identity, biological cause, sound, operation, emission, transmission or narrative role.",
+            "All components must coexist on the same declared carrier. Hidden required relations are unobservable and partial evidence fails."
+          ],
+          "component_semantics": {
+            "groups": [
+              {
+                "any_terms": [
+                  "the selected foot dorsum and toes are visible without footwear or socks",
+                  "선택한 발의 발등과 발가락이 신발·양말 밖에서 보인다",
+                  "the top of the selected bare foot and its toes are fully uncovered",
+                  "지정한 맨발의 발등과 발가락이 완전히 드러나 있다"
+                ],
+                "id": "component_1"
+              },
+              {
+                "any_terms": [
+                  "the foot remains continuously connected to its ankle",
+                  "발과 발목의 연결이 유지된다",
+                  "the uncovered foot connects directly into its own ankle",
+                  "드러난 발이 자신의 발목으로 직접 이어진다"
+                ],
+                "id": "component_2"
+              }
+            ],
+            "minimum_component_groups": 2,
+            "required_group_ids": [
+              "component_1",
+              "component_2"
+            ]
+          },
+          "contrast_examples": [
+            "피부색 신발",
+            "끝부분만 열린 신발"
+          ],
+          "definition": "the selected foot dorsum and toes are visible without footwear or socks; the foot remains continuously connected to its ankle",
+          "paraphrase_examples": [
+            "the top of the selected bare foot and its toes are fully uncovered; the uncovered foot connects directly into its own ankle",
+            "지정한 맨발의 발등과 발가락이 완전히 드러나 있다; 드러난 발이 자신의 발목으로 직접 이어진다"
+          ],
+          "visual_components": [
+            "the selected foot dorsum and toes are visible without footwear or socks",
+            "the foot remains continuously connected to its ankle"
+          ]
+        }
+      },
+      "effects": {
+        "dimensions": [],
+        "properties": []
+      },
+      "id": "cand_76f8a4393f8e57b5abecd21d27b3eeb2",
+      "provenance": [
+        {
+          "sha256": "cc05470343f3ae7b94e74395d429de6ce75db5b2266c3b119b93ae4f0029324e",
+          "source": "visual_profile:accessory_uncovered_foot"
+        }
+      ],
+      "record_kind": "visual_profile"
+    },
+    "cand_9aaba53f547453348a88d74142b2d954": {
+      "conditions": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "content": {
+        "embedding_text": "lower-leg crop preserving the calf-to-ankle contour transition, both ankle boundaries, and coherent footwear contact rather than a generic leg close-up",
+        "en": "lower-leg framing that keeps calf volume, ankle taper, and footwear contact readable",
+        "facets": {
+          "soft_body_role": [
+            "body_emphasis"
+          ]
+        },
+        "ko": "무릎 아래부터 종아리 볼륨·발목 테이퍼·신발 접점을 함께 보여주는 프레이밍",
+        "tags": [
+          "adult",
+          "legs",
+          "heels",
+          "framing"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "framing"
+        ],
+        "properties": []
+      },
+      "id": "cand_9aaba53f547453348a88d74142b2d954",
+      "provenance": [
+        {
+          "sha256": "0abfc3316b9693b762a6d7c4fd7efe9b743cd51dc1b93125a25c51629fc6bef1",
+          "source": "slot:body_framing:legs_heels_framing"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_0490a811df1652f8a174ee0a49e01e7d": {
+      "conditions": {
+        "requires_primary_any_tags": [
+          "hermes",
+          "caduceus",
+          "헤르메스",
+          "전령장"
+        ]
+      },
+      "content": {
+        "concept_units": [
+          "a separate kerykeion messenger staff belongs to the represented Hermes",
+          "wing markers attach to the sandals worn by that same figure",
+          "the staff and footwear retain distinct ownership and placement"
+        ],
+        "core_assertion_discovery": true,
+        "embedding_text": "헤르메스의 전령장과 날개 신발 Wing markers attach to Hermes' sandals while the herald's staff remains a separate owned object. 헤르메스의 전령장과 날개 신발: 별도 전령장 케뤼케이온; 샌들에 붙은 날개 표지; 발·신발·지팡이의 소유 구별 a separate kerykeion messenger staff belongs to the represented Hermes; wing markers attach to the sandals worn by that same figure; the staff and footwear retain distinct ownership and placement Hermes with an owned messenger staff and wings on his worn sandals 자신의 전령장과 착용한 샌들 날개를 함께 지닌 헤르메스",
+        "en": "Composition makes the already requested relation readable: Wing markers attach to Hermes' sandals while the herald's staff remains a separate owned object.",
+        "keywords": [
+          "a separate kerykeion messenger staff belongs to the represented Hermes",
+          "wing markers attach to the sandals worn by that same figure",
+          "the staff and footwear retain distinct ownership and placement"
+        ],
+        "ko": "헤르메스의 전령장과 날개 신발의 지정된 구성 요소와 소유 관계가 읽히는 구도",
+        "paraphrases": [
+          "헤르메스의 전령장과 날개 신발",
+          "Wing markers attach to Hermes' sandals while the herald's staff remains a separate owned object.",
+          "헤르메스의 전령장과 날개 신발: 별도 전령장 케뤼케이온; 샌들에 붙은 날개 표지; 발·신발·지팡이의 소유 구별",
+          "a separate kerykeion messenger staff belongs to the represented Hermes; wing markers attach to the sandals worn by that same figure; the staff and footwear retain distinct ownership and placement",
+          "Hermes with an owned messenger staff and wings on his worn sandals",
+          "자신의 전령장과 착용한 샌들 날개를 함께 지닌 헤르메스",
+          "Framing preserves the requested complete relation: a separate kerykeion messenger staff belongs to the represented Hermes; wing markers attach to the sandals worn by that same figure; the staff and footwear retain distinct ownership and placement"
+        ],
+        "relations": [
+          {
+            "id": "ri_hermes_staff_winged_sandals_framing_owner",
+            "object": "a separate kerykeion messenger staff belongs to the represented Hermes; wing markers attach to the sandals worn by that same figure; the staff and footwear retain distinct ownership and placement",
+            "subject": "image_plane",
+            "type": "makes_readable"
+          }
+        ],
+        "tags": [
+          "iconographic_layout",
+          "connected_visible_relation"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "composition"
+        ],
+        "properties": [
+          {
+            "dimension": "composition",
+            "property": "layout",
+            "target": "image_plane"
+          }
+        ]
+      },
+      "id": "cand_0490a811df1652f8a174ee0a49e01e7d",
+      "provenance": [
+        {
+          "sha256": "4554dda7d5b67e4150fb10a6976e98c51eeb2709d3ecbb2a20b3e61acb382d26",
+          "source": "slot:composition:ri_hermes_staff_winged_sandals_readable_composition"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_8a09f8a83c38525d8a0253616d6c059f": {
+      "conditions": {},
+      "content": {
+        "activation": {
+          "exact_terms": [
+            "미간 좁히기",
+            "미간으로 모인 눈썹",
+            "knitted brows",
+            "brow lowering"
+          ],
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "any_terms": [
+                  "face",
+                  "facial",
+                  "portrait",
+                  "actor",
+                  "person",
+                  "human",
+                  "woman",
+                  "man",
+                  "얼굴",
+                  "표정",
+                  "인물",
+                  "사람",
+                  "배우",
+                  "초상"
+                ],
+                "id": "actor_face_context"
+              }
+            ]
+          },
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "authored_components": {
+          "components": [
+            {
+              "evidence_field": "component_1_phrase",
+              "evidence_terms": [
+                "eyebrow inner ends move toward the glabella",
+                "양 눈썹 안쪽 끝이 미간으로 가까워진다",
+                "The inner ends of the eyebrows draw together toward the glabella."
+              ],
+              "id": "component_1",
+              "instruction": "Preserve the declared actor and show this facial or contact relation clearly: eyebrow inner ends move toward the glabella.",
+              "match_terms": [
+                "eyebrow inner ends move toward the glabella",
+                "양 눈썹 안쪽 끝이 미간으로 가까워진다",
+                "The inner ends of the eyebrows draw together toward the glabella."
+              ],
+              "min_content_words": 3,
+              "render_gate": {
+                "description": "Inspect the declared actor's original pixels for this complete relation: eyebrow inner ends move toward the glabella. Partial evidence fails; occlusion is unobservable.",
+                "id": "vo_ae_profile_knitted_brow_1",
+                "review_scale": "native"
+              }
+            },
+            {
+              "evidence_field": "component_2_phrase",
+              "evidence_terms": [
+                "the brow line visibly lowers toward the inner eye region",
+                "눈썹 선이 눈 안쪽 부근을 향해 낮아진다",
+                "The brow line slopes downward toward the inner-eye region."
+              ],
+              "id": "component_2",
+              "instruction": "Preserve the declared actor and show this facial or contact relation clearly: the brow line visibly lowers toward the inner eye region.",
+              "match_terms": [
+                "the brow line visibly lowers toward the inner eye region",
+                "눈썹 선이 눈 안쪽 부근을 향해 낮아진다",
+                "The brow line slopes downward toward the inner-eye region."
+              ],
+              "min_content_words": 3,
+              "render_gate": {
+                "description": "Inspect the declared actor's original pixels for this complete relation: the brow line visibly lowers toward the inner eye region. Partial evidence fails; occlusion is unobservable.",
+                "id": "vo_ae_profile_knitted_brow_2",
+                "review_scale": "native"
+              }
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v1"
+        },
+        "category": "observable_facial_or_hand_configuration",
+        "composition_instruction": "Preserve the declared actor and show this facial or contact relation clearly: eyebrow inner ends move toward the glabella. Preserve the declared actor and show this facial or contact relation clearly: the brow line visibly lowers toward the inner eye region.",
+        "concept_candidate": {
+          "affected_dimensions": [
+            "expression"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "expression",
+              "property": "face.expression",
+              "target": "main_subject"
+            }
+          ],
+          "concept_terms": [
+            "미간 쪽으로 모이고 내려간 눈썹",
+            "eyebrows draw inward and downward toward the glabella",
+            "eyebrow inner ends move toward the glabella",
+            "the brow line visibly lowers toward the inner eye region",
+            "양 눈썹 안쪽 끝이 미간으로 가까워진다",
+            "The inner ends of the eyebrows draw together toward the glabella.",
+            "눈썹 선이 눈 안쪽 부근을 향해 낮아진다",
+            "The brow line slopes downward toward the inner-eye region.",
+            "양 눈썹 안쪽 끝이 미간으로 가까워진다; 눈썹 선이 눈 안쪽 부근을 향해 낮아진다",
+            "The inner ends of the eyebrows draw together toward the glabella.; The brow line slopes downward toward the inner-eye region."
+          ],
+          "core_assertion_discovery": true
+        },
+        "evidence_requirements": {
+          "component_1_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "eyebrow inner ends move toward the glabella",
+              "양 눈썹 안쪽 끝이 미간으로 가까워진다",
+              "The inner ends of the eyebrows draw together toward the glabella."
+            ]
+          },
+          "component_2_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "the brow line visibly lowers toward the inner eye region",
+              "눈썹 선이 눈 안쪽 부근을 향해 낮아진다",
+              "The brow line slopes downward toward the inner-eye region."
+            ]
+          }
+        },
+        "reject_substitutes": [
+          "a single eyebrow raised",
+          "anger imposed on concentration"
+        ],
+        "render_gates": [
+          {
+            "description": "Inspect the declared actor's original pixels for this complete relation: eyebrow inner ends move toward the glabella. Partial evidence fails; occlusion is unobservable.",
+            "id": "vo_ae_profile_knitted_brow_1",
+            "review_scale": "native"
+          },
+          {
+            "description": "Inspect the declared actor's original pixels for this complete relation: the brow line visibly lowers toward the inner eye region. Partial evidence fails; occlusion is unobservable.",
+            "id": "vo_ae_profile_knitted_brow_2",
+            "review_scale": "native"
+          }
+        ],
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase"
+        ],
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "forbidden_prompt_terms": [],
+          "prompt_label_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "semantics": {
+          "claim_limits": [
+            "Bind all parts and laterality to the frozen actor; no inferred real emotion, trait or consent.",
+            "Retain the frozen crop and eyeline; a hidden prerequisite is unobservable, not a pass.",
+            "Every required component must pass; partial evidence is a failure."
+          ],
+          "component_semantics": {
+            "groups": [
+              {
+                "any_terms": [
+                  "eyebrow inner ends move toward the glabella",
+                  "양 눈썹 안쪽 끝이 미간으로 가까워진다",
+                  "The inner ends of the eyebrows draw together toward the glabella."
+                ],
+                "id": "component_1"
+              },
+              {
+                "any_terms": [
+                  "the brow line visibly lowers toward the inner eye region",
+                  "눈썹 선이 눈 안쪽 부근을 향해 낮아진다",
+                  "The brow line slopes downward toward the inner-eye region."
+                ],
+                "id": "component_2"
+              }
+            ],
+            "minimum_component_groups": 2,
+            "required_group_ids": [
+              "component_1",
+              "component_2"
+            ]
+          },
+          "contrast_examples": [
+            "a single eyebrow raised",
+            "anger imposed on concentration"
+          ],
+          "definition": "eyebrow inner ends move toward the glabella; the brow line visibly lowers toward the inner eye region",
+          "paraphrase_examples": [
+            "eyebrows draw inward and downward toward the glabella",
+            "양 눈썹 안쪽 끝이 미간으로 가까워진다; 눈썹 선이 눈 안쪽 부근을 향해 낮아진다",
+            "The inner ends of the eyebrows draw together toward the glabella.; The brow line slopes downward toward the inner-eye region."
+          ],
+          "visual_components": [
+            "eyebrow inner ends move toward the glabella",
+            "the brow line visibly lowers toward the inner eye region"
+          ]
+        }
+      },
+      "effects": {
+        "dimensions": [],
+        "properties": []
+      },
+      "id": "cand_8a09f8a83c38525d8a0253616d6c059f",
+      "provenance": [
+        {
+          "sha256": "6baa0def652b94b681e913df3f84bf6511f3a4ba1a4fe4208b192e16c3b30783",
+          "source": "visual_profile:ae_profile_knitted_brow"
+        }
+      ],
+      "record_kind": "visual_profile"
+    },
+    "cand_00b24d26dbf35204be1683d1c3bb2376": {
+      "conditions": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "content": {
+        "aliases": [
+          "미간 좁히기",
+          "미간으로 모인 눈썹",
+          "knitted brows",
+          "brow lowering"
+        ],
+        "concept_units": [
+          "eyebrow inner ends move toward the glabella",
+          "the brow line visibly lowers toward the inner eye region"
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+              "claim_limits": [
+                "분노·괴로움·집중 중 하나를 픽셀에서 확정하지 않는다."
+              ],
+              "definition": "내측 눈썹의 접근과 표정의 사회적 의미를 나눈다.",
+              "id": "intellectual_term_045",
+              "observable_interpretation": "미간 쪽 눈썹의 간격·주름 변화를 좁은 범위로 기술.",
+              "source_keyword": "가벼운 미간 수축"
+            },
+            {
+              "activation_authority": "interpretation_only_not_a_required_visual_recipe",
+              "claim_limits": [
+                "반복 읽기·이해 실패·능력 부족을 한 장에서 확정하지 않는다."
+              ],
+              "definition": "곤혹스러움은 문제 자료와 반응의 맥락에 둔다.",
+              "id": "intellectual_term_058",
+              "observable_interpretation": "읽히는 불일치 항목, 정지된 펜, 선택한 미간 상태를 연결한다.",
+              "source_keyword": "곤혹스러운 숙고 — Puzzled consideration"
+            }
+          ]
+        },
+        "core_assertion_discovery": true,
+        "embedding_text": "미간 쪽으로 모이고 내려간 눈썹; eyebrow inner ends move toward the glabella; the brow line visibly lowers toward the inner eye region; 미간 좁히기; 미간으로 모인 눈썹; knitted brows; brow lowering",
+        "en": "eyebrow inner ends move toward the glabella; the brow line visibly lowers toward the inner eye region",
+        "keywords": [
+          "미간 좁히기",
+          "미간으로 모인 눈썹",
+          "knitted brows",
+          "brow lowering"
+        ],
+        "ko": "미간 쪽으로 모이고 내려간 눈썹",
+        "paraphrases": [
+          "눈썹 안쪽 끝이 미간 쪽으로 모이고 눈 안쪽 위로 낮아진다",
+          "The inner brow ends draw toward the glabella and lower toward the inner eye region."
+        ],
+        "relations": [
+          {
+            "id": "actor_owner",
+            "object": "the declared actor's stated local face and eye configuration",
+            "subject": "main_subject",
+            "type": "declared_owner_scope"
+          }
+        ],
+        "tags": [
+          "human",
+          "acting_expression",
+          "expression"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "expression"
+        ],
+        "properties": [
+          {
+            "dimension": "expression",
+            "property": "face.expression",
+            "target": "main_subject"
+          }
+        ]
+      },
+      "id": "cand_00b24d26dbf35204be1683d1c3bb2376",
+      "provenance": [
+        {
+          "sha256": "70685bb63bf973fc2057a30b61b821c81d08ff966d05bb350b0bdf51f877720d",
+          "source": "slot:expression:ae_knitted_brow"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_cd6741e758ca511384fc51d1efc62264": {
+      "conditions": {},
+      "content": {
+        "adoption": "optional",
+        "associated_profile_ids": [
+          "cand_b66c87df535b5ec387a208fb957b36b1"
+        ],
+        "components": [
+          {
+            "concept_units": [
+              "the inner eyebrow ends are visibly lifted"
+            ],
+            "id": "component_1",
+            "minimum_realizations": 1
+          },
+          {
+            "concept_units": [
+              "outer eyebrow ends are not required to rise equally"
+            ],
+            "id": "component_2",
+            "minimum_realizations": 1
+          }
+        ],
+        "confusion_boundaries": [
+          "both brows lifted uniformly",
+          "sadness universally inferred"
+        ],
+        "member_candidates": [
+          {
+            "adoption": "optional",
+            "binding_id": "bind_9af167ff29e35d068141195ba7ddd8be",
+            "candidate_id": "cand_9af167ff29e35d068141195ba7ddd8be",
+            "requirements": {}
+          }
+        ],
+        "profile_activation": "independent_request_evidence_only",
+        "relations": [
+          {
+            "id": "actor_owner",
+            "object": "the explicitly stated face and contact configuration",
+            "subject": "main_subject",
+            "type": "declared_owner_scope"
+          }
+        ],
+        "source_sha256": "3280fbe87787f663d1ba732bc29bb06e9092c2a68b2c726d6280af735907ae7b"
+      },
+      "effects": {
+        "dimensions": [
+          "expression"
+        ],
+        "properties": [
+          {
+            "dimension": "expression",
+            "property": "face.expression",
+            "target": "main_subject"
+          }
+        ]
+      },
+      "id": "cand_cd6741e758ca511384fc51d1efc62264",
+      "provenance": [
+        {
+          "sha256": "2adae17e2930c0ae38b91185f62cee203cf2644e69cc164e02e6886e74ddb471",
+          "source": "bundle:ae_bundle_inner_brow"
+        }
+      ],
+      "record_kind": "visual_bundle"
+    },
+    "cand_3448f719f33d53e38afa6209671b8904": {
+      "conditions": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "content": {
+        "aliases": [
+          "위로 이동한 눈썹",
+          "Raised brows",
+          "눈썹 들기"
+        ],
+        "concept_units": [
+          "brow position rises relative to visible eye landmarks",
+          "one or both brows are explicitly selected",
+          "eye aperture is independently controlled"
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "application_conditions": [
+                "An explicitly requested human face or actor; preserve the frozen owner and crop."
+              ],
+              "id": "ae_raised_brows_acting_reuse",
+              "limits": [
+                "only one eyebrow raised",
+                "surprise imposed on the whole scene"
+              ],
+              "status": "optional_interpretation_not_emotion_diagnosis"
+            },
+            {
+              "application_conditions": [
+                "Equivalent meaning only; retain the original owner, prerequisites, all effects and guards."
+              ],
+              "id": "cute_equivalent_pv_raised_brows",
+              "limits": [
+                "No emotion, age, universal cuteness or extra actor inferred from this local form."
+              ]
+            }
+          ]
+        },
+        "core_assertion_discovery": true,
+        "embedding_text": "위로 이동한 눈썹; Raised brows; 눈썹 들기; brow position rises relative to visible eye landmarks; one or both brows are explicitly selected; eye aperture is independently controlled",
+        "en": "brow position rises relative to visible eye landmarks; one or both brows are explicitly selected; eye aperture is independently controlled",
+        "keywords": [
+          "위로 이동한 눈썹",
+          "Raised brows",
+          "눈썹 들기"
+        ],
+        "ko": "위로 이동한 눈썹",
+        "paraphrases": [
+          "both eyebrows are visibly raised",
+          "같은 얼굴의 두 눈썹이 평소 위치보다 위로 올라간다",
+          "Both eyebrows sit visibly higher over their respective eyes."
+        ],
+        "relations": [
+          {
+            "id": "owner_scope",
+            "object": "the body parts, support surfaces and contact targets stated in this configuration",
+            "subject": "main_subject",
+            "type": "declared_owner_scope"
+          }
+        ],
+        "tags": [
+          "human",
+          "pose_vocabulary",
+          "expression"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "expression"
+        ],
+        "properties": [
+          {
+            "dimension": "expression",
+            "property": "face.expression",
+            "target": "main_subject"
+          }
+        ]
+      },
+      "id": "cand_3448f719f33d53e38afa6209671b8904",
+      "provenance": [
+        {
+          "sha256": "c3d7f06caef31b9bf6c5acfc25857297a38ea08d41d31c773a7b9fe82032db68",
+          "source": "slot:expression:pv_raised_brows"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_9af167ff29e35d068141195ba7ddd8be": {
+      "conditions": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "content": {
+        "aliases": [
+          "눈썹 안쪽 끝을 올린",
+          "inner brow raise",
+          "raised inner brows"
+        ],
+        "concept_units": [
+          "the inner eyebrow ends are visibly lifted",
+          "outer eyebrow ends are not required to rise equally"
+        ],
+        "contextual_usage": {
+          "contexts": [
+            {
+              "application_conditions": [
+                "Equivalent meaning only; retain the original owner, prerequisites, all effects and guards."
+              ],
+              "id": "cute_equivalent_ae_inner_brow",
+              "limits": [
+                "No emotion, age, universal cuteness or extra actor inferred from this local form."
+              ]
+            }
+          ]
+        },
+        "core_assertion_discovery": true,
+        "embedding_text": "눈썹 안쪽 끝이 올라간 상태; the inner eyebrow ends are visibly lifted; outer eyebrow ends are not required to rise equally; 눈썹 안쪽 끝을 올린; inner brow raise; raised inner brows",
+        "en": "the inner eyebrow ends are visibly lifted; outer eyebrow ends are not required to rise equally",
+        "keywords": [
+          "눈썹 안쪽 끝을 올린",
+          "inner brow raise",
+          "raised inner brows"
+        ],
+        "ko": "눈썹 안쪽 끝이 올라간 상태",
+        "paraphrases": [
+          "양 눈썹의 안쪽 끝이 바깥쪽보다 위로 들린다",
+          "The inner ends of both eyebrows lift relative to the outer ends."
+        ],
+        "relations": [
+          {
+            "id": "actor_owner",
+            "object": "the declared actor's stated local face and eye configuration",
+            "subject": "main_subject",
+            "type": "declared_owner_scope"
+          }
+        ],
+        "tags": [
+          "human",
+          "acting_expression",
+          "expression"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "expression"
+        ],
+        "properties": [
+          {
+            "dimension": "expression",
+            "property": "face.expression",
+            "target": "main_subject"
+          }
+        ]
+      },
+      "id": "cand_9af167ff29e35d068141195ba7ddd8be",
+      "provenance": [
+        {
+          "sha256": "36936069401637024025d1270fa807d4ad60950541d672bbe3abb8b3a80d1d30",
+          "source": "slot:expression:ae_inner_brow"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_b66c87df535b5ec387a208fb957b36b1": {
+      "conditions": {},
+      "content": {
+        "activation": {
+          "exact_terms": [
+            "눈썹 안쪽 끝을 올린",
+            "inner brow raise",
+            "raised inner brows"
+          ],
+          "hard_activation": {
+            "contract_version": "photo-visual-hard-activation/v1",
+            "required_any_groups": [
+              {
+                "any_terms": [
+                  "face",
+                  "facial",
+                  "portrait",
+                  "actor",
+                  "person",
+                  "human",
+                  "woman",
+                  "man",
+                  "얼굴",
+                  "표정",
+                  "인물",
+                  "사람",
+                  "배우",
+                  "초상"
+                ],
+                "id": "actor_face_context"
+              }
+            ]
+          },
+          "requires_adult_character": false,
+          "semantic_discovery_requires_component_evidence": true
+        },
+        "authored_components": {
+          "components": [
+            {
+              "evidence_field": "component_1_phrase",
+              "evidence_terms": [
+                "the inner eyebrow ends are visibly lifted"
+              ],
+              "id": "component_1",
+              "instruction": "Preserve the declared actor and show this facial or contact relation clearly: the inner eyebrow ends are visibly lifted.",
+              "match_terms": [
+                "the inner eyebrow ends are visibly lifted"
+              ],
+              "min_content_words": 3,
+              "render_gate": {
+                "description": "Inspect the declared actor's original pixels for this complete relation: the inner eyebrow ends are visibly lifted. Partial evidence fails; occlusion is unobservable.",
+                "id": "vo_ae_profile_inner_brow_1",
+                "review_scale": "native"
+              }
+            },
+            {
+              "evidence_field": "component_2_phrase",
+              "evidence_terms": [
+                "outer eyebrow ends are not required to rise equally"
+              ],
+              "id": "component_2",
+              "instruction": "Preserve the declared actor and show this facial or contact relation clearly: outer eyebrow ends are not required to rise equally.",
+              "match_terms": [
+                "outer eyebrow ends are not required to rise equally"
+              ],
+              "min_content_words": 3,
+              "render_gate": {
+                "description": "Inspect the declared actor's original pixels for this complete relation: outer eyebrow ends are not required to rise equally. Partial evidence fails; occlusion is unobservable.",
+                "id": "vo_ae_profile_inner_brow_2",
+                "review_scale": "native"
+              }
+            }
+          ],
+          "contract_version": "photo-authored-visual-components/v1"
+        },
+        "category": "observable_facial_or_hand_configuration",
+        "composition_instruction": "Preserve the declared actor and show this facial or contact relation clearly: the inner eyebrow ends are visibly lifted. Preserve the declared actor and show this facial or contact relation clearly: outer eyebrow ends are not required to rise equally.",
+        "concept_candidate": {
+          "affected_dimensions": [
+            "expression"
+          ],
+          "affected_properties": [
+            {
+              "dimension": "expression",
+              "property": "face.expression",
+              "target": "main_subject"
+            }
+          ],
+          "concept_terms": [
+            "눈썹 안쪽 끝이 올라간 상태",
+            "inner eyebrow ends rise above their outer portions",
+            "the inner eyebrow ends are visibly lifted",
+            "outer eyebrow ends are not required to rise equally",
+            "양 눈썹의 안쪽 끝이 바깥쪽보다 위로 들린다",
+            "The inner ends of both eyebrows lift relative to the outer ends."
+          ],
+          "core_assertion_discovery": true
+        },
+        "evidence_requirements": {
+          "component_1_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "the inner eyebrow ends are visibly lifted"
+            ]
+          },
+          "component_2_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "outer eyebrow ends are not required to rise equally"
+            ]
+          }
+        },
+        "reject_substitutes": [
+          "both brows lifted uniformly",
+          "sadness universally inferred"
+        ],
+        "render_gates": [
+          {
+            "description": "Inspect the declared actor's original pixels for this complete relation: the inner eyebrow ends are visibly lifted. Partial evidence fails; occlusion is unobservable.",
+            "id": "vo_ae_profile_inner_brow_1",
+            "review_scale": "native"
+          },
+          {
+            "description": "Inspect the declared actor's original pixels for this complete relation: outer eyebrow ends are not required to rise equally. Partial evidence fails; occlusion is unobservable.",
+            "id": "vo_ae_profile_inner_brow_2",
+            "review_scale": "native"
+          }
+        ],
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase"
+        ],
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "forbidden_prompt_terms": [],
+          "prompt_label_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "semantics": {
+          "claim_limits": [
+            "Bind all parts and laterality to the frozen actor; no inferred real emotion, trait or consent.",
+            "Retain the frozen crop and eyeline; a hidden prerequisite is unobservable, not a pass.",
+            "Every required component must pass; partial evidence is a failure."
+          ],
+          "component_semantics": {
+            "groups": [
+              {
+                "any_terms": [
+                  "the inner eyebrow ends are visibly lifted"
+                ],
+                "id": "component_1"
+              },
+              {
+                "any_terms": [
+                  "outer eyebrow ends are not required to rise equally"
+                ],
+                "id": "component_2"
+              }
+            ],
+            "minimum_component_groups": 2,
+            "required_group_ids": [
+              "component_1",
+              "component_2"
+            ]
+          },
+          "contrast_examples": [
+            "both brows lifted uniformly",
+            "sadness universally inferred"
+          ],
+          "definition": "the inner eyebrow ends are visibly lifted; outer eyebrow ends are not required to rise equally",
+          "paraphrase_examples": [
+            "inner eyebrow ends rise above their outer portions",
+            "양 눈썹의 안쪽 끝이 바깥쪽보다 위로 들린다",
+            "The inner ends of both eyebrows lift relative to the outer ends."
+          ],
+          "visual_components": [
+            "the inner eyebrow ends are visibly lifted",
+            "outer eyebrow ends are not required to rise equally"
+          ]
+        }
+      },
+      "effects": {
+        "dimensions": [],
+        "properties": []
+      },
+      "id": "cand_b66c87df535b5ec387a208fb957b36b1",
+      "provenance": [
+        {
+          "sha256": "a1c35600d2a626561b2683a0a9cd6017a39db8b88cadb2111d722b3c02878b3e",
+          "source": "visual_profile:ae_profile_inner_brow"
+        }
+      ],
+      "record_kind": "visual_profile"
+    },
+    "cand_6fa470042c3458cd90d9791d719dbeb0": {
+      "conditions": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "content": {
+        "aliases": [
+          "defined brows",
+          "clean arch brows",
+          "crisp groomed brows"
+        ],
+        "embedding_text": "cleanly defined arched brows with crisp grooming and realistic brow hair texture",
+        "en": "cleanly defined arched brows with crisp grooming",
+        "keywords": [
+          "defined arch brow",
+          "crisp brow grooming",
+          "clean brow shape"
+        ],
+        "ko": "깔끔하게 정리된 선명한 아치 눈썹",
+        "tags": [
+          "human",
+          "brow",
+          "makeup",
+          "beauty",
+          "defined"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "appearance"
+        ],
+        "properties": []
+      },
+      "id": "cand_6fa470042c3458cd90d9791d719dbeb0",
+      "provenance": [
+        {
+          "sha256": "e221caa3af62d10e04e6ec66992928da43116b662884f829205da6b8720be9e8",
+          "source": "slot:brow_style:clean_defined_arch_brow"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_cc060621ffd4577388e4efc81032e3e8": {
+      "conditions": {
+        "for_any": [
+          "human"
+        ]
+      },
+      "content": {
+        "aliases": [
+          "brushed-up brows",
+          "브러시드업 눈썹 결"
+        ],
+        "concept_units": [
+          "brushed-up brows",
+          "위로 정리된 개별 털",
+          "원래 눈썹 위치"
+        ],
+        "embedding_text": "브러시드업 눈썹 결; brushed-up brows; 위로 정리된 개별 털; 원래 눈썹 위치",
+        "en": "brushed-up brows",
+        "keywords": [
+          "brushed-up brows",
+          "브러시드업 눈썹 결"
+        ],
+        "ko": "브러시드업 눈썹 결",
+        "relations": [
+          {
+            "id": "sff_pro_m11_owner",
+            "object": "눈썹",
+            "subject": "brushed-up brows",
+            "type": "visible_owner_and_boundary"
+          }
+        ],
+        "research_confusions": [
+          "눈썹 밀도/얼굴 정체성 교체"
+        ],
+        "research_origin_id": "pro:M11",
+        "research_source_urls": [
+          "https://global.kryolan.com/howto/colorful-eye-make-up"
+        ],
+        "tags": [
+          "human",
+          "adult",
+          "fashion",
+          "sensual_editorial"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "appearance"
+        ],
+        "properties": []
+      },
+      "id": "cand_cc060621ffd4577388e4efc81032e3e8",
+      "provenance": [
+        {
+          "sha256": "6560b97b295244812d94e37c34d93ef42f825c348c5183b16457bfe343ffc3e4",
+          "source": "slot:brow_style:sff_pro_m11"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_bd01df735ed657ad9de867732480416e": {
+      "conditions": {},
+      "content": {
+        "en": "golden hour",
+        "ko": "golden hour",
+        "tags": [
+          "lighting"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "lighting"
+        ],
+        "properties": []
+      },
+      "id": "cand_bd01df735ed657ad9de867732480416e",
+      "provenance": [
+        {
+          "sha256": "b2d7ad74e72b792b11793ce8d366423317f7c9c884b00fcd934a7a0d585f9edd",
+          "source": "slot:light_type:golden_hour"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_c0fd5eb966f85abdb72b4e9623b00481": {
+      "conditions": {},
+      "content": {
+        "en": "hard flash",
+        "ko": "hard flash",
+        "tags": [
+          "lighting"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "lighting"
+        ],
+        "properties": []
+      },
+      "id": "cand_c0fd5eb966f85abdb72b4e9623b00481",
+      "provenance": [
+        {
+          "sha256": "1abe4e18daf63dd1fa3613ea0067f4d0960e3246558d1dcc6fb30c9ea92c39f6",
+          "source": "slot:light_type:hard_flash"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_f5de9f2d17165939999bbde4efc539ea": {
+      "conditions": {},
+      "content": {
+        "en": "soft window",
+        "ko": "soft window",
+        "tags": [
+          "lighting"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "lighting"
+        ],
+        "properties": []
+      },
+      "id": "cand_f5de9f2d17165939999bbde4efc539ea",
+      "provenance": [
+        {
+          "sha256": "6e34efa9acd3ce8abf232dd6adc641d220b6ef54d03421a4770a0229cdfd58b2",
+          "source": "slot:light_type:soft_window"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_33eb815fce7f5651bb3992a71f7ec7ec": {
+      "conditions": {},
+      "content": {
+        "en": "dieselpunk mood",
+        "ko": "디젤펑크 감성",
+        "tags": [
+          "retro"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "setting"
+        ],
+        "properties": []
+      },
+      "id": "cand_33eb815fce7f5651bb3992a71f7ec7ec",
+      "provenance": [
+        {
+          "sha256": "851e8e96604ac48a714b275895c0d7227df02846a465974dfbb3b602f2b99d1e",
+          "source": "slot:world:dieselpunk"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_5c288b209636583fb4d431ab1cd0d3be": {
+      "conditions": {},
+      "content": {
+        "aliases": [
+          "보이는 조명과 조명 영역의 대응",
+          "practical pool relation"
+        ],
+        "concept_units": [
+          "보이는 조명과 조명 영역의 대응",
+          "wall lamp",
+          "local light",
+          "light pool",
+          "the acting wall lamp is visible",
+          "the lamp produces a localized light pool on the adjacent surface",
+          "the pool fades into the surrounding room illumination"
+        ],
+        "embedding_text": "보이는 조명과 조명 영역의 대응; The wall lamp produces a localized pool on the adjacent wall and table, fading into the surrounding room light.; the acting wall lamp is visible; the lamp produces a localized light pool on the adjacent surface; the pool fades into the surrounding room illumination",
+        "en": "The wall lamp produces a localized pool on the adjacent wall and table, fading into the surrounding room light.",
+        "keywords": [
+          "available light",
+          "uneven illumination"
+        ],
+        "ko": "보이는 조명과 조명 영역의 대응",
+        "relations": [
+          {
+            "id": "rb_practical_pool_owner_relation",
+            "object": "the selected connected environment and its visible receiving surfaces",
+            "subject": "벽등·램프와 수광면",
+            "type": "scene_bound_owner_relation"
+          }
+        ],
+        "tags": [
+          "photographic_environment",
+          "realistic_background",
+          "lighting"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "lighting"
+        ],
+        "properties": []
+      },
+      "id": "cand_5c288b209636583fb4d431ab1cd0d3be",
+      "provenance": [
+        {
+          "sha256": "b9a04665cc766102e9205de050b24b9560d4976ae1b60d7dc2502094abae305a",
+          "source": "slot:lighting:rb_practical_pool_candidate"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_e244eaf9a98c5546aa64909b9f082344": {
+      "conditions": {},
+      "content": {
+        "aliases": [
+          "civil",
+          "twilight"
+        ],
+        "embedding_text": "civil twilight with visible ambient sky light",
+        "en": "civil twilight with visible ambient sky light",
+        "facets": {
+          "time_of_day": [
+            "dawn",
+            "dusk"
+          ]
+        },
+        "keywords": [
+          "time",
+          "twilight",
+          "ambient"
+        ],
+        "ko": "하늘빛이 남아 있는 시민박명",
+        "tags": [
+          "time",
+          "twilight",
+          "ambient"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "timing"
+        ],
+        "properties": []
+      },
+      "id": "cand_e244eaf9a98c5546aa64909b9f082344",
+      "provenance": [
+        {
+          "sha256": "bb1c694a4daf9ff2d5b45e5fb1fa9cfd2fb3c682ab45412b41d6e61ffcafa232",
+          "source": "slot:time_of_day:civil_twilight"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_7873cd807ec459d9847edc255379496e": {
+      "conditions": {},
+      "content": {
+        "embedding_text": "cool morning-blue color grade",
+        "en": "cool morning-blue color grade",
+        "ko": "차가운 아침 블루 색보정",
+        "tags": [
+          "photo",
+          "color_grade",
+          "cool",
+          "morning"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "color"
+        ],
+        "properties": []
+      },
+      "id": "cand_7873cd807ec459d9847edc255379496e",
+      "provenance": [
+        {
+          "sha256": "73942a46a2b4334784328c40bd5c869e1610008651cbf812a82f4058c37970e5",
+          "source": "slot:color_grading:cool_morning_blue_grade"
+        }
+      ],
+      "record_kind": "visual_option"
+    },
+    "cand_28a68e06d76657019c6ce04d0a3cd77f": {
+      "conditions": {},
+      "content": {
+        "en": "cinematic",
+        "ko": "시네마틱",
+        "tags": [
+          "cinematic",
+          "dramatic",
+          "photo"
+        ]
+      },
+      "effects": {
+        "dimensions": [
+          "style"
+        ],
+        "properties": []
+      },
+      "id": "cand_28a68e06d76657019c6ce04d0a3cd77f",
+      "provenance": [
+        {
+          "sha256": "875fddfc5900d11237c063b9914615f780677cbfc7a77769f6414aab9cd544a3",
+          "source": "slot:genre:cinematic"
+        }
+      ],
+      "record_kind": "visual_option"
+    }
+  },
+  "source_binding_definitions": {
+    "bind_8cec642e21e05d48b757772952614477": {
+      "candidate_id": "cand_8cec642e21e05d48b757772952614477",
+      "conditions": {
+        "subject_applicability": {
+          "deny_domains": [
+            "product",
+            "jewelry",
+            "food",
+            "wildlife"
+          ],
+          "subject_categories": [
+            "human"
+          ]
+        }
+      },
+      "id": "bind_8cec642e21e05d48b757772952614477",
+      "role": "optional",
+      "semantic_role": "direct",
+      "slot_id": "hair_style",
+      "weight": 0.45
+    },
+    "bind_9af167ff29e35d068141195ba7ddd8be": {
+      "candidate_id": "cand_9af167ff29e35d068141195ba7ddd8be",
+      "conditions": {
+        "subject_applicability": {
+          "subject_categories": [
+            "human",
+            "animal"
+          ]
+        }
+      },
+      "id": "bind_9af167ff29e35d068141195ba7ddd8be",
+      "role": "optional",
+      "semantic_role": "direct",
+      "slot_id": "expression",
+      "weight": 0.5
+    }
+  },
+  "catalog_specs": {
+    "body_hair": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Owned regional body-hair density, length and distribution, separate from skin finish and scalp hair.",
+      "description_ko": "체모: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "body hair",
+        "regional hair",
+        "hair density",
+        "체모"
+      ],
+      "excludes": [
+        "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다."
+      ],
+      "id": "body_hair",
+      "includes": [
+        "Owned regional body-hair density, length and distribution, separate from skin finish and scalp hair."
+      ],
+      "neighbors": [
+        "body_marking",
+        "makeup_decoration",
+        "skin_condition",
+        "skin_finish",
+        "skin_tone"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "body.hair",
+        "skin.body_hair"
+      ],
+      "semantic_role": "direct"
+    },
+    "body_marking": {
+      "applicability": {
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ],
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Bounded natural, declared or applied markings on an owned body surface.",
+      "description_ko": "신체 표면의 국소 표식과 색 경계: 화장·자연 표식·흉터 원인은 맥락 필요; 의복 무늬와 소유자 구별",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "mark",
+        "mole",
+        "scar",
+        "pigment",
+        "patch",
+        "tattoo"
+      ],
+      "excludes": [
+        "화장·자연 표식·흉터 원인은 맥락 필요; 의복 무늬와 소유자 구별"
+      ],
+      "id": "body_marking",
+      "includes": [
+        "Bounded natural, declared or applied markings on an owned body surface."
+      ],
+      "neighbors": [
+        "body_hair",
+        "makeup_decoration",
+        "skin_condition",
+        "skin_finish",
+        "skin_tone"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "skin.marking",
+        "body.marking",
+        "skin.pigment",
+        "skin.scar"
+      ],
+      "semantic_role": "direct"
+    },
+    "footwear": {
+      "applicability": {
+        "deny_domains": [
+          "documentary",
+          "craft",
+          "wildlife",
+          "product",
+          "jewelry",
+          "food"
+        ],
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Owned footwear type, construction and appearance, with wearing versus standalone object role explicit.",
+      "description_ko": "발에 착용되는 신발의 종류와 구조: 단독 상품·바닥 소품 활용은 다른 소유 역할; 작은 부류여도 독립 속성 유효",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "shoe",
+        "boot",
+        "sandal",
+        "heel",
+        "footwear",
+        "신발"
+      ],
+      "excludes": [
+        "단독 상품·바닥 소품 활용은 다른 소유 역할; 작은 부류여도 독립 속성 유효"
+      ],
+      "id": "footwear",
+      "includes": [
+        "Owned footwear type, construction and appearance, with wearing versus standalone object role explicit."
+      ],
+      "neighbors": [
+        "attire_context",
+        "garment_detail",
+        "garment_fit",
+        "garment_state",
+        "silhouette_proportion",
+        "wardrobe_layering",
+        "wardrobe_style"
+      ],
+      "owners": [
+        "object"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "footwear.",
+        "wardrobe.footwear"
+      ],
+      "semantic_role": "direct"
+    },
+    "brow_style": {
+      "applicability": {
+        "deny_domains": [
+          "documentary",
+          "craft",
+          "wildlife",
+          "product",
+          "jewelry",
+          "food"
+        ],
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Owned eyebrow shape, strand arrangement, grooming or cosmetic line.",
+      "description_ko": "눈썹 형태·결·정리와 색 연출: 자연 털과 화장 선은 적용 맥락으로 구별; 눈썹을 눈 화장 전체로 확대하지 않음",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "brow",
+        "eyebrow",
+        "眉",
+        "눈썹"
+      ],
+      "excludes": [
+        "자연 털과 화장 선은 적용 맥락으로 구별; 눈썹을 눈 화장 전체로 확대하지 않음"
+      ],
+      "id": "brow_style",
+      "includes": [
+        "Owned eyebrow shape, strand arrangement, grooming or cosmetic line."
+      ],
+      "neighbors": [
+        "age_presentation",
+        "anatomical_connection",
+        "body_hair",
+        "body_marking",
+        "body_orientation",
+        "body_pose",
+        "body_region",
+        "cheek_makeup",
+        "complexion_coverage",
+        "expression",
+        "eye_detail",
+        "eye_makeup_line",
+        "eyeshadow_style",
+        "facial_geometry",
+        "facial_hair",
+        "gaze_engagement",
+        "gaze_target",
+        "gender_presentation",
+        "hair_color",
+        "hair_style",
+        "hand_pose",
+        "lash_style",
+        "lip_color_placement",
+        "lip_finish",
+        "makeup_contour",
+        "makeup_decoration",
+        "makeup_style",
+        "makeup_wear_state",
+        "presentation_style",
+        "silhouette_proportion",
+        "skin_condition",
+        "skin_finish",
+        "skin_tone",
+        "species_marker",
+        "wardrobe_style",
+        "wearable_accessory"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "brows.",
+        "eyebrows.",
+        "makeup.brows"
+      ],
+      "semantic_role": "direct"
+    },
+    "expression": {
+      "applicability": {
+        "subject_categories": [
+          "human",
+          "animal"
+        ]
+      },
+      "core_fields": [
+        "event",
+        "visual_priorities"
+      ],
+      "description": "Observable facial or eye-area response belonging to one declared actor, not a proven private emotion.",
+      "description_ko": "인물·동물의 관찰 가능한 얼굴 반응: 시선 목표와 사적인 마음 상태를 표정 사실로 취급하지 않음",
+      "dimensions": [
+        "expression"
+      ],
+      "evidence_terms": [
+        "smile",
+        "expression",
+        "mouth",
+        "eyes",
+        "표정"
+      ],
+      "excludes": [
+        "시선 목표와 사적인 마음 상태를 표정 사실로 취급하지 않음"
+      ],
+      "id": "expression",
+      "includes": [
+        "Observable facial or eye-area response belonging to one declared actor, not a proven private emotion."
+      ],
+      "neighbors": [
+        "eye_detail",
+        "gaze_engagement",
+        "gaze_target"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "face.expression",
+        "expression.",
+        "eyes.expression"
+      ],
+      "semantic_role": "direct"
+    },
+    "light_type": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "setting",
+        "visual_priorities"
+      ],
+      "description": "Light-source type and emission mechanism, distinct from exposure trails and image artifacts.",
+      "description_ko": "광원의 종류와 발생 방식: 긴 노출 궤적은 motion_rendering 계열; 광원 정체와 영상 흔적 구별",
+      "dimensions": [
+        "lighting"
+      ],
+      "evidence_terms": [
+        "lamp",
+        "flash",
+        "headlight",
+        "neon",
+        "fluorescent",
+        "light source"
+      ],
+      "excludes": [
+        "긴 노출 궤적은 motion_rendering 계열; 광원 정체와 영상 흔적 구별"
+      ],
+      "id": "light_type",
+      "includes": [
+        "Light-source type and emission mechanism, distinct from exposure trails and image artifacts."
+      ],
+      "neighbors": [
+        "exposure",
+        "light_color",
+        "light_direction",
+        "light_intensity",
+        "light_quality",
+        "light_shape",
+        "lighting",
+        "shadow_relation"
+      ],
+      "owners": [
+        "light"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "lighting.source",
+        "lighting.type",
+        "source.light",
+        "emission."
+      ],
+      "semantic_role": "direct"
+    },
+    "light_quality": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "setting",
+        "visual_priorities"
+      ],
+      "description": "Illumination softness, angular extent and resulting shadow transition, separate from intensity and image exposure.",
+      "description_ko": "빛의 경계와 광질: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+      "dimensions": [
+        "lighting"
+      ],
+      "evidence_terms": [
+        "soft light",
+        "hard light",
+        "diffused",
+        "shadow transition",
+        "광질"
+      ],
+      "excludes": [
+        "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다."
+      ],
+      "id": "light_quality",
+      "includes": [
+        "Illumination softness, angular extent and resulting shadow transition, separate from intensity and image exposure."
+      ],
+      "neighbors": [
+        "exposure",
+        "light_color",
+        "light_direction",
+        "light_intensity",
+        "light_shape",
+        "light_type",
+        "lighting",
+        "shadow_relation"
+      ],
+      "owners": [
+        "light"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "lighting.softness",
+        "lighting.quality",
+        "light.angular_extent"
+      ],
+      "semantic_role": "direct"
+    },
+    "lighting": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "setting",
+        "visual_priorities"
+      ],
+      "description": "A coherent illumination setup combining source, spatial placement and receiving surfaces.",
+      "description_ko": "소유자·배치·광질이 연결된 조명 구성: 단일 광원 종류와 여러 속성의 완결된 구성을 구별; 하위 속성 자동 태깅 금지",
+      "dimensions": [
+        "lighting"
+      ],
+      "evidence_terms": [
+        "light",
+        "illumination",
+        "lighting",
+        "glow",
+        "조명"
+      ],
+      "excludes": [
+        "단일 광원 종류와 여러 속성의 완결된 구성을 구별; 하위 속성 자동 태깅 금지"
+      ],
+      "id": "lighting",
+      "includes": [
+        "A coherent illumination setup combining source, spatial placement and receiving surfaces."
+      ],
+      "neighbors": [
+        "exposure",
+        "light_color",
+        "light_direction",
+        "light_intensity",
+        "light_quality",
+        "light_shape",
+        "light_type",
+        "shadow_relation"
+      ],
+      "owners": [
+        "light"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "lighting.setup",
+        "lighting.configuration"
+      ],
+      "semantic_role": "direct"
+    },
+    "time_of_day": {
+      "applicability": {},
+      "core_fields": [
+        "setting",
+        "event"
+      ],
+      "description": "Time within a day or natural-light cycle; event stage and calendar occasion are separate.",
+      "description_ko": "자연광 주기 또는 명시된 하루 시점: 폐점·시험 전날은 행사·서사 단계; 달력·생활 사건과 하루 시각 구별",
+      "dimensions": [
+        "timing"
+      ],
+      "evidence_terms": [
+        "dawn",
+        "morning",
+        "noon",
+        "afternoon",
+        "twilight",
+        "night"
+      ],
+      "excludes": [
+        "폐점·시험 전날은 행사·서사 단계; 달력·생활 사건과 하루 시각 구별"
+      ],
+      "id": "time_of_day",
+      "includes": [
+        "Time within a day or natural-light cycle; event stage and calendar occasion are separate."
+      ],
+      "neighbors": [
+        "calendar_context",
+        "historical_period",
+        "narrative_phase",
+        "procedure_step",
+        "season",
+        "transformation_stage"
+      ],
+      "owners": [
+        "context"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "timing.time_of_day",
+        "time.day_phase"
+      ],
+      "semantic_role": "contextual"
+    },
+    "aesthetic_trend": {
+      "applicability": {
+        "deny_domains": [
+          "documentary",
+          "craft",
+          "wildlife"
+        ]
+      },
+      "core_fields": [
+        "style",
+        "visual_priorities"
+      ],
+      "description": "Visual aesthetic movement or stylistic practice, distinct from an entire plot, institution or world system.",
+      "description_ko": "미적·시각적 표현 경향과 관습: 수사 절차·범죄 시스템·설화 전승은 genre·world·narrative_core와 재분류",
+      "dimensions": [
+        "style"
+      ],
+      "evidence_terms": [
+        "aesthetic",
+        "style",
+        "sensibility",
+        "visual",
+        "미감"
+      ],
+      "excludes": [
+        "수사 절차·범죄 시스템·설화 전승은 genre·world·narrative_core와 재분류"
+      ],
+      "id": "aesthetic_trend",
+      "includes": [
+        "Visual aesthetic movement or stylistic practice, distinct from an entire plot, institution or world system."
+      ],
+      "neighbors": [
+        "concept_tension",
+        "narrative_core",
+        "occasion_context",
+        "situation_context",
+        "world"
+      ],
+      "owners": [
+        "context"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "style.aesthetic",
+        "style.trend",
+        "aesthetic."
+      ],
+      "semantic_role": "contextual"
+    },
+    "hair_color": {
+      "applicability": {
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ],
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Color and color placement bounded to the declared hair regions.",
+      "description_ko": "지정 머리 영역의 색과 배치: 장면 색 보정·의복 색과 분리; 모발 영역에 한정",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "hair color",
+        "colored hair",
+        "blonde",
+        "brunette",
+        "머리 색"
+      ],
+      "excludes": [
+        "장면 색 보정·의복 색과 분리; 모발 영역에 한정"
+      ],
+      "id": "hair_color",
+      "includes": [
+        "Color and color placement bounded to the declared hair regions."
+      ],
+      "neighbors": [
+        "color",
+        "color_grading",
+        "light_color",
+        "lip_color_placement",
+        "skin_tone"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "hair.color",
+        "hair.base_color",
+        "hair.hue",
+        "hair.pigment"
+      ],
+      "semantic_role": "direct"
+    },
+    "hair_style": {
+      "applicability": {
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ],
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Owned hair shape, length, arrangement and strand topology, separate from its color.",
+      "description_ko": "머리의 형태와 연결 구조: hair_color의 색과 분리; 가발·살아 있는 모발 소유자 구별",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "hair",
+        "braid",
+        "fringe",
+        "bob",
+        "머리"
+      ],
+      "excludes": [
+        "hair_color의 색과 분리; 가발·살아 있는 모발 소유자 구별"
+      ],
+      "id": "hair_style",
+      "includes": [
+        "Owned hair shape, length, arrangement and strand topology, separate from its color."
+      ],
+      "neighbors": [
+        "age_presentation",
+        "anatomical_connection",
+        "body_hair",
+        "body_marking",
+        "body_orientation",
+        "body_pose",
+        "body_region",
+        "brow_style",
+        "cheek_makeup",
+        "complexion_coverage",
+        "expression",
+        "eye_detail",
+        "eye_makeup_line",
+        "eyeshadow_style",
+        "facial_geometry",
+        "facial_hair",
+        "gaze_engagement",
+        "gaze_target",
+        "gender_presentation",
+        "hair_color",
+        "hand_pose",
+        "lash_style",
+        "lip_color_placement",
+        "lip_finish",
+        "makeup_contour",
+        "makeup_decoration",
+        "makeup_style",
+        "makeup_wear_state",
+        "presentation_style",
+        "silhouette_proportion",
+        "skin_condition",
+        "skin_finish",
+        "skin_tone",
+        "species_marker",
+        "wardrobe_style",
+        "wearable_accessory"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "hair.style",
+        "hair.shape",
+        "hair.length",
+        "hair.structure",
+        "hair.topology",
+        "hair.strands"
+      ],
+      "semantic_role": "direct"
+    },
+    "facial_hair": {
+      "applicability": {
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ],
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Facial hair form, length and distribution, including a visibly shaved state.",
+      "description_ko": "얼굴 털의 형태와 분포: 피부 질감·머리 모양과 구별; 면도 상태도 같은 외관 축",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "mustache",
+        "beard",
+        "stubble",
+        "shaven",
+        "goatee"
+      ],
+      "excludes": [
+        "피부 질감·머리 모양과 구별; 면도 상태도 같은 외관 축"
+      ],
+      "id": "facial_hair",
+      "includes": [
+        "Facial hair form, length and distribution, including a visibly shaved state."
+      ],
+      "neighbors": [
+        "age_presentation",
+        "anatomical_connection",
+        "body_hair",
+        "body_marking",
+        "body_orientation",
+        "body_pose",
+        "body_region",
+        "brow_style",
+        "cheek_makeup",
+        "complexion_coverage",
+        "expression",
+        "eye_detail",
+        "eye_makeup_line",
+        "eyeshadow_style",
+        "facial_geometry",
+        "gaze_engagement",
+        "gaze_target",
+        "gender_presentation",
+        "hair_color",
+        "hair_style",
+        "hand_pose",
+        "lash_style",
+        "lip_color_placement",
+        "lip_finish",
+        "makeup_contour",
+        "makeup_decoration",
+        "makeup_style",
+        "makeup_wear_state",
+        "presentation_style",
+        "silhouette_proportion",
+        "skin_condition",
+        "skin_finish",
+        "skin_tone",
+        "species_marker",
+        "wardrobe_style",
+        "wearable_accessory"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "face.facial_hair",
+        "facial_hair.",
+        "beard.",
+        "mustache."
+      ],
+      "semantic_role": "direct"
+    },
+    "skin_tone": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "style",
+        "visual_priorities"
+      ],
+      "description": "Owned skin color and local color variation under declared illumination and white balance, distinct from cosmetics and image grading; apparent color does not prove intrinsic pigment or identity.",
+      "description_ko": "같은 피부 부위의 색과 국소 색 변이. 조명·화이트밸런스 기준이 명시된 보이는 색도 포함하되, 그 색으로 고유 색소·민족·정체성을 역추정하지 않으며 화장·그레이딩과 구별한다.",
+      "dimensions": [
+        "appearance",
+        "color"
+      ],
+      "evidence_terms": [
+        "skin tone",
+        "skin color",
+        "complexion",
+        "pigment",
+        "피부톤",
+        "피부색",
+        "피부의 보이는 색"
+      ],
+      "excludes": [
+        "Light color, cosmetic pigment, textile lining color or image grading alone.",
+        "Apparent skin color without its observation conditions cannot establish intrinsic pigment, ancestry or identity."
+      ],
+      "id": "skin_tone",
+      "includes": [
+        "Owned skin color or local variation.",
+        "Apparent color of a named skin region with capture illumination and white balance declared."
+      ],
+      "neighbors": [
+        "body_hair",
+        "body_marking",
+        "color",
+        "color_grading",
+        "hair_color",
+        "light_color",
+        "lip_color_placement",
+        "makeup_decoration",
+        "skin_condition",
+        "skin_finish"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "skin.color",
+        "skin.tone",
+        "complexion.color",
+        "body.skin.color",
+        "body.skin.tone",
+        "body.skin.apparent_color"
+      ],
+      "semantic_role": "direct"
+    },
+    "skin_finish": {
+      "applicability": {
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ],
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Optical finish and microtexture of the owned skin surface, not body hair, geometry or private health state.",
+      "description_ko": "피부 표면의 광학 마감과 미세 질감: 체모·눈밑 형태·홍조·눈물 상태가 섞임; 신체 형태와 피부 상태를 분리",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "skin",
+        "pores",
+        "sheen",
+        "skin texture",
+        "피부"
+      ],
+      "excludes": [
+        "체모·눈밑 형태·홍조·눈물 상태가 섞임; 신체 형태와 피부 상태를 분리"
+      ],
+      "id": "skin_finish",
+      "includes": [
+        "Optical finish and microtexture of the owned skin surface, not body hair, geometry or private health state."
+      ],
+      "neighbors": [
+        "body_hair",
+        "body_marking",
+        "makeup_decoration",
+        "skin_condition",
+        "skin_tone"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "skin.finish",
+        "skin.texture",
+        "skin.optical"
+      ],
+      "semantic_role": "direct"
+    },
+    "makeup_decoration": {
+      "applicability": {
+        "deny_domains": [
+          "documentary",
+          "craft",
+          "wildlife",
+          "product",
+          "jewelry",
+          "food"
+        ],
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Cosmetic painted or attached skin decoration, distinct from natural markings and garment ornament.",
+      "description_ko": "피부에 붙이거나 그린 화장 장식: 자연 점·흉터·문신과 구별; 신체·얼굴 외 영역도 명시된 화장 맥락 필요",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "cosmetic",
+        "face gem",
+        "decal",
+        "foil",
+        "painted",
+        "ornament"
+      ],
+      "excludes": [
+        "자연 점·흉터·문신과 구별; 신체·얼굴 외 영역도 명시된 화장 맥락 필요"
+      ],
+      "id": "makeup_decoration",
+      "includes": [
+        "Cosmetic painted or attached skin decoration, distinct from natural markings and garment ornament."
+      ],
+      "neighbors": [
+        "body_hair",
+        "body_marking",
+        "skin_condition",
+        "skin_finish",
+        "skin_tone"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "makeup.decoration",
+        "skin.cosmetic_decoration"
+      ],
+      "semantic_role": "direct"
+    },
+    "species_marker": {
+      "applicability": {},
+      "core_fields": [
+        "subject"
+      ],
+      "description": "Anatomical species cues owned by a declared subject, distinct from detachable costume ornaments.",
+      "description_ko": "주체에 소유된 종별 신체 단서: 살아 있는 귀·꼬리와 착용 장식을 구별; 특정 변신 설정에만 한정하지 않음",
+      "dimensions": [
+        "species"
+      ],
+      "evidence_terms": [
+        "ears",
+        "tail",
+        "fur",
+        "wing",
+        "antennae",
+        "species"
+      ],
+      "excludes": [
+        "살아 있는 귀·꼬리와 착용 장식을 구별; 특정 변신 설정에만 한정하지 않음"
+      ],
+      "id": "species_marker",
+      "includes": [
+        "Anatomical species cues owned by a declared subject, distinct from detachable costume ornaments."
+      ],
+      "neighbors": [
+        "age_presentation",
+        "anatomical_connection",
+        "body_hair",
+        "body_marking",
+        "body_orientation",
+        "body_pose",
+        "body_region",
+        "brow_style",
+        "cheek_makeup",
+        "complexion_coverage",
+        "expression",
+        "eye_detail",
+        "eye_makeup_line",
+        "eyeshadow_style",
+        "facial_geometry",
+        "facial_hair",
+        "gaze_engagement",
+        "gaze_target",
+        "gender_presentation",
+        "hair_color",
+        "hair_style",
+        "hand_pose",
+        "lash_style",
+        "lip_color_placement",
+        "lip_finish",
+        "makeup_contour",
+        "makeup_decoration",
+        "makeup_style",
+        "makeup_wear_state",
+        "presentation_style",
+        "silhouette_proportion",
+        "skin_condition",
+        "skin_finish",
+        "skin_tone",
+        "wardrobe_style",
+        "wearable_accessory"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "species.",
+        "body.species",
+        "body.ear_structure",
+        "body.tail"
+      ],
+      "semantic_role": "direct"
+    },
+    "garment_state": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Current garment wear, fastening, wetness or deformation, separate from construction and body state.",
+      "description_ko": "의복의 현재 상태: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "wrinkled",
+        "damp",
+        "fastened",
+        "unbuttoned",
+        "worn",
+        "creased"
+      ],
+      "excludes": [
+        "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다."
+      ],
+      "id": "garment_state",
+      "includes": [
+        "Current garment wear, fastening, wetness or deformation, separate from construction and body state."
+      ],
+      "neighbors": [
+        "attire_context",
+        "footwear",
+        "garment_detail",
+        "garment_fit",
+        "silhouette_proportion",
+        "wardrobe_layering",
+        "wardrobe_style"
+      ],
+      "owners": [
+        "object"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "wardrobe.state",
+        "garment.state"
+      ],
+      "semantic_role": "direct"
+    },
+    "body_region": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "event"
+      ],
+      "description": "Named anatomical region or selected body part, distinct from the obligation to prove its visibility.",
+      "description_ko": "선택된 신체 부위와 관찰 범위: 부위 자체와 이를 보여야 하는 검증 의무를 분리; framing·해부 연결과 연계",
+      "dimensions": [
+        "body_geometry"
+      ],
+      "evidence_terms": [
+        "region",
+        "torso",
+        "forearm",
+        "wrist",
+        "nape",
+        "anatomical"
+      ],
+      "excludes": [
+        "부위 자체와 이를 보여야 하는 검증 의무를 분리; framing·해부 연결과 연계"
+      ],
+      "id": "body_region",
+      "includes": [
+        "Named anatomical region or selected body part, distinct from the obligation to prove its visibility."
+      ],
+      "neighbors": [
+        "age_presentation",
+        "anatomical_connection",
+        "body_hair",
+        "body_marking",
+        "body_orientation",
+        "body_pose",
+        "brow_style",
+        "cheek_makeup",
+        "complexion_coverage",
+        "expression",
+        "eye_detail",
+        "eye_makeup_line",
+        "eyeshadow_style",
+        "facial_geometry",
+        "facial_hair",
+        "gaze_engagement",
+        "gaze_target",
+        "gender_presentation",
+        "hair_color",
+        "hair_style",
+        "hand_pose",
+        "lash_style",
+        "lip_color_placement",
+        "lip_finish",
+        "makeup_contour",
+        "makeup_decoration",
+        "makeup_style",
+        "makeup_wear_state",
+        "presentation_style",
+        "silhouette_proportion",
+        "skin_condition",
+        "skin_finish",
+        "skin_tone",
+        "species_marker",
+        "wardrobe_style",
+        "wearable_accessory"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "body.region",
+        "anatomy.region",
+        "body.part"
+      ],
+      "semantic_role": "direct"
+    },
+    "light_color": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "setting",
+        "visual_priorities"
+      ],
+      "description": "Color or color-temperature relation of declared illumination and its receivers, separate from local pigment or grading.",
+      "description_ko": "빛의 색: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+      "dimensions": [
+        "lighting",
+        "color"
+      ],
+      "evidence_terms": [
+        "colored light",
+        "warm light",
+        "cool light",
+        "red glow",
+        "green glow",
+        "temperature"
+      ],
+      "excludes": [
+        "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다."
+      ],
+      "id": "light_color",
+      "includes": [
+        "Color or color-temperature relation of declared illumination and its receivers, separate from local pigment or grading."
+      ],
+      "neighbors": [
+        "color",
+        "color_grading",
+        "exposure",
+        "hair_color",
+        "light_direction",
+        "light_intensity",
+        "light_quality",
+        "light_shape",
+        "light_type",
+        "lighting",
+        "lip_color_placement",
+        "shadow_relation",
+        "skin_tone"
+      ],
+      "owners": [
+        "light"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "lighting.color",
+        "light.color",
+        "emission.color"
+      ],
+      "semantic_role": "direct"
+    },
+    "light_direction": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "setting",
+        "visual_priorities"
+      ],
+      "description": "Incident light direction relative to a declared receiver and coordinate frame.",
+      "description_ko": "지정 대상과 기준축에 대한 입사 방향: 카메라 방향·빛무늬와 구별; 배우 기준과 화면 기준 명시",
+      "dimensions": [
+        "lighting"
+      ],
+      "evidence_terms": [
+        "side light",
+        "front light",
+        "backlight",
+        "overhead",
+        "from the left",
+        "from the right"
+      ],
+      "excludes": [
+        "카메라 방향·빛무늬와 구별; 배우 기준과 화면 기준 명시"
+      ],
+      "id": "light_direction",
+      "includes": [
+        "Incident light direction relative to a declared receiver and coordinate frame."
+      ],
+      "neighbors": [
+        "exposure",
+        "light_color",
+        "light_intensity",
+        "light_quality",
+        "light_shape",
+        "light_type",
+        "lighting",
+        "shadow_relation"
+      ],
+      "owners": [
+        "light"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "lighting.direction",
+        "light.direction",
+        "illumination.direction"
+      ],
+      "semantic_role": "direct"
+    },
+    "shadow_relation": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "setting",
+        "visual_priorities"
+      ],
+      "description": "Declared caster, receiving surface and shadow correspondence, separate from reflection and light-level claims.",
+      "description_ko": "그림자 대응 관계: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+      "dimensions": [
+        "lighting",
+        "composition"
+      ],
+      "evidence_terms": [
+        "casts a shadow",
+        "cast shadows",
+        "shadow consistent",
+        "shadow source"
+      ],
+      "excludes": [
+        "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다."
+      ],
+      "id": "shadow_relation",
+      "includes": [
+        "Declared caster, receiving surface and shadow correspondence, separate from reflection and light-level claims."
+      ],
+      "neighbors": [
+        "exposure",
+        "light_color",
+        "light_direction",
+        "light_intensity",
+        "light_quality",
+        "light_shape",
+        "light_type",
+        "lighting"
+      ],
+      "owners": [
+        "entity"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "shadow.relation",
+        "lighting.shadow_relation"
+      ],
+      "semantic_role": "direct"
+    },
+    "skin_condition": {
+      "applicability": {
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ],
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Current observable skin state, separate from durable markings, cosmetic layers and unproven diagnosis.",
+      "description_ko": "피부의 현재 국소 상태와 변화: 주근깨·영구 표식·화장과 구별; 원인·질환을 외관에서 확정하지 않음",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "skin",
+        "sweat",
+        "flushed",
+        "damp",
+        "reddened",
+        "puffy"
+      ],
+      "excludes": [
+        "주근깨·영구 표식·화장과 구별; 원인·질환을 외관에서 확정하지 않음"
+      ],
+      "id": "skin_condition",
+      "includes": [
+        "Current observable skin state, separate from durable markings, cosmetic layers and unproven diagnosis."
+      ],
+      "neighbors": [
+        "body_hair",
+        "body_marking",
+        "makeup_decoration",
+        "skin_finish",
+        "skin_tone"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "skin.state",
+        "skin.condition"
+      ],
+      "semantic_role": "direct"
+    },
+    "garment_detail": {
+      "applicability": {
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Construction, topology, trim and local form owned by the garment, distinct from anatomy and material identity.",
+      "description_ko": "의복의 구조·부착·트림·국소 형태: 몸 구조·피부 표식과 분리; 재질과 조직을 표현하면 추가 역할 가능",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "garment",
+        "sleeve",
+        "cuff",
+        "hem",
+        "neckline",
+        "skirt",
+        "cloth"
+      ],
+      "excludes": [
+        "몸 구조·피부 표식과 분리; 재질과 조직을 표현하면 추가 역할 가능"
+      ],
+      "id": "garment_detail",
+      "includes": [
+        "Construction, topology, trim and local form owned by the garment, distinct from anatomy and material identity."
+      ],
+      "neighbors": [
+        "attire_context",
+        "footwear",
+        "garment_fit",
+        "garment_state",
+        "silhouette_proportion",
+        "wardrobe_layering",
+        "wardrobe_style"
+      ],
+      "owners": [
+        "object"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "wardrobe.",
+        "garment.",
+        "clothing."
+      ],
+      "semantic_role": "direct"
+    },
+    "garment_fit": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Relation of a garment's volume and contour to its declared wearer, without inferring body shape from clothing.",
+      "description_ko": "의복 핏: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "fitted",
+        "loose",
+        "oversized",
+        "fit",
+        "relaxed",
+        "핏"
+      ],
+      "excludes": [
+        "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다."
+      ],
+      "id": "garment_fit",
+      "includes": [
+        "Relation of a garment's volume and contour to its declared wearer, without inferring body shape from clothing."
+      ],
+      "neighbors": [
+        "attire_context",
+        "footwear",
+        "garment_detail",
+        "garment_state",
+        "silhouette_proportion",
+        "wardrobe_layering",
+        "wardrobe_style"
+      ],
+      "owners": [
+        "object"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "wardrobe.fit",
+        "garment.fit"
+      ],
+      "semantic_role": "direct"
+    },
+    "attire_context": {
+      "applicability": {
+        "deny_domains": [
+          "wildlife",
+          "product",
+          "jewelry",
+          "food"
+        ],
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Declared role, culture, era or ceremony informing attire, separate from general garment construction.",
+      "description_ko": "역할·문화·시대·의례를 명시한 복식 맥락: 일반 의복 구성과 분리; 전통 복식을 코스프레와 동일시하지 않음",
+      "dimensions": [
+        "appearance",
+        "role"
+      ],
+      "evidence_terms": [
+        "costume",
+        "uniform",
+        "ceremonial",
+        "traditional",
+        "cosplay"
+      ],
+      "excludes": [
+        "일반 의복 구성과 분리; 전통 복식을 코스프레와 동일시하지 않음"
+      ],
+      "id": "attire_context",
+      "includes": [
+        "Declared role, culture, era or ceremony informing attire, separate from general garment construction."
+      ],
+      "neighbors": [
+        "footwear",
+        "garment_detail",
+        "garment_fit",
+        "garment_state",
+        "silhouette_proportion",
+        "wardrobe_layering",
+        "wardrobe_style"
+      ],
+      "owners": [
+        "context"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "wardrobe.context",
+        "wardrobe.cultural",
+        "wardrobe.role",
+        "attire."
+      ],
+      "semantic_role": "contextual"
+    },
+    "facial_geometry": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "event"
+      ],
+      "description": "Owned facial shape, local anatomical geometry and proportions, separate from cosmetic contour or skin finish.",
+      "description_ko": "얼굴 윤곽·부위 형태·비례: 모든 후보가 둘의 관계는 아님; 피부 마감·화장 명암과 실제 형상 구별",
+      "dimensions": [
+        "body_geometry"
+      ],
+      "evidence_terms": [
+        "face",
+        "forehead",
+        "jaw",
+        "cheek",
+        "nose",
+        "earlobe"
+      ],
+      "excludes": [
+        "모든 후보가 둘의 관계는 아님; 피부 마감·화장 명암과 실제 형상 구별"
+      ],
+      "id": "facial_geometry",
+      "includes": [
+        "Owned facial shape, local anatomical geometry and proportions, separate from cosmetic contour or skin finish."
+      ],
+      "neighbors": [
+        "age_presentation",
+        "anatomical_connection",
+        "body_hair",
+        "body_marking",
+        "body_orientation",
+        "body_pose",
+        "body_region",
+        "brow_style",
+        "cheek_makeup",
+        "complexion_coverage",
+        "expression",
+        "eye_detail",
+        "eye_makeup_line",
+        "eyeshadow_style",
+        "facial_hair",
+        "gaze_engagement",
+        "gaze_target",
+        "gender_presentation",
+        "hair_color",
+        "hair_style",
+        "hand_pose",
+        "lash_style",
+        "lip_color_placement",
+        "lip_finish",
+        "makeup_contour",
+        "makeup_decoration",
+        "makeup_style",
+        "makeup_wear_state",
+        "presentation_style",
+        "silhouette_proportion",
+        "skin_condition",
+        "skin_finish",
+        "skin_tone",
+        "species_marker",
+        "wardrobe_style",
+        "wearable_accessory"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "face.shape",
+        "face.geometry",
+        "face.proportion",
+        "body.face"
+      ],
+      "semantic_role": "direct"
+    },
+    "eye_detail": {
+      "applicability": {
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ],
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Owned local eye structure, iris color and surface appearance, distinct from gaze and surrounding cosmetics.",
+      "description_ko": "눈의 색·구조·관찰 가능한 국소 속성: 대체 안구 연결·충혈·눈물은 추가 역할; 일반 외모와 시선 관계를 구별",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "iris",
+        "pupil",
+        "eye",
+        "안구"
+      ],
+      "excludes": [
+        "대체 안구 연결·충혈·눈물은 추가 역할; 일반 외모와 시선 관계를 구별"
+      ],
+      "id": "eye_detail",
+      "includes": [
+        "Owned local eye structure, iris color and surface appearance, distinct from gaze and surrounding cosmetics."
+      ],
+      "neighbors": [
+        "expression",
+        "gaze_engagement",
+        "gaze_target"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "eyes.structure",
+        "eyes.iris",
+        "eyes.color",
+        "eye."
+      ],
+      "semantic_role": "direct"
+    },
+    "color_grading": {
+      "applicability": {
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ]
+      },
+      "core_fields": [
+        "style",
+        "visual_priorities"
+      ],
+      "description": "Image-wide or specified tonal-band color and tone transformations, preserving locked local colors.",
+      "description_ko": "이미지 전체 또는 지정 톤 대역의 색·톤 변환: 대상의 실제 고유색과 구별; 잠긴 영역 색을 덮어쓰지 않음",
+      "dimensions": [
+        "color"
+      ],
+      "evidence_terms": [
+        "grade",
+        "grading",
+        "tonal",
+        "rolloff",
+        "shifted color",
+        "색 보정"
+      ],
+      "excludes": [
+        "대상의 실제 고유색과 구별; 잠긴 영역 색을 덮어쓰지 않음"
+      ],
+      "id": "color_grading",
+      "includes": [
+        "Image-wide or specified tonal-band color and tone transformations, preserving locked local colors."
+      ],
+      "neighbors": [
+        "color",
+        "hair_color",
+        "light_color",
+        "lip_color_placement",
+        "skin_tone"
+      ],
+      "owners": [
+        "image"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "grading.",
+        "image.color",
+        "image.tone",
+        "rendering.color"
+      ],
+      "semantic_role": "direct"
+    },
+    "exposure": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "visual_priorities"
+      ],
+      "description": "Recorded exposure, clipping and preservation of tonal information, separate from incident light level.",
+      "description_ko": "기록 노출과 톤 범위: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+      "dimensions": [
+        "camera",
+        "color"
+      ],
+      "evidence_terms": [
+        "exposure",
+        "clipped",
+        "clipping",
+        "underexposed",
+        "overexposed",
+        "shadow detail"
+      ],
+      "excludes": [
+        "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다."
+      ],
+      "id": "exposure",
+      "includes": [
+        "Recorded exposure, clipping and preservation of tonal information, separate from incident light level."
+      ],
+      "neighbors": [
+        "light_color",
+        "light_direction",
+        "light_intensity",
+        "light_quality",
+        "light_shape",
+        "light_type",
+        "lighting",
+        "shadow_relation"
+      ],
+      "owners": [
+        "image"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "image.exposure",
+        "camera.exposure",
+        "image.dynamic_range"
+      ],
+      "semantic_role": "direct"
+    },
+    "light_intensity": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "setting",
+        "visual_priorities"
+      ],
+      "description": "Level of illumination reaching a declared receiver, distinct from recorded exposure and tone mapping.",
+      "description_ko": "대상에 도달하는 빛의 수준과 대비: 노출·톤 보존·클리핑·bloom이 섞임; image tone·optical artifact와 구별",
+      "dimensions": [
+        "lighting"
+      ],
+      "evidence_terms": [
+        "illumination",
+        "dim light",
+        "bright light",
+        "light intensity"
+      ],
+      "excludes": [
+        "노출·톤 보존·클리핑·bloom이 섞임; image tone·optical artifact와 구별"
+      ],
+      "id": "light_intensity",
+      "includes": [
+        "Level of illumination reaching a declared receiver, distinct from recorded exposure and tone mapping."
+      ],
+      "neighbors": [
+        "exposure",
+        "light_color",
+        "light_direction",
+        "light_quality",
+        "light_shape",
+        "light_type",
+        "lighting",
+        "shadow_relation"
+      ],
+      "owners": [
+        "light"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "lighting.intensity",
+        "lighting.level",
+        "illumination.level"
+      ],
+      "semantic_role": "direct"
+    },
+    "light_shape": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "setting",
+        "visual_priorities"
+      ],
+      "description": "Spatial distribution of light, highlights and shadow boundaries on specified receiving surfaces.",
+      "description_ko": "대상 표면에 생기는 빛무늬와 그림자 경계: 입사 방향과 광원 종류를 대신하지 않음; 무늬의 받는 표면 명시",
+      "dimensions": [
+        "lighting"
+      ],
+      "evidence_terms": [
+        "dappled",
+        "sliver",
+        "shadow",
+        "light pattern",
+        "highlight"
+      ],
+      "excludes": [
+        "입사 방향과 광원 종류를 대신하지 않음; 무늬의 받는 표면 명시"
+      ],
+      "id": "light_shape",
+      "includes": [
+        "Spatial distribution of light, highlights and shadow boundaries on specified receiving surfaces."
+      ],
+      "neighbors": [
+        "exposure",
+        "light_color",
+        "light_direction",
+        "light_intensity",
+        "light_quality",
+        "light_type",
+        "lighting",
+        "shadow_relation"
+      ],
+      "owners": [
+        "light"
+      ],
+      "priority": "core",
+      "property_prefixes": [
+        "lighting.pattern",
+        "lighting.shape",
+        "lighting.shadow",
+        "shadow.boundary"
+      ],
+      "semantic_role": "direct"
+    }
+  },
+  "read_scope": "28 full actual SOURCE records including four closure records, two actual source bindings, 32 full current proposed141 target/selected-neighbor specifications. Source metadata visible for this explicitly authorized comparison but never positive fact evidence. Prior frozen inverse adjudications are issue locators, not new source facts."
+}
