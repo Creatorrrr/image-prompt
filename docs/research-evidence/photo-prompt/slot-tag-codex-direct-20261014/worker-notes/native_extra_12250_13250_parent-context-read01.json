@@ -1,0 +1,506 @@
+{
+  "schema": "photo-explicit-parent-context-read/v1",
+  "task_name": "/root/review_06250_07250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "records": [
+    {
+      "file": "docs/analysis/2026-10-07-photo-skill-session-review/p0-implementation/BEFORE-photo_prompt_character_moe_extension.json",
+      "file_raw_sha256": "e9583cde4ce74e46e6f28501c976f9fe8b1efd1691546416b751fe774c13bb42",
+      "pointer": "/character_mechanism_graph/concept_profiles/1",
+      "canonical_sha256": "3a539642f436a4b44aaac4abe0fbe13f4ab78d14a5c2f7b8d332fdeab80dcd9e",
+      "whole_value": {
+        "id": "yandere",
+        "domain": "character_response",
+        "en": "sincere affection toward one specific adult counterpart escalating into possessive monitoring, boundary intrusion, or access control directed at that same counterpart",
+        "ko": "한 명의 동일한 성인 상대를 향한 진심 어린 애정이 그 상대의 경계를 넘는 소유적 감시나 접근 통제로 번지는 얀데레",
+        "ja": "一人の同じ成人相手への純粋な好意が、その相手の境界を越える独占的な監視やアクセス支配へ発展するヤンデレ",
+        "aliases": [
+          "얀데레",
+          "ヤンデレ",
+          "yandere"
+        ],
+        "definition": "Sincere affection or devoted care toward one identifiable adult counterpart escalates into a possessive, target-directed action that crosses a personal boundary or appropriates access, followed by an observable consequence for that same counterpart. The affection-control relation and shared target define the concept; no hairstyle, eye color, costume, role, weapon, blood, medical tool, fixed gaze, smile, or diagnosis is required.",
+        "paraphrases": [
+          "같은 성인 상대를 정성껏 돌보지만 그 사람의 출입과 일정을 자기 손에 두려는 행동이 이미 드러난다",
+          "다정한 표정과 헌신은 한 사람에게만 향하고 그 애정이 같은 사람의 사적 경계를 넘는 소유 행동으로 이어진다",
+          "사랑하는 한 명을 위한 과도한 배려가 그 사람의 다른 선택지를 줄이는 결과를 남긴다",
+          "Her sincere care for one adult counterpart becomes possessive monitoring of that same person's access and choices.",
+          "A tender outward response and one boundary-crossing action point to the same affection target, with the consequence already visible.",
+          "Devotion to one identifiable adult turns into nonviolent control rather than generic jealousy or horror styling.",
+          "同じ成人相手への優しい世話が、その人の出入りや予定を自分の管理下に置く行動へ変わる",
+          "一人への愛情表現と、その同じ相手の境界を越える独占行動が同時に見える",
+          "純粋な献身が同じ相手の選択肢を狭めた結果まで画面に残っている"
+        ],
+        "axis_requirements": {
+          "surface_affect": {
+            "semantic_classes": [
+              "open_warmth",
+              "professional_neutral",
+              "guarded"
+            ]
+          },
+          "underlying_affiliation": {
+            "semantic_classes": [
+              "obsessive"
+            ]
+          },
+          "affect_leak_intentionality": {
+            "semantic_classes": [
+              "deliberate",
+              "involuntary"
+            ]
+          }
+        },
+        "axis_exclusions": {
+          "surface_affect": {
+            "semantic_classes": [
+              "hostile"
+            ]
+          },
+          "underlying_affiliation": {
+            "semantic_classes": [
+              "neutral",
+              "negative"
+            ]
+          },
+          "affect_leak_intentionality": {
+            "semantic_classes": [
+              "absent"
+            ]
+          }
+        },
+        "required_relations": [
+          {
+            "operator": "same_target",
+            "members": [
+              "relationship_target",
+              "surface_affect",
+              "primary_action",
+              "immediate_consequence"
+            ]
+          },
+          {
+            "operator": "temporal_order",
+            "first": "trigger",
+            "then": "primary_action"
+          },
+          {
+            "operator": "contrasts",
+            "left": "surface_affect",
+            "right": "immediate_consequence"
+          }
+        ],
+        "required_evidence_roles": [
+          "baseline",
+          "relationship_target",
+          "primary_action",
+          "affect_leak",
+          "visible_response",
+          "immediate_consequence",
+          "continuity"
+        ],
+        "confounders": [
+          {
+            "id": "generic_open_devotion",
+            "en": "open romantic devotion that preserves the counterpart's boundaries and choices",
+            "ko": "상대의 경계와 선택을 존중하며 공개적으로 다정한 일반적 헌신",
+            "ja": "相手の境界と選択を尊重する素直で一般的な献身",
+            "aliases": [
+              "generic devotion",
+              "일반적 헌신",
+              "一般的な献身"
+            ],
+            "definition": "Affection and care remain open and prosocial, with no possessive monitoring, boundary intrusion, or access consequence.",
+            "paraphrases": [
+              "사랑하는 상대를 다정하게 돕지만 그 사람의 선택은 그대로 존중한다",
+              "openly loving care with no boundary crossing or possessive consequence",
+              "相手の選択を尊重しながら素直に優しく世話をする"
+            ]
+          },
+          {
+            "id": "ordinary_jealousy",
+            "en": "ordinary jealousy or insecurity without a target-directed boundary crossing",
+            "ko": "같은 상대의 경계를 넘는 행동 없이 질투하거나 불안해하는 일반적 감정",
+            "ja": "同じ相手への境界侵入行動を伴わない一般的な嫉妬や不安",
+            "aliases": [
+              "ordinary jealousy",
+              "일반적인 질투",
+              "普通の嫉妬"
+            ],
+            "definition": "The character feels jealous or insecure, but no concrete possessive action or changed access state is visible.",
+            "paraphrases": [
+              "다른 사람을 보고 질투하지만 상대의 경계나 선택에는 손대지 않는다",
+              "jealous expression without possessive action or consequence",
+              "嫉妬した表情だけで相手の境界には踏み込まない"
+            ]
+          },
+          {
+            "id": "role_only_care",
+            "en": "routine professional care or a role portrait with no possessive relationship action",
+            "ko": "소유적 관계 행동 없이 직업적 돌봄이나 역할 소품만 보이는 인물 사진",
+            "ja": "独占的な関係行動がなく職務上のケアや役割小物だけを見せる人物写真",
+            "aliases": [
+              "routine professional care",
+              "composed professional with no possessive relationship action",
+              "주사기를 든 일반 간호사",
+              "관계 행동 없는 무표정한 전문가",
+              "注射器を持つ普通の看護師"
+            ],
+            "definition": "A nurse, caregiver, attendant, or other role performs ordinary duty; costume and tools do not establish obsessive affection.",
+            "paraphrases": [
+              "간호사가 주사기를 들고 차분하게 환자를 돌보는 일반 의료 장면",
+              "침착하게 혼자 일하지만 특정 상대를 위한 행동은 없는 무표정한 전문가",
+              "a nurse holding a syringe in an ordinary clinical portrait",
+              "an expressionless expert works alone with no action for a specific counterpart",
+              "看護師が注射器を持って通常のケアをする医療ポートレート"
+            ]
+          },
+          {
+            "id": "horror_threat_aesthetic",
+            "en": "generic horror or pure hostility built from threats, anger, a weapon, blood, red light, or an intense stare",
+            "ko": "애정 대상과 소유 행동 없이 미움 위협 분노 무기 피 붉은 조명 강렬한 시선으로 만든 일반 공포나 순수 적대",
+            "ja": "愛情対象や独占行動がなく憎悪、脅迫、怒り、武器、血、赤い照明、強い視線だけで作る一般的な恐怖や純粋な敵意",
+            "aliases": [
+              "generic horror menace",
+              "일반 공포 인물",
+              "一般的なホラー人物"
+            ],
+            "definition": "Threat styling or pure hostility is visible, but there is no affectionate same-target relationship or possessive boundary consequence.",
+            "paraphrases": [
+              "칼과 피와 붉은 조명만 있는 무서운 인물 사진",
+              "상대를 미워해서 위협하고 계속 화만 내며 호감은 없다",
+              "weapon, blood, and a menacing stare with no affection target",
+              "only hatred, threats, and anger toward the target with no sincere affection",
+              "武器と血と怖い視線だけで愛情対象が見えない"
+            ]
+          },
+          {
+            "id": "detached_surveillance",
+            "en": "detached surveillance, investigation, or security monitoring with no sincere affection",
+            "ko": "진심 어린 애정 없이 업무나 적대 목적으로 대상을 감시하는 조사 보안 행동",
+            "ja": "純粋な好意がなく業務や敵対目的で対象を監視する調査・警備行動",
+            "aliases": [
+              "detached surveillance",
+              "업무상 감시",
+              "職務上の監視"
+            ],
+            "definition": "Monitoring is explained by work, investigation, fear, or hostility rather than affection toward the same target.",
+            "paraphrases": [
+              "보안 요원이 업무상 화면을 감시하지만 개인적 애정은 없다",
+              "professional monitoring without devotion to the observed person",
+              "警備担当者が業務で監視するだけで個人的な好意はない"
+            ]
+          },
+          {
+            "id": "tsundere_guarded_affection",
+            "en": "guarded affection that leaks through care while preserving the counterpart's autonomy",
+            "ko": "퉁명스러운 표면 아래 호감이 돌봄으로 새지만 상대의 자율성은 침범하지 않는 츤데레",
+            "ja": "そっけない表面から好意がケアとして漏れるが相手の自律性は侵さないツンデレ",
+            "aliases": [
+              "tsundere guarded affection",
+              "츤데레 돌봄",
+              "ツンデレの気遣い"
+            ],
+            "definition": "A rejecting or guarded surface is contradicted by prosocial care, without possession, surveillance, or boundary control.",
+            "paraphrases": [
+              "퉁명스럽게 굴지만 같은 상대를 돕고 선택을 존중한다",
+              "guarded care with concealed liking and no possessive control",
+              "そっけなく助けながらも相手の選択を尊重する"
+            ]
+          },
+          {
+            "id": "contained_personal_distress",
+            "en": "contained personal distress or a strained social mask without possessive target-directed action",
+            "ko": "소유적 대상 행동 없이 감정 누출과 불안정한 사회적 표면만 보이는 개인적 고통",
+            "ja": "独占的な対象行動がなく感情の漏れと不安定な社会的表面だけが見える個人的苦痛",
+            "aliases": [
+              "contained personal distress",
+              "shy or anxious withdrawal",
+              "억눌린 개인적 고통",
+              "수줍은 관계 회피",
+              "부끄러워 말을 못 하고 상대에게서 물러나는 소심한 인물",
+              "抑えた個人的苦痛"
+            ],
+            "definition": "A composed person shows strain, tears, or self-regulation difficulty, but no affection-control relationship is established.",
+            "paraphrases": [
+              "단정한 인물이 눈물을 참지만 특정 애정 대상이나 경계 침범은 없다",
+              "부끄러워 말을 못 하고 상대에게서 물러나는 소심한 인물",
+              "a strained composed portrait without a possessive relationship action",
+              "a shy person withdraws without possessive action or an affection-control relationship",
+              "整った人物が涙をこらえるだけで特定の愛情対象や境界侵入はない"
+            ]
+          }
+        ],
+        "optional_runtime_node_ids": [
+          "appearance_behavior_expectation_gap",
+          "behavioral_trait_evidence",
+          "contextual_behavior_trigger",
+          "facial_microexpression_anchor",
+          "gaze_relationship_evidence",
+          "relationship_stance_evidence"
+        ],
+        "applicability": {
+          "retrieval_only": true,
+          "hard_eligible": false,
+          "requester_definition_precedence": true
+        }
+      },
+      "whole_parent_actually_read": true
+    },
+    {
+      "file": "docs/analysis/2026-10-07-photo-skill-session-review/p0-implementation/BEFORE-photo_prompt_character_moe_extension.json",
+      "file_raw_sha256": "e9583cde4ce74e46e6f28501c976f9fe8b1efd1691546416b751fe774c13bb42",
+      "pointer": "/character_mechanism_graph/concept_profiles/2",
+      "canonical_sha256": "7b51a540f8c52218a883c37163ca8a7e081b72185ba3316a17b39c7351c42f99",
+      "whole_value": {
+        "id": "kuudere",
+        "domain": "character_response",
+        "en": "a calm low-expression baseline that remains stable while one small sign of warmth and a quiet supportive act become visible toward the same trusted counterpart as one possible realization of selective warmth beneath composure",
+        "ko": "침착하고 감정 표현이 적은 태도를 유지하면서도 같은 신뢰 상대에게 작은 온기와 조용한 돌봄 행동이 드러나는 쿨데레의 한 연출 예",
+        "ja": "冷静で感情表現の少ない態度を保ちながら、同じ信頼相手への小さな温かさと静かな支援行動が見えるクーデレの一つの表現例",
+        "aliases": [
+          "쿨데레",
+          "쿠데레",
+          "쿨 데레",
+          "クーデレ",
+          "kuudere",
+          "cooldere",
+          "cool-dere"
+        ],
+        "definition": "In one supported realization, a calm, emotionally restrained baseline remains intact around a specific trusted counterpart while positive affiliation becomes observable through one localized softening and one understated, target-directed supportive act with an already-visible consequence for that same counterpart. Stable composure plus selective relational warmth defines the general concept; the supportive act and its consequence are the selected cue scheme rather than universal lexical requirements. Expressionlessness, competence, attractiveness, hair, eyes, costume, role, palette, gaze, pose, or a caring prop alone does not establish the concept.",
+        "paraphrases": [
+          "늘 담담한 인물이 같은 동료의 젖은 소매를 조용히 정리해 주고 그 동료가 편해진 것을 확인하는 순간에 입매만 아주 조금 풀린다",
+          "차분한 태도는 그대로지만 신뢰하는 한 사람을 위한 실용적인 도움과 국소적인 온기가 같은 장면에서 드러난다",
+          "모두에게 감정 표현이 적은 성인이 특정 상대에게 필요한 물건을 먼저 건네고 그 상대가 안도하는 동안 눈가만 부드러워진다",
+          "Her composed low-expression baseline stays intact while she quietly solves one practical problem for the same trusted counterpart and only one facial area softens.",
+          "A restrained adult character shows selective warmth through a small same-target act whose helpful result is already visible, without hostility or a personality switch.",
+          "冷静な低反応のまま、同じ信頼相手を静かに助け、その相手の安心が見える瞬間だけ口元がわずかに和らぐ",
+          "平静さを崩さず、特定の相手にだけ小さな気遣いと局所的な温かさが現れる"
+        ],
+        "axis_requirements": {
+          "surface_affect": {
+            "semantic_classes": [
+              "composed_reserve"
+            ]
+          },
+          "underlying_affiliation": {
+            "semantic_classes": [
+              "positive"
+            ]
+          },
+          "affect_leak_timing": {
+            "semantic_classes": [
+              "within_stable_surface"
+            ]
+          },
+          "affect_leak_intentionality": {
+            "semantic_classes": [
+              "understated",
+              "involuntary"
+            ]
+          }
+        },
+        "axis_exclusions": {
+          "surface_affect": {
+            "semantic_classes": [
+              "rejecting",
+              "hostile",
+              "shy_avoidance",
+              "professional_neutral",
+              "open_warmth"
+            ]
+          },
+          "underlying_affiliation": {
+            "semantic_classes": [
+              "neutral",
+              "negative",
+              "obsessive"
+            ]
+          },
+          "affect_leak_timing": {
+            "semantic_classes": [
+              "immediate_open"
+            ]
+          },
+          "affect_leak_intentionality": {
+            "semantic_classes": [
+              "absent"
+            ]
+          }
+        },
+        "required_relations": [
+          {
+            "operator": "contrasts",
+            "left": "surface_affect",
+            "right": "underlying_affiliation"
+          },
+          {
+            "operator": "same_target",
+            "members": [
+              "relationship_target",
+              "primary_action",
+              "affect_leak",
+              "immediate_consequence"
+            ]
+          },
+          {
+            "operator": "temporal_order",
+            "first": "trigger",
+            "then": "primary_action"
+          }
+        ],
+        "required_evidence_roles": [
+          "baseline",
+          "relationship_target",
+          "primary_action",
+          "affect_leak",
+          "visible_response",
+          "immediate_consequence",
+          "continuity"
+        ],
+        "confounders": [
+          {
+            "id": "generic_stoicism",
+            "en": "generic stoicism with no relationship-specific warmth or supportive consequence",
+            "ko": "특정 상대를 향한 온기나 돌봄 결과 없이 그저 무표정하고 침착한 일반적 과묵함",
+            "ja": "特定の相手への温かさや支援結果がなく、ただ無表情で冷静な一般的ストイックさ",
+            "aliases": [
+              "generic stoicism",
+              "일반적 과묵함",
+              "一般的な無表情"
+            ],
+            "definition": "A person looks calm, serious, competent, or expressionless, but no trusted counterpart receives a selective supportive act or visible benefit.",
+            "paraphrases": [
+              "침착하게 혼자 일하지만 특정 상대를 위한 행동은 없다",
+              "a composed professional portrait with no relationship-specific care",
+              "冷静に一人で作業するだけで特定相手への気遣いはない"
+            ]
+          },
+          {
+            "id": "dandere_shy_withdrawal",
+            "en": "shy or anxious withdrawal whose reserve is caused by social inhibition",
+            "ko": "통제된 침착함이 아니라 수줍음이나 불안 때문에 관계에서 물러나는 단데레식 회피",
+            "ja": "制御された平静さではなく、恥ずかしさや不安から関係を避けるダンデレ的な引きこもり",
+            "aliases": [
+              "dandere shy withdrawal",
+              "수줍은 회피",
+              "ダンデレ的回避"
+            ],
+            "definition": "Low expression comes from timidity, anxiety, or avoidance, without the stable composed baseline and quiet follow-through that distinguish kuudere.",
+            "paraphrases": [
+              "부끄러워 말을 못 하고 상대에게서 물러난다",
+              "timid avoidance with no calm practical follow-through",
+              "恥ずかしくて相手を避けるだけで静かな支援行動はない"
+            ]
+          },
+          {
+            "id": "tsundere_hostile_denial",
+            "en": "hostile, rejecting, or flustered denial contradicted by hidden care",
+            "ko": "침착한 표면을 유지하는 대신 퉁명스러운 거절이나 동요로 호감을 부정하는 츤데레",
+            "ja": "平静さを保つのではなく、拒絶や動揺で好意を否定するツンデレ",
+            "aliases": [
+              "tsundere hostile denial",
+              "denying she cares while helping the same person",
+              "퉁명스러운 호감 부정",
+              "ツンデレの拒絶"
+            ],
+            "definition": "The outward response actively rejects, protests, or becomes flustered before care leaks through, rather than preserving a calm low-expression surface.",
+            "paraphrases": [
+              "신경 쓰지 않는다며 상대를 밀어낸 뒤 몰래 돕는다",
+              "She keeps helping the same person while denying she cares.",
+              "rejecting protest followed by concealed care",
+              "気にしていないと突き放した後で隠れて助ける"
+            ]
+          },
+          {
+            "id": "generic_open_affection",
+            "en": "open, high-amplitude affection expressed similarly toward everyone",
+            "ko": "선택적이고 절제된 온기 대신 누구에게나 크고 공개적으로 표현하는 일반적 다정함",
+            "ja": "選択的で控えめな温かさではなく、誰にでも大きく素直に示す一般的な愛情",
+            "aliases": [
+              "generic open affection",
+              "공개적인 다정함",
+              "素直で開放的な愛情"
+            ],
+            "definition": "Warmth is openly and broadly displayed from the start, so there is no stable low-expression baseline or selective small softening.",
+            "paraphrases": [
+              "처음부터 누구에게나 활짝 웃으며 애정을 표현한다",
+              "broad open warmth with no restrained baseline",
+              "最初から誰にでも笑顔で好意を示す"
+            ]
+          },
+          {
+            "id": "role_only_service",
+            "en": "routine professional service fully explained by role duty",
+            "ko": "관계별 온기가 아니라 직업적 의무만으로 설명되는 일상 서비스",
+            "ja": "関係ごとの温かさではなく職務上の義務だけで説明できる日常サービス",
+            "aliases": [
+              "role-only service",
+              "직업적 서비스",
+              "職務上のサービス"
+            ],
+            "definition": "A helpful act is ordinary job performance and shows no selective change, localized warmth, or same-target relational consequence.",
+            "paraphrases": [
+              "직원으로서 모든 손님에게 같은 서비스를 제공한다",
+              "routine duty performed identically for every client",
+              "職員として全員に同じサービスを行う"
+            ]
+          },
+          {
+            "id": "emotionless_flatness",
+            "en": "emotionless or nonhuman flatness with no observable positive affiliation",
+            "ko": "신뢰 상대를 향한 긍정적 정서가 보이지 않는 감정 부재나 비인간적 평탄함",
+            "ja": "信頼相手への肯定的な感情が見えない無感情または非人間的な平板さ",
+            "aliases": [
+              "emotionless flatness",
+              "감정 부재",
+              "無感情な平板さ"
+            ],
+            "definition": "The subject has no readable affective response or affiliation; a blank face alone is not the restrained warmth pattern.",
+            "paraphrases": [
+              "표정도 관계 반응도 전혀 없는 인물",
+              "a blank affectless subject with no caring response",
+              "表情も関係反応もまったくない人物"
+            ]
+          },
+          {
+            "id": "yandere_possessive_control",
+            "en": "possessive affection expressed through surveillance, control, coercion, or boundary intrusion",
+            "ko": "조용한 돌봄이 아니라 감시 통제 강요나 경계 침범으로 드러나는 얀데레식 소유",
+            "ja": "静かな支援ではなく監視、支配、強要、境界侵入として現れるヤンデレ的独占",
+            "aliases": [
+              "yandere possessive control",
+              "얀데레식 통제",
+              "ヤンデレ的支配"
+            ],
+            "definition": "Affection narrows the counterpart's autonomy or crosses a boundary, replacing the quiet prosocial care and preserved choice required here.",
+            "paraphrases": [
+              "상대를 아낀다며 출입과 일정을 통제한다",
+              "possessive monitoring that reduces the counterpart's choices",
+              "相手を思うと言いながら出入りや予定を支配する"
+            ]
+          }
+        ],
+        "optional_runtime_node_ids": [
+          "behavioral_trait_evidence",
+          "caring_action_evidence",
+          "facial_microexpression_anchor",
+          "gaze_relationship_evidence",
+          "outward_inner_affect_split",
+          "relationship_stance_evidence",
+          "relationship_triggered_softening",
+          "protective_distance_behavior"
+        ],
+        "applicability": {
+          "retrieval_only": true,
+          "hard_eligible": false,
+          "requester_definition_precedence": true
+        }
+      },
+      "whole_parent_actually_read": true
+    }
+  ],
+  "basis": "Both complete parent profiles were displayed in one untruncated 4835-token source read before 12269 and12270/71 drafts; actual definitions/axis requirements/exclusions/relations/evidence roles/all confounders/optional node IDs/applicability were read. Reuse requires exact canonical equality with these actually read whole values.",
+  "boundary": "Two contextual parent reads are not extra assigned CID reviews or root70 approvals. No full184-runtime-node read or broader source graph approval is claimed."
+}

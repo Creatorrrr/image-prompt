@@ -1,0 +1,31 @@
+"""Literal-only draft serializer. All semantic arguments must be authored by reviewer.
+No default role/mode/owner/operation/status or automatic semantic classification.
+"""
+import json,hashlib,copy
+from pathlib import Path
+R=Path(__file__).resolve().parents[1];A=R/'authored';I=json.loads((A/'native_extra_12250_13250_inputs.json').read_text());C=I['full_catalog_snapshot']
+sha=lambda v:hashlib.sha256(json.dumps(v,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
+raw=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+def fact(fid,pointer,quote,dimension,target,prop,mode,value_type,value,operation,receivers):
+ return {'id':fid,'realization_id':'base','pointer':pointer,'quote':quote,'dimension':dimension,'target':target,'property':prop,'mode':mode,'value':{'type':value_type,'value':value},'proposed_operation':operation,'proposed_receivers':receivers,'provisional_not_native_proof':True}
+def row(n,kind,rids,status,meaning,facts,roles,role_reason,carrier,guards,issues,reject):
+ src=I['records'][n-12250];assert kind==src['current_source']['record_kind'] and rids==src['actual_current_realization_ids']
+ assert status=='pending'
+ for f in facts:
+  v=src['current_source']
+  for k in f['pointer'].strip('/').split('/'):v=v[int(k)] if isinstance(v,list) else v[k]
+  assert isinstance(v,str) and f['quote'] in v
+ return {'ordinal':n,'candidate_id':src['candidate_id'],'record_kind':kind,'actual_rids':rids,'status':status,'meaning':meaning,'source_before':src['current_source'],'source_after':copy.deepcopy(src['current_source']),'source_delta':[],'new_source_authored':False,'source_after_exact_equal_to_previously_whole_read_current':True,'facts_draft':facts,'roles_draft':[{'slot_id':tag,'spec_sha256':sha(C[tag]),'scope':'whole_record','realization_ids':rids,'rationale':role_reason} for tag in roles],'carrier_and_owner_plan':carrier,'own_bindings_read':src['current_own_bindings'],'member_bindings_read':src['current_closure']['reference_bindings'],'own_and_member_guard_classification':guards,'reference_closure_read_sha256':sha(src['current_closure']),'original_reference_closure_read_sha256':sha(src['original_closure']),'exact5B_source_after_sha256':src['five_b_source_after_sha256'],'original_compiled':{k:v for k,v in src['original_compiled'].items() if k!='row'},'qualification_issues':issues,'rejected_boundaries':[reject],'whole_source_and_closure_read':True,'formal_native_proof':None,'root_selected':False,'root_diag70_overlap':src['root_diag70_overlap']}
+def write(start,stop,rows,spec_reads):
+ assert [r['ordinal'] for r in rows]==list(range(start,stop)) and len(rows)==stop-start
+ out={'schema':'photo-native-manual-bulk-draft/v1','task_name':'/root/review_06250_07250','model':'gpt-6.1-sol','reasoning_effort':'high','range':[start,stop],'prepared_input_count':1000,'actual_reviewed_in_checkpoint':len(rows),'actual_total_read_count_at_checkpoint':stop-12250,'new_source_after_count':0,'current_after_whole_read_count':len(rows),'formal_native_proof_count':0,'root_selected_count':0,'pending_count':len(rows),'catalog_sha256':I['catalog']['canonical_sha256'],'current_source_sha256':I['current_source']['canonical_sha256'],'input_raw_sha256':raw(A/'native_extra_12250_13250_inputs.json'),'records':rows}
+ p=A/f'native_extra_12250_13250_{start:05d}_{stop:05d}.draft.json';assert not p.exists();p.write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n')
+ # The complete after values are exact copies, not generated source proposals.
+ assert all(r['source_after']==I['records'][r['ordinal']-12250]['current_source'] for r in rows)
+ readfiles=[]
+ for f in A.glob('native_extra_12250_13250_*.read*.txt'):
+  parts=f.name.split('_');a,b=int(parts[4]),int(parts[5].split('.')[0])
+  if a<stop and b>start:readfiles.append(f)
+ files=[A/'native_extra_12250_13250_inputs.json',Path(__file__),p,*sorted(readfiles)]
+ note={'schema':'photo-native-manual-bulk-read-note/v1','task_name':'/root/review_06250_07250','agent_id':'/root/review_06250_07250','model':'gpt-6.1-sol','reasoning_effort':'high','range':[start,stop],'management_range':[12250+((start-12250)//250)*250,12250+((start-12250)//250+1)*250],'prepared_count':1000,'actual_read_count_in_checkpoint':len(rows),'actual_total_read_count_at_checkpoint':stop-12250,'complete_source_read':True,'unresolved_ordinals':list(range(start,stop)),'actual_current_whole_after_read_count':len(rows),'new_authored_source_after_count':0,'current_after_reread':'Complete current source_after copies were actually read before drafting and losslessly matched after drafting; no new authored body or new-after read credit.','root_diag70_overlap_ordinals':[r['ordinal'] for r in rows if r['root_diag70_overlap']],'root_diag70_independent_native_approval_count':0,'formal_native_count':0,'read_boundary':'Original/current/hash-matched full legacy parent/actual required candidate and binding closure read first; existing139 whole compiled judgement and own binding read only after the individual source meaning was judged. Exact nested references reuse previously fully read values only after equality checks and preserve every new field path, first full-display path and canonical SHA in the read artifact. Optional unselected children/profile never supply parent roles/effects/conditions.','specs_actually_read_or_exact_reused':spec_reads,'frozen_generation':'50fd92afd9400f2272e12fcd6494cafdeea407b841f8a862d066c48f447e6839','frozen_native_module_raw_sha256':'f74a5ef91bc07048c8bf312b66680c5b92b3b7b388f31f1890f31c8578609dee','validator_or_native_prototype_executed':False,'file_pins':{str(f.relative_to(R.parents[3])):{'raw_sha256':raw(f),'bytes':f.stat().st_size} for f in files},'boundary':'Explicit individual Codex drafts/pending only; source effects, conditions, owners and current kind retained. No role-prefix canonical rename, effect deletion, automatic noun introduction/existing-only reduction, fabricated P/PR or auto diagnosis. Root semantic/source selection and formal input/proof remain separate. No Git/code/runtime/operating/provider/model/network changes.'}
+ np=R/f'worker-notes/native_extra_12250_13250_{start:05d}_{stop:05d}.json';assert not np.exists();np.write_text(json.dumps(note,ensure_ascii=False,indent=2)+'\n');print(p.name,raw(p),np.name,raw(np))

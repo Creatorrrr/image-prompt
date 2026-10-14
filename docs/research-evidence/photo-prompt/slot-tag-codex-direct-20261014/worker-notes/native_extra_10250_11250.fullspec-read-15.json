@@ -1,0 +1,185 @@
+{
+  "catalog_sha256": "d9f4db418e1b63cd100b4c7a9fbff4c8401e00dffeffd22e299a0b5087a82b15",
+  "count_reconciliation": {
+    "correction_only_not_semantic_change": true,
+    "duplicate_read_entries": [
+      {
+        "first": "native_extra_10250_11250.fullspec-read-05.json",
+        "repeat": "native_extra_10250_11250.fullspec-read-13.json",
+        "slot": "capture_context"
+      }
+    ],
+    "previous_actual_distinct": 83,
+    "previous_reported_count": 84,
+    "prior_frozen_notes_unchanged": true
+  },
+  "cumulative_unique_fullspec_count": 86,
+  "new_fullspecs": {
+    "gaze_direction": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "event",
+        "visual_priorities"
+      ],
+      "description": "Owned eye or iris orientation toward a direction in the selected frame, independent of head orientation, a named gaze target and viewer engagement.",
+      "description_ko": "같은 주체 눈·홍채의 선택 프레임 내 방향. 머리 방향·시선의 명명 대상·눈맞춤 여부와 독립하며 감은 눈이나 동공 모양으로 방향을 추정하지 않는다.",
+      "dimensions": [
+        "expression"
+      ],
+      "evidence_terms": [
+        "iris",
+        "irises",
+        "eye direction",
+        "eyeline",
+        "looking back",
+        "시선 방향",
+        "홍채"
+      ],
+      "excludes": [
+        "Head or body turn alone.",
+        "Eye closure, pupil shape or private intent.",
+        "Named gaze target or engagement alone."
+      ],
+      "id": "gaze_direction",
+      "includes": [
+        "Upward iris direction without a named target.",
+        "An authored over-shoulder eye direction when that branch is selected."
+      ],
+      "neighbors": [
+        "body_orientation",
+        "eye_detail",
+        "expression",
+        "gaze_engagement",
+        "gaze_target"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "gaze.direction",
+        "eyes.direction",
+        "eyes.eyeline"
+      ],
+      "semantic_role": "direct"
+    },
+    "gaze_engagement": {
+      "applicability": {
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ],
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "event",
+        "visual_priorities",
+        "subject"
+      ],
+      "description": "Declared visual engagement with the camera or another participant, separate from mere eye direction or closure.",
+      "description_ko": "카메라·다른 참여자와 맺는 시선 관계: 현재 시선 방향·목표·눈 감음과 겹침; engagement 의미와 표정 요소를 재분류",
+      "dimensions": [
+        "expression",
+        "relationship"
+      ],
+      "evidence_terms": [
+        "eye contact",
+        "looking past",
+        "engagement",
+        "avoiding the camera"
+      ],
+      "excludes": [
+        "현재 시선 방향·목표·눈 감음과 겹침; engagement 의미와 표정 요소를 재분류"
+      ],
+      "id": "gaze_engagement",
+      "includes": [
+        "Declared visual engagement with the camera or another participant, separate from mere eye direction or closure."
+      ],
+      "neighbors": [
+        "expression",
+        "eye_detail",
+        "gaze_target"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "gaze.engagement",
+        "eyes.engagement"
+      ],
+      "semantic_role": "direct"
+    },
+    "visual_density": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "visual_priorities"
+      ],
+      "description": "Amount and distribution of visible information, independent of the number of people.",
+      "description_ko": "시각적 정보 밀도: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+      "dimensions": [
+        "composition"
+      ],
+      "evidence_terms": [
+        "minimal",
+        "sparse",
+        "busy",
+        "cluttered",
+        "dense",
+        "empty"
+      ],
+      "excludes": [
+        "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다."
+      ],
+      "id": "visual_density",
+      "includes": [
+        "Amount and distribution of visible information, independent of the number of people."
+      ],
+      "neighbors": [
+        "composition",
+        "format",
+        "platform_framing",
+        "shot_scale",
+        "spatial_depth",
+        "subject_framing",
+        "visual_hierarchy"
+      ],
+      "owners": [
+        "image"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "layout.density",
+        "composition.density"
+      ],
+      "semantic_role": "direct"
+    }
+  },
+  "new_read_count": 3,
+  "schema": "photo-native-manual-fullspec-read/v1",
+  "semantic_boundary": "Exact typed source addresses retained. Bright emissive patch not automatically receiver illumination; below-face eye orientation not named-target or engagement. All new draft namespaces remain proposed, not executable proof.",
+  "whole_re_reads_this_checkpoint": [
+    "object_structure",
+    "prop_placement",
+    "surface_pattern",
+    "texture",
+    "material_thickness",
+    "garment_detail",
+    "garment_fit",
+    "wardrobe_style",
+    "wardrobe_layering",
+    "action",
+    "body_orientation",
+    "expression",
+    "color",
+    "reflection_logic",
+    "world",
+    "atmospheric_medium"
+  ]
+}
