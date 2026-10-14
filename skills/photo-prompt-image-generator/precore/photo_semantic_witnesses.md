@@ -88,6 +88,9 @@ facts, use these shared neutral spellings when they express the actual request:
 | `subject` | `anatomy.face.presence` | `anatomy.face.presence/v1` | `present` |
 | `subject` | `anatomy.hair.presence` | `anatomy.hair.presence/v1` | `present` |
 | `subject` | `anatomy.nails.presence` | `anatomy.nails.presence/v1` | `present` |
+| `subject` | `anatomy.eyes.presence` | `anatomy.eyes.presence/v1` | `present` |
+| `subject` | `anatomy.mouth.presence` | `anatomy.mouth.presence/v1` | `present` |
+| `subject` | `anatomy.lips.presence` | `anatomy.lips.presence/v1` | `present` |
 | `age` | `age.declared` | `age.declared/v1` | `adult` for explicitly declared adulthood |
 
 These are authoring conventions, not entailment rules or default facts. Use the
@@ -102,6 +105,12 @@ tuple. A different presence spelling or dimension does not match this tuple.
 Keep several required parts as independently grounded atomic facts when their
 meaning is minimum presence; an exact whole-set anatomy value does not become
 a subset query. Extra unrelated atomic facts do not establish a missing part.
+For a part-presence fact, explicitly identify its actual carrier owner. A fact
+that a declared face has eyes and a separate fact that an independently named
+eye exists have different owner scopes; neither silently supplies the other.
+If separate part nodes matter, declare their actual `part_of` relationships.
+Only author the atomic parts supported by the independent request and baseline.
+A face-presence assertion does not automatically create eyes, a mouth or lips.
 
 For example, these fragments describe an already requester-specified red cup.
 They assume an active span `topic`, the literal baseline phrase `red ceramic
