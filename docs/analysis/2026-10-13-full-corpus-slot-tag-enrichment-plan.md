@@ -182,6 +182,8 @@ Native 자격화에서는 사실별 실제 realization ID와 이미 존재해야
 
 동시에 [직접 검토 초안 체크포인트](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-MANUAL-DRAFT-CHECKPOINT-01.json)에 서로 겹치지 않는 1,300개 후보의 담당자 원문·기존 5B·자기 binding 읽기와 불변 산출물 hash를 보존했다. 이는 운영 native 승인 1,300건을 뜻하지 않는다. 얼굴·신체 부위의 중립 witness 표기, 동일 효과 값, 실제 적용 대상·별칭의 충돌을 별도 검증하고 보류된 판정은 정확한 이전 행과 사유를 결합한 새 revision으로 심사한다. 전체 18,250개의 최종 명세 직접 판정과 보류 0건이라는 5단계 종료 조건은 유지한다.
 
+[세 번째 초안 체크포인트](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-MANUAL-DRAFT-CHECKPOINT-03.json)까지 서로 겹치지 않는 2,512개 후보를 보존·검증했다. 이 초안에는 역사 142개 입력과 명시적인 새 144개 입력이 함께 있으므로 catalog hash와 미해결 사유를 그대로 유지한다. 별도로 루트가 첫 20개 원본·수정본·기존 5B·자기 binding을 직접 읽고 새 144개 v4에 대한 [정식 심사](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/root-00000-00020-01/ROOT-REVIEW-SUMMARY.json)를 진행했다. 독립 에이전트의 전체 20개 의미 검토, 7개 proof·18개 사실 검토와 동결 코드의 형상 검증, 14개 admission·42개 전체 소비자/lock 검사를 거쳐 긍정 판정 7개와 보류 판정 13개를 정확히 승인·유지했다. 렌즈 초점거리의 문자열 인코딩 보정은 원 단위와 명명 분류를 보존하며, 최초 숫자형 거부 결과는 별도로 보존한다. 이는 5단계 전체 승인이나 운영 적용이 아니며 운영 native 자격 후보는 여전히 0개다.
+
 검증: 각 배치의 ID·긍정 인용·원본/수정 후 hash·선택 분기·owner/property·효과·조건을 대조하고, 의미 변경은 관련 옵션·프로필·묶음·참조에 전파한다. 운영 원본을 고친 배치는 새 local index closure·runtime publication·실제 acquire까지 검증한 뒤 커밋한다. 대장만 작성한 배치는 운영 데이터를 바꾸지 않는다. 5단계 종료 조건은 직접 검토 승인 집합이 18,250/18,250, 누락·미검토·미해결 보류 0건, Gemini 신규 호출 0건이다.
 
 산출물: 직접 검토 기준 snapshot·입력/검증 보조 도구, 전체 확정 태그안·긍정 인용·소유자·분기 근거 대장, 필요한 source 보정과 native 검증, 배치별 검증·커밋, 실제 직접 검토 coverage.
