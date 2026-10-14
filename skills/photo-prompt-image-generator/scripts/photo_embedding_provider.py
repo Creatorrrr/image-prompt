@@ -1,4 +1,4 @@
-"""Durable, request-bound Gemini embeddings; no IO at import."""
+"""Durable, request-bound embeddings. Offline local or explicit Gemini."""
 from __future__ import annotations
 import base64, hashlib, json, math, os, time, uuid
 from pathlib import Path
@@ -6,7 +6,41 @@ from datetime import datetime, timezone
 from photo_candidate_corpus import canonical_bytes, digest, decode
 import fcntl
 
-SPACE={'provider':'gemini','model':'gemini-embedding-2','dimensions':768}
+GEMINI_SPACE={'provider':'gemini','model':'gemini-embedding-2','dimensions':768}
+SPACE=GEMINI_SPACE # Compatibility for historical fixtures; not runtime selection.
+
+def validate_space(space):
+    if space==GEMINI_SPACE:return space
+    if not isinstance(space,dict) or space.get('provider')!='embeddinggemma2-local' or space.get('dimensions')!=768:
+        raise ValueError('unsupported embedding space')
+    from photo_local_embedding import space as local_space
+    if space!=local_space():raise ValueError('foreign local embedding space')
+    return space
+
+def default_space():
+    root=Path(__file__).resolve().parents[1]
+    backend=os.environ.get('PHOTO_EMBEDDING_BACKEND')
+    config=root/'embedding-default.json'
+    if backend is None:backend=decode(config.read_bytes())['provider'] if config.is_file() else 'gemini'
+    if backend=='gemini':return dict(GEMINI_SPACE)
+    if backend!='embeddinggemma2-local':raise ValueError('unknown embedding backend')
+    from photo_local_embedding import space as local_space
+    return local_space()
+
+def validate_execution(trace,space,text,vector,kind='query'):
+    validate_space(space)
+    if trace.get('provider_executed') is not True:raise ValueError('embedding was not executed')
+    if space==GEMINI_SPACE:
+        if trace.get('http_status')!=200 or not isinstance(trace.get('response_sha256'),str) or len(trace['response_sha256'])!=64 or any(c not in '0123456789abcdef' for c in trace['response_sha256']):
+            raise ValueError('missing successful Gemini response evidence')
+        return
+    from photo_local_embedding import runtime_lock,digest as local_digest,model_inputs
+    lock=runtime_lock()
+    if (trace.get('schema')!='photo-local-inference/v1' or trace.get('space')!=space
+            or trace.get('runtime')!=lock['runtime'] or trace.get('installation_sha256')!=local_digest(lock)
+            or trace.get('kind')!=kind or trace.get('input_sha256')!=hashlib.sha256(model_inputs([text],kind)[0].encode()).hexdigest()
+            or trace.get('vector_sha256')!=digest(vector) or trace.get('http_status') is not None):
+        raise ValueError('invalid local inference evidence')
 
 def atomic(path, value):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
@@ -32,8 +66,11 @@ def load_env(path):
             name,value=line.split('=',1);name=name.strip();value=value.strip().strip("\"'")
             if name in {'GEMINI_API_KEY','GOOGLE_API_KEY'} and value:os.environ.setdefault(name,value)
 
-def embed(text, binding, cache, *, space=None, repair_unknown=False):
-    space=dict(space or SPACE)
+def embed(text, binding, cache, *, space=None, repair_unknown=False,kind='query'):
+    space=dict(space or default_space());validate_space(space)
+    if space!=GEMINI_SPACE:
+        return embed_many([text],[binding],cache,space=space,kind=kind)[0]
+    if kind not in {'query','document'}:raise ValueError('embedding kind must be query or document')
     request={'schema':'photo-embedding-request/v1','text':text,'text_sha256':hashlib.sha256(text.encode()).hexdigest(),
              'space':space,'binding':binding}
     key=digest(request);directory=Path(cache)/key;directory.mkdir(parents=True,exist_ok=True)
@@ -101,3 +138,40 @@ def embed(text, binding, cache, *, space=None, repair_unknown=False):
                 time.sleep(min(30,5*(2**(attempt_number-len(attempts)))))
             finally:client.close()
     raise RuntimeError('embedding unavailable')
+
+def embed_many(texts,bindings,cache,*,space=None,kind='query'):
+    """Local batches retain per-input locks, attempts, cache and provenance."""
+    from contextlib import ExitStack
+    space=dict(space or default_space());validate_space(space)
+    if len(texts)!=len(bindings):raise ValueError('embedding input/binding cardinality mismatch')
+    if space==GEMINI_SPACE:return [embed(t,b,cache,space=space,kind=kind) for t,b in zip(texts,bindings,strict=True)]
+    from photo_local_embedding import infer
+    requests=[{'schema':'photo-local-embedding-request/v1','text':t,'text_sha256':hashlib.sha256(t.encode()).hexdigest(),
+               'space':space,'binding':b,'kind':kind} for t,b in zip(texts,bindings,strict=True)]
+    unique={digest(r):r for r in requests};results={};pending=[]
+    with ExitStack() as stack:
+        for key,request in sorted(unique.items()):
+            directory=Path(cache)/key;directory.mkdir(parents=True,exist_ok=True)
+            lock=stack.enter_context((directory/'LOCK').open('a+b'));fcntl.flock(lock,fcntl.LOCK_EX)
+            path=directory/'RESULT.json'
+            if path.exists():
+                row=decode(path.read_bytes())
+                if row.get('request')!=request or row.get('vector_sha256')!=digest(row.get('vector')):raise ValueError('local cache binding/content mismatch')
+                validate_vector(row['vector']);validate_execution(row['execution'],space,request['text'],row['vector'],kind)
+                results[key]={**row,'cache_hit':True}
+            else:
+                attempts=list(directory.glob('ATTEMPT-*.json'));attempt=directory/f'ATTEMPT-{len(attempts):03d}.json'
+                atomic(attempt,{'request':request,'state':'started','started_at':datetime.now(timezone.utc).isoformat()})
+                pending.append((key,request,directory,attempt))
+        if pending:
+            try:
+                rows=infer([r['text'] for _,r,_,_ in pending],kind,space)
+                for (key,request,directory,attempt),value in zip(pending,rows,strict=True):
+                    vector=value['vector'];validate_vector(vector);validate_execution(value['execution'],space,request['text'],vector,kind)
+                    row={'schema':'photo-embedding-result/v1','request':request,'vector':vector,'vector_sha256':digest(vector),'execution':value['execution']}
+                    atomic(directory/'RESULT.json',row);atomic(attempt,{'request':request,'state':'succeeded','vector_sha256':row['vector_sha256']})
+                    results[key]={**row,'cache_hit':False}
+            except Exception as error:
+                for _,request,_,attempt in pending:atomic(attempt,{'request':request,'state':'failed','error_type':type(error).__name__})
+                raise
+    return [results[digest(r)] for r in requests]

@@ -475,6 +475,7 @@ All references below are post-core only. Load only what the frozen request and r
 - Candidate composition, audit, hard obligations, and quality fields: `references/composition-contract.md`
 - Requested photographic-methodology review, or person-centered relationship, moment, individuality, and meaning-led framing: [photographic-methodology.md](references/photographic-methodology.md)
 - Retrieval internals, indexes, and diagnostic boundaries: `references/retrieval-contract.md`
+- Skill-owned local embedding installation and rollback: `references/local-embeddings.md`
 - Candidate idea routes and composable adult-appeal axes: `references/hybrid-augmentation-contract.md`
 - High-creativity proposals and authorial selection: `references/creative-direction-contract.md`
 - Viewer response or commercial communication outcomes: `references/viewer-experience-contract.md`

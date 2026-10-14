@@ -49,7 +49,7 @@ def audit(pack,data,context):
                   'unique_candidate_limit':64,'role_limits':{'core':4,'support':2},'minimum_similarity':.30,'rrf_k':30,'tag_admission_filter':False,'candidate_adoption':'optional','algorithm':'independent_global_bm25f_certified_cosine_rrf/v3',
                   'lanes':{'bm25f':{'state':'executed' if slots else 'not_requested','slot_count':len(slots)},'embedding':{'state':'executed' if mode=='hybrid_required' and slots else 'not_requested','slot_count':len(slots) if mode=='hybrid_required' else 0}}}
         if any(record.get(k)!=v for k,v in expected.items()):raise ValueError('slot source/query/policy binding mismatch')
-        if mode=='hybrid_required':fields=queries.validate_set(context,core,controls,data['slot_catalog'],slots)
+        if mode=='hybrid_required':fields=queries.validate_set(context,core,controls,data['slot_catalog'],slots,space=reader.manifest['space'])
         elif context is not None:raise ValueError('keyword diagnostic claims query vectors')
         if record['query_context_sha256']!=(context['canonical_sha256'] if context else None):raise ValueError('foreign slot query set')
         allowed,source_roles,contract=guards.eligible(data,core,controls);_,picked=g.frozen_core_context(data,core,controls)

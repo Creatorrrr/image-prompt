@@ -5,6 +5,14 @@ import photo_global_index as index
 import photo_candidate_realizations as realizations
 MODES={'hybrid_required','keyword_only'}
 
+def readonly_guard_entry(record):
+    """Top-level overlay of immutable metadata; no role/realization mutation."""
+    entry={**record['content'],'id':record['id'],'record_kind':record['record_kind']}
+    if '_semantic_evidence_guard' in record:entry['_semantic_evidence_guard']=record['_semantic_evidence_guard']
+    entry.update(record['conditions'])
+    entry.update(affected_dimensions=list(record['effects']['dimensions']),affected_properties=record['effects']['properties'])
+    return entry
+
 def guard_policy(policy,contract):
     category=contract.get('subject_category','generic');domains=set(contract.get('domains') or [])
     if category in set(policy.get('deny_subject_categories') or []):return False
@@ -26,7 +34,7 @@ def eligible(data,core,controls):
     overridden=g.visual_profile_user_definition_override_ids(data[g.VISUAL_OBLIGATIONS_DATA_KEY],data[g.VISUAL_PROFILE_INDEX_DATA_KEY],core.get('user_definitions') or [])
     for cid,record in data['candidates'].items():
         if record['record_kind'] not in index.POSITIVE_KINDS:continue
-        entry=c.entry(data,cid)
+        entry=readonly_guard_entry(record) if reader is not None else c.entry(data,cid)
         # Canonical conditions and effects govern every presentation role.
         # A new empty binding cannot bypass this independent source check.
         if (not guard_policy(entry.get('subject_applicability') or {},contract)

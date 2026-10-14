@@ -111,6 +111,7 @@ def capture_sources(root: Path, *, pinned=None, full=False) -> tuple[dict, Sourc
         if len({r['path'] for r in rows})!=len(rows):raise ValueError('duplicate search shard owner')
         declared={'assets/'+r['path']:r['sha256'] for r in rows}
         names={'assets/'+name for name in names}|set(declared)
+        names|={name for name in ('embedding-runtime.lock.json','embedding-default.json','requirements-local-embeddings.txt') if (root/name).is_file()}
         names|={str(p.relative_to(root)) for p in (root/'precore').glob('*.json')}
         files={};sealed=(pinned or {}).get('origin_identity',{});known=(pinned or {}).get('source',{}).get('files',{})
         for name in sorted(names):
@@ -123,7 +124,11 @@ def capture_sources(root: Path, *, pinned=None, full=False) -> tuple[dict, Sourc
                 _SOURCE_HASH_CACHE[key]=(current,sha)
             if name in declared and sha!=declared[name]:raise ValueError('live search shard checksum mismatch: '+name)
             files[name]=sha
-        return {'files':files,'code':code_inventory(root),'environment':environment_binding()},inventory
+        source={'files':files,'code':code_inventory(root),'environment':environment_binding()}
+        if layout['space'].get('provider')=='embeddinggemma2-local':
+            from photo_local_embedding import installed_binding
+            source['embedding']=installed_binding()
+        return source,inventory
     except (OSError,ValueError) as exc:
         if isinstance(exc,FreshnessError):raise
         raise FreshnessError('source_invalid',str(exc)) from exc
@@ -416,7 +421,7 @@ def verify_pack_bindings(pack: dict, snapshot: RuntimeSnapshot, generator, *, re
     record=pack['global_retrieval'];mode=record['mode'];data=snapshot.data.for_core(pack['authorial_core'])
     slots=photo_slot_retrieval.active_slots(data,pack['authorial_core'],pack['creative_controls'],record['requested_slot_ids'])
     if mode=='hybrid_required':
-        photo_slot_queries.validate_set(query_context,pack['authorial_core'],pack['creative_controls'],data['slot_catalog'],slots)
+        photo_slot_queries.validate_set(query_context,pack['authorial_core'],pack['creative_controls'],data['slot_catalog'],slots,space=data.reader.manifest['space'])
         if record['query_context_sha256']!=query_context['canonical_sha256']:raise FreshnessError('source_invalid','receipt slot context mismatch')
     elif mode!='keyword_only' or query_context is not None:raise FreshnessError('source_invalid','invalid query execution mode')
     if ((pack.get("provenance") or {}).get("tags_hash") != generator.dictionary_hash(snapshot.data)

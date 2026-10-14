@@ -32,7 +32,7 @@ def retrieve(data,core,controls,context=None,mode='hybrid_required',*,requested_
     if reader is None:raise ValueError('lazy shared search generation required')
     reader.check_presence()
     slots=active_slots(data,core,controls,requested_slots)
-    fields=queries.validate_set(context,core,controls,data['slot_catalog'],slots) if mode=='hybrid_required' else {}
+    fields=queries.validate_set(context,core,controls,data['slot_catalog'],slots,space=reader.manifest['space']) if mode=='hybrid_required' else {}
     if mode=='keyword_only' and context is not None:raise ValueError('keyword diagnostic cannot claim query embeddings')
     allowed,source_roles,contract=guards.eligible(data,core,controls)
     _,picked=g.frozen_core_context(data,core,controls)

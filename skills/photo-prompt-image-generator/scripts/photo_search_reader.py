@@ -13,7 +13,7 @@ import threading
 import zlib
 import photo_candidate_corpus as c
 import photo_search_layout as layout
-from photo_embedding_provider import SPACE
+from photo_embedding_provider import SPACE, validate_space
 
 
 def identity(path):
@@ -48,7 +48,8 @@ class SearchReader:
         self.assets=Path(assets).resolve();self.lock=threading.RLock();self.cache=OrderedDict();self.cache_bytes=0;self.cache_limit=cache_limit;self.descriptors=OrderedDict()
         self.metrics={'reads':0,'read_bytes':0,'vector_reads':0,'vector_bytes':0,'payload_reads':0,'posting_reads':0,'cache_hits':0,'cache_peak_bytes':0}
         path=regular(self.assets,manifest_name);self.manifest=c.decode(path.read_bytes())
-        if (self.manifest.get('schema')!=layout.SCHEMA or self.manifest.get('space')!=SPACE
+        validate_space(self.manifest.get('space'))
+        if (self.manifest.get('schema')!=layout.SCHEMA
                 or self.manifest.get('vector_type')!='float64' or self.manifest.get('endianness')!='little'
                 or self.manifest.get('posting_codec')!=layout.POSTING_CODEC or self.manifest.get('vector_codec')!=layout.VECTOR_CODEC):
             raise ValueError('native search layout required')
@@ -155,7 +156,11 @@ class LazyRuntimeData(dict):
 
     def for_core(self,core):
         import prompt_generator as g
+        core_digest=c.digest(core)
+        if getattr(self,'_bound_core_sha256',None)==core_digest:
+            return copy.copy(self)
         result=copy.copy(self);text,_=g.authorial_core_retrieval_text(core)
+        result._bound_core_sha256=core_digest
         result.matched_profiles={r['profile_id'] for r in self.reader.meta['profile_lookup'] if g.intent_alias_matches(text,r['term']) or g.intent_term_is_negated(text,r['term'])}
         result['_visual_meaning']={**self.reader.meta['policies']['visual_meaning_contract'],
                                   'profiles':[c.entry(result,cid) for cid in sorted(result.matched_profiles)]}

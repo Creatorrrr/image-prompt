@@ -14,10 +14,21 @@ def routing_bounds(reader,query_unit,allowed):
         a=[query_unit[d]*v for v in centers[d]];b=[query_unit[d+1]*v for v in centers[d+1]]
         tables.append([a[code&15]+b[code>>4] for code in range(256)])
     codes=memoryview(reader.quant_codes);points={}
-    for pos,cid in enumerate(reader.meta['positive_ids']):
-        if cid in allowed:
-            row=codes[pos*384:(pos+1)*384]
-            points[cid]=min(1.0,math.fsum(map(operator.getitem,tables,row))+quant['errors'][pos]+1e-10)
+    if reader.manifest['space']['provider']=='embeddinggemma2-local':
+        from photo_local_embedding import numpy_runtime
+        np=numpy_runtime()
+        positions=[pos for pos,cid in enumerate(reader.meta['positive_ids']) if cid in allowed]
+        packed=np.frombuffer(codes,dtype=np.uint8).reshape((-1,384))
+        selected=packed[positions];sums=np.zeros(len(positions),dtype=np.float64)
+        for dimension,table in enumerate(tables):sums+=np.asarray(table,dtype=np.float64)[selected[:,dimension]]
+        # 2e-12 covers float64 sequential accumulation relative to fsum.
+        for pos,value in zip(positions,sums,strict=True):
+            points[reader.meta['positive_ids'][pos]]=min(1.0,float(value)+quant['errors'][pos]+1.02e-10)
+    else:
+        for pos,cid in enumerate(reader.meta['positive_ids']):
+            if cid in allowed:
+                row=codes[pos*384:(pos+1)*384]
+                points[cid]=min(1.0,math.fsum(map(operator.getitem,tables,row))+quant['errors'][pos]+1e-10)
     bounds=[-2.0]*len(reader.meta['nodes'])
     for pos in range(len(bounds)-1,-1,-1):
         node=reader.meta['nodes'][pos]
@@ -57,6 +68,12 @@ def cosine_rank(reader,vector,allowed,limit=384,minimum=0.30):
     if limit<1:raise ValueError('positive lane limit required')
     if not set(allowed)<=set(reader.meta['positive_ids']):raise ValueError('unknown positive identity')
     norm=math.sqrt(math.sumprod(vector,vector));unit=[v/norm for v in vector]
+    if not hasattr(reader,'_vector_norms'):reader._vector_norms={}
+    np=None
+    if reader.manifest['space']['provider']=='embeddinggemma2-local':
+        from photo_local_embedding import numpy_runtime
+        np=numpy_runtime();query_array=np.asarray(unit,dtype=np.float64)
+        if not hasattr(reader,'_leaf_norm_estimates'):reader._leaf_norm_estimates={}
     counts=eligible_counts(reader,allowed);nodes=reader.meta['nodes'];bounds=routing_bounds(reader,unit,allowed);heap=[];visited=[];skipped=[]
     queue=[(-bounds[0],0)]
     while queue:
@@ -70,10 +87,24 @@ def cosine_rank(reader,vector,allowed,limit=384,minimum=0.30):
             for child in node['children']:heapq.heappush(queue,(-bounds[child],child))
             continue
         leaf=node['leaf'];row=reader.meta['vector_shards'][leaf];values=reader.block('vector',leaf);visited.append(leaf)
+        estimates=None
+        if np is not None:
+            matrix=np.frombuffer(values,dtype=np.float64).reshape((-1,768))
+            norms=reader._leaf_norm_estimates.get(leaf)
+            if norms is None:
+                norms=np.linalg.norm(matrix,axis=1);reader._leaf_norm_estimates[leaf]=norms
+            estimates=(matrix@query_array)/norms
         for offset,cid in enumerate(row['ids']):
             if cid not in allowed:continue
+            # Numeric screening never supplies a rank or pruning certificate.
+            # Every potentially competitive item is scored by original sumprod.
+            cutoff=heap[0][0] if len(heap)>=limit else minimum
+            if estimates is not None and float(estimates[offset])<cutoff-1e-10:continue
             reference=values[offset*768:(offset+1)*768]
-            score=math.sumprod(reference,vector)/(math.sqrt(math.sumprod(reference,reference))*norm)
+            reference_norm=reader._vector_norms.get(cid)
+            if reference_norm is None:
+                reference_norm=math.sqrt(math.sumprod(reference,reference));reader._vector_norms[cid]=reference_norm
+            score=math.sumprod(reference,vector)/(reference_norm*norm)
             if score<minimum:continue
             item=(score,-int(cid[5:],16),cid)
             if len(heap)<limit:heapq.heappush(heap,item)

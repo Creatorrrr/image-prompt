@@ -1816,7 +1816,9 @@ def intent_term_is_negated(text: str, term: str) -> bool:
 
     lowered = clean_spaces(str(text or "").lower())
     normalized = clean_spaces(str(term or "").lower())
-    if not lowered or not normalized:
+    # Every negation expression below contains this escaped literal term.
+    # Avoid compiling thousands of expressions for terms absent from the core.
+    if not lowered or not normalized or normalized not in lowered:
         return False
     if normalized.isascii() and re.search(r"[a-z0-9]", normalized):
         term_pattern = (
@@ -8318,9 +8320,9 @@ def generate_candidate_pack(data,core,controls,embodiment,*,seed=0,visual_intent
     result=prepare_candidate_source(data,core,controls,embodiment,seed=seed,visual_intent=visual_intent)
     if retrieval_mode=='hybrid_required' and query_context is None:
         from photo_embedding_provider import load_env
-        load_env(Path(__file__).resolve().parents[3]/'.env')
+        if data.reader.manifest['space']['provider']=='gemini':load_env(Path(__file__).resolve().parents[3]/'.env')
         active=photo_slot_retrieval.active_slots(data,core,controls,requested_slots)
-        query_context=photo_slot_queries.prepare(core,controls,data['slot_catalog'],active,query_cache or photo_runtime_sources.default_store()/'query-embeddings',language=query_language)
+        query_context=photo_slot_queries.prepare(core,controls,data['slot_catalog'],active,query_cache or photo_runtime_sources.default_store()/'query-embeddings',language=query_language,space=data.reader.manifest['space'])
     result['provenance'].update({'_query_context':query_context,'retrieval_mode':retrieval_mode,'selection_mode':'global_hybrid' if retrieval_mode=='hybrid_required' else 'global_keyword_diagnostic'})
     return build_candidate_pack(result,data)
 
