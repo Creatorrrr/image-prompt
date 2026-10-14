@@ -33,6 +33,28 @@ def stage_selected(relative):
         raise ValueError('staged content differs from the explicitly selected review batch')
 
 
+def local_execution_counts():
+    """Only explicitly registered ledgers belong to this run's accounting."""
+    from local_execution_ledger import Ledger
+    registry = review.HERE / 'LOCAL-INFERENCE-LEDGERS.json'
+    roots = json.loads(registry.read_text())['directories'] if registry.exists() else []
+    if (not isinstance(roots, list) or any(not isinstance(path, str) for path in roots)
+            or len(set(roots)) != len(roots)):
+        raise ValueError('unique local execution ledger directories required')
+    minimum = hits = 0
+    unknown = []
+    for relative in roots:
+        path = (review.HERE / relative).resolve()
+        if not path.is_relative_to(review.HERE.resolve()) or path == review.HERE.resolve():
+            raise ValueError('execution ledger must remain inside this evidence run')
+        result = Ledger(path).summary()
+        minimum += result['confirmed_minimum']
+        hits += result['confirmed_cache_hits']
+        unknown.extend(relative + '/' + run_id for run_id in result['unknown_run_ids'])
+    return {'exact_total': None if unknown else minimum, 'confirmed_minimum': minimum,
+            'confirmed_cache_hits': hits, 'unknown_run_ids': unknown, 'directories': roots}
+
+
 def write_current():
     progress = json.loads((review.HERE / 'PROGRESS.json').read_text())
     rows = []
@@ -49,6 +71,7 @@ def write_current():
     kinds = Counter(row['recommended_kind'] for row in accepted)
     roles = Counter(role['slot_id'] for row in accepted for role in row['roles'])
     changes = correction_counts(accepted)
+    executions = local_execution_counts()
     report = {
         'schema': 'photo-codex-current-source-review/v1',
         'registered_decisions': len(accepted), 'total_records': len(order),
@@ -66,11 +89,18 @@ def write_current():
         'first_unfinished_order_offset': state['first_unfinished_order_offset'],
         'native_changes_applied': False, 'native_qualification_complete': False,
         'stage05_complete': False, 'stages06_08_complete': False,
-        'gemini_calls_in_this_run': 0, 'local_embedding_inferences_in_this_run': 0,
+        'gemini_calls_in_this_run': 0,
+        'local_embedding_inferences_in_this_run': executions['exact_total'],
+        'confirmed_local_embedding_inferences': executions['confirmed_minimum'],
+        'local_embedding_cache_hits': executions['confirmed_cache_hits'],
+        'local_embedding_unknown_run_ids': executions['unknown_run_ids'],
+        'local_embedding_accounted_ledgers': executions['directories'],
         'root_personally_read_all_worker_sources_claimed': False,
         'independent_human_or_pixel_verification': False,
     }
     review.write(review.HERE / 'CURRENT.json', report)
+    inference_text = (f"{executions['exact_total']:,}건" if executions['exact_total'] is not None
+                      else f"정확한 수 미확정(확인 하한 {executions['confirmed_minimum']:,}건, 미확정 실행 {len(executions['unknown_run_ids']):,}개)")
     text = f'''# 직접 검토 최신 등록 현황
 
 현재 승인·원문 결합 검증을 통과한 판정은 **{len(accepted):,}/{len(order):,}개**다. 보류를 포함해 등록한 직접 원문 판정은 {len(rows):,}개다. 주 에이전트 직접 승인 판정 {methods['codex_direct_source_read']:,}개와 명시 승인된 gpt-6.1-sol/high 서브에이전트 직접 승인 판정 {methods['codex_subagent_direct_source_read']:,}개를 구분한다. 주 에이전트가 worker의 모든 원문을 직접 읽었다고 주장하지 않는다.
@@ -79,7 +109,7 @@ def write_current():
 
 원문·참조·catalog·긍정 인용·소유자/속성 계약·실현 분기·작성 항목 및 worker task/model/effort·배정 범위·note hash를 기계 검증했다. 기계 검사는 실제 의미 정확도나 독립 사람/전문가/이미지 픽셀 검증을 대신하지 않는다. 직접 의미 판정과 혼동 경계는 각 authored 판정·worker note에 남아 있다. 같은 모델 계열의 분업 결과를 독립 평가로 표시하지 않는다.
 
-**5B 전수 검토·5C native 자격화와 역검색·6~8단계는 미완료다.** 운영 본문·종류·태그·기존 binding·로컬 index/space는 아직 바꾸지 않았다. 최종 적용 전에는 조건·소유자·실현/번역 일치·참조를 별도로 해결하고 검증한다. Gemini 신규 호출과 이번 실행의 로컬 임베딩 추론은 0건이다.
+**5B 전수 검토·5C native 자격화와 역검색·6~8단계는 미완료다.** 운영 본문·종류·태그·기존 binding·로컬 index/space는 아직 바꾸지 않았다. 최종 적용 전에는 조건·소유자·실현/번역 일치·참조를 별도로 해결하고 검증한다. Gemini 신규 호출은 0건이며 이번 실행의 로컬 임베딩 추론은 {inference_text}이다. 수치는 명시 등록된 실행 대장의 입력 단위이며, 미완결·실패 실행은 0건으로 간주하지 않는다.
 
 단계·배치별 상세 기록은 [REPORT.ko.md](REPORT.ko.md), 최신 수치의 기계 대장은 [CURRENT.json](CURRENT.json), source-bound 원문 판정은 `decisions/`를 참고한다. 단계 완료를 표시하지 않은 중간 커밋이다.
 '''
