@@ -192,6 +192,8 @@ Native 자격화에서는 사실별 실제 realization ID와 이미 존재해야
 
 첫 50개(1250–1299)의 [세 번째 정식 심사](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review11870-01250-01300-03/ROOT-SEMANTIC-REOPEN-01.json)는 담당자의 33개 긍정·17개 보류 판정과 265개 사실·115개 단위 형상 검사를 보존한다. 독립 담당자가 50개 원문·수정본·기존 5B·자기 binding 및 33개 proof 전체를 다시 읽었고, 루트는 1250/1251/1289의 개별 인용 범위와 1290의 명시적 환경 열 상태 누락을 확인해 배치 전체 승인을 보류했다. 기존 긍정 proof의 형상 통과를 의미 승인으로 바꾸지 않는다. [인용별 번역·적용문 보완](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/authored/root_quote_local_source_clarifications_v1.json)은 원문에 이미 있는 시간·실내 위치·자연스러운 자세 의미를 각 언어의 자체 근거로 확인하도록 새 입력만 제안한다. 11128의 공통 한국어 자세에도 같은 인용 문제가 있어 보완 대상에 포함했다. 과거 배치·proof·승인 이력은 그대로 보존한다.
 
+보완한 11128의 [네 번째 심사](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/review08250-11128-04/ROOT-ACCEPTANCE.json)는 새 원문·71개 사실·26개 단위·두 실제 분기·4개 역할 명세와 기존 binding을 루트가 다시 읽고 연구 범위에서 승인했다. 두 한국어 자세 인용 모두 해당 필드의 “자연스럽게”를 직접 포함한다. 루트가 후보를 읽기 전에 독립 선언한 요청 fixture로 full/compact 전제 20개, 효과 잠금 10개, 실제 기존 binding의 성인·domain 소비 6개를 확인했다. 서기에는 걷기 동작을 추가하지 않고, 성인 전제와 기존 외형·정체의 조건부 보존을 유지한다. 이 한 건의 연구 승인은 전수 심사 종료·운영 원본 적용·실제 요청 검색·이미지 픽셀 확인을 뜻하지 않으며, 이후 catalog/source 의존성이 바뀌면 별도 재심사한다.
+
 검증: 각 배치의 ID·긍정 인용·원본/수정 후 hash·선택 분기·owner/property·효과·조건을 대조하고, 의미 변경은 관련 옵션·프로필·묶음·참조에 전파한다. 운영 원본을 고친 배치는 새 local index closure·runtime publication·실제 acquire까지 검증한 뒤 커밋한다. 대장만 작성한 배치는 운영 데이터를 바꾸지 않는다. 5단계 종료 조건은 직접 검토 승인 집합이 18,250/18,250, 누락·미검토·미해결 보류 0건, Gemini 신규 호출 0건이다.
 
 산출물: 직접 검토 기준 snapshot·입력/검증 보조 도구, 전체 확정 태그안·긍정 인용·소유자·분기 근거 대장, 필요한 source 보정과 native 검증, 배치별 검증·커밋, 실제 직접 검토 coverage.
