@@ -734,9 +734,13 @@ def admission(entry, core, *, allow_unselected=False, _nested=False, _whole_entr
             children.append({'candidate_id':cid,'realization_id':chosen,'admission':result})
         if not _nested and not allow_unselected and not set(selections) <= used:
             return {**denied, 'reason':'unused_or_foreign_dependency_selection'}
+        search_only = guards_receipt.get('search_only') or any(
+            row.get('search_only') or row.get('admission',{}).get('search_only') for row in children)
+        if not search_only:
+            validate_joint_effect_assignments([entry], core)
         return {'status': 'qualified', 'allowed': True, 'reason': 'whole_native_obligations_verified',
                 'resolved_frozen_facts': resolutions, 'dependencies':children, 'native_guards':guards_receipt,
-                'used_dependency_ids':sorted(used),**({'search_only':True} if guards_receipt.get('search_only') or any(row.get('search_only') or row.get('admission',{}).get('search_only') for row in children) else {}),**({'owner_resolution':{'candidate_id':proof.get('candidate_id'),
+                'used_dependency_ids':sorted(used),**({'search_only':True} if search_only else {}),**({'owner_resolution':{'candidate_id':proof.get('candidate_id'),
                     'realization_id':rid,'meaning_sha256':proof['meaning_sha256'],'qualification_sha256':proof.get('qualification_sha256',c.digest(proof)),
                     'bindings':owner_bindings}} if owner_bindings else {})}
     except (ValueError, KeyError, TypeError, IndexError):
@@ -934,8 +938,67 @@ def resolve_owner_bindings(proof,rid,graph,*,core=None,owner_selections=None):
     return owner_resolution(proof,rid,graph,core=core,owner_selections=owner_selections)[0]
 
 
-def _collect_permission_scope(entry, core):
+def validate_joint_effect_assignments(entries, core):
+    """Compare E assignments across the exact actual selected source closure.
+
+    Pure owner/footprint resolution only: never call admission or guard evaluation
+    here, since preservation guards themselves inspect the whole permission scope.
+    P old values are independent witnesses, not competing E assignments.
+    """
+    graph = frozen_witnesses(core)['graph']
+    canonical, _ = witnesses.validate_graph(graph)
+    assignments = {}; selected_sources = {}
+
+    def visit(entry, path):
+        if native_status(entry) != 'qualified':
+            raise ValueError('joint effects require a qualified actual selected source')
+        proof = proof_of(entry); rid = entry.get('_realization_id', 'base')
+        cid = proof.get('candidate_id') or (proof.get('review',{}).get('original_review') or {}).get('candidate_id')
+        if not cid or cid in path or len(path) > MAX_DEPENDENCY_DEPTH:
+            raise ValueError('cyclic or unbounded joint selected source closure')
+        actual = {'dimensions': sorted(entry.get('affected_dimensions', [])),
+                  'properties': sorted(entry.get('affected_properties', []), key=property_key)}
+        facts, _ = _selected_contract(proof, rid, actual)
+        owners, _ = owner_resolution(proof, rid, graph, core=core,
+                                     owner_selections=entry.get('_native_owner_selections'))
+        plan = owner_binding_plan(proof['owner_maps'][rid])
+        def owner(target):
+            value = owners[target]
+            return value if plan[target]['origin'] == 'introduced' else canonical[value]
+        selections = entry.get('_native_dependency_selections', {})
+        children = []
+        for dependency, projected in selected_dependencies(proof, rid, selections):
+            choices = dependency['realization_ids']; child_id = dependency['candidate_id']
+            choice = selections.get(child_id, choices[0] if len(choices) == 1 else None)
+            if choice not in choices:
+                raise ValueError('joint effects require the exact actual dependency realization')
+            children.append((child_id, choice, projected['guard']))
+        signature = (rid, proof['meaning_sha256'], proof.get('qualification_sha256', c.digest(proof)),
+                     c.canonical_bytes(owners), tuple((child_id, choice) for child_id, choice, _ in children))
+        if cid in selected_sources and selected_sources[cid] != signature:
+            raise ValueError('conflicting joint selected source/RID/owner closure')
+        selected_sources[cid] = signature
+        for fact in facts:
+            if fact['mode'] != 'effect':
+                continue
+            key = (fact['dimension'], owner(fact['target']), fact['property'])
+            value = (c.canonical_bytes(fact['value']), fact['operation'],
+                     frozenset(owner(target) for target in fact['receivers']))
+            if key in assignments and assignments[key] != value:
+                raise ValueError('conflicting joint effect assignment; author distinct properties or an explicit aggregate value')
+            assignments[key] = value
+        for _, choice, guard in children:
+            visit(_guard_entry(guard, choice, selections,
+                  owner_selections=entry.get('_native_owner_selections')), (*path, cid))
+
+    for entry in entries:
+        visit(entry, ())
+
+
+def _collect_permission_scope(entry, core, *, _nested=False):
     """Resolve only explicit owner bindings; unknown alias overlap remains denied."""
+    if not _nested and native_status(entry) == 'qualified':
+        validate_joint_effect_assignments([entry], core)
     frozen = frozen_witnesses(core)
     effects = copy.deepcopy(entry.get('affected_properties', []))
     dimensions = set(entry.get('affected_dimensions', []))
@@ -956,7 +1019,7 @@ def _collect_permission_scope(entry, core):
             if chosen not in choices:
                 raise ValueError('actual dependency realization must be selected before applying effects')
             child_dimensions, child_effects, _ = _collect_permission_scope(
-                _guard_entry(guards['guard'], chosen, selections,owner_selections=entry.get('_native_owner_selections')), core)
+                _guard_entry(guards['guard'], chosen, selections,owner_selections=entry.get('_native_owner_selections')), core, _nested=True)
             dimensions.update(child_dimensions); effects.extend(child_effects)
     effects = [dict(zip(PROPERTY_FIELDS, key)) for key in dict.fromkeys(property_key(row) for row in effects)]
     return sorted(dimensions), effects, frozen['graph']
