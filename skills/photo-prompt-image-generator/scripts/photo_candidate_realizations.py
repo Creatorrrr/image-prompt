@@ -6,6 +6,47 @@ records and guards, rather than copying meanings or adding search documents.
 from __future__ import annotations
 import copy
 
+PROJECTION_FIELDS = frozenset({'en', 'ko', 'embedding_text', 'concept_units', 'relations'})
+
+
+def validate_content(record):
+    """Primitive OR choices may own explicit text, never identity or guards.
+
+    Canonical search text remains owned once by the source record. These
+    manually authored render projections do not create search documents.
+    """
+    choices = record['content'].get('realization_content')
+    if choices is None:
+        return
+    import photo_candidate_corpus as c
+    if (record['record_kind'] != 'visual_option'
+            or not record['effects'].get('realizations')
+            or not isinstance(choices, dict) or set(choices) != set(ids(record))):
+        raise ValueError('primitive realization text must cover every actual branch exactly once')
+    for rid, text in choices.items():
+        if (not isinstance(text, dict) or set(text) != PROJECTION_FIELDS
+                or any(not isinstance(text[k], str) or not text[k].strip()
+                       for k in ('en', 'ko', 'embedding_text'))
+                or not c.strings(text['concept_units'], rid + '.concept_units')
+                or not isinstance(text['relations'], list)
+                or any(not isinstance(row, dict) for row in text['relations'])):
+            raise ValueError('primitive realization text cannot replace identity, guards or other metadata')
+
+
+def project_content(record, realization_id):
+    """Project one declared primitive choice without mutating its source."""
+    choices = record['content'].get('realization_content')
+    if choices is None:
+        return {}
+    branch(record, realization_id)  # Reject foreign choices even without a prior validate call.
+    selected = copy.deepcopy(choices[realization_id])
+    # Canonical aliases/keywords can describe both alternatives. They remain
+    # in the single search document, but cannot leak into a selected render
+    # view or reject it for words belonging only to another choice.
+    selected.update(aliases=[], keywords=[], terms=[], paraphrases=[], concept_terms=[],
+                    phrase_en=selected['en'], phrase_ko=selected['ko'])
+    return selected
+
 
 def ids(record):
     conditional = record['effects'].get('realizations')
