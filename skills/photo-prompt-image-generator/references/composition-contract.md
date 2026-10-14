@@ -104,10 +104,14 @@ Entries must exactly cover the actually selected selector-node closure, with
 from the descriptor. Keep fixed-role bindings unchanged and omit unused optional
 children. All selected effects and receivers resolve through this same mapping;
 explicit owner equivalence identifies one actual entity, while `part_of` retains
-distinct part ownership. Repeated assignments within one source realization on
-one actual property must agree in typed value, operation and actual receiver
-set. A different owner mapping
-does not turn a conflicting assignment or a locked mutation into permission.
+distinct part ownership. For the union of all chosen candidates and their
+actually selected child realizations, assignments on the same actual owner,
+dimension and property must agree in typed value, operation and actual receiver
+set. This includes repeated assignments within a source and shared children.
+Prerequisite old values remain distinct from selected new effects. Keep
+conflicting choices separate or use a source-authored explicit aggregate value;
+do not silently merge them. An owner choice never grants permission to change
+a frozen property.
 
 Keep the original public pack unchanged. A passing audit emits its own
 `native_owner_resolution`, bound to the exact pack, composed text, source

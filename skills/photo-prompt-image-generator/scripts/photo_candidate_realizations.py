@@ -205,7 +205,11 @@ def eligible_ids(data, candidate_id, core, contract, picked, slot='', binding_id
             role = data['slot_bindings'][bid]['slot_id'] if bid else ''
             child_selections = selected_choices
             if native.native_status(data['candidates'][child_id]) == 'qualified':
-                child_guard = native.compact(data['candidates'][child_id], data)
+                child_record = data['candidates'][child_id]
+                # Discovery reads sealed layout guards; compacting one again
+                # would discard its only native proof and return None.
+                child_guard = (native.proof_of(child_record) if '_semantic_evidence_guard' in child_record
+                               else native.compact(child_record, data))
                 descendant_ids = {cid for child_rid in ids(data['candidates'][child_id])
                     for cid in native.dependency_choices(child_guard, child_rid)}
                 child_selections = {cid:value for cid,value in selected_choices.items() if cid in descendant_ids}

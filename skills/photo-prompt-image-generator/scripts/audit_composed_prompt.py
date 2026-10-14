@@ -5890,7 +5890,7 @@ def audit_native_adoptions(pack, composed, source_data,*,resolution_out=None):
     chosen.update(row.get('candidate_id') for row in transformed if row.get('candidate_id'))
     interpretations = {row.get('candidate_id'): row for row in
         [*(composed.get('candidate_interpretations') or []), *transformed] if isinstance(row, dict)}
-    failures = [];nodes=[];closures=[];owner_selections=composed.get('owner_selections')
+    failures = [];nodes=[];closures=[];joint_entries=[];owner_selections=composed.get('owner_selections')
     try:
         graph=native.frozen_witnesses(core)['graph']
         selected_entries=native.validate_owner_selections(owner_selections,core,graph)
@@ -5978,8 +5978,13 @@ def audit_native_adoptions(pack, composed, source_data,*,resolution_out=None):
             if (not set(dimensions) <= set((core.get('intent_lock') or {}).get('open_dimensions') or [])
                     or not native.property_scope_allowed(core, dimensions, properties)):
                 raise ValueError('selected whole native effects conflict with frozen dimension/property scope')
+            joint_entries.append(entry)
         except (KeyError, ValueError, TypeError) as error:
             failures.append({'check':'native_candidate_adoption','candidate_id':cid,'reason':str(error)})
+    try:
+        native.validate_joint_effect_assignments(joint_entries, core)
+    except (KeyError, ValueError, TypeError) as error:
+        failures.append({'check':'native_joint_effect_assignments','reason':str(error)})
     if owner_selections is not None:
         unique_nodes={}
         for row in nodes:
