@@ -82,13 +82,13 @@ Facts use one nonblank string or a list of 1–8 distinct nonblank strings as th
 value. The namespace and value are compared exactly. For common presence and age
 facts, use these shared neutral spellings when they express the actual request:
 
-| property | value_type | value |
-| --- | --- | --- |
-| `entity.presence` | `entity.presence/v1` | `present` |
-| `anatomy.face.presence` | `anatomy.face.presence/v1` | `present` |
-| `anatomy.hair.presence` | `anatomy.hair.presence/v1` | `present` |
-| `anatomy.nails.presence` | `anatomy.nails.presence/v1` | `present` |
-| `age.declared` | `age.declared/v1` | `adult` for explicitly declared adulthood |
+| dimension | property | value_type | value |
+| --- | --- | --- | --- |
+| `subject` | `entity.presence` | `entity.presence/v1` | `present` |
+| `subject` | `anatomy.face.presence` | `anatomy.face.presence/v1` | `present` |
+| `subject` | `anatomy.hair.presence` | `anatomy.hair.presence/v1` | `present` |
+| `subject` | `anatomy.nails.presence` | `anatomy.nails.presence/v1` | `present` |
+| `age` | `age.declared` | `age.declared/v1` | `adult` for explicitly declared adulthood |
 
 These are authoring conventions, not entailment rules or default facts. Use the
 actual owner of the asserted property. A human category, material label, role
@@ -97,6 +97,11 @@ witness any row. Exact numeric age, another body part, a depicted face, and a
 separate actor require their own actual source-grounded meanings. For other
 properties, declare a precise namespace and exact value independently; the
 validator does not translate synonyms or infer a value from the property name.
+Dimension, property, actual owner, value type and value are one exact protocol
+tuple. A different presence spelling or dimension does not match this tuple.
+Keep several required parts as independently grounded atomic facts when their
+meaning is minimum presence; an exact whole-set anatomy value does not become
+a subset query. Extra unrelated atomic facts do not establish a missing part.
 
 For example, these fragments describe an already requester-specified red cup.
 They assume an active span `topic`, the literal baseline phrase `red ceramic
