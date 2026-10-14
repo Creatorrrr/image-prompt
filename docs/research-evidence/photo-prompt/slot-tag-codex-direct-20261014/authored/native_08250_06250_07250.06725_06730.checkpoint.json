@@ -1,0 +1,1231 @@
+{
+  "schema": "photo-native-manual-bulk-checkpoint/v1",
+  "task_name": "/root/review_08250_09250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "prepared_total": 1000,
+  "read_range": [
+    6725,
+    6730
+  ],
+  "actual_direct_read_count": 5,
+  "records": [
+    {
+      "ordinal": 6725,
+      "candidate_id": "cand_ce6816a338815f9ab5e5b10cf1fc31ac",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human",
+            "object",
+            "product"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "full-grain natural leather",
+            "natural leather grain",
+            "풀그레인 가죽 표면"
+          ],
+          "embedding_text": "full-grain leather retains non-repeating pores fine creases vein-like grain direction edge thickness and a restrained use-dependent patina; plastic smoothness or a stamped uniform texture does not substitute",
+          "en": "a full-grain leather surface retaining pores, fine creases, grain direction, and developing patina",
+          "keywords": [
+            "pores",
+            "fine creases",
+            "grain direction",
+            "patina",
+            "edge thickness"
+          ],
+          "ko": "모공·잔주름·결 방향과 사용 흔적이 남은 풀그레인 가죽 표면",
+          "tags": [
+            "surface",
+            "luxury",
+            "leather",
+            "natural_grain",
+            "patina"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "material"
+          ],
+          "properties": []
+        },
+        "id": "cand_ce6816a338815f9ab5e5b10cf1fc31ac",
+        "provenance": [
+          {
+            "sha256": "d4d510022307d78f31dcb9cc31efae94817748493338bb7dfc897b46b182b95b",
+            "source": "slot:surface_material:full_grain_leather_natural_variation_surface"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "for_any": [
+            "human",
+            "object",
+            "product"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "full-grain natural leather",
+            "natural leather grain",
+            "풀그레인 가죽 표면"
+          ],
+          "embedding_text": "full-grain leather retains non-repeating pores fine creases vein-like grain direction edge thickness and a restrained use-dependent patina; plastic smoothness or a stamped uniform texture does not substitute",
+          "en": "a full-grain leather surface retaining pores, fine creases, grain direction, and developing patina",
+          "keywords": [
+            "pores",
+            "fine creases",
+            "grain direction",
+            "patina",
+            "edge thickness"
+          ],
+          "ko": "모공·잔주름·결 방향과 사용 흔적이 남은 풀그레인 가죽 표면",
+          "tags": [
+            "surface",
+            "luxury",
+            "leather",
+            "natural_grain",
+            "patina"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "material"
+          ],
+          "properties": []
+        },
+        "id": "cand_ce6816a338815f9ab5e5b10cf1fc31ac",
+        "provenance": [
+          {
+            "sha256": "d4d510022307d78f31dcb9cc31efae94817748493338bb7dfc897b46b182b95b",
+            "source": "slot:surface_material:full_grain_leather_natural_variation_surface"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06500_06750.json",
+        "item": 226,
+        "json_pointer": "/decisions/225",
+        "row_sha256": "1696ae4c59275748493eb450fec9ddbfb112ddf8b9cee8128a753817b67e99d1"
+      },
+      "source_bindings": {
+        "bind_ce6816a338815f9ab5e5b10cf1fc31ac": {
+          "candidate_id": "cand_ce6816a338815f9ab5e5b10cf1fc31ac",
+          "conditions": {
+            "subject_applicability": {
+              "allow_domains": [
+                "product",
+                "jewelry",
+                "food",
+                "architecture",
+                "subculture_practice",
+                "worldbuilding_system",
+                "cjk_narrative_world"
+              ],
+              "allow_domains_override_subject_categories": true,
+              "subject_categories": [
+                "object",
+                "food",
+                "plant",
+                "environment",
+                "sign",
+                "human"
+              ]
+            }
+          },
+          "id": "bind_ce6816a338815f9ab5e5b10cf1fc31ac",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "surface_material",
+          "weight": 0.54
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Full-grain leather has non-repeating pores, fine creases and vein-like grain direction, retained edge thickness and restrained developing use-dependent patina.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "full-grain leather",
+          "dimension": "material",
+          "target": "actual_leather_surface",
+          "property": "surface.material",
+          "mode": "prerequisite",
+          "value": {
+            "type": "surface.material/v1",
+            "value": "full_grain_leather"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "non-repeating pores fine creases vein-like grain direction",
+          "dimension": "material",
+          "target": "actual_leather_surface",
+          "property": "surface.texture.full_grain_structure",
+          "mode": "effect",
+          "value": {
+            "type": "surface.texture.full_grain_structure/v1",
+            "value": "nonrepeating_pores_fine_creases_veinlike_grain_direction"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "edge thickness",
+          "dimension": "appearance",
+          "target": "actual_leather_edge",
+          "property": "material.geometry.edge_thickness",
+          "mode": "effect",
+          "value": {
+            "type": "material.geometry.edge_thickness/v1",
+            "value": "readable_edge_thickness_without_numeric_value"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "developing patina",
+          "dimension": "material",
+          "target": "actual_leather_surface",
+          "property": "surface.state.patina",
+          "mode": "effect",
+          "value": {
+            "type": "surface.state.patina/v1",
+            "value": "restrained_use_dependent_developing_patina"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "surface_material": "literal declared full-grain leather, not chemistry/authenticity proved from pixels",
+        "texture": "nonuniform pores/creases/directional grain, not uniform stamping or plastic smoothness",
+        "prop_state": "developing use patina may fit an independently declared prop host; a generic leather surface alone does not create a leather_object owner",
+        "skin_finish": "processed leather is not a newly declared living skin carrier",
+        "object_structure": "edge thickness alone does not name an independent object/assembly; actual carrier classification pending",
+        "age_presentation": "use patina does not prove exact age or human age"
+      },
+      "owner_and_receiver_intents": [
+        "Actual leather surface and bounded edge need independent host identity. Material P is an existing-surface application proposal, not approved source restriction.",
+        "Selected developing patina and texture remain E; they are not all pre-frozen material identity or permission to alter unchanged locked properties. No exact rate, duration, fabrication or chemical aging."
+      ],
+      "pending": [
+        "Material-only coarse effects need real texture, surface state and edge scope. Source contains no price, brand, species, particular garment, live pores or blood veins.",
+        "Intrinsic human/object/product and optional surface_material/direct0.54 broader object/food/plant/environment/sign/human plus explicit allow-domain override remain distinct cumulative checks."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "full-grain leather retains non-repeating pores fine creases vein-like grain direction edge thickness and a restrained use-dependent patina; plastic smoothness or a stamped uniform texture does not substitute",
+          "literal_fact_draft_indices": [
+            0,
+            1,
+            2
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a full-grain leather surface retaining pores, fine creases, grain direction, and developing patina",
+          "literal_fact_draft_indices": [
+            3
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "모공·잔주름·결 방향과 사용 흔적이 남은 풀그레인 가죽 표면",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6726,
+      "candidate_id": "cand_f7f5a82d4abd560db1471d24a22235a0",
+      "source_before": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "fictional_esoteric_world_archive_scene"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "비기능성 허구 도구·무가독 accession card·추상 도형 교정 overlay",
+            "nonfunctional fictional tools, unreadable accession cards, and abstract diagram-proof overlays"
+          ],
+          "embedding_text": "nonfunctional fictional tools, unreadable accession cards, and abstract diagram-proof overlays",
+          "en": "nonfunctional fictional tools, unreadable accession cards, and abstract diagram-proof overlays",
+          "facets": {
+            "manifestation_mode": [
+              "diegetic_world_system"
+            ]
+          },
+          "ko": "비기능성 허구 도구·무가독 accession card·추상 도형 교정 overlay",
+          "tags": [
+            "worldbuilding_system",
+            "fictional_esoteric_world",
+            "fictional_esoteric_world_archive_scene"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_f7f5a82d4abd560db1471d24a22235a0",
+        "provenance": [
+          {
+            "sha256": "ac48130da1f896a04931cf8507d4030387384cd39c569fb11569d44fdacce5af",
+            "source": "slot:prop:fictional_esoteric_world_archive_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "fictional_esoteric_world_archive_scene"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "비기능성 허구 도구·무가독 accession card·추상 도형 교정 overlay",
+            "nonfunctional fictional tools, unreadable accession cards, and abstract diagram-proof overlays"
+          ],
+          "embedding_text": "nonfunctional fictional tools, unreadable accession cards, and abstract diagram-proof overlays",
+          "en": "nonfunctional fictional tools, unreadable accession cards, and abstract diagram-proof overlays",
+          "facets": {
+            "manifestation_mode": [
+              "diegetic_world_system"
+            ]
+          },
+          "ko": "비기능성 허구 도구·무가독 accession card·추상 도형 교정 overlay",
+          "tags": [
+            "worldbuilding_system",
+            "fictional_esoteric_world",
+            "fictional_esoteric_world_archive_scene"
+          ]
+        },
+        "effects": {
+          "dimensions": [],
+          "properties": []
+        },
+        "id": "cand_f7f5a82d4abd560db1471d24a22235a0",
+        "provenance": [
+          {
+            "sha256": "ac48130da1f896a04931cf8507d4030387384cd39c569fb11569d44fdacce5af",
+            "source": "slot:prop:fictional_esoteric_world_archive_prop"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06500_06750.json",
+        "item": 227,
+        "json_pointer": "/decisions/226",
+        "row_sha256": "1bf843416074f44dc96fb871fc6eb8dc04ab3480912484faad3da118d1712f66"
+      },
+      "source_bindings": {
+        "bind_f7f5a82d4abd560db1471d24a22235a0": {
+          "candidate_id": "cand_f7f5a82d4abd560db1471d24a22235a0",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_f7f5a82d4abd560db1471d24a22235a0",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "prop",
+          "weight": 1
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Nonfunctional fictional tools, unreadable accession cards and abstract diagram-proof overlays are three required inventory scopes, without occult efficacy or readable records.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "nonfunctional fictional tools, unreadable accession cards, and abstract diagram-proof overlays",
+          "dimension": "framing",
+          "target": "actual_image_inventory",
+          "property": "framing.archive_inventory_inclusion",
+          "mode": "effect",
+          "value": {
+            "type": "framing.archive_inventory_inclusion/v1",
+            "value": "fictional_tools_AND_accession_cards_AND_abstract_proof_overlays"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "nonfunctional fictional tools",
+          "dimension": "role",
+          "target": "actual_fictional_tools",
+          "property": "prop.state.function",
+          "mode": "effect",
+          "value": {
+            "type": "prop.state.function/v1",
+            "value": "declared_nonfunctional_fictional_tools"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "unreadable accession cards",
+          "dimension": "text",
+          "target": "actual_accession_cards",
+          "property": "text.lettering.legibility",
+          "mode": "effect",
+          "value": {
+            "type": "text.lettering.legibility/v1",
+            "value": "no_readable_record_content_without_forcing_specific_glyphs"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "abstract diagram-proof overlays",
+          "dimension": "appearance",
+          "target": "actual_overlay_design",
+          "property": "graphic.overlay.diagram_proof",
+          "mode": "effect",
+          "value": {
+            "type": "graphic.overlay.diagram_proof/v1",
+            "value": "abstract_diagram_proof_overlay_without_invented_motif_geometry"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "prop": "three actual inventory classes, not combined archive_inventory material/type",
+        "prop_state": "explicit tools nonfunctional selected state, not working mechanism",
+        "visible_text": "unreadable is a legibility restriction, not compulsory exact letters/personal data or blankness; actual mark ownership pending",
+        "surface_pattern": "abstract diagram label lacks bounded positive motif geometry/layout, do not force pattern",
+        "world": "fictional tool label and worldbuilding facets do not supply occult laws or efficacy",
+        "action": "no archive operation or actor follows"
+      },
+      "owner_and_receiver_intents": [
+        "Actual tools, cards and overlay host/field need independent identities and existing-versus-creation/inclusion application. No default primary prop or new clerk.",
+        "Overlay may be physical/document design or image overlay; exact actual carrier and permission footprint remain pending. No generic metadata classification supplies that choice."
+      ],
+      "pending": [
+        "Empty effects cannot waive actual inclusion/nonfunctional/legibility/overlay selection. Unreadability remains actual requirement and cannot be hidden in context; no text content or symbol invented.",
+        "fictional_esoteric_world_archive_scene primary condition and optional prop/direct1 unrestricted binding remain; no living religion, ritual or scientific proof claim."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "nonfunctional fictional tools, unreadable accession cards, and abstract diagram-proof overlays",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "nonfunctional fictional tools, unreadable accession cards, and abstract diagram-proof overlays",
+          "literal_fact_draft_indices": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "비기능성 허구 도구·무가독 accession card·추상 도형 교정 overlay",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6727,
+      "candidate_id": "cand_049255095fda5cd78b8407a06372636e",
+      "source_before": {
+        "conditions": {},
+        "content": {
+          "aliases": [],
+          "concept_units": [
+            "a medium interior view retaining panel boundaries, relief depth and their relationship to the mirror"
+          ],
+          "embedding_text": "로카유 장식 목재 패널: a medium interior view retaining panel boundaries, relief depth and their relationship to the mirror",
+          "en": "a medium interior view retaining panel boundaries, relief depth and their relationship to the mirror",
+          "keywords": [
+            "로카유 장식 목재 패널",
+            "rocaille",
+            "boiserie",
+            "rococo salon",
+            "로코코 살롱",
+            "a medium interior view retaining panel boundaries, relief depth and their relationship to the mirror"
+          ],
+          "ko": "로카유 장식 목재 패널 관찰 구도",
+          "tags": [
+            "palace_fortification_visual_semantics",
+            "composition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_049255095fda5cd78b8407a06372636e",
+        "provenance": [
+          {
+            "sha256": "e69ecefe9cda836580147c7826b99b78974b490fc0ca665024d084887e092ba9",
+            "source": "slot:composition:pf_rocaille_boiserie_composition"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {},
+        "content": {
+          "aliases": [],
+          "concept_units": [
+            "a medium interior view retaining panel boundaries, relief depth and their relationship to the mirror"
+          ],
+          "embedding_text": "로카유 장식 목재 패널: a medium interior view retaining panel boundaries, relief depth and their relationship to the mirror",
+          "en": "a medium interior view retaining panel boundaries, relief depth and their relationship to the mirror",
+          "keywords": [
+            "로카유 장식 목재 패널",
+            "rocaille",
+            "boiserie",
+            "rococo salon",
+            "로코코 살롱",
+            "a medium interior view retaining panel boundaries, relief depth and their relationship to the mirror"
+          ],
+          "ko": "로카유 장식 목재 패널 관찰 구도",
+          "tags": [
+            "palace_fortification_visual_semantics",
+            "composition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_049255095fda5cd78b8407a06372636e",
+        "provenance": [
+          {
+            "sha256": "e69ecefe9cda836580147c7826b99b78974b490fc0ca665024d084887e092ba9",
+            "source": "slot:composition:pf_rocaille_boiserie_composition"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06500_06750.json",
+        "item": 228,
+        "json_pointer": "/decisions/227",
+        "row_sha256": "27c39af80cf32a21a1132f1a4efe735f15650aa4e3b224ca34fcf598b3353252"
+      },
+      "source_bindings": {
+        "bind_049255095fda5cd78b8407a06372636e": {
+          "candidate_id": "cand_049255095fda5cd78b8407a06372636e",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_049255095fda5cd78b8407a06372636e",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "composition",
+          "weight": 0.55
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "A medium interior view keeps actual panel boundaries and relief depth readable with their relation to an actual mirror; positive KO/embedding identify rocaille wood panels, not a named salon.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "a medium interior view",
+          "dimension": "framing",
+          "target": "actual_image",
+          "property": "shot.scale.interior_observation",
+          "mode": "effect",
+          "value": {
+            "type": "shot.scale.interior_observation/v1",
+            "value": "medium_interior_view_without_exact_camera_distance"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "retaining panel boundaries, relief depth",
+          "dimension": "framing",
+          "target": "actual_panel_region",
+          "property": "framing.panel_boundaries_relief",
+          "mode": "effect",
+          "value": {
+            "type": "framing.panel_boundaries_relief/v1",
+            "value": "actual_panel_boundaries_and_relief_depth_remain_readable"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "their relationship to the mirror",
+          "dimension": "composition",
+          "target": "actual_panel_mirror_relation",
+          "property": "composition.panel_mirror_relation",
+          "mode": "effect",
+          "value": {
+            "type": "composition.panel_mirror_relation/v1",
+            "value": "panel_mirror_spatial_relation_readable"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "목재 패널",
+          "dimension": "material",
+          "target": "actual_panel_surface",
+          "property": "surface.material",
+          "mode": "prerequisite",
+          "value": {
+            "type": "surface.material/v1",
+            "value": "wood"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "로카유 장식 목재 패널",
+          "dimension": "subject",
+          "target": "actual_panels",
+          "property": "objects.type",
+          "mode": "prerequisite",
+          "value": {
+            "type": "objects.type/v1",
+            "value": "rocaille_ornamented_wood_panels"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "composition": "actual panel/mirror arrangement and readable relief relation",
+        "subject_framing": "panel boundaries and depth kept readable",
+        "shot_scale": "literal medium view, no numeric distance or compulsory human mediumshot crop",
+        "surface_material": "wood on actual panels, existing-view target proposal only",
+        "location": "interior context explicit; panelled_salon in old5B exceeds positive source because salon only keyword",
+        "surface_pattern": "rocaille label alone does not supply exact motif topology/repetition",
+        "reflection_logic": "mirror presence/relationship alone is not reflected image correspondence",
+        "apparatus_pov": "not a view through the mirror"
+      },
+      "owner_and_receiver_intents": [
+        "Actual interior, panels, panel relief/edges, mirror, image and camera/reference scope must be independent. No arbitrary foreground/main subject.",
+        "The observation cue preserves actual panel geometry/material as target prerequisites if an existing-view application is chosen, without inventing ornament geometry or changing relief. Proposed P restriction is not native approval."
+      ],
+      "pending": [
+        "Composition-only coarse effects miss actual medium framing/readability. No named Rococo salon, exact historical era, lighting hardness, reflection discrepancy or exact camera distance.",
+        "Original optional composition/direct0.55 unrestricted binding retained; old5B salon-specific location inference is not automatically carried forward."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/concept_units/0",
+          "quote": "a medium interior view retaining panel boundaries, relief depth and their relationship to the mirror",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "로카유 장식 목재 패널: a medium interior view retaining panel boundaries, relief depth and their relationship to the mirror",
+          "literal_fact_draft_indices": [
+            3,
+            4
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "a medium interior view retaining panel boundaries, relief depth and their relationship to the mirror",
+          "literal_fact_draft_indices": [
+            0,
+            1,
+            2
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "로카유 장식 목재 패널 관찰 구도",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6728,
+      "candidate_id": "cand_5c9baa09ad395a45bc9287d5ab5bba97",
+      "source_before": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "resource_control_acquisition"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "자원 통제 피영향자 축",
+            "resource controller affected-party axis"
+          ],
+          "embedding_text": "the photograph makes a concrete control change and its consequence for another person's resource access readable without a throne pose or status costume",
+          "en": "single axis showing resource existing controller control-claim action and affected person's access path",
+          "keywords": [
+            "resource axis",
+            "controller",
+            "claimant",
+            "affected access"
+          ],
+          "ko": "자원–기존 통제자–통제권 청구 행동–피영향자의 접근 경로를 한 축에서 읽는 구도",
+          "tags": [
+            "desire_visual_semantics",
+            "resource_control_acquisition",
+            "composition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_5c9baa09ad395a45bc9287d5ab5bba97",
+        "provenance": [
+          {
+            "sha256": "d34634349c378a963867df4e46a86f8c86dcacc20476051864c7b130744347f6",
+            "source": "slot:composition:des_power_resource_control_axis_composition"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "requires_primary_any_tags": [
+            "resource_control_acquisition"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "자원 통제 피영향자 축",
+            "resource controller affected-party axis"
+          ],
+          "embedding_text": "the photograph makes a concrete control change and its consequence for another person's resource access readable without a throne pose or status costume",
+          "en": "single axis showing resource existing controller control-claim action and affected person's access path",
+          "keywords": [
+            "resource axis",
+            "controller",
+            "claimant",
+            "affected access"
+          ],
+          "ko": "자원–기존 통제자–통제권 청구 행동–피영향자의 접근 경로를 한 축에서 읽는 구도",
+          "tags": [
+            "desire_visual_semantics",
+            "resource_control_acquisition",
+            "composition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "composition"
+          ],
+          "properties": []
+        },
+        "id": "cand_5c9baa09ad395a45bc9287d5ab5bba97",
+        "provenance": [
+          {
+            "sha256": "d34634349c378a963867df4e46a86f8c86dcacc20476051864c7b130744347f6",
+            "source": "slot:composition:des_power_resource_control_axis_composition"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06500_06750.json",
+        "item": 229,
+        "json_pointer": "/decisions/228",
+        "row_sha256": "057a2139a99be95ffca71975214fc16e21bf422f94c522aaaba9b097bf78c737"
+      },
+      "source_bindings": {
+        "bind_5c9baa09ad395a45bc9287d5ab5bba97": {
+          "candidate_id": "cand_5c9baa09ad395a45bc9287d5ab5bba97",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_5c9baa09ad395a45bc9287d5ab5bba97",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "composition",
+          "weight": 0.94
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "One axis makes the resource, existing controller, control-claim action and consequence of concrete control change for another persons access route readable.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "single axis showing resource existing controller control-claim action and affected person",
+          "dimension": "composition",
+          "target": "actual_resource_control_access_layout",
+          "property": "composition.resource_control_access_axis",
+          "mode": "effect",
+          "value": {
+            "type": "composition.resource_control_access_axis/v1",
+            "value": "one_axis_resource_existing_controller_claim_action_affected_access"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/ko",
+          "quote": "통제권 청구 행동",
+          "dimension": "action",
+          "target": "actual_claiming_agent",
+          "property": "action.resource_control_claim",
+          "mode": "effect",
+          "value": {
+            "type": "action.resource_control_claim/v1",
+            "value": "performed_control_claim_with_actual_resource_endpoint_pending"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "a concrete control change",
+          "dimension": "relationship",
+          "target": "actual_resource_controller_relation",
+          "property": "relationship.resource_control.change",
+          "mode": "effect",
+          "value": {
+            "type": "relationship.resource_control.change/v1",
+            "value": "concrete_selected_control_change_not_status_pose"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/embedding_text",
+          "quote": "its consequence for another person's resource access",
+          "dimension": "relationship",
+          "target": "actual_affected_access_relation",
+          "property": "social.resource_access_consequence",
+          "mode": "effect",
+          "value": {
+            "type": "social.resource_access_consequence/v1",
+            "value": "same_change_consequence_for_other_actual_person_resource_access"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "existing controller",
+          "dimension": "role",
+          "target": "actual_existing_controller",
+          "property": "participant.role.resource_controller",
+          "mode": "prerequisite",
+          "value": {
+            "type": "participant.role.resource_controller/v1",
+            "value": "already_declared_controller_of_actual_resource"
+          },
+          "operation": null,
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "composition": "actual one-axis readability of named resource/control/access scopes",
+        "action": "real control-claim action, no invented particular movement/tool",
+        "social_cue": "explicit resource allocation/access consequence supports declared social reading",
+        "participant_role": "existing controller is explicit source prerequisite; exact native dimension/prefix/type/actual resource link pending, not arbitrary occupation",
+        "relational_action": "actual resource-directed control claim only with independently declared endpoints; no new opponent from generic label",
+        "proxemics": "access may be authority/resource permission rather than physical spacing; no distance/contact automatically",
+        "character_intent": "no private power motive or legal entitlement"
+      },
+      "owner_and_receiver_intents": [
+        "Actual resource/controller/claiming agent/affected person/access route must be independently bound. Claimant is not automatically a third person or the existing controller; source does not fix exact participant count.",
+        "Existing controller P must identify the same actual resource in a qualified relation, not a role scalar that loses its receiver or a tag-only prerequisite."
+      ],
+      "pending": [
+        "Composition-only effects miss actual action, control change and access consequence. No no-op by assuming already-changed control, or context demotion of selected relationship.",
+        "resource_control_acquisition primary gate and optional composition/direct0.94 unrestricted binding preserved. Throne pose/status costume alone cannot establish the change."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "the photograph makes a concrete control change and its consequence for another person's resource access readable without a throne pose or status costume",
+          "literal_fact_draft_indices": [
+            2,
+            3
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "single axis showing resource existing controller control-claim action and affected person's access path",
+          "literal_fact_draft_indices": [
+            0,
+            4
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "자원–기존 통제자–통제권 청구 행동–피영향자의 접근 경로를 한 축에서 읽는 구도",
+          "literal_fact_draft_indices": [
+            1
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    },
+    {
+      "ordinal": 6729,
+      "candidate_id": "cand_6b9aeb3ee6d25e129913346fde09fe17",
+      "source_before": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "포즈 사이의 순간",
+            "in-between moment",
+            "mid-gesture portrait"
+          ],
+          "concept_units": [
+            "one nominated body or hand action remains visibly underway"
+          ],
+          "embedding_text": "one nominated body or hand action remains visibly underway | 포즈 사이의 순간 | in-between moment | mid-gesture portrait",
+          "en": "one nominated body or hand action remains visibly underway",
+          "keywords": [
+            "포즈 사이의 순간",
+            "in-between moment",
+            "mid-gesture portrait"
+          ],
+          "ko": "포즈 사이의 순간: 구성요소 1",
+          "relations": [
+            {
+              "id": "pc_pc13_component_1_owner",
+              "object": "the requester-supported main portrait and frame",
+              "subject": "main subject and action",
+              "type": "declared_owner_scope"
+            }
+          ],
+          "tags": [
+            "human",
+            "portrait",
+            "composition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_6b9aeb3ee6d25e129913346fde09fe17",
+        "provenance": [
+          {
+            "sha256": "46f895c9d70498c696eca74420c50819fdc6a337de69068512055b1b59a0a26d",
+            "source": "slot:action:pc_pc13_component_1"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "exact_5B_after": {
+        "conditions": {
+          "for_any": [
+            "human"
+          ]
+        },
+        "content": {
+          "aliases": [
+            "포즈 사이의 순간",
+            "in-between moment",
+            "mid-gesture portrait"
+          ],
+          "concept_units": [
+            "one nominated body or hand action remains visibly underway"
+          ],
+          "embedding_text": "one nominated body or hand action remains visibly underway | 포즈 사이의 순간 | in-between moment | mid-gesture portrait",
+          "en": "one nominated body or hand action remains visibly underway",
+          "keywords": [
+            "포즈 사이의 순간",
+            "in-between moment",
+            "mid-gesture portrait"
+          ],
+          "ko": "지정된 몸 또는 손 동작 하나가 눈에 보이게 진행 중이다",
+          "relations": [
+            {
+              "id": "pc_pc13_component_1_owner",
+              "object": "the requester-supported main portrait and frame",
+              "subject": "main subject and action",
+              "type": "declared_owner_scope"
+            }
+          ],
+          "tags": [
+            "human",
+            "portrait",
+            "composition"
+          ]
+        },
+        "effects": {
+          "dimensions": [
+            "action"
+          ],
+          "properties": []
+        },
+        "id": "cand_6b9aeb3ee6d25e129913346fde09fe17",
+        "provenance": [
+          {
+            "sha256": "46f895c9d70498c696eca74420c50819fdc6a337de69068512055b1b59a0a26d",
+            "source": "slot:action:pc_pc13_component_1"
+          }
+        ],
+        "record_kind": "visual_option"
+      },
+      "compiled_locator": {
+        "file": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/decisions/review_06250_07250_06500_06750.json",
+        "item": 230,
+        "json_pointer": "/decisions/229",
+        "row_sha256": "12473733bd133730bbf89bebb4a65347a841b5e669370ee9d976f25a25b7a1b1"
+      },
+      "source_bindings": {
+        "bind_6b9aeb3ee6d25e129913346fde09fe17": {
+          "candidate_id": "cand_6b9aeb3ee6d25e129913346fde09fe17",
+          "conditions": {
+            "subject_applicability": {}
+          },
+          "id": "bind_6b9aeb3ee6d25e129913346fde09fe17",
+          "role": "optional",
+          "semantic_role": "direct",
+          "slot_id": "action",
+          "weight": 0.45
+        }
+      },
+      "references": {},
+      "reference_bindings": {},
+      "actual_rids": [
+        "base"
+      ],
+      "meaning": "Exactly one nominated body or hand action in the requester-supported main portrait remains visibly underway at the selected instant.",
+      "manual_fact_drafts": [
+        {
+          "pointer": "/content/en",
+          "quote": "one nominated body or hand action remains visibly underway",
+          "dimension": "action",
+          "target": "requester_nominated_action",
+          "property": "action.nominated_in_progress",
+          "mode": "effect",
+          "value": {
+            "type": "action.nominated_in_progress/v1",
+            "value": "same_nominated_body_OR_hand_action_visibly_underway"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        },
+        {
+          "pointer": "/content/ko",
+          "quote": "지정된 몸 또는 손 동작 하나가 눈에 보이게 진행 중이다",
+          "dimension": "timing",
+          "target": "same_nominated_event",
+          "property": "narrative.phase.in_progress",
+          "mode": "effect",
+          "value": {
+            "type": "narrative.phase.in_progress/v1",
+            "value": "selected_visible_underway_phase_of_same_nominated_action"
+          },
+          "operation": "set_value",
+          "receivers": [],
+          "requires": [],
+          "requires_status": "pending_exact_actual_carriers_receivers_guards_and_application_restriction_approval"
+        }
+      ],
+      "roles": {
+        "action": "actual nominated body/hand action underway, no specific gesture invented",
+        "narrative_phase": "selected in-progress instant of same declared action, not a full sequence",
+        "physical_motion": "requires independently nominated physical movement; generic in-between alias alone does not determine trajectory",
+        "body_pose": "no exact static posture/support geometry specified",
+        "subject_count": "one action does not assert one total person or one anatomical hand"
+      },
+      "owner_and_receiver_intents": [
+        "Source positive relation explicitly refers to requester-supported main portrait/frame. This is not permission to invent a default unrelated actor/action. Actual nominated action identity and owned body/hand carrier must be independently declared.",
+        "Body OR hand action remains an actual supported choice; no requirement to invent both, no generic human-to-all-parts inheritance. Current base lacks precise native actual action-selection/condition contract."
+      ],
+      "pending": [
+        "Action-only effects miss actual timing phase and exact nomination/visibility obligations. Do not change action E to frozen already-underway P or preservation/no-op.",
+        "Full exact5B repaired KO read with original EN/concept/embedding/relations. No new emotion, shutter, sports context, complete temporal sequence or mid-gesture identity. Intrinsic human and optional action/direct0.45 binding retained."
+      ],
+      "correction_proposal": null,
+      "proof": null,
+      "status": "pending",
+      "whole_source_and_full_compiled_5B_directly_read": true,
+      "whole_source_unit_inventory": [
+        {
+          "realization_id": "base",
+          "pointer": "/content/concept_units/0",
+          "quote": "one nominated body or hand action remains visibly underway",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/embedding_text",
+          "quote": "one nominated body or hand action remains visibly underway | 포즈 사이의 순간 | in-between moment | mid-gesture portrait",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/en",
+          "quote": "one nominated body or hand action remains visibly underway",
+          "literal_fact_draft_indices": [
+            0
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/ko",
+          "quote": "지정된 몸 또는 손 동작 하나가 눈에 보이게 진행 중이다",
+          "literal_fact_draft_indices": [
+            1
+          ],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/relations/0/object",
+          "quote": "the requester-supported main portrait and frame",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/relations/0/subject",
+          "quote": "main subject and action",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        },
+        {
+          "realization_id": "base",
+          "pointer": "/content/relations/0/type",
+          "quote": "declared_owner_scope",
+          "literal_fact_draft_indices": [],
+          "clause_support_disposition": "pending_complete_manual_clause_mapping"
+        }
+      ]
+    }
+  ],
+  "complete_native_proof_count": 0,
+  "operating_native_qualified_count": 0,
+  "source_unit_inventory_only_not_full_semantic_disposition": true,
+  "validation_generation": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/07143a62ae23201a5cceedf155a985e204256740da96fc083e703d8ac5e7ba07",
+  "actual_semantic_module": {
+    "file": "/Users/chasoik/.cache/image-prompt/photo-shared-runtime/generations/07143a62ae23201a5cceedf155a985e204256740da96fc083e703d8ac5e7ba07/scripts/photo_semantic_evidence.py",
+    "sha256": "7d9f7e7c69bc1f8186af9a289eb46defd0e953de9c27d1b0b770142ad2660205"
+  },
+  "limitations": "All five whole source and full compiled5B rows directly read. Literal facts/roles are manual pending drafts; field enumeration/hash/quote checks are not semantic classification, source correction approval, complete requires/receivers or native qualification. Prepared snapshot and earlier frozen files unchanged."
+}
