@@ -314,7 +314,9 @@ def verify():
         'direct_approved_records': len(accepted), 'pending_decisions': len(pending),
         'unreviewed_records': len(data['candidates']) - len(accepted) - len(pending),
         'approved_ids': sorted(accepted), 'pending_ids': sorted(pending), 'errors': errors,
-        'stage05_complete': len(accepted) == len(data['candidates']) and not errors,
+        'source_review_coverage_complete': len(accepted) == len(data['candidates']) and not errors,
+        'native_qualification_status': 'not_certified_by_this_ledger',
+        'stage05_complete': False,
         'boundary': 'Authored Codex decisions checked mechanically; no independent human or pixel verification.'}
     write(HERE / 'PROGRESS.json', result)
     if errors:

@@ -1,0 +1,1851 @@
+{
+  "decisions": [
+    {
+      "candidate_id": "cand_ae11e95776135dc2b0bb806b11087b13",
+      "meaning_summary": "여행 사진 장르다. 구체 여행 장소나 풍경 구성은 없다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "genre",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "사진 장르를 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "travel photography",
+              "dimension": "style",
+              "target": "image",
+              "property": "genre.travel"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "travel photography",
+          "dimension": "style",
+          "target": "image",
+          "property": "genre.travel",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "landscape metadata만으로 풍경 장소·지형·실제 여행 이력을 확정하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_bf6cf63bc2785b8a8009b590321d5413",
+      "meaning_summary": "거칠고 악착같은 집중감을 제안하는 분위기다. 관찰된 개인 심리나 영상 입자가 아니다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "mood",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "장면의 집중감과 거친 정서를 명시한 맥락이다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "gritty focus",
+              "dimension": "atmosphere",
+              "target": "scene",
+              "property": "mood.gritty_focus"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "gritty focus",
+          "dimension": "atmosphere",
+          "target": "scene",
+          "property": "mood.gritty_focus",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "focus를 광학 초점으로, gritty를 이미지 grain·피부 texture로 해석하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_d4c4085c320f56528df768606a174c60",
+      "meaning_summary": "화염에서 오는 빛이다. 영어가 특정 모닥불보다 넓으므로 한국어를 같은 범위로 보정한다.",
+      "recommended_kind": "visual_option",
+      "corrections": [
+        {
+          "pointer": "/content/ko",
+          "before": "모닥불빛",
+          "after": "화염에서 오는 빛",
+          "reason": "영어 firelight에 없는 모닥불의 구조·야영 맥락으로 한국어 의미가 좁아지지 않게 정렬한다."
+        }
+      ],
+      "roles": [
+        {
+          "slot_id": "light_type",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "불에서 발생하는 광원을 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "firelight",
+              "dimension": "lighting",
+              "target": "illuminating_light",
+              "property": "lighting.source.fire"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "firelight",
+          "dimension": "lighting",
+          "target": "illuminating_light",
+          "property": "lighting.source.fire",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "화염 광원을 특정 야영 장소·생존 사건·모닥불 구조·밝기·색 수치로 좁히지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_28a68e06d76657019c6ce04d0a3cd77f",
+      "meaning_summary": "영화 같은 시각 표현 관습이다. 특정 영화 장르나 장치는 없다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "aesthetic_trend",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "시네마틱이라는 미적 표현 방식을 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "cinematic",
+              "dimension": "style",
+              "target": "image",
+              "property": "style.aesthetic.cinematic"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "cinematic",
+          "dimension": "style",
+          "target": "image",
+          "property": "style.aesthetic.cinematic",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "시네마틱을 고정 영상비·렌즈·등장인물·극적 사건·완결된 조명 구성으로 확장하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_42629ffd91315df38b375b306da74ccf",
+      "meaning_summary": "패션 사진 장르다. 구체 의상이나 인물은 지정하지 않는다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "genre",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "사진 작업의 장르를 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "fashion photography",
+              "dimension": "style",
+              "target": "image",
+              "property": "genre.fashion"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "fashion photography",
+          "dimension": "style",
+          "target": "image",
+          "property": "genre.fashion",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "패션 장르를 성인 성적 표현·페티시·특정 옷·인물 추가로 해석하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_85fa5c84b17a5031a77c217ffa84fe87",
+      "meaning_summary": "개념적 사진 작업이라는 장르다. 어떤 개념이나 사건인지는 아직 없다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "genre",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "물리 매체가 아닌 사진 표현의 장르다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "conceptual photograph",
+              "dimension": "style",
+              "target": "image",
+              "property": "genre.conceptual"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "conceptual photograph",
+          "dimension": "style",
+          "target": "image",
+          "property": "genre.conceptual",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "concept라는 총칭으로 특정 narrative_core·초현실 법칙·소품·인쇄 지지체를 만들지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_bd5ef65a2e505b47adb0133e1bdd3279",
+      "meaning_summary": "고요하고 평온한 정서적 분위기다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "mood",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "장면의 정서 맥락을 직접 명명한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "calm and peaceful",
+              "dimension": "atmosphere",
+              "target": "scene",
+              "property": "mood.calm_peaceful"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "calm and peaceful",
+          "dimension": "atmosphere",
+          "target": "scene",
+          "property": "mood.calm_peaceful",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "평온함을 바람 없음·주체 정지·특정 얼굴 표정이나 실제 마음 상태로 확정하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_d297e9011af25d2cafc0f705f03e3437",
+      "meaning_summary": "제품 사진 장르다. 구체 제품·판매 목적·배치는 없다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "genre",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "제품 사진의 장르를 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "product photography",
+              "dimension": "style",
+              "target": "image",
+              "property": "genre.product"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "product photography",
+          "dimension": "style",
+          "target": "image",
+          "property": "genre.product",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "commercial 태그만으로 광고 문구·상표·새 제품을 추가하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_3498e80bbfaf500dac3d964d13aea8ad",
+      "meaning_summary": "보도사진이라는 장르와 보도를 위한 기록 목적의 맥락이다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "genre",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "사진의 보도 장르를 선언한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "photojournalism",
+              "dimension": "style",
+              "target": "image",
+              "property": "genre.photojournalism"
+            }
+          ]
+        },
+        {
+          "slot_id": "capture_context",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "보도라는 말 자체가 사진 기록의 목적을 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "photojournalism",
+              "dimension": "role",
+              "target": "scene",
+              "property": "capture.purpose.reporting"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "photojournalism",
+          "dimension": "style",
+          "target": "image",
+          "property": "genre.photojournalism",
+          "realization_id": "base"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "photojournalism",
+          "dimension": "role",
+          "target": "scene",
+          "property": "capture.purpose.reporting",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "보도 목적이 사건의 진실·비연출 촬영·취재 접근권·뉴스 글자의 시각 증거는 아니다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_52714d858f0955bfa2d4c97be1700c3d",
+      "meaning_summary": "풍경 사진의 장르다. 특정 자연 지형·장소·계절은 없다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "genre",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "풍경 사진을 장르로 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "landscape photography",
+              "dimension": "style",
+              "target": "image",
+              "property": "genre.landscape"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "landscape photography",
+          "dimension": "style",
+          "target": "image",
+          "property": "genre.landscape",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "자연 태그에서 산·바다·무인 풍경·맑은 날씨를 발명하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_e7172f7a0872564dabe4f0a06af5562f",
+      "meaning_summary": "달빛이라는 광원 맥락과 차가운 빛의 색감을 명시한다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "light_type",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "달빛 광원 계열이다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "cool moonlight",
+              "dimension": "lighting",
+              "target": "illuminating_light",
+              "property": "lighting.source.moonlight"
+            }
+          ]
+        },
+        {
+          "slot_id": "light_color",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "cool이 빛의 차가운 색감을 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "cool moonlight",
+              "dimension": "lighting",
+              "target": "illuminating_light",
+              "property": "lighting.color.cool"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "cool moonlight",
+          "dimension": "lighting",
+          "target": "illuminating_light",
+          "property": "lighting.source.moonlight",
+          "realization_id": "base"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "cool moonlight",
+          "dimension": "lighting",
+          "target": "illuminating_light",
+          "property": "lighting.color.cool",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "차가움을 물리 온도로 해석하지 않고 밤의 정확한 시각·청색 수치·달의 위상을 추정하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_eed96a0d59975d2ba3d244197c322bca",
+      "meaning_summary": "Y2K를 참조하는 디지털 향수의 미감이다. 장면의 실제 연도는 정하지 않는다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "aesthetic_trend",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "디지털 레트로 미감의 이름이다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "Y2K digital nostalgia",
+              "dimension": "style",
+              "target": "image",
+              "property": "style.aesthetic.y2k_digital"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "Y2K digital nostalgia",
+          "dimension": "style",
+          "target": "image",
+          "property": "style.aesthetic.y2k_digital",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "스타일 참조를 실제 시대·특정 의복·기기·세계 법칙으로 바꾸지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_c5d605802511557999518922a96e9027",
+      "meaning_summary": "촛불 광원의 선택이다. 주변 장소·정서·색 수치는 없다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "light_type",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "촛불이라는 광원 종류를 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "candlelight",
+              "dimension": "lighting",
+              "target": "illuminating_light",
+              "property": "lighting.source.candle"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "candlelight",
+          "dimension": "lighting",
+          "target": "illuminating_light",
+          "property": "lighting.source.candle",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "촛불에서 연애 상황·촛대·종교 의식·조도·특정 노란색을 자동 도출하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_d84b30ab479c5fcd9324d2be93dde21c",
+      "meaning_summary": "긴장과 서스펜스가 있는 분위기다. 구체 사건의 순간은 아직 없다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "mood",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "영문과 한국어의 공통 중심은 긴장감의 정서다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "tense and suspenseful",
+              "dimension": "atmosphere",
+              "target": "scene",
+              "property": "mood.suspense"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "tense and suspenseful",
+          "dimension": "atmosphere",
+          "target": "scene",
+          "property": "mood.suspense",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "순간이라는 번역만으로 event phase·위협자·사고·시간 순서를 발명하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_23e5d5e4c20d58a7af8d56a4d58b34c0",
+      "meaning_summary": "라이프스타일 사진 장르다. 구체 일상 활동·공간·인물은 없다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "genre",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "사진의 장르를 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "lifestyle photography",
+              "dimension": "style",
+              "target": "image",
+              "property": "genre.lifestyle"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "lifestyle photography",
+          "dimension": "style",
+          "target": "image",
+          "property": "genre.lifestyle",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "일상이라는 장르 맥락만으로 가족 관계·집·행동·비연출 정도를 만들지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_3c4cc4b4bd1f5f6e960ed9f334916021",
+      "meaning_summary": "성스러운 장엄함의 정서적 해석을 제안한다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "mood",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "신성함과 장엄함이라는 분위기의 이름이다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "sacred grandeur",
+              "dimension": "atmosphere",
+              "target": "scene",
+              "property": "mood.sacred_grandeur"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "sacred grandeur",
+          "dimension": "atmosphere",
+          "target": "scene",
+          "property": "mood.sacred_grandeur",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "감정을 실제 종교 정체·성소·신화 사건·대상 크기·세계 제도로 확정하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_68d2ad5b60b7576189a8915b477fbd0f",
+      "meaning_summary": "야생동물 사진 장르다. 구체 동물이나 촬영 이력은 없다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "genre",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "사진의 야생동물 장르를 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "wildlife photography",
+              "dimension": "style",
+              "target": "image",
+              "property": "genre.wildlife"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "wildlife photography",
+          "dimension": "style",
+          "target": "image",
+          "property": "genre.wildlife",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "장르 이름만으로 새 동물·종·마릿수·실제 야생 상태·접근 거리를 추가하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_78ef118c5bbc56489488a9fd4deab18e",
+      "meaning_summary": "직접 도달하는 태양빛의 광원 선택이다. 대상 대비 입사 각도는 없다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "light_type",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "태양빛이 광원의 종류를 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "direct sunlight",
+              "dimension": "lighting",
+              "target": "illuminating_light",
+              "property": "lighting.source.direct_sun"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "direct sunlight",
+          "dimension": "lighting",
+          "target": "illuminating_light",
+          "property": "lighting.source.direct_sun",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "direct를 전면광·낮은 각도·정오로 바꾸거나 그림자의 실제 경계를 별도 증거 없이 확정하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_980f1705876c5d7fade7079c868291a6",
+      "meaning_summary": "콘서트 현장 사진의 장르와 콘서트라는 명시된 행사 맥락이다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "genre",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "콘서트 사진의 장르다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "concert photography",
+              "dimension": "style",
+              "target": "image",
+              "property": "genre.concert"
+            }
+          ]
+        },
+        {
+          "slot_id": "occasion_context",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "영문과 현장 사진이라는 한국어가 행사 종류를 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "concert photography",
+              "dimension": "event",
+              "target": "scene",
+              "property": "event.occasion.concert"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "concert photography",
+          "dimension": "style",
+          "target": "image",
+          "property": "genre.concert",
+          "realization_id": "base"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "concert photography",
+          "dimension": "event",
+          "target": "scene",
+          "property": "event.occasion.concert",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "행사 맥락을 특정 가수·악기·군중 수·공연 조명·사람의 소속으로 확대하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_dc784ffaa00b5f4db632e39e11a8674c",
+      "meaning_summary": "호텔의 복도라는 장소다. 사용·정리·손상 상태는 없다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "location",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "물리 공간의 종류를 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "a hotel corridor",
+              "dimension": "setting",
+              "target": "environment",
+              "property": "setting.location.hotel_corridor"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "a hotel corridor",
+          "dimension": "setting",
+          "target": "environment",
+          "property": "setting.location.hotel_corridor",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "호텔에서 고급스러움·손님·조명·대칭 구도·복도의 손상 상태를 추정하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_1391f96a2c2b553281bcb82f735e3a3e",
+      "meaning_summary": "레트로퓨처리즘이라는 미적 경향이다. 장면의 실제 시대나 세계 제도는 없다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "aesthetic_trend",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "복고적 미래상을 참조하는 미적 관습의 이름이다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "retro-futurism",
+              "dimension": "style",
+              "target": "image",
+              "property": "style.aesthetic.retrofuturism"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "retro-futurism",
+          "dimension": "style",
+          "target": "image",
+          "property": "style.aesthetic.retrofuturism",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "미적 경향에서 고정 기술·건축·연도·사회 체계를 발명하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_51755271ee8550d18732f89a544b1dc3",
+      "meaning_summary": "가로 16:9의 이미지 비율이다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "format",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "출력 프레임의 종횡비가 명시되어 있다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "wide 16:9 aspect ratio",
+              "dimension": "format",
+              "target": "image",
+              "property": "format.aspect_ratio"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "wide 16:9 aspect ratio",
+          "dimension": "format",
+          "target": "image",
+          "property": "format.aspect_ratio",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "비율만으로 영화 장르·배치·UI 안전 영역·특정 물리 크기를 확정하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_aaad900452365cf79b51094826cb92a7",
+      "meaning_summary": "이미지의 차가운 청색 색보정이다. 피사체 자체의 고유색과 다르다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "color_grading",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "color grade가 영상의 색 변환을 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "cool blue color grade",
+              "dimension": "color",
+              "target": "image",
+              "property": "grading.cool_blue"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "cool blue color grade",
+          "dimension": "color",
+          "target": "image",
+          "property": "grading.cool_blue",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "전체 보정색을 피부·옷·소품의 실제 파란색이나 과학/도시 장소로 바꾸지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_acf436b1f19454cb9836e4c9f79e413e",
+      "meaning_summary": "정물 사진 장르다. 구체 물건이나 배치는 없다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "genre",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "정물 사진이라는 장르를 선언한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "still-life photography",
+              "dimension": "style",
+              "target": "image",
+              "property": "genre.still_life"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "still-life photography",
+          "dimension": "style",
+          "target": "image",
+          "property": "genre.still_life",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "정물 장르만으로 제품·소품·정지 자세·배경을 추가하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_b8a43ca5c7965e9288c7401a56f81b30",
+      "meaning_summary": "네온 누아르 감성이라는 미적 표현 맥락이다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "aesthetic_trend",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "네온 누아르라는 미감의 이름이지 세계 체계가 아니다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "neon noir mood",
+              "dimension": "style",
+              "target": "image",
+              "property": "style.aesthetic.neon_noir"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "neon noir mood",
+          "dimension": "style",
+          "target": "image",
+          "property": "style.aesthetic.neon_noir",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "미감에서 실제 네온 광원·범죄 사건·도시·고정 색감이나 세계 법칙을 추정하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_cb7f48d151ae5879b0245fb1e09510ae",
+      "meaning_summary": "8mm 초점거리와 어안 투영을 가진 렌즈 선택이다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "lens",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "8mm 초점거리가 명시된다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "an 8mm fisheye lens",
+              "dimension": "camera",
+              "target": "camera",
+              "property": "lens.focal_length"
+            },
+            {
+              "pointer": "/content/en",
+              "quote": "an 8mm fisheye lens",
+              "dimension": "camera",
+              "target": "camera",
+              "property": "lens.projection"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "an 8mm fisheye lens",
+          "dimension": "camera",
+          "target": "camera",
+          "property": "lens.focal_length",
+          "realization_id": "base"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "an 8mm fisheye lens",
+          "dimension": "camera",
+          "target": "camera",
+          "property": "lens.projection",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "어안 렌즈의 광학 변형을 신체 자체의 비현실 형태나 특정 촬영 거리로 바꾸지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_e76c19023fa854b3968ba763da7b12de",
+      "meaning_summary": "거리 사진 용도로 지칭된 28mm 렌즈 선택이다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "lens",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "28mm 초점거리를 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "a 28mm street photography lens",
+              "dimension": "camera",
+              "target": "camera",
+              "property": "lens.focal_length"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "a 28mm street photography lens",
+          "dimension": "camera",
+          "target": "camera",
+          "property": "lens.focal_length",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "렌즈의 용도 수식어만으로 장면을 거리로 옮기거나 사진 장르·행위자·촬영 거리를 확정하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_2a36661a6e405c94890d7c2dda2cebc3",
+      "meaning_summary": "현대적 리얼리즘이라는 표현 관습이다. 사실 사건의 검증이나 세계 규칙은 아니다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "aesthetic_trend",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "명명된 시각적 표현 경향이다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "modern realism",
+              "dimension": "style",
+              "target": "image",
+              "property": "style.aesthetic.modern_realism"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "modern realism",
+          "dimension": "style",
+          "target": "image",
+          "property": "style.aesthetic.modern_realism",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "현대적 스타일을 실제 촬영 연도·비연출 기록·무초현실 정책으로 확대하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_a71ee75e83cb5301aa82ee1bf73f8dbc",
+      "meaning_summary": "건축 사진의 장르다. 구체 건물이나 실내/실외 장소는 없다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "genre",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "건축 사진이라는 장르를 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "architectural photography",
+              "dimension": "style",
+              "target": "image",
+              "property": "genre.architectural"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "architectural photography",
+          "dimension": "style",
+          "target": "image",
+          "property": "genre.architectural",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "장르에서 새 건물·도시·내부 공간·원근 보정 장치를 추가하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_d6a642819eeb541c88f9b5b6be566b66",
+      "meaning_summary": "100mm의 초점거리와 매크로 촬영 기능을 지칭한 렌즈 선택이다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "lens",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "100mm 초점거리다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "a 100mm macro lens",
+              "dimension": "camera",
+              "target": "camera",
+              "property": "lens.focal_length"
+            },
+            {
+              "pointer": "/content/en",
+              "quote": "a 100mm macro lens",
+              "dimension": "camera",
+              "target": "camera",
+              "property": "lens.macro_capability"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "a 100mm macro lens",
+          "dimension": "camera",
+          "target": "camera",
+          "property": "lens.focal_length",
+          "realization_id": "base"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "a 100mm macro lens",
+          "dimension": "camera",
+          "target": "camera",
+          "property": "lens.macro_capability",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "매크로 렌즈 보유를 실제 접사 거리·확대율·심도·작은 피사체 추가로 바꾸지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_f85f192b2b655390bcaf29702f3c07d4",
+      "meaning_summary": "매크로 사진 장르의 선택이다. 물리 매체나 실제 렌즈는 없다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "genre",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "매크로 사진의 장르를 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "macro photograph",
+              "dimension": "style",
+              "target": "image",
+              "property": "genre.macro"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "macro photograph",
+          "dimension": "style",
+          "target": "image",
+          "property": "genre.macro",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "사진 장르에서 특정 렌즈·센서·거리·확대율이나 새 미세 피사체를 추정하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_31d3d56db3925fd6b62043f54e3535c8",
+      "meaning_summary": "헤드램프에서 오는 조명이다. 착용자나 차량은 지정하지 않는다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "light_type",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "헤드램프 광원을 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "headlamp light",
+              "dimension": "lighting",
+              "target": "illuminating_light",
+              "property": "lighting.source.headlamp"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "headlamp light",
+          "dimension": "lighting",
+          "target": "illuminating_light",
+          "property": "lighting.source.headlamp",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "장치 이름을 사람·차량·야외 작업·밤의 특정 시각·화면 내 장치 추가로 확대하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_32550ca8d7fa5b329f3a73566b290eb3",
+      "meaning_summary": "텅스텐 광원과 따뜻한 빛 색감을 함께 명시한다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "light_type",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "텅스텐 광원 계열이다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "warm tungsten light",
+              "dimension": "lighting",
+              "target": "illuminating_light",
+              "property": "lighting.source.tungsten"
+            }
+          ]
+        },
+        {
+          "slot_id": "light_color",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "warm이 광원의 색감을 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "warm tungsten light",
+              "dimension": "lighting",
+              "target": "illuminating_light",
+              "property": "lighting.color.warm"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "warm tungsten light",
+          "dimension": "lighting",
+          "target": "illuminating_light",
+          "property": "lighting.source.tungsten",
+          "realization_id": "base"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "warm tungsten light",
+          "dimension": "lighting",
+          "target": "illuminating_light",
+          "property": "lighting.color.warm",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "따뜻한 색감을 실제 온도·낭만적 정서·실내 장소·정확한 색온도 수치로 바꾸지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_41da21960340508dac18b4a2a86dbc9e",
+      "meaning_summary": "액션 카메라라는 촬영 장치의 종류다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "camera_type",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "카메라 종류를 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "an action camera",
+              "dimension": "camera",
+              "target": "camera",
+              "property": "camera.type.action_camera"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "an action camera",
+          "dimension": "camera",
+          "target": "camera",
+          "property": "camera.type.action_camera",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "장치 이름에서 실제 스포츠 행동·장착자·카메라 움직임·초점거리·손떨림을 추정하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_9e77209be67a5db79283876a33dedbe5",
+      "meaning_summary": "공예 작업실이라는 물리 장소다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "location",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "공예 작업실의 장소 유형을 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "a craft workshop",
+              "dimension": "setting",
+              "target": "environment",
+              "property": "setting.location.craft_workshop"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "a craft workshop",
+          "dimension": "setting",
+          "target": "environment",
+          "property": "setting.location.craft_workshop",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "작업실에서 공예가·도구·제작 단계·쓰레기·표면 재질을 자동으로 추가하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_ac61ef9ad8135203ae95b560603a5a4d",
+      "meaning_summary": "등불 광원과 따뜻한 빛의 색감을 명시한다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "light_type",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "lantern 광원을 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "warm lantern light",
+              "dimension": "lighting",
+              "target": "illuminating_light",
+              "property": "lighting.source.lantern"
+            }
+          ]
+        },
+        {
+          "slot_id": "light_color",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "warm이 빛의 색감이다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "warm lantern light",
+              "dimension": "lighting",
+              "target": "illuminating_light",
+              "property": "lighting.color.warm"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "warm lantern light",
+          "dimension": "lighting",
+          "target": "illuminating_light",
+          "property": "lighting.source.lantern",
+          "realization_id": "base"
+        },
+        {
+          "pointer": "/content/en",
+          "quote": "warm lantern light",
+          "dimension": "lighting",
+          "target": "illuminating_light",
+          "property": "lighting.color.warm",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "등불을 촛불·연소식·전기식 중 하나로 확정하거나 실내·감정·정확한 색온도를 추정하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_1ffc5a351f505ca3804caf9f7e69d5b3",
+      "meaning_summary": "차분하게 정제된 익명성이라는 정서적 읽기의 제안이다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "mood",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "익명성의 인상과 정제된 분위기를 맥락으로 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "poised anonymity",
+              "dimension": "atmosphere",
+              "target": "scene",
+              "property": "mood.poised_anonymity"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "poised anonymity",
+          "dimension": "atmosphere",
+          "target": "scene",
+          "property": "mood.poised_anonymity",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "익명성의 인상을 실제 신원 불명·얼굴 가림·범죄·직업·마스크 착용으로 단정하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_232a95a8d0e6502691d331de3231b651",
+      "meaning_summary": "선명한 캔디 계열의 장면 색 팔레트다. 구체 소유 물체나 색보정 절차는 없다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "color",
+          "semantic_role": "direct",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "채도가 높은 캔디 계열 색의 팔레트를 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "vivid candy colors",
+              "dimension": "color",
+              "target": "scene",
+              "property": "color.palette.candy"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "vivid candy colors",
+          "dimension": "color",
+          "target": "scene",
+          "property": "color.palette.candy",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "팔레트를 의복·피부의 고유색·사탕 물건·성적 맥락·특정 grading 공정으로 바꾸지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_4b02f9e29b5a5e15af642d059c52f813",
+      "meaning_summary": "희망적이고 따뜻한 정서적 느낌이다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "mood",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "정서 맥락을 직접 명시한다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "hopeful and warm",
+              "dimension": "atmosphere",
+              "target": "scene",
+              "property": "mood.hopeful_warm"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "hopeful and warm",
+          "dimension": "atmosphere",
+          "target": "scene",
+          "property": "mood.hopeful_warm",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "정서적 따뜻함을 빛의 색·온도·개인의 실제 감정이나 일어난 사건으로 확정하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    },
+    {
+      "candidate_id": "cand_531abaad986e5486a6b1f41283074f8a",
+      "meaning_summary": "코티지코어의 부드러운 감성이라는 미적 경향이다.",
+      "recommended_kind": "visual_option",
+      "corrections": [],
+      "roles": [
+        {
+          "slot_id": "aesthetic_trend",
+          "semantic_role": "contextual",
+          "scope": "whole_record",
+          "realization_ids": [
+            "base"
+          ],
+          "rationale": "코티지코어 감성이라는 표현 관습의 이름이다.",
+          "evidence": [
+            {
+              "pointer": "/content/en",
+              "quote": "cottagecore softness",
+              "dimension": "style",
+              "target": "image",
+              "property": "style.aesthetic.cottagecore"
+            }
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "pointer": "/content/en",
+          "quote": "cottagecore softness",
+          "dimension": "style",
+          "target": "image",
+          "property": "style.aesthetic.cottagecore",
+          "realization_id": "base"
+        }
+      ],
+      "rejected_boundaries": [
+        "미감에서 실제 시골 집·가사 행위·의복·부드러운 광질·물리 표면 질감을 발명하지 않는다."
+      ],
+      "uncertainties": [],
+      "status": "approved",
+      "all_roles_considered": true
+    }
+  ]
+}
