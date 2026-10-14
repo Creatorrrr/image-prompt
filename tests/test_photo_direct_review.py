@@ -76,6 +76,22 @@ class DirectReviewTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'different realization'):
             review.validate_decision(row, data)
 
+    def test_one_role_can_have_distinct_owned_evidence_for_each_actual_branch(self):
+        data, row = self.primitive_proposal()
+        standing = {**row['roles'][0]['evidence'][0], 'realization_id': 'standing'}
+        walking = {**standing, 'pointer': '/content/realization_content/walking/en',
+                   'quote': 'walking adult', 'realization_id': 'walking'}
+        row['roles'][0].update(scope='whole_record', realization_ids=['standing', 'walking'],
+                              evidence=[standing, walking])
+        row['facts'] = [standing, walking]
+        review.validate_decision(row, data)
+        row['roles'][0]['evidence'] = [standing]
+        with self.assertRaisesRegex(ValueError, 'each selected role realization'):
+            review.validate_decision(row, data)
+        row['roles'][0]['evidence'] = [standing, {**walking, 'realization_id': 'invented'}]
+        with self.assertRaisesRegex(ValueError, 'foreign realization'):
+            review.validate_decision(row, data)
+
     def test_structured_proposals_cannot_invent_a_reference_or_replace_metadata(self):
         for defect in ['candidate', 'component', 'identity', 'guard', 'unknown_conditions', 'untyped']:
             data, row = self.primitive_proposal()
