@@ -76,13 +76,30 @@ class DirectReviewTests(unittest.TestCase):
             root, here, note, packet = self.delegated_fixture(directory)
             with patch.object(review, 'ROOT', root), patch.object(review, 'HERE', here):
                 for key, value in [('model', 'gemini'), ('complete_source_read', False),
-                                   ('directly_reviewed_count', 0), ('unresolved_ordinals', [0]),
+                                   ('directly_reviewed_count', 0), ('unresolved_ordinals', [2]),
                                    ('stop', 3)]:
                     changed = {**note, key: value}
                     review.write(here / 'worker-notes/test.json', changed)
                     with self.assertRaisesRegex(ValueError, 'identity, assigned range'):
                         review.delegated_provenance('run/worker-notes/test.json',
                             'run/authored/test.json', review.c.digest(packet), A)
+
+    def test_attested_pending_judgement_cannot_be_promoted_to_approval(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root, here, note, packet = self.delegated_fixture(directory)
+            with patch.object(review, 'ROOT', root), patch.object(review, 'HERE', here):
+                review.write(here / 'worker-notes/test.json', {**note, 'unresolved_ordinals': [0]})
+                data = fixture(); row = decision(data)
+                row['authored_decision']['file'] = 'run/authored/test.json'
+                row['packet_sha256'] = review.c.digest(packet)
+                row.update(schema=review.DELEGATED_SCHEMA, review_method='codex_subagent_direct_source_read',
+                           status='needs_boundary_review', uncertainties=[{'kind':'owner', 'detail':'Not resolved.'}])
+                row['review_provenance'] = review.delegated_provenance(
+                    'run/worker-notes/test.json', 'run/authored/test.json', row['packet_sha256'], A)
+                review.validate_decision(row, data)
+                row.update(status='approved', uncertainties=[])
+                with self.assertRaisesRegex(ValueError, 'cannot be counted as approved'):
+                    review.validate_decision(row, data)
 
     def test_changed_worker_attestation_invalidates_compiled_review(self):
         with tempfile.TemporaryDirectory() as directory:
