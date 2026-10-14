@@ -1,0 +1,222 @@
+{
+  "task_name": "/root/review_06250_07250",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "catalog": {
+    "file": "docs/research-evidence/photo-prompt/slot-tag-codex-direct-20261014/CATALOG-FINAL-146-V5.json",
+    "raw_sha256": "ecd6b9f8bec993f332e5572c22b4c9680fb35537105ed1310edaddc0326286a7"
+  },
+  "actual_full_definition_read": [
+    "character_contrast",
+    "light_quality",
+    "body_hair",
+    "visual_density"
+  ],
+  "full_specs": {
+    "character_contrast": {
+      "applicability": {
+        "deny_domains": [
+          "product",
+          "jewelry",
+          "food",
+          "wildlife"
+        ],
+        "subject_categories": [
+          "human"
+        ]
+      },
+      "core_fields": [
+        "event"
+      ],
+      "description": "Contrast between a declared character's visible bearing, local response, role or status.",
+      "description_ko": "한 인물의 태도·반응·역할 사이 대비: 권위와 주도권·계급 대비도 포함됨; 감정 모순으로만 정의하면 현재 후보 의미를 축소",
+      "dimensions": [
+        "character_response"
+      ],
+      "evidence_terms": [
+        "contrasts",
+        "contradiction",
+        "denial",
+        "authority",
+        "guarded"
+      ],
+      "excludes": [
+        "권위와 주도권·계급 대비도 포함됨; 감정 모순으로만 정의하면 현재 후보 의미를 축소"
+      ],
+      "id": "character_contrast",
+      "includes": [
+        "Contrast between a declared character's visible bearing, local response, role or status."
+      ],
+      "neighbors": [
+        "aftermath_trace",
+        "character_intent",
+        "mood",
+        "narrative_clue",
+        "offscreen_context",
+        "participant_role",
+        "proxemics",
+        "social_cue"
+      ],
+      "owners": [
+        "context"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "character.contrast",
+        "response.contrast"
+      ],
+      "semantic_role": "contextual"
+    },
+    "light_quality": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "setting",
+        "visual_priorities"
+      ],
+      "description": "Illumination softness, angular extent and resulting shadow transition, separate from intensity and image exposure.",
+      "description_ko": "빛의 경계와 광질: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+      "dimensions": [
+        "lighting"
+      ],
+      "evidence_terms": [
+        "soft light",
+        "hard light",
+        "diffused",
+        "shadow transition",
+        "광질"
+      ],
+      "excludes": [
+        "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+        "A source device name or ambiguous named lighting look alone does not establish softness, angular extent or shadow transition."
+      ],
+      "id": "light_quality",
+      "includes": [
+        "Illumination softness, angular extent and resulting shadow transition, separate from intensity and image exposure."
+      ],
+      "neighbors": [
+        "exposure",
+        "light_color",
+        "light_direction",
+        "light_intensity",
+        "light_shape",
+        "light_type",
+        "lighting",
+        "shadow_relation"
+      ],
+      "owners": [
+        "light"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "lighting.softness",
+        "lighting.quality",
+        "light.angular_extent"
+      ],
+      "semantic_role": "direct"
+    },
+    "body_hair": {
+      "applicability": {},
+      "core_fields": [
+        "subject",
+        "style"
+      ],
+      "description": "Owned regional body-hair density, length, distribution, skin attachment, individual-fiber thickness and pigmentation, separate from skin finish, scalp hair, facial hair and eyebrow or lash styling.",
+      "description_ko": "지정 피부 부위에 소유된 체모의 밀도·길이·분포·피부 부착·개별 털 굵기·색소. 피부 마감·두발·수염·눈썹 및 속눈썹 연출과 구별하며, 선택한 속성만 적용한다.",
+      "dimensions": [
+        "appearance"
+      ],
+      "evidence_terms": [
+        "body hair",
+        "regional hair",
+        "hair density",
+        "체모"
+      ],
+      "excludes": [
+        "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+        "Scalp-hair arrangement/color, facial-hair styling, brow/lash styling, skin pigment or skin optical finish alone.",
+        "Thickness or pigmentation does not prove age, sex, hormones, health, numerical composition or history."
+      ],
+      "id": "body_hair",
+      "includes": [
+        "Owned regional body-hair density, length, distribution, skin attachment, individual-fiber thickness and pigmentation, separate from skin finish, scalp hair, facial hair and eyebrow or lash styling."
+      ],
+      "neighbors": [
+        "body_marking",
+        "brow_style",
+        "facial_hair",
+        "hair_color",
+        "hair_style",
+        "lash_style",
+        "makeup_decoration",
+        "skin_condition",
+        "skin_finish",
+        "skin_tone"
+      ],
+      "owners": [
+        "actor"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "body.hair",
+        "skin.body_hair"
+      ],
+      "semantic_role": "direct"
+    },
+    "visual_density": {
+      "applicability": {},
+      "core_fields": [
+        "style",
+        "visual_priorities"
+      ],
+      "description": "Amount and distribution of visible information, independent of the number of people.",
+      "description_ko": "시각적 정보 밀도: 대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다.",
+      "dimensions": [
+        "composition"
+      ],
+      "evidence_terms": [
+        "minimal",
+        "sparse",
+        "busy",
+        "cluttered",
+        "dense",
+        "empty"
+      ],
+      "excludes": [
+        "대상·속성·관계를 실제로 표현할 때만 직접 역할로 판정하며, 맥락·원인·정체를 외관에서 확정하지 않는다."
+      ],
+      "id": "visual_density",
+      "includes": [
+        "Amount and distribution of visible information, independent of the number of people."
+      ],
+      "neighbors": [
+        "composition",
+        "format",
+        "platform_framing",
+        "shot_scale",
+        "spatial_depth",
+        "subject_framing",
+        "visual_hierarchy"
+      ],
+      "owners": [
+        "image"
+      ],
+      "priority": "support",
+      "property_prefixes": [
+        "layout.density",
+        "composition.density"
+      ],
+      "semantic_role": "direct"
+    }
+  },
+  "spec_sha256": {
+    "character_contrast": "a2ea5e6e21f796a4ec57dd40de62d9020fb173dc1882af4bb7b2c84dd1939517",
+    "light_quality": "d59a2c36809f966de021076e8021af949427f80f33c971306e9f0057fcef26ba",
+    "body_hair": "ab4de8df5dee567a67c1417c0ed761999d1dd85cdaa10c342b339c72d74719b6",
+    "visual_density": "b9881d02a53a1ee731773510767d55c8e01b3f6d32b712db058a5c31f34bfdc9"
+  },
+  "additional_reread": [
+    "body_orientation"
+  ],
+  "actual_read_context": "8511 role/care contrast,8517 actualdiffusewindowshadowtransition,8518 regionalfinehair/stubbleOR and8521 negative-space density. All four fullspec bodies including owners/applicability/prefix/neighbors actually read, not hashonly. body_orientation fullreread for8524 actualembedding faceorientation."
+}
