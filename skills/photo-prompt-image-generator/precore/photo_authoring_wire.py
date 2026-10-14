@@ -556,7 +556,8 @@ def normalize_semantic_assertions(
                 raise ValueError(
                     f"semantic assertion {assertion_id!r} has invalid axis key {key!r}"
                 )
-            if key == "inventory" and _native_witnesses.is_scope_inventory(item):
+            if key == "inventory" and (_native_witnesses.is_scope_inventory(item)
+                    or _native_witnesses.is_existing_member_scope(item)):
                 if not isinstance(raw_value,str):
                     raise ValueError("scope inventory axes require exact canonical JSON text")
                 axes[key] = raw_value
