@@ -184,6 +184,8 @@ Native 자격화에서는 사실별 실제 realization ID와 이미 존재해야
 
 [세 번째 초안 체크포인트](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-MANUAL-DRAFT-CHECKPOINT-03.json)까지 서로 겹치지 않는 2,512개 후보를 보존·검증했다. 이 초안에는 역사 142개 입력과 명시적인 새 144개 입력이 함께 있으므로 catalog hash와 미해결 사유를 그대로 유지한다. 별도로 루트가 첫 20개 원본·수정본·기존 5B·자기 binding을 직접 읽고 새 144개 v4에 대한 [정식 심사](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/native_batches/root-00000-00020-01/ROOT-REVIEW-SUMMARY.json)를 진행했다. 독립 에이전트의 전체 20개 의미 검토, 7개 proof·18개 사실 검토와 동결 코드의 형상 검증, 14개 admission·42개 전체 소비자/lock 검사를 거쳐 긍정 판정 7개와 보류 판정 13개를 정확히 승인·유지했다. 렌즈 초점거리의 문자열 인코딩 보정은 원 단위와 명명 분류를 보존하며, 최초 숫자형 거부 결과는 별도로 보존한다. 이는 5단계 전체 승인이나 운영 적용이 아니며 운영 native 자격 후보는 여전히 0개다.
 
+같은 인물의 손·얼굴 등 실제 선택된 소유자 사이의 조건을 다루도록 `photo-native-source-guards/v2`를 구현했다. 원문 CID·실현 분기·선택 소유자·필수/선택 구성원·presentation의 조건 출처를 결합하고, 실제 소유 관계·별개 대상·정확한 값·보존 의무를 검색과 채택 단계에서 구별해 검사한다. 루트의 25개 모듈 회귀 검증은 352회 실행·고유 328개·533개 subtest, 실패·오류·skip 0건이다. 실제 메타데이터 재빌드는 같은 로컬 공간의 벡터 18,180개를 재사용했고 새 추론·provider/Gemini 호출 없이 완료했다. 실행 세대 `e54254ce78fde43d717a5c6e1670a0ffa5b50050fdafcf4b813930e42ecd0a7f`를 발행하고 실제 `lazy_verified` acquire와 원본 payload 일치까지 확인했다. 이 코드 검증은 운영 원본·태그를 바꾸거나 1278/1296의 개별 의미를 승인하지 않으며, 최종 144개 슬롯 전체의 실제 core-bound 검색 및 전수 native 자격화는 남아 있다.
+
 검증: 각 배치의 ID·긍정 인용·원본/수정 후 hash·선택 분기·owner/property·효과·조건을 대조하고, 의미 변경은 관련 옵션·프로필·묶음·참조에 전파한다. 운영 원본을 고친 배치는 새 local index closure·runtime publication·실제 acquire까지 검증한 뒤 커밋한다. 대장만 작성한 배치는 운영 데이터를 바꾸지 않는다. 5단계 종료 조건은 직접 검토 승인 집합이 18,250/18,250, 누락·미검토·미해결 보류 0건, Gemini 신규 호출 0건이다.
 
 산출물: 직접 검토 기준 snapshot·입력/검증 보조 도구, 전체 확정 태그안·긍정 인용·소유자·분기 근거 대장, 필요한 source 보정과 native 검증, 배치별 검증·커밋, 실제 직접 검토 coverage.
@@ -209,6 +211,8 @@ Native 자격화에서는 사실별 실제 realization ID와 이미 존재해야
 태그·조건 metadata만 바뀐 후보는 full text, recipe, provider/model/revision/dimensions, 모델 패키지·실행 설정, vector integrity가 같은 **현재 로컬 공간의 벡터만** 재사용한다. 본문이 바뀐 후보는 같은 로컬 모델로 다시 임베딩한다. 모델·recipe·공간이 바뀌면 문서 전체와 관련 질의를 재임베딩하고 별도 검증한다. 슬롯 명세를 바꿔 독립 질의가 달라졌다면 해당 질의 context와 실제 로컬 query embedding도 새로 생성한다. 예상·실제 로컬 추론 수, 동일 공간 재사용·실패 내역과 실행 trace를 기록한다. 과거 Gemini query 벡터나 응답을 새 local 검색 증거로 재포장하지 않는다.
 
 모든 슬롯에 대해 독립 BM25F·임베딩 lane·RRF·역할 제시를 확인한다. 영속 태그가 없는 후보와 다른 슬롯 태그만 있던 후보도 적합한 요청에서 발견될 수 있어야 한다. 다중 태그 후보를 여러 개의 검색 문서나 여러 ranking vote로 계산하지 않는다. 역할 부적합·필수 조건 위반은 순위와 별도로 검증한다.
+
+개별 후보가 각각 유효한 경우에도 공동 채택의 실제 효과를 검증한다. 선택된 부모·필수 자식·명시 선택 자식과 여러 독립 후보를 같은 실제 owner graph로 해석한 뒤, 동일 소유자·dimension·property의 효과가 typed value·operation·실제 receiver 집합에서 충돌하지 않아야 한다. 명시적 alias는 같은 대상이며 part_of는 동등성이 아니다. 기존 값 prerequisite와 새 값 effect는 구별하고, 합의된 명시적 복합 값 없이 상충하는 두 선택을 자동 병합하지 않는다.
 
 검증: 전체 통계·문서 수·vector 범위·posting·payload closure를 대조하고, 전체 139개 슬롯의 한국어·영어 고정 질의에서 각 lane의 순위를 같은 로컬 벡터 공간의 offline full-scan oracle과 비교한다. 이후 슬롯을 추가했다면 늘어난 최종 catalog 전부로 범위를 확장한다. reader의 lazy loading, 필요한 extent bytes, 64MiB 콘텐츠 cache·64개 vector descriptor 한계, skip certificate, 최악 조건의 bounded full streaming을 검증한다. cold metadata read와 검색·재검산 read를 분리하며 전체 프로세스/RSS·모델 메모리를 reader cache 한도로 표시하지 않는다.
 

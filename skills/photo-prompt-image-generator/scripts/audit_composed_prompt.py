@@ -2734,6 +2734,7 @@ def audit_global_retrieval(pack,source_data,query_context=None):
 
 _BOUND_AUDIT_SOURCE = contextvars.ContextVar("photo_audit_source", default=None)
 _BOUND_OWNER_SELECTIONS = contextvars.ContextVar("photo_owner_selections",default=None)
+_BOUND_NATIVE_INTERPRETATIONS = contextvars.ContextVar("photo_native_interpretations",default={})
 _BOUND_QUERY_CONTEXT = contextvars.ContextVar("photo_audit_query", default=None)
 
 
@@ -5734,6 +5735,14 @@ def native_property_effects_allowed(core, dimensions, effects, *, candidate_id=N
             source = _audit_source_data()
             if candidate_id in source['candidates']:
                 record = source['candidates'][candidate_id]
+                if native.native_status(record)=='qualified' and native._has_target_guards(record):
+                    import photo_candidate_corpus as corpus
+                    choice=_BOUND_NATIVE_INTERPRETATIONS.get().get(candidate_id,{})
+                    selected_rid=realization_id or choice.get('realization_id')
+                    maps=native.proof_of(record)['owner_maps']
+                    if selected_rid is None and len(maps)==1:selected_rid=next(iter(maps))
+                    record=corpus.entry(source,candidate_id,realization_id=selected_rid,
+                        dependency_selections=choice.get('dependency_selections'),owner_selections=_BOUND_OWNER_SELECTIONS.get())
         except (KeyError, TypeError, ValueError):
             return False
     return native.property_scope_allowed(core, dimensions, effects, record=record, realization_id=realization_id,owner_selections=_BOUND_OWNER_SELECTIONS.get())
@@ -5941,7 +5950,7 @@ def audit_native_adoptions(pack, composed, source_data,*,resolution_out=None):
                 relevant = native.dependency_choices(child_guard, rid)
                 child_selections = {key:value for key,value in selections.items() if key in relevant}
                 child_entry = corpus.entry(source_data, selected_id, realization_id=rid,
-                    dependency_selections=child_selections,owner_selections=owner_selections)
+                    dependency_selections=child_selections,owner_selections=owner_selections,guard_root=entry)
                 audit_selected_native_profile(child_entry, interpretation if selected_id==source_id else interpretations.get(selected_id,{}),
                     str(composed.get('prompt_en') or ''))
                 if not candidate_semantics_generator.core_entry_eligible(source_data, core, constraints, picked, '', child_entry):
@@ -5961,7 +5970,7 @@ def audit_native_adoptions(pack, composed, source_data,*,resolution_out=None):
                     member_choice = next(row['realization_id'] for row in closure if row['candidate_id']==member['candidate_id'])
                     member_entry = corpus.entry(source_data, member['candidate_id'], member['binding_id'],
                         realization_id=member_choice, dependency_selections={key:value for key,value in selections.items()
-                            if key in native.dependency_choices(native.compact(source_data['candidates'][member['candidate_id']], source_data),member_choice)},owner_selections=owner_selections)
+                            if key in native.dependency_choices(native.compact(source_data['candidates'][member['candidate_id']], source_data),member_choice)},owner_selections=owner_selections,guard_root=entry)
                     if not candidate_semantics_generator.core_entry_eligible(source_data, core, constraints, picked,
                             member_record['slot_id'], member_entry):
                         raise ValueError('selected member presentation conditions are incompatible')
@@ -6007,6 +6016,10 @@ def audit_composed_prompt(pack,composed,*,source_data=None,runtime_receipt=None,
         source_data=photo_shared_views.RequestCandidates(source_data.for_core(pack['authorial_core']),pack['candidate_pool'],pack['role_proposals'])
     token=_BOUND_AUDIT_SOURCE.set(source_data);query_token=_BOUND_QUERY_CONTEXT.set(query_context)
     owner_token=_BOUND_OWNER_SELECTIONS.set(composed.get('owner_selections'))
+    choice_token=_BOUND_NATIVE_INTERPRETATIONS.set({row['candidate_id']:row for row in
+        [*(composed.get('candidate_interpretations') or []), *[row for row in
+            ((composed.get('creative_augmentation_brief') or {}).get('decisions') or []) if isinstance(row,dict) and row.get('decision')=='transformed']]
+        if isinstance(row,dict) and row.get('candidate_id')})
     try:
         report = _audit_composed_prompt(photo_native_pack.read_view(pack),composed)
         resolution={}
@@ -6014,7 +6027,7 @@ def audit_composed_prompt(pack,composed,*,source_data=None,runtime_receipt=None,
         if report['failures']: report['status'] = 'fail'
         elif resolution:report['native_owner_resolution']=resolution
         return report
-    finally:_BOUND_AUDIT_SOURCE.reset(token);_BOUND_QUERY_CONTEXT.reset(query_token);_BOUND_OWNER_SELECTIONS.reset(owner_token)
+    finally:_BOUND_AUDIT_SOURCE.reset(token);_BOUND_QUERY_CONTEXT.reset(query_token);_BOUND_OWNER_SELECTIONS.reset(owner_token);_BOUND_NATIVE_INTERPRETATIONS.reset(choice_token)
 
 
 

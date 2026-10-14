@@ -116,6 +116,39 @@ input. After a successful `compose-audit`, a different owner mapping requires a
 new run; a failed audit can be corrected. The workflow binds the receipt to the
 render request and independently recomputes it before execution.
 
+### Conditions on the selected source owners
+
+Some sources require a relationship between their actual selected owners. For
+example, two existing hands can belong to the same existing holder while
+remaining distinct parts. Read and satisfy those conditions as well as each
+owner's precise prerequisites. A selected owner, an owner name or a matching
+material does not establish a part relation, distinctness or another owner's
+identity. Only independently frozen facts and explicit graph relations can do so.
+
+The authored source may express this with `photo-native-source-guards/v2`.
+Each endpoint is exactly `{kind: "source_target", candidate_id: "<CID>",
+target: "<source-local target>"}`. The actual selected realization and its
+audited owner mapping resolve that address. Rules support `part_of` or
+`disjoint`, an exact typed frozen value, an exact frozen entity relationship,
+and complete established-scope preservation. Explicit equivalent owner IDs
+refer to the same entity; part ownership remains distinct. The older v1 guard
+format retains its literal fixed-role meaning.
+
+Source and branch conditions can address themselves and required direct
+children. A member-pointer condition can address its parent and that selected
+child; the child's presentation condition addresses the child and its required
+direct children. Optional unselected children supply no owners or conditions.
+Keep the declared source conditions intact. Do not author internal condition
+frames or amend the public pack, binding, frozen graph or core to make a cue fit.
+The final audit reconstructs the selected closure and condition provenance.
+
+An unresolved owner or child realization can remain available for review during
+discovery. Adoption and permission checks require its complete actual mapping
+and every applicable condition to pass. A resolved relationship failure cannot
+be treated as an unresolved choice. Preservation checks include the whole
+selected effect and receiver scope, including selected children, and still
+require the final literal preservation evidence.
+
 ### Authorial binding shape
 
 The example below retains a complete baseline without additional refinements under the v2 policy. Add a decision only for a material final refinement.

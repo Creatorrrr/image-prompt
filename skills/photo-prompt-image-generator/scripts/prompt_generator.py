@@ -8345,7 +8345,8 @@ def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, sl
     dimensions = entry.get("affected_dimensions") or []
     lock = core.get("intent_lock") or {}
     properties = entry.get("affected_properties") or []
-    owner_pending=allow_owner_selection_pending and photo_semantic_evidence.pending_owner_selection(entry)
+    owner_pending=allow_owner_selection_pending and (photo_semantic_evidence.pending_owner_selection(entry)
+        or (not _condition_layer and native_admission.get("search_only",False)))
     if owner_pending and not set(dimensions)<=set(lock.get('open_dimensions') or []):return False
     if check_effect_scope and not owner_pending:
         try:

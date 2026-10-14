@@ -80,6 +80,8 @@ def guard_record(record, corpus=None):
     import photo_semantic_evidence
     proof = photo_semantic_evidence.compact(record, corpus)
     if proof is not None:
+        # Condition provenance lives in the sealed source/member guard sets;
+        # never flatten v2 parent and child CID namespaces during projection.
         value['_semantic_evidence_guard'] = proof
         base = photo_semantic_evidence.with_projection(record, record['effects'])
         value['effects'] = {**base, **({'realizations':record['effects']['realizations']}
