@@ -238,6 +238,8 @@ Native 자격화에서는 사실별 실제 realization ID와 이미 존재해야
 
 [열 번째 초안 체크포인트](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-MANUAL-DRAFT-CHECKPOINT-10.json)는 추가 595개, 비중복 누계 6,320개의 담당자 직접 검토 초안을 보존한다. 새 구간 중 175개는 현재 5B 수정본의 전체 재독과 수동 사실 초안이며, 새 원문 after 작성·재독은 0개다. 다른 포함 구간의 실제 작성 후 재독과 이 차이를 명시한다. 여섯 수량 사실의 형식 오류와 age/gaze/서사 속성에 대한 담당자 자체 수정 필요도 그대로 남긴다. 검토 범위·해시·문법 검증은 의미 승인이나 정식 native proof가 아니며, 이 체크포인트가 새로 부여한 운영 자격은 0건이다. 중첩된 부분 기록은 중복 집계하지 않는다.
 
+기존 구성원 집합의 [B2 소비자 연결](../research-evidence/photo-prompt/slot-tag-codex-direct-20261014/ROOT-MEMBER-B2-INTEGRATION-01.json)을 완료했다. source owner-bindings/v4와 request owner-selections/v2의 정확한 선택, source-guards/v3의 명시적 각 멤버 술어를 동일한 B1 결과로 admission·조건·전체 효과·permission·compose·새 runtime 감사까지 운반한다. 새 개체·신체 목록·수량을 추정하지 않으며, guard-role-support/v1이 quantified guard를 역할 근거로 쓰는 것은 거부한다. 루트 검토에서 공동 채택 전체의 보존 검사 누락과 root 자식 선택을 줄인 뒤 과거 캐시를 재사용하는 오류를 확인·수정했고 이력을 보존했다. 담당자 최종 438회·고유 432개·1,039개 subtest와 루트 확장 517회·고유 493개·1,103개 subtest, 별도 discovery 경계 두 경우가 통과했다. 같은 공간 벡터 18,180개를 재사용하고 추론·Gemini 0회로 세대 `694ba2cc064e0eae2ae0d24603f37250577122cd4a700ae10f6e379ec9057609`를 발행·실제 acquire하여 원본 payload 일치를 확인했다. 이는 엔진 기능과 격리 fixture의 실제 경로 검증이며, 운영 원본 139개 슬롯·native 자격 0건과 전수 후보 심사 상태는 유지한다. 일반 사실의 역할 view 연결과 1264의 domain override 소비자 보정은 다음 작업이다.
+
 ## 6단계 — 확정 연결 적용과 무결성 검증
 
 5단계의 직접 검토 승인 대장과 현재 source/catalog hash가 일치하는 추가·제거 관계만 native 원본에 적용한다. Gemini 초안·단순 유사도·규칙 출력에서 관계를 자동 수입하지 않는다. 기존 후보 ID와 계속 유효한 binding ID는 유지한다. 새로운 binding ID는 후보·슬롯 관계와 검토한 계약에 따라 안정적으로 생성하고 재실행해도 같은 관계가 중복되지 않도록 한다. 동일 후보·동일 슬롯의 불필요한 다중 관계는 허용하지 않는다. 조건별 변형이 필요하면 한 관계 안에 명시적인 적용 대안을 기록하며 검색 투표를 추가하지 않는다.

@@ -8315,11 +8315,22 @@ def frozen_core_context(data: dict, core: dict, controls: dict) -> tuple[dict, d
 
 def native_property_scope_allowed(core, dimensions, properties, *, entry=None, data=None, candidate_id=None, realization_id=None):
     import photo_semantic_evidence as native
+    original=entry or {}
     if data is not None and candidate_id in data['candidates']:
-        entry = data['candidates'][candidate_id]
-    if entry is not None and 'authored_record' in entry:
-        entry = entry['authored_record']
-    return native.property_scope_allowed(core, dimensions, properties, record=entry, realization_id=realization_id)
+        import photo_candidate_corpus as corpus
+        record=data['candidates'][candidate_id]
+        selected=realization_id or original.get('_realization_id')
+        if selected is None and native.native_status(record)=='qualified' and len(native.proof_of(record)['effect_sets'])==1:
+            selected=next(iter(native.proof_of(record)['effect_sets']))
+        entry=corpus.entry(data,candidate_id,realization_id=selected,
+            dependency_selections=original.get('_native_dependency_selections'),owner_selections=original.get('_native_owner_selections'),guard_root=original.get('_native_guard_root'))
+    elif entry is not None and 'authored_record' in entry:
+        # Keep request-local selection context; authored positive source never
+        # replaces an already sealed request entry or its chosen actual RID.
+        record=entry['authored_record']
+        entry={**record,**{key:entry[key] for key in ('_semantic_evidence_guard','_native_owner_selections','_native_dependency_selections','_native_guard_root','_realization_id') if key in entry}}
+    return native.property_scope_allowed(core, dimensions, properties, record=entry, realization_id=realization_id,
+        owner_selections=original.get('_native_owner_selections'))
 
 
 def core_entry_eligible(data: dict, core: dict, contract: dict, picked: dict, slot: str, entry: dict, *, check_effect_scope=True, _condition_layer=False,allow_owner_selection_pending=False) -> bool:

@@ -5735,7 +5735,7 @@ def native_property_effects_allowed(core, dimensions, effects, *, candidate_id=N
             source = _audit_source_data()
             if candidate_id in source['candidates']:
                 record = source['candidates'][candidate_id]
-                if native.native_status(record)=='qualified' and native._has_target_guards(record):
+                if native.native_status(record)=='qualified':
                     import photo_candidate_corpus as corpus
                     choice=_BOUND_NATIVE_INTERPRETATIONS.get().get(candidate_id,{})
                     selected_rid=realization_id or choice.get('realization_id')
@@ -5878,7 +5878,63 @@ def audit_native_profile_choices(pack,composed,source_data,chosen,interpretation
     if not required<=seen:raise ValueError('request-required native profile choice inventory is missing')
 
 
-def audit_native_adoptions(pack, composed, source_data,*,resolution_out=None):
+def _native_adoption_entries(pack,composed,source_data):
+    """One source-qualified resolved view for all actual chosen native roots."""
+    import photo_semantic_evidence as native
+    import photo_candidate_corpus as corpus
+    chosen=normalize_chosen_candidate_ids(composed.get('chosen_candidate_ids'))
+    chosen.update(normalize_chosen_candidate_ids(composed.get('chosen_visual_concept_ids')))
+    transformed=[row for row in (composed.get('creative_augmentation_brief') or {}).get('decisions',[])
+        if isinstance(row,dict) and row.get('decision')=='transformed']
+    chosen.update(row['candidate_id'] for row in transformed if row.get('candidate_id'))
+    interpretations={row.get('candidate_id'):row for row in [*(composed.get('candidate_interpretations') or []),*transformed] if isinstance(row,dict)}
+    entries=[];core=pack.get('authorial_core') or {}
+    for cid in sorted(chosen):
+        try:
+            presented=(pack.get('candidate_pool') or {}).get(cid,{})
+            source_id=cid if cid in source_data['candidates'] else presented.get('source_candidate_id',cid)
+            if source_id not in source_data['candidates']:
+                if not corpus.ID.fullmatch(source_id):continue
+                raise ValueError('chosen cue has no pinned canonical native source')
+            native.validate(source_data['candidates'][source_id],source_data['slot_catalog'],corpus=source_data)
+            if native.native_status(source_data['candidates'][source_id])!='qualified':raise ValueError('chosen native source is unqualified')
+            interpretation=interpretations.get(cid,{})
+            entries.append(corpus.entry(source_data,source_id,interpretation.get('binding_id',presented.get('binding_id')),
+                realization_id=interpretation.get('realization_id'),dependency_selections=interpretation.get('dependency_selections'),
+                owner_selections=composed.get('owner_selections')))
+        except (ValueError,KeyError,TypeError) as exc:
+            error=ValueError(str(exc));error.candidate_id=cid;raise error from exc
+    return entries
+
+
+def audit_native_adoptions(pack,composed,source_data,*,resolution_out=None):
+    import photo_semantic_evidence as native
+    import photo_candidate_corpus as corpus
+    core=pack.get('authorial_core') or {}
+    try:entries=_native_adoption_entries(pack,composed,source_data)
+    except (ValueError,KeyError,TypeError) as exc:
+        return [{'check':'native_candidate_adoption','candidate_id':getattr(exc,'candidate_id',None),'reason':str(exc)}]
+    if not entries:return _audit_native_adoptions(pack,composed,source_data,resolution_out=resolution_out)
+    try:
+        with native.bound_selected_resolution(entries,core) as context:
+            output={};failures=_audit_native_adoptions(pack,composed,source_data,resolution_out=output)
+            if not failures and resolution_out is not None and output:
+                if context['scoped']:
+                    output.update(schema='photo-native-owner-resolution/v2',
+                        member_scopes_sha256=context['view']['context']['member_scopes_sha256'],
+                        input_binding=copy.deepcopy(context['view']['context']['input_binding']),
+                        resolved_view=copy.deepcopy(context['view']))
+                    output.pop('canonical_sha256',None);output['canonical_sha256']=corpus.digest(output)
+                resolution_out.update(output)
+            return failures
+    except (ValueError,KeyError,TypeError) as exc:
+        joint='conflicting joint effect assignment' in str(exc)
+        return [{'check':'native_joint_effect_assignments' if joint else 'native_candidate_adoption',
+            **({'candidate_id':native._proof_cid(native.proof_of(entries[0]))} if len(entries)==1 else {}),'reason':str(exc)}]
+
+
+
+def _audit_native_adoptions(pack, composed, source_data,*,resolution_out=None):
     """Search recall never certifies a chosen cue's whole actual native effects."""
     import photo_candidate_corpus as corpus
     import photo_semantic_evidence as native
@@ -5890,7 +5946,7 @@ def audit_native_adoptions(pack, composed, source_data,*,resolution_out=None):
     chosen.update(row.get('candidate_id') for row in transformed if row.get('candidate_id'))
     interpretations = {row.get('candidate_id'): row for row in
         [*(composed.get('candidate_interpretations') or []), *transformed] if isinstance(row, dict)}
-    failures = [];nodes=[];closures=[];joint_entries=[];owner_selections=composed.get('owner_selections')
+    failures = [];nodes=[];closures=[];joint_entries=[];admissions=[];owner_selections=composed.get('owner_selections')
     try:
         graph=native.frozen_witnesses(core)['graph']
         selected_entries=native.validate_owner_selections(owner_selections,core,graph)
@@ -5931,6 +5987,7 @@ def audit_native_adoptions(pack, composed, source_data,*,resolution_out=None):
                 for child in value.get('dependencies',[]):
                     if child.get('admission'):collect_owner_rows(child['admission'])
             collect_owner_rows(receipt)
+            if native._ACTIVE_RESOLUTION.get()['scoped']:admissions.append({'candidate_id':source_id,'realization_id':entry.get('_realization_id','base'),'admission':copy.deepcopy(receipt)})
             native.audit_scope_preservation(receipt,interpretation,str(composed.get('prompt_en') or ''))
             audit_selected_native_profile(entry,interpretation,str(composed.get('prompt_en') or ''))
             constraints, picked = candidate_semantics_generator.frozen_core_context(
@@ -6001,6 +6058,7 @@ def audit_native_adoptions(pack, composed, source_data,*,resolution_out=None):
                 'owner_graph_sha256':corpus.digest(graph),'owner_selections_sha256':corpus.digest(owner_selections),
                 'nodes':sorted(nodes,key=lambda row:(row['candidate_id'],row['realization_id'])),
                 'selected_closures':sorted(closures,key=lambda row:(row['candidate_id'],row['realization_id']))}
+            if admissions:value['native_admissions']=admissions
             value['canonical_sha256']=corpus.digest(value);resolution_out.update(value)
     return failures
 
@@ -6026,12 +6084,18 @@ def audit_composed_prompt(pack,composed,*,source_data=None,runtime_receipt=None,
             ((composed.get('creative_augmentation_brief') or {}).get('decisions') or []) if isinstance(row,dict) and row.get('decision')=='transformed']]
         if isinstance(row,dict) and row.get('candidate_id')})
     try:
-        report = _audit_composed_prompt(photo_native_pack.read_view(pack),composed)
-        resolution={}
-        report['failures'].extend(audit_native_adoptions(pack,composed,source_data,resolution_out=resolution))
-        if report['failures']: report['status'] = 'fail'
-        elif resolution:report['native_owner_resolution']=resolution
-        return report
+        import photo_semantic_evidence as native
+        with contextlib.ExitStack() as stack:
+            try:
+                entries=_native_adoption_entries(pack,composed,source_data)
+                if entries:stack.enter_context(native.bound_selected_resolution(entries,pack['authorial_core']))
+            except (ValueError,KeyError,TypeError):pass  # strict native audit below records the failure
+            report = _audit_composed_prompt(photo_native_pack.read_view(pack),composed)
+            resolution={}
+            report['failures'].extend(audit_native_adoptions(pack,composed,source_data,resolution_out=resolution))
+            if report['failures']: report['status'] = 'fail'
+            elif resolution:report['native_owner_resolution']=resolution
+            return report
     finally:_BOUND_AUDIT_SOURCE.reset(token);_BOUND_QUERY_CONTEXT.reset(query_token);_BOUND_OWNER_SELECTIONS.reset(owner_token);_BOUND_NATIVE_INTERPRETATIONS.reset(choice_token)
 
 
